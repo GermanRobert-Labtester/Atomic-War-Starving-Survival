@@ -8,7 +8,7 @@ using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
 {
-    public sealed class WeatherHardeningHostSession
+    public sealed class WeatherHardeningHostSession : HostSessionBase
     {
         public WeatherHardeningSystem System { get; }
         public WeatherHardeningState State => System.State;

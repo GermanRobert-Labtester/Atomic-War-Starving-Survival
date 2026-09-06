@@ -11,11 +11,12 @@ namespace Ashfall.Core.Expeditions
         public string displayName { get; set; } = string.Empty;
         public int distanceTicks { get; set; } = 8;
         public float travelHours { get; set; }
-        public int dangerLevel { get; set; } = 1;
+        public float dangerLevel { get; set; } = 1f;
         public float encounterChancePerTick { get; set; } = 0.12f;
         public float baseStaminaDrainPerHour { get; set; } = 2.0f;
         public List<string>? lootCategories { get; set; }
         public string? scavenging_table_id { get; set; }
+        public bool requiresDiscovery { get; set; }
     }
 
     /// <summary>
@@ -100,16 +101,18 @@ namespace Ashfall.Core.Expeditions
                         ? dto.baseStaminaDrainPerHour
                         : Math.Clamp(1.5f + dto.dangerLevel * 0.25f, 1.0f, 5.0f);
 
+                    int danger = (int)Math.Round(dto.dangerLevel > 0f ? dto.dangerLevel : 1f);
                     var def = new ExpeditionDefinition
                     {
                         id = dto.id,
                         displayName = !string.IsNullOrEmpty(dto.displayName) ? dto.displayName : dto.id,
                         distanceTicks = ticks > 0 ? ticks : 8,
-                        dangerLevel = dto.dangerLevel > 0 ? dto.dangerLevel : 1,
+                        dangerLevel = danger > 0 ? danger : 1,
                         encounterChancePerTick = encounterChance,
                         baseStaminaDrainPerHour = drain,
                         lootCategories = dto.lootCategories != null ? new List<string>(dto.lootCategories) : new List<string>(),
-                        scavenging_table_id = dto.scavenging_table_id ?? string.Empty
+                        scavenging_table_id = dto.scavenging_table_id ?? string.Empty,
+                        requiresDiscovery = dto.requiresDiscovery
                     };
 
                     seen.Add(def.id);

@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-02<br>
-**Total Registered Actions:** 117 entries / 183 flag tokens (aliases included)
+**Last Verified:** 2026-09-06<br>
+**Total Registered Actions:** 143 entries / 211 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -20,6 +20,7 @@
 | `--bridge-selftest` | — | Report UnityEngine shim removal (shim is gone; always exits 0) |
 | `--core-selftest` | — | Ice road + census headless demos |
 | `--data-integrity-selftest` | — | Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates) |
+| `--export-parity-selftest` | — | [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present |
 | `--catalog-boot-preflight` | — | Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors |
 | `--panel-bind-lifecycle-selftest` | `--panel-bind-selftest`, `--panel-lifecycle-selftest` | Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch |
 | `--save-load-ui-failure-selftest` | `--save-load-failure-selftest`, `--save-load-failure-uitest`, `--save-load-selftest` | Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact |
@@ -31,6 +32,7 @@
 | `--campaign-fuzz-selftest` | — | Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite |
 | `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
 | `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
+| `--agriculture-selftest` | — | Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition |
 | `--arbitration-selftest` | — | CrossingArbitrationHeadlessDemo |
 | `--black-flotilla-selftest` | `--maritime-selftest`, `--expansion-09-selftest` | The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip |
 | `--brine-selftest` | `--salt-steam-selftest` | BrineWaterHeadlessDemo (S2 salt & steam) |
@@ -40,11 +42,14 @@
 | `--crossing-selftest` | — | CrossingHeadlessDemo (Exp 04) |
 | `--deep-coast-host-selftest` | `--deep-coast-playthrough` | Deep-coast host playthrough: survey → decision → dive → scavenge → save/restore |
 | `--deep-coast-selftest` | `--deep-coast-route-selftest` | District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save |
+| `--defense-selftest` | — | Shelter Defense Expansion (Plan 163): trap catalog, installation, engagement, alarm, capture handoff |
 | `--disease-selftest` | `--disease-expansion-selftest` | Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip |
 | `--duty-roster-selftest` | — | DutyRosterHeadlessDemo (Exp 02) |
 | `--endings-selftest` | `--shelf-selftest` | EndingsHeadlessDemo (S4 endings exclusive + roundtrip) |
 | `--expansions-selftest` | `--all-expansions-selftest` | Run full 7-expansion verification suite (Holdfast, Duty Roster, Standing Record, Crossing, Arbitration, LedgerDebt, Glass Orchard) |
 | `--greenhouse-selftest` | `--glass-orchard-selftest` | GreenhouseHeadlessDemo (Exp 05) |
+| `--psychology-selftest` | — | Psychology Arc Expansion (Plan 164): breakdown arcs, sustained-stress triggers, catharsis, treatment |
+| `--wildlife-selftest` | — | Wildlife Ecosystem (Plan 165): fauna catalog, predation/radiation pressure, apex, taming, save round-trip |
 | `--holdfast-briefing` | — | Print location count and every Holdfast quest briefing |
 | `--holdfast-selftest` | — | Holdfast S1 survival loop, ice road, and trade verification |
 | `--ice-road-selftest` | — | IceRoadHeadlessDemo (Exp 01) |
@@ -80,7 +85,9 @@
 | `--expansion-hub-save-selftest` | — | Expansion hub save write → reload → restore → checksum/tamper checks |
 | `--expedition-encounter-bridge-selftest` | — | ExpeditionEncounterBridge bare-notice + resolved surface smoke test |
 | `--expedition-selftest` | — | Expedition domain: sorties, encounter resolution, loot drops, and save round-trip |
+| `--patrol-encounter-selftest` | `--travel-encounter-selftest` | Patrol catalog, cooldown, recognition, resolution, and save/restore lifecycle |
 | `--research-catalog-selftest` | — | Research knowledge catalog: load count, DAG validity, and cross-catalog unlock references (Plan 34) |
+| `--radio-catalog-selftest` | — | Radio station catalog: JSON authority, schedules, and signal model (AF-B1 / Plan 60) |
 | `--holdfast-save-selftest` | — | S1 save write → reload → restore → checksum/tamper checks |
 | `--holdfast-trade-save-selftest` | — | Holdfast trade ledger and save store round-trip and tamper checks |
 | `--inventory-save-selftest` | — | Inventory system save store round-trip, item serialization, and checksum verification |
@@ -120,6 +127,25 @@
 | `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
+| `--decon-airlock-uitest` | — | Decon Airlock UI data grid panel bindings |
+| `--decon-airlock-selftest` | — | Decon Airlock UI data grid panel bindings |
+| `--geodetic-survey-uitest` | — | Geodetic Survey UI data grid panel bindings |
+| `--geodetic-survey-selftest` | — | Geodetic Survey UI data grid panel bindings |
+| `--kinetic-storage-uitest` | — | Kinetic Storage UI data grid panel bindings |
+| `--kinetic-storage-selftest` | — | Kinetic Storage UI data grid panel bindings |
+| `--chemical-recon-uitest` | — | Chemical Recon UI data grid panel bindings |
+| `--chemical-recon-selftest` | — | Chemical Recon UI data grid panel bindings |
+| `--recon-telemetry-uitest` | `--recon-telemetry-selftest` | Recon Telemetry UI data grid panel bindings |
+| `--geothermal-uitest` | — | Geothermal Aquifer UI panel bindings |
+| `--geothermal-aquifer-selftest` | — | Geothermal Aquifer UI panel bindings |
+| `--ebpvd-coating-uitest` | — | EB-PVD Thermal Barrier Coating UI panel bindings |
+| `--ebpvd-coating-selftest` | — | EB-PVD Thermal Barrier Coating UI panel bindings |
+| `--microfluidic-diagnostic-uitest` | — | Microfluidic Diagnostics UI panel bindings |
+| `--microfluidic-diagnostic-selftest` | — | Microfluidic Diagnostics UI panel bindings |
+| `--mine-flail-uitest` | — | Mine-Clearing Flail UI panel bindings |
+| `--mine-flail-selftest` | — | Mine-Clearing Flail UI panel bindings |
+| `--rail-grinding-uitest` | — | Rail Grinding Corridor UI panel bindings |
+| `--rail-grinding-selftest` | — | Rail Grinding Corridor UI panel bindings |
 | `--survivors-uitest` | — | Survivors panel UI construction, roster cards, and affliction badges |
 | `--ui-layout-selftest` | `--layout-selftest` | Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments |
 | `--ui-snapshot-regenerate` | `--ui-snapshots-regen` | Recapture all snapshot targets and OVERWRITE snapshots/ goldens (needs real display) |

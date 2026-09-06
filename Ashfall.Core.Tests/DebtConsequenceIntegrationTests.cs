@@ -167,7 +167,9 @@ namespace Ashfall.Core.Tests
             for (int d = 0; d < template.termDays; d++)
                 ledger.TickDaily(41 + d);
 
-            Assert.Equal(1, standingEvents);
+            // Every authored stage carries a standing delta: moderate
+            // standing loss, bounty escalation, and severe raid escalation.
+            Assert.Equal(3, standingEvents);
             // The chain is two stages: bounty_moderate, then its escalation
             // raid_severe — both fire the bounty request (and nothing re-fires).
             Assert.Equal(2, bountyEvents);
@@ -210,7 +212,7 @@ namespace Ashfall.Core.Tests
             for (int d = 0; d < template.termDays; d++)
                 ledger.TickDaily(41 + d);
 
-            Assert.Equal(0, standingEvents); // bounty_and_seizure: no standing leg
+            Assert.Equal(1, standingEvents); // authored -10 collateral standing leg
             Assert.Equal(1, seizureEvents);
         }
 
@@ -544,9 +546,10 @@ namespace Ashfall.Core.Tests
 
             // Same consequence requested again (defensive path): still one.
             var contract = ledger.GetContract(Debtor)!;
+            var consequence = catalog.GetConsequence(template.consequenceId)!;
             bridge.GetType().GetMethod("HandleLaborObligation",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
-                .Invoke(bridge, new object[] { "faction_supply_corps", 7, contract });
+                .Invoke(bridge, new object[] { consequence, "faction_supply_corps", 7, contract });
             Assert.Single(bridge.LaborObligations);
         }
 

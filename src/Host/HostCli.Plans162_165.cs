@@ -266,5 +266,43 @@ namespace AtomicWar.GodotApp
             return EmitSummary("psychology_selftest", fail == 0, failedCount: fail, passedCount: pass,
                 details: string.Join("; ", details));
         }
+
+        public static int RunWildlifeSelfTest(string dataDirectory)
+        {
+            int pass = 0, fail = 0;
+            var details = new List<string>();
+
+            void Check(string gate, bool ok, string note = "")
+            {
+                if (ok) { pass++; details.Add($"  PASS {gate}"); }
+                else { fail++; details.Add($"  FAIL {gate}{(note.Length > 0 ? " — " + note : "")}"); }
+                GD.Print($"{(ok ? "[PASS]" : "[FAIL]")} wildlife/{gate}");
+            }
+
+            var io = CatalogPath.CreateFileIOForDataDir(dataDirectory);
+            var json = new SystemTextJsonSerializer();
+            var catalog = Ashfall.Core.World.WildlifeEcosystemCatalogLoader.Load(dataDirectory, io, json);
+            var diags = Ashfall.Core.World.WildlifeEcosystemCatalogLoader.Validate(catalog);
+            Check("wildlife_catalog", diags.Count == 0, diags.Count > 0 ? string.Join("; ", diags) : "");
+            Check("species_roster", catalog.species.Count >= 12, $"got {catalog.species.Count}");
+
+            var sys = new Ashfall.Core.World.WildlifeEcosystemSystem();
+            sys.LoadCatalog(catalog);
+            var mig = new Ashfall.Core.WildlifeMigrationSystem(new SeededRng(42));
+            mig.RegisterPack("pack_hare_a", "species_cotton_hare", "sector_4_hinterlands", 8);
+            sys.TickDay(1, mig, 100f, "any", new SeededRng(1), new SeededRng(2), new SeededRng(3));
+            Check("ecology_tick", sys.State.last_tick_day == 1);
+
+            var state = sys.CaptureState();
+            var restored = new Ashfall.Core.World.WildlifeEcosystemSystem();
+            restored.LoadCatalog(catalog);
+            restored.RestoreState(state);
+            Check("save_round_trip", restored.State.last_tick_day == sys.State.last_tick_day);
+
+            GD.Print($"wildlife selftest: {pass} passed, {fail} failed");
+            if (fail > 0) GD.Print(string.Join("\n", details));
+            return EmitSummary("wildlife_selftest", fail == 0, failedCount: fail, passedCount: pass,
+                details: string.Join("; ", details));
+        }
     }
 }

@@ -150,6 +150,13 @@ namespace Ashfall.Core.Combat
         public int AmmoRemaining = 0;
         public int MagazineCapacity;     // item 6: max rounds in one reload
         public int ScrapRepairCost;     // exposed to the UI
+        // Optional Plan B75 projection. Defaults preserve old saves and combat
+        // behavior when no calibration profile has been attached.
+        public float BallisticsAccuracyMultiplier = 1f;
+        public float BallisticsRangeMultiplier = 1f;
+        public float BallisticsPenetrationMultiplier = 1f;
+        public float BallisticsCriticalMultiplier = 1f;
+        public float BallisticsMalfunctionMultiplier = 1f;
     }
 
     /// <summary>Combat-log event appended to the encounter history.</summary>

@@ -53,7 +53,7 @@ namespace Ashfall.Core.Narrative
         public float legitimacy_impact { get; set; } = 5.0f;
         public float fear_impact { get; set; } = 0.0f;
         public float deterrence_rating { get; set; } = 0.35f;
-        public string doctrine_tag { get; set; } = "Merciful";
+        public string doctrine_tag { get; set; } = "Procedural";
     }
 
     [Serializable]
@@ -137,6 +137,7 @@ namespace Ashfall.Core.Narrative
         private readonly ISeededRng _rng;
         private readonly Inventory.Inventory _inventory;
         private readonly NeedsSystem? _needs;
+        private readonly PoliticsSystem? _politics;
         private readonly ILog _log;
 
         private readonly Dictionary<string, WastelandLawDef> _laws = new Dictionary<string, WastelandLawDef>(StringComparer.Ordinal);
@@ -156,11 +157,13 @@ namespace Ashfall.Core.Narrative
             ISeededRng? rng = null,
             Inventory.Inventory? inventory = null,
             NeedsSystem? needs = null,
+            PoliticsSystem? politics = null,
             ILog? log = null)
         {
             _rng = rng ?? new SeededRng(193);
             _inventory = inventory ?? new Inventory.Inventory();
             _needs = needs;
+            _politics = politics;
             _log = log ?? NullLog.Instance;
         }
 
@@ -244,13 +247,34 @@ namespace Ashfall.Core.Narrative
             {
                 if (_laws.TryGetValue(incident.assignedLawId, out var law))
                 {
-                    if (evidenceScore < law.min_evidence_confidence)
+                    // ── PoliticsSystem: governance mode modifies evidence threshold ──
+                    float effectiveThreshold = law.min_evidence_confidence;
+                    if (_politics != null)
+                    {
+                        if (_politics.IsMartialLaw)
+                            effectiveThreshold = Math.Max(0.2f, law.min_evidence_confidence - 0.25f);
+                    }
+
+                    // ── Law doctrine tag modifies threshold ──
+                    if (law.doctrine_tag == "Draconian")
+                        effectiveThreshold = Math.Max(0.25f, effectiveThreshold - 0.15f);
+                    else if (law.doctrine_tag == "Merciful")
+                        effectiveThreshold = Math.Min(0.95f, effectiveThreshold + 0.15f);
+
+                    if (evidenceScore < effectiveThreshold)
                     {
                         return TrialResult.Fail("insufficient_evidence_for_conviction");
                     }
                     if (!law.allowed_punishments.Contains(decision.punishment.ToString()))
                     {
                         return TrialResult.Fail("punishment_not_permitted_by_law");
+                    }
+
+                    // ── Merciful doctrine blocks execution ──
+                    if (law.doctrine_tag == "Merciful"
+                        && decision.punishment == PunishmentLevel.Execution)
+                    {
+                        return TrialResult.Fail("execution_blocked_by_merciful_governance");
                     }
                 }
             }
@@ -338,6 +362,18 @@ namespace Ashfall.Core.Narrative
 
             // Reduce vigilante pressure on resolution
             _state.vigilantePressure = Math.Max(0f, _state.vigilantePressure - 30f);
+
+            // ── PoliticsSystem: apply legitimacy and approval deltas ──
+            if (_politics != null)
+            {
+                _politics.ApplyLegitimacyDelta(legitimacyDelta);
+                if (decision.verdict == TrialVerdict.Guilty && decision.punishment == PunishmentLevel.Execution)
+                {
+                    // Martial law executions bolster coup risk
+                    if (_politics.IsMartialLaw)
+                        _politics.ApplyCoupRiskDelta(0.08f);
+                }
+            }
 
             OnTrialConcluded?.Invoke(decision.incidentId, decision.verdict, decision.punishment);
 

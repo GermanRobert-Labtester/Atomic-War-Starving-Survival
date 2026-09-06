@@ -53,6 +53,16 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        public ActionResult EngageEmergencyBrake(string instanceId)
+        {
+            var res = System.EngageEmergencyBrake(instanceId);
+            LastEvent = res.IsSuccess
+                ? $"EMERGENCY BRAKE engaged: {instanceId}. Rotor offline — release via maintenance."
+                : "Emergency brake blocked: " + res.FailureCode;
+            RaiseStateChanged();
+            return res;
+        }
+
         public ActionResult PerformMaintenance(string instanceId, int day, Func<string, int, bool> consumeItems)
         {
             var res = System.PerformMaintenance(instanceId, day, consumeItems);

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 #pragma warning disable CS8618
+using Ashfall.Core.Factions;
 using Ashfall.Core.Narrative;
 
 namespace Ashfall.Core.Expeditions
@@ -40,6 +42,21 @@ namespace Ashfall.Core.Expeditions
 
             /// <summary>Ordered choices from the catalog, empty for bare notices.</summary>
             public List<EncounterChoiceDefinition> choices;
+
+            /// <summary>True when this surface came from TravelEncounterSystem.</summary>
+            public bool is_patrol;
+
+            /// <summary>True when this surface came from micro_locations.json.</summary>
+            public bool is_micro_location;
+
+            /// <summary>Canonical faction identity for patrol presentation.</summary>
+            public string faction_id;
+
+            /// <summary>Authored patrol context, kept separate from prose.</summary>
+            public string territory_state;
+            public string patrol_archetype;
+            public string recognition_label;
+            public int patrol_chain_stage;
 
             /// <summary>The expedition state that triggered this surfacing.</summary>
             public ExpeditionState trigger;
@@ -163,6 +180,7 @@ namespace Ashfall.Core.Expeditions
                 dto.category = string.Empty;
                 dto.choices = new List<EncounterChoiceDefinition>();
                 dto.resolved_at_lead = false;
+                dto.is_patrol = false;
             }
             else
             {
@@ -181,6 +199,7 @@ namespace Ashfall.Core.Expeditions
                         dto.title = def.title;
                         dto.description = def.description;
                         dto.category = def.category;
+                        dto.is_micro_location = def.isMicroLocation;
                         dto.choices = def.choices ?? new List<EncounterChoiceDefinition>();
                         _narrative.RecordEncounterSelected(def);
                         picked = true;
@@ -200,11 +219,23 @@ namespace Ashfall.Core.Expeditions
                             dto.title = pDef.Title;
                             dto.description = pDef.Description;
                             dto.category = pDef.Category;
+                            dto.is_patrol = true;
+                            dto.faction_id = FactionStandingIdResolver.ToSystemsId(pDef.FactionId);
+                            dto.territory_state = pDef.TerritoryState ?? string.Empty;
+                            dto.patrol_archetype = pDef.PatrolArchetype ?? string.Empty;
                             dto.choices = new List<EncounterChoiceDefinition>();
+                            var patrolPresentation = TravelEngine!.BuildPatrolPresentation(pDef.Id);
+                            if (patrolPresentation != null)
+                            {
+                                dto.recognition_label = patrolPresentation.RecognitionLabel;
+                                dto.patrol_chain_stage = patrolPresentation.CurrentChainStage;
+                            }
                             if (pDef.Choices != null)
                             {
                                 foreach (var c in pDef.Choices)
                                 {
+                                    var projected = patrolPresentation?.Choices
+                                        .FirstOrDefault(x => string.Equals(x.ChoiceId, c.ChoiceId, StringComparison.OrdinalIgnoreCase));
                                     dto.choices.Add(new EncounterChoiceDefinition
                                     {
                                         choiceId = c.ChoiceId,
@@ -215,7 +246,10 @@ namespace Ashfall.Core.Expeditions
                                         requiredItemQuantity = c.RequiredItemQuantity,
                                         factionId = !string.IsNullOrWhiteSpace(c.FactionId) ? c.FactionId : pDef.FactionId,
                                         factionStandingDelta = c.FactionStandingDelta,
-                                        costItems = new List<string>(c.CostItems ?? new List<string>())
+                                        costItems = new List<string>(c.CostItems ?? new List<string>()),
+                                        enabled = projected?.IsAvailable ?? true,
+                                        disabledReason = projected?.DisabledReasonCode ?? string.Empty,
+                                        isPatrolChoice = true
                                     });
                                 }
                             }

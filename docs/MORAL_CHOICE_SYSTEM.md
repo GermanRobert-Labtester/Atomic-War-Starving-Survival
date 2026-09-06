@@ -2079,8 +2079,48 @@ At day 60: **Very Positive band**, 24 empathy — one good arc short of Storykee
 
 - **Numbers optimize; stories linger.** A visible meter turns kindness into strategy. Hide the number and the player is left with the child's face and the empty pack — which is the point.
 - **The journal is a mirror, not a scoreboard.** Arrows after the fact let players audit their past without being graded in their present.
-- **The world is the UI.** Prices, dogs, doors, radio silence, chalk warnings — feedback that costs no screen space and can't be minimized.
-- **Replay lives in the dark.** Because the bands are invisible, two players can finish with opposite legends and only find out by comparing journals.
+---
+
+## 🎲 PLAN 38: SEEDED DAILY OFFER PIPELINE & STRUCTURED RESOLUTION
+
+### 1. Catalog Registration & Engine-Authoritative Storage
+The Core `MoralChoiceSystem` maintains an authoritative in-memory catalog (`_catalog`) mapping quest IDs to `MoralChoiceQuestDefinition`. Catalogs from `moral_choice_quests.json`, branching chains, and expansions are loaded and registered via:
+- `RegisterQuest(MoralChoiceQuestDefinition def)`
+- `RegisterQuests(IEnumerable<MoralChoiceQuestDefinition> defs)`
+- `IReadOnlyDictionary<string, MoralChoiceQuestDefinition> Catalog`
+- `MoralChoiceQuestDefinition? GetQuest(string id)`
+
+### 2. Deterministic Daily Offers (`GetDailyOffers`)
+Daily quest encounters are delivered without state pollution or drift using a deterministic pseudo-random stream parameterized by the system seed and campaign day:
+```csharp
+ulong dailySeedRaw = unchecked((ulong)_rng.Seed * 31337UL + (ulong)day * 1009UL + 0x5EEDUL);
+int dailySeed = unchecked((int)(dailySeedRaw ^ (dailySeedRaw >> 32)));
+var dailyRng = new SeededRng(dailySeed);
+```
+- **Candidate Filtering**:
+  - `!IsResolved(q.Id)`
+  - `IsAvailableOnDay(q, day)` (`day >= MinDay && (MaxDay <= 0 || day <= MaxDay)`)
+  - `IsChainQuestAccessible(q.Id, day)` (evaluates branch lockouts and prerequisite quest gates)
+- **Deterministic Sort**: Candidates are sorted alphabetically by canonical `Id` before selection, ensuring that identical day/seed inputs always produce identical encounter offers across all platforms and saves.
+
+### 3. Structured Resolution API (`TryResolve`)
+Guarantees strict single-resolution idempotence with typed error codes:
+- **`MoralResolveResultCode`**:
+  - `Success`: Resolution accepted, impact calculated, state persisted.
+  - `UnknownChoice`: Quest ID does not exist in catalog.
+  - `ChoiceNotAvailable`: Quest day window has not opened or has expired.
+  - `AlreadyResolved`: Quest was previously resolved; returns existing resolution without mutating scores.
+  - `UnknownOption`: Option index out of range for the quest.
+  - `RequirementMissing`: Quest gate requirements or branch lockouts prevent resolution.
+
+### 4. Verification & Testing
+- Unit tests in `Ashfall.Core.Tests/MoralChoice/MoralChoiceDailyOfferTests.cs`:
+  - 30-day offer determinism under identical seeds
+  - Exclusion of resolved quests from future offers
+  - Idempotent double-resolution replay
+  - Out-of-bounds index and date window guards
+  - Unknown mod quest preservation on save/restore
+- Headless verification: `godot --headless --path . -- --moral-choice-selftest` passes cleanly.
 
 ---
 

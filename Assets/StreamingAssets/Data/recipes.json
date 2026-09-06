@@ -1514,10 +1514,702 @@
     {
       "id": "craft_battery_maintenance_fluid",
       "recipeName": "Blend Battery Maintenance Fluid",
-      "ingredients": [ { "itemId": "item_battery_electrolyte_concentrate", "amount": 1 }, { "itemId": "clean_water", "amount": 1 } ],
+      "ingredients": [
+        {
+          "itemId": "item_battery_electrolyte_concentrate",
+          "amount": 1
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
       "resultItemId": "item_battery_maintenance_fluid",
       "resultAmount": 1,
       "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_advanced_water_filter",
+      "recipeName": "Build Advanced Water Filter",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        },
+        {
+          "itemId": "item_water_filter_advanced",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_lead_lined_effluent_filter",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_cbrn_filter_blueprint"
+    },
+    {
+      "id": "craft_hepa_scrubber_assembly",
+      "recipeName": "Assemble HEPA Air Scrubber Pack",
+      "ingredients": [
+        {
+          "itemId": "item_air_filter_hepa",
+          "amount": 1
+        },
+        {
+          "itemId": "plastic_material",
+          "amount": 2
+        },
+        {
+          "itemId": "duct_tape",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "air_filter",
+      "resultAmount": 4,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_air_filtration"
+    },
+    {
+      "id": "craft_reconditioned_deep_cycle_bank",
+      "recipeName": "Assemble Deep-Cycle Battery Bank",
+      "ingredients": [
+        {
+          "itemId": "item_battery_reconditioned",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 2
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "battery_pack",
+      "resultAmount": 2,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_battery_reconditioner_blueprint"
+    },
+    {
+      "id": "craft_cbrn_respirator_filter",
+      "recipeName": "Pack CBRN Respirator Cartridges",
+      "ingredients": [
+        {
+          "itemId": "item_cbrn_cartridge",
+          "amount": 1
+        },
+        {
+          "itemId": "rubber_hose",
+          "amount": 1
+        },
+        {
+          "itemId": "plastic_material",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "filter_pack",
+      "resultAmount": 2,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_cbrn_filter_blueprint"
+    },
+    {
+      "id": "process_cloud_seeding_condensate",
+      "recipeName": "Condense Atmospheric Moisture",
+      "ingredients": [
+        {
+          "itemId": "item_cloud_seeding_canister",
+          "amount": 1
+        },
+        {
+          "itemId": "fuel",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "clean_water_jug",
+      "resultAmount": 2,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "distiller",
+      "requiredBlueprintId": "knowledge_atmospheric_cloud_seeding"
+    },
+    {
+      "id": "refit_vulcanized_diving_rig",
+      "recipeName": "Refit Heavy Vulcanized Hazmat Rig",
+      "ingredients": [
+        {
+          "itemId": "item_diving_suit_vulcanized",
+          "amount": 1
+        },
+        {
+          "itemId": "rubber_hose",
+          "amount": 2
+        },
+        {
+          "itemId": "duct_tape",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "hazmat_suit",
+      "resultAmount": 1,
+      "craftingTimeHours": 5.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_submersible_salvage_rig"
+    },
+    {
+      "id": "craft_calibrated_field_geiger",
+      "recipeName": "Assemble Calibrated Field Radiometer",
+      "ingredients": [
+        {
+          "itemId": "item_dosimeter_calibrated",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 2
+        },
+        {
+          "itemId": "plastic_material",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "geiger_counter",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_micro_dosimeter_blueprint"
+    },
+    {
+      "id": "transcribe_field_guide_cultivation",
+      "recipeName": "Transcribe Botanical Husbandry Guide",
+      "ingredients": [
+        {
+          "itemId": "item_field_guide_annotated",
+          "amount": 1
+        },
+        {
+          "itemId": "paper_stock",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "growing_manual",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_field_guide_taxonomy"
+    },
+    {
+      "id": "refit_improved_gas_mask_rig",
+      "recipeName": "Outfit Advanced Gas Mask Rig",
+      "ingredients": [
+        {
+          "itemId": "item_gas_mask_improved",
+          "amount": 1
+        },
+        {
+          "itemId": "rubber_hose",
+          "amount": 1
+        },
+        {
+          "itemId": "cloth",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "gas_mask",
+      "resultAmount": 2,
+      "craftingTimeHours": 2.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_gas_mask_improved"
+    },
+    {
+      "id": "craft_hydraulic_armored_shield",
+      "recipeName": "Fabricate Hydraulic Reinforced Blast Shield",
+      "ingredients": [
+        {
+          "itemId": "item_hydraulic_actuator",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "itemId": "mechanical_parts",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "item_armored_blast_shield",
+      "resultAmount": 1,
+      "craftingTimeHours": 6.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_deep_well_hydraulics"
+    },
+    {
+      "id": "batch_hydroponic_enrichment",
+      "recipeName": "Synthesize Concentrated Rations",
+      "ingredients": [
+        {
+          "itemId": "item_hydroponic_nutrients",
+          "amount": 1
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "canned_food",
+      "resultAmount": 4,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "distiller",
+      "requiredBlueprintId": "knowledge_hydroponic_doser_blueprint"
+    },
+    {
+      "id": "integrate_iff_transponder",
+      "recipeName": "Integrate IFF Survival Transceiver",
+      "ingredients": [
+        {
+          "itemId": "item_iff_beacon",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 2
+        },
+        {
+          "itemId": "battery",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "handheld_radio",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_iff_transponder_blueprint"
+    },
+    {
+      "id": "assemble_hardened_military_transceiver",
+      "recipeName": "Assemble Military Long-Range Radio",
+      "ingredients": [
+        {
+          "itemId": "item_military_radio_module",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 3
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "military_radio",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_encrypted_radio_blueprint"
+    },
+    {
+      "id": "assemble_cathode_radar_scope",
+      "recipeName": "Assemble Cathode Night Vision Sight",
+      "ingredients": [
+        {
+          "itemId": "item_radar_display_tube",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 2
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "night_vision_scope",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_radar_scope_blueprint"
+    },
+    {
+      "id": "fabricate_radiation_blast_barrier",
+      "recipeName": "Fabricate Borated Breaching Shield",
+      "ingredients": [
+        {
+          "itemId": "item_radiation_shielding_panel",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "itemId": "metal_pipe",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "item_titanium_breaching_shield",
+      "resultAmount": 1,
+      "craftingTimeHours": 5.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_radiation_shielding"
+    },
+    {
+      "id": "encode_tactical_cipher_codebook",
+      "recipeName": "Encode Tactical Cipher Codebook",
+      "ingredients": [
+        {
+          "itemId": "item_radio_cipher_rotor",
+          "amount": 1
+        },
+        {
+          "itemId": "paper_stock",
+          "amount": 2
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_comm_codebook_alpha",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_radio_advanced"
+    },
+    {
+      "id": "wire_vacuum_tube_headset",
+      "recipeName": "Assemble Low-Noise Radio Headset",
+      "ingredients": [
+        {
+          "itemId": "item_radio_vacuum_tube",
+          "amount": 1
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        },
+        {
+          "itemId": "plastic_material",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "radio_headset",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_signal_amplifier_blueprint"
+    },
+    {
+      "id": "synthesize_reagent_radaway",
+      "recipeName": "Synthesize Pure Rad-Away Solution",
+      "ingredients": [
+        {
+          "itemId": "item_reagent_clean",
+          "amount": 1
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 2
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "rad_away",
+      "resultAmount": 2,
+      "craftingTimeHours": 2.5,
+      "requiredStationId": "distiller",
+      "requiredBlueprintId": "knowledge_pharmacology_synthesis"
+    },
+    {
+      "id": "assemble_piezoelectric_geophone",
+      "recipeName": "Assemble Deep Geophone Probe",
+      "ingredients": [
+        {
+          "itemId": "item_seismic_detector",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_geophone_probe",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_seismic_fault_mapping"
+    },
+    {
+      "id": "program_automated_sentry_feed",
+      "recipeName": "Calibrate Automated Sentry Munitions",
+      "ingredients": [
+        {
+          "itemId": "item_sentry_targeting_chip",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 2
+        },
+        {
+          "itemId": "mechanical_parts",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "ammo_762",
+      "resultAmount": 30,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_automated_sentry_doctrine"
+    },
+    {
+      "id": "assemble_pure_sine_solar_inverter",
+      "recipeName": "Wire Pure-Sine Solar Inverter Array",
+      "ingredients": [
+        {
+          "itemId": "item_solar_inverter",
+          "amount": 1
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 3
+        },
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "battery_pack",
+      "resultAmount": 3,
+      "craftingTimeHours": 4.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_solar_advanced"
+    },
+    {
+      "id": "assemble_precision_surgical_arm",
+      "recipeName": "Assemble Precision Surgical Manipulator",
+      "ingredients": [
+        {
+          "itemId": "item_surgical_arm_servo",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "itemId": "electronic_scrap",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "field_surgical_kit",
+      "resultAmount": 1,
+      "craftingTimeHours": 3.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_surgical_robot_blueprint"
+    },
+    {
+      "id": "repack_sterile_surgical_trauma_kit",
+      "recipeName": "Repack Sterile Trauma Surgery Kit",
+      "ingredients": [
+        {
+          "itemId": "item_surgical_kit",
+          "amount": 1
+        },
+        {
+          "itemId": "bandage",
+          "amount": 3
+        },
+        {
+          "itemId": "alcohol_wipes_box_10_of_10",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "medical_kit",
+      "resultAmount": 2,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_field_trauma_surgery"
+    },
+    {
+      "id": "assemble_thermal_breaching_rig",
+      "recipeName": "Assemble Heavy Breaching Barrier",
+      "ingredients": [
+        {
+          "itemId": "item_thermal_lance",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "itemId": "fuel",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_titanium_breaching_shield",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench",
+      "requiredBlueprintId": "knowledge_hazmat_breaching_technique"
+    },
+    {
+      "id": "preserve_rations_vacuum_canner",
+      "recipeName": "Can Long-Term Storage Rations",
+      "ingredients": [
+        {
+          "itemId": "item_vacuum_seal_canner",
+          "amount": 1
+        },
+        {
+          "itemId": "empty_tin_can",
+          "amount": 5
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "canned_food",
+      "resultAmount": 5,
+      "craftingTimeHours": 3.0,
+      "requiredStationId": "stove",
+      "requiredBlueprintId": "knowledge_cold_canning_preservation"
+    },
+    {
+      "id": "recipe_ballistics_refurbish_rifle",
+      "recipeName": "Refurbish Rifle Ballistics",
+      "ingredients": [
+        {
+          "itemId": "item_ballistics_cleaning_kit",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_chemical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_ballistics_cleaning_kit",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_ballistics_refurbish_sidearm",
+      "recipeName": "Refurbish Sidearm Ballistics",
+      "ingredients": [
+        {
+          "itemId": "item_ballistics_cleaning_kit",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_chemical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_ballistics_cleaning_kit",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_aeroponics_nutrient_batch",
+      "recipeName": "Mix Aeroponics Nutrient Batch",
+      "ingredients": [
+        {
+          "itemId": "item_hydroponic_nutrients",
+          "amount": 1
+        },
+        {
+          "itemId": "clean_water",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "item_hydroponic_nutrients",
+      "resultAmount": 2,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_geothermal_descaling_kit",
+      "recipeName": "Assemble Geothermal Descaling Kit",
+      "ingredients": [
+        {
+          "itemId": "scrap_chemical",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_geothermal_descaling_kit",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_pneumatic_capsule_50mm",
+      "recipeName": "Form 50mm Pneumatic Capsule",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_pneumatic_capsule_50mm",
+      "resultAmount": 1,
+      "craftingTimeHours": 0.75,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_pneumatic_capsule_100mm",
+      "recipeName": "Form 100mm Pneumatic Capsule",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "itemId": "cloth",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_pneumatic_capsule_100mm",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.25,
       "requiredStationId": "workbench"
     }
   ]

@@ -117,6 +117,26 @@ namespace AtomicWar.GodotApp
             { "mechanical_components", "scrap_mechanical" },
             { "mechanical_parts",      "scrap_mechanical" },
             { "scrap_mechanical",      "scrap_mechanical" }, // self-alias for safety
+
+            // Expansion item IDs whose catalog names are more specific than
+            // the existing art library. Keep the mapping explicit and
+            // deterministic until dedicated item art is authored.
+            { "item_decon_chelator_concentrate", "item_prussian_blue_chelating_pellets" },
+            { "item_lead_lined_effluent_filter", "filter_cartridge" },
+            { "item_heavy_neoprene_scrub_brush", "toothbrush" },
+            { "item_sealed_waste_bin", "bunker_grid_container" },
+            { "item_theodolite_brass_precision", "relic_antique_brass_telescope" },
+            { "item_surveyor_stadia_rod", "sensor_laser_rangefinder" },
+            { "item_datum_plate_bronze", "item_lead_plate" },
+            { "item_concrete_mix", "concrete_mix" },
+            { "item_forged_rotor_shaft", "bearing_set_industrial" },
+            { "item_magnetic_bearing_coil", "antenna_coil" },
+            { "item_high_vacuum_pump", "pump" },
+            { "item_containment_ring_steel", "shelter_wall_steel_plate" },
+            { "item_reinforced_concrete_vault", "shelter_storage_crate_large" },
+            { "item_seismic_damper_pad", "shelter_wall_steel_plate" },
+            { "item_vacuum_pump_oil", "machine_oil" },
+            { "item_bearing_grease", "item_uv_grease" },
         };
 
         // ── Prefix-add normalization ─────────────────────────────────

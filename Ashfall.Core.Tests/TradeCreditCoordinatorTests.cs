@@ -196,6 +196,30 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void InactiveOrOutOfWindowTemplate_BlocksOffer()
+        {
+            var f = CreditFixture.Create();
+            var template = f.Catalog.GetTemplate("debt_supply_corps_rations")!;
+
+            template.active = false;
+            var disabled = f.Coordinator.TryBuildCreditOffer(SupplyCorps, "canned_food");
+            Assert.False(disabled.Eligible);
+            Assert.Equal("credit_template_inactive", disabled.Reason);
+
+            template.active = true;
+            template.minDay = f.Day + 1;
+            var tooEarly = f.Coordinator.TryBuildCreditOffer(SupplyCorps, "canned_food");
+            Assert.False(tooEarly.Eligible);
+            Assert.Equal("credit_template_inactive", tooEarly.Reason);
+
+            template.minDay = 0;
+            template.maxDay = f.Day - 1;
+            var tooLate = f.Coordinator.TryBuildCreditOffer(SupplyCorps, "canned_food");
+            Assert.False(tooLate.Eligible);
+            Assert.Equal("credit_template_inactive", tooLate.Reason);
+        }
+
+        [Fact]
         public void ExpiredEmbargo_DoesNotBlockOffer()
         {
             var f = CreditFixture.Create();
@@ -246,7 +270,7 @@ namespace Ashfall.Core.Tests
             Assert.False(result.Success);
             Assert.Equal("credit_principal_transfer_failed", result.Reason);
             var contract = f.Ledger.GetContract(Debtor);
-            Assert.True(contract == null || !contract.signed); // no ink without goods
+            Assert.Null(contract); // failed transaction tears down the unsigned draft too
             Assert.Equal(0f, f.Ledger.TotalOwed(Debtor));
         }
 

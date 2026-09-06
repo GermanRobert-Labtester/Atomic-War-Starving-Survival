@@ -797,6 +797,36 @@
         "dried_rations",
         "scrap_metal"
       ]
+    },
+    {
+      "id": "loc_forestry_compound",
+      "displayName": "Forestry Compound",
+      "distanceTicks": 6,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.15,
+      "baseStaminaDrainPerHour": 2.5,
+      "scavenging_table_id": "table_loot_forestry_compound",
+      "lootCategories": [
+        "scrap_wood",
+        "mechanical_parts",
+        "scrap_metal",
+        "fuel"
+      ]
+    },
+    {
+      "id": "loc_warehouse_district",
+      "displayName": "Warehouse District",
+      "distanceTicks": 5,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_warehouse",
+      "lootCategories": [
+        "scrap_metal",
+        "mechanical_parts",
+        "canned_food",
+        "battery"
+      ]
     }
   ]
 }

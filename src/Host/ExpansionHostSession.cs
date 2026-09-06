@@ -32,6 +32,7 @@ namespace AtomicWar.GodotApp
         public CrossingQuestSystem CrossingQuests { get; }
         public GenerationalSuccessionEngine Generational { get; }
         public EpilogueMatrixRuntime Epilogue { get; }
+        public DutyRosterSystem DutyRoster { get; private set; }
         public Ashfall.Core.Foundry.SilentFoundrySystem SilentFoundry { get; private set; }
         public Ashfall.Core.Foundry.SilentFoundryCatalog FoundryData { get; private set; }
         public Ashfall.Core.Disease.DiseaseSystem Disease { get; private set; }
@@ -71,6 +72,7 @@ namespace AtomicWar.GodotApp
             CrossingQuests.BindConsequenceLedger(consequenceLedger);
             Generational = new GenerationalSuccessionEngine();
             Epilogue = new EpilogueMatrixRuntime();
+            DutyRoster = new DutyRosterSystem();
 
             // Persistence: any hub-system state change marks the save dirty.
             Waystation.OnStateChanged += _ => RaiseStateChanged();
@@ -96,6 +98,12 @@ namespace AtomicWar.GodotApp
             Generational.OnDwellerRetired += (_, _) => RaiseStateChanged();
             Generational.OnTraitInherited += (_, _, _) => RaiseStateChanged();
             Generational.OnChapterAdvanced += _ => RaiseStateChanged();
+        }
+
+        /// <summary>Attach the campaign-owned duty roster used by debt labor reservations.</summary>
+        public void BindDutyRoster(DutyRosterSystem roster)
+        {
+            DutyRoster = roster ?? throw new ArgumentNullException(nameof(roster));
         }
 
         public event Action<CrossingStageNarrativeEvent>? OnCrossingStageNarrative;
@@ -189,6 +197,15 @@ namespace AtomicWar.GodotApp
         {
             DebtDispatcher?.Detach();
             DebtDispatcher = null;
+        }
+
+        /// <summary>Host-session teardown also releases the dispatcher
+        /// subscription, including callers that dispose the session directly
+        /// through the shared lifecycle registry.</summary>
+        public override void Dispose()
+        {
+            ShutdownDebtIntegration();
+            base.Dispose();
         }
 
         // ---- Cross-host save ----

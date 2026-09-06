@@ -80,6 +80,7 @@ namespace Ashfall.Core.Farming
         public event Action<string, string, int>? OnFungiHarvested;
         public event Action<string, string>? OnToxicBloom;
         public event Action<string>? OnBloomPurged;
+        public event Action<string, float>? OnSporeExposure;
 
         public FungiCultivationState State => _state;
         public IReadOnlyDictionary<string, FungusStrainDef> Strains => _strains;
@@ -212,6 +213,21 @@ namespace Ashfall.Core.Farming
                     _state.totalBlooms++;
                     OnToxicBloom?.Invoke(plot.plotId, plot.roomId);
                 }
+            }
+
+            // ── Spore lung exposure: aggregate per-room hazard and emit ──
+            var roomHazards = new Dictionary<string, float>(StringComparer.Ordinal);
+            for (int i = 0; i < _state.plots.Count; i++)
+            {
+                var plot = _state.plots[i];
+                if (string.IsNullOrEmpty(plot.roomId)) continue;
+                float hazard = GetSporeHazardInRoom(plot.roomId);
+                if (hazard > 0f)
+                    roomHazards[plot.roomId] = hazard;
+            }
+            foreach (var kvp in roomHazards)
+            {
+                OnSporeExposure?.Invoke(kvp.Key, kvp.Value);
             }
         }
 

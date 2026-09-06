@@ -41,6 +41,9 @@ namespace AtomicWar.GodotApp
             Research = research ?? new ResearchSystem(logger);
             Engine = new CraftingSystem(Inventory);
             Workshop = new WorkshopReverseEngineeringSystem(Inventory, Research, Engine, logger);
+            Engine.BindResearchGate(id => Research.IsManualUnlocked(id)
+                || Research.GetKnowledge(id)?.isCompleted == true
+                || Research.IsBlueprintUnlocked(id));
             PharmaLab = new PharmaLabSystem(Inventory, rng ?? new SeededRng(1986), logger);
 
             // Plan 34: award the completed node's breakthrough_item exactly once —
@@ -108,6 +111,9 @@ namespace AtomicWar.GodotApp
             // Load authoritative relic and pharma catalogs from JSON
             var relicCatalog = RelicCatalogLoader.Load(dataDir, fileIO, serializer);
             session.Workshop.LoadCatalog(relicCatalog);
+
+            var techCatalog = TechSalvageCatalogLoader.Load(dataDir, fileIO, serializer);
+            session.Workshop.LoadTechSalvageCatalog(techCatalog);
 
             var pharmaCatalog = PharmaRecipeCatalogLoader.Load(dataDir, fileIO, serializer);
             session.PharmaLab.LoadCatalog(pharmaCatalog);

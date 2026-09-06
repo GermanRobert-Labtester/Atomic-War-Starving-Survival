@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Ashfall.Core.Campaign;
+using Ashfall.Core.Expeditions;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.World
@@ -21,6 +24,7 @@ namespace Ashfall.Core.World
         private readonly List<MapRoute> _routes;
 
         public event Action<string>? OnNodeDiscovered;
+        public event Action<string, MapFogState>? OnNodeKnowledgeChanged;
         public event Action<string>? OnNodeCompleted;
         public event Action<string, bool>? OnNodeLockChanged;
 
@@ -64,6 +68,7 @@ namespace Ashfall.Core.World
         public IReadOnlyList<string> DiscoveredNodes => _state.Discovered;
         public IReadOnlyList<string> CompletedNodes => _state.Completed;
         public IReadOnlyList<string> LockedNodes => _state.Locked;
+        public IReadOnlyList<MapNodeKnowledgeState> Knowledge => _state.Knowledge;
 
         public bool IsDiscovered(string nodeId)
         {
@@ -73,15 +78,280 @@ namespace Ashfall.Core.World
             return false;
         }
 
-        public bool Discover(string nodeId)
+        public MapFogState GetFogState(string nodeId)
+        {
+            var k = GetNodeKnowledge(nodeId);
+            return k?.FogState ?? MapFogState.Unknown;
+        }
+
+        public MapNodeKnowledgeState? GetNodeKnowledge(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return null;
+            for (int i = 0; i < _state.Knowledge.Count; i++)
+            {
+                if (string.Equals(_state.Knowledge[i].NodeId, nodeId, StringComparison.Ordinal))
+                    return _state.Knowledge[i];
+            }
+            return null;
+        }
+
+        public bool Discover(string nodeId) => DiscoverVisited(nodeId, "legacy", 1);
+
+        public bool DiscoverRumor(string nodeId, string sourceId, int day, InformationConfidence confidence = InformationConfidence.Medium)
         {
             if (string.IsNullOrEmpty(nodeId)) return false;
             var node = FindNode(nodeId);
             if (node == null) return false;
-            if (IsDiscovered(nodeId)) return true; // idempotent
-            _state.Discovered.Add(nodeId);
+
+            var existing = GetNodeKnowledge(nodeId);
+            if (existing != null)
+            {
+                existing.LastConfirmedDay = Math.Max(existing.LastConfirmedDay, day);
+                if (existing.FogState > MapFogState.Rumored)
+                {
+                    return true;
+                }
+                if (existing.Provenance != null && confidence > existing.Provenance.Confidence)
+                {
+                    existing.Provenance.Confidence = confidence;
+                }
+                return true;
+            }
+
+            var record = new MapNodeKnowledgeState
+            {
+                NodeId = nodeId,
+                FogState = MapFogState.Rumored,
+                LastConfirmedDay = Math.Max(1, day),
+                Provenance = new CampaignProvenanceRecord(
+                    KnowledgeSourceKind.RadioIntercept,
+                    sourceId,
+                    "radio_system",
+                    day,
+                    confidence,
+                    nodeId)
+            };
+
+            _state.Knowledge.Add(record);
+            if (!_state.Discovered.Contains(nodeId))
+                _state.Discovered.Add(nodeId);
+
             OnNodeDiscovered?.Invoke(nodeId);
+            OnNodeKnowledgeChanged?.Invoke(nodeId, MapFogState.Rumored);
             return true;
+        }
+
+        public bool DiscoverSurvey(string nodeId, string surveySourceId, int day, IEnumerable<string>? traits = null)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            var node = FindNode(nodeId);
+            if (node == null) return false;
+
+            var existing = GetNodeKnowledge(nodeId);
+            if (existing != null)
+            {
+                existing.LastConfirmedDay = Math.Max(existing.LastConfirmedDay, day);
+                if (traits != null)
+                {
+                    foreach (var t in traits)
+                    {
+                        if (!string.IsNullOrEmpty(t) && !existing.Traits.Contains(t))
+                            existing.Traits.Add(t);
+                    }
+                }
+
+                if (existing.FogState < MapFogState.Surveyed)
+                {
+                    existing.FogState = MapFogState.Surveyed;
+                    existing.Provenance = new CampaignProvenanceRecord(
+                        KnowledgeSourceKind.ExpeditionSurvey,
+                        surveySourceId,
+                        "survey_engine",
+                        day,
+                        InformationConfidence.High,
+                        nodeId);
+                    OnNodeKnowledgeChanged?.Invoke(nodeId, MapFogState.Surveyed);
+                }
+                return true;
+            }
+
+            var record = new MapNodeKnowledgeState
+            {
+                NodeId = nodeId,
+                FogState = MapFogState.Surveyed,
+                LastConfirmedDay = Math.Max(1, day),
+                Provenance = new CampaignProvenanceRecord(
+                    KnowledgeSourceKind.ExpeditionSurvey,
+                    surveySourceId,
+                    "survey_engine",
+                    day,
+                    InformationConfidence.High,
+                    nodeId)
+            };
+
+            if (traits != null)
+            {
+                foreach (var t in traits)
+                {
+                    if (!string.IsNullOrEmpty(t) && !record.Traits.Contains(t))
+                        record.Traits.Add(t);
+                }
+            }
+
+            _state.Knowledge.Add(record);
+            if (!_state.Discovered.Contains(nodeId))
+                _state.Discovered.Add(nodeId);
+
+            OnNodeDiscovered?.Invoke(nodeId);
+            OnNodeKnowledgeChanged?.Invoke(nodeId, MapFogState.Surveyed);
+            return true;
+        }
+
+        public bool DiscoverVisited(string nodeId, string survivorId, int day)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            var node = FindNode(nodeId);
+            if (node == null) return false;
+
+            bool isNewlyDiscovered = !IsDiscovered(nodeId);
+
+            var existing = GetNodeKnowledge(nodeId);
+            if (existing != null)
+            {
+                existing.LastConfirmedDay = Math.Max(existing.LastConfirmedDay, day);
+                if (existing.FogState != MapFogState.Visited)
+                {
+                    existing.FogState = MapFogState.Visited;
+                    existing.Provenance = new CampaignProvenanceRecord(
+                        KnowledgeSourceKind.ExpeditionVisit,
+                        survivorId,
+                        "expedition_system",
+                        day,
+                        InformationConfidence.Confirmed,
+                        nodeId);
+                    OnNodeKnowledgeChanged?.Invoke(nodeId, MapFogState.Visited);
+                }
+            }
+            else
+            {
+                var record = new MapNodeKnowledgeState
+                {
+                    NodeId = nodeId,
+                    FogState = MapFogState.Visited,
+                    LastConfirmedDay = Math.Max(1, day),
+                    Provenance = new CampaignProvenanceRecord(
+                        KnowledgeSourceKind.ExpeditionVisit,
+                        survivorId,
+                        "expedition_system",
+                        day,
+                        InformationConfidence.Confirmed,
+                        nodeId)
+                };
+                _state.Knowledge.Add(record);
+                OnNodeKnowledgeChanged?.Invoke(nodeId, MapFogState.Visited);
+            }
+
+            if (!_state.Discovered.Contains(nodeId))
+                _state.Discovered.Add(nodeId);
+
+            if (isNewlyDiscovered)
+                OnNodeDiscovered?.Invoke(nodeId);
+
+            return true;
+        }
+
+        public MapNodeIntelView? GetNodeIntel(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return null;
+            var node = FindNode(nodeId);
+            if (node == null) return null;
+
+            var knowledge = GetNodeKnowledge(nodeId);
+            var fogState = knowledge?.FogState ?? MapFogState.Unknown;
+
+            if (fogState == MapFogState.Unknown)
+            {
+                return new MapNodeIntelView
+                {
+                    NodeId = nodeId,
+                    DisplayName = "Unknown Sector",
+                    FogState = MapFogState.Unknown,
+                    PositionX = 0f,
+                    PositionY = 0f,
+                    Danger = MapNodeDanger.None,
+                    DangerBand = "Unknown",
+                    FactionId = string.Empty,
+                    LootDescription = "Unknown",
+                    Traits = Array.Empty<string>(),
+                    Provenance = null,
+                    LastConfirmedDay = 0,
+                    Routable = false
+                };
+            }
+
+            if (fogState == MapFogState.Rumored)
+            {
+                int hash = ComputeStableHash(nodeId);
+                float offsetX = ((hash % 50) + 50) * (((hash & 1) == 0) ? 1f : -1f);
+                float offsetY = (((hash / 50) % 50) + 50) * (((hash & 2) == 0) ? 1f : -1f);
+
+                string dangerBand = node.Danger switch
+                {
+                    MapNodeDanger.Low => "Low",
+                    MapNodeDanger.Medium => "Medium",
+                    MapNodeDanger.High => "High",
+                    MapNodeDanger.Locked => "High",
+                    _ => "Low"
+                };
+
+                return new MapNodeIntelView
+                {
+                    NodeId = nodeId,
+                    DisplayName = node.DisplayName,
+                    FogState = MapFogState.Rumored,
+                    PositionX = node.PositionX + offsetX,
+                    PositionY = node.PositionY + offsetY,
+                    Danger = MapNodeDanger.None,
+                    DangerBand = dangerBand,
+                    FactionId = string.Empty,
+                    LootDescription = "Unconfirmed scrap / rumor",
+                    Traits = Array.Empty<string>(),
+                    Provenance = knowledge?.Provenance,
+                    LastConfirmedDay = knowledge?.LastConfirmedDay ?? 0,
+                    Routable = false
+                };
+            }
+
+            return new MapNodeIntelView
+            {
+                NodeId = nodeId,
+                DisplayName = node.DisplayName,
+                FogState = fogState,
+                PositionX = node.PositionX,
+                PositionY = node.PositionY,
+                Danger = node.Danger,
+                DangerBand = node.Danger.ToString(),
+                FactionId = node.FactionId ?? string.Empty,
+                LootDescription = fogState == MapFogState.Visited ? node.LootTableId : $"Category: {node.LootTableId}",
+                Traits = knowledge?.Traits != null ? knowledge.Traits.ToArray() : Array.Empty<string>(),
+                Provenance = knowledge?.Provenance,
+                LastConfirmedDay = knowledge?.LastConfirmedDay ?? 0,
+                Routable = true
+            };
+        }
+
+        private static int ComputeStableHash(string str)
+        {
+            unchecked
+            {
+                uint hash = 2166136261;
+                for (int i = 0; i < str.Length; i++)
+                {
+                    hash ^= str[i];
+                    hash *= 16777619;
+                }
+                return (int)(hash & 0x7FFFFFFF);
+            }
         }
 
         public bool IsCompleted(string nodeId)
@@ -214,6 +484,7 @@ namespace Ashfall.Core.World
                 {
                     if (r.From != current) continue;
                     if (!IsDiscovered(r.To)) continue;
+                    if (r.To != toId && GetFogState(r.To) == MapFogState.Rumored) continue;
                     if (IsLocked(r.To) && r.To != toId) continue;
                     float nd = dist[current] + r.DistanceKm;
                     if (nd < dist[r.To])
@@ -237,6 +508,69 @@ namespace Ashfall.Core.World
             return rev;
         }
 
+        public ExpeditionEstimate EstimateRoute(
+            ExpeditionDefinition def,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            bool isNightScavenge = false,
+            ExpeditionVehicleProfile? vehicle = null,
+            float weaponReadiness = 1f,
+            float weaponJamRisk = 0f)
+        {
+            return ExpeditionSystem.Estimate(def, stance, isNightScavenge, vehicle, weaponReadiness, weaponJamRisk);
+        }
+
+        public ExpeditionEstimate? EstimateRoute(
+            string fromId,
+            string toId,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            bool isNightScavenge = false,
+            ExpeditionVehicleProfile? vehicle = null,
+            float weaponReadiness = 1f,
+            float weaponJamRisk = 0f)
+        {
+            var path = PlanRoute(fromId, toId);
+            if (path.Count == 0 && fromId != toId) return null;
+
+            float totalDistKm = 0f;
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                string u = path[i];
+                string v = path[i + 1];
+                for (int rIdx = 0; rIdx < _routes.Count; rIdx++)
+                {
+                    var r = _routes[rIdx];
+                    if (r.From == u && r.To == v)
+                    {
+                        totalDistKm += r.DistanceKm;
+                        break;
+                    }
+                }
+            }
+
+            var targetNode = GetNode(toId);
+            if (targetNode == null) return null;
+
+            int distanceTicks = Math.Max(1, (int)Math.Ceiling(totalDistKm / 5.0f));
+            int dangerLevel = targetNode.Danger switch
+            {
+                MapNodeDanger.Low => 1,
+                MapNodeDanger.Medium => 2,
+                MapNodeDanger.High => 3,
+                _ => 1
+            };
+
+            var def = new ExpeditionDefinition
+            {
+                id = toId,
+                displayName = targetNode.DisplayName,
+                distanceTicks = distanceTicks,
+                dangerLevel = dangerLevel,
+                scavenging_table_id = targetNode.LootTableId
+            };
+
+            return ExpeditionSystem.Estimate(def, stance, isNightScavenge, vehicle, weaponReadiness, weaponJamRisk);
+        }
+
         public WastelandMapState CaptureState() => _state.Capture();
 
         public void RestoreState(WastelandMapState state)
@@ -251,6 +585,59 @@ namespace Ashfall.Core.World
                 if (_nodes[i].Id == id) return _nodes[i];
             return null;
         }
+    }
+
+    /// <summary>Strategic wasteland cartography fog-of-war states.</summary>
+    public enum MapFogState
+    {
+        Unknown = 0,
+        Rumored = 1,
+        Surveyed = 2,
+        Visited = 3
+    }
+
+    /// <summary>
+    /// Persistent knowledge state of a location node, tracking fog state, provenance, and survey traits.
+    /// </summary>
+    [Serializable]
+    public sealed class MapNodeKnowledgeState
+    {
+        public string NodeId = string.Empty;
+        public MapFogState FogState = MapFogState.Unknown;
+        public CampaignProvenanceRecord? Provenance;
+        public int LastConfirmedDay;
+        public List<string> Traits = new List<string>();
+
+        public MapNodeKnowledgeState() { }
+
+        public MapNodeKnowledgeState Clone() => new MapNodeKnowledgeState
+        {
+            NodeId = NodeId,
+            FogState = FogState,
+            Provenance = Provenance?.Clone(),
+            LastConfirmedDay = LastConfirmedDay,
+            Traits = Traits != null ? new List<string>(Traits) : new List<string>()
+        };
+    }
+
+    /// <summary>
+    /// Player-facing derived intelligence view for a map node, applying fog-of-war obfuscation.
+    /// </summary>
+    public sealed class MapNodeIntelView
+    {
+        public string NodeId { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public MapFogState FogState { get; set; }
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
+        public MapNodeDanger Danger { get; set; }
+        public string DangerBand { get; set; } = string.Empty;
+        public string FactionId { get; set; } = string.Empty;
+        public string LootDescription { get; set; } = string.Empty;
+        public IReadOnlyList<string> Traits { get; set; } = Array.Empty<string>();
+        public CampaignProvenanceRecord? Provenance { get; set; }
+        public int LastConfirmedDay { get; set; }
+        public bool Routable { get; set; }
     }
 
     /// <summary>Status of a map node for player interaction and visibility.</summary>
@@ -374,6 +761,9 @@ namespace Ashfall.Core.World
         /// <summary>List of registered damaged-map fragment IDs.</summary>
         public List<string> RegisteredMapFragments = new List<string>();
 
+        /// <summary>Strategic knowledge and fog-of-war states per location.</summary>
+        public List<MapNodeKnowledgeState> Knowledge = new List<MapNodeKnowledgeState>();
+
         public void NormalizeAndValidate(IReadOnlyList<MapNode> nodes)
         {
             var validIds = new HashSet<string>(StringComparer.Ordinal);
@@ -400,6 +790,80 @@ namespace Ashfall.Core.World
 
             for (int i = Unlocked.Count - 1; i >= 0; i--)
                 if (!validIds.Contains(Unlocked[i])) Unlocked.RemoveAt(i);
+
+            if (Knowledge == null) Knowledge = new List<MapNodeKnowledgeState>();
+            for (int i = Knowledge.Count - 1; i >= 0; i--)
+            {
+                if (Knowledge[i] == null || string.IsNullOrEmpty(Knowledge[i].NodeId) || !validIds.Contains(Knowledge[i].NodeId))
+                    Knowledge.RemoveAt(i);
+            }
+
+            var knowledgeMap = new Dictionary<string, MapNodeKnowledgeState>(StringComparer.Ordinal);
+            for (int i = 0; i < Knowledge.Count; i++)
+            {
+                if (!knowledgeMap.ContainsKey(Knowledge[i].NodeId))
+                    knowledgeMap[Knowledge[i].NodeId] = Knowledge[i];
+            }
+
+            // Legacy save migration: any discovered node without knowledge defaults to Visited
+            for (int i = 0; i < Discovered.Count; i++)
+            {
+                string discId = Discovered[i];
+                if (!knowledgeMap.ContainsKey(discId))
+                {
+                    var legacyRec = new MapNodeKnowledgeState
+                    {
+                        NodeId = discId,
+                        FogState = MapFogState.Visited,
+                        LastConfirmedDay = 1,
+                        Provenance = new CampaignProvenanceRecord(
+                            KnowledgeSourceKind.ExpeditionVisit,
+                            "legacy_save",
+                            "expedition_system",
+                            1,
+                            InformationConfidence.Confirmed,
+                            discId)
+                    };
+                    Knowledge.Add(legacyRec);
+                    knowledgeMap[discId] = legacyRec;
+                }
+            }
+
+            // Starting unlocked nodes default to Visited
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].StartingUnlocked)
+                {
+                    if (!knowledgeMap.ContainsKey(nodes[i].Id))
+                    {
+                        var startRec = new MapNodeKnowledgeState
+                        {
+                            NodeId = nodes[i].Id,
+                            FogState = MapFogState.Visited,
+                            LastConfirmedDay = 1,
+                            Provenance = new CampaignProvenanceRecord(
+                                KnowledgeSourceKind.ExpeditionVisit,
+                                "starting_unlocked",
+                                "wasteland_map",
+                                1,
+                                InformationConfidence.Confirmed,
+                                nodes[i].Id)
+                        };
+                        Knowledge.Add(startRec);
+                        knowledgeMap[nodes[i].Id] = startRec;
+                    }
+                }
+            }
+
+            // Synchronize Discovered with Knowledge: any Rumored, Surveyed, or Visited node is Discovered
+            for (int i = 0; i < Knowledge.Count; i++)
+            {
+                var k = Knowledge[i];
+                if (k.FogState >= MapFogState.Rumored && !Discovered.Contains(k.NodeId))
+                {
+                    Discovered.Add(k.NodeId);
+                }
+            }
         }
 
         public WastelandMapState Capture() => new WastelandMapState
@@ -408,7 +872,8 @@ namespace Ashfall.Core.World
             Completed = new List<string>(Completed),
             Locked = new List<string>(Locked),
             Unlocked = new List<string>(Unlocked),
-            RegisteredMapFragments = new List<string>(RegisteredMapFragments)
+            RegisteredMapFragments = new List<string>(RegisteredMapFragments),
+            Knowledge = Knowledge != null ? Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>()
         };
 
         public void RestoreInto(WastelandMapState state, IReadOnlyList<MapNode> nodes)
@@ -418,6 +883,7 @@ namespace Ashfall.Core.World
             Locked = state.Locked != null ? new List<string>(state.Locked) : new List<string>();
             Unlocked = state.Unlocked != null ? new List<string>(state.Unlocked) : new List<string>();
             RegisteredMapFragments = state.RegisteredMapFragments != null ? new List<string>(state.RegisteredMapFragments) : new List<string>();
+            Knowledge = state.Knowledge != null ? state.Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>();
             NormalizeAndValidate(nodes);
         }
     }

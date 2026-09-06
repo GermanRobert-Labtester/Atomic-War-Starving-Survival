@@ -169,6 +169,47 @@ public static class SceneBindingSelfTest
             ("CancelJobButton", typeof(Button)),
             ("CloseButton", typeof(Button))
         );
+        Check("res://assets/ui/panels/RadioIntelligencePanel.tscn", typeof(RadioIntelligencePanel),
+            ("CloseButton", typeof(Button)),
+            ("ScanButton", typeof(Button)),
+            ("FrequencyLabel", typeof(Label)),
+            ("BandLabel", typeof(Label)),
+            ("SignalMeter", typeof(ProgressBar)),
+            ("Oscilloscope", typeof(ColorRect)),
+            ("DecryptButton", typeof(Button)),
+            ("DecryptProgressBar", typeof(ProgressBar)),
+            ("RecordBearingButton", typeof(Button)),
+            ("BearingRadar", typeof(Control)),
+            ("SosContainer", typeof(VBoxContainer)),
+            ("InterceptListContainer", typeof(VBoxContainer)),
+            ("StatusLabel", typeof(Label))
+        );
+        Check("res://assets/ui/panels/ShelterSocialPanel.tscn", typeof(ShelterSocialPanel),
+            ("CloseButton", typeof(Button)),
+            ("RoomListContainer", typeof(VBoxContainer)),
+            ("SurvivorListContainer", typeof(VBoxContainer)),
+            ("RelationsContainer", typeof(VBoxContainer)),
+            ("DisputeContainer", typeof(VBoxContainer)),
+            ("MediateButton", typeof(Button)),
+            ("GatheringButton", typeof(Button)),
+            ("MemorialContainer", typeof(VBoxContainer)),
+            ("HistoryContainer", typeof(VBoxContainer)),
+            ("StatusLabel", typeof(Label))
+        );
+        Check("res://assets/ui/panels/SubterraneanOperationsPanel.tscn", typeof(SubterraneanOperationsPanel),
+            ("CloseButton", typeof(Button)),
+            ("SectorSelector", typeof(OptionButton)),
+            ("MethaneMeter", typeof(ProgressBar)),
+            ("FloodMeter", typeof(ProgressBar)),
+            ("SporeMeter", typeof(ProgressBar)),
+            ("ShoringMeter", typeof(ProgressBar)),
+            ("MitigationListContainer", typeof(VBoxContainer)),
+            ("BulkheadToggleButton", typeof(Button)),
+            ("RescueContainer", typeof(VBoxContainer)),
+            ("RescueProgressBar", typeof(ProgressBar)),
+            ("RescueLaborButton", typeof(Button)),
+            ("StatusLabel", typeof(Label))
+        );
         Check("res://assets/ui/panels/CraftingPanel.tscn", typeof(CraftingPanel),
             ("RecipeList", typeof(VBoxContainer)),
             ("QueueList", typeof(VBoxContainer)),

@@ -32,12 +32,12 @@ namespace Ashfall.Core.Tests
         public void CatalogBaseline_ReconcilesToExact55Encounters()
         {
             var encounters = _catalog.Encounters.ToList();
-            Assert.Equal(55, encounters.Count);
+            Assert.Equal(57, encounters.Count);
 
             int patrolCount = encounters.Count(e => e.Id.StartsWith("enc_patrol_"));
             int nonPatrolCount = encounters.Count - patrolCount;
 
-            Assert.Equal(19, patrolCount);
+            Assert.Equal(21, patrolCount);
             Assert.Equal(36, nonPatrolCount);
         }
 
@@ -112,8 +112,8 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0, inv.CountById("canned_food"));
             // Standing updated (+1)
             Assert.Equal(initialStanding + 1, war.GetStanding("iron_garrison"));
-            // Cooldown set to day 6
-            Assert.Equal(6, sys.GetCooldownExpiry("patrol_garrison_checkpoint"));
+            // Checkpoint cooldown is authored at three days: day 1 -> day 4.
+            Assert.Equal(4, sys.GetCooldownExpiry("patrol_garrison_checkpoint"));
         }
 
         [Fact]

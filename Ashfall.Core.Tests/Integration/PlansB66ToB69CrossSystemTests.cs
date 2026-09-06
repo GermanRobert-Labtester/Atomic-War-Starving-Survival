@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Excavation;
 using Ashfall.Core.Foundry;
@@ -32,6 +33,11 @@ namespace Ashfall.Core.Tests.Integration
         private sealed class World
         {
             public readonly InventoryContainer Inv = NewRoomyInventory();
+
+            /// <summary>Mirror of every item id that ever entered the fixture
+            /// inventory — the save/load split uses it to restore the
+            /// campaign inventory section exactly.</summary>
+            public readonly List<string> KnownItemIds = new List<string>();
 
             /// <summary>Default capacity is 20 slots / 100 weight — far too small for a stress fixture.</summary>
             private static InventoryContainer NewRoomyInventory()
@@ -67,7 +73,7 @@ namespace Ashfall.Core.Tests.Integration
                 Foundry.BindInventory(
                     id => Inv.CountById(id),
                     (_, _) => true,
-                    (id, amt) => Inv.AddById(id, amt),
+                    (id, amt) => { Inv.AddById(id, amt); if (!KnownItemIds.Contains(id)) KnownItemIds.Add(id); },
                     (id, amt) => Inv.TryConsume(id, amt));
 
                 Radio = new ShelterRadioStationSystem(new SeededRng(seed + 1), null, NullLog.Instance);
@@ -125,6 +131,7 @@ namespace Ashfall.Core.Tests.Integration
                     if (!Inv.AddById(itemId, chunk)) break;
                     remaining -= chunk;
                 }
+                if (!KnownItemIds.Contains(itemId)) KnownItemIds.Add(itemId);
             }
         }
 
@@ -314,6 +321,146 @@ namespace Ashfall.Core.Tests.Integration
             Assert.Equal(straight.CryoViability, split.CryoViability);
             Assert.Equal(straight.SlagLevel, split.SlagLevel, 3);
         }
+
+        /// <summary>
+        /// 30-day seeded campaign stress replay: the full B66–B69 simulation
+        /// (heavy batches, quake coupling, cryo thermal pressure, power
+        /// brownouts) run straight vs save/load-split at day 15 vs a paired
+        /// rerun. All three must agree exactly on every persisted outcome —
+        /// no rerolled results, no drifted timing, no double consumption.
+        /// </summary>
+        [Fact]
+        public void ScenarioG_ThirtyDayCampaign_SplitAndPairedRerunsProduceIdenticalState()
+        {
+            var straight = RunThirtyDayCampaign(new World(seed: 2024), splitAtDay: -1);
+            var split = RunThirtyDayCampaign(new World(seed: 2024), splitAtDay: 15);
+            var paired = RunThirtyDayCampaign(new World(seed: 2024), splitAtDay: -1);
+
+            Assert.Equal(straight.HeavyBeams, split.HeavyBeams);
+            Assert.Equal(straight.HeavyBeams, paired.HeavyBeams);
+            Assert.Equal(straight.CryoViability, split.CryoViability);
+            Assert.Equal(straight.CryoViability, paired.CryoViability);
+            Assert.Equal(straight.SlagPermille, split.SlagPermille);
+            Assert.Equal(straight.SlagPermille, paired.SlagPermille);
+            Assert.Equal(straight.CompletedCount, split.CompletedCount);
+            Assert.Equal(straight.CompletedCount, paired.CompletedCount);
+            Assert.Equal(straight.FailedCount, split.FailedCount);
+            Assert.Equal(straight.FailedCount, paired.FailedCount);
+            Assert.Equal(straight.ReleasedCount, split.ReleasedCount);
+            Assert.Equal(straight.ReleasedCount, paired.ReleasedCount);
+            Assert.Equal(straight.TotalSlips, split.TotalSlips);
+            Assert.Equal(straight.TotalSlips, paired.TotalSlips);
+            // The 30-day campaign must have actually exercised the systems.
+            Assert.True(straight.CompletedCount > 0, "campaign should complete heavy batches");
+            Assert.True(straight.TotalSlips > 0, "campaign should experience fault slips");
+        }
+
+
+        private sealed class CampaignDigest
+        {
+            public int HeavyBeams;
+            public int CryoViability;
+            public int SlagPermille;
+            public int CompletedCount;
+            public int FailedCount;
+            public int ReleasedCount;
+            public int TotalSlips;
+        }
+
+        /// <summary>
+        /// 30-day campaign: two heavy beam batches, dampener installation,
+        /// a mid-campaign quake + brownout window (days 10–12), continuous
+        /// cryo storage with one recovery, and per-day ticks of all four
+        /// systems in the plan's canonical order.
+        /// </summary>
+        private CampaignDigest RunThirtyDayCampaign(World w, int splitAtDay)
+        {
+            w.Foundry.Unlock(1);
+            Assert.Equal(ActionResult.StatusKind.Success,
+                w.Seismic.InstallDampener("sector_excavation_alpha", w.Inv).Status);
+            Assert.Contains("registered", w.CryoVault.RegisterSample("cryo_seed_radiant_wept_wheat"));
+
+            // Seed the crucible so batch 2 (day 20) has billets available.
+            Assert.Contains("Heat started", w.Foundry.StartHeavyBatch("metallurgy_heavy_i_beam", 4, 0.7f, 2));
+            bool secondBatchQueued = false;
+            string? recoveryCanister = null;
+            bool recoveryQueued = false;
+
+            for (int day = 3; day <= 32; day++)
+            {
+                // Mid-campaign tectonic + grid stress window.
+                if (day == 10) w.Seismic.InjectKineticShock(200f, "sector_excavation_alpha");
+                if (day >= 10 && day <= 12) w.CryoPower = false;
+                if (day == 13) w.CryoPower = true;
+
+                w.Foundry.TickDaily(day);
+                if (w.Foundry.HeatStage == FoundryHeatStage.AtHeat && day > 3)
+                    w.Foundry.TapAndCast(day);
+                w.Seismic.TickDay(day);
+                w.CryoVault.TickDay(day);
+
+                // Batch 2 once batch 1 completes (day ~8).
+                if (!secondBatchQueued && day > 9
+                    && (w.Foundry.HeatStage == FoundryHeatStage.Idle || w.Foundry.HeatStage == FoundryHeatStage.Complete))
+                {
+                    string r = w.Foundry.StartHeavyBatch("metallurgy_heavy_i_beam", 4, 0.7f, day);
+                    if (w.Foundry.IsHeavyBatchActive) secondBatchQueued = true;
+                    else if (!r.Contains("Heat is already in progress")) secondBatchQueued = true; // refused for missing stock — do not retry
+                }
+
+                // Queue the cultivar recovery once the first line is stable.
+                if (!recoveryQueued && day > 14 && w.CryoVault.State.canisters.Count > 0)
+                {
+                    recoveryCanister = w.CryoVault.State.canisters[0].canister_id;
+                    if (w.CryoVault.QueueRecovery(recoveryCanister).StartsWith("Recovery queued"))
+                        recoveryQueued = true;
+                }
+
+                if (day == splitAtDay)
+                {
+                    // Save/load split at day 15: restore all three systems.
+                    // The campaign inventory section persists across the save
+                    // boundary — mirror it into the split world exactly.
+                    var w2 = new World(seed: 2024, foundryState: w.Foundry.State);
+                    w2.Inv.Clear();
+                    foreach (var knownId in w.KnownItemIds)
+                    {
+                        int count = w.Inv.CountById(knownId);
+                        for (int c = 0; c < count; c += 99)
+                            w2.Inv.AddById(knownId, Math.Min(99, count - c));
+                        if (!w2.KnownItemIds.Contains(knownId)) w2.KnownItemIds.Add(knownId);
+                    }
+                    w2.Seismic.RestoreState(w.Seismic.CaptureState());
+                    w2.CryoVault.RestoreState(w.CryoVault.CaptureState());
+                    w2.CryoPower = w.CryoPower;
+                    // Continue days 16..32 with the same schedule.
+                    for (int d = day + 1; d <= 32; d++)
+                    {
+                        w2.Foundry.TickDaily(d);
+                        if (w2.Foundry.HeatStage == FoundryHeatStage.AtHeat)
+                            w2.Foundry.TapAndCast(d);
+                        w2.Seismic.TickDay(d);
+                        w2.CryoVault.TickDay(d);
+                    }
+                    return DigestOf(w2);
+                }
+            }
+
+            return DigestOf(w);
+        }
+
+        private CampaignDigest DigestOf(World w) => new()
+        {
+            HeavyBeams = w.Inv.CountById("item_metallurgy_heavy_i_beam"),
+            CryoViability = w.CryoVault.State.canisters.Count > 0
+                ? w.CryoVault.State.canisters[0].viability_permille
+                : 1000,
+            SlagPermille = (int)Math.Round(w.Foundry.SlagLevel * 10),
+            CompletedCount = w.Foundry.State.completed.Count,
+            FailedCount = w.Foundry.State.failed.Count,
+            ReleasedCount = w.CryoVault.State.released_log.Count,
+            TotalSlips = w.Seismic.State.faults.Values.Sum(f => f.totalSlips)
+        };
 
         private sealed class StressResult
         {

@@ -77,6 +77,17 @@ namespace AtomicWar.GodotApp
                 saveSectionKey: "expansion_hub",
                 onReset: () =>
                 {
+                    // Debt owns event subscriptions outside the generic
+                    // StatefulSessionBase reset. Detach the host bridge first,
+                    // then shut down the session-owned dispatcher, so a new
+                    // campaign or reload cannot retain old callbacks.
+                    _debtBridge?.Detach();
+                    _debtBridge = null;
+                    _tradeCredit = null;
+                    _debtBridgeDirty = false;
+                    if (_expansions != null)
+                    _expansions.DutyRoster.IsSurvivorReservedExternally = null;
+                    _expansions?.ShutdownDebtIntegration();
                     _expansions?.Dispose();
                     _expansions = null!;
                     _expansionHubDirty = false;
@@ -107,6 +118,17 @@ namespace AtomicWar.GodotApp
                     _combat?.Dispose();
                     _combat = null!;
                     _combatDirty = false;
+                }));
+
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "recon_telemetry",
+                dependsOn: new[] { "expeditions", "wasteland_map", "radio" },
+                saveSectionKey: "recon_telemetry",
+                onReset: () =>
+                {
+                    _reconTelemetry?.Dispose();
+                    _reconTelemetry = null!;
+                    _reconTelemetryDirty = false;
                 }));
 
             // Economy & Foundry
@@ -187,6 +209,18 @@ namespace AtomicWar.GodotApp
                     _verdict?.Dispose();
                     _verdict = null!;
                     _verdictDirty = false;
+                }));
+
+            // Counter-Intelligence
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "counter_intelligence",
+                dependsOn: new[] { "faction_branch" },
+                saveSectionKey: "counter_intelligence",
+                onReset: () =>
+                {
+                    _counterIntelligence?.Dispose();
+                    _counterIntelligence = null!;
+                    _counterIntelligenceDirty = false;
                 }));
 
             // Maritime & Deep Coast
@@ -406,6 +440,17 @@ namespace AtomicWar.GodotApp
             _stageFireHazard = null;
             _shelterFireSession = null;
             _shelterFireDirty = false;
+
+            _espionage166?.Dispose();
+            _fluidLogistics168?.Dispose();
+            _proceduralNarrative169?.Dispose();
+            _espionage166 = null;
+            _fluidLogistics168 = null;
+            _proceduralNarrative169 = null;
+            _espionageAgentsAway.Clear();
+            _espionage166Dirty = false;
+            _fluidLogistics168Dirty = false;
+            _proceduralNarrative169Dirty = false;
         }
 
         /// <summary>

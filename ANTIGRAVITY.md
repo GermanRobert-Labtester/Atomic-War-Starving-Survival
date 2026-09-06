@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — ANTIGRAVITY Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-09-05
+# Last generated: 2026-09-06
 
 ---
 
@@ -47,13 +47,15 @@ The project owner already maintains the following MCP connections. Treat this se
 
 ### STITCH UI HANDOFF — Greenhouse supply actions (Plan 22) — DO NOT REDISCOVER
 
-The Greenhouse panel (`src/UI/GreenhousePanel.cs`) has **live host APIs with
-no UI**: seed selection (PLANT hardcodes tubers), soil AMEND, drip-chain
-install/filter, pest-protection deploy, shade cloth, STERILIZE (grow-medium
-clear), water quantity/tainted choice, a supply-stock strip, and
-readiness columns. All backing methods exist and are tested (Plan 22,
-`--greenhouse-selftest` 89/89). Agents asked to build/generate this UI must
-use **`google-stitch`** with the ready-made handoff spec:
+The historical Greenhouse handoff below is **not current implementation
+evidence**. The 2026-09-05 UI audit found seed selection, water choices,
+supply/readiness presentation already present, but all three water payloads
+decode incorrectly to clean 50-unit watering (`UI-20`). Amendment,
+maintenance and sterilization API claims must be checked against the
+current, trimmed host before implementation. Do not repeat the old
+“PLANT hardcodes tubers / all eight APIs already exist” claim without
+source verification. Agents asked to build/generate missing UI must use
+**`google-stitch`**, reconciling the historical handoff with current source:
 
 - **Spec:** `docs/ui/GREENHOUSE_UI_GAP_SPEC.md` — 8 gap register entries,
   each with the exact host API, state bindings, action routes, theme tokens
@@ -72,42 +74,48 @@ use **`google-stitch`** with the ready-made handoff spec:
 The Antigravity client holds the live MCP connection to Google Stitch —
 route all screen/layout/interaction design for the panels below through it
 (ANTIGRAVITY.md is the client bootstrap). A panel is "missing" when it either
-does not exist or is a **stub**: untyped `Bind(object?)`, hardcoded flavor
-text, no Core session binding. Stitch output remains a proposal until
+does not exist or is a **stub**: ignored binding, hardcoded operational
+state, empty refresh, or missing domain commands. `Bind(object?)` alone is
+not proof of a stub: ElectrostaticScrubberPanel casts and subscribes to a
+real VentilationHostSession. Stitch output remains a proposal until
 reconciled with the runtime theme (`AshfallUiHelpers`/`DesignTheme`), the
 `state → blocker → cost → consequence` panel standard, and Core binding
 discipline (presentation-only).
 
-Currently missing/stub (verified 2026-09-03 — replace entries as they are
-bound to Core):
+Partial historical list, reconciled 2026-09-05. The complete **UI PANELS &
+UX AUDIT** register later in this file supersedes old missing/bound claims.
+Do not mark a panel complete from file creation or a typed field alone:
 
-> **Plans 78–81 flagship batch (Wave 6, pending Stitch generation):**
+> **Plans 78–81 flagship batch (Wave 6, integrated 2026-09-05):**
 > `DeconAirlockPanel`, `GeodeticSurveyPanel`, `KineticStoragePanel`,
 > `ChemicalReconPanel`. The four Core systems exist
 > (`DecontaminationSystem` protocol/effluent extension, `GeodeticSurveyEngine`,
 > `KineticStorageSystem`, `ChemicalReconEngine`) with catalogs
 > `decontamination_protocol_catalog.json`, `geodetic_survey_catalog.json`,
-> `kinetic_flywheel_catalog.json`, `toxic_chemical_catalog.json` — but the
-> host panels do not exist yet. Generate layouts via `google-stitch` before
-> implementing in `src/UI/`, then extend `Main.HandleGreenhouseAction`-style
-> action switches and keep `LastEvent` as the single feedback strip.
+> `kinetic_flywheel_catalog.json`, `toxic_chemical_catalog.json` (all
+> `GAMEPLAY_CONSUMED` in the utilization baseline). Binding + adapter
+> integration completed: panels Bind on first OPEN (`Main.World.cs`), action
+> adapters pass typed arguments (queue-resolved decon case, monument-derived
+> survey triples, class-rate flywheel power, observation-derived sample
+> location), and the two missing Core commands now exist —
+> `KineticStorageSystem.EngageEmergencyBrake` and
+> `ChemicalReconEngine.SelectFilterCategory`. See UI-11/UI-12 resolution
+> notes below; re-audit pending per audit policy.
+> **Historical Stitch prompts + binding contracts to reconcile:
+> `docs/ui/PLANS_78_81_UI_STITCH_SPEC.md`** (Greenhouse-spec format).
 
 | Panel | Status |
 |---|---|
-| `ElectrostaticScrubberPanel` | missing (Plan 72 — create bound to VentilationSystem stage) |
+| `ElectrostaticScrubberPanel` | exists with real VentilationHostSession binding; duplicate construction and missing normal player route (UI-13) |
 | `AquiferTreatyConcessionPanel` | stub — hardcoded text, no Core binding |
 | `BasalRadonMigrationPanel` | stub |
-| `ChemicalReconPanel` | missing (Plan 81 — create bound to ChemicalReconEngine: normalized detector reading, hazard class, filter saturation, wind, sample status; Wave 6 of Plans 78–81 flagship; UNKNOWN HAZARD / FILTER BREAKTHROUGH / CRITICAL EXPOSURE require text labels, no color-only semantics) |
 | `ClandestineInsurgencyPanel` | stub |
 | `CrossingSafeConductVouchPanel` | stub |
 | `CryogenicPermafrostCorePanel` | stub |
-| `DeconAirlockPanel` | missing (Plan 78 — create bound to DecontaminationSystem protocol/effluent/interlock APIs: stage progress, radiometric gate reading, effluent tank, reagent reserve, manual override; Wave 6 of Plans 78–81 flagship; distinct from the existing `UltrasonicDecontaminationAirlockPanel` stub; INNER DOOR LOCKED / CONTAMINATION ABOVE LIMIT / REWASH REQUIRED require text labels) |
 | `FungalProteinFermenterPanel` | stub |
-| `GeodeticSurveyPanel` | missing (Plan 79 — create bound to GeodeticSurveyEngine: sighted points, angle readout, uncertainty, network triangle, baseline length, monument status, hidden-route progress; Wave 6 of Plans 78–81 flagship; crosshair/vernier is visual-only — Core returns measured values, no UI-side trig) |
 | `HeavyMarineDieselGeneratorPanel` | stub |
 | `InductionCupolaFurnacePanel` | stub |
 | `IronCenotaphMemorialPanel` | stub |
-| `KineticStoragePanel` | missing (Plan 80 — create bound to KineticStorageSystem: RPM, stored energy, vacuum quality, bearing temperature, charge/discharge, containment state, maintenance, emergency brake; Wave 6 of Plans 78–81 flagship; OVERSPEED / VACUUM LOSS / BEARING OVERHEAT / CONTAINMENT COMPROMISED require text labels; UI must route the brake through the Core command, never bypass it) |
 | `LongWalkExpeditionPanel` | stub |
 | `MagneticDrumArchivePanel` | stub |
 | `MechanicalProstheticsLathePanel` | stub |
@@ -119,9 +127,25 @@ bound to Core):
 | `UltrasonicDecontaminationAirlockPanel` | stub |
 | `VaultDoorBreachingPanel` | stub |
 
-Bound panels are exempt (e.g. `SlurryDewateringSumpPanel`, `SumpFloodingPanel`,
-`WeatherSondePanel`, `RailwayTerminalPanel`). When a stub gains a Core
-binding, remove it from this table in the same commit.
+Real bound implementations include `SlurryDewateringSumpPanel`,
+`SumpFloodingPanel` and `WeatherSondePanel`; sharing helpers does not make
+them stubs. Remove a missing/stub entry only after its domain state,
+actions, normal route, lifecycle and feedback are verified, not merely
+when a Bind method is added.
+
+> **Plans 190–193 flagship batch (Wave 0 recon complete, 2026-09-06):**
+> `AmputationTriagePanel`, `RailwayTerminalPanel`, `FungiCultivationBedPanel`,
+> `JusticeTribunalPanel`. All four Core systems exist (`AmputationSystem`,
+> `RailwaySystem`, `FungiCultivationSystem`, `JusticeSystem`) with catalogs
+> `surgical_procedures.json`, `rail_network.json`, `underground_flora.json`,
+> `wasteland_laws.json` (all `GAMEPLAY_CONSUMED`). Save stores
+> (`AmputationSaveStore`, `RailwaySaveStore`, `FungiSaveStore`,
+> `JusticeSaveStore`) follow the canonical `SaveStoreHub`/`SchemaVersionedEnvelope`
+> pattern. Godot wiring is complete in `Main.Plans190_193.cs`
+> (Setup/Save/TickDay + journal events). All four panels are **UI-07 stubs**:
+> typed `Bind(XxxSystem)` casts to real Core systems, but `RefreshView` is
+> empty and no domain commands, state display, or normal player route exists.
+> Do not mark these panels complete until the UI-07 acceptance criteria are met.
 
 ### Failure policy
 
@@ -495,3 +519,408 @@ All AI clients and cloud runners — Cursor, Claude, Gemini, Codex, local agents
 - MCP routing: use the canonical `composio` / `google-stitch` registry above instead of rediscovering connections.
 
 Client-specific bootstrap instructions must never override the non-negotiable project rules in this file.
+
+---
+
+## UI PANELS & UX AUDIT — 2026-09-05 — OPEN FINDINGS
+
+This register records the owner's requested deep audit of missing, stubbed,
+relabelled and over-shared panels. It supersedes historical UI maturity
+claims above where they conflict with current source. **These findings are
+not fixes or authorization to implement them.** Existing/concurrent work
+was preserved; only audit documentation was changed.
+
+**Owner requirement: do not copy/relabel one complete panel for unrelated
+systems or items.** Shared theme, framing and low-level components are
+allowed; the actual task body, selected entity, state, blockers, costs,
+consequences and command flow must be domain-specific. A new title, color,
+class name, typed field or screenshot does not complete a panel. Do not
+replace missing specialist workflows with another generic multi-system
+operations console.
+
+Full evidence and ownership analysis:
+[UI_PANELS_UX_FORENSIC_REPORT.md](docs/forensics/UI_PANELS_UX_FORENSIC_REPORT.md).
+Every inventoried source and route:
+[UI_PANELS_UX_INVENTORY.md](docs/forensics/UI_PANELS_UX_INVENTORY.md).
+Contrast, overflow, focus and readability:
+[ACCESSIBILITY_REPORT.md](docs/ui/ACCESSIBILITY_REPORT.md).
+
+### Audited coverage and interpretation
+
+- 178 panel-source files across src, including four expansion classes named
+  AviationUI/ChemUI/LaborUI/PoliticsUI. The initial count was 174; four
+  Plans146–149 files appeared/changed concurrently. This is a naming-based
+  panel inventory, not the number of all UI components/scenes.
+- All 141 descriptors reconciled: 112 declared Live, 29 shelved Prototype.
+  Of 134 configured unique IDs, 23 are unregistered; plans_110_113 is Live
+  with no action destination. Counts overlap classes; do not sum them as
+  an invented total of missing screens.
+- 19 near-identical hardcoded three-column prototypes; 10 additional
+  fake-success prototypes; 11 typed one-label stubs; 11 incomplete
+  expansion readouts; 6 atlases with inert action bars.
+- Full static inventory and suspicious-family tracing, representative
+  stored screenshots and headless checks—not 178 fresh visual playthroughs.
+- **EXISTS ≠ COMPILES ≠ WIRED ≠ EXECUTES ≠ PLAYER-FACING ≠ VERIFIED.**
+  Entries without a targeted defect in the inventory are not certified
+  complete. Shared style alone is not evidence of a bad copy.
+
+### Complete finding register
+
+#### UI-01 — HIGH — Research, Standing Record and Muster atlases are relabeled faction screens
+
+Affected: ResearchAtlasPanel; StandingRecordAtlasPanel; MusterAtlasPanel.
+
+All three populate the same five fixed faction/trust rows, coalition values and faction dossiers under different domain headings. Binding a host does not replace BuildData. Research still renders Faction/Current/ΔTrust instead of a research dependency/progress workflow; Standing Record and Muster reuse the same body and mostly fixed status metrics. Registered Live and host-configured is not proof of discoverable navigation.
+
+Evidence: src/UI/ResearchAtlasPanel.cs:BuildData/BuildGrids/RefreshDetail (477/289/408); src/UI/StandingRecordAtlasPanel.cs:BuildData/RefreshStatusRail/RefreshDetail (433/232/364); src/UI/MusterAtlasPanel.cs:BuildData/RefreshStatusRail (433/232); src/Main.PlayerSurfaces.cs:485; snapshots/research_atlas_default.png; snapshots/standing_record_atlas_default.png; snapshots/muster_atlas_default.png.
+
+Required follow-up acceptance: Design domain-specific bodies against the existing Research, Standing Record and Muster owners. Share theme primitives, not faction datasets or unrelated workflow structure.
+
+#### UI-02 — HIGH — Six atlas action bars are inert text, not commands
+
+Affected: MapAtlasPanel; MaritimeAtlasPanel; MusterAtlasPanel; QuestsAtlasPanel; ResearchAtlasPanel; StandingRecordAtlasPanel.
+
+BuildActionFixtureRows feeds non-selectable AshfallDataGrid rows even on bound screens. Labels such as Dispatch Sortie, Plot Waypoint, Accept, Abandon, Inspect and Schedule have no corresponding button activation or command dispatch. A visually complete action strip therefore promises unavailable interaction.
+
+Evidence: src/UI/MapAtlasPanel.cs:BuildActionRows/BuildActionFixtureRows (355/449); src/UI/MaritimeAtlasPanel.cs:BuildActionRows/BuildActionFixtureRows (319/423); src/UI/QuestsAtlasPanel.cs:BuildActionFixtureRows (372); src/UI/{ResearchAtlasPanel,StandingRecordAtlasPanel,MusterAtlasPanel}.cs:BuildActionFixtureRows.
+
+Required follow-up acceptance: Give each actual task a real command with selection, blocker, cost, consequence and authoritative result feedback. Do not make fake rows clickable without implementing the underlying contract.
+
+#### UI-03 — HIGH — Quest and maritime atlases substitute authored examples for current progress
+
+Affected: QuestsAtlasPanel; MaritimeAtlasPanel.
+
+Quests hardcodes 3 active/5 available/11 completed/4 locked/0 failed/1 abandoned on the bound path; a fixed five Holdfast keys are labeled Active independently of actual quest status. Maritime buckets catalog sites by index modulo four, reports stage Sealed and decision None, and sums catalog oxygen budgets rather than showing a current expedition's remaining oxygen. These are not reliable operational views.
+
+Evidence: src/UI/QuestsAtlasPanel.cs:RefreshStatusRail/BuildQuestRows (154/185); src/UI/MaritimeAtlasPanel.cs:RefreshStatusRail/RoomRowsFor (255 onward).
+
+Required follow-up acceptance: Project quest progress and active dive-instance state. Distinguish catalog capacity/planning values from live remaining resources; render genuine empty/unknown states.
+
+#### UI-04 — HIGH — Map atlas selection loses quadrant identity
+
+Affected: MapAtlasPanel.
+
+Three quadrant grids emit local row indices into the same selection handler. ResolveVisibleRow and FindLocation walk the complete location list rather than the clicked quadrant's filtered list. East/South row zero can therefore show North/global row zero's detail; null-sector filtering further changes offsets.
+
+Evidence: src/UI/MapAtlasPanel.cs:OnRowSelected wiring/TileRowsFor/ResolveVisibleRow/FindLocation (130 onward/285/338/395).
+
+Required follow-up acceptance: Carry a stable location ID from each rendered row to detail and actions; verify every quadrant, filtered row and empty state.
+
+#### UI-05 — HIGH — Nineteen three-column consoles are near-identical hardcoded shells
+
+Affected: AquiferTreatyConcessionPanel; BasalRadonMigrationPanel; ClandestineInsurgencyPanel; CrossingSafeConductVouchPanel; CryogenicPermafrostCorePanel; FungalProteinFermenterPanel; HeavyMarineDieselGeneratorPanel; InductionCupolaFurnacePanel; IronCenotaphMemorialPanel; LongWalkExpeditionPanel; MagneticDrumArchivePanel; MechanicalProstheticsLathePanel; SonicRuptureDrillPanel; SubterraneanDebtLedgerPanel; SurfaceShrapnelAegisPanel; TraumaBondingCohortPanel; TroposphericRadioRelayPanel; UltrasonicDecontaminationAirlockPanel; VaultDoorBreachingPanel.
+
+These assert IsBound=true, ignore Bind(object? session), render fixed telemetry and expose non-close buttons without Pressed handlers. Normalizing comments, strings, class names, numbers, whitespace and selected color-token names produces two exact structural groups of eight and ten; Magnetic Drum is the nineteenth near-copy with a changed margin accessor. All nineteen are shelved Prototype routes, not completed gameplay. Eighteen still look up Margin at the wrong tree depth and throw during eager construction.
+
+Evidence: src/UI/AquiferTreatyConcessionPanel.cs:IsBound/Bind/RefreshView/BuildLayout/CreatePanelFrame (20/34/45/111/161); corresponding members in all named files; src/UI/MagneticDrumArchivePanel.cs; Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs:137; src/Main.UiPanels.cs:BuildUserInterface; headless decon-airlock-uitest log.
+
+Required follow-up acceptance: Keep them shelved until each has its own domain task design and real owner contract. Fix eager-construction health separately; recoloring, relabeling or assigning a host field does not complete a panel.
+
+#### UI-06 — MEDIUM — Ten additional prototypes simulate success without changing state
+
+Affected: AnaerobicBiogasDigesterPanel; SubterraneanCartographyPanel; UndergroundPrintingPressPanel; SiliconIngotSlicingPanel; GeothermalSteamTurbinePanel; WarDogKennelPanel; IsotopeSeparatorPanel; PlasmaArcSmeltingPanel; BoreholeSeismographPanel; HeavyLogisticsAirlockPanel.
+
+These roughly 126–130-line prototypes have unconditional IsBound, no session Bind, empty RefreshView/Unbind and hardcoded telemetry. Buttons only ShowFeedback, including success-sounding results, without a Core mutation. Biogas reports fixed 38.2°C/96.5% and feeding output with no inventory operation. Prototype gating limits direct player exposure but these are missing workflows, not implemented consoles.
+
+Evidence: src/UI/AnaerobicBiogasDigesterPanel.cs; corresponding IsBound/RefreshView/ShowFeedback members in all ten files; Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs:126.
+
+Required follow-up acceptance: Resolve existing gameplay equivalents and owners before designing each unique workflow; do not promote simulated-success fixtures.
+
+#### UI-07 — HIGH — Eleven typed panels are still a single label with an empty refresh
+
+Affected: AmputationTriagePanel; ArchaeologyExcavationPanel; CeremonyFestivalPanel; ChemWarfareDefensePanel; CommsArrayTransceiverPanel; FungiCultivationBedPanel; JusticeTribunalPanel; RailwayTerminalPanel; RoboticsWorkshopPanel; SurvivorDowntimePanel; WinterFreezePanel.
+
+Each 33-line implementation stores a typed system but renders only AshfallDashboardShell plus one generic label and Close; RefreshView is empty. There is no entity selection, task state, actionable blocker, cost, consequence or domain command. RailwayTerminalPanel is not a completed bound-panel exemption despite the previous AGENTS claim.
+
+**2026-09-06 update — Plans 190–193 quartet:** `AmputationTriagePanel`,
+`RailwayTerminalPanel`, `FungiCultivationBedPanel`, and `JusticeTribunalPanel`
+now have **real typed Core bindings** (not `Bind(object?)`): each panel's
+`Bind()` casts to the actual system type (`AmputationSystem`, `RailwaySystem`,
+`FungiCultivationSystem`, `JusticeSystem`). Save stores, catalog loading,
+and Main orchestration are complete. The panels remain UI-07 stubs because
+`RefreshView` is still empty and no domain commands are wired — but their
+backend is fully operational. The remaining seven panels in this list have
+no such backend.
+
+Evidence: src/UI/RailwayTerminalPanel.cs:Bind/RefreshView/_Ready (13/19/21); same full-file structure in all eleven named files; src/Main.PlayerSurfaces.cs:45; src/Main.Plans190_193.cs (full orchestration for all four).
+
+Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven.
+
+#### UI-08 — HIGH — Eleven expansion readouts lack their management workflows
+
+Affected: AviationUI; ChemUI; LaborUI; PoliticsUI; PrisonerPanel; StealthReadoutPanel; MutationTreePanel; NurseryPanel; FalloutPlumePanel; DesperationCrisisPanel; MercenaryBountyBoardPanel.
+
+Most use the same shell/status rail/single multiline Label and read actual system state when refreshed, but expose no domain commands beyond Close. A readout is not a dispatch, policy, allocation, training or care workflow. Mercenary's board is thinner still: active-count text plus a fixed no-targets message and neutral guild text. These are partial readouts, not evidence that all corresponding Core mechanics are absent.
+
+Evidence: src/UI/{AviationUI,ChemUI,LaborUI,PoliticsUI,PrisonerPanel,StealthReadoutPanel,MutationTreePanel,NurseryPanel,FalloutPlumePanel,DesperationCrisisPanel}.cs:_Ready/RefreshView; src/UI/MercenaryBountyBoardPanel.cs:RefreshView; src/Main.PlayerSurfaces.cs:45/511.
+
+Required follow-up acceptance: Document the actual player decisions per domain and expose the existing command owners with selectable targets, blockers and costs; do not count a shared multiline label as a dedicated workflow.
+
+#### UI-09 — HIGH — Twenty-three configured navigation IDs were never registered
+
+Affected: expansion_fallout_plume; desperation_crisis; mercenary_bounty_board; archaeology_excavation; amputation_surgery; railway_logistics; fungi_cultivation; justice_tribunal; chem_warfare_defense; comms_array_transceiver; ceremony_ritual; robotics_assembly; survivor_downtime; winter_freeze; aviation; narcotics; forced_labor; politics; prisoners; stealth; mutation_tree; nursery; fallout_detail.
+
+ConfigureActions returns false for an unknown descriptor, and the host ignores that return value. These 23 IDs cover 22 classes because Fallout has two IDs. Nine have dashboard AddNavButton entries, so the dashboard advertises routes that OpenPlayerPanel rejects as unknown. Registering them alone would expose the incomplete bodies in UI-07/UI-08.
+
+**2026-09-06 update:** `amputation_surgery`, `railway_logistics`,
+`fungi_cultivation`, and `justice_tribunal` now have operational Core
+systems, save stores, and Main orchestration behind their stub panels.
+Registration remains blocked on UI-07 completion (empty RefreshView).
+
+Evidence: Assets/Ashfall.Core/UI/PanelRegistry.cs:ConfigureActions/Resolve (204/227); Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs; src/Main.PlayerSurfaces.cs:45–114/511–554; src/UI/GameDashboardPanel.cs:435–448; src/Main.GameFlow.cs:165; src/Main.Plans190_193.cs.
+
+Required follow-up acceptance: Reconcile descriptor, binding, availability, entry point, destination and close path as one contract. Gate unfinished workflows instead of silently adding Live descriptors.
+
+#### UI-10 — HIGH — A Live industrial route has no destination; four domains have no dedicated UI
+
+Affected: plans_110_113; chlor-alkali synthesis; solar concentration; precision optics; ballistic shields.
+
+The bootstrap registers plans_110_113 as Live, but no ConfigureActions destination or matching player panel exists. Main.Plans110_113 constructs, loads, ticks and captures four real host systems with no corresponding typed UI consumers. There is backend capability without an operational player surface.
+
+Evidence: Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs:169; src/Main.PlayerSurfaces.cs; src/Main.Plans110_113.cs; src/Host/{ChlorAlkaliHostSession,SolarConcentratorHostSession,PrecisionOpticsHostSession,BallisticShieldHostSession}.cs; src/Main.GameFlow.cs:217.
+
+Required follow-up acceptance: Plan four distinct task surfaces on the existing owners. Do not fix this by introducing another unrelated multi-system omnibus screen.
+
+#### UI-11 — HIGH — Wave 6 panels exist but are not bound or normally reachable
+
+Affected: DeconAirlockPanel; GeodeticSurveyPanel; KineticStoragePanel; ChemicalReconPanel.
+
+All four now have substantial UI source, construction and OnActionRequested subscriptions. No production Bind call to these panel instances or normal registered navigation route was found. They start hidden; OPEN handlers and tests can set visibility directly, which does not bind state or make a player entry point. The old 'files do not exist' statement is stale.
+
+Evidence: src/Main.UiPanels.cs:396–440; src/Main.World.cs:462–520; src/Main.Plans78_81.cs; src/Main.UiTests.Wave6.cs:10–47; src/UI/{DeconAirlockPanel,GeodeticSurveyPanel,KineticStoragePanel,ChemicalReconPanel}.cs:Bind; Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs.
+
+Required follow-up acceptance: Complete authoritative binding, dependency setup, route, discovery and lifecycle first; retain four domain-specific designs and validate actions before promotion.
+
+> **RESOLVED 2026-09-05 (pending re-audit):** panels now Bind on first OPEN
+> via the action handlers (`Main.World.cs` — `_deconAirlockBound` et al.
+> guards make Bind idempotent and order-independent of session setup);
+> route/discovery/lifecycle unchanged (registry OPEN/CLOSE + OnClose).
+> Action-argument correctness resolved under UI-12.
+
+#### UI-12 — HIGH — Wave 6 action adapters contain wrong arguments and explicit no-ops
+
+Affected: DeconAirlockPanel; GeodeticSurveyPanel; KineticStoragePanel; ChemicalReconPanel.
+
+Decon emits a selected case ID but Main passes it to StartProtocolCycle's survivorId slot with empty gear and fixed contamination. Survey Observe supplies an empty target and fixed clear weather/skill; resolve does nothing. Flywheel EMERGENCY_BRAKE does nothing, while charge/discharge hardcode 1000 and 60. Chemical change_filter does nothing and sampling supplies an empty location. Several calls bypass host command wrappers and their LastEvent/StateChanged feedback; decon does explicitly mark its dirty flag, so not all persistence routing is absent.
+
+Evidence: src/Main.World.cs:462–520; src/UI/DeconAirlockPanel.cs:365; Assets/Ashfall.Core/DecontaminationSystem.cs:StartProtocolCycle; Assets/Ashfall.Core/World/GeodeticSurveyEngine.cs:Observe; Assets/Ashfall.Core/Expeditions/ChemicalReconEngine.cs:CollectSample; src/Host/ChemicalReconHostSession.cs.
+
+Required follow-up acceptance: Pin typed command arguments and before/after state tests, especially emergency actions. A callable manual-brake Core command was not found; resolve that seam explicitly instead of inventing UI-owned brake behavior.
+
+> **RESOLVED 2026-09-05 (pending re-audit):** all four adapters now pass
+> typed arguments — decon resolves survivor/gear/contamination from the
+> selected queue case; survey observe derives the FROM monument from active
+> monuments and resolve iterates active-monument triples (engine unlock is
+> idempotent); flywheel CHARGE/DISCHARGE use class-rate `max_charge_kw`/
+> `max_discharge_kw` (hardcoded 1000 kW removed); chemical scans use the
+> engine's `activeSensorBand` and sampling resolves the location from the
+> hazard's latest observation. The missing brake seam is now an explicit
+> Core command: `KineticStorageSystem.EngageEmergencyBrake(instanceId)`
+> (logged, takes rotor offline, released only by PerformMaintenance) exposed
+> through `KineticStorageHostSession.EngageEmergencyBrake` with `LastEvent`
+> feedback. `ChemicalReconEngine.SelectFilterCategory` resolves the
+> change_filter no-op the same way.
+
+#### UI-13 — HIGH — Existing specialist panels are stranded despite useful implementations
+
+Affected: ElectrostaticScrubberPanel; GeothermalAquiferPanel; ChemicalLabPanel.
+
+Electrostatic Scrubber already binds VentilationHostSession and invokes real stage controls; it is constructed twice across Main.UiPanels and SetupElectrostaticScrubberPanel, with no normal registered entry. Geothermal Aquifer now has a Setup-time Bind and real action buttons, but its OnActionRequested is not subscribed in construction and no normal route was found. ChemicalLabPanel has typed chemical-synthesis binding and operations but no Main construction/registration. File absence is the wrong diagnosis for all three.
+
+Evidence: src/UI/ElectrostaticScrubberPanel.cs:Bind; src/Main.UiPanels.cs:BuildUserInterface; src/Main.ExpandedShelterSystems.cs:129–137; src/Main.ShelterInfrastructure.cs:SetupGeothermalAquifer (374–388); src/Main.UiPanels.cs:868–870; src/UI/GeothermalAquiferPanel.cs:105–120; src/UI/ChemicalLabPanel.cs; src/Main.ChemicalSynthesis.cs.
+
+Required follow-up acceptance: Reuse each existing specialist implementation's legitimate domain work, then finish its single construction/binding/route/event/lifecycle contract. PharmaLab does not automatically replace retort chemical synthesis.
+
+#### UI-14 — HIGH — New Plans 146–149 screens are partial readouts, not completed control workflows
+
+Affected: EbPvdCoatingPanel; MicrofluidicDiagnosticPanel; MineFlailPanel; RailGrindingPanel.
+
+These four files appeared/changed concurrently during the audit. At the final inspection they compile, are constructed and bound from BuildPlans146To149Panels, and have domain data projections. However, OnActionRequested is only declared, not emitted by domain controls; Main handlers implement OPEN only, and registry/player entry points are absent. Their shared sidebar/table/detail scaffold, hardcoded example values and raw machine IDs do not fulfill coating, diagnostics, clearing or grinding operations. This is an as-observed WIP finding, not an assertion about a future completed change.
+
+Evidence: src/Main.UiPanels.cs:442; src/Main.Plans146_149.cs:140–224; src/UI/{EbPvdCoatingPanel,MicrofluidicDiagnosticPanel,MineFlailPanel,RailGrindingPanel}.cs; src/UI/EbPvdCoatingPanel.cs:RefreshView; Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs.
+
+Required follow-up acceptance: Require four distinct state→blocker→cost→consequence workflows, real commands and normal routes. Re-audit the concurrent work before accepting any closeout claim.
+
+#### UI-15 — MEDIUM — Three omnibus panels compress unrelated domains into one operations screen
+
+Affected: Phase0Panel; Plans94To97Panel; Plans130To133Panel.
+
+Phase0 explicitly groups ten systems under an internal phase label. Plans94To97 puts grain milling/storage, cryogenic separation and heliograph communications side by side; Plans130To133 does the same for powder metallurgy, NVIS communications, lyophilization and draisine rerailing. Real host-backed commands exist, so these are not all stubs, but the plan-number information architecture and compressed fixed layouts conflict with the owner's rejection of reusing one panel for unrelated tasks. Plans94's IsBound accepts any host while builders assume the others, and its first nonempty event can mask feedback from another subsystem.
+
+Evidence: src/UI/Phase0Panel.cs:class summary/_Ready; src/UI/Plans94To97Panel.cs:IsBound/RefreshView/FirstEvent; src/UI/Plans130To133Panel.cs:_Ready/RefreshView.
+
+Required follow-up acceptance: Give the domains dedicated workflows or explicitly distinct navigable task views while preserving shared styling and existing command owners. No new gameplay systems merely to split presentation.
+
+#### UI-16 — HIGH — Overlay detection, dismissal and navigation maintain different incomplete lists
+
+Affected: Global overlay lifecycle; WorkshopPanel; PharmaLabPanel; Phase0Panel; DeepCoastPanel; WeatherHistoryPanel; expanded shelter panels; Wave 6; specialist/new panels.
+
+AnyOverlayPanelOpen covers far fewer controls than CloseAllOverlayPanels, and CloseAllOverlayPanels itself omits multiple constructed overlays. For example workshop, pharma, phase0, deep coast, weather history, water/kitchen expanded panels and newer panels are missing from the close list. OpenExpandedPanel does not repair this. Global Escape can treat an unlisted overlay as 'no overlay' and return to the menu when the panel does not consume the event; switching panels can leave an older overlay visible. This is source-proven list drift; every possible focus/stack combination was not replayed.
+
+Evidence: src/Main.GameFlow.cs:AnyOverlayPanelOpen/_UnhandledInput (662/693); src/Main.PanelLifecycle.cs:CloseAllOverlayPanels (9–61); src/Main.PlayerSurfaces.cs:OpenExpandedPanel; src/Main.Application.cs:_UnhandledKeyInput.
+
+Required follow-up acceptance: Use one authoritative lifecycle contract for visibility, topmost focus, back/close and navigation. Verify each route with keyboard/controller cancel and multiple-overlay transitions.
+
+#### UI-17 — HIGH — Dashboard navigation exceeds the supported canvas before its extra controls
+
+Affected: GameDashboardPanel navigation rail; atlas/fixed-width console layouts.
+
+The dashboard navigation is a non-scrolling VBox with 40 navigation buttons at a 30-pixel minimum each: 1200 pixels before headings, separation, save/developer controls or header/footer. That already exceeds 1080 pixels. Stored 1280×800 Research/Standing/Muster atlas images also visibly cut off right-side grid content. Plans130To133 has a 1320-pixel minimum before fitting smaller targets. These are concrete overflow defects/risks, not evidence that root anchors solve responsive layout.
+
+Evidence: src/UI/GameDashboardPanel.cs:BuildNavigationRail/AddNavButton (397–460/604); src/UI/Plans130To133Panel.cs:_Ready; snapshots/{research_atlas_default,standing_record_atlas_default,muster_atlas_default}.png.
+
+Required follow-up acceptance: Provide reachable scroll/reflow navigation and test descendant bounds, long labels, focus scrolling and supported scales. Preserve domain distinction while repairing sizing.
+
+#### UI-18 — HIGH — Three detail refreshes access freed labels during UI construction
+
+Affected: ExpeditionRadarPanel; FactionsNarrativePanel; SkillMatrixPanel.
+
+RefreshDetail empties the detail container through immediate child freeing and then accesses a cached label that belonged to it. A headless BuildUserInterface run logged ObjectDisposedException at ExpeditionRadar line 370, FactionsNarrative line 325 and SkillMatrix line 371. These failures occur before the decon UI smoke test announces PASS.
+
+Evidence: src/UI/ExpeditionRadarPanel.cs:RefreshDetail (370); src/UI/FactionsNarrativePanel.cs:RefreshDetail (325); src/UI/SkillMatrixPanel.cs:RefreshDetail (371); src/UI/AshfallUiHelpers.cs:EmptyChildren; /tmp/ashfall-ui-audit.KI94f7/decon-airlock-uitest.log:11/40/69.
+
+Required follow-up acceptance: Repair ownership/lifetime of rebuilt detail children and assert fresh construction plus repeated selection/refresh is exception-free.
+
+#### UI-19 — MEDIUM — Production unbound/empty paths display plausible fixture data
+
+Affected: GreenhousePanel; WeatherPanel; FactionMatrixPanel; FactionsNarrativePanel; SilentFoundryPanel; ExpeditionRadarPanel; DutyRosterPanel; SkillMatrixPanel; DoseLedgerPanel; SurvivalWorkstationPanel; MapAtlasPanel; MaritimeAtlasPanel; QuestsAtlasPanel.
+
+Production Refresh/BuildRows branches include fixture builders on missing hosts or empty collections. A lost binding or genuinely empty campaign can therefore display credible invented rows rather than an explicit unavailable/empty state. This finding is about fallback behavior; it does not claim these panels all use fake data when correctly bound. UI-01/UI-03 document the separate bound-path violations.
+
+Evidence: src/UI/GreenhousePanel.cs:304; src/UI/WeatherPanel.cs:121; src/UI/FactionMatrixPanel.cs:148; src/UI/FactionsNarrativePanel.cs:245; src/UI/SilentFoundryPanel.cs:280; src/UI/ExpeditionRadarPanel.cs:239/291; src/UI/DutyRosterPanel.cs:255; src/UI/SkillMatrixPanel.cs:225; src/UI/DoseLedgerPanel.cs:113; src/UI/SurvivalWorkstationPanel.cs:320; src/UI/MapAtlasPanel.cs:273; src/UI/MaritimeAtlasPanel.cs:281; src/UI/QuestsAtlasPanel.cs:BuildQuestRows.
+
+Required follow-up acceptance: Keep fixtures in explicit test/preview mode. Runtime empty, loading, unavailable and error states must be truthful and must not imply completed actions or inventory.
+
+#### UI-20 — HIGH — Greenhouse water choices all decode to clean 50-unit watering
+
+Affected: GreenhousePanel; Main.HandleGreenhouseAction.
+
+The panel emits water:25:clean, water:50:clean and water:50:tainted. Main splits only the first colon; '25:clean' and '50:tainted' are neither 'tainted' nor valid floats, so all three fall through to clean water with 50 units. The selected quantity/source is lost and the displayed stock gate can disagree with consumption. Seed selection, water choices, supply/readiness UI now exist; the older eight-gap specification must not be treated as current evidence. Amendment/maintenance/sterilization host API claims also need revalidation against the trimmed current host.
+
+Evidence: src/UI/GreenhousePanel.cs:511–593; src/Main.World.cs:HandleGreenhouseAction (69–95); src/Host/GreenhouseHostSession.cs:Plant/Water; docs/ui/GREENHOUSE_UI_GAP_SPEC.md.
+
+Required follow-up acceptance: Pin quantity and source as a typed command contract with inventory-delta tests for all three choices, then reconcile the historical Stitch handoff with current APIs.
+
+#### UI-21 — HIGH — Coverage claims and smoke-test passes overstate player readiness
+
+Affected: PlayerSurfaceManifest; PanelRouteGateTests; UiLayoutSelfTest; UiAccessibilitySelfTest; Wave 6/Plans 146–149 UI tests; snapshot manifest.
+
+PlayerSurfaceManifest manufactures binding strings and marks Live routes ProductionRendered/reachable without observing execution. Route tests miss AddNavButton parameter literals and the inverse 'every configured ID is registered' check. Layout tests set and check root bounds, not descendants. Accessibility tests do not measure contrast or perform a full focus traversal. Wave 6 tests check construction/non-null, and new Plans146–149 tests primarily IsBound. The decon smoke log contains 18 missing-Margin errors, 18 NullReferenceExceptions and three ObjectDisposedExceptions before PASS; layout teardown reports 16634 leaked ObjectDB instances. Scene contracts and golden fixtures are limited evidence, not end-to-end gameplay.
+
+Evidence: Assets/Ashfall.Core/UI/PlayerSurfaceManifest.cs:Generate; Ashfall.Core.Tests/UI/PanelRouteGateTests.cs; src/Host/HostCli.cs:RunUiLayoutSelfTest (2638 onward); src/Host/UiAccessibilitySelfTest.cs; src/Main.UiTests.Wave6.cs; src/Main.Plans146_149.cs:228 onward; docs/ui/snapshot_manifest.json; headless audit logs.
+
+Required follow-up acceptance: Require route→bind→visible→select→command→state delta→feedback→save/reload proof, fail on engine exceptions, and validate descendant bounds/focus. Never report generated 100% as observed UI completion.
+
+#### UI-22 — MEDIUM — UI documentation classifies files and contracts incorrectly
+
+Affected: AGENTS.md missing/stub list and Greenhouse handoff; UI_PANEL_ARCHITECTURE_GUIDE; closeout/coverage claims.
+
+The previous list says Electrostatic and Wave 6 files are missing and exempts RailwayTerminal as bound. Current source proves different states (UI-07/UI-11/UI-13). Bind(object?) alone is not a stub test: Electrostatic performs a real VentilationHostSession cast and subscriptions. **RailwayTerminalPanel** is confirmed as a UI-07 stub with typed `Bind(RailwaySystem)` — the Core system, save store, and Main orchestration are complete, but `RefreshView` is empty and no domain commands are wired. The architecture guide's scene-contract examples and historical Greenhouse API descriptions are not a substitute for current source. Concurrent closeout files likewise cannot override missing command/navigation evidence.
+
+Evidence: AGENTS.md:STITCH UI HANDOFF/Missing UI panels; docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md; src/UI/RailwayTerminalPanel.cs; src/UI/ElectrostaticScrubberPanel.cs:Bind; src/UI/GreenhousePanel.cs; docs/ui/GREENHOUSE_UI_GAP_SPEC.md; src/Main.Plans190_193.cs.
+
+Required follow-up acceptance: Track EXISTS/COMPILES/WIRED/EXECUTES/PLAYER-FACING/VERIFIED separately. Update status with current source and action-level acceptance evidence, not filename creation or a screenshot.
+
+#### UI-23 — HIGH — Shared small-text tokens and controls undermine readability and keyboard access
+
+Affected: Theme; AshfallDataGrid; AshfallSidebar; AshfallDashboardShell; GameDashboardPanel.
+
+Runtime tuple colors give Dim/Ink contrast 3.45:1 and Dim/SurfaceCard 3.09:1, below the 4.5:1 body-text audit threshold; Dim/SelectedBg is 2.73:1. DataGrid headers and sidebar hints use Dim at 11px. Critical/SurfaceCard is 4.12:1. Several hex tokens disagree with the tuples actually rendered, so a mockup can use different colors from production. DataGrid row activation is mouse-GuiInput-only, without focusable keyboard selection. Close targets are 28px high and nav targets 30px: usability concerns at small scales, not a claimed universal target-size standards violation.
+
+Evidence: Assets/Ashfall.Core/UI/Theme.cs:31–95/FontSizeLabel; src/UI/AshfallDataGrid.cs:BuildHeaderCell/BuildRow; src/UI/AshfallSidebar.cs:67/156; src/UI/AshfallDashboardShell.cs:AttachHeaderCloseButton (150); src/UI/GameDashboardPanel.cs:606; docs/ui/ACCESSIBILITY_REPORT.md.
+
+Required follow-up acceptance: Fix non-disabled readable text contrast and focusable row selection first; reconcile token representations, audit text scaling/long labels, and verify focus visibility/topmost behavior. Keep non-color warning labels.
+
+### Functional equivalents and uncertainty — do not invent duplicate Core systems
+
+- ResearchPanel, StandingRecordPanel, MusterPanel, QuestsPanel, MapPanel,
+  MaritimePanel/DeepCoastPanel are existing domain counterparts to the
+  atlases. Preserve their owners and legitimate work; do not retain fake
+  atlas datasets or simply relabel the same body again.
+- SlurryDewateringSumpPanel has real SumpFlooding binding despite a similar
+  frame/comment. ElectrostaticScrubberPanel has a real object-to-session
+  cast. Neither is a stub merely because of those superficial matches.
+- ChemicalLabPanel is not automatically replaced by PharmaLab; retort
+  chemical synthesis and pharmaceutical preparation are different tasks.
+- ChroniclePanel has an Endgame/Epilogue partial equivalent; its lack of
+  direct Main construction does not prove endings are absent.
+- WeatherHistoryPanel has a real weather-history/F5 path through
+  Main.Application and OpenWeatherHistoryPanel, despite no registry entry.
+- Trauma bonding, Long Walk, vouch, radon, cupola, aquifer and memorial have
+  existing Core semantic counterparts (TraumaBondSystem, LongWalkSystem,
+  VouchAccessSystem, YearOfAshRadonSystem, CupolaFoundryEngine,
+  GeothermalAquiferSystem, MemorialSystem). Resolve the exact command/data
+  contract before creating any new owner for a shelved prototype.
+- WeatherHardeningHostSession, CounterIntelligenceHostSession and
+  ReconTelemetryHostSession lack direct typed panel consumers in this
+  sweep. This is a candidate exposure review, **not proof that each needs
+  an independent screen**: indirect integration/readouts must be considered.
+- No save-corruption or deterministic-replay failure was reproduced by
+  this UI audit. Missing presentation does not imply missing persistence.
+  Use existing campaign sections and seeded Core owners.
+
+### Verification record — do not convert partial passes to “all green”
+
+| Check | Observed audit result |
+|---|---|
+| Core/tests build | Initial PASS; final recheck **FAIL, 8 errors/5 warnings** in concurrent Plans146–149 test additions |
+| Full xUnit run | **INCOMPLETE/UNKNOWN**: output stalled, then old terminal session was lost; no final full-suite verdict — **ROOT CAUSE RESOLVED 2026-09-06 (F9–F12 seal):** the stall was `GeothermalAquiferSystemTests.AdvanceDrilling_BitDestroyed_DeactivatesProject` spinning an unbounded `while` when no strata catalog is loaded (`AdvanceDrilling` fails `no_strata` forever; fix applied in-place to the untracked test file — load a depth-0 stratum; owned by the Flagship XI stream to commit). With the fix, `dotnet test --blame-hang` completes in 69 s: 8328 total, 8315 passed, 13 failed (all other streams' in-flight gate tests; none from the F9–F12 wave) |
+| Godot host build | Final recheck **PASS, 0 warnings/0 errors** |
+| data-integrity-selftest | Earlier audit snapshot **PASS**, 255 catalogs, 0 errors/0 warnings |
+| bridge-selftest | **PASS**, exit 0; shim-removal verb only |
+| scene-binding-selftest | **PASS, 22/22** scene contracts; not all panel workflows |
+| ui-accessibility-selftest | Prints **PASS, 5 gates**, but limited assertions and teardown leaks/errors |
+| ui-layout-selftest | Prints **PASS**, but root-only size checks; 16634 ObjectDB instances leaked at shutdown |
+| decon-airlock-uitest | Prints **PASS** after 18 missing-Margin, 18 NullReferenceException and 3 ObjectDisposedException reports: **FAIL for UI health** |
+| Targeted PanelRouteGateTests | Approved bounded retry **PASS, 19/19** against earlier --no-build assembly; latest test source still failed compilation at recheck |
+
+The lost terminal no longer had a dotnet process when checked; no process
+was killed. A later sandboxed targeted attempt failed because the test
+runner could not open a local socket; the approved outside-sandbox retry
+passed. These are distinct observations; the cause of the earlier stalled
+full run is not established.
+
+**Resolution (2026-09-06, F9–F12 wave seal):** the recurring full-suite
+stall was reproduced under `--blame-hang` and pinned to the unbounded drill
+loop in `GeothermalAquiferSystemTests.AdvanceDrilling_BitDestroyed_DeactivatesProject`
+(no strata loaded ⇒ `AdvanceDrilling` fails `no_strata` every iteration ⇒
+infinite loop). A second test in the same file used the same missing-catalog
+pattern and was fixed identically. `SaveRoundTrip_PreservesFullState` in that
+file still fails for behavioral reasons owned by that stream. The earlier
+UI-audit-era stalls are consistent with this test (alphabetically late,
+always near the end of a run) but older runs are not reproducible to prove it.
+Quarantine note: the F9–F12 wave's four committed test files were swept into
+the csproj quarantine while untracked and were unquarantined in commit
+620381bd after verifying they compile and pass on trunk.
+
+New test-build errors included unresolved CoreSeededRng,
+PowerSupplyContext.Throttled, EbPvdCoatingEngine.ResumeJob and mismatched
+context/RegisterRailSegment arguments. These belonged to concurrent work
+and were not repaired by the audit. Earlier catalog/headless results
+predate some concurrent additions; see the forensic report for exact limits.
+
+### Closure rules for future UI work
+
+1. Keep prototypes unavailable until truthful domain state and real
+   commands exist. Never promote merely to satisfy a route-count gate.
+2. Use google-stitch via Antigravity for later missing/stub design work,
+   following project policy; reconcile proposals with current API contracts
+   and runtime color tuples, not stale hex-only mockups/specs.
+3. Verify normal entry → descriptor → dependency setup → Bind → visible
+   state → stable selected ID → command → Core/inventory delta → returned
+   feedback → keyboard/controller Close/back → save/reload where relevant.
+4. Fail UI health checks on engine exceptions. Test child bounds, long
+   labels, readable contrast and focusable grid selection; root dimensions,
+   IsBound and historical screenshots are insufficient.
+5. Do not create panel-local gameplay/resource state, a parallel save store
+   or another modality manager to make a mockup look operational.
+6. Keep LastEvent/result feedback tied to the active domain command.
+   No fixture-success messages in production and no unrelated subsystem's
+   stale event replacing the action the player just performed.
+7. Recheck concurrent changes before closing findings. Update this register
+   and the detailed report with evidence, not a blanket completion claim.
+
+Suggested next prompt after accepting this audit: “Plan the UI-01–UI-23
+repairs from the forensic report, preserving unique domain workflows and
+existing Core ownership. Prioritize runtime health, truthful state/actions
+and dead routes. Do not implement or generate external designs yet.”

@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 
+using Ashfall.Core.Inventory;
 using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.YearOfAsh;
+using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
 namespace Ashfall.Core
 {
@@ -26,6 +28,59 @@ namespace Ashfall.Core
         public List<string> huddleAssignments = new List<string>();
         public float waterwayFreezeScore = 0f;
         public string waterwayFreezeState = "Open";
+
+        // Plan 57: Stoves, insulation retrofits, cogeneration & technician efficiency
+        public List<AuxiliaryStove> stoves = new List<AuxiliaryStove>();
+        public Dictionary<string, int> roomInsulationLevels = new Dictionary<string, int>(StringComparer.Ordinal);
+        public Dictionary<string, string> roomInstalledInsulation = new Dictionary<string, string>(StringComparer.Ordinal);
+        public float generatorWasteHeatKw;
+        public bool circulationPumpActive;
+        public float technicianEfficiencyMult = 1.0f;
+    }
+
+    [Serializable]
+    public sealed class InsulationCost
+    {
+        public string item_id { get; set; } = string.Empty;
+        public int amount { get; set; } = 1;
+    }
+
+    [Serializable]
+    public sealed class ShelterInsulationDef
+    {
+        public string insulation_id { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public string wall_material_tag { get; set; } = string.Empty;
+        public float thermal_conductivity { get; set; } = 0.05f;
+        public float air_leak_factor { get; set; } = 0.2f;
+        public float moisture_penalty { get; set; } = 0.05f;
+        public List<InsulationCost> retrofit_item_costs { get; set; } = new List<InsulationCost>();
+        public int max_upgrade_level { get; set; } = 3;
+        public int level { get; set; } = 1;
+        public float insulation_factor { get; set; } = 1.25f;
+        public float fire_risk_modifier { get; set; } = 0f;
+        public List<string> tags { get; set; } = new List<string>();
+    }
+
+    [Serializable]
+    public sealed class ShelterInsulationCatalog
+    {
+        public int schema_version { get; set; } = 1;
+        public List<ShelterInsulationDef> insulations { get; set; } = new List<ShelterInsulationDef>();
+    }
+
+    [Serializable]
+    public sealed class AuxiliaryStove
+    {
+        public string stoveId = string.Empty;
+        public string roomId = string.Empty;
+        public string displayName = string.Empty;
+        public string stoveType = "scrap_wood"; // scrap_wood, coal, oil_diesel, electric
+        public float heatKw = 3.5f;
+        public string fuelItemId = "scrap_metal";
+        public float fuelBurnUnits = 1f;
+        public bool isBurning;
+        public int daysRemaining;
     }
 
     [Serializable]
@@ -76,6 +131,8 @@ namespace Ashfall.Core
         public bool hasBurst;
         public int burstDay = -1;
         public float burstSeverity;                 // 0-1
+        public bool isFrozen;
+        public float freezeScore;                   // 0-100
     }
 
     [Serializable]
@@ -88,11 +145,12 @@ namespace Ashfall.Core
         public string description = string.Empty;
     }
 
-    public enum ThermalIncidentKind { PipeBurst, FreezeDamage, BoilerOverheat, ValveFailure }
+    public enum ThermalIncidentKind { PipeBurst, FreezeDamage, BoilerOverheat, ValveFailure, SeismicShear, RadiatorRupture }
 
     public sealed class ShelterThermalSystem
     {
         public const string SystemId = "shelter_thermal";
+        public const string InsulationCatalogPath = "shelter_insulation_catalog.json";
         public float BoilerFuelLevel => _state.boilerFuelLevel;
         public bool BoilerActive => _state.boilerActive;
 
@@ -156,6 +214,7 @@ namespace Ashfall.Core
             _assignments = assignment;
             _log = log ?? NullLog.Instance;
             RegisterDefaultThermalGear();
+            RegisterDefaultInsulations();
         }
 
         private void RegisterDefaultThermalGear()
@@ -164,6 +223,101 @@ namespace Ashfall.Core
             RegisterThermalGear(new ThermalGearDef { item_id = "item_thermal_parka", display_name = "Down-Lined Arctic Parka", insulation_value = 26f, body_slot = "chest" });
             RegisterThermalGear(new ThermalGearDef { item_id = "item_fur_mittens", display_name = "Trapped-Pelts Gauntlet Mittens", insulation_value = 8f, body_slot = "hands" });
             RegisterThermalGear(new ThermalGearDef { item_id = "item_insulated_boots", display_name = "Felt-Lined Mukluk Snow Boots", insulation_value = 12f, body_slot = "feet" });
+        }
+
+        private readonly Dictionary<string, ShelterInsulationDef> _insulationCatalog = new Dictionary<string, ShelterInsulationDef>(StringComparer.Ordinal);
+        public IReadOnlyDictionary<string, ShelterInsulationDef> InsulationCatalog => _insulationCatalog;
+
+        public void RegisterInsulation(ShelterInsulationDef def)
+        {
+            if (def != null && !string.IsNullOrEmpty(def.insulation_id))
+                _insulationCatalog[def.insulation_id] = def;
+        }
+
+        public void LoadInsulationCatalog(string jsonContent)
+        {
+            if (string.IsNullOrWhiteSpace(jsonContent)) return;
+            try
+            {
+                var serializer = new SystemTextJsonSerializer();
+                var catalog = serializer.Deserialize<ShelterInsulationCatalog>(jsonContent);
+                if (catalog?.insulations != null)
+                {
+                    foreach (var ins in catalog.insulations)
+                        RegisterInsulation(ins);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"[ShelterThermal] Failed to load insulation catalog: {ex.Message}");
+            }
+        }
+
+        private void RegisterDefaultInsulations()
+        {
+            RegisterInsulation(new ShelterInsulationDef
+            {
+                insulation_id = "insul_scrap_panels",
+                name = "Corrugated Scrap Wall Sheeting",
+                wall_material_tag = "scrap",
+                thermal_conductivity = 0.085f,
+                air_leak_factor = 0.45f,
+                level = 1,
+                insulation_factor = 1.25f,
+                max_upgrade_level = 3,
+                retrofit_item_costs = new List<InsulationCost>
+                {
+                    new InsulationCost { item_id = "item_scrap_metal", amount = 20 }
+                }
+            });
+            RegisterInsulation(new ShelterInsulationDef
+            {
+                insulation_id = "insul_mineral_wool",
+                name = "Compressed Mineral Rockwool Batts",
+                wall_material_tag = "composite",
+                thermal_conductivity = 0.042f,
+                air_leak_factor = 0.25f,
+                level = 2,
+                insulation_factor = 1.65f,
+                max_upgrade_level = 3,
+                retrofit_item_costs = new List<InsulationCost>
+                {
+                    new InsulationCost { item_id = "item_cloth", amount = 6 },
+                    new InsulationCost { item_id = "item_chemicals", amount = 3 }
+                }
+            });
+            RegisterInsulation(new ShelterInsulationDef
+            {
+                insulation_id = "insul_fiberglass_batts",
+                name = "Foil-Backed Fiberglass Insulation",
+                wall_material_tag = "fiberglass",
+                thermal_conductivity = 0.032f,
+                air_leak_factor = 0.15f,
+                level = 3,
+                insulation_factor = 2.10f,
+                max_upgrade_level = 3,
+                retrofit_item_costs = new List<InsulationCost>
+                {
+                    new InsulationCost { item_id = "item_plastic", amount = 6 },
+                    new InsulationCost { item_id = "item_cloth", amount = 4 }
+                }
+            });
+            RegisterInsulation(new ShelterInsulationDef
+            {
+                insulation_id = "insul_aerogel_composite",
+                name = "Nanoporous Aerogel Thermal Blanket",
+                wall_material_tag = "aerogel",
+                thermal_conductivity = 0.015f,
+                air_leak_factor = 0.05f,
+                level = 4,
+                insulation_factor = 3.00f,
+                max_upgrade_level = 3,
+                retrofit_item_costs = new List<InsulationCost>
+                {
+                    new InsulationCost { item_id = "item_chemicals", amount = 8 },
+                    new InsulationCost { item_id = "item_scrap_metal", amount = 10 }
+                }
+            });
         }
 
         public void RegisterThermalGear(ThermalGearDef gear)
@@ -347,12 +501,40 @@ namespace Ashfall.Core
             // Deep freeze input
             float deepFreezeFactor = _deepFreeze.IsIntakeBlocked ? 0.3f : 1f;
 
-            // Boiler heat production
+            // Generator waste-heat cogeneration (Plan 57 §4.9)
+            if (_state.generatorWasteHeatKw > 0f && _state.circulationPumpActive)
+            {
+                float cogenKw = _state.generatorWasteHeatKw * 0.40f;
+                var radRooms = _state.rooms.FindAll(r => r.hasRadiator);
+                if (radRooms.Count > 0)
+                {
+                    float perRoom = cogenKw / radRooms.Count;
+                    foreach (var r in radRooms)
+                        AddAuxiliaryHeat(r.roomId, perRoom);
+                }
+            }
+
+            // Auxiliary stoves (Plan 57 §4.8)
+            foreach (var stove in _state.stoves)
+            {
+                if (stove.isBurning)
+                {
+                    AddAuxiliaryHeat(stove.roomId, stove.heatKw);
+                    if (stove.daysRemaining > 0)
+                    {
+                        stove.daysRemaining--;
+                        if (stove.daysRemaining <= 0) stove.isBurning = false;
+                    }
+                }
+            }
+
+            // Boiler heat production with technician staffing efficiency (Plan 57 §4.10)
             if (_state.boilerActive)
             {
                 _state.boilerCurrentTempC = Math.Max(_state.boilerCurrentTempC, _state.boilerTargetTempC);
                 float deltaT = Math.Max(0f, _state.boilerTargetTempC - _deepFreeze.IndoorTempCelsius);
-                float fuelBurn = (float)Math.Min(2.5f, 0.25f + 0.012f * deltaT);
+                float techEff = Math.Clamp(_state.technicianEfficiencyMult, 0.6f, 1.8f);
+                float fuelBurn = (float)Math.Min(2.5f, (0.25f + 0.012f * deltaT) / techEff);
                 _state.boilerFuelLevel = Math.Max(0, _state.boilerFuelLevel - fuelBurn);
                 if (_state.boilerFuelLevel <= 0)
                 {
@@ -440,6 +622,26 @@ namespace Ashfall.Core
                             OnIncident?.Invoke(incident);
                         }
                     }
+                }
+            }
+
+            // Pipe freezing progression (Plan 57 §4.6)
+            foreach (var pipe in _state.pipes)
+            {
+                var r1 = _state.rooms.Find(r => r.roomId == pipe.fromRoomId);
+                var r2 = _state.rooms.Find(r => r.roomId == pipe.toRoomId);
+                float minTemp = Math.Min(r1?.currentTempC ?? _deepFreeze.IndoorTempCelsius, r2?.currentTempC ?? _deepFreeze.IndoorTempCelsius);
+                if (minTemp < 0f)
+                {
+                    pipe.freezeScore = Math.Min(100f, pipe.freezeScore + (Math.Abs(minTemp) * 2.5f) + 5f);
+                    if (pipe.freezeScore >= 40f)
+                        pipe.isFrozen = true;
+                }
+                else if (minTemp > 5f)
+                {
+                    pipe.freezeScore = Math.Max(0f, pipe.freezeScore - (minTemp * 2f));
+                    if (pipe.freezeScore <= 0f)
+                        pipe.isFrozen = false;
                 }
             }
 
@@ -663,6 +865,157 @@ namespace Ashfall.Core
             OnIncident?.Invoke(incident);
             OnThermalChanged?.Invoke();
             return ActionResult.Success("thermal.external_burst");
+        }
+
+        public ActionResult RetrofitInsulation(string roomId, string insulationId, InventoryContainer? inventory = null)
+        {
+            if (!_insulationCatalog.TryGetValue(insulationId, out var def) || def == null)
+                return ActionResult.Failed("unknown_insulation", "thermal.unknown_insulation");
+
+            var room = _state.rooms.Find(r => r.roomId == roomId);
+            if (room == null) return ActionResult.Failed("unknown_room", "thermal.unknown_room");
+
+            if (inventory != null && def.retrofit_item_costs != null)
+            {
+                foreach (var cost in def.retrofit_item_costs)
+                {
+                    if (!inventory.HasSufficient(cost.item_id, cost.amount))
+                        return ActionResult.Blocked("insufficient_materials", "thermal.insufficient_materials");
+                }
+                foreach (var cost in def.retrofit_item_costs)
+                {
+                    inventory.TryConsume(cost.item_id, cost.amount);
+                }
+            }
+
+            room.insulationFactor = def.insulation_factor;
+            _state.roomInsulationLevels[roomId] = def.level;
+            _state.roomInstalledInsulation[roomId] = def.insulation_id;
+
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.insulation_retrofitted",
+                new Dictionary<string, double> { { "level", def.level }, { "factor", def.insulation_factor } });
+        }
+
+        public ActionResult ThawPipeWithBlowtorch(string pipeId, InventoryContainer inventory)
+        {
+            var pipe = _state.pipes.Find(p => p.pipeId == pipeId);
+            if (pipe == null) return ActionResult.Failed("unknown_pipe", "thermal.unknown_pipe");
+            if (!pipe.isFrozen) return ActionResult.Blocked("not_frozen", "thermal.not_frozen");
+
+            if (inventory == null || !inventory.HasSufficient("item_blowtorch", 1))
+                return ActionResult.Blocked("no_blowtorch", "thermal.no_blowtorch");
+
+            // Consume 1 unit of fuel if available (optional support fuel)
+            if (inventory.HasSufficient("item_fuel", 1))
+            {
+                inventory.TryConsume("item_fuel", 1);
+            }
+
+            pipe.isFrozen = false;
+            pipe.freezeScore = 0f;
+            pipe.condition = Math.Max(10f, pipe.condition - 5f);
+
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.pipe_thawed_blowtorch",
+                new Dictionary<string, double> { { "condition", pipe.condition } });
+        }
+
+        public ActionResult AddAuxiliaryStove(string roomId, AuxiliaryStove stove)
+        {
+            var room = _state.rooms.Find(r => r.roomId == roomId);
+            if (room == null) return ActionResult.Failed("unknown_room", "thermal.unknown_room");
+            if (stove == null) return ActionResult.Failed("invalid_stove", "thermal.invalid_stove");
+
+            stove.roomId = roomId;
+            if (_state.stoves.Exists(s => s.stoveId == stove.stoveId))
+                return ActionResult.Blocked("stove_already_exists", "thermal.stove_already_exists");
+
+            _state.stoves.Add(stove);
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.stove_added");
+        }
+
+        public ActionResult LightAuxiliaryStove(string roomId, string stoveId, int burnDays = 3, InventoryContainer? inventory = null)
+        {
+            var stove = _state.stoves.Find(s => s.roomId == roomId && s.stoveId == stoveId);
+            if (stove == null) return ActionResult.Failed("unknown_stove", "thermal.unknown_stove");
+            if (stove.isBurning) return ActionResult.Blocked("already_burning", "thermal.already_burning");
+
+            string fuelId = string.IsNullOrEmpty(stove.fuelItemId) ? "item_fuel" : stove.fuelItemId;
+            if (inventory != null)
+            {
+                if (!inventory.HasSufficient(fuelId, burnDays))
+                    return ActionResult.Blocked("insufficient_fuel", "thermal.insufficient_fuel");
+                inventory.TryConsume(fuelId, burnDays);
+            }
+
+            stove.isBurning = true;
+            stove.daysRemaining = Math.Max(1, burnDays);
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.stove_lit",
+                new Dictionary<string, double> { { "burnDays", stove.daysRemaining } });
+        }
+
+        public void SetGeneratorWasteHeat(float generatorKw, bool pumpActive)
+        {
+            _state.generatorWasteHeatKw = Math.Max(0f, generatorKw);
+            _state.circulationPumpActive = pumpActive;
+            OnThermalChanged?.Invoke();
+        }
+
+        public void SetTechnicianEfficiency(float efficiencyMult)
+        {
+            _state.technicianEfficiencyMult = Math.Clamp(efficiencyMult, 0.5f, 2.0f);
+            OnThermalChanged?.Invoke();
+        }
+
+        public ActionResult ShearPipe(string pipeId, float severity = 1f)
+        {
+            var pipe = _state.pipes.Find(p => p.pipeId == pipeId);
+            if (pipe == null) return ActionResult.Failed("unknown_pipe", "thermal.unknown_pipe");
+
+            pipe.hasBurst = true;
+            pipe.burstDay = _currentDay;
+            pipe.burstSeverity = Math.Clamp(severity, 0.1f, 1.0f);
+            pipe.condition = Math.Max(0f, pipe.condition - (severity * 50f));
+            _state.lastIncidentDay = _currentDay;
+
+            var incident = new ThermalIncident
+            {
+                day = _currentDay,
+                pipeId = pipe.pipeId,
+                roomId = pipe.fromRoomId,
+                kind = ThermalIncidentKind.SeismicShear,
+                description = $"Pipe {pipeId} suffered seismic shear at severity {severity:F2}"
+            };
+            _state.incidentLog.Add(incident);
+            OnIncident?.Invoke(incident);
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.pipe_sheared");
+        }
+
+        public ActionResult ShearRadiatorLoop(string roomId)
+        {
+            var room = _state.rooms.Find(r => r.roomId == roomId);
+            if (room == null) return ActionResult.Failed("unknown_room", "thermal.unknown_room");
+            if (!room.hasRadiator) return ActionResult.Blocked("no_radiator", "thermal.no_radiator");
+
+            room.radiatorValveOpen = 0f;
+            room.currentTempC = Math.Max(-15f, room.currentTempC - 5f);
+            _state.lastIncidentDay = _currentDay;
+
+            var incident = new ThermalIncident
+            {
+                day = _currentDay,
+                roomId = roomId,
+                kind = ThermalIncidentKind.RadiatorRupture,
+                description = $"Radiator loop ruptured in {room.displayName} from violent seismic shock"
+            };
+            _state.incidentLog.Add(incident);
+            OnIncident?.Invoke(incident);
+            OnThermalChanged?.Invoke();
+            return ActionResult.Success("thermal.radiator_sheared");
         }
 
         public ShelterThermalState CaptureState() => CloneState(_state);

@@ -42,6 +42,13 @@ namespace Ashfall.Core
         public event Action<string, int, DebtContract> OnCollateralSeizure;
         public event Action<string, int, DebtContract> OnLaborObligation;
 
+        // Consequence-aware variants are used by the host bridge for stable
+        // source identities. The legacy events remain for existing consumers.
+        public event Action<DebtConsequence, string, int, DebtContract> OnEmbargoRequestedDetailed;
+        public event Action<DebtConsequence, string, DebtContract> OnBountyRequestedDetailed;
+        public event Action<DebtConsequence, string, int, DebtContract> OnCollateralSeizureDetailed;
+        public event Action<DebtConsequence, string, int, DebtContract> OnLaborObligationDetailed;
+
         public DebtConsequenceDispatcher(LedgerDebtSystem ledger, DebtTemplateCatalog catalog)
         {
             _ledger = ledger ?? throw new ArgumentNullException(nameof(ledger));
@@ -186,21 +193,32 @@ namespace Ashfall.Core
 
             var template = ResolveTemplate(contract);
 
+            // Every authored standing delta is a faction consequence. Keeping
+            // this outside the effect switch prevents embargo, bounty,
+            // collateral, labor, raid, and forgiveness records from silently
+            // dropping their authored reputation change.
+            if (consequence.standingDelta != 0 && !string.IsNullOrEmpty(targetFaction))
+                OnStandingPenalty?.Invoke(consequence, targetFaction, contract);
+
             switch (consequence.effectType)
             {
                 case "standing_loss":
-                    if (!string.IsNullOrEmpty(targetFaction))
-                        OnStandingPenalty?.Invoke(consequence, targetFaction, contract);
                     break;
 
                 case "embargo":
                     if (!string.IsNullOrEmpty(consequence.embargoScope))
+                    {
                         OnEmbargoRequested?.Invoke(consequence.embargoScope, consequence.embargoDurationDays, contract);
+                        OnEmbargoRequestedDetailed?.Invoke(consequence, consequence.embargoScope, consequence.embargoDurationDays, contract);
+                    }
                     break;
 
                 case "bounty":
                     if (!string.IsNullOrEmpty(targetFaction))
+                    {
                         OnBountyRequested?.Invoke(targetFaction, contract);
+                        OnBountyRequestedDetailed?.Invoke(consequence, targetFaction, contract);
+                    }
                     break;
 
                 case "collateral_seizure":
@@ -209,30 +227,38 @@ namespace Ashfall.Core
 
                 case "labor_obligation":
                     if (!string.IsNullOrEmpty(targetFaction) && consequence.laborDays > 0)
+                    {
                         OnLaborObligation?.Invoke(targetFaction, consequence.laborDays, contract);
+                        OnLaborObligationDetailed?.Invoke(consequence, targetFaction, consequence.laborDays, contract);
+                    }
                     break;
 
                 case "standing_loss_and_embargo":
-                    if (!string.IsNullOrEmpty(targetFaction))
-                        OnStandingPenalty?.Invoke(consequence, targetFaction, contract);
                     if (!string.IsNullOrEmpty(consequence.embargoScope))
+                    {
                         OnEmbargoRequested?.Invoke(consequence.embargoScope, consequence.embargoDurationDays, contract);
+                        OnEmbargoRequestedDetailed?.Invoke(consequence, consequence.embargoScope, consequence.embargoDurationDays, contract);
+                    }
                     break;
 
                 case "bounty_and_seizure":
                     if (!string.IsNullOrEmpty(targetFaction))
+                    {
                         OnBountyRequested?.Invoke(targetFaction, contract);
+                        OnBountyRequestedDetailed?.Invoke(consequence, targetFaction, contract);
+                    }
                     TryDispatchSeizure(consequence, template, contract);
                     break;
 
                 case "raid":
                     if (!string.IsNullOrEmpty(targetFaction))
+                    {
                         OnBountyRequested?.Invoke(targetFaction, contract);
+                        OnBountyRequestedDetailed?.Invoke(consequence, targetFaction, contract);
+                    }
                     break;
 
                 case "treaty_breach":
-                    if (!string.IsNullOrEmpty(targetFaction))
-                        OnStandingPenalty?.Invoke(consequence, targetFaction, contract);
                     break;
 
                 case "forgiveness":
@@ -283,6 +309,7 @@ namespace Ashfall.Core
 
             if (quantity <= 0) return;
             OnCollateralSeizure?.Invoke(itemId, quantity, contract);
+            OnCollateralSeizureDetailed?.Invoke(consequence, itemId, quantity, contract);
         }
     }
 }

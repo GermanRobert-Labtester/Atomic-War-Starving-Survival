@@ -177,5 +177,93 @@ namespace Ashfall.Core.Tests.Narrative
             Assert.Single(sys2.State.banishments);
             Assert.Equal("survivor_exiled", sys2.State.banishments[0].survivorId);
         }
+
+        [Fact]
+        public void MartialLaw_LowersEvidenceThreshold_ForConviction()
+        {
+            var politics = new PoliticsSystem();
+            politics.SetInitialLeader("leader_1");
+            // Activate martial law
+            politics.DeclareMartialLaw();
+
+            var sys = new JusticeSystem(new SeededRng(42), politics: politics);
+            sys.RegisterLaw(new WastelandLawDef
+            {
+                law_id = "law_theft_martial",
+                crime_type = "Theft",
+                min_evidence_confidence = 0.5f,
+                allowed_punishments = new List<string> { "Execution" }
+            });
+
+            var incident = sys.ReportCrime("inc_martial", CrimeType.Theft, "survivor_thief", null, 1);
+            // Add just enough evidence: 0.3 weight (below normal 0.5, above martial 0.25)
+            sys.AddEvidence("inc_martial", "ev_witness", "Witness testimony", 0.3f, 1);
+
+            var result = sys.HoldTrial(new TrialDecision
+            {
+                incidentId = "inc_martial",
+                verdict = TrialVerdict.Guilty,
+                punishment = PunishmentLevel.Execution
+            }, 2);
+
+            Assert.True(result.Success, $"Martial law should allow conviction with lower evidence. Failure: {result.FailureCode}");
+        }
+
+        [Fact]
+        public void MercifulLaw_BlocksExecution()
+        {
+            var sys = new JusticeSystem(new SeededRng(42));
+            sys.RegisterLaw(new WastelandLawDef
+            {
+                law_id = "law_theft_merciful",
+                crime_type = "Theft",
+                min_evidence_confidence = 0.5f,
+                allowed_punishments = new List<string> { "Execution", "Restitution" },
+                doctrine_tag = "Merciful"
+            });
+
+            var incident = sys.ReportCrime("inc_merciful", CrimeType.Theft, "survivor_thief", null, 1);
+            sys.AddEvidence("inc_merciful", "ev_strong", "Strong evidence", 0.9f, 1);
+
+            var result = sys.HoldTrial(new TrialDecision
+            {
+                incidentId = "inc_merciful",
+                verdict = TrialVerdict.Guilty,
+                punishment = PunishmentLevel.Execution
+            }, 2);
+
+            Assert.False(result.Success, "Merciful doctrine should block execution");
+            Assert.Equal("execution_blocked_by_merciful_governance", result.FailureCode);
+        }
+
+        [Fact]
+        public void PoliticsSystem_ReceivesLegitimacyDelta_AfterTrial()
+        {
+            var politics = new PoliticsSystem();
+            politics.SetInitialLeader("leader_1");
+            float initialLegitimacy = politics.Legitimacy;
+
+            var sys = new JusticeSystem(new SeededRng(42), politics: politics);
+            sys.RegisterLaw(new WastelandLawDef
+            {
+                law_id = "law_assault_standard",
+                crime_type = "Assault",
+                min_evidence_confidence = 0.3f,
+                allowed_punishments = new List<string> { "Restitution" }
+            });
+
+            sys.ReportCrime("inc_legit", CrimeType.Assault, "survivor_a", "survivor_v", 1);
+            sys.AddEvidence("inc_legit", "ev_strong", "Strong evidence", 0.8f, 1);
+
+            sys.HoldTrial(new TrialDecision
+            {
+                incidentId = "inc_legit",
+                verdict = TrialVerdict.Guilty,
+                punishment = PunishmentLevel.Restitution
+            }, 2);
+
+            Assert.True(politics.Legitimacy > initialLegitimacy,
+                $"Legitimacy should increase after just trial. Was {initialLegitimacy}, now {politics.Legitimacy}");
+        }
     }
 }

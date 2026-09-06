@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "stations": [
+    {
+      "id": "room_station_clinic",
+      "station_id": "room_station_clinic",
+      "room_id": "room_clinic",
+      "blower_id": "",
+      "power_demand_watts": 220,
+      "max_cargo_mass_kg": 6,
+      "max_cargo_volume_litres": 12
+    },
+    {
+      "id": "room_station_armory",
+      "station_id": "room_station_armory",
+      "room_id": "room_armory_munitions",
+      "blower_id": "",
+      "power_demand_watts": 260,
+      "max_cargo_mass_kg": 8,
+      "max_cargo_volume_litres": 15
+    },
+    {
+      "id": "room_station_greenhouse",
+      "station_id": "room_station_greenhouse",
+      "room_id": "room_greenhouse",
+      "blower_id": "",
+      "power_demand_watts": 240,
+      "max_cargo_mass_kg": 5,
+      "max_cargo_volume_litres": 10
+    }
+  ],
+  "links": [
+    {
+      "id": "pneumatic_link_clinic_armory",
+      "link_id": "pneumatic_link_clinic_armory",
+      "from_station_id": "room_station_clinic",
+      "to_station_id": "room_station_armory",
+      "length_m": 42,
+      "capsule_standard": "capsule_50mm",
+      "base_leakage": 0.03,
+      "base_seal_condition": 100
+    },
+    {
+      "id": "pneumatic_link_armory_greenhouse",
+      "link_id": "pneumatic_link_armory_greenhouse",
+      "from_station_id": "room_station_armory",
+      "to_station_id": "room_station_greenhouse",
+      "length_m": 58,
+      "capsule_standard": "capsule_100mm",
+      "base_leakage": 0.04,
+      "base_seal_condition": 100
+    },
+    {
+      "id": "pneumatic_link_greenhouse_clinic",
+      "link_id": "pneumatic_link_greenhouse_clinic",
+      "from_station_id": "room_station_greenhouse",
+      "to_station_id": "room_station_clinic",
+      "length_m": 36,
+      "capsule_standard": "capsule_50mm",
+      "base_leakage": 0.02,
+      "base_seal_condition": 100
+    }
+  ],
+  "capsule_standards": [
+    {
+      "id": "part_capsule_50mm",
+      "standard_id": "capsule_50mm",
+      "diameter_mm": 50,
+      "base_speed_kmh": 30
+    },
+    {
+      "id": "part_capsule_100mm",
+      "standard_id": "capsule_100mm",
+      "diameter_mm": 100,
+      "base_speed_kmh": 24
+    }
+  ],
+  "voice_pipes": [
+    {
+      "from_station_id": "room_station_clinic",
+      "to_station_id": "room_station_armory",
+      "blackout_safe": true
+    },
+    {
+      "from_station_id": "room_station_greenhouse",
+      "to_station_id": "room_station_clinic",
+      "blackout_safe": true
+    }
+  ]
+}

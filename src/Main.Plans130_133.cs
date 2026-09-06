@@ -191,7 +191,9 @@ namespace AtomicWar.GodotApp
                     null!, _simDay);
         }
 
-        private void SavePlans130To133()
+        // Composite orchestration only; the child SaveXxx methods are the
+        // registered campaign sections.
+        private void PersistPlans130To133()
         {
             SavePowderMetallurgy();
             SaveNvisCommunications();

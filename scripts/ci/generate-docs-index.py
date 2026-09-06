@@ -94,6 +94,10 @@ def classify_doc(rel_path: str, content: str, title: str):
             break
     if not summary:
         summary = title
+    # Summaries are copied into docs/INDEX.md, whose directory is different
+    # from the source document. Keep the summary readable without carrying
+    # source-relative links into the index where they resolve incorrectly.
+    summary = re.sub(r'!?\[([^\]]+)\]\([^)]*\)', r'\1', summary)
     if len(summary) > 120:
         summary = summary[:117] + "..."
 

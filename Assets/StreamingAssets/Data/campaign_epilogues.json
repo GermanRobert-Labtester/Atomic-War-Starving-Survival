@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "vignettes": [
+    {
+      "id": "epilogue_demographics_thriving",
+      "category": "demographics",
+      "priority": 10,
+      "min_survivors": 12,
+      "max_survivors": 999,
+      "max_starvation_deaths": 0,
+      "title": "A Beacon in the Ash",
+      "narrative": "Against impossible odds, the shelter grew into a thriving subterranean bastion. With over a dozen healthy survivors, children born into sealed corridors learned pre-war mathematics before they ever saw the sun. The air remains sweet, the bunks are warm, and the graves in the memorial garden are few.",
+      "tags": ["triumph", "demographics", "haven"]
+    },
+    {
+      "id": "epilogue_demographics_persevering",
+      "category": "demographics",
+      "priority": 5,
+      "min_survivors": 5,
+      "max_survivors": 11,
+      "max_starvation_deaths": 3,
+      "title": "Scarred Continuity",
+      "narrative": "The community survived, though every face bears the marks of the long winter. A small cadre of resolute men and women keep the filters turning and the water flowing. They have lost friends, parents, and partners, but their hands remain steady on the valves. They endure.",
+      "tags": ["endurance", "demographics", "hard_fought"]
+    },
+    {
+      "id": "epilogue_demographics_desolation",
+      "category": "demographics",
+      "priority": 1,
+      "min_survivors": 0,
+      "max_survivors": 4,
+      "max_starvation_deaths": 999,
+      "title": "The Hollow Vault",
+      "narrative": "Silence reclaimed the corridors. The emergency strobes pulse above empty cots and untended dials. Those few who remained walked out into the radioactive twilight or succumbed in the dark. The shelter stands not as a home, but as a tomb for an era that could not save itself.",
+      "tags": ["bleak", "demographics", "extinction"]
+    },
+    {
+      "id": "epilogue_governance_reconciliation",
+      "category": "governance",
+      "priority": 10,
+      "min_paroled_captives": 2,
+      "max_penal_shifts": 10,
+      "title": "The Covenant of Common Ground",
+      "narrative": "By meeting hostility with structured justice rather than wrath, the shelter broke the cycle of raider violence. Paroled adversaries took up toolboxes and rifles beside their former jailers. A written charter was adopted, ensuring that dignity outlasted the apocalypse.",
+      "tags": ["justice", "governance", "reconciliation"]
+    },
+    {
+      "id": "epilogue_governance_iron_order",
+      "category": "governance",
+      "priority": 5,
+      "min_paroled_captives": 0,
+      "max_penal_shifts": 999,
+      "title": "Rule of the Iron Sump",
+      "narrative": "Survival demanded uncompromising discipline. Captives labored under armed guard at the slurry pumps and air-filtration shafts, earning their half-rations in sweat. Order was maintained at the cost of softness, but in the radioactive wasteland, softness is an early grave.",
+      "tags": ["authoritarian", "governance", "penal"]
+    },
+    {
+      "id": "epilogue_technology_renaissance",
+      "category": "technology",
+      "priority": 10,
+      "min_archives_decrypted": 3,
+      "title": "The Rediscovered Light",
+      "narrative": "Through painstaking cryptanalysis of subterranean memory spools, the shelter resurrected lost pre-war sciences. Automated climate controls, geothermal turbines, and pharmaceutical synthesizers hummed to life. The people no longer merely scavenge the past — they possess the tools to rebuild tomorrow.",
+      "tags": ["tech", "archives", "renaissance"]
+    },
+    {
+      "id": "epilogue_technology_makeshift",
+      "category": "technology",
+      "priority": 1,
+      "min_archives_decrypted": 0,
+      "title": "Bailing Wire and Hope",
+      "narrative": "Without deciphered technical archives, every machine in the vault remains a patched relic of scrap metal, leather gaskets, and prayer. Blackouts are frequent, and filters rattle with grit, yet somehow the grease monkeys coax one more revolution from the dynamos each morning.",
+      "tags": ["tech", "makeshift", "scavenger"]
+    },
+    {
+      "id": "epilogue_sustenance_harvest",
+      "category": "sustenance",
+      "priority": 10,
+      "min_starvation_deaths": 0,
+      "max_starvation_deaths": 0,
+      "title": "The Granary of the Deep",
+      "narrative": "Cryogenic freezers and hardwood smokehouses kept the pantry brimming with preserved rations. The spectre of starvation never breached the blast doors. Even during the dark freeze of nuclear winter, every survivor sat down to a measured, nutritious meal.",
+      "tags": ["food", "sustenance", "abundance"]
+    },
+    {
+      "id": "epilogue_sustenance_famine",
+      "category": "sustenance",
+      "priority": 1,
+      "min_starvation_deaths": 1,
+      "max_starvation_deaths": 999,
+      "title": "The Ledger of Hunger",
+      "narrative": "Famine gnawed at the shelter's marrow. With power blackouts spoiling freeze lockers and winter freezing the pipelines, rations were stretched until survivors chewed boiled belt leather. The hollow eyes of those who starved will haunt the survivors until the end of their days.",
+      "tags": ["food", "famine", "grim"]
+    }
+  ]
+}

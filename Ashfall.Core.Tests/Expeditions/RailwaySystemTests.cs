@@ -531,5 +531,72 @@ namespace Ashfall.Core.Tests.Expeditions
 
             Assert.Equal(trainA.status, trainB.status);
         }
+
+        [Fact]
+        public void RailCorridorOperational_ReturnsTrue_ForIntactPath()
+        {
+            var sys = new RailwaySystem(new SeededRng(42));
+            sys.RegisterCatalog(new RailwayNetworkCatalog
+            {
+                nodes = new List<RailNodeDef>
+                {
+                    new RailNodeDef { node_id = "north", zone_id = "zone_north" },
+                    new RailNodeDef { node_id = "south", zone_id = "zone_south" }
+                },
+                segments = new List<TrackSegmentDef>
+                {
+                    new TrackSegmentDef
+                    {
+                        segment_id = "seg_1",
+                        start_node_id = "north",
+                        end_node_id = "south",
+                        base_integrity = 0.9f,
+                        distance_km = 10f
+                    }
+                }
+            });
+
+            Assert.True(sys.IsRailCorridorOperational("north", "south"));
+            var corridor = sys.GetOperationalRailCorridor("north", "south");
+            Assert.NotNull(corridor);
+            Assert.Single(corridor!);
+            Assert.Equal("seg_1", corridor![0]);
+        }
+
+        [Fact]
+        public void RailCorridorOperational_ReturnsFalse_ForDegradedSegment()
+        {
+            var sys = new RailwaySystem(new SeededRng(42));
+            sys.RegisterCatalog(new RailwayNetworkCatalog
+            {
+                nodes = new List<RailNodeDef>
+                {
+                    new RailNodeDef { node_id = "east", zone_id = "zone_east" },
+                    new RailNodeDef { node_id = "west", zone_id = "zone_west" }
+                },
+                segments = new List<TrackSegmentDef>
+                {
+                    new TrackSegmentDef
+                    {
+                        segment_id = "seg_broken",
+                        start_node_id = "east",
+                        end_node_id = "west",
+                        base_integrity = 0.2f,
+                        distance_km = 5f
+                    }
+                }
+            });
+
+            Assert.False(sys.IsRailCorridorOperational("east", "west"));
+            Assert.Null(sys.GetOperationalRailCorridor("east", "west"));
+        }
+
+        [Fact]
+        public void RailCorridorOperational_ReturnsFalse_ForUnknownNodes()
+        {
+            var sys = new RailwaySystem(new SeededRng(42));
+            Assert.False(sys.IsRailCorridorOperational("nope", "nowhere"));
+            Assert.Null(sys.GetOperationalRailCorridor("nope", "nowhere"));
+        }
     }
 }

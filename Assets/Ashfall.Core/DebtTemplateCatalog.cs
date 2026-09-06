@@ -19,6 +19,11 @@ namespace Ashfall.Core
         public string consequenceId;
         public string displayName;
         public string description;
+        /// <summary>Optional campaign availability controls. Missing fields
+        /// from pre-Plan-IV catalogs remain active for backward compatibility.</summary>
+        public bool active = true;
+        public int minDay;
+        public int maxDay;
     }
 
     /// <summary>Default/forfeit consequence definition loaded from ledger_debt_templates.json.</summary>
@@ -132,6 +137,10 @@ namespace Ashfall.Core
                     if (t.principalQuantity <= 0) { catalog.Errors.Add(t.id + ": principalQuantity must be > 0"); }
                     if (t.termDays <= 0) { catalog.Errors.Add(t.id + ": termDays must be > 0"); }
                     if (t.rate < 0f) { catalog.Errors.Add(t.id + ": rate must be >= 0"); }
+                    if (t.minDay < 0) { catalog.Errors.Add(t.id + ": minDay must be >= 0"); }
+                    if (t.maxDay < 0) { catalog.Errors.Add(t.id + ": maxDay must be >= 0"); }
+                    if (t.maxDay > 0 && t.maxDay < t.minDay)
+                        catalog.Errors.Add(t.id + ": maxDay must be >= minDay");
                     if (string.IsNullOrEmpty(t.forfeitDescription)) { catalog.Errors.Add(t.id + ": missing forfeitDescription"); }
                     if (string.IsNullOrEmpty(t.consequenceId)) { catalog.Errors.Add(t.id + ": missing consequenceId"); }
                     catalog.Templates.Add(t);

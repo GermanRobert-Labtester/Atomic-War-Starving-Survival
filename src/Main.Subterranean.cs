@@ -66,10 +66,11 @@ namespace AtomicWar.GodotApp
 
         private bool IsClaustrophobe(string survivorId)
         {
-            var entry = _survivors?.Roster?.Roster?.FirstOrDefault(e =>
+            var survivors = _survivors;
+            var entry = survivors?.Roster?.Roster?.FirstOrDefault(e =>
                 e != null && string.Equals(e.survivorId, survivorId, StringComparison.Ordinal));
             if (entry == null) return false;
-            var def = _survivors.Roster.FindDefinition(entry.definitionId);
+            var def = survivors!.Roster.FindDefinition(entry.definitionId);
             return def?.traitIds?.Contains(SubterraneanSystem.ClaustrophobiaTraitId) ?? false;
         }
 

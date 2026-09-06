@@ -149,7 +149,7 @@ namespace Ashfall.Core.Tests
             var enc = CreateValidPatrol();
             enc.Choices.RemoveAt(0); // only 1 choice left
             var errors = PatrolEncounterValidator.Validate(new[] { enc }, _factions, _items);
-            Assert.Contains(errors, e => e.Contains("between 2 and 4 choices"));
+            Assert.Contains(errors, e => e.Contains("between 2 and 6 choices"));
         }
 
         [Fact]

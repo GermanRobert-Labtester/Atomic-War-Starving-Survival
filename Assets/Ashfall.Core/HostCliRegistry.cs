@@ -55,6 +55,7 @@ namespace Ashfall.Core
         AgricultureSelfTest,
         DefenseSelfTest,
         PsychologySelfTest,
+        WildlifeSelfTest,
         HoldfastBriefing,
         HoldfastSelfTest,
         IceRoadSelfTest,
@@ -82,6 +83,7 @@ namespace Ashfall.Core
         ExpansionHubSaveSelfTest,
         ExpeditionEncounterBridgeSelfTest,
         ExpeditionSelfTest,
+        PatrolEncounterSelfTest,
         HoldfastSaveSelfTest,
         HoldfastTradeSaveSelfTest,
         InventorySaveSelfTest,
@@ -407,6 +409,12 @@ namespace Ashfall.Core
                     null,
                     "Plans 162-165: arc catalog, sustained triggers, conditional behaviors, stash conservation, catharsis bounds"),
                 new HostCliActionDescriptor(
+                    HostCliAction.WildlifeSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--wildlife-selftest",
+                    null,
+                    "Plans 162-165: species catalog, single-population ecology, extinction/recolonization, apex, taming transfer"),
+                new HostCliActionDescriptor(
                     HostCliAction.HoldfastBriefing,
                     "Expansions & Campaign Modules",
                     "--holdfast-briefing",
@@ -560,6 +568,12 @@ namespace Ashfall.Core
                     "--expedition-selftest",
                     null,
                     "Expedition domain: sorties, encounter resolution, loot drops, and save round-trip"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PatrolEncounterSelfTest,
+                    "Host Domains & Save Stores",
+                    "--patrol-encounter-selftest",
+                    new[] { "--travel-encounter-selftest" },
+                    "Patrol catalog, cooldown, recognition, resolution, and save/restore lifecycle"),
                 new HostCliActionDescriptor(
                     HostCliAction.HoldfastSaveSelfTest,
                     "Host Domains & Save Stores",

@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "operations": [
+    {
+      "id": "fop_inventory_leak",
+      "display_name": "Supply Depot Reconnaissance",
+      "target_faction": "warlords_sector_4",
+      "operation_class": "intelligence_leak",
+      "target_subsystem": "storage",
+      "suspicion_per_tick": 5,
+      "cooldown_days": 4,
+      "detection_difficulty": 40,
+      "tags": ["leak", "supplies", "covert"]
+    },
+    {
+      "id": "fop_fuel_sabotage",
+      "display_name": "Fuel Line Line Contamination",
+      "target_faction": "iron_garrison",
+      "operation_class": "sabotage",
+      "target_subsystem": "fuel",
+      "suspicion_per_tick": 15,
+      "cooldown_days": 8,
+      "detection_difficulty": 55,
+      "tags": ["sabotage", "fuel", "disruption"]
+    },
+    {
+      "id": "fop_water_tampering",
+      "display_name": "Filtration Siphon Diversion",
+      "target_faction": "cult_of_ash_sign",
+      "operation_class": "sabotage",
+      "target_subsystem": "water",
+      "suspicion_per_tick": 20,
+      "cooldown_days": 7,
+      "detection_difficulty": 60,
+      "tags": ["sabotage", "water", "filter"]
+    },
+    {
+      "id": "fop_power_interruption",
+      "display_name": "Substation Breaker Tampering",
+      "target_faction": "iron_garrison",
+      "operation_class": "sabotage",
+      "target_subsystem": "power",
+      "suspicion_per_tick": 18,
+      "cooldown_days": 6,
+      "detection_difficulty": 50,
+      "tags": ["sabotage", "power", "grid"]
+    },
+    {
+      "id": "fop_misinformation",
+      "display_name": "False Radio Distress Intercept",
+      "target_faction": "ash_militia",
+      "operation_class": "counter_intel",
+      "target_subsystem": "radio",
+      "suspicion_per_tick": 8,
+      "cooldown_days": 5,
+      "detection_difficulty": 35,
+      "tags": ["misdirection", "radio", "intel"]
+    },
+    {
+      "id": "fop_patrol_theft",
+      "display_name": "Expedition Route Blueprint Theft",
+      "target_faction": "warlords_sector_4",
+      "operation_class": "theft",
+      "target_subsystem": "patrol",
+      "suspicion_per_tick": 12,
+      "cooldown_days": 9,
+      "detection_difficulty": 45,
+      "tags": ["theft", "routes", "map"]
+    },
+    {
+      "id": "fop_sleeper_activate",
+      "display_name": "Sleeper Asset Activation",
+      "target_faction": "iron_garrison",
+      "operation_class": "infiltration",
+      "target_subsystem": "personnel",
+      "suspicion_per_tick": 25,
+      "cooldown_days": 12,
+      "detection_difficulty": 70,
+      "tags": ["sleeper", "personnel", "turncoat"]
+    },
+    {
+      "id": "fop_convoy_interception",
+      "display_name": "Trade Convoy Intel Tipoff",
+      "target_faction": "warlords_sector_4",
+      "operation_class": "ambush_prep",
+      "target_subsystem": "storage",
+      "suspicion_per_tick": 10,
+      "cooldown_days": 6,
+      "detection_difficulty": 50,
+      "tags": ["convoy", "trade", "intercept"]
+    }
+  ],
+  "dead_drop_templates": [
+    {
+      "id": "fdrop_culvert_ruins",
+      "display_name": "Concrete Drainage Culvert Drop",
+      "target_location": "loc_recovery_yard",
+      "reward_intel_points": 25,
+      "risk_level": "medium",
+      "expiry_days": 5
+    },
+    {
+      "id": "fdrop_hollow_tree",
+      "display_name": "Petrified Timber Knot Drop",
+      "target_location": "loc_grain_silo",
+      "reward_intel_points": 15,
+      "risk_level": "low",
+      "expiry_days": 7
+    },
+    {
+      "id": "fdrop_rusted_pylon",
+      "display_name": "High-Voltage Transmission Pylon Base",
+      "target_location": "loc_radio_relay_mast",
+      "reward_intel_points": 35,
+      "risk_level": "high",
+      "expiry_days": 4
+    },
+    {
+      "id": "fdrop_abandoned_silo",
+      "display_name": "Silo Foundation Drainage Cavity",
+      "target_location": "loc_diesel_tank_farm",
+      "reward_intel_points": 40,
+      "risk_level": "high",
+      "expiry_days": 3
+    }
+  ]
+}

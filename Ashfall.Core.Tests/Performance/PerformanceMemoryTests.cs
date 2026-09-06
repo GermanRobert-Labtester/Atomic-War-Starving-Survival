@@ -82,8 +82,11 @@ public class PerformanceMemoryTests
         using var sessionOff = new PerfSession(ctx, trackAllocations: false);
         using var sessionOn = new PerfSession(ctx, trackAllocations: true);
 
-        sessionOff.Measure(() => { });
-        sessionOn.Measure(() => { });
+        for (int i = 0; i < 10; i++)
+        {
+            sessionOff.Measure(() => { });
+            sessionOn.Measure(() => { });
+        }
 
         var statsOff = sessionOff.ComputeStatistics();
         var statsOn = sessionOn.ComputeStatistics();

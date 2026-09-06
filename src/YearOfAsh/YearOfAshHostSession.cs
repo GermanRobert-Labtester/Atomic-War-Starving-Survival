@@ -56,6 +56,16 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _warlordRng = new SeededRng(2026);
             _demoRoster = CreateDefaultDemoRoster();
             WireWarlordConsequences();
+            WireWarRunner();
+        }
+
+        private void WireWarRunner()
+        {
+            if (_warRunner == null) return;
+            _warRunner.StandingDeltaApplier = (factionId, delta) =>
+            {
+                _factionWar.ModifyStanding(factionId, delta);
+            };
         }
 
         /// <summary>
@@ -136,6 +146,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 var warCatalogLoader = new FactionWarContentCatalogLoader(fileIO, serializer, new GodotLog());
                 var warCatalog = warCatalogLoader.Load(dataDir);
                 session._warRunner = new FactionWarChainRunner(warCatalog);
+                session.WireWarRunner();
             }
 
             var existingSave = loadExistingSave ? YearOfAshSaveStore.TryLoad() : null;
@@ -198,6 +209,16 @@ namespace AtomicWar.GodotApp.YearOfAsh
                     return true;
             }
             return false;
+        }
+
+        public void RecordWarLocationVisited(string locationId)
+        {
+            _warRunner.RecordLocationVisited(locationId);
+        }
+
+        public void ResolveWarChoice(string chainId, string stageId, string choiceId, int currentDay)
+        {
+            _warRunner.ResolveChoice(chainId, stageId, choiceId, currentDay);
         }
 
         public string GetStatusSummary()

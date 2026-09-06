@@ -123,7 +123,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseRadiationDetailPanel());
 
             PanelRegistry.ConfigureActions("research",
-                bindAction: () => { _sharedResearch = EnsureSharedResearch(); _researchPanel.Bind(_sharedResearch); },
+                bindAction: () => { _sharedResearch = EnsureSharedResearch(); _researchHostSession ??= ResearchHostSession.Create(_dataDir, _sharedResearch); _researchPanel.Bind(_sharedResearch, _researchHostSession); },
                 openAction: () => _researchPanel.Open(),
                 closeAction: () => CloseResearchPanel());
 
@@ -193,14 +193,29 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseInventoryOverlay());
 
             PanelRegistry.ConfigureActions("crafting",
-                bindAction: () => { SetupCrafting(); SetupInventory(); _craftingPanel.Bind(_crafting, _inventory); },
-                openAction: () => _craftingPanel.Open(),
+                bindAction: () => { SetupCrafting(); SetupInventory(); SyncCraftingStationsFromShelter(); _craftingPanel.Bind(_crafting, _inventory); },
+                openAction: () => { SyncCraftingStationsFromShelter(); _craftingPanel.Open(); },
                 closeAction: () => CloseCraftingPanel());
 
             PanelRegistry.ConfigureActions("workshop",
-                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); _workshopPanel.Bind(_crafting.Workshop, _inventory.Inventory, _survivors); },
+                bindAction: () => { EnsureShelterWorkshop(); SetupInventory(); SetupEquipmentCondition(); SetupExpeditions(); SetupSurvivors(); _workshopPanel.Bind(_shelterWorkshop!, _inventory.Inventory, _equipmentCondition?.System, _expeditions?.Vehicles, _survivors); },
                 openAction: () => _workshopPanel.Open(),
                 closeAction: () => CloseWorkshopPanel());
+
+            PanelRegistry.ConfigureActions("radio_intelligence",
+                bindAction: () => { EnsureRadioStation(); _radioIntelligencePanel.Bind(_radioStationSystem!, EnsureOrbitalHarrowTelemetry(), _simDay); },
+                openAction: () => _radioIntelligencePanel.Open(),
+                closeAction: () => CloseRadioIntelligencePanel());
+
+            PanelRegistry.ConfigureActions("shelter_social",
+                bindAction: () => { EnsureShelterSocialDynamics(); SetupSurvivors(); _shelterSocialPanel.Bind(_shelterSocialDynamics!, _survivorRelations?.System, _survivors?.Needs, _memorial, _survivors, _inventory?.Inventory, _simDay); },
+                openAction: () => _shelterSocialPanel.Open(),
+                closeAction: () => CloseShelterSocialPanel());
+
+            PanelRegistry.ConfigureActions("subterranean_operations",
+                bindAction: () => { EnsureExcavationHazards(); SetupInventory(); SetupSurvivors(); _subterraneanOperationsPanel.Bind(_excavationHazards!, _inventory.Inventory, _survivors); },
+                openAction: () => _subterraneanOperationsPanel.Open(),
+                closeAction: () => CloseSubterraneanOperationsPanel());
 
             PanelRegistry.ConfigureActions("pharma_lab",
                 bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); SetupMentalHealthCrisis(); _pharmaLabPanel.Bind(_crafting.PharmaLab, _inventory.Inventory, _chemicalDependency?.System, _survivors); },
@@ -433,6 +448,26 @@ namespace AtomicWar.GodotApp
                 openAction: () => _powerGridPanel.Open(),
                 closeAction: () => _powerGridPanel.Visible = false);
 
+            PanelRegistry.ConfigureActions("geothermal_orc",
+                bindAction: () => { ComposePlans74To77(); _geothermalOrcPanel.Bind(_geothermalOrc); },
+                openAction: () => _geothermalOrcPanel.Open(),
+                closeAction: () => _geothermalOrcPanel.Close());
+
+            PanelRegistry.ConfigureActions("ballistics_workbench",
+                bindAction: () => { ComposePlans74To77(); _ballisticsWorkbenchPanel.Bind(_ballisticsWorkbench); },
+                openAction: () => _ballisticsWorkbenchPanel.Open(),
+                closeAction: () => _ballisticsWorkbenchPanel.Close());
+
+            PanelRegistry.ConfigureActions("aeroponics",
+                bindAction: () => { ComposePlans74To77(); _aeroponicsPanel.Bind(_aeroponics); },
+                openAction: () => _aeroponicsPanel.Open(),
+                closeAction: () => _aeroponicsPanel.Close());
+
+            PanelRegistry.ConfigureActions("pneumatic_dispatch",
+                bindAction: () => { ComposePlans74To77(); _pneumaticDispatchPanel.Bind(_pneumaticDispatch); },
+                openAction: () => _pneumaticDispatchPanel.Open(),
+                closeAction: () => _pneumaticDispatchPanel.Close());
+
             PanelRegistry.ConfigureActions("expedition_radar",
                 bindAction: () => { SetupExpeditions(); SetupSurvivors(); _expeditionRadarPanel.Bind(_expeditions, _survivors); },
                 openAction: () => _expeditionRadarPanel.Open(),
@@ -559,6 +594,16 @@ namespace AtomicWar.GodotApp
                 openAction: () => _slurryDewateringSumpPanel.Open(),
                 closeAction: () => _slurryDewateringSumpPanel.Visible = false);
 
+            PanelRegistry.ConfigureActions("electrostatic_scrubber",
+                bindAction: () =>
+                {
+                    SetupExpandedShelterSystems();
+                    if (_ventilationHost != null)
+                        _electrostaticScrubberPanel.Bind(_ventilationHost);
+                },
+                openAction: () => _electrostaticScrubberPanel.Open(),
+                closeAction: () => _electrostaticScrubberPanel.Visible = false);
+
             PanelRegistry.ConfigureActions("plans_94_97",
                 bindAction: () =>
                 {
@@ -597,6 +642,12 @@ namespace AtomicWar.GodotApp
                 openAction: () => HandlePsychologyAction("OPEN", ""),
                 closeAction: () => HandlePsychologyAction("CLOSE", ""));
 
+            // Plans 162-165 — wasteland bestiary (Plan 165).
+            PanelRegistry.ConfigureActions("bestiary",
+                bindAction: () => HandleWildlifeAction("OPEN", ""),
+                openAction: () => HandleWildlifeAction("OPEN", ""),
+                closeAction: () => HandleWildlifeAction("CLOSE", ""));
+
             // Note: 29 flagship prototype consoles (Issues 01–28, 30) are registered as
             // PanelMaturity.Prototype and excluded from player navigation. Their classes
             // remain available for snapshots, previews, and future host session development.
@@ -611,7 +662,7 @@ namespace AtomicWar.GodotApp
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
                 "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133",
-                "farming", "defense_grid", "psychology_arcs"
+                "farming", "defense_grid", "psychology_arcs", "bestiary"
             };
 
             foreach (var expId in expandedIds)

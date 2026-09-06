@@ -186,6 +186,31 @@ namespace Ashfall.Core.Warlords
             return rec != null ? (WarlordTerritoryState)rec.state : WarlordTerritoryState.None;
         }
 
+        public void SetTerritoryState(string locationId, WarlordTerritoryState state, int day = 0)
+        {
+            if (string.IsNullOrWhiteSpace(locationId)) return;
+            if (_state.territory == null) _state.territory = new List<WarlordTerritoryRecord>();
+            var rec = _state.Territory(locationId);
+            int prevState = rec != null ? rec.state : (int)WarlordTerritoryState.None;
+            if (rec == null)
+            {
+                rec = new WarlordTerritoryRecord
+                {
+                    locationId = locationId,
+                    state = (int)state,
+                    sinceDay = day
+                };
+                _state.territory.Add(rec);
+            }
+            else
+            {
+                rec.state = (int)state;
+                rec.sinceDay = day;
+            }
+            OnTerritoryChanged?.Invoke(locationId, prevState, (int)state, day);
+            OnStateChanged?.Invoke();
+        }
+
         public int ControlledCount()
         {
             int n = 0;

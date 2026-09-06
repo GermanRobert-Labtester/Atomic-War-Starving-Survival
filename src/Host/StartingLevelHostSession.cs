@@ -75,8 +75,13 @@ namespace AtomicWar.GodotApp
         public void TickDay() => TickDay(false, Ashfall.Core.WeatherKind.Clear);
 
         public void TickDay(bool isFilterDutyAssigned, Ashfall.Core.WeatherKind outdoorWeather)
+            => TickDay(isFilterDutyAssigned, outdoorWeather, powerAvailability01: 1f);
+
+        /// <summary>Power-aware pass-through (SHELTER_FAILURE_EFFECTS G6):
+        /// zero availability takes the filtration stack offline.</summary>
+        public void TickDay(bool isFilterDutyAssigned, Ashfall.Core.WeatherKind outdoorWeather, float powerAvailability01)
         {
-            System.TickDay(isFilterDutyAssigned, outdoorWeather);
+            System.TickDay(isFilterDutyAssigned, outdoorWeather, powerAvailability01);
             RaiseStateChanged();
         }
 

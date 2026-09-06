@@ -39,6 +39,7 @@ namespace AtomicWar.GodotApp
             SetupJournal();
             _dutyRoster = DutyRosterHostSession.Create(_dataDir, log: null, journal: _journal);
             _dutyRoster.StateChanged += () => _dutyRosterDirty = true;
+            _expansions?.BindDutyRoster(_dutyRoster.Roster);
 
             // Cross-host roundtrip: a save written here (or by the Unity host) restores
             // the chart, marks, and encounter counters instead of starting blank.

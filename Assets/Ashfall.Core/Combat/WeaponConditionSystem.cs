@@ -153,7 +153,10 @@ namespace Ashfall.Core.Combat
             if (weapon.AshFoul > 0f)
                 chance += MathfCompat.Clamp01(weapon.AshFoul) * 0.6f;
 
-            return MathfCompat.Clamp01(chance);
+            float calibrationRisk = weapon.BallisticsMalfunctionMultiplier <= 0f
+                ? 1f
+                : weapon.BallisticsMalfunctionMultiplier;
+            return MathfCompat.Clamp01(chance * calibrationRisk);
         }
 
         /// <summary>Derive the condition degradation from firing one burst of a weapon.</summary>

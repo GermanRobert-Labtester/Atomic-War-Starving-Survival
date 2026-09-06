@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "species": [
+    { "id": "species_cotton_hare", "display_name": "Cotton Hare", "radiation_tolerance": 0.3, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": true, "tameness_chance": 0.2, "tags": ["prey", "soft_fur"] },
+    { "id": "species_feral_goat", "display_name": "Feral Goat", "radiation_tolerance": 0.5, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": true, "tameness_chance": 0.12, "tags": ["prey", "pack_animal"] },
+    { "id": "species_blight_rat", "display_name": "Blight Rat", "radiation_tolerance": 0.9, "diet_type": "scavenger", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["prey", "mutant", "swarm"] },
+    { "id": "species_ash_boar", "display_name": "Ash Boar", "radiation_tolerance": 0.6, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["prey", "large"] },
+    { "id": "species_mirror_carp", "display_name": "Mirror Carp", "radiation_tolerance": 0.4, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["prey", "water"] },
+    { "id": "species_ghost_moth", "display_name": "Ghost Moth", "radiation_tolerance": 0.7, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["prey", "night"] },
+    { "id": "species_rad_dog", "display_name": "Rad-Dog", "radiation_tolerance": 0.85, "diet_type": "carnivore", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["predator", "mutant", "pack_canine"] },
+    { "id": "species_wolf", "display_name": "Ash Wolf", "radiation_tolerance": 0.45, "diet_type": "carnivore", "apex_population_threshold": 14, "tameable": false, "tameness_chance": 0, "tags": ["predator", "apex", "pack_canine"] },
+    { "id": "species_dust_lynx", "display_name": "Dust Lynx", "radiation_tolerance": 0.55, "diet_type": "carnivore", "apex_population_threshold": 10, "tameable": false, "tameness_chance": 0, "tags": ["predator", "apex", "lurker"] },
+    { "id": "species_iron_crow", "display_name": "Iron Crow", "radiation_tolerance": 0.65, "diet_type": "scavenger", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["scavenger"] },
+    { "id": "species_ash_gull", "display_name": "Ash Gull", "radiation_tolerance": 0.5, "diet_type": "scavenger", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["scavenger", "water"] },
+    { "id": "species_gray_heron", "display_name": "Gray Heron", "radiation_tolerance": 0.45, "diet_type": "carnivore", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["predator", "water"] }
+  ],
+  "predator_prey": [
+    { "predator_species_id": "species_wolf", "prey_species_id": "species_cotton_hare", "predation_pressure": 0.06 },
+    { "predator_species_id": "species_wolf", "prey_species_id": "species_feral_goat", "predation_pressure": 0.04 },
+    { "predator_species_id": "species_dust_lynx", "prey_species_id": "species_cotton_hare", "predation_pressure": 0.05 },
+    { "predator_species_id": "species_rad_dog", "prey_species_id": "species_blight_rat", "predation_pressure": 0.07 },
+    { "predator_species_id": "species_gray_heron", "prey_species_id": "species_mirror_carp", "predation_pressure": 0.05 }
+  ],
+  "seasonal_moves": [
+    { "species_id": "species_cotton_hare", "season_window_id": "window_deep_freeze", "move_chance": 0.08 },
+    { "species_id": "species_ash_gull", "season_window_id": "window_thaw", "move_chance": 0.1 }
+  ]
+}

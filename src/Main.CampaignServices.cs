@@ -40,11 +40,13 @@ namespace AtomicWar.GodotApp
                 SetupPhase0();
                 SetupCrafting();
                 SetupExpeditions();
+                SetupReconTelemetry();
                 SetupEconomy();
                 SetupJournal();
                 SetupRadio();
                 SetupPowerGrid();
                 SetupGreenhouse();
+                ComposePlans74To77();
                 SetupMaritime();
                 SetupYearOfAsh();
                 SetupVerdict();
@@ -110,6 +112,7 @@ namespace AtomicWar.GodotApp
 
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
+                SetupPlans166To169();
             }
             finally
             {
@@ -150,7 +153,8 @@ namespace AtomicWar.GodotApp
             }
             else
             {
-                _sharedFactionStance = new Ashfall.Core.Economy.FactionStanceEngine();
+                throw new InvalidOperationException(
+                    "No campaign-owned faction stance authority is available; faction surfaces must not create a local default.");
             }
             return _sharedFactionStance;
         }

@@ -42,6 +42,8 @@ namespace AtomicWar.GodotApp
             _expansions = ExpansionHostSession.Create(
                 _dataDir,
                 consequenceLedger: _consequenceLedger);
+            if (_dutyRoster != null)
+                _expansions.BindDutyRoster(_dutyRoster.Roster);
             _expansions.StateChanged += () => _expansionHubDirty = true;
             _expansions.OnCrossingStageNarrative += OnCrossingStageNarrative;
 

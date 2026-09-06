@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "technologies": [
+    {
+      "id": "tech_radiosonde_receiver",
+      "source_item_id": "item_radiosonde",
+      "display_name_key": "research.reverse_engineering.radiosonde_receiver",
+      "complexity": 2,
+      "base_research_points": 5,
+      "base_scrap_yields": [
+        { "item_id": "electronic_scrap", "amount": 2 },
+        { "item_id": "copper_wire_10m_of_10m", "amount": 1 }
+      ],
+      "possible_blueprint_ids": ["knowledge_signal_amplifier_blueprint"],
+      "blueprint_required_points": 10,
+      "required_research_equipment_tags": [],
+      "required_skill_discipline": "engineering",
+      "base_success_chance": 0.72,
+      "catastrophic_failure_chance": 0.04,
+      "preservation_value": 0.45,
+      "research_notes_pool": ["note_radiosonde_signal_stage"],
+      "tags": ["signal", "weather"]
+    },
+    {
+      "id": "tech_high_pressure_pump",
+      "source_item_id": "item_high_vacuum_pump",
+      "display_name_key": "research.reverse_engineering.high_pressure_pump",
+      "complexity": 4,
+      "base_research_points": 8,
+      "base_scrap_yields": [
+        { "item_id": "mechanical_parts", "amount": 3 },
+        { "item_id": "scrap_metal", "amount": 2 }
+      ],
+      "possible_blueprint_ids": ["knowledge_water_condenser_blueprint"],
+      "blueprint_required_points": 16,
+      "required_research_equipment_tags": [],
+      "required_skill_discipline": "engineering",
+      "base_success_chance": 0.58,
+      "catastrophic_failure_chance": 0.09,
+      "preservation_value": 0.75,
+      "research_notes_pool": ["note_high_pressure_fluid_loop"],
+      "tags": ["water", "fluid"]
+    },
+    {
+      "id": "tech_advanced_filter_element",
+      "source_item_id": "item_water_filter_advanced",
+      "display_name_key": "research.reverse_engineering.advanced_filter_element",
+      "complexity": 3,
+      "base_research_points": 6,
+      "base_scrap_yields": [
+        { "item_id": "scrap_metal", "amount": 2 },
+        { "item_id": "chemicals", "amount": 1 }
+      ],
+      "possible_blueprint_ids": ["knowledge_cbrn_filter_blueprint"],
+      "blueprint_required_points": 12,
+      "required_research_equipment_tags": [],
+      "required_skill_discipline": "science",
+      "base_success_chance": 0.66,
+      "catastrophic_failure_chance": 0.06,
+      "preservation_value": 0.65,
+      "research_notes_pool": ["note_cbrn_filter_media"],
+      "tags": ["water", "decontamination"]
+    },
+    {
+      "id": "tech_battery_reconditioner",
+      "source_item_id": "item_battery_reconditioned",
+      "display_name_key": "research.reverse_engineering.battery_reconditioner",
+      "complexity": 3,
+      "base_research_points": 6,
+      "base_scrap_yields": [
+        { "item_id": "electronic_scrap", "amount": 2 },
+        { "item_id": "chemicals", "amount": 1 }
+      ],
+      "possible_blueprint_ids": ["knowledge_battery_reconditioner_blueprint"],
+      "blueprint_required_points": 12,
+      "required_research_equipment_tags": [],
+      "required_skill_discipline": "engineering",
+      "base_success_chance": 0.64,
+      "catastrophic_failure_chance": 0.06,
+      "preservation_value": 0.55,
+      "research_notes_pool": ["note_battery_reconditioning_cycle"],
+      "tags": ["power", "maintenance"]
+    }
+  ]
+}

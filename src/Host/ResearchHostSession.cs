@@ -31,6 +31,11 @@ namespace AtomicWar.GodotApp
         private ResearchHostSession(string? dataDir, ResearchSystem? engine)
         {
             Engine = engine ?? new ResearchSystem(log: new NullLog());
+            Engine.OnResearchCompleted += def =>
+            {
+                LastEvent = $"Breakthrough achieved: {def.displayName} ({def.breakthroughItem ?? "none"})";
+                RaiseStateChanged();
+            };
             if (!string.IsNullOrEmpty(dataDir))
                 LoadCatalog(dataDir);
         }
@@ -74,8 +79,21 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public bool StartResearch(string id, int day)
+        public bool StartResearch(string id, int day) => TryStart(id, day, out _);
+
+        public bool TryStart(string id) => TryStart(id, CurrentDay, out _);
+
+        public bool TryStart(string id, int day, out ResearchEligibilityCode code)
         {
+            var eligibility = Engine.GetEligibility(id);
+            code = eligibility.Code;
+            if (!eligibility.CanStart)
+            {
+                LastEvent = $"Cannot start {id}: {FormatFailureCode(eligibility)}";
+                RaiseStateChanged();
+                return false;
+            }
+
             bool ok = Engine.StartResearch(id, day);
             if (ok)
             {
@@ -84,6 +102,27 @@ namespace AtomicWar.GodotApp
             }
             return ok;
         }
+
+        public string FormatFailureCode(ResearchEligibility eligibility)
+        {
+            return eligibility.Code switch
+            {
+                ResearchEligibilityCode.UnknownNode => "Unknown research node",
+                ResearchEligibilityCode.AlreadyCompleted => "Already completed",
+                ResearchEligibilityCode.AlreadyActive => "Currently in progress",
+                ResearchEligibilityCode.AnotherResearchActive => $"Another research active ({eligibility.ConflictingActiveResearchId})",
+                ResearchEligibilityCode.MissingPrerequisites => $"Missing prerequisites ({string.Join(", ", eligibility.MissingPrerequisites)})",
+                ResearchEligibilityCode.NotDiscovered => "Not yet discovered in research tree",
+                _ => "Eligible"
+            };
+        }
+
+        public IReadOnlyList<ResearchKnowledgeDef> AvailableNodes() => Engine.GetAvailableNodes();
+        public IReadOnlyList<ResearchKnowledgeDef> LockedNodes() => Engine.GetLockedNodes();
+        public IReadOnlyList<ResearchKnowledgeDef> CompletedNodes() => Engine.GetCompletedNodes();
+        public int DaysRemaining(string id) => Engine.GetDaysRemaining(id);
+        public ResearchEligibility GetEligibility(string id) => Engine.GetEligibility(id);
+        public IReadOnlyList<string> GetDependents(string id) => Engine.GetDependents(id);
 
         public void AdvanceDay(int day)
         {

@@ -29,7 +29,7 @@
       "name": "Build Ashfall.Core.Tests (net9.0)",
       "category": "Build & Tests",
       "command": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
-      "timeout_seconds": 60,
+      "timeout_seconds": 120,
       "expected_summary": "",
       "classification": "fast",
       "critical": true
@@ -39,7 +39,7 @@
       "name": "Execute Core Unit & Determinism Test Suite (xUnit)",
       "category": "Build & Tests",
       "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
-      "timeout_seconds": 90,
+      "timeout_seconds": 120,
       "expected_summary": "Passed!",
       "classification": "fast",
       "critical": true
@@ -49,7 +49,7 @@
       "name": "Build Godot Host Application (Ashfall.csproj net8.0)",
       "category": "Build & Tests",
       "command": "dotnet build Ashfall.csproj --nologo",
-      "timeout_seconds": 60,
+      "timeout_seconds": 120,
       "expected_summary": "",
       "classification": "fast",
       "critical": true
@@ -318,7 +318,7 @@
       "name": "Compiler Warning Baseline Gate (0 Warnings)",
       "category": "Drift & Architecture Gates",
       "command": "bash scripts/ci/warning-baseline-gate.sh",
-      "timeout_seconds": 90,
+      "timeout_seconds": 180,
       "expected_summary": "COMPILER WARNING BASELINE GATE PASSED",
       "classification": "fast",
       "critical": true

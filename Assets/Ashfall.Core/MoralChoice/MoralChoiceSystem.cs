@@ -110,6 +110,7 @@ namespace Ashfall.Core.MoralChoice
 
         /// <summary>Branch architecture from moral_choice_chains.json; null until InitializeChainData.</summary>
         private MoralChoiceChainData? _chainData;
+        private readonly Dictionary<string, MoralChoiceQuestDefinition> _catalog = new Dictionary<string, MoralChoiceQuestDefinition>(StringComparer.Ordinal);
         private Dictionary<string, string> _questToBranch = new Dictionary<string, string>();
         private HashSet<string> _entryQuestSet = new HashSet<string>();
 
@@ -177,6 +178,120 @@ namespace Ashfall.Core.MoralChoice
         {
             resolution = _state.resolutions.FirstOrDefault(r => string.Equals(r.questId, questId, StringComparison.Ordinal));
             return resolution != null;
+        }
+
+        // ── Catalog registration ───────────────────────────────────────
+
+        public void RegisterQuest(MoralChoiceQuestDefinition def)
+        {
+            if (def == null || string.IsNullOrEmpty(def.Id)) return;
+            _catalog[def.Id] = def;
+        }
+
+        public void RegisterQuests(IEnumerable<MoralChoiceQuestDefinition> defs)
+        {
+            if (defs == null) return;
+            foreach (var def in defs)
+                RegisterQuest(def);
+        }
+
+        public IReadOnlyDictionary<string, MoralChoiceQuestDefinition> Catalog => _catalog;
+        public int CatalogCount => _catalog.Count;
+
+        public MoralChoiceQuestDefinition? GetQuest(string id) =>
+            !string.IsNullOrEmpty(id) && _catalog.TryGetValue(id, out var def) ? def : null;
+
+        // ── Seeded daily offers ────────────────────────────────────────
+
+        /// <summary>
+        /// Returns deterministic daily moral choice offers for the given day.
+        /// Uses seed formula: unchecked((ulong)_rng.Seed * 31337UL + (ulong)day * 1009UL + 0x5EEDUL).
+        /// Only returns unresolved quests whose day window is active and whose chain prerequisites/gates are met.
+        /// </summary>
+        public IReadOnlyList<MoralChoiceQuestDefinition> GetDailyOffers(int day, int maxOffers = 1)
+        {
+            if (maxOffers <= 0 || _catalog.Count == 0) return Array.Empty<MoralChoiceQuestDefinition>();
+
+            var candidates = new List<MoralChoiceQuestDefinition>();
+            foreach (var kv in _catalog)
+            {
+                var q = kv.Value;
+                if (!IsResolved(q.Id) && IsAvailableOnDay(q, day) && IsChainQuestAccessible(q.Id, day))
+                {
+                    candidates.Add(q);
+                }
+            }
+
+            if (candidates.Count == 0) return Array.Empty<MoralChoiceQuestDefinition>();
+
+            // Sort deterministically by Id
+            candidates.Sort((a, b) => string.Compare(a.Id, b.Id, StringComparison.Ordinal));
+
+            if (candidates.Count <= maxOffers) return candidates;
+
+            ulong dailySeedRaw = unchecked((ulong)_rng.Seed * 31337UL + (ulong)day * 1009UL + 0x5EEDUL);
+            int dailySeed = unchecked((int)(dailySeedRaw ^ (dailySeedRaw >> 32)));
+            var dailyRng = new SeededRng(dailySeed);
+
+            var pool = new List<MoralChoiceQuestDefinition>(candidates);
+            var selected = new List<MoralChoiceQuestDefinition>(maxOffers);
+            for (int i = 0; i < maxOffers && pool.Count > 0; i++)
+            {
+                int idx = dailyRng.Next(0, pool.Count);
+                selected.Add(pool[idx]);
+                pool.RemoveAt(idx);
+            }
+
+            return selected;
+        }
+
+        // ── Structured resolution ──────────────────────────────────────
+
+        /// <summary>
+        /// Attempts to resolve a registered moral choice quest.
+        /// Enforces strict single-resolution, catalog validity, day window, and choice index bounds
+        /// returning structured status codes without throwing on invalid player/client input.
+        /// </summary>
+        public bool TryResolve(string questId, int choiceIndex, string locationId, int day, out MoralResolveResult result)
+        {
+            if (string.IsNullOrEmpty(questId) || !_catalog.TryGetValue(questId, out var def))
+            {
+                result = MoralResolveResult.Failed(MoralResolveResultCode.UnknownChoice,
+                    $"Quest '{questId}' is not registered in moral choice catalog.");
+                return false;
+            }
+
+            if (TryGetResolution(questId, out var existing))
+            {
+                result = MoralResolveResult.Failed(MoralResolveResultCode.AlreadyResolved,
+                    $"Quest '{questId}' was already resolved on day {existing!.resolvedDay}.", existing);
+                return false;
+            }
+
+            if (!IsAvailableOnDay(def, day))
+            {
+                result = MoralResolveResult.Failed(MoralResolveResultCode.ChoiceNotAvailable,
+                    $"Quest '{questId}' is not available on day {day} (window: {def.MinDay}..{def.MaxDay}).");
+                return false;
+            }
+
+            if (!IsChainQuestAccessible(questId, day))
+            {
+                result = MoralResolveResult.Failed(MoralResolveResultCode.RequirementMissing,
+                    $"Quest '{questId}' chain gate or branch requirements are not met.");
+                return false;
+            }
+
+            if (choiceIndex < 0 || choiceIndex >= def.Choices.Count)
+            {
+                result = MoralResolveResult.Failed(MoralResolveResultCode.UnknownOption,
+                    $"Choice index {choiceIndex} is out of bounds for quest '{questId}' (0..{def.Choices.Count - 1}).");
+                return false;
+            }
+
+            var resolution = Resolve(def, choiceIndex, locationId, day);
+            result = MoralResolveResult.Succeeded(resolution);
+            return true;
         }
 
         // ── Branch tracking ────────────────────────────────────────────
@@ -295,6 +410,7 @@ namespace Ashfall.Core.MoralChoice
         public MoralChoiceResolution Resolve(MoralChoiceQuestDefinition quest, int choiceIndex, string locationId, int day)
         {
             if (quest == null) throw new ArgumentNullException(nameof(quest));
+            if (!_catalog.ContainsKey(quest.Id)) _catalog[quest.Id] = quest;
             if (!IsCanonicalQuestId(quest.Id))
             {
                 throw new ArgumentException(

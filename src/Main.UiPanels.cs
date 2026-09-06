@@ -51,6 +51,9 @@ namespace AtomicWar.GodotApp
         private SurvivorsPanel _survivorsOverlay = null!;
         private CraftingPanel _craftingPanel = null!;
         private WorkshopPanel _workshopPanel = null!;
+        private RadioIntelligencePanel _radioIntelligencePanel = null!;
+        private ShelterSocialPanel _shelterSocialPanel = null!;
+        private SubterraneanOperationsPanel _subterraneanOperationsPanel = null!;
         private PharmaLabPanel _pharmaLabPanel = null!;
         private RadioPanel _radioPanel = null!;
         private MedicalPanel _medicalPanel = null!;
@@ -136,6 +139,10 @@ namespace AtomicWar.GodotApp
         private TriangulationPanel _triangulationPanel = null!;
         private WeatherSondePanel _weatherSondePanel = null!;
         private PowerGridPanel _powerGridPanel = null!;
+        private GeothermalOrcPanel _geothermalOrcPanel = null!;
+        private BallisticsWorkbenchPanel _ballisticsWorkbenchPanel = null!;
+        private AeroponicsPanel _aeroponicsPanel = null!;
+        private PneumaticDispatchPanel _pneumaticDispatchPanel = null!;
         private ExpeditionRadarPanel _expeditionRadarPanel = null!;
         private DoseLedgerPanel _doseLedgerPanel = null!;
         private CaravanBarterLedgerPanel _caravanBarterLedgerPanel = null!;
@@ -265,10 +272,25 @@ namespace AtomicWar.GodotApp
             _craftingPanel.OnOpenPharmaLabRequested += () => OpenPlayerPanel("pharma_lab");
             AddChild(_craftingPanel);
 
-            // ── Workshop panel (relic reverse engineering) ──
+            // ── Workshop panel (precision workshop & armory) ──
             _workshopPanel = PanelSceneLoader.Load<WorkshopPanel>("res://assets/ui/panels/WorkshopPanel.tscn");
             _workshopPanel.OnClose += CloseWorkshopPanel;
             AddChild(_workshopPanel);
+
+            // ── Radio Intelligence panel (Plan 47) ──
+            _radioIntelligencePanel = PanelSceneLoader.Load<RadioIntelligencePanel>("res://assets/ui/panels/RadioIntelligencePanel.tscn");
+            _radioIntelligencePanel.OnClose += CloseRadioIntelligencePanel;
+            AddChild(_radioIntelligencePanel);
+
+            // ── Shelter Social panel (Plan 48) ──
+            _shelterSocialPanel = PanelSceneLoader.Load<ShelterSocialPanel>("res://assets/ui/panels/ShelterSocialPanel.tscn");
+            _shelterSocialPanel.OnClose += CloseShelterSocialPanel;
+            AddChild(_shelterSocialPanel);
+
+            // ── Subterranean Operations panel (Plan 49) ──
+            _subterraneanOperationsPanel = PanelSceneLoader.Load<SubterraneanOperationsPanel>("res://assets/ui/panels/SubterraneanOperationsPanel.tscn");
+            _subterraneanOperationsPanel.OnClose += CloseSubterraneanOperationsPanel;
+            AddChild(_subterraneanOperationsPanel);
 
             // ── Pharma Lab panel (compounding & distillation) ──
             _pharmaLabPanel = new PharmaLabPanel();
@@ -475,6 +497,18 @@ namespace AtomicWar.GodotApp
             _psychologyArcPanel.OnActionRequested += HandlePsychologyAction;
 
             AddChild(_psychologyArcPanel);
+
+
+
+            _bestiaryPanel = new AtomicWar.GodotApp.UI.BestiaryPanel();
+
+            _bestiaryPanel.Visible = false;
+
+            _bestiaryPanel.OnClose += () => HandleWildlifeAction("CLOSE", "");
+
+            _bestiaryPanel.OnActionRequested += HandleWildlifeAction;
+
+            AddChild(_bestiaryPanel);
 
             BuildPlans146To149Panels();
 
@@ -821,6 +855,26 @@ namespace AtomicWar.GodotApp
             _powerGridPanel = new PowerGridPanel { Visible = false };
             _powerGridPanel.OnClose += () => _powerGridPanel.Visible = false;
             AddChild(_powerGridPanel);
+
+            _geothermalOrcPanel = new GeothermalOrcPanel { Visible = false };
+            _geothermalOrcPanel.OnClose += () => _geothermalOrcPanel.Visible = false;
+            _geothermalOrcPanel.OnActionRequested += HandleGeothermalOrcAction;
+            AddChild(_geothermalOrcPanel);
+
+            _ballisticsWorkbenchPanel = new BallisticsWorkbenchPanel { Visible = false };
+            _ballisticsWorkbenchPanel.OnClose += () => _ballisticsWorkbenchPanel.Visible = false;
+            _ballisticsWorkbenchPanel.OnActionRequested += HandleBallisticsWorkbenchAction;
+            AddChild(_ballisticsWorkbenchPanel);
+
+            _aeroponicsPanel = new AeroponicsPanel { Visible = false };
+            _aeroponicsPanel.OnClose += () => _aeroponicsPanel.Visible = false;
+            _aeroponicsPanel.OnActionRequested += HandleAeroponicsAction;
+            AddChild(_aeroponicsPanel);
+
+            _pneumaticDispatchPanel = new PneumaticDispatchPanel { Visible = false };
+            _pneumaticDispatchPanel.OnClose += () => _pneumaticDispatchPanel.Visible = false;
+            _pneumaticDispatchPanel.OnActionRequested += HandlePneumaticDispatchAction;
+            AddChild(_pneumaticDispatchPanel);
 
             _expeditionRadarPanel = new ExpeditionRadarPanel { Visible = false };
             _expeditionRadarPanel.OnClose += () => _expeditionRadarPanel.Visible = false;
@@ -1269,7 +1323,12 @@ namespace AtomicWar.GodotApp
             _mainMenu.OnContinue += ContinueGame;
             _mainMenu.OnSettings += () => { _settingsPanel.Open(); };
             _mainMenu.OnCodex += () => { OpenPlayerPanel("codex"); };
-            _mainMenu.OnQuit += () => { SaveAll(); GetTree().Quit(); };
+            _mainMenu.OnQuit += () =>
+            {
+                SaveAll();
+                ShutdownDebtConsequenceIntegration();
+                GetTree().Quit();
+            };
             AddChild(_mainMenu);
 
             // ── Game Over (overlay, hidden) ──

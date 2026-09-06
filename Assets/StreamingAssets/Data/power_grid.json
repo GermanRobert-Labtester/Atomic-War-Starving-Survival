@@ -45,6 +45,27 @@
       "draw_watts": 80,
       "default_priority": "low",
       "failure_effect_id": "fx_lighting_dim"
+    },
+    {
+      "id": "room_workshop",
+      "display_name": "Workshop",
+      "draw_watts": 300,
+      "default_priority": "low",
+      "failure_effect_id": "fx_workshop_offline"
+    },
+    {
+      "id": "room_cryo_vault",
+      "display_name": "Cryo Vault",
+      "draw_watts": 280,
+      "default_priority": "critical",
+      "failure_effect_id": "fx_cryo_vault_unpowered"
+    },
+    {
+      "id": "room_ward_quarantine",
+      "display_name": "Quarantine Ward",
+      "draw_watts": 90,
+      "default_priority": "critical",
+      "failure_effect_id": "fx_quarantine_ventilation_off"
     }
   ]
 }

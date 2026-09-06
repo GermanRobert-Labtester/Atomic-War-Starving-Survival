@@ -7676,6 +7676,60 @@
       "stackMax": 10,
       "weight": 1.8,
       "tradeValue": 52
+    },
+    {
+      "id": "item_aeroponic_medicinal_root",
+      "displayName": "Aeroponic Medicinal Root",
+      "description": "A clean medicinal root grown in a sealed mist chamber. It is small, pale, and more valuable for what the reservoir kept out than for its size.",
+      "type": "Consumable",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 12
+    },
+    {
+      "id": "item_aeroponic_food_leaf",
+      "displayName": "Aeroponic Food Leaf",
+      "description": "A dense leaf crop raised under measured light and nutrient mist. The harvest is modest, but it arrives without a surface run or a contaminated root bed.",
+      "type": "Consumable",
+      "stackMax": 30,
+      "weight": 0.1,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_ballistics_cleaning_kit",
+      "displayName": "Ballistics Cleaning Kit",
+      "description": "A bench tin containing bore solvent, lint-free patches, gauges, and a small torque key. It is enough to service one worn weapon if the hands using it are patient.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 0.6,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_pneumatic_capsule_50mm",
+      "displayName": "50mm Pneumatic Capsule",
+      "description": "A hard polymer capsule with a felt cargo sleeve and a numbered brass collar. It is built for small sealed transfers between shelter rooms.",
+      "type": "Container",
+      "stackMax": 10,
+      "weight": 0.4,
+      "tradeValue": 7
+    },
+    {
+      "id": "item_pneumatic_capsule_100mm",
+      "displayName": "100mm Pneumatic Capsule",
+      "description": "A wide-bore service capsule for heavier parts and sealed food allotments. Its locking collar is overbuilt because a jammed tube stops being a convenience quickly.",
+      "type": "Container",
+      "stackMax": 5,
+      "weight": 0.8,
+      "tradeValue": 14
+    },
+    {
+      "id": "item_geothermal_descaling_kit",
+      "displayName": "Geothermal Descaling Kit",
+      "description": "A measured drum of descaling compound, gaskets, and a sacrificial brush head for the ORC heat exchanger. It is unpleasant work, but less unpleasant than opening a leaking loop.",
+      "type": "Tool",
+      "stackMax": 3,
+      "weight": 2.5,
+      "tradeValue": 28
     }
   ]
 }

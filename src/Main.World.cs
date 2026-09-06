@@ -40,6 +40,14 @@ namespace AtomicWar.GodotApp
         private PowerGridHostSession _powerGrid = null!;
         private bool _powerGridDirty;
         private GreenhouseHostSession _greenhouse = null!;
+        private AtomicWar.GodotApp.UI.DeconAirlockPanel _deconAirlockPanel = null!;
+        private AtomicWar.GodotApp.UI.GeodeticSurveyPanel _geodeticSurveyPanel = null!;
+        private AtomicWar.GodotApp.UI.KineticStoragePanel _kineticStoragePanel = null!;
+        private AtomicWar.GodotApp.UI.ChemicalReconPanel _chemicalReconPanel = null!;
+        private bool _deconAirlockBound;
+        private bool _geodeticSurveyBound;
+        private bool _kineticStorageBound;
+        private bool _chemicalReconBound;
         private GreenhousePanel _greenhousePanel = null!;
         private bool _greenhouseDirty;
         private WorldHostSession _world = null!;
@@ -143,6 +151,7 @@ namespace AtomicWar.GodotApp
         {
             if (_world != null) return;
             _world = WorldHostSession.Create(_dataDir);
+            WireSurgeAdapters();
             _world.StateChanged += () =>
             {
                 _worldDirty = true;
@@ -238,34 +247,50 @@ namespace AtomicWar.GodotApp
             if (_crafting == null) return;
 
             // WT-INT-01: Bridge shelter workshop infrastructure to CraftingSystem "workbench" station.
-            // Authority: shelter room "room_workshop" in _shelterAssignment or machine health in _shelterWorkshop.
-            bool workshopOperational = false;
-            float workbenchCondition = 100f;
-
-            if (_shelterWorkshop != null)
-            {
-                if (_shelterWorkshop.State.machines.TryGetValue("room_workshop", out var machine))
-                {
-                    workbenchCondition = Math.Clamp(machine.ToolingHealth * 100f, 0f, 100f);
-                    workshopOperational = workbenchCondition > 0f;
-                }
-                else
-                {
-                    workshopOperational = true;
-                }
-            }
-            else if (_shelterAssignment?.System?.Rooms != null)
+            // Authority: shelter room "room_workshop" in _shelterAssignment or machine health in _shelterWorkshop,
+            // combined with power availability in _powerGrid.
+            bool roomExists = false;
+            if (_shelterAssignment?.System?.Rooms != null)
             {
                 for (int i = 0; i < _shelterAssignment.System.Rooms.Count; i++)
                 {
                     var r = _shelterAssignment.System.Rooms[i];
-                    if (r != null && string.Equals(r.RoomId, "room_workshop", StringComparison.Ordinal))
+                    if (r != null && (string.Equals(r.RoomId, "room_workshop", StringComparison.Ordinal) ||
+                                      string.Equals(r.RoomId, "room_workshop_heavy", StringComparison.Ordinal) ||
+                                      string.Equals(r.RoomId, "room_workshop_precision", StringComparison.Ordinal)))
                     {
-                        workshopOperational = true;
+                        roomExists = true;
                         break;
                     }
                 }
             }
+
+            bool hasMachine = false;
+            float machineCondition = 100f;
+            if (_shelterWorkshop?.State?.machines != null && _shelterWorkshop.State.machines.Count > 0)
+            {
+                if (_shelterWorkshop.State.machines.TryGetValue("room_workshop", out var machine))
+                {
+                    hasMachine = true;
+                    machineCondition = Math.Clamp(machine.ToolingHealth * 100f, 0f, 100f);
+                }
+                else
+                {
+                    foreach (var m in _shelterWorkshop.State.machines.Values)
+                    {
+                        if (m != null && m.RoomId != null && m.RoomId.StartsWith("room_workshop", StringComparison.Ordinal))
+                        {
+                            hasMachine = true;
+                            machineCondition = Math.Min(machineCondition, Math.Clamp(m.ToolingHealth * 100f, 0f, 100f));
+                        }
+                    }
+                }
+            }
+
+            bool isPowered = _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_workshop");
+
+            bool workshopOperational = (roomExists || hasMachine) && isPowered && machineCondition > 0f;
+            float workbenchCondition = (roomExists || hasMachine) && isPowered ? machineCondition : 0f;
 
             if (workshopOperational)
             {
@@ -337,9 +362,46 @@ namespace AtomicWar.GodotApp
             if (_powerGrid != null) return;
             SetupCampaignDay();
             var rng = _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng;
-            _powerGrid = PowerGridHostSession.CreateDefault(rng);
+            _powerGrid = PowerGridHostSession.CreateDefault(rng, _dataDir);
             _powerGrid.TryLoad();
-            _powerGrid.OnStateChanged += () => _powerGridDirty = true;
+            _powerGrid.OnStateChanged += () =>
+            {
+                _powerGridDirty = true;
+                SyncCraftingStationsFromShelter();
+            };
+            WireSurgeAdapters();
+        }
+
+        private bool _surgeAdaptersWired;
+
+        /// <summary>
+        /// SHELTER_EMP_MEDICAL_POWER (G4): EMP/orbital events feed the grid.
+        /// Deterministic + bounded: <see cref="PowerGridSystem.ApplySurgeDay"/>
+        /// dedups per day. Called from both setup paths (order-independent);
+        /// wiring is idempotent.
+        /// </summary>
+        private void WireSurgeAdapters()
+        {
+            if (_surgeAdaptersWired || _powerGrid == null || _world == null) return;
+            var weather = _world.Weather;
+            if (weather == null) return;
+            _surgeAdaptersWired = true;
+
+            weather.OnWeatherChanged += kind =>
+            {
+                if (kind == WeatherKind.EMPStorm)
+                    _powerGrid?.System.ApplySurgeDay(_simDay, Ashfall.Core.Shelter.PowerGridSystem.EmpStormSurgeSeverity);
+            };
+
+            var orbital = _world.WeatherIntelligence?.Orbital;
+            if (orbital != null)
+            {
+                orbital.OnImpactDetailed += rep =>
+                {
+                    if (rep != null)
+                        _powerGrid?.System.ApplySurgeDay(rep.Day, rep.PowerGridDisruption / 100f);
+                };
+            }
         }
 
         private void SavePowerGrid()
@@ -419,6 +481,10 @@ namespace AtomicWar.GodotApp
         {
             _greenhousePanel.Visible = false;
         }
+        private void CloseDeconAirlockPanel() { _deconAirlockPanel.Visible = false; }
+        private void CloseGeodeticSurveyPanel() { _geodeticSurveyPanel.Visible = false; }
+        private void CloseKineticStoragePanel() { _kineticStoragePanel.Visible = false; }
+        private void CloseChemicalReconPanel() { _chemicalReconPanel.Visible = false; }
 
         private void CloseCraftingPanel()
         {
@@ -428,6 +494,21 @@ namespace AtomicWar.GodotApp
         private void CloseWorkshopPanel()
         {
             if (_workshopPanel != null) _workshopPanel.Visible = false;
+        }
+
+        private void CloseRadioIntelligencePanel()
+        {
+            if (_radioIntelligencePanel != null) _radioIntelligencePanel.Visible = false;
+        }
+
+        private void CloseShelterSocialPanel()
+        {
+            if (_shelterSocialPanel != null) _shelterSocialPanel.Visible = false;
+        }
+
+        private void CloseSubterraneanOperationsPanel()
+        {
+            if (_subterraneanOperationsPanel != null) _subterraneanOperationsPanel.Visible = false;
         }
 
         private void ClosePharmaLabPanel()
@@ -450,5 +531,181 @@ namespace AtomicWar.GodotApp
             _weatherForecastPanel.Visible = false;
         }
 
+
+        private void HandleDeconAirlockAction(string action, string param = "")
+        {
+            if (action == "OPEN")
+            {
+                if (_deconAirlockPanel != null)
+                {
+                    if (!_deconAirlockBound && _decontamination != null) { _deconAirlockPanel.Bind(_decontamination); _deconAirlockBound = true; }
+                    _deconAirlockPanel.Visible = true;
+                }
+                return;
+            }
+            if (action == "CLOSE") { if (_deconAirlockPanel != null) _deconAirlockPanel.Visible = false; return; }
+            if (_deconAirlockPanel == null || _decontamination == null) return;
+            switch(action)
+            {
+                case "start_decon":
+                {
+                    // param is the selected queue caseId — resolve the real
+                    // occupant/gear/contamination from the decon queue.
+                    var c = _decontamination.System.State.queue.Find(q => q.caseId == param);
+                    if (c != null)
+                        _decontamination.System.StartProtocolCycle("decon_standard_return", c.survivorId, c.gearId, c.surfaceContamination);
+                    break;
+                }
+                case "tick_stage": _decontamination.System.TickActiveStage(); break;
+                case "manual_override": _decontamination.System.EngageManualOverride(); break;
+                case "dispose_gear": _decontamination.System.DisposeContaminatedGear(param); break;
+                case "treat_effluent": _decontamination.System.TreatEffluent(); break;
+                case "install_filter": _decontamination.System.InstallEffluentFilter(); break;
+            }
+            _deconAirlockPanel.RefreshView();
+            _decontaminationDirty = true;
+        }
+
+        private void HandleGeodeticSurveyAction(string action, string param = "")
+        {
+            if (action == "OPEN")
+            {
+                if (_geodeticSurveyPanel != null)
+                {
+                    if (!_geodeticSurveyBound && _geodeticSurvey != null) { _geodeticSurveyPanel.Bind(_geodeticSurvey); _geodeticSurveyBound = true; }
+                    _geodeticSurveyPanel.Visible = true;
+                }
+                return;
+            }
+            if (action == "CLOSE") { if (_geodeticSurveyPanel != null) _geodeticSurveyPanel.Visible = false; return; }
+            if (_geodeticSurveyPanel == null || _geodeticSurvey == null) return;
+            int day = _campaignDay?.Calendar?.CurrentDay ?? 1;
+            switch(action)
+            {
+                case "establish":
+                    _geodeticSurvey.EstablishMonument(param, day, (id, count) => _inventory?.Inventory?.TryConsume(id, count) ?? false);
+                    break;
+                case "observe":
+                {
+                    // From = first active monument that is not the target point.
+                    string? from = _geodeticSurvey.System.Monuments
+                        .Where(m => m.isActive && m.surveyPointId != param)
+                        .Select(m => m.surveyPointId)
+                        .FirstOrDefault();
+                    if (from != null)
+                        _geodeticSurvey.System.Observe(from, param, "clear", 0.5f);
+                    break;
+                }
+                case "resolve":
+                {
+                    // Try every triple of active monuments (idempotent — the
+                    // engine unlocks routes exactly once and returns the
+                    // existing triangle on repeats).
+                    var ids = _geodeticSurvey.System.Monuments
+                        .Where(m => m.isActive).Select(m => m.surveyPointId).ToList();
+                    for (int a = 0; a < ids.Count; a++)
+                        for (int b = a + 1; b < ids.Count; b++)
+                            for (int c = b + 1; c < ids.Count; c++)
+                                _geodeticSurvey.System.TryResolveTriangle(ids[a], ids[b], ids[c]);
+                    break;
+                }
+            }
+            _geodeticSurveyPanel.RefreshView();
+        }
+
+        private void HandleKineticStorageAction(string action, string param = "")
+        {
+            if (action == "OPEN")
+            {
+                if (_kineticStoragePanel != null)
+                {
+                    if (!_kineticStorageBound && _kineticStorage != null) { _kineticStoragePanel.Bind(_kineticStorage); _kineticStorageBound = true; }
+                    _kineticStoragePanel.Visible = true;
+                }
+                return;
+            }
+            if (action == "CLOSE") { if (_kineticStoragePanel != null) _kineticStoragePanel.Visible = false; return; }
+            if (_kineticStoragePanel == null || _kineticStorage == null) return;
+            int day = _campaignDay?.Calendar?.CurrentDay ?? 1;
+            // Class-rate power limits: never exceed the catalog's charge/discharge kW.
+            var flywheel = _kineticStorage.System.FindFlywheel(param);
+            var fc = flywheel != null ? _kineticStorage.System.FindClass(flywheel.flywheelClassId) : null;
+            switch(action)
+            {
+                case "CHARGE":
+                    if (fc != null) _kineticStorage.System.Charge(param, fc.max_charge_kw, 600f);
+                    break;
+                case "DISCHARGE":
+                    if (fc != null) _kineticStorage.System.Discharge(param, fc.max_discharge_kw, 60f);
+                    break;
+                case "EMERGENCY_BRAKE":
+                    _kineticStorage.EngageEmergencyBrake(param);
+                    break;
+                case "MAINTENANCE":
+                    _kineticStorage.PerformMaintenance(param, day, (id, count) => _inventory?.Inventory?.TryConsume(id, count) ?? false);
+                    break;
+            }
+            _kineticStoragePanel.RefreshView();
+        }
+
+        private void HandleChemicalReconAction(string action, string param = "")
+        {
+            if (action == "OPEN")
+            {
+                if (_chemicalReconPanel != null)
+                {
+                    if (!_chemicalReconBound && _chemicalRecon != null) { _chemicalReconPanel.Bind(_chemicalRecon); _chemicalReconBound = true; }
+                    _chemicalReconPanel.Visible = true;
+                }
+                return;
+            }
+            if (action == "CLOSE") { if (_chemicalReconPanel != null) _chemicalReconPanel.Visible = false; return; }
+            if (_chemicalReconPanel == null || _chemicalRecon == null) return;
+            switch(action)
+            {
+                case "deploy_sensor":
+                    // Scan with the engine's active sensor band (Core-owned state).
+                    _chemicalRecon.System.ScanLocation(param, _chemicalRecon.System.State.activeSensorBand, 0.5f);
+                    break;
+                case "sample":
+                {
+                    // param is the hazardId — resolve the location from the
+                    // latest observation of that hazard.
+                    var obs = _chemicalRecon.System.Observations
+                        .Where(o => o.hazardId == param)
+                        .OrderByDescending(o => o.lastConfirmedDay)
+                        .FirstOrDefault();
+                    if (obs != null)
+                        _chemicalRecon.CollectSample(param, obs.locationNodeId, 0.5f,
+                            (itemId, count) => _inventory?.Inventory?.TryConsume(itemId, count) ?? false);
+                    break;
+                }
+                case "change_filter":
+                {
+                    // Select the recommended filter category for this location.
+                    string recommended = _chemicalRecon.System.GetRecommendedFilter(param);
+                    _chemicalRecon.System.SelectFilterCategory(recommended);
+                    break;
+                }
+            }
+            _chemicalReconPanel.RefreshView();
+        }
+
+        private void HandleGeothermalAction(string action, string param = "")
+        {
+            if (action == "OPEN") { if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = true; return; }
+            if (action == "CLOSE") { if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = false; return; }
+            if (_geothermalAquiferPanel == null || _geothermalAquifer == null) return;
+            switch(action)
+            {
+                case "start_drilling": _geothermalAquifer.System.StartDrilling(); break;
+                case "install_casing": _geothermalAquifer.System.InstallCasing(float.Parse(param ?? "100")); break;
+                case "commission_turbine": _geothermalAquifer.System.CommissionTurbine(); break;
+                case "descale": _geothermalAquifer.System.Descale(); break;
+                case "vent_pressure": _geothermalAquifer.System.VentPressure(); break;
+                case "tap_aquifer": _geothermalAquifer.System.TapAquifer(); break;
+            }
+            _geothermalAquiferPanel.RefreshView();
+        }
     }
 }

@@ -11,7 +11,9 @@ namespace Ashfall.Core.Narrative
         None = 0,
         MissingRequiredItem = 1,
         InsufficientCostItems = 2,
-        MissingRequiredFlag = 3
+        MissingRequiredFlag = 3,
+        RecognitionCondition = 4,
+        StandingCondition = 5
     }
 
     public sealed class ChoiceRequirementFailure
@@ -67,15 +69,93 @@ namespace Ashfall.Core.Narrative
         public int ChainStageAdvanced { get; set; }
         public List<NormalizedItemCost> DeductedCosts { get; set; } = new List<NormalizedItemCost>();
         public string CooldownKey { get; set; } = string.Empty;
+        public FactionBountyRecord? BountyRecord { get; set; }
+    }
+
+    /// <summary>
+    /// Stable, read-only projection of the player's prior contact with one
+    /// patrol faction. The projection is deliberately smaller than the save
+    /// records so selection and presentation never need to inspect raw history.
+    /// </summary>
+    public sealed class PatrolRecognitionContext
+    {
+        public string FactionId { get; init; } = string.Empty;
+        public string EncounterId { get; init; } = string.Empty;
+        public IReadOnlyList<string> PriorChoiceIds { get; init; } = Array.Empty<string>();
+        public int EncountersWithFaction { get; init; }
+        public int PaidTollCount { get; init; }
+        public int FoughtPatrolCount { get; init; }
+        public int CurrentChainStage { get; init; }
+        public int CurrentStanding { get; init; }
+        public IReadOnlyList<string> RecognitionTags { get; init; } = Array.Empty<string>();
+
+        public bool HasChoice(string choiceId)
+        {
+            if (string.IsNullOrWhiteSpace(choiceId)) return false;
+            for (int i = 0; i < PriorChoiceIds.Count; i++)
+            {
+                if (string.Equals(PriorChoiceIds[i], choiceId, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool HasTag(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag)) return false;
+            for (int i = 0; i < RecognitionTags.Count; i++)
+            {
+                if (string.Equals(RecognitionTags[i], tag, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Presentation-only projection for a patrol choice. It carries the
+    /// authoritative availability result and the authored mechanics needed by
+    /// a host view; it does not own or mutate encounter state.
+    /// </summary>
+    public sealed class PatrolChoicePresentation
+    {
+        public string ChoiceId { get; init; } = string.Empty;
+        public string Text { get; init; } = string.Empty;
+        public bool IsAvailable { get; init; }
+        public string DisabledReasonCode { get; init; } = string.Empty;
+        public string RequiredItemId { get; init; } = string.Empty;
+        public int RequiredItemQuantity { get; init; }
+        public IReadOnlyList<NormalizedItemCost> Costs { get; init; } = Array.Empty<NormalizedItemCost>();
+        public int MoraleDelta { get; init; }
+        public int GuiltDelta { get; init; }
+        public string FactionId { get; init; } = string.Empty;
+        public int FactionStandingDelta { get; init; }
+        public IReadOnlyList<ChoiceRequirementFailure> Failures { get; init; } = Array.Empty<ChoiceRequirementFailure>();
+    }
+
+    /// <summary>Stable host-facing patrol header and choice projection.</summary>
+    public sealed class PatrolEncounterPresentation
+    {
+        public string EncounterId { get; init; } = string.Empty;
+        public string FactionId { get; init; } = string.Empty;
+        public string TerritoryState { get; init; } = string.Empty;
+        public string PatrolArchetype { get; init; } = string.Empty;
+        public int CurrentChainStage { get; init; }
+        public string RecognitionLabel { get; init; } = string.Empty;
+        public IReadOnlyList<PatrolChoicePresentation> Choices { get; init; } = Array.Empty<PatrolChoicePresentation>();
     }
 
     public sealed class TravelEncounterSystem
     {
         private readonly TravelEncounterCatalog _catalog;
         private readonly Dictionary<string, int> _chainStages = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, int> _patrolChainStages = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, int> _encounterAvailableDay = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, PatrolHistoryRecord> _patrolHistory = new(StringComparer.OrdinalIgnoreCase);
         private Inventory.Inventory? _inventory;
         private FactionWarSystem? _factionWar;
+        private World.ITerritoryAuthority? _territoryAuthority;
+        private FactionBountySystem? _bountySystem;
 
         public TravelEncounterCatalog Catalog => _catalog;
 
@@ -91,19 +171,39 @@ namespace Ashfall.Core.Narrative
             set => _factionWar = value;
         }
 
+        public World.ITerritoryAuthority? TerritoryAuthority
+        {
+            get => _territoryAuthority;
+            set => _territoryAuthority = value;
+        }
+
+        public FactionBountySystem? BountySystem
+        {
+            get => _bountySystem;
+            set => _bountySystem = value;
+        }
+
         public event Action<string, string>? OnChoiceResolved;
         public event Action<string, int>? OnChainStageAdvanced;
+        public event Action<string, string>? OnPatrolHistoryRecorded;
 
         public TravelEncounterSystem(TravelEncounterCatalog catalog)
         {
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
         }
 
-        public TravelEncounterSystem(TravelEncounterCatalog catalog, Inventory.Inventory? inventory, FactionWarSystem? factionWar = null)
+        public TravelEncounterSystem(
+            TravelEncounterCatalog catalog,
+            Inventory.Inventory? inventory,
+            FactionWarSystem? factionWar = null,
+            World.ITerritoryAuthority? territoryAuthority = null,
+            FactionBountySystem? bountySystem = null)
         {
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             _inventory = inventory;
             _factionWar = factionWar;
+            _territoryAuthority = territoryAuthority;
+            _bountySystem = bountySystem;
         }
 
         public static string GetCooldownKey(TravelEncounterDefinition encounter)
@@ -139,7 +239,88 @@ namespace Ashfall.Core.Narrative
             OnChainStageAdvanced?.Invoke(chainId, stage);
         }
 
-        public bool IsEncounterEligible(TravelEncounterDefinition encounter, string region, float dangerLevel, string currentSeason, int currentDay)
+        private static string GetPatrolChainKey(string factionId, string chainId)
+        {
+            string faction = FactionStandingIdResolver.ToSystemsId(factionId);
+            return string.IsNullOrWhiteSpace(chainId)
+                ? string.Empty
+                : faction + "::" + chainId.Trim();
+        }
+
+        private static string GetPatrolHistoryKey(string factionId, string encounterId, string choiceId)
+        {
+            return FactionStandingIdResolver.ToSystemsId(factionId) + "::" +
+                   (encounterId ?? string.Empty).Trim() + "::" + (choiceId ?? string.Empty).Trim();
+        }
+
+        public int GetPatrolChainStage(string factionId, string chainId)
+        {
+            string key = GetPatrolChainKey(factionId, chainId);
+            return string.IsNullOrEmpty(key) || !_patrolChainStages.TryGetValue(key, out int stage) ? 0 : stage;
+        }
+
+        public int GetPatrolChainStage(TravelEncounterDefinition encounter)
+        {
+            if (encounter == null) return 0;
+            return GetPatrolChainStage(encounter.FactionId, encounter.ChainId);
+        }
+
+        public PatrolRecognitionContext GetRecognitionContext(string factionId, string encounterId = "", string chainId = "")
+        {
+            string canonicalFaction = FactionStandingIdResolver.ToSystemsId(factionId);
+            var choices = new List<string>();
+            var tags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            int factionCount = 0;
+            int paidTolls = 0;
+            int fights = 0;
+
+            foreach (var record in _patrolHistory.Values)
+            {
+                if (!string.Equals(record.FactionId, canonicalFaction, StringComparison.OrdinalIgnoreCase)) continue;
+                factionCount += Math.Max(1, record.TimesSelected);
+                if (string.IsNullOrWhiteSpace(encounterId) || string.Equals(record.EncounterId, encounterId, StringComparison.OrdinalIgnoreCase))
+                    choices.Add(record.ChoiceId);
+
+                if (record.Tags != null)
+                {
+                    foreach (var tag in record.Tags)
+                    {
+                        if (string.IsNullOrWhiteSpace(tag)) continue;
+                        tags.Add(tag);
+                        if (string.Equals(tag, "paid_toll", StringComparison.OrdinalIgnoreCase)) paidTolls += Math.Max(1, record.TimesSelected);
+                        if (string.Equals(tag, "hostile", StringComparison.OrdinalIgnoreCase)) fights += Math.Max(1, record.TimesSelected);
+                    }
+                }
+            }
+
+            int standing = _factionWar?.GetStanding(canonicalFaction) ?? 0;
+            return new PatrolRecognitionContext
+            {
+                FactionId = canonicalFaction,
+                EncounterId = encounterId ?? string.Empty,
+                PriorChoiceIds = choices,
+                EncountersWithFaction = factionCount,
+                PaidTollCount = paidTolls,
+                FoughtPatrolCount = fights,
+                CurrentChainStage = GetPatrolChainStage(canonicalFaction, chainId),
+                CurrentStanding = standing,
+                RecognitionTags = new List<string>(tags)
+            };
+        }
+
+        public PatrolRecognitionContext GetRecognitionContext(TravelEncounterDefinition encounter)
+        {
+            if (encounter == null) return new PatrolRecognitionContext();
+            return GetRecognitionContext(encounter.FactionId, encounter.Id, encounter.ChainId);
+        }
+
+        public bool IsEncounterEligible(
+            TravelEncounterDefinition encounter,
+            string region,
+            float dangerLevel,
+            string currentSeason,
+            int currentDay,
+            string locationId = "")
         {
             if (encounter == null) return false;
 
@@ -177,14 +358,52 @@ namespace Ashfall.Core.Narrative
             // Chain progression filter
             if (!string.IsNullOrEmpty(encounter.ChainId))
             {
-                int currentStage = GetChainStage(encounter.ChainId);
-                if (encounter.PrereqChainStage != currentStage)
+                int currentStage = IsPatrol(encounter)
+                    ? GetPatrolChainStage(encounter)
+                    : GetChainStage(encounter.ChainId);
+                // -1 is the authored "any stage" value used by recurring
+                // patrol variants. Legacy chains retain exact-stage matching.
+                if (encounter.PrereqChainStage >= 0 && encounter.PrereqChainStage != currentStage)
+                {
+                    return false;
+                }
+            }
+
+            // Flagship VII (F11) — War-state filter
+            bool isWartime = _factionWar?.IsAtWar == true;
+            if (encounter.WarState == TravelEncounterWarState.Peacetime && isWartime)
+            {
+                return false;
+            }
+            if (encounter.WarState == TravelEncounterWarState.Wartime && !isWartime)
+            {
+                return false;
+            }
+
+            // Flagship VII (F12) — Dynamic territory filter
+            if (!string.IsNullOrWhiteSpace(encounter.RequiredTerritoryOwner) && _territoryAuthority != null)
+            {
+                string resolvedLocation = World.PatrolTerritoryResolver.ResolveLocation(locationId, region);
+                if (string.IsNullOrWhiteSpace(resolvedLocation) ||
+                    !_territoryAuthority.IsClaimedBy(resolvedLocation, encounter.RequiredTerritoryOwner))
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        public bool IsEncounterEligible(TravelEncounterDefinition encounter, TravelEncounterSelectionContext context)
+        {
+            if (encounter == null || context == null) return false;
+            return IsEncounterEligible(
+                encounter,
+                context.Region,
+                context.DangerLevel,
+                context.CurrentSeason,
+                context.CurrentDay,
+                context.LocationId);
         }
 
         public float GetEffectiveWeight(TravelEncounterDefinition encounter, string stance)
@@ -197,10 +416,38 @@ namespace Ashfall.Core.Narrative
                 weight *= multiplier;
             }
 
+            // Flagship VII (F11) — Wartime weight multiplier
+            if (_factionWar?.IsAtWar == true && encounter.WarWeightMultiplier > 0f)
+            {
+                weight *= encounter.WarWeightMultiplier;
+            }
+
+            if (IsPatrol(encounter))
+            {
+                var recognition = GetRecognitionContext(encounter);
+                // Hostile Warlord contact makes future raid parties more
+                // likely, while remaining a bounded authored runtime modifier.
+                if (recognition.HasTag("hostile") &&
+                    string.Equals(FactionStandingIdResolver.ToSystemsId(encounter.FactionId), "faction_scavenger_warlords", StringComparison.OrdinalIgnoreCase))
+                {
+                    weight *= 1.25f;
+                }
+            }
+
             return Math.Max(0.01f, weight);
         }
 
-        public TravelEncounterDefinition? SelectEncounter(string region, float dangerLevel, string stance, string currentSeason, int currentDay, ISeededRng rng)
+        private static bool IsPatrol(TravelEncounterDefinition encounter) =>
+            encounter != null && encounter.Id.StartsWith("enc_patrol_", StringComparison.OrdinalIgnoreCase);
+
+        public TravelEncounterDefinition? SelectEncounter(
+            string region,
+            float dangerLevel,
+            string stance,
+            string currentSeason,
+            int currentDay,
+            ISeededRng rng,
+            string locationId = "")
         {
             var eligible = new List<TravelEncounterDefinition>();
             var weights = new List<float>();
@@ -208,7 +455,7 @@ namespace Ashfall.Core.Narrative
 
             foreach (var encounter in _catalog.Encounters)
             {
-                if (IsEncounterEligible(encounter, region, dangerLevel, currentSeason, currentDay))
+                if (IsEncounterEligible(encounter, region, dangerLevel, currentSeason, currentDay, locationId))
                 {
                     float w = GetEffectiveWeight(encounter, stance);
                     eligible.Add(encounter);
@@ -237,8 +484,22 @@ namespace Ashfall.Core.Narrative
             return eligible[0];
         }
 
+        public TravelEncounterDefinition? SelectEncounter(TravelEncounterSelectionContext context)
+        {
+            if (context == null) return null;
+            var rng = context.Rng ?? new SeededRng(context.CurrentDay * 397 + 17);
+            return SelectEncounter(
+                context.Region,
+                context.DangerLevel,
+                context.Stance,
+                context.CurrentSeason,
+                context.CurrentDay,
+                rng,
+                context.LocationId);
+        }
+
         public List<(TravelEncounterDefinition encounter, float weight)> GetEligiblePatrolCandidates(
-            string region, float dangerLevel, string stance, string currentSeason, int currentDay)
+            string region, float dangerLevel, string stance, string currentSeason, int currentDay, string locationId = "")
         {
             var list = new List<(TravelEncounterDefinition, float)>();
             foreach (var enc in _catalog.Encounters)
@@ -246,7 +507,7 @@ namespace Ashfall.Core.Narrative
                 if (!enc.Id.StartsWith("enc_patrol_", StringComparison.OrdinalIgnoreCase) && string.IsNullOrWhiteSpace(enc.FactionId))
                     continue;
 
-                if (IsEncounterEligible(enc, region, dangerLevel, currentSeason, currentDay))
+                if (IsEncounterEligible(enc, region, dangerLevel, currentSeason, currentDay, locationId))
                 {
                     float w = GetEffectiveWeight(enc, stance);
                     if (w > 0f)
@@ -318,6 +579,159 @@ namespace Ashfall.Core.Narrative
             return result;
         }
 
+        public ChoiceAvailabilityResult EvaluateChoiceAvailability(
+            TravelEncounterDefinition encounter,
+            TravelEncounterChoice choice,
+            Inventory.Inventory? inventory = null,
+            Func<string, bool>? flagEvaluator = null)
+        {
+            var result = EvaluateChoiceAvailability(choice, inventory, flagEvaluator);
+            if (encounter == null || choice == null || !IsPatrol(encounter)) return result;
+
+            var recognition = GetRecognitionContext(encounter);
+            if (choice.RequiredChainStage >= 0 && recognition.CurrentChainStage != choice.RequiredChainStage)
+            {
+                result.Failures.Add(new ChoiceRequirementFailure
+                {
+                    FailureType = ChoiceRequirementFailureType.RecognitionCondition,
+                    Reason = $"Requires patrol chain stage {choice.RequiredChainStage}; current stage is {recognition.CurrentChainStage}."
+                });
+            }
+            if (choice.MaxChainStage >= 0 && recognition.CurrentChainStage > choice.MaxChainStage)
+            {
+                result.Failures.Add(new ChoiceRequirementFailure
+                {
+                    FailureType = ChoiceRequirementFailureType.RecognitionCondition,
+                    Reason = $"Choice is no longer available after patrol chain stage {choice.MaxChainStage}."
+                });
+            }
+            if (choice.RequiredHistoryTags != null)
+            {
+                foreach (var tag in choice.RequiredHistoryTags)
+                {
+                    if (!recognition.HasTag(tag))
+                    {
+                        result.Failures.Add(new ChoiceRequirementFailure
+                        {
+                            FailureType = ChoiceRequirementFailureType.RecognitionCondition,
+                            Reason = $"Requires prior patrol history '{tag}'."
+                        });
+                    }
+                }
+            }
+            if (choice.ForbiddenHistoryTags != null)
+            {
+                foreach (var tag in choice.ForbiddenHistoryTags)
+                {
+                    if (recognition.HasTag(tag))
+                    {
+                        result.Failures.Add(new ChoiceRequirementFailure
+                        {
+                            FailureType = ChoiceRequirementFailureType.RecognitionCondition,
+                            Reason = $"Unavailable after prior patrol history '{tag}'."
+                        });
+                    }
+                }
+            }
+
+            string faction = !string.IsNullOrWhiteSpace(choice.FactionId) ? choice.FactionId : encounter.FactionId;
+            int standing = _factionWar?.GetStanding(FactionStandingIdResolver.ToSystemsId(faction)) ?? 0;
+            if (choice.MinFactionStanding.HasValue && standing < choice.MinFactionStanding.Value)
+            {
+                result.Failures.Add(new ChoiceRequirementFailure
+                {
+                    FailureType = ChoiceRequirementFailureType.StandingCondition,
+                    Reason = $"Requires standing at least {choice.MinFactionStanding.Value}; current standing is {standing}."
+                });
+            }
+            if (choice.MaxFactionStanding.HasValue && standing > choice.MaxFactionStanding.Value)
+            {
+                result.Failures.Add(new ChoiceRequirementFailure
+                {
+                    FailureType = ChoiceRequirementFailureType.StandingCondition,
+                    Reason = $"Requires standing at most {choice.MaxFactionStanding.Value}; current standing is {standing}."
+                });
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds the authoritative, read-only view projection for one patrol.
+        /// Eligibility and affordability are evaluated by TravelEncounterSystem;
+        /// hosts only format this result for presentation.
+        /// </summary>
+        public PatrolEncounterPresentation? BuildPatrolPresentation(
+            string encounterId,
+            Inventory.Inventory? inventory = null,
+            Func<string, bool>? flagEvaluator = null)
+        {
+            if (!_catalog.TryGetEncounter(encounterId, out var encounter) || !IsPatrol(encounter))
+                return null;
+
+            var recognition = GetRecognitionContext(encounter);
+            var choices = new List<PatrolChoicePresentation>();
+            foreach (var choice in encounter.Choices ?? new List<TravelEncounterChoice>())
+            {
+                var availability = EvaluateChoiceAvailability(encounter, choice, inventory ?? _inventory, flagEvaluator);
+                choices.Add(new PatrolChoicePresentation
+                {
+                    ChoiceId = choice.ChoiceId,
+                    Text = choice.Text,
+                    IsAvailable = availability.IsAvailable,
+                    DisabledReasonCode = GetAvailabilityReasonCode(availability),
+                    RequiredItemId = choice.RequiredItemId,
+                    RequiredItemQuantity = choice.RequiredItemQuantity,
+                    Costs = choice.GetNormalizedCosts(),
+                    MoraleDelta = choice.MoraleDelta,
+                    GuiltDelta = choice.GuiltDelta,
+                    FactionId = !string.IsNullOrWhiteSpace(choice.FactionId) ? choice.FactionId : encounter.FactionId,
+                    FactionStandingDelta = choice.FactionStandingDelta,
+                    Failures = new List<ChoiceRequirementFailure>(availability.Failures)
+                });
+            }
+
+            string recognitionLabel = recognition.HasTag("hostile")
+                ? "Hostile history"
+                : recognition.CurrentChainStage >= 2
+                    ? "Trusted regular"
+                    : recognition.CurrentChainStage == 1
+                        ? "Recognized regular"
+                        : recognition.EncountersWithFaction > 0
+                            ? "Prior contact"
+                            : "No prior contact";
+
+            return new PatrolEncounterPresentation
+            {
+                EncounterId = encounter.Id,
+                FactionId = FactionStandingIdResolver.ToSystemsId(encounter.FactionId),
+                TerritoryState = encounter.TerritoryState ?? string.Empty,
+                PatrolArchetype = encounter.PatrolArchetype ?? string.Empty,
+                CurrentChainStage = recognition.CurrentChainStage,
+                RecognitionLabel = recognitionLabel,
+                Choices = choices
+            };
+        }
+
+        private static string GetAvailabilityReasonCode(ChoiceAvailabilityResult availability)
+        {
+            if (availability == null || availability.IsAvailable) return string.Empty;
+            foreach (var failure in availability.Failures)
+            {
+                if (failure == null) continue;
+                return failure.FailureType switch
+                {
+                    ChoiceRequirementFailureType.InsufficientCostItems => "cost_unavailable",
+                    ChoiceRequirementFailureType.MissingRequiredItem => "required_item_missing",
+                    ChoiceRequirementFailureType.MissingRequiredFlag => "required_condition_missing",
+                    ChoiceRequirementFailureType.RecognitionCondition => "recognition_requirement_unmet",
+                    ChoiceRequirementFailureType.StandingCondition => "standing_requirement_unmet",
+                    _ => "unavailable"
+                };
+            }
+            return "unavailable";
+        }
+
         public bool TryBuildResolutionPlan(
             string encounterId,
             string choiceId,
@@ -351,7 +765,7 @@ namespace Ashfall.Core.Narrative
             int expiry = GetCooldownExpiry(cdKey);
             bool onCooldown = _encounterAvailableDay.TryGetValue(cdKey, out int nextDay) && currentDay < nextDay;
 
-            var avail = EvaluateChoiceAvailability(selectedChoice, inventory ?? _inventory, flagEvaluator);
+            var avail = EvaluateChoiceAvailability(encounter, selectedChoice, inventory ?? _inventory, flagEvaluator);
 
             string targetFaction = !string.IsNullOrWhiteSpace(selectedChoice.FactionId)
                 ? selectedChoice.FactionId
@@ -407,25 +821,19 @@ namespace Ashfall.Core.Narrative
                 return false;
             }
 
-            // Check if encounter group or individual is on cooldown
-            string cdKey = GetCooldownKey(encounter);
-            if (_encounterAvailableDay.TryGetValue(cdKey, out int nextDay) && currentDay < nextDay)
+            // Preflight every non-consuming requirement before opening the
+            // inventory transaction. This keeps failed recognition/cost paths
+            // fully atomic: no item, standing, history, chain, or cooldown is
+            // changed when the choice cannot be committed.
+            if (!TryBuildResolutionPlan(encounterId, choiceId, currentDay, out var plan) || plan == null || !plan.CanExecute)
             {
                 return false;
             }
 
-            // Evaluate non-consuming required item gate
-            if (!string.IsNullOrWhiteSpace(selectedChoice.RequiredItemId) && selectedChoice.RequiredItemQuantity > 0)
-            {
-                int avail = _inventory?.CountById(selectedChoice.RequiredItemId) ?? 0;
-                if (avail < selectedChoice.RequiredItemQuantity)
-                {
-                    return false;
-                }
-            }
+            string cdKey = plan.CooldownKey;
 
             // Deduct costs atomically via InventoryBill transaction
-            var costs = selectedChoice.GetNormalizedCosts();
+            var costs = plan.Costs;
             if (costs.Count > 0)
             {
                 if (_inventory == null)
@@ -457,13 +865,44 @@ namespace Ashfall.Core.Narrative
                 _factionWar.ModifyStanding(canonicalFaction, selectedChoice.FactionStandingDelta);
             }
 
-            // Set cooldown for this group/encounter
-            _encounterAvailableDay[cdKey] = currentDay + 5;
+            // Set cooldown for this group/encounter using the definition's
+            // authored recurrence rather than a uniform runtime constant.
+            _encounterAvailableDay[cdKey] = currentDay + encounter.GetCooldownDays();
 
             // Advance chain if applicable
             if (!string.IsNullOrEmpty(encounter.ChainId) && selectedChoice.AdvancesChainStage > 0)
             {
-                SetChainStage(encounter.ChainId, selectedChoice.AdvancesChainStage);
+                if (IsPatrol(encounter))
+                {
+                    string chainKey = GetPatrolChainKey(encounter.FactionId, encounter.ChainId);
+                    int existing = GetPatrolChainStage(encounter);
+                    int next = Math.Max(existing, selectedChoice.AdvancesChainStage);
+                    _patrolChainStages[chainKey] = next;
+                    OnChainStageAdvanced?.Invoke(chainKey, next);
+                }
+                else
+                {
+                    SetChainStage(encounter.ChainId, selectedChoice.AdvancesChainStage);
+                }
+            }
+
+            if (IsPatrol(encounter))
+            {
+                RecordPatrolHistory(encounter, selectedChoice, currentDay);
+            }
+
+            // Flagship VII (F10) — Severe patrol violations hand off to bounty authority
+            FactionBountyRecord? bountyRecord = null;
+            if (_bountySystem != null &&
+                !string.IsNullOrWhiteSpace(canonicalFaction) &&
+                selectedChoice.FactionStandingDelta <= FactionBountySystem.PatrolBountyStandingThreshold)
+            {
+                bountyRecord = _bountySystem.IssuePatrolBounty(
+                    canonicalFaction,
+                    encounterId,
+                    choiceId,
+                    selectedChoice.FactionStandingDelta,
+                    currentDay);
             }
 
             result = new TravelEncounterResolutionResult
@@ -478,12 +917,54 @@ namespace Ashfall.Core.Narrative
                 FactionStandingDelta = selectedChoice.FactionStandingDelta,
                 UnlocksFieldGuideId = selectedChoice.UnlocksFieldGuideId,
                 ChainStageAdvanced = selectedChoice.AdvancesChainStage,
-                DeductedCosts = costs,
-                CooldownKey = cdKey
+                DeductedCosts = new List<NormalizedItemCost>(costs),
+                CooldownKey = cdKey,
+                BountyRecord = bountyRecord
             };
 
             OnChoiceResolved?.Invoke(encounterId, choiceId);
             return true;
+        }
+
+        private void RecordPatrolHistory(TravelEncounterDefinition encounter, TravelEncounterChoice choice, int day)
+        {
+            string faction = FactionStandingIdResolver.ToSystemsId(encounter.FactionId);
+            string key = GetPatrolHistoryKey(faction, encounter.Id, choice.ChoiceId);
+            if (!_patrolHistory.TryGetValue(key, out var record))
+            {
+                record = new PatrolHistoryRecord
+                {
+                    FactionId = faction,
+                    EncounterId = encounter.Id,
+                    ChoiceId = choice.ChoiceId,
+                    ResolutionDay = day,
+                    LastResolutionDay = day,
+                    TimesSelected = 0,
+                    Tags = new List<string>()
+                };
+                _patrolHistory[key] = record;
+            }
+
+            record.TimesSelected = Math.Max(0, record.TimesSelected) + 1;
+            record.LastResolutionDay = day;
+            if (record.ResolutionDay <= 0) record.ResolutionDay = day;
+
+            var tags = new HashSet<string>(record.Tags ?? new List<string>(), StringComparer.OrdinalIgnoreCase);
+            if (choice.HistoryTags != null)
+            {
+                foreach (var tag in choice.HistoryTags)
+                {
+                    if (!string.IsNullOrWhiteSpace(tag)) tags.Add(tag.Trim());
+                }
+            }
+            if (choice.ChoiceId.IndexOf("toll", StringComparison.OrdinalIgnoreCase) >= 0)
+                tags.Add("paid_toll");
+            if (!choice.IsNonviolent || choice.FactionStandingDelta <= -10)
+                tags.Add("hostile");
+            if (choice.FactionStandingDelta > 0)
+                tags.Add("cooperative");
+            record.Tags = new List<string>(tags);
+            OnPatrolHistoryRecorded?.Invoke(encounter.Id, choice.ChoiceId);
         }
 
         public bool ResolveChoice(string encounterId, string choiceId, int currentDay, out int moraleDelta, out int guiltDelta, out string unlockedFieldGuideId)
@@ -503,17 +984,40 @@ namespace Ashfall.Core.Narrative
 
         public TravelEncounterState CaptureState()
         {
+            var history = new List<PatrolHistoryRecord>();
+            foreach (var record in _patrolHistory.Values)
+            {
+                history.Add(new PatrolHistoryRecord
+                {
+                    FactionId = record.FactionId,
+                    EncounterId = record.EncounterId,
+                    ChoiceId = record.ChoiceId,
+                    ResolutionDay = record.ResolutionDay,
+                    TimesSelected = record.TimesSelected,
+                    LastResolutionDay = record.LastResolutionDay,
+                    Tags = new List<string>(record.Tags ?? new List<string>())
+                });
+            }
+            history.Sort((a, b) => string.Compare(
+                a.FactionId + "::" + a.EncounterId + "::" + a.ChoiceId,
+                b.FactionId + "::" + b.EncounterId + "::" + b.ChoiceId,
+                StringComparison.Ordinal));
+
             return new TravelEncounterState
             {
                 ChainStages = new Dictionary<string, int>(_chainStages, StringComparer.OrdinalIgnoreCase),
-                EncounterAvailableDay = new Dictionary<string, int>(_encounterAvailableDay, StringComparer.OrdinalIgnoreCase)
+                EncounterAvailableDay = new Dictionary<string, int>(_encounterAvailableDay, StringComparer.OrdinalIgnoreCase),
+                PatrolChainStages = new Dictionary<string, int>(_patrolChainStages, StringComparer.OrdinalIgnoreCase),
+                PatrolHistory = history
             };
         }
 
         public void RestoreState(TravelEncounterState? state)
         {
             _chainStages.Clear();
+            _patrolChainStages.Clear();
             _encounterAvailableDay.Clear();
+            _patrolHistory.Clear();
             if (state == null) return;
 
             if (state.ChainStages != null)
@@ -548,6 +1052,34 @@ namespace Ashfall.Core.Narrative
                             _encounterAvailableDay.Remove(enc.Id);
                         }
                     }
+                }
+            }
+
+            if (state.PatrolChainStages != null)
+            {
+                foreach (var kvp in state.PatrolChainStages)
+                {
+                    _patrolChainStages[kvp.Key] = kvp.Value;
+                }
+            }
+
+            if (state.PatrolHistory != null)
+            {
+                foreach (var source in state.PatrolHistory)
+                {
+                    if (source == null || string.IsNullOrWhiteSpace(source.ChoiceId)) continue;
+                    string faction = FactionStandingIdResolver.ToSystemsId(source.FactionId);
+                    var copy = new PatrolHistoryRecord
+                    {
+                        FactionId = faction,
+                        EncounterId = source.EncounterId ?? string.Empty,
+                        ChoiceId = source.ChoiceId,
+                        ResolutionDay = source.ResolutionDay,
+                        TimesSelected = Math.Max(1, source.TimesSelected),
+                        LastResolutionDay = source.LastResolutionDay,
+                        Tags = new List<string>(source.Tags ?? new List<string>())
+                    };
+                    _patrolHistory[GetPatrolHistoryKey(faction, copy.EncounterId, copy.ChoiceId)] = copy;
                 }
             }
         }

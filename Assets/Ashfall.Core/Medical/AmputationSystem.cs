@@ -92,6 +92,7 @@ namespace Ashfall.Core.Medical
         public int schema_version { get; set; } = 1;
         public Dictionary<string, List<LimbState>> survivorLimbs { get; set; } = new Dictionary<string, List<LimbState>>();
         public List<string> phantomPainSurvivorIds { get; set; } = new List<string>();
+        public Dictionary<string, int> phantomPainEpisodeDays { get; set; } = new Dictionary<string, int>();
         public int totalAmputationsPerformed { get; set; } = 0;
     }
 
@@ -107,6 +108,7 @@ namespace Ashfall.Core.Medical
         public event Action<string, LimbId, LimbCondition>? OnAmputationComplete;
         public event Action<string, LimbId>? OnGangreneDeclared;
         public event Action<string, string>? OnProstheticFitted;
+        public event Action<string, float>? OnPhantomPainEpisode;
 
         public AmputationSystemState State => _state;
 
@@ -220,6 +222,54 @@ namespace Ashfall.Core.Medical
                             {
                                 _needs.Modify(s, NeedKind.Health, -15f);
                                 _needs.Modify(s, NeedKind.Morale, -10f);
+                            }
+                        }
+                    }
+                }
+
+                // ── Phantom pain episodic stress spikes ─────────────────
+                if (_state.phantomPainSurvivorIds.Contains(survivorId))
+                {
+                    if (!_state.phantomPainEpisodeDays.TryGetValue(survivorId, out int daysSinceLast))
+                        daysSinceLast = 0;
+                    daysSinceLast++;
+                    _state.phantomPainEpisodeDays[survivorId] = daysSinceLast;
+
+                    // Episode fires every 3-7 days (deterministic via seeded RNG)
+                    int threshold = 3 + (int)(_rng.NextDouble() * 5.0);
+                    if (daysSinceLast >= threshold)
+                    {
+                        float stressAmount = 15f + (float)(_rng.NextDouble() * 20.0); // 15-35 morale hit
+                        _state.phantomPainEpisodeDays[survivorId] = 0;
+
+                        if (_needs != null)
+                        {
+                            var s = _needs.Get(survivorId);
+                            if (s != null && s.IsAliveState)
+                            {
+                                _needs.Modify(s, NeedKind.Morale, -stressAmount);
+                            }
+                        }
+
+                        OnPhantomPainEpisode?.Invoke(survivorId, stressAmount);
+
+                        // Decay: 15% chance phantom pain resolves each episode after 30+ days
+                        int totalDaysSinceAmputation = 0;
+                        var survivorLimbs = _state.survivorLimbs.TryGetValue(survivorId, out var sl) ? sl : null;
+                        if (survivorLimbs != null)
+                        {
+                            foreach (var limb in survivorLimbs)
+                                totalDaysSinceAmputation = Math.Max(totalDaysSinceAmputation, limb.recoveryDaysLeft > 0 ? 0 : 30);
+                        }
+                        if (totalDaysSinceAmputation >= 30 && _rng.NextDouble() < 0.15)
+                        {
+                            _state.phantomPainSurvivorIds.Remove(survivorId);
+                            _state.phantomPainEpisodeDays.Remove(survivorId);
+                            // Clear limb flags
+                            if (survivorLimbs != null)
+                            {
+                                foreach (var limb in survivorLimbs)
+                                    limb.hasPhantomPain = false;
                             }
                         }
                     }
@@ -398,6 +448,40 @@ namespace Ashfall.Core.Medical
             }
 
             return Math.Max(0.15f, mult);
+        }
+
+        /// <summary>
+        /// Combat effectiveness multiplier based on limb condition.
+        /// Arm amputations affect accuracy and weapon handling; leg amputations
+        /// affect mobility and evasion. Gangrenous/infected limbs impose
+        /// additional penalties from pain and sepsis.
+        /// </summary>
+        public float GetCombatEffectivenessMultiplier(string survivorId)
+        {
+            var limbs = EnsureSurvivorLimbs(survivorId);
+            float mult = 1.0f;
+
+            for (int i = 0; i < limbs.Count; i++)
+            {
+                var l = limbs[i];
+                if (l.limb == LimbId.LeftArm || l.limb == LimbId.RightArm)
+                {
+                    if (l.condition == LimbCondition.Amputated) mult -= 0.40f;
+                    else if (l.condition == LimbCondition.Prosthetic) mult -= 0.20f;
+                    else if (l.condition == LimbCondition.Bionic) mult += 0.15f;
+                    else if (l.condition == LimbCondition.Gangrenous) mult -= 0.35f;
+                    else if (l.condition == LimbCondition.Infected) mult -= 0.20f;
+                }
+                else if (l.limb == LimbId.LeftLeg || l.limb == LimbId.RightLeg)
+                {
+                    if (l.condition == LimbCondition.Amputated) mult -= 0.30f;
+                    else if (l.condition == LimbCondition.Prosthetic) mult -= 0.15f;
+                    else if (l.condition == LimbCondition.Bionic) mult += 0.10f;
+                    else if (l.condition == LimbCondition.Gangrenous) mult -= 0.25f;
+                }
+            }
+
+            return Math.Max(0.10f, mult);
         }
 
         public void RestoreState(AmputationSystemState state)

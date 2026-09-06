@@ -18,15 +18,29 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("holdfast_core", new HoldfastCoreDayOwner(this), phase: 1);
             _campaignDay.Register("maritime_deep_coast", new DeepCoastMaritimeDayOwner(this), phase: 1);
             _campaignDay.Register("power_grid", new PowerGridDayOwner(this), phase: 1);
+            // Plans B74-B77: ORC output is published before the grid owner
+            // resolves the day's load, while chamber and tube milestones run
+            // in the production phase.
+            _campaignDay.Register("geothermal_orc", new GeothermalOrcDayOwner(this), phase: 1);
             _campaignDay.Register("weather_world", new WeatherWorldDayOwner(this), phase: 1);
+            // Plan B68 — geological pulse progression precedes production
+            // (foundry sees the quake's interruption context the same day).
+            _campaignDay.Register("seismic_geology", new SeismicGeologyDayOwner(this), phase: 1);
 
             // Phase 2: Production, Infrastructure & Survival Basics
             _campaignDay.Register("crafting_production", new CraftingProductionDayOwner(this), phase: 2);
             _campaignDay.Register("economy_market", new EconomyMarketDayOwner(this), phase: 2);
             _campaignDay.Register("greenhouse_foundry", new GreenhouseFoundryDayOwner(this), phase: 2);
+            _campaignDay.Register("aeroponics", new AeroponicsDayOwner(this), phase: 2);
+            _campaignDay.Register("pneumatic_dispatch", new PneumaticDispatchDayOwner(this), phase: 2);
+            // Plan B69 — cryo thermal/viability update follows the foundry
+            // (shared grid: brownout from the furnace reaches the vault same-day).
+            _campaignDay.Register("cryo_vault", new CryoVaultDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_facilities", new ShelterFacilitiesDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_fire", new ShelterFireDayOwner(this), phase: 2);
             _campaignDay.Register("starting_level_rations", new StartingLevelRationsDayOwner(this), phase: 2);
+            _campaignDay.Register("plan_166_research", new Plan166ResearchDayOwner(this), phase: 4);
+            _campaignDay.Register("plan_168_fluid", new Plan168FluidDayOwner(this), phase: 2);
 
             // Phase 3: Survivors, Medical, Disease & Social
             _campaignDay.Register("duty_roster", new DutyRosterDayOwner(this), phase: 3);
@@ -53,6 +67,8 @@ namespace AtomicWar.GodotApp
             // Plans 162-165 (Plan 164): breakdown arcs evaluate AFTER the
             // phase-3 needs tick finalized canonical stress (plan §11.3).
             _campaignDay.Register("psychology_arcs_162", new PsychologyArcsDayOwner(this), phase: 4);
+            _campaignDay.Register("plan_167_espionage", new Plan167EspionageDayOwner(this), phase: 4);
+            _campaignDay.Register("plan_169_procedural_narrative", new Plan169NarrativeDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -162,7 +178,10 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupStartingLevel();
-                _m._startingLevel.TickDay();
+                // SHELTER_FAILURE_EFFECTS (G6): fx_filtration_off — air filtration
+                // follows the canonical room_air_filtration breaker.
+                float airPower = _m._powerGrid?.System == null || _m._powerGrid.System.IsRoomPowered("room_air_filtration") ? 1f : 0f;
+                _m._startingLevel.TickDay(isFilterDutyAssigned: false, outdoorWeather: WeatherKind.Clear, powerAvailability01: airPower);
 
                 _m.SetupInventory();
                 int foodToConsume = _m._startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3;
@@ -221,6 +240,45 @@ namespace AtomicWar.GodotApp
                 if (_m._foundryDirty) _m.SaveExpansionHub();
 
                 events.Add(new DayStateChangeEvent("greenhouse_foundry_ticked", "greenhouse_foundry", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Plan B68 — geological pulse progression runs in phase 1, after
+        /// weather/power: fault tension accumulates, slips route damage to
+        /// thermal/excavation authorities, and severe quakes request a cryo
+        /// vault breach (Scenario E) before the production owners tick.
+        /// </summary>
+        private sealed class SeismicGeologyDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public SeismicGeologyDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSeismicDynamics();
+                _m._seismicDynamics!.TickDay(day);
+                if (_m._seismicDirty) _m.SaveSeismicDynamics();
+                events.Add(new DayStateChangeEvent("seismic_geology_ticked", "seismic_dynamics", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Plan B69 — cryo thermal/viability update runs in phase 2 after the
+        /// foundry owner: grid brownout from the furnace reaches the vault the
+        /// same day, so a brownout day degrades samples exactly once.
+        /// </summary>
+        private sealed class CryoVaultDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public CryoVaultDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupCryoVault();
+                _m._cryoVault!.TickDay(day);
+                if (_m._cryoVaultDirty) _m.SaveCryoVault();
+                events.Add(new DayStateChangeEvent("cryo_vault_ticked", "cryo_vault", null, null, day));
             }
         }
 
@@ -394,7 +452,13 @@ namespace AtomicWar.GodotApp
                 // 2. chemical dependency progression (single tick owner)
                 // 3. disease progression
                 if (_m._medical.Pipeline != null)
-                    _m._medical.Pipeline.AdvanceScheduled(24f, day);
+                {
+                    // SHELTER_EMP_MEDICAL_POWER: procedures advance only while the
+                    // clinic has power — an outage freezes remaining hours (no
+                    // reroll, no cost anomaly; costs consume at completion).
+                    float clinicPower = _m._powerGrid?.System == null || _m._powerGrid.System.IsRoomPowered("room_clinic") ? 1f : 0f;
+                    _m._medical.Pipeline.AdvanceScheduled(24f * clinicPower, day);
+                }
                 _m._medical.TickHours(24f);
 
                 _m.SetupDisease();
@@ -651,6 +715,11 @@ namespace AtomicWar.GodotApp
                     _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.WorldEvolution, day, 0));
                 world.Wildlife?.TickDay(day,
                     _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.WorldEvolution, day, 1));
+
+                // Plans 162-165 (Plan 165): the ecology layer ticks immediately
+                // after the migration authority moved the packs — it reads and
+                // mutates populations only through WildlifeMigrationSystem.
+                _m.TickWildlifeEcosystemDay(day);
 
                 // ── Landmark collapses → warning, journal ──
                 if (world.Landmarks != null)
@@ -919,7 +988,6 @@ namespace AtomicWar.GodotApp
                 }
 
                 _m.SetupExpansions();
-                _m._expansions.Ledger.TickDaily(day);
                 _m._expansions.TickCrossingQuests(day);
 
                 _m.SetupExpansionQuests();

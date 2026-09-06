@@ -635,6 +635,16 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "fungus_spores_common",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon",
+          "hazard_type": "disease",
+          "hazard_chance": 0.1,
+          "codex_unlock_id": "codex_fungi_subterranean"
         }
       ]
     },
@@ -1484,6 +1494,14 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "fungus_spores_bioluminescent",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_fungi_bioluminescent"
         }
       ]
     },
@@ -1875,6 +1893,15 @@
           "min_quantity": 1,
           "max_quantity": 2,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "fungus_spores_common",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "uncommon",
+          "hazard_type": "disease",
+          "hazard_chance": 0.15
         }
       ]
     },
@@ -3243,6 +3270,14 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "fungus_spores_medicinal",
+          "weight": 7,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "codex_unlock_id": "codex_fungi_medicinal"
         }
       ]
     },

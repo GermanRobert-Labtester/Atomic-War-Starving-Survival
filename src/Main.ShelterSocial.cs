@@ -138,6 +138,16 @@ namespace AtomicWar.GodotApp
             LoadVinylRecordCatalog(vmSys);
             _vinylMorale = new VinylMoraleHostSession(vmSys);
             _vinylMorale.DayProvider = () => _simDay;
+            _vinylMorale.System.OnMoraleApplied += amount =>
+            {
+                if (amount > 0 && _survivors?.Needs != null)
+                {
+                    foreach (var sv in _survivors.Needs.Registered)
+                    {
+                        _survivors.Needs.Modify(sv, NeedKind.Morale, amount);
+                    }
+                }
+            };
             if (_vinylMoralePanel != null && _vinylMoralePanel.IsInsideTree())
                 RemoveChild(_vinylMoralePanel);
             _vinylMoralePanel = new VinylMoralePanel();
@@ -240,13 +250,29 @@ namespace AtomicWar.GodotApp
 
                 string knowledgeKey = Ashfall.Core.Journal.KnowledgeKeys.WildlifeSpeciesCaught(speciesId);
 
-                _journal.Knowledge.Discover(knowledgeKey);
-                _journal.UnlockWildlifeCaught(speciesId);
-                _journal.TryAddRawEntry(
-                    knowledgeKey,
-                    $"Captured first specimen of species '{speciesId}' at trap site {siteId} (hunter: {hunterId}).",
-                    null!,
-                    _simDay);
+                // Resolve display name for species from catalog if available
+                string speciesName = speciesId;
+                if (trapCatalog != null && trapCatalog.Prey.TryGetValue(speciesId, out var preyDef) && !string.IsNullOrEmpty(preyDef.displayName))
+                {
+                    speciesName = preyDef.displayName;
+                }
+
+                // Resolve author: assigned hunter -> shelter fallback
+                Ashfall.Core.Journal.ISurvivorAuthor? author = null;
+                if (_survivors?.Roster != null && !string.IsNullOrEmpty(hunterId))
+                {
+                    var survivorDef = _survivors.Roster.FindDefinition(hunterId);
+                    if (survivorDef != null)
+                    {
+                        author = new TrappingJournalAuthor(survivorDef.id, survivorDef.displayName);
+                    }
+                }
+                author ??= new TrappingJournalAuthor(
+                    string.IsNullOrEmpty(hunterId) ? "shelter_crew" : hunterId,
+                    string.IsNullOrEmpty(hunterId) ? "Shelter Trapper" : hunterId);
+
+                string text = $"Captured first specimen of {speciesName} at trap site {siteId} (hunter: {author.DisplayName}).";
+                _journal.TryDiscoverRawKnowledge(knowledgeKey, text, author, _simDay);
             };
 
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())
@@ -290,7 +316,9 @@ namespace AtomicWar.GodotApp
             if (_apprenticeship != null) return;
             SetupCampaignDay();
             var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
-            var appSkills = new SkillProgressionSystem();
+            var appSkills = EnsureSharedSkillProgression();
+            if (appState.skillProgression != null)
+                appSkills.RestoreState(appState.skillProgression);
             var appSys = new ApprenticeshipSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Social, 0, 3), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
             appSys.RestoreState(appState);
             _apprenticeship = new ApprenticeshipHostSession(appSys);
@@ -305,7 +333,11 @@ namespace AtomicWar.GodotApp
         private void SaveApprenticeship()
         {
             if (_apprenticeship != null)
-                CaptureSection("apprenticeship", ApprenticeshipSaveStore.TryCapturePersisted(_apprenticeship.System.CaptureState()));
+            {
+                var state = _apprenticeship.System.CaptureState();
+                state.skillProgression = EnsureSharedSkillProgression().CaptureState();
+                CaptureSection("apprenticeship", ApprenticeshipSaveStore.TryCapturePersisted(state));
+            }
         }
 
         private void SetupCaregiving()
@@ -327,6 +359,19 @@ namespace AtomicWar.GodotApp
         {
             if (_caregiving != null)
                 CaptureSection("caregiving", CaregivingSaveStore.TryCapturePersisted(_caregiving.System.CaptureState()));
+        }
+
+        private sealed class TrappingJournalAuthor : Ashfall.Core.Journal.ISurvivorAuthor
+        {
+            public string Id { get; }
+            public string DisplayName { get; }
+            public Ashfall.Core.Journal.RiskBiasTrait RiskBias => Ashfall.Core.Journal.RiskBiasTrait.Realist;
+
+            public TrappingJournalAuthor(string id, string displayName)
+            {
+                Id = id;
+                DisplayName = displayName;
+            }
         }
     }
 }

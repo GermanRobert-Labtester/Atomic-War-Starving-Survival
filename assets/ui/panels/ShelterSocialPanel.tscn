@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://shelter_social_panel"]
+[ext_resource type="Script" path="res://src/UI/ShelterSocialPanel.cs" id="1_script"]
+
+[node name="ShelterSocialPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="CloseButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="RoomListContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="SurvivorListContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="RelationsContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="DisputeContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="MediateButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="GatheringButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="MemorialContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="HistoryContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0

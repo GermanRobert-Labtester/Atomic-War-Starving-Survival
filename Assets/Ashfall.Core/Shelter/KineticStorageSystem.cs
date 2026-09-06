@@ -474,6 +474,27 @@ namespace Ashfall.Core.Shelter
         }
 
         /// <summary>
+        /// Engage the emergency brake on a flywheel (Core command — UI must
+        /// route through this, never write rotor state directly). Takes the
+        /// rotor offline; released only by PerformMaintenance.
+        /// </summary>
+        public ActionResult EngageEmergencyBrake(string instanceId)
+        {
+            var f = FindFlywheel(instanceId);
+            if (f == null) return ActionResult.Blocked("not_found", "flywheel.not_found");
+            if (f.hasFailed) return ActionResult.Blocked("failed", "flywheel.failed");
+            if (f.emergencyBrakeEngaged) return ActionResult.Blocked("already_braked", "flywheel.already_braked");
+
+            f.emergencyBrakeEngaged = true;
+            f.isOnline = false;
+            f.activeChargeKw = 0;
+            f.activeDischargeKw = 0;
+            _log.Warn($"[Flywheel] {instanceId}: EMERGENCY BRAKE engaged by operator command");
+            OnStorageChanged?.Invoke();
+            return ActionResult.Success("flywheel.brake_engaged");
+        }
+
+        /// <summary>
         /// Perform maintenance on a flywheel.
         /// </summary>
         public ActionResult PerformMaintenance(string instanceId, int day, Func<string, int, bool> consumeItems)

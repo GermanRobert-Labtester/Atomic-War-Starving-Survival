@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "caravans": [
+    {
+      "caravan_id": "caravan_scrap_salvagers",
+      "name": "Rust-Valley Scrap Guild",
+      "description": "Hardened mechanics and junk haulers specializing in salvage, structural iron, and repair tools.",
+      "faction_id": "faction_salvagers",
+      "schedule_period_days": 14,
+      "stay_duration_days": 3,
+      "barter_tolerance_bp": 9500,
+      "counterfeit_risk_bp": 600,
+      "stock": [
+        { "item_id": "item_blowtorch", "quantity": 1, "price_multiplier_bp": 10000 },
+        { "item_id": "item_scrap_metal", "quantity": 50, "price_multiplier_bp": 9000 },
+        { "item_id": "item_fuel", "quantity": 20, "price_multiplier_bp": 11000 }
+      ],
+      "demanded_item_tags": ["medical", "food", "clean_water"],
+      "demanded_price_mult_bp": 12500
+    },
+    {
+      "caravan_id": "caravan_permafrost_traders",
+      "name": "Deep-Tundra Fur & Ration Convoy",
+      "description": "Long-distance snow sled team trading calorie-dense rations, thermal gear, and insulation supplies.",
+      "faction_id": "faction_permafrost_nomads",
+      "schedule_period_days": 20,
+      "stay_duration_days": 2,
+      "barter_tolerance_bp": 10000,
+      "counterfeit_risk_bp": 400,
+      "stock": [
+        { "item_id": "item_canned_food", "quantity": 30, "price_multiplier_bp": 10000 },
+        { "item_id": "cloth", "quantity": 25, "price_multiplier_bp": 9500 },
+        { "item_id": "plastic_material", "quantity": 15, "price_multiplier_bp": 10500 }
+      ],
+      "demanded_item_tags": ["fuel", "ammunition", "tools"],
+      "demanded_price_mult_bp": 13000
+    },
+    {
+      "caravan_id": "caravan_medic_syndicate",
+      "name": "Black Cross Apothecary",
+      "description": "Traveling field medics offering sterile antibiotics, burn dressings, and technical surgery guides.",
+      "faction_id": "faction_black_cross",
+      "schedule_period_days": 25,
+      "stay_duration_days": 2,
+      "barter_tolerance_bp": 10500,
+      "counterfeit_risk_bp": 200,
+      "stock": [
+        { "item_id": "item_first_aid_kit", "quantity": 8, "price_multiplier_bp": 10000 },
+        { "item_id": "item_manual_field_medicine", "quantity": 1, "price_multiplier_bp": 12000 },
+        { "item_id": "item_rad_away", "quantity": 10, "price_multiplier_bp": 11500 }
+      ],
+      "demanded_item_tags": ["clean_water", "chemicals", "electronics"],
+      "demanded_price_mult_bp": 14000
+    },
+    {
+      "caravan_id": "caravan_black_market_munitions",
+      "name": "Iron-Sights Ordnance Runners",
+      "description": "Shady border smugglers dealing in surplus cartridges, explosive primers, and questionable technical manuals.",
+      "faction_id": "faction_wasteland_outlaws",
+      "schedule_period_days": 18,
+      "stay_duration_days": 2,
+      "barter_tolerance_bp": 9000,
+      "counterfeit_risk_bp": 2500,
+      "stock": [
+        { "item_id": "item_ammo_9mm", "quantity": 120, "price_multiplier_bp": 9500 },
+        { "item_id": "item_manual_rough_repairs", "quantity": 1, "price_multiplier_bp": 8500 },
+        { "item_id": "item_fuel", "quantity": 15, "price_multiplier_bp": 11000 }
+      ],
+      "demanded_item_tags": ["medical", "food", "luxury"],
+      "demanded_price_mult_bp": 12000
+    }
+  ]
+}

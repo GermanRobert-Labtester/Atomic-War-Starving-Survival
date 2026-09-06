@@ -6,10 +6,10 @@ uid="uid://dtiagil5tvdfq"
 
 [deps]
 
-files=["res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.source.translation"]
+files=["res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.de.translation", "res://assets/l10n/strings.source.translation"]
 
 source_file="res://assets/l10n/strings.csv"
-dest_files=["res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.source.translation"]
+dest_files=["res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.de.translation", "res://assets/l10n/strings.source.translation"]
 
 [params]
 

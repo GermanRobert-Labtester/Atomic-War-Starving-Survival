@@ -104,11 +104,11 @@ namespace AtomicWar.GodotApp.UI
             mainVBox.AddChild(bodyHBox);
 
             // Left Column (Telemetry)
-            var leftPanel = CreatePanelFrame("MAGNETIC DRUM ROTOR & READ HEADS");
+            var leftPanel = CreatePanelFrame("MAGNETIC DRUM ROTOR & READ HEADS", out var leftMargin);
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftMargin.AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("DRUM ROTATION VELOCITY", "3,600 RPM [CRYSTAL LOCKED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("FERRITE HEAD TRACK", "TRACK 42 OF 128 [ACCESSED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("PARITY BIT ERROR RATE", "0.0001% [FERRITE COATING OK]", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
@@ -116,22 +116,22 @@ namespace AtomicWar.GodotApp.UI
             _telemetryContainer.AddChild(CreateTelemetryRow("STORED BLUEPRINT SECTOR", "SHELTER EXPANSION ARCHITECTURE", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
 
             // Center Column (Interactive Controls)
-            var centerPanel = CreatePanelFrame("OPTICAL MICROFICHE VIEWER & SEARCH");
+            var centerPanel = CreatePanelFrame("OPTICAL MICROFICHE VIEWER & SEARCH", out var centerMargin);
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerMargin.AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[SEEK TRACK TO ENGINEERING BLUEPRINTS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[PROJECT 35mm MICROFICHE SPOOL]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[DUMP CORE PARITY MEMORY TO TELETYPE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[RE-MAGNETIZE DEGRADED DRUM TRACKS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
-            var rightPanel = CreatePanelFrame("MICROFICHE CASSETTES & DECODED PLANS");
+            var rightPanel = CreatePanelFrame("MICROFICHE CASSETTES & DECODED PLANS", out var rightMargin);
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightMargin.AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("PRE-WAR SCHEMATICS LOADED", "84 CASSETTES CATALOGED", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("FOUNDRY HYDRO-PRESS BLUEPRINT", "100% RECOVERED & VERIFIED", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("SECTOR 09 GEOTHERMAL SURVEY", "AVAILABLE ON SPOOL #14", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
@@ -158,7 +158,7 @@ namespace AtomicWar.GodotApp.UI
             mainVBox.AddChild(logPanel);
         }
 
-        private static PanelContainer CreatePanelFrame(string headerText)
+        private static PanelContainer CreatePanelFrame(string headerText, out MarginContainer margin)
         {
             var panel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
             var vbox = new VBoxContainer();
@@ -171,7 +171,7 @@ namespace AtomicWar.GodotApp.UI
             title.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             vbox.AddChild(title);
 
-            var margin = new MarginContainer { Name = "Margin", SizeFlagsVertical = SizeFlags.ExpandFill };
+            margin = new MarginContainer { Name = "Margin", SizeFlagsVertical = SizeFlags.ExpandFill };
             margin.AddThemeConstantOverride("margin_left", 8);
             margin.AddThemeConstantOverride("margin_top", 8);
             margin.AddThemeConstantOverride("margin_right", 8);

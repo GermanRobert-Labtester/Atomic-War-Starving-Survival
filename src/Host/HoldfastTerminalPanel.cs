@@ -241,7 +241,7 @@ namespace AtomicWar.GodotApp
                 return campaignSaved;
             }
 
-            bool saved = _session != null && _session.TrySave(basePathOverride, tradePathOverride);
+            bool saved = _session != null && _session.TrySaveToLegacyFiles(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
                 ? "Holdfast terminal is not connected."
                 : _session.LastPersistenceMessage;
@@ -266,7 +266,7 @@ namespace AtomicWar.GodotApp
                 return campaignReloaded;
             }
 
-            bool loaded = _session != null && _session.TryReload(basePathOverride, tradePathOverride);
+            bool loaded = _session != null && _session.TryReloadFromLegacyFiles(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
                 ? "Holdfast terminal is not connected."
                 : _session.LastPersistenceMessage;

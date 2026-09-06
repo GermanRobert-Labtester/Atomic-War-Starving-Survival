@@ -58,6 +58,30 @@ namespace Ashfall.Core.Narrative
         [JsonPropertyName("required_flag")]
         public string RequiredFlag { get; set; } = string.Empty;
 
+        // Patrol recognition conditions. These are deliberately data-only and
+        // default to "no gate" so legacy travel encounters keep their exact
+        // availability semantics.
+        [JsonPropertyName("required_chain_stage")]
+        public int RequiredChainStage { get; set; } = -1;
+
+        [JsonPropertyName("max_chain_stage")]
+        public int MaxChainStage { get; set; } = -1;
+
+        [JsonPropertyName("required_history_tags")]
+        public List<string> RequiredHistoryTags { get; set; } = new List<string>();
+
+        [JsonPropertyName("forbidden_history_tags")]
+        public List<string> ForbiddenHistoryTags { get; set; } = new List<string>();
+
+        [JsonPropertyName("history_tags")]
+        public List<string> HistoryTags { get; set; } = new List<string>();
+
+        [JsonPropertyName("min_faction_standing")]
+        public int? MinFactionStanding { get; set; }
+
+        [JsonPropertyName("max_faction_standing")]
+        public int? MaxFactionStanding { get; set; }
+
         public List<NormalizedItemCost> GetNormalizedCosts()
         {
             if (CostItems == null || CostItems.Count == 0)
@@ -161,10 +185,60 @@ namespace Ashfall.Core.Narrative
         [JsonPropertyName("cooldown_group")]
         public string CooldownGroup { get; set; } = string.Empty;
 
+        // F5 — authored recurrence. Omitted legacy data retains the original
+        // five-day contract; zero remains valid for deliberately immediate
+        // encounters.
+        [JsonPropertyName("cooldown_days")]
+        public int CooldownDays { get; set; } = 5;
+
+        [JsonPropertyName("patrol_archetype")]
+        public string PatrolArchetype { get; set; } = string.Empty;
+
+        // Flagship VII (F11) — War-state variants & dynamic weighting
+        [JsonPropertyName("war_state")]
+        public string WarStateString { get; set; } = "any";
+
+        [JsonPropertyName("war_weight_multiplier")]
+        public float WarWeightMultiplier { get; set; } = 1.0f;
+
+        // Flagship VII (F12) — Dynamic territory-state eligibility
+        [JsonPropertyName("required_territory_owner")]
+        public string RequiredTerritoryOwner { get; set; } = string.Empty;
+
+        public TravelEncounterWarState WarState => ParseWarState(WarStateString);
+
+        public static TravelEncounterWarState ParseWarState(string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return TravelEncounterWarState.Any;
+            return value.Trim().ToLowerInvariant() switch
+            {
+                "any" => TravelEncounterWarState.Any,
+                "peacetime" => TravelEncounterWarState.Peacetime,
+                "wartime" => TravelEncounterWarState.Wartime,
+                _ => throw new ArgumentException($"Invalid war_state: '{value}'. Expected 'any', 'peacetime', or 'wartime'.")
+            };
+        }
+
+        public static bool IsValidWarState(string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return true;
+            string s = value.Trim().ToLowerInvariant();
+            return s is "any" or "peacetime" or "wartime";
+        }
+
         public string GetCooldownKey()
         {
             return !string.IsNullOrWhiteSpace(CooldownGroup) ? CooldownGroup.Trim() : Id;
         }
+
+        public int GetCooldownDays() => Math.Max(0, CooldownDays);
+    }
+
+    public enum TravelEncounterWarState
+    {
+        Any = 0,
+        Peacetime = 1,
+        Wartime = 2
     }
 
     [Serializable]
@@ -181,6 +255,31 @@ namespace Ashfall.Core.Narrative
     }
 
     [Serializable]
+    public sealed class PatrolHistoryRecord
+    {
+        [JsonPropertyName("faction_id")]
+        public string FactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("encounter_id")]
+        public string EncounterId { get; set; } = string.Empty;
+
+        [JsonPropertyName("choice_id")]
+        public string ChoiceId { get; set; } = string.Empty;
+
+        [JsonPropertyName("resolution_day")]
+        public int ResolutionDay { get; set; }
+
+        [JsonPropertyName("times_selected")]
+        public int TimesSelected { get; set; } = 1;
+
+        [JsonPropertyName("last_resolution_day")]
+        public int LastResolutionDay { get; set; }
+
+        [JsonPropertyName("tags")]
+        public List<string> Tags { get; set; } = new List<string>();
+    }
+
+    [Serializable]
     public sealed class TravelEncounterState
     {
         [JsonPropertyName("chain_stages")]
@@ -188,6 +287,12 @@ namespace Ashfall.Core.Narrative
 
         [JsonPropertyName("encounter_cooldowns")]
         public Dictionary<string, int> EncounterAvailableDay { get; set; } = new Dictionary<string, int>();
+
+        [JsonPropertyName("patrol_history")]
+        public List<PatrolHistoryRecord> PatrolHistory { get; set; } = new List<PatrolHistoryRecord>();
+
+        [JsonPropertyName("patrol_chain_stages")]
+        public Dictionary<string, int> PatrolChainStages { get; set; } = new Dictionary<string, int>();
     }
 
     public sealed class TravelEncounterCatalog

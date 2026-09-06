@@ -212,9 +212,15 @@ namespace Ashfall.Core.Economy
             if (ItemAliases.ToCanonical(template.principalItemId) != canonicalRequestedItem)
                 return "credit_no_matching_template";
 
-            // Template-active gate: every authored template is currently
-            // unconditioned (no day/unlock fields in the schema); the hook
-            // stays here so a future schema field lands in one place.
+            // Template-active gate: authored templates can be disabled or
+            // bounded to a campaign-day window. Missing legacy fields retain
+            // the active/unbounded defaults from DebtTemplate.
+            int day = _currentDay();
+            if (!template.active
+                || day < template.minDay
+                || (template.maxDay > 0 && day > template.maxDay))
+                return "credit_template_inactive";
+
             return string.Empty;
         }
 
@@ -246,6 +252,7 @@ namespace Ashfall.Core.Economy
             // Disburse first, then sign; compensate the grant if ink fails.
             if (!_tryGrantItems(template.principalItemId, template.principalQuantity))
             {
+                _ledger.CancelDraft(_debtorId, creditorId, template.id);
                 _log.Warn("CreditPrincipalTransferFailed { item=" + template.principalItemId
                     + " qty=" + template.principalQuantity + " } — contract not signed, grant rolled back.");
                 return CreditAcceptResult.Fail("credit_principal_transfer_failed");
@@ -253,6 +260,7 @@ namespace Ashfall.Core.Economy
             if (!_ledger.SignContract(_debtorId, day))
             {
                 _revokeItems?.Invoke(template.principalItemId, template.principalQuantity);
+                _ledger.CancelDraft(_debtorId, creditorId, template.id);
                 _log.Warn("CreditSignFailed { template=" + template.id + " } — principal disbursement revoked.");
                 return CreditAcceptResult.Fail("credit_sign_failed");
             }

@@ -138,10 +138,10 @@ namespace Ashfall.Core.Tests
             var v2Raid = _catalog.GetEncounter("enc_patrol_warlord_raid_v2")!;
             var v3Raid = _catalog.GetEncounter("enc_patrol_warlord_raid_v3")!;
 
-            Assert.Equal(0.5f, v1Raid.BaseWeight, 3);
-            Assert.Equal(0.5f, v2Raid.BaseWeight, 3);
-            Assert.Equal(0.5f, v3Raid.BaseWeight, 3);
-            Assert.Equal(1.5f, v1Raid.BaseWeight + v2Raid.BaseWeight + v3Raid.BaseWeight, 3);
+            Assert.Equal(0.3f, v1Raid.BaseWeight, 3);
+            Assert.Equal(0.3f, v2Raid.BaseWeight, 3);
+            Assert.Equal(0.3f, v3Raid.BaseWeight, 3);
+            Assert.Equal(0.9f, v1Raid.BaseWeight + v2Raid.BaseWeight + v3Raid.BaseWeight, 3);
         }
 
         [Fact]
@@ -171,14 +171,14 @@ namespace Ashfall.Core.Tests
 
                 if (selected.CooldownGroup == "patrol_garrison_checkpoint")
                 {
-                    Assert.True(day - lastCheckpointDay >= 5,
-                        $"Checkpoint variant occurred on day {day}, but previous occurred on day {lastCheckpointDay} (< 5 days gap)!");
+                    Assert.True(day - lastCheckpointDay >= 3,
+                        $"Checkpoint variant occurred on day {day}, but previous occurred on day {lastCheckpointDay} (< 3 days gap)!");
                     lastCheckpointDay = day;
                 }
                 else if (selected.CooldownGroup == "patrol_warlord_raid")
                 {
-                    Assert.True(day - lastRaidDay >= 5,
-                        $"Warlord raid variant occurred on day {day}, but previous occurred on day {lastRaidDay} (< 5 days gap)!");
+                    Assert.True(day - lastRaidDay >= 7,
+                        $"Warlord raid variant occurred on day {day}, but previous occurred on day {lastRaidDay} (< 7 days gap)!");
                     lastRaidDay = day;
                 }
 

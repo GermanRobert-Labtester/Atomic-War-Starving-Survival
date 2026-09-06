@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "id": "crop_aeroponic_medicinal_root",
+      "nutrient_profile_id": "crop_aeroponic_medicinal_root",
+      "crop_tag": "medicinal_root",
+      "nitrogen": 120,
+      "phosphorus": 80,
+      "potassium": 160,
+      "iron": 4,
+      "calcium": 90,
+      "magnesium": 35,
+      "optimal_ec_min": 1.4,
+      "optimal_ec_max": 2.2,
+      "optimal_ph_min": 5.6,
+      "optimal_ph_max": 6.4,
+      "yield_item_id": "item_aeroponic_medicinal_root",
+      "yield_amount": 2,
+      "medicinal": true,
+      "base_growth_per_day": 12
+    },
+    {
+      "id": "crop_aeroponic_food_leaf",
+      "nutrient_profile_id": "crop_aeroponic_food_leaf",
+      "crop_tag": "food_leaf",
+      "nitrogen": 150,
+      "phosphorus": 55,
+      "potassium": 130,
+      "iron": 3,
+      "calcium": 100,
+      "magnesium": 40,
+      "optimal_ec_min": 1.0,
+      "optimal_ec_max": 1.8,
+      "optimal_ph_min": 5.5,
+      "optimal_ph_max": 6.5,
+      "yield_item_id": "item_aeroponic_food_leaf",
+      "yield_amount": 4,
+      "medicinal": false,
+      "base_growth_per_day": 15
+    }
+  ]
+}

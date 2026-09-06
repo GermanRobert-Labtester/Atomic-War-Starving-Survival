@@ -532,14 +532,14 @@ namespace Ashfall.Core.Tests
 
             var def = _catalog.GetEncounter(encId)!;
 
-            // Day 12: Inactive in TravelEncounterSystem (5-day cooldown until day 15)
+            // Day 12: Inactive in TravelEncounterSystem (three-day checkpoint cooldown until day 13)
             Assert.False(travelSys.IsEncounterEligible(def, "high_scarp", 1.0f, "all", 12));
 
-            // Day 14: Still inactive
-            Assert.False(travelSys.IsEncounterEligible(def, "high_scarp", 1.0f, "all", 14));
+            // Day 12 remains inside the authored boundary.
+            Assert.False(travelSys.IsEncounterEligible(def, "high_scarp", 1.0f, "all", 12));
 
-            // Day 15: Cooldown expired! Active again in TravelEncounterSystem
-            Assert.True(travelSys.IsEncounterEligible(def, "high_scarp", 1.0f, "all", 15));
+            // Day 13: Cooldown expired! Active again in TravelEncounterSystem
+            Assert.True(travelSys.IsEncounterEligible(def, "high_scarp", 1.0f, "all", 13));
         }
 
         [Fact]

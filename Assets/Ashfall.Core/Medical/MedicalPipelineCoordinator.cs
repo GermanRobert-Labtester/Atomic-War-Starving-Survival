@@ -53,6 +53,12 @@ namespace Ashfall.Core.Medical
         private readonly Dictionary<string, IMedicalProtocolHandler> _protocols =
             new Dictionary<string, IMedicalProtocolHandler>(StringComparer.Ordinal);
         private readonly Func<Survivors.SurvivorId, PatientAvailability> _availability;
+
+        /// <summary>Optional grid read (SHELTER_EMP_MEDICAL_POWER): false when the
+        /// clinic/ward has no power — scheduled procedures pause via scaled advance
+        /// hours, and new treatment starts are refused with clinic_no_power.
+        /// Null = legacy behavior (always powered).</summary>
+        private readonly Func<bool>? _clinicPowerCheck;
         private readonly Func<int> _currentDay;
 
         /// <summary>Monotonic version for stale-preview rejection; persists with the pipeline.</summary>
@@ -83,7 +89,8 @@ namespace Ashfall.Core.Medical
             MedicalReservationLedger reservations,
             MedicalProcedureSchedule schedule,
             Func<Survivors.SurvivorId, PatientAvailability> availability,
-            Func<int> currentDay)
+            Func<int> currentDay,
+            Func<bool>? clinicPowerCheck = null)
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _diagnosis = diagnosis ?? throw new ArgumentNullException(nameof(diagnosis));
@@ -91,6 +98,7 @@ namespace Ashfall.Core.Medical
             _schedule = schedule ?? throw new ArgumentNullException(nameof(schedule));
             _availability = availability ?? throw new ArgumentNullException(nameof(availability));
             _currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            _clinicPowerCheck = clinicPowerCheck;
         }
 
         // ── Handler registry ─────────────────────────────────────────
@@ -330,6 +338,12 @@ namespace Ashfall.Core.Medical
         /// </summary>
         public MedicalOperationResult ExecuteTreatment(Survivors.SurvivorId survivor, string treatmentId, long expectedVersion = 0, AfflictionId? target = null, string? targetItem = null)
         {
+            if (_clinicPowerCheck != null && !_clinicPowerCheck())
+            {
+                OnTreatmentRefused?.Invoke(treatmentId, survivor, "clinic_no_power");
+                return new MedicalOperationResult { Success = false, ReasonCode = "clinic_no_power", StateVersion = StateVersion };
+            }
+
             var preview = PreviewTreatment(survivor, treatmentId, expectedVersion, target, targetItem);
             if (!preview.IsAvailable)
             {

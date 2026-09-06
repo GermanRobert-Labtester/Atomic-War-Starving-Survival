@@ -48,8 +48,18 @@ namespace AtomicWar.GodotApp
                 if (count == 0)
                     GD.PushWarning($"[Ashfall Godot] research_knowledge.json loaded 0 nodes from {_dataDir} — research content unavailable");
             }
+            engine.OnResearchCompleted += OnSharedResearchCompleted;
             _sharedResearch = engine;
             return engine;
+        }
+
+        private void OnSharedResearchCompleted(ResearchKnowledgeDef def)
+        {
+            if (def == null) return;
+            SetupJournal();
+            string bt = !string.IsNullOrEmpty(def.breakthroughItem) ? $" Breakthrough: {def.breakthroughItem}." : string.Empty;
+            _journal?.TryAddRawEntry($"research_{def.id}", $"Research completed: {def.displayName}.{bt}", null!, _simDay);
+            _journalDirty = true;
         }
 
 
@@ -130,12 +140,14 @@ namespace AtomicWar.GodotApp
         private void BindElectrostaticScrubberPanel()
         {
             if (_ventilationHost == null) return;
-            if (_electrostaticScrubberPanel != null && _electrostaticScrubberPanel.IsInsideTree())
-                RemoveChild(_electrostaticScrubberPanel);
-            _electrostaticScrubberPanel = new ElectrostaticScrubberPanel();
+            if (_electrostaticScrubberPanel == null)
+            {
+                _electrostaticScrubberPanel = new ElectrostaticScrubberPanel { Visible = false };
+                _electrostaticScrubberPanel.OnClose += () => _electrostaticScrubberPanel.Visible = false;
+                AddChild(_electrostaticScrubberPanel);
+            }
             _electrostaticScrubberPanel.Bind(_ventilationHost);
             _electrostaticScrubberPanel.Visible = false;
-            AddChild(_electrostaticScrubberPanel);
         }
 
         private void WireWaterTreatmentSumpBridge()
@@ -273,10 +285,10 @@ namespace AtomicWar.GodotApp
             SaveWaystation();
             SaveSumpFlooding();
             SaveDecontamination();
-            SavePlans78To81();
-            SavePlans110To113();
-            SavePlans130To133();
-            SavePlans146To149();
+            PersistPlans78To81();
+            PersistPlans110To113();
+            PersistPlans130To133();
+            PersistPlans146To149();
             SaveKitchenNutrition();
             SaveGrainProcessing();
             SaveCryogenicAirSeparation();
@@ -314,11 +326,15 @@ namespace AtomicWar.GodotApp
 
         private void TickAllExpandedShelterSystems(int day)
         {
-            _waterTreatment?.TickDay(day);
+            // SHELTER_EMP_MEDICAL_POWER: water-plant power follows the canonical
+            // room_water_pump breaker (same bus as the fluid network's feed).
+            float waterPower = _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_water_pump") ? 1f : 0f;
+            _waterTreatment?.TickDay(day, waterPower);
             _airlockSecurity?.TickDay(day);
             _survivorRelations?.TickDay(day);
             _regionalTreaty?.TickDay(day);
             _vinylMorale?.TickDay(day);
+            RefreshTrappingDensity();
             _wildlifeTrapping?.TickDay(day);
             _excavation?.TickDay();
             _apprenticeship?.TickDay(day);
@@ -539,6 +555,10 @@ namespace AtomicWar.GodotApp
             _shelterDecor?.Dispose(); _shelterDecor = null!;
             _travelingCaravan?.Dispose(); _travelingCaravan = null!;
             _powerGrid?.Dispose(); _powerGrid = null!;
+            _geothermalOrc?.Dispose(); _geothermalOrc = null!;
+            _ballisticsWorkbench?.Dispose(); _ballisticsWorkbench = null!;
+            _aeroponics?.Dispose(); _aeroponics = null!;
+            _pneumaticDispatch?.Dispose(); _pneumaticDispatch = null!;
             _medicalWardSession?.Dispose(); _medicalWardSession = null!;
             _medicalWard = null!;
             _factionBranch?.Dispose(); _factionBranch = null!;
@@ -570,6 +590,10 @@ namespace AtomicWar.GodotApp
             _contractorRosterDirty = false;
             _mentalHealthCrisisDirty = false;
             _powerGridDirty = false;
+            _geothermalOrcDirty = false;
+            _ballisticsWorkbenchDirty = false;
+            _aeroponicsDirty = false;
+            _pneumaticDispatchDirty = false;
             _medicalWardDirty = false;
 
             // Lifecycle reset is intentionally persistence-free. The expanded

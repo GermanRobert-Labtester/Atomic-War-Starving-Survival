@@ -112,6 +112,10 @@ namespace Ashfall.Core.UI
             R("triangulation",       "Radio Triangulation",           PanelGroup.Secondary,  new[] { "radio" });
             R("weather_sonde",       "Weather Sonde",                 PanelGroup.Secondary,  new[] { "world" });
             R("power_grid",          "Power Grid",                    PanelGroup.Expanded,   new[] { "power_grid" });
+            R("geothermal_orc",      "Geothermal ORC Loop",            PanelGroup.Expanded,   new[] { "power_grid", "inventory" });
+            R("ballistics_workbench","Ballistics Workbench",            PanelGroup.Expanded,   new[] { "inventory", "equipment_condition" });
+            R("aeroponics",          "Aeroponic Chambers",              PanelGroup.Expanded,   new[] { "inventory", "power_grid" });
+            R("pneumatic_dispatch",  "Pneumatic Dispatch",              PanelGroup.Expanded,   new[] { "inventory", "power_grid" });
             R("expedition_radar",    "Expedition Radar",              PanelGroup.Secondary,  new[] { "expeditions" });
             R("dose_ledger",         "Dose Ledger",                   PanelGroup.Expanded,   new[] { "phase0" });
             R("caravan_barter",      "Caravan Barter Ledger",         PanelGroup.Secondary,  new[] { "economy" });
@@ -178,6 +182,9 @@ namespace Ashfall.Core.UI
             // Plans 162-165 — breakdown arcs: stages, treatment progress,
             // work gating, and private-stash intervention (Plan 164).
             R("psychology_arcs",           "Psychological Arcs",          PanelGroup.Expanded, new[] { "survivors", "medical" });
+            // Plans 162-165 — knowledge-gated bestiary over the wildlife
+            // ecology layer (Plan 165).
+            R("bestiary",                  "Wasteland Bestiary",          PanelGroup.Expanded, new[] { "world" });
         }
 
         private static void R(

@@ -78,9 +78,9 @@ namespace Ashfall.Core
             "weather_gate_",
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "chem_agent_", "comms_target_", "ceremony_", "robot_",
-            "vessel_", "hobby_", "degrade_profile_", "thermal_gear_",
+            "vessel_", "hobby_", "degrade_profile_", "thermal_gear_", "insul_", "fault_", "mentorship_", "caravan_",
             "fallout_pattern_", "desperation_", "bounty_template_", "lore_archive_",
-            "procedure_", "rail_node_", "rail_segment_", "car_", "strain_", "substrate_", "law_",
+            "procedure_", "rail_node_", "rail_segment_", "rail_edge_", "car_", "strain_", "substrate_", "law_",
             "development_trait_", "interrogation_", "camo_",
             "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
@@ -166,7 +166,11 @@ namespace Ashfall.Core
             // Plans 110-113 — Industrial Chemistry, Solar-Thermal, Precision Optics, Ballistic Shields
             "process_chlor_alkali_", "solar_dish_", "optic_", "shield_",
             // Flagship Tasks 5-8 — Weather Hardening, Counter-Intelligence, Geothermal, Recon Telemetry
-            "upgrade_", "agent_", "strata_", "probe_"
+            "upgrade_", "agent_", "strata_", "probe_",
+            // Plans 62-65 — Pre-war Archives, Captives, Food Preservation, Epilogues
+            "archive_", "captive_", "topic_", "preservation_", "recipe_cure_", "recipe_smoke_", "epilogue_",
+            // Plans 50-53 — Vehicle Garage, Faction Espionage, Survivor Mental Health, Subterranean Acoustics
+            "vmod_", "fop_", "fdrop_", "acue_"
         };
 
         /// <summary>
@@ -216,7 +220,11 @@ namespace Ashfall.Core
             "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id",
             // Plans 110-113
             "process_id", "concentrator_id", "optic_recipe_id", "shield_id",
-            "upgrade_id", "strata_id", "channel_id", "platform_id", "equipment_id"
+            "upgrade_id", "strata_id", "channel_id", "platform_id", "equipment_id",
+            // Plans 54-57 — Thermodynamics, Seismic, Barter, Apprenticeship
+            "insulation_id", "fault_id", "caravan_id", "mentorship_id", "legacy_trait_id",
+            // Plan 73 — Rail Logistics
+            "rail_edge_id"
         };
 
         /// <summary>
@@ -259,7 +267,9 @@ namespace Ashfall.Core
             "eligible_conditions",
             // Flagship XI (Plans 154-157) — pathogen strain lineage, subterranean
             // anchors, psyops faction targets
-            "strain_of", "mutation_targets", "surface_anchor_id", "target_faction_id"
+            "strain_of", "mutation_targets", "surface_anchor_id", "target_faction_id",
+            // Plans 62-65
+            "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -277,10 +287,11 @@ namespace Ashfall.Core
             // slug vocabularies are not catalog references (repaired alongside the
             // flagship institutions data registration).
             "agenda_clauses", "canonical_surface", "sensor_class", "tool_class", "effectType",
-            "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
+            "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id", "art_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
-            "hazardType", "will_not", "lootCategories", "tech_offerings",
+            "hazardType", "will_not", "lootCategories", "tech_offerings", "narrativeHook", "patrol_archetype",
+            "gauge_tag", "clearance_requirement", "obstacle_profile", "repair_requirement", "track_condition",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile", "target_type",
             "forged_credentials", "behavior_flags", "platform_type", "sensor_suite",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
@@ -413,7 +424,11 @@ namespace Ashfall.Core
             // The harvestable_materials list names creature yields for lore; the
             // WastelandBestiaryCatalog stores them as opaque strings and never
             // resolves them against items.json.
-            "harvestable_materials"
+            "harvestable_materials",
+            // Plans 62-65
+            "encryption_grade", "intel_category", "allowed_food_types",
+            // Plans 50-53
+            "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile"
         };
 
         /// <summary>
@@ -437,6 +452,8 @@ namespace Ashfall.Core
                                      // survivors created by events' add_survivor effects
             "stores",               // internal bunker room (set_quarantine effect)
             "trade_goods",          // trade-category label used in wants/offers
+            "caravan_space", "caravan_access", // trade services offered in character wants/offers
+            "archive_proof",        // Current service token offered by the Tempest; not an inventory/catalog id.
             "flag_verdict_eden_log_recovered", "flag_verdict_fuse_world_read",
             "flag_verdict_shift_charter_restored", "flag_verdict_clerk_met",
             "flag_verdict_call_resolved", "flag_verdict_relay_read",

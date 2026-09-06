@@ -27,6 +27,7 @@ namespace Ashfall.Core.Crafting
         private Func<string, float> _crafterCostMultiplier; // crafterId -> material cost mult
         private Func<string, float> _crafterCraftTimeMultiplier; // crafterId -> duration mult
         private Func<string, bool> _canCraftMoonshine;
+        private Func<string, bool> _researchGate;
 
         public InventoryContainer OverflowStash { get; set; }
 
@@ -47,6 +48,9 @@ namespace Ashfall.Core.Crafting
         public void SetCrafterCostMultiplier(Func<string, float> mult) => _crafterCostMultiplier = mult;
         public void SetCrafterCraftTimeMultiplier(Func<string, float> mult) => _crafterCraftTimeMultiplier = mult;
         public void SetMoonshineGate(Func<string, bool> canCraftMoonshine) => _canCraftMoonshine = canCraftMoonshine;
+
+        /// <summary>Bind authored research/blueprint requirements to the canonical ResearchSystem.</summary>
+        public void BindResearchGate(Func<string, bool> isUnlocked) => _researchGate = isUnlocked;
 
         public int ActiveCraftCount => _active.Count;
         public IReadOnlyList<ActiveCraft> ActiveCrafts => _active;
@@ -72,6 +76,14 @@ namespace Ashfall.Core.Crafting
         public bool CanCraft(Recipe recipe, string crafterId)
         {
             if (recipe == null) return false;
+
+            if (_researchGate != null)
+            {
+                if (!string.IsNullOrEmpty(recipe.requiredResearchId)
+                    && !_researchGate(recipe.requiredResearchId)) return false;
+                if (!string.IsNullOrEmpty(recipe.requiredBlueprintId)
+                    && !_researchGate(recipe.requiredBlueprintId)) return false;
+            }
 
             if (!string.IsNullOrEmpty(recipe.requiredStationId))
             {
@@ -136,6 +148,16 @@ namespace Ashfall.Core.Crafting
         {
             if (recipe == null)
                 return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "missing_recipe", "craft.missing_recipe", stateVersion);
+
+            if (_researchGate != null)
+            {
+                if (!string.IsNullOrEmpty(recipe.requiredResearchId)
+                    && !_researchGate(recipe.requiredResearchId))
+                    return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "research_locked", "craft.research_locked", stateVersion);
+                if (!string.IsNullOrEmpty(recipe.requiredBlueprintId)
+                    && !_researchGate(recipe.requiredBlueprintId))
+                    return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "blueprint_locked", "craft.blueprint_locked", stateVersion);
+            }
 
             if (!string.IsNullOrEmpty(recipe.requiredStationId))
             {
@@ -396,6 +418,8 @@ namespace Ashfall.Core.Crafting
         public int resultAmount = 1;
         public float craftingTimeHours = 1f;
         public string requiredStationId = string.Empty;
+        public string requiredResearchId = string.Empty;
+        public string requiredBlueprintId = string.Empty;
     }
 
     /// <summary>A quantity of an item required (or produced) by a recipe.</summary>

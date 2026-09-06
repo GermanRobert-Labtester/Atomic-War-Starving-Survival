@@ -40,7 +40,7 @@ namespace Ashfall.Core.Tests
                 }
                 rows.Add($"{seed},{day},{s.Fatigue:F2},{s.Health:F2},{restApplied}");
             }
-            try { Directory.CreateDirectory(ArtifactDir); File.WriteAllLines(Path.Combine(ArtifactDir, $"rest_seed_{seed}_{days}d_rest{useRest}.csv"), rows); } catch { }
+            TelemetryArtifactWriter.TryWriteLines(ArtifactDir, $"rest_seed_{seed}_{days}d_rest{useRest}.csv", rows);
             return rows;
         }
 
@@ -108,7 +108,7 @@ namespace Ashfall.Core.Tests
                 bool acute = rad.RadiationDose >= RadiationSystem.AcuteThreshold;
                 rows.Add($"{seed},{day},{zoneRad},{shielding},{rad.RadiationDose:F1},{rad.LifetimeRadiationExposure:F1},{needs.Health:F1},{acute}");
             }
-            try { Directory.CreateDirectory(ArtifactDir); File.WriteAllLines(Path.Combine(ArtifactDir, $"rad_seed_{seed}_zone{zoneRad}_shield{shielding}_{days}d.csv"), rows); } catch { }
+            TelemetryArtifactWriter.TryWriteLines(ArtifactDir, $"rad_seed_{seed}_zone{zoneRad}_shield{shielding}_{days}d.csv", rows);
 
             // With shielding 1, zone 2 => 1 rad/h, dose day7 ~178 but health coupling at 80+ should have caused some loss
             // We don't assert exact health, just that measurement happened and is deterministic

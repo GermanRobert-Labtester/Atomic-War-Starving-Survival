@@ -217,8 +217,8 @@ namespace AtomicWar.GodotApp
 
         private void SetupCulturalArchive()
         {
-            EnsureCulturalArchive();
-            foreach (var doc in _culturalArchive.Documents)
+            var culturalArchive = EnsureCulturalArchive();
+            foreach (var doc in culturalArchive.Documents)
                 if (!string.IsNullOrEmpty(doc.active_scholar_id))
                     EnsureInstitutionLedger().TryClaim(
                         doc.active_scholar_id, CulturalArchiveVaultSystem.InstitutionId, "scholar");
@@ -226,16 +226,16 @@ namespace AtomicWar.GodotApp
 
         private void SetupDiplomaticSummit()
         {
-            EnsureDiplomaticSummit();
-            foreach (var g in _diplomaticSummit.Guarantees.Where(g => g.status == "exchanged"))
+            var diplomaticSummit = EnsureDiplomaticSummit();
+            foreach (var g in diplomaticSummit.Guarantees.Where(g => g.status == "exchanged"))
                 EnsureInstitutionLedger().TryClaim(
                     g.survivor_id, DiplomaticSummitSystem.InstitutionId, "guarantee");
         }
 
         private void SetupSkyDefense()
         {
-            EnsureSkyDefense();
-            foreach (var turret in _skyDefense.Turrets)
+            var skyDefense = EnsureSkyDefense();
+            foreach (var turret in skyDefense.Turrets)
                 foreach (var crew in turret.assigned_crew_ids)
                     EnsureInstitutionLedger().TryClaim(
                         crew, SkyDefenseBatterySystem.InstitutionId, "gunner");
@@ -243,8 +243,8 @@ namespace AtomicWar.GodotApp
 
         private void SetupSanatorium()
         {
-            EnsureSanatorium();
-            foreach (var p in _sanatorium.Patients.Where(p => p.status == "admitted"))
+            var sanatorium = EnsureSanatorium();
+            foreach (var p in sanatorium.Patients.Where(p => p.status == "admitted"))
                 EnsureInstitutionLedger().TryClaim(
                     p.survivor_id, PsychologicalSanatoriumSystem.InstitutionId, "patient");
         }
@@ -298,7 +298,9 @@ namespace AtomicWar.GodotApp
             _sanatoriumDirty = false;
         }
 
-        private void SaveFlagshipInstitutionsIfDirty()
+        // Composite orchestration only; each institution owns its registered
+        // save section through the SaveXxx methods above.
+        private void PersistFlagshipInstitutionsIfDirty()
         {
             if (_culturalArchiveDirty) SaveCulturalArchive();
             if (_diplomaticSummitDirty) SaveDiplomaticSummit();
@@ -515,7 +517,7 @@ namespace AtomicWar.GodotApp
                 _m._diplomaticSummit!.TickDay(day);
                 _m._sanatorium!.TickDay(day);
 
-                _m.SaveFlagshipInstitutionsIfDirty();
+                _m.PersistFlagshipInstitutionsIfDirty();
                 events.Add(new DayStateChangeEvent("flagship_institutions_ticked",
                     "flagship_institutions", null, null, day));
             }

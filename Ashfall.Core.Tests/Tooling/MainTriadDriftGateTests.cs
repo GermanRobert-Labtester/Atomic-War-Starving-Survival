@@ -47,7 +47,17 @@ namespace Ashfall.Core.Tests
                 "IceRoad",
                 "NpcArcs",
                 "Phantom",
+                "Plans166To169", // Composite setup; save twins are SaveEspionage, SaveFluidLogistics, SaveProceduralNarrative
+                "Plans50To53", // Composite setup; save twins are SaveVehicleGarage, SaveShelterEspionage, SaveSurvivorMentalHealth
+                "Plans62To65", // Composite setup; save twins are SaveFoodPreservation, SavePrewarArchives, SaveShelterPrisoners
+                "Plans78To81", // Composite setup; child systems own registered save sections.
+                "Plans110To113", // Composite setup; child systems own registered save sections.
+                "Plans130To133", // Composite setup; child systems own registered save sections.
+                "Plans146To149", // Composite setup; child systems own registered save sections.
+                "FlagshipInstitutions", // Composite setup; each institution owns a registered save section.
+                "Plans130To133Panel",
                 "Plans94To97Panel",
+                "ShelterAcoustics", // Audio presentation / acoustic direction; transient simulation facts
                 "ShelterFireHazard", // Save twin is SaveShelterFire
                 "UtilityAi",
                 "WeatherSonde",

@@ -61,8 +61,8 @@ namespace Ashfall.Core.Tests
             Assert.True(ok);
             Assert.NotNull(res);
 
-            // Group cooldown key should have expiry day 15 (10 + 5)
-            Assert.Equal(15, sys.GetCooldownExpiry("patrol_garrison_checkpoint"));
+            // Checkpoint recurrence is authored at three days.
+            Assert.Equal(13, sys.GetCooldownExpiry("patrol_garrison_checkpoint"));
 
             // All variants in this group should now be on cooldown on day 11
             var baseEnc = _catalog.GetEncounter("enc_patrol_garrison_checkpoint")!;
@@ -89,7 +89,7 @@ namespace Ashfall.Core.Tests
             Assert.True(ok);
             Assert.NotNull(res);
 
-            Assert.Equal(25, sys.GetCooldownExpiry("patrol_warlord_raid"));
+            Assert.Equal(27, sys.GetCooldownExpiry("patrol_warlord_raid"));
 
             var baseRaid = _catalog.GetEncounter("enc_patrol_warlord_raid")!;
             var v2Raid = _catalog.GetEncounter("enc_patrol_warlord_raid_v2")!;
@@ -122,7 +122,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void CooldownExpiry_AllowsVariantsAgainAfter5Days()
+        public void CooldownExpiry_AllowsCheckpointVariantsAtAuthoredBoundary()
         {
             var inv = CreateInventoryWithFood();
             var sys = new TravelEncounterSystem(_catalog, inv);
@@ -132,14 +132,14 @@ namespace Ashfall.Core.Tests
 
             var v2Enc = _catalog.GetEncounter("enc_patrol_garrison_checkpoint_v2")!;
 
-            // Day 14: still on cooldown
-            Assert.False(sys.IsEncounterEligible(v2Enc, "high_scarp", 1.0f, "all", 14));
+            // Day 12: still on cooldown
+            Assert.False(sys.IsEncounterEligible(v2Enc, "high_scarp", 1.0f, "all", 12));
 
-            // Day 15: cooldown expired, eligible again
-            Assert.True(sys.IsEncounterEligible(v2Enc, "high_scarp", 1.0f, "all", 15));
+            // Day 13: cooldown expired, eligible again
+            Assert.True(sys.IsEncounterEligible(v2Enc, "high_scarp", 1.0f, "all", 13));
 
-            // Can resolve choice on day 15
-            bool resolvedAfterExpiry = sys.ResolveChoice("enc_patrol_garrison_checkpoint_v2", "choice_pay_garrison_toll", 15, out _);
+            // Can resolve choice on day 13
+            bool resolvedAfterExpiry = sys.ResolveChoice("enc_patrol_garrison_checkpoint_v2", "choice_pay_garrison_toll", 13, out _);
             Assert.True(resolvedAfterExpiry);
         }
 
@@ -150,20 +150,20 @@ namespace Ashfall.Core.Tests
             var sys1 = new TravelEncounterSystem(_catalog, inv);
 
             sys1.ResolveChoice("enc_patrol_garrison_checkpoint", "choice_pay_garrison_toll", 12, out _);
-            Assert.Equal(17, sys1.GetCooldownExpiry("patrol_garrison_checkpoint"));
+            Assert.Equal(15, sys1.GetCooldownExpiry("patrol_garrison_checkpoint"));
 
             var state = sys1.CaptureState();
             Assert.NotNull(state);
             Assert.True(state.EncounterAvailableDay.ContainsKey("patrol_garrison_checkpoint"));
-            Assert.Equal(17, state.EncounterAvailableDay["patrol_garrison_checkpoint"]);
+            Assert.Equal(15, state.EncounterAvailableDay["patrol_garrison_checkpoint"]);
 
             var sys2 = new TravelEncounterSystem(_catalog, inv);
             sys2.RestoreState(state);
 
-            Assert.Equal(17, sys2.GetCooldownExpiry("patrol_garrison_checkpoint"));
+            Assert.Equal(15, sys2.GetCooldownExpiry("patrol_garrison_checkpoint"));
             var v3Enc = _catalog.GetEncounter("enc_patrol_garrison_checkpoint_v3")!;
             Assert.False(sys2.IsEncounterEligible(v3Enc, "high_scarp", 1.0f, "all", 14));
-            Assert.True(sys2.IsEncounterEligible(v3Enc, "high_scarp", 1.0f, "all", 17));
+            Assert.True(sys2.IsEncounterEligible(v3Enc, "high_scarp", 1.0f, "all", 15));
         }
 
         [Fact]

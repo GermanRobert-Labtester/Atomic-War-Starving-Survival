@@ -106,7 +106,10 @@ namespace AtomicWar.GodotApp
                 new Ashfall.Core.Medical.MedicalReservationLedger(),
                 new Ashfall.Core.Medical.MedicalProcedureSchedule(),
                 sv => ResolvePatientAvailability(sv.Value),
-                () => _simDay);
+                () => _simDay,
+                // SHELTER_EMP_MEDICAL_POWER: clinic/ward power read from the grid.
+                // Null-safe: an absent grid leaves the clinic powered (legacy behavior).
+                () => _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_clinic"));
 
             var respiratoryDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RespiratoryDegenerationId);
             var radiationDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RadiationSicknessId);
@@ -430,6 +433,27 @@ namespace AtomicWar.GodotApp
                 if (spent) SaveInventory();
                 return spent;
             });
+
+            // SHELTER_FAILURE_EFFECTS: campaign quarantine containment — the
+            // coordinator assigns/releases isolation and computes daily isolation
+            // quality against the canonical disease engine. Ventilation power
+            // reads the room_ward_quarantine breaker (G5 delegate); daily care
+            // consumption mirrors BindSupply above.
+            SetupMedicalWard();
+            var quarantineCoordinator = new Ashfall.Core.Disease.DiseaseQuarantineCoordinator(
+                _medicalWard,
+                engine,
+                _dutyRoster?.Roster,
+                tryConsumeItem: (itemId, count) =>
+                {
+                    SetupInventory();
+                    return _inventory?.Inventory != null && _inventory.Inventory.TryConsume(itemId, count);
+                },
+                containmentProvider: () => Ashfall.Core.Disease.ContainmentCapability.FromResearch(
+                    k => _sharedResearch?.State.completedIds.Contains(k) ?? false),
+                isolationPowerCheck: () => _powerGrid?.System == null
+                    || _powerGrid.System.IsRoomPowered("room_ward_quarantine"));
+            _disease.BindCoordinator(quarantineCoordinator);
             _disease.Engine.OnTreatmentApplied += (survivorId, diseaseId, itemId, role, day) =>
             {
                 SetupJournal();

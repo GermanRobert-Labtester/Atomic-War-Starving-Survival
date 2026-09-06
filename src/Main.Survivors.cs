@@ -67,7 +67,7 @@ namespace AtomicWar.GodotApp
                 {
                     return (SurvivorExposureLocation.Expedition, exp.locationId);
                 }
-                return _survivors.GetSurvivorLocation(id);
+                return (SurvivorExposureLocation.ShelterInterior, "");
             };
 
             _survivors.StateChanged += () =>

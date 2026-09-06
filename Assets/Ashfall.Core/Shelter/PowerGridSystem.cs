@@ -22,6 +22,11 @@ namespace Ashfall.Core.Shelter
         private readonly PowerGridState _state;
         private readonly List<PowerGridRoom> _rooms;
         private readonly ISeededRng _rng;
+        // Runtime generation sources are projections from their owning systems.
+        // They are deliberately not persisted here: the owning save section
+        // restores first, then the host republishes the contribution.
+        private readonly Dictionary<string, float> _generationContributions =
+            new Dictionary<string, float>(StringComparer.Ordinal);
 
         /// <summary>Raised whenever a room's powered state changes.</summary>
         public event Action<PowerGridEvent>? OnPowerChanged;
@@ -48,7 +53,24 @@ namespace Ashfall.Core.Shelter
         public PowerGridState State => _state;
         public IReadOnlyList<PowerGridRoom> Rooms => _rooms;
 
-        public float GenerationWatts => _state.GenerationWatts;
+        /// <summary>
+        /// Base generator output plus current runtime contributions (kW is
+        /// represented as watts at this authority). External contributions are
+        /// fuel-free; the base generator remains the only fuel-burning source.
+        /// </summary>
+        public float GenerationWatts
+        {
+            get
+            {
+                float total = _state.GenerationWatts;
+                foreach (var contribution in _generationContributions.Values)
+                    total += Math.Max(0f, contribution);
+                return total;
+            }
+        }
+
+        public float BaseGenerationWatts => _state.GenerationWatts;
+        public IReadOnlyDictionary<string, float> GenerationContributions => _generationContributions;
         public float FuelUnits => _state.FuelUnits;
         public float BatteryReserveWh => _state.BatteryReserveWh;
         public float BatteryCapacityWh => _state.BatteryCapacityWh;
@@ -56,18 +78,54 @@ namespace Ashfall.Core.Shelter
         public float NetWatts => GenerationWatts - TotalDrawWatts;
         public bool IsBrownout => TotalDrawWatts > GenerationWatts && BatteryReserveWh <= 0;
 
-        public PowerGridSnapshot Snapshot() => new PowerGridSnapshot
+        /// <summary>
+        /// Publish one external generation source. The source ID is stable and
+        /// replacing a value is idempotent, so a host can republish after every
+        /// campaign tick without accumulating duplicate output.
+        /// </summary>
+        public bool SetGenerationContribution(string sourceId, float watts)
         {
-            Day = _state.SimDay,
-            GenerationWatts = GenerationWatts,
-            FuelUnits = FuelUnits,
-            BatteryReserveWh = BatteryReserveWh,
-            BatteryCapacityWh = BatteryCapacityWh,
-            TotalDrawWatts = TotalDrawWatts,
-            NetWatts = NetWatts,
-            IsBrownout = IsBrownout,
-            RoomIds = new List<string>(RoomPoweredStates())
-        };
+            if (string.IsNullOrWhiteSpace(sourceId)) return false;
+            if (float.IsNaN(watts) || float.IsInfinity(watts)) return false;
+            float normalized = Math.Max(0f, watts);
+            if (normalized <= 0f)
+                _generationContributions.Remove(sourceId);
+            else
+                _generationContributions[sourceId] = normalized;
+
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.GenerationChanged,
+                sourceId,
+                _state.SimDay,
+                normalized > 0f ? "generation_contribution_set" : "generation_contribution_removed",
+                normalized));
+            return true;
+        }
+
+        public bool RemoveGenerationContribution(string sourceId)
+        {
+            if (string.IsNullOrWhiteSpace(sourceId)) return false;
+            return SetGenerationContribution(sourceId, 0f);
+        }
+
+        public PowerGridSnapshot Snapshot()
+        {
+            var snapshot = new PowerGridSnapshot
+            {
+                Day = _state.SimDay,
+                GenerationWatts = GenerationWatts,
+                FuelUnits = FuelUnits,
+                BatteryReserveWh = BatteryReserveWh,
+                BatteryCapacityWh = BatteryCapacityWh,
+                TotalDrawWatts = TotalDrawWatts,
+                NetWatts = NetWatts,
+                IsBrownout = IsBrownout,
+                RoomIds = new List<string>(RoomPoweredStates())
+            };
+            foreach (var contribution in _generationContributions)
+                snapshot.GenerationContributions[contribution.Key] = contribution.Value;
+            return snapshot;
+        }
 
         public bool IsRoomPowered(string roomId)
         {
@@ -141,6 +199,70 @@ namespace Ashfall.Core.Shelter
                 _state.SimDay, "fuel_added", units));
         }
 
+        /// <summary>EMP storm severity applied on weather onset (balance constant;</summary>
+        /// orbital surges are data-driven via OrbitalImpactReport.PowerGridDisruption).
+        public const float EmpStormSurgeSeverity = 0.6f;
+
+        /// <summary>Fraction of battery capacity drained at full surge severity.</summary>
+        public const float SurgeBatteryDrainFraction = 0.15f;
+
+        /// <summary>
+        /// Apply an external electrical surge (EMP storm onset, orbital impact).
+        /// Deterministic: trips the lowest-priority non-tripped circuits first
+        /// (priority tier ascending, then RoomId ordinal), draining the battery
+        /// proportionally to severity. Critical rooms are exempt below 0.9
+        /// severity so a surge can wound the grid without destroying it.
+        /// Deduped per day: a second surge event on the same day is a no-op.
+        /// The surge day persists via <see cref="PowerGridState.LastSurgeDay"/>.
+        /// </summary>
+        public IReadOnlyList<string> ApplySurgeDay(int day, float severity01)
+        {
+            float severity = Math.Clamp(severity01, 0f, 1f);
+            if (severity <= 0f) return Array.Empty<string>();
+            if (day <= _state.LastSurgeDay) return Array.Empty<string>();
+
+            bool criticalEligible = severity >= 0.9f;
+            var candidates = new List<(string RoomId, int Tier)>();
+            foreach (var r in _rooms)
+            {
+                if (_state.IsRoomTripped(r.RoomId)) continue;
+                // Effective tier: player override wins; catalog default otherwise.
+                bool hasOverride = false;
+                for (int p = 0; p < _state.Priorities.Count; p++)
+                {
+                    if (_state.Priorities[p].RoomId == r.RoomId) { hasOverride = true; break; }
+                }
+                var tier = (int)(hasOverride
+                    ? _state.GetRoomPriority(r.RoomId)
+                    : r.DefaultPriority);
+                if (tier == (int)PowerGridRoomPriority.Disabled) continue;
+                if (tier == (int)PowerGridRoomPriority.Critical && !criticalEligible) continue;
+                candidates.Add((r.RoomId, tier));
+            }
+            candidates.Sort(static (a, b) =>
+            {
+                int byTier = a.Tier.CompareTo(b.Tier);
+                return byTier != 0 ? byTier : string.CompareOrdinal(a.RoomId, b.RoomId);
+            });
+
+            int tripCount = (int)(severity * candidates.Count);
+            var tripped = new List<string>(tripCount);
+            for (int i = 0; i < tripCount; i++)
+            {
+                _state.MarkTripped(candidates[i].RoomId, day);
+                tripped.Add(candidates[i].RoomId);
+            }
+
+            float drain = (float)Math.Floor(_state.BatteryCapacityWh * SurgeBatteryDrainFraction * severity);
+            _state.BatteryReserveWh = Math.Max(0f, _state.BatteryReserveWh - drain);
+            _state.LastSurgeDay = day;
+
+            OnPowerChanged?.Invoke(new PowerGridEvent(PowerGridEventKind.SurgeApplied,
+                tripped.Count > 0 ? string.Join(",", tripped) : "none",
+                day, "surge_applied", severity));
+            return tripped;
+        }
+
         /// <summary>
         /// Tick one full day. Deterministic: given the same fuel/battery state
         /// and RNG, the result is identical across hosts and runs.
@@ -156,7 +278,10 @@ namespace Ashfall.Core.Shelter
             float brownoutHours = 0f;
 
             // Burn fuel proportional to generation.
-            float fuelNeed = gen * 24f * 0.001f;
+            float externalGeneration = 0f;
+            foreach (var contribution in _generationContributions.Values)
+                externalGeneration += Math.Max(0f, contribution);
+            float fuelNeed = Math.Max(0f, gen - externalGeneration) * 24f * 0.001f;
             if (_state.FuelUnits >= fuelNeed)
             {
                 _state.FuelUnits -= fuelNeed;
@@ -332,6 +457,13 @@ string? failureEffectId = null)
         public List<string> TrippedRooms = new List<string>();
         public List<RoomPriorityRecord> Priorities = new List<RoomPriorityRecord>();
 
+        /// <summary>
+        /// Day of the last applied surge (EMP/orbital). Optional field: saves
+        /// written before the field existed restore as 0 ("no surge yet") per
+        /// the repository's optional-field migration tolerance.
+        /// </summary>
+        public int LastSurgeDay;
+
         public bool IsBreakerClosed(string roomId) => !ClosedBreakers.Contains(roomId);
         public bool IsRoomTripped(string roomId) => TrippedRooms.Contains(roomId);
 
@@ -406,7 +538,8 @@ string? failureEffectId = null)
             BatteryCapacityWh = BatteryCapacityWh,
             ClosedBreakers = new List<string>(ClosedBreakers),
             TrippedRooms = new List<string>(TrippedRooms),
-            Priorities = new List<RoomPriorityRecord>(Priorities)
+            Priorities = new List<RoomPriorityRecord>(Priorities),
+            LastSurgeDay = LastSurgeDay
         };
 
         public void RestoreInto(PowerGridState state, IReadOnlyList<PowerGridRoom> rooms)
@@ -416,6 +549,7 @@ string? failureEffectId = null)
             FuelUnits = state.FuelUnits;
             BatteryReserveWh = state.BatteryReserveWh;
             BatteryCapacityWh = state.BatteryCapacityWh;
+            LastSurgeDay = state.LastSurgeDay;
             ClosedBreakers = state.ClosedBreakers ?? new List<string>();
             TrippedRooms = state.TrippedRooms ?? new List<string>();
             Priorities = state.Priorities ?? new List<RoomPriorityRecord>();
@@ -471,6 +605,8 @@ string? detail = null, float numeric = 0f)
         PriorityChanged,
         FuelAdded,
         Tripped,
+        SurgeApplied,
+        GenerationChanged,
         TickSummary
     }
 
@@ -496,5 +632,7 @@ string? detail = null, float numeric = 0f)
         public float NetWatts;
         public bool IsBrownout;
         public List<string> RoomIds = new List<string>();
+        public Dictionary<string, float> GenerationContributions =
+            new Dictionary<string, float>(StringComparer.Ordinal);
     }
 }

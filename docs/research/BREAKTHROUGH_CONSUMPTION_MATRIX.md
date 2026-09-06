@@ -1,0 +1,34 @@
+# Breakthrough Item Consumption Matrix
+
+Authoritative machine-audited matrix validating that every breakthrough item rewarded by the 56 knowledge nodes in `research_knowledge.json` is actively consumed by at least one crafting recipe in `recipes.json`.
+
+| Breakthrough Item | Item Name | Source Knowledge Node(s) | Category | Consumer Recipe ID | Recipe Name | Station | Result Item | Status |
+|---|---|---|---|---|---|---|---|---|
+| `item_air_filter_hepa` | HEPA Filtration Core | `knowledge_air_filtration` | engineering | `craft_hepa_scrubber_assembly` | Assemble HEPA Air Scrubber Pack | `workbench` | `air_filter` (4) | **CONSUMED** |
+| `item_battery_reconditioned` | Reconditioned Deep-Cycle Battery | `knowledge_battery_reconditioner_blueprint` | engineering | `craft_reconditioned_deep_cycle_bank` | Assemble Deep-Cycle Battery Bank | `workbench` | `battery_pack` (2) | **CONSUMED** |
+| `item_cbrn_cartridge` | Carbon-Nanotube CBRN Cartridge | `knowledge_cbrn_filter_blueprint` | survival | `craft_cbrn_respirator_filter` | Pack CBRN Respirator Cartridges | `workbench` | `filter_pack` (2) | **CONSUMED** |
+| `item_cloud_seeding_canister` | Silver-Iodide Cloud Seeding Canister | `knowledge_atmospheric_cloud_seeding` | science | `process_cloud_seeding_condensate` | Condense Atmospheric Moisture | `distiller` | `clean_water_jug` (2) | **CONSUMED** |
+| `item_desal_membrane` | Desalination Membrane | `knowledge_water_condenser_blueprint` | engineering | `craft_desalination_still` | Build Desalination Still | `water_purifier` | `item_desal_membrane` (0) | **CONSUMED** |
+| `item_diving_suit_vulcanized` | Vulcanized Heavy Diving Suit | `knowledge_submersible_salvage_rig` | engineering | `refit_vulcanized_diving_rig` | Refit Heavy Vulcanized Hazmat Rig | `workbench` | `hazmat_suit` (1) | **CONSUMED** |
+| `item_dosimeter_calibrated` | Calibrated Solid-State Dosimeter | `knowledge_micro_dosimeter_blueprint` | medical | `craft_calibrated_field_geiger` | Assemble Calibrated Field Radiometer | `workbench` | `geiger_counter` (1) | **CONSUMED** |
+| `item_field_guide_annotated` | Annotated Wasteland Field Guide | `knowledge_field_guide_taxonomy` | scavenging | `transcribe_field_guide_cultivation` | Transcribe Botanical Husbandry Guide | `workbench` | `growing_manual` (1) | **CONSUMED** |
+| `item_gas_mask_improved` | Improved CBRN Gas Mask | `knowledge_gas_mask_improved` | engineering | `refit_improved_gas_mask_rig` | Outfit Advanced Gas Mask Rig | `workbench` | `gas_mask` (2) | **CONSUMED** |
+| `item_hydraulic_actuator` | Heavy Hydraulic Linear Actuator | `knowledge_deep_well_hydraulics`<br>`knowledge_power_armor_servo_blueprint` | engineering, survival | `craft_hydraulic_armored_shield` | Fabricate Hydraulic Reinforced Blast Shield | `workbench` | `item_armored_blast_shield` (1) | **CONSUMED** |
+| `item_hydroponic_nutrients` | Concentrated Hydroponic Nutrient Pack | `knowledge_hydroponic_doser_blueprint` | survival | `batch_hydroponic_enrichment` | Synthesize Concentrated Rations | `distiller` | `canned_food` (4) | **CONSUMED** |
+| `item_iff_beacon` | IFF Transponder Beacon | `knowledge_iff_transponder_blueprint` | combat | `integrate_iff_transponder` | Integrate IFF Survival Transceiver | `workbench` | `handheld_radio` (1) | **CONSUMED** |
+| `item_military_radio_module` | Hardened Military Transceiver Module | `knowledge_encrypted_radio_blueprint` | science | `assemble_hardened_military_transceiver` | Assemble Military Long-Range Radio | `workbench` | `military_radio` (1) | **CONSUMED** |
+| `item_radar_display_tube` | Cathode Radar Display Tube | `knowledge_radar_scope_blueprint` | scavenging | `assemble_cathode_radar_scope` | Assemble Cathode Night Vision Sight | `workbench` | `night_vision_scope` (1) | **CONSUMED** |
+| `item_radiation_shielding_panel` | Borated Radiation Shielding Panel | `knowledge_radiation_shielding` | engineering | `fabricate_radiation_blast_barrier` | Fabricate Borated Breaching Shield | `workbench` | `item_titanium_breaching_shield` (1) | **CONSUMED** |
+| `item_radio_cipher_rotor` | Electromechanical Cipher Rotor | `knowledge_radio_advanced` | science | `encode_tactical_cipher_codebook` | Encode Tactical Cipher Codebook | `workbench` | `item_comm_codebook_alpha` (1) | **CONSUMED** |
+| `item_radio_vacuum_tube` | Low-Noise Radio Vacuum Tube | `knowledge_signal_amplifier_blueprint` | science | `wire_vacuum_tube_headset` | Assemble Low-Noise Radio Headset | `workbench` | `radio_headset` (1) | **CONSUMED** |
+| `item_reagent_clean` | Ultra-Pure Chemical Reagent | `knowledge_pharmacology_synthesis`<br>`knowledge_hand_centrifuge_blueprint` | medical | `synthesize_reagent_radaway` | Synthesize Pure Rad-Away Solution | `distiller` | `rad_away` (2) | **CONSUMED** |
+| `item_seismic_detector` | Piezoelectric Seismic Geophone | `knowledge_seismic_fault_mapping`<br>`knowledge_seismic_geophone_blueprint` | scavenging, science | `assemble_piezoelectric_geophone` | Assemble Deep Geophone Probe | `workbench` | `item_geophone_probe` (1) | **CONSUMED** |
+| `item_sentry_targeting_chip` | Automated Sentry Targeting Chip | `knowledge_automated_sentry_doctrine`<br>`knowledge_turret_controller_blueprint` | combat | `program_automated_sentry_feed` | Calibrate Automated Sentry Munitions | `workbench` | `ammo_762` (30) | **CONSUMED** |
+| `item_solar_inverter` | Pure Sine Solar Inverter | `knowledge_solar_advanced` | engineering | `assemble_pure_sine_solar_inverter` | Wire Pure-Sine Solar Inverter Array | `workbench` | `battery_pack` (3) | **CONSUMED** |
+| `item_surgical_arm_servo` | Micro-Servo Surgical Manipulator | `knowledge_surgical_robot_blueprint` | medical | `assemble_precision_surgical_arm` | Assemble Precision Surgical Manipulator | `workbench` | `field_surgical_kit` (1) | **CONSUMED** |
+| `item_surgical_kit` | Sterile Field Surgical Kit | `knowledge_field_trauma_surgery`<br>`knowledge_uv_sterilizer_blueprint` | medical | `repack_sterile_surgical_trauma_kit` | Repack Sterile Trauma Surgery Kit | `workbench` | `medical_kit` (2) | **CONSUMED** |
+| `item_thermal_lance` | Magnesium Thermal Breaching Lance | `knowledge_hazmat_breaching_technique`<br>`knowledge_vault_breach_blueprint` | scavenging | `assemble_thermal_breaching_rig` | Assemble Heavy Breaching Barrier | `workbench` | `item_titanium_breaching_shield` (1) | **CONSUMED** |
+| `item_vacuum_seal_canner` | Mechanical Vacuum-Seal Canner | `knowledge_cold_canning_preservation` | survival | `preserve_rations_vacuum_canner` | Can Long-Term Storage Rations | `stove` | `canned_food` (5) | **CONSUMED** |
+| `item_water_filter_advanced` | Advanced Ceramic Water Filter | `knowledge_water_advanced` | survival | `craft_advanced_water_filter` | Build Advanced Water Filter | `workbench` | `item_lead_lined_effluent_filter` (1) | **CONSUMED** |
+
+**Summary:** 26 / 26 unique breakthrough items have active recipe consumers in `recipes.json`. 0 orphaned breakthrough items.

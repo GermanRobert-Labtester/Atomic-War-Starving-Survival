@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security;
 using System.Text;
 using Godot;
 using Ashfall.Core;
@@ -81,20 +80,20 @@ namespace AtomicWar.GodotApp.Host
             {
                 return Directory.GetFiles(directory, searchPattern, searchOption);
             }
-            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException || ex is System.Security.SecurityException)
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException || ex is ArgumentException || ex is System.Security.SecurityException)
             {
-                GD.PrintErr($"[GodotFileIO] Failed to enumerate files in '{directory}': {ex.Message}");
+                _log.Warn($"[GodotFileIO] EnumerateFiles failed for '{directory}' ({ex.GetType().Name}); returning an empty result.");
                 return Array.Empty<string>();
             }
         }
 
-        private static void EnumerateResRecursive(string dir, string pattern, SearchOption option, List<string> results)
+        private void EnumerateResRecursive(string dir, string pattern, SearchOption option, List<string> results)
         {
             using var d = DirAccess.Open(dir);
             if (d == null)
             {
                 var err = DirAccess.GetOpenError();
-                GD.PrintErr($"[GodotFileIO] Failed to open virtual directory '{dir}': error {err}");
+                _log.Warn($"[GodotFileIO] EnumerateFiles failed for virtual directory '{dir}': DirAccess error {err}.");
                 return;
             }
             d.ListDirBegin();

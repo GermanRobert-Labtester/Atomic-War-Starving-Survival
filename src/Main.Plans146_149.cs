@@ -252,7 +252,9 @@ namespace AtomicWar.GodotApp
                 CaptureSection("rail_grinding", RailGrindingSaveStore.TryCapturePersisted(_railGrinding.System.CaptureState()));
         }
 
-        private void SavePlans146To149()
+        // Composite orchestration only; the child SaveXxx methods are the
+        // registered campaign sections.
+        private void PersistPlans146To149()
         {
             SaveRouteInfrastructure();
             SaveEbPvdCoating();

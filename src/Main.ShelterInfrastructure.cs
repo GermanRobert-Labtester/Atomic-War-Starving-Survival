@@ -30,6 +30,8 @@ namespace AtomicWar.GodotApp
         private bool _shelterThermalDirty;
         private WeatherHardeningHostSession _weatherHardening = null!;
         private bool _weatherHardeningDirty;
+        private GeothermalAquiferHostSession _geothermalAquifer = null!;
+        private bool _geothermalAquiferDirty;
         private Ashfall.Core.VentilationSystem _ventilation = null!; // Plan 29 29B: machine tell readings
         private VentilationHostSession? _ventilationHost;                    // Plan 72 stage console session
         private Ashfall.Core.Shelter.ShelterFireHazardSystem? _stageFireHazard; // Plan 72 arc-fault fire handoff
@@ -367,6 +369,29 @@ namespace AtomicWar.GodotApp
         {
             if (_weatherHardening != null)
                 CaptureSection("weather_hardening", WeatherHardeningSaveStore.TryCapturePersisted(_weatherHardening.System.CaptureState()));
+        }
+
+        private void SetupGeothermalAquifer()
+        {
+            if (_geothermalAquifer != null) return;
+            var state = GeothermalAquiferSaveStore.TryLoad() ?? new GeothermalAquiferState();
+            var system = new GeothermalAquiferSystem(
+                state,
+                new SeededRng(2003),
+                new GodotLog(),
+                _powerGrid?.System,
+                _waterTreatment?.System,
+                _inventory?.Inventory);
+            _geothermalAquifer = new GeothermalAquiferHostSession(system);
+            _geothermalAquifer.LoadCatalog(_dataDir);
+            if (_geothermalAquiferPanel != null)
+                _geothermalAquiferPanel.Bind(_geothermalAquifer);
+        }
+
+        private void SaveGeothermalAquifer()
+        {
+            if (_geothermalAquifer != null)
+                CaptureSection("geothermal_aquifer", GeothermalAquiferSaveStore.TryCapturePersisted(_geothermalAquifer.System.CaptureState()));
         }
 
         private void SetupShelterSchedule()

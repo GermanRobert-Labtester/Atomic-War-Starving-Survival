@@ -161,5 +161,70 @@ namespace Ashfall.Core.Tests.Farming
             Assert.Equal(0.75f, restored!.growthStage, 2);
             Assert.Equal("strain_grey_mycelium", restored.strainId);
         }
+
+        [Fact]
+        public void SporeExposure_EventFires_WithRoomHazard()
+        {
+            var sys = new FungiCultivationSystem(new SeededRng(42));
+            sys.RegisterCatalog(new UndergroundFloraCatalog
+            {
+                strains = new List<FungusStrainDef>
+                {
+                    new FungusStrainDef
+                    {
+                        strain_id = "strain_black_rot",
+                        category = "Toxic",
+                        growth_days = 2,
+                        moisture_min = 0.3f,
+                        moisture_max = 1.0f,
+                        darkness_required = false,
+                        spore_hazard = 0.75f,
+                        yield_item_id = "fungus_spores_common"
+                    }
+                },
+                substrates = new List<SubstrateDef>
+                {
+                    new SubstrateDef { substrate_id = "sub_compost", nutrition_multiplier = 1.0f }
+                }
+            });
+
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            inv.AddById("fungus_spores_common", 5);
+            var sys2 = new FungiCultivationSystem(new SeededRng(42), inv);
+            sys2.RegisterCatalog(new UndergroundFloraCatalog
+            {
+                strains = new List<FungusStrainDef>
+                {
+                    new FungusStrainDef
+                    {
+                        strain_id = "strain_black_rot",
+                        category = "Toxic",
+                        growth_days = 2,
+                        moisture_min = 0.3f,
+                        moisture_max = 1.0f,
+                        darkness_required = false,
+                        spore_hazard = 0.75f,
+                        yield_item_id = "fungus_spores_common"
+                    }
+                },
+                substrates = new List<SubstrateDef>
+                {
+                    new SubstrateDef { substrate_id = "sub_compost", nutrition_multiplier = 1.0f }
+                }
+            });
+
+            sys2.EnsurePlot("plot_1", "room_grow_bay_1");
+            sys2.CultivateSpores("plot_1", "strain_black_rot", "sub_compost", 1);
+
+            var exposures = new List<(string room, float dose)>();
+            sys2.OnSporeExposure += (room, dose) => exposures.Add((room, dose));
+
+            // Tick several days to build up spore density
+            for (int d = 0; d < 5; d++)
+                sys2.TickDay(d);
+
+            Assert.NotEmpty(exposures);
+            Assert.All(exposures, e => Assert.True(e.dose > 0f, $"Room {e.room} had zero dose"));
+        }
     }
 }

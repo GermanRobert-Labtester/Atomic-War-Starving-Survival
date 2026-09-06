@@ -53,6 +53,15 @@ namespace Ashfall.Core.Narrative
         public int factionStandingDelta = 0;
         /// <summary>Items consumed by selecting this choice.</summary>
         public List<string> costItems = new List<string>();
+
+        // Patrol presentation projection. Narrative encounters keep the
+        // default-enabled state; patrols receive these values from the
+        // authoritative TravelEncounterSystem before the host renders them.
+        public bool enabled = true;
+        public string disabledReason = string.Empty;
+        public string requirementSummary = string.Empty;
+        public string costSummary = string.Empty;
+        public bool isPatrolChoice = false;
     }
 
     /// <summary>

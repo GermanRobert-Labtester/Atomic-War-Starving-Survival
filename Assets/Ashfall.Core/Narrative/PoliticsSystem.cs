@@ -379,6 +379,18 @@ namespace Ashfall.Core.Narrative
             }
         }
 
+        /// <summary>Apply a legitimacy delta from external systems (e.g. justice trials).</summary>
+        public void ApplyLegitimacyDelta(float delta)
+        {
+            _legitimacy = Math.Clamp(_legitimacy + delta, 0f, 100f);
+        }
+
+        /// <summary>Apply a coup risk delta from external systems (e.g. executions under martial law).</summary>
+        public void ApplyCoupRiskDelta(float delta)
+        {
+            _coupRisk = Math.Clamp(_coupRisk + delta, 0f, 1f);
+        }
+
         public PoliticsState CaptureState()
         {
             var state = new PoliticsState

@@ -18,6 +18,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class DailyBriefingModal : Control
     {
         public event Action<int>? OnAcknowledged;
+        public event Action<string>? OnDeepLinkRequested;
 
         private Label _titleLabel = null!;
         private RichTextLabel _bodyLabel = null!;
@@ -99,12 +100,13 @@ namespace AtomicWar.GodotApp.UI
 
             _bodyLabel = new RichTextLabel
             {
-                BbcodeEnabled = false,
+                BbcodeEnabled = true,
                 FitContent = true,
                 ScrollActive = false,
                 SizeFlagsHorizontal = SizeFlags.ExpandFill,
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
+            _bodyLabel.MetaClicked += OnMetaClicked;
             _bodyLabel.AddThemeFontSizeOverride("normal_font_size", DesignTheme.FontSizeBody);
             _bodyLabel.AddThemeColorOverride("default_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             _scroll.AddChild(_bodyLabel);
@@ -201,6 +203,15 @@ namespace AtomicWar.GodotApp.UI
             OnAcknowledged?.Invoke(day);
         }
 
+        private void OnMetaClicked(Variant meta)
+        {
+            string route = meta.AsString();
+            if (!string.IsNullOrEmpty(route))
+            {
+                OnDeepLinkRequested?.Invoke(route);
+            }
+        }
+
         private static string ComposeText(DailyBriefingReport report)
         {
             if (report == null) return string.Empty;
@@ -218,7 +229,12 @@ namespace AtomicWar.GodotApp.UI
                     if (e == null) continue;
                     if (!string.IsNullOrEmpty(e.PrimaryId))
                         sb.Append("  • [").Append(e.PrimaryId).Append("] ");
-                    sb.AppendLine(string.IsNullOrEmpty(e.Text) ? "(no detail)" : e.Text);
+                    sb.Append(string.IsNullOrEmpty(e.Text) ? "(no detail)" : e.Text);
+                    if (!string.IsNullOrEmpty(e.DeepLinkRoute))
+                    {
+                        sb.Append(" [url=").Append(e.DeepLinkRoute).Append("][color=#6ee7b7]>> GOTO[/color][/url]");
+                    }
+                    sb.AppendLine();
                 }
                 sb.Append('\n');
             }

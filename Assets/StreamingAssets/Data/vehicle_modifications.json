@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "modifications": [
+    {
+      "id": "vmod_expanded_flatbed",
+      "slot_type": "cargo",
+      "compatible_vehicle_tags": ["road", "rough", "hauler", "truck"],
+      "install_cost": [
+        { "item_id": "mechanical_parts", "amount": 4 },
+        { "item_id": "scrap_metal", "amount": 8 }
+      ],
+      "install_labor_ticks": 240,
+      "effects": {
+        "cargo_capacity_delta": 60,
+        "speed_multiplier_delta": -0.05,
+        "fuel_consumption_multiplier": 1.05,
+        "wear_rate_multiplier": 1.1,
+        "radiation_protection_permille": 0
+      },
+      "tags": ["cargo", "hauler", "flatbed"]
+    },
+    {
+      "id": "vmod_lead_lined_cab",
+      "slot_type": "protection",
+      "compatible_vehicle_tags": ["road", "rough", "hauler", "truck"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 12 },
+        { "item_id": "mechanical_parts", "amount": 3 }
+      ],
+      "install_labor_ticks": 300,
+      "effects": {
+        "cargo_capacity_delta": -20,
+        "speed_multiplier_delta": -0.1,
+        "fuel_consumption_multiplier": 1.1,
+        "wear_rate_multiplier": 1.05,
+        "radiation_protection_permille": 400
+      },
+      "tags": ["protection", "radiation", "armor"]
+    },
+    {
+      "id": "vmod_reinforced_bullbar",
+      "slot_type": "protection",
+      "compatible_vehicle_tags": ["quad", "bike", "road", "rough", "truck", "hauler"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 6 },
+        { "item_id": "mechanical_parts", "amount": 2 }
+      ],
+      "install_labor_ticks": 180,
+      "effects": {
+        "cargo_capacity_delta": 0,
+        "speed_multiplier_delta": -0.02,
+        "fuel_consumption_multiplier": 1.0,
+        "wear_rate_multiplier": 0.85,
+        "radiation_protection_permille": 50
+      },
+      "tags": ["protection", "chassis", "collision"]
+    },
+    {
+      "id": "vmod_aux_fuel_rack",
+      "slot_type": "utility",
+      "compatible_vehicle_tags": ["quad", "bike", "road", "rough", "hauler", "truck"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 4 },
+        { "item_id": "mechanical_parts", "amount": 2 }
+      ],
+      "install_labor_ticks": 120,
+      "effects": {
+        "cargo_capacity_delta": -10,
+        "speed_multiplier_delta": 0.0,
+        "fuel_consumption_multiplier": 0.95,
+        "wear_rate_multiplier": 1.0,
+        "radiation_protection_permille": 0
+      },
+      "tags": ["utility", "fuel", "range"]
+    },
+    {
+      "id": "vmod_traction_cleats",
+      "slot_type": "mobility",
+      "compatible_vehicle_tags": ["rough", "quad", "hauler", "truck"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 5 },
+        { "item_id": "mechanical_parts", "amount": 3 }
+      ],
+      "install_labor_ticks": 200,
+      "effects": {
+        "cargo_capacity_delta": 0,
+        "speed_multiplier_delta": 0.15,
+        "fuel_consumption_multiplier": 1.08,
+        "wear_rate_multiplier": 0.9,
+        "radiation_protection_permille": 0
+      },
+      "tags": ["mobility", "traction", "rough_terrain"]
+    },
+    {
+      "id": "vmod_stretcher_mount",
+      "slot_type": "utility",
+      "compatible_vehicle_tags": ["road", "truck", "hauler"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 3 },
+        { "item_id": "bandage", "amount": 4 }
+      ],
+      "install_labor_ticks": 150,
+      "effects": {
+        "cargo_capacity_delta": -15,
+        "speed_multiplier_delta": 0.0,
+        "fuel_consumption_multiplier": 1.0,
+        "wear_rate_multiplier": 1.0,
+        "radiation_protection_permille": 100
+      },
+      "tags": ["utility", "medical", "rescue"]
+    },
+    {
+      "id": "vmod_heavy_winch",
+      "slot_type": "utility",
+      "compatible_vehicle_tags": ["road", "rough", "truck", "hauler"],
+      "install_cost": [
+        { "item_id": "mechanical_parts", "amount": 4 },
+        { "item_id": "scrap_metal", "amount": 5 }
+      ],
+      "install_labor_ticks": 180,
+      "effects": {
+        "cargo_capacity_delta": -10,
+        "speed_multiplier_delta": -0.02,
+        "fuel_consumption_multiplier": 1.02,
+        "wear_rate_multiplier": 0.9,
+        "radiation_protection_permille": 0
+      },
+      "tags": ["utility", "recovery", "towing"]
+    },
+    {
+      "id": "vmod_engine_supercharger",
+      "slot_type": "engine",
+      "compatible_vehicle_tags": ["road", "bike", "quad", "truck"],
+      "install_cost": [
+        { "item_id": "mechanical_parts", "amount": 6 },
+        { "item_id": "scrap_metal", "amount": 4 }
+      ],
+      "install_labor_ticks": 280,
+      "effects": {
+        "cargo_capacity_delta": 0,
+        "speed_multiplier_delta": 0.35,
+        "fuel_consumption_multiplier": 1.2,
+        "wear_rate_multiplier": 1.25,
+        "radiation_protection_permille": 0
+      },
+      "tags": ["engine", "speed", "performance"]
+    }
+  ]
+}

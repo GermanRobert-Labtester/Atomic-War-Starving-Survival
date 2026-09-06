@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "cues": [
+    {
+      "id": "acue_generator_hum_60hz",
+      "display_name": "Generator 60Hz Low Hum",
+      "bus_id": "generator",
+      "playback_mode": "loop",
+      "base_volume_db": -6.0,
+      "pitch_jitter_permille": 20,
+      "ducking_group": "machinery",
+      "description": "Continuous low drone of heavy diesel and flywheel power generation."
+    },
+    {
+      "id": "acue_ventilation_rush",
+      "display_name": "Forced-Air Duct Rush",
+      "bus_id": "ventilation",
+      "playback_mode": "loop",
+      "base_volume_db": -8.0,
+      "pitch_jitter_permille": 30,
+      "ducking_group": "machinery",
+      "description": "Air intake and filtration duct air rush responding to scrubbing load."
+    },
+    {
+      "id": "acue_water_pump_clatter",
+      "display_name": "Reciprocating Water Pump",
+      "bus_id": "machinery",
+      "playback_mode": "loop",
+      "base_volume_db": -10.0,
+      "pitch_jitter_permille": 40,
+      "ducking_group": "machinery",
+      "description": "Piston stroke chatter and sump drainage vibration."
+    },
+    {
+      "id": "acue_geiger_clicks_low",
+      "display_name": "Geiger Ambient Drift",
+      "bus_id": "radiation",
+      "playback_mode": "procedural_density",
+      "base_volume_db": -12.0,
+      "pitch_jitter_permille": 150,
+      "ducking_group": "none",
+      "description": "Sporadic ionizing radiation clicks reflecting background millisieverts."
+    },
+    {
+      "id": "acue_geiger_clicks_high",
+      "display_name": "Geiger Cascade Chatter",
+      "bus_id": "radiation",
+      "playback_mode": "procedural_density",
+      "base_volume_db": -8.0,
+      "pitch_jitter_permille": 120,
+      "ducking_group": "none",
+      "description": "Rapid ionization cascade warning of dangerous contamination levels."
+    },
+    {
+      "id": "acue_structural_creak",
+      "display_name": "Subterranean Strata Stress Creak",
+      "bus_id": "structural",
+      "playback_mode": "one_shot",
+      "base_volume_db": -4.0,
+      "pitch_jitter_permille": 80,
+      "ducking_group": "none",
+      "description": "Deep resonant groaning of reinforced concrete and shifting bedrock."
+    },
+    {
+      "id": "acue_falling_dust",
+      "display_name": "Ceiling Grit and Dust Fall",
+      "bus_id": "structural",
+      "playback_mode": "one_shot",
+      "base_volume_db": -7.0,
+      "pitch_jitter_permille": 60,
+      "ducking_group": "none",
+      "description": "Fine particulate showers dislodged by micro-tremors and stress shifts."
+    },
+    {
+      "id": "acue_radio_static_burst",
+      "display_name": "Atmospheric Static Squelch",
+      "bus_id": "radio",
+      "playback_mode": "one_shot",
+      "base_volume_db": -9.0,
+      "pitch_jitter_permille": 100,
+      "ducking_group": "radio",
+      "description": "Burst of ionizing RF interference and ionospheric skip noise."
+    },
+    {
+      "id": "acue_radio_voice_intercept",
+      "display_name": "Faint Faction RF Intercept",
+      "bus_id": "radio",
+      "playback_mode": "one_shot",
+      "base_volume_db": -6.0,
+      "pitch_jitter_permille": 50,
+      "ducking_group": "radio",
+      "description": "Distorted military communique or coded wasteland chatter fragments."
+    },
+    {
+      "id": "acue_bulkhead_heavy_slam",
+      "display_name": "Blast Bulkhead Impact",
+      "bus_id": "bulkhead",
+      "playback_mode": "one_shot",
+      "base_volume_db": -3.0,
+      "pitch_jitter_permille": 40,
+      "ducking_group": "dialogue",
+      "description": "Heavy acoustic thud of blast door pressure latch locking in place."
+    },
+    {
+      "id": "acue_hydraulic_door_hiss",
+      "display_name": "Hydraulic Pneumatic Equalization",
+      "bus_id": "bulkhead",
+      "playback_mode": "one_shot",
+      "base_volume_db": -5.0,
+      "pitch_jitter_permille": 30,
+      "ducking_group": "dialogue",
+      "description": "Pressurized seal decompression and hydraulic actuator stroke."
+    }
+  ],
+  "mix_profiles": [
+    {
+      "id": "acue_prof_surface",
+      "display_name": "Surface Outpost & Sentry Post",
+      "reverb_room_size": 0.1,
+      "lowpass_cutoff_hz": 20000,
+      "attenuation_db": 0.0
+    },
+    {
+      "id": "acue_prof_airlock",
+      "display_name": "Decontamination Airlock",
+      "reverb_room_size": 0.4,
+      "lowpass_cutoff_hz": 14000,
+      "attenuation_db": -2.0
+    },
+    {
+      "id": "acue_prof_inner_vault",
+      "display_name": "Reinforced Living Habitation",
+      "reverb_room_size": 0.6,
+      "lowpass_cutoff_hz": 9000,
+      "attenuation_db": -4.0
+    },
+    {
+      "id": "acue_prof_deep_excavation",
+      "display_name": "Deep Subterranean Stope",
+      "reverb_room_size": 0.85,
+      "lowpass_cutoff_hz": 5500,
+      "attenuation_db": -6.0
+    }
+  ]
+}

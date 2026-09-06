@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "trauma_types": [
+    {
+      "id": "trauma_combat_shock",
+      "display_name": "Combat Shock",
+      "description": "Nerve-rending hyperarousal triggered by close-quarters violence and shrapnel concussions.",
+      "stress_floor_permille": 250,
+      "insomnia_chance_permille": 300,
+      "trigger_tags": ["combat", "explosion", "injury"],
+      "crisis_affinity": "crisis_panic"
+    },
+    {
+      "id": "trauma_survivor_guilt",
+      "display_name": "Survivor's Guilt",
+      "description": "Crushing existential remorse over outliving fallen squadmates and abandoned refugees.",
+      "stress_floor_permille": 200,
+      "insomnia_chance_permille": 250,
+      "trigger_tags": ["death", "sacrifice", "abandonment"],
+      "crisis_affinity": "crisis_withdrawal"
+    },
+    {
+      "id": "trauma_claustrophobia",
+      "display_name": "Subterranean Suffocation Dread",
+      "description": "Intense acute panic triggered by enclosed blast vaults, bulkhead seals, and airlock cycling.",
+      "stress_floor_permille": 150,
+      "insomnia_chance_permille": 150,
+      "trigger_tags": ["confinement", "vault", "darkness"],
+      "crisis_affinity": "crisis_barricade"
+    },
+    {
+      "id": "trauma_nightmares",
+      "display_name": "Recurrent Radiation Nightmares",
+      "description": "Terrifying dreams of peeling skin, blinding flashes, and incinerated skylines preventing deep REM sleep.",
+      "stress_floor_permille": 180,
+      "insomnia_chance_permille": 400,
+      "trigger_tags": ["radiation", "sleep", "flash"],
+      "crisis_affinity": "crisis_shift_refusal"
+    },
+    {
+      "id": "trauma_radiation_dread",
+      "display_name": "Invisible Poison Dread",
+      "description": "Pathological terror of ambient ionizing sieverts, geiger chatter, and tainted water.",
+      "stress_floor_permille": 220,
+      "insomnia_chance_permille": 200,
+      "trigger_tags": ["rads", "fallout", "geiger"],
+      "crisis_affinity": "crisis_hoarding"
+    },
+    {
+      "id": "trauma_bereavement",
+      "display_name": "Unprocessed Bereavement",
+      "description": "Prolonged mourning of lost kin and shattered world fragments, causing severe apathy.",
+      "stress_floor_permille": 160,
+      "insomnia_chance_permille": 180,
+      "trigger_tags": ["loss", "family", "grief"],
+      "crisis_affinity": "crisis_withdrawal"
+    }
+  ],
+  "recovery_actions": [
+    {
+      "id": "therapy_quiet_room",
+      "display_name": "Quiet-Room Decompression",
+      "description": "Isolated sensory rest in sound-dampened quarters to calm sensory bombardment.",
+      "required_room": "room_bunks",
+      "stress_reduction_permille": 70,
+      "daily_resolution_chance_permille": 120,
+      "counselor_bonus_permille": 30
+    },
+    {
+      "id": "therapy_support_circle",
+      "display_name": "Peer Support Circle",
+      "description": "Shared evening dialogue around the mess hall table to process collective grief and trauma.",
+      "required_room": "room_main",
+      "stress_reduction_permille": 90,
+      "daily_resolution_chance_permille": 150,
+      "counselor_bonus_permille": 50
+    },
+    {
+      "id": "therapy_journal_catharsis",
+      "display_name": "Cathartic Journaling",
+      "description": "Structured written reflection in salvage ledgers to externalize haunting memories.",
+      "required_room": "room_clinic",
+      "stress_reduction_permille": 80,
+      "daily_resolution_chance_permille": 140,
+      "counselor_bonus_permille": 40
+    }
+  ],
+  "crisis_events": [
+    {
+      "id": "crisis_withdrawal",
+      "display_name": "Depressive Withdrawal",
+      "description": "The survivor shuts down completely, refusing social engagement and seeking isolated corners.",
+      "threshold_stress_permille": 800,
+      "duration_days": 3,
+      "productivity_penalty_permille": 600,
+      "journal_entry_key": "journal_crisis_withdrawal"
+    },
+    {
+      "id": "crisis_hoarding",
+      "display_name": "Scarcity Panic Hoarding",
+      "description": "Obsessive concealment of ration biscuits and medical bandages in bunk slats.",
+      "threshold_stress_permille": 750,
+      "duration_days": 4,
+      "productivity_penalty_permille": 350,
+      "journal_entry_key": "journal_crisis_hoarding"
+    },
+    {
+      "id": "crisis_shift_refusal",
+      "display_name": "Exhaustion Shift Strike",
+      "description": "The survivor refuses to report for their rostered maintenance rotation, citing physical trembling.",
+      "threshold_stress_permille": 850,
+      "duration_days": 2,
+      "productivity_penalty_permille": 1000,
+      "journal_entry_key": "journal_crisis_shift_refusal"
+    },
+    {
+      "id": "crisis_panic",
+      "display_name": "Acute Hyperarousal Panic",
+      "description": "Sudden tremor and sensory overwhelm, misinterpreting plumbing clatter as air raid tremors.",
+      "threshold_stress_permille": 900,
+      "duration_days": 2,
+      "productivity_penalty_permille": 800,
+      "journal_entry_key": "journal_crisis_panic"
+    },
+    {
+      "id": "crisis_barricade",
+      "display_name": "Claustrophobic Barricade",
+      "description": "In a panic state, the survivor jams the access latch of an inner storage alcove.",
+      "threshold_stress_permille": 950,
+      "duration_days": 2,
+      "productivity_penalty_permille": 900,
+      "journal_entry_key": "journal_crisis_barricade"
+    }
+  ]
+}

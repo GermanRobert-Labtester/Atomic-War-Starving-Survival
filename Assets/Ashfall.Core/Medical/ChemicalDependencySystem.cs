@@ -337,7 +337,7 @@ namespace Ashfall.Core.Medical
 
         // ── Tick ──────────────────────────────────────────────────────
 
-        public void TickHours(string survivorId, float gameHours)
+        public void TickHours(string survivorId, float gameHours, bool isStaffed = false, float staffSpeedMultiplier = 1.25f)
         {
             if (string.IsNullOrEmpty(survivorId) || gameHours <= 0f) return;
             if (!_ledger.TryGetValue(survivorId, out var deps)) return;
@@ -363,11 +363,13 @@ namespace Ashfall.Core.Medical
                 }
                 else if (dep.inManagedDetox)
                 {
+                    float drainMultiplier = isStaffed ? 0.75f : 1.0f;
                     float moraleDrain = ManagedDetoxMoraleDrainPerHour * gameHours *
-                        Severity(dep.kind);
+                        Severity(dep.kind) * drainMultiplier;
                     OnMoraleDrainRequested?.Invoke(survivorId, moraleDrain);
 
-                    dep.detoxProgressHours += gameHours;
+                    float progressHours = gameHours * (isStaffed ? Math.Max(1.0f, staffSpeedMultiplier) : 1.0f);
+                    dep.detoxProgressHours += progressHours;
                     if (dep.detoxProgressHours >= DetoxSuccessThresholdHours)
                         CompleteDetox(survivorId, deps, i, dep);
                 }

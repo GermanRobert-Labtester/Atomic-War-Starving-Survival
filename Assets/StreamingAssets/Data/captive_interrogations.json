@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "captive_archetypes": [
+    {
+      "id": "captive_raider_scout",
+      "display_name": "Iron Raider Forward Scout",
+      "description": "A battle-hardened raider scout captured during an assault. Highly hostile, but motivated by survival bargaining.",
+      "faction_origin": "faction_iron_raiders",
+      "base_resistance": 45.0,
+      "base_hostility": 70.0,
+      "penal_labor_efficiency": 1.2,
+      "potential_topics": [
+        "topic_arms_cache",
+        "topic_patrol_schedules"
+      ],
+      "tags": ["scout", "raider", "hostile"]
+    },
+    {
+      "id": "captive_mercenary_engineer",
+      "display_name": "Deserter Combat Engineer",
+      "description": "A technical specialist who fled military discipline. Pragmatic, receptive to ideological discussion or safe shelter.",
+      "faction_origin": "faction_deserter_coalition",
+      "base_resistance": 55.0,
+      "base_hostility": 35.0,
+      "penal_labor_efficiency": 1.5,
+      "potential_topics": [
+        "topic_cipher_key",
+        "topic_hidden_granary"
+      ],
+      "tags": ["engineer", "technical", "pragmatic"]
+    },
+    {
+      "id": "captive_zealot_infiltrator",
+      "display_name": "Sun-Seeker Cult Zealot",
+      "description": "A fanatical surface believer captured tampering with perimeter valves. Extremely high resistance to interrogation.",
+      "faction_origin": "faction_sun_seekers",
+      "base_resistance": 85.0,
+      "base_hostility": 90.0,
+      "penal_labor_efficiency": 0.8,
+      "potential_topics": [
+        "topic_patrol_schedules",
+        "topic_cipher_key"
+      ],
+      "tags": ["zealot", "fanatic", "unyielding"]
+    },
+    {
+      "id": "captive_scavenger_straggler",
+      "display_name": "Guild Scavenger Straggler",
+      "description": "An opportunist scavenger caught trapped in shelter defenses. Low hostility, readily complies under humane treatment.",
+      "faction_origin": "faction_scavenger_guild",
+      "base_resistance": 25.0,
+      "base_hostility": 20.0,
+      "penal_labor_efficiency": 1.0,
+      "potential_topics": [
+        "topic_arms_cache",
+        "topic_hidden_granary"
+      ],
+      "tags": ["scavenger", "opportunist", "tractable"]
+    }
+  ],
+  "interrogation_topics": [
+    {
+      "id": "topic_arms_cache",
+      "display_name": "Hidden Arms Depot Coordinates",
+      "intel_category": "cache_location",
+      "intel_gain": 2,
+      "resistance_cost": 30.0,
+      "reward_item_id": "item_travel_ration"
+    },
+    {
+      "id": "topic_patrol_schedules",
+      "display_name": "Raider Ambush Routes & Timing",
+      "intel_category": "tactical_intel",
+      "intel_gain": 3,
+      "resistance_cost": 40.0,
+      "reward_item_id": "item_travel_ration"
+    },
+    {
+      "id": "topic_cipher_key",
+      "display_name": "Cryptographic Codebook Cipher",
+      "intel_category": "cipher_intel",
+      "intel_gain": 4,
+      "resistance_cost": 50.0,
+      "reward_item_id": "chemicals"
+    },
+    {
+      "id": "topic_hidden_granary",
+      "display_name": "Sealed Dry-Store Granary",
+      "intel_category": "supply_cache",
+      "intel_gain": 3,
+      "resistance_cost": 35.0,
+      "reward_item_id": "dried_rations"
+    }
+  ]
+}

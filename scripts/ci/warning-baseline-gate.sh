@@ -36,7 +36,12 @@ FAILED=0
 
 # 1. Build Ashfall.Core.Tests (net9.0)
 echo "[1/3] Building Ashfall.Core.Tests..."
-dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo -t:Rebuild > "${TMP_TEST_LOG}" 2>&1 || {
+# Keep warning verification independent of compiler-server and MSBuild-node
+# lifetime.  The host project is large enough that the default shared build
+# can outlive the gate's timeout on a cold runner even when it is warning-free.
+BUILD_FLAGS=(--nologo -t:Rebuild -m:1 -p:UseSharedCompilation=false)
+
+dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj "${BUILD_FLAGS[@]}" > "${TMP_TEST_LOG}" 2>&1 || {
     echo "ERROR: Ashfall.Core.Tests failed to build!"
     cat "${TMP_TEST_LOG}"
     exit 1
@@ -53,7 +58,7 @@ fi
 
 # 2. Build Ashfall.Core (net8.0)
 echo "[2/3] Building Ashfall.Core..."
-dotnet build Ashfall.Core/Ashfall.Core.csproj --nologo -t:Rebuild > "${TMP_CORE_LOG}" 2>&1 || {
+dotnet build Ashfall.Core/Ashfall.Core.csproj "${BUILD_FLAGS[@]}" > "${TMP_CORE_LOG}" 2>&1 || {
     echo "ERROR: Ashfall.Core failed to build!"
     cat "${TMP_CORE_LOG}"
     exit 1
@@ -70,7 +75,7 @@ fi
 
 # 3. Build Godot host (Ashfall.csproj, net8.0)
 echo "[3/3] Building Ashfall.csproj (Godot host)..."
-dotnet build Ashfall.csproj --nologo -t:Rebuild > "${TMP_HOST_LOG}" 2>&1 || {
+dotnet build Ashfall.csproj "${BUILD_FLAGS[@]}" > "${TMP_HOST_LOG}" 2>&1 || {
     echo "ERROR: Ashfall.csproj failed to build!"
     cat "${TMP_HOST_LOG}"
     exit 1

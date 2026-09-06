@@ -33,19 +33,19 @@ namespace Ashfall.Core.Random
         // Plans 162-165 — flagship survival layer. Dot-namespaced so each mechanic
         // draws from its own StableHash-derived stream; adding any of these cannot
         // shift another stream's derived seed.
-        public const string AgricultureMutation = "agriculture.mutation";
-        public const string AgriculturePest = "agriculture.pest";
-        public const string AgricultureBlight = "agriculture.blight";
-        public const string DefenseTargeting = "defense.targeting";
-        public const string DefenseCapture = "defense.capture";
-        public const string DefenseDamage = "defense.damage";
-        public const string PsychologyArcTrigger = "psychology.arc_trigger";
-        public const string PsychologyArcBehavior = "psychology.arc_behavior";
-        public const string PsychologyRecovery = "psychology.recovery";
-        public const string WildlifePopulation = "wildlife.population";
-        public const string WildlifeMigration = "wildlife.migration";
-        public const string WildlifeApex = "wildlife.apex";
-        public const string WildlifeTaming = "wildlife.taming";
+        public const string AgricultureMutation = "agriculture_mutation";
+        public const string AgriculturePest = "agriculture_pest";
+        public const string AgricultureBlight = "agriculture_blight";
+        public const string DefenseTargeting = "defense_targeting";
+        public const string DefenseCapture = "defense_capture";
+        public const string DefenseDamage = "defense_damage";
+        public const string PsychologyArcTrigger = "psychology_arc_trigger";
+        public const string PsychologyArcBehavior = "psychology_arc_behavior";
+        public const string PsychologyRecovery = "psychology_recovery";
+        public const string WildlifePopulation = "wildlife_population";
+        public const string WildlifeMigration = "wildlife_migration";
+        public const string WildlifeApex = "wildlife_apex";
+        public const string WildlifeTaming = "wildlife_taming";
         // Plans 146-149 — advanced industrial & expedition machinery. Distinct
         // StableHash-derived strings; snake_case per CampaignRngSourceGateTests.
         public const string EbpvdCoating = "advanced_mfg_ebpvd_coating";

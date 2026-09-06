@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://radio_intelligence_panel"]
+[ext_resource type="Script" path="res://src/UI/RadioIntelligencePanel.cs" id="1_script"]
+
+[node name="RadioIntelligencePanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="CloseButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="ScanButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="FrequencyLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="BandLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="SignalMeter" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="Oscilloscope" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="DecryptButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="DecryptProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="RecordBearingButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="BearingRadar" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="SosContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="InterceptListContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0

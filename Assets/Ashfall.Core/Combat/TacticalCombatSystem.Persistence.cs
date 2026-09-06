@@ -308,7 +308,12 @@ namespace Ashfall.Core.Combat
                 AshFoul = MathfCompat.Clamp01(w.AshFoul),
                 AmmoId = w.AmmoId ?? string.Empty,
                 AmmoRemaining = w.AmmoRemaining,
-                ScrapRepairCost = w.ScrapRepairCost
+                ScrapRepairCost = w.ScrapRepairCost,
+                BallisticsAccuracyMultiplier = w.BallisticsAccuracyMultiplier <= 0f ? 1f : w.BallisticsAccuracyMultiplier,
+                BallisticsRangeMultiplier = w.BallisticsRangeMultiplier <= 0f ? 1f : w.BallisticsRangeMultiplier,
+                BallisticsPenetrationMultiplier = w.BallisticsPenetrationMultiplier <= 0f ? 1f : w.BallisticsPenetrationMultiplier,
+                BallisticsCriticalMultiplier = w.BallisticsCriticalMultiplier <= 0f ? 1f : w.BallisticsCriticalMultiplier,
+                BallisticsMalfunctionMultiplier = w.BallisticsMalfunctionMultiplier <= 0f ? 1f : w.BallisticsMalfunctionMultiplier
             };
         }
 

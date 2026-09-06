@@ -141,7 +141,9 @@ namespace AtomicWar.GodotApp
                 CaptureSection("ballistic_shield", BallisticShieldSaveStore.TryCapturePersisted(_ballisticShield.System.CaptureState()));
         }
 
-        private void SavePlans110To113()
+        // Composite orchestration only; the child SaveXxx methods are the
+        // registered campaign sections.
+        private void PersistPlans110To113()
         {
             SaveChlorAlkali();
             SaveSolarConcentrator();

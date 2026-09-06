@@ -148,6 +148,81 @@
         "psychological",
         "controlled"
       ]
+    },
+    {
+      "chem_id": "chem_fungal_antibiotic",
+      "name": "Cordyceps-Derived Broad-Spectrum Antibiotic",
+      "category": "Antibiotic",
+      "effect_tags": [
+        "infection_resistance",
+        "wound_healing",
+        "immune_boost"
+      ],
+      "duration_hours": 24.0,
+      "onset_class": "Gradual",
+      "tolerance_gain": 0.03,
+      "dependency_pressure": 4.0,
+      "withdrawal_profile_id": "withdrawal_none",
+      "toxicity_contribution": 8.0,
+      "contraindication_tags": [
+        "liver_damage"
+      ],
+      "trade_value": 65,
+      "research_tier": 2,
+      "recipe_inputs": [
+        {
+          "item_id": "fungus_spores_medicinal",
+          "amount": 2
+        },
+        {
+          "item_id": "item_sterile_solvent_pack",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "pharmaceutical",
+        "antibiotic",
+        "fungal",
+        "medical"
+      ]
+    },
+    {
+      "chem_id": "chem_spore_sedative",
+      "name": "Mycelial Cortex Depressant",
+      "category": "Sedative",
+      "effect_tags": [
+        "deep_sleep",
+        "pain_suppression",
+        "hallucination_mild"
+      ],
+      "duration_hours": 10.0,
+      "onset_class": "Gradual",
+      "tolerance_gain": 0.10,
+      "dependency_pressure": 20.0,
+      "withdrawal_profile_id": "withdrawal_dysphoria",
+      "toxicity_contribution": 18.0,
+      "contraindication_tags": [
+        "respiratory_depression",
+        "psychosis"
+      ],
+      "trade_value": 55,
+      "research_tier": 2,
+      "recipe_inputs": [
+        {
+          "item_id": "harvested_mushrooms_subterranean",
+          "amount": 3
+        },
+        {
+          "item_id": "item_clean_water",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "pharmaceutical",
+        "sedative",
+        "fungal",
+        "controlled"
+      ]
     }
   ]
 }

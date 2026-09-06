@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "insulations": [
+    {
+      "insulation_id": "insul_scrap_panels",
+      "name": "Corrugated Scrap Wall Sheeting",
+      "wall_material_tag": "scrap",
+      "thermal_conductivity": 0.085,
+      "air_leak_factor": 0.45,
+      "moisture_penalty": 0.15,
+      "level": 1,
+      "insulation_factor": 1.25,
+      "retrofit_item_costs": [
+        { "item_id": "item_scrap_metal", "amount": 8 },
+        { "item_id": "duct_tape", "amount": 2 }
+      ],
+      "max_upgrade_level": 3,
+      "fire_risk_modifier": 0.05,
+      "tags": ["basic", "scrap", "wall"]
+    },
+    {
+      "insulation_id": "insul_mineral_wool",
+      "name": "Compressed Mineral Rockwool Batts",
+      "wall_material_tag": "composite",
+      "thermal_conductivity": 0.042,
+      "air_leak_factor": 0.25,
+      "moisture_penalty": 0.08,
+      "level": 2,
+      "insulation_factor": 1.65,
+      "retrofit_item_costs": [
+        { "item_id": "cloth", "amount": 6 },
+        { "item_id": "chemicals", "amount": 3 }
+      ],
+      "max_upgrade_level": 3,
+      "fire_risk_modifier": -0.10,
+      "tags": ["thermal", "fire_resistant", "rockwool"]
+    },
+    {
+      "insulation_id": "insul_fiberglass_batts",
+      "name": "Foil-Backed Fiberglass Insulation",
+      "wall_material_tag": "fiberglass",
+      "thermal_conductivity": 0.032,
+      "air_leak_factor": 0.15,
+      "moisture_penalty": 0.05,
+      "level": 3,
+      "insulation_factor": 2.10,
+      "retrofit_item_costs": [
+        { "item_id": "plastic_material", "amount": 6 },
+        { "item_id": "cloth", "amount": 4 },
+        { "item_id": "duct_tape", "amount": 3 }
+      ],
+      "max_upgrade_level": 3,
+      "fire_risk_modifier": 0.02,
+      "tags": ["advanced", "vapor_barrier", "high_efficiency"]
+    },
+    {
+      "insulation_id": "insul_aerogel_composite",
+      "name": "Nanoporous Aerogel Thermal Blanket",
+      "wall_material_tag": "aerogel",
+      "thermal_conductivity": 0.015,
+      "air_leak_factor": 0.05,
+      "moisture_penalty": 0.01,
+      "level": 4,
+      "insulation_factor": 3.00,
+      "retrofit_item_costs": [
+        { "item_id": "chemicals", "amount": 8 },
+        { "item_id": "plastic_material", "amount": 8 },
+        { "item_id": "item_scrap_metal", "amount": 4 }
+      ],
+      "max_upgrade_level": 3,
+      "fire_risk_modifier": -0.20,
+      "tags": ["military_spec", "aerogel", "cryo_resistant"]
+    }
+  ]
+}

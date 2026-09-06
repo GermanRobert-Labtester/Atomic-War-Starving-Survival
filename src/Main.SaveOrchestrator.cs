@@ -180,6 +180,7 @@ namespace AtomicWar.GodotApp
             SetupThirdonary();
             SetupGreenhouse();
             SetupPowerGrid();
+            ComposePlans74To77();
             SetupSilentFoundry();
             SetupDisease();
             SetupEncounterChoiceResolver();
@@ -188,6 +189,7 @@ namespace AtomicWar.GodotApp
             SetupMemorial();
             SetupSurvivorFate();
             SetupExpandedShelterSystems();
+            SetupPlans166To169();
             SetupFactionBranch();
             SetupOnboarding();
             SetupEcologicalInfestation();
@@ -197,6 +199,7 @@ namespace AtomicWar.GodotApp
             SetupShelterSocial();
             SetupExcavationHazards();
             SetupDynamicQuests();
+            SetupPlans50To53();
             // ── Plans 178-201: expansion systems (Ensure* restores persisted state) ──
             SetupGenerational();
             SetupPrisoners();
@@ -231,6 +234,7 @@ namespace AtomicWar.GodotApp
             SetupAgriculture();
             SetupDefense();
             SetupPsychologyArcs();
+            SetupWildlifeEcosystem();
             SetupNuclearCore();
             SetupArmoredCrawlers();
             SetupPersonalQuests();
@@ -322,6 +326,10 @@ namespace AtomicWar.GodotApp
                 SavePhase0();
                 SaveStartingLevel();
                 SaveGreenhouse();
+                SaveGeothermalOrc();
+                SaveBallisticsWorkbench();
+                SaveAeroponics();
+                SavePneumaticDispatch();
                 SaveRadio();
                 SaveMoraleContagion();
                 SavePathogenStrains();
@@ -340,6 +348,12 @@ namespace AtomicWar.GodotApp
                 SaveShelterSocial();
                 SaveExcavationHazards();
                 SaveDynamicQuests();
+                SaveVehicleGarage();
+                SaveShelterEspionage();
+                SaveSurvivorMentalHealth();
+                // ── Plans B68/B69 — seismic monitoring & cryo vault ──
+                SaveSeismicDynamics();
+                SaveCryoVault();
                 // ── Audit-PR triad repairs ───────────────────────────────
                 SaveSilentFoundry();
                 SaveDisease();
@@ -348,6 +362,12 @@ namespace AtomicWar.GodotApp
                 SaveTravelEncounters();
                 // ─────────────────────────────────────────────────────────
                 SaveAllExpandedShelterSystems();
+                SaveEspionage();
+                SaveFluidLogistics();
+                SaveProceduralNarrative();
+                SaveFoodPreservation();
+                SavePrewarArchives();
+                SaveShelterPrisoners();
                 SaveSurvivorSocial();
                 SaveSurvivorFate();
                 SaveCampaignDay();
@@ -387,6 +407,7 @@ namespace AtomicWar.GodotApp
                 SaveAgriculture();
                 SaveDefense();
                 SavePsychologyArcs();
+                SaveWildlifeEcosystem();
                 SaveNuclearCore();
                 SaveArmoredCrawlers();
                 SavePersonalQuests();

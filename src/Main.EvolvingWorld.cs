@@ -59,11 +59,22 @@ namespace AtomicWar.GodotApp
         {
             SetupWorld();
             SetupWildlifeTrappingIfBound();
+            SetupWildlifeEcosystem();
             string sector = _world.ShelterSectorId;
             int pop = string.IsNullOrEmpty(sector) ? 0 : _world.Wildlife.GetSectorPackPopulation(sector);
             float seasonal = WildlifeSeasonalCalendar.SectorAbundanceFactor(
                 _world.Profile, _simDay, sector, _world.Wildlife?.State.packs);
             _homeTrappingDensity = Math.Clamp((0.5f + pop * 0.1f) * seasonal, 0.4f, 1.5f);
+            // Plans 162-165 (Plan 165): make trapping extinction-aware — the
+            // ecosystem layer rescales the same pack population by excluding
+            // locally extinct species, so trap checks and ecology share one
+            // source and can never diverge.
+            if (_wildlifeEcosystem != null && _world.Wildlife != null && !string.IsNullOrEmpty(sector))
+            {
+                float ecoDensity = _wildlifeEcosystem.System.SectorDensityMultiplier(_world.Wildlife, sector);
+                float rawDensity = Math.Max(0.01f, pop / 15f);
+                _homeTrappingDensity = Math.Clamp(_homeTrappingDensity * (ecoDensity / rawDensity), 0f, 1.5f);
+            }
             if (_wildlifeTrapping != null)
             {
                 _wildlifeTrapping.WildlifeDensityMultiplier = _homeTrappingDensity;
@@ -124,9 +135,7 @@ namespace AtomicWar.GodotApp
 
         private void SetupWildlifeTrappingIfBound()
         {
-            // The trapping session is constructed by its own surface; if it is
-            // not up yet there is nothing to feed today — the next daily tick
-            // refreshes it after the panel wires.
+            SetupWildlifeTrapping();
         }
 
         /// <summary>

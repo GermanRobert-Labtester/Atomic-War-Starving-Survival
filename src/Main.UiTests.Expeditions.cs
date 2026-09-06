@@ -84,6 +84,80 @@ namespace AtomicWar.GodotApp
                 : string.Empty);
             Check(def != null || _expeditions.Pending.Count == 0, "pending queue consistent with surfaced encounters");
 
+            // Close and reopen to ensure modal is dismissed before exemplar test sequence
+            _expeditionPanel.Close();
+            _expeditionPanel.Open();
+
+            // ── Plan 49 (F21): 4 Exemplar Micro-Locations UI & Navigation Verification ──
+            string[] exemplars = new[]
+            {
+                "micro_roadside_memorial",
+                "micro_crashed_truck",
+                "micro_observation_post",
+                "micro_frozen_bus"
+            };
+
+            foreach (var exemplarId in exemplars)
+            {
+                var exDef = _expeditions.FindEncounter(exemplarId);
+                Check(exDef != null, $"exemplar {exemplarId} found in catalog");
+                if (exDef == null) continue;
+
+                var surfaced = new ExpeditionEncounterBridge.EncounterSurfaced
+                {
+                    encounter_id = exemplarId,
+                    title = exDef.title,
+                    description = exDef.description,
+                    category = exDef.category,
+                    choices = exDef.choices ?? new List<Ashfall.Core.Narrative.EncounterChoiceDefinition>(),
+                    is_micro_location = exDef.isMicroLocation,
+                    trigger = state,
+                    resolved_at_lead = true
+                };
+
+                _expeditionPanel.ShowEncounterNotice(surfaced);
+                Check(_expeditionPanel.EncounterModal != null && _expeditionPanel.EncounterModal.Visible, $"modal visible for {exemplarId}");
+                Check(_expeditionPanel.EncounterTitleLabel != null && !string.IsNullOrEmpty(_expeditionPanel.EncounterTitleLabel.Text), $"{exemplarId} title rendered");
+                Check(_expeditionPanel.EncounterContextLabel != null && _expeditionPanel.EncounterContextLabel.Text == "DISCOVERY · MICRO-LOCATION", $"{exemplarId} shows DISCOVERY · MICRO-LOCATION context");
+                Check(_expeditionPanel.EncounterBodyLabel != null && _expeditionPanel.EncounterBodyLabel.SizeFlagsHorizontal.HasFlag(Control.SizeFlags.ExpandFill), $"{exemplarId} body has ExpandFill");
+                Check(_expeditionPanel.EncounterBodyLabel?.AutowrapMode == TextServer.AutowrapMode.WordSmart, $"{exemplarId} body autowraps WordSmart");
+
+                if (exemplarId == "micro_frozen_bus")
+                {
+                    Check(exDef.description.Length >= 190, "micro_frozen_bus has longest description (~198 chars)");
+                    Check(_expeditionPanel.EncounterBodyLabel?.Text.Contains(exDef.description) == true, "longest description text preserved without truncation");
+                }
+
+                Check(_expeditionPanel.ChoicesContainer != null, $"{exemplarId} choices container created");
+
+                _expeditionPanel.Close();
+                _expeditionPanel.Open();
+            }
+
+            // German localization exemplar check
+            AtomicWar.GodotApp.Localization.AshfallLocalization.SetLocale("de");
+            var memorialDef = _expeditions.FindEncounter("micro_roadside_memorial");
+            if (memorialDef != null)
+            {
+                var surfacedDe = new ExpeditionEncounterBridge.EncounterSurfaced
+                {
+                    encounter_id = "micro_roadside_memorial",
+                    title = memorialDef.title,
+                    description = memorialDef.description,
+                    category = memorialDef.category,
+                    choices = memorialDef.choices,
+                    is_micro_location = memorialDef.isMicroLocation,
+                    trigger = state,
+                    resolved_at_lead = true
+                };
+                _expeditionPanel.ShowEncounterNotice(surfacedDe);
+                Check(_expeditionPanel.EncounterTitleLabel?.Text == "Straßenrand-Gedenkstätte", "German title resolves for micro_roadside_memorial");
+                Check(_expeditionPanel.EncounterBodyLabel?.Text.Contains("Geschmolzene Talgreste") == true, "German description resolves for micro_roadside_memorial");
+                _expeditionPanel.Close();
+                _expeditionPanel.Open();
+            }
+            AtomicWar.GodotApp.Localization.AshfallLocalization.SetLocale("en");
+
             HostCli.EmitSummary("expedition_panel_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }

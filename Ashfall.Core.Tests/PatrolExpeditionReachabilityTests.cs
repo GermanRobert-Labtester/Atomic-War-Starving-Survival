@@ -73,7 +73,7 @@ namespace Ashfall.Core.Tests
             inv.TryProduce("canned_food", 10);
             travelSys.Inventory = inv;
 
-            // Resolve enc_patrol_garrison_checkpoint on Day 1 (default cooldown 5 days -> available Day 6)
+            // Resolve enc_patrol_garrison_checkpoint on Day 1 (authored checkpoint cooldown -> available Day 4)
             bool ok = travelSys.ResolveChoice("enc_patrol_garrison_checkpoint", "choice_pay_garrison_toll", 1, out var res);
             Assert.True(ok);
 
@@ -81,10 +81,10 @@ namespace Ashfall.Core.Tests
             bool okDay2 = travelSys.ResolveChoice("enc_patrol_garrison_checkpoint", "choice_pay_garrison_toll", 2, out _);
             Assert.False(okDay2);
 
-            // On Day 6, cooldown expires and choice can be taken again
-            bool okDay6 = travelSys.ResolveChoice("enc_patrol_garrison_checkpoint", "choice_pay_garrison_toll", 6, out var resDay6);
-            Assert.True(okDay6);
-            Assert.NotNull(resDay6);
+            // On Day 4, cooldown expires and choice can be taken again
+            bool okDay4 = travelSys.ResolveChoice("enc_patrol_garrison_checkpoint", "choice_pay_garrison_toll", 4, out var resDay4);
+            Assert.True(okDay4);
+            Assert.NotNull(resDay4);
         }
 
         [Fact]

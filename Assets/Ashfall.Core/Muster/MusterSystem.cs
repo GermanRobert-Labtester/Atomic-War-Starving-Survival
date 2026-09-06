@@ -41,6 +41,11 @@ namespace Ashfall.Core.Muster
         /// consumes this list; it never re-derives witness eligibility).
         /// Additive field — old saves restore to empty.</summary>
         public List<WitnessResult> witnessResults = new List<WitnessResult>();
+
+        // ── Plan 72 ────────────────────────────────────────────────────
+        /// <summary>Plan 72: Active muster force, supplies, doctrine, and
+        /// conflict state machine. Additive field — older saves restore safely.</summary>
+        public MusterWarfareState warfare = new MusterWarfareState();
     }
 
     /// <summary>One delivered testimony (Plan 25 · 25B.15). Idempotence: a
@@ -75,6 +80,7 @@ namespace Ashfall.Core.Muster
 
         private readonly MusterState _state;
         private readonly List<MusterQuestlineDefinition> _catalog = new List<MusterQuestlineDefinition>();
+        private readonly MusterWarfareEngine _warfareEngine;
 
         public event Action<MusterRecord> OnQuestlineResolved;
         public event Action<MusterState> OnStateChanged;
@@ -84,10 +90,14 @@ namespace Ashfall.Core.Muster
             _state = state ?? new MusterState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;
             if (_state.records == null) _state.records = new List<MusterRecord>();
+            _state.warfare ??= new MusterWarfareState();
+            _warfareEngine = new MusterWarfareEngine(_state.warfare);
+            _warfareEngine.OnStateChanged += RaiseChanged;
             PopulateFoundingCatalog();
         }
 
         public MusterState State => _state;
+        public MusterWarfareEngine Warfare => _warfareEngine;
         public IReadOnlyList<MusterQuestlineDefinition> Catalog => _catalog;
         public bool MusterTriggered => _state.musterTriggered;
         public int EscalationDay => _state.escalationDay;
@@ -268,6 +278,7 @@ namespace Ashfall.Core.Muster
                     resolvedDay = r.resolvedDay
                 });
             }
+            copy.warfare = _state.warfare?.Clone() ?? new MusterWarfareState();
             return copy;
         }
 
@@ -311,6 +322,8 @@ namespace Ashfall.Core.Muster
                     });
                 }
             }
+            _state.warfare ??= new MusterWarfareState();
+            _state.warfare.RestoreFrom(saved.warfare);
             RaiseChanged();
         }
 

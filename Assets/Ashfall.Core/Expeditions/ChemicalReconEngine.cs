@@ -87,7 +87,8 @@ namespace Ashfall.Core.Expeditions
         public int detectorBatteryRemaining = 120;
         public string activeSensorBand = "wide_band";
         public List<string> unlockedFilterCategories = new List<string> { "particulate_only" };
-        public List<string> safeCorridorIds = new List<string>();
+        public string activeFilterCategory = "particulate_only";
+        public List<string> safeCorridorIds = new List<string> {};
     }
 
     [Serializable]
@@ -442,6 +443,26 @@ namespace Ashfall.Core.Expeditions
             _state.activeSensorBand = band;
             OnReconChanged?.Invoke();
             return ActionResult.Success("chemrecon.band_set");
+        }
+
+        /// <summary>
+        /// Select the active gas-mask filter category (Core command). The
+        /// selected category drives filter-consumption projections and the
+        /// panel's compatibility readout.
+        /// </summary>
+        public ActionResult SelectFilterCategory(string category)
+        {
+            if (string.IsNullOrEmpty(category))
+                return ActionResult.Blocked("invalid_category", "chemrecon.invalid_category");
+            if (!_catalog.filter_model.filter_categories.Contains(category))
+                return ActionResult.Blocked("unknown_category", "chemrecon.unknown_category");
+            if (!_state.unlockedFilterCategories.Contains(category))
+                return ActionResult.Blocked("filter_not_held", "chemrecon.filter_not_held");
+
+            _state.activeFilterCategory = category;
+            _log.Info($"[ChemRecon] active filter category set to {category}");
+            OnReconChanged?.Invoke();
+            return ActionResult.Success("chemrecon.filter_selected");
         }
 
         /// <summary>

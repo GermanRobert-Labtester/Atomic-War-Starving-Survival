@@ -446,8 +446,13 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "STEALTH OPS", "stealth");
             AddNavButton(content, "FALLOUT RADAR", "fallout_detail");
             AddNavButton(content, "FARMING", "farming");
+            AddNavButton(content, "GEOTHERMAL ORC", "geothermal_orc");
+            AddNavButton(content, "BALLISTICS BENCH", "ballistics_workbench");
+            AddNavButton(content, "AEROPONICS", "aeroponics");
+            AddNavButton(content, "PNEUMATIC DISPATCH", "pneumatic_dispatch");
             AddNavButton(content, "DEFENSE GRID", "defense_grid");
             AddNavButton(content, "PSYCH WATCH", "psychology_arcs");
+            AddNavButton(content, "BESTIARY", "bestiary");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());

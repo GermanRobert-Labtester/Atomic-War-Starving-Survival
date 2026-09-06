@@ -66,11 +66,25 @@ namespace AtomicWar.GodotApp
             _amputation.OnAmputationComplete += (survivorId, limb, condition) =>
             {
                 _journal?.TryAddRawEntry("amputation_performed", $"Emergency amputation performed on {survivorId}'s {limb} (State: {condition}).", null!, _simDay);
+                // TODO: Avatar integration — update survivor portrait variant, sprite attachment,
+                // animation set, and equipment restrictions for the affected limb.
+                RefreshSurvivorVisuals(survivorId);
             };
 
             _amputation.OnGangreneDeclared += (survivorId, limb) =>
             {
                 _journal?.TryAddRawEntry("gangrene_warning", $"Critical medical emergency: {survivorId}'s {limb} wound has turned gangrenous!", null!, _simDay);
+            };
+
+            _amputation.OnProstheticFitted += (survivorId, prostheticId) =>
+            {
+                _journal?.TryAddRawEntry("prosthetic_fitted", $"Prosthetic '{prostheticId}' fitted to {survivorId}.", null!, _simDay);
+                RefreshSurvivorVisuals(survivorId);
+            };
+
+            _amputation.OnPhantomPainEpisode += (survivorId, stressAmount) =>
+            {
+                _journal?.TryAddRawEntry("phantom_pain_episode", $"{survivorId} experienced a severe phantom-pain episode.", null!, _simDay);
             };
 
             return _amputation;
@@ -118,6 +132,28 @@ namespace AtomicWar.GodotApp
                     catch (Exception ex)
                     {
                         GD.PrintErr($"[Main.Railway] Failed to parse {catalogPath}: {ex.Message}");
+                    }
+                }
+            }
+
+            string logisticsPath = "res://Assets/StreamingAssets/Data/rail_logistics_catalog.json";
+            if (Godot.FileAccess.FileExists(logisticsPath))
+            {
+                using var file = Godot.FileAccess.Open(logisticsPath, Godot.FileAccess.ModeFlags.Read);
+                if (file != null)
+                {
+                    string json = file.GetAsText();
+                    try
+                    {
+                        var container = System.Text.Json.JsonSerializer.Deserialize<RailLogisticsCatalogContainer>(json);
+                        if (container != null && container.edges != null)
+                        {
+                            _railway.RegisterLogisticsCatalog(container.edges);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        GD.PrintErr($"[Main.Railway] Failed to parse {logisticsPath}: {ex.Message}");
                     }
                 }
             }
@@ -234,7 +270,7 @@ namespace AtomicWar.GodotApp
             var inv = _inventory?.Inventory ?? new Ashfall.Core.Inventory.Inventory();
             var needs = _survivors?.Needs;
 
-            _justice = new JusticeSystem(rng, inv, needs, new GodotLog());
+            _justice = new JusticeSystem(rng, inv, needs, _politics, new GodotLog());
 
             string catalogPath = "res://Assets/StreamingAssets/Data/wasteland_laws.json";
             if (Godot.FileAccess.FileExists(catalogPath))
@@ -308,6 +344,17 @@ namespace AtomicWar.GodotApp
             _amputation?.TickDay(currentDay);
             _fungi?.TickDay(currentDay);
             _justice?.TickDay(currentDay);
+        }
+
+        /// <summary>
+        /// Placeholder for avatar/visual refresh when survivor limb state changes.
+        /// Future: update portrait variant, sprite attachments, animation sets,
+        /// and equipment restrictions based on AmputationSystem limb conditions.
+        /// </summary>
+        private void RefreshSurvivorVisuals(string survivorId)
+        {
+            // TODO: Integrate with survivor portrait/avatar system when available.
+            GD.Print($"[Main.Plans190_193] Visual refresh requested for survivor '{survivorId}' (avatar system not yet integrated).");
         }
     }
 }

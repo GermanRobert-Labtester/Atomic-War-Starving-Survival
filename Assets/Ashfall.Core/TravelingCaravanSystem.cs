@@ -55,9 +55,11 @@ namespace Ashfall.Core
         /// legacy hand-coded regional tables.
         /// </summary>
         public GoodsCatalog? Catalog { get; set; }
+        public Narrative.TravelEncounterSystem? TravelEncounters { get; set; }
 
-        public event Action<CaravanEntry, string> OnCaravanArrivedAtNode;
-        public event Action<CaravanEntry, string, int> OnTradeCompleted;
+        public event Action<CaravanEntry, string>? OnCaravanArrivedAtNode;
+        public event Action<CaravanEntry, string, int>? OnTradeCompleted;
+        public event Action<CaravanEntry, Narrative.TravelEncounterDefinition>? OnCaravanPatrolEncountered;
 
         public TravelingCaravanState State => _state;
         public int CaravanCount => _state.activeCaravans?.Count ?? 0;
@@ -166,7 +168,14 @@ namespace Ashfall.Core
         /// <summary>
         /// Daily tick: increments stay duration and advances caravans to the next route waypoint.
         /// </summary>
-        public void DailyTick()
+        public void DailyTick() => DailyTick(0, null);
+
+        public void DailyTick(
+            int currentDay,
+            ISeededRng? rng = null,
+            string defaultRegion = "the_toll",
+            int dangerLevel = 2,
+            string season = "all")
         {
             if (_state.activeCaravans == null || _state.activeCaravans.Count == 0) return;
 
@@ -181,8 +190,58 @@ namespace Ashfall.Core
                     caravan.routeIndex = (caravan.routeIndex + 1) % caravan.routeNodeIds.Count;
                     caravan.currentNodeId = caravan.routeNodeIds[caravan.routeIndex];
                     OnCaravanArrivedAtNode?.Invoke(caravan, caravan.currentNodeId);
+
+                    if (TravelEncounters != null && rng != null)
+                    {
+                        CheckRouteEncounter(caravan, defaultRegion, dangerLevel, season, currentDay, rng);
+                    }
                 }
             }
+        }
+
+        public Narrative.TravelEncounterDefinition? CheckRouteEncounter(
+            CaravanEntry caravan,
+            string region,
+            int dangerLevel,
+            string season,
+            int currentDay,
+            ISeededRng rng,
+            string stance = "Balanced")
+        {
+            if (TravelEncounters == null || caravan == null) return null;
+
+            var context = Narrative.TravelEncounterSelectionContext.From(
+                region: region,
+                dangerLevel: dangerLevel,
+                stance: stance,
+                currentSeason: season,
+                currentDay: currentDay,
+                currentWeather: WeatherKind.Clear,
+                rng: rng,
+                locationId: caravan.currentNodeId,
+                routeId: caravan.caravanId,
+                mode: Narrative.TravelMode.Caravan);
+
+            var encounter = TravelEncounters.SelectEncounter(context);
+            if (encounter != null)
+            {
+                OnCaravanPatrolEncountered?.Invoke(caravan, encounter);
+            }
+            return encounter;
+        }
+
+        public bool ResolveRouteEncounterChoice(
+            string encounterId,
+            string choiceId,
+            int currentDay,
+            out Narrative.TravelEncounterResolutionResult? result)
+        {
+            if (TravelEncounters == null)
+            {
+                result = null;
+                return false;
+            }
+            return TravelEncounters.ResolveChoice(encounterId, choiceId, currentDay, out result);
         }
 
         public bool TryBuyItem(string caravanId, string itemId, int amount, ref int playerRations)

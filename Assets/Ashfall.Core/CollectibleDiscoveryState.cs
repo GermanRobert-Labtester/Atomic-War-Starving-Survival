@@ -19,6 +19,16 @@ namespace Ashfall.Core
     }
 
     /// <summary>
+    /// Persisted mapping from collectible item ID to the world location where it was discovered.
+    /// </summary>
+    [Serializable]
+    public sealed class CollectibleDiscoveryLocationEntry
+    {
+        public string item_id = string.Empty;
+        public string location_id = string.Empty;
+    }
+
+    /// <summary>
     /// Persisted DTO for <see cref="CollectibleDiscoveryState"/>. All id lists
     /// are written ordinal-sorted so HashSet enumeration order can never
     /// destabilize the save checksum (Invariant 4 / determinism rules).
@@ -39,6 +49,9 @@ namespace Ashfall.Core
 
         /// <summary>All collectible IDs ever acquired into inventory in this campaign.</summary>
         public string[] ever_acquired_ids = Array.Empty<string>();
+
+        /// <summary>Origin location IDs where collectibles were discovered.</summary>
+        public CollectibleDiscoveryLocationEntry[] discovery_locations = Array.Empty<CollectibleDiscoveryLocationEntry>();
     }
 
     /// <summary>
@@ -50,6 +63,7 @@ namespace Ashfall.Core
     /// - WasEverAcquired: permanent acquisition history (survives selling/dropping).
     /// - NewUnacknowledged: first-time acquisition awaiting player UI acknowledgement.
     /// - DiscoveredAcknowledged: acknowledged historical discovery.
+    /// - DiscoveryLocationId: originating scavenging/world location ID.
     ///
     /// Deliberately separate from <see cref="UniqueItemClaimRegistry"/>:
     /// discovery gates the one-time EFFECT and UI presentation, uniqueness gates GENERATION.
@@ -62,6 +76,8 @@ namespace Ashfall.Core
             new HashSet<string>(StringComparer.Ordinal);
         private readonly HashSet<string> _everAcquiredIds =
             new HashSet<string>(StringComparer.Ordinal);
+        private readonly Dictionary<string, string> _discoveryLocations =
+            new Dictionary<string, string>(StringComparer.Ordinal);
 
         public int Count => _unacknowledgedIds.Count + _acknowledgedIds.Count;
         public int UnacknowledgedCount => _unacknowledgedIds.Count;
@@ -105,18 +121,33 @@ namespace Ashfall.Core
             return CollectibleDiscoveryStatus.Undiscovered;
         }
 
+        public IReadOnlyDictionary<string, string> DiscoveryLocations => _discoveryLocations;
+
+        /// <summary>Returns the world location ID where the collectible was discovered, or null if unknown or not recorded.</summary>
+        public string? GetDiscoveryLocation(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return null;
+            return _discoveryLocations.TryGetValue(itemId, out var loc) ? loc : null;
+        }
+
         /// <summary>
         /// Mark a collectible acquired and discovered. Returns true only on the
         /// unknown -> discovered transition (idempotent afterwards).
         /// Newly discovered items enter the NewUnacknowledged state.
+        /// Records originating discovery location when provided.
         /// </summary>
-        public bool MarkDiscovered(string itemId)
+        public bool MarkDiscovered(string itemId, string? discoveryLocationId = null)
         {
             if (string.IsNullOrEmpty(itemId)) return false;
             _everAcquiredIds.Add(itemId);
 
             if (_acknowledgedIds.Contains(itemId) || _unacknowledgedIds.Contains(itemId))
                 return false;
+
+            if (!string.IsNullOrEmpty(discoveryLocationId))
+            {
+                _discoveryLocations[itemId] = discoveryLocationId;
+            }
 
             return _unacknowledgedIds.Add(itemId);
         }
@@ -158,13 +189,25 @@ namespace Ashfall.Core
             allDiscovered.AddRange(_unacknowledgedIds);
             allDiscovered.Sort(StringComparer.Ordinal);
 
+            var locEntries = new List<CollectibleDiscoveryLocationEntry>(_discoveryLocations.Count);
+            foreach (var kv in _discoveryLocations)
+            {
+                locEntries.Add(new CollectibleDiscoveryLocationEntry
+                {
+                    item_id = kv.Key,
+                    location_id = kv.Value
+                });
+            }
+            locEntries.Sort((a, b) => string.CompareOrdinal(a.item_id, b.item_id));
+
             return new CollectibleDiscoverySave
             {
                 schema_version = 2,
                 discovered_ids = allDiscovered.ToArray(),
                 unacknowledged_ids = unack,
                 acknowledged_ids = ack,
-                ever_acquired_ids = ever
+                ever_acquired_ids = ever,
+                discovery_locations = locEntries.ToArray()
             };
         }
 
@@ -178,8 +221,22 @@ namespace Ashfall.Core
             _unacknowledgedIds.Clear();
             _acknowledgedIds.Clear();
             _everAcquiredIds.Clear();
+            _discoveryLocations.Clear();
 
             if (save == null) return;
+
+            // Restore origin locations if present in save
+            if (save.discovery_locations != null)
+            {
+                for (int i = 0; i < save.discovery_locations.Length; i++)
+                {
+                    var entry = save.discovery_locations[i];
+                    if (entry != null && !string.IsNullOrEmpty(entry.item_id) && !string.IsNullOrEmpty(entry.location_id))
+                    {
+                        _discoveryLocations[entry.item_id] = entry.location_id;
+                    }
+                }
+            }
 
             if (save.schema_version <= 1 ||
                 ((save.acknowledged_ids == null || save.acknowledged_ids.Length == 0) &&

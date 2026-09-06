@@ -111,7 +111,7 @@
       "category": "share",
       "trigger": "Two young siblings broadcast from a storm cellar beneath an abandoned clinic.",
       "discovery": "Ana and Miko have locked themselves in the basement with water but no food while armed raiders scour the area.",
-      "location_id": "",
+      "location_id": "prewar_medical_cache",
       "min_day": 1,
       "max_day": 200,
       "choices": [

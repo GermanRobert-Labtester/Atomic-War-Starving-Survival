@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.IO;
 
 namespace Ashfall.Core.Farming
 {
@@ -145,8 +146,9 @@ namespace Ashfall.Core.Farming
                 return json.Deserialize<CropStrainCatalogContainer>(text)
                        ?? new CropStrainCatalogContainer();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                CatalogDiagnostics.Warn(path, "crop strain catalog", ex);
                 return new CropStrainCatalogContainer();
             }
         }

@@ -104,10 +104,10 @@ namespace Ashfall.Core
             if (_attached) return;
             _attached = true;
             _dispatcher.OnStandingPenalty += HandleStandingPenalty;
-            _dispatcher.OnEmbargoRequested += HandleEmbargoRequested;
-            _dispatcher.OnBountyRequested += HandleBountyRequested;
-            _dispatcher.OnCollateralSeizure += HandleCollateralSeizure;
-            _dispatcher.OnLaborObligation += HandleLaborObligation;
+            _dispatcher.OnEmbargoRequestedDetailed += HandleEmbargoRequested;
+            _dispatcher.OnBountyRequestedDetailed += HandleBountyRequested;
+            _dispatcher.OnCollateralSeizureDetailed += HandleCollateralSeizure;
+            _dispatcher.OnLaborObligationDetailed += HandleLaborObligation;
             _dispatcher.OnConsequenceDispatched += HandleConsequenceDispatched;
         }
 
@@ -118,10 +118,10 @@ namespace Ashfall.Core
             if (!_attached) return;
             _attached = false;
             _dispatcher.OnStandingPenalty -= HandleStandingPenalty;
-            _dispatcher.OnEmbargoRequested -= HandleEmbargoRequested;
-            _dispatcher.OnBountyRequested -= HandleBountyRequested;
-            _dispatcher.OnCollateralSeizure -= HandleCollateralSeizure;
-            _dispatcher.OnLaborObligation -= HandleLaborObligation;
+            _dispatcher.OnEmbargoRequestedDetailed -= HandleEmbargoRequested;
+            _dispatcher.OnBountyRequestedDetailed -= HandleBountyRequested;
+            _dispatcher.OnCollateralSeizureDetailed -= HandleCollateralSeizure;
+            _dispatcher.OnLaborObligationDetailed -= HandleLaborObligation;
             _dispatcher.OnConsequenceDispatched -= HandleConsequenceDispatched;
         }
 
@@ -150,13 +150,13 @@ namespace Ashfall.Core
                 + " debtor=" + contract.debtorId + " }");
         }
 
-        private void HandleEmbargoRequested(string scope, int durationDays, DebtContract contract)
+        private void HandleEmbargoRequested(DebtConsequence consequence, string scope, int durationDays, DebtContract contract)
         {
             // Scope "creditor_faction" (and the empty default) suspends trade
             // with the creditor; the ledger owns start/end and dedupe.
             string faction = contract.creditorId ?? string.Empty;
             if (string.IsNullOrEmpty(faction) || durationDays <= 0) return;
-            string sourceId = DebtSourceId(contract, "embargo");
+            string sourceId = DebtSourceId(contract, consequence.id, "embargo");
             bool added = _embargoes.TryAddEmbargo(faction, scope, _currentDay(), durationDays, sourceId);
             if (added)
             {
@@ -166,7 +166,7 @@ namespace Ashfall.Core
             }
         }
 
-        private void HandleBountyRequested(string factionId, DebtContract contract)
+        private void HandleBountyRequested(DebtConsequence consequence, string factionId, DebtContract contract)
         {
             // Deterministic handoff: the dispatcher's persisted fired-set
             // guarantees this request is unique per consequence, so provoking
@@ -183,7 +183,7 @@ namespace Ashfall.Core
                 + " raids=" + _ironRaiders.RaidsThisSeason + " }");
         }
 
-        private void HandleCollateralSeizure(string itemId, int quantity, DebtContract contract)
+        private void HandleCollateralSeizure(DebtConsequence consequence, string itemId, int quantity, DebtContract contract)
         {
             // All-or-nothing: if the pledged good is not fully present, nothing
             // is removed and the shortfall is logged (the creditor's collectors
@@ -208,9 +208,9 @@ namespace Ashfall.Core
             }
         }
 
-        private void HandleLaborObligation(string creditorFactionId, int laborDays, DebtContract contract)
+        private void HandleLaborObligation(DebtConsequence consequence, string creditorFactionId, int laborDays, DebtContract contract)
         {
-            string sourceId = DebtSourceId(contract, "labor");
+            string sourceId = DebtSourceId(contract, consequence.id, "labor");
             for (int i = 0; i < _state.laborObligations.Count; i++)
             {
                 if (_state.laborObligations[i].sourceId == sourceId) return; // one per consequence
@@ -262,11 +262,17 @@ namespace Ashfall.Core
 
         /// <summary>Defense-in-depth source identity shared by the embargo and
         /// labor ledgers: debt:{debtor}@{day}:{consequence}/{kind}.</summary>
+        public static string DebtSourceId(DebtContract contract, string consequenceId, string kind)
+        {
+            return "debt:" + contract.debtorId + "@" + contract.signedDay + ":"
+                + (consequenceId ?? string.Empty) + "/" + kind;
+        }
+
+        /// <summary>Legacy source identity retained for callers that do not
+        /// have a consequence payload. New host adapters must use the
+        /// consequence-aware overload above.</summary>
         public static string DebtSourceId(DebtContract contract, string kind)
         {
-            // The template's consequence ids are resolved by the dispatcher;
-            // the bridge sees requests per consequence chain, so the contract
-            // instance identity plus the request kind is the stable key.
             return "debt:" + contract.debtorId + "@" + contract.signedDay + ":" + kind;
         }
 

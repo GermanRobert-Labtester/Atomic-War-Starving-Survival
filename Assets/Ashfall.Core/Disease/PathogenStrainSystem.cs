@@ -62,14 +62,21 @@ namespace Ashfall.Core.Disease
 
         /// <summary>Raised when a fictional strain mutation lands (survivorId, fromId, toId).</summary>
         public event Action<string, string, string>? OnStrainMutation;
+        /// <summary>Raised when a fictional cure project completes (strainId, day).</summary>
+        public event Action<string, int>? OnCureCompleted;
 
         public PathogenStrainSystem(PathogenStrainCatalogContainer catalog, DiseaseSystem disease)
         {
             _catalog = catalog ?? new PathogenStrainCatalogContainer();
             _disease = disease ?? throw new ArgumentNullException(nameof(disease));
             foreach (var strain in _catalog.pathogen_strains)
-                if (strain != null && !string.IsNullOrEmpty(strain.id))
-                    _strainById[strain.id] = strain;
+            {
+                if (strain == null || string.IsNullOrEmpty(strain.id)) continue;
+                // Duplicate ids: keep the first (later rows are ignored, never
+                // overwrite — a catalog typo cannot silently replace a strain).
+                if (!_strainById.TryAdd(strain.id, strain))
+                    continue;
+            }
         }
 
         // ------------------------------------------------------------- attach
@@ -123,10 +130,15 @@ namespace Ashfall.Core.Disease
         // ----------------------------------------------------------- mutation
 
         /// <summary>
-        /// One deterministic mutation pass over active strain infections. Order:
-        /// ordinal strain ids, then ordinal survivor ids. Roll seeds derive from
-        /// (day, survivorId, strainId), so no RNG state is persisted and a
-        /// reload reproduces the same sequence.
+        /// One deterministic mutation pass (Flagship XI QA repair). Two
+        /// directions, both ordinal by id and seeded per (day, survivor, pair):
+        /// 1. PRIMARY — an authored parent disease can emerge into its child
+        ///    strain (this is how strains reach the holdfast: any natural
+        ///    infection is a potential patient zero). Emergence chance is the
+        ///    child's own mutation_chance_per_day, raised by the dose factor.
+        ///    Owner-tunable entirely through pathogens.json.
+        /// 2. DRIFT — an active strain infection transitions into a sibling
+        ///    strain from its mutation_targets.
         /// </summary>
         public void TickMutations(int day)
         {
@@ -136,9 +148,32 @@ namespace Ashfall.Core.Disease
             foreach (var strainId in _strainById.Keys.OrderBy(id => id, StringComparer.Ordinal).ToList())
             {
                 var strain = _strainById[strainId];
-                if (strain.mutation_chance_per_day <= 0f || strain.mutation_targets.Count == 0) continue;
-
                 var entry = _disease.GetDiseaseState(strainId);
+
+                // Primary direction: parent infections may emerge into this strain.
+                var parentEntry = _disease.GetDiseaseState(strain.strain_of);
+                if (parentEntry != null && parentEntry.infected.Count > 0)
+                {
+                    foreach (var patient in parentEntry.infected
+                        .OrderBy(p => p.survivor_id, StringComparer.Ordinal).ToList())
+                    {
+                        if (patient == null || string.IsNullOrEmpty(patient.survivor_id)) continue;
+                        // Already carrying this strain (or mutating onward): skip.
+                        if (PatientCarries(patient.survivor_id, strainId)) continue;
+                        float dose = radiation?.Invoke(patient.survivor_id) ?? 0f;
+                        float chance = MutationChance(strain, dose);
+                        if (chance <= 0f) continue;
+
+                        var rng = new SeededRng(MutationSeed(day, patient.survivor_id, strain.strain_of + "->" + strainId));
+                        if (rng.NextDouble() >= chance) continue;
+
+                        if (_disease.MutateInfection(patient.survivor_id, strain.strain_of, strainId))
+                            OnStrainMutation?.Invoke(patient.survivor_id, strain.strain_of, strainId);
+                    }
+                }
+
+                // Drift direction: active strain infections transition onward.
+                if (strain.mutation_chance_per_day <= 0f || strain.mutation_targets.Count == 0) continue;
                 if (entry == null || entry.infected.Count == 0) continue;
 
                 foreach (var patient in entry.infected.OrderBy(p => p.survivor_id, StringComparer.Ordinal).ToList())
@@ -164,6 +199,16 @@ namespace Ashfall.Core.Disease
                         OnStrainMutation?.Invoke(patient.survivor_id, strainId, target);
                 }
             }
+        }
+
+        private bool PatientCarries(string survivorId, string diseaseId)
+        {
+            var entry = _disease.GetDiseaseState(diseaseId);
+            if (entry == null) return false;
+            foreach (var patient in entry.infected)
+                if (patient != null && string.Equals(patient.survivor_id, survivorId, StringComparison.Ordinal))
+                    return true;
+            return false;
         }
 
         /// <summary>Pure: effective per-day mutation chance under the current radiation dose.</summary>
@@ -203,15 +248,19 @@ namespace Ashfall.Core.Disease
         /// <summary>
         /// The engine's lethality-modifier: abstract radiation severity pressure
         /// for strain infections only, reduced by the per-patient treatment
-        /// ledger already applied by the engine (never below zero there).
+        /// ledger already applied by the engine (never below zero there). A
+        /// COMPLETED CURE turns the modifier negative for that strain
+        /// (CureEfficacyLethalityRelief) — the unlock's realized gameplay effect.
         /// </summary>
         public float RadiationSeverityPressure(string survivorId, string diseaseId)
         {
             if (!_strainById.TryGetValue(diseaseId, out var strain)) return 0f;
             float dose = RadiationDoseQuery?.Invoke(survivorId) ?? 0f;
-            return (Math.Clamp(dose, 0f, 100f) / 100f)
-                   * Math.Clamp(strain.radiation_severity_gain, 0f, 1f)
-                   * MaxRadiationLethalityPressure;
+            float pressure = (Math.Clamp(dose, 0f, 100f) / 100f)
+                             * Math.Clamp(strain.radiation_severity_gain, 0f, 1f)
+                             * MaxRadiationLethalityPressure;
+            if (IsCureUnlocked(diseaseId)) pressure -= CureEfficacyLethalityRelief;
+            return pressure;
         }
 
         /// <summary>Wires the engine hook (call after construction).</summary>
@@ -262,6 +311,7 @@ namespace Ashfall.Core.Disease
                     if (!_state.curedStrainIds.Contains(project.strainId))
                         _state.curedStrainIds.Add(project.strainId);
                     anyCompleted = true;
+                    OnCureCompleted?.Invoke(project.strainId, day);
                 }
             }
             return anyCompleted;

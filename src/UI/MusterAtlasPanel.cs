@@ -234,9 +234,10 @@ public partial class MusterAtlasPanel : Control, IBindablePanel
         _statusRail.Set("currents",  "5", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("denizens",  "127", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("sentinels", "44", AshfallMetricCard.Criticality.Caution);
-        _statusRail.Set("dossiers",  "12", AshfallMetricCard.Criticality.Warn);
-        _statusRail.Set("approach", _host.Engine.SelectedApproach?.ToString() ?? "—",
-            AshfallMetricCard.Criticality.Normal);
+        var approachText = _host.Engine?.Warfare != null && _host.Engine.Warfare.Phase != MusterConflictPhase.Idle
+            ? $"War: {_host.Engine.Warfare.Phase}"
+            : (_host.Engine?.SelectedApproach?.ToString() ?? "—");
+        _statusRail.Set("approach", approachText, AshfallMetricCard.Criticality.Normal);
     }
 
     private List<(string id, string display, string direction, float dTrust, float anchorCap)> _currentRows = new();
@@ -405,6 +406,25 @@ public partial class MusterAtlasPanel : Control, IBindablePanel
             _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Camp Strength",
                 $"D{coal.denizens} C{coal.discontents} S{coal.sentinels} R{coal.raiders}",
                 AshfallUiHelpers.ToColor(DesignTheme.Muted)));
+        }
+        if (_host?.Engine?.Warfare != null)
+        {
+            var warfare = _host.Engine.Warfare;
+            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Warfare Phase", warfare.Phase.ToString(),
+                AshfallUiHelpers.ToColor(warfare.Phase == MusterConflictPhase.Idle ? DesignTheme.Lethe : DesignTheme.Entropy)));
+            _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Committed Forces", warfare.ActiveRoster.Count.ToString(),
+                AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            if (!string.IsNullOrEmpty(warfare.State.TargetSectorId))
+            {
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Target Sector", warfare.State.TargetSectorId,
+                    AshfallUiHelpers.ToColor(DesignTheme.Critical)));
+            }
+            if (warfare.State.LastEngagementResult != null)
+            {
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Last Engagement", warfare.State.LastEngagementResult.Outcome,
+                    AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            }
         }
     }
 

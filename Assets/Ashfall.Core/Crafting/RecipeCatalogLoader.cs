@@ -16,6 +16,8 @@ namespace Ashfall.Core.Crafting
         public int resultAmount { get; set; } = 1;
         public float craftingTimeHours { get; set; } = 1f;
         public string requiredStationId { get; set; } = string.Empty;
+        public string requiredResearchId { get; set; } = string.Empty;
+        public string requiredBlueprintId { get; set; } = string.Empty;
     }
 
     [Serializable]
@@ -130,6 +132,8 @@ namespace Ashfall.Core.Crafting
                         resultAmount = dto.resultAmount > 0 ? dto.resultAmount : 1,
                         craftingTimeHours = dto.craftingTimeHours > 0f ? dto.craftingTimeHours : 1f,
                         requiredStationId = dto.requiredStationId ?? string.Empty
+                        ,requiredResearchId = dto.requiredResearchId ?? string.Empty
+                        ,requiredBlueprintId = dto.requiredBlueprintId ?? string.Empty
                     };
 
                     if (dto.ingredients != null)

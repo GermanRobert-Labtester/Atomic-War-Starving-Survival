@@ -18,6 +18,8 @@ using Ashfall.Core.Expeditions;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Disease;
+using Ashfall.Core.Factions;
+using Ashfall.Core.Shelter;
 
 namespace AtomicWar.GodotApp
 {
@@ -63,6 +65,10 @@ namespace AtomicWar.GodotApp
                 TryLoadYearOfAshCatalogs(dataDir, files, json, instr);
                 TryLoadVerdictCatalogs(dataDir, files, json, instr);
                 TryLoadExpansionCatalogs(dataDir, files, json, instr);
+                TryLoadTechSalvageCatalog(dataDir, files, json, instr);
+                TryLoadEspionageMissionCatalog(dataDir, files, json, instr);
+                TryLoadFluidInfrastructureCatalog(dataDir, files, json, instr);
+                TryLoadQuestTemplateCatalog(dataDir, files, json, instr);
 
                 // Simulate representative queries for N days
                 RunRepresentativeQueries(instr, 7);
@@ -297,6 +303,89 @@ namespace AtomicWar.GodotApp
                 instr.RecordDefinitionsRegistered("recipes.json", "RecipeCatalog", 1);
             }
             catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] recipes.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadTechSalvageCatalog(string dataDir, IFileIO files, IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, "tech_salvage.json");
+                if (!files.FileExists(path)) return;
+                instr.RecordCatalogOpened("tech_salvage.json", "TechSalvageCatalogLoader");
+                var catalog = TechSalvageCatalogLoader.Load(dataDir, files, json);
+                int count = catalog?.Count ?? 0;
+                instr.RecordCatalogDeserialized("tech_salvage.json", count);
+                instr.RecordDefinitionsRegistered("tech_salvage.json", "TechSalvageCatalog", count);
+                if (catalog != null)
+                {
+                    foreach (var definition in catalog.Take(5))
+                    {
+                        if (definition != null && !string.IsNullOrWhiteSpace(definition.Id))
+                            instr.RecordDefinitionQueried("tech_salvage.json", definition.Id,
+                                "TechSalvageCatalog.GetById", "WorkshopReverseEngineeringSystem", 1);
+                    }
+                }
+            }
+            catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] tech_salvage.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadEspionageMissionCatalog(string dataDir, IFileIO files, IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, EspionageMissionCatalogLoader.FileName);
+                if (!files.FileExists(path)) return;
+                instr.RecordCatalogOpened(EspionageMissionCatalogLoader.FileName, "EspionageMissionCatalogLoader");
+                var missions = EspionageMissionCatalogLoader.Load(dataDir, files, json);
+                instr.RecordCatalogDeserialized(EspionageMissionCatalogLoader.FileName, missions.Count);
+                instr.RecordDefinitionsRegistered(EspionageMissionCatalogLoader.FileName, "EspionageMissionCatalog", missions.Count);
+                foreach (var mission in missions.Take(5))
+                {
+                    if (mission != null && !string.IsNullOrWhiteSpace(mission.Id))
+                        instr.RecordDefinitionQueried(EspionageMissionCatalogLoader.FileName, mission.Id,
+                            "EspionageMissionCatalog.GetById", "EspionageSystem", 1);
+                }
+            }
+            catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] espionage_missions.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadFluidInfrastructureCatalog(string dataDir, IFileIO files, IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, FluidInfrastructureCatalogLoader.FileName);
+                if (!files.FileExists(path)) return;
+                instr.RecordCatalogOpened(FluidInfrastructureCatalogLoader.FileName, "FluidInfrastructureCatalogLoader");
+                var catalog = FluidInfrastructureCatalogLoader.Load(dataDir, files, json);
+                int count = (catalog?.Pipes?.Count ?? 0) + (catalog?.Pumps?.Count ?? 0) + (catalog?.Reservoirs?.Count ?? 0);
+                instr.RecordCatalogDeserialized(FluidInfrastructureCatalogLoader.FileName, count);
+                instr.RecordDefinitionsRegistered(FluidInfrastructureCatalogLoader.FileName, "FluidInfrastructureCatalog", count);
+            }
+            catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] fluid_infrastructure.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadQuestTemplateCatalog(string dataDir, IFileIO files, IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, QuestTemplateCatalogLoader.FileName);
+                if (!files.FileExists(path)) return;
+                instr.RecordCatalogOpened(QuestTemplateCatalogLoader.FileName, "QuestTemplateCatalogLoader");
+                var templates = QuestTemplateCatalogLoader.Load(dataDir, files, json);
+                instr.RecordCatalogDeserialized(QuestTemplateCatalogLoader.FileName, templates.Count);
+                instr.RecordDefinitionsRegistered(QuestTemplateCatalogLoader.FileName, "QuestTemplateCatalog", templates.Count);
+                foreach (var template in templates.Take(5))
+                {
+                    if (template != null && !string.IsNullOrWhiteSpace(template.Id))
+                        instr.RecordDefinitionQueried(QuestTemplateCatalogLoader.FileName, template.Id,
+                            "QuestTemplateCatalog.GetById", "ProceduralNarrativeSystem", 1);
+                }
+            }
+            catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] quest_templates.json: {ex.Message}"); }
         }
 
         private static void TryLoadFactionCatalog(string dataDir, IFileIO files, IJsonSerializer json,

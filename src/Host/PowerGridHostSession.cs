@@ -28,14 +28,30 @@ namespace AtomicWar.GodotApp
 
         public event Action? OnStateChanged;
 
+        /// <summary>
+        /// Headless/selftest convenience overload: constructs from the embedded
+        /// fallback defaults when no data directory is supplied.
+        /// </summary>
         public static PowerGridHostSession CreateDefault(ISeededRng rng)
+            => CreateDefault(rng, dataDir: null);
+
+        /// <summary>
+        /// Constructs from the authoritative power_grid.json catalog
+        /// (Assets/StreamingAssets/Data/power_grid.json) via the Core loader.
+        /// A missing or unusable catalog falls back to embedded defaults
+        /// (ShelterPowerGridCatalogLoader.FallbackDefault) so boot never fails
+        /// over a catalog. The previous hardcoded DefaultGrid() snapshot was
+        /// removed — catalog and runtime can no longer drift.
+        /// </summary>
+        public static PowerGridHostSession CreateDefault(ISeededRng rng, string? dataDir)
         {
-            var grid = LoadGridJson();
+            var grid = LoadGridJson(dataDir);
             var rooms = new List<PowerGridRoom>();
             foreach (var r in grid.Rooms)
             {
-                rooms.Add(new PowerGridRoom(r.RoomId, r.DisplayName, r.DrawWatts,
-                    (PowerGridRoomPriority)(int)r.DefaultPriority, r.FailureEffectId));
+                var priority = ShelterPowerGridCatalogLoader.MapPriority(r.Id, r.DefaultPriority)
+                    ?? PowerGridRoomPriority.Standard;
+                rooms.Add(new PowerGridRoom(r.Id, r.DisplayName, r.DrawWatts, priority, r.FailureEffectId));
             }
             var state = new PowerGridState
             {
@@ -116,48 +132,12 @@ namespace AtomicWar.GodotApp
             return true;
         }
 
-        private static PowerGridJson LoadGridJson()
+        private static ShelterPowerGridCatalogDef LoadGridJson(string? dataDir)
         {
-            // Default rooms match the authoritative power_grid.json catalog
-            // (Assets/StreamingAssets/Data/power_grid.json). The Core
-            // PowerGridSystem does not read catalog JSON; the host carries the
-            // defaults so the live session starts in the documented state.
-            return DefaultGrid();
-        }
-
-        private static PowerGridJson DefaultGrid() => new PowerGridJson
-        {
-            GenerationWattsDefault = 800f,
-            BatteryCapacityWhDefault = 4000f,
-            FuelUnitsDefault = 100f,
-            Rooms = new List<PowerGridRoomJson>
-            {
-                new PowerGridRoomJson { RoomId = "room_air_filtration", DisplayName = "Air Filtration",
-                    DrawWatts = 180f, DefaultPriority = (int)PowerGridRoomPriority.Critical },
-                new PowerGridRoomJson { RoomId = "room_clinic", DisplayName = "Clinic",
-                    DrawWatts = 120f, DefaultPriority = (int)PowerGridRoomPriority.Critical },
-                new PowerGridRoomJson { RoomId = "room_greenhouse", DisplayName = "Greenhouse",
-                    DrawWatts = 160f, DefaultPriority = (int)PowerGridRoomPriority.Standard },
-                new PowerGridRoomJson { RoomId = "room_foundry", DisplayName = "Silent Foundry",
-                    DrawWatts = 220f, DefaultPriority = (int)PowerGridRoomPriority.Low }
-            }
-        };
-
-        private sealed class PowerGridJson
-        {
-            public float GenerationWattsDefault;
-            public float BatteryCapacityWhDefault;
-            public float FuelUnitsDefault;
-            public List<PowerGridRoomJson> Rooms;
-        }
-
-        private sealed class PowerGridRoomJson
-        {
-            public string RoomId;
-            public string DisplayName;
-            public float DrawWatts;
-            public int DefaultPriority;
-            public string FailureEffectId;
+            if (string.IsNullOrWhiteSpace(dataDir))
+                return ShelterPowerGridCatalogLoader.FallbackDefault();
+            return ShelterPowerGridCatalogLoader.LoadOrDefault(
+                dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
         }
     }
 }

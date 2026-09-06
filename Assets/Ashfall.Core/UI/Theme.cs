@@ -98,6 +98,10 @@ namespace Ashfall.Core.UI
         public const string InfoHex = "#6EA3A8";
         public static readonly (float r, float g, float b, float a) Info = (0.431f, 0.639f, 0.659f, 1f);
 
+        /// <summary>Cyan accent — research, discovery, and codex telemetry. #6ea3a8.</summary>
+        public const string CyanHex = "#6EA3A8";
+        public static readonly (float r, float g, float b, float a) Cyan = (0.431f, 0.639f, 0.659f, 1f);
+
         // ── Expansion IV tokens ─────────────────────────────────────────
 
         /// <summary>Structural entropy — corroded amber. #c97b3a.</summary>

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "archives": [
+    {
+      "id": "archive_orbital_telemetry_array",
+      "display_name": "Orbital Telemetry Array Spool",
+      "description": "Magnetic core memory drum recovered from a deep stratospheric tracking bunker, containing orbital constellation codes and satellite ephemeris data.",
+      "encryption_grade": "orbital_command",
+      "required_room": "room_laboratory_research",
+      "cleaning_solvent_id": "chemicals",
+      "cleaning_solvent_count": 2,
+      "base_effort_points": 120.0,
+      "reward_research_ids": [
+        "knowledge_ionospheric_propagation",
+        "knowledge_encrypted_radio_blueprint"
+      ],
+      "tags": ["signals", "orbital", "high_tier"]
+    },
+    {
+      "id": "archive_subsurface_hydrology_grid",
+      "display_name": "Subsurface Hydrology Survey Plaque",
+      "description": "Etched optical glass disc documenting regional aquifer recharge channels, deep artesian faults, and seismic water filtration strata.",
+      "encryption_grade": "quantum_lattice",
+      "required_room": "room_laboratory_research",
+      "cleaning_solvent_id": "chemicals",
+      "cleaning_solvent_count": 1,
+      "base_effort_points": 90.0,
+      "reward_research_ids": [
+        "knowledge_deep_well_hydraulics",
+        "knowledge_water_advanced"
+      ],
+      "tags": ["hydrology", "water", "infrastructure"]
+    },
+    {
+      "id": "archive_geothermal_tap_specifications",
+      "display_name": "Geothermal Tap Engineering Reel",
+      "description": "Microfilm cartridge describing deep-strata heat exchangers, corrosion-resistant refractory alloys, and closed-loop turbine injection wells.",
+      "encryption_grade": "military_grade",
+      "required_room": "room_laboratory_research",
+      "cleaning_solvent_id": "chemicals",
+      "cleaning_solvent_count": 2,
+      "base_effort_points": 150.0,
+      "reward_research_ids": [
+        "knowledge_geothermal_tap",
+        "knowledge_high_temp_metallurgy"
+      ],
+      "tags": ["energy", "metallurgy", "subterranean"]
+    },
+    {
+      "id": "archive_cryogenic_preservation_protocols",
+      "display_name": "Cryogenic Preservation Handbook Wafers",
+      "description": "Silicon wafer set outlining ultra-low-temperature cell stasis, vapor-phase nitrogen circulation, and biological nutrient preservation.",
+      "encryption_grade": "basic",
+      "required_room": "room_laboratory_research",
+      "cleaning_solvent_id": "chemicals",
+      "cleaning_solvent_count": 1,
+      "base_effort_points": 60.0,
+      "reward_research_ids": [
+        "knowledge_food_preservation",
+        "knowledge_cold_canning_preservation"
+      ],
+      "tags": ["preservation", "cryogenics", "biological"]
+    },
+    {
+      "id": "archive_pharmacological_synthesis_index",
+      "display_name": "Pharmacological Chelation Dossier",
+      "description": "High-density optical plate holding organic synthesis schematics for synthetic chelating agents, broad-spectrum antivirals, and nerve counter-agents.",
+      "encryption_grade": "military_grade",
+      "required_room": "room_laboratory_research",
+      "cleaning_solvent_id": "chemicals",
+      "cleaning_solvent_count": 2,
+      "base_effort_points": 100.0,
+      "reward_research_ids": [
+        "knowledge_pharmacology_synthesis",
+        "knowledge_chelation_therapy"
+      ],
+      "tags": ["medical", "pharma", "radiation"]
+    },
+    {
+      "id": "archive_seismic_rupture_defense",
+      "display_name": "Seismic Rupture Hardening Ledger",
+      "description": "Magnetic wire spool recording subterranean stress-wave propagation models, shock-dampened bulkhead anchoring, and structural fault reinforcement.",
+      "encryption_grade": "quantum_lattice",
+      "required_room": "room_laboratory_research",
+      "cleaning_solvent_id": "chemicals",
+      "cleaning_solvent_count": 1,
+      "base_effort_points": 110.0,
+      "reward_research_ids": [
+        "knowledge_seismic_fault_mapping",
+        "knowledge_fortified_chokepoints"
+      ],
+      "tags": ["defense", "seismic", "fortification"]
+    }
+  ]
+}

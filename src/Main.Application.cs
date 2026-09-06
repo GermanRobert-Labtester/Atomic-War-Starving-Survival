@@ -98,6 +98,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.PsychologySelfTest:
                     GetTree().Quit(HostCli.RunPsychologySelfTest(_dataDir));
                     return;
+                case HostCliAction.WildlifeSelfTest:
+                    GetTree().Quit(HostCli.RunWildlifeSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SilentFoundrySelfTest:
                     GetTree().Quit(HostCli.RunSilentFoundrySelfTest(_dataDir));
                     return;
@@ -329,8 +332,14 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(HostCli.RunBridgeSelfTest());
                     return;
+                case HostCliAction.PowerGridCatalogSelfTest:
+                    GetTree().Quit(HostCli.RunPowerGridCatalogSelfTest());
+                    return;
                 case HostCliAction.ExpeditionEncounterBridgeSelfTest:
                     GetTree().Quit(HostCli.RunExpeditionEncounterBridgeSelfTest());
+                    return;
+                case HostCliAction.PatrolEncounterSelfTest:
+                    GetTree().Quit(HostCli.RunPatrolEncounterSelfTest(_dataDir));
                     return;
                 case HostCliAction.MedicalSelfTest:
                     GetTree().Quit(HostCli.RunMedicalSelfTest());
@@ -672,6 +681,7 @@ namespace AtomicWar.GodotApp
                 // PowerGrid, MedicalWard, Memorial, SilentFoundry, Disease, WastelandMap,
                 // EncounterChoice, and all 21 ExpandedShelter stores.
                 SaveAll();
+                ShutdownDebtConsequenceIntegration();
 
                 GetTree().Quit();
             }

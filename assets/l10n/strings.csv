@@ -1,69 +1,204 @@
-key,en,source
-ui.common.ok,"OK","src/UI/AshfallUiHelpers.cs"
-ui.common.cancel,"Cancel","src/UI/AshfallUiHelpers.cs"
-ui.common.close,"Close","src/UI/AshfallUiHelpers.cs"
-ui.common.back,"Back","src/UI/AshfallUiHelpers.cs"
-ui.common.confirm,"Confirm","src/UI/AshfallUiHelpers.cs"
-ui.common.save,"Save","src/UI/AshfallUiHelpers.cs"
-ui.common.apply,"Apply","src/UI/AshfallUiHelpers.cs"
-ui.common.reset,"Reset","src/UI/AshfallUiHelpers.cs"
-ui.common.enabled,"ENABLED","src/UI/AshfallUiHelpers.cs"
-ui.common.disabled,"DISABLED","src/UI/AshfallUiHelpers.cs"
-ui.common.active,"ACTIVE","src/UI/AshfallUiHelpers.cs"
-ui.common.dormant,"DORMANT","src/UI/AshfallUiHelpers.cs"
-ui.common.stable,"STABLE","src/UI/AshfallUiHelpers.cs"
-ui.common.critical,"CRITICAL","src/UI/AshfallUiHelpers.cs"
-ui.common.warning,"WARNING","src/UI/AshfallUiHelpers.cs"
-settings.title,"SYSTEM CONFIGURATION // SETTINGS","src/UI/SettingsPanel.cs"
-settings.section.display,"DISPLAY & GRAPHICS","src/UI/SettingsPanel.cs"
-settings.section.audio,"AUDIO SIGNALS","src/UI/SettingsPanel.cs"
-settings.section.accessibility,"ACCESSIBILITY & READABILITY","src/UI/SettingsPanel.cs"
-settings.section.gameplay,"GAMEPLAY PROTOCOLS","src/UI/SettingsPanel.cs"
-settings.section.language,"LANGUAGE & LOCALIZATION","src/UI/SettingsPanel.cs"
-settings.display.window_mode,"Window Mode","src/UI/SettingsPanel.cs"
-settings.display.resolution,"Resolution Preset","src/UI/SettingsPanel.cs"
-settings.display.ui_scale,"Interface Scale","src/UI/SettingsPanel.cs"
-settings.display.vsync,"Vertical Sync","src/UI/SettingsPanel.cs"
-settings.display.max_fps,"Frame Rate Cap","src/UI/SettingsPanel.cs"
-settings.audio.mute_all,"Mute All Audio","src/UI/SettingsPanel.cs"
-settings.audio.master,"Master Volume","src/UI/SettingsPanel.cs"
-settings.audio.music,"Music / Ambience Score","src/UI/SettingsPanel.cs"
-settings.audio.sfx,"Sound Effects / Machinery","src/UI/SettingsPanel.cs"
-settings.audio.radio,"Radio Receiver / Transmissions","src/UI/SettingsPanel.cs"
-settings.audio.ambience,"Bunker Ambience / Air Duct","src/UI/SettingsPanel.cs"
-settings.accessibility.high_contrast,"High Contrast HUD","src/UI/SettingsPanel.cs"
-settings.accessibility.hazard_labels,"Always Show Hazard Text","src/UI/SettingsPanel.cs"
-settings.accessibility.reduced_motion,"Reduced Motion","src/UI/SettingsPanel.cs"
-settings.accessibility.large_fonts,"Large Font Floor","src/UI/SettingsPanel.cs"
-settings.gameplay.tutorial_mode,"Tutorial & Onboarding Guidance","src/UI/SettingsPanel.cs"
-settings.gameplay.confirm_end_day,"Confirm Before Ending Day","src/UI/SettingsPanel.cs"
-settings.gameplay.verbose_radio,"Detailed Radio Log Dispatches","src/UI/SettingsPanel.cs"
-settings.gameplay.auto_save,"Auto-Save on Day Advance","src/UI/SettingsPanel.cs"
-settings.gameplay.reset_tutorials,"Reset Tutorial Guidance","src/UI/SettingsPanel.cs"
-settings.language.locale,"Language / Locale","src/UI/SettingsPanel.cs"
-tutorial.title,"DAY 1 OBJECTIVE","src/UI/OnboardingHintPanel.cs"
-tutorial.protocol.title,"Resolve the Day 1 protocol","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.protocol.objective,"Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.inspect.title,"Inspect three bunker rooms","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.inspect.objective,"Open the shelter and inspect rooms until three have confirming notes.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.rationing.title,"Open the stores and read them","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.rationing.objective,"Open the inventory and look at the food and water you are rationing.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.assignment.title,"Assign a survivor to a duty","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.assignment.objective,"Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.weather.title,"Read the weather","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.weather.objective,"Open the weather forecast or panel to learn what tomorrow will bring.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.inventory.title,"Use an item from the stores","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.inventory.objective,"Equip a protective item or consume something real from the ledger. Both are real commands.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.day_advance.title,"End Day 1","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-tutorial.day_advance.objective,"Press the Advance Day confirm. The first night ticks; the morning briefing returns.","Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs"
-warning.radiation.acute,"ACUTE RADIATION DETECTED: Survivor {0} has {1:F0} mSv exposure (-5 HP/h decay). Administer Rad-Away or Iodine.","Assets/Ashfall.Core/Radiation/RadiationSystem.cs"
-warning.radiation.storm,"FALLOUT STORM INCOMING: Elevated environmental radiation. Keep survivors indoors or equip hazmat gear.","Assets/Ashfall.Core/Weather/WeatherSystem.cs"
-warning.water.low,"WATER RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Run filtration or desalination.","Assets/Ashfall.Core/Survivors/NeedsSystem.cs"
-warning.food.low,"FOOD RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Adjust rations or scavenge.","Assets/Ashfall.Core/Survivors/NeedsSystem.cs"
-warning.power.brownout,"POWER DEFICIT: Generator reserve depleted. Air filtration offline; indoor contamination rising.","Assets/Ashfall.Core/Shelter/PowerGridSystem.cs"
-warning.survivor.critical,"SURVIVOR IN DANGER: {0} has reached critical {1}. Triage immediately.","Assets/Ashfall.Core/Survivors/NeedsSystem.cs"
-codex.manual.title,"FIELD SURVIVAL MANUAL","src/UI/JournalPanel.cs"
-codex.manual.radiation,"Radiation & Dosimeter: Dose accumulates from fallout and storms. Above 50 mSv triggers acute radiation sickness with 5 HP/hr health decay. Administer Rad-Away or Iodine.","src/UI/JournalPanel.cs"
-codex.manual.rations,"Rations & Water: Clean water is essential. 3 survivors consume ~3.6 units daily. Maintain filtration membranes.","src/UI/JournalPanel.cs"
-codex.manual.power,"Power & Grid: Air filtration requires continuous electrical power. Stock batteries and generator fuel.","src/UI/JournalPanel.cs"
-codex.manual.duty,"Duty Shifts: Unassigned survivors suffer morale decay and cannot maintain bunker facilities.","src/UI/JournalPanel.cs"
+key,en,de,source
+ui.common.ok,OK,,src/UI/AshfallUiHelpers.cs
+ui.common.cancel,Cancel,,src/UI/AshfallUiHelpers.cs
+ui.common.close,Close,,src/UI/AshfallUiHelpers.cs
+ui.common.back,Back,,src/UI/AshfallUiHelpers.cs
+ui.common.confirm,Confirm,,src/UI/AshfallUiHelpers.cs
+ui.common.save,Save,,src/UI/AshfallUiHelpers.cs
+ui.common.apply,Apply,,src/UI/AshfallUiHelpers.cs
+ui.common.reset,Reset,,src/UI/AshfallUiHelpers.cs
+ui.common.enabled,ENABLED,,src/UI/AshfallUiHelpers.cs
+ui.common.disabled,DISABLED,,src/UI/AshfallUiHelpers.cs
+ui.common.active,ACTIVE,,src/UI/AshfallUiHelpers.cs
+ui.common.dormant,DORMANT,,src/UI/AshfallUiHelpers.cs
+ui.common.stable,STABLE,,src/UI/AshfallUiHelpers.cs
+ui.common.critical,CRITICAL,,src/UI/AshfallUiHelpers.cs
+ui.common.warning,WARNING,,src/UI/AshfallUiHelpers.cs
+settings.title,SYSTEM CONFIGURATION // SETTINGS,,src/UI/SettingsPanel.cs
+settings.section.display,DISPLAY & GRAPHICS,,src/UI/SettingsPanel.cs
+settings.section.audio,AUDIO SIGNALS,,src/UI/SettingsPanel.cs
+settings.section.accessibility,ACCESSIBILITY & READABILITY,,src/UI/SettingsPanel.cs
+settings.section.gameplay,GAMEPLAY PROTOCOLS,,src/UI/SettingsPanel.cs
+settings.section.language,LANGUAGE & LOCALIZATION,,src/UI/SettingsPanel.cs
+settings.display.window_mode,Window Mode,,src/UI/SettingsPanel.cs
+settings.display.resolution,Resolution Preset,,src/UI/SettingsPanel.cs
+settings.display.ui_scale,Interface Scale,,src/UI/SettingsPanel.cs
+settings.display.vsync,Vertical Sync,,src/UI/SettingsPanel.cs
+settings.display.max_fps,Frame Rate Cap,,src/UI/SettingsPanel.cs
+settings.audio.mute_all,Mute All Audio,,src/UI/SettingsPanel.cs
+settings.audio.master,Master Volume,,src/UI/SettingsPanel.cs
+settings.audio.music,Music / Ambience Score,,src/UI/SettingsPanel.cs
+settings.audio.sfx,Sound Effects / Machinery,,src/UI/SettingsPanel.cs
+settings.audio.radio,Radio Receiver / Transmissions,,src/UI/SettingsPanel.cs
+settings.audio.ambience,Bunker Ambience / Air Duct,,src/UI/SettingsPanel.cs
+settings.accessibility.high_contrast,High Contrast HUD,,src/UI/SettingsPanel.cs
+settings.accessibility.hazard_labels,Always Show Hazard Text,,src/UI/SettingsPanel.cs
+settings.accessibility.reduced_motion,Reduced Motion,,src/UI/SettingsPanel.cs
+settings.accessibility.large_fonts,Large Font Floor,,src/UI/SettingsPanel.cs
+settings.gameplay.tutorial_mode,Tutorial & Onboarding Guidance,,src/UI/SettingsPanel.cs
+settings.gameplay.confirm_end_day,Confirm Before Ending Day,,src/UI/SettingsPanel.cs
+settings.gameplay.verbose_radio,Detailed Radio Log Dispatches,,src/UI/SettingsPanel.cs
+settings.gameplay.auto_save,Auto-Save on Day Advance,,src/UI/SettingsPanel.cs
+settings.gameplay.reset_tutorials,Reset Tutorial Guidance,,src/UI/SettingsPanel.cs
+settings.language.locale,Language / Locale,,src/UI/SettingsPanel.cs
+tutorial.title,DAY 1 OBJECTIVE,,src/UI/OnboardingHintPanel.cs
+tutorial.protocol.title,Resolve the Day 1 protocol,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.protocol.objective,"Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.",,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.inspect.title,Inspect three bunker rooms,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.inspect.objective,Open the shelter and inspect rooms until three have confirming notes.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.rationing.title,Open the stores and read them,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.rationing.objective,Open the inventory and look at the food and water you are rationing.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.assignment.title,Assign a survivor to a duty,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.assignment.objective,Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.weather.title,Read the weather,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.weather.objective,Open the weather forecast or panel to learn what tomorrow will bring.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.inventory.title,Use an item from the stores,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.inventory.objective,Equip a protective item or consume something real from the ledger. Both are real commands.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.day_advance.title,End Day 1,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.day_advance.objective,Press the Advance Day confirm. The first night ticks; the morning briefing returns.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+warning.radiation.acute,ACUTE RADIATION DETECTED: Survivor {0} has {1:F0} mSv exposure (-5 HP/h decay). Administer Rad-Away or Iodine.,,Assets/Ashfall.Core/Radiation/RadiationSystem.cs
+warning.radiation.storm,FALLOUT STORM INCOMING: Elevated environmental radiation. Keep survivors indoors or equip hazmat gear.,,Assets/Ashfall.Core/Weather/WeatherSystem.cs
+warning.water.low,WATER RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Run filtration or desalination.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+warning.food.low,FOOD RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Adjust rations or scavenge.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+warning.power.brownout,POWER DEFICIT: Generator reserve depleted. Air filtration offline; indoor contamination rising.,,Assets/Ashfall.Core/Shelter/PowerGridSystem.cs
+warning.survivor.critical,SURVIVOR IN DANGER: {0} has reached critical {1}. Triage immediately.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+codex.manual.title,FIELD SURVIVAL MANUAL,,src/UI/JournalPanel.cs
+codex.manual.radiation,Radiation & Dosimeter: Dose accumulates from fallout and storms. Above 50 mSv triggers acute radiation sickness with 5 HP/hr health decay. Administer Rad-Away or Iodine.,,src/UI/JournalPanel.cs
+codex.manual.rations,Rations & Water: Clean water is essential. 3 survivors consume ~3.6 units daily. Maintain filtration membranes.,,src/UI/JournalPanel.cs
+codex.manual.power,Power & Grid: Air filtration requires continuous electrical power. Stock batteries and generator fuel.,,src/UI/JournalPanel.cs
+codex.manual.duty,Duty Shifts: Unassigned survivors suffer morale decay and cannot maintain bunker facilities.,,src/UI/JournalPanel.cs
+discovery.micro_roadside_memorial.title,Roadside Memorial,Straßenrand-Gedenkstätte,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_roadside_memorial.description,"Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs.","Geschmolzene Talgreste sitzen in verrosteten Rationsdosen um einen verbogenen Pfahl. Ein Foto wurde weggerissen, nur eine blutbefleckte Ecke blieb unter einem Stein zurück. Das Wachs ist zu blassen, grauen Scheiben erstarrt.",Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_roadside_memorial.choice.leave_memorial,Leave it untouched.,Unberührt lassen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_roadside_memorial.choice.take_offering,Take the candle stubs and any small offering left behind.,Die Kerzenreste und alle kleinen Opfergaben mitnehmen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_truck.title,Crashed Supply Truck,Abgestürzter Versorgungslaster,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_truck.description,"A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost.","Ein militärischer Logistiktransporter liegt zerschmettert im gefrorenen Graben, die Windschutzscheibe nach außen geborsten. Zerrissene Strahlungswarnschilder klammern sich an die verbogenen Hecktüren. Der Laderaum wurde längst geplündert, aber eine Kiste liegt aufgebrochen im Frost.",Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_truck.choice.search_truck_cargo,Search the split crate and cab for salvage.,Die aufgebrochene Kiste und das Fahrerhaus nach Brauchbarem durchsuchen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_truck.choice.search_truck_cab,Investigate the cab for documents or personal effects.,Das Fahrerhaus nach Dokumenten oder persönlichen Gegenständen untersuchen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_truck.choice.ignore_truck,Move on. Someone already took what was worth taking.,Weitergehen. Jemand hat bereits alles Brauchbare mitgenommen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_frozen_bus.title,Frozen Evacuation Bus,Gefrorener Evakuierungsbus,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_frozen_bus.description,"The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside.","Die Bustüren sind weit aufgefroren, sodass der aschebeladene Wind durch die Kabine heult. Der Einzelschuh eines Kindes steht aufrecht unter einer Gepäckablage. Die Fenster sind auf der Innenseite von dickem, schmierigem Frost überzogen.",Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_frozen_bus.choice.search_bus_luggage,Search the luggage rack for supplies.,Die Gepäckablage nach Vorräten durchsuchen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_frozen_bus.choice.leave_bus,Leave the bus undisturbed.,Den Bus unberührt lassen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_frozen_bus.choice.read_bus_tag,Check the transit tag on the dashboard for a destination.,Die Transitmarke auf dem Armaturenbrett nach einem Bestimmungsort prüfen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_improvised_grave.title,Improvised Grave,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_improvised_grave.description,"A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_improvised_grave.choice.respect_grave,Pay respects and move on.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_improvised_grave.choice.inspect_grave_marker,Read the name and date scratched into the plank.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_improvised_grave.choice.disturb_grave,Check beneath the stones for any buried belongings.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_collapsed_bridge.title,Collapsed Bridge,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_collapsed_bridge.description,"A colossal span of reinforced concrete leans broken into the black, freezing river. A transport vehicle is wedged violently against the submerged rebar, its rear doors hanging open just above the roaring current.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_collapsed_bridge.choice.search_bridge_vehicle,Climb down to the wedged vehicle and search the cargo area.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_collapsed_bridge.choice.inspect_bridge_structure,Examine the collapsed span for salvageable steel or cable.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_collapsed_bridge.choice.avoid_bridge,Find a way around. The structure looks unstable.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_drainage_pipe.title,Drainage Pipe,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_drainage_pipe.description,"Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_drainage_pipe.choice.crawl_pipe,Crawl inside and check the blankets for supplies.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_drainage_pipe.choice.read_pipe_warning,Read the warning scratched into the concrete.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_drainage_pipe.choice.ignore_pipe,Leave it alone. Someone may come back.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_rail_siding.title,Rail Siding,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_rail_siding.description,"Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_rail_siding.choice.search_rail_car,Search the freight car for industrial salvage.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_rail_siding.choice.read_rail_ledger,Read the maintenance ledger.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_rail_siding.choice.ignore_rail,The car has been picked over. Move on.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_dead_livestock.title,Dead Livestock Area,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_dead_livestock.description,"Plastic ear tags flutter in the ash-wind among the dead weeds. Massive, bloated bodies of livestock were dragged into a rough trench, but the grave diggers abandoned the work. The Geiger counter stutters nervously here.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_dead_livestock.choice.scavenge_livestock,Scavenge usable material from the remains.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_dead_livestock.choice.inspect_livestock_tags,Inspect the ear tags for farm identification.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_dead_livestock.choice.avoid_livestock,Keep your distance. The contamination risk is not worth it.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_ruined_greenhouse.title,Ruined Greenhouse,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_ruined_greenhouse.description,"Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_ruined_greenhouse.choice.take_greenhouse_seeds,Take the labeled seed trays.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_ruined_greenhouse.choice.open_greenhouse_cabinet,Force the sealed cabinet open.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_ruined_greenhouse.choice.leave_greenhouse,Leave the greenhouse for whoever finds it next.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shell_crater.title,Shell Crater,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shell_crater.description,"The blast fused the earth into dark, jagged glass along one side of the massive crater. A torn military harness and scorched metal fragments are fused into the soil. Stepping near the rim, each footfall lands with a hollow knock that carries further than it should.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shell_crater.choice.inspect_crater,Carefully inspect the crater edge for salvage.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shell_crater.choice.salvage_crater_harness,Dig out the harness and stamped metal fragments.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shell_crater.choice.avoid_crater,The ground is unstable. Walk around.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_field_kitchen.title,Abandoned Field Kitchen,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_field_kitchen.description,"A massive cast-iron cooking pot is frozen solid to its metal stand. Bent ladles hang from rusted wire hooks. Hundreds of tally marks are gouged into the serving table, five bars to a group, tracking rations that eventually ran out.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_field_kitchen.choice.search_kitchen,Search the kitchen area for preserved food or fuel.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_field_kitchen.choice.take_kitchen_tools,Take the ladles and cooking implements.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_field_kitchen.choice.read_ration_marks,Read the ration marks scratched into the table.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_generator.title,Abandoned Generator,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_generator.description,"The heavy generator casing is wrenched open, its primary power cables severed with surgical precision. A frantic fuel mixture ratio is scrawled in grease pencil on the frame. The heavy block is dead, but it could be salvaged.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_generator.choice.strip_generator,Strip the generator for electrical components.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_generator.choice.read_generator_notes,Copy the fuel mixture notes from the frame.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_generator.choice.mark_generator,Mark the location for a future salvage team.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shrine.title,Roadside Shrine,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shrine.description,"Tallow candles have burned down to stubs inside a rusted ration tin. Small offerings—screws, shiny pebbles, a bullet—sit beneath a faded cloth carefully knotted around the twisted guardrail.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shrine.choice.leave_shrine,Leave the shrine undisturbed.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shrine.choice.take_shrine_offerings,Take the small offerings left beneath the cloth.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_shrine.choice.add_shrine_offering,Leave a small offering of your own.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_emergency_cache.title,Emergency Cache,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_emergency_cache.description,"The rubber weather seal has cracked in the bitter cold, but the faded stencil is undeniable. Deep gouges show where someone tried to pry the heavy lock before abandoning it. It reads: CIVIL DEFENSE — EMERGENCY RATION CACHE.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_emergency_cache.choice.open_cache,Force the cracked seal and open the cache.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_emergency_cache.choice.leave_cache,Leave the cache sealed. Someone may need it more.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_observation_post.title,Military Observation Post,Militärischer Beobachtungsposten,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_observation_post.description,"A heavy optics mount still points silently toward the desolate crossing below. Frantic grid references and kill-counts are scrawled on the concrete wall, stopping abruptly mid-sentence. A single spent sniper cartridge sits on the frozen windowsill.",Eine schwere Optikhalterung weist noch immer lautlos auf die verlassene Kreuzung hinunter. Hektische Gitterkoordinaten und Abschusszahlen sind an die Betonwand gekritzelt und brechen mitten im Satz ab. Eine einzelne abgefeuerte Scharfschützenhülse liegt auf der gefrorenen Fensterbank.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_observation_post.choice.search_observation_post,Search the post for optics or intelligence documents.,Den Posten nach Optiken oder Aufklärungsdokumenten durchsuchen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_observation_post.choice.read_grid_references,Copy the grid references and dates from the wall.,Die Gitterkoordinaten und Daten von der Wand abschreiben.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_observation_post.choice.ignore_observation_post,The post has been stripped. Move on.,Der Posten wurde geplündert. Weitergehen.,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_barricade.title,Abandoned Barricade,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_barricade.description,"Traffic arrows were repainted twice in different faction colors, marking shifting territories. A mummified corpse lies slumped behind the barrier, clutching a rusted lockbox. The sandbags have frozen into a solid, bullet-pocked wall.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_barricade.choice.search_barricade,Search the barricade for supplies left behind.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_barricade.choice.read_barricade_markings,Examine the faction markings on the barricade.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_barricade.choice.avoid_barricade,Circle around. The body suggests this was not a safe place.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hunting_blind.title,Hunting Blind,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hunting_blind.description,"Half of the camouflage blind has collapsed under the weight of radioactive ash. An empty thermos, scattered brass casings, and a cloth-wrapped journal lie abandoned under the bench. The damp pages chronicle a hunt that went terribly wrong.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hunting_blind.choice.search_blind,Search the blind for hunting supplies.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hunting_blind.choice.read_blind_journal,Read the damp journal.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hunting_blind.choice.leave_blind,Leave the blind as you found it.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_radio_tower.title,Damaged Radio Tower,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_radio_tower.description,"The towering mast has buckled, its twisted steel groaning in the wind. A single intact feed line snakes into a heavy, locked utility cabinet at the base. The metal door is scarred with deep claw marks.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_radio_tower.choice.open_radio_cabinet,Force the cabinet open and salvage the components.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_radio_tower.choice.read_radio_log,Check the cabinet for a frequency log or maintenance record.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_radio_tower.choice.ignore_radio,The tower is beyond repair. Move on.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_destroyed_checkpoint.title,Destroyed Checkpoint,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_destroyed_checkpoint.description,"Heavy concrete barriers are scorched black on the side facing the bunker, suggesting whatever attacked came from within. A blood-spattered logbook is pinned beneath a collapsed steel chair. The faction identity plate has been violently torn away.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_destroyed_checkpoint.choice.search_checkpoint,Search the checkpoint for confiscated goods or supplies.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_destroyed_checkpoint.choice.read_checkpoint_log,Read the logbook beneath the chair.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_destroyed_checkpoint.choice.avoid_checkpoint,The destruction suggests heavy fighting. Keep moving.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_tent.title,Abandoned Tent,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_tent.description,"The military-grade fabric has collapsed under the weight of grey snow. Inside, nested tin cups sit beside a child's crayon drawing, meticulously preserved in a plastic sleeve. The tent's zipper is frozen shut from the inside.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_tent.choice.search_tent,Cut open the tent and search for supplies.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_tent.choice.take_drawing,Take the child's drawing from the plastic sleeve.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_abandoned_tent.choice.leave_tent,Leave the tent undisturbed.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_makeshift_clinic.title,Makeshift Clinic,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_makeshift_clinic.description,"Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked—some shelves stripped bare while others were ignored entirely.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_makeshift_clinic.choice.search_clinic,Search the untouched shelves for medical supplies.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_makeshift_clinic.choice.read_triage_list,Read the triage numbers on the cardboard strips.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_makeshift_clinic.choice.leave_clinic,Leave the clinic intact. Others may need it.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_drone.title,Crashed Drone,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_drone.description,"One shattered wing is driven deep into the frozen earth. The outer casing was ripped open by scavengers, but the armored flight-control compartment remains sealed. Corrosive battery acid has burned a dark, hissing stain into the soil.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_drone.choice.open_drone_compartment,Force open the flight-control compartment.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_drone.choice.read_drone_log,Attempt to extract the flight log from the sealed compartment.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_crashed_drone.choice.avoid_drone,The battery acid suggests chemical risk. Leave it.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_fuel_cache.title,Fuel Cache,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_fuel_cache.description,"Two military drums are half-buried beneath a rusted sheet of corrugated metal. A desperate route map to a safe zone has been scratched into one lid with a nail. The drums are heavy, their tamper-seals unbroken.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_fuel_cache.choice.take_fuel_cache,Dig up the containers and take the fuel.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_fuel_cache.choice.read_route_sketch,Copy the route sketch from the lid.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_fuel_cache.choice.leave_fuel_cache,Leave the cache hidden. You may need it later.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_water_source.title,Water Source,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_water_source.description,"A dented tin cup is bound to the rusted hand pump with frayed wire, the concrete basin stained with heavy, unnatural mineral deposits. Someone wrote 'SAFE' in charcoal, alongside a date from five years ago. The pump handle still groans when moved.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_water_source.choice.collect_water,Pump and collect water from the source.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_water_source.choice.test_water,Test the water quality before collecting.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_water_source.choice.avoid_water,The mineral staining is suspicious. Move on.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_supply_drop.title,Supply Drop,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_supply_drop.description,"The faded military parachute is hopelessly tangled in the black, petrified branches of dead trees. The stenciled coordinates indicate it drifted miles off course. The reinforced crate is intact, but the heavy locking seal has been severed.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_supply_drop.choice.open_supply_drop,Open the crate and take what is inside.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_supply_drop.choice.read_supply_label,Read the shipping label for destination and origin information.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_supply_drop.choice.leave_supply_drop,Leave the crate. It was meant for someone else.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hospital_chapel_ledger.title,Hospital Chapel Ledger,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hospital_chapel_ledger.description,"The chapel beside the east wing kept a visitors' ledger through the worst of it. The last entries are names, then bed numbers, then nothing at all — just a date repeated down the page in a steady hand until the hand stopped coming. A candle box under the stand still has three stubs and a packet of matches.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hospital_chapel_ledger.choice.read_the_names,"Read the last page properly, then close the ledger.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_hospital_chapel_ledger.choice.take_matches,Take the lighter from the candle box. The dead do not need light.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_depot_undertow_raft_line.title,Undertow Raft Line,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_depot_undertow_raft_line.description,"A raft of sealed crates lashed to a handrail runs down the flooded concourse, marked with the Undertow's tar-symbol. The line is rigged to a pulley someone greased recently. Whatever moves along it moves quietly, and often.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_depot_undertow_raft_line.choice.note_the_route,Mark the pulley anchors on your map and leave the line alone.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_depot_undertow_raft_line.choice.cut_one_crate,Cut one crate free before the owners notice.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_gamma_levy_board.title,Checkpoint Gamma Levy Board,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_gamma_levy_board.description,"The garrison's levy board still stands by the guard shack: grain quotas, diesel quotas, and the names of households marked square for paid and circle for owed. Fresh chalk over old chalk. Somebody drives here to write, which means somebody still collects.",,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_gamma_levy_board.choice.memorize_the_board,Memorize which farms have paid and which are marked owed.,,Assets/StreamingAssets/Data/micro_locations.json
+discovery.micro_gamma_levy_board.choice.take_the_chalk,Take the chalk and the board's rating stamp. Forged square marks might pass at a distance.,,Assets/StreamingAssets/Data/micro_locations.json

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "strata": [
+    {
+      "id": "borehole_stratum_hot_granite",
+      "stratum_id": "borehole_stratum_hot_granite",
+      "display_name": "Hot Granite",
+      "depth_m": 300,
+      "base_rock_temperature_c": 118,
+      "thermal_capacity_factor": 0.85,
+      "enthalpy_kj_per_kg": 2150,
+      "brine_mineral_index": 0.7,
+      "silica_scaling_factor": 0.9,
+      "corrosion_factor": 0.8,
+      "recovery_rate_per_day": 1.2,
+      "max_safe_extraction_kw": 450,
+      "required_excavation_tier": 2
+    },
+    {
+      "id": "borehole_stratum_steam_reservoir",
+      "stratum_id": "borehole_stratum_steam_reservoir",
+      "display_name": "Pressured Steam Reservoir",
+      "depth_m": 520,
+      "base_rock_temperature_c": 176,
+      "thermal_capacity_factor": 1.05,
+      "enthalpy_kj_per_kg": 2860,
+      "brine_mineral_index": 1.2,
+      "silica_scaling_factor": 1.35,
+      "corrosion_factor": 1.1,
+      "recovery_rate_per_day": 0.8,
+      "max_safe_extraction_kw": 950,
+      "required_excavation_tier": 3
+    },
+    {
+      "id": "borehole_stratum_deep_basement",
+      "stratum_id": "borehole_stratum_deep_basement",
+      "display_name": "Deep Basement Heat",
+      "depth_m": 780,
+      "base_rock_temperature_c": 244,
+      "thermal_capacity_factor": 1.2,
+      "enthalpy_kj_per_kg": 3420,
+      "brine_mineral_index": 1.7,
+      "silica_scaling_factor": 1.8,
+      "corrosion_factor": 1.45,
+      "recovery_rate_per_day": 0.45,
+      "max_safe_extraction_kw": 1500,
+      "required_excavation_tier": 4
+    }
+  ]
+}

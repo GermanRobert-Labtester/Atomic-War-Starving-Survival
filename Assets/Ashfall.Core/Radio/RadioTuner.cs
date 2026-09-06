@@ -119,6 +119,91 @@ namespace Ashfall.Core.Radio
                 DecodedContent = lines[idx]
             };
         }
+
+        /// <summary>
+        /// Evaluate continuous distress signal lock against the authoritative distress system.
+        /// </summary>
+        public DistressFrequencyTuneResult EvaluateFrequency(
+            float frequencyMhz,
+            RadioDistressSystem distress,
+            float staticNoiseFloor,
+            ISeededRng rng,
+            int day)
+        {
+            if (distress == null)
+            {
+                return new DistressFrequencyTuneResult
+                {
+                    IsLocked = false,
+                    Noise = staticNoiseFloor
+                };
+            }
+
+            TuneTo(frequencyMhz);
+
+            var signal = distress.FindSignalAtFrequency(frequencyMhz, 0.5f);
+            if (signal == null)
+            {
+                return new DistressFrequencyTuneResult
+                {
+                    IsLocked = false,
+                    Noise = staticNoiseFloor
+                };
+            }
+
+            float offset = Math.Abs(frequencyMhz - signal.FrequencyMhz);
+            float strength = Math.Max(0f, 1f - (offset / 0.5f));
+            float vu = strength * (1f - staticNoiseFloor);
+
+            string decoded = signal.SourceName;
+            float clarity = 0.35f;
+
+            if (signal.MessageFragments != null && signal.MessageFragments.Count > 0)
+            {
+                DistressMessageFragment? bestFrag = null;
+                for (int i = 0; i < signal.MessageFragments.Count; i++)
+                {
+                    var frag = signal.MessageFragments[i];
+                    if (frag.Day <= day)
+                    {
+                        if (bestFrag == null || frag.Day > bestFrag.Day)
+                        {
+                            bestFrag = frag;
+                        }
+                    }
+                }
+                bestFrag ??= signal.MessageFragments[0];
+                decoded = bestFrag.Text;
+                clarity = bestFrag.Clarity;
+            }
+
+            bool isLocked = vu >= 0.25f;
+
+            return new DistressFrequencyTuneResult
+            {
+                IsLocked = isLocked,
+                Signal = signal,
+                IsGenuineRescue = signal.IsGenuineRescue,
+                IsDeceptive = signal.IsTrapOrDeception,
+                VuStrength = vu,
+                Noise = staticNoiseFloor,
+                DecodedContent = decoded,
+                Clarity = clarity
+            };
+        }
+    }
+
+    [Serializable]
+    public sealed class DistressFrequencyTuneResult
+    {
+        public bool IsLocked;
+        public DistressSignalDefinition? Signal;
+        public bool IsGenuineRescue;
+        public bool IsDeceptive;
+        public float VuStrength;
+        public float Noise;
+        public string DecodedContent = string.Empty;
+        public float Clarity;
     }
 
     [Serializable]

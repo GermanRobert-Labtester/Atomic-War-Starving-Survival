@@ -49,7 +49,8 @@ namespace Ashfall.Core.Content
             "starting_supplies.json", "starting_survivors.json",
             "greenhouse_items.json", "library_manuals.json",
             "crop_strains.json", "nutrition_profiles.json", "agriculture_items.json", "defenses.json", "mental_arcs.json",
-            "research_knowledge.json", "skills.json",
+            "research_knowledge.json", "tech_salvage.json", "espionage_missions.json", "fluid_infrastructure.json", "quest_templates.json", "skills.json",
+            "prewar_archives.json", "captive_interrogations.json", "food_preservation.json", "campaign_epilogues.json",
             "standing_record_factions.json", "standing_record_layouts.json",
             "standing_record_memory.json", "standing_record_quests.json",
             "year_of_ash_events.json", "year_of_ash_items.json",
@@ -117,6 +118,17 @@ namespace Ashfall.Core.Content
             // Flagship XI (Plans 154-157)
             "contagion_events.json", "pathogens.json",
             "subterranean_zones.json", "propaganda_campaigns.json",
+            // Plans 50-53
+            "vehicle_modifications.json", "faction_intelligence.json",
+            "psychological_trauma.json", "shelter_audio_cues.json",
+            // Plans 54-57 (Flagship: Trade, Apprenticeship, Seismic, Thermal)
+            "shelter_insulation_catalog.json", "seismic_fault_catalog.json",
+            "merchant_caravans.json", "apprenticeship_catalog.json",
+            // Plan 73 (Flagship: Rail Logistics)
+            "rail_logistics_catalog.json",
+            // Plans 74-77 (Flagship: geothermal, ballistics, aeroponics, pneumatic dispatch)
+            "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
+            "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -273,6 +285,14 @@ namespace Ashfall.Core.Content
                 ["mental_arcs.json"] = new[] { "MentalArcCatalogLoader" },
                 ["library_manuals.json"] = new[] { "LibraryManualCatalogLoader" },
                 ["research_knowledge.json"] = new[] { "ResearchKnowledgeCatalogLoader" },
+                ["tech_salvage.json"] = new[] { "TechSalvageCatalogLoader" },
+                ["espionage_missions.json"] = new[] { "EspionageMissionCatalogLoader" },
+                ["fluid_infrastructure.json"] = new[] { "FluidInfrastructureCatalogLoader" },
+                ["quest_templates.json"] = new[] { "QuestTemplateCatalogLoader" },
+                ["prewar_archives.json"] = new[] { "PrewarArchiveCatalogLoader" },
+                ["captive_interrogations.json"] = new[] { "CaptiveInterrogationCatalogLoader" },
+                ["food_preservation.json"] = new[] { "FoodPreservationCatalogLoader" },
+                ["campaign_epilogues.json"] = new[] { "CampaignEpilogueCatalogLoader" },
                 ["skills.json"] = new[] { "SkillCatalogLoader" },
                 ["trade_screen_scenarios.json"] = new[] { "TradeScreenScenarios" },
                 ["trade_specialties.json"] = new[] { "TradeSpecialtySystem" },
@@ -391,6 +411,19 @@ namespace Ashfall.Core.Content
                 ["mine_flail_catalog.json"] = new[] { "MineFlailCatalogLoader", "MineClearingFlailEngine" },
                 ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticCatalogLoader", "MicrofluidicDiagnosticEngine" },
                 ["rail_grinding_catalog.json"] = new[] { "RailGrindingCatalogLoader", "RailGrindingEngine" },
+                ["vehicle_modifications.json"] = new[] { "VehicleGarageCatalogLoader", "VehicleGarageSystem" },
+                ["faction_intelligence.json"] = new[] { "FactionIntelligenceCatalogLoader", "ShelterEspionageSystem" },
+                ["psychological_trauma.json"] = new[] { "PsychologicalTraumaCatalogLoader", "SurvivorMentalHealthSystem" },
+                ["shelter_audio_cues.json"] = new[] { "ShelterAudioCueCatalogLoader", "ShelterAcousticDirector" },
+                ["shelter_insulation_catalog.json"] = new[] { "ShelterThermalSystem" },
+                ["seismic_fault_catalog.json"] = new[] { "SeismicDynamicsSystem" },
+                ["merchant_caravans.json"] = new[] { "ShelterBarterSystem" },
+                ["apprenticeship_catalog.json"] = new[] { "ApprenticeshipSystem" },
+                ["rail_logistics_catalog.json"] = new[] { "RailLogisticsCatalogLoader", "RailwaySystem" },
+                ["geothermal_strata_catalog.json"] = new[] { "GeothermalStrataCatalogLoader", "GeothermalOrcSystem" },
+                ["ballistics_workbench_catalog.json"] = new[] { "BallisticsWorkbenchCatalogLoader", "BallisticsWorkbenchSystem" },
+                ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsCatalogLoader", "AeroponicsSystem" },
+                ["pneumatic_network_catalog.json"] = new[] { "PneumaticNetworkCatalogLoader", "PneumaticDispatchSystem" },
             };
 
             // Additional mappings for previously UNRESOLVED catalogs
@@ -498,7 +531,15 @@ namespace Ashfall.Core.Content
                 ["world_evolution_seeds.json"] = "EvolvingWorldCatalog",
                 ["library_manuals.json"] = "LibraryStudySystem",
                 ["research_knowledge.json"] = "ResearchSystem",
+                ["tech_salvage.json"] = "WorkshopReverseEngineeringSystem",
+                ["espionage_missions.json"] = "EspionageSystem",
+                ["fluid_infrastructure.json"] = "FluidLogisticsSystem",
+                ["quest_templates.json"] = "ProceduralNarrativeSystem",
                 ["skills.json"] = "SkillProgressionSystem",
+                ["prewar_archives.json"] = "PrewarArchiveDecryptionSystem",
+                ["captive_interrogations.json"] = "ShelterPrisonerSystem",
+                ["food_preservation.json"] = "FoodPreservationSystem",
+                ["campaign_epilogues.json"] = "CampaignEpilogueEngine",
                 ["starting_supplies.json"] = "StartingLevelSystem",
                 ["starting_survivors.json"] = "SurvivorStartingStateLoader",
                 ["dive_sites.json"] = "DiveSiteCatalog",
@@ -571,6 +612,10 @@ namespace Ashfall.Core.Content
                 ["damaged_map_zones.json"] = "WastelandMapSystem",
                 ["cassette_sets.json"] = "VinylMoraleSystem",
                 ["epilogue_chronicle.json"] = "EpilogueMatrix",
+                ["geothermal_strata_catalog.json"] = "GeothermalOrcSystem",
+                ["ballistics_workbench_catalog.json"] = "BallisticsWorkbenchSystem",
+                ["aeroponics_nutrient_catalog.json"] = "AeroponicsSystem",
+                ["pneumatic_network_catalog.json"] = "PneumaticDispatchSystem",
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -629,6 +674,10 @@ namespace Ashfall.Core.Content
                 ["mental_arcs.json"] = new[] { "MentalArcCatalogLoader", "PsychologicalArcSystem" },
                 ["library_manuals.json"] = new[] { "LibraryStudySystem" },
                 ["research_knowledge.json"] = new[] { "ResearchSystem" },
+                ["tech_salvage.json"] = new[] { "WorkshopReverseEngineeringSystem" },
+                ["espionage_missions.json"] = new[] { "EspionageSystem" },
+                ["fluid_infrastructure.json"] = new[] { "FluidLogisticsSystem" },
+                ["quest_templates.json"] = new[] { "ProceduralNarrativeSystem" },
                 ["skills.json"] = new[] { "SkillProgressionSystem", "LatentExpertAwakeningSystem" },
                 ["trade_screen_scenarios.json"] = new[] { "TradeScreenPresenter" },
                 ["trade_specialties.json"] = new[] { "TradeSpecialtySystem" },
@@ -794,6 +843,23 @@ namespace Ashfall.Core.Content
                 ["mine_flail_catalog.json"] = new[] { "MineFlailCatalogLoader", "MineClearingFlailEngine", "RouteInfrastructureSystem" },
                 ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticCatalogLoader", "MicrofluidicDiagnosticEngine", "MedicalPipelineCoordinator" },
                 ["rail_grinding_catalog.json"] = new[] { "RailGrindingCatalogLoader", "RailGrindingEngine", "RouteInfrastructureSystem" },
+                ["prewar_archives.json"] = new[] { "PrewarArchiveDecryptionSystem" },
+                ["captive_interrogations.json"] = new[] { "ShelterPrisonerSystem" },
+                ["food_preservation.json"] = new[] { "FoodPreservationSystem" },
+                ["campaign_epilogues.json"] = new[] { "CampaignEpilogueEngine" },
+                ["vehicle_modifications.json"] = new[] { "VehicleGarageSystem" },
+                ["faction_intelligence.json"] = new[] { "ShelterEspionageSystem" },
+                ["psychological_trauma.json"] = new[] { "SurvivorMentalHealthSystem" },
+                ["shelter_audio_cues.json"] = new[] { "ShelterAcousticDirector" },
+                ["shelter_insulation_catalog.json"] = new[] { "ShelterThermalSystem" },
+                ["seismic_fault_catalog.json"] = new[] { "SeismicDynamicsSystem" },
+                ["merchant_caravans.json"] = new[] { "ShelterBarterSystem" },
+                ["apprenticeship_catalog.json"] = new[] { "ApprenticeshipSystem" },
+                ["rail_logistics_catalog.json"] = new[] { "RailwaySystem", "RailLogisticsCatalogLoader" },
+                ["geothermal_strata_catalog.json"] = new[] { "GeothermalOrcSystem" },
+                ["ballistics_workbench_catalog.json"] = new[] { "BallisticsWorkbenchSystem" },
+                ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsSystem" },
+                ["pneumatic_network_catalog.json"] = new[] { "PneumaticDispatchSystem" },
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -830,6 +896,12 @@ namespace Ashfall.Core.Content
                 "holdfast_quests.json", "crossing_quests.json",
                 "year_of_ash_quests.json", "verdict_questlines.json",
                 "thirdonary_quests.json", "standing_record_quests.json",
+                "prewar_archives.json", "captive_interrogations.json", "food_preservation.json", "campaign_epilogues.json",
+                "shelter_insulation_catalog.json", "seismic_fault_catalog.json",
+                "merchant_caravans.json", "apprenticeship_catalog.json",
+                "rail_logistics_catalog.json",
+                "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
+                "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -1082,6 +1154,13 @@ namespace Ashfall.Core.Content
                 "damaged_map_zones.json", "cassette_sets.json",
                 "epilogue_chronicle.json", "dive_sites.json",
                 "deep_lore_locations.json", "black_flotilla_items.json",
+                "tech_salvage.json", "espionage_missions.json", "fluid_infrastructure.json", "quest_templates.json",
+                "prewar_archives.json", "captive_interrogations.json", "food_preservation.json", "campaign_epilogues.json",
+                "shelter_insulation_catalog.json", "seismic_fault_catalog.json",
+                "merchant_caravans.json", "apprenticeship_catalog.json",
+                "rail_logistics_catalog.json",
+                "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
+                "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
             };
 
             foreach (var cat in _graph.Catalogs)

@@ -94,8 +94,31 @@ namespace AtomicWar.GodotApp
             if (_dailyBriefingModal != null) return;
             _dailyBriefingModal = PanelSceneLoader.Load<DailyBriefingModal>("res://assets/ui/modals/DailyBriefingModal.tscn");
             _dailyBriefingModal.OnAcknowledged += OnBriefingAcknowledged;
+            _dailyBriefingModal.OnDeepLinkRequested += HandleBriefingDeepLink;
             AddChild(_dailyBriefingModal);
             _dailyBriefingModal.Hide();
+        }
+
+        private void HandleBriefingDeepLink(string route)
+        {
+            if (string.IsNullOrEmpty(route)) return;
+            if (_dailyBriefingModal != null && _dailyBriefingModal.Visible)
+            {
+                _dailyBriefingModal.Hide();
+            }
+
+            if (route.StartsWith("panel:", StringComparison.OrdinalIgnoreCase))
+            {
+                string panelSpec = route.Substring("panel:".Length);
+                string panelId = panelSpec;
+                int qIdx = panelSpec.IndexOf('?');
+                if (qIdx >= 0)
+                {
+                    panelId = panelSpec.Substring(0, qIdx);
+                }
+
+                OpenPlayerPanel(panelId);
+            }
         }
 
         private void LoadDailyBriefing()

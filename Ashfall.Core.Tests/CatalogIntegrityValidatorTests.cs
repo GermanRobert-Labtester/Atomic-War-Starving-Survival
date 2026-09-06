@@ -72,20 +72,12 @@ namespace Ashfall.Core.Tests
 
         private static CatalogIntegrityReport ProbeReport(string probe)
         {
-            string dir = DataDir();
-            string path = Path.Combine(dir, "probe_integrity_tmp.json");
-            try
+            return ValidateScratch(scratch =>
             {
-                File.WriteAllText(path,
-                    "{\"entries\":[{\"id\":\"probe_entry\",\"resultItemId\":\"" + probe
+                File.WriteAllText(Path.Combine(scratch, "probe_integrity_tmp.json"),
+                    "{\"schema_version\":1,\"entries\":[{\"id\":\"probe_entry\",\"resultItemId\":\"" + probe
                     + "\",\"choices\":[{\"choiceId\":\"c1\",\"requiredItemId\":\"" + probe + "\"}]}]}");
-                var report = CatalogIntegrityValidator.Validate(dir, new FileSystemIO());
-                return report;
-            }
-            finally
-            {
-                if (File.Exists(path)) File.Delete(path);
-            }
+            });
         }
 
         /// <summary>

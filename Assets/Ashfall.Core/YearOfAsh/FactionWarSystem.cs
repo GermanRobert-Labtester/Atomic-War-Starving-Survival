@@ -23,6 +23,7 @@ namespace Ashfall.Core.YearOfAsh
         public string dominantFactionId = "faction_central_garrison";
         public List<string> enactedDecrees = new List<string>();
         public int totalArtilleryStrikesLogged = 0;
+        public bool isWarActive = false;
     }
 
     /// <summary>
@@ -42,6 +43,12 @@ namespace Ashfall.Core.YearOfAsh
         public FactionWarSystemState State => _state;
         public int WarTension => _state.activeWarTension;
         public string DominantFactionId => _state.dominantFactionId;
+        public bool IsAtWar => _state.isWarActive;
+
+        public void SetWarActive(bool active)
+        {
+            _state.isWarActive = active;
+        }
 
         public event Action<string, int> OnFactionStandingChanged;
         public event Action<string> OnDecreeEnacted;
@@ -155,6 +162,7 @@ namespace Ashfall.Core.YearOfAsh
                 activeWarTension = _state.activeWarTension,
                 dominantFactionId = _state.dominantFactionId,
                 totalArtilleryStrikesLogged = _state.totalArtilleryStrikesLogged,
+                isWarActive = _state.isWarActive,
                 enactedDecrees = _state.enactedDecrees != null
                     ? new List<string>(_state.enactedDecrees)
                     : new List<string>(),
@@ -191,6 +199,7 @@ namespace Ashfall.Core.YearOfAsh
             _state.activeWarTension = state.activeWarTension;
             _state.dominantFactionId = state.dominantFactionId ?? "faction_central_garrison";
             _state.totalArtilleryStrikesLogged = state.totalArtilleryStrikesLogged;
+            _state.isWarActive = state.isWarActive;
             _state.enactedDecrees = state.enactedDecrees != null
                 ? new List<string>(state.enactedDecrees)
                 : new List<string>();

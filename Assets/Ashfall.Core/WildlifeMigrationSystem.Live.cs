@@ -135,6 +135,40 @@ namespace Ashfall.Core
         }
 
         /// <summary>
+        /// Plan 165: species-targeted deterministic thinning for the ecology
+        /// layer (predation, radiation attrition, taming removal). Same rules
+        /// as harvest pressure — largest-first, ties by pack id, remnant floor
+        /// respected — but scoped to one species so the ecosystem never touches
+        /// another species' packs. Returns the population actually removed.
+        /// </summary>
+        public int ThinSpeciesInSector(string speciesId, string sectorId, int amount, int floor = 2)
+        {
+            if (string.IsNullOrEmpty(speciesId) || string.IsNullOrEmpty(sectorId) || amount <= 0) return 0;
+            if (floor < 0) floor = 0;
+            int removed = 0;
+            for (int i = 0; i < amount; i++)
+            {
+                WildlifePackRecord? best = null;
+                foreach (var p in _state.packs)
+                {
+                    if (p == null || p.population <= floor
+                        || !string.Equals(p.currentSectorId, sectorId, StringComparison.Ordinal)
+                        || !string.Equals(p.speciesId, speciesId, StringComparison.Ordinal)) continue;
+                    if (best == null
+                        || p.population > best.population
+                        || (p.population == best.population && string.CompareOrdinal(p.packId, best.packId) < 0))
+                    {
+                        best = p;
+                    }
+                }
+                if (best == null) break;
+                best.population--;
+                removed++;
+            }
+            return removed;
+        }
+
+        /// <summary>
         /// Pack pressure in a sector: total population of packs currently
         /// holding it. Trapping, encounter weighting, and scarcity read this.
         /// </summary>

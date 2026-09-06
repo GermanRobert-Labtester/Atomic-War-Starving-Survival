@@ -42,6 +42,8 @@ namespace AtomicWar.GodotApp
         private bool _encounterChoiceDirty;
         private CombatHostSession _combat = null!;
         private bool _combatDirty;
+        private ReconTelemetryHostSession _reconTelemetry = null!;
+        private bool _reconTelemetryDirty;
 
         private void FlushExpeditionIfDirty()
         {
@@ -176,6 +178,34 @@ namespace AtomicWar.GodotApp
             {
                 _expeditionDirty = false;
                 GD.Print("[Ashfall Godot] Expedition save written.");
+            }
+        }
+
+        private void SetupReconTelemetry()
+        {
+            if (_reconTelemetry != null) return;
+            var state = ReconTelemetrySaveStore.TryLoad() ?? new ReconTelemetryState();
+            var system = new ReconTelemetrySystem(
+                state,
+                new SeededRng(2005),
+                new GodotLog(),
+                _world?.WastelandMap,
+                EnsureRadioStation(),
+                _world?.Weather,
+                _inventory?.Inventory);
+            _reconTelemetry = new ReconTelemetryHostSession(system);
+            _reconTelemetry.LoadCatalog(_dataDir);
+            _reconTelemetry.StateChanged += () => _reconTelemetryDirty = true;
+            if (_reconTelemetryPanel != null)
+                _reconTelemetryPanel.Bind(_reconTelemetry);
+        }
+
+        private void SaveReconTelemetry()
+        {
+            if (_reconTelemetry != null)
+            {
+                if (CaptureSection("recon_telemetry", ReconTelemetrySaveStore.TryCapturePersisted(_reconTelemetry.System.CaptureState())))
+                    _reconTelemetryDirty = false;
             }
         }
 
@@ -373,6 +403,7 @@ namespace AtomicWar.GodotApp
                 }
                 _travelEncounters.OnChoiceResolved += (_, _) => _travelEncountersDirty = true;
                 _travelEncounters.OnChainStageAdvanced += (_, _) => _travelEncountersDirty = true;
+                _travelEncounters.OnPatrolHistoryRecorded += (_, _) => _travelEncountersDirty = true;
             }
             catch (Exception e)
             {
@@ -444,6 +475,49 @@ namespace AtomicWar.GodotApp
         private void CloseMapDetailPanel()
         {
             _mapDetailPanel.Visible = false;
+        }
+
+        private void OpenReconTelemetryPanel()
+        {
+            SetupReconTelemetry();
+            _reconTelemetryPanel?.Open();
+        }
+
+        private void CloseReconTelemetryPanel()
+        {
+            if (_reconTelemetryPanel != null) _reconTelemetryPanel.Visible = false;
+        }
+
+        private void HandleReconTelemetryAction(string action, string param = "")
+        {
+            if (action == "OPEN") { OpenReconTelemetryPanel(); return; }
+            if (action == "CLOSE") { CloseReconTelemetryPanel(); return; }
+            if (_reconTelemetry == null) return;
+
+            switch (action)
+            {
+                case "launch":
+                    _reconTelemetry.System.LaunchMission(param, "loc_holdfast");
+                    break;
+                case "survey":
+                    var mission = _reconTelemetry.System.GetMission(_reconTelemetry.System.State.activeMissions[0].missionId);
+                    if (mission != null)
+                        _reconTelemetry.System.SurveySectors(mission.missionId, new System.Collections.Generic.List<string> { param });
+                    break;
+                case "recover":
+                    if (_reconTelemetry.System.State.activeMissions.Count > 0)
+                        _reconTelemetry.System.RecoverPlatform(_reconTelemetry.System.State.activeMissions[0].missionId);
+                    break;
+                case "forecast":
+                    _reconTelemetry.System.GenerateForecast(_reconTelemetry.System.State.launchedPlatformIds[0]);
+                    break;
+                case "scout":
+                    if (_reconTelemetry.System.State.activeMissions.Count > 0)
+                        _reconTelemetry.System.ScoutRoute(param, _reconTelemetry.System.State.activeMissions[0].missionId);
+                    break;
+            }
+            _reconTelemetryPanel?.RefreshView();
+            _reconTelemetryDirty = true;
         }
 
         // Debounced flush hooks for systems that mutate each frame. They run

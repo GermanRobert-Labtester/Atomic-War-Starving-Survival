@@ -48,6 +48,9 @@ namespace AtomicWar.GodotApp
             var expansionQuests = MoralChoiceExpansionQuestCatalogLoader.Load(_dataDir, fileIO, json);
             _moralChoiceDefs.AddRange(expansionQuests);
 
+            // Register all definitions into the Core system's authoritative catalog
+            _moralChoice.RegisterQuests(_moralChoiceDefs);
+
             // Load chain architecture (branches, gates, echo quests)
             _moralChainData = MoralChoiceChainCatalogLoader.Load(_dataDir, fileIO, json);
             _moralChoice.InitializeChainData(_moralChainData);
@@ -130,6 +133,12 @@ namespace AtomicWar.GodotApp
             return null;
         }
 
+        public IReadOnlyList<MoralChoiceQuestDefinition> GetDailyMoralOffers(int maxOffers = 1)
+        {
+            SetupMoralChoice();
+            return _moralChoice.GetDailyOffers(_simDay, maxOffers);
+        }
+
         /// <summary>
         /// Resolve a catalog quest by id. Returns false when the id is unknown
         /// or the quest is already resolved; the journal line is written by
@@ -140,8 +149,10 @@ namespace AtomicWar.GodotApp
             SetupMoralChoice();
             var def = _moralChoiceDefs.FirstOrDefault(
                 d => string.Equals(d.Id, questId, StringComparison.Ordinal));
-            if (def == null || _moralChoice.IsResolved(questId)) return false;
-            _moralChoice.Resolve(def, choiceIndex, def.LocationId, _simDay);
+            if (def == null) return false;
+            if (!_moralChoice.TryResolve(questId, choiceIndex, def.LocationId, _simDay, out _))
+                return false;
+
             _moralChoiceDirty = true;
             AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
             return true;

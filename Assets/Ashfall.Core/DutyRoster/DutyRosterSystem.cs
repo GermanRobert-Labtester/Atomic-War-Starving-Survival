@@ -46,6 +46,16 @@ namespace Ashfall.Core
         public string survivorId;
     }
 
+    [Serializable]
+    public class DutyRosterPneumaticMemo
+    {
+        public string memoId;
+        public string targetRoomId;
+        public int deliveredDay;
+        public int expiresDay;
+        public float shiftEfficiencyBonus;
+    }
+
     /// <summary>Home occupant hint for the morning tick. Host supplies who slept.</summary>
     public class DutyRosterOccupant
     {
@@ -79,6 +89,7 @@ namespace Ashfall.Core
         public List<string> overflowVisited = new List<string>();
         public List<DutyRosterRow> rows = new List<DutyRosterRow>();
         public List<DutyRosterAssignmentEntry> assignments = new List<DutyRosterAssignmentEntry>();
+        public List<DutyRosterPneumaticMemo> pneumaticMemos = new List<DutyRosterPneumaticMemo>();
         public List<string> hiddenFromNorth = new List<string>();
         public List<string> blankRowsLivingNames = new List<string>();
     }
@@ -354,6 +365,47 @@ namespace Ashfall.Core
         public bool Assign(string role, string survivorId)
         {
             return _assignments.Assign(role, survivorId);
+        }
+
+        /// <summary>
+        /// Canonical consumer for a delivered pneumatic duty memo. Delivery is
+        /// idempotent by memo ID and the bonus is time-bounded campaign state.
+        /// </summary>
+        public bool ReceivePneumaticMemo(
+            string memoId,
+            string targetRoomId,
+            int deliveredDay,
+            int durationDays = 1,
+            float shiftEfficiencyBonus = 0.05f)
+        {
+            if (string.IsNullOrWhiteSpace(memoId)) return false;
+            EnsureLists();
+            for (int i = 0; i < _state.pneumaticMemos.Count; i++)
+                if (_state.pneumaticMemos[i].memoId == memoId) return false;
+            _state.pneumaticMemos.Add(new DutyRosterPneumaticMemo
+            {
+                memoId = memoId,
+                targetRoomId = targetRoomId ?? string.Empty,
+                deliveredDay = deliveredDay,
+                expiresDay = deliveredDay + Math.Max(0, durationDays),
+                shiftEfficiencyBonus = Math.Clamp(shiftEfficiencyBonus, 0f, 0.25f)
+            });
+            RaiseChanged();
+            return true;
+        }
+
+        public float GetPneumaticMemoBonus(string targetRoomId, int day)
+        {
+            float total = 0f;
+            if (_state.pneumaticMemos == null) return total;
+            for (int i = 0; i < _state.pneumaticMemos.Count; i++)
+            {
+                var memo = _state.pneumaticMemos[i];
+                if (memo == null || memo.targetRoomId != targetRoomId) continue;
+                if (day >= memo.deliveredDay && day <= memo.expiresDay)
+                    total += memo.shiftEfficiencyBonus;
+            }
+            return Math.Clamp(total, 0f, 0.5f);
         }
 
         public ActionResult AssignWithResult(string role, string survivorId)
@@ -633,6 +685,7 @@ namespace Ashfall.Core
         {
             if (_state.rows == null) _state.rows = new List<DutyRosterRow>();
             if (_state.assignments == null) _state.assignments = new List<DutyRosterAssignmentEntry>();
+            if (_state.pneumaticMemos == null) _state.pneumaticMemos = new List<DutyRosterPneumaticMemo>();
             if (_state.hiddenFromNorth == null) _state.hiddenFromNorth = new List<string>();
             if (_state.blankRowsLivingNames == null) _state.blankRowsLivingNames = new List<string>();
             if (_state.overflowVisited == null) _state.overflowVisited = new List<string>();
@@ -724,6 +777,24 @@ namespace Ashfall.Core
                     {
                         role = a.role,
                         survivorId = a.survivorId
+                    });
+                }
+            }
+
+            to.pneumaticMemos = new List<DutyRosterPneumaticMemo>();
+            if (from.pneumaticMemos != null)
+            {
+                for (int i = 0; i < from.pneumaticMemos.Count; i++)
+                {
+                    var memo = from.pneumaticMemos[i];
+                    if (memo == null) continue;
+                    to.pneumaticMemos.Add(new DutyRosterPneumaticMemo
+                    {
+                        memoId = memo.memoId,
+                        targetRoomId = memo.targetRoomId,
+                        deliveredDay = memo.deliveredDay,
+                        expiresDay = memo.expiresDay,
+                        shiftEfficiencyBonus = memo.shiftEfficiencyBonus
                     });
                 }
             }

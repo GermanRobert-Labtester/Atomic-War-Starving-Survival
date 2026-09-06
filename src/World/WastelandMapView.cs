@@ -32,20 +32,36 @@ namespace AtomicWar.GodotApp.World
         public void Bind(WorldHostSession? worldHost)
         {
             _worldHost = worldHost;
-            _mapSystem = worldHost?.WastelandMap;
+            Bind(worldHost?.WastelandMap);
+        }
+
+        public void Bind(WastelandMapSystem? mapSystem)
+        {
+            if (_mapSystem != null)
+            {
+                _mapSystem.OnNodeDiscovered -= HandleMapNodeChanged;
+                _mapSystem.OnNodeKnowledgeChanged -= HandleNodeKnowledgeChanged;
+            }
+            _mapSystem = mapSystem;
+            if (_mapSystem != null)
+            {
+                _mapSystem.OnNodeDiscovered += HandleMapNodeChanged;
+                _mapSystem.OnNodeKnowledgeChanged += HandleNodeKnowledgeChanged;
+            }
             if (_mapNodesContainer != null)
             {
                 Initialize();
             }
         }
 
-        public void Bind(WastelandMapSystem? mapSystem)
+        private void HandleMapNodeChanged(string nodeId)
         {
-            _mapSystem = mapSystem;
-            if (_mapNodesContainer != null)
-            {
-                Initialize();
-            }
+            Initialize();
+        }
+
+        private void HandleNodeKnowledgeChanged(string nodeId, MapFogState fogState)
+        {
+            Initialize();
         }
 
         public void Initialize()
@@ -135,15 +151,37 @@ namespace AtomicWar.GodotApp.World
                 var marker = _markerScene.Instantiate<MapLocationMarkerView>();
                 marker.NodeId = node.Id;
                 marker.DisplayName = node.DisplayName;
-                marker.DangerLevel = WorldEscalatedDanger(node, DangerToString(node.Danger));
-                marker.Status = ResolveNodeStatus(node);
-                marker.PositionOffset = new Vector2(0, -30);
-                marker.SetPosition(new Vector2(node.PositionX, node.PositionY));
+
+                var intel = _mapSystem?.GetNodeIntel(node.Id);
+                if (intel != null && intel.FogState == MapFogState.Rumored)
+                {
+                    marker.PositionOffset = new Vector2(0, -30);
+                    marker.SetPosition(new Vector2(intel.PositionX, intel.PositionY));
+                    marker.StatusBadge = "RUMOR";
+                    marker.DangerLevel = !string.IsNullOrEmpty(intel.DangerBand) ? intel.DangerBand.ToLowerInvariant() : "none";
+                    marker.Status = MapLocationMarkerStatus.Discovered;
+                }
+                else if (intel != null && intel.FogState == MapFogState.Surveyed)
+                {
+                    marker.PositionOffset = new Vector2(0, -30);
+                    marker.SetPosition(new Vector2(intel.PositionX, intel.PositionY));
+                    marker.StatusBadge = "SURVEYED";
+                    marker.DangerLevel = WorldEscalatedDanger(node, DangerToString(node.Danger));
+                    marker.Status = ResolveNodeStatus(node);
+                }
+                else
+                {
+                    marker.PositionOffset = new Vector2(0, -30);
+                    marker.SetPosition(new Vector2(node.PositionX, node.PositionY));
+                    marker.StatusBadge = string.Empty;
+                    marker.DangerLevel = WorldEscalatedDanger(node, DangerToString(node.Danger));
+                    marker.Status = ResolveNodeStatus(node);
+                }
 
                 marker.NodeSelected += OnNodeSelected;
                 _mapNodesContainer.AddChild(marker);
 
-                GD.Print($"[Ashfall Godot][World] Created marker for {node.DisplayName} (status={marker.Status}) at ({node.PositionX}, {node.PositionY})");
+                GD.Print($"[Ashfall Godot][World] Created marker for {node.DisplayName} (status={marker.Status}) at ({marker.Position.X}, {marker.Position.Y})");
             }
             catch (Exception ex)
             {
@@ -186,6 +224,11 @@ namespace AtomicWar.GodotApp.World
 
         public override void _ExitTree()
         {
+            if (_mapSystem != null)
+            {
+                _mapSystem.OnNodeDiscovered -= HandleMapNodeChanged;
+                _mapSystem.OnNodeKnowledgeChanged -= HandleNodeKnowledgeChanged;
+            }
             ClearMarkers();
             base._ExitTree();
         }

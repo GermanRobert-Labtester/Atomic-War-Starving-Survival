@@ -60,6 +60,7 @@ namespace AtomicWar.GodotApp
         SurvivorsUiTest,
         Phase0UiTest,
         BridgeSelfTest,
+        PowerGridCatalogSelfTest,
         DutyRosterSelfTest,
         StandingRecordSelfTest,
         CrossingSelfTest,
@@ -69,6 +70,7 @@ namespace AtomicWar.GodotApp
         AgricultureSelfTest,
         DefenseSelfTest,
         PsychologySelfTest,
+        WildlifeSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -93,6 +95,7 @@ namespace AtomicWar.GodotApp
         DoseLedgerSelfTest,
         ExpeditionSelfTest,
         ExpeditionEncounterBridgeSelfTest,
+        PatrolEncounterSelfTest,
         MedicalSelfTest,
         NarrativeSelfTest,
         NpcArcSelfTest,
@@ -256,6 +259,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DefenseSelfTest;
             if (Has(args, "--psychology-selftest"))
                 return HostCliAction.PsychologySelfTest;
+            if (Has(args, "--wildlife-selftest"))
+                return HostCliAction.WildlifeSelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
@@ -338,6 +343,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DoseUiTest;
             if (Has(args, "--bridge-selftest"))
                 return HostCliAction.BridgeSelfTest;
+            if (Has(args, "--power-grid-catalog-selftest"))
+                return HostCliAction.PowerGridCatalogSelfTest;
             if (Has(args, "--year-of-ash-save-selftest"))
                 return HostCliAction.YearOfAshSaveSelfTest;
             if (Has(args, "--verdict-selftest") || Has(args, "--expansion-08-selftest"))
@@ -354,6 +361,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExpeditionSelfTest;
             if (Has(args, "--expedition-encounter-bridge-selftest"))
                 return HostCliAction.ExpeditionEncounterBridgeSelfTest;
+            if (Has(args, "--patrol-encounter-selftest") || Has(args, "--travel-encounter-selftest"))
+                return HostCliAction.PatrolEncounterSelfTest;
             if (Has(args, "--medical-selftest"))
                 return HostCliAction.MedicalSelfTest;
             if (Has(args, "--narrative-selftest"))
@@ -479,6 +488,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --asset-coverage-report  Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
             GD.Print("  --asset-registry-selftest Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
+            GD.Print("  --power-grid-catalog-selftest  Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal");
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --data-integrity-selftest Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
             GD.Print("  --export-parity-selftest [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present");
@@ -495,6 +505,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --real-campaign-journey-selftest / --campaign-journey-selftest / --real-main-journey-selftest Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5)");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
+            GD.Print("  --agriculture-selftest   Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition");
             GD.Print("  --arbitration-selftest   CrossingArbitrationHeadlessDemo");
             GD.Print("  --black-flotilla-selftest / --maritime-selftest / --expansion-09-selftest The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip");
             GD.Print("  --brine-selftest / --salt-steam-selftest         BrineWaterHeadlessDemo (S2 salt & steam)");
@@ -504,11 +515,14 @@ namespace AtomicWar.GodotApp
             GD.Print("  --crossing-selftest      CrossingHeadlessDemo (Exp 04)");
             GD.Print("  --deep-coast-host-selftest / --deep-coast-playthrough Deep-coast host playthrough: survey → decision → dive → scavenge → save/restore");
             GD.Print("  --deep-coast-selftest / --deep-coast-route-selftest District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save");
+            GD.Print("  --defense-selftest       Shelter Defense Expansion (Plan 163): trap catalog, installation, engagement, alarm, capture handoff");
             GD.Print("  --disease-selftest / --disease-expansion-selftest Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
             GD.Print("  --duty-roster-selftest   DutyRosterHeadlessDemo (Exp 02)");
             GD.Print("  --endings-selftest / --shelf-selftest       EndingsHeadlessDemo (S4 endings exclusive + roundtrip)");
             GD.Print("  --expansions-selftest / --all-expansions-selftest    Run full 7-expansion verification suite (Holdfast, Duty Roster, Standing Record, Crossing, Arbitration, LedgerDebt, Glass Orchard)");
             GD.Print("  --greenhouse-selftest / --glass-orchard-selftest    GreenhouseHeadlessDemo (Exp 05)");
+            GD.Print("  --psychology-selftest    Psychology Arc Expansion (Plan 164): breakdown arcs, sustained-stress triggers, catharsis, treatment");
+            GD.Print("  --wildlife-selftest      Wildlife Ecosystem (Plan 165): fauna catalog, predation/radiation pressure, apex, taming, save round-trip");
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
             GD.Print("  --holdfast-selftest      Holdfast S1 survival loop, ice road, and trade verification");
             GD.Print("  --ice-road-selftest      IceRoadHeadlessDemo (Exp 01)");
@@ -546,6 +560,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --expansion-hub-save-selftest Expansion hub save write → reload → restore → checksum/tamper checks");
             GD.Print("  --expedition-encounter-bridge-selftest  ExpeditionEncounterBridge bare-notice + resolved surface smoke test");
             GD.Print("  --expedition-selftest    Expedition domain: sorties, encounter resolution, loot drops, and save round-trip");
+            GD.Print("  --patrol-encounter-selftest / --travel-encounter-selftest  Patrol catalog, cooldown, recognition, resolution, and save/restore lifecycle");
             GD.Print("  --research-catalog-selftest  Research knowledge catalog: load count, DAG validity, and cross-catalog unlock references (Plan 34)");
             GD.Print("  --radio-catalog-selftest     Radio station catalog: JSON authority, schedules, and signal model (AF-B1 / Plan 60)");
             GD.Print("  --holdfast-save-selftest S1 save write → reload → restore → checksum/tamper checks");

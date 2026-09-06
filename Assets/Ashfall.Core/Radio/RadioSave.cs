@@ -33,6 +33,9 @@ namespace Ashfall.Core.Radio
         public bool isDispatched;
         public bool isResolved;
         public string resolutionType = string.Empty;
+        public bool isMoralChoiceAvailable;
+        public int moralChoiceResolutionIndex = -1;
+        public bool isIgnored;
     }
 
     [Serializable]

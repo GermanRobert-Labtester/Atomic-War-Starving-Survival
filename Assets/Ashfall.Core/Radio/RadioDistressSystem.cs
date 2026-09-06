@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Ashfall.Core.IO;
+using Ashfall.Core.MoralChoice;
+using Ashfall.Core.YearOfAsh;
 
 namespace Ashfall.Core.Radio
 {
@@ -17,7 +19,9 @@ namespace Ashfall.Core.Radio
         ResolvedGrimTooLate = 5,
         ResolvedTrapDefeated = 6,
         ResolvedMysteryDecoded = 7,
-        Expired = 8
+        Expired = 8,
+        ResolvedTrapAvoided = 9,
+        ResolvedIgnored = 10
     }
 
     public enum DistressOutcomeType
@@ -70,11 +74,81 @@ namespace Ashfall.Core.Radio
         [JsonPropertyName("outcome_type")]
         public string OutcomeTypeStr { get; set; } = "survivor_isolated";
 
+        [JsonIgnore]
+        public string OutcomeType => OutcomeTypeStr;
+
+        [JsonPropertyName("authenticity")]
+        public string Authenticity { get; set; } = string.Empty;
+
+        [JsonPropertyName("tone_register")]
+        public string ToneRegister { get; set; } = string.Empty;
+
         [JsonPropertyName("days_to_trace")]
         public int DaysToTrace { get; set; } = 4;
 
+        [JsonPropertyName("deadline_days")]
+        public int? DeadlineDaysSnake { get; set; }
+
+        [JsonPropertyName("deadlineDays")]
+        public int? DeadlineDaysCamel { get; set; }
+
+        [JsonIgnore]
+        public int DeadlineDays
+        {
+            get => DeadlineDaysSnake ?? DeadlineDaysCamel ?? DaysToTrace;
+            set => DeadlineDaysSnake = value;
+        }
+
+        [JsonPropertyName("sender_survival_days")]
+        public int? SenderSurvivalDaysSnake { get; set; }
+
+        [JsonPropertyName("senderSurvivalDays")]
+        public int? SenderSurvivalDaysCamel { get; set; }
+
+        [JsonIgnore]
+        public int SenderSurvivalDays
+        {
+            get => SenderSurvivalDaysSnake ?? SenderSurvivalDaysCamel ?? 0;
+            set => SenderSurvivalDaysSnake = value;
+        }
+
+        [JsonPropertyName("ignore_consequence")]
+        public string? IgnoreConsequenceSnake { get; set; }
+
+        [JsonPropertyName("ignoreConsequence")]
+        public string? IgnoreConsequenceCamel { get; set; }
+
+        [JsonIgnore]
+        public string IgnoreConsequence
+        {
+            get => IgnoreConsequenceSnake ?? IgnoreConsequenceCamel ?? string.Empty;
+            set => IgnoreConsequenceSnake = value;
+        }
+
+        [JsonPropertyName("warning_text")]
+        public string WarningText { get; set; } = string.Empty;
+
         [JsonPropertyName("revealed_location")]
         public string RevealedLocation { get; set; } = string.Empty;
+
+        [JsonPropertyName("location_reference")]
+        public string? LocationReferenceSnake { get; set; }
+
+        [JsonPropertyName("locationReference")]
+        public string? LocationReferenceCamel { get; set; }
+
+        [JsonIgnore]
+        public string LocationReference
+        {
+            get => LocationReferenceSnake ?? LocationReferenceCamel ?? RevealedLocation;
+            set => LocationReferenceSnake = value;
+        }
+
+        [JsonPropertyName("revealed_knowledge")]
+        public string RevealedKnowledge { get; set; } = string.Empty;
+
+        [JsonPropertyName("knowledge_points")]
+        public int KnowledgePoints { get; set; }
 
         [JsonPropertyName("revealed_items")]
         public List<string> RevealedItems { get; set; } = new List<string>();
@@ -87,6 +161,15 @@ namespace Ashfall.Core.Radio
 
         [JsonPropertyName("recruit_survivor_id")]
         public string RecruitSurvivorId { get; set; } = string.Empty;
+
+        [JsonPropertyName("sender_faction_id")]
+        public string SenderFactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("deceptive_faction_id")]
+        public string DeceptiveFactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("moral_choice_id")]
+        public string MoralChoiceId { get; set; } = string.Empty;
 
         [JsonPropertyName("reputation_faction_id")]
         public string ReputationFactionId { get; set; } = string.Empty;
@@ -105,6 +188,43 @@ namespace Ashfall.Core.Radio
         /// advances the NPC's authored arc. Empty = no arc link.</summary>
         [JsonPropertyName("resolve_quest_id")]
         public string ResolveQuestId { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public bool IsTrapOrDeception =>
+            string.Equals(Authenticity, "trap", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(Authenticity, "false_flag", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(Authenticity, "bait_trap", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(OutcomeTypeStr, "bait_trap", StringComparison.OrdinalIgnoreCase) ||
+            !string.IsNullOrEmpty(DeceptiveFactionId);
+
+        [JsonIgnore]
+        public bool IsAutomated =>
+            string.Equals(Authenticity, "automated", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(OutcomeTypeStr, "knowledge", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(OutcomeTypeStr, "encrypted", StringComparison.OrdinalIgnoreCase) ||
+            FrequencyId == "freq_distress_392_7" ||
+            FrequencyId == "freq_distress_512_4" ||
+            FrequencyId == "freq_distress_623_8" ||
+            FrequencyId == "freq_distress_701_3";
+
+        [JsonIgnore]
+        public bool IsGenuineRescue =>
+            !IsTrapOrDeception &&
+            !IsAutomated &&
+            (string.Equals(Authenticity, "genuine", StringComparison.OrdinalIgnoreCase) ||
+             !string.IsNullOrEmpty(MoralChoiceId) ||
+             !string.IsNullOrEmpty(SenderFactionId) ||
+             !string.IsNullOrEmpty(RecruitSurvivorId) ||
+             OutcomeTypeStr.StartsWith("survivor", StringComparison.OrdinalIgnoreCase));
+
+        [JsonIgnore]
+        public bool IsGrimOrMemorial =>
+            !IsTrapOrDeception &&
+            !IsGenuineRescue &&
+            (string.Equals(Authenticity, "stale", StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(OutcomeTypeStr, "narrative", StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(OutcomeTypeStr, "supply_cache", StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(OutcomeTypeStr, "military", StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -122,6 +242,9 @@ namespace Ashfall.Core.Radio
         public bool IsDispatched { get; set; }
         public bool IsResolved { get; set; }
         public string ResolutionSummary { get; set; } = string.Empty;
+        public bool IsMoralChoiceAvailable { get; set; }
+        public int MoralChoiceResolutionIndex { get; set; } = -1;
+        public bool IsIgnored { get; set; }
     }
 
     /// <summary>
@@ -137,6 +260,9 @@ namespace Ashfall.Core.Radio
 
         private readonly Dictionary<string, ActiveDistressSignal> _activeSignals =
             new Dictionary<string, ActiveDistressSignal>(StringComparer.OrdinalIgnoreCase);
+
+        private readonly Dictionary<int, DistressSignalDefinition> _exactFrequencyIndex =
+            new Dictionary<int, DistressSignalDefinition>();
 
         public event Action<DistressSignalDefinition, ActiveDistressSignal>? OnSignalIntercepted;
         public event Action<DistressSignalDefinition, ActiveDistressSignal>? OnSignalTriangulated;
@@ -166,6 +292,8 @@ namespace Ashfall.Core.Radio
         {
             if (def == null || string.IsNullOrEmpty(def.FrequencyId)) return;
             _definitions[def.FrequencyId] = def;
+            int freqKey = (int)Math.Round(def.FrequencyMhz * 10f);
+            _exactFrequencyIndex[freqKey] = def;
             if (!_activeSignals.ContainsKey(def.FrequencyId))
             {
                 _activeSignals[def.FrequencyId] = new ActiveDistressSignal
@@ -183,6 +311,12 @@ namespace Ashfall.Core.Radio
             return _definitions.TryGetValue(signalId, out var def) ? def : null;
         }
 
+        public DistressSignalDefinition? GetByExactFrequency(float freqMhz)
+        {
+            int key = (int)Math.Round(freqMhz * 10f);
+            return _exactFrequencyIndex.TryGetValue(key, out var def) ? def : null;
+        }
+
         public ActiveDistressSignal? GetActiveState(string signalId)
         {
             if (string.IsNullOrEmpty(signalId)) return null;
@@ -191,8 +325,31 @@ namespace Ashfall.Core.Radio
 
         public DistressSignalDefinition? FindSignalAtFrequency(float freqMhz, float toleranceMhz = 0.5f)
         {
+            int exactKey = (int)Math.Round(freqMhz * 10f);
+            if (_exactFrequencyIndex.TryGetValue(exactKey, out var exactDef))
+            {
+                float exactDiff = Math.Abs(exactDef.FrequencyMhz - freqMhz);
+                if (exactDiff <= toleranceMhz) return exactDef;
+            }
+
+            int minKey = (int)Math.Floor((freqMhz - toleranceMhz) * 10f);
+            int maxKey = (int)Math.Ceiling((freqMhz + toleranceMhz) * 10f);
             DistressSignalDefinition? best = null;
             float minDiff = float.MaxValue;
+            for (int k = minKey; k <= maxKey; k++)
+            {
+                if (_exactFrequencyIndex.TryGetValue(k, out var cand))
+                {
+                    float diff = Math.Abs(cand.FrequencyMhz - freqMhz);
+                    if (diff <= toleranceMhz && diff < minDiff)
+                    {
+                        minDiff = diff;
+                        best = cand;
+                    }
+                }
+            }
+            if (best != null) return best;
+
             foreach (var d in _definitions.Values)
             {
                 float diff = Math.Abs(d.FrequencyMhz - freqMhz);
@@ -203,6 +360,114 @@ namespace Ashfall.Core.Radio
                 }
             }
             return best;
+        }
+
+        public int LoadFromDataDirectory(string dataDir, IFileIO? fileIO = null, IJsonSerializer? serializer = null)
+        {
+            fileIO ??= new FileSystemIO();
+            string path = fileIO.Combine(dataDir, "radio_distress_signals.json");
+            if (!fileIO.FileExists(path)) return 0;
+            string json = fileIO.ReadAllText(path);
+            return LoadFromJson(json);
+        }
+
+        public bool TryTriggerMoralChoice(string signalId, out string moralChoiceId)
+        {
+            moralChoiceId = string.Empty;
+            if (string.IsNullOrEmpty(signalId)) return false;
+            if (!_definitions.TryGetValue(signalId, out var def)) return false;
+            if (!_activeSignals.TryGetValue(signalId, out var state)) return false;
+            if (state.Status == DistressSignalStatus.Inactive || state.Status == DistressSignalStatus.Expired) return false;
+            if (state.MoralChoiceResolutionIndex >= 0) return false;
+            if (state.IsResolved) return false;
+            if (!def.IsGenuineRescue || def.IsTrapOrDeception || def.IsAutomated) return false;
+            if (string.IsNullOrEmpty(def.MoralChoiceId)) return false;
+            if (state.HighestClarity < 0.25f) return false;
+
+            state.IsMoralChoiceAvailable = true;
+            moralChoiceId = def.MoralChoiceId;
+            return true;
+        }
+
+        public bool ResolveMoralChoice(
+            string signalId,
+            int choiceIndex,
+            MoralChoiceSystem moral,
+            MoralChoiceQuestDefinition questDef,
+            int day,
+            out MoralChoiceResolution? resolution,
+            FactionWarSystem? factionWar = null)
+        {
+            resolution = null;
+            if (string.IsNullOrEmpty(signalId) || questDef == null || moral == null) return false;
+            if (!_definitions.TryGetValue(signalId, out var def)) return false;
+            if (!_activeSignals.TryGetValue(signalId, out var state)) return false;
+
+            // Idempotent: if already resolved, replay resolution without re-applying deltas
+            if (state.MoralChoiceResolutionIndex >= 0)
+            {
+                moral.TryGetResolution(questDef.Id, out resolution);
+                resolution ??= moral.Resolve(questDef, choiceIndex, def.RevealedLocation, day);
+                return true;
+            }
+
+            resolution = moral.Resolve(questDef, choiceIndex, def.RevealedLocation, day);
+            state.MoralChoiceResolutionIndex = choiceIndex;
+
+            if (choiceIndex == 0) // Rescue
+            {
+                state.Status = DistressSignalStatus.Dispatched;
+                state.IsDispatched = true;
+                state.IsIgnored = false;
+            }
+            else // Ignore
+            {
+                state.Status = DistressSignalStatus.ResolvedIgnored;
+                state.IsResolved = true;
+                state.IsIgnored = true;
+                state.ResolutionSummary = "Signal ignored by command; sender_death inevitable.";
+
+                if (factionWar != null)
+                {
+                    string faction = !string.IsNullOrEmpty(def.SenderFactionId) ? def.SenderFactionId : def.ReputationFactionId;
+                    if (!string.IsNullOrEmpty(faction))
+                    {
+                        int delta = def.ReputationDelta > 0 ? def.ReputationDelta : 15;
+                        factionWar.ModifyStanding(faction, -delta);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public bool CompleteRescue(string signalId, FactionWarSystem? factionWar = null)
+        {
+            if (string.IsNullOrEmpty(signalId)) return false;
+            if (!_definitions.TryGetValue(signalId, out var def)) return false;
+            if (!_activeSignals.TryGetValue(signalId, out var state)) return false;
+
+            if (state.IsIgnored || state.Status == DistressSignalStatus.ResolvedIgnored) return false;
+            if (state.Status != DistressSignalStatus.Dispatched && state.Status != DistressSignalStatus.ResolvedRescued) return false;
+
+            // Idempotent
+            if (state.Status == DistressSignalStatus.ResolvedRescued) return true;
+
+            state.Status = DistressSignalStatus.ResolvedRescued;
+            state.IsResolved = true;
+            state.ResolutionSummary = "Rescue completed successfully.";
+
+            if (factionWar != null)
+            {
+                string faction = !string.IsNullOrEmpty(def.SenderFactionId) ? def.SenderFactionId : def.ReputationFactionId;
+                if (!string.IsNullOrEmpty(faction))
+                {
+                    int delta = def.ReputationDelta > 0 ? def.ReputationDelta : 15;
+                    factionWar.ModifyStanding(faction, delta);
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -475,7 +740,10 @@ namespace Ashfall.Core.Radio
                     highestClarity = s.HighestClarity,
                     isDispatched = s.IsDispatched,
                     isResolved = s.IsResolved,
-                    resolutionType = s.ResolutionSummary
+                    resolutionType = s.ResolutionSummary,
+                    isMoralChoiceAvailable = s.IsMoralChoiceAvailable,
+                    moralChoiceResolutionIndex = s.MoralChoiceResolutionIndex,
+                    isIgnored = s.IsIgnored
                 });
             }
             list.Sort((a, b) => string.Compare(a.signalId, b.signalId, StringComparison.Ordinal));
@@ -497,19 +765,32 @@ namespace Ashfall.Core.Radio
                     state.IsDispatched = entry.isDispatched;
                     state.IsResolved = entry.isResolved;
                     state.ResolutionSummary = entry.resolutionType;
+                    state.IsMoralChoiceAvailable = entry.isMoralChoiceAvailable;
+                    state.MoralChoiceResolutionIndex = entry.moralChoiceResolutionIndex;
+                    state.IsIgnored = entry.isIgnored;
+                    state.IsTriangulated = state.Status == DistressSignalStatus.Triangulated ||
+                                           state.Status == DistressSignalStatus.Dispatched ||
+                                           state.Status == DistressSignalStatus.ResolvedRescued;
                 }
                 else
                 {
+                    var status = (DistressSignalStatus)entry.status;
                     _activeSignals[entry.signalId] = new ActiveDistressSignal
                     {
                         SignalId = entry.signalId,
-                        Status = (DistressSignalStatus)entry.status,
+                        Status = status,
                         InterceptedDay = entry.interceptedDay,
                         DaysRemaining = entry.daysRemaining,
                         HighestClarity = entry.highestClarity,
                         IsDispatched = entry.isDispatched,
                         IsResolved = entry.isResolved,
-                        ResolutionSummary = entry.resolutionType
+                        ResolutionSummary = entry.resolutionType,
+                        IsMoralChoiceAvailable = entry.isMoralChoiceAvailable,
+                        MoralChoiceResolutionIndex = entry.moralChoiceResolutionIndex,
+                        IsIgnored = entry.isIgnored,
+                        IsTriangulated = status == DistressSignalStatus.Triangulated ||
+                                         status == DistressSignalStatus.Dispatched ||
+                                         status == DistressSignalStatus.ResolvedRescued
                     };
                 }
             }

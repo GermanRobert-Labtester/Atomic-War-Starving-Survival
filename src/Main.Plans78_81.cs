@@ -106,7 +106,9 @@ namespace AtomicWar.GodotApp
                 CaptureSection("chemical_recon", ChemicalReconSaveStore.TryCapturePersisted(_chemicalRecon.System.CaptureState()));
         }
 
-        private void SavePlans78To81()
+        // Composite orchestration only; the child SaveXxx methods are the
+        // registered campaign sections.
+        private void PersistPlans78To81()
         {
             SaveGeodeticSurvey();
             SaveKineticStorage();

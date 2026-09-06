@@ -12,6 +12,12 @@ namespace Ashfall.Core.Narrative
             "controlled", "contested", "border"
         };
 
+        private static readonly HashSet<string> AllowedArchetypes = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "checkpoint", "caravan_escort", "raid_party", "press_gang",
+            "refugee_eviction", "supply_run", "reconnaissance", "border_patrol"
+        };
+
         public static List<string> Validate(
             IEnumerable<TravelEncounterDefinition> encounters,
             ISet<string>? validFactionIds = null,
@@ -68,11 +74,27 @@ namespace Ashfall.Core.Narrative
                     errors.Add($"Patrol '{enc.Id}' has invalid territory_state '{enc.TerritoryState}'. Allowed: controlled, contested, border.");
                 }
 
-                // 4. Choices count in [2, 4]
-                if (enc.Choices == null || enc.Choices.Count < 2 || enc.Choices.Count > 4)
+                if (enc.CooldownDays < 0)
+                {
+                    errors.Add($"Patrol '{enc.Id}' has invalid cooldown_days {enc.CooldownDays}. Must be >= 0.");
+                }
+
+                if (!string.IsNullOrWhiteSpace(enc.PatrolArchetype) && !AllowedArchetypes.Contains(enc.PatrolArchetype))
+                {
+                    errors.Add($"Patrol '{enc.Id}' has invalid patrol_archetype '{enc.PatrolArchetype}'.");
+                }
+
+                if (enc.ChainStage < 0 || enc.PrereqChainStage < -1)
+                {
+                    errors.Add($"Patrol '{enc.Id}' has invalid chain stage values ({enc.ChainStage}, {enc.PrereqChainStage}).");
+                }
+
+                // 4. Choices count in [2, 6]. Six permits a compact staged
+                // recognition chain without duplicating whole encounter rows.
+                if (enc.Choices == null || enc.Choices.Count < 2 || enc.Choices.Count > 6)
                 {
                     int count = enc.Choices?.Count ?? 0;
-                    errors.Add($"Patrol '{enc.Id}' must have between 2 and 4 choices, but has {count}.");
+                    errors.Add($"Patrol '{enc.Id}' must have between 2 and 6 choices, but has {count}.");
                 }
                 else
                 {
@@ -141,6 +163,16 @@ namespace Ashfall.Core.Narrative
                                 errors.Add($"Patrol '{enc.Id}' choice '{c.ChoiceId}' required item '{c.RequiredItemId}' cannot also be consumed in costs.");
                             }
                         }
+
+                        if (c.RequiredChainStage < -1 || c.MaxChainStage < -1)
+                        {
+                            errors.Add($"Patrol '{enc.Id}' choice '{c.ChoiceId}' has invalid recognition stage bounds.");
+                        }
+
+                        if (c.RequiredChainStage >= 0 && c.MaxChainStage >= 0 && c.RequiredChainStage > c.MaxChainStage)
+                        {
+                            errors.Add($"Patrol '{enc.Id}' choice '{c.ChoiceId}' requires chain stage {c.RequiredChainStage} after its maximum {c.MaxChainStage}.");
+                        }
                     }
                 }
 
@@ -171,6 +203,22 @@ namespace Ashfall.Core.Narrative
                 if (enc.CooldownGroup != null && enc.CooldownGroup.Length > 0 && string.IsNullOrWhiteSpace(enc.CooldownGroup))
                 {
                     errors.Add($"Patrol '{enc.Id}' has whitespace-only cooldown_group.");
+                }
+
+                // 9. Flagship VII: War-state and territory owner validation
+                if (!TravelEncounterDefinition.IsValidWarState(enc.WarStateString))
+                {
+                    errors.Add($"Patrol '{enc.Id}' has invalid war_state '{enc.WarStateString}'. Allowed: any, peacetime, wartime.");
+                }
+
+                if (enc.WarWeightMultiplier <= 0f)
+                {
+                    errors.Add($"Patrol '{enc.Id}' war_weight_multiplier {enc.WarWeightMultiplier} must be positive.");
+                }
+
+                if (!string.IsNullOrWhiteSpace(enc.RequiredTerritoryOwner) && validFactionIds != null && !validFactionIds.Contains(enc.RequiredTerritoryOwner))
+                {
+                    errors.Add($"Patrol '{enc.Id}' references unknown required_territory_owner '{enc.RequiredTerritoryOwner}'.");
                 }
 
                 // Collect for variant family comparison
@@ -217,6 +265,12 @@ namespace Ashfall.Core.Narrative
                         errors.Add($"Variant family '{kvp.Key}' chain mismatch between '{lead.Id}' and '{other.Id}'.");
                     }
 
+                    if (lead.CooldownDays != other.CooldownDays ||
+                        !string.Equals(lead.PatrolArchetype, other.PatrolArchetype, StringComparison.OrdinalIgnoreCase))
+                    {
+                        errors.Add($"Variant family '{kvp.Key}' recurrence metadata mismatch between '{lead.Id}' and '{other.Id}'.");
+                    }
+
                     // Choices must be mechanically identical
                     if (lead.Choices.Count != other.Choices.Count)
                     {
@@ -236,7 +290,11 @@ namespace Ashfall.Core.Narrative
                             c1.GuiltDelta != c2.GuiltDelta ||
                             c1.FactionStandingDelta != c2.FactionStandingDelta ||
                             c1.RequiredItemId != c2.RequiredItemId ||
-                            c1.RequiredItemQuantity != c2.RequiredItemQuantity)
+                            c1.RequiredItemQuantity != c2.RequiredItemQuantity ||
+                            c1.RequiredChainStage != c2.RequiredChainStage ||
+                            c1.MaxChainStage != c2.MaxChainStage ||
+                            c1.MinFactionStanding != c2.MinFactionStanding ||
+                            c1.MaxFactionStanding != c2.MaxFactionStanding)
                         {
                             errors.Add($"Variant family '{kvp.Key}' choice mechanics mismatch at index {cIdx} between '{lead.Id}' and '{other.Id}'.");
                         }

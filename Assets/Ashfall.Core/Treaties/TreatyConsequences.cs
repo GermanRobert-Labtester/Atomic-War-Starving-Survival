@@ -51,7 +51,20 @@ namespace Ashfall.Core
         public string SourceId = string.Empty;
 
         public static string MakeSourceId(string treatyId, TreatyEffectKind kind) =>
-            $"treaty:{treatyId}:effect:{kind.ToString().ToLowerInvariant()}";
+            $"treaty:{treatyId}:effect:{ToSnakeCase(kind.ToString())}";
+
+        /// <summary>TradeDiscount → trade_discount (project snake_case id rule).</summary>
+        private static string ToSnakeCase(string name)
+        {
+            var sb = new System.Text.StringBuilder(name.Length + 4);
+            for (int i = 0; i < name.Length; i++)
+            {
+                char c = name[i];
+                if (char.IsUpper(c) && i > 0) sb.Append('_');
+                sb.Append(char.ToLowerInvariant(c));
+            }
+            return sb.ToString();
+        }
     }
 
     /// <summary>Typed transition record emitted after the treaty state has

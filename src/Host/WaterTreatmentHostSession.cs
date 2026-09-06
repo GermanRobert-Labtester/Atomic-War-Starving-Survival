@@ -90,9 +90,9 @@ namespace AtomicWar.GodotApp
                 StateVersion);
         }
 
-        public void TickDay(int day)
+        public void TickDay(int day, float powerAvailability01 = 1f)
         {
-            System.TickDay(day);
+            System.TickDay(day, powerAvailability01);
             RaiseStateChanged();
         }
 

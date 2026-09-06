@@ -29,6 +29,16 @@ namespace Ashfall.Core
         public bool isComplete;
         public string completionUnlockId = string.Empty; // research or recipe unlocked
         public List<string> completedRelicIds = new List<string>();
+
+        // Plan 166 tech-salvage job fields. The source item is committed when
+        // the job starts; this prevents duplicate completion after reload.
+        public string activeTechSalvageId = string.Empty;
+        public string techSourceItemId = string.Empty;
+        public bool techSourceConsumed;
+        public int techStartedDay;
+        public float techEquipmentQuality01;
+        public List<string> completedTechSalvageIds = new List<string>();
+        public List<ResearchNoteState> researchNotes = new List<ResearchNoteState>();
     }
 
     /// <summary>Catalog entry for a relic from data.</summary>
@@ -59,6 +69,16 @@ namespace Ashfall.Core
         public List<RelicDefinition> recipes { get => relics; set => relics = value; }
     }
 
+    [Serializable]
+    public sealed class ResearchNoteState
+    {
+        public string noteId = string.Empty;
+        public string techId = string.Empty;
+        public string researcherId = string.Empty;
+        public int day;
+        public string progressBand = string.Empty;
+    }
+
     public sealed class WorkshopReverseEngineeringSystem
     {
         public const string SystemId = "workshop_reverse_engineering";
@@ -66,11 +86,14 @@ namespace Ashfall.Core
         private WorkshopState _state = new WorkshopState();
         private readonly Dictionary<string, RelicDefinition> _relicCatalog =
             new Dictionary<string, RelicDefinition>(StringComparer.Ordinal);
+        private readonly Dictionary<string, PreWarTechDef> _techCatalog =
+            new Dictionary<string, PreWarTechDef>(StringComparer.Ordinal);
         private readonly global::Ashfall.Core.Inventory.Inventory _inventory;
         private readonly ResearchSystem _researchSystem;
         private readonly Crafting.CraftingSystem _craftingSystem;
         private readonly ILog _log;
         private Func<string, float> _getSurvivorSkill; // survivorId -> relevant skill level
+        private ISeededRng _techRng;
 
         public WorkshopState State => _state;
         public IReadOnlyDictionary<string, RelicDefinition> Catalog => _relicCatalog;
@@ -89,6 +112,7 @@ ILog? log = null)
             _craftingSystem = craftingSystem ?? throw new ArgumentNullException(nameof(craftingSystem));
             _log = log ?? NullLog.Instance;
             _getSurvivorSkill = (_) => 1.0f; // default skill multiplier
+            _techRng = new SeededRng(166);
         }
 
         /// <summary>Bind a survivor skill evaluator: survivorId -> skill multiplier (1.0 = average).</summary>
@@ -109,6 +133,36 @@ ILog? log = null)
             }
             _log.Info($"[Workshop] loaded {_relicCatalog.Count} relics from catalog");
         }
+
+        public void LoadTechSalvageCatalog(IEnumerable<PreWarTechDef> definitions)
+        {
+            _techCatalog.Clear();
+            if (definitions == null) return;
+            foreach (var def in definitions)
+            {
+                if (def != null && !string.IsNullOrWhiteSpace(def.Id) && !_techCatalog.ContainsKey(def.Id))
+                    _techCatalog[def.Id] = def;
+            }
+            _log.Info($"[Workshop] loaded {_techCatalog.Count} tech salvage definitions");
+        }
+
+        public void BindTechSalvageRng(ISeededRng rng)
+        {
+            _techRng = rng ?? new SeededRng(166);
+        }
+
+        public IReadOnlyDictionary<string, PreWarTechDef> TechSalvageCatalog => _techCatalog;
+
+        public PreWarTechDef? GetTechSalvage(string techId)
+        {
+            if (string.IsNullOrWhiteSpace(techId)) return null;
+            _techCatalog.TryGetValue(techId, out var def);
+            return def;
+        }
+
+        public bool IsTechSalvageCompleted(string techId) =>
+            !string.IsNullOrWhiteSpace(techId)
+            && _state.completedTechSalvageIds.Contains(techId);
 
         /// <summary>Register a single relic (for testing or hard-coded fallback).</summary>
         public void RegisterRelic(RelicDefinition relic)
@@ -136,6 +190,106 @@ ILog? log = null)
 
         /// <summary>True if the workshop is currently busy with a job.</summary>
         public bool IsBusy => _state.workPhase > 0 && !_state.isComplete;
+
+        /// <summary>Pure preview for a cataloged tech recovery job.</summary>
+        public TechDismantlePreview PreviewTechDismantle(
+            string sourceItemId,
+            string researcherId,
+            ResearchFacilityContext? facility = null)
+        {
+            var preview = new TechDismantlePreview { sourceItemId = sourceItemId ?? string.Empty };
+            if (IsBusy) { preview.failureCode = "workshop_busy"; return preview; }
+            if (!_techCatalog.TryGetValue(sourceItemId ?? string.Empty, out var def))
+            {
+                // Catalog IDs are the command IDs, while inventory holds the
+                // source item ID. Search deterministically by source item.
+                foreach (var candidate in _techCatalog.Values)
+                {
+                    if (candidate != null && string.Equals(candidate.SourceItemId, sourceItemId, StringComparison.Ordinal))
+                    {
+                        def = candidate;
+                        break;
+                    }
+                }
+            }
+            if (def == null) { preview.failureCode = "unknown_tech"; return preview; }
+            if (IsTechSalvageCompleted(def.Id)) { preview.failureCode = "already_salvaged"; return preview; }
+            if (_inventory.CountById(def.SourceItemId) < 1) { preview.failureCode = "missing_source_item"; return preview; }
+
+            var context = facility ?? new ResearchFacilityContext();
+            if (!context.IsAvailable) { preview.failureCode = "lab_unavailable"; return preview; }
+            if (!context.PowerStable) { preview.failureCode = "lab_power_unstable"; return preview; }
+            if (context.EquipmentTags == null || def.RequiredResearchEquipmentTags == null)
+            {
+                preview.failureCode = "missing_research_equipment";
+                return preview;
+            }
+            for (int i = 0; i < def.RequiredResearchEquipmentTags.Count; i++)
+            {
+                if (!ContainsOrdinal(context.EquipmentTags, def.RequiredResearchEquipmentTags[i]))
+                {
+                    preview.failureCode = "missing_research_equipment";
+                    return preview;
+                }
+            }
+
+            float skill = Math.Clamp(_getSurvivorSkill(researcherId ?? string.Empty), 0.25f, 2f);
+            float equipment = Math.Clamp(context.EquipmentQuality01, 0f, 1f);
+            preview.techId = def.Id;
+            preview.successChance = Math.Clamp(
+                def.BaseSuccessChance + (skill - 1f) * 0.15f + equipment * 0.20f - (def.Complexity - 1) * 0.04f,
+                0.05f, 0.95f);
+            preview.catastrophicFailureChance = Math.Clamp(
+                def.CatastrophicFailureChance * (1f - equipment * 0.5f), 0f, 0.25f);
+            preview.researchPoints = def.BaseResearchPoints;
+            preview.blueprintRequiredPoints = def.BlueprintRequiredPoints;
+            preview.isAvailable = true;
+            return preview;
+        }
+
+        /// <summary>
+        /// Starts a cataloged tech recovery job. The source item is consumed as
+        /// the command commit, before any deterministic outcome roll occurs.
+        /// </summary>
+        public ActionResult StartTechDismantle(
+            string sourceItemId,
+            string researcherId,
+            int day = 0,
+            ResearchFacilityContext? facility = null)
+        {
+            var preview = PreviewTechDismantle(sourceItemId, researcherId, facility);
+            if (!preview.isAvailable)
+                return ActionResult.Blocked(preview.failureCode, "workshop.tech_dismantle_unavailable");
+
+            var def = _techCatalog[preview.techId];
+            if (!_inventory.TryConsume(def.SourceItemId, 1))
+                return ActionResult.Blocked("missing_source_item", "workshop.tech_missing_source");
+
+            float skill = Math.Clamp(_getSurvivorSkill(researcherId ?? string.Empty), 0.25f, 2f);
+            float hours = Math.Max(2f, 3f + def.Complexity * 1.5f) / Math.Min(1.5f, skill);
+            _state.selectedRelicId = string.Empty;
+            _state.assignedResearcherId = researcherId ?? string.Empty;
+            _state.workPhase = 5;
+            _state.progressHours = 0f;
+            _state.hoursRequired = hours;
+            _state.isComplete = false;
+            _state.activeTechSalvageId = def.Id;
+            _state.techSourceItemId = def.SourceItemId;
+            _state.techSourceConsumed = true;
+            _state.techStartedDay = day;
+            _state.techEquipmentQuality01 = Math.Clamp(facility?.EquipmentQuality01 ?? 0f, 0f, 1f);
+            _state.completionUnlockId = string.Empty;
+
+            _log.Info($"[Workshop] started tech recovery '{def.Id}' ({hours:F1}h)");
+            OnWorkshopStateChanged?.Invoke();
+            return ActionResult.Success("workshop.tech_dismantle_started",
+                new Dictionary<string, double>
+                {
+                    { "hours_required", hours },
+                    { "success_chance", preview.successChance },
+                    { "catastrophic_failure_chance", preview.catastrophicFailureChance }
+                });
+        }
 
         // ── Actions ──────────────────────────────────────────────────────────
 
@@ -268,6 +422,7 @@ ILog? log = null)
         {
             if (!IsBusy) return ActionResult.Blocked("workshop_idle", "workshop.no_active_job");
             if (_state.isComplete) return ActionResult.Blocked("already_complete", "workshop.already_complete");
+            if (hoursElapsed <= 0f) return ActionResult.Failed("invalid_hours", "workshop.invalid_hours");
 
             _state.progressHours += hoursElapsed;
             if (_state.progressHours >= _state.hoursRequired)
@@ -309,6 +464,9 @@ ILog? log = null)
 
         private ActionResult CompleteJob()
         {
+            if (_state.workPhase == 5)
+                return CompleteTechJob();
+
             if (!_relicCatalog.TryGetValue(_state.selectedRelicId, out var relic))
                 return ActionResult.Failed("missing_relic", "workshop.error_missing_relic");
 
@@ -383,6 +541,106 @@ ILog? log = null)
             return result;
         }
 
+        private ActionResult CompleteTechJob()
+        {
+            if (!_techCatalog.TryGetValue(_state.activeTechSalvageId, out var def))
+                return ActionResult.Failed("missing_tech", "workshop.tech_missing_definition");
+            if (IsTechSalvageCompleted(def.Id))
+                return ActionResult.Blocked("already_salvaged", "workshop.tech_already_salvaged");
+
+            // The source is already consumed, so outcome math is independent
+            // of the current inventory count after a save/load boundary.
+            float skill = Math.Clamp(_getSurvivorSkill(_state.assignedResearcherId), 0.25f, 2f);
+            float successChance = Math.Clamp(
+                def.BaseSuccessChance + (skill - 1f) * 0.15f + _state.techEquipmentQuality01 * 0.20f - (def.Complexity - 1) * 0.04f,
+                0.05f, 0.95f);
+            bool success = _techRng.NextDouble() < successChance;
+            bool catastrophic = !success && _techRng.NextDouble() <
+                Math.Clamp(def.CatastrophicFailureChance * (1f - _state.techEquipmentQuality01 * 0.5f), 0f, 0.25f);
+
+            _state.isComplete = true;
+            _state.completedTechSalvageIds.Add(def.Id);
+            var deltas = new Dictionary<string, double>
+            {
+                { "success_chance", successChance },
+                { "source_consumed", _state.techSourceConsumed ? 1 : 0 }
+            };
+
+            if (catastrophic)
+            {
+                string[] failureTypes = { "component_arc", "pressure_cell_rupture", "stored_energy_release", "data_core_destroyed" };
+                string failureType = failureTypes[_techRng.Next(0, failureTypes.Length)];
+                deltas["catastrophic_failure"] = 1;
+                var failure = new TechSalvageFailure
+                {
+                    techId = def.Id,
+                    sourceItemId = def.SourceItemId,
+                    failureType = failureType,
+                    day = _state.techStartedDay
+                };
+                OnTechSalvageFailure?.Invoke(failure);
+                var failed = ActionResult.Failed("catastrophic_failure", "workshop.tech_catastrophic_failure", deltas);
+                OnActionCompleted?.Invoke(failed);
+                OnWorkshopStateChanged?.Invoke();
+                return failed;
+            }
+
+            if (!success)
+            {
+                deltas["salvage_recovered"] = 0;
+                var failed = ActionResult.Failed("research_failed", "workshop.tech_research_failed", deltas);
+                OnActionCompleted?.Invoke(failed);
+                OnWorkshopStateChanged?.Invoke();
+                return failed;
+            }
+
+            _researchSystem.TryAddResearchPoints(def.BaseResearchPoints, def.Id);
+            deltas["research_points"] = def.BaseResearchPoints;
+            deltas["blueprint_progress"] = def.BaseResearchPoints;
+            for (int i = 0; i < def.BaseScrapYields.Count; i++)
+            {
+                var yield = def.BaseScrapYields[i];
+                if (yield == null || string.IsNullOrWhiteSpace(yield.ItemId) || yield.Amount <= 0) continue;
+                if (_inventory.AddById(yield.ItemId, yield.Amount))
+                    deltas[yield.ItemId] = yield.Amount;
+            }
+
+            if (def.PossibleBlueprintIds.Count > 0)
+            {
+                int blueprintIndex = _techRng.Next(0, def.PossibleBlueprintIds.Count);
+                string blueprintId = def.PossibleBlueprintIds[blueprintIndex];
+                if (!string.IsNullOrWhiteSpace(blueprintId))
+                {
+                    _researchSystem.TryAddBlueprintProgress(
+                        blueprintId,
+                        def.BaseResearchPoints,
+                        def.BlueprintRequiredPoints,
+                        _state.techStartedDay,
+                        def.Id);
+                    _state.completionUnlockId = blueprintId;
+                    OnBlueprintInsight?.Invoke(blueprintId);
+                }
+            }
+
+            if (def.ResearchNotesPool.Count > 0)
+            {
+                int noteIndex = _techRng.Next(0, def.ResearchNotesPool.Count);
+                _state.researchNotes.Add(new ResearchNoteState
+                {
+                    noteId = def.ResearchNotesPool[noteIndex],
+                    techId = def.Id,
+                    researcherId = _state.assignedResearcherId,
+                    day = _state.techStartedDay,
+                    progressBand = "decoded"
+                });
+            }
+
+            var result = ActionResult.Success("workshop.tech_dismantle_complete", deltas);
+            OnActionCompleted?.Invoke(result);
+            OnWorkshopStateChanged?.Invoke();
+            return result;
+        }
+
         private void ResetState()
         {
             _state.selectedRelicId = string.Empty;
@@ -400,14 +658,84 @@ ILog? log = null)
 
         public WorkshopState CaptureState()
         {
-            return _state;
+            return new WorkshopState
+            {
+                systemId = _state.systemId,
+                selectedRelicId = _state.selectedRelicId,
+                assignedResearcherId = _state.assignedResearcherId,
+                workPhase = _state.workPhase,
+                progressHours = _state.progressHours,
+                hoursRequired = _state.hoursRequired,
+                reservedComponentIds = new List<string>(_state.reservedComponentIds ?? new List<string>()),
+                reservedComponentAmounts = new List<int>(_state.reservedComponentAmounts ?? new List<int>()),
+                isComplete = _state.isComplete,
+                completionUnlockId = _state.completionUnlockId,
+                completedRelicIds = new List<string>(_state.completedRelicIds ?? new List<string>()),
+                activeTechSalvageId = _state.activeTechSalvageId,
+                techSourceItemId = _state.techSourceItemId,
+                techSourceConsumed = _state.techSourceConsumed,
+                techStartedDay = _state.techStartedDay,
+                techEquipmentQuality01 = _state.techEquipmentQuality01,
+                completedTechSalvageIds = new List<string>(_state.completedTechSalvageIds ?? new List<string>()),
+                researchNotes = CloneNotes(_state.researchNotes)
+            };
         }
 
         public void RestoreState(WorkshopState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            _state = new WorkshopState
+            {
+                systemId = saved.systemId ?? SystemId,
+                selectedRelicId = saved.selectedRelicId ?? string.Empty,
+                assignedResearcherId = saved.assignedResearcherId ?? string.Empty,
+                workPhase = saved.workPhase,
+                progressHours = Math.Max(0f, saved.progressHours),
+                hoursRequired = Math.Max(0f, saved.hoursRequired),
+                reservedComponentIds = saved.reservedComponentIds != null ? new List<string>(saved.reservedComponentIds) : new List<string>(),
+                reservedComponentAmounts = saved.reservedComponentAmounts != null ? new List<int>(saved.reservedComponentAmounts) : new List<int>(),
+                isComplete = saved.isComplete,
+                completionUnlockId = saved.completionUnlockId ?? string.Empty,
+                completedRelicIds = saved.completedRelicIds != null ? new List<string>(saved.completedRelicIds) : new List<string>(),
+                activeTechSalvageId = saved.activeTechSalvageId ?? string.Empty,
+                techSourceItemId = saved.techSourceItemId ?? string.Empty,
+                techSourceConsumed = saved.techSourceConsumed,
+                techStartedDay = saved.techStartedDay,
+                techEquipmentQuality01 = Math.Clamp(saved.techEquipmentQuality01, 0f, 1f),
+                completedTechSalvageIds = saved.completedTechSalvageIds != null ? new List<string>(saved.completedTechSalvageIds) : new List<string>(),
+                researchNotes = CloneNotes(saved.researchNotes)
+            };
             OnWorkshopStateChanged?.Invoke();
+        }
+
+        public event Action<TechSalvageFailure>? OnTechSalvageFailure;
+        public event Action<string>? OnBlueprintInsight;
+
+        private static List<ResearchNoteState> CloneNotes(List<ResearchNoteState>? notes)
+        {
+            var copy = new List<ResearchNoteState>();
+            if (notes == null) return copy;
+            foreach (var note in notes)
+            {
+                if (note == null) continue;
+                copy.Add(new ResearchNoteState
+                {
+                    noteId = note.noteId,
+                    techId = note.techId,
+                    researcherId = note.researcherId,
+                    day = note.day,
+                    progressBand = note.progressBand
+                });
+            }
+            return copy;
+        }
+
+        private static bool ContainsOrdinal(List<string> values, string value)
+        {
+            if (values == null) return false;
+            for (int i = 0; i < values.Count; i++)
+                if (string.Equals(values[i], value, StringComparison.Ordinal)) return true;
+            return false;
         }
     }
 }

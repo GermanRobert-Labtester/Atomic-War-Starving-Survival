@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "preservation_tiers": [
+    {
+      "id": "preservation_ambient",
+      "display_name": "Ambient Storage",
+      "description": "Exposed shelf or container storage subject to room temperature and microbial exposure.",
+      "shelf_life_days": 5,
+      "shelf_life_multiplier": 1.0,
+      "power_draw_watts": 0,
+      "flavor_morale_bonus": 0,
+      "spoilage_toxin_risk": 0.25,
+      "allowed_food_types": ["raw_meat", "dried_rations", "vegetable"]
+    },
+    {
+      "id": "preservation_root_cellar",
+      "display_name": "Deep Root Cellar",
+      "description": "Underground cold-storage vault isolated from surface heat and insulated by bedrock.",
+      "shelf_life_days": 15,
+      "shelf_life_multiplier": 3.0,
+      "power_draw_watts": 0,
+      "flavor_morale_bonus": 0,
+      "spoilage_toxin_risk": 0.10,
+      "allowed_food_types": ["raw_meat", "dried_rations", "vegetable", "tuber"]
+    },
+    {
+      "id": "preservation_salt_cured",
+      "display_name": "Salt Curing & Brine",
+      "description": "Chemical desiccation using coarse mineral salt and nitrates to inhibit bacterial growth.",
+      "shelf_life_days": 35,
+      "shelf_life_multiplier": 7.0,
+      "power_draw_watts": 0,
+      "flavor_morale_bonus": -1,
+      "spoilage_toxin_risk": 0.05,
+      "allowed_food_types": ["raw_meat"]
+    },
+    {
+      "id": "preservation_smokehouse",
+      "display_name": "Hardwood Smokehouse",
+      "description": "Slow-smoked drying over aromatic hardwood and peat coals, creating a sealed outer rind.",
+      "shelf_life_days": 30,
+      "shelf_life_multiplier": 6.0,
+      "power_draw_watts": 0,
+      "flavor_morale_bonus": 1,
+      "spoilage_toxin_risk": 0.04,
+      "allowed_food_types": ["raw_meat"]
+    },
+    {
+      "id": "preservation_fermented",
+      "display_name": "Earthen Crock Fermentation",
+      "description": "Anaerobic lactic fermentation in sealed ceramic crocks, preserving nutrients and acidity.",
+      "shelf_life_days": 25,
+      "shelf_life_multiplier": 5.0,
+      "power_draw_watts": 0,
+      "flavor_morale_bonus": 0,
+      "spoilage_toxin_risk": 0.06,
+      "allowed_food_types": ["vegetable", "tuber"]
+    },
+    {
+      "id": "preservation_cryogenic",
+      "display_name": "Cryogenic Deep Freeze",
+      "description": "Sub-zero electric refrigeration lockers. Freezes cellular decay completely while powered.",
+      "shelf_life_days": 120,
+      "shelf_life_multiplier": 24.0,
+      "power_draw_watts": 150,
+      "flavor_morale_bonus": 2,
+      "spoilage_toxin_risk": 0.01,
+      "allowed_food_types": ["raw_meat", "vegetable", "dried_rations", "tuber"]
+    }
+  ],
+  "curing_recipes": [
+    {
+      "id": "recipe_cure_salt_rations",
+      "display_name": "Dry-Salt Cured Strips",
+      "target_tier": "preservation_salt_cured",
+      "input_item_id": "raw_meat",
+      "input_quantity": 2,
+      "preservative_item_id": "chemicals",
+      "preservative_quantity": 1,
+      "output_item_id": "dried_rations",
+      "output_quantity": 2,
+      "work_ticks_required": 4
+    },
+    {
+      "id": "recipe_smoke_hardwood_rations",
+      "display_name": "Smokehouse Smoked Jerky",
+      "target_tier": "preservation_smokehouse",
+      "input_item_id": "raw_meat",
+      "input_quantity": 2,
+      "preservative_item_id": "wood_block",
+      "preservative_quantity": 1,
+      "output_item_id": "dried_rations",
+      "output_quantity": 2,
+      "work_ticks_required": 6
+    }
+  ]
+}

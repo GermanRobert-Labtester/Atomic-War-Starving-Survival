@@ -183,9 +183,16 @@ namespace Ashfall.Core.Tests
             Assert.Contains(versioned, f => f.SectionKey == "expansion_quest" && f.Version == ExpansionQuestSaveEnvelope.CurrentVersion);
             Assert.Contains(versioned, f => f.SectionKey == "weight_of_choices" && f.Version == Ashfall.Core.Factions.WeightOfChoicesSave.CurrentSaveVersion);
 
-            // 120 unversioned checksum envelopes, including the Plans 130–133
-            // state sections (powder_metallurgy, nvis_communications, lyophilization, draisine_recovery).
-            Assert.Equal(120, envelopes.Count);
+            // 154 unversioned checksum envelopes, including the Plans 130–133
+            // state sections (powder_metallurgy, nvis_communications, lyophilization, draisine_recovery),
+            // Tasks 5–8 state sections (weather_hardening, geothermal_aquifer, counter_intelligence, recon_telemetry),
+            // Plans 146–149 state sections (route_infrastructure, ebpvd_coating, microfluidic_diagnostic, mine_clearing_flail, rail_grinding),
+            // Plans 166–169 state sections (espionage, fluid_logistics, procedural_narrative),
+            // Plans 62–65 state sections (food_preservation, prewar_archives, shelter_prisoners),
+            // Plans 50–53 state sections (vehicle_garage, faction_espionage, survivor_mental_health),
+            // Plans B68–B69 state sections (seismic_dynamics, cryo_vault),
+            // and the muster-warfare / plans-74-77 state sections from the concurrent flagship streams.
+            Assert.Equal(154, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -198,7 +205,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (126 sections: 6 versioned codecs, 120 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (160 sections: 6 versioned codecs, 154 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

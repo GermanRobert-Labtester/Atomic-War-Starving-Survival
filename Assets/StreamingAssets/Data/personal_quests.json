@@ -50,7 +50,7 @@
               "label": "Donate recovered medicine to the infirmary",
               "description": "Place the salvaged antibiotics into the bunker common stores.",
               "morale_delta": 15.0,
-              "reward_item_id": "medicine",
+              "reward_item_id": "antibiotics",
               "reward_amount": 3,
               "next_stage": -1,
               "consequence_summary": "The bunker infirmary receives critical medical aid. Survivor gains 'Generous Heart'."
@@ -118,7 +118,7 @@
               "label": "Take the Oath of Triage Equality",
               "description": "Swear never to prioritize rank or standing over medical urgency.",
               "morale_delta": 20.0,
-              "reward_item_id": "medicine",
+              "reward_item_id": "antibiotics",
               "reward_amount": 4,
               "next_stage": -1,
               "consequence_summary": "The medic rediscovers their vocational calling. Gains 'Righteous Triage'."
@@ -391,7 +391,7 @@
               "label": "Distribute cough syrup freely to all survivors",
               "description": "Administer daily spoonfuls to anyone exhibiting throat irritation.",
               "morale_delta": 18.0,
-              "reward_item_id": "medicine",
+              "reward_item_id": "antibiotics",
               "reward_amount": 4,
               "next_stage": -1,
               "consequence_summary": "Coughing in the sleeping quarters subsides. Gains 'Bountiful Herbalist'."
@@ -401,7 +401,7 @@
               "label": "Refine into concentrated emergency vials",
               "description": "Store high-potency drops in the trauma locker for acute cases.",
               "morale_delta": 10.0,
-              "reward_item_id": "medicine",
+              "reward_item_id": "antibiotics",
               "reward_amount": 6,
               "next_stage": -1,
               "consequence_summary": "Infirmary reserves bolstered against sudden contagion."
@@ -527,7 +527,7 @@
               "label": "Offer water and grant asylum",
               "description": "Break the cycle of pre-war vengeance through compassion.",
               "morale_delta": 20.0,
-              "reward_item_id": "food",
+              "reward_item_id": "canned_food",
               "reward_amount": 5,
               "next_stage": -1,
               "consequence_summary": "The war truly ends in the veteran's soul. Gains 'Forgiving Veteran'."

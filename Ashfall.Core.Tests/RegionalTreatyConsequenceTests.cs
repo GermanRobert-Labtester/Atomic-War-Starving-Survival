@@ -125,7 +125,7 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0.1f, sys.GetTradeDiscount("fac_1"), 4);
 
             seen.Clear();
-            Assert.Equal(ActionResult.StatusKind.Success, sys.BreakTreaty("treaty_a"));
+            Assert.Equal(ActionResult.StatusKind.Success, sys.BreakTreaty("treaty_a").Status);
 
             var t = Assert.Single(seen);
             Assert.Equal(TreatyViolationCause.Betrayal, t.Cause);
@@ -140,7 +140,10 @@ namespace Ashfall.Core.Tests
         {
             var sys = Create();
             sys.LoadCatalog(new List<TreatyDefinition> { Def("treaty_a", "fac_1") });
-            Assert.Equal(ActionResult.StatusKind.Blocked, sys.BreakTreaty("treaty_a"));
+            // unknown instance → Failed; proposed-but-not-ratified → Blocked
+            Assert.Equal(ActionResult.StatusKind.Failed, sys.BreakTreaty("treaty_a").Status);
+            Assert.Equal(ActionResult.StatusKind.Success, sys.Propose("treaty_a").Status);
+            Assert.Equal(ActionResult.StatusKind.Blocked, sys.BreakTreaty("treaty_a").Status);
         }
 
         [Fact]
@@ -327,8 +330,8 @@ namespace Ashfall.Core.Tests
             var sys = Create();
             sys.LoadCatalog(new List<TreatyDefinition>
             {
-                Def("zz_last", "fac_2", effects: Fx("economy_discount", 0.1f), Fx("raid_pressure_relief", 0.05f)),
-                Def("aa_first", "fac_1", effects: Fx("power"), Fx("water_quota", 120f))
+                Def("zz_last", "fac_2", 0f, Fx("economy_discount", 0.1f), Fx("raid_pressure_relief", 0.05f)),
+                Def("aa_first", "fac_1", 0f, Fx("power"), Fx("water_quota", 120f))
             });
             Ratify(sys, "zz_last");
             Ratify(sys, "aa_first", day: 2);
@@ -428,10 +431,13 @@ namespace Ashfall.Core.Tests
             var def = Def("treaty_a", "fac_1", effects: Fx("economy_discount", 0.1f));
             sys.LoadCatalog(new List<TreatyDefinition> { def });
             Ratify(sys, "treaty_a");
+            // Capture the ended effects BEFORE the status change, exactly as
+            // RegionalTreatySystem.BuildTransition does for the real event.
+            var ended = sys.GetActiveEffectDescriptors();
             sys.BreakTreaty("treaty_a");
 
             string line = TreatyBulletins.Compose(
-                new TreatyTransition { TreatyId = "treaty_a", FactionId = "fac_1", From = TreatyStatus.Ratified, To = TreatyStatus.Violated, Cause = TreatyViolationCause.Betrayal, EndedEffects = sys.State.treaties.Count > 0 ? sys.GetActiveEffectDescriptors() : new List<TreatyActiveEffect>() },
+                new TreatyTransition { TreatyId = "treaty_a", FactionId = "fac_1", From = TreatyStatus.Ratified, To = TreatyStatus.Violated, Cause = TreatyViolationCause.Betrayal, EndedEffects = ended },
                 def);
             Assert.Contains("broken", line);
             Assert.Contains("back to full tariff", line);
@@ -484,7 +490,7 @@ namespace Ashfall.Core.Tests
                     war.ModifyStanding(t.FactionId, (int)def.violation_penalty_affinity);
                 }
             };
-            Assert.Equal(ActionResult.StatusKind.Success, restored.BreakTreaty("treaty_a"));
+            Assert.Equal(ActionResult.StatusKind.Success, restored.BreakTreaty("treaty_a").Status);
             Assert.Equal(1, breachCount);
             Assert.Equal(-20, war.GetStanding("fac_1"));
             Assert.Equal(0f, restored.GetTradeDiscount("fac_1"), 4);

@@ -13,7 +13,7 @@
       "defense_rating": 4,
       "services": ["trade", "staging", "rest", "filter_recharge"],
       "stock_item_ids": ["scrap_metal", "scrap_mechanical", "water_filter"],
-      "local_problem": "Filter degradation under heavy coal soot accumulation."
+      "local_problem": "Soot from the old rail yards coats every filter membrane black. Kessel swears he can taste coal dust in the drinking water now — and nobody tells him he's wrong."
     },
     {
       "id": "waystation_switchback",
@@ -27,7 +27,7 @@
       "defense_rating": 3,
       "services": ["trade", "staging", "rest", "blessing"],
       "stock_item_ids": ["fuel", "clean_water", "medical_kit"],
-      "local_problem": "Scree instability threatening the southern bunkhouse foundation."
+      "local_problem": "The scree slope behind the southern bunkhouse shifts a few inches every week. Vane marks the cracks in the wall with chalk each morning — the chalk lines keep getting wider."
     },
     {
       "id": "waystation_span44",
@@ -41,7 +41,7 @@
       "defense_rating": 5,
       "services": ["trade", "staging", "repair"],
       "stock_item_ids": ["scrap_metal", "electronic_scrap", "ammo_308"],
-      "local_problem": "Bridge abutment settling requiring heavy structural shoring."
+      "local_problem": "The bridge abutment sinks another centimetre every hard frost. Taggart's crews shore it with railway sleepers, but the river is patient and the concrete is not. One more bad winter and the crossing goes."
     },
     {
       "id": "waystation_verity",
@@ -55,7 +55,7 @@
       "defense_rating": 3,
       "services": ["trade", "staging", "rest", "intelligence"],
       "stock_item_ids": ["medical_kit", "clean_water", "scrap_metal"],
-      "local_problem": "Deep well pump motor seized by fine sand."
+      "local_problem": "The deep well pump seized up on fine sand that shouldn't be there — Corvo thinks someone poured it in deliberately, and she keeps a loaded crossbow behind the counter while she tries to prove it."
     },
     {
       "id": "waystation_coast_lock",
@@ -69,7 +69,7 @@
       "defense_rating": 4,
       "services": ["trade", "staging", "saline_wash"],
       "stock_item_ids": ["clean_water", "water_filter", "diesel_fuel"],
-      "local_problem": "Sluice gate valve seized by heavy salt crust."
+      "local_problem": "The sluice gate valve is welded shut by salt crust an inch thick. Renn chips at it every low tide with a hammer that's losing its handle, and the sea undoes her work twice a day without apology."
     },
     {
       "id": "waystation_grain_verge",
@@ -83,7 +83,7 @@
       "defense_rating": 4,
       "services": ["trade", "staging", "grain_exchange"],
       "stock_item_ids": ["dried_rations", "clean_water", "scrap_wood"],
-      "local_problem": "Ration quota disputes with garrison sentries."
+      "local_problem": "The garrison sentries want a bigger cut of every grain shipment. Orlov argues the numbers at the weighing plate each dawn, and each dawn the sentries' rifles get a little more casually pointed at the silo door."
     }
   ]
 }

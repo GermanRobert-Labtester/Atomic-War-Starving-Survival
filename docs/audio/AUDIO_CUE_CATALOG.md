@@ -3,7 +3,7 @@
 > **Living Architecture Authority**: Documents all registered audio cues, target Godot audio buses, asset resource paths, loop behavior, volume trim, and cooldown timers in `src/Audio/AudioCueCatalog.cs`.
 
 **Total Registered Cues:** `195`<br>
-**Last Verified:** `2026-09-05`<br>
+**Last Verified:** `2026-09-06`<br>
 **Drift Gated:** `python3 scripts/ci/generate-audio-catalog.py --check`
 
 ---
@@ -169,7 +169,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `weather_wind_gust` | `SFX` | `res://assets/audio/sfx/sfx_wind_gust_harsh.mp3` | No | -8.0 dB | 3.0s | ✅ Exists |
 | `dispute_argument_shout` | `ShelterSocial` | `res://assets/audio/sfx/sfx_dispute_argument_shout.wav` | No | -2.0 dB | 1.0s | ⚠️ Fallback/Missing |
 | `mediation_accord_chime` | `ShelterSocial` | `res://assets/audio/sfx/sfx_mediation_accord_chime.wav` | No | -3.0 dB | 0.5s | ⚠️ Fallback/Missing |
-| `mess_hall_chatter_loop` | `ShelterSocial` | `res://assets/audio/sfx/sfx_mess_hall_chatter_loop.wav` | Yes | -12.0 dB | — | ⚠️ Fallback/Missing |
+| `mess_hall_chatter_loop` | `ShelterSocial` | `res://assets/audio/sfx/sfx_mess_hall_chatter_loop.wav` | Yes | -12.0 dB | — | ✅ Exists |
 | `bulkhead_hydraulic_slam` | `Subterranean` | `res://assets/audio/sfx/sfx_bunker_door_seal.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
 | `cave_in_collapse_rumble` | `Subterranean` | `res://assets/audio/sfx/sfx_structural_collapse.mp3` | No | 2.0 dB | 2.0s | ✅ Exists |
 | `water_pump_hum_loop` | `Subterranean` | `res://assets/audio/sfx/sfx_water_filtration_loop.wav` | Yes | -8.0 dB | — | ✅ Exists |

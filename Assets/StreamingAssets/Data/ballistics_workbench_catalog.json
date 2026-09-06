@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "id": "part_ballistics_rifle_standard",
+      "profile_id": "part_ballistics_rifle_standard",
+      "weapon_tag": "rifle",
+      "base_dispersion_moa": 3.8,
+      "wear_per_shot_factor": 0.12,
+      "corrosive_ammo_wear_modifier": 1.45,
+      "overpressure_wear_modifier": 1.7,
+      "headspace_warning_threshold": 0.55,
+      "headspace_failure_threshold": 0.85,
+      "max_calibration_bonus": 0.2,
+      "maintenance_recipe_id": "recipe_ballistics_refurbish_rifle",
+      "supported_ammo_tags": ["ammo_rifle"]
+    },
+    {
+      "id": "part_ballistics_sidearm_standard",
+      "profile_id": "part_ballistics_sidearm_standard",
+      "weapon_tag": "sidearm",
+      "base_dispersion_moa": 5.2,
+      "wear_per_shot_factor": 0.09,
+      "corrosive_ammo_wear_modifier": 1.35,
+      "overpressure_wear_modifier": 1.6,
+      "headspace_warning_threshold": 0.6,
+      "headspace_failure_threshold": 0.9,
+      "max_calibration_bonus": 0.16,
+      "maintenance_recipe_id": "recipe_ballistics_refurbish_sidearm",
+      "supported_ammo_tags": ["ammo_pistol"]
+    }
+  ]
+}

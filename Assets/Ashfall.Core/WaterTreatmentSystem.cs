@@ -87,6 +87,10 @@ namespace Ashfall.Core
         private readonly ILog _log;
         private int _currentDay;
 
+        /// <summary>Runtime-only: last grid-derived power fraction (not persisted;
+        /// re-derived each day from the power grid by the host).</summary>
+        private float _lastPowerAvailability01 = 1f;
+
         public WaterTreatmentState State => _state;
         public float CleanWater => _state.cleanWater;
         public float RawWater => _state.rawWater;
@@ -245,6 +249,8 @@ namespace Ashfall.Core
         {
             if (inputAmount <= 0)
                 return ActionResult.Failed("invalid_amount", "water.invalid_amount");
+            if (_lastPowerAvailability01 <= 0f)
+                return ActionResult.Blocked("power_unavailable", "watertreat.no_power");
             if (_state.isProcessing)
                 return ActionResult.Blocked("already_processing", "water.already_processing");
 
@@ -576,9 +582,16 @@ namespace Ashfall.Core
         // ── Daily Tick ──────────────────────────────────────────────────────
 
         /// <summary>Daily tick. Advances active treatment and applies passive effects.</summary>
-        public void TickDay(int day)
+        /// <summary>
+        /// Advance one shelter day. <paramref name="powerAvailability01"/> is the
+        /// grid-derived power fraction for the water plant (1 = nominal, 0 =
+        /// outage, from the canonical room breaker state). Zero power pauses the
+        /// active batch; defaults to 1 for legacy callers.
+        /// </summary>
+        public void TickDay(int day, float powerAvailability01 = 1f)
         {
             _currentDay = day;
+            _lastPowerAvailability01 = powerAvailability01;
 
             // Incoming flood contamination accelerates filter clogging and exposure
             if (_state.incomingContaminationLevel > 0.01f)
@@ -595,10 +608,12 @@ namespace Ashfall.Core
                 OnWaterStateChanged?.Invoke();
             }
 
-            // Advance active treatment by one day's worth
-            if (_state.isProcessing)
+            // Advance active treatment by one day's worth. Powered stages only:
+            // with zero power the batch pauses (progress frozen, job retained);
+            // passive filter degradation from standing water is not power-driven.
+            if (_state.isProcessing && _lastPowerAvailability01 > 0f)
             {
-                TickTreatment(1.0f);
+                TickTreatment(Math.Clamp(_lastPowerAvailability01, 0f, 1f));
             }
 
             // Passive filter degradation from standing water

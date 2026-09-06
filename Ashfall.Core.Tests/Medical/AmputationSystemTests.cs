@@ -158,5 +158,72 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(LimbCondition.Bionic, restoredLimb!.condition);
             Assert.Equal("bionic_arm_prototype", restoredLimb.prostheticId);
         }
+
+        [Fact]
+        public void PhantomPain_EpisodesFire_Periodically_AndDecay()
+        {
+            var needs = new NeedsSystem();
+            needs.Register(new SurvivorNeedsState { Id = "survivor_pain", Health = 100f, Morale = 100f, Hunger = 100f, Thirst = 100f, Fatigue = 100f });
+            var sys = new AmputationSystem(new SeededRng(42), needs: needs);
+            sys.RegisterProcedure(new SurgicalProcedureDef
+            {
+                procedure_id = "procedure_amputation_leg",
+                required_tool_id = "surgical_saw",
+                phantom_pain_chance = 1.0f
+            });
+            sys.EnsureSurvivorLimbs("survivor_pain");
+
+            // Amputate — phantom pain guaranteed
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            inv.AddById("surgical_saw", 1);
+            var sys2 = new AmputationSystem(new SeededRng(42), inv, needs);
+            sys2.RegisterProcedure(new SurgicalProcedureDef
+            {
+                procedure_id = "procedure_amputation_leg",
+                required_tool_id = "surgical_saw",
+                phantom_pain_chance = 1.0f
+            });
+            sys2.EnsureSurvivorLimbs("survivor_pain");
+            sys2.PerformAmputation("survivor_pain", LimbId.LeftLeg, "procedure_amputation_leg");
+
+            int episodesFired = 0;
+            sys2.OnPhantomPainEpisode += (id, stress) => { episodesFired++; };
+
+            // Tick for 21 days — should get multiple episodes
+            for (int d = 0; d < 21; d++)
+                sys2.TickDay(d);
+
+            Assert.True(episodesFired >= 2, $"Expected >=2 phantom pain episodes, got {episodesFired}");
+        }
+
+        [Fact]
+        public void CombatEffectiveness_Degrades_WithAmputations()
+        {
+            var sys = new AmputationSystem(new SeededRng(42));
+            sys.EnsureSurvivorLimbs("survivor_fighter");
+
+            // Intact = 100%
+            float intact = sys.GetCombatEffectivenessMultiplier("survivor_fighter");
+            Assert.Equal(1.0f, intact);
+
+            // Amputate right arm
+            var limb = sys.GetLimb("survivor_fighter", LimbId.RightArm);
+            limb!.condition = LimbCondition.Amputated;
+            float oneArm = sys.GetCombatEffectivenessMultiplier("survivor_fighter");
+            Assert.True(oneArm < 0.80f, $"Expected <0.80 with missing arm, got {oneArm}");
+
+            // Amputate left leg too
+            var leg = sys.GetLimb("survivor_fighter", LimbId.LeftLeg);
+            leg!.condition = LimbCondition.Amputated;
+            float armAndLeg = sys.GetCombatEffectivenessMultiplier("survivor_fighter");
+            Assert.True(armAndLeg < oneArm, "Missing arm+leg should be worse than missing just arm");
+            Assert.True(armAndLeg >= 0.10f, $"Combat effectiveness floor is 0.10, got {armAndLeg}");
+
+            // Bionic upgrade restores
+            limb.condition = LimbCondition.Bionic;
+            leg.condition = LimbCondition.Bionic;
+            float bionic = sys.GetCombatEffectivenessMultiplier("survivor_fighter");
+            Assert.True(bionic > 1.0f, $"Bionic should exceed baseline, got {bionic}");
+        }
     }
 }

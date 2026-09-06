@@ -12,6 +12,7 @@
     "holdfast_items.json",
     "verdict_items.json",
     "year_of_ash_items.json",
+    "agriculture_items.json",
     "items.json"
   ],
   "unknownValueItems": [],
@@ -125,12 +126,12 @@
       "dangerLevel": 3,
       "distanceTicks": 4,
       "table": "table_loot_collapsed_structure",
-      "meanValue": 13.4,
-      "meanEncounters": 0.91,
+      "meanValue": 14.54,
+      "meanEncounters": 0.905,
       "meanTicks": 11,
-      "meanStaminaSpent": 17.49,
+      "meanStaminaSpent": 17.39,
       "collapseP": 0,
-      "valuePerStamina": 0.7661,
+      "valuePerStamina": 0.8359,
       "completedRate": 1
     },
     {
@@ -580,12 +581,12 @@
       "dangerLevel": 7,
       "distanceTicks": 7,
       "table": "table_loot_metro_station",
-      "meanValue": 51.8,
-      "meanEncounters": 2.115,
+      "meanValue": 43.22,
+      "meanEncounters": 2.08,
       "meanTicks": 17,
-      "meanStaminaSpent": 36.6,
+      "meanStaminaSpent": 36.62,
       "collapseP": 0,
-      "valuePerStamina": 1.4151,
+      "valuePerStamina": 1.18,
       "completedRate": 1
     },
     {
@@ -645,12 +646,12 @@
       "dangerLevel": 9,
       "distanceTicks": 12,
       "table": "table_loot_ministry_bunker",
-      "meanValue": 39.16,
-      "meanEncounters": 3.855,
+      "meanValue": 44.18,
+      "meanEncounters": 3.885,
       "meanTicks": 27,
-      "meanStaminaSpent": 63.66,
+      "meanStaminaSpent": 62.8,
       "collapseP": 0,
-      "valuePerStamina": 0.6152,
+      "valuePerStamina": 0.7035,
       "completedRate": 1
     },
     {
@@ -703,6 +704,32 @@
       "meanStaminaSpent": 12.81,
       "collapseP": 0,
       "valuePerStamina": 3.1952,
+      "completedRate": 1
+    },
+    {
+      "id": "loc_forestry_compound",
+      "dangerLevel": 4,
+      "distanceTicks": 6,
+      "table": "table_loot_forestry_compound",
+      "meanValue": 27.49,
+      "meanEncounters": 1.145,
+      "meanTicks": 15,
+      "meanStaminaSpent": 27.68,
+      "collapseP": 0,
+      "valuePerStamina": 0.9931,
+      "completedRate": 1
+    },
+    {
+      "id": "loc_warehouse_district",
+      "dangerLevel": 5,
+      "distanceTicks": 5,
+      "table": "table_loot_warehouse",
+      "meanValue": 21,
+      "meanEncounters": 1.38,
+      "meanTicks": 13,
+      "meanStaminaSpent": 23.71,
+      "collapseP": 0,
+      "valuePerStamina": 0.886,
       "completedRate": 1
     }
   ]

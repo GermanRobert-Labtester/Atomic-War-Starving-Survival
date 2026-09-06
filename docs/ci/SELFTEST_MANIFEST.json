@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 96,
-  "headless_test_count": 94,
+  "total_tests": 105,
+  "headless_test_count": 103,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -338,6 +338,50 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "agriculture_selftest",
+      "action": "AgricultureSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--agriculture-selftest",
+      "aliases": [],
+      "description": "Plans 162-165: crop strain catalog, growth composition, mutation isolation, compost, nutrition diversity",
+      "headless_compatible": true,
+      "expected_summary_id": "agriculture_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "defense_selftest",
+      "action": "DefenseSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--defense-selftest",
+      "aliases": [],
+      "description": "Plans 162-165: trap catalog, perimeter composition, pre-combat raid resolution, capture handoff",
+      "headless_compatible": true,
+      "expected_summary_id": "defense_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "psychology_selftest",
+      "action": "PsychologySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--psychology-selftest",
+      "aliases": [],
+      "description": "Plans 162-165: arc catalog, sustained triggers, conditional behaviors, stash conservation, catharsis bounds",
+      "headless_compatible": true,
+      "expected_summary_id": "psychology_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "wildlife_selftest",
+      "action": "WildlifeSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--wildlife-selftest",
+      "aliases": [],
+      "description": "Plans 162-165: species catalog, single-population ecology, extinction/recolonization, apex, taming transfer",
+      "headless_compatible": true,
+      "expected_summary_id": "wildlife_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "holdfast_briefing",
       "action": "HoldfastBriefing",
       "category": "Expansions & Campaign Modules",
@@ -620,6 +664,19 @@
       "description": "Expedition domain: sorties, encounter resolution, loot drops, and save round-trip",
       "headless_compatible": true,
       "expected_summary_id": "expedition_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "patrol_encounter_selftest",
+      "action": "PatrolEncounterSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--patrol-encounter-selftest",
+      "aliases": [
+        "--travel-encounter-selftest"
+      ],
+      "description": "Patrol catalog, cooldown, recognition, resolution, and save/restore lifecycle",
+      "headless_compatible": true,
+      "expected_summary_id": "patrol_encounter_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1147,6 +1204,58 @@
       "description": "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)",
       "headless_compatible": true,
       "expected_summary_id": "real_campaign_journey_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ebpvd_coating_uitest",
+      "action": "EbPvdCoatingUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--ebpvd-coating-uitest",
+      "aliases": [
+        "--ebpvd-coating-selftest"
+      ],
+      "description": "EB-PVD thermal barrier coating UI panel construction, status rail, and job controls",
+      "headless_compatible": true,
+      "expected_summary_id": "ebpvd_coating_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "microfluidic_diagnostic_uitest",
+      "action": "MicrofluidicDiagnosticUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--microfluidic-diagnostic-uitest",
+      "aliases": [
+        "--microfluidic-diagnostic-selftest"
+      ],
+      "description": "Microfluidic diagnostic analyzer UI panel construction, cartridge fab, and assay telemetry",
+      "headless_compatible": true,
+      "expected_summary_id": "microfluidic_diagnostic_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "mine_flail_uitest",
+      "action": "MineFlailUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--mine-flail-uitest",
+      "aliases": [
+        "--mine-flail-selftest"
+      ],
+      "description": "Mine-clearing flail UI panel construction, breach telemetry, and hardware maintenance",
+      "headless_compatible": true,
+      "expected_summary_id": "mine_flail_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rail_grinding_uitest",
+      "action": "RailGrindingUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--rail-grinding-uitest",
+      "aliases": [
+        "--rail-grinding-selftest"
+      ],
+      "description": "Rail grinding train UI panel construction, reprofiling telemetry, and stone maintenance",
+      "headless_compatible": true,
+      "expected_summary_id": "rail_grinding_uitest",
       "timeout_seconds": 30
     }
   ]

@@ -1339,6 +1339,22 @@
       "dangerLevel": 2,
       "travelHours": 1.5,
       "baseRadsPerHour": 9
+    },
+    {
+      "id": "loc_forestry_compound",
+      "displayName": "Forestry Compound",
+      "description": "A pre-war timber harvesting station and log sorting yard in the northern pines. The diesel sawmills stand silent, but the maintenance sheds hold spare parts and tools.",
+      "dangerLevel": 4,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_warehouse_district",
+      "displayName": "Warehouse District",
+      "description": "Rows of corrugated steel storage buildings once serving the freight terminal. Now a labyrinth of broken pallets, shadowed catwalks, and holding pens used by scavenger gangs.",
+      "dangerLevel": 5,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 20
     }
   ]
 }

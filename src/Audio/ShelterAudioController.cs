@@ -20,6 +20,8 @@ namespace AtomicWar.GodotApp.Audio
         private bool _generatorRunning;
         private bool _brownout;
         private bool _disposed;
+        private readonly Ashfall.Core.Audio.ReactiveAmbienceEvaluator _ambienceEvaluator = new Ashfall.Core.Audio.ReactiveAmbienceEvaluator();
+        public Ashfall.Core.Audio.ReactiveAmbienceEvaluator AmbienceEvaluator => _ambienceEvaluator;
 
         public ShelterAudioController(AudioManager audio)
             : this(

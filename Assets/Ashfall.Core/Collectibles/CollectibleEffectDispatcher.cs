@@ -20,6 +20,8 @@ namespace Ashfall.Core
         public bool EffectApplied;
         public bool DiscoveryRegistered;
         public string FailureReason = string.Empty;
+        public string? DiscoveryLocationId;
+        public bool HasDiscoveryEffects => !string.IsNullOrEmpty(EffectType) && EffectType != "none" && EffectApplied;
     }
 
     /// <summary>
@@ -93,12 +95,15 @@ namespace Ashfall.Core
         /// <summary>Campaign discovery ledger shared with the save store.</summary>
         public CollectibleDiscoveryState Discovery => _discovery;
 
+        /// <summary>Emitted immediately when a new collectible discovery is registered.</summary>
+        public event Action<CollectibleDispatchResult>? OnCollectibleDiscovered;
+
         /// <summary>
         /// Route one inventory acquisition. Safe to call for every item that
         /// enters the shelter inventory: non-collectibles and repeat
         /// acquisitions are no-ops.
         /// </summary>
-        public CollectibleDispatchResult DispatchOnAcquire(string itemId)
+        public CollectibleDispatchResult DispatchOnAcquire(string itemId, string? discoveryLocationId = null)
         {
             var result = new CollectibleDispatchResult();
 
@@ -115,6 +120,7 @@ namespace Ashfall.Core
             if (_discovery.IsDiscovered(itemId))
             {
                 result.AlreadyDiscovered = true;
+                result.DiscoveryLocationId = _discovery.GetDiscoveryLocation(itemId);
                 return result; // one-time effect already handled — never replay
             }
 
@@ -150,7 +156,12 @@ namespace Ashfall.Core
             }
 
             result.EffectApplied = true;
-            result.DiscoveryRegistered = _discovery.MarkDiscovered(itemId);
+            result.DiscoveryLocationId = discoveryLocationId;
+            result.DiscoveryRegistered = _discovery.MarkDiscovered(itemId, discoveryLocationId);
+            if (result.DiscoveryRegistered)
+            {
+                OnCollectibleDiscovered?.Invoke(result);
+            }
             return result;
         }
 

@@ -137,6 +137,22 @@ namespace Ashfall.Core
                 string.Empty);
         }
 
+        /// <summary>Create a failed result while retaining diagnostic deltas.</summary>
+        public static ActionResult Failed(
+            string failureCode,
+            string messageKey,
+            IReadOnlyDictionary<string, double>? deltas,
+            string? eventId = null)
+        {
+            return new ActionResult(
+                StatusKind.Failed,
+                failureCode,
+                messageKey,
+                deltas,
+                eventId ?? string.Empty,
+                string.Empty);
+        }
+
         /// <summary>Create a cancelled result.</summary>
         public static ActionResult Cancelled(
             string messageKey,

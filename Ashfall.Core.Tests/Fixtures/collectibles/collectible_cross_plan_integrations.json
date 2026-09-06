@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "integrations": [
+    {
+      "id": "collectible_to_scavenging",
+      "producer": "collectible_catalog",
+      "consumer": "scavenging",
+      "status": "wired",
+      "contract": "Collectible item definition provides item_id, category, and rarity for scavenging table selection.",
+      "runtime_path": "ScavengingTableCatalog -> LootSelector -> Inventory.OnItemAdded -> CollectibleEffectDispatcher",
+      "persistence_path": "ShelterInventory / UniqueItemClaimRegistry",
+      "verification_key": "collectible_scavenging_coverage"
+    },
+    {
+      "id": "technical_manual_to_research",
+      "producer": "collectible_discovery",
+      "consumer": "research",
+      "status": "wired",
+      "contract": "Technical manual with effect_type=knowledge unlocks research node via ResearchSystem.UnlockManual(target).",
+      "runtime_path": "CollectibleEffectDispatcher.ApplyKnowledge -> ResearchSystem.UnlockManual",
+      "persistence_path": "ResearchSystemState (unlocked_manuals / research save)",
+      "verification_key": "technical_manual_research_unlock"
+    },
+    {
+      "id": "map_collectible_to_world_map",
+      "producer": "collectible_discovery",
+      "consumer": "world_map",
+      "status": "wired",
+      "contract": "Map collectible with effect_type=location_clue discovers map node via WastelandMapSystem.Discover(target).",
+      "runtime_path": "CollectibleEffectDispatcher.ApplyLocationClue -> WastelandMapSystem.Discover",
+      "persistence_path": "WastelandMapState.Discovered (wasteland_map_save)",
+      "verification_key": "map_collectible_reveal"
+    },
+    {
+      "id": "faction_document_to_faction_intel",
+      "producer": "collectible_discovery",
+      "consumer": "faction_intel",
+      "status": "wired",
+      "contract": "Faction document with effect_type=faction_info unlocks canonical codex/intel record via JournalSystem.TryDiscoverKnowledge(target).",
+      "runtime_path": "CollectibleEffectDispatcher.ApplyJournalUnlock -> JournalSystem.TryDiscoverKnowledge",
+      "persistence_path": "JournalSaveState (discovered_knowledge / journal save)",
+      "verification_key": "faction_document_intel_unlock"
+    },
+    {
+      "id": "readable_artifact_to_journal",
+      "producer": "collectible_discovery",
+      "consumer": "journal_codex",
+      "status": "wired",
+      "contract": "Readable artifact with effect_type=journal_unlock unlocks journal entry and codex note via JournalSystem.TryDiscoverKnowledge(target).",
+      "runtime_path": "CollectibleEffectDispatcher.ApplyJournalUnlock -> JournalSystem.TryDiscoverKnowledge",
+      "persistence_path": "JournalSaveState.discovered_knowledge / entries",
+      "verification_key": "readable_artifact_journal_unlock"
+    },
+    {
+      "id": "vinyl_to_vinyl_system",
+      "producer": "collectible_inventory",
+      "consumer": "vinyl_system",
+      "status": "wired",
+      "contract": "Vinyl record items in shelter inventory register tracks and supply morale playing via VinylMoraleSystem.",
+      "runtime_path": "Inventory -> VinylMoraleSystem",
+      "persistence_path": "VinylMoraleState / inventory save",
+      "verification_key": "vinyl_record_morale"
+    },
+    {
+      "id": "cultural_object_to_folklore",
+      "producer": "collectible_discovery",
+      "consumer": "folklore",
+      "status": "deferred",
+      "contract": "Cultural/religious artifact unlocks folklore codex entries and cultural memory.",
+      "runtime_path": "None (deferred)",
+      "persistence_path": "None (deferred)",
+      "blocker": "Folklore runtime consumer is not implemented; no canonical FolkloreSystem exists in Core.",
+      "resolution": "Wire when canonical FolkloreSystem exposes persistent unlock API and registers cultural folklore records.",
+      "temporary_behavior": "Metadata preserved in collectible catalog; discovery registers without runtime folklore unlock.",
+      "verification_key": "cultural_object_folklore_deferred"
+    },
+    {
+      "id": "toy_photo_letter_to_morale",
+      "producer": "collectible_discovery",
+      "consumer": "morale",
+      "status": "wired",
+      "contract": "Personal artifacts (toys, photos, letters) with effect_type=morale boost living survivors' morale via NeedsSystem.Modify(Morale).",
+      "runtime_path": "CollectibleEffectDispatcher.ApplyMorale -> NeedsSystem.Modify",
+      "persistence_path": "SurvivorNeedsState (needs save)",
+      "verification_key": "toy_photo_morale_boost"
+    },
+    {
+      "id": "discovery_to_save_state",
+      "producer": "collectible_discovery",
+      "consumer": "save_codex",
+      "status": "wired",
+      "contract": "All discovered collectible IDs, acknowledgement status, acquisition history, and discovery locations persist across save/load.",
+      "runtime_path": "CollectibleDiscoveryState.CaptureState -> CollectibleDiscoverySaveStore -> SaveStoreHub",
+      "persistence_path": "collectible_discovery_save.json (checksummed envelope)",
+      "verification_key": "discovery_save_persistence"
+    }
+  ]
+}

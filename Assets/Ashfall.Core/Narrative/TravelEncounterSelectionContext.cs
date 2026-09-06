@@ -18,6 +18,9 @@ namespace Ashfall.Core.Narrative
         public string CurrentSeason { get; init; } = "";
         public int CurrentDay { get; init; }
         public WeatherKind CurrentWeather { get; init; }
+        public string LocationId { get; init; } = "";
+        public string RouteId { get; init; } = "";
+        public TravelMode Mode { get; init; } = TravelMode.Travel;
         public ISeededRng? Rng { get; init; }
 
         public static TravelEncounterSelectionContext From(
@@ -27,7 +30,10 @@ namespace Ashfall.Core.Narrative
             string currentSeason,
             int currentDay,
             WeatherKind currentWeather,
-            ISeededRng? rng = null)
+            ISeededRng? rng = null,
+            string locationId = "",
+            string routeId = "",
+            TravelMode mode = TravelMode.Travel)
         {
             return new TravelEncounterSelectionContext
             {
@@ -37,8 +43,18 @@ namespace Ashfall.Core.Narrative
                 CurrentSeason = currentSeason ?? "",
                 CurrentDay = currentDay,
                 CurrentWeather = currentWeather,
-                Rng = rng
+                Rng = rng,
+                LocationId = locationId ?? "",
+                RouteId = routeId ?? "",
+                Mode = mode
             };
         }
+    }
+
+    public enum TravelMode
+    {
+        Travel = 0,
+        Expedition = 1,
+        Caravan = 2
     }
 }

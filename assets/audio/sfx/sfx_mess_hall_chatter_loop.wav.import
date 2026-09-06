@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cm7l6v8p2jb1"
-path="res://.godot/imported/sfx_mess_hall_chatter_loop.wav-5f97e7df9674488cefda9193e3be6b14.sample"
+path="res://.godot/imported/sfx_mess_hall_chatter_loop.wav-49113b9ad71db0dd4fa75990653943d7.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_mess_hall_chatter_loop.wav"
-dest_files=["res://.godot/imported/sfx_mess_hall_chatter_loop.wav-5f97e7df9674488cefda9193e3be6b14.sample"]
+dest_files=["res://.godot/imported/sfx_mess_hall_chatter_loop.wav-49113b9ad71db0dd4fa75990653943d7.sample"]
 
 [params]
 

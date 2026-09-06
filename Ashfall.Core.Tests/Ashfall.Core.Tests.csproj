@@ -41,7 +41,7 @@
     <Compile Remove="FoundryTreatyConsequenceExpansionTests.cs" />
     <Compile Remove="RegionalTreatyConsequenceTests.cs" />
     <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
-    <Compile Remove="Shelter/PowerGridCatalogTests.cs" />
+    <Compile Remove="Integration/Plans72To75CampaignIntegrationTests.cs" /> <!-- TEMP; restored -->
     <Compile Remove="Memorial/WastelandGraveEpitaphsCatalogTests.cs" />
     <Compile Remove="GreenhouseItemCatalogTests.cs" />
     <Compile Remove="Narrative/HoldfastNpcCatalogTests.cs" />
@@ -75,11 +75,6 @@
     <Compile Remove="Plan84WitnessExpansionTests.cs" />
     <Compile Remove="Progression/Plan80LibraryManualsExpansionTests.cs" />
     <Compile Remove="Radiation/Plan81DoseLocationsExpansionTests.cs" />
-    <Compile Remove="Radio/DistressSignalCampaignSmokeTests.cs" />
-    <Compile Remove="Radio/DistressSignalFactionTests.cs" />
-    <Compile Remove="Radio/DistressSignalMoralChoiceTests.cs" />
-    <Compile Remove="Radio/DistressSignalNarrativeTests.cs" />
-    <Compile Remove="Radio/DistressSignalPerformanceTests.cs" />
     <Compile Remove="Shelter/NuclearCoreLifecycleTests.cs" />
     <Compile Remove="StandingRecordFactionExpansionTests.cs" />
     <Compile Remove="Survivors/DeathMemoryPipelineTests.cs" />

@@ -4,7 +4,7 @@
     {
       "id": "event_orbital_kinetic_early_track",
       "name": "High-Altitude Radar Track Lock",
-      "description": "Long-range perimeter Doppler radar establishes intermittent tracking lock on a high-orbit kinetic rod on an orbital degradation vector.",
+      "description": "The perimeter radar locks onto something falling — a tungsten rod, left over from a war fought by people who never intended to survive it. It tumbles through decaying orbit with the lazy patience of a thing that has all the time in the world.",
       "severity": "Moderate",
       "signal_type": "radar_anomaly",
       "is_false_positive": false,
@@ -20,7 +20,7 @@
     {
       "id": "event_orbital_kinetic_thermal_descent",
       "name": "Thermal Descent Plasma Signature",
-      "description": "Atmospheric thermal imaging detects a searing hypersonic plasma plume plunging steeply through the mesosphere toward Sector 4.",
+      "description": "A white-hot streak tears across the sky like a crack in the firmament, visible even through the ash haze. The thermal imagers scream as something plunges through the mesosphere, aimed directly at Sector 4 — and there is absolutely nothing anyone can do but watch it fall.",
       "severity": "Severe",
       "signal_type": "thermal_signature",
       "is_false_positive": false,
@@ -36,7 +36,7 @@
     {
       "id": "event_orbital_kinetic_seismic_precursor",
       "name": "Deep Infrasound Shock Precursor",
-      "description": "Subterranean bedrock seismographs register low-frequency acoustic harmonic vibration as a heavy military penetrator slices through atmospheric layers.",
+      "description": "The walls hum. A deep, bass vibration that rattles teeth and loosens bolts — the bedrock itself flinching as a military penetrator screams through the upper atmosphere, punching a shockwave ahead of it into the earth.",
       "severity": "Severe",
       "signal_type": "seismic_precursor",
       "is_false_positive": false,
@@ -52,7 +52,7 @@
     {
       "id": "event_orbital_kinetic_fragmented_track",
       "name": "Fragmented Ballast Rod Scatter",
-      "description": "Broken orbital guidance telemetry indicates a fractured tungsten defense rod splitting into dual impact trajectories during terminal descent.",
+      "description": "The radar track splits into two. A tungsten rod has fractured during reentry, its halves tumbling apart on diverging trajectories — each one still carrying enough kinetic energy to punch through four metres of reinforced concrete.",
       "severity": "Moderate",
       "signal_type": "radar_anomaly",
       "is_false_positive": false,
@@ -68,7 +68,7 @@
     {
       "id": "event_orbital_cluster_multiple_returns",
       "name": "Telemetry Station Cluster Shower",
-      "description": "A decaying communications satellite bus disintegrates into multiple burning debris clusters raking across contiguous shelter roof quadrants.",
+      "description": "A dead satellite breaks apart in the upper atmosphere, scattering a constellation of burning fragments across the shelter's roof quadrants. It looks like fireworks — the last fireworks anyone will ever see — and each one hits like a mortar round.",
       "severity": "Moderate",
       "signal_type": "radar_anomaly",
       "is_false_positive": false,

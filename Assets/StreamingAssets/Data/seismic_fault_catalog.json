@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "faults": [
+    {
+      "fault_id": "fault_sub_strata_rift",
+      "name": "Sub-Strata Tension Rift",
+      "description": "A shallow tectonic fracture running beneath the outer excavation zone, prone to frequent minor slips and conduit shearing.",
+      "depth_layer": "sub_surface",
+      "slip_threshold": 100.0,
+      "base_accumulation_rate": 2.5,
+      "depth_multiplier": 1.15,
+      "strata_attenuation_factor": 0.35,
+      "pipe_shear_probability": 0.60,
+      "radiator_rupture_probability": 0.30,
+      "methane_outgassing_ppm": 650,
+      "affected_sectors": [
+        "sector_excavation_alpha",
+        "sector_excavation_beta"
+      ]
+    },
+    {
+      "fault_id": "fault_basal_detachment",
+      "name": "Basal Bedrock Detachment Fault",
+      "description": "Deep continental boundary fracture experiencing high confining pressure; stores immense geological stress before release.",
+      "depth_layer": "deep_strata",
+      "slip_threshold": 250.0,
+      "base_accumulation_rate": 1.8,
+      "depth_multiplier": 1.45,
+      "strata_attenuation_factor": 0.50,
+      "pipe_shear_probability": 0.85,
+      "radiator_rupture_probability": 0.70,
+      "methane_outgassing_ppm": 1800,
+      "affected_sectors": [
+        "sector_excavation_gamma",
+        "bunker_core"
+      ]
+    },
+    {
+      "fault_id": "fault_orbital_crevasse",
+      "name": "Kinetic Impact Crevasse",
+      "description": "A fractured fault plane formed directly along the shockwave trajectory of an orbital kinetic penetrator, highly sensitive to surface explosions.",
+      "depth_layer": "crustal_breach",
+      "slip_threshold": 180.0,
+      "base_accumulation_rate": 2.0,
+      "depth_multiplier": 1.30,
+      "strata_attenuation_factor": 0.25,
+      "pipe_shear_probability": 0.75,
+      "radiator_rupture_probability": 0.50,
+      "methane_outgassing_ppm": 1200,
+      "affected_sectors": [
+        "sector_excavation_alpha",
+        "bunker_core"
+      ]
+    }
+  ]
+}

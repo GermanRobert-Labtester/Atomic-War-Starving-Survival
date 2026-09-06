@@ -193,7 +193,7 @@ public class SubterraneanSystemTests
         // Pick a roll in [0.014375, 0.0575): fires unshored, rides out shored.
         for (int day = 1; day <= 4000; day++)
         {
-            var rng = new SeededRng(SubterraneanSystem.NodeSeed(day, "subnode_metro_relay_annex"));
+            var rng = new Ashfall.Core.SeededRng(SubterraneanSystem.NodeSeed(day, "subnode_metro_relay_annex"));
             double roll = rng.NextDouble();
             if (roll >= 0.014375 && roll < 0.0575)
                 return (day, 25f);

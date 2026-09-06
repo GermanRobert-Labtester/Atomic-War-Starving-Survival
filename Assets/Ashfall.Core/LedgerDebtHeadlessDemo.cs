@@ -265,7 +265,8 @@ namespace Ashfall.Core
             check(redispatches == 0, "restored fired-state prevents redispatch");
 
             // F3.13 — a second consequence type proves dispatch is catalog-driven
-            // (bounty_and_seizure takes the pledged principal, fires no standing).
+            // (bounty_and_seizure takes the pledged principal and its authored
+            // standing delta is dispatched alongside the seizure).
             var scav = catalog.GetTemplate("debt_scavengers_food");
             check(scav != null, "scavenger template present");
             string? seizedItem = null;
@@ -274,7 +275,7 @@ namespace Ashfall.Core
             check(DefaultNewScenario(scenarioLedger, scav!, debtor, 90), "scavenger debt defaults");
             check(seizedItem == "dried_rations" && seizedQty == scav!.principalQuantity,
                 "collateral seizure takes the pledged principal");
-            check(standings == 1, "no standing penalty for the seizure consequence");
+            check(standings == 2, "collateral consequence applies its authored standing penalty");
 
             // F3.14 — embargo/bounty typed payloads from real templates.
             var water = catalog.GetTemplate("debt_hydro_barons_water");

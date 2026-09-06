@@ -1,105 +1,84 @@
 # Plan IV — Ledger Debt Consequences, Trade Credit & Headless Integration — Implementation Log
 
 **Plan:** ASHFALL Flagship Integration Plan IV (F1/F2/F3)
-**Status:** COMPLETE — all gates green
-**Commits:** `54472ba3` (Core systems + tests) · `0657daa8` (host wiring + v5 + data; bundled by the concurrent sync stream together with the Plans 46–49 work) · `c48b29c3` (F3 test pins + Plans 46–49 compile repairs)
+**Status:** IMPLEMENTED — debt-focused gates pass; the wrapper expansion selftest is blocked by missing imported Godot assets in this checkout.
+**Verification date:** 2026-09-06
 
-## Phase 0 — Architecture reconnaissance
-
-Status: PASS
-
-Recorded ownership graph:
+## Authority map
 
 ```text
-ledger construction owner:      src/Host/ExpansionHostSession.cs (Ledger property, ctor)
-template catalog owner:         DebtTemplateCatalogLoader (was UNWIRED in host before this task)
-campaign day source:            _core.Clock.Day (HoldfastRuntimeSession.Day projects the same clock)
-save owner:                     ExpansionHubSave / ExpansionHubSaveCodec (v4 → v5)
-session teardown path:          ExpansionHostSession.ShutdownDebtIntegration() (new)
-standing authority:             Ashfall.Core.YearOfAsh.FactionWarSystem.ModifyStanding (clamp ±100, hostile ≤ −50)
-embargo authority:              FactionEmbargoLedger (new — day-derived windows, source-id dedupe)
-raid/bounty authority:          Ashfall.Core.Muster.IronRaidersSystem.ProvokeRaid (deterministic)
-inventory authority:            InventoryHostSession / Inventory container (AddById/RemoveById/CountById)
-labor authority:                bounded obligation ledger inside DebtConsequenceHostBridge (DutyRoster's fixed 5-role wall chart cannot host bounded debt labor — documented divergence)
-trade insufficient-funds path:  HoldfastTradeSession.Buy → HoldfastTradeFailure.InsufficientFunds
+ledger construction:       src/Host/ExpansionHostSession.cs
+template catalog:           DebtTemplateCatalogLoader
+campaign day:               _core.Clock.Day
+save owner:                 ExpansionHubSave / ExpansionHubSaveCodec
+dispatcher lifetime:        ExpansionHostSession + Main lifecycle
+standing authority:         FactionWarSystem.ModifyStanding
+embargo authority:          FactionEmbargoLedger
+raid authority:             IronRaidersSystem.ProvokeRaid
+inventory authority:        injected inventory mutation delegates
+labor persistence:          DebtConsequenceBridgeState (bounded endDay records)
+trade credit entry:         HoldfastTradeSession.Buy → HoldfastTerminalPanel
 ```
 
-Baseline: Core tests 6077/6077 PASS; host build broken by a concurrent stream's untracked mid-edit `Main.Plans46_49.cs` (pre-existing, not this task's — repaired only after that stream committed it broken; see divergences).
+The ledger is ticked by the dedicated phase-4 debt day owner. The older narrative day owner no longer ticks the same ledger, preventing accelerated defaults and duplicate dispatch attempts.
 
-## Stage 1 — Dispatcher persistence & idempotency
+## F1 — Host consequence wiring
 
-Status: PASS
+`ExpansionHostSession` owns one loaded catalog and one `DebtConsequenceDispatcher`. `Main` composes `DebtConsequenceHostBridge` once, restores its state before daily simulation, and detaches it on quit, reset, and session disposal. Recomposition clears the bridge/coordinator references and does not leave subscriptions attached to the old ledger.
 
-- `DebtDispatcherState` (serializable fired-set) + `CaptureState/RestoreState` on `DebtConsequenceDispatcher`.
-- Stable identity: `debtorId@signedDay:consequenceId` — no counters, no RNG, deterministic across save/load.
-- Typed `OnStandingPenalty(DebtConsequence, string, DebtContract)` now carries the FIRED consequence (escalated deltas apply exactly; the old signature re-derived the delta from the base template and applied the wrong value after escalation).
-- Collateral falls back to the template principal at the lent quantity when the consequence authors no `collateralItemId` (all shipped consequences author none — the pledged good is the intended seizure).
-- `forgiveness` effect now calls the canonical `LedgerDebtSystem.ForgiveContract` — a real state transition, not an event.
+The dispatcher persists fired identities in `DebtDispatcherState` using `debtor@signedDay:consequenceId`. The bridge uses consequence-aware source IDs for embargo and labor records, so escalation stages cannot collide. Default side effects route through the canonical faction, embargo, raid, inventory, and bounded labor authorities. Every authored nonzero standing delta is emitted, including deltas attached to embargo, bounty, collateral, labor, raid, and forgiveness effects. `forgiveness` calls `LedgerDebtSystem.ForgiveContract`, so it clears debt without consuming repayment resources.
 
-## Stage 2 — Host consequence adapters (F1)
+Failed credit transactions now call `LedgerDebtSystem.CancelDraft`; an unsigned draft cannot remain after principal transfer or signature failure.
 
-Status: PASS
+## F2 — Trade credit
 
-`DebtConsequenceHostBridge` (Core, host-agnostic):
+`TradeCreditCoordinator` exposes an ephemeral `CreditOffer` projection of a catalog template. It deterministically matches principal items, canonicalizes aliases, and gates offers by:
 
-| Consequence | Canonical target | Side effect | Reload protection |
+- canonical hostile standing threshold;
+- unresolved same-creditor debt;
+- active embargo;
+- principal relevance;
+- authored template active/day-window fields.
+
+Acceptance revalidates the offer, performs the ledger’s two-reading ceremony, transfers principal through the inventory authority, signs at the current campaign day, and compensates or cancels the draft if either side fails. The Holdfast terminal presents creditor, principal, quantity, term, rate, repayment estimate, forfeit, consequence summary, and explicit debt wording. Only `ACCEPT CREDIT` signs; decline and other terminal actions leave ledger and inventory unchanged.
+
+Reachable authored trade-credit contexts include:
+
+| Context | Creditor | Template | Principal |
 |---|---|---|---|
-| standing | FactionWarSystem.ModifyStanding | authored delta, clamped | dispatcher fired-set |
-| embargo | FactionEmbargoLedger.TryAddEmbargo | day-derived [start, start+days) window | fired-set + source-id dedupe |
-| bounty/raid | IronRaidersSystem.ProvokeRaid (activate on first) | +1 raid per consequence stage | fired-set |
-| collateral | inventory delegates (all-or-nothing; shortfall logs and takes nothing) | canonical remove | fired-set |
-| labor | bounded obligation (startDay/endDay, released at endDay) | survivor bound | fired-set + source-id dedupe |
-| forgiveness | LedgerDebtSystem.ForgiveContract | balance cleared, no payment | fired-set + ledger state |
-| telemetry | ILog structured line (campaignDay/debtor/template/creditor/consequence/effectType/dispatchId) | diagnostic only | never the idempotency store |
+| food/rations | `faction_supply_corps` | `debt_supply_corps_rations` | `canned_food × 8` |
+| fuel | `faction_railway_guild` | `debt_railway_guild_fuel` | `diesel_fuel × 10` |
+| medical | `faction_supply_corps` | `debt_supply_corps_medical` | `medical_kit × 3` |
 
-Host wiring (`Main.DebtCredit.cs`): `EnsureDebtConsequenceIntegration()` composes the bridge against `_yearOfAsh.FactionWar`, `_muster.IronRaiders`, the shared `_inventory.Inventory`; `ExpansionHostSession` owns ledger + single catalog instance + exactly one dispatcher (`ShutdownDebtIntegration` detaches); phase-4 `DebtLedgerDayOwner` ticks `Ledger.TickDaily` + `bridge.TickDaily` each campaign day — debt ages in the real campaign.
+## F3 — Headless closure
 
-## Stage 3+4 — Trade credit (F2 backend)
+`LedgerDebtHeadlessDemo` loads the live catalog and verifies:
 
-Status: PASS
+- 15 templates and 10 consequences;
+- template and escalation foreign keys;
+- acyclic escalation graph;
+- two-reading/signing ceremony;
+- authored standing, collateral, embargo, bounty/raid, and forgiveness behavior;
+- dispatcher fired-state JSON roundtrip with zero redispatches.
 
-`TradeCreditCoordinator` (Core): `CreditOffer` is a projection of the debt template (never contract state); deterministic catalog-order template matching with `ItemAliases` canonicalization; gates = hostile standing (canonical `FactionWarSystem.HostileStandingThreshold`, −50 exactly is ineligible), same-creditor unresolved debt (signed && !paid && !forgiven; paid/forgiven never block), active embargo, principal relevance, stale-offer revalidation on acceptance. Acceptance = ledger two-reading ceremony → grant → sign, with compensating revoke on sign failure and fail-before-ink on grant failure. Reload double-disbursement is structurally prevented by the same-creditor gate.
+The demo is registered through `ExpansionMasterSession` and the dedicated CLI route reports **57/57 PASS**.
 
-## Stage 5 — Trade UI
-
-Status: PASS (host-verified build + holdfast selftest; snapshot not produced)
-
-`HoldfastTerminalPanel`: insufficient-funds refusal shows the full offer in plain text (creditor, principal+quantity, term, rate, total owed, forfeit, consequence summary, explicit "This is debt"), a disabled-until-offered `ACCEPT CREDIT` button, and `PressAcceptCredit()` as the only signing path; any other action declines. No hover-only terms, no color-only cues. Full accessibility snapshot remains open (see remaining).
-
-## Stage 6 — Headless oracle (F3)
-
-Status: PASS — 57/57 checks, verified through `--ledger-debt-selftest` and inside `--expansions-selftest` (499/499).
-
-Covers: catalog load (0 errors, 15 templates, 10 consequences), template→consequence and escalation FKs with per-reference diagnostics, escalation cycle walk, rations scenario (forfeit→standing −5 on `faction_supply_corps` exactly once, payload identity), dispatcher fired-state JSON roundtrip with zero redispatches, scavenger collateral (15 × dried_rations, no standing), embargo payload (creditor_faction/14d), bounty+raid escalation (exactly 2), fixture-forced `forgiveness_rare` (contract forgiven, no payment consumed).
-
-## Stage 7 — Expansion master registration
-
-Status: PASS (already registered; call site now forwards the data directory).
-
-## Stage 8 — Full regression closure
-
-Status: PASS
+## Current verification
 
 ```text
-dotnet build Ashfall.Core.Tests   → 0 warnings, 0 errors
-dotnet test                       → 6124/6124 PASSED (baseline 6077 + 47 new/updated)
-dotnet build Ashfall.csproj       → 0 warnings, 0 errors
---data-integrity-selftest         → PASS 180 catalogs, 0 errors, 0 warnings (9575 ids)
---bridge-selftest                 → PASS
---ledger-debt-selftest            → PASS 57/57
---expansions-selftest             → PASS 499/499 ALL EXPANSIONS GREEN
---holdfast-selftest               → PASS (terminal incl. credit UI additions)
+focused debt tests        43 passed, 0 failed
+full xUnit suite           8490 passed, 0 failed, 0 skipped
+dotnet build Ashfall.csproj        0 warnings, 0 errors
+--ledger-debt-selftest    PASS 57/57
+--data-integrity-selftest PASS; 269 catalogs, 0 errors, 0 warnings
+--content-utilization-selftest PASS; 552 catalogs, 0 orphaned
 ```
 
-## Divergences from the plan
+`--expansion-selftest` was also attempted. In this checkout it aborts while the Godot host is initializing because imported font/audio/texture resources are absent and the `user://logs` file cannot be opened; this occurs before the debt result is available. The dedicated debt selftest remains green and does not depend on those imported presentation assets.
 
-1. **Trade surface.** `TradeScreenPresenter`/`CaravanAtomicTrader` have no host-side execution sink and no funds concept; the canonical insufficient-funds path is `HoldfastTradeSession.Buy` behind the Holdfast terminal. Credit integrates there. The five creditors were added to `holdfast_factions.json` and all 15 principals to `holdfast_items.json` (+ `ItemAliases` mappings) so every template is reachable through ordinary trade — not just the required three.
-2. **Labor authority.** `DutyRosterSystem` is a fixed 5-role wall chart with auto-assign semantics; a bounded debt obligation would break it. The bridge owns a persisted, endDay-bounded obligation ledger instead (documented here as the sanctioned home).
-3. **Bounty mapping.** `bounty` and escalated `raid` consequences both map to `OnBountyRequested` → one raid provocation per authored stage (2 for a bounty→raid chain). Deterministic and catalog-driven; a dedicated raid scheduler remains future work.
-4. **Concurrent stream.** `Main.Plans46_49.cs` was committed broken mid-edit (wrong field `_inventoryHost`, `??` across `ICampaignRngManager`/`ISeededRng`, `Survivors.HostSession`); repaired with canonical APIs (`SetupInventory()`/`_inventory`, `Rng.Fork(stream)`, `_survivors.Needs`). Commit `c48b29c3`.
+## Scope notes
 
-## Remaining known limitations
-
-- Credit-offer accessibility snapshot at target resolution not yet rendered (structural accessibility checklist implemented; snapshot run pending the UI vision-QA lane).
-- Embargo scope is authored but applies creditor-wide; per-scope filtering (e.g. trade_offers vs. credit only) is future data/runtime work.
-- `HandlePaid` (embargo lift / standing restoration on late payment) remains a stub, as before.
+- The production trade surface is the Holdfast terminal because the older `TradeScreenPresenter`/`CaravanAtomicTrader` path has no host execution sink or funds model.
+- The current duty roster has five fixed wall-chart roles, so debt labor remains a persisted, bounded obligation bridge rather than a fabricated permanent roster role.
+- Embargo records are creditor-wide; finer `trade_offers` versus credit-only scopes remain future work.
+- Late-payment embargo lifting and standing restoration remain outside this milestone’s existing `HandlePaid` behavior.

@@ -31,6 +31,11 @@ namespace Ashfall.Core.Disease
         private readonly Func<string, int, bool>? _tryConsumeItem;
         private readonly Func<ContainmentCapability>? _containmentProvider;
 
+        /// <summary>Optional grid read: true when quarantine-ward ventilation
+        /// has power. False withholds the containment efficacy bonus for the
+        /// day (ventilation offline). Null = legacy behavior (bonus always applies).</summary>
+        private readonly Func<bool>? _isolationPowerCheck;
+
         private readonly Dictionary<string, float> _isolationQualities =
             new Dictionary<string, float>(StringComparer.Ordinal);
 
@@ -43,13 +48,15 @@ namespace Ashfall.Core.Disease
             DiseaseSystem diseaseSystem,
             DutyRosterSystem? dutyRoster = null,
             Func<string, int, bool>? tryConsumeItem = null,
-            Func<ContainmentCapability>? containmentProvider = null)
+            Func<ContainmentCapability>? containmentProvider = null,
+            Func<bool>? isolationPowerCheck = null)
         {
             _medicalWard = medicalWard ?? throw new ArgumentNullException(nameof(medicalWard));
             _diseaseSystem = diseaseSystem ?? throw new ArgumentNullException(nameof(diseaseSystem));
             _dutyRoster = dutyRoster;
             _tryConsumeItem = tryConsumeItem;
             _containmentProvider = containmentProvider;
+            _isolationPowerCheck = isolationPowerCheck;
 
             // Wire isolation quality provider into DiseaseSystem
             _diseaseSystem.GetIsolationQuality = GetIsolationQuality;
@@ -64,6 +71,9 @@ namespace Ashfall.Core.Disease
         }
 
         public MedicalWardSystem Ward => _medicalWard;
+
+        /// <summary>Ventilation power: null check defaults to powered (legacy behavior).</summary>
+        private bool IsolationPowered => _isolationPowerCheck?.Invoke() ?? true;
         public DiseaseSystem Disease => _diseaseSystem;
         public DutyRosterSystem? Roster => _dutyRoster;
 
@@ -279,7 +289,7 @@ namespace Ashfall.Core.Disease
                     quality = 1.0f;
                 }
 
-                quality += containment.EfficacyBonus;
+                quality += IsolationPowered ? containment.EfficacyBonus : 0f;
                 quality = Math.Clamp(quality, 0.10f, 1.0f);
 
                 _isolationQualities[patientId] = quality;

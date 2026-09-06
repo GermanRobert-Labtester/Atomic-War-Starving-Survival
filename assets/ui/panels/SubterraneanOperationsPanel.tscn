@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://subterranean_ops_panel"]
+[ext_resource type="Script" path="res://src/UI/SubterraneanOperationsPanel.cs" id="1_script"]
+
+[node name="SubterraneanOperationsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="CloseButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="SectorSelector" type="OptionButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="MethaneMeter" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="FloodMeter" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="SporeMeter" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="ShoringMeter" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="MitigationListContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="BulkheadToggleButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="RescueContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="RescueProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="RescueLaborButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0

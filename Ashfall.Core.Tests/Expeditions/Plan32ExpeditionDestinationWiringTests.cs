@@ -79,14 +79,14 @@ namespace Ashfall.Core.Tests.Expeditions
         }
 
         [Fact]
-        public void ExpeditionsCatalog_LoadsExactly50Destinations()
+        public void ExpeditionsCatalog_LoadsAllAuthoredDestinations()
         {
             var defs = LoadPrimaryExpeditions();
-            Assert.Equal(53, defs.Count);
+            Assert.Equal(55, defs.Count);
         }
 
         [Fact]
-        public void Expeditions_All50HaveUniqueCanonicalIdsAndValidBounds()
+        public void Expeditions_AllAuthoredDestinationsHaveUniqueCanonicalIdsAndValidBounds()
         {
             var defs = LoadPrimaryExpeditions();
             var seenIds = new HashSet<string>(StringComparer.Ordinal);
@@ -143,7 +143,7 @@ namespace Ashfall.Core.Tests.Expeditions
             }
 
             Assert.Equal(16, scavenge);
-            Assert.Equal(18, standard);
+            Assert.Equal(20, standard);
             Assert.Equal(13, hazardous);
             Assert.Equal(6, deep);
         }

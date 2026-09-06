@@ -83,7 +83,11 @@ namespace Ashfall.Core
             // Plan 28 — Living Wasteland Ecology, Migration & Infestations
             "species_", "migration_", "infestation_", "eco_chain_",
             // Plan 36 — Wildlife Trapping Catalog
-            "trap_"
+            "trap_",
+            // Plans 62-65 — Pre-war Archives, Captives, Food Preservation, Epilogues
+            "archive_", "captive_", "topic_", "preservation_", "recipe_cure_", "recipe_smoke_", "epilogue_",
+            // Plans 50-53 — Vehicle Garage, Faction Espionage, Survivor Mental Health, Subterranean Acoustics
+            "vmod_", "fop_", "fdrop_", "acue_"
         };
 
         /// <summary>
@@ -143,7 +147,9 @@ namespace Ashfall.Core
             // Plans 90-93 — cupola foundry, vertical ascent, acoustic detection
             "feedstock_item_id", "fuel_item_id", "flux_item_id", "base_yield_item_id",
             "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
-            "install_item_ids", "repair_item_ids", "dampening_item_id"
+            "install_item_ids", "repair_item_ids", "dampening_item_id",
+            // Plans 62-65
+            "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -155,7 +161,7 @@ namespace Ashfall.Core
         /// </summary>
         public static readonly string[] VocabularyKeys =
         {
-            "tags", "category", "type", "phase", "severity", "discovery_trigger", "badge_asset_id",
+            "tags", "category", "type", "phase", "severity", "discovery_trigger", "badge_asset_id", "art_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "legacy_aliases",
             "collection_id", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
@@ -290,7 +296,11 @@ namespace Ashfall.Core
             // The harvestable_materials list names creature yields for lore; the
             // WastelandBestiaryCatalog stores them as opaque strings and never
             // resolves them against items.json.
-            "harvestable_materials"
+            "harvestable_materials",
+            // Plans 62-65
+            "encryption_grade", "intel_category", "allowed_food_types",
+            // Plans 50-53
+            "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile"
         };
 
         /// <summary>
@@ -312,6 +322,7 @@ namespace Ashfall.Core
                                      // survivors created by events' add_survivor effects
             "stores",               // internal bunker room (set_quarantine effect)
             "trade_goods",          // trade-category label used in wants/offers
+            "archive_proof",        // Current service token offered by the Tempest; not an inventory/catalog id.
             "flag_verdict_eden_log_recovered", "flag_verdict_fuse_world_read",
             "flag_verdict_shift_charter_restored", "flag_verdict_clerk_met",
             "flag_verdict_call_resolved", "flag_verdict_relay_read",

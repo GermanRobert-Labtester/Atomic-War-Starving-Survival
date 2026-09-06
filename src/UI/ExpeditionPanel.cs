@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Factions;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -56,7 +59,10 @@ namespace AtomicWar.GodotApp.UI
         private readonly Queue<ExpeditionEncounterBridge.EncounterSurfaced> _encounterQueue = new();
         private Control? _encounterModal;
         private Label? _encounterTitle;
+        private Label? _encounterContext;
+        private TextureRect? _encounterFactionEmblem;
         private Label? _encounterBody;
+        private Button? _encounterBtnOk;
         private Control? _encounterBanner;
         private Label? _encounterBannerLabel;
         private bool _modalActive;
@@ -65,6 +71,13 @@ namespace AtomicWar.GodotApp.UI
         private ExpeditionEncounterBridge.EncounterSurfaced? _lastSurfaced;
         private VBoxContainer? _choicesContainer;
         private bool _pendingBatchMode;
+
+        public Label? EncounterTitleLabel => _encounterTitle;
+        public Label? EncounterContextLabel => _encounterContext;
+        public Label? EncounterBodyLabel => _encounterBody;
+        public Control? EncounterModal => _encounterModal;
+        public VBoxContainer? ChoicesContainer => _choicesContainer;
+        public ExpeditionEncounterBridge.EncounterSurfaced? LastSurfaced => _lastSurfaced;
 
         public bool IsBound => _expeditionHost != null;
 
@@ -131,6 +144,15 @@ namespace AtomicWar.GodotApp.UI
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
+
+            // Load faction display names from lore catalog (idempotent)
+            try
+            {
+                string lorePath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
+                if (File.Exists(lorePath))
+                    FactionDisplayNameCatalog.LoadFromJson(File.ReadAllText(lorePath));
+            }
+            catch { /* non-fatal: humanization fallback will be used */ }
 
             var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.95f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
@@ -272,6 +294,46 @@ namespace AtomicWar.GodotApp.UI
                 "survivor_gunner_mikhail" or "survivor_mikhail_volkov" => "Gunner Mikhail",
                 "elena_vasquez" or "survivor_elena_vasquez" => "Elena Vasquez",
                 _ => id.Replace("survivor_", "").Replace("_", " ").ToUpperInvariant()
+            };
+        }
+
+        private static string FormatFactionName(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return "UNKNOWN FACTION";
+            // Use lore-backed catalog for display names; falls back to
+            // humanized ID when no lore entry exists.
+            string canonical = FactionStandingIdResolver.ToSystemsId(id);
+            string resolved = FactionDisplayNameCatalog.Resolve(canonical);
+            return resolved.ToUpperInvariant();
+        }
+
+        private static string HumanizeDisplayToken(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return string.Empty;
+            string[] parts = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length == 0) continue;
+                parts[i] = char.ToUpperInvariant(parts[i][0]) + (parts[i].Length > 1 ? parts[i][1..] : string.Empty);
+            }
+            return string.Join(" ", parts).ToUpperInvariant();
+        }
+
+        private static string FormatPatrolToken(string id)
+        {
+            return string.IsNullOrWhiteSpace(id) ? "PATROL" : HumanizeDisplayToken(id);
+        }
+
+        private static string FormatUnavailableReason(string code)
+        {
+            return code switch
+            {
+                "cost_unavailable" => "Cost unavailable",
+                "required_item_missing" => "Required item unavailable",
+                "required_condition_missing" => "Required condition unmet",
+                "recognition_requirement_unmet" => "Recognition requirement unmet",
+                "standing_requirement_unmet" => "Standing requirement unmet",
+                _ => "Unavailable"
             };
         }
 
@@ -673,6 +735,7 @@ namespace AtomicWar.GodotApp.UI
                 dto.category = string.Empty;
                 dto.choices = new List<Ashfall.Core.Narrative.EncounterChoiceDefinition>();
                 dto.resolved_at_lead = false;
+                dto.is_micro_location = false;
             }
             else
             {
@@ -680,6 +743,7 @@ namespace AtomicWar.GodotApp.UI
                 dto.description = def.description;
                 dto.category = def.category;
                 dto.choices = def.choices ?? new List<Ashfall.Core.Narrative.EncounterChoiceDefinition>();
+                dto.is_micro_location = def.isMicroLocation;
             }
 
             _encounterQueue.Clear();
@@ -757,22 +821,62 @@ namespace AtomicWar.GodotApp.UI
             BuildEncounterModal();
             if (_encounterModal == null) return;
 
-            if (_encounterTitle != null) _encounterTitle.Text = _lastSurfaced!.title;
+            string encounterId = _lastSurfaced!.encounter_id ?? string.Empty;
+            string titleKey = $"discovery.{encounterId}.title";
+            string localizedTitle = AshfallLocalization.Tr(titleKey, _lastSurfaced!.title);
+
+            if (_encounterTitle != null) _encounterTitle.Text = localizedTitle;
+            if (_encounterContext != null && _encounterFactionEmblem != null)
+            {
+                bool isPatrol = _lastSurfaced!.is_patrol;
+                bool isMicro = _lastSurfaced!.is_micro_location;
+                if (isPatrol)
+                {
+                    _encounterContext.Visible = true;
+                    _encounterFactionEmblem.Visible = true;
+                    string faction = FormatFactionName(_lastSurfaced!.faction_id);
+                    string archetype = FormatPatrolToken(_lastSurfaced!.patrol_archetype);
+                    string territory = FormatPatrolToken(_lastSurfaced!.territory_state);
+                    string recognition = string.IsNullOrWhiteSpace(_lastSurfaced!.recognition_label)
+                        ? "No prior contact"
+                        : _lastSurfaced!.recognition_label;
+                    _encounterContext.Text = $"{faction} · {archetype} · {territory} · {recognition}";
+                    _encounterFactionEmblem.Texture = AshfallUiHelpers.MakeFactionEmblem(_lastSurfaced!.faction_id, 42).Texture;
+                }
+                else if (isMicro)
+                {
+                    _encounterContext.Visible = true;
+                    _encounterFactionEmblem.Visible = false;
+                    _encounterContext.Text = "DISCOVERY · MICRO-LOCATION";
+                }
+                else
+                {
+                    _encounterContext.Visible = false;
+                    _encounterFactionEmblem.Visible = false;
+                }
+            }
             if (_encounterBody != null && _lastSurfaced != null)
             {
+                string descKey = $"discovery.{encounterId}.description";
+                string localizedDesc = AshfallLocalization.Tr(descKey, _lastSurfaced!.description);
+
                 if (_lastSurfaced!.resolved_at_lead == false)
                 {
                     // Bare notice: honest text, no invented outcome.
-                    _encounterBody.Text = _lastSurfaced!.description;
+                    _encounterBody.Text = localizedDesc;
                 }
                 else
                 {
                     string phase = ((ExpeditionPhase)_lastSurfaced!.trigger.phase).ToString().ToUpperInvariant();
+                    string categoryLine = _lastSurfaced!.is_micro_location
+                        ? "DISCOVERY · MICRO-LOCATION"
+                        : $"{_lastSurfaced!.category} · {phase} · encounter #{_lastSurfaced!.trigger.encounterCount}";
+
                     _encounterBody.Text = string.Join("\n",
                         FormatSurvivorName(_lastSurfaced!.trigger.survivorId) + " at " + _lastSurfaced!.trigger.displayName,
-                        $"{_lastSurfaced!.category} · {phase} · encounter #{_lastSurfaced!.trigger.encounterCount}",
+                        categoryLine,
                         "",
-                        _lastSurfaced!.description);
+                        localizedDesc);
                 }
             }
 
@@ -804,8 +908,17 @@ namespace AtomicWar.GodotApp.UI
             _choicesContainer.AddChild(AshfallUiHelpers.MakeSeparator());
             _choicesContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("TACTICAL APPROACH SELECTION"));
 
-            var choiceRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            choiceRow.Alignment = BoxContainer.AlignmentMode.Center;
+            var choiceScroll = new ScrollContainer
+            {
+                CustomMinimumSize = new Vector2(0, 190),
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                SizeFlagsVertical = Control.SizeFlags.ExpandFill,
+                HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+                VerticalScrollMode = ScrollContainer.ScrollMode.Auto
+            };
+            var choiceList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            choiceList.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            choiceScroll.AddChild(choiceList);
 
             float danger = _lastSurfaced?.trigger?.dangerLevel ?? 5f;
             string stance = _lastSurfaced?.trigger?.stance ?? "Balanced";
@@ -815,7 +928,8 @@ namespace AtomicWar.GodotApp.UI
             foreach (var c in _lastSurfaced!.choices)
             {
                 string choiceId = c.choiceId;
-                string choiceText = c.text;
+                string choiceKey = $"discovery.{_lastSurfaced!.encounter_id}.choice.{choiceId}";
+                string choiceText = AshfallLocalization.Tr(choiceKey, c.text);
 
                 // Tactical assessment derivation
                 string riskTag = danger >= 8 ? "EXTREME RISK" : danger >= 5 ? "HIGH RISK" : danger >= 3 ? "MODERATE RISK" : "LOW RISK";
@@ -836,16 +950,17 @@ namespace AtomicWar.GodotApp.UI
                 if (c.factionStandingDelta != 0) previewText += $" · Standing: {(c.factionStandingDelta > 0 ? "+" : "")}{c.factionStandingDelta}";
                 choiceCard.AddChild(AshfallUiHelpers.MakeMetadata(previewText));
 
-                bool canAfford = true;
+                bool authoritativePatrol = _lastSurfaced!.is_patrol && c.isPatrolChoice;
+                bool canAfford = authoritativePatrol ? c.enabled : true;
                 bool meetsRequirement = true;
                 string requirementText = string.Empty;
 
                 if (!string.IsNullOrWhiteSpace(c.requiredItemId) && c.requiredItemQuantity > 0)
                 {
                     int held = inv?.CountById(c.requiredItemId) ?? 0;
-                    string itemName = _expeditionHost?.Items?.Get(c.requiredItemId)?.displayName ?? c.requiredItemId;
+                    string itemName = _expeditionHost?.Items?.Get(c.requiredItemId)?.displayName ?? HumanizeDisplayToken(c.requiredItemId);
                     requirementText = $"Req: {itemName} x{c.requiredItemQuantity} ({held}/{c.requiredItemQuantity})";
-                    if (held < c.requiredItemQuantity)
+                    if (!authoritativePatrol && held < c.requiredItemQuantity)
                     {
                         canAfford = false;
                         meetsRequirement = false;
@@ -871,9 +986,9 @@ namespace AtomicWar.GodotApp.UI
                         int needed = kvp.Value;
                         if (needed <= 0) continue;
                         int held = inv?.CountById(kvp.Key) ?? 0;
-                        string itemName = _expeditionHost?.Items?.Get(kvp.Key)?.displayName ?? kvp.Key;
+                        string itemName = _expeditionHost?.Items?.Get(kvp.Key)?.displayName ?? HumanizeDisplayToken(kvp.Key);
                         costParts.Add($"{itemName} x{needed} ({held}/{needed})");
-                        if (held < needed)
+                        if (!authoritativePatrol && held < needed)
                         {
                             canAfford = false;
                         }
@@ -900,6 +1015,67 @@ namespace AtomicWar.GodotApp.UI
                         ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber)
                         : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical);
                     choiceCard.AddChild(costLabel);
+                }
+
+                // Reward badge: Gain: {itemName} ×{qty} (Theme.Lethe)
+                if (!string.IsNullOrWhiteSpace(c.grantItemId) && c.grantItemQuantity > 0)
+                {
+                    string grantName = _expeditionHost?.Items?.Get(c.grantItemId)?.displayName ?? HumanizeDisplayToken(c.grantItemId);
+                    var rewardLabel = AshfallUiHelpers.MakeSmall($"Gain: {grantName} ×{c.grantItemQuantity}");
+                    rewardLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe);
+                    choiceCard.AddChild(rewardLabel);
+                }
+                // Offering / Cost badge: Cost: {itemName} ×{-qty} (Theme.LetheAmber) with shelter inventory affordability check
+                else if (!string.IsNullOrWhiteSpace(c.grantItemId) && c.grantItemQuantity < 0)
+                {
+                    int neededOffering = -c.grantItemQuantity;
+                    int heldOffering = inv?.CountById(c.grantItemId) ?? 0;
+                    string offeringName = _expeditionHost?.Items?.Get(c.grantItemId)?.displayName ?? HumanizeDisplayToken(c.grantItemId);
+                    var offeringLabel = AshfallUiHelpers.MakeSmall($"Cost: {offeringName} ×{neededOffering} ({heldOffering}/{neededOffering})");
+                    offeringLabel.Modulate = heldOffering >= neededOffering
+                        ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber)
+                        : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical);
+                    choiceCard.AddChild(offeringLabel);
+                    if (heldOffering < neededOffering)
+                    {
+                        canAfford = false;
+                    }
+                }
+
+                // Journal clue badge: [CODEX] Clue Unlocked: {journalName} (Theme.Cyan)
+                if (!string.IsNullOrWhiteSpace(c.journalUnlockId))
+                {
+                    string journalName = HumanizeDisplayToken(c.journalUnlockId);
+                    var journalLabel = AshfallUiHelpers.MakeSmall($"[CODEX] Clue Unlocked: {journalName}");
+                    journalLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Cyan);
+                    choiceCard.AddChild(journalLabel);
+                }
+
+                // Map discovery badge: [MAP] Discovers: {locName} (Theme.Cyan)
+                if (!string.IsNullOrWhiteSpace(c.discoverLocationId))
+                {
+                    string locName = _expeditionHost?.Definitions?.Find(d => d.id == c.discoverLocationId)?.displayName ?? HumanizeDisplayToken(c.discoverLocationId);
+                    var mapLabel = AshfallUiHelpers.MakeSmall($"[MAP] Discovers: {locName}");
+                    mapLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Cyan);
+                    choiceCard.AddChild(mapLabel);
+                }
+
+                // One-time badge: [ONE-TIME] (Theme.LetheAmber)
+                if (c.depletesOnResolve)
+                {
+                    var oneTimeLabel = AshfallUiHelpers.MakeSmall("[ONE-TIME]");
+                    oneTimeLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber);
+                    choiceCard.AddChild(oneTimeLabel);
+                }
+
+                if (!canAfford)
+                {
+                    string reason = authoritativePatrol
+                        ? FormatUnavailableReason(c.disabledReason)
+                        : "Cost or requirement unavailable";
+                    var unavailable = AshfallUiHelpers.MakeSmall($"UNAVAILABLE — {reason}", autowrap: true);
+                    unavailable.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                    choiceCard.AddChild(unavailable);
                 }
 
                 var btn = AshfallUiHelpers.MakeButton(choiceText.ToUpperInvariant(), () =>
@@ -929,18 +1105,31 @@ namespace AtomicWar.GodotApp.UI
                         DismissEncounter();
                     }
                 }, false);
-                btn.CustomMinimumSize = new Vector2(210, 32);
-                if (!canAfford)
-                {
-                    btn.Disabled = true;
-                }
+                btn.CustomMinimumSize = new Vector2(0, 46);
+                btn.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                btn.Disabled = !canAfford;
                 choiceCard.AddChild(btn);
 
-                choiceRow.AddChild(choiceCard);
+                choiceList.AddChild(choiceCard);
             }
 
-            _choicesContainer.AddChild(choiceRow);
+            _choicesContainer.AddChild(choiceScroll);
             vbox.AddChild(_choicesContainer);
+            for (int i = 0; i < choiceList.GetChildCount(); i++)
+            {
+                if (choiceList.GetChild(i) is VBoxContainer cardNode)
+                {
+                    for (int j = 0; j < cardNode.GetChildCount(); j++)
+                    {
+                        if (cardNode.GetChild(j) is Button button && !button.Disabled)
+                        {
+                            button.GrabFocus();
+                            return;
+                        }
+                    }
+                }
+            }
+            _encounterBtnOk?.GrabFocus();
         }
 
         /// <summary>Close the current modal and advance the queue. Acknowledged.</summary>
@@ -994,23 +1183,44 @@ namespace AtomicWar.GodotApp.UI
             _encounterModal.AddChild(center);
 
             var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            card.CustomMinimumSize = new Vector2(420, 0);
+            card.CustomMinimumSize = new Vector2(480, 0);
             center.AddChild(card);
 
             _encounterTitle = AshfallUiHelpers.MakeTitle("ENCOUNTER", Ashfall.Core.UI.Theme.FontSizeH2);
             _encounterTitle.HorizontalAlignment = HorizontalAlignment.Center;
             card.AddChild(_encounterTitle);
 
+            var metaRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            metaRow.Alignment = BoxContainer.AlignmentMode.Center;
+            _encounterFactionEmblem = AshfallUiHelpers.MakeFactionEmblem(string.Empty, 42);
+            _encounterFactionEmblem.Visible = false;
+            metaRow.AddChild(_encounterFactionEmblem);
+            _encounterContext = AshfallUiHelpers.MakeSmall(string.Empty, autowrap: true);
+            _encounterContext.HorizontalAlignment = HorizontalAlignment.Center;
+            _encounterContext.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            _encounterContext.Visible = false;
+            metaRow.AddChild(_encounterContext);
+            card.AddChild(metaRow);
+
+            var bodyScroll = new ScrollContainer
+            {
+                CustomMinimumSize = new Vector2(0, 140),
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+                VerticalScrollMode = ScrollContainer.ScrollMode.Auto
+            };
             _encounterBody = AshfallUiHelpers.MakeBody("", true);
             _encounterBody.HorizontalAlignment = HorizontalAlignment.Center;
-            card.AddChild(_encounterBody);
+            _encounterBody.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            bodyScroll.AddChild(_encounterBody);
+            card.AddChild(bodyScroll);
 
             var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
             btnRow.Alignment = BoxContainer.AlignmentMode.Center;
 
-            var btnOk = AshfallUiHelpers.MakeButton("OK", DismissEncounter, false);
-            btnOk.CustomMinimumSize = new Vector2(140, 36);
-            btnRow.AddChild(btnOk);
+            _encounterBtnOk = AshfallUiHelpers.MakeButton("OK", DismissEncounter, false);
+            _encounterBtnOk.CustomMinimumSize = new Vector2(140, 36);
+            btnRow.AddChild(_encounterBtnOk);
 
             var btnLater = AshfallUiHelpers.MakeButton("DECIDE LATER", DeferEncounter, false);
             btnLater.CustomMinimumSize = new Vector2(160, 36);

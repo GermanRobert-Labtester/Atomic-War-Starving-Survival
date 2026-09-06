@@ -233,6 +233,82 @@ namespace Ashfall.Core.Campaign
             return r;
         }
 
+        /// <summary>
+        /// Builds a daily briefing report from structured BriefingFact intelligence,
+        /// optionally filtering through cadence state to suppress unchanged warnings.
+        /// </summary>
+        public static DailyBriefingReport BuildFromBriefingFacts(
+            int day,
+            int buildSeed,
+            IEnumerable<BriefingFact>? facts,
+            DailyBriefingState? cadenceState = null,
+            int maxEntriesPerSection = DefaultMaxEntriesPerSection)
+        {
+            var r = new DailyBriefingReport
+            {
+                Day = day,
+                BuildSeed = buildSeed,
+                Title = $"DAY {day} BRIEFING",
+                GeneratedUtc = string.Empty
+            };
+
+            if (facts == null) return r;
+
+            IEnumerable<BriefingFact> activeFacts;
+            if (cadenceState != null)
+            {
+                activeFacts = DailyBriefingCadenceFilter.FilterAndAdvance(facts, cadenceState.CadenceRecords, day);
+            }
+            else
+            {
+                activeFacts = facts;
+            }
+
+            var critical = new List<DailyBriefingEntry>();
+            var warnings = new List<DailyBriefingEntry>();
+            var intel = new List<DailyBriefingEntry>();
+            var flavor = new List<DailyBriefingEntry>();
+
+            int order = 0;
+            foreach (var f in activeFacts)
+            {
+                if (f == null) continue;
+                order++;
+
+                var entry = new DailyBriefingEntry(
+                    f.Taxonomy.ToString(),
+                    f.FactId,
+                    f.Message,
+                    order: order,
+                    secondaryId: f.RelatedEntityId,
+                    numeric: f.Severity,
+                    deepLinkRoute: f.DeepLinkRoute);
+
+                switch (f.Taxonomy)
+                {
+                    case BriefingTaxonomyClass.Critical:
+                        critical.Add(entry);
+                        break;
+                    case BriefingTaxonomyClass.Warning:
+                        warnings.Add(entry);
+                        break;
+                    case BriefingTaxonomyClass.Intel:
+                        intel.Add(entry);
+                        break;
+                    case BriefingTaxonomyClass.Flavor:
+                        flavor.Add(entry);
+                        break;
+                }
+            }
+
+            AddSectionIfNotEmpty(r, "Critical Alerts", critical, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Hazards & Warnings", warnings, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Intelligence & Recon", intel, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Settlement Morale", flavor, maxEntriesPerSection);
+
+            return r;
+        }
+
         private static void AddSectionIfNotEmpty(
             DailyBriefingReport report,
             string title,
@@ -365,11 +441,12 @@ namespace Ashfall.Core.Campaign
         public string Text;
         public int Order;
         public float Numeric;
+        public string DeepLinkRoute = string.Empty;
 
         public DailyBriefingEntry() { }
 
         public DailyBriefingEntry(string category, string primaryId,
-            string text, int order = 0, string? secondaryId = null, float numeric = 0f)
+            string text, int order = 0, string? secondaryId = null, float numeric = 0f, string? deepLinkRoute = null)
         {
             Category = category ?? string.Empty;
             PrimaryId = primaryId ?? string.Empty;
@@ -377,6 +454,7 @@ namespace Ashfall.Core.Campaign
             Text = text ?? string.Empty;
             Order = order;
             Numeric = numeric;
+            DeepLinkRoute = deepLinkRoute ?? string.Empty;
         }
     }
 

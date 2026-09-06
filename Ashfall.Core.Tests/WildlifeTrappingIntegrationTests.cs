@@ -29,6 +29,20 @@ namespace Ashfall.Core.Tests
             return "Assets/StreamingAssets/Data";
         }
 
+        private static string FindRepoRoot()
+        {
+            string search = Directory.GetCurrentDirectory();
+            for (int i = 0; i < 6; i++)
+            {
+                if (File.Exists(Path.Combine(search, "project.godot")))
+                    return search;
+                string? parent = Directory.GetParent(search)?.FullName;
+                if (parent == null) break;
+                search = parent;
+            }
+            return AppContext.BaseDirectory;
+        }
+
         private static WildlifeTrappingCatalog? LoadTrappingCatalog()
         {
             var fileIO = new FileSystemIO();
@@ -113,20 +127,42 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WT_WX_005_AllWeatherKinds_EvaluateWithinZeroAndOne()
+        public void WT_WX_005_DeterministicReplay_SameSeedAndWeather_ProducesIdenticalCatch()
         {
-            foreach (WeatherKind kind in Enum.GetValues(typeof(WeatherKind)))
-            {
-                float pen = WildlifeTrappingSystem.WeatherPenaltyFor(kind);
-                Assert.InRange(pen, 0f, 1f);
+            var sys1 = new WildlifeTrappingSystem(new SeededRng(1984));
+            var sys2 = new WildlifeTrappingSystem(new SeededRng(1984));
+            sys1.SetSelectionContext(new WildlifeSelectionContext { CurrentWeather = WeatherKind.Ashfall });
+            sys2.SetSelectionContext(new WildlifeSelectionContext { CurrentWeather = WeatherKind.Ashfall });
 
-                float mult = WildlifeTrappingSystem.CalculateWeatherMultiplier(0.5f, kind);
-                Assert.InRange(mult, 0f, 1f);
-            }
+            sys1.SetTrap("site_det", "bait_grain", "hunter_a");
+            sys2.SetTrap("site_det", "bait_grain", "hunter_a");
+
+            sys1.CheckTraps();
+            sys2.CheckTraps();
+
+            Assert.Equal(sys1.State.trapSites[0].hasCatch, sys2.State.trapSites[0].hasCatch);
+            Assert.Equal(sys1.State.trapSites[0].catchSpecies, sys2.State.trapSites[0].catchSpecies);
+            Assert.Equal(sys1.State.trapSites[0].remainingDurability, sys2.State.trapSites[0].remainingDurability);
         }
 
         [Fact]
-        public void WT_WX_006_DurabilityDecrementsOnCheck_RegardlessOfWeather()
+        public void WT_WX_006_BycatchIsolation_WeatherDoesNotAlterBycatchFormula()
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+            var trapDef = catalog!.Traps["trap_net"];
+            Assert.True(trapDef.bycatchChance > 0f);
+
+            float clearMult = WildlifeTrappingSystem.CalculateWeatherMultiplier(trapDef.weatherSensitivity, WeatherKind.Clear);
+            float blizzardMult = WildlifeTrappingSystem.CalculateWeatherMultiplier(trapDef.weatherSensitivity, WeatherKind.Blizzard);
+            Assert.NotEqual(clearMult, blizzardMult);
+
+            // Authored bycatchChance is isolated from weather penalty
+            Assert.Equal(0.25f, trapDef.bycatchChance, 2);
+        }
+
+        [Fact]
+        public void WT_WX_007_DurabilityDecrementsOnCheck_RegardlessOfWeather()
         {
             var sys = new WildlifeTrappingSystem(new SeededRng(100));
             sys.SetSelectionContext(new WildlifeSelectionContext { CurrentWeather = WeatherKind.Blizzard });
@@ -139,7 +175,20 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WT_WX_007_PrimaryCatchChance_ClampsBetween005And095()
+        public void WT_WX_008_ExhaustiveEnumPolicy_EveryWeatherKindHasExplicitMapping()
+        {
+            foreach (WeatherKind kind in Enum.GetValues(typeof(WeatherKind)))
+            {
+                float pen = WildlifeTrappingSystem.WeatherPenaltyFor(kind);
+                Assert.InRange(pen, 0f, 1f);
+
+                float mult = WildlifeTrappingSystem.CalculateWeatherMultiplier(0.5f, kind);
+                Assert.InRange(mult, 0f, 1f);
+            }
+        }
+
+        [Fact]
+        public void WT_WX_009_PrimaryCatchChance_ClampsBetween005And095()
         {
             float minChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(0.01f, 0f, 0.1f, 1.0f, WeatherKind.Blizzard);
             float maxChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(10.0f, 100f, 5.0f, 0.0f, WeatherKind.Clear);
@@ -222,6 +271,134 @@ namespace Ashfall.Core.Tests
             Assert.Equal(1.0f, prog.GetDisciplineProgress01(actor.Id, "survival"), 3);
         }
 
+        [Fact]
+        public void WT_SK_006_TwoTraps_TwoHunters_EvaluatedIndependently()
+        {
+            var sys = new WildlifeTrappingSystem(new SeededRng(1234));
+            var ctx = new WildlifeSelectionContext();
+            ctx.HunterSkillLevels["hunter_novice"] = 0f;
+            ctx.HunterSkillLevels["hunter_expert"] = 100f;
+            sys.SetSelectionContext(ctx);
+
+            sys.SetTrap("site_1", "", "hunter_novice");
+            sys.SetTrap("site_2", "", "hunter_expert");
+
+            float chance1 = WildlifeTrappingSystem.CalculatePrimaryCatchChance(1.0f, 0f, 1.0f, 0f, WeatherKind.Clear);
+            float chance2 = WildlifeTrappingSystem.CalculatePrimaryCatchChance(1.0f, 100f, 1.0f, 0f, WeatherKind.Clear);
+
+            Assert.Equal(0.25f, chance1, 3);
+            Assert.Equal(0.75f, chance2, 3);
+        }
+
+        [Fact]
+        public void WT_SK_007_QuarryEligibilityPerHunter_MinSkillLevelGating()
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            catalog!.RegisterWith(sys);
+
+            // Register custom high-skill quarry requiring skill 60
+            sys.RegisterPreyDefinition(new PreyDefinition { speciesId = "apex_stag" });
+            sys.RegisterQuarry(new QuarrySpecies { speciesId = "apex_stag", minSkillLevel = 60f });
+
+            var ctxNovice = new WildlifeSelectionContext();
+            ctxNovice.HunterSkillLevels["hunter_novice"] = 10f;
+            sys.SetSelectionContext(ctxNovice);
+            sys.SetTrap("site_novice", "", "hunter_novice");
+
+            // For novice (skill 10 < 60), apex_stag is ineligible
+            for (int i = 0; i < 20; i++)
+            {
+                sys.State.trapSites[0].remainingDurability = 5;
+                sys.State.trapSites[0].checkDay = 1;
+                sys.CheckTraps();
+                if (sys.State.trapSites[0].hasCatch)
+                {
+                    Assert.NotEqual("apex_stag", sys.State.trapSites[0].catchSpecies);
+                }
+            }
+        }
+
+        [Fact]
+        public void WT_SK_008_MidCampaignProgressionUpdate_SeenOnNextCheck()
+        {
+            var prog = new SkillProgressionSystem();
+            prog.RegisterSkill(new SkillDef { id = "skill_surv_1", disciplineId = "survival", xpThreshold = 100f });
+            prog.RegisterSkill(new SkillDef { id = "skill_surv_2", disciplineId = "survival", xpThreshold = 200f });
+            var actor = new SimpleSkillActor("dweller_trapper", "survival");
+
+            // Initial: 0 XP -> 0% progress -> skill 0
+            float initialProg = prog.GetDisciplineProgress01(actor.Id, "survival");
+            Assert.Equal(0f, initialProg);
+
+            var ctx = new WildlifeSelectionContext();
+            ctx.HunterSkillLevels[actor.Id] = initialProg * 100f;
+            float initialChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(1.0f, ctx.HunterSkillLevels[actor.Id], 1.0f, 0f, WeatherKind.Clear);
+            Assert.Equal(0.25f, initialChance, 3);
+
+            // Award 150 XP mid-campaign
+            prog.RecordAction(actor, "survival", 150f, 10);
+            float updatedProg = prog.GetDisciplineProgress01(actor.Id, "survival");
+            Assert.Equal(0.75f, updatedProg, 3);
+
+            // Rebuild context on next check
+            ctx.HunterSkillLevels[actor.Id] = updatedProg * 100f;
+            float updatedChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(1.0f, ctx.HunterSkillLevels[actor.Id], 1.0f, 0f, WeatherKind.Clear);
+            Assert.Equal(0.625f, updatedChance, 3);
+            Assert.True(updatedChance > initialChance);
+        }
+
+        [Fact]
+        public void WT_SK_009_BycatchIsolation_SkillDoesNotModifyBycatch()
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+            var trapDef = catalog!.Traps["trap_net"];
+            Assert.NotNull(trapDef);
+
+            float skillNoviceMult = WildlifeTrappingSystem.SkillMultiplierFor(0f);
+            float skillMasterMult = WildlifeTrappingSystem.SkillMultiplierFor(100f);
+            Assert.NotEqual(skillNoviceMult, skillMasterMult);
+
+            Assert.Equal(0.25f, trapDef.bycatchChance, 2);
+        }
+
+        [Fact]
+        public void WT_SK_010_DurabilityIsolation_SkillDoesNotAlterDurabilityDecrement()
+        {
+            var sys = new WildlifeTrappingSystem(new SeededRng(101));
+            var ctx = new WildlifeSelectionContext();
+            ctx.HunterSkillLevels["novice"] = 0f;
+            ctx.HunterSkillLevels["master"] = 100f;
+            sys.SetSelectionContext(ctx);
+
+            sys.SetTrap("site_novice", "", "novice");
+            sys.SetTrap("site_master", "", "master");
+            sys.State.trapSites[0].remainingDurability = 5;
+            sys.State.trapSites[0].checkDay = 1;
+            sys.State.trapSites[1].remainingDurability = 5;
+            sys.State.trapSites[1].checkDay = 1;
+
+            sys.CheckTraps();
+
+            Assert.Equal(4, sys.State.trapSites[0].remainingDurability);
+            Assert.Equal(4, sys.State.trapSites[1].remainingDurability);
+        }
+
+        [Fact]
+        public void WT_SK_011_SharedAuthorityGuard_TrappingResolvesSharedSkillProgression()
+        {
+            string root = FindRepoRoot();
+            string evolvingWorldPath = Path.Combine(root, "src", "Main.EvolvingWorld.cs");
+            Assert.True(File.Exists(evolvingWorldPath), $"Main.EvolvingWorld.cs exists at {evolvingWorldPath}");
+            string content = File.ReadAllText(evolvingWorldPath);
+
+            Assert.Contains("EnsureSharedSkillProgression()", content);
+            Assert.Contains("skillProgression.GetDisciplineProgress01", content);
+            Assert.Contains("\"survival\"", content);
+        }
+
         // ====================================================================
         // Workstream C: First-Catch Discovery & Codex (WT-JC)
         // ====================================================================
@@ -277,7 +454,35 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WT_JC_003_FirstCatchLoggedSpeciesIds_RoundTripsThroughSaveRestore()
+        public void WT_JC_003_DifferentSpecies_SequentialDiscovery_FiresOnceEach()
+        {
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            var discovered = new List<string>();
+            sys.OnNewSpeciesDiscovered += (sp, site, hunter) => discovered.Add(sp);
+
+            // Record first rabbit
+            sys.State.firstCatchLoggedSpeciesIds.Add("rabbit");
+
+            // Mock catches
+            sys.SetTrap("site_1", "bait_grain", "hunter_1");
+            sys.SetTrap("site_2", "bait_scrap", "hunter_2");
+
+            var setMethod = typeof(WildlifeTrappingSystem).GetMethod("TryRecordFirstCatch",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.NotNull(setMethod);
+
+            setMethod!.Invoke(sys, new object[] { "cotton_hare", "site_1", "hunter_1" });
+            setMethod.Invoke(sys, new object[] { "rad_rat", "site_2", "hunter_2" });
+            // Repeat rabbit (already logged)
+            setMethod.Invoke(sys, new object[] { "rabbit", "site_1", "hunter_1" });
+
+            Assert.Equal(2, discovered.Count);
+            Assert.Equal("cotton_hare", discovered[0]);
+            Assert.Equal("rad_rat", discovered[1]);
+        }
+
+        [Fact]
+        public void WT_JC_004_FirstCatchLoggedSpeciesIds_RoundTripsThroughSaveRestore()
         {
             var sys1 = new WildlifeTrappingSystem(new SeededRng(42));
             sys1.State.firstCatchLoggedSpeciesIds.Add("rabbit");
@@ -295,7 +500,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WT_JC_004_LegacySaveWithoutFirstCatch_RestoresAsEmptyList()
+        public void WT_JC_005_LegacySaveWithoutFirstCatch_RestoresAsEmptyList()
         {
             var legacy = new WildlifeTrappingState();
             legacy.firstCatchLoggedSpeciesIds = null!;
@@ -307,8 +512,41 @@ namespace Ashfall.Core.Tests
             Assert.Empty(sys.State.firstCatchLoggedSpeciesIds);
         }
 
+        private sealed class TrappingTestAuthor : ISurvivorAuthor
+        {
+            public string Id { get; }
+            public string DisplayName { get; }
+            public RiskBiasTrait RiskBias { get; }
+
+            public TrappingTestAuthor(string id, string name, RiskBiasTrait bias = RiskBiasTrait.Realist)
+            {
+                Id = id;
+                DisplayName = name;
+                RiskBias = bias;
+            }
+        }
+
         [Fact]
-        public void WT_JC_005_JournalSystem_UnlockWildlifeCaught_UnlocksCodexKey()
+        public void WT_JC_006_JournalEntry_CreatedOnce_WithValidAuthorAndDedup()
+        {
+            var journal = new JournalSystem();
+            var author = new TrappingTestAuthor("hunter_anna", "Hunter Anna");
+            string knowledgeKey = "wildlife_species_caught_rabbit";
+
+            var entry1 = journal.TryDiscoverRawKnowledge(knowledgeKey, "Captured a wild rabbit.", author, 3);
+            Assert.NotNull(entry1);
+            Assert.Equal(1, journal.CodexUnlockCount);
+            Assert.Equal("Hunter Anna", entry1!.AuthorName);
+            Assert.True(journal.Knowledge.Has(knowledgeKey));
+
+            // Duplicate call does not produce second entry
+            var entry2 = journal.TryDiscoverRawKnowledge(knowledgeKey, "Captured another wild rabbit.", author, 4);
+            Assert.Null(entry2);
+            Assert.Equal(1, journal.CodexUnlockCount);
+        }
+
+        [Fact]
+        public void WT_JC_007_JournalSystem_UnlockWildlifeCaught_UnlocksCodexKey()
         {
             var journal = new JournalSystem();
             string species = "rabbit";
@@ -323,7 +561,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WT_JC_006_CodexEntries_ContainsAll15AuthoritativePreySpecies()
+        public void WT_JC_008_CodexEntries_ContainsAll15AuthoritativePreySpecies()
         {
             var catalog = LoadTrappingCatalog();
             Assert.NotNull(catalog);
@@ -354,80 +592,83 @@ namespace Ashfall.Core.Tests
             }
         }
 
+        [Fact]
+        public void WT_JC_009_Bycatch_NotCountedAsFirstCatch()
+        {
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            var discovered = new List<string>();
+            sys.OnNewSpeciesDiscovered += (sp, site, hunter) => discovered.Add(sp);
+
+            sys.SetTrap("site_bycatch", "bait_scrap", "hunter_bob");
+            var site = sys.State.trapSites[0];
+            site.hasCatch = true;
+            site.catchSpecies = "rabbit";
+            site.bycatchSpecies = "rad_rat";
+
+            // Verify only catchSpecies is recorded in firstCatchLoggedSpeciesIds
+            var method = typeof(WildlifeTrappingSystem).GetMethod("TryRecordFirstCatch",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.NotNull(method);
+            method!.Invoke(sys, new object[] { site.catchSpecies, site.siteId, site.assignedHunterId });
+
+            Assert.Single(discovered);
+            Assert.Equal("rabbit", discovered[0]);
+            Assert.Contains("rabbit", sys.State.firstCatchLoggedSpeciesIds);
+            Assert.DoesNotContain("rad_rat", sys.State.firstCatchLoggedSpeciesIds);
+        }
+
         // ====================================================================
         // Workstream D: Shelter Crafting Station (WT-CS)
         // ====================================================================
 
-        [Fact]
-        public void WT_CS_001_CraftingSystem_DefaultHasNoStations()
+        private static JsonElement? GetRecipeFromJson(string recipeId)
         {
-            var inv = new Ashfall.Core.Inventory.Inventory();
-            var engine = new CraftingSystem(inv);
-
-            Assert.Null(engine.GetStation("workbench"));
-        }
-
-        [Fact]
-        public void WT_CS_002_WorkbenchRecipe_BlockedWhenNoWorkbenchStation()
-        {
-            var inv = new Ashfall.Core.Inventory.Inventory();
-            var engine = new CraftingSystem(inv);
-
-            var recipe = new Recipe
+            string path = Path.Combine(DataDir, "recipes.json");
+            if (!File.Exists(path)) return null;
+            using var doc = JsonDocument.Parse(File.ReadAllText(path));
+            if (!doc.RootElement.TryGetProperty("recipes", out var recipes)) return null;
+            foreach (var r in recipes.EnumerateArray())
             {
-                id = "craft_trap_box",
-                recipeName = "Box Trap",
-                requiredStationId = "workbench",
-                ingredients = new List<Ingredient>()
-            };
-
-            Assert.False(engine.CanCraft(recipe));
+                if (r.TryGetProperty("id", out var idProp) && idProp.GetString() == recipeId)
+                {
+                    return r.Clone();
+                }
+            }
+            return null;
         }
 
         [Fact]
-        public void WT_CS_003_WorkbenchRecipe_AllowedWhenOperationalWorkbenchRegistered()
+        public void WT_CS_001_DataContract_ImprovisedWire_RequiresNoStation()
         {
-            var inv = new Ashfall.Core.Inventory.Inventory();
-            var engine = new CraftingSystem(inv);
-
-            var recipe = new Recipe
-            {
-                id = "craft_trap_box",
-                recipeName = "Box Trap",
-                requiredStationId = "workbench",
-                ingredients = new List<Ingredient>()
-            };
-
-            engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 100f });
-
-            Assert.True(engine.CanCraft(recipe));
+            var recipe = GetRecipeFromJson("craft_trap_improvised_wire");
+            Assert.NotNull(recipe);
+            Assert.True(recipe!.Value.TryGetProperty("requiredStationId", out var stationProp));
+            Assert.Equal(string.Empty, stationProp.GetString());
         }
 
         [Fact]
-        public void WT_CS_004_WorkbenchRecipe_BlockedWhenStationIsBroken()
+        public void WT_CS_002_DataContract_BoxTrap_RequiresWorkbench()
         {
-            var inv = new Ashfall.Core.Inventory.Inventory();
-            var engine = new CraftingSystem(inv);
-
-            var recipe = new Recipe
-            {
-                id = "craft_trap_box",
-                recipeName = "Box Trap",
-                requiredStationId = "workbench",
-                ingredients = new List<Ingredient>()
-            };
-
-            engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 0f });
-
-            Assert.False(engine.CanCraft(recipe));
+            var recipe = GetRecipeFromJson("craft_trap_box");
+            Assert.NotNull(recipe);
+            Assert.True(recipe!.Value.TryGetProperty("requiredStationId", out var stationProp));
+            Assert.Equal("workbench", stationProp.GetString());
         }
 
         [Fact]
-        public void WT_CS_005_RecipeWithoutRequiredStation_CraftableWithoutWorkbench()
+        public void WT_CS_003_DataContract_FishTrap_RequiresWorkbench()
+        {
+            var recipe = GetRecipeFromJson("craft_trap_fish");
+            Assert.NotNull(recipe);
+            Assert.True(recipe!.Value.TryGetProperty("requiredStationId", out var stationProp));
+            Assert.Equal("workbench", stationProp.GetString());
+        }
+
+        [Fact]
+        public void WT_CS_004_StationlessRecipe_CraftableWithoutWorkbench()
         {
             var inv = new Ashfall.Core.Inventory.Inventory();
             var engine = new CraftingSystem(inv);
-
             var recipe = new Recipe
             {
                 id = "craft_trap_improvised_wire",
@@ -440,22 +681,347 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void WT_CS_006_StationDegradeAndRepair_UpdatesOperationalStatus()
+        public void WT_CS_005_BoxTrap_BlockedWithoutWorkbench()
         {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+            var recipe = new Recipe
+            {
+                id = "craft_trap_box",
+                recipeName = "Box Trap",
+                requiredStationId = "workbench",
+                ingredients = new List<Ingredient>()
+            };
+
+            Assert.False(engine.CanCraft(recipe));
+        }
+
+        [Fact]
+        public void WT_CS_006_FishTrap_BlockedWithoutWorkbench()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+            var recipe = new Recipe
+            {
+                id = "craft_trap_fish",
+                recipeName = "Fish Trap",
+                requiredStationId = "workbench",
+                ingredients = new List<Ingredient>()
+            };
+
+            Assert.False(engine.CanCraft(recipe));
+        }
+
+        [Fact]
+        public void WT_CS_007_BrokenWorkbench_BlocksBoxAndFishTraps()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+            engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 0f });
+
+            var boxRecipe = new Recipe { id = "craft_trap_box", requiredStationId = "workbench", ingredients = new List<Ingredient>() };
+            var fishRecipe = new Recipe { id = "craft_trap_fish", requiredStationId = "workbench", ingredients = new List<Ingredient>() };
+
+            Assert.False(engine.CanCraft(boxRecipe));
+            Assert.False(engine.CanCraft(fishRecipe));
+        }
+
+        [Fact]
+        public void WT_CS_008_OperationalWorkbench_AllowsBoxTrap()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+            engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 100f });
+
+            var recipe = new Recipe { id = "craft_trap_box", requiredStationId = "workbench", ingredients = new List<Ingredient>() };
+            Assert.True(engine.CanCraft(recipe));
+        }
+
+        [Fact]
+        public void WT_CS_009_OperationalWorkbench_AllowsFishTrap()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+            engine.AddStation(new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 100f });
+
+            var recipe = new Recipe { id = "craft_trap_fish", requiredStationId = "workbench", ingredients = new List<Ingredient>() };
+            Assert.True(engine.CanCraft(recipe));
+        }
+
+        [Fact]
+        public void WT_CS_010_ShelterNotBuilt_WorkbenchAbsent()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+
+            Assert.Null(engine.GetStation("workbench"));
+        }
+
+        [Fact]
+        public void WT_CS_011_ShelterBuilt_WorkbenchSynchronizes()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+
             var station = new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 100f };
-            Assert.True(station.IsOperational);
+            engine.AddStation(station);
 
+            var synced = engine.GetStation("workbench");
+            Assert.NotNull(synced);
+            Assert.True(synced!.IsOperational);
+            Assert.Equal(100f, synced.condition);
+        }
+
+        [Fact]
+        public void WT_CS_012_StationLosesAvailability_BlocksNewCraft()
+        {
+            var inv = new Ashfall.Core.Inventory.Inventory();
+            var engine = new CraftingSystem(inv);
+            var station = new CraftingStation { id = "workbench", displayName = "Civilian Workbench", condition = 100f };
+            engine.AddStation(station);
+
+            var recipe = new Recipe { id = "craft_trap_box", requiredStationId = "workbench", ingredients = new List<Ingredient>() };
+            Assert.True(engine.CanCraft(recipe));
+
+            // Station degrades to broken
             station.Degrade(100f);
-            Assert.Equal(0f, station.condition);
             Assert.False(station.IsOperational);
+            Assert.False(engine.CanCraft(recipe));
 
+            // Station repaired -> operational
             station.Repair(50f);
-            Assert.Equal(50f, station.condition);
             Assert.True(station.IsOperational);
+            Assert.True(engine.CanCraft(recipe));
+
+            // Station removed -> blocked
+            engine.RemoveStation(station);
+            Assert.Null(engine.GetStation("workbench"));
+            Assert.False(engine.CanCraft(recipe));
+        }
+
+        [Fact]
+        public void WT_CS_013_NoUnconditionalProductionSeed_SourceGate()
+        {
+            string repoRoot = FindRepoRoot();
+            string path = Path.Combine(repoRoot, "src", "Host", "CraftingHostSession.cs");
+            Assert.True(File.Exists(path), $"CraftingHostSession.cs not found at {path}");
+
+            string code = File.ReadAllText(path);
+            Assert.Contains("bool seedDefaultWorkbench = false", code);
+            Assert.Contains("seedDefaultWorkbench: false", code);
         }
 
         // ====================================================================
-        // Workstream E: Task 8 Cross-System Integration Smoke Test
+        // Workstream E: Cross-System Integration (WT-XI)
+        // ====================================================================
+
+        [Fact]
+        public void WT_XI_001_DailyWorldRefresh_OccursBeforeTrapCheck()
+        {
+            string repoRoot = FindRepoRoot();
+            string path = Path.Combine(repoRoot, "src", "Main.ExpandedShelterSystems.cs");
+            Assert.True(File.Exists(path), $"Main.ExpandedShelterSystems.cs not found at {path}");
+
+            string code = File.ReadAllText(path);
+            int refreshIdx = code.IndexOf("RefreshTrappingDensity();", StringComparison.Ordinal);
+            int tickTrapIdx = code.IndexOf("_wildlifeTrapping?.TickDay(day);", StringComparison.Ordinal);
+
+            Assert.True(refreshIdx >= 0, "RefreshTrappingDensity() must be present in Main.ExpandedShelterSystems.cs");
+            Assert.True(tickTrapIdx >= 0, "_wildlifeTrapping?.TickDay(day); must be present in Main.ExpandedShelterSystems.cs");
+            Assert.True(refreshIdx < tickTrapIdx, "RefreshTrappingDensity() must occur before _wildlifeTrapping?.TickDay(day);");
+        }
+
+        [Fact]
+        public void WT_XI_002_FullCheck_UsesWeather_Density_Hunter_And_Bait()
+        {
+            // Baseline roll: density 1.0, skill 50 (neutral 1.0x), bait 1.0, sensitivity 0.5, weather Clear (1.0x)
+            float baseline = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 1.0f,
+                hunterSkillLevel: 50f,
+                baitMultiplier: 1.0f,
+                weatherSensitivity: 0.5f,
+                weather: WeatherKind.Clear);
+
+            Assert.Equal(0.5f, baseline, precision: 3);
+
+            // Weather impact: Blizzard reduces chance for weather-sensitive traps
+            float blizzardChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 1.0f,
+                hunterSkillLevel: 50f,
+                baitMultiplier: 1.0f,
+                weatherSensitivity: 0.8f,
+                weather: WeatherKind.Blizzard);
+
+            Assert.True(blizzardChance < baseline, $"Blizzard ({blizzardChance}) should be lower than baseline ({baseline})");
+
+            // Hunter skill increases chance (100 skill > 50 skill)
+            float skilledChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 1.0f,
+                hunterSkillLevel: 100f,
+                baitMultiplier: 1.0f,
+                weatherSensitivity: 0.5f,
+                weather: WeatherKind.Clear);
+
+            Assert.True(skilledChance > baseline, $"Skilled hunter ({skilledChance}) should be higher than baseline ({baseline})");
+
+            // Bait multiplier increases chance
+            float baitedChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 1.0f,
+                hunterSkillLevel: 50f,
+                baitMultiplier: 1.5f,
+                weatherSensitivity: 0.5f,
+                weather: WeatherKind.Clear);
+
+            Assert.True(baitedChance > baseline, $"Baited ({baitedChance}) should be higher than baseline ({baseline})");
+
+            // Density scales chance
+            float highDensityChance = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 1.5f,
+                hunterSkillLevel: 50f,
+                baitMultiplier: 1.0f,
+                weatherSensitivity: 0.5f,
+                weather: WeatherKind.Clear);
+
+            Assert.True(highDensityChance > baseline, $"High density ({highDensityChance}) should be higher than baseline ({baseline})");
+
+            // Clamping bounds: 0.05f to 0.95f
+            float extremeLow = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 0.01f,
+                hunterSkillLevel: 0f,
+                baitMultiplier: 0.1f,
+                weatherSensitivity: 1.0f,
+                weather: WeatherKind.Ashfall);
+            Assert.Equal(0.05f, extremeLow, precision: 3);
+
+            float extremeHigh = WildlifeTrappingSystem.CalculatePrimaryCatchChance(
+                densityMultiplier: 3.0f,
+                hunterSkillLevel: 100f,
+                baitMultiplier: 3.0f,
+                weatherSensitivity: 0f,
+                weather: WeatherKind.Clear);
+            Assert.Equal(0.95f, extremeHigh, precision: 3);
+        }
+
+        [Fact]
+        public void WT_XI_003_PostLoadContextRebuild_BeforeCheck()
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+
+            var sys1 = new WildlifeTrappingSystem(new SeededRng(42));
+            catalog!.RegisterWith(sys1);
+
+            sys1.SetTrap("site_alpha", "bait_scrap_meat", "hunter_dweller");
+
+            // Provide ephemeral context to sys1
+            var ctx1 = new WildlifeSelectionContext
+            {
+                CurrentWeather = WeatherKind.Rain,
+                SeasonWindowId = "window_thaw"
+            };
+            ctx1.HunterSkillLevels["hunter_dweller"] = 80f;
+            sys1.SetSelectionContext(ctx1);
+
+            var savedState = sys1.CaptureState();
+
+            // Verify savedState does NOT persist ephemeral context
+            string json = new SystemTextJsonSerializer().Serialize(savedState);
+            Assert.DoesNotContain("Rain", json);
+            Assert.DoesNotContain("window_thaw", json);
+            Assert.DoesNotContain("HunterSkillLevels", json);
+
+            // Restore into fresh system
+            var sys2 = new WildlifeTrappingSystem(new SeededRng(42));
+            catalog.RegisterWith(sys2);
+            sys2.RestoreState(savedState);
+
+            // Post-load: host rebuilds context
+            var ctx2 = new WildlifeSelectionContext
+            {
+                CurrentWeather = WeatherKind.Rain,
+                SeasonWindowId = "window_thaw"
+            };
+            ctx2.HunterSkillLevels["hunter_dweller"] = 80f;
+            sys2.SetSelectionContext(ctx2);
+
+            // CheckTraps succeeds using rebuilt context
+            var res = sys2.CheckTraps();
+            Assert.True(res.IsSuccess);
+        }
+
+        [Fact]
+        public void WT_XI_004_DiseaseAndContaminationBridge_Unchanged()
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            catalog!.RegisterWith(sys);
+
+            sys.SetTrap("site_alpha", "bait_scrap_meat", "hunter_dweller");
+            var site = sys.State.trapSites[0];
+
+            // Direct catch with disease and contamination
+            site.hasCatch = true;
+            site.catchSpecies = "rad_rat";
+            site.carcassYield = 2.0f;
+            site.isToxic = true;
+            site.diseaseId = "parasites_rat_lung";
+            site.contaminationDose = 3.5f;
+
+            // Butchery processes meat
+            var butcherRes = sys.Butcher(site.siteId, "dweller_butcher");
+            Assert.True(butcherRes.IsSuccess);
+            Assert.True(site.isMeatProcessed);
+            Assert.Equal("parasites_rat_lung", site.diseaseId);
+            Assert.Equal(3.5f, site.contaminationDose);
+
+            // Duplicate butchery is blocked
+            var duplicate = sys.Butcher(site.siteId, "dweller_butcher");
+            Assert.False(duplicate.IsSuccess);
+        }
+
+        [Fact]
+        public void WT_XI_005_OverhuntCatchPressure_Unchanged()
+        {
+            var catalog = LoadTrappingCatalog();
+            Assert.NotNull(catalog);
+
+            var sys = new WildlifeTrappingSystem(new SeededRng(100));
+            catalog!.RegisterWith(sys);
+
+            sys.SetTrap("site_alpha", "bait_scrap_meat", "hunter_dweller", "snare", "trap_snare", checkIntervalDays: 1, durabilityChecks: 5);
+            var site = sys.State.trapSites[0];
+            site.checkDay = 1;
+
+            // Simulate successive check days with declining density multiplier
+            sys.TickDay(1, densityMultiplier: 1.0f);
+            Assert.Equal(4, site.remainingDurability);
+
+            site.hasCatch = false;
+            sys.TickDay(2, densityMultiplier: 0.5f);
+            Assert.Equal(3, site.remainingDurability);
+
+            site.hasCatch = false;
+            sys.TickDay(3, densityMultiplier: 0.2f);
+            Assert.Equal(2, site.remainingDurability);
+        }
+
+        [Fact]
+        public void WT_XI_006_PanelBinding_StillWorks_SourceGate()
+        {
+            string repoRoot = FindRepoRoot();
+            string path = Path.Combine(repoRoot, "src", "UI", "WildlifeTrappingPanel.cs");
+            Assert.True(File.Exists(path), $"WildlifeTrappingPanel.cs not found at {path}");
+
+            string code = File.ReadAllText(path);
+            Assert.Contains("IBindablePanel", code);
+            Assert.Contains("public void Bind(WildlifeTrappingHostSession session)", code);
+            Assert.Contains("public void Unbind()", code);
+        }
+
+        // ====================================================================
+        // End-to-End Deterministic Scenario
         // ====================================================================
 
         public sealed record EndToEndRunSignature(

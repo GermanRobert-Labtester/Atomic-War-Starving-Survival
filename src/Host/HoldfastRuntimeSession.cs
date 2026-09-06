@@ -141,8 +141,7 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        [Obsolete("Migrate to aggregate campaign persistence.")]
-        public bool TrySave(string basePathOverride = null!, string tradePathOverride = null!)
+        public bool TrySaveToLegacyFiles(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool baseSaved = HoldfastSaveStore.TrySave(World.CaptureSave(), basePathOverride);
             bool tradeSaved = HoldfastTradeSaveStore.TrySave(Trade.CaptureState(), tradePathOverride);
@@ -153,8 +152,7 @@ namespace AtomicWar.GodotApp
             return saved;
         }
 
-        [Obsolete("Migrate to aggregate campaign persistence.")]
-        public bool TryReload(string basePathOverride = null!, string tradePathOverride = null!)
+        public bool TryReloadFromLegacyFiles(string basePathOverride = null!, string tradePathOverride = null!)
         {
             var worldSnapshot = World.CaptureSave();
             var tradeSnapshot = Trade.CaptureState();
@@ -199,6 +197,14 @@ namespace AtomicWar.GodotApp
                 return false;
             }
         }
+
+        [Obsolete("Migrate to aggregate campaign persistence.")]
+        public bool TrySave(string basePathOverride = null!, string tradePathOverride = null!) =>
+            TrySaveToLegacyFiles(basePathOverride, tradePathOverride);
+
+        [Obsolete("Migrate to aggregate campaign persistence.")]
+        public bool TryReload(string basePathOverride = null!, string tradePathOverride = null!) =>
+            TryReloadFromLegacyFiles(basePathOverride, tradePathOverride);
 
         public void SeedDevelopmentState()
         {

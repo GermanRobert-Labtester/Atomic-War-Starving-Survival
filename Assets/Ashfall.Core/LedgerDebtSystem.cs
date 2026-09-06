@@ -157,6 +157,27 @@ namespace Ashfall.Core
         }
 
         /// <summary>
+        /// Tear down an unsigned draft created for a failed cross-system
+        /// transaction. A draft is not debt and must not survive a principal
+        /// transfer failure or a rejected signature. The expected creditor and
+        /// template protect an older/unrelated draft from being removed by a
+        /// compensating rollback.
+        /// </summary>
+        public bool CancelDraft(string debtorId, string creditorId = "", string templateId = "")
+        {
+            var contract = GetContract(debtorId);
+            if (contract == null || contract.signed) return false;
+            if (!string.IsNullOrEmpty(creditorId) && !string.Equals(contract.creditorId, creditorId, StringComparison.Ordinal))
+                return false;
+            if (!string.IsNullOrEmpty(templateId) && !string.Equals(contract.templateId, templateId, StringComparison.Ordinal))
+                return false;
+
+            _state.contracts.Remove(contract);
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>
         /// Daily tick. Signed, unpaid contracts run their term down. At zero the
         /// forfeit is due — named up front, now collectable at the Lockup.
         /// </summary>

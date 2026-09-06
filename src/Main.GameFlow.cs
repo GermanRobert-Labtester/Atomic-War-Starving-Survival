@@ -318,6 +318,7 @@ namespace AtomicWar.GodotApp
                 case "crafting":
                     SetupCrafting();
                     SetupInventory();
+                    SyncCraftingStationsFromShelter();
                     _craftingPanel.Bind(_crafting, _inventory);
                     _craftingPanel.Open();
                     break;
@@ -677,6 +678,8 @@ namespace AtomicWar.GodotApp
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
                 _mapDetailPanel, _eventDetailPanel, _openingProtocolModal,
+                _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
+                _pneumaticDispatchPanel,
                 _dailyBriefingModal
             };
 

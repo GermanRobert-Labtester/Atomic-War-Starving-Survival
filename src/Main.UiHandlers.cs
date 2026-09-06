@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp
         {
             SetupCrafting();
             SetupInventory();
+            SyncCraftingStationsFromShelter();
             _craftingPanel.Bind(_crafting, _inventory);
             _craftingPanel.Open();
         }
@@ -224,7 +225,12 @@ namespace AtomicWar.GodotApp
             _crossingQuestPanel.Bind(_expansions, _expansions.Vouch, _simDay);
             _crossingQuestPanel.Open();
         }
-        public void OnExitGameClicked() { SaveAll(); GetTree().Quit(); }
+        public void OnExitGameClicked()
+        {
+            SaveAll();
+            ShutdownDebtConsequenceIntegration();
+            GetTree().Quit();
+        }
 
 
 

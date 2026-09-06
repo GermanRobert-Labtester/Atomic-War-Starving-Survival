@@ -120,6 +120,45 @@ namespace AtomicWar.GodotApp
                 }
             }
 
+            // Plan 37 gate: every breakthrough item must be consumed as an ingredient in at least one recipe.
+            var recipeIngredientIds = new HashSet<string>(StringComparer.Ordinal);
+            string recipesPath = System.IO.Path.Combine(dataDirectory, "recipes.json");
+            if (files.FileExists(recipesPath))
+            {
+                string recipesRaw = files.ReadAllText(recipesPath);
+                if (!string.IsNullOrEmpty(recipesRaw))
+                {
+                    using var recipesDoc = System.Text.Json.JsonDocument.Parse(recipesRaw);
+                    if (recipesDoc.RootElement.TryGetProperty("recipes", out var recipesArray))
+                    {
+                        foreach (var r in recipesArray.EnumerateArray())
+                        {
+                            if (r.TryGetProperty("ingredients", out var ingArray))
+                            {
+                                foreach (var ing in ingArray.EnumerateArray())
+                                {
+                                    if (ing.TryGetProperty("itemId", out var itemProp))
+                                    {
+                                        string? iid = itemProp.GetString();
+                                        if (!string.IsNullOrEmpty(iid))
+                                            recipeIngredientIds.Add(iid);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var node in nodes)
+            {
+                if (!string.IsNullOrEmpty(node.breakthroughItem) && !recipeIngredientIds.Contains(node.breakthroughItem))
+                {
+                    GD.PrintErr($"[RESEARCH] node '{node.id}' references breakthrough item '{node.breakthroughItem}' with NO active recipe consumer in recipes.json (Plan 37)");
+                    errors++;
+                }
+            }
+
             // Cross-catalog: relic research_unlock_id → knowledge node.
             int relicRefs = 0;
             foreach (var relicUnlockId in CollectStringIds(dataDirectory, files, "knowledge_", "relic_recipes.json"))
@@ -646,6 +685,13 @@ namespace AtomicWar.GodotApp
             var report = LedgerDebtHeadlessDemo.Run(null, new GodotLog());
             GD.Print(report.Summary);
             return EmitSummaryFromHeadlessReport("ledger_debt_selftest", report);
+        }
+
+        public static int RunPatrolEncounterSelfTest(string dataDirectory)
+        {
+            var report = TravelEncounterHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return EmitSummaryFromHeadlessReport("patrol_encounter_selftest", report);
         }
 
         public static int RunHoldfastSelfTest(string dataDirectory)

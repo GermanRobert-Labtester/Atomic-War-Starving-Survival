@@ -27,6 +27,20 @@ namespace AtomicWar.GodotApp
 
         private int DebtCampaignDay() => _core != null ? _core.Clock.Day : _simDay;
 
+        /// <summary>Stops debt callbacks before the live ledger/session is
+        /// discarded. Safe to call repeatedly from reset and quit paths.</summary>
+        private void ShutdownDebtConsequenceIntegration()
+        {
+            _debtBridge?.Detach();
+            _debtBridge = null;
+            _tradeCredit = null;
+            if (_expansions != null)
+                _expansions.DutyRoster.IsSurvivorReservedExternally = null;
+            _holdfastTerminal?.BindCredit(null);
+            _debtBridgeDirty = false;
+            _expansions?.ShutdownDebtIntegration();
+        }
+
         /// <summary>
         /// Idempotent composition of the debt-consequence integration. The
         /// expansion session owns the ledger/catalog/dispatcher/embargo ledger;
@@ -69,6 +83,12 @@ namespace AtomicWar.GodotApp
                     _debtBridgeDirty = true;
                     _expansionHubDirty = true;
                 };
+
+                // Keep the canonical duty authority aware of bounded debt
+                // labor. The bridge owns the persisted endDay record; the
+                // roster owns assignment refusal while that record is active.
+                _expansions.DutyRoster.IsSurvivorReservedExternally =
+                    survivorId => _debtBridge != null && _debtBridge.IsBoundToLabor(survivorId);
 
                 // One embargo query, two consumers: the terminal's trade session and
                 // the credit coordinator. Credit can never bypass what trade cannot.

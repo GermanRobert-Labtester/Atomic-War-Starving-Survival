@@ -195,6 +195,26 @@ namespace Ashfall.Core.Journal
         }
 
         /// <summary>
+        /// Records a freeform discovery entry and unlocks the codex for that knowledge key
+        /// through a single deduplication gate. Returns the created entry, or null if already known.
+        /// </summary>
+        public JournalEntry? TryDiscoverRawKnowledge(
+            string knowledgeKey,
+            string text,
+            ISurvivorAuthor? author,
+            int day,
+            float hour = -1f)
+        {
+            if (string.IsNullOrEmpty(knowledgeKey) || string.IsNullOrEmpty(text)) return null;
+            if (!_knowledge.Discover(knowledgeKey)) return null;
+
+            CodexUnlockCount++;
+            OnCodexUnlocked?.Invoke(knowledgeKey);
+
+            return InsertEntry(knowledgeKey, text, author!, day, hour);
+        }
+
+        /// <summary>
         /// Record a freeform narrative entry once per knowledge key (Prompt #19
         /// ghost-station diary fragments). Deduped via <see cref="KnowledgeBase"/>.
         /// </summary>

@@ -10,6 +10,8 @@ namespace AtomicWar.GodotApp
     {
         private FactionBranchHostSession _factionBranch = null!;
         private bool _factionBranchDirty;
+        private CounterIntelligenceHostSession _counterIntelligence = null!;
+        private bool _counterIntelligenceDirty;
 
         private void SetupFactionBranch()
         {
@@ -34,6 +36,25 @@ namespace AtomicWar.GodotApp
             {
                 if (CaptureSection("weight_of_choices", WeightOfChoicesSaveStore.TryCapturePersisted(_factionBranch.Coordinator.CaptureState())))
                     _factionBranchDirty = false;
+            }
+        }
+
+        private void SetupCounterIntelligence()
+        {
+            if (_counterIntelligence != null) return;
+            var state = CounterIntelligenceSaveStore.TryLoad() ?? new CounterIntelligenceState();
+            var system = new CounterIntelligenceSystem(state, new SeededRng(2001), new GodotLog());
+            _counterIntelligence = new CounterIntelligenceHostSession(system);
+            _counterIntelligence.LoadCatalog(_dataDir);
+            _counterIntelligence.StateChanged += () => _counterIntelligenceDirty = true;
+        }
+
+        private void SaveCounterIntelligence()
+        {
+            if (_counterIntelligence != null)
+            {
+                if (CaptureSection("counter_intelligence", CounterIntelligenceSaveStore.TryCapturePersisted(_counterIntelligence.System.CaptureState())))
+                    _counterIntelligenceDirty = false;
             }
         }
 

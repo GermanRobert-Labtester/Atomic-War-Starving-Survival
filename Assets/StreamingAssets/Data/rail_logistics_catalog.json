@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "edges": [
+    {
+      "rail_edge_id": "rail_edge_holdfast_to_delta",
+      "from_node": "rail_node_holdfast_terminal",
+      "to_node": "rail_node_delta_junction",
+      "gauge_tag": "standard_gauge",
+      "track_condition": "fair",
+      "grade": 0.005,
+      "switchyard_id": "rail_node_switchyard",
+      "clearance_requirement": "standard_clearance",
+      "derailment_risk_bp": 150,
+      "obstacle_profile": "clear",
+      "repair_requirement": "steel_rail_segment",
+      "tags": ["mainline", "river_corridor"]
+    },
+    {
+      "rail_edge_id": "rail_edge_delta_to_silo",
+      "from_node": "rail_node_delta_junction",
+      "to_node": "rail_node_silo_depot",
+      "gauge_tag": "standard_gauge",
+      "track_condition": "degraded",
+      "grade": 0.02,
+      "switchyard_id": "rail_node_switchyard",
+      "clearance_requirement": "heavy_military",
+      "derailment_risk_bp": 550,
+      "obstacle_profile": "rockslide_prone",
+      "repair_requirement": "steel_rail_segment",
+      "tags": ["industrial", "spur", "rockslide"]
+    },
+    {
+      "rail_edge_id": "rail_edge_delta_to_dam",
+      "from_node": "rail_node_delta_junction",
+      "to_node": "rail_node_dam_terminus",
+      "gauge_tag": "standard_gauge",
+      "track_condition": "critical",
+      "grade": 0.035,
+      "switchyard_id": "rail_node_switchyard",
+      "clearance_requirement": "trestle_clearance",
+      "derailment_risk_bp": 850,
+      "obstacle_profile": "collapsed_trestle",
+      "repair_requirement": "railroad_ties",
+      "tags": ["trestle_bridge", "gorge", "ambush_point"]
+    },
+    {
+      "rail_edge_id": "rail_edge_delta_to_switchyard",
+      "from_node": "rail_node_delta_junction",
+      "to_node": "rail_node_switchyard",
+      "gauge_tag": "standard_gauge",
+      "track_condition": "operational",
+      "grade": 0.002,
+      "switchyard_id": "rail_node_switchyard",
+      "clearance_requirement": "standard_clearance",
+      "derailment_risk_bp": 200,
+      "obstacle_profile": "clear",
+      "repair_requirement": "steel_rail_segment",
+      "tags": ["switchyard_feeder"]
+    },
+    {
+      "rail_edge_id": "rail_edge_switchyard_to_silo_alt",
+      "from_node": "rail_node_switchyard",
+      "to_node": "rail_node_silo_depot",
+      "gauge_tag": "standard_gauge",
+      "track_condition": "fair",
+      "grade": 0.015,
+      "switchyard_id": "rail_node_switchyard",
+      "clearance_requirement": "standard_clearance",
+      "derailment_risk_bp": 350,
+      "obstacle_profile": "debris",
+      "repair_requirement": "steel_rail_segment",
+      "tags": ["bypass", "secondary"]
+    }
+  ]
+}

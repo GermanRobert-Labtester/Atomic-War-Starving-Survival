@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "pipes": [
+    {
+      "id": "pipe_standard_shelter",
+      "diameter_class": "standard",
+      "max_pressure": 1.0,
+      "flow_resistance": 0.1,
+      "freeze_tolerance": -5.0,
+      "condition_decay": 0.01,
+      "repair_item_ids": ["scrap_metal", "mechanical_parts"]
+    },
+    {
+      "id": "pipe_freeze_resistant",
+      "diameter_class": "reinforced",
+      "max_pressure": 1.5,
+      "flow_resistance": 0.06,
+      "freeze_tolerance": -20.0,
+      "condition_decay": 0.006,
+      "repair_item_ids": ["scrap_metal", "mechanical_parts"]
+    }
+  ],
+  "pumps": [
+    {
+      "id": "pump_hand_reciprocating",
+      "max_flow": 12.0,
+      "head_pressure": 0.8,
+      "power_draw": 0.0,
+      "efficiency": 0.65,
+      "condition_decay": 0.02
+    },
+    {
+      "id": "pump_electric_pressure",
+      "max_flow": 40.0,
+      "head_pressure": 1.4,
+      "power_draw": 3.0,
+      "efficiency": 0.9,
+      "condition_decay": 0.01
+    }
+  ],
+  "reservoirs": [
+    {
+      "id": "reservoir_clean_buried",
+      "capacity": 250.0,
+      "base_leak_rate": 0.005,
+      "allowed_water_classes": ["clean", "potable"]
+    },
+    {
+      "id": "reservoir_raw_catchment",
+      "capacity": 180.0,
+      "base_leak_rate": 0.015,
+      "allowed_water_classes": ["raw", "brackish", "irradiated"]
+    }
+  ]
+}

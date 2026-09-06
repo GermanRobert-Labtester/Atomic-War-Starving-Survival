@@ -204,6 +204,18 @@ namespace Ashfall.Core.StartingLevel
         public void TickDay() => TickDay(false, WeatherKind.Clear);
 
         public void TickDay(bool isFilterDutyAssigned, WeatherKind outdoorWeather)
+            => TickDay(isFilterDutyAssigned, outdoorWeather, powerAvailability01: 1f);
+
+        /// <summary>
+        /// Advance one shelter day. <paramref name="powerAvailability01"/> is the
+        /// grid-derived power fraction for the filtration plant (canonical room
+        /// <c>room_air_filtration</c>, failure effect <c>fx_filtration_off</c>).
+        /// With zero power the active scrubbing stack is offline: the filter
+        /// clogs at hazard-weather rate regardless of duty roster, and the
+        /// powered +10 quality offset disappears (the stack stops pushing
+        /// clean air). Defaults to 1 for legacy callers.
+        /// </summary>
+        public void TickDay(bool isFilterDutyAssigned, WeatherKind outdoorWeather, float powerAvailability01)
         {
             State.day++;
             State.daysSurvived++;
@@ -212,6 +224,7 @@ namespace Ashfall.Core.StartingLevel
             State.eveningRadioResolved = false;
 
             // ── Air Filtration Degradation ──
+            bool filtrationPowered = powerAvailability01 > 0f;
             float baseDegrade = 5.0f;
             bool isHazardWeather = outdoorWeather == WeatherKind.FalloutStorm ||
                                    outdoorWeather == WeatherKind.BlackRain ||
@@ -220,6 +233,14 @@ namespace Ashfall.Core.StartingLevel
             {
                 baseDegrade += 4.0f; // Heavy particulate / fallout storm clogging
             }
+            if (!filtrationPowered)
+            {
+                // fx_filtration_off: the powered scrubbing stack is offline —
+                // the filter clogs at hazard-weather rate regardless of duty
+                // roster (intake maintenance cannot run without power).
+                baseDegrade += 4.0f;
+                isFilterDutyAssigned = false;
+            }
 
             if (isFilterDutyAssigned)
             {
@@ -227,7 +248,9 @@ namespace Ashfall.Core.StartingLevel
             }
 
             State.airFilterHealthPercent = Math.Max(0.0f, State.airFilterHealthPercent - baseDegrade);
-            State.airQualityPercent = Math.Clamp(State.airFilterHealthPercent * 0.9f + 10f, 0f, 100f);
+            // Powered scrubbing adds a +10 quality offset; an offline stack loses it.
+            float poweredOffset = filtrationPowered ? 10f : 0f;
+            State.airQualityPercent = Math.Clamp(State.airFilterHealthPercent * 0.9f + poweredOffset, 0f, 100f);
 
             if (State.airFilterHealthPercent < 50.0f)
             {

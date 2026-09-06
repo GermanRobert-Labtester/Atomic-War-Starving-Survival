@@ -51,10 +51,15 @@ namespace Ashfall.Core.MoralChoice
 
         public static List<MoralChoiceQuestDefinition> Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
-            if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir))
+            return LoadFrom(dataDir, DefaultFileName, fileIO, json);
+        }
+
+        public static List<MoralChoiceQuestDefinition> LoadFrom(string dataDir, string fileName, IFileIO fileIO, IJsonSerializer json)
+        {
+            if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir) || string.IsNullOrEmpty(fileName))
                 return new List<MoralChoiceQuestDefinition>();
 
-            string path = fileIO.Combine(dataDir, DefaultFileName);
+            string path = fileIO.Combine(dataDir, fileName);
             if (!fileIO.FileExists(path))
                 return new List<MoralChoiceQuestDefinition>();
 
@@ -73,6 +78,22 @@ namespace Ashfall.Core.MoralChoice
                 definitions.Add(Map(record));
             }
             return definitions;
+        }
+
+        public static List<MoralChoiceQuestDefinition> LoadStubs(string dataDir, IFileIO fileIO, IJsonSerializer json)
+        {
+            var baseList = Load(dataDir, fileIO, json);
+            var distressList = LoadFrom(dataDir, "moral_choice_quests_distress.json", fileIO, json);
+            var map = new Dictionary<string, MoralChoiceQuestDefinition>(StringComparer.OrdinalIgnoreCase);
+            foreach (var q in baseList)
+            {
+                if (!string.IsNullOrEmpty(q.Id)) map[q.Id] = q;
+            }
+            foreach (var q in distressList)
+            {
+                if (!string.IsNullOrEmpty(q.Id)) map[q.Id] = q;
+            }
+            return new List<MoralChoiceQuestDefinition>(map.Values);
         }
 
         private static MoralChoiceQuestDefinition Map(MoralChoiceQuestRecord r) => new MoralChoiceQuestDefinition

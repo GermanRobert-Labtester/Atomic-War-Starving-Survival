@@ -97,7 +97,21 @@ namespace AtomicWar.GodotApp
 
         private void OnCollectibleItemAdded(ItemDefinition item, int amount)
         {
-            if (_collectibleDispatcher == null || item == null || string.IsNullOrEmpty(item.id))
+            if (item == null || string.IsNullOrEmpty(item.id))
+                return;
+
+            if (_vinylMorale != null && Ashfall.Core.Narrative.VinylRecordAcquisitionMap.IsVinylAcquisitionItem(item.id))
+            {
+                var rng = _campaignDay != null
+                    ? _campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 99)
+                    : new Ashfall.Core.SeededRng(1042);
+                var acquired = Ashfall.Core.Narrative.VinylRecordAcquisitionMap.TryAcquireFromItem(
+                    item.id, _vinylMorale.System, rng);
+                if (!string.IsNullOrEmpty(acquired))
+                    _vinylMoraleDirty = true;
+            }
+
+            if (_collectibleDispatcher == null)
                 return;
 
             var result = _collectibleDispatcher.DispatchOnAcquire(item.id);

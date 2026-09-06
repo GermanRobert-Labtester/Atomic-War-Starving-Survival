@@ -121,6 +121,7 @@ namespace Ashfall.Core.Expeditions
         private readonly Dictionary<string, TrackSegmentDef> _segmentDefs = new Dictionary<string, TrackSegmentDef>(StringComparer.Ordinal);
         private readonly Dictionary<string, TrainCarDef> _carDefs = new Dictionary<string, TrainCarDef>(StringComparer.Ordinal);
         private RailwayState _state = new RailwayState();
+        public RailwayState State => _state;
 
         public event Action<string, string>? OnTrainDispatched;
         public event Action<string, string>? OnTrainArrived;
@@ -128,7 +129,33 @@ namespace Ashfall.Core.Expeditions
         public event Action<string, string>? OnTrainAmbushed;
         public event Action<string, float>? OnTrackRepaired;
 
-        public RailwayState State => _state;
+        public const string CatalogPath = "rail_logistics_catalog.json";
+        private readonly Dictionary<string, RailLogisticsEdgeDef> _logisticsEdges = new Dictionary<string, RailLogisticsEdgeDef>(StringComparer.Ordinal);
+        public IReadOnlyDictionary<string, RailLogisticsEdgeDef> LogisticsEdges => _logisticsEdges;
+
+        public void RegisterLogisticsCatalog(IEnumerable<RailLogisticsEdgeDef> edges)
+        {
+            if (edges == null) return;
+            foreach (var e in edges)
+            {
+                if (e != null && !string.IsNullOrEmpty(e.rail_edge_id))
+                    _logisticsEdges[e.rail_edge_id] = e;
+            }
+        }
+
+        public RailLogisticsEdgeDef? GetLogisticsEdge(string fromNode, string toNode)
+        {
+            foreach (var edge in _logisticsEdges.Values)
+            {
+                if ((edge.from_node == fromNode && edge.to_node == toNode) ||
+                    (edge.from_node == toNode && edge.to_node == fromNode))
+                {
+                    return edge;
+                }
+            }
+            return null;
+        }
+
         public IReadOnlyDictionary<string, RailNodeDef> Nodes => _nodes;
         public IReadOnlyDictionary<string, TrackSegmentDef> SegmentDefs => _segmentDefs;
 
@@ -245,6 +272,23 @@ namespace Ashfall.Core.Expeditions
             return ActionResult.Success("railway.bridge_reconstructed");
         }
 
+        public ActionResult ClearTrackObstacle(string segmentId)
+        {
+            if (!_segmentDefs.TryGetValue(segmentId, out var def))
+                return ActionResult.Blocked("unknown_segment", "railway.unknown_segment");
+
+            var seg = EnsureSegmentState(segmentId);
+            if (!seg.isSabotaged)
+                return ActionResult.Blocked("no_obstacle", "railway.no_obstacle");
+
+            if (_inventory.CountById("scrap_metal") < 5)
+                return ActionResult.Blocked("insufficient_clearing_materials", "railway.insufficient_clearing_materials");
+
+            _inventory.RemoveById("scrap_metal", 5);
+            seg.isSabotaged = false;
+            return ActionResult.Success("railway.obstacle_cleared");
+        }
+
         public bool CanTraverseSegment(TrainState train, string segmentId)
         {
             if (!_segmentDefs.TryGetValue(segmentId, out var def)) return false;
@@ -334,7 +378,16 @@ namespace Ashfall.Core.Expeditions
             // 1. Derailment risk check on degraded track (Plan 73 §7.6)
             if (seg.integrity < 0.65f)
             {
-                double derailChance = (0.65f - seg.integrity) * 0.40;
+                float riskFactor = 0.40f;
+                if (def != null)
+                {
+                    var edge = GetLogisticsEdge(def.start_node_id, def.end_node_id);
+                    if (edge != null && edge.derailment_risk_bp > 0)
+                    {
+                        riskFactor = Math.Max(0.20f, edge.derailment_risk_bp / 1000.0f);
+                    }
+                }
+                double derailChance = (0.65f - seg.integrity) * riskFactor;
                 if (_rng.NextDouble() < derailChance)
                 {
                     train.status = TrainDispatchStatus.Derailment;
@@ -374,7 +427,17 @@ namespace Ashfall.Core.Expeditions
                     effectiveDelta *= 0.5f; // exhaustion speed penalty
             }
 
-            // 4. Advance progress
+            // 4. Grade speed modifier (Plan 73 §7.5)
+            if (def != null)
+            {
+                var edge = GetLogisticsEdge(def.start_node_id, def.end_node_id);
+                if (edge != null && edge.grade > 0.01f)
+                {
+                    effectiveDelta *= (1.0f - Math.Min(0.35f, edge.grade * 5f));
+                }
+            }
+
+            // 5. Advance progress
             train.segmentProgress += effectiveDelta;
             if (train.segmentProgress >= 1.0f)
             {
@@ -603,6 +666,48 @@ namespace Ashfall.Core.Expeditions
 
         public TrainState? GetTrain(string trainId)
             => _state.trains.Find(t => t != null && t.trainId == trainId);
+
+        /// <summary>
+        /// TradeRouteSystem integration: check whether a rail corridor is operational
+        /// between two nodes. Returns true if a path of fully traversable segments exists.
+        /// </summary>
+        public bool IsRailCorridorOperational(string originNodeId, string destinationNodeId)
+        {
+            if (!_nodes.ContainsKey(originNodeId) || !_nodes.ContainsKey(destinationNodeId))
+                return false;
+            var path = FindShortestPath(originNodeId, destinationNodeId);
+            if (path == null || path.Count == 0) return false;
+            foreach (var segId in path)
+            {
+                var segState = EnsureSegmentState(segId);
+                if (!_segmentDefs.TryGetValue(segId, out var def)) return false;
+                if (segState.integrity < 0.40f) return false;
+                if (def.bridge_required && !segState.bridgeIntact) return false;
+                if (segState.isSabotaged) return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// TradeRouteSystem integration: returns the list of operational rail segments
+        /// between two nodes, or null if the corridor is not operational.
+        /// </summary>
+        public List<string>? GetOperationalRailCorridor(string originNodeId, string destinationNodeId)
+        {
+            if (!_nodes.ContainsKey(originNodeId) || !_nodes.ContainsKey(destinationNodeId))
+                return null;
+            var path = FindShortestPath(originNodeId, destinationNodeId);
+            if (path == null || path.Count == 0) return null;
+            foreach (var segId in path)
+            {
+                var segState = EnsureSegmentState(segId);
+                if (!_segmentDefs.TryGetValue(segId, out var def)) return null;
+                if (segState.integrity < 0.40f) return null;
+                if (def.bridge_required && !segState.bridgeIntact) return null;
+                if (segState.isSabotaged) return null;
+            }
+            return path;
+        }
 
         public void RestoreState(RailwayState state)
         {

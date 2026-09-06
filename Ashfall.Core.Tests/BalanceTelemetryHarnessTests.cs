@@ -66,14 +66,7 @@ namespace Ashfall.Core.Tests
                 if (day <= 3) Assert.True(survivor.IsAliveState, $"Survivor died unexpectedly on day {day} seed {seed}");
             }
 
-            // Write CSV
-            try
-            {
-                Directory.CreateDirectory(ArtifactDir);
-                var path = Path.Combine(ArtifactDir, $"balance_seed_{seed}.csv");
-                File.WriteAllLines(path, rows);
-            }
-            catch { /* ignore I/O in CI */ }
+            TelemetryArtifactWriter.TryWriteLines(ArtifactDir, $"balance_seed_{seed}.csv", rows);
 
             // Basic invariants
             Assert.True(survivor.Hunger > 20f, "Hunger must increase over 7 days");

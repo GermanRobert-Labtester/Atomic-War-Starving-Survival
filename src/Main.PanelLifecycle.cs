@@ -29,6 +29,8 @@ namespace AtomicWar.GodotApp
                 _brineExtractionPanel, _expeditionCampPanel, _fireIncidentPanel,
                 _geigerCalibrationPanel, _triangulationPanel, _weatherSondePanel,
                 _powerGridPanel, _expeditionRadarPanel, _doseLedgerPanel,
+                _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
+                _pneumaticDispatchPanel,
                 _caravanBarterLedgerPanel, _factionMatrixPanel, _factionsNarrativePanel,
                 _skillMatrixPanel, _survivalWorkstationPanel, _verdictDashboardPanel,
                 _mapAtlasPanel, _maritimeAtlasPanel, _musterAtlasPanel,

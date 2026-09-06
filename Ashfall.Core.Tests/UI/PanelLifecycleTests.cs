@@ -123,6 +123,42 @@ namespace Ashfall.Core.Tests.UI
             Assert.Equal(2, completionCount); // Exactly 2, not 3
         }
 
+        [Fact]
+        public void ResearchAtlas_DisciplinePartitioningAndDependents_ReflectsLiveCatalog()
+        {
+            var research = new ResearchSystem();
+            ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
+
+            Assert.Equal(56, research.CatalogCount);
+
+            string[] disciplines = { "survival", "engineering", "medical", "science", "scavenging", "combat" };
+            foreach (var d in disciplines)
+            {
+                int count = 0;
+                foreach (var node in research.Catalog.Values)
+                {
+                    if (string.Equals(node.category, d, StringComparison.OrdinalIgnoreCase))
+                        count++;
+                }
+                Assert.True(count > 0, $"Discipline {d} must contain at least 1 node in authoritative catalog");
+            }
+
+            // Test dependents traversal
+            var waterBasicsDeps = research.GetDependents("knowledge_water_basics");
+            Assert.Contains("knowledge_water_advanced", waterBasicsDeps);
+
+            // Initially locked
+            var eligAdv = research.GetEligibility("knowledge_water_advanced");
+            Assert.False(eligAdv.CanStart);
+            Assert.Equal(ResearchEligibilityCode.MissingPrerequisites, eligAdv.Code);
+
+            // Complete prereq
+            research.CompleteResearch("knowledge_water_basics");
+            eligAdv = research.GetEligibility("knowledge_water_advanced");
+            Assert.True(eligAdv.CanStart);
+            Assert.Equal(ResearchEligibilityCode.Eligible, eligAdv.Code);
+        }
+
         private class MockAuthor : ISurvivorAuthor
         {
             public string Id { get; }

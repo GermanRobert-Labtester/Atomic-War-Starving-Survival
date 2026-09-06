@@ -21,6 +21,7 @@ namespace Ashfall.Core.Campaign
         public int simDay;
         public List<DailyBriefingReport> PendingReports = new List<DailyBriefingReport>();
         public List<int> AcknowledgedDays = new List<int>();
+        public List<DailyBriefingCadenceRecord> CadenceRecords = new List<DailyBriefingCadenceRecord>();
         public string Checksum = string.Empty;
     }
 
@@ -29,6 +30,8 @@ namespace Ashfall.Core.Campaign
     {
         public List<DailyBriefingReport> Pending = new List<DailyBriefingReport>();
         public HashSet<int> AcknowledgedDays = new HashSet<int>();
+        public Dictionary<string, DailyBriefingCadenceRecord> CadenceRecords =
+            new Dictionary<string, DailyBriefingCadenceRecord>(StringComparer.Ordinal);
 
         public bool HasUnacknowledged(int day)
         {
@@ -58,18 +61,31 @@ namespace Ashfall.Core.Campaign
             Pending.Add(report);
         }
 
-        public DailyBriefingSave CaptureState() => new DailyBriefingSave
+        public DailyBriefingSave CaptureState()
         {
-            saveVersion = DailyBriefingSave.CurrentSaveVersion,
-            simDay = Pending.Count > 0 ? Pending[Pending.Count - 1].Day : 0,
-            PendingReports = new List<DailyBriefingReport>(Pending),
-            AcknowledgedDays = new List<int>(AcknowledgedDays)
-        };
+            var cadenceList = new List<DailyBriefingCadenceRecord>(CadenceRecords.Count);
+            var sortedKeys = new List<string>(CadenceRecords.Keys);
+            sortedKeys.Sort(StringComparer.Ordinal);
+            for (int i = 0; i < sortedKeys.Count; i++)
+            {
+                cadenceList.Add(CadenceRecords[sortedKeys[i]].Clone());
+            }
+
+            return new DailyBriefingSave
+            {
+                saveVersion = DailyBriefingSave.CurrentSaveVersion,
+                simDay = Pending.Count > 0 ? Pending[Pending.Count - 1].Day : 0,
+                PendingReports = new List<DailyBriefingReport>(Pending),
+                AcknowledgedDays = new List<int>(AcknowledgedDays),
+                CadenceRecords = cadenceList
+            };
+        }
 
         public void RestoreState(DailyBriefingSave save)
         {
             Pending.Clear();
             AcknowledgedDays.Clear();
+            CadenceRecords.Clear();
             if (save == null) return;
             if (save.PendingReports != null)
                 for (int i = 0; i < save.PendingReports.Count; i++)
@@ -78,6 +94,13 @@ namespace Ashfall.Core.Campaign
             if (save.AcknowledgedDays != null)
                 for (int i = 0; i < save.AcknowledgedDays.Count; i++)
                     AcknowledgedDays.Add(save.AcknowledgedDays[i]);
+            if (save.CadenceRecords != null)
+                for (int i = 0; i < save.CadenceRecords.Count; i++)
+                {
+                    var r = save.CadenceRecords[i];
+                    if (r != null && !string.IsNullOrEmpty(r.FactId))
+                        CadenceRecords[r.FactId] = r.Clone();
+                }
         }
     }
 

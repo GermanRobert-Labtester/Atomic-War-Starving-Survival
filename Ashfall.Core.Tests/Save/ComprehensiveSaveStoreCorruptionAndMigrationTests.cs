@@ -268,10 +268,17 @@ namespace Ashfall.Core.Tests.Save
             // Plans 94-97 added grain_processing, cryogenic_air_separation, heliograph;
             // Plans 78-81 added geodetic_survey, kinetic_storage, chemical_recon;
             // Plans 110-113 added chlor_alkali_synthesis, solar_concentrator, precision_optics, ballistic_shield;
-            // Plans 130-133 added powder_metallurgy, nvis_communications, lyophilization, draisine_recovery).
-            Assert.Equal(126, SaveSectionRegistry.All.Count);
+            // Plans 130-133 added powder_metallurgy, nvis_communications, lyophilization, draisine_recovery;
+            // Tasks 5-8 added weather_hardening, geothermal_aquifer, counter_intelligence, recon_telemetry;
+            // Plans 146-149 added route_infrastructure, ebpvd_coating, microfluidic_diagnostic, mine_clearing_flail, rail_grinding;
+            // Plans 166-169 added espionage, fluid_logistics, procedural_narrative;
+            // Plans 62-65 added the three dedicated aggregate save stores.
+            // Plans 50-53 added vehicle_garage, faction_espionage, survivor_mental_health.
+            // Plans B66-B69 added heavy metallurgy (foundry-internal state),
+            // seismic_dynamics and cryo_vault; the muster/power streams added the rest.
+            Assert.Equal(160, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(126, keys.Count);
+            Assert.Equal(160, keys.Count);
         }
     }
 }

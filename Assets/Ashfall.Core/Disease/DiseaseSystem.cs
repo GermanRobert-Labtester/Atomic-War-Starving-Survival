@@ -70,6 +70,9 @@ namespace Ashfall.Core.Disease
 
         /// <summary>Day of the last accepted treatment (-1 = none).</summary>
         public int last_treatment_day = -1;
+
+        /// <summary>Whether this infection has been identified by medical staff.</summary>
+        public bool is_diagnosed = false;
     }
 
     /// <summary>
@@ -982,6 +985,19 @@ ILog? log = null)
             toEntry.infected.Add(patient);
             toEntry.infections_total++;
 
+            // Flagship XI QA repair: the destination entry crosses the outbreak
+            // threshold exactly like a fresh infection would — declare, track,
+            // and raise, so downstream bridges (e.g. morale contagion fear)
+            // see mutations that create a new outbreak.
+            if (!toEntry.outbreak_active && toEntry.infected.Count >= OutbreakThreshold)
+            {
+                toEntry.outbreak_active = true;
+                toEntry.outbreaks_total++;
+                toEntry.deaths_during_outbreak = 0;
+                Raise(OnOutbreakDeclared, DiseaseIds.EventOutbreakDeclared,
+                    "outbreak declared: " + toDiseaseId, toDiseaseId);
+            }
+
             Raise(OnStrainMutated, "disease_strain_mutated",
                 survivorId + ": " + fromDiseaseId + " has shifted into " + toDiseaseId,
                 survivorId, toDiseaseId);
@@ -1216,6 +1232,46 @@ ILog? log = null)
                 if (p != null && p.quarantined) return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Explicitly diagnose a patient's infection, revealing disease identity in clinical pictures.
+        /// </summary>
+        public bool Diagnose(string survivorId, string diseaseId)
+        {
+            if (!TryFindPatient(survivorId, diseaseId, out _, out var patient) || patient == null)
+                return false;
+
+            if (patient.is_diagnosed) return true; // already diagnosed
+
+            patient.is_diagnosed = true;
+            _log.Info($"[Disease] {survivorId} diagnosed with {diseaseId}.");
+            RaiseStateChanged();
+            return true;
+        }
+
+        public bool IsDiagnosed(string survivorId, string diseaseId)
+        {
+            if (TryFindPatient(survivorId, diseaseId, out _, out var patient) && patient != null)
+                return patient.is_diagnosed;
+            return false;
+        }
+
+        public DiseaseClinicalPicture GetClinicalPicture(string survivorId, string diseaseId)
+        {
+            var def = _catalog.GetById(diseaseId);
+            if (def == null)
+                return new DiseaseClinicalPicture();
+
+            if (!TryFindPatient(survivorId, diseaseId, out _, out var patient) || patient == null)
+                return DiseaseTriage.PictureOf(def, 0, diagnosed: false);
+
+            return DiseaseTriage.PictureOf(
+                def,
+                patient.days_sick,
+                effectiveLethality: Math.Max(0f, def.lethality - patient.lethality_reduction),
+                dosesGiven: patient.treatments_applied,
+                diagnosed: patient.is_diagnosed);
         }
 
         // -----------------------------------------------------------------
@@ -1546,7 +1602,8 @@ ILog? log = null)
                                 // truthfully means "this patient was never treated".
                                 treatments_applied = p.treatments_applied,
                                 lethality_reduction = p.lethality_reduction,
-                                last_treatment_day = p.last_treatment_day
+                                last_treatment_day = p.last_treatment_day,
+                                is_diagnosed = p.is_diagnosed
                             });
                         }
                     }
