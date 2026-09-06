@@ -239,6 +239,23 @@ IJsonSerializer? serializer = null)
             }
         }
 
+        /// <summary>
+        /// Merge Plan B66 heavy metallurgy recipes (projected as product
+        /// entries) into the bound catalog. Existing product ids are never
+        /// overwritten. Deterministic; safe to call again.
+        /// </summary>
+        public void MergeHeavyRecipes(IEnumerable<FoundryProductEntry> heavyProducts)
+        {
+            if (heavyProducts == null) return;
+            foreach (var p in heavyProducts)
+            {
+                if (p == null || string.IsNullOrEmpty(p.product_id)) continue;
+                if (_byProductId.ContainsKey(p.product_id)) continue;
+                _byProductId[p.product_id] = p;
+                _products.Add(p);
+            }
+        }
+
         public FoundryProductEntry? GetProduct(string productId)
         {
             if (string.IsNullOrEmpty(productId)) return null;

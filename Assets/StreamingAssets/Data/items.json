@@ -7532,6 +7532,150 @@
       "stackMax": 2,
       "weight": 8.0,
       "tradeValue": 40
+    },
+    {
+      "id": "item_blowtorch",
+      "displayName": "Oxy-Propane Blowtorch",
+      "description": "Portable pressurized cutting and thawing torch for unfreezing conduits and metal fabrication.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 2.2,
+      "tradeValue": 45
+    },
+    {
+      "id": "item_manual_generator_maintenance",
+      "displayName": "Technical Manual: Generator Maintenance",
+      "description": "Exhaustive handwritten and illustrated maintenance manual detailing diesel engine tolerances, injector calibration, and radiator loop repair.",
+      "type": "Book",
+      "stackMax": 5,
+      "weight": 0.8,
+      "tradeValue": 65
+    },
+    {
+      "id": "item_manual_field_medicine",
+      "displayName": "Technical Manual: Field Medicine",
+      "description": "Annotated trauma care manual with step-by-step sterile debridement, hypothermia rewarming, and frostbite salvage procedures.",
+      "type": "Book",
+      "stackMax": 5,
+      "weight": 0.8,
+      "tradeValue": 65
+    },
+    {
+      "id": "item_manual_rough_repairs",
+      "displayName": "Technical Manual: Structural Shoring & Repairs",
+      "description": "Practical engineering guide covering load-bearing timber shoring, hydraulic jacking, and seismic conduit reinforcement.",
+      "type": "Book",
+      "stackMax": 5,
+      "weight": 0.8,
+      "tradeValue": 65
+    },
+    {
+      "id": "item_manual_seismology",
+      "displayName": "Technical Manual: Deep-Earth Seismology",
+      "description": "Geological field manual recording tectonic shear patterns, fault stress telemetry, and tremor epicenter triangulation.",
+      "type": "Book",
+      "stackMax": 5,
+      "weight": 0.8,
+      "tradeValue": 65
+    },
+    {
+      "id": "item_metallurgy_iron_ingot",
+      "displayName": "Reclaimed Iron Ingot",
+      "description": "A rough-squared ingot of reclaimed iron from the smelter bay. Pour marks still visible on the flank. The starting point of every serious repair job in the shelter.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.4,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_metallurgy_copper_ingot",
+      "displayName": "Refined Copper Ingot",
+      "description": "Stripped wire and salvage melted down into a dense copper ingot. Conductivity varies with the scrap it came from, but it beats scavenging for another spool that may not exist.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.0,
+      "tradeValue": 26
+    },
+    {
+      "id": "item_metallurgy_steel_billet",
+      "displayName": "Mixed Machine-Steel Billet",
+      "description": "A heavy billet of machine steel, rendered down from mechanical scrap. Consistent enough to machine, dull gray, still warm at the core when it leaves the cooling beds.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 3.6,
+      "tradeValue": 30
+    },
+    {
+      "id": "item_metallurgy_solder_stock",
+      "displayName": "Solder Stock",
+      "description": "Hand-cast bars of soft alloy for electrical and plumbing work. Not pre-war specification, but it flows and it holds. The electronics bench goes through it slowly and always needs more.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.4,
+      "tradeValue": 12
+    },
+    {
+      "id": "item_metallurgy_heavy_i_beam",
+      "displayName": "Heavy I-Beam",
+      "description": "A long structural beam drawn from the smelter's heavy mold. The flanges are thick and slightly uneven, but it carries load the way the old factory steel did. Deep-strata work stalls without them.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 18.0,
+      "tradeValue": 120
+    },
+    {
+      "id": "item_metallurgy_shoring_plate",
+      "displayName": "Shoring Plate",
+      "description": "A flat rolled plate for lining excavated tunnels and reinforcing weak overhead rock. Bolt holes are cast in. Cold to the touch even hours after pouring.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 9.5,
+      "tradeValue": 58
+    },
+    {
+      "id": "item_metallurgy_spring_steel_billet",
+      "displayName": "Spring Steel Billet",
+      "description": "A billet alloyed for flex and fatigue resistance. The foundry crew argues about the quench, but the results keep winches and valve returns working long past when rigid stock would have cracked.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 3.2,
+      "tradeValue": 44
+    },
+    {
+      "id": "item_metallurgy_gear_blank",
+      "displayName": "Cast Gear Blank",
+      "description": "A cast gear wheel before the teeth are cut. Casting them in-house saves weeks of waiting on trade caravans for salvage that may not match anyway.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.8,
+      "tradeValue": 36
+    },
+    {
+      "id": "item_metallurgy_shaft_stock",
+      "displayName": "Machined Shaft Stock",
+      "description": "Straight, turned shafting in common diameters. Everything that spins in the shelter eventually needs a piece of this: pumps, blowers, drill heads.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.2,
+      "tradeValue": 34
+    },
+    {
+      "id": "item_metallurgy_shielding_plate",
+      "displayName": "Dense Shielding Plate",
+      "description": "A heavy plate cast around lead salvage for radiation shielding. Awkward to hang, impossible to fake. The cryo vault specification calls for these by name.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 22.0,
+      "tradeValue": 150
+    },
+    {
+      "id": "item_metallurgy_tool_blank",
+      "displayName": "High-Grade Tool Blank",
+      "description": "An alloy tool blank ready for the grinder. With patient finishing it becomes a chisel, a cutter, or a die that outlasts three of anything salvaged.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 1.8,
+      "tradeValue": 52
     }
   ]
 }

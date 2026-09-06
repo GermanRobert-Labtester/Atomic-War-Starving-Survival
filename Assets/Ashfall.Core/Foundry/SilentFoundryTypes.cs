@@ -32,6 +32,12 @@ namespace Ashfall.Core.Foundry
         public const string ItemGreenSand = "item_foundry_green_sand";
         public const string ItemFlux = "item_foundry_flux";
         public const string ItemAlloyAdditive = "item_foundry_alloy_additive";
+
+        // Plan B66 — heavy metallurgy expansion.
+        public const string ItemScrapMechanical = "scrap_mechanical";
+        public const string ItemCopperWire = "copper_wire_10m_of_10m";
+        public const string ItemShoringBracket = "item_foundry_shoring_bracket";
+        public const string CategoryHeavyMetallurgy = "heavy_metallurgy";
     }
 
     // ---------------------------------------------------------------------
@@ -231,6 +237,13 @@ namespace Ashfall.Core.Foundry
         public float cumulativeHope = 0f;
         public int firstHeatDay = 0;
         public int strikeDay = 0;
+
+        // Plan B66 — heavy metallurgy expansion. Legacy defaults keep old
+        // saves safe: no slag, no active heavy batch (never a half-full
+        // crucible materializing from a pre-B66 save).
+        public string activeMetallurgyRecipeId = string.Empty;
+        public float metallurgySlag = 0f;              // 0..100 normalized
+        public int metallurgyBatchesCompleted = 0;
 
         // Determinism.
         public int rngSeed = 0;

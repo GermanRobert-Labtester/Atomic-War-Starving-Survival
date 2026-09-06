@@ -161,6 +161,7 @@ namespace Ashfall.Core.Foundry
             if (OverdueCycles >= 1) chance += 6;
             if (_state.safetyExhaust < 25f) chance += 8;
             if (_state.sandMoisture > 90f && _state.hearthTuyeres < 40f) chance += 6; // steam pocket risk
+            chance += (int)(_state.metallurgySlag / 12f);      // B66 slagged crucible
             return Math.Min(60, chance);
         }
 
@@ -197,6 +198,7 @@ namespace Ashfall.Core.Foundry
             _state.assignedWorkers = 0;
             _state.laborAccumulated = 0f;
             _state.materialsConsumed = 0;
+            ClearHeavyBatch();
 
             Raise(EventIncident, severity + " incident day " + day + ": " + record.summary);
             OnIncident?.Invoke(record);
@@ -329,6 +331,9 @@ namespace Ashfall.Core.Foundry
             // Heat stage machine.
             AdvanceHeatStage(day);
 
+            // B66 heavy metallurgy: slag accumulates while a heavy batch cooks.
+            AdvanceMetallurgy(day);
+
             // Labor escalation: unresolved tensions escalate after one day.
             if (_state.laborDispute == FoundryLaborDispute.Tensions
                 && day - _state.laborDisputeStartedDay >= 1)
@@ -368,6 +373,7 @@ namespace Ashfall.Core.Foundry
                     {
                         _state.heatStage = FoundryHeatStage.Idle;
                         var product = _catalog.GetProduct(_state.activeProductId);
+                        ClearHeavyBatch();
                         _state.failed.Add(new FoundryFailedCastRecord
                         {
                             productId = _state.activeProductId,
@@ -413,6 +419,14 @@ namespace Ashfall.Core.Foundry
             }
         }
 
+        /// <summary>Clear the B66 heavy-batch marker when the furnace is dumped mid-batch (incident or burnout).</summary>
+        private void ClearHeavyBatch()
+        {
+            if (!IsHeavyBatchActive) return;
+            _state.activeMetallurgyRecipeId = string.Empty;
+            DeactivateHeavySource();
+        }
+
         private void SetStage(FoundryHeatStage stage, int day)
         {
             _state.heatStage = stage;
@@ -432,6 +446,10 @@ namespace Ashfall.Core.Foundry
             float quality = RollQuality(product);
             _state.pendingQuality = quality;
             var tier = QualityTier(quality);
+
+            // B66: the batch completed its full thermal cycle either way —
+            // resolve the heavy marker and apply tier-scaled lining wear.
+            OnHeavyCastResolved(product.product_id);
 
             if (tier == FoundryQualityTier.Scrap || quality <= 0f)
             {
@@ -501,6 +519,7 @@ namespace Ashfall.Core.Foundry
             q += ((_state.refractoryLining - 60f) / 10f) * 3f; // lining condition ±3
             q -= Math.Min(15f, DaysOverdue * 2.5f);            // maintenance neglect
             q += (_state.workerSkill - product.skill_target) * 12f; // skill ±6
+            q -= _state.metallurgySlag / 8f;                   // B66 crucible slag 0..-12.5
             q += _rng.Next(-5, 6);                             // seeded jitter only
 
             // Mold reuse degrades the bed.
