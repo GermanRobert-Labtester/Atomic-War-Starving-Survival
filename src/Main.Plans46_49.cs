@@ -73,7 +73,11 @@ namespace AtomicWar.GodotApp
                 }
             };
 
-            _shelterWorkshop.OnWorkshopChanged += () => _shelterWorkshopDirty = true;
+            _shelterWorkshop.OnWorkshopChanged += () =>
+            {
+                _shelterWorkshopDirty = true;
+                SyncCraftingStationsFromShelter();
+            };
             return _shelterWorkshop;
         }
 
@@ -99,6 +103,15 @@ namespace AtomicWar.GodotApp
 
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("radio_station") : new SeededRng(47);
             _radioStationSystem = new ShelterRadioStationSystem(rng, null, new GodotLog());
+
+            // Plan B67: radio detection consumes the canonical weather
+            // authority — atmospheric interference rises with storm severity.
+            // No radio-only weather state is created.
+            var weather = _world?.Weather;
+            if (weather != null)
+            {
+                _radioStationSystem.BindWeatherNoiseProvider(() => WeatherNoiseForKind(weather.Current));
+            }
 
             string catalogPath = "res://Assets/StreamingAssets/Data/radio_intercepts.json";
             if (Godot.FileAccess.FileExists(catalogPath))
@@ -131,6 +144,41 @@ namespace AtomicWar.GodotApp
         private void SetupRadioStation()
         {
             EnsureRadioStation();
+        }
+
+        /// <summary>
+        /// Plan B67 — map the canonical weather authority onto radio
+        /// atmospheric noise. Wiring only: the mapping is authored host
+        /// presentation; the weather state itself stays canonical.
+        /// Storm kinds that also blind the triangulation engine
+        /// (FalloutStorm, Blizzard) get the heaviest penalty; electrical
+        /// storms interfere most of all.
+        /// </summary>
+        private static float WeatherNoiseForKind(WeatherKind kind)
+        {
+            switch (kind)
+            {
+                case WeatherKind.EMPStorm:
+                case WeatherKind.AshLightning:
+                    return 0.45f;
+                case WeatherKind.FalloutStorm:
+                case WeatherKind.Blizzard:
+                case WeatherKind.BlackRain:
+                case WeatherKind.AcidSnow:
+                case WeatherKind.RadHail:
+                case WeatherKind.GlassStorm:
+                case WeatherKind.BloodRain:
+                case WeatherKind.BlackSnow:
+                    return 0.35f;
+                case WeatherKind.Rain:
+                case WeatherKind.Overcast:
+                case WeatherKind.Ashfall:
+                case WeatherKind.BioFog:
+                case WeatherKind.AlgaeBloom:
+                    return 0.15f;
+                default:
+                    return 0.05f; // Clear
+            }
         }
 
         private void SaveRadioStation()
