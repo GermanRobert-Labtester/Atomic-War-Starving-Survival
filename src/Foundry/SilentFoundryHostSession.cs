@@ -361,6 +361,9 @@ namespace AtomicWar.GodotApp
             if (ratificationDays.Count > 0)
                 engine.BindTreaties(ratificationDays);
             engine.BindCatalog(catalog, maintenanceCycle);
+            // Plan B66: heavy metallurgy roster merges into the production
+            // catalog so the standard heat machine resolves heavy recipes.
+            engine.BindMetallurgyCatalog(MetallurgyCatalogLoader.Load(dataDir, files, json));
             return (engine, catalog);
         }
 

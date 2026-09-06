@@ -138,6 +138,9 @@ namespace AtomicWar.GodotApp
             _silentFoundry = AtomicWar.GodotApp.SilentFoundryHostSession.Create(
                 _dataDir, _expansions, _inventory, _journal, market: _economy.Market);
             _silentFoundry.BindPowerAndThermal(_powerGrid?.System, _shelterThermal?.System);
+            // Plan B66: heavy batches emit smoke/CO through the canonical
+            // ventilation authority (register/deactivate around each batch).
+            _silentFoundry.Engine.BindVentilation(_ventilation);
             // GAP-STUB-03 (resolved): wire the remaining FactionStanceEngine
             // providers as live accessors into Main state, not one-time
             // captured values, so guild trust reflects the campaign's actual
