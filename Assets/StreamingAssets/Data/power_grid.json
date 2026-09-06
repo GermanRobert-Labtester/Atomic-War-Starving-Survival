@@ -67,5 +67,7 @@
       "default_priority": "critical",
       "failure_effect_id": "fx_quarantine_ventilation_off"
     }
-  ]
+  ],
+  "emp_storm_severity": 0.6,
+  "surge_battery_drain_fraction": 0.15
 }

@@ -390,7 +390,7 @@ namespace AtomicWar.GodotApp
             weather.OnWeatherChanged += kind =>
             {
                 if (kind == WeatherKind.EMPStorm)
-                    _powerGrid?.System.ApplySurgeDay(_simDay, Ashfall.Core.Shelter.PowerGridSystem.EmpStormSurgeSeverity);
+                    _powerGrid?.System.ApplySurgeDay(_simDay, _powerGrid.System.EmpStormSeverity);
             };
 
             var orbital = _world.WeatherIntelligence?.Orbital;

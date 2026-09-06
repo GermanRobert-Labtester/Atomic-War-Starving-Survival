@@ -38,6 +38,14 @@ namespace Ashfall.Core.Shelter
         [JsonPropertyName("battery_capacity_wh_default")] public float BatteryCapacityWhDefault { get; set; }
         [JsonPropertyName("fuel_units_default")] public float FuelUnitsDefault { get; set; }
         [JsonPropertyName("rooms")] public List<ShelterPowerGridRoomDef> Rooms { get; set; } = new List<ShelterPowerGridRoomDef>();
+
+        /// <summary>Optional surge tuning (SHELTER_HARDENING). Absent fields keep
+        /// the system defaults — old catalogs stay valid.</summary>
+        [JsonPropertyName("emp_storm_severity")]
+        public float? EmpStormSeverity { get; set; }
+
+        [JsonPropertyName("surge_battery_drain_fraction")]
+        public float? SurgeBatteryDrainFraction { get; set; }
     }
 
     /// <summary>
@@ -111,6 +119,10 @@ namespace Ashfall.Core.Shelter
             { error = $"{FileName}: unsupported schema_version {catalog.SchemaVersion} (expected {SupportedSchemaVersion})."; return false; }
             if (catalog.GenerationWattsDefault < 0f || catalog.BatteryCapacityWhDefault < 0f || catalog.FuelUnitsDefault < 0f)
             { error = $"{FileName}: negative default generation/battery/fuel values."; return false; }
+            if (catalog.EmpStormSeverity is < 0f or > 1f)
+            { error = $"{FileName}: emp_storm_severity must be within 0..1."; return false; }
+            if (catalog.SurgeBatteryDrainFraction is < 0f or > 1f)
+            { error = $"{FileName}: surge_battery_drain_fraction must be within 0..1."; return false; }
             if (catalog.Rooms == null || catalog.Rooms.Count == 0)
             { error = $"{FileName}: no rooms defined."; return false; }
 

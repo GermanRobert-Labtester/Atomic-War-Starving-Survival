@@ -132,6 +132,13 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.TickPowerGrid(day);
+
+                // SHELTER_HARDENING: the distribution subgrid observes the grid's
+                // per-room draws, then advances its thermal/fuse model. Runs in
+                // the same phase as the grid so downstream consumers (phase 2+)
+                // see post-surge, post-thermal state.
+                _m.TickPowerSubgrids(day);
+
                 events.Add(new DayStateChangeEvent("power_ticked", "power_grid", null, null, day));
             }
         }

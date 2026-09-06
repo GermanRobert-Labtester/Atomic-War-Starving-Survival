@@ -190,6 +190,23 @@ namespace AtomicWar.GodotApp
             return _powerSubgrids;
         }
 
+        /// <summary>
+        /// SHELTER_HARDENING: feed each grid room's current draw into the
+        /// distribution subgrid, then advance its thermal/fuse model. Runs in
+        /// the power-grid day-owner phase (before water/medical consumers).
+        /// </summary>
+        public void TickPowerSubgrids(int day)
+        {
+            var subgrid = EnsurePowerSubgrids();
+            if (_powerGrid?.System != null)
+            {
+                foreach (var room in _powerGrid.System.Rooms)
+                    subgrid.ApplyRoomLoad(room.RoomId, _powerGrid.System.GetRoomDrawWatts(room.RoomId));
+            }
+            subgrid.TickDay(day);
+            if (_powerSubgridsDirty) SavePowerSubgrids();
+        }
+
         private void SetupPowerSubgrids()
         {
             EnsurePowerSubgrids();
@@ -500,11 +517,9 @@ namespace AtomicWar.GodotApp
                 _surgicalWardDirty = true;
             }
 
-            if (_powerSubgrids != null)
-            {
-                _powerSubgrids.TickDay(day);
-                _powerSubgridsDirty = true;
-            }
+            // Subgrid tick moved to TickPowerSubgrids (PowerGridDayOwner phase 1,
+            // SHELTER_HARDENING) — do not duplicate it here; this orchestrator is
+            // not currently called from the campaign pipeline.
 
             if (_hydroponicBiomes != null)
             {

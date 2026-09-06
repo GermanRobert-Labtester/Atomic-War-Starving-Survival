@@ -60,7 +60,13 @@ namespace AtomicWar.GodotApp
                 BatteryCapacityWh = grid.BatteryCapacityWhDefault,
                 BatteryReserveWh = grid.BatteryCapacityWhDefault
             };
-            return new PowerGridHostSession(rooms, state, rng);
+            var session = new PowerGridHostSession(rooms, state, rng);
+            // SHELTER_HARDENING: surge tuning is catalog-driven (fields optional;
+            // an explicit 0 legitimately disables the weather surge path).
+            session.System.ConfigureSurge(
+                grid.EmpStormSeverity ?? Ashfall.Core.Shelter.PowerGridSystem.DefaultEmpStormSurgeSeverity,
+                grid.SurgeBatteryDrainFraction ?? Ashfall.Core.Shelter.PowerGridSystem.DefaultSurgeBatteryDrainFraction);
+            return session;
         }
 
         public PowerGridHostSession(List<PowerGridRoom> rooms,

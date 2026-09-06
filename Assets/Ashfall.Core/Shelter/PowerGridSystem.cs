@@ -199,12 +199,26 @@ namespace Ashfall.Core.Shelter
                 _state.SimDay, "fuel_added", units));
         }
 
-        /// <summary>EMP storm severity applied on weather onset (balance constant;</summary>
-        /// orbital surges are data-driven via OrbitalImpactReport.PowerGridDisruption).
-        public const float EmpStormSurgeSeverity = 0.6f;
+        /// <summary>EMP storm severity applied on weather onset — catalog-driven
+        /// via power_grid.json `emp_storm_severity` (SHELTER_HARDENING); falls
+        /// back to this default when the catalog omits the field.</summary>
+        public const float DefaultEmpStormSurgeSeverity = 0.6f;
 
-        /// <summary>Fraction of battery capacity drained at full surge severity.</summary>
-        public const float SurgeBatteryDrainFraction = 0.15f;
+        /// <summary>Default fraction of battery capacity drained at full surge severity.</summary>
+        public const float DefaultSurgeBatteryDrainFraction = 0.15f;
+
+        private float _empStormSurgeSeverity = DefaultEmpStormSurgeSeverity;
+        private float _surgeBatteryDrainFraction = DefaultSurgeBatteryDrainFraction;
+
+        /// <summary>Catalog-driven surge tuning (0..1 each). Applies from the next surge.</summary>
+        public void ConfigureSurge(float empStormSeverity, float batteryDrainFraction)
+        {
+            _empStormSurgeSeverity = Math.Clamp(empStormSeverity, 0f, 1f);
+            _surgeBatteryDrainFraction = Math.Clamp(batteryDrainFraction, 0f, 1f);
+        }
+
+        public float EmpStormSeverity => _empStormSurgeSeverity;
+        public float SurgeBatteryDrain => _surgeBatteryDrainFraction;
 
         /// <summary>
         /// Apply an external electrical surge (EMP storm onset, orbital impact).
@@ -253,7 +267,7 @@ namespace Ashfall.Core.Shelter
                 tripped.Add(candidates[i].RoomId);
             }
 
-            float drain = (float)Math.Floor(_state.BatteryCapacityWh * SurgeBatteryDrainFraction * severity);
+            float drain = (float)Math.Floor(_state.BatteryCapacityWh * _surgeBatteryDrainFraction * severity);
             _state.BatteryReserveWh = Math.Max(0f, _state.BatteryReserveWh - drain);
             _state.LastSurgeDay = day;
 
@@ -365,6 +379,18 @@ namespace Ashfall.Core.Shelter
             for (int i = 0; i < _rooms.Count; i++)
                 if (_rooms[i].RoomId == roomId) return _rooms[i];
             return null;
+        }
+
+        /// <summary>
+        /// Current draw a room presents to the distribution network: its catalog
+        /// draw when powered, 0 when tripped/open/disabled (SHELTER_HARDENING —
+        /// feeds the subgrid's per-node thermal/fuse model via ApplyRoomLoad).
+        /// </summary>
+        public float GetRoomDrawWatts(string roomId)
+        {
+            if (!IsRoomPowered(roomId)) return 0f;
+            var r = FindRoom(roomId);
+            return r?.DrawWatts ?? 0f;
         }
 
         private float ComputeTotalDraw()

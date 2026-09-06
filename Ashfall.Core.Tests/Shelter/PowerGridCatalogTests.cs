@@ -55,6 +55,28 @@ namespace Ashfall.Core.Tests.Shelter
         }
 
         [Fact]
+        public void Catalog_PropagatesSurgeTuning()
+        {
+            // SHELTER_HARDENING: surge tuning is catalog-driven (fields optional).
+            var catalog = LoadCatalog();
+            Assert.True(catalog.EmpStormSeverity is >= 0f and <= 1f,
+                $"emp_storm_severity out of range: {catalog.EmpStormSeverity}");
+            Assert.True(catalog.SurgeBatteryDrainFraction is >= 0f and <= 1f,
+                $"surge_battery_drain_fraction out of range: {catalog.SurgeBatteryDrainFraction}");
+        }
+
+        [Fact]
+        public void Catalog_MissingSurgeTuning_FallsBackToDefaults()
+        {
+            var catalog = ShelterPowerGridCatalogLoader.FallbackDefault();
+            Assert.Null(catalog.EmpStormSeverity); // absent → system defaults apply
+            Assert.Null(catalog.SurgeBatteryDrainFraction);
+            // Loader validation still passes (optional fields).
+            var ok = ShelterPowerGridCatalogLoader.Validate(catalog, out var error);
+            Assert.True(ok, error);
+        }
+
+        [Fact]
         public void Catalog_QuarantineWardVentilationIsCriticalTier()
         {
             // SHELTER_EMP_MEDICAL_POWER: quarantine ventilation is life-safety —
@@ -82,7 +104,7 @@ namespace Ashfall.Core.Tests.Shelter
                 ["fx_foundry_standstill"] = "SilentFoundryHostSession power gate (room_foundry/room_workshop)",
                 ["fx_lighting_dim"] = "ShelterScheduleSystem brownout lighting demand",
                 ["fx_workshop_offline"] = "Main.World workshop power gate (room_workshop)",
-                ["fx_cryo_vault_unpowered"] = "CryoVaultDayOwner (concurrent stream — verify at integration)",
+                ["fx_cryo_vault_unpowered"] = "CryoVaultSystem powerAvailableProvider ← Main.PlansB68_B69.IsCryoVaultPowered (room_cryo_vault)",
                 ["fx_quarantine_ventilation_off"] = "DiseaseQuarantineCoordinator isolationPowerCheck (Main.SetupDisease)",
             };
 
