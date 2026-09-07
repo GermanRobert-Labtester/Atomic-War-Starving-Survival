@@ -30,7 +30,33 @@ namespace Ashfall.Core.Onboarding
         InventoryUse = 5,
 
         /// <summary>Commit the first day advance to reach Day 2.</summary>
-        DayAdvance = 6
+        DayAdvance = 6,
+
+        /// <summary>Start and complete a real water-treatment operation.</summary>
+        Water = 7,
+
+        /// <summary>Operate a real shelter power breaker.</summary>
+        Power = 8,
+
+        /// <summary>Consume a real food ration from the inventory.</summary>
+        Food = 9,
+
+        /// <summary>Start a real research node.</summary>
+        Research = 10,
+
+        /// <summary>Dispatch a real expedition.</summary>
+        Expedition = 11
+    }
+
+    /// <summary>
+    /// Selects the onboarding contract used by a campaign. Legacy saves retain
+    /// the original protocol journey; new campaigns use the state-true
+    /// first-hour sequence.
+    /// </summary>
+    public enum OnboardingProfile
+    {
+        Legacy = 0,
+        FirstHour = 1
     }
 
     /// <summary>
@@ -81,6 +107,7 @@ namespace Ashfall.Core.Onboarding
     {
         public int schemaVersion = OnboardingJourney.SaveVersion;
         public int day = 1;
+        public int profile = (int)OnboardingProfile.Legacy;
 
         /// <summary>
         /// Ordinal-stable signal list — the checksum recursive walk iterates this

@@ -48,6 +48,19 @@ namespace Ashfall.Core.Combat
         /// <summary>Raise a trauma/affliction on a real survivor (kind, severity). Null → trauma skipped.</summary>
         public Action<string, string, float> RaiseTrauma { get; }
 
+        /// <summary>
+        /// Plan B86 — optional acoustic signature sink (stance / StealthSystem).
+        /// Null → caller logs noise as a combat event only. Set once at construction.
+        /// </summary>
+        public Action<float>? EmitBreachNoise { get; }
+
+        /// <summary>
+        /// Plan B86 — optional tool-wear sink (EquipmentConditionSystem).
+        /// Args: tool item id, wear amount. Null → caller logs wear as an event only.
+        /// Set once at construction.
+        /// </summary>
+        public Action<string, float>? ApplyBreachToolWear { get; }
+
         private readonly List<string> _unboundRequired;
 
         /// <summary>
@@ -67,7 +80,9 @@ namespace Ashfall.Core.Combat
             Func<string, int, bool>? consumeItem = null,
             Action<string, string, float>? raiseTrauma = null,
             Action<CombatLootEntry>? grantLoot = null,
-            Action<string>? markCombatSurvived = null)
+            Action<string>? markCombatSurvived = null,
+            Action<float>? emitBreachNoise = null,
+            Action<string, float>? applyBreachToolWear = null)
         {
             DamageSurvivor = damageSurvivor ?? NoOpDamageSurvivor;
             HealSurvivor = healSurvivor ?? NoOpHealSurvivor;
@@ -77,6 +92,8 @@ namespace Ashfall.Core.Combat
             RaiseTrauma = raiseTrauma;
             GrantLoot = grantLoot;
             MarkCombatSurvived = markCombatSurvived;
+            EmitBreachNoise = emitBreachNoise;
+            ApplyBreachToolWear = applyBreachToolWear;
 
             _unboundRequired = new List<string>();
             if (damageSurvivor == null) _unboundRequired.Add(nameof(DamageSurvivor));
@@ -90,7 +107,7 @@ namespace Ashfall.Core.Combat
 
         /// <summary>All-effects-unbound instance for isolated tests. Essential effects use no-op adapters; optional effects are null (fallbacks active).</summary>
         public static CombatHostPorts NoOp() =>
-            new CombatHostPorts(null, null, null, null, null, null, null, null);
+            new CombatHostPorts(null, null, null, null, null, null, null, null, null, null);
 
         // ── Named no-op adapters (referenced by NoOp and as fallbacks) ──
 

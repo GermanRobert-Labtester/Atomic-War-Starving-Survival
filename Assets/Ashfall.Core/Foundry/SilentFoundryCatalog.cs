@@ -256,6 +256,23 @@ IJsonSerializer? serializer = null)
             }
         }
 
+        /// <summary>
+        /// Merge Plan B100 glassworks recipes into the same heat-machine
+        /// catalog. Existing product IDs are never overwritten and repeated
+        /// binding is deterministic.
+        /// </summary>
+        public void MergeGlassworksRecipes(IEnumerable<FoundryProductEntry> glassProducts)
+        {
+            if (glassProducts == null) return;
+            foreach (var p in glassProducts)
+            {
+                if (p == null || string.IsNullOrEmpty(p.product_id)) continue;
+                if (_byProductId.ContainsKey(p.product_id)) continue;
+                _byProductId[p.product_id] = p;
+                _products.Add(p);
+            }
+        }
+
         public FoundryProductEntry? GetProduct(string productId)
         {
             if (string.IsNullOrEmpty(productId)) return null;

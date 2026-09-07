@@ -5,6 +5,7 @@ using Ashfall.Core;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Onboarding;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp
 {
@@ -35,7 +36,13 @@ namespace AtomicWar.GodotApp
         {
             if (_onboardingJourney != null) return;
 
-            _onboardingJourney = new OnboardingJourney();
+            if (AtomicWar.GodotApp.Settings.UserSettingsStore.Current.TutorialMode == 2)
+            {
+                _onboardingJourney = null;
+                return;
+            }
+
+            _onboardingJourney = OnboardingJourney.CreateFirstHour();
             try
             {
                 var saved = OnboardingSaveStore.TryLoad();
@@ -47,7 +54,7 @@ namespace AtomicWar.GodotApp
             catch (InvalidOperationException ex)
             {
                 GD.PushWarning($"[Onboarding] Save load rejected: {ex.Message}. Starting fresh.");
-                _onboardingJourney = new OnboardingJourney();
+                _onboardingJourney = OnboardingJourney.CreateFirstHour();
             }
 
             EnsureOnboardingPanel();
@@ -146,6 +153,30 @@ namespace AtomicWar.GodotApp
             _onboardingJourney?.Replay();
         }
 
+        private void ResetOnboardingJourney()
+        {
+            if (_onboardingJourney == null)
+                SetupOnboarding();
+            _onboardingJourney?.Replay();
+            _onboardingHintPanel?.RefreshView();
+        }
+
+        private void ApplyOnboardingSettings(Ashfall.Core.Settings.UserSettingsData settings)
+        {
+            if (settings.TutorialMode == 2)
+            {
+                if (_onboardingHintPanel != null)
+                    _onboardingHintPanel.Visible = false;
+                _onboardingJourney = null;
+                _onboardingDirty = false;
+                return;
+            }
+
+            if (_onboardingJourney == null)
+                SetupOnboarding();
+            _onboardingHintPanel?.RefreshView();
+        }
+
         public void DismissOnboardingHint()
         {
             _onboardingHintPanel?.MarkHintDismissed();
@@ -178,7 +209,16 @@ namespace AtomicWar.GodotApp
             var def = j.CurrentStageDef;
             // Append rather than overwrite so the existing daily briefing
             // line stays visible.
-            _statusLabel.Text = $"Day {_simDay} · {def.Title} (onboarding): {def.Objective}";
+            string stageId = def.Id switch
+            {
+                OnboardingStage.InventoryUse => "inventory_use",
+                OnboardingStage.DayAdvance => "day_advance",
+                _ => def.Id.ToString().ToLowerInvariant()
+            };
+            string title = AshfallLocalization.Tr($"onboarding.{stageId}.title", def.Title);
+            string objective = AshfallLocalization.Tr($"onboarding.{stageId}.objective", def.Objective);
+            _statusLabel.Text = AshfallLocalization.TrFormat(
+                "onboarding.status.bar", _simDay, title, objective);
         }
     }
 }

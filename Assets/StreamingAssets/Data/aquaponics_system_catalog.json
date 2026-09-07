@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "tank_classes": [
+    {
+      "tank_class_id": "tank_raft_small",
+      "display_name": "Small Raft Loop",
+      "volume_litres": 400,
+      "max_biomass_kg": 12,
+      "plant_bed_capacity": 4,
+      "power_draw_watts": 90,
+      "aeration_rate": 1.4,
+      "do_sat": 9.0,
+      "do_crash_rate": 1.8,
+      "do_respiration_per_kg": 0.12,
+      "heat_kw_per_power": 0.04,
+      "room_id_default": "room_greenhouse"
+    },
+    {
+      "tank_class_id": "tank_raft_standard",
+      "display_name": "Standard Raft Loop",
+      "volume_litres": 900,
+      "max_biomass_kg": 28,
+      "plant_bed_capacity": 10,
+      "power_draw_watts": 160,
+      "aeration_rate": 1.8,
+      "do_sat": 9.0,
+      "do_crash_rate": 2.2,
+      "do_respiration_per_kg": 0.11,
+      "heat_kw_per_power": 0.06,
+      "room_id_default": "room_greenhouse"
+    }
+  ],
+  "species": [
+    {
+      "species_id": "species_rad_tilapia",
+      "display_name": "Rad-Tolerant Tilapia",
+      "fcr_inverse": 0.55,
+      "ration_kg_per_kg": 0.03,
+      "n_excretion_frac": 0.35,
+      "temp_band_min": 0.55,
+      "temp_band_max": 1.15,
+      "do_warn": 3.0,
+      "n_warn": 8.0,
+      "harvest_item_id": "item_aquaponic_fish",
+      "harvest_kg_per_item": 0.5,
+      "min_harvest_biomass_kg": 2.0
+    },
+    {
+      "species_id": "species_ash_carp",
+      "display_name": "Ashwater Carp",
+      "fcr_inverse": 0.42,
+      "ration_kg_per_kg": 0.025,
+      "n_excretion_frac": 0.4,
+      "temp_band_min": 0.4,
+      "temp_band_max": 1.05,
+      "do_warn": 2.5,
+      "n_warn": 10.0,
+      "harvest_item_id": "item_aquaponic_fish",
+      "harvest_kg_per_item": 0.6,
+      "min_harvest_biomass_kg": 3.0
+    }
+  ],
+  "feeds": [
+    {
+      "feed_id": "feed_insect_meal",
+      "item_id": "item_insect_larvae_meal",
+      "nutrition": 1.0,
+      "n_factor": 1.0
+    },
+    {
+      "feed_id": "feed_algae_extend",
+      "item_id": "crop_nutrient_algae",
+      "nutrition": 0.7,
+      "n_factor": 0.8
+    }
+  ],
+  "biofilters": [
+    {
+      "biofilter_id": "biofilter_fluid_bed",
+      "media_item_id": "item_biofilter_media",
+      "media_capacity": 2.5,
+      "fouling_rate": 0.7,
+      "stress_fouling": 1.4,
+      "backwash_restore": 35,
+      "media_cost_per_backwash": 1
+    }
+  ],
+  "disease_bands": [
+    {
+      "band_id": "clear",
+      "ordinal": 0,
+      "growth_penalty": 1.0,
+      "mortality": 0.0
+    },
+    {
+      "band_id": "early",
+      "ordinal": 1,
+      "growth_penalty": 0.85,
+      "mortality": 0.02
+    },
+    {
+      "band_id": "established",
+      "ordinal": 2,
+      "growth_penalty": 0.55,
+      "mortality": 0.08
+    },
+    {
+      "band_id": "severe",
+      "ordinal": 3,
+      "growth_penalty": 0.2,
+      "mortality": 0.2
+    }
+  ],
+  "plant_profiles": [
+    {
+      "plant_profile_id": "plant_leafy_raft",
+      "yield_item_id": "crop_leafy_green",
+      "yield_amount": 2,
+      "nitrate_per_yield": 1.5
+    },
+    {
+      "plant_profile_id": "plant_algae_raft",
+      "yield_item_id": "crop_nutrient_algae",
+      "yield_amount": 1,
+      "nitrate_per_yield": 1.0
+    }
+  ]
+}

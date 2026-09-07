@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "network_id": "tablet_manufacturing_primary",
+  "display_name": "Shelter Tablet Works",
+  "press": {
+    "press_id": "press_shelter_single",
+    "display_name": "Single-Station Tablet Press",
+    "construction_required_items": { "scrap_metal": 10, "item_press_tooling_set": 1 },
+    "construction_labor_days": 2,
+    "max_condition": 100,
+    "maintenance_interval_days": 8,
+    "maintenance_required_items": { "scrap_metal": 2 },
+    "tooling_replacement_items": { "item_press_tooling_set": 1 },
+    "room_id": "room_laboratory_research",
+    "tooling_wear_per_batch": 2.5
+  },
+  "formulations": [
+    {
+      "formulation_id": "formulation_wide_spectrum_antibiotic",
+      "display_name": "Wide-Spectrum Antibiotic Doses",
+      "medical_effect_item_id": "antibiotics",
+      "formulation_class": "antibiotic",
+      "precursor_costs": { "item_medical_precursor_base": 2 },
+      "required_precursor_tags": ["precursor"],
+      "binder_resource_id": "item_tablet_binder",
+      "binder_amount": 1,
+      "packaging_resource_id": "item_sealed_packaging_foil",
+      "release_class_id": "immediate",
+      "base_batch_size": 10,
+      "quality_threshold": 0.5,
+      "trade_value_modifier": 1.0,
+      "controlled_substance_tag": "",
+      "tags": ["medical", "antibiotic"]
+    },
+    {
+      "formulation_id": "formulation_analgesic_standard",
+      "display_name": "Standard Analgesic Doses",
+      "medical_effect_item_id": "painkillers",
+      "formulation_class": "analgesic",
+      "precursor_costs": { "item_medical_precursor_base": 1, "crop_medicinal_herb": 2 },
+      "required_precursor_tags": ["precursor", "herb"],
+      "binder_resource_id": "item_tablet_binder",
+      "binder_amount": 1,
+      "packaging_resource_id": "item_sealed_packaging_foil",
+      "release_class_id": "immediate",
+      "base_batch_size": 12,
+      "quality_threshold": 0.5,
+      "trade_value_modifier": 0.9,
+      "controlled_substance_tag": "",
+      "tags": ["medical", "analgesic"]
+    },
+    {
+      "formulation_id": "formulation_thyroid_support_tablet",
+      "display_name": "Thyroid Support Tablets",
+      "medical_effect_item_id": "iodine_pills",
+      "formulation_class": "supplement",
+      "precursor_costs": { "item_medical_saline_salt": 1, "item_medical_precursor_base": 1 },
+      "required_precursor_tags": ["precursor"],
+      "binder_resource_id": "item_tablet_binder",
+      "binder_amount": 1,
+      "packaging_resource_id": "item_sealed_packaging_foil",
+      "release_class_id": "delayed",
+      "base_batch_size": 14,
+      "quality_threshold": 0.5,
+      "trade_value_modifier": 0.8,
+      "controlled_substance_tag": "",
+      "tags": ["medical", "supplement", "coated"]
+    }
+  ],
+  "release_classes": [
+    {
+      "release_class_id": "immediate",
+      "display_name": "Immediate Release",
+      "shelf_life_class": "standard",
+      "coating_quality_floor": 1.0,
+      "trade_value_bonus": 0.0,
+      "extra_process_days": 0
+    },
+    {
+      "release_class_id": "delayed",
+      "display_name": "Delayed Release",
+      "shelf_life_class": "extended",
+      "coating_quality_floor": 0.7,
+      "trade_value_bonus": 0.1,
+      "extra_process_days": 1
+    },
+    {
+      "release_class_id": "protected",
+      "display_name": "Protected Release",
+      "shelf_life_class": "protected",
+      "coating_quality_floor": 0.8,
+      "trade_value_bonus": 0.2,
+      "extra_process_days": 1
+    }
+  ],
+  "output_buffer_max_batches": 3,
+  "tags": ["medical", "manufacturing", "pharmaceutical"]
+}

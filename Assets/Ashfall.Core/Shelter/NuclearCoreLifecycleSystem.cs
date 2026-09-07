@@ -60,6 +60,13 @@ namespace Ashfall.Core.Shelter
 
     public sealed class NuclearCoreLifecycleSystem
     {
+        /// <summary>
+        /// Stable runtime projection key for the external power-grid source.
+        /// The grid does not persist projections; the host republishes this
+        /// value after restoring the nuclear section.
+        /// </summary>
+        public const string PowerSourceId = "nuclear_core";
+
         private readonly Inventory.Inventory _inventory;
         private readonly NuclearCoreCatalog _catalog;
         private readonly ISeededRng _rng;

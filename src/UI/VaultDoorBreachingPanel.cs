@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("6-PIN TUMBLER ALIGNMENT", "PINS 1,2,4 ALIGNED / 3,5,6 BINDING", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _telemetryContainer.AddChild(CreateTelemetryRow("SHEAR FREQUENCY SCANNER", "1,420 Hz RESONANT NOTCH", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("TENSION WRENCH TORQUE", "14.5 Nm APPLIED", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[IGNITE MAGNESIUM THERMAL LANCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[PRESSURIZE 500 BAR HYDRAULIC RAMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[PULSE ACOUSTIC SHEAR RESONATOR]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("OUTER ARMOR PENETRATION", "100% BREACHED", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("LEAD CORE BURN DEPTH", "68.5% CUT THROUGH", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("INNER TUNGSTEN PLATE", "22.0% INTEGRITY LEFT", AshfallUiHelpers.ToColor(DesignTheme.Critical)));

@@ -137,6 +137,7 @@ namespace Ashfall.Core.Tests
 
             Assert.NotNull(presentation);
             Assert.Equal("faction_central_garrison", presentation!.FactionId);
+            Assert.Equal("iron_garrison", presentation.DisplayFactionId);
             Assert.Equal("checkpoint", presentation.PatrolArchetype);
             Assert.Equal("No prior contact", presentation.RecognitionLabel);
 

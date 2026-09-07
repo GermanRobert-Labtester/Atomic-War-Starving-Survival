@@ -110,6 +110,51 @@ namespace Ashfall.Core.Tests.Expeditions
         }
 
         [Fact]
+        public void CampaignTick_AdvancesTravelOncePerDay_AndPersistsTransmissionWear()
+        {
+            var sys = new RailwaySystem(new SeededRng(42), new Inventory.Inventory());
+            sys.RegisterCatalog(CreateTestCatalog());
+            var train = sys.CreateStarterTrain("train_daily", "Daily Runner", "node_a");
+
+            Assert.True(sys.DispatchTrain("train_daily", "seg_a_b").IsSuccess);
+            sys.TickDay(10);
+            Assert.Equal(0.5f, train.segmentProgress);
+            Assert.True(train.transmissionWearPermille > 0);
+
+            sys.TickDay(10);
+            Assert.Equal(0.5f, train.segmentProgress);
+            sys.TickDay(11);
+            Assert.Equal(TrainDispatchStatus.Arrived, train.status);
+
+            var json = System.Text.Json.JsonSerializer.Serialize(sys.State);
+            var restoredState = System.Text.Json.JsonSerializer.Deserialize<RailwayState>(json)!;
+            var restored = new RailwaySystem(new SeededRng(42));
+            restored.RestoreState(restoredState);
+            Assert.Equal(11, restored.State.last_tick_day);
+            Assert.Equal(train.transmissionWearPermille, restored.State.trains[0].transmissionWearPermille);
+        }
+
+        [Fact]
+        public void TransmissionService_ConsumesMechanicalPart_AndClearsServiceGate()
+        {
+            var inventory = new Inventory.Inventory();
+            inventory.AddById("mechanical_parts", 10);
+            var sys = new RailwaySystem(new SeededRng(42), inventory);
+            sys.RegisterCatalog(CreateTestCatalog());
+            var train = sys.CreateStarterTrain("train_service", "Workshop Test", "node_a");
+            train.transmissionWearPermille = 1000;
+            train.transmissionServiceRequired = true;
+
+            var result = sys.ServiceTransmission("train_service", 12);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(0, train.transmissionWearPermille);
+            Assert.False(train.transmissionServiceRequired);
+            Assert.Equal(12, train.lastTransmissionServiceDay);
+            Assert.Equal(0, inventory.CountById("mechanical_parts"));
+        }
+
+        [Fact]
         public void Derailment_On_Degraded_Track_Can_Be_Cleared()
         {
             var sys = new RailwaySystem(new SeededRng(1), new Inventory.Inventory());

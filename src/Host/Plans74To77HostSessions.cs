@@ -138,6 +138,9 @@ namespace AtomicWar.GodotApp
             => HandleActionResult(System.Refurbish(
                 weaponInstanceId, parts, serviceQuality, day));
 
+        public ActionResult AttachOptic(string weaponInstanceId, float opticQuality)
+            => HandleActionResult(System.AttachOptic(weaponInstanceId, opticQuality));
+
         public CustomAmmoBatchState? CreateAmmoBatch(
             string ammoItemId,
             string creatorSurvivorId,

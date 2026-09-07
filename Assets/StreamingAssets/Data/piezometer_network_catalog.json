@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "network_id": "aquifer_network_primary",
+  "display_name": "Deep Water Monitoring Network",
+  "sensor_item_id": "item_groundwater_sensor",
+  "isolation_module_item_id": "item_aquifer_isolation_module",
+  "maintenance_kit_item_id": "item_well_maintenance_kit",
+  "strata": [
+    {
+      "strata_id": "strata_shallow_gravel",
+      "display_name": "Shallow Gravel Bench",
+      "baseline_recharge_class": "high",
+      "storage_capacity_class": "small",
+      "fracture_susceptibility": 0.2,
+      "contamination_transport_class": "fast",
+      "sensor_install_cost": { "item_groundwater_sensor": 1, "scrap_metal": 2 },
+      "monitoring_accuracy": 0.8,
+      "maintenance_profile_id": "maint_standard",
+      "monitored_source_ids": ["source_shallow_well", "source_cistern_inlet"],
+      "tags": ["shallow", "permeable"]
+    },
+    {
+      "strata_id": "strata_sandstone_mid",
+      "display_name": "Mid Sandstone Shelf",
+      "baseline_recharge_class": "moderate",
+      "storage_capacity_class": "moderate",
+      "fracture_susceptibility": 0.4,
+      "contamination_transport_class": "moderate",
+      "sensor_install_cost": { "item_groundwater_sensor": 1, "scrap_metal": 4 },
+      "monitoring_accuracy": 0.7,
+      "maintenance_profile_id": "maint_standard",
+      "monitored_source_ids": ["source_mid_borehole"],
+      "tags": ["mid", "sedimentary"]
+    },
+    {
+      "strata_id": "strata_deep_fractured_bedrock",
+      "display_name": "Deep Fractured Bedrock",
+      "baseline_recharge_class": "low",
+      "storage_capacity_class": "large",
+      "fracture_susceptibility": 0.8,
+      "contamination_transport_class": "slow",
+      "sensor_install_cost": { "item_groundwater_sensor": 1, "item_bedrock_sensor_rig": 1 },
+      "monitoring_accuracy": 0.55,
+      "maintenance_profile_id": "maint_deep",
+      "monitored_source_ids": ["source_deep_borehole"],
+      "tags": ["deep", "fractured"]
+    }
+  ],
+  "maintenance_profiles": [
+    {
+      "maintenance_profile_id": "maint_standard",
+      "required_items": { "item_well_maintenance_kit": 1 },
+      "fouling_per_day": 0.012,
+      "calibration_drift_per_day": 0.008
+    },
+    {
+      "maintenance_profile_id": "maint_deep",
+      "required_items": { "item_well_maintenance_kit": 2, "scrap_metal": 1 },
+      "fouling_per_day": 0.008,
+      "calibration_drift_per_day": 0.005
+    }
+  ],
+  "forecast": {
+    "warning_signal_threshold": 0.45,
+    "critical_head_index": 0.25,
+    "stable_head_index": 0.55,
+    "minimum_warning_confidence": 0.3,
+    "heavy_demand_threshold": 0.7
+  },
+  "trend_window": 8,
+  "tags": ["hydrogeology", "monitoring"]
+}

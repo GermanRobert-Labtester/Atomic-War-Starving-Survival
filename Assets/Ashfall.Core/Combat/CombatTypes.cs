@@ -124,6 +124,32 @@ namespace Ashfall.Core.Combat
         public string MaterialId = string.Empty;
         public float IntegrityPct = 100f;
         public float ArmorRating; // flat damage absorbed while intact
+
+        // Plan B86 — optional clearance profile + mid-breach progress.
+        // PathBlocking defaults to 0 so legacy fire-only barriers stay non-blocking
+        // until EnsureObstacleBarrier / Begin sets an authored profile value.
+        public string ObstacleProfileId = string.Empty;
+        public string ActiveBreachToolId = string.Empty;
+        public string BreachPhase = BreachPhaseIds.Available;
+        public int BreachSetupTicksRemaining;
+        public int BreachClearTicksRemaining;
+        public int BreachClearTicksTotal;
+        public float BreachProgress01;
+        public float PathBlocking;
+        public float CoverContribution;
+        public bool BreachDestroysCover;
+    }
+
+    /// <summary>Stable string ids for <see cref="BarrierState.BreachPhase"/>.</summary>
+    public static class BreachPhaseIds
+    {
+        public const string Available = "Available";
+        public const string SettingUp = "SettingUp";
+        public const string Clearing = "Clearing";
+        public const string Cleared = "Cleared";
+        public const string Interrupted = "Interrupted";
+        public const string Failed = "Failed";
+        public const string Abandoned = "Abandoned";
     }
 
     /// <summary>

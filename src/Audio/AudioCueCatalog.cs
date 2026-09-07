@@ -233,6 +233,7 @@ namespace AtomicWar.GodotApp.Audio
         public const string RadioEbsAlert = "radio_ebs_alert";
         public const string RadioDeadHandPulse = "radio_dead_hand_pulse";
         public const string RadioDistressBeacon = "radio_distress_beacon";
+        public const string RadioVinylBroadcast = "radio_vinyl_broadcast";
         public const string RadioVoCh3AshRoad = "radio_vo_ch3_ash_road";
         public const string RadioVoCh7Milband = "radio_vo_ch7_milband";
         public const string RadioVoCh11Stockpile = "radio_vo_ch11_stockpile";

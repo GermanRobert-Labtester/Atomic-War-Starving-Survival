@@ -2,8 +2,8 @@
 
 > **Living Architecture Authority**: Documents all registered audio cues, target Godot audio buses, asset resource paths, loop behavior, volume trim, and cooldown timers in `src/Audio/AudioCueCatalog.cs`.
 
-**Total Registered Cues:** `195`<br>
-**Last Verified:** `2026-09-06`<br>
+**Total Registered Cues:** `196`<br>
+**Last Verified:** `2026-09-07`<br>
 **Drift Gated:** `python3 scripts/ci/generate-audio-catalog.py --check`
 
 ---
@@ -95,6 +95,7 @@ ASHFALL organizes sound design into 12 dedicated audio buses with independent vo
 | `music_menu` | `Music` | `res://assets/audio/music/main_menu.ogg` | No | -6.0 dB | — | ✅ Exists |
 | `radio_decrypted_beep` | `Radio` | `res://assets/audio/sfx/sfx_radio_decrypted_beep.wav` | No | -2.0 dB | 0.5s | ⚠️ Fallback/Missing |
 | `radio_tuning_heterodyne` | `Radio` | `res://assets/audio/radio/radio_static_hiss.wav` | Yes | -8.0 dB | — | ✅ Exists |
+| `radio_vinyl_broadcast` | `Radio` | `res://assets/audio/radio/radio_static_hiss.wav` | No | -4.0 dB | 0.25s | ✅ Exists |
 | `action_crafting` | `SFX` | `res://assets/audio/sfx/sfx_crafting_assemble.mp3` | No | 0.0 dB | 1.0s | ✅ Exists |
 | `action_injection` | `SFX` | `res://assets/audio/sfx/sfx_injection.mp3` | No | 0.0 dB | 0.5s | ✅ Exists |
 | `action_interrogation_slam` | `SFX` | `res://assets/audio/sfx/sfx_interrogation_slam.mp3` | No | -2.0 dB | 0.5s | ✅ Exists |

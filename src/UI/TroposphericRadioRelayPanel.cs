@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("TROPOSPHERIC DUCTING INDEX", "1.42 [OPTIMAL PROPAGATION]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("IONOSPHERIC ALTITUDE", "85 KM REFLECTION LAYER", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _telemetryContainer.AddChild(CreateTelemetryRow("BAND 1 (MERIDIAN SIPHON)", "42.500 MHz [CARRIER LOCKED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[ALIGN PARABOLIC DISH AZIMUTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[ENGAGE 10KW KLYSTRON TRANSMITTER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[FILTER ATMOSPHERIC NOISE SPIKE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("TRANSMITTER ECHO-01", "OLD RADIO MAST (ONLINE)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("STATION K-9", "FOUNDRY LOOP (INTERMITTENT)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _dataContainer.AddChild(CreateTelemetryRow("LOADED CIPHER KEY", "KEY #04 IRON-7 [AUTHENTIC]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));

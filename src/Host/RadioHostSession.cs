@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core;
+using Ashfall.Core.IO;
 using Ashfall.Core.Radio;
 
 namespace AtomicWar.GodotApp
@@ -112,11 +113,25 @@ namespace AtomicWar.GodotApp
             var stationCatalog = new RadioStationCatalog();
             stationCatalog.LoadFromDataDirectory(actualDataDir);
 
+            var triangulation = new SignalTriangulationSystem();
+            try
+            {
+                var io = new Ashfall.Core.FileSystemIO();
+                var ser = new Ashfall.Core.SystemTextJsonSerializer();
+                var dfDto = DirectionFindingCatalogLoader.Load(actualDataDir, io, ser);
+                DirectionFindingCatalogLoader.Validate(dfDto);
+                triangulation.LoadCatalog(dfDto);
+            }
+            catch (Exception ex) /* optional: DF catalog absent in sparse fixtures */
+            {
+                CatalogDiagnostics.Warn(actualDataDir, "direction_finding_catalog", ex);
+            }
+
             var session = new RadioHostSession(
                 FactionRadioEngine.LoadFromJson(json),
                 new SeededRng(DemoSeed),
                 day,
-                null,
+                triangulation,
                 broadcastCatalog,
                 stationCatalog,
                 distressSystem);
@@ -436,6 +451,9 @@ namespace AtomicWar.GodotApp
             }
             state.stationOverrides.Sort((a, b) => string.Compare(a.stationId, b.stationId, StringComparison.Ordinal));
 
+            // Plan B88 — persist continuous DF triangulation (observations/candidates/baselines).
+            state.triangulation = Triangulation.CaptureState();
+
             return state;
         }
 
@@ -482,6 +500,10 @@ namespace AtomicWar.GodotApp
                 }
                 Stations.ImportOverrides(map);
             }
+
+            // Plan B88 — restore continuous DF triangulation nest (empty on pre-V3 saves).
+            if (state.triangulation != null)
+                Triangulation.RestoreState(state.triangulation);
 
             LastEvent = "Radio state restored.";
         }

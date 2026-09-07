@@ -109,6 +109,7 @@ namespace AtomicWar.GodotApp.Settings
             _current = data.Clone();
 
             // 1. Audio Application
+            AtomicWar.GodotApp.Audio.AudioSettings.ApplyUnifiedMix(data);
             ApplyAudio("Master", data.MasterVolume, data.MuteAll);
             ApplyAudio("Music", data.MusicVolume, data.MuteAll);
             ApplyAudio("SFX", data.SfxVolume, data.MuteAll);

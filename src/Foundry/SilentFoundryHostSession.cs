@@ -364,6 +364,9 @@ namespace AtomicWar.GodotApp
             // Plan B66: heavy metallurgy roster merges into the production
             // catalog so the standard heat machine resolves heavy recipes.
             engine.BindMetallurgyCatalog(MetallurgyCatalogLoader.Load(dataDir, files, json));
+            // Plan B100: scientific glassworks uses the same heat/casting
+            // authority and therefore needs no new save section or host loop.
+            engine.BindGlassworksCatalog(GlassworksCatalogLoader.Load(dataDir, files, json));
             return (engine, catalog);
         }
 

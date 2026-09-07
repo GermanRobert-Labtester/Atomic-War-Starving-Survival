@@ -56,6 +56,8 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupCrafting();
             SetupEquipmentCondition();
+            // Plan B89: ensure metrology is available before ballistics calibrate/refurbish.
+            SetupPrecisionMetrology();
             var rng = _campaignDay.Rng.GetStream(
                 Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng;
             _ballisticsWorkbench = BallisticsWorkbenchHostSession.Create(
@@ -63,6 +65,8 @@ namespace AtomicWar.GodotApp
                 rng,
                 _inventory?.Inventory,
                 _equipmentCondition?.System);
+            if (_combat != null)
+                _combat.Ballistics = _ballisticsWorkbench.System;
             _ballisticsWorkbench.StateChanged += () => _ballisticsWorkbenchDirty = true;
         }
 
@@ -214,12 +218,70 @@ namespace AtomicWar.GodotApp
                     result = _ballisticsWorkbench.Inspect(param, day);
                     break;
                 case "calibrate":
-                    result = _ballisticsWorkbench.Calibrate(param, 0.65f, 0.75f, day);
+                {
+                    // Plan B89: live tooling calibration from precision metrology when
+                    // registered; otherwise workshop precision-room Calibration; never a
+                    // hardcoded bunker-wide constant.
+                    float tooling = ResolveBallisticsToolingCalibration();
+                    result = _ballisticsWorkbench.Calibrate(param, 0.65f, tooling, day);
                     break;
+                }
                 case "refurbish":
+                {
+                    float tooling = ResolveBallisticsToolingCalibration();
                     result = _ballisticsWorkbench.Refurbish(
-                        param, new[] { "item_ballistics_cleaning_kit" }, 0.75f, day);
+                        param, new[] { "item_ballistics_cleaning_kit" }, tooling, day);
                     break;
+                }
+                case "attach_optic":
+                {
+                    var parts = (param ?? string.Empty).Split('|');
+                    if (parts.Length < 3 ||
+                        string.IsNullOrWhiteSpace(parts[0]) ||
+                        string.IsNullOrWhiteSpace(parts[1]) ||
+                        string.IsNullOrWhiteSpace(parts[2]))
+                    {
+                        result = ActionResult.Failed("invalid_optic", "ballistics.invalid_optic");
+                        break;
+                    }
+
+                    SetupPrecisionOptics();
+                    var existing = _ballisticsWorkbench.System.FindProfile(parts[0]);
+                    var workpiece = _precisionOptics?.System.State.activeWorkpiece;
+                    if (existing?.OpticQuality > 0f)
+                    {
+                        result = ActionResult.Blocked(
+                            "optic_already_attached",
+                            "ballistics.optic_already_attached");
+                    }
+                    else if (workpiece == null || !workpiece.isCompleted)
+                    {
+                        result = ActionResult.Blocked(
+                            "optic_not_ready",
+                            "ballistics.optic_not_ready");
+                    }
+                    else
+                    {
+                        _ballisticsWorkbench.EnsureProfile(parts[0], parts[1]);
+                        float quality = workpiece.accumulatedQuality;
+                        var completed = _precisionOptics!.CompleteOptic(parts[2]);
+                        if (!completed.IsSuccess)
+                        {
+                            result = completed;
+                        }
+                        else if (!_inventory.Inventory.TryConsumeById(parts[2], 1))
+                        {
+                            result = ActionResult.Failed(
+                                "optic_consume_failed",
+                                "ballistics.optic_consume_failed");
+                        }
+                        else
+                        {
+                            result = _ballisticsWorkbench.AttachOptic(parts[0], quality);
+                        }
+                    }
+                    break;
+                }
                 default:
                     result = ActionResult.Failed("unknown_action", "ballistics.unknown_action");
                     break;

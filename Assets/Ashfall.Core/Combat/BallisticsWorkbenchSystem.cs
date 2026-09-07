@@ -43,6 +43,9 @@ namespace Ashfall.Core.Combat
         [JsonPropertyName("max_calibration_bonus")]
         public float MaxCalibrationBonus { get; set; } = 0.2f;
 
+        [JsonPropertyName("max_optic_bonus")]
+        public float MaxOpticBonus { get; set; } = 0.15f;
+
         [JsonPropertyName("maintenance_recipe_id")]
         public string MaintenanceRecipeId { get; set; } = string.Empty;
 
@@ -73,6 +76,10 @@ namespace Ashfall.Core.Combat
         public float CrownCondition = 1f;
         public float RiflingCondition = 1f;
         public float CalibrationQuality;
+        // B99: quality of the one optic mounted to this weapon. The
+        // ballistics profile is the persisted home; the optics bench owns
+        // manufacture, not mounted-equipment state.
+        public float OpticQuality;
         public WeaponHeadspaceState HeadspaceState;
         public bool Inspected;
         public bool CatastrophicFailureResolved;
@@ -255,6 +262,24 @@ namespace Ashfall.Core.Combat
             return ActionResult.Success("ballistics.calibrated");
         }
 
+        /// <summary>
+        /// Mount one completed optical element on a weapon profile. This is a
+        /// bounded projection only; combat resolution remains in TacticalCombatSystem.
+        /// </summary>
+        public ActionResult AttachOptic(string weaponInstanceId, float opticQuality)
+        {
+            var profile = FindProfile(weaponInstanceId);
+            if (profile == null)
+                return ActionResult.Failed("unknown_weapon", "ballistics.unknown_weapon");
+            if (profile.OpticQuality > 0f)
+                return ActionResult.Blocked("optic_already_attached", "ballistics.optic_already_attached");
+
+            profile.OpticQuality = Math.Clamp(opticQuality, 0f, 1f);
+            Recalculate(profile, ResolveDefinition(profile.ProfileId));
+            OnProfileChanged?.Invoke(profile);
+            return ActionResult.Success("ballistics.optic_attached");
+        }
+
         public ActionResult Refurbish(
             string weaponInstanceId,
             IReadOnlyList<string>? parts,
@@ -399,10 +424,12 @@ namespace Ashfall.Core.Combat
             float accuracy = Math.Clamp(baseDispersion / Math.Max(0.1f, profile.DispersionMoa), 0.65f, 1.2f);
             float calibration = 1f + Math.Clamp(profile.CalibrationQuality *
                 (definition?.MaxCalibrationBonus ?? 0.2f), 0f, 0.25f);
+            float optic = 1f + Math.Clamp(profile.OpticQuality *
+                (definition?.MaxOpticBonus ?? 0.15f), 0f, 0.20f);
             float unsafePenalty = profile.HeadspaceState >= WeaponHeadspaceState.Unsafe ? 0.75f : 1f;
             var modifier = new WeaponCombatModifier
             {
-                AccuracyMultiplier = Math.Clamp(accuracy * calibration * unsafePenalty, 0.5f, 1.2f),
+                AccuracyMultiplier = Math.Clamp(accuracy * calibration * optic * unsafePenalty, 0.5f, 1.2f),
                 RangeMultiplier = Math.Clamp(0.9f + profile.RiflingCondition * 0.1f, 0.75f, 1f),
                 PenetrationMultiplier = Math.Clamp(0.85f + profile.CrownCondition * 0.15f, 0.75f, 1f),
                 CriticalMultiplier = Math.Clamp(0.9f + profile.CalibrationQuality * 0.15f, 0.8f, 1.1f),
@@ -510,6 +537,7 @@ namespace Ashfall.Core.Combat
                 profile.CrownCondition = Math.Clamp(profile.CrownCondition, 0f, 1f);
                 profile.RiflingCondition = Math.Clamp(profile.RiflingCondition, 0f, 1f);
                 profile.CalibrationQuality = Math.Clamp(profile.CalibrationQuality, 0f, 1f);
+                profile.OpticQuality = Math.Clamp(profile.OpticQuality, 0f, 1f);
             }
         }
     }

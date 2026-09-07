@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 #pragma warning disable CS8618
 using Ashfall.Core.PlayerCommand;
 
@@ -578,6 +579,43 @@ namespace Ashfall.Core
                 _log.Warn($"[WaterTreatment] incoming contamination elevated ({_state.incomingContaminationLevel:F2}) — flood source");
             OnWaterStateChanged?.Invoke();
         }
+
+        // ── Hydrogeology advisory seam (Plan 115) ─────────────────────────
+        // Intelligence-only: the piezometer network reports facts; treatment
+        // chemistry, stock and modes remain wholly owned here. Each advisory
+        // id is consumed exactly once (idempotent — reloads never re-apply).
+
+        private string? _lastAdvisoryId;
+
+        /// <summary>True while an active hydrogeology contamination advisory is registered.</summary>
+        public bool HasContaminationAdvisory { get; private set; }
+
+        /// <summary>Source ids excluded from intake by the latest advisory (isolations included).</summary>
+        public IReadOnlyList<string> AdvisoryBlockedSourceIds { get; private set; } = Array.Empty<string>();
+
+        /// <summary>
+        /// Registers a hydrogeology contamination advisory. Returns false when the
+        /// advisory was already consumed (same id) — callers can retry safely.
+        /// </summary>
+        public bool RegisterContaminationAdvisory(
+            string advisoryId, string advisoryLevel, IReadOnlyList<string> contaminatedSourceIds)
+        {
+            if (string.IsNullOrEmpty(advisoryId)) return false;
+            if (advisoryId == _lastAdvisoryId) return false; // consumed once
+            _lastAdvisoryId = advisoryId;
+            HasContaminationAdvisory = advisoryLevel != "none" && contaminatedSourceIds.Count > 0;
+            AdvisoryBlockedSourceIds = HasContaminationAdvisory
+                ? contaminatedSourceIds.ToArray()
+                : Array.Empty<string>();
+            if (HasContaminationAdvisory)
+                _log.Warn($"[WaterTreatment] hydrogeology advisory '{advisoryLevel}' — {contaminatedSourceIds.Count} source(s) flagged");
+            OnWaterStateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>Intake check: is this abstract source blocked by the current advisory?</summary>
+        public bool IsIntakeSourceBlocked(string sourceId) =>
+            HasContaminationAdvisory && AdvisoryBlockedSourceIds.Contains(sourceId);
 
         // ── Daily Tick ──────────────────────────────────────────────────────
 

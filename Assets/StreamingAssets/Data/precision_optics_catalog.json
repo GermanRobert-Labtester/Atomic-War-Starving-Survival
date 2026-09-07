@@ -27,7 +27,8 @@
       ],
       "max_quality": 0.90,
       "required_tool_tags": ["optics_bench"],
-      "target_system": "rangefinder"
+      "target_system": "rangefinder",
+      "output_item_id": "item_precision_rangefinder_achromat"
     },
     {
       "optic_recipe_id": "optic_heliograph_mirror",

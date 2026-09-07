@@ -11,7 +11,7 @@ namespace Ashfall.Core.Tests.Radio
     public class RadioSaveMigrationTests
     {
         [Fact]
-        public void V2Save_EncodesAndDecodes_WithFullPlan24State()
+        public void V3Save_EncodesAndDecodes_WithTriangulationNest()
         {
             var json = new SystemTextJsonSerializer();
             var state = new RadioSaveState
@@ -64,12 +64,39 @@ namespace Ashfall.Core.Tests.Radio
                         frequencyMhz = 88.5f,
                         recordedDay = 45
                     }
+                },
+                triangulation = new TriangulationState
+                {
+                    observations =
+                    {
+                        new RadioObservation
+                        {
+                            signalId = "sig_civil_defense",
+                            stationId = "station_shelter_primary",
+                            bearingDegrees = 40f,
+                            errorDegrees = 2f,
+                            signalStrength = 0.9f,
+                            weatherCondition = "Clear",
+                            operatorSkill = 0.8f
+                        }
+                    },
+                    discoveredLocationIds = { "loc_broadcast_bunker_echo" },
+                    stationBaselines =
+                    {
+                        new StationBaselineEntry
+                        {
+                            stationId = "station_shelter_primary",
+                            xKm = 0f,
+                            yKm = 0f,
+                            arrayId = "df_array_shelter_loop"
+                        }
+                    }
                 }
             };
 
             string encoded = RadioSaveCodec.Encode(state, json);
             Assert.NotNull(encoded);
-            Assert.Contains("\"saveVersion\":2", encoded);
+            Assert.Contains("\"saveVersion\":3", encoded);
 
             bool ok = RadioSaveCodec.TryDecode(encoded, json, out var restored);
             Assert.True(ok);
@@ -82,10 +109,14 @@ namespace Ashfall.Core.Tests.Radio
             Assert.Single(restored.distressSignals);
             Assert.Single(restored.signalLog);
             Assert.Single(restored.recordedCassettes);
+            Assert.NotNull(restored.triangulation);
+            Assert.Single(restored.triangulation.observations);
+            Assert.Contains("loc_broadcast_bunker_echo", restored.triangulation.discoveredLocationIds);
+            Assert.Single(restored.triangulation.stationBaselines);
         }
 
         [Fact]
-        public void V1LegacySave_MigratesSeamlesslyToV2()
+        public void V1LegacySave_MigratesSeamlesslyToV3()
         {
             var json = new SystemTextJsonSerializer();
             var v1 = new RadioSaveStateFrozenV1
@@ -124,10 +155,61 @@ namespace Ashfall.Core.Tests.Radio
             Assert.NotNull(migrated.discoveredStationIds);
             Assert.NotNull(migrated.signalLog);
             Assert.NotNull(migrated.recordedCassettes);
+            Assert.NotNull(migrated.triangulation);
+            Assert.Empty(migrated.triangulation.observations);
         }
 
         [Fact]
-        public void TamperedV2Payload_IsRejected()
+        public void V2LegacySave_MigratesToV3_WithEmptyTriangulationNest()
+        {
+            var json = new SystemTextJsonSerializer();
+            var v2 = new RadioSaveStateFrozenV2
+            {
+                saveVersion = 2,
+                day = 33,
+                currentFrequency = 104.2f,
+                history = new List<RadioInterceptEntry>
+                {
+                    new RadioInterceptEntry
+                    {
+                        factionId = "faction_civil_defense",
+                        callsign = "CIVIL",
+                        frequencyMhz = 104.2f,
+                        kind = 0,
+                        message = "relay",
+                        signalStrength = 5,
+                        day = 33
+                    }
+                },
+                playedBroadcastKeys = new List<string> { "33:104.20:relay" },
+                discoveredStationIds = new List<string> { RadioStationCatalog.StationCivilDefense },
+                customPresets = new List<float> { 104.2f },
+                distressSignals = new List<DistressSignalSaveEntry>(),
+                signalLog = new List<SignalLogEntry>(),
+                recordedCassettes = new List<RecordedCassetteEntry>(),
+                stationOverrides = new List<StationStateOverrideEntry>()
+            };
+            v2.Checksum = SaveChecksum.Compute(v2);
+
+            string v2Json = json.Serialize(v2);
+            Assert.Contains("\"saveVersion\":2", v2Json);
+
+            bool ok = RadioSaveCodec.TryDecode(v2Json, json, out var migrated);
+            Assert.True(ok);
+            Assert.NotNull(migrated);
+            Assert.Equal(3, migrated!.saveVersion);
+            Assert.Equal(33, migrated.day);
+            Assert.Equal(104.2f, migrated.currentFrequency);
+            Assert.Single(migrated.history);
+            Assert.Single(migrated.discoveredStationIds);
+            Assert.NotNull(migrated.triangulation);
+            Assert.Empty(migrated.triangulation.observations);
+            Assert.Empty(migrated.triangulation.candidates);
+            Assert.Empty(migrated.triangulation.discoveredLocationIds);
+        }
+
+        [Fact]
+        public void TamperedV3Payload_IsRejected()
         {
             var json = new SystemTextJsonSerializer();
             var state = new RadioSaveState

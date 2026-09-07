@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("CELL ALPHA RED DAWN", "4 OPERATIVES (ACTIVE)", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
             _telemetryContainer.AddChild(CreateTelemetryRow("CELL BETA THE FREE ASH", "3 OPERATIVES (MONITORED)", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _telemetryContainer.AddChild(CreateTelemetryRow("PIRATE RADIO FREQUENCY", "148.250 MHz [INTERCEPTED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[RAID SECTOR 03 HIDEOUT]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[INTERROGATE SUSPECTED REBEL AGENTS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[IMPOSE EMERGENCY SECTOR 03 CURFEW]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("HOLDING CELLS OCCUPANCY", "3 / 6 DETAINEES (VARGA, KOREN)", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("CONFESSION PROBABILITY", "74.5% UNDER INTERROGATION", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("CONFISCATED PAMPHLETS", "142 SEDITIOUS LEAFLETS", AshfallUiHelpers.ToColor(DesignTheme.Dim)));

@@ -202,3 +202,97 @@ discovery.micro_gamma_levy_board.title,Checkpoint Gamma Levy Board,,Assets/Strea
 discovery.micro_gamma_levy_board.description,"The garrison's levy board still stands by the guard shack: grain quotas, diesel quotas, and the names of households marked square for paid and circle for owed. Fresh chalk over old chalk. Somebody drives here to write, which means somebody still collects.",,Assets/StreamingAssets/Data/micro_locations.json
 discovery.micro_gamma_levy_board.choice.memorize_the_board,Memorize which farms have paid and which are marked owed.,,Assets/StreamingAssets/Data/micro_locations.json
 discovery.micro_gamma_levy_board.choice.take_the_chalk,Take the chalk and the board's rating stamp. Forged square marks might pass at a distance.,,Assets/StreamingAssets/Data/micro_locations.json
+ui.common.close_short,CLOSE [Esc],SCHLIESSEN [Esc],src/UI/ResearchPanel.cs
+research.title,RESEARCH & TECHNOLOGY // QUEUE,FORSCHUNG & TECHNOLOGIE // WARTESCHLANGE,src/UI/ResearchPanel.cs
+research.card.title,RESEARCH & TECHNOLOGY,FORSCHUNG & TECHNOLOGIE,src/UI/ResearchPanel.cs
+research.card.subtitle,"R&D QUEUE · DISCOVERED KNOWLEDGE · BREAKTHROUGHS","F&E-WARTESCHLANGE · ENTDECKTES WISSEN · DURCHBRÜCHE",src/UI/ResearchPanel.cs
+research.section.active,ACTIVE RESEARCH,AKTIVE FORSCHUNG,src/UI/ResearchPanel.cs
+research.section.available,AVAILABLE RESEARCH,VERFÜGBARE FORSCHUNG,src/UI/ResearchPanel.cs
+research.section.locked,LOCKED / UPCOMING RESEARCH,GESPERRTE / ANSTEHENDE FORSCHUNG,src/UI/ResearchPanel.cs
+research.section.completed,COMPLETED RESEARCH,ABGESCHLOSSENE FORSCHUNG,src/UI/ResearchPanel.cs
+research.section.knowledge,DISCOVERED KNOWLEDGE,ENTDECKTES WISSEN,src/UI/ResearchPanel.cs
+research.status.ready,Ready.,Bereit.,src/UI/ResearchPanel.cs
+research.status.offline,Offline — no research engine connected.,Offline — keine Forschungsinstanz verbunden.,src/UI/ResearchPanel.cs
+research.status.active,Research system active. Day {0}.,Forschungssystem aktiv. Tag {0}.,src/UI/ResearchPanel.cs
+research.progress,"Progress: Day {0} of {1} ({2} days remaining)","Fortschritt: Tag {0} von {1} ({2} Tage verbleiben)",src/UI/ResearchPanel.cs
+research.breakthrough_award,Breakthrough Award: {0},Durchbruch-Belohnung: {0},src/UI/ResearchPanel.cs
+research.breakthrough,Breakthrough: {0},Durchbruch: {0},src/UI/ResearchPanel.cs
+research.node.summary,{0} [{1}] — {2} days,{0} [{1}] — {2} Tage,src/UI/ResearchPanel.cs
+research.action.start,START RESEARCH,FORSCHUNG STARTEN,src/UI/ResearchPanel.cs
+research.empty.available_busy,No other research available (queue slot occupied or all unlocked).,Keine weitere Forschung verfügbar (Warteschlange belegt oder alles freigeschaltet).,src/UI/ResearchPanel.cs
+research.empty.available,No research available to start.,Keine Forschung zum Starten verfügbar.,src/UI/ResearchPanel.cs
+research.empty.locked,No locked research nodes remaining.,Keine gesperrten Forschungsknoten verbleiben.,src/UI/ResearchPanel.cs
+research.requirements,Requires: {0},Benötigt: {0},src/UI/ResearchPanel.cs
+research.locked.prerequisites,Locked: prerequisites incomplete,Gesperrt: Voraussetzungen fehlen,src/UI/ResearchPanel.cs
+research.empty.completed,No completed research.,Keine Forschung abgeschlossen.,src/UI/ResearchPanel.cs
+research.completed,{0} [{1}] — Complete,{0} [{1}] — Abgeschlossen,src/UI/ResearchPanel.cs
+research.completed.breakthrough,(Breakthrough: {0}),(Durchbruch: {0}),src/UI/ResearchPanel.cs
+research.empty.knowledge,No knowledge unlocked yet.,Noch kein Wissen freigeschaltet.,src/UI/ResearchPanel.cs
+research.knowledge.row,{0} — {1},{0} — {1},src/UI/ResearchPanel.cs
+onboarding.title,FIRST-HOUR OBJECTIVE,ZIEL DER ERSTEN STUNDE,src/UI/OnboardingHintPanel.cs
+onboarding.status.offline,ONBOARDING OFFLINE,ONBOARDING OFFLINE,src/UI/OnboardingHintPanel.cs
+onboarding.status.booting,Booting renderer — a real save/load resume is wired in Core.,Renderer startet — echtes Speichern und Fortsetzen ist im Core verdrahtet.,src/UI/OnboardingHintPanel.cs
+onboarding.status.complete,JOURNEY COMPLETE,WEG ABGESCHLOSSEN,src/UI/OnboardingHintPanel.cs
+onboarding.status.current,CURRENT: {0},AKTUELL: {0},src/UI/OnboardingHintPanel.cs
+onboarding.status.day_two,You reached Day 2. Returning the ledger to your command.,Tag 2 erreicht. Das Protokoll kehrt unter dein Kommando zurück.,src/UI/OnboardingHintPanel.cs
+onboarding.status.first_hour_complete,The first-hour sequence is complete. The shelter is yours to manage.,Die Sequenz der ersten Stunde ist abgeschlossen. Der Bunker liegt in deiner Hand.,src/UI/OnboardingHintPanel.cs
+onboarding.status.disabled,ONBOARDING DISABLED — veteran mode is active.,ONBOARDING DEAKTIVIERT — Veteranenmodus ist aktiv.,src/Main.PlayerSurfaces.cs
+onboarding.status.inactive,Onboarding is not active for this run.,Onboarding ist für diesen Durchlauf nicht aktiv.,src/UI/OnboardingHintPanel.cs
+onboarding.status.bar,"Day {0} · {1} (onboarding): {2}","Tag {0} · {1} (Onboarding): {2}",src/Main.Onboarding.cs
+onboarding.assistance.minimal,ASSISTANCE: MINIMAL,HILFE: MINIMAL,src/UI/OnboardingHintPanel.cs
+onboarding.assistance.standard,ASSISTANCE: STANDARD,HILFE: STANDARD,src/UI/OnboardingHintPanel.cs
+onboarding.assistance.guided,ASSISTANCE: GUIDED,HILFE: GEFÜHRT,src/UI/OnboardingHintPanel.cs
+onboarding.action.show_where,SHOW ME WHERE,ZEIG MIR DEN WEG,src/UI/OnboardingHintPanel.cs
+onboarding.action.skip,SKIP STEP,SCHRITT ÜBERSPRINGEN,src/UI/OnboardingHintPanel.cs
+onboarding.action.dismiss,DISMISS HINT,HINWEIS AUSBLENDEN,src/UI/OnboardingHintPanel.cs
+onboarding.action.replay,REPLAY,ERNEUT STARTEN,src/UI/OnboardingHintPanel.cs
+onboarding.checklist.title,JOURNEY CHECKLIST,WEG-CHECKLISTE,src/UI/OnboardingHintPanel.cs
+onboarding.hint.empty,HINT: —,HINWEIS: —,src/UI/OnboardingHintPanel.cs
+onboarding.hint.prefix,HINT:,HINWEIS:,src/UI/OnboardingHintPanel.cs
+onboarding.hint.dismissed,HINT: (dismissed),HINWEIS: (ausgeblendet),src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.tracker,The first-hour onboarding tracker. Survives save/load.,Der Onboarding-Tracker für die erste Stunde. Überlebt Speichern und Laden.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.close,Close the onboarding hint panel. Your progress is preserved.,Onboarding-Hinweis schließen. Dein Fortschritt bleibt erhalten.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.assistance,How much the journey guides each beat. Toggle via the assistance button below.,Wie stark der Weg jeden Schritt führt. Unten umschalten.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.objective,Exactly what is required to complete this onboarding step.,Was genau zum Abschluss dieses Onboarding-Schritts erforderlich ist.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.hint,A contextual nudge that appears when you pause or hit a wall.,Ein kontextbezogener Hinweis, wenn du innehältst oder feststeckst.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.show_where,Open the real system for this step so you can act.,Das echte System für diesen Schritt öffnen.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.skip,Mark this step known and move on. Real actions are still yours to take when ready.,Diesen Schritt als bekannt markieren und weitergehen.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.dismiss,Hide the contextual hint for this step until you advance.,Diesen Hinweis bis zum nächsten Schritt ausblenden.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.assistance_cycle,"Cycle between MINIMAL (objective only), STANDARD (default), GUIDED (extra help).","Zwischen MINIMAL (nur Ziel), STANDARD (Standard) und GEFÜHRT (mehr Hilfe) wechseln.",src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.replay,Restart the onboarding hints from Day 1 (does not undo gameplay).,Onboarding-Hinweise ab Tag 1 neu starten (ändert das Spiel nicht).,src/UI/OnboardingHintPanel.cs
+onboarding.protocol.title,Resolve the Day 1 protocol,Das Protokoll von Tag 1 abarbeiten,src/UI/OnboardingHintPanel.cs
+onboarding.protocol.objective,"Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.","Die ersten Anweisungen abarbeiten: Rationen, Wartung, dann Funk. Jede Wahl kostet.",src/UI/OnboardingHintPanel.cs
+onboarding.inspect.title,Inspect three bunker rooms,Drei Bunkerräume prüfen,src/UI/OnboardingHintPanel.cs
+onboarding.inspect.objective,Open the shelter and inspect rooms until three have confirming notes.,Unterkunft öffnen und Räume prüfen, bis drei bestätigende Notizen vorliegen.,src/UI/OnboardingHintPanel.cs
+onboarding.rationing.title,Open the stores and read them,Lager öffnen und prüfen,src/UI/OnboardingHintPanel.cs
+onboarding.rationing.objective,Open the inventory and look at the food and water you are rationing.,Inventar öffnen und die rationierten Vorräte prüfen.,src/UI/OnboardingHintPanel.cs
+onboarding.assignment.title,Assign a survivor to a duty,Einen Überlebenden einteilen,src/UI/OnboardingHintPanel.cs
+onboarding.assignment.objective,Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.,Dienstplan öffnen und einen Überlebenden einer Schicht zuweisen.,src/UI/OnboardingHintPanel.cs
+onboarding.weather.title,Read the weather,Wetter lesen,src/UI/OnboardingHintPanel.cs
+onboarding.weather.objective,Open the weather forecast or panel to learn what tomorrow will bring.,Wettervorhersage öffnen und sehen, was morgen kommt.,src/UI/OnboardingHintPanel.cs
+onboarding.inventory_use.title,Use an item from the stores,Einen Gegenstand aus dem Lager verwenden,src/UI/OnboardingHintPanel.cs
+onboarding.inventory_use.objective,Equip a protective item or consume something real from the ledger. Both are real commands.,Schutzausrüstung anlegen oder etwas aus dem Lager verbrauchen. Beides sind echte Befehle.,src/UI/OnboardingHintPanel.cs
+onboarding.day_advance.title,End Day 1,Tag 1 beenden,src/UI/OnboardingHintPanel.cs
+onboarding.day_advance.objective,Press the Advance Day confirm. The first night ticks; the morning briefing returns.,Tag bestätigen. Die erste Nacht vergeht; die Morgenbesprechung kehrt zurück.,src/UI/OnboardingHintPanel.cs
+onboarding.water.title,Treat the water,Wasser aufbereiten,src/UI/OnboardingHintPanel.cs
+onboarding.water.objective,Start a real water-treatment batch. The shelter cannot drink intention.,Einen echten Wasseraufbereitungszyklus starten. Der Bunker kann keine Absicht trinken.,src/UI/OnboardingHintPanel.cs
+onboarding.power.title,Restore power,Strom wiederherstellen,src/UI/OnboardingHintPanel.cs
+onboarding.power.objective,Operate a shelter breaker and see the grid state change.,Einen Bunkerschalter bedienen und die Änderung im Netz sehen.,src/UI/OnboardingHintPanel.cs
+onboarding.food.title,Use a food ration,Nahrungsration verwenden,src/UI/OnboardingHintPanel.cs
+onboarding.food.objective,Consume a real food ration from the stores.,Eine echte Nahrungsration aus den Vorräten verbrauchen.,src/UI/OnboardingHintPanel.cs
+onboarding.research.title,Start research,Forschung starten,src/UI/OnboardingHintPanel.cs
+onboarding.research.objective,Start one available research node. Knowledge takes time.,Einen verfügbaren Forschungsknoten starten. Wissen braucht Zeit.,src/UI/OnboardingHintPanel.cs
+onboarding.expedition.title,Dispatch an expedition,Expedition entsenden,src/UI/OnboardingHintPanel.cs
+onboarding.expedition.objective,Dispatch a real expedition. The surface will answer for it.,Eine echte Expedition entsenden. Die Oberfläche wird antworten.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.protocol,"Pick ration, maintenance, and radio. The bunker stores adjust around your choices.","Rationen, Wartung und Funk wählen. Die Bunkervorräte richten sich danach.",src/UI/OnboardingHintPanel.cs
+onboarding.hint.inspect,Inspect any three rooms — every confirming note is a fallback if the next storm cuts light.,Drei Räume prüfen — jede Notiz hilft, wenn der nächste Sturm das Licht nimmt.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.rationing,Open the stores. Read the food and water you are rationing against.,Lager öffnen. Die rationierten Vorräte prüfen.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.assignment,Pull one survivor onto a duty from the Duty Roster. Their shifts move the bunker forward.,Einen Überlebenden im Dienstplan einteilen. Seine Schicht hält den Bunker in Bewegung.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.weather,Read the forecast before you end the day — fallout storms change outdoor rad.,Vor Tagesende die Vorhersage lesen — Falloutstürme verändern die Außenstrahlung.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.inventory,Equip something real. The geiger or gas mask only protects the hands that wear them.,Etwas Echtes ausrüsten. Geigerzähler und Maske schützen nur, wer sie trägt.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.day_advance,Confirm the advance. The morning briefing returns once Day 2 lands.,Vormarsch bestätigen. Die Morgenbesprechung kehrt an Tag 2 zurück.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.water,Start a treatment batch from the water plant. A real batch changes the shelter ledger.,Einen Aufbereitungszyklus in der Wasseranlage starten. Ein echter Zyklus ändert das Bunkerprotokoll.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.power,Open the grid and operate one breaker. Watch the room state, not a tutorial promise.,Netz öffnen und einen Schalter bedienen. Den Raumstatus beobachten, nicht ein Tutorialversprechen.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.food,Consume one food ration. The stores must actually lose it.,Eine Nahrungsration verbrauchen. Die Vorräte müssen sie wirklich verlieren.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.research,Start an available research node. The queue is the proof.,Einen verfügbaren Forschungsknoten starten. Die Warteschlange ist der Beweis.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.expedition,Dispatch a sortie with the real expedition command. The surface decides the cost.,Eine Sortie mit dem echten Expeditionsbefehl entsenden. Die Oberfläche bestimmt den Preis.,src/UI/OnboardingHintPanel.cs

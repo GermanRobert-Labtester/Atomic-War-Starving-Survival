@@ -21,6 +21,9 @@ namespace AtomicWar.GodotApp.Localization
             if (_initialized) return;
             _initialized = true;
 
+            LocalizationService.Instance.OnMissingKey += key =>
+                GD.PrintErr($"[AshfallLocalization] Missing localization key: {key}");
+
             // Load CSV catalog if present in assets/l10n/
             LoadCatalogFromRes("res://assets/l10n/strings.csv");
 
@@ -51,6 +54,12 @@ namespace AtomicWar.GodotApp.Localization
         {
             Initialize();
             return LocalizationService.Instance.Format(key, args);
+        }
+
+        public static string TrNamed(string key, System.Collections.Generic.IReadOnlyDictionary<string, object?> args)
+        {
+            Initialize();
+            return LocalizationService.Instance.FormatNamed(key, args);
         }
 
         private static void LoadCatalogFromRes(string resPath)

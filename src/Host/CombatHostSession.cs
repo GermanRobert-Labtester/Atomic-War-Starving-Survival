@@ -37,6 +37,13 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public Ashfall.Core.EquipmentConditionSystem? Equipment { get; set; }
 
+        /// <summary>
+        /// Optional bounded ballistics projection. When set, persisted
+        /// calibration/optic state is applied to each combat weapon token at
+        /// encounter start.
+        /// </summary>
+        public BallisticsWorkbenchSystem? Ballistics { get; set; }
+
         /// <summary>Condition-at-start of bridge-bound weapons, for the post-combat write-back.</summary>
         private readonly Dictionary<string, float> _boundWeaponConditionAtStart = new();
         private string _boundWeaponsSyncedForResolution = string.Empty;
@@ -172,7 +179,9 @@ namespace AtomicWar.GodotApp
                 consumeItem,
                 prior.RaiseTrauma,
                 grantLoot,
-                markCombatSurvived ?? prior.MarkCombatSurvived);
+                markCombatSurvived ?? prior.MarkCombatSurvived,
+                prior.EmitBreachNoise,
+                prior.ApplyBreachToolWear);
         }
 
         /// <summary>
@@ -204,9 +213,11 @@ namespace AtomicWar.GodotApp
             // process, and the data authority never changes mid-session.
             if (!string.IsNullOrEmpty(dataDir))
             {
+                var files = new FileSystemIO();
+                var json = new SystemTextJsonSerializer();
                 try
                 {
-                    CombatCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                    CombatCatalogLoader.Load(dataDir, files, json);
                 }
                 catch (Exception ex)
                 {
@@ -217,6 +228,22 @@ namespace AtomicWar.GodotApp
                 CombatCatalog.SeedDefaults();
 
             var session = new CombatHostSession();
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                try
+                {
+                    var files = new FileSystemIO();
+                    var json = new SystemTextJsonSerializer();
+                    var breachCatalog = BreachingCatalogLoader.Load(dataDir, files, json);
+                    BreachingCatalogLoader.Validate(breachCatalog);
+                    session.Engine.LoadBreachingCatalog(breachCatalog);
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Combat] breaching_equipment_catalog.json load failed: {ex.Message}");
+                }
+            }
+
             var save = CombatSaveStore.TryLoad();
             if (save != null)
             {
@@ -224,6 +251,15 @@ namespace AtomicWar.GodotApp
                 session.LastEvent = "Combat state restored from save.";
             }
             return session;
+        }
+
+        /// <summary>
+        /// Plan B86 — bind expedition inventory + vehicle availability so
+        /// breaching tools cannot clear for free when logistics are unbound.
+        /// </summary>
+        public void ConfigureBreachingLogistics(bool vehicleAvailable = false)
+        {
+            Engine.ConfigureBreachingLogistics(Inventory?.Inventory, vehicleAvailable);
         }
 
         // ── Production Combat Entry Point ────────────────────────────────
@@ -313,6 +349,12 @@ namespace AtomicWar.GodotApp
                     if (bound)
                         _boundWeaponConditionAtStart[token.InstanceId] = token.ConditionPct;
                 }
+            }
+
+            if (Ballistics != null)
+            {
+                for (int i = 0; i < weaponList.Count; i++)
+                    Ballistics.ApplyToCombatWeapon(weaponList[i]);
             }
 
             int finalEnemyCount = enemyCount > 0 ? enemyCount : DefaultAmbushEnemyCount;

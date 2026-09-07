@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-06<br>
-**Total Registered Actions:** 143 entries / 211 flag tokens (aliases included)
+**Total Registered Actions:** 149 entries / 218 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -18,6 +18,7 @@
 | `--asset-coverage-report` | — | Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list |
 | `--asset-registry-selftest` | — | Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/ |
 | `--bridge-selftest` | — | Report UnityEngine shim removal (shim is gone; always exits 0) |
+| `--power-grid-catalog-selftest` | — | Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal |
 | `--core-selftest` | — | Ice road + census headless demos |
 | `--data-integrity-selftest` | — | Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates) |
 | `--export-parity-selftest` | — | [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present |
@@ -33,16 +34,19 @@
 | `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
 | `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
 | `--agriculture-selftest` | — | Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition |
+| `--aquaponics-selftest` | — | Plan B87 closed-loop aquaponics: catalog, growth, power/DO crash, harvest, nutrient export, save round-trip |
 | `--arbitration-selftest` | — | CrossingArbitrationHeadlessDemo |
 | `--black-flotilla-selftest` | `--maritime-selftest`, `--expansion-09-selftest` | The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip |
 | `--brine-selftest` | `--salt-steam-selftest` | BrineWaterHeadlessDemo (S2 salt & steam) |
 | `--census-selftest` | — | CensusHeadlessDemo |
 | `--cluster-selftest` | `--order-12c-selftest` | Cluster12CHeadlessDemo (S3 order 12-C + quest snapshot) |
+| `--combat-breaching-selftest` | — | Plan B86 combat breaching: catalog, quiet/loud clearance, vehicle gate, mid-breach save fields |
 | `--combat-selftest` | — | Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip |
 | `--crossing-selftest` | — | CrossingHeadlessDemo (Exp 04) |
 | `--deep-coast-host-selftest` | `--deep-coast-playthrough` | Deep-coast host playthrough: survey → decision → dive → scavenge → save/restore |
 | `--deep-coast-selftest` | `--deep-coast-route-selftest` | District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save |
 | `--defense-selftest` | — | Shelter Defense Expansion (Plan 163): trap catalog, installation, engagement, alarm, capture handoff |
+| `--direction-finding-selftest` | — | Plan B88 HF/DF: catalog, baselines, skywave, fingerprint≠fix, RadioSave V3 triangulation nest |
 | `--disease-selftest` | `--disease-expansion-selftest` | Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip |
 | `--duty-roster-selftest` | — | DutyRosterHeadlessDemo (Exp 02) |
 | `--endings-selftest` | `--shelf-selftest` | EndingsHeadlessDemo (S4 endings exclusive + roundtrip) |
@@ -66,6 +70,7 @@
 | `--muster-selftest` | `--expansion-06-selftest` | MusterHeadlessDemo (Exp 06 the Muster) |
 | `--faction-ecology-selftest` | — | Plan 25 faction ecology vertical slice (action board, E-P1 chain, witness, camp scene, muster path) |
 | `--phase0-selftest` | — | Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip |
+| `--precision-metrology-selftest` | — | Plan B89 precision metrology: grades, registered consumers only, workshop projection, disturbance, save round-trip |
 | `--silent-foundry-selftest` | — | Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip |
 | `--standing-record-selftest` | — | StandingRecordHeadlessDemo (Exp 03) |
 | `--verdict-selftest` | `--expansion-08-selftest` | The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save |
@@ -115,7 +120,8 @@
 | `--duty-roster-uitest` | — | Duty Roster panel UI construction, role assignments, and shift scheduling |
 | `--economy-uitest` | — | Economy market panel UI construction, price shock display, and barter grid |
 | `--expedition-panel-uitest` | `--expedition-panel-lifecycle` | Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface |
-| `--onboarding-journey-selftest` | `--onboarding-selftest` | First-hour onboarding journey: protocol → inspect → rationing → assignment → weather → inventory-use → day-advance, with resume after save/load and no-resource-fabrication |
+| `--onboarding-journey-selftest` | `--onboarding-selftest` | First-hour onboarding journey: water → power → food → research → expedition, with resume after save/load and state-true signals |
+| `--mod-selftest` | `--mods-selftest` | Deterministic JSON mod manifest validation, whitelist enforcement, layering, failure isolation, and catalog-integrity staging |
 | `--holdfast-runtime-uitest` | `--holdfast-runtime-ui-test`, `--holdfast-runtime-selftest` | Godot Holdfast terminal browse → trade → failed trade → save → reload |
 | `--inventory-uitest` | `--inventory-selftest` | Inventory panel UI construction, item grid, and slot binding |
 | `--journal-uitest` | — | Build ledger UI, cycle tabs, quit |

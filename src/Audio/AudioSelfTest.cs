@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp.Audio
                 AudioCueCatalog.AmbSurfaceAshfall, AudioCueCatalog.AmbSurfaceBlizzard,
                 AudioCueCatalog.AmbSurfaceFalloutStorm, AudioCueCatalog.AmbSurfaceStorm,
                 AudioCueCatalog.MusicMenu,
-                AudioCueCatalog.RadioStatic, AudioCueCatalog.ShelterDoorOpen,
+                AudioCueCatalog.RadioStatic, AudioCueCatalog.RadioVinylBroadcast, AudioCueCatalog.ShelterDoorOpen,
                 AudioCueCatalog.ActionItemPickup, AudioCueCatalog.DangerAlarmKlaxon,
                 AudioCueCatalog.SaveSuccess, AudioCueCatalog.DayTransition,
                 AudioCueCatalog.GameOver,
@@ -324,6 +324,21 @@ namespace AtomicWar.GodotApp.Audio
             Check("Default alert volume is 100", defaults.AlertVolume == 100f, ref pass, ref fail);
             Check("Default version is current", defaults.Version == AudioSettings.CurrentVersion, ref pass, ref fail);
             Check("Default no mutes", !defaults.MasterMute && !defaults.MusicMute && !defaults.SfxMute, ref pass, ref fail);
+
+            var unifiedMix = new Ashfall.Core.Settings.UserSettingsData
+            {
+                MasterVolume = 0.42f,
+                MusicVolume = 0.31f,
+                AmbienceVolume = 0.27f,
+                SfxVolume = 0.63f,
+                RadioVolume = 0.54f,
+                MuteAll = true
+            };
+            AudioSettings.ApplyUnifiedMix(unifiedMix);
+            var projectedMix = AudioSettings.Instance;
+            Check("Unified settings project master mix", Math.Abs(projectedMix.MasterVolume - 42f) < 0.01f, ref pass, ref fail);
+            Check("Unified settings project radio mix", Math.Abs(projectedMix.RadioVolume - 54f) < 0.01f, ref pass, ref fail);
+            Check("Unified settings project mute state", projectedMix.MasterMute && projectedMix.RadioMute, ref pass, ref fail);
 
             // Round-trip
             var testSettings = new AudioSettings { MasterVolume = 50f, MusicVolume = 30f, MusicMute = true };

@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("ENGINE SHAFT VELOCITY", "1,200 RPM [GRID LOCKED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("TURBOCHARGER BOOST", "2.8 BAR BOOST PRESSURE", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("EXHAUST GAS TEMPERATURE", "480C (HEAT EXCHANGER OK)", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[ENGAGE COMPRESSED AIR STARTER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[SYNCHRONIZE GENERATOR TO GRID]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[PURGE DIESEL FUEL INJECTORS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("DIESEL DAY TANK LEVEL", "840 L (CONSUMPTION: 42 L/HR)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("TOTAL SHELTER BUS DRAW", "380 kW / 480 kW CAPACITY", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("SECONDARY DIESEL STOCKPILE", "4,200 L IN DEEP SUMP", AshfallUiHelpers.ToColor(DesignTheme.Dim)));

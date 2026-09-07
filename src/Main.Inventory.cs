@@ -114,7 +114,11 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = result.IsSuccess ? $"Consumed {itemId}. {deltas}".Trim() : result.MessageKey;
             _inventoryPanel?.RefreshView();
             _inventoryDetailPanel?.RefreshView();
-            if (result.IsSuccess) ObserveSigil("inventory.used");
+            if (result.IsSuccess)
+            {
+                ObserveSigil("inventory.used");
+                if (IsFoodItem(itemId)) ObserveSigil("food.ration_consumed");
+            }
         }
 
         private void OnInventoryEquipClicked(string itemId)
@@ -125,6 +129,14 @@ namespace AtomicWar.GodotApp
             _inventoryPanel?.RefreshView();
             _inventoryDetailPanel?.RefreshView();
             if (result.IsSuccess) ObserveSigil("inventory.used");
+        }
+
+        private bool IsFoodItem(string itemId)
+        {
+            var definition = _inventory?.Catalog.Get(itemId);
+            return definition != null &&
+                (definition.type == ItemType.Food ||
+                 definition.type == ItemType.ContaminatedFood);
         }
 
         private void OnInventoryCheckClicked()

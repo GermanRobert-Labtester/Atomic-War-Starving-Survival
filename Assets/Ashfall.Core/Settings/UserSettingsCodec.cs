@@ -92,12 +92,29 @@ namespace Ashfall.Core.Settings
             else
             {
                 data.Locale = data.Locale.Trim().ToLowerInvariant();
-                if (data.Locale != "en" && data.Locale != "pseudo")
+                if (data.Locale != "en" && data.Locale != "de" && data.Locale != "pseudo")
                 {
                     warnings.Add($"Locale '{data.Locale}' not recognized; defaulting to 'en'");
                     data.Locale = "en";
                 }
             }
+
+            data.EnabledMods ??= new List<string>();
+            var sanitizedMods = new List<string>();
+            var seenMods = new HashSet<string>(StringComparer.Ordinal);
+            foreach (string? modId in data.EnabledMods)
+            {
+                string normalized = modId?.Trim().ToLowerInvariant() ?? string.Empty;
+                if (!Ashfall.Core.Mods.JsonModLayering.IsSafeModId(normalized))
+                {
+                    if (!string.IsNullOrWhiteSpace(modId))
+                        warnings.Add($"Enabled mod '{modId}' ignored because its id is not path-safe");
+                    continue;
+                }
+                if (seenMods.Add(normalized))
+                    sanitizedMods.Add(normalized);
+            }
+            data.EnabledMods = sanitizedMods;
 
             // Tutorial Mode (0=All, 1=ContextualOnly, 2=Disabled)
             if (data.TutorialMode < 0 || data.TutorialMode > 2)

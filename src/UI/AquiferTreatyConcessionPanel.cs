@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("BASAL AQUIFER SIPHON DEPTH", "-620 METERS (STRATA 4)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _telemetryContainer.AddChild(CreateTelemetryRow("WATER SALINITY PURITY", "120 ppm (POTABLE GRADE)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("TRITIUM HEAVY ISOTOPE", "4.2 Bq/L [SAFE COMMERCE]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[RATIFY EMERGENCY WATER-FOR-AMMO ACCORD]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[THROTTLE TRIBUTARY BYPASS TO 50%]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[FLUSH CONTAMINATED SEDIMENT TRAP]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("7.62x39mm AMMO TRIBUTE", "450 ROUNDS CRATED", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("PURIFIED LEAD INGOTS", "120 KG IN ESCROW", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _dataContainer.AddChild(CreateTelemetryRow("SEALED ANTIBIOTICS VIALS", "18 UNITS STORED", AshfallUiHelpers.ToColor(DesignTheme.Warm)));

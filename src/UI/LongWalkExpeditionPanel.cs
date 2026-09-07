@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("TOTAL CORRIDOR DISTANCE", "1,240 KM TO OLD MERIDIAN", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _telemetryContainer.AddChild(CreateTelemetryRow("CURRENT MARCH DISTANCE", "412 KM AT GLASS BASIN", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("RELAY GAMMA SIGNAL STRENGTH", "42% CARRIER LOCK", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[DISPATCH AIRDROP RESUPPLY CRATE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[AUTHORIZE NIGHT MARCH IN BLIZZARD]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[ORDER EMERGENCY RAD-X PURGE PROTOCOL]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("WATER STOCKS (EXPEDITION)", "3.2 DAYS REMAINING", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("RATION KITS (EXPEDITION)", "5.5 DAYS REMAINING", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("RAD-X AMPULES IN FIELD", "8 DOSES REMAINING", AshfallUiHelpers.ToColor(DesignTheme.Dim)));

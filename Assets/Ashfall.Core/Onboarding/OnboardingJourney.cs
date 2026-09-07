@@ -89,8 +89,77 @@ namespace Ashfall.Core.Onboarding
                 (DaySentinel, 2)),
         };
 
+        public static readonly OnboardingStage[] FirstHourOrder =
+        {
+            OnboardingStage.Water,
+            OnboardingStage.Power,
+            OnboardingStage.Food,
+            OnboardingStage.Research,
+            OnboardingStage.Expedition,
+        };
+
+        public static readonly OnboardingStageDef[] FirstHour =
+        {
+            new OnboardingStageDef(
+                OnboardingStage.Water,
+                "Treat the water",
+                "Start a real water-treatment batch. The shelter cannot drink intention.",
+                "water_treatment",
+                ("water.treatment_started", 1)),
+            new OnboardingStageDef(
+                OnboardingStage.Power,
+                "Restore power",
+                "Operate a shelter breaker and see the grid state change.",
+                "power_grid",
+                ("power.breaker_toggled", 1)),
+            new OnboardingStageDef(
+                OnboardingStage.Food,
+                "Use a food ration",
+                "Consume a real food ration from the stores.",
+                "inventory",
+                ("food.ration_consumed", 1)),
+            new OnboardingStageDef(
+                OnboardingStage.Research,
+                "Start research",
+                "Start one available research node. Knowledge takes time.",
+                "research",
+                ("research.started", 1)),
+            new OnboardingStageDef(
+                OnboardingStage.Expedition,
+                "Dispatch an expedition",
+                "Dispatch a real expedition. The surface will answer for it.",
+                "expeditions",
+                ("expedition.dispatched", 1)),
+        };
+
         public static OnboardingStageDef Def(OnboardingStage id) =>
             Order[(int)id];
+
+        public static OnboardingStageDef DefFor(OnboardingProfile profile, OnboardingStage id)
+        {
+            if (profile == OnboardingProfile.FirstHour)
+            {
+                for (int i = 0; i < FirstHour.Length; i++)
+                    if (FirstHour[i].Id == id) return FirstHour[i];
+                throw new ArgumentOutOfRangeException(nameof(id), id, "Not a first-hour onboarding stage.");
+            }
+
+            return Def(id);
+        }
+
+        public static IReadOnlyList<OnboardingStage> OrderFor(OnboardingProfile profile) =>
+            profile == OnboardingProfile.FirstHour ? FirstHourOrder : LegacyOrder;
+
+        private static readonly OnboardingStage[] LegacyOrder =
+        {
+            OnboardingStage.Protocol,
+            OnboardingStage.Inspect,
+            OnboardingStage.Rationing,
+            OnboardingStage.Assignment,
+            OnboardingStage.Weather,
+            OnboardingStage.InventoryUse,
+            OnboardingStage.DayAdvance,
+        };
 
         public static int LastDataStageIndex => (int)OnboardingStage.DayAdvance;
     }
@@ -105,8 +174,9 @@ namespace Ashfall.Core.Onboarding
     /// checks.
     ///
     /// Two completion surfaces coexist: <em>stageComplete</em> from real signals
-    /// or <see cref="SkipCurrent"/>; <em>journeyComplete</em> ONLY when the real
-    /// first-day advance has actually happened — never auto-skipped.
+    /// or <see cref="SkipCurrent"/>; <em>journeyComplete</em> is reached only
+    /// by the profile's terminal contract (day advance for legacy, expedition
+    /// dispatch for first-hour), never by a clock tick alone.
     /// </summary>
     public sealed class OnboardingJourney
     {
@@ -118,6 +188,8 @@ namespace Ashfall.Core.Onboarding
         private OnboardingSaveState _state;
 
         public OnboardingStage CurrentStage => (OnboardingStage)_state.currentStage;
+
+        public OnboardingProfile Profile => (OnboardingProfile)_state.profile;
 
         public bool JourneyComplete => _state.journeyComplete;
 
@@ -144,6 +216,21 @@ namespace Ashfall.Core.Onboarding
             _state = new OnboardingSaveState();
         }
 
+        public OnboardingJourney(OnboardingProfile profile)
+        {
+            OnboardingProfile normalized = profile == OnboardingProfile.FirstHour
+                ? OnboardingProfile.FirstHour
+                : OnboardingProfile.Legacy;
+            _state = new OnboardingSaveState
+            {
+                profile = (int)normalized,
+                currentStage = (int)OnboardingCatalog.OrderFor(normalized)[0],
+            };
+        }
+
+        public static OnboardingJourney CreateFirstHour() =>
+            new OnboardingJourney(OnboardingProfile.FirstHour);
+
         public OnboardingSignalResult RecordSigil(string sigilName, int delta = 1)
         {
             if (string.IsNullOrWhiteSpace(sigilName) || delta <= 0)
@@ -167,8 +254,9 @@ namespace Ashfall.Core.Onboarding
 
         public bool SkipCurrent()
         {
-            int idx = _state.currentStage;
-            if (idx >= (int)OnboardingStage.DayAdvance) return false;
+            OnboardingStage stage = CurrentStage;
+            if (IsTerminalStage(stage)) return false;
+            int idx = (int)stage;
             if (_state.completedStages.Contains(idx)) return false;
 
             _state.completedStages.Add(idx);
@@ -180,12 +268,15 @@ namespace Ashfall.Core.Onboarding
 
         public void SkipAllRemaining()
         {
-            for (int i = _state.currentStage; i < (int)OnboardingStage.DayAdvance; i++)
+            var order = OnboardingCatalog.OrderFor(Profile);
+            for (int i = CurrentPosition(); i < order.Count; i++)
             {
-                if (!_state.completedStages.Contains(i))
+                int stage = (int)order[i];
+                if (IsTerminalStage(order[i])) break;
+                if (!_state.completedStages.Contains(stage))
                 {
-                    _state.completedStages.Add(i);
-                    OnStageAdvanced?.Invoke((OnboardingStage)i);
+                    _state.completedStages.Add(stage);
+                    OnStageAdvanced?.Invoke(order[i]);
                 }
             }
             _state.currentStage = NextIncompleteIndex();
@@ -199,7 +290,12 @@ namespace Ashfall.Core.Onboarding
             _state.dismissedHints.Clear();
             _counts.Clear();
 
-            if (_state.day >= 2)
+            if (Profile == OnboardingProfile.FirstHour)
+            {
+                _state.journeyComplete = false;
+                _state.currentStage = (int)OnboardingCatalog.FirstHourOrder[0];
+            }
+            else if (_state.day >= 2)
             {
                 _state.completedStages.Add((int)OnboardingStage.DayAdvance);
                 _state.journeyComplete = true;
@@ -210,7 +306,7 @@ namespace Ashfall.Core.Onboarding
                 _state.journeyComplete = false;
                 _state.currentStage = (int)OnboardingStage.Protocol;
             }
-            OnStageAdvanced?.Invoke(Category(_state.currentStage));
+            OnStageAdvanced?.Invoke(CurrentStage);
             EmitJourneyChangedIf();
         }
 
@@ -226,7 +322,7 @@ namespace Ashfall.Core.Onboarding
             if (day <= _state.day) return;
             _state.day = day;
 
-            if (_state.day >= 2)
+            if (Profile == OnboardingProfile.Legacy && _state.day >= 2)
             {
                 if (!_state.completedStages.Contains((int)OnboardingStage.DayAdvance))
                 {
@@ -266,7 +362,7 @@ namespace Ashfall.Core.Onboarding
             => _state.stagesGuided.Contains((int)stage);
 
         public OnboardingStageDef CurrentStageDef =>
-            OnboardingCatalog.Def(CurrentStage);
+            OnboardingCatalog.DefFor(Profile, CurrentStage);
 
         public bool IsStageRequirementsSatisfied(OnboardingStageDef def)
             => AreRequirementsSatisfied(def);
@@ -274,13 +370,12 @@ namespace Ashfall.Core.Onboarding
         public IReadOnlyList<OnboardingStage> OutstandingStages()
         {
             var list = new List<OnboardingStage>();
-            bool pastTerminal = _state.currentStage >= OnboardingCatalog.LastDataStageIndex
-                                  && _state.completedStages.Contains(OnboardingCatalog.LastDataStageIndex);
-            if (!pastTerminal)
+            if (!JourneyComplete)
             {
-                for (int i = 0; i <= OnboardingCatalog.LastDataStageIndex; i++)
-                    if (!_state.completedStages.Contains(i))
-                        list.Add((OnboardingStage)i);
+                var order = OnboardingCatalog.OrderFor(Profile);
+                for (int i = 0; i < order.Count; i++)
+                    if (!_state.completedStages.Contains((int)order[i]))
+                        list.Add(order[i]);
             }
             return list;
         }
@@ -305,31 +400,38 @@ namespace Ashfall.Core.Onboarding
         private bool AdvanceStagesAccountingForNonTerminal()
         {
             bool anyChange = false;
-            int guard = OnboardingCatalog.LastDataStageIndex + 1;
+            int guard = OnboardingCatalog.OrderFor(Profile).Count;
             while (guard-- > 0)
             {
-                int idx = _state.currentStage;
-                if (idx >= (int)OnboardingStage.DayAdvance) break;
+                OnboardingStage stage = CurrentStage;
+                if (Profile == OnboardingProfile.Legacy && IsTerminalStage(stage)) break;
+                int idx = (int)stage;
                 if (_state.completedStages.Contains(idx)) break;
-                if (!AreRequirementsSatisfied(OnboardingCatalog.Def((OnboardingStage)idx))) break;
+                if (!AreRequirementsSatisfied(OnboardingCatalog.DefFor(Profile, stage))) break;
 
                 _state.completedStages.Add(idx);
                 if (!_suppressEvents) OnStageAdvanced?.Invoke((OnboardingStage)idx);
                 anyChange = true;
                 _state.currentStage = NextIncompleteIndex();
             }
+            if (Profile == OnboardingProfile.FirstHour &&
+                OnboardingCatalog.OrderFor(Profile).Count == _state.completedStages.Count &&
+                !JourneyComplete)
+            {
+                _state.journeyComplete = true;
+            }
             return anyChange;
         }
 
         private int NextIncompleteIndex()
         {
-            int lastData = (int)OnboardingStage.DayAdvance;
-            for (int i = 0; i < lastData; i++)
+            var order = OnboardingCatalog.OrderFor(Profile);
+            for (int i = 0; i < order.Count; i++)
             {
-                if (!_state.completedStages.Contains(i))
-                    return i;
+                if (!_state.completedStages.Contains((int)order[i]))
+                    return (int)order[i];
             }
-            return lastData;
+            return (int)order[order.Count - 1];
         }
 
         public OnboardingSaveState CaptureState()
@@ -347,6 +449,7 @@ namespace Ashfall.Core.Onboarding
             {
                 schemaVersion = _state.schemaVersion,
                 day = _state.day,
+                profile = _state.profile,
                 sigils = persistedSigils,
                 currentStage = _state.currentStage,
                 completedStages = new List<int>(_state.completedStages),
@@ -378,7 +481,14 @@ namespace Ashfall.Core.Onboarding
             {
                 schemaVersion = futureVersion,
                 day = saved.day == 0 ? 1 : saved.day,
-                currentStage = NormaliseStage(saved.currentStage),
+                profile = saved.profile == (int)OnboardingProfile.FirstHour
+                    ? (int)OnboardingProfile.FirstHour
+                    : (int)OnboardingProfile.Legacy,
+                currentStage = NormaliseStage(
+                    saved.profile == (int)OnboardingProfile.FirstHour
+                        ? OnboardingProfile.FirstHour
+                        : OnboardingProfile.Legacy,
+                    saved.currentStage),
                 completedStages = saved.completedStages != null
                     ? new List<int>(saved.completedStages)
                     : new List<int>(),
@@ -403,27 +513,34 @@ namespace Ashfall.Core.Onboarding
                 }
             }
 
-            // Reconcile: the terminal DayAdvance stage completes iff the real
-            // day has reached 2.
-            bool dayRealAdvance = j._state.day >= 2;
+            // Reconcile the legacy terminal stage from the real day boundary.
+            // First-hour completion is signal-driven and must not be fabricated
+            // by a day change during load.
+            bool dayRealAdvance = j.Profile == OnboardingProfile.Legacy && j._state.day >= 2;
             if (dayRealAdvance && !j._state.completedStages.Contains((int)OnboardingStage.DayAdvance))
                 j._state.completedStages.Add((int)OnboardingStage.DayAdvance);
-            j._state.journeyComplete =
-                dayRealAdvance && j._state.completedStages.Contains((int)OnboardingStage.DayAdvance);
+            if (j.Profile == OnboardingProfile.Legacy)
+            {
+                j._state.journeyComplete =
+                    dayRealAdvance && j._state.completedStages.Contains((int)OnboardingStage.DayAdvance);
+            }
+            else
+            {
+                j._state.journeyComplete = OnboardingCatalog.FirstHourOrder
+                    .All(stage => j._state.completedStages.Contains((int)stage));
+            }
 
             // Walk forward over any earlier stages that had already met their
             // requirements at save-time so the resume is exactly correct.
-            while (j._state.currentStage < (int)OnboardingStage.DayAdvance &&
-                   j.AreRequirementsSatisfied(OnboardingCatalog.Def(
-                       (OnboardingStage)j._state.currentStage)))
+            int guard = OnboardingCatalog.OrderFor(j.Profile).Count;
+            while (guard-- > 0 &&
+                   (j.Profile == OnboardingProfile.FirstHour || !j.IsTerminalStage(j.CurrentStage)) &&
+                   j.AreRequirementsSatisfied(j.CurrentStageDef))
             {
                 int idx = j._state.currentStage;
                 if (j._state.completedStages.Contains(idx)) break;
                 j._state.completedStages.Add(idx);
-                if (j._state.currentStage < (int)OnboardingStage.DayAdvance - 1)
-                    j._state.currentStage++;
-                else
-                    break;
+                j._state.currentStage = j.NextIncompleteIndex();
             }
 
             j._state.currentStage = j.NextIncompleteIndex();
@@ -433,15 +550,26 @@ namespace Ashfall.Core.Onboarding
             return j;
         }
 
-        private static int NormaliseStage(int idx)
+        private static int NormaliseStage(OnboardingProfile profile, int idx)
         {
-            if (idx < 0 || idx >= OnboardingCatalog.Order.Length)
-                return (int)OnboardingStage.Protocol;
-            return idx;
+            var order = OnboardingCatalog.OrderFor(profile);
+            for (int i = 0; i < order.Count; i++)
+                if ((int)order[i] == idx) return idx;
+            return (int)order[0];
         }
 
-        private static OnboardingStage Category(int idx)
-            => (OnboardingStage)Math.Clamp(idx, 0, OnboardingCatalog.Order.Length - 1);
+        private int CurrentPosition()
+        {
+            var order = OnboardingCatalog.OrderFor(Profile);
+            for (int i = 0; i < order.Count; i++)
+                if (order[i] == CurrentStage) return i;
+            return 0;
+        }
+
+        private bool IsTerminalStage(OnboardingStage stage) =>
+            Profile == OnboardingProfile.FirstHour
+                ? stage == OnboardingStage.Expedition
+                : stage == OnboardingStage.DayAdvance;
 
         private void EmitJourneyChangedIf()
         {

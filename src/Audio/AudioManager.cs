@@ -744,6 +744,8 @@ namespace AtomicWar.GodotApp.Audio
 
         private void PlayOneShotStream(AudioStream stream, string bus, float volumeDb, float pitchScale = 1f)
         {
+            if (_headless || !IsInsideTree()) return;
+
             AudioStreamPlayer player;
             if (_pool.Count > 0)
             {
@@ -770,6 +772,8 @@ namespace AtomicWar.GodotApp.Audio
 
         private void PlayLoopStream(string loopKey, AudioStream stream, string bus, float volumeDb, float pitchScale = 1f, float fadeIn = 0f)
         {
+            if (_headless || !IsInsideTree()) return;
+
             if (stream is AudioStreamWav wav)
                 wav.LoopMode = AudioStreamWav.LoopModeEnum.Forward;
             else if (stream is AudioStreamOggVorbis ogg)
@@ -844,7 +848,7 @@ namespace AtomicWar.GodotApp.Audio
 
         private void PlayMusicStream(AudioStream? stream)
         {
-            if (stream == null) return;
+            if (stream == null || _headless || !IsInsideTree()) return;
 
             if (_musicActiveA)
             {
@@ -885,7 +889,7 @@ namespace AtomicWar.GodotApp.Audio
         /// </summary>
         public void RouteCondition(string audioKey, string bus, float intensity = 1f, bool loop = false)
         {
-            if (string.IsNullOrEmpty(audioKey)) return;
+            if (string.IsNullOrEmpty(audioKey) || _headless || !IsInsideTree()) return;
             var cue = AudioCueCatalog.Resolve(audioKey);
             if (cue == null) return;
 

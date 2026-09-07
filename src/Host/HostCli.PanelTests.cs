@@ -2899,6 +2899,7 @@ namespace AtomicWar.GodotApp
                 modified.VSync = false;
                 modified.MaxFps = 120;
                 modified.HighContrast = true;
+                modified.TutorialMode = 2;
                 modified.ResolutionWidth = 2560;
                 modified.ResolutionHeight = 1440;
 
@@ -2916,6 +2917,7 @@ namespace AtomicWar.GodotApp
                 Check(!loaded.VSync, "reloaded VSync state preserved");
                 Check(loaded.MaxFps == 120, "reloaded MaxFps preserved");
                 Check(loaded.HighContrast, "reloaded HighContrast preserved");
+                Check(loaded.TutorialMode == 2, "reloaded veteran onboarding mode preserved");
                 Check(loaded.ResolutionWidth == 2560 && loaded.ResolutionHeight == 1440, "reloaded resolution preserved");
 
                 // 5. Corruption Recovery & Diagnostic Preservation

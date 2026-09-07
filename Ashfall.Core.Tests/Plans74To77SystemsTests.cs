@@ -72,6 +72,84 @@ public sealed class Plans74To77SystemsTests
     }
 
     [Fact]
+    public void BallisticsWorkbench_AttachOptic_ImprovesBoundedAccuracyProjection()
+    {
+        var system = new BallisticsWorkbenchSystem(new SeededRng(7501));
+        system.RegisterDefinition(new BallisticsWorkbenchDefinition
+        {
+            ProfileId = "profile_test",
+            BaseDispersionMoa = 3f,
+            MaxOpticBonus = 0.15f,
+            HeadspaceWarningThreshold = 0.5f,
+            HeadspaceFailureThreshold = 0.9f
+        });
+        system.EnsureProfile("weapon_test", "profile_test");
+        var before = system.GetCombatModifier("weapon_test");
+
+        var attached = system.AttachOptic("weapon_test", 0.9f);
+        var withOptic = system.GetCombatModifier("weapon_test");
+
+        Assert.True(attached.IsSuccess);
+        Assert.Equal(0.9f, system.FindProfile("weapon_test")!.OpticQuality, 3);
+        Assert.True(withOptic.AccuracyMultiplier >= before.AccuracyMultiplier);
+        Assert.InRange(withOptic.AccuracyMultiplier, 0.5f, 1.2f);
+        Assert.Equal(before.MalfunctionMultiplier, withOptic.MalfunctionMultiplier, 3);
+    }
+
+    [Fact]
+    public void BallisticsWorkbench_ApplyToCombatWeapon_WritesProjectionTokens()
+    {
+        var system = new BallisticsWorkbenchSystem(new SeededRng(7502));
+        system.RegisterDefinition(new BallisticsWorkbenchDefinition
+        {
+            ProfileId = "profile_test",
+            BaseDispersionMoa = 3f,
+            MaxOpticBonus = 0.15f,
+            HeadspaceWarningThreshold = 0.5f,
+            HeadspaceFailureThreshold = 0.9f
+        });
+        system.EnsureProfile("weapon_test", "profile_test");
+        Assert.True(system.AttachOptic("weapon_test", 1f).IsSuccess);
+
+        var token = new WeaponInstanceState { InstanceId = "weapon_test" };
+        system.ApplyToCombatWeapon(token);
+        var modifier = system.GetCombatModifier("weapon_test");
+
+        Assert.Equal(modifier.AccuracyMultiplier, token.BallisticsAccuracyMultiplier, 3);
+        Assert.Equal(modifier.RangeMultiplier, token.BallisticsRangeMultiplier, 3);
+        Assert.Equal(modifier.PenetrationMultiplier, token.BallisticsPenetrationMultiplier, 3);
+        Assert.Equal(modifier.CriticalMultiplier, token.BallisticsCriticalMultiplier, 3);
+        Assert.Equal(modifier.MalfunctionMultiplier, token.BallisticsMalfunctionMultiplier, 3);
+    }
+
+    [Fact]
+    public void BallisticsWorkbench_OpticQuality_RoundTripsAndClamps()
+    {
+        var system = new BallisticsWorkbenchSystem(new SeededRng(7503));
+        system.RegisterDefinition(new BallisticsWorkbenchDefinition
+        {
+            ProfileId = "profile_test",
+            BaseDispersionMoa = 3f,
+            HeadspaceWarningThreshold = 0.5f,
+            HeadspaceFailureThreshold = 0.9f
+        });
+        system.EnsureProfile("weapon_test", "profile_test");
+        Assert.True(system.AttachOptic("weapon_test", 4f).IsSuccess);
+
+        var restored = new BallisticsWorkbenchSystem(new SeededRng(999));
+        restored.RegisterDefinition(new BallisticsWorkbenchDefinition
+        {
+            ProfileId = "profile_test",
+            BaseDispersionMoa = 3f,
+            HeadspaceWarningThreshold = 0.5f,
+            HeadspaceFailureThreshold = 0.9f
+        });
+        restored.RestoreState(system.CaptureState());
+
+        Assert.Equal(1f, restored.FindProfile("weapon_test")!.OpticQuality, 3);
+    }
+
+    [Fact]
     public void Aeroponics_GrowsAndReturnsHarvestToCanonicalInventory()
     {
         var inventory = new InventoryStore();

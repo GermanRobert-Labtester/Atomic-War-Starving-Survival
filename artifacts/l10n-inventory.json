@@ -1,0 +1,4946 @@
+{
+  "schema_version": 1,
+  "generated_by": "scripts/ci/extract_l10n_inventory.py",
+  "pilot_panels": [
+    "ResearchPanel",
+    "OnboardingHintPanel"
+  ],
+  "ui_file_count": 214,
+  "record_count": 535,
+  "hardcoded_literal_count": 472,
+  "localized_lookup_count": 63,
+  "literal_counts_by_panel": {
+    "AirlockSecurityPanel": 1,
+    "AmputationTriagePanel": 1,
+    "AnaerobicBiogasDigesterPanel": 5,
+    "ApprenticeshipPanel": 1,
+    "AquiferTreatyConcessionPanel": 9,
+    "ArchaeologyExcavationPanel": 1,
+    "AshfallDataGrid": 1,
+    "AutopsyReportPanel": 2,
+    "AviationUI": 2,
+    "BasalRadonMigrationPanel": 9,
+    "BoreholeSeismographPanel": 5,
+    "BrineExtractionPanel": 4,
+    "CaregivingPanel": 1,
+    "CenturySeedPanel": 1,
+    "CeremonyFestivalPanel": 1,
+    "ChemUI": 2,
+    "ChemWarfareDefensePanel": 1,
+    "ChemicalLabPanel": 2,
+    "ChroniclePanel": 3,
+    "ClandestineInsurgencyPanel": 9,
+    "CombatPanel": 2,
+    "CommsArrayTransceiverPanel": 1,
+    "CraftingPanel": 2,
+    "CrossingQuestPanel": 2,
+    "CrossingSafeConductVouchPanel": 9,
+    "CryogenicPermafrostCorePanel": 9,
+    "DailyBriefingModal": 6,
+    "DeconAirlockPanel": 1,
+    "DeepCoastPanel": 1,
+    "DesperationCrisisPanel": 4,
+    "DoseLedgerPanel": 2,
+    "DutyRosterDetailPanel": 1,
+    "DutyRosterPanel": 3,
+    "EbPvdCoatingPanel": 1,
+    "ElectrostaticScrubberPanel": 18,
+    "EpiloguePanel": 1,
+    "ExcavationPanel": 1,
+    "ExpeditionCampPanel": 4,
+    "ExpeditionPanel": 4,
+    "ExpeditionRadarPanel": 2,
+    "FactionMatrixPanel": 2,
+    "FactionsNarrativePanel": 4,
+    "FalloutPlumePanel": 3,
+    "FireIncidentPanel": 4,
+    "FungalProteinFermenterPanel": 9,
+    "FungiCultivationBedPanel": 1,
+    "GameOverPanel": 2,
+    "GeigerCalibrationPanel": 10,
+    "GeodeticSurveyPanel": 2,
+    "GeothermalAquiferPanel": 1,
+    "GeothermalSteamTurbinePanel": 5,
+    "GreenhousePanel": 1,
+    "HeavyLogisticsAirlockPanel": 5,
+    "HeavyMarineDieselGeneratorPanel": 9,
+    "InductionCupolaFurnacePanel": 9,
+    "InventoryPanel": 1,
+    "IronCenotaphMemorialPanel": 9,
+    "IsotopeSeparatorPanel": 5,
+    "JusticeTribunalPanel": 1,
+    "LaborUI": 2,
+    "LongWalkExpeditionPanel": 9,
+    "MagneticDrumArchivePanel": 9,
+    "MainMenuPanel": 3,
+    "MaritimePanel": 8,
+    "MechanicalProstheticsLathePanel": 9,
+    "MercenaryBountyBoardPanel": 2,
+    "MicrofluidicDiagnosticPanel": 1,
+    "MineFlailPanel": 1,
+    "MusterPanel": 1,
+    "MutationTreePanel": 3,
+    "NurseryPanel": 3,
+    "PharmaLabPanel": 8,
+    "Plans74To77Panels": 2,
+    "PlasmaArcSmeltingPanel": 5,
+    "PoliticsUI": 2,
+    "PrisonerPanel": 3,
+    "RadioIntelligencePanel": 4,
+    "RailGrindingPanel": 1,
+    "RailwayTerminalPanel": 15,
+    "ReconTelemetryPanel": 1,
+    "RegionalTreatyPanel": 1,
+    "ResearchAtlasPanel": 1,
+    "RoboticsWorkshopPanel": 1,
+    "SafeCrackModal": 3,
+    "SaveLoadPanel": 1,
+    "SettingsPanel": 1,
+    "ShelterDecorPanel": 3,
+    "ShelterHudPanel": 3,
+    "ShelterSocialPanel": 2,
+    "SilentFoundryPanel": 4,
+    "SiliconIngotSlicingPanel": 5,
+    "SkillMatrixPanel": 3,
+    "SlurryDewateringSumpPanel": 11,
+    "SonicRuptureDrillPanel": 9,
+    "StandingRecordPanel": 1,
+    "StealthReadoutPanel": 3,
+    "SubterraneanCartographyPanel": 5,
+    "SubterraneanDebtLedgerPanel": 9,
+    "SubterraneanOperationsPanel": 7,
+    "SurfaceShrapnelAegisPanel": 9,
+    "SurvivalWorkstationPanel": 6,
+    "SurvivorDowntimePanel": 1,
+    "TraumaBondingCohortPanel": 9,
+    "TriangulationPanel": 4,
+    "TroposphericRadioRelayPanel": 9,
+    "UltrasonicDecontaminationAirlockPanel": 9,
+    "UndergroundPrintingPressPanel": 5,
+    "VaultDoorBreachingPanel": 9,
+    "VinylMoralePanel": 3,
+    "WarDogKennelPanel": 5,
+    "WaystationNetworkPanel": 5,
+    "WeatherSondePanel": 5,
+    "WildlifeTrappingPanel": 3,
+    "WinterFreezePanel": 1,
+    "WorkshopPanel": 6
+  },
+  "records": [
+    {
+      "file": "src/UI/AirlockSecurityPanel.cs",
+      "line": 106,
+      "panel": "AirlockSecurityPanel",
+      "literal": "Airlock security session is not bound. Sentry post & biometric scanners are offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AmputationTriagePanel.cs",
+      "line": 23,
+      "panel": "AmputationTriagePanel",
+      "literal": "Triage module offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AnaerobicBiogasDigesterPanel.cs",
+      "line": 87,
+      "panel": "AnaerobicBiogasDigesterPanel",
+      "literal": "[FEED ORGANIC WASTE SLURRY]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AnaerobicBiogasDigesterPanel.cs",
+      "line": 91,
+      "panel": "AnaerobicBiogasDigesterPanel",
+      "literal": "[REGENERATE H2S SCRUBBER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AnaerobicBiogasDigesterPanel.cs",
+      "line": 95,
+      "panel": "AnaerobicBiogasDigesterPanel",
+      "literal": "[COMPRESS METHANE TO CYLINDERS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AnaerobicBiogasDigesterPanel.cs",
+      "line": 99,
+      "panel": "AnaerobicBiogasDigesterPanel",
+      "literal": "[VENT OVERPRESSURE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AnaerobicBiogasDigesterPanel.cs",
+      "line": 103,
+      "panel": "AnaerobicBiogasDigesterPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ApprenticeshipPanel.cs",
+      "line": 81,
+      "panel": "ApprenticeshipPanel",
+      "literal": "Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 49,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "STATUS: COMPACT RATIFIED - PURIFIED FLOW: 420 L/HR / TRIBUTE: 4 DAYS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 75,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "DIPLOMATIC HYDRAULICS // HYDRO-BARONS AQUIFER TREATIES [AQUI-01]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 83,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "STATUS: COMPACT RATIFIED - PURIFIED FLOW: 420 L/HR / TRIBUTE: 4 DAYS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 88,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 124,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "[RATIFY EMERGENCY WATER-FOR-AMMO ACCORD]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 125,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "[THROTTLE TRIBUTARY BYPASS TO 50%]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 126,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "[FLUSH CONTAMINATED SEDIMENT TRAP]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 127,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "[DISPATCH NEGOTIATOR TO HYDRO-BARON CONCLAVE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AquiferTreatyConcessionPanel.cs",
+      "line": 151,
+      "panel": "AquiferTreatyConcessionPanel",
+      "literal": "[AQUI-01] Siphon flow rate locked at 420.5 L/Hour.\\n[AQUI-01] Tribute consignment verified by Hydro-Baron courier.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ArchaeologyExcavationPanel.cs",
+      "line": 23,
+      "panel": "ArchaeologyExcavationPanel",
+      "literal": "Archaeology module initializing...",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AshfallDataGrid.cs",
+      "line": 124,
+      "panel": "AshfallDataGrid",
+      "literal": "— no entries —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AutopsyReportPanel.cs",
+      "line": 81,
+      "panel": "AutopsyReportPanel",
+      "literal": "Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AutopsyReportPanel.cs",
+      "line": 94,
+      "panel": "AutopsyReportPanel",
+      "literal": "No forensic autopsy cases registered.\\nPost-mortem examinations and pathology findings will appear here when specimens are brought to the medical bay.\\n\\nLast Event: ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AviationUI.cs",
+      "line": 55,
+      "panel": "AviationUI",
+      "literal": "No active aircraft registered in the shelter airfield or hangar.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/AviationUI.cs",
+      "line": 84,
+      "panel": "AviationUI",
+      "literal": "Aviation system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 49,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "STATUS: RADON INVERSION ACTIVE - SUMP: 3,420 Bq/m3 (CRITICAL)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 75,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "SHELTER RADIOLOGY // BASAL RADON INVERSION & STRATA MIGRATION [RAD-04]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 83,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "STATUS: RADON INVERSION ACTIVE - SUMP: 3,420 Bq/m3 (CRITICAL)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 88,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 124,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "[MAXIMIZE SUMP EXHAUST BLOWERS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 125,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "[PULSE POSITIVE PRESSURE AIR CURTAIN]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 126,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "[BACKWASH ACTIVATED CHARCOAL FILTER BED]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 127,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "[ENGAGE EMERGENCY SECTOR 08 SEAL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BasalRadonMigrationPanel.cs",
+      "line": 151,
+      "panel": "BasalRadonMigrationPanel",
+      "literal": "[RAD-04] Tectonic fissure degassing detected beneath sub-level 4.\\n[RAD-04] Exhaust blower velocity set to maximum negative draft.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BoreholeSeismographPanel.cs",
+      "line": 83,
+      "panel": "BoreholeSeismographPanel",
+      "literal": "[CALIBRATE ACCELEROMETERS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BoreholeSeismographPanel.cs",
+      "line": 87,
+      "panel": "BoreholeSeismographPanel",
+      "literal": "[TRIANGULATE EPICENTER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BoreholeSeismographPanel.cs",
+      "line": 91,
+      "panel": "BoreholeSeismographPanel",
+      "literal": "[REINFORCE SHEAR DAMPERS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BoreholeSeismographPanel.cs",
+      "line": 95,
+      "panel": "BoreholeSeismographPanel",
+      "literal": "[TRIGGER TECTONIC ALARM]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BoreholeSeismographPanel.cs",
+      "line": 99,
+      "panel": "BoreholeSeismographPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BrineExtractionPanel.cs",
+      "line": 179,
+      "panel": "BrineExtractionPanel",
+      "literal": "Drill replaced.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BrineExtractionPanel.cs",
+      "line": 187,
+      "panel": "BrineExtractionPanel",
+      "literal": "Pump repaired.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BrineExtractionPanel.cs",
+      "line": 195,
+      "panel": "BrineExtractionPanel",
+      "literal": "Vein: No salt mine session bound",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/BrineExtractionPanel.cs",
+      "line": 207,
+      "panel": "BrineExtractionPanel",
+      "literal": "Vein: Not opened",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CaregivingPanel.cs",
+      "line": 97,
+      "panel": "CaregivingPanel",
+      "literal": "Caregiving host session is not bound. Bedside tending assignments and bond records are offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CenturySeedPanel.cs",
+      "line": 155,
+      "panel": "CenturySeedPanel",
+      "literal": "Succession engine unavailable.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CeremonyFestivalPanel.cs",
+      "line": 23,
+      "panel": "CeremonyFestivalPanel",
+      "literal": "No active ceremonies.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChemUI.cs",
+      "line": 56,
+      "panel": "ChemUI",
+      "literal": "No chemical medicine profiles active.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChemUI.cs",
+      "line": 85,
+      "panel": "ChemUI",
+      "literal": "Narcotics system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChemWarfareDefensePanel.cs",
+      "line": 23,
+      "panel": "ChemWarfareDefensePanel",
+      "literal": "CBRN defense grid offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChemicalLabPanel.cs",
+      "line": 443,
+      "panel": "ChemicalLabPanel",
+      "literal": "Restores scrubber to 100% (Costs: scrap_chemical ×2, clean_water ×1)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChemicalLabPanel.cs",
+      "line": 473,
+      "panel": "ChemicalLabPanel",
+      "literal": "Chemical laboratory is offline. Bind a live ChemicalSynthesisHostSession to initialize controls.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChroniclePanel.cs",
+      "line": 166,
+      "panel": "ChroniclePanel",
+      "literal": "CAMPAIGN SEALED — RECORD IMMUTABLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChroniclePanel.cs",
+      "line": 171,
+      "panel": "ChroniclePanel",
+      "literal": "SEAL CAMPAIGN & FREEZE ARCHIVE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ChroniclePanel.cs",
+      "line": 176,
+      "panel": "ChroniclePanel",
+      "literal": "CAMPAIGN ACTIVE (NOT READY TO SEAL)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 49,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "STATUS: ACTIVE SUBVERSION - CELL ALPHA RED DAWN DETECTED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 75,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "SHELTER COUNTER-INSURGENCY // SEDITIOUS NETWORK MONITORING [POL-02]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 83,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "STATUS: ACTIVE SUBVERSION - CELL ALPHA RED DAWN DETECTED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 88,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 124,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "[RAID SECTOR 03 HIDEOUT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 125,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "[INTERROGATE SUSPECTED REBEL AGENTS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 126,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "[IMPOSE EMERGENCY SECTOR 03 CURFEW]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 127,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "[CONFISCATE COUNTERFEIT RATION STAMPS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ClandestineInsurgencyPanel.cs",
+      "line": 151,
+      "panel": "ClandestineInsurgencyPanel",
+      "literal": "[POL-02] Wiretap recorded rendezvous at Sump Pipe 4.\\n[POL-02] Curfew declared in Sector 03. Insurgency score reduced.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CombatPanel.cs",
+      "line": 68,
+      "panel": "CombatPanel",
+      "literal": "COMBAT & ENCOUNTERS  ·  ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CombatPanel.cs",
+      "line": 79,
+      "panel": "CombatPanel",
+      "literal": "No active combat. Use START to engage a raider skirmish.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CommsArrayTransceiverPanel.cs",
+      "line": 23,
+      "panel": "CommsArrayTransceiverPanel",
+      "literal": "Searching frequencies...",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CraftingPanel.cs",
+      "line": 263,
+      "panel": "CraftingPanel",
+      "literal": "CRAFTING QUEUE  [idle]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CraftingPanel.cs",
+      "line": 265,
+      "panel": "CraftingPanel",
+      "literal": "Filter:",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingQuestPanel.cs",
+      "line": 176,
+      "panel": "CrossingQuestPanel",
+      "literal": "Panel not bound to session.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingQuestPanel.cs",
+      "line": 261,
+      "panel": "CrossingQuestPanel",
+      "literal": "No active Crossing protocol in progress. Review available charters below.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 49,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "STATUS: BRIDGEHEAD ARMED - TRANSIT PERMITS: 14 / SURCHARGE: +25%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 75,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "FRONTIER CHECKPOINT // CROSSING SAFE-CONDUCT VOUCH [VOUCH-01]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 83,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "STATUS: BRIDGEHEAD ARMED - TRANSIT PERMITS: 14 / SURCHARGE: +25%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 88,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 124,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "[STAMP AUTHORIZED SAFE-CONDUCT PASS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 125,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "[CONFISCATE CONTRABAND & DETAIN]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 126,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "[RAISE HEAVY SPIKE BARRIER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 127,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "[FIRE WARNING SHOT ACROSS GORGE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CrossingSafeConductVouchPanel.cs",
+      "line": 151,
+      "panel": "CrossingSafeConductVouchPanel",
+      "literal": "[VOUCH-01] Caravan Salt Walker cleared checkpoint. Toll paid 150 Scrip.\\n[VOUCH-01] Contraband scan negative on sector gate 2.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 49,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "STATUS: DEEP FREEZE ALERT - PERMAFROST: -450M / CORE TEMP: -62.4C",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 75,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "SHELTER THERMAL DYNAMICS // CRYOGENIC PERMAFROST CORE [CRYO-02]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 83,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "STATUS: DEEP FREEZE ALERT - PERMAFROST: -450M / CORE TEMP: -62.4C",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 88,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 124,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "[PULSE GEOTHERMAL THERMAL INJECTION]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 125,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "[THROTTLE GLYCOL CHILLER PUMPS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 126,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "[ENGAGE EMERGENCY RESISTIVE HEATING COILS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 127,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "[VENT CRYOGENIC NITROGEN OVERPRESSURE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/CryogenicPermafrostCorePanel.cs",
+      "line": 151,
+      "panel": "CryogenicPermafrostCorePanel",
+      "literal": "[CRYO-02] Permafrost creep penetrating sub-level 4 perimeter bulkhead.\\n[CRYO-02] Resistive coils engaged in residential sector.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DailyBriefingModal.cs",
+      "line": 51,
+      "panel": "DailyBriefingModal",
+      "literal": "PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DailyBriefingModal.cs",
+      "line": 122,
+      "panel": "DailyBriefingModal",
+      "literal": "Acknowledge daily briefing and resume gameplay [Enter] / [Space]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DailyBriefingModal.cs",
+      "line": 126,
+      "panel": "DailyBriefingModal",
+      "literal": "Daily Briefing Report Title",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DailyBriefingModal.cs",
+      "line": 127,
+      "panel": "DailyBriefingModal",
+      "literal": "Daily Briefing Summary — Use [Up]/[Down] arrow keys or mouse wheel to scroll",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DailyBriefingModal.cs",
+      "line": 128,
+      "panel": "DailyBriefingModal",
+      "literal": "Instantly reveal complete briefing text [Tab]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DailyBriefingModal.cs",
+      "line": 189,
+      "panel": "DailyBriefingModal",
+      "literal": "REVEALED // PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DeconAirlockPanel.cs",
+      "line": 256,
+      "panel": "DeconAirlockPanel",
+      "literal": "EFFLUENT & REAGENTS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DeepCoastPanel.cs",
+      "line": 157,
+      "panel": "DeepCoastPanel",
+      "literal": "Deep coast session unavailable.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DesperationCrisisPanel.cs",
+      "line": 53,
+      "panel": "DesperationCrisisPanel",
+      "literal": "Sanctuary is stable. No severe desperation protocols required.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DesperationCrisisPanel.cs",
+      "line": 59,
+      "panel": "DesperationCrisisPanel",
+      "literal": "EMERGENCY RATION HARVEST",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DesperationCrisisPanel.cs",
+      "line": 70,
+      "panel": "DesperationCrisisPanel",
+      "literal": "SANCTIFIED BURIAL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DesperationCrisisPanel.cs",
+      "line": 106,
+      "panel": "DesperationCrisisPanel",
+      "literal": "Desperation monitor offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DoseLedgerPanel.cs",
+      "line": 200,
+      "panel": "DoseLedgerPanel",
+      "literal": "DOSIMETRY DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DoseLedgerPanel.cs",
+      "line": 372,
+      "panel": "DoseLedgerPanel",
+      "literal": "DOSIMETRY DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DutyRosterDetailPanel.cs",
+      "line": 104,
+      "panel": "DutyRosterDetailPanel",
+      "literal": "Marks: none yet. The wall is blank.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DutyRosterPanel.cs",
+      "line": 381,
+      "panel": "DutyRosterPanel",
+      "literal": "SHIFT DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DutyRosterPanel.cs",
+      "line": 388,
+      "panel": "DutyRosterPanel",
+      "literal": "SHIFT DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/DutyRosterPanel.cs",
+      "line": 396,
+      "panel": "DutyRosterPanel",
+      "literal": "SHIFT DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/EbPvdCoatingPanel.cs",
+      "line": 115,
+      "panel": "EbPvdCoatingPanel",
+      "literal": "PROCESS TELEMETRY & CONTROL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 83,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "STATUS: NO PRECIPITATOR STAGE INSTALLED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 84,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 85,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 86,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 87,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 88,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 90,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 131,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "Seals hopper dust into marked drums for disposal hauling (10 kg each)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 136,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "Maintenance: clears faults, restores plate and transformer condition",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 161,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "AIR HANDLING // ELECTROSTATIC PRECIPITATOR [FILTER STAGE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 167,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "STATUS: OFFLINE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 171,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 206,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "[RAP PLATES — DUST TO HOPPER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 210,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "[SEAL HOPPER DUST INTO DRUMS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 214,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "[SERVICE STAGE — CLEAR FAULTS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 229,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "Drums are sealed and mapped for deep burial. Do not open indoors.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 246,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "[FILTER] Precipitator console standing by.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ElectrostaticScrubberPanel.cs",
+      "line": 291,
+      "panel": "ElectrostaticScrubberPanel",
+      "literal": "—",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/EpiloguePanel.cs",
+      "line": 235,
+      "panel": "EpiloguePanel",
+      "literal": "Chronicle matrix evaluated against active world ledger flags.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExcavationPanel.cs",
+      "line": 84,
+      "panel": "ExcavationPanel",
+      "literal": "No subterranean excavation sites currently active.\\nAssign surveying teams or discover buried deep-strata vaults to begin excavation operations.\\n\\nLast Event: ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionCampPanel.cs",
+      "line": 187,
+      "panel": "ExpeditionCampPanel",
+      "literal": "Phase: Not in camp",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionCampPanel.cs",
+      "line": 194,
+      "panel": "ExpeditionCampPanel",
+      "literal": "Phase: Camp (Night)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionCampPanel.cs",
+      "line": 227,
+      "panel": "ExpeditionCampPanel",
+      "literal": "Encounter: Resolved",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionCampPanel.cs",
+      "line": 232,
+      "panel": "ExpeditionCampPanel",
+      "literal": "Encounter: None",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionPanel.cs",
+      "line": 234,
+      "panel": "ExpeditionPanel",
+      "literal": "Burn 10 carried fuel items into the selected tank.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionPanel.cs",
+      "line": 244,
+      "panel": "ExpeditionPanel",
+      "literal": "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionPanel.cs",
+      "line": 618,
+      "panel": "ExpeditionPanel",
+      "literal": "NO ROUTE DATA.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionPanel.cs",
+      "line": 850,
+      "panel": "ExpeditionPanel",
+      "literal": "DISCOVERY · MICRO-LOCATION",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionRadarPanel.cs",
+      "line": 370,
+      "panel": "ExpeditionRadarPanel",
+      "literal": "TARGET DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ExpeditionRadarPanel.cs",
+      "line": 390,
+      "panel": "ExpeditionRadarPanel",
+      "literal": "TARGET DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FactionMatrixPanel.cs",
+      "line": 219,
+      "panel": "FactionMatrixPanel",
+      "literal": "FACTION DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FactionMatrixPanel.cs",
+      "line": 388,
+      "panel": "FactionMatrixPanel",
+      "literal": "FACTION DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FactionsNarrativePanel.cs",
+      "line": 325,
+      "panel": "FactionsNarrativePanel",
+      "literal": "FACTION DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FactionsNarrativePanel.cs",
+      "line": 332,
+      "panel": "FactionsNarrativePanel",
+      "literal": "FACTION DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FactionsNarrativePanel.cs",
+      "line": 340,
+      "panel": "FactionsNarrativePanel",
+      "literal": "FACTION DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FactionsNarrativePanel.cs",
+      "line": 347,
+      "panel": "FactionsNarrativePanel",
+      "literal": "FACTION DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FalloutPlumePanel.cs",
+      "line": 51,
+      "panel": "FalloutPlumePanel",
+      "literal": "No active radioactive clouds detected in the local sector.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FalloutPlumePanel.cs",
+      "line": 54,
+      "panel": "FalloutPlumePanel",
+      "literal": "ENGAGE EMERGENCY 48H AIRLOCK SEAL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FalloutPlumePanel.cs",
+      "line": 90,
+      "panel": "FalloutPlumePanel",
+      "literal": "Atmospheric sensors offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FireIncidentPanel.cs",
+      "line": 202,
+      "panel": "FireIncidentPanel",
+      "literal": "Cannot dispatch brigade: no eligible survivors available.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FireIncidentPanel.cs",
+      "line": 233,
+      "panel": "FireIncidentPanel",
+      "literal": "Tick advanced.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FireIncidentPanel.cs",
+      "line": 244,
+      "panel": "FireIncidentPanel",
+      "literal": "Status: Fire suppression system offline (no session bound)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FireIncidentPanel.cs",
+      "line": 259,
+      "panel": "FireIncidentPanel",
+      "literal": "Status: No active fire incidents in shelter",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 49,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "STATUS: INCUBATING - VAT 03 BLOOM / YIELD: 320 KG/DAY",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 75,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "SHELTER NUTRITION // FUNGAL PROTEIN FERMENTERS [MYCO-02]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 83,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "STATUS: INCUBATING - VAT 03 BLOOM / YIELD: 320 KG/DAY",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 88,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 124,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "[INJECT STERILE GLUCOSE NUTRIENT BROTH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 125,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "[ENGAGE PADDLE AGITATOR MOTOR]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 126,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "[ACTIVATE PULSED UV SPORE STERILIZER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 127,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "[HARVEST TOP-LAYER MYCELIAL SLURRY]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungalProteinFermenterPanel.cs",
+      "line": 151,
+      "panel": "FungalProteinFermenterPanel",
+      "literal": "[MYCO-02] UV sterilizer pulsed for 15 minutes.\\n[MYCO-02] 320 kg fungal protein paste harvested for kitchen mash.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/FungiCultivationBedPanel.cs",
+      "line": 23,
+      "panel": "FungiCultivationBedPanel",
+      "literal": "Mushroom beds monitoring...",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GameOverPanel.cs",
+      "line": 50,
+      "panel": "GameOverPanel",
+      "literal": "The bunker fell silent.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GameOverPanel.cs",
+      "line": 83,
+      "panel": "GameOverPanel",
+      "literal": "[Enter] New Game  ·  [Esc] Menu",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 189,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Device: No dosimeter session bound",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 190,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Status: Calibration station offline",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 200,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Device: Not registered",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 201,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Status: No dosimeter profile found",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 229,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Status: Calibrating...",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 230,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Complete Calibration",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 235,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Status: CALIBRATION OVERDUE [!]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 236,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Start Calibration",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 241,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Status: Operational",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeigerCalibrationPanel.cs",
+      "line": 242,
+      "panel": "GeigerCalibrationPanel",
+      "literal": "Start Calibration",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeodeticSurveyPanel.cs",
+      "line": 307,
+      "panel": "GeodeticSurveyPanel",
+      "literal": "RESOLVED TRIANGLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeodeticSurveyPanel.cs",
+      "line": 316,
+      "panel": "GeodeticSurveyPanel",
+      "literal": "HIDDEN ROUTE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeothermalAquiferPanel.cs",
+      "line": 123,
+      "panel": "GeothermalAquiferPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeothermalSteamTurbinePanel.cs",
+      "line": 87,
+      "panel": "GeothermalSteamTurbinePanel",
+      "literal": "[ENGAGE STEAM INLET VALVE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeothermalSteamTurbinePanel.cs",
+      "line": 91,
+      "panel": "GeothermalSteamTurbinePanel",
+      "literal": "[INJECT ANTI-SCALING INHIBITOR]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeothermalSteamTurbinePanel.cs",
+      "line": 95,
+      "panel": "GeothermalSteamTurbinePanel",
+      "literal": "[DRAIN SEPARATOR BRINE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeothermalSteamTurbinePanel.cs",
+      "line": 99,
+      "panel": "GeothermalSteamTurbinePanel",
+      "literal": "[EMERGENCY TURBINE TRIP]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GeothermalSteamTurbinePanel.cs",
+      "line": 103,
+      "panel": "GeothermalSteamTurbinePanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/GreenhousePanel.cs",
+      "line": 408,
+      "panel": "GreenhousePanel",
+      "literal": "APIARY // HIVE CONTROL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyLogisticsAirlockPanel.cs",
+      "line": 83,
+      "panel": "HeavyLogisticsAirlockPanel",
+      "literal": "[BAROMETRIC EQUALIZATION]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyLogisticsAirlockPanel.cs",
+      "line": 87,
+      "panel": "HeavyLogisticsAirlockPanel",
+      "literal": "[CYCLE DECON BLOWDOWN]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyLogisticsAirlockPanel.cs",
+      "line": 91,
+      "panel": "HeavyLogisticsAirlockPanel",
+      "literal": "[OPEN INNER BLAST DOOR]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyLogisticsAirlockPanel.cs",
+      "line": 95,
+      "panel": "HeavyLogisticsAirlockPanel",
+      "literal": "[EMERGENCY AIRLOCK PURGE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyLogisticsAirlockPanel.cs",
+      "line": 99,
+      "panel": "HeavyLogisticsAirlockPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 49,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "STATUS: BASE LOAD ACTIVE - 1,200 RPM / 480 kW OUTPUT (SYNCHRONIZED)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 75,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "SHELTER POWER GRID // V12 MARINE TURBODIESEL GENERATOR [GEN-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 83,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "STATUS: BASE LOAD ACTIVE - 1,200 RPM / 480 kW OUTPUT (SYNCHRONIZED)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 88,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 124,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "[ENGAGE COMPRESSED AIR STARTER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 125,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "[SYNCHRONIZE GENERATOR TO GRID]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 126,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "[PURGE DIESEL FUEL INJECTORS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 127,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "[DIVERT EXHAUST TO GREENHOUSE HEATING]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/HeavyMarineDieselGeneratorPanel.cs",
+      "line": 151,
+      "panel": "HeavyMarineDieselGeneratorPanel",
+      "literal": "[GEN-03] Compressed air starter pulsed. V12 turbodiesel online at 1,200 RPM.\\n[GEN-03] Generator synchronized with shelter main bus at 480 kW.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 49,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "STATUS: SMELTING ACTIVE - MOLTEN HIGH-TUNGSTEN ALLOY / 1,640C",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 75,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "SUBTERRANEAN METALLURGY // INDUCTION CUPOLA FURNACE [MET-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 83,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "STATUS: SMELTING ACTIVE - MOLTEN HIGH-TUNGSTEN ALLOY / 1,640C",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 88,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 124,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "[ACTIVATE 850 KW INDUCTION COILS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 125,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "[TILT CRUCIBLE FOR MOLTEN POUR]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 126,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "[INJECT MAGNESIUM DESULFURIZER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 127,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "[SKIM ACCUMULATED SURFACE SLAG]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InductionCupolaFurnacePanel.cs",
+      "line": 151,
+      "panel": "InductionCupolaFurnacePanel",
+      "literal": "[MET-03] Induction coils drew 850 kW. Core melt reached 1,640C.\\n[MET-03] 24 armor-grade steel billets poured into casting molds.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/InventoryPanel.cs",
+      "line": 97,
+      "panel": "InventoryPanel",
+      "literal": "SELECT",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 49,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "STATUS: MEMORIAL FLAME ACTIVE - RECORDED: 38 SOULS (-18% GRIEF)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 75,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "SHELTER COMMEMORATION // THE IRON CENOTAPH [RIT-01]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 83,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "STATUS: MEMORIAL FLAME ACTIVE - RECORDED: 38 SOULS (-18% GRIEF)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 88,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 124,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "[ENGRAVE BRONZE MEMORIAL PLAQUE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 125,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "[REFUEL ETERNAL MEMORIAL FLAME]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 126,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "[HOLD ALL-SHELTER VIGIL & MOMENT OF SILENCE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 127,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "[RECITE DIEGETIC COMMEMORATION EULOGY]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IronCenotaphMemorialPanel.cs",
+      "line": 151,
+      "panel": "IronCenotaphMemorialPanel",
+      "literal": "[RIT-01] Bronze plaque carved for Dr. Aris Thorne.\\n[RIT-01] Memorial vigil conducted. Living survivor grief mitigated.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IsotopeSeparatorPanel.cs",
+      "line": 87,
+      "panel": "IsotopeSeparatorPanel",
+      "literal": "[STRIKE ION BEAM ARC]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IsotopeSeparatorPanel.cs",
+      "line": 91,
+      "panel": "IsotopeSeparatorPanel",
+      "literal": "[RAMP 1.8T MAGNETIC FIELD]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IsotopeSeparatorPanel.cs",
+      "line": 95,
+      "panel": "IsotopeSeparatorPanel",
+      "literal": "[HARVEST ISOTOPE COLLECTORS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IsotopeSeparatorPanel.cs",
+      "line": 99,
+      "panel": "IsotopeSeparatorPanel",
+      "literal": "[EMERGENCY BEAM DUMP]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/IsotopeSeparatorPanel.cs",
+      "line": 103,
+      "panel": "IsotopeSeparatorPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/JusticeTribunalPanel.cs",
+      "line": 23,
+      "panel": "JusticeTribunalPanel",
+      "literal": "Awaiting justice docket...",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LaborUI.cs",
+      "line": 56,
+      "panel": "LaborUI",
+      "literal": "No captives assigned to forced labor details.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LaborUI.cs",
+      "line": 85,
+      "panel": "LaborUI",
+      "literal": "Forced labor system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 49,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "STATUS: PILGRIMAGE ACTIVE - 1,240 KM / ATTRITION: HIGH",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 75,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "EXPEDITIONARY COMMAND // THE LONG WALK - FALLOUT CORRIDOR [EXP-06]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 83,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "STATUS: PILGRIMAGE ACTIVE - 1,240 KM / ATTRITION: HIGH",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 88,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 124,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "[DISPATCH AIRDROP RESUPPLY CRATE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 125,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "[AUTHORIZE NIGHT MARCH IN BLIZZARD]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 126,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "[ORDER EMERGENCY RAD-X PURGE PROTOCOL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 127,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "[ESTABLISH REINFORCED WAYPOINT BIVOUAC]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/LongWalkExpeditionPanel.cs",
+      "line": 151,
+      "panel": "LongWalkExpeditionPanel",
+      "literal": "[EXP-06] Party crossed frozen irradiated riverbed.\\n[EXP-06] Waypoint Beta bivouac established. Fire kindled.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 49,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "STATUS: CORE MEMORY ONLINE - ROTATION: 3,600 RPM / READ HEAD: LOCKED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 75,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "BUNKER COMPUTING // MAGNETIC DRUM & MICROFICHE ARCHIVE [CYBER-01]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 83,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "STATUS: CORE MEMORY ONLINE - ROTATION: 3,600 RPM / READ HEAD: LOCKED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 88,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 124,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "[SEEK TRACK TO ENGINEERING BLUEPRINTS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 125,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "[PROJECT 35mm MICROFICHE SPOOL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 126,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "[DUMP CORE PARITY MEMORY TO TELETYPE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 127,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "[RE-MAGNETIZE DEGRADED DRUM TRACKS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MagneticDrumArchivePanel.cs",
+      "line": 151,
+      "panel": "MagneticDrumArchivePanel",
+      "literal": "[CYBER-01] Magnetic drum read head positioned on Track 42.\\n[CYBER-01] Microfiche optical projector resolved pre-war hydro-press plans.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MainMenuPanel.cs",
+      "line": 113,
+      "panel": "MainMenuPanel",
+      "literal": "ATOMIC WAR // STARVING SURVIVAL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MainMenuPanel.cs",
+      "line": 125,
+      "panel": "MainMenuPanel",
+      "literal": "The nuclear exchange is concluded. Atmospheric fallout is descending.\\nManage radiation, rations, air filtration, and human survival.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MainMenuPanel.cs",
+      "line": 177,
+      "panel": "MainMenuPanel",
+      "literal": "ASHFALL v1.0.0 // GODOT 4.7+ .NET ENGINE // HOST REVISION ACTIVE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 146,
+      "panel": "MaritimePanel",
+      "literal": "Maritime session unavailable.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 195,
+      "panel": "MaritimePanel",
+      "literal": "Stealth dive launched into Flotilla wreckage.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 206,
+      "panel": "MaritimePanel",
+      "literal": "Compressor cranked manually.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 234,
+      "panel": "MaritimePanel",
+      "literal": "Advanced dive time by 15 seconds.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 243,
+      "panel": "MaritimePanel",
+      "literal": "Controlled surface ascent completed.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 252,
+      "panel": "MaritimePanel",
+      "literal": "Emergency blowout ascent executed!",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 280,
+      "panel": "MaritimePanel",
+      "literal": "Loot node recovered: +2 Electronic Scrap, +1 Lead Sheeting.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MaritimePanel.cs",
+      "line": 284,
+      "panel": "MaritimePanel",
+      "literal": "Cannot scavenge while on surface standby.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 49,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "STATUS: MILLING ACTIVE - TITANIUM-LEAD PNEUMATIC ARM / VANE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 75,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "SURGICAL MACHINING // PROSTHETICS & CYBERNETIC LATHE [PROSTH-01]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 83,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "STATUS: MILLING ACTIVE - TITANIUM-LEAD PNEUMATIC ARM / VANE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 88,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 124,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "[MILL PNEUMATIC PISTON CYLINDERS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 125,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "[CALIBRATE MYOELECTRIC SENSORS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 126,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "[INJECT LOCAL NERVE ANESTHETIC]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 127,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "[FIT REINFORCED LEAD SOCKET COUPLING]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MechanicalProstheticsLathePanel.cs",
+      "line": 151,
+      "panel": "MechanicalProstheticsLathePanel",
+      "literal": "[PROSTH-01] CNC spindle calibrated at 3,400 RPM.\\n[PROSTH-01] Myoelectric sensors synchronized with patient nerve bundle.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MercenaryBountyBoardPanel.cs",
+      "line": 40,
+      "panel": "MercenaryBountyBoardPanel",
+      "literal": "No bounties available.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MercenaryBountyBoardPanel.cs",
+      "line": 55,
+      "panel": "MercenaryBountyBoardPanel",
+      "literal": "Bounty board online. No targets in local sector.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MicrofluidicDiagnosticPanel.cs",
+      "line": 115,
+      "panel": "MicrofluidicDiagnosticPanel",
+      "literal": "ASSAY PROTOCOL & DIAGNOSTICS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MineFlailPanel.cs",
+      "line": 115,
+      "panel": "MineFlailPanel",
+      "literal": "BREACH TELEMETRY & STATUS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MusterPanel.cs",
+      "line": 182,
+      "panel": "MusterPanel",
+      "literal": "Panel not bound to active Muster session.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MutationTreePanel.cs",
+      "line": 55,
+      "panel": "MutationTreePanel",
+      "literal": "No genetic instability profiles active.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MutationTreePanel.cs",
+      "line": 84,
+      "panel": "MutationTreePanel",
+      "literal": "Mutation system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/MutationTreePanel.cs",
+      "line": 95,
+      "panel": "MutationTreePanel",
+      "literal": "No biological mutation profiles registered. Severe radiation exposure will catalyze mutations.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/NurseryPanel.cs",
+      "line": 55,
+      "panel": "NurseryPanel",
+      "literal": "No active children registered in the shelter nursery or schoolhouse.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/NurseryPanel.cs",
+      "line": 84,
+      "panel": "NurseryPanel",
+      "literal": "Generational system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/NurseryPanel.cs",
+      "line": 94,
+      "panel": "NurseryPanel",
+      "literal": "No children under care. Construct cribs and school primers to support generational rearing.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 100,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.title",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 103,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.tracker",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 106,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "ui.common.close_short",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 108,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.close",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 115,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.assistance.standard",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 117,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.assistance",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 121,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.booting",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 123,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.objective",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 128,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.hint.empty",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 129,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.hint",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 141,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.action.show_where",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 143,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.show_where",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 148,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.action.skip",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 150,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.skip",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 155,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.action.dismiss",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 157,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.dismiss",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 162,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.assistance.standard",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 164,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.assistance_cycle",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 169,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.action.replay",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 171,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.tooltip.replay",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 178,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.checklist.title",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 209,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.offline",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 210,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.booting",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 211,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.hint.empty",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 212,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.assistance.standard",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 223,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.complete",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 225,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.current",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 228,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.day_two",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 317,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.status.inactive",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 373,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.hint.dismissed",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 377,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.hint.prefix",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 400,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.assistance.minimal",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 401,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.assistance.guided",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/OnboardingHintPanel.cs",
+      "line": 402,
+      "panel": "OnboardingHintPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "onboarding.assistance.standard",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 86,
+      "panel": "PharmaLabPanel",
+      "literal": "PHARMACEUTICAL LABORATORY // CHEMICAL COMPOUNDING & DISTILLATION",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 94,
+      "panel": "PharmaLabPanel",
+      "literal": " [X] CLOSE ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 108,
+      "panel": "PharmaLabPanel",
+      "literal": "LAB STATUS: IDLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 120,
+      "panel": "PharmaLabPanel",
+      "literal": "No active distillation or compounding run.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 125,
+      "panel": "PharmaLabPanel",
+      "literal": " ABORT BATCH ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 218,
+      "panel": "PharmaLabPanel",
+      "literal": "LAB STATUS: IDLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 221,
+      "panel": "PharmaLabPanel",
+      "literal": "Distillation apparatus clean. Select a pharmaceutical recipe below.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PharmaLabPanel.cs",
+      "line": 344,
+      "panel": "PharmaLabPanel",
+      "literal": " START COMPOUNDING RUN ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/Plans74To77Panels.cs",
+      "line": 197,
+      "panel": "Plans74To77Panels",
+      "literal": "WORKBENCH // ENTER A WEAPON INSTANCE ID",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/Plans74To77Panels.cs",
+      "line": 267,
+      "panel": "Plans74To77Panels",
+      "literal": "CHAMBER // ENTER OR ADD A CHAMBER ID",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PlasmaArcSmeltingPanel.cs",
+      "line": 83,
+      "panel": "PlasmaArcSmeltingPanel",
+      "literal": "[STRIKE PLASMA TORCH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PlasmaArcSmeltingPanel.cs",
+      "line": 87,
+      "panel": "PlasmaArcSmeltingPanel",
+      "literal": "[TILT CRUCIBLE FOR POUR]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PlasmaArcSmeltingPanel.cs",
+      "line": 91,
+      "panel": "PlasmaArcSmeltingPanel",
+      "literal": "[INJECT ARGON SHIELD]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PlasmaArcSmeltingPanel.cs",
+      "line": 95,
+      "panel": "PlasmaArcSmeltingPanel",
+      "literal": "[EMERGENCY CRUCIBLE DUMP]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PlasmaArcSmeltingPanel.cs",
+      "line": 99,
+      "panel": "PlasmaArcSmeltingPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PoliticsUI.cs",
+      "line": 56,
+      "panel": "PoliticsUI",
+      "literal": "Settlement council is currently adjourned.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PoliticsUI.cs",
+      "line": 85,
+      "panel": "PoliticsUI",
+      "literal": "Politics system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PrisonerPanel.cs",
+      "line": 56,
+      "panel": "PrisonerPanel",
+      "literal": "No captives currently detained.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PrisonerPanel.cs",
+      "line": 85,
+      "panel": "PrisonerPanel",
+      "literal": "Prisoner system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/PrisonerPanel.cs",
+      "line": 103,
+      "panel": "PrisonerPanel",
+      "literal": "All detention cells vacant. Capture hostile combatants during wasteland sorties.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RadioIntelligencePanel.cs",
+      "line": 128,
+      "panel": "RadioIntelligencePanel",
+      "literal": "TUNED: --- kHz",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RadioIntelligencePanel.cs",
+      "line": 129,
+      "panel": "RadioIntelligencePanel",
+      "literal": "BAND: OFFLINE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RadioIntelligencePanel.cs",
+      "line": 130,
+      "panel": "RadioIntelligencePanel",
+      "literal": "No radio station session bound.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RadioIntelligencePanel.cs",
+      "line": 202,
+      "panel": "RadioIntelligencePanel",
+      "literal": "Scan the frequency dial to search for active wasteland emissions.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailGrindingPanel.cs",
+      "line": 115,
+      "panel": "RailGrindingPanel",
+      "literal": "GRINDING TELEMETRY & PROFILE CONTROL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 157,
+      "panel": "RailwayTerminalPanel",
+      "literal": "SEGMENT LOGISTICS & CONTROL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 163,
+      "panel": "RailwayTerminalPanel",
+      "literal": "No segment selected",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 169,
+      "panel": "RailwayTerminalPanel",
+      "literal": "Endpoints: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 175,
+      "panel": "RailwayTerminalPanel",
+      "literal": "Distance: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 181,
+      "panel": "RailwayTerminalPanel",
+      "literal": "Integrity: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 187,
+      "panel": "RailwayTerminalPanel",
+      "literal": "Logistics: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 195,
+      "panel": "RailwayTerminalPanel",
+      "literal": "COMMANDS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 201,
+      "panel": "RailwayTerminalPanel",
+      "literal": "[REPAIR TRACK (+25%)]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 205,
+      "panel": "RailwayTerminalPanel",
+      "literal": "[REBUILD BRIDGE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 209,
+      "panel": "RailwayTerminalPanel",
+      "literal": "[CLEAR TRACK OBSTACLE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 213,
+      "panel": "RailwayTerminalPanel",
+      "literal": "[DISPATCH TRAIN ON SEGMENT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 217,
+      "panel": "RailwayTerminalPanel",
+      "literal": "[CLEAR DERAILMENT & RE-RAIL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 225,
+      "panel": "RailwayTerminalPanel",
+      "literal": "Terminal standby.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 334,
+      "panel": "RailwayTerminalPanel",
+      "literal": "No segment selected",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RailwayTerminalPanel.cs",
+      "line": 371,
+      "panel": "RailwayTerminalPanel",
+      "literal": "Standard gauge | Default grade",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ReconTelemetryPanel.cs",
+      "line": 115,
+      "panel": "ReconTelemetryPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/RegionalTreatyPanel.cs",
+      "line": 103,
+      "panel": "RegionalTreatyPanel",
+      "literal": "No regional treaties or diplomatic accords currently on record.\\nDiplomatic envoys and faction emissaries will negotiate regional accords during diplomatic outreach.\\n\\nLast Event: ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ResearchAtlasPanel.cs",
+      "line": 435,
+      "panel": "ResearchAtlasPanel",
+      "literal": "START RESEARCH",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 80,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.status.offline",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 87,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.status.offline",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 95,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.status.active",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 116,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.progress",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 126,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.breakthrough_award",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 144,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.empty.available_busy",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 145,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.empty.available",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 159,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.node.summary",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 168,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.breakthrough",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 176,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.action.start",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 191,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.empty.locked",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 202,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.node.summary",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 215,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.requirements",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 216,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.locked.prerequisites",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 230,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.empty.completed",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 236,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.completed",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 239,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.completed.breakthrough",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 251,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.knowledge.row",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 257,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.empty.knowledge",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 317,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.card.title",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 318,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.card.subtitle",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 325,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.title",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 346,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.section.active",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 355,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.section.available",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 364,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.section.locked",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 373,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.section.completed",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 382,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.section.knowledge",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 391,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "research.status.ready",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/ResearchPanel.cs",
+      "line": 398,
+      "panel": "ResearchPanel",
+      "literal": null,
+      "classification": "localized_lookup",
+      "key": "ui.common.close_short",
+      "exemption": null
+    },
+    {
+      "file": "src/UI/RoboticsWorkshopPanel.cs",
+      "line": 23,
+      "panel": "RoboticsWorkshopPanel",
+      "literal": "Robotics diagnostic bay empty.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SafeCrackModal.cs",
+      "line": 178,
+      "panel": "SafeCrackModal",
+      "literal": "Safe: Not found",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SafeCrackModal.cs",
+      "line": 204,
+      "panel": "SafeCrackModal",
+      "literal": "Safe is OPEN",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SafeCrackModal.cs",
+      "line": 206,
+      "panel": "SafeCrackModal",
+      "literal": "Safe is JAMMED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SaveLoadPanel.cs",
+      "line": 126,
+      "panel": "SaveLoadPanel",
+      "literal": "< active",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SettingsPanel.cs",
+      "line": 302,
+      "panel": "SettingsPanel",
+      "literal": "TUTORIALS RESET",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterDecorPanel.cs",
+      "line": 97,
+      "panel": "ShelterDecorPanel",
+      "literal": "A named wall, shelf, peg, or surface inside the selected room.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterDecorPanel.cs",
+      "line": 164,
+      "panel": "ShelterDecorPanel",
+      "literal": "Shelter decor is waiting for the campaign session.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterDecorPanel.cs",
+      "line": 200,
+      "panel": "ShelterDecorPanel",
+      "literal": "Select an item from storage. Mounting removes one real item; removing a player-mounted item returns it.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterHudPanel.cs",
+      "line": 193,
+      "panel": "ShelterHudPanel",
+      "literal": "FORECAST // --",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterHudPanel.cs",
+      "line": 206,
+      "panel": "ShelterHudPanel",
+      "literal": "DUTY ROSTER // --",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterHudPanel.cs",
+      "line": 289,
+      "panel": "ShelterHudPanel",
+      "literal": "No fresh signal.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterSocialPanel.cs",
+      "line": 140,
+      "panel": "ShelterSocialPanel",
+      "literal": "No shelter social session bound.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/ShelterSocialPanel.cs",
+      "line": 276,
+      "panel": "ShelterSocialPanel",
+      "literal": "MEDIATE SELECTED DISPUTE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SilentFoundryPanel.cs",
+      "line": 122,
+      "panel": "SilentFoundryPanel",
+      "literal": "MACHINE // NOMINAL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SilentFoundryPanel.cs",
+      "line": 234,
+      "panel": "SilentFoundryPanel",
+      "literal": "MACHINE // NOMINAL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SilentFoundryPanel.cs",
+      "line": 239,
+      "panel": "SilentFoundryPanel",
+      "literal": "MACHINE // ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SilentFoundryPanel.cs",
+      "line": 352,
+      "panel": "SilentFoundryPanel",
+      "literal": "CAST DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SiliconIngotSlicingPanel.cs",
+      "line": 83,
+      "panel": "SiliconIngotSlicingPanel",
+      "literal": "[ENGAGE DIAMOND MULTI-WIRE SLICE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SiliconIngotSlicingPanel.cs",
+      "line": 87,
+      "panel": "SiliconIngotSlicingPanel",
+      "literal": "[FEED SILICON CARBIDE SLURRY]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SiliconIngotSlicingPanel.cs",
+      "line": 91,
+      "panel": "SiliconIngotSlicingPanel",
+      "literal": "[COLLECT WAFERS TO CASSETTE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SiliconIngotSlicingPanel.cs",
+      "line": 95,
+      "panel": "SiliconIngotSlicingPanel",
+      "literal": "[EMERGENCY WIRE BRAKE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SiliconIngotSlicingPanel.cs",
+      "line": 99,
+      "panel": "SiliconIngotSlicingPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SkillMatrixPanel.cs",
+      "line": 371,
+      "panel": "SkillMatrixPanel",
+      "literal": "ACTOR DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SkillMatrixPanel.cs",
+      "line": 378,
+      "panel": "SkillMatrixPanel",
+      "literal": "ACTOR DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SkillMatrixPanel.cs",
+      "line": 386,
+      "panel": "SkillMatrixPanel",
+      "literal": "ACTOR DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 124,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "Swaps in a fresh cloth filter (1 cloth)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 149,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "SUBTERRANEAN HYDRAULICS // SLURRY DEWATERING SUMP [HYDRO-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 157,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "STATUS: SUMP PUMPS ACTIVE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 162,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 202,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[DOSE FLOCCULANT — SETTLE SILT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 206,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[RUN CENTRIFUGE BATCH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 210,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[REPLACE FILTER CLOTH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 214,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[PACK CAKE FOR SMELTING]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 218,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[SEAL TAILINGS DRUMS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 236,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "Tailings are sealed for disposal. Cake awaits assay.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SlurryDewateringSumpPanel.cs",
+      "line": 253,
+      "panel": "SlurryDewateringSumpPanel",
+      "literal": "[HYDRO-03] Slurry plant standing by.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 49,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "STATUS: BORE EXCAVATION ACTIVE - DEPTH: -84.5M / YIELD: RICH",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 75,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "SUBTERRANEAN SCAVENGING // ULTRASONIC ROCK RUPTURE [SCAV-02]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 83,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "STATUS: BORE EXCAVATION ACTIVE - DEPTH: -84.5M / YIELD: RICH",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 88,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 124,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "[PULSE 28 KHZ ULTRASONIC RUPTURE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 125,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "[ENGAGE HIGH-VOLUME PNEUMATIC SUCTION]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 126,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "[PURGE CLOGGED CYCLONE SIFTER SCREEN]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 127,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "[DIVERT SCRAP TO FOUNDRY HOPPER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SonicRuptureDrillPanel.cs",
+      "line": 151,
+      "panel": "SonicRuptureDrillPanel",
+      "literal": "[SCAV-02] Ultrasonic rupture shattered basalt strata.\\n[SCAV-02] Pneumatic cyclone diverted 420 kg scrap iron to hopper.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/StandingRecordPanel.cs",
+      "line": 171,
+      "panel": "StandingRecordPanel",
+      "literal": "Standing Record system unavailable.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/StealthReadoutPanel.cs",
+      "line": 55,
+      "panel": "StealthReadoutPanel",
+      "literal": "No active expedition stealth parties tracked.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/StealthReadoutPanel.cs",
+      "line": 84,
+      "panel": "StealthReadoutPanel",
+      "literal": "Stealth system offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/StealthReadoutPanel.cs",
+      "line": 95,
+      "panel": "StealthReadoutPanel",
+      "literal": "No active expedition stealth profiles. Dispatch sorties equipped with camouflage gear to monitor detection risk.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanCartographyPanel.cs",
+      "line": 83,
+      "panel": "SubterraneanCartographyPanel",
+      "literal": "[EXECUTE 3D LIDAR SCAN]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanCartographyPanel.cs",
+      "line": 87,
+      "panel": "SubterraneanCartographyPanel",
+      "literal": "[PROJECT RAD ISOBAR OVERLAY]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanCartographyPanel.cs",
+      "line": 91,
+      "panel": "SubterraneanCartographyPanel",
+      "literal": "[PLOT EXTRACTION WAYPOINT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanCartographyPanel.cs",
+      "line": 95,
+      "panel": "SubterraneanCartographyPanel",
+      "literal": "[FLAG COLLAPSE HAZARD]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanCartographyPanel.cs",
+      "line": 99,
+      "panel": "SubterraneanCartographyPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 49,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "STATUS: BLACK MARKET ARBITRAGE ACTIVE - TOTAL DEBT: 14,850 SCRIP",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 75,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "SHELTER FISCAL AUTHORITY // DEBT LEDGER & SCRIP CLEARINGHOUSE [ECON-04]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 83,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "STATUS: BLACK MARKET ARBITRAGE ACTIVE - TOTAL DEBT: 14,850 SCRIP",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 88,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 124,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "[ISSUE HIGH-INTEREST MERCHANDISE BOND]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 125,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "[EXECUTE COLLATERAL SEIZURE PROTOCOL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 126,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "[ARBITRAGE BLACK MARKET SCRIP FOR RATIONS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 127,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "[RESTRUCTURE FACTION ACCORD REPAYMENT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanDebtLedgerPanel.cs",
+      "line": 151,
+      "panel": "SubterraneanDebtLedgerPanel",
+      "literal": "[ECON-04] Promissory note #88 registered for 100 rounds 7.62mm.\\n[ECON-04] Collateral lien placed on debtor Carver foundry toolset.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 134,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "No excavation hazard session bound.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 176,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "[LOCKED] TRAPPED MINERS DETECTED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 238,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "DISPATCH CLEARANCE CREW (60 Ticks)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 245,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "RESCUE COMPLETED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 249,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "[CATASTROPHIC COLLAPSE] Rescue window expired. Sector lost.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 254,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "SECTOR ABANDONED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SubterraneanOperationsPanel.cs",
+      "line": 261,
+      "panel": "SubterraneanOperationsPanel",
+      "literal": "NO RESCUE REQUIRED",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 49,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "STATUS: PERIMETER SENSORS ACTIVE - AEGIS INTEGRITY: 84.2%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 75,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "SURFACE DEFENSE GRID // SHRAPNEL AEGIS & REACTIVE ARMOR [DEF-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 83,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "STATUS: PERIMETER SENSORS ACTIVE - AEGIS INTEGRITY: 84.2%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 88,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 124,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "[ARM REACTIVE EXPLOSIVE TILES]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 125,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "[ENGAGE AUTOMATED CIWS TRACKING]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 126,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "[PULSE HIGH-VOLTAGE ELECTROCUTION OVERLOAD]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 127,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "[SEAL SURFACE BLAST SHUTTERS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurfaceShrapnelAegisPanel.cs",
+      "line": 151,
+      "panel": "SurfaceShrapnelAegisPanel",
+      "literal": "[DEF-03] CIWS radar completed 360-degree top-side azimuth sweep.\\n[DEF-03] Perimeter high-voltage fence energized at 4.8 kV.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivalWorkstationPanel.cs",
+      "line": 153,
+      "panel": "SurvivalWorkstationPanel",
+      "literal": "AVAILABLE RECIPES",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivalWorkstationPanel.cs",
+      "line": 240,
+      "panel": "SurvivalWorkstationPanel",
+      "literal": "RECIPE DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivalWorkstationPanel.cs",
+      "line": 265,
+      "panel": "SurvivalWorkstationPanel",
+      "literal": "CRAFTING IN PROGRESS",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivalWorkstationPanel.cs",
+      "line": 276,
+      "panel": "SurvivalWorkstationPanel",
+      "literal": "— idle —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivalWorkstationPanel.cs",
+      "line": 473,
+      "panel": "SurvivalWorkstationPanel",
+      "literal": "— idle —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivalWorkstationPanel.cs",
+      "line": 493,
+      "panel": "SurvivalWorkstationPanel",
+      "literal": "RECIPE DETAIL",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/SurvivorDowntimePanel.cs",
+      "line": 23,
+      "panel": "SurvivorDowntimePanel",
+      "literal": "Recreation center.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 49,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "STATUS: COHORT STRESS CRITICAL - TRAUMA RESONANCE: 78.4%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 75,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "SHELTER SOCIAL PSYCHOLOGY // TRAUMA BONDING & COHORT MATRIX [SOC-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 83,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "STATUS: COHORT STRESS CRITICAL - TRAUMA RESONANCE: 78.4%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 88,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 124,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "[ADMINISTER EMOTIONAL DE-ESCALATION TALK]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 125,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "[DISTRIBUTE EXTRA PHARMA SEDATIVES]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 126,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "[SEPARATE SEDITIOUS CONFLICT PAIRS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 127,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "[ORDER MANDATORY RECREATION & VINYL LISTENING]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TraumaBondingCohortPanel.cs",
+      "line": 151,
+      "panel": "TraumaBondingCohortPanel",
+      "literal": "[SOC-03] Rostova and Vane formed mutual grief pact.\\n[SOC-03] Morale de-escalation protocol lowered conflict tension.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TriangulationPanel.cs",
+      "line": 182,
+      "panel": "TriangulationPanel",
+      "literal": "Candidate: None",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TriangulationPanel.cs",
+      "line": 183,
+      "panel": "TriangulationPanel",
+      "literal": "Confidence: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TriangulationPanel.cs",
+      "line": 184,
+      "panel": "TriangulationPanel",
+      "literal": "Uncertainty: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TriangulationPanel.cs",
+      "line": 185,
+      "panel": "TriangulationPanel",
+      "literal": "Discovery: No data",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 49,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "STATUS: TROPOSCATTER LOCKED - SECTOR 7 DISTANT BEACON (88.4%)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 75,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "RADIO TELEMETRY // TROPOSPHERIC SCATTER RELAY [COMM-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 83,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "STATUS: TROPOSCATTER LOCKED - SECTOR 7 DISTANT BEACON (88.4%)",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 88,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 124,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "[ALIGN PARABOLIC DISH AZIMUTH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 125,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "[ENGAGE 10KW KLYSTRON TRANSMITTER]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 126,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "[FILTER ATMOSPHERIC NOISE SPIKE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 127,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "[RECORD ENCRYPTED DIEGETIC BROADCAST]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/TroposphericRadioRelayPanel.cs",
+      "line": 151,
+      "panel": "TroposphericRadioRelayPanel",
+      "literal": "[COMM-03] 10kW Klystron tube energized. High-power troposcatter active.\\n[COMM-03] Decrypted Morse teletype stream from Meridian Relay.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 49,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "STATUS: AIRLOCK CYCLE ACTIVE - HOT ZONE PURGE / DOSE: 18.2 mSv",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 75,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "RADIOLOGICAL DETOX // ULTRASONIC DELUGE AIRLOCK [RAD-05]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 83,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "STATUS: AIRLOCK CYCLE ACTIVE - HOT ZONE PURGE / DOSE: 18.2 mSv",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 88,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 124,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "[INITIATE HIGH-PRESSURE CHELATING WASH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 125,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "[PULSE 32 KHZ ULTRASONIC CAVITATION]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 126,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "[INJECT PRESSURIZED FOAM SEALANT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 127,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "[PNEUMATIC BLOWER SUCTION PURGE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UltrasonicDecontaminationAirlockPanel.cs",
+      "line": 151,
+      "panel": "UltrasonicDecontaminationAirlockPanel",
+      "literal": "[RAD-05] 32 kHz ultrasonic transducers energized for deluge cycle.\\n[RAD-05] Survivor skin radiation reduced from 140 mSv to 1.2 mSv.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UndergroundPrintingPressPanel.cs",
+      "line": 83,
+      "panel": "UndergroundPrintingPressPanel",
+      "literal": "[COMPOSE LEAD TYPE EDITORIAL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UndergroundPrintingPressPanel.cs",
+      "line": 87,
+      "panel": "UndergroundPrintingPressPanel",
+      "literal": "[RUN OFFSET CYLINDER PRESS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UndergroundPrintingPressPanel.cs",
+      "line": 91,
+      "panel": "UndergroundPrintingPressPanel",
+      "literal": "[DISPERSE LEAFLETS TO SECTORS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UndergroundPrintingPressPanel.cs",
+      "line": 95,
+      "panel": "UndergroundPrintingPressPanel",
+      "literal": "[EMERGENCY BURN PRESS PLATES]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/UndergroundPrintingPressPanel.cs",
+      "line": 99,
+      "panel": "UndergroundPrintingPressPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 49,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "STATUS: BREACH ACTIVE - DOOR 04-A / DEADBOLT: 42.6%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 75,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "TACTICAL BREACHING // ARMORED VAULT DOOR RIG [SEC-03]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 83,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "STATUS: BREACH ACTIVE - DOOR 04-A / DEADBOLT: 42.6%",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 88,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "[X] CLOSE CONSOLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 124,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "[IGNITE MAGNESIUM THERMAL LANCE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 125,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "[PRESSURIZE 500 BAR HYDRAULIC RAMS]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 126,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "[PULSE ACOUSTIC SHEAR RESONATOR]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 127,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "[DEPLOY EXPLOSIVE LINEAR SHAPED CHARGE]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VaultDoorBreachingPanel.cs",
+      "line": 151,
+      "panel": "VaultDoorBreachingPanel",
+      "literal": "[SEC-03] Thermal lance ignited at 2,840C. Lead layer melting.\\n[SEC-03] Hydraulic rams pressurized to 480 Bar.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VinylMoralePanel.cs",
+      "line": 102,
+      "panel": "VinylMoralePanel",
+      "literal": "Play Selected Album",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VinylMoralePanel.cs",
+      "line": 112,
+      "panel": "VinylMoralePanel",
+      "literal": "Stop Turntable",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/VinylMoralePanel.cs",
+      "line": 159,
+      "panel": "VinylMoralePanel",
+      "literal": "NO VINYL RECORDS ACQUIRED — Scavenge ruins, search pre-war apartments, or trade with caravans to discover albums.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WarDogKennelPanel.cs",
+      "line": 87,
+      "panel": "WarDogKennelPanel",
+      "literal": "[DEPLOY SCOUT DOG]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WarDogKennelPanel.cs",
+      "line": 91,
+      "panel": "WarDogKennelPanel",
+      "literal": "[RAD-CLEANSE VET BATH]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WarDogKennelPanel.cs",
+      "line": 95,
+      "panel": "WarDogKennelPanel",
+      "literal": "[DISPENSE FORTIFIED MEAT]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WarDogKennelPanel.cs",
+      "line": 99,
+      "panel": "WarDogKennelPanel",
+      "literal": "[INITIATE AGGRESSION DRILL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WarDogKennelPanel.cs",
+      "line": 103,
+      "panel": "WarDogKennelPanel",
+      "literal": "[CLOSE PANEL]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WaystationNetworkPanel.cs",
+      "line": 76,
+      "panel": "WaystationNetworkPanel",
+      "literal": "REGION TRADE STOCK",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WaystationNetworkPanel.cs",
+      "line": 90,
+      "panel": "WaystationNetworkPanel",
+      "literal": "Unlock Waystation Camp",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WaystationNetworkPanel.cs",
+      "line": 94,
+      "panel": "WaystationNetworkPanel",
+      "literal": "Light Heating Stove",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WaystationNetworkPanel.cs",
+      "line": 166,
+      "panel": "WaystationNetworkPanel",
+      "literal": "[import lapsed — market short] ",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WaystationNetworkPanel.cs",
+      "line": 172,
+      "panel": "WaystationNetworkPanel",
+      "literal": "[stocked]",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WeatherSondePanel.cs",
+      "line": 150,
+      "panel": "WeatherSondePanel",
+      "literal": "Altitude: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WeatherSondePanel.cs",
+      "line": 151,
+      "panel": "WeatherSondePanel",
+      "literal": "Battery: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WeatherSondePanel.cs",
+      "line": 152,
+      "panel": "WeatherSondePanel",
+      "literal": "Hydrogen: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WeatherSondePanel.cs",
+      "line": 153,
+      "panel": "WeatherSondePanel",
+      "literal": "Sensor: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WeatherSondePanel.cs",
+      "line": 154,
+      "panel": "WeatherSondePanel",
+      "literal": "Observation Quality: —",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WildlifeTrappingPanel.cs",
+      "line": 72,
+      "panel": "WildlifeTrappingPanel",
+      "literal": "Set Snare at Perimeter",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WildlifeTrappingPanel.cs",
+      "line": 82,
+      "panel": "WildlifeTrappingPanel",
+      "literal": "Check & Harvest Snares",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WildlifeTrappingPanel.cs",
+      "line": 86,
+      "panel": "WildlifeTrappingPanel",
+      "literal": "Repair Trap",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WinterFreezePanel.cs",
+      "line": 23,
+      "panel": "WinterFreezePanel",
+      "literal": "Winter tracking offline.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WorkshopPanel.cs",
+      "line": 158,
+      "panel": "WorkshopPanel",
+      "literal": "COLLECT JOB",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WorkshopPanel.cs",
+      "line": 164,
+      "panel": "WorkshopPanel",
+      "literal": "ABORT JOB",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WorkshopPanel.cs",
+      "line": 169,
+      "panel": "WorkshopPanel",
+      "literal": "WORKSHOP STATUS: IDLE",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WorkshopPanel.cs",
+      "line": 171,
+      "panel": "WorkshopPanel",
+      "literal": "No active job.",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WorkshopPanel.cs",
+      "line": 186,
+      "panel": "WorkshopPanel",
+      "literal": "OVERHAUL TOOLING",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    },
+    {
+      "file": "src/UI/WorkshopPanel.cs",
+      "line": 208,
+      "panel": "WorkshopPanel",
+      "literal": "START JOB",
+      "classification": "hardcoded_ui_literal",
+      "key": null,
+      "exemption": "inventory_only_until_panel_wave"
+    }
+  ]
+}

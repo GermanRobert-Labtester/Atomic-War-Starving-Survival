@@ -204,6 +204,10 @@ namespace AtomicWar.GodotApp
                     _vinylMorale.System.CancelBroadcastBrownout();
                     return;
                 }
+                // The vinyl relay is presentation-only: the Core event has
+                // already resolved the morale/radio consequence. This cue
+                // must never feed back into simulation state.
+                _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioVinylBroadcast);
                 _radio.RecordCulturalBroadcast(record.record_id, record.genre, record.display_name, day, _vinylMorale.System.State.lastBroadcastSignalStrength);
             };
         }

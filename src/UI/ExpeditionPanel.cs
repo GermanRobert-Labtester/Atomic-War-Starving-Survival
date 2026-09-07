@@ -300,10 +300,10 @@ namespace AtomicWar.GodotApp.UI
         private static string FormatFactionName(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) return "UNKNOWN FACTION";
-            // Use lore-backed catalog for display names; falls back to
-            // humanized ID when no lore entry exists.
-            string canonical = FactionStandingIdResolver.ToSystemsId(id);
-            string resolved = FactionDisplayNameCatalog.Resolve(canonical);
+            // Presentation retains the authored lore ID. Canonicalization is
+            // for standing/state authorities; mapping it here would turn an
+            // Iron Garrison patrol into the unrelated display era name.
+            string resolved = FactionDisplayNameCatalog.Resolve(id);
             return resolved.ToUpperInvariant();
         }
 

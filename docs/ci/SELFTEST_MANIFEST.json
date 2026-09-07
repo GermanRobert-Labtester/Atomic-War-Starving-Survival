@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 105,
-  "headless_test_count": 103,
+  "total_tests": 109,
+  "headless_test_count": 107,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -379,6 +379,50 @@
       "description": "Plans 162-165: species catalog, single-population ecology, extinction/recolonization, apex, taming transfer",
       "headless_compatible": true,
       "expected_summary_id": "wildlife_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "precision_metrology_selftest",
+      "action": "PrecisionMetrologySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--precision-metrology-selftest",
+      "aliases": [],
+      "description": "Plan B89: metrology catalog, registered-consumer calibration, workshop projection, disturbance determinism, save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "precision_metrology_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "direction_finding_selftest",
+      "action": "DirectionFindingSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--direction-finding-selftest",
+      "aliases": [],
+      "description": "Plan B88: DF catalog, baselines, skywave uncertainty, fingerprint identity, triangulation save nest, RadioSave V3",
+      "headless_compatible": true,
+      "expected_summary_id": "direction_finding_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "aquaponics_selftest",
+      "action": "AquaponicsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--aquaponics-selftest",
+      "aliases": [],
+      "description": "Plan B87: aquaponics catalog, growth determinism, power-loss DO crash, harvest, nutrient export, save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "aquaponics_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "combat_breaching_selftest",
+      "action": "CombatBreachingSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--combat-breaching-selftest",
+      "aliases": [],
+      "description": "Plan B86: breaching catalog, quiet cut vs loud breach, vehicle gate, mid-breach save, barrier clone fields",
+      "headless_compatible": true,
+      "expected_summary_id": "combat_breaching_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1187,7 +1231,7 @@
       "aliases": [
         "--onboarding-selftest"
       ],
-      "description": "First-hour onboarding journey: protocol\u2192inspect\u2192rationing\u2192assignment\u2192weather\u2192inventory-use\u2192day-advance, with save/load resume and no-resource fabrication",
+      "description": "First-hour onboarding journey: water\u2192power\u2192food\u2192research\u2192expedition, with save/load resume and state-true signals",
       "headless_compatible": true,
       "expected_summary_id": "onboarding_journey_selftest",
       "timeout_seconds": 30

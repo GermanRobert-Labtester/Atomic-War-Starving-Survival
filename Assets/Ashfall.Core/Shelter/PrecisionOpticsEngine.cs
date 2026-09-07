@@ -33,6 +33,7 @@ namespace Ashfall.Core.Shelter
         public float max_quality = 0.85f;
         public List<string> required_tool_tags = new List<string>();
         public string target_system = string.Empty;
+        public string output_item_id = string.Empty;
     }
 
     [Serializable]
@@ -253,7 +254,12 @@ namespace Ashfall.Core.Shelter
             if (!wp.isCompleted)
                 return ActionResult.Blocked("workpiece_incomplete", "Workpiece has not completed all manufacturing stages.");
 
-            string finalItemId = !string.IsNullOrEmpty(outputItemId) ? outputItemId : wp.recipeId;
+            var recipe = _catalog.recipes.FirstOrDefault(r => r.optic_recipe_id == wp.recipeId);
+            string finalItemId = !string.IsNullOrEmpty(outputItemId)
+                ? outputItemId
+                : !string.IsNullOrEmpty(recipe?.output_item_id)
+                    ? recipe.output_item_id
+                    : wp.recipeId;
             _inventory.AddById(finalItemId, 1);
             _state.completedOpticsCount++;
             _state.activeWorkpiece = null;

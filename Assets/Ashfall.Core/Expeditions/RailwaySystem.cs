@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
 
@@ -101,12 +102,19 @@ namespace Ashfall.Core.Expeditions
         public bool isCrewExhausted { get; set; } = false;
         public string vehicleClass { get; set; } = "locomotive";
         public bool isOnExpedition { get; set; } = false;
+        /// <summary>Accumulated drivetrain wear in the same 0..1000 scale as the vehicle garage.</summary>
+        public int transmissionWearPermille { get; set; } = 0;
+        /// <summary>Set once the rail vehicle needs workshop service before another dispatch.</summary>
+        public bool transmissionServiceRequired { get; set; } = false;
+        public int lastTransmissionServiceDay { get; set; } = -1;
     }
 
     [Serializable]
     public sealed class RailwayState
     {
         public int schema_version { get; set; } = 1;
+        /// <summary>Last campaign day whose rail travel was advanced.</summary>
+        public int last_tick_day { get; set; } = -1;
         public Dictionary<string, TrackSegmentState> segments { get; set; } = new Dictionary<string, TrackSegmentState>(StringComparer.Ordinal);
         public List<TrainState> trains { get; set; } = new List<TrainState>();
     }
@@ -335,6 +343,8 @@ namespace Ashfall.Core.Expeditions
             if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
             if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
                 return ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
+            if (train.transmissionServiceRequired)
+                return ActionResult.Blocked("transmission_service_required", "railway.transmission_service_required");
 
             if (!_segmentDefs.TryGetValue(segmentId, out var def))
                 return ActionResult.Blocked("invalid_segment", "railway.invalid_segment");
@@ -438,6 +448,13 @@ namespace Ashfall.Core.Expeditions
             }
 
             // 5. Advance progress
+            if (def != null && effectiveDelta > 0f)
+            {
+                // Match VehicleGarageSystem's travel-wear convention:
+                // distance × progress × base rate × transmission share.
+                int wear = Math.Max(1, (int)Math.Round(def.distance_km * effectiveDelta * 1.8f));
+                ApplyTransmissionWear(train, wear);
+            }
             train.segmentProgress += effectiveDelta;
             if (train.segmentProgress >= 1.0f)
             {
@@ -489,6 +506,70 @@ namespace Ashfall.Core.Expeditions
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Advance all reachable rail travel from the campaign day owner.
+        /// One call represents one half-segment travel tick, matching the
+        /// existing expedition estimate. The day guard prevents duplicate
+        /// owner registration or repeated calls from advancing a train twice.
+        /// </summary>
+        public void TickDay(int day)
+        {
+            if (day <= _state.last_tick_day) return;
+            int elapsedDays = _state.last_tick_day < 0 ? 1 : day - _state.last_tick_day;
+            _state.last_tick_day = day;
+
+            var trainIds = _state.trains
+                .Where(t => t != null && t.status == TrainDispatchStatus.EnRoute)
+                .Select(t => t.trainId)
+                .OrderBy(id => id, StringComparer.Ordinal)
+                .ToList();
+
+            for (int elapsed = 0; elapsed < elapsedDays; elapsed++)
+            {
+                for (int i = 0; i < trainIds.Count; i++)
+                {
+                    var train = GetTrain(trainIds[i]);
+                    if (train != null && train.status == TrainDispatchStatus.EnRoute)
+                        TickTravel(train.trainId);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Service a rail vehicle's transmission through the canonical
+        /// shelter inventory. The train remains the sole owner of its wear.
+        /// </summary>
+        public ActionResult ServiceTransmission(string trainId, int serviceDay = -1, int repairPermille = 1000)
+        {
+            var train = GetTrain(trainId);
+            if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
+            if (train.status == TrainDispatchStatus.EnRoute)
+                return ActionResult.Blocked("train_in_transit", "railway.train_in_transit");
+            if (train.transmissionWearPermille <= 0 && !train.transmissionServiceRequired)
+                return ActionResult.Blocked("transmission_nominal", "railway.transmission_nominal");
+
+            int repairAmount = Math.Min(
+                Math.Max(1, repairPermille),
+                train.transmissionWearPermille);
+            int serviceUnits = Math.Max(1, (int)Math.Ceiling(repairAmount / 100.0));
+            int scrapCost = serviceUnits * 4;
+            if (_inventory.CountById("mechanical_parts") < serviceUnits
+                && _inventory.CountById("scrap_metal") < scrapCost)
+                return ActionResult.Blocked("insufficient_service_materials", "railway.insufficient_service_materials");
+
+            if (_inventory.CountById("mechanical_parts") >= serviceUnits)
+                _inventory.RemoveById("mechanical_parts", serviceUnits);
+            else
+                _inventory.RemoveById("scrap_metal", scrapCost);
+
+            train.transmissionWearPermille = Math.Max(
+                0,
+                train.transmissionWearPermille - repairAmount);
+            train.transmissionServiceRequired = train.transmissionWearPermille >= 1000;
+            train.lastTransmissionServiceDay = serviceDay;
+            return ActionResult.Success("railway.transmission_serviced");
         }
 
         /// <summary>Plan a multi-segment route from the train's current node (Plan 73 §7.4).</summary>
@@ -572,6 +653,8 @@ namespace Ashfall.Core.Expeditions
             if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
             if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
                 return ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
+            if (train.transmissionServiceRequired)
+                return ActionResult.Blocked("transmission_service_required", "railway.transmission_service_required");
 
             if (!_nodes.ContainsKey(destinationNodeId))
                 return ActionResult.Blocked("invalid_destination", "railway.invalid_destination");
@@ -659,9 +742,20 @@ namespace Ashfall.Core.Expeditions
             train.segmentProgress = 0f;
             train.activeSegmentId = null;
             train.isCrewExhausted = false;
+            train.transmissionWearPermille = 0;
+            train.transmissionServiceRequired = false;
             if (!string.IsNullOrEmpty(segmentId))
                 OnTrackRepaired?.Invoke(segmentId, EnsureSegmentState(segmentId).integrity);
             return true;
+        }
+
+        private static void ApplyTransmissionWear(TrainState train, int wearPermille)
+        {
+            train.transmissionWearPermille = Math.Min(
+                1000,
+                train.transmissionWearPermille + Math.Max(0, wearPermille));
+            if (train.transmissionWearPermille >= 1000)
+                train.transmissionServiceRequired = true;
         }
 
         public TrainState? GetTrain(string trainId)

@@ -877,5 +877,26 @@ namespace AtomicWar.GodotApp.UI
                 child.Free();
             }
         }
+
+        /// <summary>
+        /// Removes every child except the supplied persistent child.
+        /// Useful for detail panes whose title/header is part of the pane
+        /// and must survive content refreshes.
+        /// </summary>
+        public static void EmptyChildrenExcept(Node parent, Node preservedChild)
+        {
+            if (parent == null || !GodotObject.IsInstanceValid(parent))
+                return;
+
+            for (int i = parent.GetChildCount() - 1; i >= 0; i--)
+            {
+                var child = parent.GetChild(i);
+                if (child == preservedChild)
+                    continue;
+
+                parent.RemoveChild(child);
+                child.Free();
+            }
+        }
     }
 }

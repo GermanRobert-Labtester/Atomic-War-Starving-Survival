@@ -22,6 +22,11 @@ namespace Ashfall.Core.Tests
         private const string S_DutyAssigned = "duty.assigned";
         private const string S_WeatherRead = "weather.read";
         private const string S_InventoryUsed = "inventory.used";
+        private const string S_WaterStarted = "water.treatment_started";
+        private const string S_PowerToggled = "power.breaker_toggled";
+        private const string S_FoodConsumed = "food.ration_consumed";
+        private const string S_ResearchStarted = "research.started";
+        private const string S_ExpeditionDispatched = "expedition.dispatched";
 
         [Fact]
         public void FreshJourney_StartsAtProtocolStage()
@@ -31,6 +36,66 @@ namespace Ashfall.Core.Tests
             Assert.False(j.JourneyComplete);
             Assert.False(j.IsStageComplete(OnboardingStage.Protocol));
             Assert.Equal(OnboardingAssistance.Standard, j.Assistance);
+        }
+
+        [Fact]
+        public void FirstHourJourney_StartsAtWaterAndUsesFiveDomainStages()
+        {
+            var j = OnboardingJourney.CreateFirstHour();
+
+            Assert.Equal(OnboardingProfile.FirstHour, j.Profile);
+            Assert.Equal(OnboardingStage.Water, j.CurrentStage);
+            Assert.Equal(5, j.OutstandingStages().Count);
+            Assert.False(j.JourneyComplete);
+        }
+
+        [Fact]
+        public void FirstHourJourney_RequiresStateTrueSignalsInOrder()
+        {
+            var j = OnboardingJourney.CreateFirstHour();
+
+            j.RecordSigil(S_WaterStarted);
+            Assert.Equal(OnboardingStage.Power, j.CurrentStage);
+            j.RecordSigil(S_PowerToggled);
+            Assert.Equal(OnboardingStage.Food, j.CurrentStage);
+            j.RecordSigil(S_FoodConsumed);
+            Assert.Equal(OnboardingStage.Research, j.CurrentStage);
+            j.RecordSigil(S_ResearchStarted);
+            Assert.Equal(OnboardingStage.Expedition, j.CurrentStage);
+            Assert.False(j.JourneyComplete);
+
+            j.RecordSigil(S_ExpeditionDispatched);
+
+            Assert.True(j.IsStageComplete(OnboardingStage.Expedition));
+            Assert.True(j.JourneyComplete);
+            Assert.Equal(OnboardingStage.Expedition, j.CurrentStage);
+        }
+
+        [Fact]
+        public void FirstHourJourney_DayAdvanceDoesNotFabricateCompletion()
+        {
+            var j = OnboardingJourney.CreateFirstHour();
+            j.SetDay(2);
+
+            Assert.Equal(2, j.Day);
+            Assert.False(j.JourneyComplete);
+            Assert.Equal(OnboardingStage.Water, j.CurrentStage);
+        }
+
+        [Fact]
+        public void FirstHourJourney_SaveRestorePreservesProfileAndProgress()
+        {
+            var j = OnboardingJourney.CreateFirstHour();
+            j.RecordSigil(S_WaterStarted);
+            j.RecordSigil(S_PowerToggled);
+
+            var restored = OnboardingJourney.Restore(j.CaptureState());
+
+            Assert.Equal(OnboardingProfile.FirstHour, restored.Profile);
+            Assert.Equal(OnboardingStage.Food, restored.CurrentStage);
+            Assert.False(restored.JourneyComplete);
+            Assert.Equal(1, restored.Sigils[S_WaterStarted]);
+            Assert.Equal(1, restored.Sigils[S_PowerToggled]);
         }
 
         [Fact]

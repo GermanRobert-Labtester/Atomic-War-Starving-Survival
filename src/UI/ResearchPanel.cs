@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -18,6 +19,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class ResearchPanel : Control
     {
         public event Action? OnClose;
+        public event Action<string>? OnResearchStarted;
 
         private Label _lblActiveTitle;
         private VBoxContainer _activeContainer;
@@ -76,13 +78,14 @@ namespace AtomicWar.GodotApp.UI
 
             if (_research == null)
             {
-                _activeContainer.AddChild(MakeDimLine("No research session bound."));
-                _availableList.AddChild(MakeDimLine("No research session bound."));
-                _lockedList.AddChild(MakeDimLine("No research session bound."));
-                _completedList.AddChild(MakeDimLine("No research session bound."));
-                _knowledgeList.AddChild(MakeDimLine("No research session bound."));
+                string offline = T("research.status.offline", "Offline — no research engine connected.");
+                _activeContainer.AddChild(MakeDimLine(offline));
+                _availableList.AddChild(MakeDimLine(offline));
+                _lockedList.AddChild(MakeDimLine(offline));
+                _completedList.AddChild(MakeDimLine(offline));
+                _knowledgeList.AddChild(MakeDimLine(offline));
                 if (_statusFeedbackLabel != null)
-                    _statusFeedbackLabel.Text = "Offline — no research engine connected.";
+                    _statusFeedbackLabel.Text = T("research.status.offline", "Offline — no research engine connected.");
                 return;
             }
 
@@ -90,7 +93,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _statusFeedbackLabel.Text = !string.IsNullOrEmpty(_host?.LastEvent)
                     ? _host.LastEvent
-                    : $"Research system active. Day {_research.State.currentDay}.";
+                    : F("research.status.active", "Research system active. Day {0}.", _research.State.currentDay);
             }
 
             // ── 1. ACTIVE RESEARCH ──
@@ -111,7 +114,9 @@ namespace AtomicWar.GodotApp.UI
                 var desc = AshfallUiHelpers.MakeSmall(active.description);
                 activeBox.AddChild(desc);
 
-                string progressText = $"Progress: Day {_research.State.activeResearchDays} of {active.daysToComplete} ({remaining} days remaining)";
+                string progressText = F("research.progress",
+                    "Progress: Day {0} of {1} ({2} days remaining)",
+                    _research.State.activeResearchDays, active.daysToComplete, remaining);
                 var progressLabel = new Label { Text = progressText };
                 progressLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                 progressLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
@@ -119,7 +124,8 @@ namespace AtomicWar.GodotApp.UI
 
                 if (!string.IsNullOrEmpty(active.breakthroughItem))
                 {
-                    var btLabel = AshfallUiHelpers.MakeSmall($"Breakthrough Award: {active.breakthroughItem}");
+                    var btLabel = AshfallUiHelpers.MakeSmall(F("research.breakthrough_award",
+                        "Breakthrough Award: {0}", active.breakthroughItem));
                     btLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
                     activeBox.AddChild(btLabel);
                 }
@@ -135,7 +141,9 @@ namespace AtomicWar.GodotApp.UI
             var availableNodes = _research.GetAvailableNodes();
             if (availableNodes.Count == 0)
             {
-                _availableList.AddChild(MakeDimLine(active != null ? "No other research available (queue slot occupied or all unlocked)." : "No research available to start."));
+                _availableList.AddChild(MakeDimLine(active != null
+                    ? T("research.empty.available_busy", "No other research available (queue slot occupied or all unlocked).")
+                    : T("research.empty.available", "No research available to start.")));
             }
             else
             {
@@ -147,21 +155,26 @@ namespace AtomicWar.GodotApp.UI
                     var infoBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
                     infoBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
-                    var nameLbl = new Label { Text = $"{node.displayName} [{node.category}] — {node.daysToComplete} days" };
+                    var nameLbl = new Label
+                    {
+                        Text = F("research.node.summary", "{0} [{1}] — {2} days",
+                            node.displayName, node.category, node.daysToComplete)
+                    };
                     nameLbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                     nameLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                     infoBox.AddChild(nameLbl);
 
                     if (!string.IsNullOrEmpty(node.breakthroughItem))
                     {
-                        var btLbl = AshfallUiHelpers.MakeSmall($"Breakthrough: {node.breakthroughItem}");
+                        var btLbl = AshfallUiHelpers.MakeSmall(F("research.breakthrough",
+                            "Breakthrough: {0}", node.breakthroughItem));
                         btLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
                         infoBox.AddChild(btLbl);
                     }
                     row.AddChild(infoBox);
 
                     string nodeId = node.id;
-                    var startBtn = AshfallUiHelpers.MakeButton("START RESEARCH", () =>
+                    var startBtn = AshfallUiHelpers.MakeButton(T("research.action.start", "START RESEARCH"), () =>
                     {
                         HandleStartResearch(nodeId);
                     });
@@ -176,7 +189,7 @@ namespace AtomicWar.GodotApp.UI
             var lockedNodes = _research.GetLockedNodes();
             if (lockedNodes.Count == 0)
             {
-                _lockedList.AddChild(MakeDimLine("No locked research nodes remaining."));
+                _lockedList.AddChild(MakeDimLine(T("research.empty.locked", "No locked research nodes remaining.")));
             }
             else
             {
@@ -185,7 +198,11 @@ namespace AtomicWar.GodotApp.UI
                     var itemBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
                     itemBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
-                    var nameLbl = new Label { Text = $"{node.displayName} [{node.category}] — {node.daysToComplete} days" };
+                    var nameLbl = new Label
+                    {
+                        Text = F("research.node.summary", "{0} [{1}] — {2} days",
+                            node.displayName, node.category, node.daysToComplete)
+                    };
                     nameLbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                     nameLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
                     itemBox.AddChild(nameLbl);
@@ -196,8 +213,8 @@ namespace AtomicWar.GodotApp.UI
                         .ToList();
 
                     string reason = prereqNames.Count > 0
-                        ? $"Requires: {string.Join(", ", prereqNames)}"
-                        : "Locked: prerequisites incomplete";
+                        ? F("research.requirements", "Requires: {0}", string.Join(", ", prereqNames))
+                        : T("research.locked.prerequisites", "Locked: prerequisites incomplete");
 
                     var reasonLbl = AshfallUiHelpers.MakeSmall(reason);
                     reasonLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warning));
@@ -211,15 +228,17 @@ namespace AtomicWar.GodotApp.UI
             var completedNodes = _research.GetCompletedNodes();
             if (completedNodes.Count == 0)
             {
-                _completedList.AddChild(MakeDimLine("No completed research."));
+                _completedList.AddChild(MakeDimLine(T("research.empty.completed", "No completed research.")));
             }
             else
             {
                 foreach (var node in completedNodes)
                 {
-                    string text = $"{node.displayName} [{node.category}] — Complete";
+                    string text = F("research.completed", "{0} [{1}] — Complete",
+                        node.displayName, node.category);
                     if (!string.IsNullOrEmpty(node.breakthroughItem))
-                        text += $" (Breakthrough: {node.breakthroughItem})";
+                        text += " " + F("research.completed.breakthrough",
+                            "(Breakthrough: {0})", node.breakthroughItem);
 
                     AddRow(_completedList, text, DesignTheme.Pale);
                 }
@@ -230,12 +249,13 @@ namespace AtomicWar.GodotApp.UI
             foreach (var kv in _research.Catalog.OrderBy(k => k.Key, StringComparer.Ordinal))
             {
                 if (!_research.IsManualUnlocked(kv.Key)) continue;
-                AddRow(_knowledgeList, $"{kv.Value.displayName} — {kv.Value.category}", DesignTheme.Lethe);
+                AddRow(_knowledgeList, F("research.knowledge.row", "{0} — {1}",
+                    kv.Value.displayName, kv.Value.category), DesignTheme.Lethe);
                 unlockedCount++;
             }
             RenderedRowCount = unlockedCount;
             if (RenderedRowCount == 0)
-                _knowledgeList.AddChild(MakeDimLine("No knowledge unlocked yet."));
+                _knowledgeList.AddChild(MakeDimLine(T("research.empty.knowledge", "No knowledge unlocked yet.")));
         }
 
         private void HandleStartResearch(string nodeId)
@@ -260,6 +280,10 @@ namespace AtomicWar.GodotApp.UI
                     : $"Cannot start: {elig.Code}";
                 if (_statusFeedbackLabel != null)
                     _statusFeedbackLabel.Text = failMsg;
+            }
+            else
+            {
+                OnResearchStarted?.Invoke(nodeId);
             }
             RefreshView();
         }
@@ -294,14 +318,17 @@ namespace AtomicWar.GodotApp.UI
             container.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(container);
 
-            var panelCard = AshfallUiHelpers.MakeCardFrame("RESEARCH & TECHNOLOGY", "R&D QUEUE · DISCOVERED KNOWLEDGE · BREAKTHROUGHS");
+            var panelCard = AshfallUiHelpers.MakeCardFrame(
+                T("research.card.title", "RESEARCH & TECHNOLOGY"),
+                T("research.card.subtitle", "R&D QUEUE · DISCOVERED KNOWLEDGE · BREAKTHROUGHS"));
             panelCard.CustomMinimumSize = new Vector2(960, 720);
             container.AddChild(panelCard);
 
             var margin = panelCard.GetChild<MarginContainer>(0);
             var mainVBox = margin.GetChild<VBoxContainer>(0);
 
-            var title = AshfallUiHelpers.MakeTitle("RESEARCH & TECHNOLOGY // QUEUE", DesignTheme.FontSizeH1);
+            var title = AshfallUiHelpers.MakeTitle(T("research.title",
+                "RESEARCH & TECHNOLOGY // QUEUE"), DesignTheme.FontSizeH1);
             title.HorizontalAlignment = HorizontalAlignment.Center;
             mainVBox.AddChild(title);
 
@@ -321,7 +348,7 @@ namespace AtomicWar.GodotApp.UI
             scroll.AddChild(scrollContent);
 
             // 1. Active research
-            _lblActiveTitle = AshfallUiHelpers.MakeSectionHeader("ACTIVE RESEARCH");
+            _lblActiveTitle = AshfallUiHelpers.MakeSectionHeader(T("research.section.active", "ACTIVE RESEARCH"));
             scrollContent.AddChild(_lblActiveTitle);
             _activeContainer = new VBoxContainer();
             _activeContainer.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -330,7 +357,7 @@ namespace AtomicWar.GodotApp.UI
             scrollContent.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // 2. Available research
-            _lblAvailableTitle = AshfallUiHelpers.MakeSectionHeader("AVAILABLE RESEARCH");
+            _lblAvailableTitle = AshfallUiHelpers.MakeSectionHeader(T("research.section.available", "AVAILABLE RESEARCH"));
             scrollContent.AddChild(_lblAvailableTitle);
             _availableList = new VBoxContainer();
             _availableList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -339,7 +366,7 @@ namespace AtomicWar.GodotApp.UI
             scrollContent.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // 3. Locked / Upcoming
-            _lblLockedTitle = AshfallUiHelpers.MakeSectionHeader("LOCKED / UPCOMING RESEARCH");
+            _lblLockedTitle = AshfallUiHelpers.MakeSectionHeader(T("research.section.locked", "LOCKED / UPCOMING RESEARCH"));
             scrollContent.AddChild(_lblLockedTitle);
             _lockedList = new VBoxContainer();
             _lockedList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -348,7 +375,7 @@ namespace AtomicWar.GodotApp.UI
             scrollContent.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // 4. Completed
-            _lblCompletedTitle = AshfallUiHelpers.MakeSectionHeader("COMPLETED RESEARCH");
+            _lblCompletedTitle = AshfallUiHelpers.MakeSectionHeader(T("research.section.completed", "COMPLETED RESEARCH"));
             scrollContent.AddChild(_lblCompletedTitle);
             _completedList = new VBoxContainer();
             _completedList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -357,7 +384,7 @@ namespace AtomicWar.GodotApp.UI
             scrollContent.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // 5. Discovered knowledge
-            _lblKnowledgeTitle = AshfallUiHelpers.MakeSectionHeader("DISCOVERED KNOWLEDGE");
+            _lblKnowledgeTitle = AshfallUiHelpers.MakeSectionHeader(T("research.section.knowledge", "DISCOVERED KNOWLEDGE"));
             scrollContent.AddChild(_lblKnowledgeTitle);
             _knowledgeList = new VBoxContainer();
             _knowledgeList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -366,14 +393,15 @@ namespace AtomicWar.GodotApp.UI
             mainVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // Status feedback strip
-            _statusFeedbackLabel = AshfallUiHelpers.MakeSmall("Ready.");
+            _statusFeedbackLabel = AshfallUiHelpers.MakeSmall(T("research.status.ready", "Ready."));
             _statusFeedbackLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             mainVBox.AddChild(_statusFeedbackLabel);
 
             var bottomHBox = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingMd);
             bottomHBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
+            var btnClose = AshfallUiHelpers.MakeButton(T("ui.common.close_short",
+                "CLOSE [Esc]"), () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             btnClose.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             bottomHBox.AddChild(btnClose);
@@ -418,6 +446,23 @@ namespace AtomicWar.GodotApp.UI
             {
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
+            }
+        }
+
+        private static string T(string key, string fallback) =>
+            AshfallLocalization.Tr(key, fallback);
+
+        private static string F(string key, string fallback, params object[] args)
+        {
+            AshfallLocalization.Initialize();
+            string translated = AshfallLocalization.Tr(key, fallback);
+            try
+            {
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture, translated, args);
+            }
+            catch (FormatException)
+            {
+                return fallback;
             }
         }
     }

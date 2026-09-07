@@ -49,7 +49,8 @@ namespace Ashfall.Core.Expeditions
             /// <summary>True when this surface came from micro_locations.json.</summary>
             public bool is_micro_location;
 
-            /// <summary>Canonical faction identity for patrol presentation.</summary>
+            /// <summary>Authored faction identity for patrol name and emblem presentation.
+            /// Core standing mutations retain their separate canonical systems ID.</summary>
             public string faction_id;
 
             /// <summary>Authored patrol context, kept separate from prose.</summary>
@@ -220,13 +221,14 @@ namespace Ashfall.Core.Expeditions
                             dto.description = pDef.Description;
                             dto.category = pDef.Category;
                             dto.is_patrol = true;
-                            dto.faction_id = FactionStandingIdResolver.ToSystemsId(pDef.FactionId);
+                            dto.faction_id = pDef.FactionId;
                             dto.territory_state = pDef.TerritoryState ?? string.Empty;
                             dto.patrol_archetype = pDef.PatrolArchetype ?? string.Empty;
                             dto.choices = new List<EncounterChoiceDefinition>();
                             var patrolPresentation = TravelEngine!.BuildPatrolPresentation(pDef.Id);
                             if (patrolPresentation != null)
                             {
+                                dto.faction_id = patrolPresentation.DisplayFactionId;
                                 dto.recognition_label = patrolPresentation.RecognitionLabel;
                                 dto.patrol_chain_stage = patrolPresentation.CurrentChainStage;
                             }

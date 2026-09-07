@@ -26,6 +26,7 @@ namespace Ashfall.Core.Localization
         public int RegisteredKeyCount => _strings.Count;
 
         public event Action<string>? OnLocaleChanged;
+        public event Action<string>? OnMissingKey;
 
         public LocalizationService()
         {
@@ -74,6 +75,7 @@ namespace Ashfall.Core.Localization
                 {
                     return GeneratePseudoString(defaultText);
                 }
+                OnMissingKey?.Invoke(key);
                 return $"[!!! {key} !!!]";
             }
 
@@ -87,6 +89,7 @@ namespace Ashfall.Core.Localization
                 return fallback;
             }
 
+            OnMissingKey?.Invoke(key);
             return defaultText ?? key;
         }
 
@@ -106,6 +109,27 @@ namespace Ashfall.Core.Localization
             {
                 return template;
             }
+        }
+
+        /// <summary>
+        /// Formats a named-placeholder template without making translated
+        /// word order depend on the source language. Missing placeholders are
+        /// reported and leave the template visible rather than collapsing to
+        /// an empty string.
+        /// </summary>
+        public string FormatNamed(string key, IReadOnlyDictionary<string, object?> args)
+        {
+            string result = Get(key);
+            if (args == null || args.Count == 0) return result;
+
+            foreach (var pair in args)
+            {
+                string token = "{" + pair.Key + "}";
+                result = result.Replace(token, Convert.ToString(pair.Value, CultureInfo.InvariantCulture) ?? string.Empty,
+                    StringComparison.Ordinal);
+            }
+
+            return result;
         }
 
         /// <summary>

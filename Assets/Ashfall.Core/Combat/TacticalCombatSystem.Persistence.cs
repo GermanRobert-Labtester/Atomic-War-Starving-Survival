@@ -333,7 +333,17 @@ namespace Ashfall.Core.Combat
                     IsPlayer = b.IsPlayer,
                     MaterialId = b.MaterialId ?? string.Empty,
                     IntegrityPct = MathfCompat.Clamp01(b.IntegrityPct * 0.01f) * 100f,
-                    ArmorRating = b.ArmorRating
+                    ArmorRating = b.ArmorRating,
+                    ObstacleProfileId = b.ObstacleProfileId ?? string.Empty,
+                    ActiveBreachToolId = b.ActiveBreachToolId ?? string.Empty,
+                    BreachPhase = string.IsNullOrWhiteSpace(b.BreachPhase) ? BreachPhaseIds.Available : b.BreachPhase,
+                    BreachSetupTicksRemaining = Math.Max(0, b.BreachSetupTicksRemaining),
+                    BreachClearTicksRemaining = Math.Max(0, b.BreachClearTicksRemaining),
+                    BreachClearTicksTotal = Math.Max(0, b.BreachClearTicksTotal),
+                    BreachProgress01 = MathfCompat.Clamp01(b.BreachProgress01),
+                    PathBlocking = Math.Max(0f, b.PathBlocking),
+                    CoverContribution = Math.Max(0f, b.CoverContribution),
+                    BreachDestroysCover = b.BreachDestroysCover
                 });
             }
             return copy;

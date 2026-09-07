@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "arrays": [
+    {
+      "array_id": "df_array_shelter_loop",
+      "display_name": "Shelter Loop Adcock",
+      "description": "A compact crossed-loop pair on the shelter roof collar. Short baseline, workable bearings, large night uncertainty.",
+      "baseline_class": "short",
+      "station_id": "station_shelter_primary",
+      "baseline_x_km": 0.0,
+      "baseline_y_km": 0.0,
+      "band_ids": ["band_hf_mid", "band_hf_upper"],
+      "base_bearing_error_deg": 6.0,
+      "skywave_uncertainty_mult": 1.55,
+      "power_demand_w": 45,
+      "calibration_interval_days": 7,
+      "install_item_ids": ["copper_wire_10m_of_10m", "item_low_noise_sensor_amplifier"],
+      "tags": ["hf", "direction_finding", "fixed"]
+    },
+    {
+      "array_id": "df_array_ridge_outrigger",
+      "display_name": "Ridge Outrigger Baseline",
+      "description": "A second listening post on the ridge berm. Lengthens the baseline enough to shrink confidence regions when both posts hear the same emitter.",
+      "baseline_class": "medium",
+      "station_id": "station_ridge_outrigger",
+      "baseline_x_km": 12.0,
+      "baseline_y_km": 3.5,
+      "band_ids": ["band_hf_mid", "band_hf_upper", "band_hf_lower"],
+      "base_bearing_error_deg": 4.0,
+      "skywave_uncertainty_mult": 1.35,
+      "power_demand_w": 70,
+      "calibration_interval_days": 5,
+      "install_item_ids": ["copper_wire_10m_of_10m", "copper_wire_10m_of_10m", "item_low_noise_sensor_amplifier"],
+      "tags": ["hf", "direction_finding", "baseline"]
+    },
+    {
+      "array_id": "df_array_long_haul_relay",
+      "display_name": "Long-Haul Relay Pair",
+      "description": "Two distant mast sites tied by landline. Best fix geometry in the catalog, hungry for power and calibration discipline.",
+      "baseline_class": "long",
+      "station_id": "station_long_haul_relay",
+      "baseline_x_km": -8.0,
+      "baseline_y_km": 18.0,
+      "band_ids": ["band_hf_lower", "band_hf_mid", "band_hf_upper"],
+      "base_bearing_error_deg": 3.0,
+      "skywave_uncertainty_mult": 1.2,
+      "power_demand_w": 110,
+      "calibration_interval_days": 3,
+      "install_item_ids": ["item_bedrock_sensor_rig", "item_low_noise_sensor_amplifier", "copper_wire_10m_of_10m"],
+      "tags": ["hf", "direction_finding", "long_baseline"]
+    }
+  ],
+  "bands": [
+    { "band_id": "band_hf_lower", "display_name": "HF Lower", "min_mhz": 3.0, "max_mhz": 8.0 },
+    { "band_id": "band_hf_mid", "display_name": "HF Mid", "min_mhz": 8.0, "max_mhz": 18.0 },
+    { "band_id": "band_hf_upper", "display_name": "HF Upper", "min_mhz": 18.0, "max_mhz": 30.0 }
+  ],
+  "skywave_seasons": [
+    {
+      "season_id": "skywave_night",
+      "weather_tags": ["Night", "Skywave"],
+      "uncertainty_mult": 1.6,
+      "confidence_mult": 0.75,
+      "false_signature_chance": 0.08
+    },
+    {
+      "season_id": "skywave_storm",
+      "weather_tags": ["FalloutStorm", "Blizzard", "PolarizationFade"],
+      "uncertainty_mult": 1.9,
+      "confidence_mult": 0.6,
+      "false_signature_chance": 0.12
+    },
+    {
+      "season_id": "skywave_clear_day",
+      "weather_tags": ["Clear"],
+      "uncertainty_mult": 1.0,
+      "confidence_mult": 1.0,
+      "false_signature_chance": 0.0
+    }
+  ],
+  "fingerprints": [
+    {
+      "fingerprint_id": "fp_civil_defense_carrier",
+      "signal_id": "sig_civil_defense",
+      "display_name": "Civil Defense Carrier",
+      "mapped_location_id": "loc_broadcast_bunker_echo",
+      "identity_confidence": 0.85,
+      "tags": ["friendly", "broadcast"]
+    },
+    {
+      "fingerprint_id": "fp_distress_generic",
+      "signal_id": "sig_distress",
+      "display_name": "Distress Burst Pattern",
+      "mapped_location_id": "loc_hidden_relay_bunker",
+      "identity_confidence": 0.7,
+      "tags": ["distress"]
+    },
+    {
+      "fingerprint_id": "fp_numbers_sigint",
+      "signal_id": "sig_numbers",
+      "display_name": "Numbers Station Cadence",
+      "mapped_location_id": "",
+      "identity_confidence": 0.9,
+      "tags": ["hostile", "identity_only"]
+    }
+  ]
+}

@@ -3788,7 +3788,26 @@
       "cooldown_seconds": 2.0,
       "fade_in_seconds": 0.0,
       "fade_out_seconds": 0.0,
-      "fallback_cue_id": "sfx_structural_collapse"
+    "fallback_cue_id": "sfx_structural_collapse"
+  },
+  {
+    "id": "radio_vinyl_broadcast",
+    "resource_path": "res://assets/audio/radio/radio_static_hiss.wav",
+    "resource_paths": [
+      "res://assets/audio/radio/radio_static_hiss.wav"
+    ],
+    "bus": "Radio",
+    "loop": false,
+    "default_volume_db": -4.0,
+    "volume_jitter_db": 0.2,
+    "pitch_min": 0.98,
+    "pitch_max": 1.02,
+    "max_instances": 2,
+    "priority": 65,
+    "cooldown_seconds": 0.25,
+    "fade_in_seconds": 0.0,
+    "fade_out_seconds": 0.0,
+    "fallback_cue_id": "radio_signal_lock"
     }
   ]
 }

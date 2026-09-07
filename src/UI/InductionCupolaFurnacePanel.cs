@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("CORE MELT TEMPERATURE", "1,640C @ 850 kW INDUCTION", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
             _telemetryContainer.AddChild(CreateTelemetryRow("REFRACTORY LINING WEAR", "18.5% (ZIRCONIA BRICK OK)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("MAGNESIUM INJECTION FLUX", "14.2 KG/CHARGE [DESULFURIZING]", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[ACTIVATE 850 KW INDUCTION COILS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[TILT CRUCIBLE FOR MOLTEN POUR]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[INJECT MAGNESIUM DESULFURIZER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("ARMOR-GRADE STEEL BILLETS", "24 INGOTS (1,200 KG)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("LEAD-TUNGSTEN RADIATION SHIELDS", "8 PLATES CAST", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _dataContainer.AddChild(CreateTelemetryRow("RAW SCRAP CHARGE HOPPER", "3,400 KG REBAR / RAILS", AshfallUiHelpers.ToColor(DesignTheme.Dim)));

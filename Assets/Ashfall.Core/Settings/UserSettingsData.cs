@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Settings
@@ -80,6 +81,13 @@ namespace Ashfall.Core.Settings
         [JsonPropertyName("auto_save_on_day")]
         public bool AutoSaveOnDay { get; set; } = true;
 
+        // ── Content ──────────────────────────────────────────────────────
+        [JsonPropertyName("mods_enabled")]
+        public bool ModsEnabled { get; set; } = true;
+
+        [JsonPropertyName("enabled_mods")]
+        public List<string> EnabledMods { get; set; } = new();
+
         public UserSettingsData Clone()
         {
             return new UserSettingsData
@@ -105,7 +113,9 @@ namespace Ashfall.Core.Settings
                 TutorialMode = TutorialMode,
                 ConfirmEndDay = ConfirmEndDay,
                 VerboseRadioLog = VerboseRadioLog,
-                AutoSaveOnDay = AutoSaveOnDay
+                AutoSaveOnDay = AutoSaveOnDay,
+                ModsEnabled = ModsEnabled,
+                EnabledMods = new List<string>(EnabledMods ?? new List<string>())
             };
         }
     }

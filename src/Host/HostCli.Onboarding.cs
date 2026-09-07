@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 // ============================================================================
 // Headless self-test driver: --onboarding-journey-selftest
-// Drives the full first-hour onboarding journey through the real Core systems
-// (StartingLevel, Inventory, DutyRoster, World) and the Core OnboardingJourney
-// state machine. Two-phase: drive Day 1 → in-flight save → restore → resume →
-// reach Day 2. No resources are fabricated; sigils are recorded only.
+// Drives the first-hour onboarding state machine through its five stable
+// state-true signals, then performs an in-flight save/load resume. The
+// inventory seed is used only to prove that recording onboarding evidence does
+// not fabricate or consume resources.
 // ============================================================================
 using System;
 using Godot;
@@ -77,71 +77,32 @@ namespace AtomicWar.GodotApp
                     Check(false, $"duty roster bootstrap: {ex.Message}");
                 }
 
-                // ── Phase B: fresh journey + signal recording ──
-                var journey = new OnboardingJourney();
-                Check(journey.CurrentStage == OnboardingStage.Protocol,
-                    "fresh journey starts at Protocol");
+                // ── Phase B: fresh first-hour journey + state signals ──
+                var journey = OnboardingJourney.CreateFirstHour();
+                Check(journey.Profile == OnboardingProfile.FirstHour &&
+                      journey.CurrentStage == OnboardingStage.Water,
+                    "fresh journey starts at the water stage");
 
-                // ── §1 Protocol ──
-                journey.RecordSigil("protocol.ration");
-                journey.RecordSigil("protocol.maintenance");
-                journey.RecordSigil("protocol.radio");
-                Check(journey.IsStageComplete(OnboardingStage.Protocol),
-                    "all three protocol.* sigils complete Protocol");
+                journey.RecordSigil("water.treatment_started");
+                Check(journey.IsStageComplete(OnboardingStage.Water),
+                    "water treatment signal completes Water");
+                journey.RecordSigil("power.breaker_toggled");
+                Check(journey.IsStageComplete(OnboardingStage.Power),
+                    "breaker signal completes Power");
 
-                // ── §2 Inspect — three rooms — and confirm the real starting-level
-                //      state did not budge (no fabrication). ──
-                int cannedMid = cannedBefore, bandageMid = bandageBefore;
-                if (inv != null) { cannedMid = inv.Inventory.CountById("canned_food"); bandageMid = inv.Inventory.CountById("bandage"); }
-                journey.RecordSigil("inspect.room");
-                journey.RecordSigil("inspect.room");
-                journey.RecordSigil("inspect.room");
-                Check(journey.IsStageComplete(OnboardingStage.Inspect),
-                    "three inspect.room sigils complete Inspect");
-                Check(cannedMid == cannedBefore && bandageMid == bandageBefore,
-                    "inspect stage did not fabricate inventory");
+                int cannedBeforeFood = cannedBefore;
+                journey.RecordSigil("food.ration_consumed");
+                Check(journey.IsStageComplete(OnboardingStage.Food),
+                    "food ration signal completes Food");
+                Check(cannedBeforeFood == cannedBefore,
+                    "onboarding signal did not fabricate or consume inventory");
 
-                // ── §3 Rationing ──
-                journey.RecordSigil("store.opened");
-                Check(journey.IsStageComplete(OnboardingStage.Rationing),
-                    "store.opened completes Rationing");
-
-                // ── §4 Assignment — drive a real assignment, but never consume
-                //      inventory (no fabrication). ──
-                int cannedPostAssign = cannedBefore, bandagePostAssign = bandageBefore;
-                if (inv != null) { cannedPostAssign = inv.Inventory.CountById("canned_food"); bandagePostAssign = inv.Inventory.CountById("bandage"); }
-                bool assigned = false;
-                if (dutyRoster != null)
-                {
-                    try
-                    {
-                        assigned = dutyRoster.Assign(DutyRosterIds.RoleNightWatch, slot.survivorId);
-                    }
-                    catch (Exception ex)
-                    {
-                        Check(false, $"duty assign exception: {ex.Message}");
-                    }
-                }
-                journey.RecordSigil("duty.assigned");
-                Check(assigned || journey.IsStageComplete(OnboardingStage.Assignment),
-                    "duty assignment OR sigil-as-evidence completes Assignment");
-                Check(cannedPostAssign == cannedBefore && bandagePostAssign == bandageBefore,
-                    "assignment stage did not fabricate inventory");
-
-                // ── §5 Weather ──
-                journey.RecordSigil("weather.read");
-                Check(journey.IsStageComplete(OnboardingStage.Weather),
-                    "weather.read completes Weather");
-
-                // ── §6 InventoryUse — confirm an unrelated inventory count
-                //      did not budge. ──
-                int cannedPostRead = cannedBefore, bandagePostRead = bandageBefore;
-                if (inv != null) { cannedPostRead = inv.Inventory.CountById("canned_food"); bandagePostRead = inv.Inventory.CountById("bandage"); }
-                journey.RecordSigil("inventory.used");
-                Check(journey.IsStageComplete(OnboardingStage.InventoryUse),
-                    "inventory.used completes InventoryUse");
-                Check(cannedPostRead == cannedBefore && bandagePostRead == bandageBefore,
-                    "inventory.used did not fabricate inventory");
+                journey.RecordSigil("research.started");
+                Check(journey.IsStageComplete(OnboardingStage.Research),
+                    "research start signal completes Research");
+                Check(journey.CurrentStage == OnboardingStage.Expedition &&
+                      !journey.JourneyComplete,
+                    "expedition remains the final outstanding stage");
 
                 // ── Phase C: mid-journey save/load round-trip ──
                 int sigilCountAtSave = 0;
@@ -164,8 +125,9 @@ namespace AtomicWar.GodotApp
                 int sigilCountLoaded = 0;
                 foreach (var s in loaded.sigils) sigilCountLoaded++;
                 Check(sigilCountAtSave == sigilCountLoaded, "sigil count survives save/load");
-                Check(loaded.currentStage == (int)OnboardingStage.DayAdvance,
-                    "current stage at save == DayAdvance (last incomplete)");
+                Check(loaded.profile == (int)OnboardingProfile.FirstHour &&
+                      loaded.currentStage == (int)OnboardingStage.Expedition,
+                    "current stage at save == Expedition (last incomplete)");
 
                 // ── Phase D: restore from disk into a fresh journey ──
                 var restored = OnboardingJourney.Restore(loaded);
@@ -179,17 +141,21 @@ namespace AtomicWar.GodotApp
                     failures++;
                     return failures;
                 }
-                Check(restored.CurrentStage == OnboardingStage.DayAdvance,
-                    "restored journey resumes at DayAdvance");
+                Check(restored.Profile == OnboardingProfile.FirstHour &&
+                      restored.CurrentStage == OnboardingStage.Expedition,
+                    "restored journey resumes at Expedition");
                 Check(restored.JourneyComplete == false,
-                    "restored journey is NOT yet complete (no day-2 yet)");
+                    "restored journey is NOT yet complete (no dispatch yet)");
 
-                // ── Phase E: only the real day-2 advance completes the journey ──
+                // ── Phase E: only the real expedition dispatch completes the journey ──
+                restored.RecordSigil("expedition.dispatched");
+                Check(restored.JourneyComplete,
+                    "expedition dispatch signal completes journey");
                 restored.SetDay(2);
                 Check(restored.JourneyComplete,
-                    "real day-2 advance completes journey");
-                Check(restored.CurrentStage == OnboardingStage.DayAdvance,
-                    "DayAdvance stage is reached after real day-2 advance");
+                    "day advance does not undo completed first-hour journey");
+                Check(restored.CurrentStage == OnboardingStage.Expedition,
+                    "Expedition remains the terminal completed stage");
 
                 // Final: verify resources still unchanged through entire run.
                 int cannedFinal = 0, bandageFinal = 0;

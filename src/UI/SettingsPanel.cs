@@ -15,6 +15,8 @@ namespace AtomicWar.GodotApp.UI
     public partial class SettingsPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnTutorialResetRequested;
+        public event Action<UserSettingsData>? OnSettingsApplied;
 
         private UserSettingsData _working = new();
         private UserSettingsData _initial = new();
@@ -240,10 +242,11 @@ namespace AtomicWar.GodotApp.UI
             var rowLang = MakeSettingRow("Language / Locale");
             _optLanguage = new OptionButton { CustomMinimumSize = new Vector2(240, 32) };
             _optLanguage.AddItem("English (US)", 0);
-            _optLanguage.AddItem("[QA] Pseudo-Locale (Expanded)", 1);
+            _optLanguage.AddItem("Deutsch", 1);
+            _optLanguage.AddItem("[QA] Pseudo-Locale (Expanded)", 2);
             _optLanguage.ItemSelected += idx =>
             {
-                _working.Locale = idx == 1 ? "pseudo" : "en";
+                _working.Locale = idx switch { 1 => "de", 2 => "pseudo", _ => "en" };
             };
             rowLang.AddChild(_optLanguage);
             contentVBox.AddChild(rowLang);
@@ -297,7 +300,7 @@ namespace AtomicWar.GodotApp.UI
             var rowResetTut = MakeSettingRow("Reset Tutorial Progress");
             _btnResetTutorials = AshfallUiHelpers.MakeButton("RESET TUTORIALS", () =>
             {
-                // Reset onboarding journey state in session if accessible
+                OnTutorialResetRequested?.Invoke();
                 _btnResetTutorials.Text = "TUTORIALS RESET";
             });
             _btnResetTutorials.CustomMinimumSize = new Vector2(240, 32);
@@ -439,7 +442,8 @@ namespace AtomicWar.GodotApp.UI
             if (_lblRadioVol != null) _lblRadioVol.Text = $"{(int)(_working.RadioVolume * 100)}%";
             if (_lblAmbienceVol != null) _lblAmbienceVol.Text = $"{(int)(_working.AmbienceVolume * 100)}%";
 
-            if (_optLanguage != null) _optLanguage.Selected = _working.Locale == "pseudo" ? 1 : 0;
+            if (_optLanguage != null)
+                _optLanguage.Selected = _working.Locale switch { "de" => 1, "pseudo" => 2, _ => 0 };
             if (_optTutorialMode != null) _optTutorialMode.Selected = Math.Clamp(_working.TutorialMode, 0, 2);
 
             _btnHighContrast.Text = _working.HighContrast ? "ENABLED" : "DISABLED";
@@ -454,6 +458,7 @@ namespace AtomicWar.GodotApp.UI
             _working = new UserSettingsData();
             RefreshControls();
             UserSettingsStore.Apply(_working);
+            OnSettingsApplied?.Invoke(_working);
         }
 
         private void ApplyAndSave()
@@ -461,6 +466,7 @@ namespace AtomicWar.GodotApp.UI
             UserSettingsStore.Save(_working);
             UserSettingsStore.Apply(_working);
             _initial = _working.Clone();
+            OnSettingsApplied?.Invoke(_working);
             Close();
         }
 

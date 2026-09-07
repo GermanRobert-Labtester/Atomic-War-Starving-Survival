@@ -158,6 +158,8 @@ namespace AtomicWar.GodotApp
             if (ratificationDays.Count > 0)
                 foundry.BindTreaties(ratificationDays);
             foundry.BindCatalog(foundryData, maintenanceCycle);
+            foundry.BindGlassworksCatalog(
+                Ashfall.Core.Foundry.GlassworksCatalogLoader.Load(dataDirectory, files, json));
             session.SilentFoundry = foundry;
             session.FoundryData = foundryData;
             foundry.OnStateChanged += _ => session.RaiseStateChanged();

@@ -319,7 +319,7 @@ public partial class FactionsNarrativePanel : Control, IBindablePanel
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        AshfallUiHelpers.EmptyChildren(_detailBox);
+        AshfallUiHelpers.EmptyChildrenExcept(_detailBox, _detailTitle);
         if (_stance == null || _factions.Count == 0)
         {
             _detailTitle.Text = "FACTION DETAIL";

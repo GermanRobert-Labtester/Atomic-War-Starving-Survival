@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("SHARED TRAUMA RESONANCE", "78.4% [SEVERE STRAIN]", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _telemetryContainer.AddChild(CreateTelemetryRow("VANE - ROSTOVA BOND INDEX", "+0.65 [MUTUAL LOSS]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _telemetryContainer.AddChild(CreateTelemetryRow("MILLER - CARVER ANTAGONISM", "-0.82 [FOUNDRY ACCIDENT]", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[ADMINISTER EMOTIONAL DE-ESCALATION TALK]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[DISTRIBUTE EXTRA PHARMA SEDATIVES]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[SEPARATE SEDITIOUS CONFLICT PAIRS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("COHORT ALPHA (VETERANS)", "88% COHESION / STABLE", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("COHORT BETA (FOUNDRY)", "42% COHESION / FRACTURED", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
             _dataContainer.AddChild(CreateTelemetryRow("COHORT GAMMA (BEREAVED)", "94% COHESION / UNITED", AshfallUiHelpers.ToColor(DesignTheme.Warm)));

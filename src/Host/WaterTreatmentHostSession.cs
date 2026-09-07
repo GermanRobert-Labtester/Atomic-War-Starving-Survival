@@ -15,6 +15,7 @@ namespace AtomicWar.GodotApp
         public WaterTreatmentSystem System { get; }
         public InventoryHostSession? InventoryHost { get; set; }
         public string LastEvent { get; private set; } = string.Empty;
+        public event Action? OnTreatmentStarted;
         public WaterTreatmentHostSession(WaterTreatmentSystem system, InventoryHostSession? inventoryHost = null)
         {
             System = system ?? new WaterTreatmentSystem(new GodotLog());
@@ -52,6 +53,7 @@ namespace AtomicWar.GodotApp
             if (result.IsSuccess)
             {
                 LastEvent = $"Started {mode} processing {amount:F1}L water.";
+                OnTreatmentStarted?.Invoke();
                 RaiseStateChanged();
             }
             else

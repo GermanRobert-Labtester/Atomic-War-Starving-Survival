@@ -236,9 +236,43 @@ namespace AtomicWar.GodotApp
                     $"Direction-finding telemetry confirmed active radio emissions at {locId}.",
                     null!,
                     _radio.Day);
-                GD.Print($"[Ashfall Godot] Triangulation discovered wasteland location '{locId}'.");
+                // Continuous DF yields a rumor fix — not an instant surveyed Discover.
+                // Exact-fix HF intercepts remain on ShelterRadioStationSystem → Discover.
+                bool rumored = _world?.WastelandMap?.DiscoverRumor(
+                    locId,
+                    sourceId: "signal_triangulation",
+                    day: _radio.Day,
+                    confidence: InformationConfidence.Medium) == true;
+                TryBridgeDistressFromTriangulation(locId);
+                GD.Print(rumored
+                    ? $"[Ashfall Godot] Triangulation rumored wasteland location '{locId}'."
+                    : $"[Ashfall Godot] Triangulation revealed '{locId}' (no map node / already known).");
             };
             GD.Print("[Ashfall Godot] Radio host ready.");
+        }
+
+        /// <summary>
+        /// When continuous DF resolves a fingerprint-mapped location, mark any
+        /// active distress whose signal id or revealed location matches.
+        /// </summary>
+        private void TryBridgeDistressFromTriangulation(string locationOrSignalId)
+        {
+            if (_radio?.DistressSystem == null || string.IsNullOrEmpty(locationOrSignalId)) return;
+
+            if (_radio.DistressSystem.MarkTriangulated(locationOrSignalId))
+                return;
+
+            var catalog = _radio.Triangulation.Catalog;
+            if (catalog == null) return;
+            foreach (var fp in catalog.FingerprintsBySignal.Values)
+            {
+                if (fp == null) continue;
+                if (string.Equals(fp.mapped_location_id, locationOrSignalId, StringComparison.Ordinal)
+                    || string.Equals(fp.signal_id, locationOrSignalId, StringComparison.Ordinal))
+                {
+                    _radio.DistressSystem.MarkTriangulated(fp.signal_id);
+                }
+            }
         }
 
         private void SaveRadio()

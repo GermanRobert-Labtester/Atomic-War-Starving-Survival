@@ -130,6 +130,7 @@ namespace AtomicWar.GodotApp
                 _expeditions.NarrativeEngine.QuestLink = _expansionQuests.System;
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
+            _expeditions.Engine.OnExpeditionStarted += _ => ObserveSigil("expedition.dispatched");
             SyncWaterRoutes();
             _expeditions.Engine.OnExpeditionCompleted += state =>
             {
@@ -216,12 +217,16 @@ namespace AtomicWar.GodotApp
             SetupSurvivors();
             SetupPhase0();
             SetupSurvivorFate();
+            // B99: make the persisted ballistics projection available before
+            // combat builds its weapon tokens.
+            ComposePlans74To77();
             _combat = CombatHostSession.Create(_dataDir);
             if (_combat != null)
             {
                 _combat.Inventory = _inventory;
                 _combat.Survivors = _survivors;
                 _combat.Equipment = _equipmentCondition?.System;
+                _combat.Ballistics = _ballisticsWorkbench?.System;
                 // MarkCombatSurvived is a required combat effect (see
                 // CombatHostSession.ValidatePorts / WeaponConditionSystem's
                 // UnboundRequiredEffects) that was previously left unwired,
@@ -230,6 +235,8 @@ namespace AtomicWar.GodotApp
                 _combat.WireRealState(
                     markCombatSurvived: survivorId => _phase0.RegisterCombatSurvived(survivorId),
                     onSurvivorDeath: (survivorId, causeDetail) => _survivorFate?.ReportDeath(survivorId, Ashfall.Core.Survivors.SurvivorDeathCause.Combat, causeDetail, "combat", isPlayerAvatar: false, day: _simDay));
+                // Plan B86 — inventory-bound breaching logistics (fail-closed without stock).
+                _combat.ConfigureBreachingLogistics(vehicleAvailable: false);
                 _combat.ValidatePorts();
                 _combat.StateChanged += () => _combatDirty = true;
                 // Expedition encounters auto-populate a real combat encounter.

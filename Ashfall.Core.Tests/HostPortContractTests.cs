@@ -23,6 +23,8 @@ namespace Ashfall.Core.Tests
             Assert.Null(ports.GrantLoot);
             Assert.Null(ports.MarkCombatSurvived);
             Assert.Null(ports.RaiseTrauma);
+            Assert.Null(ports.EmitBreachNoise);
+            Assert.Null(ports.ApplyBreachToolWear);
         }
 
         [Fact]

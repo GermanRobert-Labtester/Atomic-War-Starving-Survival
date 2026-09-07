@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "network_id": "rail_interlock_primary",
+  "display_name": "Corridor Signal & Interlock Grid",
+  "junctions": [
+    {
+      "junction_id": "junction_holdfast_terminal",
+      "display_name": "Holdfast Central Interlock",
+      "map_node_id": "rail_node_holdfast_terminal",
+      "connected_route_ids": ["rail_segment_holdfast_to_delta"],
+      "main_route_id": "rail_segment_holdfast_to_delta",
+      "siding_route_ids": [],
+      "interlock_type": "lever_frame",
+      "maintenance_profile_id": "maint_yard",
+      "weather_sensitivity": 0.3,
+      "signal_profile_id": "signal_standard",
+      "unlock_requirements": { "item_switch_stand_module": 1, "item_signal_lamp_module": 1 },
+      "tags": ["terminal", "yard"]
+    },
+    {
+      "junction_id": "junction_delta",
+      "display_name": "Delta Junction Interlock",
+      "map_node_id": "rail_node_delta_junction",
+      "connected_route_ids": [
+        "rail_segment_delta_to_silo",
+        "rail_segment_delta_to_dam",
+        "rail_segment_delta_to_switchyard"
+      ],
+      "main_route_id": "rail_segment_delta_to_silo",
+      "siding_route_ids": ["rail_segment_delta_to_dam"],
+      "interlock_type": "relay",
+      "maintenance_profile_id": "maint_corridor",
+      "weather_sensitivity": 0.6,
+      "signal_profile_id": "signal_standard",
+      "unlock_requirements": { "item_switch_stand_module": 1, "item_signal_lamp_module": 2 },
+      "tags": ["junction", "corridor"]
+    },
+    {
+      "junction_id": "junction_switchyard",
+      "display_name": "Switchyard Passing Loop",
+      "map_node_id": "rail_node_switchyard",
+      "connected_route_ids": [
+        "rail_segment_switchyard_to_silo_alt",
+        "rail_segment_delta_to_switchyard"
+      ],
+      "main_route_id": "rail_segment_switchyard_to_silo_alt",
+      "siding_route_ids": ["rail_segment_delta_to_switchyard"],
+      "interlock_type": "mechanical",
+      "maintenance_profile_id": "maint_yard",
+      "weather_sensitivity": 0.8,
+      "signal_profile_id": "signal_standard",
+      "unlock_requirements": { "item_switch_stand_module": 1, "item_signal_lamp_module": 1, "item_rail_control_component": 1 },
+      "tags": ["passing_loop", "bypass"]
+    }
+  ],
+  "maintenance_profiles": [
+    {
+      "maintenance_profile_id": "maint_yard",
+      "required_items": { "item_track_maintenance_kit": 1 },
+      "obstruction_per_severity_day": 0.04,
+      "obstruction_decay_per_day": 0.03
+    },
+    {
+      "maintenance_profile_id": "maint_corridor",
+      "required_items": { "item_track_maintenance_kit": 2 },
+      "obstruction_per_severity_day": 0.06,
+      "obstruction_decay_per_day": 0.02
+    }
+  ],
+  "tags": ["railway", "interlock", "signaling"]
+}

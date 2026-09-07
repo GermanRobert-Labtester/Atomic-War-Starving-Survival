@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "grades": [
+    {
+      "grade_id": "uncalibrated",
+      "display_name": "Uncalibrated",
+      "ordinal": 0,
+      "tooling_calibration": 0.0,
+      "drift_per_day": 0.0
+    },
+    {
+      "grade_id": "field",
+      "display_name": "Field",
+      "ordinal": 1,
+      "tooling_calibration": 0.35,
+      "drift_per_day": 0.02
+    },
+    {
+      "grade_id": "shop",
+      "display_name": "Shop",
+      "ordinal": 2,
+      "tooling_calibration": 0.55,
+      "drift_per_day": 0.01
+    },
+    {
+      "grade_id": "reference",
+      "display_name": "Reference",
+      "ordinal": 3,
+      "tooling_calibration": 0.75,
+      "drift_per_day": 0.005
+    },
+    {
+      "grade_id": "certified",
+      "display_name": "Certified",
+      "ordinal": 4,
+      "tooling_calibration": 0.95,
+      "drift_per_day": 0.002
+    }
+  ],
+  "standards": [
+    {
+      "standard_id": "std_machinist_caliper",
+      "display_name": "Machinist's Caliper",
+      "item_id": "machinist_caliper",
+      "max_grade": "shop",
+      "required_room_ids": ["room_workshop", "room_workshop_precision"],
+      "calibration_labor_ticks": 30,
+      "bootstrap": true,
+      "tags": ["length", "bootstrap"]
+    },
+    {
+      "standard_id": "std_gauge_block_set",
+      "display_name": "Gauge Block Set",
+      "item_id": "item_gauge_block_set",
+      "max_grade": "certified",
+      "required_room_ids": ["room_workshop_precision"],
+      "calibration_labor_ticks": 60,
+      "bootstrap": false,
+      "tags": ["length", "reference"]
+    },
+    {
+      "standard_id": "std_optical_flat",
+      "display_name": "Optical Flat",
+      "item_id": "item_optical_flat",
+      "max_grade": "reference",
+      "required_room_ids": ["room_workshop_precision"],
+      "calibration_labor_ticks": 45,
+      "bootstrap": false,
+      "tags": ["surface", "optics"]
+    },
+    {
+      "standard_id": "std_surface_plate",
+      "display_name": "Granite Surface Plate",
+      "item_id": "item_surface_plate",
+      "max_grade": "certified",
+      "required_room_ids": ["room_workshop_precision"],
+      "calibration_labor_ticks": 90,
+      "bootstrap": false,
+      "tags": ["datum", "reference"]
+    },
+    {
+      "standard_id": "std_micrometer_set",
+      "display_name": "Micrometer Set",
+      "item_id": "item_micrometer_set",
+      "max_grade": "reference",
+      "required_room_ids": ["room_workshop", "room_workshop_precision"],
+      "calibration_labor_ticks": 40,
+      "bootstrap": true,
+      "tags": ["length", "bootstrap"]
+    }
+  ],
+  "consumers": [
+    {
+      "consumer_id": "workshop_precision",
+      "room_id": "room_workshop_precision",
+      "min_grade": "shop",
+      "benefits_from_metrology": true
+    },
+    {
+      "consumer_id": "workshop_general",
+      "room_id": "room_workshop",
+      "min_grade": "field",
+      "benefits_from_metrology": true
+    },
+    {
+      "consumer_id": "ballistics_workbench",
+      "room_id": "room_workshop",
+      "min_grade": "field",
+      "benefits_from_metrology": true
+    }
+  ],
+  "disturbance": {
+    "quake_drift_per_magnitude": 0.04,
+    "min_magnitude": 3.0,
+    "idempotent_key_window_days": 1
+  }
+}

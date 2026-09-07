@@ -7914,6 +7914,105 @@
       "stackMax": 4,
       "weight": 1.8,
       "tradeValue": 70
+    },
+    {
+      "id": "item_groundwater_sensor",
+      "displayName": "Groundwater Sensor",
+      "description": "A sealed down-hole probe salvaged from a monitoring station. Reads water level and conductivity through a cracked glass gauge. Still more honest than dipping a rag down the casing and tasting it.",
+      "type": "Component",
+      "stackMax": 5,
+      "weight": 1.4,
+      "tradeValue": 22
+    },
+    {
+      "id": "item_aquifer_isolation_module",
+      "displayName": "Aquifer Isolation Module",
+      "description": "A heavy shut-off collar meant for capping a compromised well line. Sealing one source means the rest of the grid works harder. Everyone understands the arithmetic even if they hate it.",
+      "type": "Component",
+      "stackMax": 4,
+      "weight": 2.2,
+      "tradeValue": 30
+    },
+    {
+      "id": "item_well_maintenance_kit",
+      "displayName": "Well Service Kit",
+      "description": "Brushes, calibration weights, and a hand pump for flushing silt out of a monitoring line. Dirty work, but a fouled sensor lies to you, and a lying sensor drowns you later.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 0.9,
+      "tradeValue": 12
+    },
+    {
+      "id": "item_switch_stand_module",
+      "displayName": "Switch Stand Module",
+      "description": "A hand-throw stand with a calibrated latch for holding a switch point true. Without one, the points drift and every crew on the corridor trusts the rails a little less.",
+      "type": "Component",
+      "stackMax": 4,
+      "weight": 3.1,
+      "tradeValue": 26
+    },
+    {
+      "id": "item_signal_lamp_module",
+      "displayName": "Signal Lamp Module",
+      "description": "A shielded lamp and lens assembly for a corridor signal post. A dark signal reads as a broken promise; a lit one, even amber, tells crews somebody is still watching the line.",
+      "type": "Component",
+      "stackMax": 6,
+      "weight": 1.1,
+      "tradeValue": 14
+    },
+    {
+      "id": "item_rail_control_component",
+      "displayName": "Route-Control Component",
+      "description": "Sealed relay logic for interlocking a junction's levers so conflicting routes cannot be set at once. Old semaphore logic in a dust-proof case — the quiet kind of safety.",
+      "type": "Component",
+      "stackMax": 4,
+      "weight": 1.8,
+      "tradeValue": 34
+    },
+    {
+      "id": "item_track_maintenance_kit",
+      "displayName": "Track Maintenance Kit",
+      "description": "Sledge, spikes, broom, and a scoop for drifting ash. Junction work is mostly housekeeping: keep the points moving and the lamps burning, or the whole corridor stops.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 2.4,
+      "tradeValue": 9
+    },
+    {
+      "id": "item_tablet_binder",
+      "displayName": "Inert Binder Stock",
+      "description": "Neutral compressed starch base that holds a pressed dose together. No effect on its own; without it, a batch is just powder in a drawer.",
+      "type": "Consumable",
+      "stackMax": 20,
+      "weight": 0.3,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_sealed_packaging_foil",
+      "displayName": "Sealed Packaging Foil",
+      "description": "Crimp-sealed foil strips that keep moisture and dust off finished doses. Sealed stock keeps for seasons; a paper twist does not.",
+      "type": "Consumable",
+      "stackMax": 15,
+      "weight": 0.2,
+      "tradeValue": 6
+    },
+    {
+      "id": "item_press_tooling_set",
+      "displayName": "Press Tooling Set",
+      "description": "Matched die and punch set for the tablet press. Worn tooling makes cracked, uneven doses — the kind a sick person can't afford to guess about.",
+      "type": "Component",
+      "stackMax": 3,
+      "weight": 2.8,
+      "tradeValue": 28
+    },
+    {
+      "id": "item_tablet_coating_base",
+      "displayName": "Protective Coating Base",
+      "description": "Neutral film-forming wash for finished doses. A coated dose keeps longer and goes down easier — shelter chemistry, nothing more arcane than that.",
+      "type": "Consumable",
+      "stackMax": 12,
+      "weight": 0.4,
+      "tradeValue": 8
     }
   ]
 }

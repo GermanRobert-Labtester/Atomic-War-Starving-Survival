@@ -130,6 +130,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_currentQuest == null) return;
 
+            // The choice buttons are rebuilt on every refresh. Clear the
+            // cached focus target before freeing the old button tree.
+            _firstInteractiveButton = null;
+
             bool isResolved = _moralChoiceSystem?.IsResolved(_currentQuest.Id) ?? false;
             MoralChoiceResolution? resolution = null;
             _moralChoiceSystem?.TryGetResolution(_currentQuest.Id, out resolution);

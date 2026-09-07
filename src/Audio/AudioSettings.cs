@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text.Json.Serialization;
 using Ashfall.Core.Audio;
+using Ashfall.Core.Settings;
 
 namespace AtomicWar.GodotApp.Audio
 {
@@ -33,6 +34,28 @@ namespace AtomicWar.GodotApp.Audio
         public static bool HasDiagnosticError => !string.IsNullOrEmpty(_lastDiagnosticMessage);
 
         public static void ClearDiagnosticMessage() => _lastDiagnosticMessage = null;
+
+        /// <summary>
+        /// Applies the five user-facing mix controls from the unified settings
+        /// store. Advanced per-domain buses remain in this legacy audio store,
+        /// but the controls exposed by SettingsPanel have one authority.
+        /// </summary>
+        public static void ApplyUnifiedMix(UserSettingsData data)
+        {
+            if (data == null) return;
+            var settings = Instance;
+            settings.MasterVolume = Math.Clamp(data.MasterVolume * 100f, 0f, 100f);
+            settings.MusicVolume = Math.Clamp(data.MusicVolume * 100f, 0f, 100f);
+            settings.AmbienceVolume = Math.Clamp(data.AmbienceVolume * 100f, 0f, 100f);
+            settings.SfxVolume = Math.Clamp(data.SfxVolume * 100f, 0f, 100f);
+            settings.RadioVolume = Math.Clamp(data.RadioVolume * 100f, 0f, 100f);
+            settings.MasterMute = data.MuteAll;
+            settings.MusicMute = data.MuteAll;
+            settings.AmbienceMute = data.MuteAll;
+            settings.SfxMute = data.MuteAll;
+            settings.RadioMute = data.MuteAll;
+            settings.NotifySettingsChanged();
+        }
 
         // ── Persisted fields ────────────────────────────────────
 
@@ -114,6 +137,8 @@ namespace AtomicWar.GodotApp.Audio
         // ── Non-persisted ───────────────────────────────────────
 
         public event Action? OnSettingsChanged;
+
+        public void NotifySettingsChanged() => OnSettingsChanged?.Invoke();
 
         // ── Paths ───────────────────────────────────────────────
 

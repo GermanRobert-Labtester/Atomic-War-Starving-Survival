@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("SUMP SCINTILLATION CHAMBER", "3,420 Bq/m3 [CRITICAL]", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
             _telemetryContainer.AddChild(CreateTelemetryRow("SUB-LEVEL 3 AIR DUCTWAYS", "1,240 Bq/m3 [HIGH]", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _telemetryContainer.AddChild(CreateTelemetryRow("RESIDENTIAL BARRACKS", "380 Bq/m3 [MODERATE]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[MAXIMIZE SUMP EXHAUST BLOWERS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[PULSE POSITIVE PRESSURE AIR CURTAIN]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[BACKWASH ACTIVATED CHARCOAL FILTER BED]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("ALPHA DECAY LUNG BURDEN", "142 mSv/SURVIVOR [HIGH]", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("POLONIUM-218 SATURATION", "84.2% IN EXHAUST PLUME", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("INTACT RESPIRATORY MASKS", "14 / 18 SURVIVORS", AshfallUiHelpers.ToColor(DesignTheme.Warm)));

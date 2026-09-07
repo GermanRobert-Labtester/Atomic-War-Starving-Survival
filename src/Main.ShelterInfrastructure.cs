@@ -289,6 +289,7 @@ namespace AtomicWar.GodotApp
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
             _waterTreatment = new WaterTreatmentHostSession(wtSys, _inventory);
+            _waterTreatment.OnTreatmentStarted += () => ObserveSigil("water.treatment_started");
             if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
                 RemoveChild(_waterTreatmentPanel);
             _waterTreatmentPanel = new WaterTreatmentPanel();

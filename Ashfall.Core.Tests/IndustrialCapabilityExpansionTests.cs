@@ -247,6 +247,31 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void PrecisionOptics_DefaultCompletion_UsesAuthoredOutputItem()
+        {
+            var inv = new Inventory.Inventory();
+            inv.AddById(PrecisionOpticsEngine.ItemGlassBlank, 1);
+            var engine = new PrecisionOpticsEngine(inv, new SeededRng(3004));
+            var catalog = new PrecisionOpticsCatalog();
+            var recipe = new OpticRecipeDef
+            {
+                optic_recipe_id = "optic_rangefinder_achromat",
+                display_name = "Rangefinder Achromat",
+                output_item_id = "item_precision_rangefinder_achromat"
+            };
+            recipe.stages.Add(new OpticStageDef { stage = "grind", work_units = 1f, quality_gain = 0.3f });
+            catalog.recipes.Add(recipe);
+            engine.LoadCatalog(catalog);
+
+            Assert.True(engine.StartWorkpiece(recipe.optic_recipe_id).IsSuccess);
+            Assert.True(engine.AdvanceWork(1f).IsSuccess);
+            Assert.True(engine.State.activeWorkpiece!.isCompleted);
+            Assert.True(engine.CompleteOptic().IsSuccess);
+
+            Assert.Equal(1, inv.CountById(recipe.output_item_id));
+        }
+
+        [Fact]
         public void PrecisionOptics_FoucaultKnifeEdgeTest_FiguringGain()
         {
             var inv = new Inventory.Inventory();

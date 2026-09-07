@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("RECORDED CASUALTIES", "38 SOULS ON MEMORIAL WALL", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _telemetryContainer.AddChild(CreateTelemetryRow("RADIATION POISONING", "42.0% OF ALL DEATHS", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
             _telemetryContainer.AddChild(CreateTelemetryRow("STARVATION & DEHYDRATION", "24.0% OF ALL DEATHS", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[ENGRAVE BRONZE MEMORIAL PLAQUE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[REFUEL ETERNAL MEMORIAL FLAME]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[HOLD ALL-SHELTER VIGIL & MOMENT OF SILENCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("ETERNAL OIL FLAME RESERVOIR", "42.5 LITERS (0.2 L/DAY)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _dataContainer.AddChild(CreateTelemetryRow("MEMORIAL RELICS PRESERVED", "24 DOG TAGS / 6 WATCHES", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             _dataContainer.AddChild(CreateTelemetryRow("SHELTER GRIEF MITIGATION", "-18.5% DESPAIR INDEX", AshfallUiHelpers.ToColor(DesignTheme.Warm)));

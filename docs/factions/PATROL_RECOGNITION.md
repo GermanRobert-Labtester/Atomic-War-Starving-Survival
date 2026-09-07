@@ -128,6 +128,7 @@ All state survives capture → serialize → deserialize → restore with exact 
 
 `BuildPatrolPresentation()` in `TravelEncounterSystem` produces a read-only `PatrolEncounterPresentation` with:
 - `FactionId` — canonical systems ID
+- `DisplayFactionId` — authored lore ID for the faction name and emblem; it remains separate so an Iron Garrison patrol is not presented with the Central Garrison's later-era display name
 - `TerritoryState` — controlled/contested/border
 - `PatrolArchetype` — checkpoint/raid_party/etc.
 - `RecognitionLabel` — human-readable recognition state

@@ -137,7 +137,10 @@ namespace Ashfall.Core.Narrative
     public sealed class PatrolEncounterPresentation
     {
         public string EncounterId { get; init; } = string.Empty;
+        /// <summary>Canonical systems ID for standing, history, and other Core integrations.</summary>
         public string FactionId { get; init; } = string.Empty;
+        /// <summary>Authored lore ID used by hosts to resolve faction names and emblems.</summary>
+        public string DisplayFactionId { get; init; } = string.Empty;
         public string TerritoryState { get; init; } = string.Empty;
         public string PatrolArchetype { get; init; } = string.Empty;
         public int CurrentChainStage { get; init; }
@@ -705,6 +708,7 @@ namespace Ashfall.Core.Narrative
             {
                 EncounterId = encounter.Id,
                 FactionId = FactionStandingIdResolver.ToSystemsId(encounter.FactionId),
+                DisplayFactionId = encounter.FactionId,
                 TerritoryState = encounter.TerritoryState ?? string.Empty,
                 PatrolArchetype = encounter.PatrolArchetype ?? string.Empty,
                 CurrentChainStage = recognition.CurrentChainStage,

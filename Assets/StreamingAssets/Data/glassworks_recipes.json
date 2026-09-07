@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "collection_id": "glassworks_recipes_b100",
+  "description": "Plan B100 scientific glassware roster. Authored gameplay values only; no real-world furnace or annealing instructions.",
+  "recipes": [
+    {
+      "id": "foundry_prod_glass_borosilicate_blank",
+      "display_name": "Cast Borosilicate Glass Blank",
+      "input_items": [
+        { "item_id": "solar_cell", "amount": 1 },
+        { "item_id": "scrap_metal", "amount": 1 }
+      ],
+      "fuel_units": 3,
+      "water_litres": 8,
+      "labor_days": 1,
+      "skill_target": 0.55,
+      "quality_target": 72,
+      "result_item_id": "item_cast_borosilicate_glass_blank",
+      "result_amount": 1,
+      "tags": ["glassworks_b100", "optics_feedstock", "scientific"]
+    },
+    {
+      "id": "foundry_prod_glass_laminated_viewport",
+      "display_name": "Laminated Ballistic Viewport Glass",
+      "input_items": [
+        { "item_id": "item_cast_borosilicate_glass_blank", "amount": 1 },
+        { "item_id": "item_welders_glass", "amount": 1 },
+        { "item_id": "scrap_metal", "amount": 2 }
+      ],
+      "fuel_units": 4,
+      "water_litres": 10,
+      "labor_days": 1,
+      "skill_target": 0.65,
+      "quality_target": 74,
+      "result_item_id": "item_laminated_ballistic_viewport_glass",
+      "result_amount": 1,
+      "tags": ["glassworks_b100", "shield_repair", "scientific"]
+    }
+  ]
+}

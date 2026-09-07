@@ -290,6 +290,8 @@ namespace Ashfall.Core.Tests
             train.activeSegmentId = "segment_test";
             train.status = TrainDispatchStatus.Derailment;
             train.cars[0].condition = 40f;
+            train.transmissionWearPermille = 700;
+            train.transmissionServiceRequired = true;
             var recovery = new DraisineRerailingSystem(inventory, railway, new SeededRng(133), () => 500f);
             recovery.LoadCatalog(new RerailingEquipmentCatalog
             {
@@ -314,6 +316,8 @@ namespace Ashfall.Core.Tests
             Assert.Equal(DraisineRecoveryStatus.Recovered, recovery.State.status);
             Assert.Equal(TrainDispatchStatus.Idle, train.status);
             Assert.Equal(60f, train.cars[0].condition);
+            Assert.Equal(0, train.transmissionWearPermille);
+            Assert.False(train.transmissionServiceRequired);
         }
 
         [Fact]

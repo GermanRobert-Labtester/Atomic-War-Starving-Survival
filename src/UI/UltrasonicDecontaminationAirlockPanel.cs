@@ -108,7 +108,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(leftPanel);
             _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
+            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
             _telemetryContainer.AddChild(CreateTelemetryRow("BOOTS CONTAMINATION HOTSPOT", "140 mSv/hr [SEVERE EXPOSURE]", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
             _telemetryContainer.AddChild(CreateTelemetryRow("RESPIRATOR CANISTER DOSE", "42 mSv/hr [SATURATED]", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _telemetryContainer.AddChild(CreateTelemetryRow("HANDS AND FOREARMS", "28 mSv/hr [MODERATE]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
             _buttonContainer.AddChild(new Button { Text = "[INITIATE HIGH-PRESSURE CHELATING WASH]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[PULSE 32 KHZ ULTRASONIC CAVITATION]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[INJECT PRESSURIZED FOAM SEALANT]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -131,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             bodyHBox.AddChild(rightPanel);
             _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
+            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
             _dataContainer.AddChild(CreateTelemetryRow("RADIOACTIVE SLUDGE SUMP", "1,240 L / 2,000 L (4,800 Bq/L)", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("FILTER BANK A (HEPA/RESIN)", "82% SATURATED (BACKWASH REQ)", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
             _dataContainer.AddChild(CreateTelemetryRow("FILTER BANK B (ACTIVATED)", "34% SATURATED [NOMINAL]", AshfallUiHelpers.ToColor(DesignTheme.Dim)));

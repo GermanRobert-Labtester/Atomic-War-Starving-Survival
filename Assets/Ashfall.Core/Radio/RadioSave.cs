@@ -73,10 +73,11 @@ namespace Ashfall.Core.Radio
     }
 
     /// <summary>
-    /// ASHFALL — radio host save state (Version 2). Owns every authoritative mutable value of
+    /// ASHFALL — radio host save state (Version 3). Owns every authoritative mutable value of
     /// the receiver: intercept history, played-broadcast dedup keys, tuned frequency,
     /// sim day, discovered stations, custom presets, active/resolved distress signals,
-    /// signal intelligence log, recorded cassettes, and station overrides.
+    /// signal intelligence log, recorded cassettes, station overrides, and continuous
+    /// HF/DF triangulation observations/candidates (Plan B88).
     /// Versioned + checksummed via <see cref="RadioSaveCodec"/>.
     /// </summary>
     [Serializable]
@@ -96,6 +97,27 @@ namespace Ashfall.Core.Radio
         public List<RecordedCassetteEntry> recordedCassettes = new List<RecordedCassetteEntry>();
         public List<StationStateOverrideEntry> stationOverrides = new List<StationStateOverrideEntry>();
 
+        // Plan B88 (V3) — continuous DF triangulation nest (Core CaptureState shape)
+        public TriangulationState triangulation = new TriangulationState();
+
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>Frozen V2 wire shape for checksum-safe migration into V3.</summary>
+    [Serializable]
+    public class RadioSaveStateFrozenV2
+    {
+        public int saveVersion = 2;
+        public int day;
+        public float currentFrequency;
+        public List<RadioInterceptEntry> history = new List<RadioInterceptEntry>();
+        public List<string> playedBroadcastKeys = new List<string>();
+        public List<string> discoveredStationIds = new List<string>();
+        public List<float> customPresets = new List<float>();
+        public List<DistressSignalSaveEntry> distressSignals = new List<DistressSignalSaveEntry>();
+        public List<SignalLogEntry> signalLog = new List<SignalLogEntry>();
+        public List<RecordedCassetteEntry> recordedCassettes = new List<RecordedCassetteEntry>();
+        public List<StationStateOverrideEntry> stationOverrides = new List<StationStateOverrideEntry>();
         public string Checksum = string.Empty;
     }
 
@@ -113,11 +135,11 @@ namespace Ashfall.Core.Radio
     /// <summary>
     /// Radio save codec: checksum recomputed on encode, hard-reject on decode for
     /// tamper / checksumless / newer-version payloads (mirrors VerdictSaveCodec).
-    /// Supports V1 -> V2 migration with frozen shape validation.
+    /// Supports V1 -> V2 -> V3 migration with frozen shape validation.
     /// </summary>
     public static class RadioSaveCodec
     {
-        public const int CurrentSaveVersion = 2;
+        public const int CurrentSaveVersion = 3;
         public const int MigrationFromVersion = 1;
 
         public static string Encode(RadioSaveState state, IJsonSerializer json)
@@ -125,6 +147,7 @@ namespace Ashfall.Core.Radio
             if (state == null) throw new ArgumentNullException(nameof(state));
             if (json == null) throw new ArgumentNullException(nameof(json));
             state.saveVersion = CurrentSaveVersion;
+            EnsureCollections(state);
             state.Checksum = SaveChecksum.Compute(state);
             return json.Serialize(state);
         }
@@ -141,15 +164,17 @@ namespace Ashfall.Core.Radio
                 if (decoded.saveVersion < MigrationFromVersion) return false; // too old — reject
 
                 if (decoded.saveVersion == 1)
-                {
                     return MigrateV1(json, serializer, out state);
-                }
 
+                if (decoded.saveVersion == 2)
+                    return MigrateV2(json, serializer, out state);
+
+                // V3+: normalize collections before checksum so null vs empty cannot diverge.
+                EnsureCollections(decoded);
                 if (string.IsNullOrEmpty(decoded.Checksum)) return false;     // malformed new format — reject
                 if (!string.Equals(SaveChecksum.Compute(decoded), decoded.Checksum, StringComparison.Ordinal))
                     return false;                                             // tampered
 
-                EnsureCollections(decoded);
                 state = decoded;
                 return true;
             }
@@ -182,6 +207,35 @@ namespace Ashfall.Core.Radio
                 signalLog = new List<SignalLogEntry>(),
                 recordedCassettes = new List<RecordedCassetteEntry>(),
                 stationOverrides = new List<StationStateOverrideEntry>(),
+                triangulation = new TriangulationState(),
+                Checksum = string.Empty
+            };
+            return true;
+        }
+
+        private static bool MigrateV2(string json, IJsonSerializer serializer, out RadioSaveState state)
+        {
+            state = null!;
+            var v2 = serializer.Deserialize<RadioSaveStateFrozenV2>(json);
+            if (v2 == null) return false;
+            if (string.IsNullOrEmpty(v2.Checksum)) return false;
+            if (!string.Equals(SaveChecksum.Compute(v2), v2.Checksum, StringComparison.Ordinal))
+                return false; // tampered V2 save
+
+            state = new RadioSaveState
+            {
+                saveVersion = CurrentSaveVersion,
+                day = v2.day,
+                currentFrequency = v2.currentFrequency,
+                history = v2.history ?? new List<RadioInterceptEntry>(),
+                playedBroadcastKeys = v2.playedBroadcastKeys ?? new List<string>(),
+                discoveredStationIds = v2.discoveredStationIds ?? new List<string>(),
+                customPresets = v2.customPresets ?? new List<float>(),
+                distressSignals = v2.distressSignals ?? new List<DistressSignalSaveEntry>(),
+                signalLog = v2.signalLog ?? new List<SignalLogEntry>(),
+                recordedCassettes = v2.recordedCassettes ?? new List<RecordedCassetteEntry>(),
+                stationOverrides = v2.stationOverrides ?? new List<StationStateOverrideEntry>(),
+                triangulation = new TriangulationState(),
                 Checksum = string.Empty
             };
             return true;
@@ -197,6 +251,13 @@ namespace Ashfall.Core.Radio
             if (state.signalLog == null) state.signalLog = new List<SignalLogEntry>();
             if (state.recordedCassettes == null) state.recordedCassettes = new List<RecordedCassetteEntry>();
             if (state.stationOverrides == null) state.stationOverrides = new List<StationStateOverrideEntry>();
+            if (state.triangulation == null) state.triangulation = new TriangulationState();
+            if (state.triangulation.observations == null) state.triangulation.observations = new List<RadioObservation>();
+            if (state.triangulation.candidates == null) state.triangulation.candidates = new List<TriangulationCandidate>();
+            if (state.triangulation.discoveredLocationIds == null)
+                state.triangulation.discoveredLocationIds = new List<string>();
+            if (state.triangulation.stationBaselines == null)
+                state.triangulation.stationBaselines = new List<StationBaselineEntry>();
         }
     }
 }

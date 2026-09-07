@@ -364,7 +364,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        AshfallUiHelpers.EmptyChildren(_detailBox);
+        AshfallUiHelpers.EmptyChildrenExcept(_detailBox, _detailTitle);
         if (_host == null)
         {
             _detailTitle.Text = "TARGET DETAIL";

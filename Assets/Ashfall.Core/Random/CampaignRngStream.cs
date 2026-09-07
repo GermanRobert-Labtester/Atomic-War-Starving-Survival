@@ -52,6 +52,18 @@ namespace Ashfall.Core.Random
         public const string MicrofluidicDiagnostics = "medical_microfluidic_diagnostics";
         public const string MineClearingFlail = "route_engineering_mine_flail";
         public const string RailGrinding = "route_engineering_rail_grinding";
+        // Plans B86–B89 — precision metrology (deterministic drift / measurement noise)
+        public const string MetrologyCalibrationDrift = "metrology_calibration_drift";
+        public const string MetrologyMeasurementNoise = "metrology_measurement_noise";
+        // Plan B88 — HF/DF atmosphere jitter + false-signature rolls (snake_case; no dots)
+        public const string DfSkywaveJitter = "df_skywave_jitter";
+        public const string DfFalseSignature = "df_false_signature";
+        // Plan B87 — aquaponics disease pressure + fry survival (snake_case; no dots)
+        public const string AquaponicsDisease = "aquaponics_disease";
+        public const string AquaponicsFrySurvival = "aquaponics_fry_survival";
+        // Plan B86 — breaching operator incidents + secondary obstacle effects
+        public const string BreachOperatorIncident = "breach_operator_incident";
+        public const string BreachObstacleSecondary = "breach_obstacle_secondary_effect";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>
