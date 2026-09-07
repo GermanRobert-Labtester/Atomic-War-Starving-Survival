@@ -437,7 +437,11 @@ namespace AtomicWar.GodotApp
             if (_powerGridPanel == null)
             {
                 _powerGridPanel = new PowerGridPanel();
-                _powerGridPanel.OnRoomToggled += id => _powerGrid.ToggleBreaker(id);
+                _powerGridPanel.OnRoomToggled += id =>
+                {
+                    if (_powerGrid.ToggleBreaker(id))
+                        ObserveSigil("power.breaker_toggled");
+                };
                 _powerGridPanel.OnPriorityChanged += (id, p) => _powerGrid.SetPriority(id, p);
                 _powerGridPanel.OnFuelAdded += u => _powerGrid.AddFuel(u);
                 AddChild(_powerGridPanel);
@@ -485,6 +489,7 @@ namespace AtomicWar.GodotApp
         private void CloseGeodeticSurveyPanel() { _geodeticSurveyPanel.Visible = false; }
         private void CloseKineticStoragePanel() { _kineticStoragePanel.Visible = false; }
         private void CloseChemicalReconPanel() { _chemicalReconPanel.Visible = false; }
+        private void CloseFungiCultivationPanel() { _fungiCultivationBedPanel.Visible = false; }
 
         private void CloseCraftingPanel()
         {

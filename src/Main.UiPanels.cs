@@ -252,6 +252,8 @@ namespace AtomicWar.GodotApp
             // ── Settings panel (overlay) ──
             _settingsPanel = new SettingsPanel();
             _settingsPanel.OnClose += CloseSettingsPanel;
+            _settingsPanel.OnTutorialResetRequested += ResetOnboardingJourney;
+            _settingsPanel.OnSettingsApplied += ApplyOnboardingSettings;
             AddChild(_settingsPanel);
 
             // ── Inventory overlay panel ──
@@ -407,6 +409,7 @@ namespace AtomicWar.GodotApp
             // ── Research panel (overlay) ──
             _researchPanel = new ResearchPanel();
             _researchPanel.OnClose += CloseResearchPanel;
+            _researchPanel.OnResearchStarted += _ => ObserveSigil("research.started");
             AddChild(_researchPanel);
 
             // ── Shelter panel (overlay) ──
@@ -473,6 +476,12 @@ namespace AtomicWar.GodotApp
             _farmingPanel.OnActionRequested += HandleAgricultureAction;
 
             AddChild(_farmingPanel);
+
+            // ── Fungi cultivation panel (Plan 204 — dark beds workflow) ──
+            _fungiCultivationBedPanel = new FungiCultivationBedPanel();
+            _fungiCultivationBedPanel.Visible = false;
+            _fungiCultivationBedPanel.OnClose += CloseFungiCultivationPanel;
+            AddChild(_fungiCultivationBedPanel);
 
 
 
