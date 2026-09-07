@@ -8,7 +8,7 @@ config_version=5
 
 config/name="ASHFALL: Atomic War - Starving Survival"
 config/description="Post-nuclear survival strategy RPG"
-config/version="1.0.0"
+config/version="1.1.0"
 run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.7", "C#", "Compatibility")
 config/icon="res://icon.svg"
@@ -29,6 +29,10 @@ window/dpi/allow_hidpi=true
 [dotnet]
 
 project/assembly_name="Ashfall"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/l10n/strings.en.translation", "res://assets/l10n/strings.de.translation")
 
 [rendering]
 
