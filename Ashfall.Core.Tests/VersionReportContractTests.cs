@@ -191,8 +191,9 @@ namespace Ashfall.Core.Tests
             // Plans 62–65 state sections (food_preservation, prewar_archives, shelter_prisoners),
             // Plans 50–53 state sections (vehicle_garage, faction_espionage, survivor_mental_health),
             // Plans B68–B69 state sections (seismic_dynamics, cryo_vault),
+            // Plans B86–B89 state sections (precision_metrology, aquaponics; B88 nests under radio),
             // and the muster-warfare / plans-74-77 state sections from the concurrent flagship streams.
-            Assert.Equal(154, envelopes.Count);
+            Assert.Equal(157, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -205,7 +206,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (160 sections: 6 versioned codecs, 154 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (163 sections: 6 versioned codecs, 157 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

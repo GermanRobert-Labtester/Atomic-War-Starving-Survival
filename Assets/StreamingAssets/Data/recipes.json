@@ -736,6 +736,24 @@
       "requiredStationId": "workbench"
     },
     {
+      "id": "recipe_filter_pack_carbon",
+      "recipeName": "Filter Pack (carbon recharge)",
+      "ingredients": [
+        {
+          "itemId": "carbon_black_powder",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_mechanical",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "filter_pack",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
+    },
+    {
       "id": "recipe_inhaler",
       "recipeName": "Improvised Inhaler",
       "ingredients": [

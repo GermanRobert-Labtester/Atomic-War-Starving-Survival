@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — CODEX Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-09-06
+# Last generated: 2026-09-07
 
 ---
 
@@ -642,9 +642,23 @@ and Main orchestration are complete. The panels remain UI-07 stubs because
 backend is fully operational. The remaining seven panels in this list have
 no such backend.
 
+**2026-09-06 Plan 204 update — `FungiCultivationBedPanel` UI-07 body
+implemented:** the panel now renders the full domain workflow (bed list with
+phase labels, strain/growth/flushes/preparation/moisture/contamination/room
+spore-load/bioluminescent-light readout) and wires ten real commands to the
+Core system — PrepareSubstrate (cold/heated), CultivateSpores, WaterPlot,
+HarvestPlot, PurgeToxicBloom, DisposeInfectedSubstrate (discard/burn/quarantine),
+and DigNewBed (canonical `room_greenhouse_shelter`). Feedback mirrors Core
+`ActionResult` with player-readable blockers; no raw IDs. Core additions
+documented in `docs/shelter/PLAN_204_MUSHROOM_CULTIVATION_CLOSEOUT.md`;
+test evidence in `Ashfall.Core.Tests/Farming/FungiCultivationPlan204Tests.cs`
+(16 tests; full suite 9070/9070 PASS). Its UI-07 gap is closed for the fungi
+domain; `AmputationTriagePanel`, `RailwayTerminalPanel` and
+`JusticeTribunalPanel` remain empty-refresh stubs with operational backends.
+
 Evidence: src/UI/RailwayTerminalPanel.cs:Bind/RefreshView/_Ready (13/19/21); same full-file structure in all eleven named files; src/Main.PlayerSurfaces.cs:45; src/Main.Plans190_193.cs (full orchestration for all four).
 
-Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven.
+Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven. **Plan 204 closed the fungi body (see update above); the other ten remain STUB/PARTIAL.**
 
 #### UI-08 — HIGH — Eleven expansion readouts lack their management workflows
 
@@ -666,6 +680,11 @@ ConfigureActions returns false for an unknown descriptor, and the host ignores t
 `fungi_cultivation`, and `justice_tribunal` now have operational Core
 systems, save stores, and Main orchestration behind their stub panels.
 Registration remains blocked on UI-07 completion (empty RefreshView).
+**Plan 204 update:** `fungi_cultivation`'s UI-07 body is now implemented
+(real commands, non-empty RefreshView — see UI-07 note), clearing its
+registration blocker; the route registration itself is still a separate
+pending host change (UI-09 contract work), and the other three panels
+remain blocked.
 
 Evidence: Assets/Ashfall.Core/UI/PanelRegistry.cs:ConfigureActions/Resolve (204/227); Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs; src/Main.PlayerSurfaces.cs:45–114/511–554; src/UI/GameDashboardPanel.cs:435–448; src/Main.GameFlow.cs:165; src/Main.Plans190_193.cs.
 

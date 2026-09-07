@@ -129,6 +129,13 @@ namespace Ashfall.Core.Content
             // Plans 74-77 (Flagship: geothermal, ballistics, aeroponics, pneumatic dispatch)
             "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
             "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
+            // Plan B100 — scientific glassworks projected into Silent Foundry.
+            "glassworks_recipes.json",
+            // Plans B86–B89 (Flagship: breaching, aquaponics, HF/DF, metrology)
+            "breaching_equipment_catalog.json",
+            "metrology_standards_catalog.json",
+            "direction_finding_catalog.json",
+            "aquaponics_system_catalog.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -404,6 +411,10 @@ namespace Ashfall.Core.Content
                 ["decontamination_protocol_catalog.json"] = new[] { "DeconProtocolCatalogLoader" },
                 ["geodetic_survey_catalog.json"] = new[] { "GeodeticSurveyCatalogLoader" },
                 ["kinetic_flywheel_catalog.json"] = new[] { "KineticFlywheelCatalogLoader" },
+                ["breaching_equipment_catalog.json"] = new[] { "BreachingCatalogLoader" },
+                ["metrology_standards_catalog.json"] = new[] { "PrecisionMetrologyCatalogLoader" },
+                ["direction_finding_catalog.json"] = new[] { "DirectionFindingCatalogLoader" },
+                ["aquaponics_system_catalog.json"] = new[] { "AquaponicsCatalogLoader" },
                 ["toxic_chemical_catalog.json"] = new[] { "ToxicChemicalCatalogLoader" },
                 ["infiltrator_profiles.json"] = new[] { "InfiltratorCatalogLoader" },
                 ["weather_hardening_upgrades.json"] = new[] { "WeatherHardeningCatalogLoader" },
@@ -828,6 +839,8 @@ namespace Ashfall.Core.Content
                 ["caravan_trade_routes.json"] = new[] { "CaravanTradeNetworkSystem" },
                 ["power_subgrid_nodes.json"] = new[] { "PowerDistributionSubgridSystem" },
                 ["perimeter_defenses.json"] = new[] { "PerimeterDefenseSystem" },
+                // Plans 202-205 flagship
+                ["plastic_pyrolysis_catalog.json"] = new[] { "PlasticPyrolysisSystem" },
                 ["decontamination_protocol_catalog.json"] = new[] { "DeconProtocolCatalogLoader", "DecontaminationSystem" },
                 ["geodetic_survey_catalog.json"] = new[] { "GeodeticSurveyCatalogLoader", "GeodeticSurveyEngine" },
                 // Flagship XI (Plans 154-157)
@@ -836,6 +849,10 @@ namespace Ashfall.Core.Content
                 ["subterranean_zones.json"] = new[] { "SubterraneanZoneCatalogLoader", "SubterraneanSystem" },
                 ["propaganda_campaigns.json"] = new[] { "PsyOpsCatalogLoader", "PsyOpsSystem" },
                 ["kinetic_flywheel_catalog.json"] = new[] { "KineticFlywheelCatalogLoader", "KineticStorageSystem" },
+                ["breaching_equipment_catalog.json"] = new[] { "BreachingCatalogLoader", "CombatBreachingEngine", "TacticalCombatSystem" },
+                ["metrology_standards_catalog.json"] = new[] { "PrecisionMetrologyCatalogLoader", "PrecisionMetrologySystem" },
+                ["direction_finding_catalog.json"] = new[] { "DirectionFindingCatalogLoader", "SignalTriangulationSystem" },
+                ["aquaponics_system_catalog.json"] = new[] { "AquaponicsCatalogLoader", "AquaponicsSystem" },
                 ["toxic_chemical_catalog.json"] = new[] { "ToxicChemicalCatalogLoader", "ChemicalReconEngine" },
                 ["infiltrator_profiles.json"] = new[] { "InfiltratorCatalogLoader", "CounterIntelligenceSystem" },
                 ["weather_hardening_upgrades.json"] = new[] { "WeatherHardeningCatalogLoader", "WeatherHardeningSystem" },
@@ -860,6 +877,7 @@ namespace Ashfall.Core.Content
                 ["ballistics_workbench_catalog.json"] = new[] { "BallisticsWorkbenchSystem" },
                 ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsSystem" },
                 ["pneumatic_network_catalog.json"] = new[] { "PneumaticDispatchSystem" },
+                ["glassworks_recipes.json"] = new[] { "GlassworksCatalogLoader", "SilentFoundrySystem" },
             };
 
             foreach (var cat in _graph.Catalogs)

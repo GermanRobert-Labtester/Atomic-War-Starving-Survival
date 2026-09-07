@@ -354,6 +354,10 @@ namespace AtomicWar.GodotApp
                 // ── Plans B68/B69 — seismic monitoring & cryo vault ──
                 SaveSeismicDynamics();
                 SaveCryoVault();
+                // ── Plan B89 — precision metrology ──
+                SavePrecisionMetrology();
+                // ── Plan B87 — closed-loop aquaponics ──
+                SaveAquaponics();
                 // ── Audit-PR triad repairs ───────────────────────────────
                 SaveSilentFoundry();
                 SaveDisease();
@@ -391,6 +395,7 @@ namespace AtomicWar.GodotApp
                 SaveAmputation();
                 SaveRailway();
                 SaveFungi();
+                SavePlasticPyrolysis();
                 SaveJustice();
                 SaveRecreation();
                 SaveChemWarfare();

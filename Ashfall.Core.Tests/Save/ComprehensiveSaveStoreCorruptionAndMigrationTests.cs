@@ -276,9 +276,10 @@ namespace Ashfall.Core.Tests.Save
             // Plans 50-53 added vehicle_garage, faction_espionage, survivor_mental_health.
             // Plans B66-B69 added heavy metallurgy (foundry-internal state),
             // seismic_dynamics and cryo_vault; the muster/power streams added the rest.
-            Assert.Equal(160, SaveSectionRegistry.All.Count);
+            // Plans B86-B89 added precision_metrology and aquaponics (B88 nests under radio).
+            Assert.Equal(163, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(160, keys.Count);
+            Assert.Equal(163, keys.Count);
         }
     }
 }

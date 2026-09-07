@@ -153,6 +153,7 @@ namespace Ashfall.Core.Save
             new("amputation", "SaveAmputation", "SetupAmputation", "medical", "Infection progression, amputations, prosthetics and bionics"),
             new("railway", "SaveRailway", "SetupRailway", "expedition", "Rail network, track repair, and armored train operations"),
             new("fungi_cultivation", "SaveFungi", "SetupFungi", "farming", "Subterranean fungi beds, substrate, spores, and blooms", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("plastic_pyrolysis", "SavePlasticPyrolysis", "SetupPlasticPyrolysis", "industry", "Retort bay — waste plastic to synthetic fuel fractions (Plan 202)", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("wasteland_justice", "SaveJustice", "SetupJustice", "narrative", "Crime incidents, trials, punishments, banishments, and grudges"),
             new("child_development", "SaveGenerational", "SetupGenerational", "social", "Child development phases, education, trauma, and adulthood", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("prisoner_management", "SavePrisoners", "SetupPrisoners", "factions", "Captive detention, upkeep, interrogation, escape, and recruitment"),
@@ -214,6 +215,8 @@ namespace Ashfall.Core.Save
             new("ballistics_workbench", "SaveBallisticsWorkbench", "SetupBallisticsWorkbench", "combat", "Plan B75 — weapon calibration, headspace wear, custom ammunition, and failure state"),
             new("aeroponics", "SaveAeroponics", "SetupAeroponics", "farming", "Plan B76 — aeroponic chambers, nutrient chemistry, disease, lighting, and harvest"),
             new("pneumatic_dispatch", "SavePneumaticDispatch", "SetupPneumaticDispatch", "infrastructure", "Plan B77 — pneumatic stations, capsule routing, seals, jams, and blackout-safe dispatch"),
+            new("precision_metrology", "SavePrecisionMetrology", "SetupPrecisionMetrology", "shelter", "Plan B89 — precision metrology grades, certificates, and registered-consumer calibration"),
+            new("aquaponics", "SaveAquaponics", "SetupAquaponics", "farming", "Plan B87 — closed-loop aquaponics ecology, biofilter health, and harvest yields"),
         };
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -337,6 +340,7 @@ namespace Ashfall.Core.Save
                 { "amputation", "amputation_save.json" },
                 { "railway", "railway_save.json" },
                 { "fungi_cultivation", "fungi_cultivation_save.json" },
+                { "plastic_pyrolysis", "plastic_pyrolysis_save.json" },
                 { "wasteland_justice", "wasteland_justice_save.json" },
                 { "child_development", "child_development_save.json" },
                 { "prisoner_management", "prisoner_save.json" },
@@ -396,6 +400,8 @@ namespace Ashfall.Core.Save
                 { "ballistics_workbench", "ballistics_workbench_save.json" },
                 { "aeroponics", "aeroponics_save.json" },
                 { "pneumatic_dispatch", "pneumatic_dispatch_save.json" },
+                { "precision_metrology", "precision_metrology_save.json" },
+                { "aquaponics", "aquaponics_save.json" },
             };
 
         /// <summary>

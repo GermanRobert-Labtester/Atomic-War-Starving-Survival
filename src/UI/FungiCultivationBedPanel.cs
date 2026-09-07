@@ -292,7 +292,7 @@ namespace AtomicWar.GodotApp.UI
                     return Ashfall.Core.ActionResult.Failed("no_selection", "fungi.unknown_strain");
                 if (_substrateSelect.Selected < 0 || _substrateSelect.Selected >= subs.Count)
                     return Ashfall.Core.ActionResult.Failed("no_selection", "fungi.unknown_substrate");
-                return RunCommand(() => _system.CultivateSpores(_selectedPlotId, strains[_strainSelect.Selected].strain_id, subs[_substrateSelect.Selected].substrate_id, _system.State.totalHarvests),
+                return RunCommand(() => _system.CultivateSpores(_selectedPlotId, strains[_strainSelect.Selected].strain_id, subs[_substrateSelect.Selected].substrate_id),
                     "Spores planted. Colonization begins.");
             }));
             _detail.AddChild(digRow);

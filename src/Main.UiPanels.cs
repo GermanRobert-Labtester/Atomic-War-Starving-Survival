@@ -98,6 +98,7 @@ namespace AtomicWar.GodotApp
         private AmputationTriagePanel _amputationTriagePanel = null!;
         private RailwayTerminalPanel _railwayTerminalPanel = null!;
         private FungiCultivationBedPanel _fungiCultivationBedPanel = null!;
+        private PlasticPyrolysisPanel _plasticPyrolysisPanel = null!;
         private JusticeTribunalPanel _justiceTribunalPanel = null!;
         private CommsArrayTransceiverPanel _commsArrayTransceiverPanel = null!;
         private CeremonyFestivalPanel _ceremonyFestivalPanel = null!;
@@ -482,6 +483,12 @@ namespace AtomicWar.GodotApp
             _fungiCultivationBedPanel.Visible = false;
             _fungiCultivationBedPanel.OnClose += CloseFungiCultivationPanel;
             AddChild(_fungiCultivationBedPanel);
+
+            // ── Retort bay panel (Plan 202 — waste plastic reclamation) ──
+            _plasticPyrolysisPanel = new PlasticPyrolysisPanel();
+            _plasticPyrolysisPanel.Visible = false;
+            _plasticPyrolysisPanel.OnClose += ClosePlasticPyrolysisPanel;
+            AddChild(_plasticPyrolysisPanel);
 
 
 

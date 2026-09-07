@@ -23,7 +23,19 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("guidance",
                 bindAction: () => { SetupOnboarding(); EnsureOnboardingPanel(); },
-                openAction: () => { EnsureOnboardingPanel(); _onboardingHintPanel?.Show(); },
+                openAction: () =>
+                {
+                    if (AtomicWar.GodotApp.Settings.UserSettingsStore.Current.TutorialMode == 2)
+                    {
+                        if (_statusLabel != null)
+                            _statusLabel.Text = AtomicWar.GodotApp.Localization.AshfallLocalization.Tr(
+                                "onboarding.status.disabled",
+                                "ONBOARDING DISABLED — veteran mode is active.");
+                        return;
+                    }
+                    EnsureOnboardingPanel();
+                    _onboardingHintPanel?.Show();
+                },
                 closeAction: () => { if (_onboardingHintPanel != null) _onboardingHintPanel.Visible = false; });
 
             PanelRegistry.ConfigureActions("emergency_response",
@@ -76,6 +88,11 @@ namespace AtomicWar.GodotApp
                 bindAction: () => _fungiCultivationBedPanel.Bind(EnsureFungi()),
                 openAction: () => _fungiCultivationBedPanel.Visible = true,
                 closeAction: () => _fungiCultivationBedPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("plastic_pyrolysis",
+                bindAction: () => _plasticPyrolysisPanel.Bind(EnsurePlasticPyrolysis()),
+                openAction: () => _plasticPyrolysisPanel.Visible = true,
+                closeAction: () => _plasticPyrolysisPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("justice_tribunal",
                 bindAction: () => _justiceTribunalPanel.Bind(EnsureJustice()),
@@ -444,9 +461,9 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _weatherSondePanel.Visible = false);
 
             PanelRegistry.ConfigureActions("power_grid",
-                bindAction: () => { if (_powerGrid != null) _powerGridPanel.Bind(_powerGrid); },
-                openAction: () => _powerGridPanel.Open(),
-                closeAction: () => _powerGridPanel.Visible = false);
+                bindAction: () => OpenPowerGrid(),
+                openAction: () => _powerGridPanel?.Open(),
+                closeAction: () => { if (_powerGridPanel != null) _powerGridPanel.Visible = false; });
 
             PanelRegistry.ConfigureActions("geothermal_orc",
                 bindAction: () => { ComposePlans74To77(); _geothermalOrcPanel.Bind(_geothermalOrc); },

@@ -121,6 +121,11 @@ namespace Ashfall.Core.Farming
         private readonly Inventory.Inventory _inventory;
         private readonly ILog _log;
 
+        /// <summary>Host-injected campaign day provider (deterministic — never wall-clock).</summary>
+        public Func<int>? DayProvider { get; set; }
+
+        private int CurrentDay() => DayProvider?.Invoke() ?? 0;
+
         private readonly Dictionary<string, FungusStrainDef> _strains = new Dictionary<string, FungusStrainDef>(StringComparer.Ordinal);
         private readonly Dictionary<string, SubstrateDef> _substrates = new Dictionary<string, SubstrateDef>(StringComparer.Ordinal);
         private FungiCultivationState _state = new FungiCultivationState();
@@ -255,7 +260,7 @@ namespace Ashfall.Core.Farming
             return null;
         }
 
-        public ActionResult CultivateSpores(string plotId, string strainId, string substrateId, int currentDay)
+        public ActionResult CultivateSpores(string plotId, string strainId, string substrateId, int currentDay = -1)
         {
             var plot = _state.plots.Find(p => p.plotId == plotId);
             if (plot == null) return ActionResult.Blocked("plot_not_found", "fungi.plot_not_found");
@@ -299,7 +304,7 @@ namespace Ashfall.Core.Farming
             plot.isHarvestReady = false;
             plot.hasToxicBloom = false;
             plot.remainingFlushes = Math.Max(1, strain.flush_count);
-            plot.plantedDay = currentDay;
+            plot.plantedDay = currentDay >= 0 ? currentDay : CurrentDay();
 
             OnSporesCultivated?.Invoke(plotId, strainId);
             return ActionResult.Success("fungi.spores_cultivated");

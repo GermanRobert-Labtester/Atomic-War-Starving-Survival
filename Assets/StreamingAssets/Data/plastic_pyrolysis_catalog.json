@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "machine": {
+    "machine_id": "machine_plastic_retort",
+    "display_name": "Back-Draft Retort Bay",
+    "construction_required_items": {
+      "scrap_metal": 8,
+      "scrap_wood": 4,
+      "electrical_wire": 2
+    },
+    "construction_labor_days": 2,
+    "max_condition": 100,
+    "maintenance_interval_days": 6,
+    "maintenance_required_items": {
+      "scrap_metal": 2
+    },
+    "room_id": "room_generator",
+    "ventilation_load_per_active_day": 0.04
+  },
+  "feedstock_profiles": [
+    {
+      "feedstock_profile_id": "feedstock_clean_thermoplastic",
+      "display_name": "Clean Sheet Thermoplastic",
+      "accepted_item_ids": [
+        "plastic_material",
+        "item_bio_plastic"
+      ],
+      "contamination_level": "clean",
+      "batch_input_units": 10,
+      "energy_cost_kwh_per_day": 6,
+      "process_duration_days": 2,
+      "liquid_fuel_yield_units": 4,
+      "light_fraction_yield_units": 2,
+      "solid_carbon_yield_units": 3,
+      "offgas_energy_credit_kwh": 2,
+      "hazard_risk_bp": 100,
+      "equipment_wear_per_batch": 1.5,
+      "operator_skill_risk_reduction_pct": 40,
+      "tags": [
+        "pyrolysis",
+        "clean_feedstock"
+      ],
+      "input_mass_kg": 3.0,
+      "liquid_mass_kg": 1.2,
+      "light_mass_kg": 0.6,
+      "carbon_mass_kg": 0.6
+    },
+    {
+      "feedstock_profile_id": "feedstock_mixed_waste_plastic",
+      "display_name": "Mixed Waste Plastic",
+      "accepted_item_ids": [
+        "scrap_plastic"
+      ],
+      "contamination_level": "mixed",
+      "batch_input_units": 12,
+      "energy_cost_kwh_per_day": 6,
+      "process_duration_days": 2,
+      "liquid_fuel_yield_units": 3,
+      "light_fraction_yield_units": 3,
+      "solid_carbon_yield_units": 4,
+      "offgas_energy_credit_kwh": 2,
+      "hazard_risk_bp": 300,
+      "equipment_wear_per_batch": 2.5,
+      "operator_skill_risk_reduction_pct": 30,
+      "tags": [
+        "pyrolysis",
+        "mixed_feedstock"
+      ],
+      "input_mass_kg": 2.4,
+      "liquid_mass_kg": 0.9,
+      "light_mass_kg": 0.6,
+      "carbon_mass_kg": 0.5
+    },
+    {
+      "feedstock_profile_id": "feedstock_contaminated_plastic",
+      "display_name": "Fouled Plastic Scrap",
+      "accepted_item_ids": [
+        "scrap_plastic",
+        "plastic_material"
+      ],
+      "contamination_level": "contaminated",
+      "batch_input_units": 12,
+      "energy_cost_kwh_per_day": 7,
+      "process_duration_days": 3,
+      "liquid_fuel_yield_units": 2,
+      "light_fraction_yield_units": 2,
+      "solid_carbon_yield_units": 5,
+      "offgas_energy_credit_kwh": 2,
+      "hazard_risk_bp": 800,
+      "equipment_wear_per_batch": 4.0,
+      "operator_skill_risk_reduction_pct": 20,
+      "tags": [
+        "pyrolysis",
+        "contaminated_feedstock"
+      ],
+      "input_mass_kg": 2.4,
+      "liquid_mass_kg": 0.6,
+      "light_mass_kg": 0.4,
+      "carbon_mass_kg": 0.7
+    }
+  ],
+  "outputs": {
+    "liquid_fuel_item_id": "synthetic_fuel_canister",
+    "light_fraction_item_id": "fuel_1l",
+    "solid_carbon_item_id": "carbon_black_powder"
+  },
+  "hazard_outcomes": {
+    "quality_loss_weight_pct": 55,
+    "machine_damage_weight_pct": 25,
+    "machine_damage_condition_loss": 15,
+    "fire_event_weight_pct": 12,
+    "gas_release_weight_pct": 8,
+    "gas_release_severity": 0.35
+  },
+  "offgas_credit_cap_pct": 40,
+  "storage_buffer_max_batches": 3,
+  "tags": [
+    "pyrolysis",
+    "shelter_industry",
+    "fuel_economy"
+  ]
+}

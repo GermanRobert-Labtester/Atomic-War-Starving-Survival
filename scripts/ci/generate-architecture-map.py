@@ -379,6 +379,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--save-store-checksum-selftest"],
         "tests": ["FungiCultivationSystemTests"]
     },
+    "plastic_pyrolysis": {
+        "domain": "Plans 202-205 Flagship (Plan 202)",
+        "core": ["PlasticPyrolysisSystem"],
+        "catalog": ["plastic_pyrolysis_catalog.json"],
+        "host": ["Main"],
+        "setup": "SetupPlasticPyrolysis",
+        "ticked": True,
+        "tick_type": "Daily Sim Tick",
+        "store": ["PlasticPyrolysisSaveStore"],
+        "ui": ["PlasticPyrolysisPanel"],
+        "routes": ["plastic_pyrolysis"],
+        "cli": ["--save-store-checksum-selftest"],
+        "tests": ["PlasticPyrolysisEngineTests"]
+    },
     "wasteland_justice": {
         "domain": "Plans 178-201 Expansion Block",
         "core": ["JusticeSystem"],
@@ -1704,7 +1718,15 @@ ARCHITECTURE_GRAPH = {
     "agriculture": { "domain": "Farming", "core": ["AgricultureSystem"], "catalog": ["crop_strains.json"], "host": ["Main"], "setup": "SetupAgriculture", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["AgricultureSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["AgricultureSystemTests"] },
     "settlement_defenses": { "domain": "Combat", "core": ["DefenseSystem"], "catalog": ["defenses.json"], "host": ["DefenseHostSession"], "setup": "SetupDefense", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["DefenseSaveStore"], "ui": ["DefenseGridPanel"], "routes": ["defense_grid"], "cli": [], "tests": ["DefenseSystemTests"] },
     "psychological_arcs": { "domain": "Psychology", "core": ["PsychologicalArcSystem"], "catalog": ["mental_arcs.json"], "host": ["PsychologyArcHostSession"], "setup": "SetupPsychologyArcs", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["PsychologyArcSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["PsychologicalArcSystemTests"] },
-    "wildlife_ecosystem": { "domain": "Hunting", "core": ["WildlifeEcosystemSystem"], "catalog": ["wildlife_ecosystem.json"], "host": ["WildlifeEcosystemHostSession"], "setup": "SetupWildlifeEcosystem", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["WildlifeEcosystemSaveStore"], "ui": ["BestiaryPanel"], "routes": ["bestiary"], "cli": [], "tests": ["WildlifeEcosystemSystemTests"] }
+    "wildlife_ecosystem": { "domain": "Hunting", "core": ["WildlifeEcosystemSystem"], "catalog": ["wildlife_ecosystem.json"], "host": ["WildlifeEcosystemHostSession"], "setup": "SetupWildlifeEcosystem", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["WildlifeEcosystemSaveStore"], "ui": ["BestiaryPanel"], "routes": ["bestiary"], "cli": [], "tests": ["WildlifeEcosystemSystemTests"] },
+    "seismic_dynamics": { "domain": "Shelter", "core": ["SeismicDynamicsSystem"], "catalog": ["seismic_fault_catalog.json"], "host": ["Main"], "setup": "SetupSeismicDynamics", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["SeismicDynamicsSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["ShelterSeismicDynamicsPlan56Tests", "SeismicMonitoringB68Tests"] },
+    "cryo_vault": { "domain": "Shelter", "core": ["CryoVaultSystem"], "catalog": ["cryo_cultivars.json"], "host": ["Main"], "setup": "SetupCryoVault", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["CryoVaultSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["CryoVaultB69Tests"] },
+    "geothermal_orc": { "domain": "Power", "core": ["GeothermalOrcSystem"], "catalog": ["geothermal_strata_catalog.json"], "host": ["Main"], "setup": "SetupGeothermalOrc", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["GeothermalOrcSaveStore"], "ui": ["GeothermalOrcPanel"], "routes": [], "cli": [], "tests": ["Plans74To77SystemsTests"] },
+    "ballistics_workbench": { "domain": "Combat", "core": ["BallisticsWorkbenchSystem"], "catalog": ["ballistics_workbench_catalog.json"], "host": ["Main"], "setup": "SetupBallisticsWorkbench", "ticked": False, "tick_type": "On-Demand", "store": ["BallisticsWorkbenchSaveStore"], "ui": ["BallisticsWorkbenchPanel"], "routes": [], "cli": [], "tests": ["Plans74To77SystemsTests"] },
+    "aeroponics": { "domain": "Farming", "core": ["AeroponicsSystem"], "catalog": ["aeroponics_nutrient_catalog.json"], "host": ["Main"], "setup": "SetupAeroponics", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["AeroponicsSaveStore"], "ui": ["AeroponicsPanel"], "routes": [], "cli": [], "tests": ["Plans74To77SystemsTests"] },
+    "pneumatic_dispatch": { "domain": "Infrastructure", "core": ["PneumaticDispatchSystem"], "catalog": ["pneumatic_network_catalog.json"], "host": ["Main"], "setup": "SetupPneumaticDispatch", "ticked": False, "tick_type": "On-Demand", "store": ["PneumaticDispatchSaveStore"], "ui": ["PneumaticDispatchPanel"], "routes": [], "cli": [], "tests": ["Plans74To77SystemsTests"] },
+    "precision_metrology": { "domain": "Shelter", "core": ["PrecisionMetrologySystem"], "catalog": ["metrology_standards_catalog.json"], "host": ["Main"], "setup": "SetupPrecisionMetrology", "ticked": True, "tick_type": "Daily Calibration Drift", "store": ["PrecisionMetrologySaveStore"], "ui": [], "routes": [], "cli": ["--precision-metrology-selftest"], "tests": ["PrecisionMetrologySystemTests"] },
+    "aquaponics": { "domain": "Farming", "core": ["AquaponicsSystem"], "catalog": ["aquaponics_system_catalog.json"], "host": ["Main"], "setup": "SetupAquaponics", "ticked": True, "tick_type": "Daily Ecology Tick", "store": ["AquaponicsSaveStore"], "ui": [], "routes": [], "cli": ["--aquaponics-selftest"], "tests": ["AquaponicsSystemTests", "PlansB86ToB89ContinuityTests"] }
 }
 
 def scan_codebase_symbols():

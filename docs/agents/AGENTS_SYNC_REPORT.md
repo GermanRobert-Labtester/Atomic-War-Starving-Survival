@@ -2,7 +2,7 @@
 
 **Canonical source:** `AGENTS.md`<br>
 **Synced files:** 12 derived client files<br>
-**Sync date:** 2026-09-06<br>
+**Sync date:** 2026-09-07<br>
 **Tool:** `scripts/ci/sync-agent-rulebooks.py`
 
 ---

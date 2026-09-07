@@ -18,6 +18,10 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("holdfast_core", new HoldfastCoreDayOwner(this), phase: 1);
             _campaignDay.Register("maritime_deep_coast", new DeepCoastMaritimeDayOwner(this), phase: 1);
             _campaignDay.Register("power_grid", new PowerGridDayOwner(this), phase: 1);
+            // Plan B98: nuclear output is an external, fuel-free projection.
+            // Its ordinal sorts before power_grid so restored RTG/sealed-cell
+            // output is visible when the day's load is resolved.
+            _campaignDay.Register("nuclear_core", new NuclearCoreDayOwner(this), phase: 1);
             // Plans B74-B77: ORC output is published before the grid owner
             // resolves the day's load, while chamber and tube milestones run
             // in the production phase.
@@ -36,6 +40,12 @@ namespace AtomicWar.GodotApp
             // Plan B69 — cryo thermal/viability update follows the foundry
             // (shared grid: brownout from the furnace reaches the vault same-day).
             _campaignDay.Register("cryo_vault", new CryoVaultDayOwner(this), phase: 2);
+            // Plan B89 — precision metrology drift + workshop projection after
+            // seismic (phase 1) so quake disturbance lands before daily drift.
+            _campaignDay.Register("precision_metrology", new PrecisionMetrologyDayOwner(this), phase: 2);
+            // Plan B87 — aquaponics ecology after power/thermal owners so
+            // brownout and room heat are queryable for the same day.
+            _campaignDay.Register("aquaponics", new AquaponicsDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_facilities", new ShelterFacilitiesDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_fire", new ShelterFireDayOwner(this), phase: 2);
             _campaignDay.Register("starting_level_rations", new StartingLevelRationsDayOwner(this), phase: 2);
@@ -140,6 +150,24 @@ namespace AtomicWar.GodotApp
                 _m.TickPowerSubgrids(day);
 
                 events.Add(new DayStateChangeEvent("power_ticked", "power_grid", null, null, day));
+            }
+        }
+
+        private sealed class NuclearCoreDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public NuclearCoreDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                var nuclear = _m.EnsureNuclearCore();
+                _m.PublishNuclearCoreGeneration();
+                events.Add(new DayStateChangeEvent(
+                    "nuclear_generation_published",
+                    "nuclear_core",
+                    null,
+                    null,
+                    nuclear.GetTotalGenerationWatts()));
             }
         }
 
@@ -286,6 +314,39 @@ namespace AtomicWar.GodotApp
                 _m._cryoVault!.TickDay(day);
                 if (_m._cryoVaultDirty) _m.SaveCryoVault();
                 events.Add(new DayStateChangeEvent("cryo_vault_ticked", "cryo_vault", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Plan B89 — precision metrology daily drift and workshop Calibration
+        /// projection. Runs in phase 2 after seismic so quake disturbance is
+        /// applied first, then passive drift.
+        /// </summary>
+        private sealed class PrecisionMetrologyDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public PrecisionMetrologyDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickPrecisionMetrology(day);
+                events.Add(new DayStateChangeEvent("precision_metrology_ticked", "precision_metrology", null, null, day));
+            }
+        }
+
+        /// <summary>
+        /// Plan B87 — closed-loop aquaponics daily ecology tick. Phase 2 so
+        /// power/thermal query results for the day are already settled.
+        /// </summary>
+        private sealed class AquaponicsDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public AquaponicsDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickAquaponics(day);
+                events.Add(new DayStateChangeEvent("aquaponics_ticked", "aquaponics", null, null, day));
             }
         }
 
@@ -897,6 +958,9 @@ namespace AtomicWar.GodotApp
 
                 // ── Plans 190-193: Infection & Amputation, Railways, Subterranean Fungi, Wasteland Justice ──
                 _m.TickPlans190_193(day);
+
+                // ── Plan 202: Plastic Pyrolysis (retort bay, grid-power projected) ──
+                _m.TickPlasticPyrolysis(day);
 
                 // ── Plans 178-181: Childhood Rearing, Prisoner Management, Mutation Trees, Stealth ──
                 _m.TickPlans178_181(day);

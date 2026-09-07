@@ -2723,6 +2723,66 @@
       "empShielded": false
     },
     {
+      "id": "scrap_plastic",
+      "displayName": "Waste Plastic Scrap",
+      "description": "Torn sheeting, cracked containers, bottle shards — the shelter sheds plastic the way it sheds heat. Sorted and baled, it is feedstock for the retort. Worth one, a fifth of a kilo, fifty to a stack.",
+      "type": "Material",
+      "stackMax": 50,
+      "weight": 0.2,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "hungerRestore": 0,
+      "thirstRestore": 0,
+      "healthEffect": 0,
+      "radCleanse": 0,
+      "moraleEffect": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "tradeValue": 1,
+      "empShielded": false
+    },
+    {
+      "id": "synthetic_fuel_canister",
+      "displayName": "Retort Synthetic Fuel",
+      "description": "A dented can of reclamation fuel rendered from waste plastic in the back-draft retort. It burns dirty and runs engines rough — expect more wear, fewer kilometres to the can. Worth eight, four kilos, ten to a stack.",
+      "type": "Fuel",
+      "stackMax": 10,
+      "weight": 4.0,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "hungerRestore": 0,
+      "thirstRestore": 0,
+      "healthEffect": 0,
+      "radCleanse": 0,
+      "moraleEffect": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "tradeValue": 8,
+      "empShielded": false
+    },
+    {
+      "id": "carbon_black_powder",
+      "displayName": "Carbon Black Powder",
+      "description": "Fine soot pressed from the retort's draft chamber. Seals gaskets, cuts rubber compound, recharge respirator inserts. Breathing it is its own small emergency. Worth three, half a kilo, twenty to a stack.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.5,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "hungerRestore": 0,
+      "thirstRestore": 0,
+      "healthEffect": 0,
+      "radCleanse": 0,
+      "moraleEffect": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "tradeValue": 3,
+      "empShielded": false
+    },
+    {
       "id": "protective_childs_coat",
       "displayName": "Child's Protective Coat",
       "description": "A small padded coat with a detachable hood, sized for a child. It provides insulation and a modicum of rad protection the way a promise provides safety: only if the adult keeps it. Worth nine, four tenths of a kilo, five to a stack. Parents trade for it. Survivors keep it. The size never changes. The need does.",
@@ -4512,6 +4572,46 @@
       "stackMax": 1,
       "weight": 0.3,
       "tradeValue": 16,
+      "empShielded": true
+    },
+    {
+      "id": "item_gauge_block_set",
+      "displayName": "Gauge Block Set",
+      "description": "A wooden case of hardened steel gauge blocks, wrung together to build reference lengths. The contact faces are still flat enough for shop certification work if the bench stays quiet.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 2.4,
+      "tradeValue": 42,
+      "empShielded": true
+    },
+    {
+      "id": "item_optical_flat",
+      "displayName": "Optical Flat",
+      "description": "A fused-quartz disk ground and polished for interference fringes. Used to check surface flatness on precision parts. Drop it once and the certificate is gone.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 0.8,
+      "tradeValue": 36,
+      "empShielded": true
+    },
+    {
+      "id": "item_surface_plate",
+      "displayName": "Granite Surface Plate",
+      "description": "A thick granite plate with a scraped reference face. The datum everything else is measured against. Too heavy to move casually; too valuable to leave undamped during excavation.",
+      "type": "Equipment",
+      "stackMax": 1,
+      "weight": 45.0,
+      "tradeValue": 55,
+      "empShielded": true
+    },
+    {
+      "id": "item_micrometer_set",
+      "displayName": "Micrometer Set",
+      "description": "Outside micrometers in a felt-lined tin, zeroed against a reference bar. Good enough for field and shop grades when the caliper alone is not.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 1.1,
+      "tradeValue": 28,
       "empShielded": true
     },
     {
@@ -7296,6 +7396,16 @@
       "empShielded": true
     },
     {
+      "id": "item_precision_rangefinder_achromat",
+      "displayName": "Precision Rangefinder Achromat",
+      "description": "Hand-finished optical doublet for analog range observation and steadier weapon calibration.",
+      "type": "Equipment",
+      "stackMax": 2,
+      "weight": 0.8,
+      "tradeValue": 48,
+      "empShielded": true
+    },
+    {
       "id": "item_cerium_oxide_polishing_rouge",
       "displayName": "Cerium Oxide Polishing Rouge",
       "description": "Ultra-fine optical polishing compound used to achieve scratch-free optical surfaces and figure correction.",
@@ -7698,6 +7808,33 @@
       "tradeValue": 5
     },
     {
+      "id": "item_insect_larvae_meal",
+      "displayName": "Insect Larvae Meal",
+      "description": "Dried black soldier larvae milled into a coarse fish feed. Protein-dense, shelf-stable, and one of the few rationed inputs a closed aquaponics loop cannot invent from scrap.",
+      "type": "Consumable",
+      "stackMax": 50,
+      "weight": 0.2,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_biofilter_media",
+      "displayName": "Biofilter Media",
+      "description": "Inert ceramic beads and plastic lattice for bacterial colonization. Backwashing a fouled bed without fresh media only redistributes the sludge.",
+      "type": "Component",
+      "stackMax": 20,
+      "weight": 0.5,
+      "tradeValue": 8
+    },
+    {
+      "id": "item_aquaponic_fish",
+      "displayName": "Aquaponic Fish",
+      "description": "A farmed fish pulled from a raft tank before the dissolved oxygen fell. The flesh is pale and clean relative to surface water, but it still needs kitchen work before it is a meal.",
+      "type": "Consumable",
+      "stackMax": 20,
+      "weight": 0.4,
+      "tradeValue": 7
+    },
+    {
       "id": "item_ballistics_cleaning_kit",
       "displayName": "Ballistics Cleaning Kit",
       "description": "A bench tin containing bore solvent, lint-free patches, gauges, and a small torque key. It is enough to service one worn weapon if the hands using it are patient.",
@@ -7732,6 +7869,51 @@
       "stackMax": 3,
       "weight": 2.5,
       "tradeValue": 28
+    },
+    {
+      "id": "item_manual_bolt_shears",
+      "displayName": "Manual Bolt Shears",
+      "description": "Heavy compound shears for cutting fence wire and light rebar by hand. Slow, quiet, and hard on the wrists.",
+      "type": "Tool",
+      "stackMax": 2,
+      "weight": 2.4,
+      "tradeValue": 22
+    },
+    {
+      "id": "item_hydraulic_wire_cutter",
+      "displayName": "Hydraulic Wire Cutter",
+      "description": "A compact hydraulic cutter head for concertina and reinforced fence. Quieter than a ram, hungrier for maintenance.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 4.8,
+      "tradeValue": 48
+    },
+    {
+      "id": "item_mechanical_breach_ram",
+      "displayName": "Mechanical Breach Ram",
+      "description": "A braced mechanical ram for doors, sandbags, and light masonry. Loud enough to announce itself two lanes over.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 7.5,
+      "tradeValue": 55
+    },
+    {
+      "id": "item_expedition_winch_kit",
+      "displayName": "Expedition Winch Kit",
+      "description": "Cable, snatch block, and mount hardware for pulling wreckage or hedgehog obstacles when a vehicle can take the load.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 6.2,
+      "tradeValue": 60
+    },
+    {
+      "id": "item_linear_breach_section",
+      "displayName": "Linear Breach Section",
+      "description": "A sealed, single-use clearance charge section from prewar stocks. Gameplay consumable only — no construction or initiation details survive in the kit notes.",
+      "type": "Consumable",
+      "stackMax": 4,
+      "weight": 1.8,
+      "tradeValue": 70
     }
   ]
 }
