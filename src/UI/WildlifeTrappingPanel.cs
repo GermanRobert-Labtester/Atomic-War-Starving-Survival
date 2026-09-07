@@ -11,6 +11,11 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
 
+        /// <summary>The single perimeter site this panel manages.</summary>
+        private const string ManagedSiteId = "snare_perimeter_north";
+        /// <summary>Catalog trap deployed by the Set/Replace action when the catalog is bound.</summary>
+        private const string DefaultTrapId = "trap_snare";
+
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
@@ -73,9 +78,9 @@ namespace AtomicWar.GodotApp.UI
             _setTrapBtn.Pressed += () =>
             {
                 if (_host?.Catalog != null)
-                    _host.TrySetTrap("snare_perimeter_north", "trap_snare", "bait_grain_lure", "Hunter");
+                    _host.TrySetTrap(ManagedSiteId, DefaultTrapId, "bait_grain_lure", "Hunter");
                 else
-                    _host?.SetTrap("snare_perimeter_north", "bait_grain_lure", "Hunter");
+                    _host?.SetTrap(ManagedSiteId, "bait_grain_lure", "Hunter");
             };
             buttonRow.AddChild(_setTrapBtn);
 
@@ -161,6 +166,27 @@ namespace AtomicWar.GodotApp.UI
             // Show repair button only when a broken catalog-linked trap exists
             if (_repairBtn != null)
                 _repairBtn.Visible = hasBroken;
+
+            // Deploy/replace control state — a direct projection of the Core
+            // SetTrap replaceability contract (trap_active guard), NOT a
+            // parallel rule: a site is replaceable when it has a pending
+            // catch, was never armed (legacy setDay <= 0), or its trap is
+            // broken. A healthy active trap blocks the action.
+            var managedSite = s.trapSites.Find(t => t.siteId == ManagedSiteId);
+            if (_setTrapBtn != null)
+            {
+                bool replaceable = managedSite == null
+                    || managedSite.hasCatch
+                    || managedSite.setDay <= 0
+                    || managedSite.isBroken;
+                _setTrapBtn.Text = managedSite != null && replaceable
+                    ? "Replace Trap at Perimeter"
+                    : "Set Snare at Perimeter";
+                _setTrapBtn.Disabled = !replaceable;
+                _setTrapBtn.TooltipText = replaceable
+                    ? string.Empty
+                    : "Trap active — check the snare or wait for it to break.";
+            }
 
             if (_detailText != null)
             {

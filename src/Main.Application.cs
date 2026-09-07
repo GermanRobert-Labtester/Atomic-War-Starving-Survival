@@ -38,6 +38,10 @@ namespace AtomicWar.GodotApp
             // Register all player-navigable panel descriptors before any navigation occurs.
             Ashfall.Core.UI.PanelRegistryBootstrap.RegisterAll();
 
+            // Parse first so --user-data-dir and other host overrides are in
+            // place before settings and mod discovery resolve their roots.
+            var cliAction = HostCli.Parse(OS.GetCmdlineUserArgs());
+
             ResolveDataDir();
 
             // Validate required catalogs before any systems are initialized.
@@ -46,8 +50,6 @@ namespace AtomicWar.GodotApp
 
             // Parse once and keep the action: the catch below needs to name the
             // gate that threw, and re-parsing there could disagree with what ran.
-            var cliAction = HostCli.Parse(OS.GetCmdlineUserArgs());
-
             // Every CLI self-test runs inside this guard. Without it an exception
             // thrown by a gate escapes _Ready(), skipping GetTree().Quit(), so the
             // process emits no FAIL line and hangs until CI kills it — while any
@@ -100,6 +102,21 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.WildlifeSelfTest:
                     GetTree().Quit(HostCli.RunWildlifeSelfTest(_dataDir));
+                    return;
+                case HostCliAction.TrappingHostSelfTest:
+                    GetTree().Quit(HostCli.RunTrappingHostSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PrecisionMetrologySelfTest:
+                    GetTree().Quit(HostCli.RunPrecisionMetrologySelfTest(_dataDir));
+                    return;
+                case HostCliAction.DirectionFindingSelfTest:
+                    GetTree().Quit(HostCli.RunDirectionFindingSelfTest(_dataDir));
+                    return;
+                case HostCliAction.AquaponicsSelfTest:
+                    GetTree().Quit(HostCli.RunAquaponicsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CombatBreachingSelfTest:
+                    GetTree().Quit(HostCli.RunCombatBreachingSelfTest(_dataDir));
                     return;
                 case HostCliAction.SilentFoundrySelfTest:
                     GetTree().Quit(HostCli.RunSilentFoundrySelfTest(_dataDir));
@@ -419,6 +436,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.Day1ToDay2MilestoneSelfTest:
                     GetTree().Quit(HostCli.RunDay1ToDay2MilestoneSelfTest(_dataDir));
                     return;
+                case HostCliAction.ModSelfTest:
+                    GetTree().Quit(HostCli.RunModSelfTest());
+                    return;
                 case HostCliAction.UiLayoutSelfTest:
                     GetTree().Quit(HostCli.RunUiLayoutSelfTest(_dataDir));
                     return;
@@ -689,7 +709,7 @@ namespace AtomicWar.GodotApp
 
         private void ResolveDataDir()
         {
-            _dataDir = CatalogPath.ResolveDataDir();
+            _dataDir = ModRuntime.Prepare(CatalogPath.ResolveDataDir());
         }
 
         /// <summary>

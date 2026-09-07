@@ -71,6 +71,11 @@ namespace AtomicWar.GodotApp
         DefenseSelfTest,
         PsychologySelfTest,
         WildlifeSelfTest,
+        TrappingHostSelfTest,
+        PrecisionMetrologySelfTest,
+        DirectionFindingSelfTest,
+        AquaponicsSelfTest,
+        CombatBreachingSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -148,6 +153,7 @@ namespace AtomicWar.GodotApp
         UiSnapshotSelfTest,
         UiSnapshotRegenerate,
         OnboardingJourneySelfTest,
+        ModSelfTest,
         ContentUtilizationSelfTest,
         SelfTestManifest,
         ListSelfTests,
@@ -261,6 +267,16 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.PsychologySelfTest;
             if (Has(args, "--wildlife-selftest"))
                 return HostCliAction.WildlifeSelfTest;
+            if (Has(args, "--trapping-selftest"))
+                return HostCliAction.TrappingHostSelfTest;
+            if (Has(args, "--precision-metrology-selftest"))
+                return HostCliAction.PrecisionMetrologySelfTest;
+            if (Has(args, "--direction-finding-selftest"))
+                return HostCliAction.DirectionFindingSelfTest;
+            if (Has(args, "--aquaponics-selftest"))
+                return HostCliAction.AquaponicsSelfTest;
+            if (Has(args, "--combat-breaching-selftest"))
+                return HostCliAction.CombatBreachingSelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
@@ -423,6 +439,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExpeditionPanelUiTest;
             if (Has(args, "--onboarding-journey-selftest") || Has(args, "--onboarding-selftest"))
                 return HostCliAction.OnboardingJourneySelfTest;
+            if (Has(args, "--mod-selftest") || Has(args, "--mods-selftest"))
+                return HostCliAction.ModSelfTest;
             if (Has(args, "--ui-snapshot-regenerate") || Has(args, "--ui-snapshots-regen"))
                 return HostCliAction.UiSnapshotRegenerate;
             if (Has(args, "--ui-snapshot-uitest") || Has(args, "--ui-snapshots"))
@@ -506,16 +524,19 @@ namespace AtomicWar.GodotApp
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
             GD.Print("  --agriculture-selftest   Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition");
+            GD.Print("  --aquaponics-selftest    Plan B87 closed-loop aquaponics: catalog, growth, power/DO crash, harvest, nutrient export, save round-trip");
             GD.Print("  --arbitration-selftest   CrossingArbitrationHeadlessDemo");
             GD.Print("  --black-flotilla-selftest / --maritime-selftest / --expansion-09-selftest The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip");
             GD.Print("  --brine-selftest / --salt-steam-selftest         BrineWaterHeadlessDemo (S2 salt & steam)");
             GD.Print("  --census-selftest        CensusHeadlessDemo");
             GD.Print("  --cluster-selftest / --order-12c-selftest       Cluster12CHeadlessDemo (S3 order 12-C + quest snapshot)");
+            GD.Print("  --combat-breaching-selftest Plan B86 combat breaching: catalog, quiet/loud clearance, vehicle gate, mid-breach save fields");
             GD.Print("  --combat-selftest        Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip");
             GD.Print("  --crossing-selftest      CrossingHeadlessDemo (Exp 04)");
             GD.Print("  --deep-coast-host-selftest / --deep-coast-playthrough Deep-coast host playthrough: survey → decision → dive → scavenge → save/restore");
             GD.Print("  --deep-coast-selftest / --deep-coast-route-selftest District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save");
             GD.Print("  --defense-selftest       Shelter Defense Expansion (Plan 163): trap catalog, installation, engagement, alarm, capture handoff");
+            GD.Print("  --direction-finding-selftest Plan B88 HF/DF: catalog, baselines, skywave, fingerprint≠fix, RadioSave V3 triangulation nest");
             GD.Print("  --disease-selftest / --disease-expansion-selftest Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
             GD.Print("  --duty-roster-selftest   DutyRosterHeadlessDemo (Exp 02)");
             GD.Print("  --endings-selftest / --shelf-selftest       EndingsHeadlessDemo (S4 endings exclusive + roundtrip)");
@@ -523,6 +544,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --greenhouse-selftest / --glass-orchard-selftest    GreenhouseHeadlessDemo (Exp 05)");
             GD.Print("  --psychology-selftest    Psychology Arc Expansion (Plan 164): breakdown arcs, sustained-stress triggers, catharsis, treatment");
             GD.Print("  --wildlife-selftest      Wildlife Ecosystem (Plan 165): fauna catalog, predation/radiation pressure, apex, taming, save round-trip");
+            GD.Print("  --trapping-selftest      Wildlife trapping host path: TrySetTrap billing, broken-trap replacement, atomic failure, trap-recipe identity");
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
             GD.Print("  --holdfast-selftest      Holdfast S1 survival loop, ice road, and trade verification");
             GD.Print("  --ice-road-selftest      IceRoadHeadlessDemo (Exp 01)");
@@ -539,6 +561,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --muster-selftest / --expansion-06-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
             GD.Print("  --faction-ecology-selftest                      Plan 25 faction ecology vertical slice (action board, E-P1 chain, witness, camp scene, muster path)");
             GD.Print("  --phase0-selftest        Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
+            GD.Print("  --precision-metrology-selftest Plan B89 precision metrology: grades, registered consumers only, workshop projection, disturbance, save round-trip");
             GD.Print("  --silent-foundry-selftest Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip");
             GD.Print("  --standing-record-selftest StandingRecordHeadlessDemo (Exp 03)");
             GD.Print("  --verdict-selftest / --expansion-08-selftest The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save");
@@ -592,7 +615,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --duty-roster-uitest     Duty Roster panel UI construction, role assignments, and shift scheduling");
             GD.Print("  --economy-uitest         Economy market panel UI construction, price shock display, and barter grid");
             GD.Print("  --expedition-panel-uitest / --expedition-panel-lifecycle Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface");
-            GD.Print("  --onboarding-journey-selftest / --onboarding-selftest First-hour onboarding journey: protocol → inspect → rationing → assignment → weather → inventory-use → day-advance, with resume after save/load and no-resource-fabrication");
+            GD.Print("  --onboarding-journey-selftest / --onboarding-selftest First-hour onboarding journey: water → power → food → research → expedition, with resume after save/load and state-true signals");
+            GD.Print("  --mod-selftest / --mods-selftest Deterministic JSON mod manifest validation, whitelist enforcement, layering, failure isolation, and catalog-integrity staging");
             GD.Print("  --holdfast-runtime-uitest / --holdfast-runtime-ui-test / --holdfast-runtime-selftest  Godot Holdfast terminal browse → trade → failed trade → save → reload");
             GD.Print("  --inventory-uitest / --inventory-selftest       Inventory panel UI construction, item grid, and slot binding");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");

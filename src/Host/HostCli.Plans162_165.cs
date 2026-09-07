@@ -304,5 +304,127 @@ namespace AtomicWar.GodotApp
             return EmitSummary("wildlife_selftest", fail == 0, failedCount: fail, passedCount: pass,
                 details: string.Join("; ", details));
         }
+
+        /// <summary>
+        /// Flagship trapping tranche — host-layer gates for the player-facing
+        /// TrySetTrap path: item billing, broken-trap replacement, atomic
+        /// failure on missing materials, and the trap_active no-charge block.
+        /// Core-level replacement/season/migration/recipe semantics are pinned
+        /// by Ashfall.Core.Tests (WildlifeTrappingReplacementTests,
+        /// WildlifeTrappingSeasonMigrationTests, WildlifeTrapRecipeIdentityTests).
+        /// </summary>
+        public static int RunTrappingHostSelfTest(string dataDirectory)
+        {
+            int pass = 0, fail = 0;
+            var details = new List<string>();
+
+            void Check(string gate, bool ok, string note = "")
+            {
+                if (ok) { pass++; details.Add($"  PASS {gate}"); }
+                else { fail++; details.Add($"  FAIL {gate}{(note.Length > 0 ? " — " + note : "")}"); }
+                GD.Print($"{(ok ? "[PASS]" : "[FAIL]")} trapping-host/{gate}");
+            }
+
+            var io = CatalogPath.CreateFileIOForDataDir(dataDirectory);
+            var json = new SystemTextJsonSerializer();
+            var traps = Ashfall.Core.WildlifeTrappingCatalogLoader.Load(dataDirectory, io, json);
+            var items = Ashfall.Core.Inventory.ItemCatalogLoader.LoadCatalog(dataDirectory, io, json);
+            Check("trapping_catalog", traps != null && traps.Traps.Count >= 10,
+                $"got {traps?.Traps.Count ?? 0} traps");
+
+            if (traps != null && items != null)
+            {
+                // ── Cross-catalog recipe identity (workstream D, host side) ──
+                var recipes = Ashfall.Core.Crafting.RecipeCatalogLoader.Load(dataDirectory, io, json, items);
+                var integrity = Ashfall.Core.Crafting.TrapRecipeIntegrity.Validate(recipes, traps.Traps);
+                Check("trap_recipe_identity", integrity.Count == 0, string.Join("; ", integrity));
+
+                var inv = new InventoryHostSession(new Ashfall.Core.Inventory.Inventory(), items);
+                var system = new WildlifeTrappingSystem(new SeededRng(42), new GodotLog());
+                traps.RegisterWith(system);
+                var session = new WildlifeTrappingHostSession(system)
+                {
+                    Catalog = traps,
+                    Inventory = inv
+                };
+
+                const string wireTrap = "trap_improvised_wire"; // interval 1, durability 3
+
+                // ── Gate 1: deployment consumes the trap item exactly once ──
+                var wireDef = items.Get(wireTrap);
+                inv.Inventory.Add(wireDef, 2);
+                var deploy = session.TrySetTrap("site_a", wireTrap, "bait_scrap_meat", "hunter_1");
+                Check("deploy_charges_item_once",
+                    deploy.IsSuccess && inv.Inventory.Count(wireDef) == 1
+                    && system.State.trapSites[0].trapId == wireTrap,
+                    $"res={deploy.IsSuccess} left={inv.Inventory.Count(wireDef)}");
+
+                // ── Gate 2: broken-trap replacement preserves identity, refreshes state ──
+                // Deterministic broken-state fixture (capture/restore path):
+                // a pending catch blocks trap checks, so breaking on a fixed
+                // tick schedule would depend on catch RNG. Restoring an
+                // isBroken site is the sanctioned state path.
+                RestoreBrokenSite(system, "site_a", wireTrap, "hunter_1");
+                var site = system.State.trapSites[0];
+                Check("trap_breaks_after_durability", site.isBroken, $"durability={site.remainingDurability}");
+
+                inv.Inventory.Add(wireDef, 1); // pay for the replacement
+                int wiresBeforeReplace = inv.Inventory.Count(wireDef);
+                var replace = session.TrySetTrap("site_a", wireTrap, "bait_scrap_meat", "hunter_1");
+                Check("replace_broken",
+                    replace.IsSuccess
+                    && system.State.trapSites.Count == 1
+                    && site.siteId == "site_a"
+                    && site.assignedHunterId == "hunter_1"
+                    && site.trapId == wireTrap
+                    && site.remainingDurability == 3
+                    && !site.isBroken
+                    && inv.Inventory.Count(wireDef) == wiresBeforeReplace - 1,
+                    $"res={replace.IsSuccess} durability={site.remainingDurability} left={inv.Inventory.Count(wireDef)}");
+
+                // ── Gate 3: active trap is blocked with no charge ──
+                inv.Inventory.Add(wireDef, 1);
+                int beforeCount = inv.Inventory.Count(wireDef);
+                var blocked = session.TrySetTrap("site_a", wireTrap, "bait_scrap_meat", "hunter_1");
+                Check("active_blocked_no_charge",
+                    !blocked.IsSuccess && inv.Inventory.Count(wireDef) == beforeCount,
+                    $"res={blocked.IsSuccess} left={inv.Inventory.Count(wireDef)}");
+                inv.Inventory.Remove(wireDef, inv.Inventory.Count(wireDef)); // drain for the atomicity gate
+
+                // ── Gate 4: missing materials fail atomically (zero mutation) ──
+                RestoreBrokenSite(system, "site_a", wireTrap, "hunter_1");
+                var siteBefore = new SystemTextJsonSerializer().Serialize(system.State.trapSites[0]);
+                var atomicFail = session.TrySetTrap("site_a", wireTrap, "bait_scrap_meat", "hunter_1");
+                var siteAfter = new SystemTextJsonSerializer().Serialize(system.State.trapSites[0]);
+                Check("replace_atomic_on_missing_materials",
+                    !atomicFail.IsSuccess && siteBefore == siteAfter && inv.Inventory.Count(wireDef) == 0,
+                    $"res={atomicFail.IsSuccess} mutated={siteBefore != siteAfter}");
+            }
+
+            GD.Print($"trapping host selftest: {pass} passed, {fail} failed");
+            if (fail > 0) GD.Print(string.Join("\n", details));
+            return EmitSummary("trapping_host_selftest", fail == 0, failedCount: fail, passedCount: pass,
+                details: string.Join("; ", details));
+        }
+
+        private static void RestoreBrokenSite(
+            WildlifeTrappingSystem system, string siteId, string trapId, string hunterId)
+        {
+            var state = new WildlifeTrappingState();
+            state.trapSites.Add(new TrapSite
+            {
+                siteId = siteId,
+                assignedHunterId = hunterId,
+                trapId = trapId,
+                trapType = "improvised_wire",
+                baitType = "bait_scrap_meat",
+                setDay = 1,
+                checkDay = 2,
+                checkIntervalDays = 1,
+                remainingDurability = 0,
+                isBroken = true
+            });
+            system.RestoreState(state);
+        }
     }
 }

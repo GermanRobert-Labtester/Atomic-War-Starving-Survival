@@ -415,7 +415,18 @@ namespace Ashfall.Core
                 existing.remainingDurability = durabilityChecks > 0 ? durabilityChecks : -1;
                 existing.isBroken = false;
                 existing.assignedHunterId = hunterId ?? string.Empty;
+                // Plan (flagship trapping tranche): a replacement begins clean —
+                // the entire catch payload of the old trap is cleared, not just
+                // the hasCatch flag. Stale catchSpecies/carcassYield/isToxic
+                // etc. must not leak into the fresh trap's state.
                 existing.hasCatch = false;
+                existing.catchSpecies = string.Empty;
+                existing.bycatchSpecies = string.Empty;
+                existing.carcassYield = 0f;
+                existing.isToxic = false;
+                existing.toxinRemoved = false;
+                existing.isMeatProcessed = false;
+                existing.hidePreserved = false;
                 existing.diseaseId = string.Empty;
                 existing.contaminationDose = 0f;
             }
@@ -439,16 +450,26 @@ namespace Ashfall.Core
         public const float BaseCatchChance = 0.5f;
 
         /// <summary>
-        /// Select a quarry species based on bait affinity, trap type, per-site hunter skill level,
-        /// season, migration presence, and abundance. Returns the species ID or
-        /// string.Empty if no eligible quarry.
+        /// Deterministic quarry-eligibility filter (Plan 36 / flagship trapping
+        /// tranche). Returns the sorted species IDs that pass every independent
+        /// gate for the given bait/trap/skill and the current selection
+        /// context:
+        ///   skill gate  — hunterSkillLevel >= minSkillLevel;
+        ///   season gate — prey with activeSeasons must include SeasonWindowId
+        ///                 (empty activeSeasons = year-round);
+        ///   migration   — prey with migrationSpeciesId require that species
+        ///                 in PresentMigrationSector. Empty presence excludes
+        ///                 every migration-linked prey (migration-linked prey
+        ///                 are simply absent when no pack stands in the
+        ///                 sector); non-migration prey are unaffected.
+        /// No weighting and no fallback here — callers get the exact filtered
+        /// candidate set so tests can assert membership directly.
         /// </summary>
-        private string SelectQuarrySpecies(string baitType, string trapType, float hunterSkillLevel)
+        public List<string> GetEligibleQuarryIds(string baitType, string trapType, float hunterSkillLevel)
         {
-            var candidates = new List<(string id, float weight)>();
+            var eligible = new List<string>();
             string seasonId = _selectionContext.SeasonWindowId;
             bool hasSeason = !string.IsNullOrEmpty(seasonId);
-            bool hasMigration = _selectionContext.PresentMigrationSpecies.Count > 0;
 
             foreach (var kvp in _quarryCatalog)
             {
@@ -468,12 +489,35 @@ namespace Ashfall.Core
                     if (!seasonMatch) continue;
                 }
 
-                // Plan 36: migration filter — prey with migrationSpeciesId must be present
-                if (hasMigration && _preyDefinitionCatalog.TryGetValue(q.speciesId, out var preyDef2)
+                // Plan 36 / flagship tranche: migration filter — a prey with a
+                // migrationSpeciesId is only selectable when that species is
+                // live in the sector. The old `hasMigration` guard skipped this
+                // filter entirely when the presence set was empty, which made
+                // migration-linked prey catchable on empty ground.
+                if (_preyDefinitionCatalog.TryGetValue(q.speciesId, out var preyDef2)
                     && !string.IsNullOrEmpty(preyDef2.migrationSpeciesId)
                     && !_selectionContext.PresentMigrationSpecies.Contains(preyDef2.migrationSpeciesId))
                     continue;
 
+                eligible.Add(q.speciesId);
+            }
+
+            eligible.Sort(StringComparer.Ordinal);
+            return eligible;
+        }
+
+        /// <summary>
+        /// Select a quarry species based on bait affinity, trap type, per-site hunter skill level,
+        /// season, migration presence, and abundance. Returns the species ID or
+        /// string.Empty if no eligible quarry.
+        /// </summary>
+        private string SelectQuarrySpecies(string baitType, string trapType, float hunterSkillLevel)
+        {
+            var candidates = new List<(string id, float weight)>();
+
+            foreach (string speciesId in GetEligibleQuarryIds(baitType, trapType, hunterSkillLevel))
+            {
+                var q = _quarryCatalog[speciesId];
                 float weight = 1.0f;
 
                 // Bait affinity bonus
@@ -492,7 +536,6 @@ namespace Ashfall.Core
 
                 candidates.Add((q.speciesId, weight));
             }
-
             if (candidates.Count == 0)
                 return "rabbit"; // fallback
 
