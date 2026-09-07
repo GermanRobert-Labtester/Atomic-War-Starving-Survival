@@ -244,6 +244,21 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry("fungi_harvest", $"Harvested {count} units of {strain} from subterranean bed {plotId}.", null!, _simDay);
             };
 
+            _fungi.OnSubstratePrepared += (plotId, preparation, usedHeat) =>
+            {
+                _journal?.TryAddRawEntry("fungi_substrate_prepared", $"Bed {plotId} substrate prepared ({preparation}{(usedHeat ? ", heated" : "")}).", null!, _simDay);
+            };
+
+            _fungi.OnSubstrateDisposed += (plotId, method) =>
+            {
+                _journal?.TryAddRawEntry("fungi_substrate_disposed", $"Contaminated substrate from bed {plotId} disposed ({method}).", null!, _simDay);
+            };
+
+            _fungi.OnContaminationSpread += (sourcePlotId, roomId) =>
+            {
+                _journal?.TryAddRawEntry("fungi_contamination_spread", $"Mold contamination is spreading from bed {sourcePlotId} to neighbouring beds in {roomId}.", null!, _simDay);
+            };
+
             return _fungi;
         }
 
@@ -342,7 +357,27 @@ namespace AtomicWar.GodotApp
         private void TickPlans190_193(int currentDay)
         {
             _amputation?.TickDay(currentDay);
-            _fungi?.TickDay(currentDay);
+            _railway?.TickDay(currentDay);
+
+            // Plan 204: project real per-room thermal state into the fungi beds when the
+            // shelter thermal authority is live; otherwise the Core default band applies.
+            if (_fungi != null)
+            {
+                var thermalRooms = _shelterThermal?.System.State.rooms;
+                if (thermalRooms != null && thermalRooms.Count > 0)
+                {
+                    var temps = new Dictionary<string, float>(StringComparer.Ordinal);
+                    for (int i = 0; i < thermalRooms.Count; i++)
+                        temps[thermalRooms[i].roomId] = thermalRooms[i].currentTempC;
+                    _fungi.TickDay(currentDay, roomTemperatureOverride: roomId =>
+                        temps.TryGetValue(roomId, out var t) ? t : 15f);
+                }
+                else
+                {
+                    _fungi.TickDay(currentDay);
+                }
+            }
+
             _justice?.TickDay(currentDay);
         }
 

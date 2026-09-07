@@ -6644,6 +6644,8 @@
       "displayName": "Subterranean Cap Mushrooms",
       "description": "Nutrient-dense cultivated caps harvested from dark underground beds. Safe to cook and consume.",
       "type": "Food",
+      "hungerRestore": 6,
+      "moraleEffect": 1,
       "stackMax": 30,
       "weight": 0.2,
       "tradeValue": 6,

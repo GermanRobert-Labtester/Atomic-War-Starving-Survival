@@ -13,7 +13,10 @@
       "spore_hazard": 0.10,
       "light_output": 18.0,
       "yield_item_id": "fungus_spores_bioluminescent",
-      "yield_count": 4
+      "yield_count": 4,
+      "temperature_min": 8.0,
+      "temperature_max": 26.0,
+      "flush_count": 2
     },
     {
       "strain_id": "strain_grey_mycelium",
@@ -27,7 +30,10 @@
       "spore_hazard": 0.15,
       "light_output": 0.0,
       "yield_item_id": "harvested_mushrooms_subterranean",
-      "yield_count": 6
+      "yield_count": 6,
+      "temperature_min": 6.0,
+      "temperature_max": 24.0,
+      "flush_count": 3
     },
     {
       "strain_id": "strain_cordyceps_mutant",
@@ -41,7 +47,10 @@
       "spore_hazard": 0.35,
       "light_output": 4.0,
       "yield_item_id": "fungus_spores_medicinal",
-      "yield_count": 2
+      "yield_count": 2,
+      "temperature_min": 12.0,
+      "temperature_max": 28.0,
+      "flush_count": 2
     },
     {
       "strain_id": "strain_black_rot_mold",
@@ -55,7 +64,10 @@
       "spore_hazard": 0.75,
       "light_output": 0.0,
       "yield_item_id": "fungus_spores_common",
-      "yield_count": 8
+      "yield_count": 8,
+      "temperature_min": 4.0,
+      "temperature_max": 34.0,
+      "flush_count": 4
     }
   ],
   "substrates": [
