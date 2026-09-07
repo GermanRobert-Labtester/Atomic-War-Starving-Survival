@@ -1432,6 +1432,488 @@
                     "consequences": "You strip the hull of functional brass fittings and pressure gauges. The interior remains sealed. The material yield is acceptable."
                 }
             ]
+        },
+        {
+            "id": "quest_the_drowned_archive",
+            "title": "The Drowned Archive",
+            "description": "A flooded records office two kilometers out holds the valley's civil registry: births, deeds, water rights, names. The paper is dying faster than the water is falling.",
+            "type": "exploration",
+            "minDay": 40,
+            "maxDay": 180,
+            "factionTag": "neutral",
+            "synopsis": "The pre-war records office for the whole valley stands knee-deep in grey water, and every week the bottom shelves lose another year of the dead. A salvage team can go in light and fast for whatever is readable, or heavy and slow with shoring and pumps for the whole archive — or the shelter can decide that paper does not feed anyone and let the valley forget on schedule.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "archive_names_first",
+                    "text": "Send the light team. Names before infrastructure — the registry of the dead goes first.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 15
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "They come back with nine waterproof bags of birth and death records and one of water deeds. That night the cook finds her mother's marriage entry, still legible, and reads it aloud to whoever is in the mess hall. Nobody suggests stopping. The deeds could have bought a pump; the pump would not have known her mother's name."
+                },
+                {
+                    "id": "archive_blueprints_first",
+                    "text": "Infrastructure first. Municipal blueprints tell us where every pipe and cache in the valley runs.",
+                    "effects": [
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": 5
+                        },
+                        {
+                            "type": "resource",
+                            "value": 20
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The blueprints are worth exactly what you hoped: a sealed maintenance cache nobody remembered, and the true map of the valley's water mains. The registry stays on the bottom shelf. Six months from now, when someone asks what became of the town's names, the honest answer will be that the shelter traded them for pipe."
+                },
+                {
+                    "id": "archive_full_slow_salvage",
+                    "text": "Shore it, pump it, take it all. Slow, expensive, complete.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -15
+                        },
+                        {
+                            "type": "morale",
+                            "value": 10
+                        },
+                        {
+                            "type": "survivor_health",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "Three weeks of pump fuel and two cases of trench foot buy the whole archive: names, deeds, blueprints, and a box of school photographs nobody requisitioned. The shelter becomes, quietly, the valley's memory — a position that pays nothing and that people will walk four kilometers to consult."
+                },
+                {
+                    "id": "archive_leave_it_drown",
+                    "text": "Paper doesn't feed anyone. Let the water finish its filing.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "No team goes out, no fuel is spent, and the registry completes its slow drowning on the valley's own schedule. The decision is defensible in every ledger. The survivors who grew up here know what was on those shelves, and they know the shelter chose the pump fuel over their grandparents' names."
+                }
+            ]
+        },
+        {
+            "id": "quest_names_on_the_door",
+            "title": "Names on the Door",
+            "description": "Refugees from the north have heard the shelter salvaged the valley's records. They are at the treeline with a list of relatives, asking what the paper says.",
+            "type": "community",
+            "minDay": 60,
+            "maxDay": 220,
+            "factionTag": "neutral",
+            "synopsis": "Eleven strangers, one folded list of names, and a question the archive can actually answer: who in their families was registered alive in the valley's last year of records. Reading names aloud from a doorway is free and changes everything; keeping the registry's contents to the shelter turns a salvage into a hoard.",
+            "prerequisites": [
+                "quest_the_drowned_archive"
+            ],
+            "choices": [
+                {
+                    "id": "names_read_aloud",
+                    "text": "Bring the ledger to the door. Read every name they ask for, whatever it says.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 10
+                        },
+                        {
+                            "type": "survivor_count",
+                            "value": 2
+                        }
+                    ],
+                    "consequences": "The reading takes two hours. Four names come back alive — registered at settlements north of the rail cut — and two women sit down in the mud when they hear it. Seven names come back dead, and the list-holder nods at each one like a clerk, because grief with paperwork is grief somebody witnessed. Two of the eleven ask to stay. The shelter's door acquires a reputation it cannot afford and will not trade away: the place that reads names."
+                },
+                {
+                    "id": "names_sell_copies",
+                    "text": "The archive is property now. Copies cost rations.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": 15
+                        },
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "Nine of the eleven pay. Two walk north without answers rather than buy their own dead. The ration take is real and lands in the ledger that night; so does the fact that the mess hall went quiet when the count was read aloud. The archive has become an economy, and economies of grief have a way of being remembered at the worst times."
+                },
+                {
+                    "id": "names_refuse_the_door",
+                    "text": "The registry is the shelter's. Send them on.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The treeline empties by dusk. Inside, the salvage team asks what the list was for and is told, accurately, that it was nothing. Two of them stop volunteering for archive duty within the week. Paper that answers nobody is just dry kindling with better penmanship."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_registry_deed",
+            "title": "The Registry Deed",
+            "description": "The water deeds pulled from the archive name a pre-war cistern field behind the rail cut — municipal reserve, sealed, unmapped since the war. The paperwork is the only map that survived.",
+            "type": "exploration",
+            "minDay": 90,
+            "maxDay": 260,
+            "factionTag": "neutral",
+            "synopsis": "Three deeds, one survey sketch, and a cistern field that the valley's own government forgot on purpose or by catastrophe — the marginalia does not say which. The sketch shows six access shafts; five are marked with the municipal seal and one with a handwritten X and the word DON'T in the same ink. The last link of the archive's chain leads underground.",
+            "prerequisites": [
+                "quest_names_on_the_door"
+            ],
+            "choices": [
+                {
+                    "id": "registry_open_five",
+                    "text": "Work the five sealed shafts. Leave the X alone.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": 30
+                        },
+                        {
+                            "type": "morale",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "Five shafts, five intact municipal cisterns, and water that tests clean enough to make the medic laugh once, briefly, like a cough. The sixth shaft stays welded the way someone wanted it. Your crews develop the superstition of not looking at it. The water lasts a season and the question lasts longer."
+                },
+                {
+                    "id": "registry_open_the_sixth",
+                    "text": "DON'T is advice, not law. Open the sixth shaft.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -10
+                        },
+                        {
+                            "type": "survivor_health",
+                            "value": -15
+                        },
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "The sixth cistern is not empty and never held water. What it held is not in any registry: the team comes up fast, three of them dosed, and the shaft gets its weld back within the hour at your order. The archived deeds were a map to a reserve; the handwritten X was a map to the reason the reserve needed guarding. The valley forgot the cistern field on purpose. Now so would you, if the dosimeter readings would let you."
+                },
+                {
+                    "id": "registry_deed_to_the_freeholders",
+                    "text": "Hand the deeds to the Salt Freeholders. Let the people who work water own it.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 20
+                        },
+                        {
+                            "type": "resource",
+                            "value": 10
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The Freeholders read the deeds in silence, the way people read wills. Their crews open the five sealed shafts by winter and your shelter buys first refusal at friend rates — less water than you could have taken, forever, instead of a season's flood of it. The sixth shaft's X they honor without being told, and their foreman writes DON'T into their own books in the same hand."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_chalk_school",
+            "title": "The Chalk School",
+            "description": "The bunker's seven children have a school now: the teacher writes lessons on the corridor wall in chalk, four hours a day, in the space between the pump room and the sick bay.",
+            "type": "community",
+            "minDay": 50,
+            "maxDay": 200,
+            "factionTag": "neutral",
+            "synopsis": "It started as babysitting and became arithmetic. The teacher — refugee, formerly nobody's business — writes on the wall because paper is rationed, and the children learn because the alternative is the corridors. The labor board has noticed that four adult-hours a day are going into reading instead of pumps. The leadership table has noticed that the wall is covered in the only sentences in the bunker that aren't about survival.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "chalk_sanction_the_school",
+                    "text": "Sanction it. Four hours a day, on the roster, rationed like any shift.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 15
+                        },
+                        {
+                            "type": "labor_efficiency",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The school goes on the duty roster between pump and sick bay, and the corridor wall becomes, officially, the most protected surface in the bunker. Labor is four hours lighter for a season. The children learn to read the ration board before they learn cursive, which the teacher calls an acceptable curriculum for the century."
+                },
+                {
+                    "id": "chalk_shut_it_down",
+                    "text": "Every hand belongs to the pumps. End the lessons.",
+                    "effects": [
+                        {
+                            "type": "labor_efficiency",
+                            "value": 5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The wall gets scrubbed on a Sunday, which somebody will remember as a deliberate cruelty and somebody else will swear was routine maintenance. The four hours go to the pumps and the pumps do not notice. The children go back to the corridors, and the corridors, within a month, teach them things."
+                },
+                {
+                    "id": "chalk_let_it_run_unlisted",
+                    "text": "Look the other way, officially. The school runs when the roster doesn't.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The roster keeps its fiction and the wall keeps its chalk. It works right up until the first inspection argument, when the labor chief asks why the pump logs show four hours unaccounted and nobody can answer without naming the school — at which point looking the other way becomes the same decision as sanctioning, only without the credit."
+                }
+            ]
+        },
+        {
+            "id": "quest_numbers_in_the_dark",
+            "title": "Numbers in the Dark",
+            "description": "The bunker's radio has started receiving a numbers station after the storms: a flat voice, groups of five, the same interval every ninth night. Your operator has been writing them down instead of sleeping.",
+            "type": "investigation",
+            "minDay": 110,
+            "maxDay": 300,
+            "factionTag": "neutral",
+            "synopsis": "Nobody still transmits for fun. The groups of five repeat with a patience that machinery doesn't have and people don't either, and the interval — every ninth night, ten minutes after the hour — survived two storms that flattened relay towers. The operator thinks it is a schedule for somebody. The question is whether the shelter wants to be the somebody who answers, the somebody who decodes, or the somebody who never heard it.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "numbers_answer_blind",
+                    "text": "Transmit the next group back, on their frequency, after their interval.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -5
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "You answer with their own numbers and the flat voice stops mid-group — the first human thing it has ever done. The ninth-night schedule ends. Three weeks later a different station, same interval, reads a single group once: your bunker's grid square, spoken aloud, correctly. Somebody now knows who is listening. The operator sleeps worse and transcribes faster."
+                },
+                {
+                    "id": "numbers_decode_in_house",
+                    "text": "No transmission. Decode it in-house — the ledger-keeper and the operator, one sheet a night.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 10
+                        },
+                        {
+                            "type": "resource",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "It takes two months and most of the shelter's spare lamp oil. The decode is partial — a call sign, a bearing, and what the ledger-keeper swears is a quantity list in pre-war municipal codes — but it is yours, and it is real, and the bunker has a secret that belongs to everyone in it. The numbers keep coming every ninth night. You have started, without deciding to, thinking of the voice as a neighbor."
+                },
+                {
+                    "id": "numbers_log_and_ignore",
+                    "text": "Log the intervals. Change nothing. The dark talks to everybody.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The sheets go in the drawer and the drawer goes in the desk and the ninth nights pass uneventfully, which is precisely what was ordered. The operator keeps transcribing anyway — off duty, in private, in a notebook that is not the shelter's. Some schedules, once heard, do not require permission to be kept."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_voice_answers",
+            "title": "The Voice Answers",
+            "description": "The numbers station broke pattern for the first time: instead of groups of five, the flat voice read one word, three times, on the ninth-night interval. The word was a bearing. The bearing points at the rail cut.",
+            "type": "investigation",
+            "minDay": 110,
+            "maxDay": 320,
+            "factionTag": "neutral",
+            "synopsis": "Whoever — whatever — kept the ninth-night schedule for two years has changed it because of the shelter: the decode, the answer, or the listening itself. The bearing resolves to the flooded rail cut, where the water stands over the tracks and the old signal hut still has a roof. The station is asking a question in the only grammar it has. Walking out to the cut is the only way to hear whether it was an invitation, a warning, or a test with no intended survivors.",
+            "prerequisites": [
+                "quest_numbers_in_the_dark"
+            ],
+            "choices": [
+                {
+                    "id": "voice_walk_the_bearing",
+                    "text": "Send the two-person team at dawn. Light, fast, transcribe everything.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": 25
+                        },
+                        {
+                            "type": "morale",
+                            "value": 15
+                        }
+                    ],
+                    "consequences": "The signal hut holds a pre-war emergency cache — unopened, inventoried, dry — and a hand-crank field set still wired to the tower, its logbook open to a final entry dated the week the war ended: STATION KEPT. SCHEDULE HELD. AWAITING ANSWER. Two years of numbers were a lighthouse with no sea, kept by a machine and a promise. The shelter answers it now, every ninth night, in the clear. The voice reads the groups back. Neither side has said anything useful yet. Both sides keep the schedule."
+                },
+                {
+                    "id": "voice_watch_from_the_treeline",
+                    "text": "Nobody walks it. Glass and patience from the treeline, one week.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -5
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "A week of lenses shows the hut, the tower, the water, and nothing that moves except weather. The station's next broadcast drops the bearing and returns to groups of five, unchanged, as if the question had been heard and withdrawn. The treeline team comes in convinced of two opposite things and the shelter adopts, by exhaustion, the safer one: the cut stays off the route map, marked with a radio symbol nobody explains to the new arrivals."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_green_water_week",
+            "title": "The Green Water Week",
+            "description": "The well has been drawing green-tinged water for six days. The filter stack says it is within tolerance. The cook says she has been stretching the grey tins with boiled leather and nobody's stomach has noticed, because nobody's stomach is reporting for duty anymore.",
+            "type": "medical",
+            "minDay": 70,
+            "maxDay": 240,
+            "factionTag": "neutral",
+            "synopsis": "Two problems arrived together and are pretending to be unrelated: the water table has shifted since the storms, and the cook has been quietly rationing around a shortage she never reported. The medic wants the well closed and tested; the labor board wants the week survived; the cook wants nobody to know about the leather. All three wants are correct, and the shelter can only fund one of them openly.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "green_close_and_test",
+                    "text": "Close the well. Full filter test. Ration the reserves and tell everyone why.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -10
+                        },
+                        {
+                            "type": "survivor_health",
+                            "value": 10
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "Four days on reserves while the medic runs the stack through every reagent the shelter owns. The verdict: a mineral bloom, not contamination — ugly, safe, and seasonal. The truth costs a week of short rations and buys something the bunker has not had since the storms: a week where nobody whispered. The cook's leather secret comes out on its own, third night, and is absorbed without incident, which is its own kind of test result."
+                },
+                {
+                    "id": "green_boil_and_bluff",
+                    "text": "Double-boil, say nothing, keep the schedule. Panic is also a contaminant.",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "value": -5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "The double-boil holds the week and the green fades on its own, which the shelter will never know for certain — certainty was the thing you declined to buy. Two cases of stomach trouble get treated as what they look like. The cook keeps her secret and her shifts. The water log for that week says nothing, and nothing is what the log will say the next time the well runs strange."
+                },
+                {
+                    "id": "green_trade_for_clean",
+                    "text": "Buy clean water from the Freeholders' next run. Scrap for liters, one week only.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -15
+                        },
+                        {
+                            "type": "survivor_health",
+                            "value": 5
+                        },
+                        {
+                            "type": "faction_relation",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "The Freeholders sell at road prices, which means fair, which means expensive. The week passes on clean water and the well recovers its color on the eighth day like nothing happened. The trade line to the pans is warmer now — water sellers remember water buyers — and the shelter's scrap pile is a season lighter, which is a problem for a different week, honestly earned."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_census_taker",
+            "title": "The Census Taker",
+            "description": "A clerk of the Meridian Compact has walked your road with a ledger, a pencil stub, and no escort, to count the valley's doors. Your door is fourteenth on the route. The questions are polite. The columns are not.",
+            "type": "diplomacy",
+            "minDay": 100,
+            "maxDay": 280,
+            "factionTag": "meridian_compact",
+            "synopsis": "The Compact claims it is rebuilding civil record: how many, how fed, how armed, how governed. The clerk takes the answers without expression and writes in a hand too small to read across a table. A counted door is a door the Compact considers part of something; an uncounted door is a door the Compact has filed under 'pending.' The valley's other shelters have all, apparently, found time for the pencil stub.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "census_sign_honest",
+                    "text": "Answer every column honestly. Sign at the bottom.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 10
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The clerk's columns close over your true numbers — population, stores, arms, the works — and the signature goes in beside them in your own hand. Within a season a Compact aid convoy adjusts its route to include you, which is worth more than the grain it carries: it means the road to your door is now somebody's official business. What else the numbers are worth, in rooms you will never see, is the price of the convoy, paid in advance."
+                },
+                {
+                    "id": "census_sign_light",
+                    "text": "Sign, but the columns get a smaller shelter than the one that's breathing.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "Two-thirds of your population, half your stores, one armed watch instead of three. The clerk writes it all without a flicker — clerks are trained, or born, not to count what isn't offered. The lie works exactly as well as the truth would have, minus the convoy's full attention, and it sits in the Compact's archive now with your signature under it. Signatures outlive the reasons for them."
+                },
+                {
+                    "id": "census_refuse_the_ledger",
+                    "text": "The shelter declines to be counted. Show the clerk the road, politely.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": -15
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The clerk makes one mark — you do not get to see whether it is 'refused' or 'pending,' and the difference will be decided in a building you will never enter. The Compact's next aid route skips your turn-off. So does its next tax route, and, for now, its next patrol. An uncounted door is free, and free is a flavor of alone that the valley is slowly running out of."
+                }
+            ]
         }
     ]
 }

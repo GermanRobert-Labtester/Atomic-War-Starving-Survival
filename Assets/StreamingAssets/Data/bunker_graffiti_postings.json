@@ -145,6 +145,102 @@
       "triggerWorldFlag": "friction_ritual_fuel_curtailed",
       "minDay": 12,
       "weight": 0.9
+    },
+    {
+      "id": "graffiti_radio_dial_night_watch",
+      "title": "Below the Forbidden Frequencies",
+      "text": "whoever keeps tuning past the mark \u2014 we hear the dial from two bunks over. it clicks like a tooth. some of us count the clicks to sleep now, which is either trust or the end of us.",
+      "triggerWorldFlag": "friction_forbidden_radio_listening",
+      "minDay": 28,
+      "weight": 0.9
+    },
+    {
+      "id": "graffiti_radio_dial_quartermaster",
+      "title": "The Quartermaster's Addition",
+      "text": "the dial costs batteries. batteries cost walks. walks cost people. before anyone tunes anything, write what you hope to hear on the board next to the ration tally. hope is a consumable. it is now inventoried.",
+      "triggerWorldFlag": "friction_radio_dial_argument",
+      "minDay": 35,
+      "weight": 0.8
+    },
+    {
+      "id": "graffiti_keepsake_thief_knows",
+      "title": "The Thief Knows This Wall",
+      "text": "i know this is here. i read it every day on the way to the pump. the tin is under the third-bunk blanket where you will not look because you have already looked. when i bring it back it will be because i decided to, not because the wall decided for me.",
+      "triggerWorldFlag": "friction_stolen_keepsake",
+      "minDay": 30,
+      "weight": 0.7
+    },
+    {
+      "id": "graffiti_keepsake_returned_note",
+      "title": "Under the Returned Tin",
+      "text": "the tin came back. nobody saw it come back, which was the point. what was inside is one button short. the thief kept the button. we have all agreed, out loud, that this is a fair price for learning we have a thief who pays.",
+      "triggerWorldFlag": "friction_stolen_keepsake",
+      "minDay": 45,
+      "weight": 0.7
+    },
+    {
+      "id": "graffiti_work_names_column",
+      "title": "The Names Column, by the Ladder",
+      "text": "somebody wrote SHIRKER by the ladder in chalk. chalk wipes. this wall doesn't. before the next name goes up, remember the last shift the accused pulled: four hours in the sump, no rotation, no complaint logged. the wall remembers. the wall is also the only witness we can afford.",
+      "triggerWorldFlag": "friction_work_shirker_accusation",
+      "minDay": 40,
+      "weight": 0.9
+    },
+    {
+      "id": "graffiti_first_tin_math",
+      "title": "The Arithmetic of the First Tin",
+      "text": "the first tin goes to the pump crew and the pump crew has not eaten first since the storms. do the math before the shouting: the people who keep the air moving get the tin that keeps them moving. it is not favoritism. it is maintenance. write that down somewhere the shouting can read it.",
+      "triggerWorldFlag": "ration_first_tin_logged",
+      "minDay": 26,
+      "weight": 1.0
+    },
+    {
+      "id": "graffiti_scoop_graveyard_shift",
+      "title": "Request of the Graveyard Shift",
+      "text": "the scoop rotated to the night crew. the night crew thanks the day crew in the only grammar available: we will not short your measure at 0300 when you are asleep and the ladle is in our hand and nobody is counting. this wall is the count.",
+      "triggerWorldFlag": "ration_scoop_rotated",
+      "minDay": 33,
+      "weight": 0.8
+    },
+    {
+      "id": "graffiti_walkout_door_is_heavy",
+      "title": "For Whoever Walked Out",
+      "text": "you left at the storm lull, which means you planned, which means you were right that we would not follow. the hatch is heavy from both sides. it is heavier from out there. if this wall is ever read by you again, know that your bunk was stripped by regulation and your tin was not touched. both facts were argued about. one argument won.",
+      "triggerWorldFlag": "escalation_walkout",
+      "minDay": 50,
+      "weight": 0.9
+    },
+    {
+      "id": "graffiti_walkout_bunk_held",
+      "title": "The Bunk Was Not Reassigned",
+      "text": "the board says reassign the walkout bunk after seven days. it has been nine. the blanket is folded the way they folded it, wrong corner first. whoever is counting days on this wall \u2014 stop counting out loud. some of us are still counting too.",
+      "triggerWorldFlag": "escalation_walkout_reconsidered",
+      "minDay": 55,
+      "weight": 0.8
+    },
+    {
+      "id": "graffiti_sabotage_valve_chalk",
+      "title": "Chalk on the Valves",
+      "text": "the investigation found the chalk marks on three valves: opened, closed, opened. somebody was testing which valves we watch. the answer is in this corridor now, in this handwriting, and it reads: we watch all of them. we were not always saying that out loud. we are saying it now.",
+      "triggerWorldFlag": "escalation_sabotage_investigated",
+      "minDay": 60,
+      "weight": 0.9
+    },
+    {
+      "id": "graffiti_hot_token_wall_ledger",
+      "title": "The Token Wall Ledger",
+      "text": "they confiscated the hot tokens. fine. this wall is the new ledger: who worked, who ate, who waited. it is slower than tokens and it cannot be pocketed and it cannot be confiscated without scrubbing the corridor down to concrete, which would take the whole shelter a week. the tokens were metal. the record is load-bearing.",
+      "triggerWorldFlag": "friction_hot_token_confiscation",
+      "minDay": 42,
+      "weight": 0.8
+    },
+    {
+      "id": "graffiti_frequency_quiet_hours",
+      "title": "Quiet Hours Are Load-Bearing",
+      "text": "to the frightened, from the tired: the frequency nobody names is quiet from 2200 to 0400 and that is when the sleep happens and the sleep is what keeps the hands steady on the valves. fear gets the day shift. this is not a compromise. it is a schedule, and schedules are the only walls we can build out of paper.",
+      "triggerWorldFlag": "friction_radio_frequency_fear",
+      "minDay": 48,
+      "weight": 0.7
     }
   ]
 }

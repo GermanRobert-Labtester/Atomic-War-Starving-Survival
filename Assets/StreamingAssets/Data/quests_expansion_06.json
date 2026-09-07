@@ -687,6 +687,380 @@
                     "consequences": "You attempt to copy the schematic during the negotiation without payment. The envoy detects the breach, seals the data, and blacklists your settlement."
                 }
             ]
+        },
+        {
+            "id": "quest_chalk_supply",
+            "title": "Chalk and Arithmetics",
+            "description": "The corridor school is down to nine sticks of chalk and the teacher has started writing smaller. Nine sticks is three weeks of lessons, or one week of large letters that the youngest can read from the back of the line.",
+            "type": "community",
+            "minDay": 60,
+            "maxDay": 240,
+            "factionTag": "neutral",
+            "synopsis": "A trivial shortage with no trivial solutions: chalk can be cut from the archive's lime stores, synthesized from the medical lab's slaked lime at real cost, bought from the next Compact caravan at a price that will make the labor chief say the word 'school' like a diagnosis — or the lessons can shrink to fit the supply, which is the arithmetic the teacher refuses to teach.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "chalk_cut_from_archive",
+                    "text": "Cut sticks from the archive's lime shelving. The dead can sponsor the living.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 10
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The shelving lime is soft and writes grey, and the teacher rationing it feels, she says, like eating the library. The children do not notice the difference between grey and white, which is the entire moral of the week. The lessons stay large enough to read from the back of the line for two more months."
+                },
+                {
+                    "id": "chalk_synthesize_in_lab",
+                    "text": "Slaked lime, settle tanks, cut and dry. Real chalk from the medical lab.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -10
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "Three days of lab time and a batch of reagents the sick bay had plans for produce forty clean white sticks — enough for a term. The medic signs the requisition without comment, which from her is a standing ovation. The first lesson written in the new chalk is the water cycle. The pump room crew stands in the corridor reading it for a week."
+                },
+                {
+                    "id": "chalk_shrink_the_lessons",
+                    "text": "Write smaller. Teach less. Make nine sticks last.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "The teacher's handwriting shrinks to a hand-span tall and the youngest move to the front of the corridor, which means the oldest stop coming. Nine sticks last eleven weeks. Nobody ordered the school to end; the school just got quiet one letter at a time, which is how everything ends here."
+                }
+            ]
+        },
+        {
+            "id": "quest_grave_markers",
+            "title": "The Grave-Marker Carpenter",
+            "description": "An old carpenter from the north settlements has asked for scrap wood, a corner of the workshop, and permission. He makes grave markers — proper ones, joined and planed — for the valley's dead, who have been getting stakes and stones.",
+            "type": "community",
+            "minDay": 80,
+            "maxDay": 280,
+            "factionTag": "traders",
+            "synopsis": "The valley buries its dead with whatever is at hand: rebar stakes, door-plank slabs, stones with scratches. The carpenter wants to change that with offcuts and hand tools, at the cost of wood the shelter could burn, and at a second cost nobody has priced: a workshop corner where an old man planes names into boards, in earshot of everyone. The dead have no vote. The living have started to notice they're watching the door for him.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "markers_give_the_wood",
+                    "text": "Scrap wood and the bench by the hatch. Names deserve joinery.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -10
+                        },
+                        {
+                            "type": "morale",
+                            "value": 15
+                        }
+                    ],
+                    "consequences": "The first marker leaves the workshop for a picker who died at the rail cut, and the burial stops being a disposal. Word goes up and down the valley within a month: your door sponsors the marker-maker. Settlements that were your competitors start walking their dead your direction for the plane and the chisel, and the labor board discovers that the wood it wrote off as fuel has been buying something the fuel never could."
+                },
+                {
+                    "id": "markers_refuse_the_bench",
+                    "text": "Wood is heat and shoring. The dead are past needing corners.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": 5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The carpenter shoulders his tools and goes north without an argument; he has heard no before now, and keeps his routes. The offcuts go to the stove and the stove does its job. The next burial uses a stake, and the person who digs it says, out loud, at the graveside, that it isn't right — and everybody at the grave knows he isn't talking about the digging."
+                },
+                {
+                    "id": "markers_trade_the_bench",
+                    "text": "Bench and wood for a share of his trade. The valley pays in markers; we take in rations.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": 5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The arrangement works on paper and in rations: settlements up-valley pay the carpenter in food, the carpenter pays the shelter its cut, and the markers keep getting made. What the ledger doesn't carry is the phrase that starts following your traders up the road — the door that sells the dead's furniture. The rations are clean. The sentence isn't."
+                }
+            ]
+        },
+        {
+            "id": "quest_spur_of_nine_rails",
+            "title": "The Spur of Nine Rails",
+            "description": "The winter storm scoured the embankment south of the bunker and uncovered a rail spur that no map in the shelter owns: nine spans of buried track, gauge intact, running toward the old quarry cut.",
+            "type": "exploration",
+            "minDay": 50,
+            "maxDay": 200,
+            "factionTag": "neutral",
+            "synopsis": "Rail is the valley's hardest currency — shoring stock, trade bar, and the only metal the Railway Guild has ever begged for. The storm did the digging; the shelter holds the claim by squatter's arithmetic, which is to say by being the ones standing on it. The Guild will hear about the spur within the month regardless. The only open question is what your name is attached to when they do.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "spur_survey_quietly",
+                    "text": "Survey it ourselves, quietly, before anyone else's boot prints get into the snow.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -5
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "Two days of cold walking produce a real survey: nine spans, eleven tons by the engineer's slide rule, fishplates intact on seven. The shelter now knows what every other party in the valley will want to know, and knows it first. First is a position, not a plan — the plan comes when the Guild's scout walks the same embankment, which the snow says will be within three weeks."
+                },
+                {
+                    "id": "spur_call_the_guild",
+                    "text": "Send the Guild the bearings now. Let them find it under our welcome, not our silence.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 15
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The Guild's response arrives in four days, which means a brake-car was already within a day's walk and merely hadn't been invited. Their surveyors call the spur 'nine rails' in the log, and the log lists your shelter as the finder of record — a line that will be read aloud at Guild water points for a year. Finders, in the Guild's grammar, ride free."
+                },
+                {
+                    "id": "spur_bury_it_again",
+                    "text": "Snow, spoil, and silence. Some claims aren't worth the company they bring.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -5
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "Two days of re-burial and the embankment looks scoured and empty again, eleven tons of rail sleeping under the spoil like the rest of the valley's decisions. The shelter keeps its quiet and loses a claim it will hear about eventually anyway — the next storm scours honestly. The engineer marks the true bearings in his private book regardless. Private books are how the valley actually remembers."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_rails_decision",
+            "title": "Eleven Tons of Argument",
+            "description": "The spur is dug out, surveyed, and known: nine spans, eleven tons, and three parties with positions — the Guild wants it laid, the shelter's shoring wants it cut, and the labor board wants the argument to end before the ground freezes again.",
+            "type": "politics",
+            "minDay": 80,
+            "maxDay": 260,
+            "factionTag": "neutral",
+            "synopsis": "Every ton of the spur can only be spent once. Laid and connected, it puts the shelter on the Guild's water-and-freight line permanently — with the inspections, tariffs, and attention that permanence invites. Cut for shoring, it reinforces the bunker's deep gallery for a generation and leaves the valley's rail map without you on it. Split down the middle satisfies the labor board and nobody's grandchildren.",
+            "prerequisites": [
+                "quest_spur_of_nine_rails"
+            ],
+            "choices": [
+                {
+                    "id": "rails_lay_the_line",
+                    "text": "Lay it. Join the Guild's map and take the freight, the tariffs, and the attention.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 25
+                        },
+                        {
+                            "type": "resource",
+                            "value": 20
+                        },
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The first Guild brake-car rolls to your hatch in autumn, and after that one rolls every ninth day — the valley's whole economy runs on schedules somebody else keeps, and yours is now among them. Freight in, tariffs out, and a spur junction that puts your door on the map permanently. Maps, the census taker would tell you, cut both directions; the Guild's maps mostly cut toward the Guild."
+                },
+                {
+                    "id": "rails_cut_for_shoring",
+                    "text": "Cut it for the deep gallery. Rail we stand under beats rail that rolls past.",
+                    "effects": [
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": 15
+                        },
+                        {
+                            "type": "resource",
+                            "value": 10
+                        },
+                        {
+                            "type": "faction_relation",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "Eleven tons becomes forty feet of gallery shoring that the engineer will still be signing off on when everyone at this table is in the ground. The Guild's log records the spur as 'consumed locally,' which is their coldest possible prose. Your deep walls hold against everything the valley can decide to send them, which, this winter, feels like the same sentence."
+                },
+                {
+                    "id": "rails_split_the_spur",
+                    "text": "Five spans to the Guild, four to the shoring. Nobody's grandchildren get everything.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 10
+                        },
+                        {
+                            "type": "resource",
+                            "value": 10
+                        },
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": 5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The split holds because both sides wanted it more than they wanted to win: a stub junction on the Guild's map and twenty feet of shoring in the deep gallery. The labor board calls it balance. The engineer calls it a compromise with the frost line, and watches the stub junction every spring like it might change its mind."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_springs_audit",
+            "title": "The Unregistered Spring",
+            "description": "A Hydro Barons audit team is working the sector well by well, and their route sheet includes you. It does not include the spring the cook's crew has been drawing from since the green-water week — small, cold, unregistered, and by the Barons' water law, technically theirs already.",
+            "type": "trade",
+            "minDay": 110,
+            "maxDay": 300,
+            "factionTag": "traders",
+            "synopsis": "The Barons' auditor arrives with a meter, a ledger, and the patience of an institution. The spring can be registered — legal, taxed, permanent, and forever after a line item in somebody else's book — or it can be sealed and hidden before the audit walk, which keeps it free and makes every draw from it an act of quiet theft. The third option is the oldest one in the valley: sell the spring's location to the audit before the audit finds it, and buy goodwill with water you were never going to keep anyway.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "springs_register_it",
+                    "text": "Walk the auditor to the spring yourself. Register it, tax and all.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 10
+                        },
+                        {
+                            "type": "resource",
+                            "value": -10
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The spring gets a number, a meter, and a quarterly tithe — modest, because the Barons' modesty is a business strategy. What the registration buys is the thing money can't in this valley: a legal draw. No audit will ever surprise the cook's crew at the spring again, and no auditor will ever need to be wondered about. The water tastes the same. The looking over the shoulder stops."
+                },
+                {
+                    "id": "springs_seal_and_hide",
+                    "text": "Seal the spring chamber before the audit walk. The draw continues, quietly.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": 10
+                        },
+                        {
+                            "type": "morale",
+                            "value": -5
+                        },
+                        {
+                            "type": "faction_relation",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The new seal plate goes on at night and the audit team walks past forty liters an hour of hidden water without slowing down. The spring keeps filling the shelter's jugs off every ledger in the valley — until the day a Barons patrol finds the plate, and the day that plate is found, the whole quiet season becomes evidence. The cook's crew has started drawing water at odd hours. Odd hours have witnesses."
+                },
+                {
+                    "id": "springs_sell_the_bearing",
+                    "text": "Sell the audit the spring's bearing before they find it. Goodwill is water too.",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "value": 15
+                        },
+                        {
+                            "type": "resource",
+                            "value": -5
+                        },
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "You give the auditor the bearing before his meter does, and the ledger records your shelter as cooperative to the point of initiative. The Barons' standing with you warms by exactly the temperature of the spring they now own. The cook's crew learns what happened at the next draw, when the meter is already on the chamber: that the water was theirs for a season, and then it was sold, and that those two facts are the whole history of the valley in one afternoon."
+                }
+            ]
+        },
+        {
+            "id": "quest_the_long_shift_mutt",
+            "title": "The Long-Shift Mutt",
+            "description": "A dog has adopted the night shift. It appeared three weeks ago at the hatch grille, does not beg, does not bark, and walks the pump corridor at 0300 with the regularity of a rostered hand. The night crew has started leaving it a corner of tin. The labor board has noticed it is not on the roster.",
+            "type": "survival",
+            "minDay": 90,
+            "maxDay": 280,
+            "factionTag": "neutral",
+            "synopsis": "Mouths are arithmetic and the arithmetic says no. But the dog has made itself useful in the only way available to it — the night crew is a third less jumpy with a second set of ears on the corridor, and twice now it has stood at the hatch grille ten minutes before the watch heard anything at all. Formally sheltering it costs rations; formally turning it out costs the thing the night shift has that the day shift doesn't: the sense that somebody else is listening too.",
+            "prerequisites": [],
+            "choices": [
+                {
+                    "id": "mutt_roster_the_dog",
+                    "text": "Roster it. Half ration, own bunk corner, name chosen by the night crew.",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "value": -5
+                        },
+                        {
+                            "type": "morale",
+                            "value": 15
+                        },
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The night crew names it Gauge, after the pressure instrument it sleeps under, and the labor board's objection dies the first time Gauge stands at the hatch grille whining at nothing — and nothing turns out to be two scavengers forty minutes from the treeline. Half a ration a day buys the bunker's only early-warning system with four legs and no shift complaints. The day crew pretends to resent it and takes turns walking it."
+                },
+                {
+                    "id": "mutt_turn_it_out",
+                    "text": "The arithmetic says no. Open the hatch at dusk and let the road re-adopt it.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "Gauge goes out without a fight, which is the worst available outcome — a dog that argues could be argued back. It sits at the treeline until full dark, then walks the embankment south. The night crew's 0300 corridor walk continues for a week out of habit before anybody admits out loud that they're walking it alone. The half ration goes back into the common pot where nobody can taste it."
+                },
+                {
+                    "id": "mutt_unofficial_bunk",
+                    "text": "Not on the roster, not out the door. The dog exists between the lines, like half this bunker.",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 5
+                        },
+                        {
+                            "type": "resource",
+                            "value": -3
+                        }
+                    ],
+                    "consequences": "Gauge becomes an institution of the gap between rules: fed from private tins, bedded in the pump corner, invisible on every ledger and present at every 0300. It works until the first hard month, when the ration board counts mouths and finds one that answers to no line — and then the shelter will have to decide, out loud, what it decided silently three weeks ago."
+                }
+            ]
         }
     ]
 }
