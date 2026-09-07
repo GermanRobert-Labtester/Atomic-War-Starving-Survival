@@ -841,6 +841,11 @@ namespace Ashfall.Core.Content
                 ["perimeter_defenses.json"] = new[] { "PerimeterDefenseSystem" },
                 // Plans 202-205 flagship
                 ["plastic_pyrolysis_catalog.json"] = new[] { "PlasticPyrolysisSystem" },
+                ["cargo_airdrop_catalog.json"] = new[] { "CargoAirdropSystem" },
+                // Plans 114-117 flagship
+                ["piezometer_network_catalog.json"] = new[] { "AquiferPiezometerEngine" },
+                ["railway_interlock_catalog.json"] = new[] { "RailwayInterlockEngine" },
+                ["tablet_manufacturing_catalog.json"] = new[] { "PharmaceuticalTabletEngine" },
                 ["decontamination_protocol_catalog.json"] = new[] { "DeconProtocolCatalogLoader", "DecontaminationSystem" },
                 ["geodetic_survey_catalog.json"] = new[] { "GeodeticSurveyCatalogLoader", "GeodeticSurveyEngine" },
                 // Flagship XI (Plans 154-157)

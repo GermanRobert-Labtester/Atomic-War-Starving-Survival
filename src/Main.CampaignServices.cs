@@ -104,6 +104,7 @@ namespace AtomicWar.GodotApp
                 SetupRailway();
                 SetupFungi();
                 SetupPlasticPyrolysis();
+                SetupCargoAirdrop();
                 SetupJustice();
                 SetupRecreation();
                 SetupChemWarfare();

@@ -396,6 +396,7 @@ namespace AtomicWar.GodotApp
                 SaveRailway();
                 SaveFungi();
                 SavePlasticPyrolysis();
+                SaveCargoAirdrop();
                 SaveJustice();
                 SaveRecreation();
                 SaveChemWarfare();

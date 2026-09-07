@@ -962,6 +962,9 @@ namespace AtomicWar.GodotApp
                 // ── Plan 202: Plastic Pyrolysis (retort bay, grid-power projected) ──
                 _m.TickPlasticPyrolysis(day);
 
+                // ── Plan 205: airdrop descent/landing/interception + crate collection ──
+                _m.TickCargoAirdrop(day);
+
                 // ── Plan 203: perimeter weather wear + false alarms ──
                 _m.TickPerimeterDefenseDaily(day);
 

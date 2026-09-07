@@ -491,6 +491,7 @@ namespace AtomicWar.GodotApp
         private void CloseChemicalReconPanel() { _chemicalReconPanel.Visible = false; }
         private void CloseFungiCultivationPanel() { _fungiCultivationBedPanel.Visible = false; }
         private void ClosePlasticPyrolysisPanel() { _plasticPyrolysisPanel.Visible = false; }
+        private void CloseCargoAirdropPanel() { _cargoAirdropPanel.Visible = false; }
 
         private void CloseCraftingPanel()
         {

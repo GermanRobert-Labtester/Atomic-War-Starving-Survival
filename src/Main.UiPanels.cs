@@ -99,6 +99,7 @@ namespace AtomicWar.GodotApp
         private RailwayTerminalPanel _railwayTerminalPanel = null!;
         private FungiCultivationBedPanel _fungiCultivationBedPanel = null!;
         private PlasticPyrolysisPanel _plasticPyrolysisPanel = null!;
+        private CargoAirdropPanel _cargoAirdropPanel = null!;
         private JusticeTribunalPanel _justiceTribunalPanel = null!;
         private CommsArrayTransceiverPanel _commsArrayTransceiverPanel = null!;
         private CeremonyFestivalPanel _ceremonyFestivalPanel = null!;
@@ -489,6 +490,12 @@ namespace AtomicWar.GodotApp
             _plasticPyrolysisPanel.Visible = false;
             _plasticPyrolysisPanel.OnClose += ClosePlasticPyrolysisPanel;
             AddChild(_plasticPyrolysisPanel);
+
+            // ── Airdrop watch panel (Plan 205 — cargo recovery) ──
+            _cargoAirdropPanel = new CargoAirdropPanel();
+            _cargoAirdropPanel.Visible = false;
+            _cargoAirdropPanel.OnClose += CloseCargoAirdropPanel;
+            AddChild(_cargoAirdropPanel);
 
 
 

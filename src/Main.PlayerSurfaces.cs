@@ -94,6 +94,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _plasticPyrolysisPanel.Visible = true,
                 closeAction: () => _plasticPyrolysisPanel.Visible = false);
 
+            PanelRegistry.ConfigureActions("cargo_airdrop",
+                bindAction: () => _cargoAirdropPanel.Bind(EnsureCargoAirdrop()),
+                openAction: () => _cargoAirdropPanel.Visible = true,
+                closeAction: () => _cargoAirdropPanel.Visible = false);
+
             PanelRegistry.ConfigureActions("justice_tribunal",
                 bindAction: () => _justiceTribunalPanel.Bind(EnsureJustice()),
                 openAction: () => _justiceTribunalPanel.Visible = true,

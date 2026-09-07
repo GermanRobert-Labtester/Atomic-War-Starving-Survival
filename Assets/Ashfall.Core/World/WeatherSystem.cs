@@ -41,6 +41,10 @@ namespace Ashfall.Core.World
         public float hoursUntilNextCheck = 0f;
         public int rollCount = 0;
         public bool restrictToNonHazardWeather = false;
+
+        // ── Plan 205: deterministic surface wind (single weather authority) ──
+        public float wind_direction_deg = 0f;
+        public float wind_speed_kph = 0f;
     }
 
     /// <summary>
@@ -76,6 +80,10 @@ namespace Ashfall.Core.World
 
         public WorldWeatherState State => _state;
         public WeatherKind Current => ParseKind(_state.currentKind);
+
+        // ── Plan 205: surface wind projections (degrees; kph) ──
+        public float WindDirectionDeg => _state.wind_direction_deg;
+        public float WindSpeedKph => _state.wind_speed_kph;
         public int Seed => _seed;
 
         // ── Profile ────────────────────────────────────────────────────
@@ -159,6 +167,27 @@ namespace Ashfall.Core.World
                 return WeatherKind.Clear;
 
             double roll = rng.NextDouble() * total;
+            var kind = RollKind(roll, clear, rain, overcast, ashfall, storm, blizzard, blackRain);
+
+            // Plan 205: wind accompanies every weather roll. Storm kinds run a
+            // higher base speed band; calm kinds stay light. Deterministic from
+            // the same seeded rng instance as the kind draw.
+            double windRoll = rng.NextDouble();
+            double speedRoll = rng.NextDouble();
+            bool severe = kind is WeatherKind.FalloutStorm or WeatherKind.Blizzard
+                or WeatherKind.BlackRain or WeatherKind.AcidSnow
+                or WeatherKind.BlackSnow or WeatherKind.BloodRain;
+            float baseSpeed = severe ? 18f : 6f;
+            float bandWidth = severe ? 22f : 10f;
+            _state.wind_direction_deg = (float)(windRoll * 360.0);
+            _state.wind_speed_kph = baseSpeed + (float)(speedRoll * bandWidth);
+
+            return kind;
+        }
+
+        private static WeatherKind RollKind(double roll, float clear, float rain, float overcast,
+            float ashfall, float storm, float blizzard, float blackRain)
+        {
             if (roll < clear) return WeatherKind.Clear;
             roll -= clear;
             if (roll < rain) return WeatherKind.Rain;
@@ -258,7 +287,9 @@ namespace Ashfall.Core.World
                 totalElapsedHours = _state.totalElapsedHours,
                 hoursUntilNextCheck = _state.hoursUntilNextCheck,
                 rollCount = _state.rollCount,
-                restrictToNonHazardWeather = _state.restrictToNonHazardWeather
+                restrictToNonHazardWeather = _state.restrictToNonHazardWeather,
+                wind_direction_deg = _state.wind_direction_deg,
+                wind_speed_kph = _state.wind_speed_kph
             };
         }
 
@@ -271,6 +302,8 @@ namespace Ashfall.Core.World
             _state.hoursUntilNextCheck = saved.hoursUntilNextCheck;
             _state.rollCount = Math.Max(0, saved.rollCount);
             _state.restrictToNonHazardWeather = saved.restrictToNonHazardWeather;
+            _state.wind_direction_deg = saved.wind_direction_deg;
+            _state.wind_speed_kph = saved.wind_speed_kph;
             RaiseChanged();
         }
 

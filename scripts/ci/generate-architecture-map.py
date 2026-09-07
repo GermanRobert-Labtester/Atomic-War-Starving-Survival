@@ -379,6 +379,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--save-store-checksum-selftest"],
         "tests": ["FungiCultivationSystemTests"]
     },
+    "cargo_airdrop": {
+        "domain": "Plans 202-205 Flagship (Plan 205)",
+        "core": ["CargoAirdropSystem"],
+        "catalog": ["cargo_airdrop_catalog.json"],
+        "host": ["Main"],
+        "setup": "SetupCargoAirdrop",
+        "ticked": True,
+        "tick_type": "Daily Sim Tick",
+        "store": ["CargoAirdropSaveStore"],
+        "ui": ["CargoAirdropPanel"],
+        "routes": ["cargo_airdrop"],
+        "cli": ["--save-store-checksum-selftest"],
+        "tests": ["CargoAirdropEngineTests"]
+    },
     "plastic_pyrolysis": {
         "domain": "Plans 202-205 Flagship (Plan 202)",
         "core": ["PlasticPyrolysisSystem"],
