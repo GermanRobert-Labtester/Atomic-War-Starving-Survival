@@ -25,9 +25,13 @@ namespace Ashfall.Core.Defense
     public sealed class PerimeterDefenseSave
     {
         public string systemId { get; set; } = "perimeter_defense";
-        public int schema_version { get; set; } = 1;
+        public int schema_version { get; set; } = 2;
         public int last_tick_day { get; set; } = 1;
         public List<EmplacementRuntimeState> emplacements { get; set; } = new List<EmplacementRuntimeState>();
+
+        // ── Plan 203 additions (additive; old saves default safe) ──
+        public List<PerimeterSectorState> sectors { get; set; } = new List<PerimeterSectorState>();
+        public List<PerimeterIntrusionLogEntry> intrusion_log { get; set; } = new List<PerimeterIntrusionLogEntry>();
     }
 
     public sealed class AssaultSimulationResult
@@ -57,12 +61,29 @@ namespace Ashfall.Core.Defense
 
         private PerimeterDefenseSave _state = new PerimeterDefenseSave();
 
+        // Plan 203: bounded intrusion history (never unbounded persistence).
+        public const int IntrusionLogCapacity = 32;
+        // Attacker counter tags (roadmap §6.10) — abstract capability vocabulary.
+        public const string CounterCuttingTools = "cutting_tools";
+        public const string CounterExplosives = "explosives";
+        public const string CounterStealth = "stealth";
+        public const string CounterVehicleBreach = "vehicle_breach";
+        public const string CounterEmp = "emp";
+
         public event Action<EmplacementRuntimeState>? OnEmplacementConstructed;
         public event Action<EmplacementRuntimeState, int>? OnAmmoLoaded;
         public event Action<EmplacementRuntimeState>? OnTurretJammed;
         public event Action<EmplacementRuntimeState>? OnEmplacementDestroyed;
         public event Action<AssaultSimulationResult>? OnAssaultRepelled;
         public event Action<AssaultSimulationResult>? OnPerimeterBreached;
+
+        // ── Plan 203 events ──
+        public event Action<string, int>? OnFalseAlarm;                   // sectorId, day
+        public event Action<string, bool>? OnSectorAlarmTriggered;        // sectorId, isFalse
+        public event Action<float>? OnWeatherWear;                        // total HP lost today
+        public event Action<PerimeterIntrusionLogEntry>? OnIntrusionLogged;
+        /// <summary>Forwarder for the string event bus (optional).</summary>
+        public event Action<string>? OnEventRaised;
 
         public IReadOnlyList<PerimeterDefenseDefinition> Definitions => _defenseDefs;
         public IReadOnlyList<EmplacementRuntimeState> Emplacements => _state.emplacements;
@@ -136,6 +157,11 @@ namespace Ashfall.Core.Defense
             };
 
             _state.emplacements.Add(emp);
+
+            // Plan 203: auto-assign new emplacements round-robin across the canonical
+            // sector graph so the grid has topology without player micromanagement.
+            var autoSector = PerimeterSector.All[_state.emplacements.Count % PerimeterSector.All.Count];
+            AssignEmplacementToSector(emp.emplacement_id, autoSector);
             OnEmplacementConstructed?.Invoke(emp);
             _log.Info($"[PerimeterDefense] Constructed {def.display_name} ({empId}).");
             return ActionResult.Success("defense.constructed");
@@ -191,6 +217,232 @@ namespace Ashfall.Core.Defense
             return ActionResult.Success("defense.turret_serviced");
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // Plan 203 — sector grid, false alarms, weather wear, alerts,
+        // counterplay. Adds encounter-context state only; combat damage
+        // and injuries remain owned by the combat authority (§6.1).
+        // ─────────────────────────────────────────────────────────────
+
+        public PerimeterSectorState? FindSector(string sectorId)
+        {
+            foreach (var s in _state.sectors)
+                if (s.sector_id == sectorId) return s;
+            return null;
+        }
+
+        public IReadOnlyList<PerimeterSectorState> Sectors => _state.sectors;
+        public IReadOnlyList<PerimeterIntrusionLogEntry> IntrusionLog => _state.intrusion_log;
+
+        private PerimeterSectorState EnsureSector(string sectorId)
+        {
+            var existing = FindSector(sectorId);
+            if (existing != null) return existing;
+            var sector = new PerimeterSectorState { sector_id = sectorId };
+            _state.sectors.Add(sector);
+            return sector;
+        }
+
+        public ActionResult AssignEmplacementToSector(string emplacementId, string sectorId)
+        {
+            if (!PerimeterSector.IsValid(sectorId))
+                return ActionResult.Failed("unknown_sector", "defense.unknown_sector");
+            var emp = FindEmplacement(emplacementId);
+            if (emp == null)
+                return ActionResult.Failed("emplacement_not_found", "defense.emplacement_not_found");
+
+            // Remove from any current sector, then assign.
+            foreach (var s in _state.sectors)
+                s.emplacement_ids.RemoveAll(id => id == emplacementId);
+
+            EnsureSector(sectorId).emplacement_ids.Add(emplacementId);
+            OnEventRaised?.Invoke("defense.emplacement_assigned");
+            return ActionResult.Success("defense.emplacement_assigned");
+        }
+
+        /// <summary>
+        /// Daily perimeter tick. Severe weather (corrosive/abrasive kinds, host-projected)
+        /// wears every intact emplacement by its catalog wear. Alert devices may false-trigger.
+        /// Deterministic under the seeded RNG. No combat runs here.
+        /// </summary>
+        public void TickDay(int day, bool severeWeather)
+        {
+            if (severeWeather)
+            {
+                float totalWear = 0f;
+                for (int i = 0; i < _state.emplacements.Count; i++)
+                {
+                    var emp = _state.emplacements[i];
+                    if (emp.is_destroyed) continue;
+                    var def = _defsById.TryGetValue(emp.defense_id, out var d) ? d : null;
+                    float wear = def?.weather_wear_per_storm ?? 0f;
+                    if (wear <= 0f) continue;
+                    int applied = (int)Math.Min(wear, (float)emp.current_hp);
+                    emp.current_hp -= applied;
+                    totalWear += applied;
+                    if (emp.current_hp <= 0)
+                    {
+                        emp.current_hp = 0;
+                        emp.is_destroyed = true;
+                        emp.is_active = false;
+                        OnEmplacementDestroyed?.Invoke(emp);
+                        _log.Warn($"[PerimeterDefense] {emp.emplacement_id} destroyed by weather wear.");
+                    }
+                }
+                if (totalWear > 0f)
+                {
+                    OnWeatherWear?.Invoke(totalWear);
+                    OnEventRaised?.Invoke("defense.weather_wear");
+                }
+            }
+
+            // False alarms: each armed, unspent alert device rolls its base rate.
+            for (int i = 0; i < _state.sectors.Count; i++)
+            {
+                var sector = _state.sectors[i];
+                if (!sector.alarm_armed || sector.alarm_spent) continue;
+
+                foreach (var empId in sector.emplacement_ids)
+                {
+                    var emp = FindEmplacement(empId);
+                    if (emp == null || emp.is_destroyed || !emp.is_active) continue;
+                    if (!_defsById.TryGetValue(emp.defense_id, out var def)) continue;
+                    if (!def.alert_device || def.false_alarm_rate_bp <= 0) continue;
+
+                    if (_rng.NextDouble() < def.false_alarm_rate_bp / 10000.0)
+                    {
+                        TriggerSectorAlarm(sector, day, isFalse: true, emp.emplacement_id);
+                        break; // one false trigger per sector per day
+                    }
+                }
+            }
+        }
+
+        private void TriggerSectorAlarm(PerimeterSectorState sector, int day, bool isFalse, string detail)
+        {
+            sector.alarm_spent = true;
+            sector.last_trigger_day = day;
+            if (isFalse) sector.false_alarm_count++;
+            else sector.hostile_trigger_count++;
+
+            LogIntrusion(new PerimeterIntrusionLogEntry
+            {
+                day = day,
+                sector_id = sector.sector_id,
+                kind = isFalse ? "false_alarm" : "hostile_trigger",
+                detail = detail
+            });
+
+            OnSectorAlarmTriggered?.Invoke(sector.sector_id, isFalse);
+            if (isFalse) OnFalseAlarm?.Invoke(sector.sector_id, day);
+            _log.Info($"[PerimeterDefense] Sector '{sector.sector_id}' alarm {(isFalse ? "FALSE trigger" : "triggered")} (device spent)." );
+        }
+
+        /// <summary>Rearms a spent sector alarm device (player action — no cost, no cooldown).</summary>
+        public ActionResult ResetSectorAlarm(string sectorId)
+        {
+            var sector = FindSector(sectorId);
+            if (sector == null)
+                return ActionResult.Failed("unknown_sector", "defense.unknown_sector");
+            if (!sector.alarm_spent)
+                return ActionResult.Blocked("alarm_not_spent", "defense.alarm_not_spent");
+
+            sector.alarm_spent = false;
+            OnEventRaised?.Invoke("defense.alarm_reset");
+            return ActionResult.Success("defense.alarm_reset");
+        }
+
+        public ActionResult DisarmSector(string sectorId)
+        {
+            var sector = FindSector(sectorId);
+            if (sector == null)
+                return ActionResult.Failed("unknown_sector", "defense.unknown_sector");
+            sector.alarm_armed = !sector.alarm_armed;
+            if (!sector.alarm_armed) sector.alarm_spent = false;
+            OnEventRaised?.Invoke("defense.alarm_disarmed");
+            return ActionResult.Success(sector.alarm_armed ? "defense.alarm_armed" : "defense.alarm_disarmed");
+        }
+
+        private void LogIntrusion(PerimeterIntrusionLogEntry entry)
+        {
+            _state.intrusion_log.Add(entry);
+            while (_state.intrusion_log.Count > IntrusionLogCapacity)
+                _state.intrusion_log.RemoveAt(0);
+            OnIntrusionLogged?.Invoke(entry);
+        }
+
+        private static bool IsCountered(PerimeterDefenseDefinition def, HashSet<string>? attackerCounters)
+        {
+            if (attackerCounters == null || attackerCounters.Count == 0) return false;
+            foreach (var tag in def.counter_tags)
+                if (attackerCounters.Contains(tag)) return true;
+            return false;
+        }
+
+        private bool SectorAlarmSpentFor(EmplacementRuntimeState emp)
+        {
+            for (int i = 0; i < _state.sectors.Count; i++)
+            {
+                var s = _state.sectors[i];
+                if (s.emplacement_ids.Contains(emp.emplacement_id)) return s.alarm_spent;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Encounter-start context snapshot for the raid/combat authority (§6.9).
+        /// Combat consumes these modifiers; it never writes perimeter state.
+        /// </summary>
+        public PerimeterEncounterSnapshot GetEncounterSnapshot(IEnumerable<string>? attackerCounterTags = null)
+        {
+            var counters = attackerCounterTags != null ? new HashSet<string>(attackerCounterTags, StringComparer.Ordinal) : null;
+            var snap = new PerimeterEncounterSnapshot();
+            float delay = 1f;
+
+            for (int i = 0; i < _state.emplacements.Count; i++)
+            {
+                var emp = _state.emplacements[i];
+                if (emp.is_destroyed || !emp.is_active) continue;
+                if (!_defsById.TryGetValue(emp.defense_id, out var def)) continue;
+
+                bool countered = IsCountered(def, counters);
+                if (countered) snap.countered_emplacement_ids.Add(emp.emplacement_id);
+
+                // Alert devices only deny stealth while armed and unspent (§6.7 lifecycle).
+                if (def.prevents_stealth_breach && !countered && !SectorAlarmSpentFor(emp))
+                    snap.stealth_denied = true;
+
+                if (!countered)
+                {
+                    // Entanglements and barriers slow approach proportionally to integrity.
+                    if (def.slow_factor > 0f)
+                    {
+                        float integrity = emp.max_hp > 0 ? emp.current_hp / (float)emp.max_hp : 0f;
+                        delay += def.slow_factor * integrity;
+                    }
+                    // Observation/early-warning hardware contributes detection initiative.
+                    if (def.defense_type == "observation" || def.defense_type == "early_warning")
+                        snap.detection_initiative_bonus += 0.1f + def.night_accuracy_bonus;
+
+                    var sector = FindSectorOf(emp.emplacement_id);
+                    if (sector != null && !snap.protected_sectors.Contains(sector.sector_id))
+                        snap.protected_sectors.Add(sector.sector_id);
+                }
+            }
+
+            snap.movement_delay_multiplier = delay;
+            return snap;
+        }
+
+        private PerimeterSectorState? FindSectorOf(string emplacementId)
+        {
+            for (int i = 0; i < _state.sectors.Count; i++)
+            {
+                var s = _state.sectors[i];
+                if (s.emplacement_ids.Contains(emplacementId)) return s;
+            }
+            return null;
+        }
+
         public ActionResult RepairEmplacement(string emplacementId, int hpToRestore)
         {
             var emp = FindEmplacement(emplacementId);
@@ -217,15 +469,19 @@ namespace Ashfall.Core.Defense
         public AssaultSimulationResult SimulateRaiderAssault(
             int raiderStrength,
             bool isNight = false,
-            Func<string, bool>? isEmplacementPowered = null)
+            Func<string, bool>? isEmplacementPowered = null,
+            IEnumerable<string>? attackerCounterTags = null,
+            int currentDay = -1)
         {
+            var counters = attackerCounterTags != null ? new HashSet<string>(attackerCounterTags, StringComparer.Ordinal) : null;
             var result = new AssaultSimulationResult
             {
                 InitialRaiderStrength = raiderStrength,
                 RemainingRaiderStrength = raiderStrength
             };
 
-            // 1. Check early-warning tripwire flares
+            // 1. Check early-warning tripwire flares. Plan 203: stealth denial only
+            //    applies while the device is armed, unspent, and not countered.
             float nightAccuracyBonus = 0f;
             for (int i = 0; i < _state.emplacements.Count; i++)
             {
@@ -233,13 +489,31 @@ namespace Ashfall.Core.Defense
                 if (emp.is_destroyed || !emp.is_active) continue;
                 if (!_defsById.TryGetValue(emp.defense_id, out var def)) continue;
 
-                if (def.prevents_stealth_breach)
+                if (def.prevents_stealth_breach && !IsCountered(def, counters) && !SectorAlarmSpentFor(emp))
                 {
                     result.StealthInfiltrationNeutralized = true;
                 }
-                if (isNight && def.night_accuracy_bonus > 0f)
+                if (isNight && def.night_accuracy_bonus > 0f && !IsCountered(def, counters))
                 {
                     nightAccuracyBonus = Math.Max(nightAccuracyBonus, def.night_accuracy_bonus);
+                }
+            }
+
+            // 1b. Hostile approach triggers sector alert devices (§6.7 lifecycle —
+            //     the device spends; detection/initiative context flows to combat).
+            for (int i = 0; i < _state.sectors.Count; i++)
+            {
+                var sector = _state.sectors[i];
+                if (!sector.alarm_armed || sector.alarm_spent) continue;
+                foreach (var empId in sector.emplacement_ids)
+                {
+                    var emp = FindEmplacement(empId);
+                    if (emp == null || emp.is_destroyed || !emp.is_active) continue;
+                    if (!_defsById.TryGetValue(emp.defense_id, out var alertDef)) continue;
+                    if (!alertDef.alert_device) continue;
+                    if (IsCountered(alertDef, counters)) continue;
+                    TriggerSectorAlarm(sector, currentDay < 0 ? _state.last_tick_day : currentDay, isFalse: false, empId);
+                    break; // one hostile trigger per sector per assault
                 }
             }
 
@@ -249,6 +523,10 @@ namespace Ashfall.Core.Defense
                 var emp = _state.emplacements[i];
                 if (emp.is_destroyed || !emp.is_active || emp.is_jammed) continue;
                 if (!_defsById.TryGetValue(emp.defense_id, out var def)) continue;
+
+                // Plan 203 counterplay: attackers with matching capability tags
+                // neutralize the emplacement entirely (§6.10 — no guaranteed immunity).
+                if (IsCountered(def, counters)) continue;
 
                 // Check power requirement
                 if (def.power_draw_watts > 0 && isEmplacementPowered != null && !isEmplacementPowered(emp.emplacement_id))
@@ -316,6 +594,13 @@ namespace Ashfall.Core.Defense
                 {
                     result.Breached = true;
                     result.Repelled = false;
+                    LogIntrusion(new PerimeterIntrusionLogEntry
+                    {
+                        day = currentDay < 0 ? _state.last_tick_day : currentDay,
+                        sector_id = "perimeter",
+                        kind = "breach",
+                        detail = $"{result.RemainingRaiderStrength} raiders breached"
+                    });
                     OnPerimeterBreached?.Invoke(result);
                     _log.Warn($"[PerimeterDefense] CRITICAL: Perimeter defense breached by {result.RemainingRaiderStrength} raiders!");
                     return result;
@@ -324,6 +609,13 @@ namespace Ashfall.Core.Defense
 
             result.Repelled = true;
             result.Breached = false;
+            LogIntrusion(new PerimeterIntrusionLogEntry
+            {
+                day = currentDay < 0 ? _state.last_tick_day : currentDay,
+                sector_id = "perimeter",
+                kind = "repelled",
+                detail = $"{result.AttackersKilled} attackers neutralized"
+            });
             OnAssaultRepelled?.Invoke(result);
             _log.Info($"[PerimeterDefense] Assault repelled! Raiders neutralized or routed.");
             return result;
@@ -334,7 +626,7 @@ namespace Ashfall.Core.Defense
             var save = new PerimeterDefenseSave
             {
                 systemId = SystemId,
-                schema_version = 1,
+                schema_version = 2,
                 last_tick_day = _state.last_tick_day
             };
 
@@ -355,6 +647,10 @@ namespace Ashfall.Core.Defense
                     is_jammed = emp.is_jammed
                 });
             }
+
+            // Plan 203: sectors + bounded intrusion log.
+            save.sectors = new List<PerimeterSectorState>(_state.sectors);
+            save.intrusion_log = new List<PerimeterIntrusionLogEntry>(_state.intrusion_log);
 
             return save;
         }
@@ -385,6 +681,12 @@ namespace Ashfall.Core.Defense
                     });
                 }
             }
+
+            // Plan 203: additive restore — old saves carry no sectors/log (safe defaults).
+            _state.sectors = save.sectors ?? new List<PerimeterSectorState>();
+            _state.intrusion_log = save.intrusion_log ?? new List<PerimeterIntrusionLogEntry>();
+            if (_state.intrusion_log.Count > IntrusionLogCapacity)
+                _state.intrusion_log.RemoveRange(0, _state.intrusion_log.Count - IntrusionLogCapacity);
         }
     }
 }

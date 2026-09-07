@@ -270,12 +270,49 @@ namespace AtomicWar.GodotApp
             };
             _perimeterDefense.OnAmmoLoaded += (_, _) => _perimeterDefenseDirty = true;
 
+            // Plan 203: sector alarms, false alarms, weather wear, intrusion log.
+            _perimeterDefense.OnFalseAlarm += (sectorId, day) =>
+            {
+                _journal?.TryAddRawEntry("defense_false_alarm", $"False alarm in the {sectorId} perimeter sector — wildlife or weather set it off. Device needs reset.", null!, _simDay);
+                _perimeterDefenseDirty = true;
+            };
+            _perimeterDefense.OnSectorAlarmTriggered += (sectorId, isFalse) =>
+            {
+                if (!isFalse)
+                {
+                    _journal?.TryAddRawEntry("defense_alarm_triggered", $"Perimeter alarm tripped in the {sectorId} sector!", null!, _simDay);
+                    _perimeterDefenseDirty = true;
+                }
+            };
+            _perimeterDefense.OnWeatherWear += totalWear =>
+            {
+                _journal?.TryAddRawEntry("defense_weather_wear", $"Severe weather wears the perimeter emplacements ({totalWear:F0} structural damage).", null!, _simDay);
+                _perimeterDefenseDirty = true;
+            };
+
             return _perimeterDefense;
+        }
+
+        /// <summary>
+        /// Plan 203 daily perimeter tick: severe-weather wear + false-alarm rolls,
+        /// projected from the single weather authority (corrosive/abrasive kinds).
+        /// </summary>
+        private void TickPerimeterDefenseDaily(int currentDay)
+        {
+            if (_perimeterDefense == null) return;
+
+            var kind = _world?.Weather.Current ?? WeatherKind.Clear;
+            bool severe = kind is WeatherKind.Ashfall or WeatherKind.FalloutStorm
+                or WeatherKind.Blizzard or WeatherKind.BlackRain or WeatherKind.AcidSnow
+                or WeatherKind.BlackSnow or WeatherKind.BloodRain;
+
+            _perimeterDefense.TickDay(currentDay, severe);
         }
 
         private void SetupPerimeterDefense()
         {
             EnsurePerimeterDefense();
+            _defense?.AttachPerimeter(_perimeterDefense);
         }
 
         private void SavePerimeterDefense()
@@ -364,8 +401,17 @@ namespace AtomicWar.GodotApp
 
         public NuclearCoreLifecycleSystem EnsureNuclearCore()
         {
-            if (_nuclearCore != null) return _nuclearCore;
+            if (_nuclearCore != null)
+            {
+                // Power-grid contributions are runtime projections. Re-run the
+                // publish when a caller created the nuclear system before the
+                // grid (or after a slot restore rebuilt the grid).
+                SetupPowerGrid();
+                PublishNuclearCoreGeneration();
+                return _nuclearCore;
+            }
             SetupInventory();
+            SetupPowerGrid();
             var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
             var json = new SystemTextJsonSerializer();
             var cat = NuclearCoreCatalogLoader.Load(_dataDir, fileIO, json)
@@ -401,11 +447,13 @@ namespace AtomicWar.GodotApp
             _nuclearCore.OnCoreInstalled += (instanceId, profileId) =>
             {
                 _journal?.TryAddRawEntry("nuclear_core_installed", $"Reactor core {instanceId} ({profileId}) successfully installed and seated.", null!, _simDay);
+                PublishNuclearCoreGeneration();
                 _nuclearCoreDirty = true;
             };
             _nuclearCore.OnReactorScrammed += instanceId =>
             {
                 _journal?.TryAddRawEntry("nuclear_reactor_scram", $"EMERGENCY SCRAM: Reactor core {instanceId} control rods dropped to safe cold state!", null!, _simDay);
+                PublishNuclearCoreGeneration();
                 _nuclearCoreDirty = true;
             };
             _nuclearCore.OnHeatStateChanged += (instanceId, state) =>
@@ -418,7 +466,19 @@ namespace AtomicWar.GodotApp
                 _nuclearCoreDirty = true;
             };
 
+            PublishNuclearCoreGeneration();
             return _nuclearCore;
+        }
+
+        /// <summary>
+        /// Republish nuclear output into the live grid. The contribution is
+        /// idempotent and deliberately not part of either save section.
+        /// </summary>
+        private void PublishNuclearCoreGeneration()
+        {
+            _powerGrid?.System?.SetGenerationContribution(
+                NuclearCoreLifecycleSystem.PowerSourceId,
+                Math.Max(0f, _nuclearCore?.GetTotalGenerationWatts() ?? 0f));
         }
 
         private void SetupNuclearCore()

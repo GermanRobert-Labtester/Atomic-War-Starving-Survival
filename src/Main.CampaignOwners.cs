@@ -962,6 +962,9 @@ namespace AtomicWar.GodotApp
                 // ── Plan 202: Plastic Pyrolysis (retort bay, grid-power projected) ──
                 _m.TickPlasticPyrolysis(day);
 
+                // ── Plan 203: perimeter weather wear + false alarms ──
+                _m.TickPerimeterDefenseDaily(day);
+
                 // ── Plans 178-181: Childhood Rearing, Prisoner Management, Mutation Trees, Stealth ──
                 _m.TickPlans178_181(day);
 

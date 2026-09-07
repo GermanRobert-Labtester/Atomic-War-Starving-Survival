@@ -228,6 +228,68 @@ public partial class DefenseGridPanel : Control
             return;
         }
 
+        // ── Plan 203: perimeter sector grid (attached perimeter authority) ──
+        if (_host.Perimeter != null)
+        {
+            var perimeter = _host.Perimeter;
+            _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("PERIMETER GRID"));
+
+            var snapshot = perimeter.GetEncounterSnapshot();
+            _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Approach delay", $"×{snapshot.movement_delay_multiplier:0.0#}", AshfallUiHelpers.ColorText));
+            _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Stealth denied", snapshot.stealth_denied ? "YES" : "no",
+                snapshot.stealth_denied ? AshfallUiHelpers.ColorSuccess : AshfallUiHelpers.ColorMuted));
+
+            foreach (var sector in perimeter.Sectors)
+            {
+                string alarmState = !sector.alarm_armed ? "DISARMED"
+                    : sector.alarm_spent ? "SPENT — NEEDS RESET" : "ARMED";
+                var stateColor = sector.alarm_spent ? AshfallUiHelpers.ColorWarning : AshfallUiHelpers.ColorText;
+
+                var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                var label = AshfallUiHelpers.MakeBody($"{sector.sector_id.ToUpperInvariant()} — {alarmState} · {sector.emplacement_ids.Count} emplacement(s) · false alarms {sector.false_alarm_count}", autowrap: false);
+                label.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                label.AddThemeColorOverride("font_color", stateColor);
+                row.AddChild(label);
+
+                if (sector.alarm_spent)
+                {
+                    var resetBtn = AshfallUiHelpers.MakeButton("RESET", () =>
+                    {
+                        _host.ResetSectorAlarm(sector.sector_id);
+                        RefreshView();
+                    });
+                    resetBtn.TooltipText = "Rearm the triggered alert device. No cost.";
+                    resetBtn.CustomMinimumSize = new Vector2(0, 26);
+                    row.AddChild(resetBtn);
+                }
+                var armBtn = AshfallUiHelpers.MakeButton(sector.alarm_armed ? "DISARM" : "ARM", () =>
+                {
+                    _host.ToggleSectorArm(sector.sector_id);
+                    RefreshView();
+                });
+                armBtn.TooltipText = "Toggle the sector's alert device standby.";
+                armBtn.CustomMinimumSize = new Vector2(0, 26);
+                row.AddChild(armBtn);
+
+                _detailBox.AddChild(row);
+            }
+
+            var logTail = perimeter.IntrusionLog;
+            if (logTail.Count > 0)
+            {
+                _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("RECENT PERIMETER EVENTS"));
+                int entriesShown = 0;
+                for (int i = logTail.Count - 1; i >= 0 && entriesShown < 5; i--, entriesShown++)
+                {
+                    var e = logTail[i];
+                    _detailBox.AddChild(AshfallUiHelpers.MakeMetadata($"Day {e.day} — {e.sector_id}: {e.kind.Replace('_', ' ')}"));
+                }
+            }
+
+            var sep203 = AshfallUiHelpers.MakeSeparator();
+            _detailBox.AddChild(sep203);
+        }
+
         // Install section (always available — costs shown per trap).
         _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("INSTALL NEW TRAP"));
         var installRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);

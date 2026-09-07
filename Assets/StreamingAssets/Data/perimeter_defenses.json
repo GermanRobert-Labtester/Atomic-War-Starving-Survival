@@ -18,7 +18,11 @@
       "build_costs": {
         "sandbags": 4,
         "scrap_wood": 2
-      }
+      },
+      "counter_tags": ["explosives"],
+      "weather_wear_per_storm": 8.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     },
     {
       "defense_id": "def_razorwire_obstacle",
@@ -37,7 +41,11 @@
       "build_costs": {
         "scrap_metal": 3,
         "electrical_wire": 2
-      }
+      },
+      "counter_tags": ["cutting_tools"],
+      "weather_wear_per_storm": 12.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     },
     {
       "defense_id": "def_tripwire_flare_line",
@@ -56,7 +64,11 @@
       "build_costs": {
         "flare_tripwire": 2,
         "scrap_wood": 1
-      }
+      },
+      "counter_tags": ["stealth"],
+      "weather_wear_per_storm": 25.0,
+      "false_alarm_rate_bp": 300,
+      "alert_device": true
     },
     {
       "defense_id": "def_sentry_turret_9mm",
@@ -75,7 +87,11 @@
       "build_costs": {
         "scrap_metal": 6,
         "electrical_wire": 2
-      }
+      },
+      "counter_tags": ["emp"],
+      "weather_wear_per_storm": 4.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     },
     {
       "defense_id": "def_sentry_turret_556",
@@ -94,7 +110,11 @@
       "build_costs": {
         "scrap_metal": 10,
         "electrical_wire": 4
-      }
+      },
+      "counter_tags": ["emp", "explosives"],
+      "weather_wear_per_storm": 4.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     },
     {
       "defense_id": "def_reinforced_outer_gate",
@@ -113,7 +133,11 @@
       "build_costs": {
         "scrap_metal": 8,
         "scrap_wood": 4
-      }
+      },
+      "counter_tags": ["explosives", "vehicle_breach"],
+      "weather_wear_per_storm": 2.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     },
     {
       "defense_id": "def_heavy_barricade",
@@ -132,7 +156,11 @@
       "build_costs": {
         "scrap_metal": 5,
         "sandbags": 3
-      }
+      },
+      "counter_tags": ["explosives"],
+      "weather_wear_per_storm": 6.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     },
     {
       "defense_id": "def_searchlight_tower",
@@ -151,7 +179,11 @@
       "build_costs": {
         "scrap_metal": 4,
         "electrical_wire": 3
-      }
+      },
+      "counter_tags": [],
+      "weather_wear_per_storm": 10.0,
+      "false_alarm_rate_bp": 0,
+      "alert_device": false
     }
   ]
 }

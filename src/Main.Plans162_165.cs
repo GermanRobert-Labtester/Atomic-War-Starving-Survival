@@ -307,6 +307,9 @@ namespace AtomicWar.GodotApp
                 system.RestoreState(saved);
 
             _defense = new DefenseHostSession(system);
+            // Plan 203: attach the perimeter authority when it already exists
+            // (defense setup can run before or after perimeter setup).
+            if (_perimeterDefense != null) _defense.AttachPerimeter(_perimeterDefense);
             _defense.StateChanged += () => _defenseDirty = true;
 
             // Capture handoff: DefenseSystem only reports the fact; the

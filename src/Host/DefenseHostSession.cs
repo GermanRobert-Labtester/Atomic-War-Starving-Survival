@@ -21,6 +21,37 @@ namespace AtomicWar.GodotApp
         /// PrisonerSystem.TakePrisoner (single captive authority).</summary>
         public event Action<int, int>? OnCaptivesToHandOff;
 
+        /// <summary>Plan 203: attached perimeter authority (optional — sector grid,
+        /// alarms, weather wear). Attached by Main once both sessions exist.</summary>
+        public PerimeterDefenseSystem? Perimeter { get; private set; }
+
+        public void AttachPerimeter(PerimeterDefenseSystem? perimeter)
+        {
+            if (Perimeter != null) Perimeter.OnEventRaised -= _ => RaiseStateChanged();
+            Perimeter = perimeter;
+            if (Perimeter != null) Perimeter.OnEventRaised += _ => RaiseStateChanged();
+            RaiseStateChanged();
+        }
+
+        public ActionResult ResetSectorAlarm(string sectorId)
+        {
+            if (Perimeter == null) return ActionResult.Failed("no_perimeter", "defense.no_perimeter");
+            var res = Perimeter.ResetSectorAlarm(sectorId);
+            if (res.IsSuccess) LastEvent = $"{sectorId} sector alarm device reset.";
+            else LastEvent = "Alarm reset blocked: " + res.FailureCode;
+            RaiseStateChanged();
+            return res;
+        }
+
+        public ActionResult ToggleSectorArm(string sectorId)
+        {
+            if (Perimeter == null) return ActionResult.Failed("no_perimeter", "defense.no_perimeter");
+            var res = Perimeter.DisarmSector(sectorId);
+            if (res.IsSuccess) LastEvent = $"{sectorId} sector alarm {(Perimeter.FindSector(sectorId)?.alarm_armed == true ? "armed" : "disarmed")}.";
+            RaiseStateChanged();
+            return res;
+        }
+
         public DefenseHostSession(DefenseSystem system)
         {
             System = system ?? throw new ArgumentNullException(nameof(system));
