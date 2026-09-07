@@ -35,6 +35,146 @@
             "bodyText": "The comms array bursts with ear-splitting static. Just beneath the white noise, a cold, synthesized voice recites an unbroken sequence of numbers on a ghostly loop.",
             "weight": 1.0,
             "minDay": 8
+        },
+        {
+            "id": "incident_fallout_storm_approach",
+            "title": "Fallout Storm Approach",
+            "bodyText": "The barograph has fallen for two hours and the ridge has gone the color of a wet ashtray. This is a front, not cloud drift: the counters climb ahead of the wind, so the particulate is already moving. Four hours, maybe. Seal the intakes, bring in the racks, and decide now who finishes the outside work.",
+            "weight": 1.2,
+            "minDay": 12
+        },
+        {
+            "id": "incident_contaminated_water_table",
+            "title": "Contaminated Water Table",
+            "bodyText": "The well draws bitter and the strips darken faster than last week. This is not the purifier; the purifier is clean and its seals are good. Something has entered the table upstream of you, quietly, and it will keep entering until somebody walks the two days to find out what. Boil twice. Boiling is not a plan, it is a delay.",
+            "weight": 0.9,
+            "minDay": 32
+        },
+        {
+            "id": "incident_ground_tremor",
+            "title": "Ground Tremor",
+            "bodyText": "Four seconds, from the north-east. Dust came out of the ceiling seams and the store-room shelving jumped. Nothing broke and nobody was hurt, but the crack map on the wall carries one more line than it did this morning. This shelter was built for one thing and ground movement was not it. Read the seals again tonight.",
+            "weight": 0.7,
+            "minDay": 18
+        },
+        {
+            "id": "incident_perimeter_breach_attempt",
+            "title": "Perimeter Breach Attempt",
+            "bodyText": "The watch found the sealed service access on the west face standing two fingers open, with the ground beneath it scuffed clean of ash. There are tool marks on the hasp: patient work, not hurried, by somebody who knew where the hasp was and had time to learn how it moves. Nothing missing. Nothing entered. They wanted to know whether they could.",
+            "weight": 0.8,
+            "minDay": 35
+        },
+        {
+            "id": "incident_unknown_visitor",
+            "title": "Unknown Visitor",
+            "bodyText": "One visitor at the hatch, unarmed, hands open and visible, asking for water in the flat even tone of somebody who has done this forty times. A Rebuilder canvas patch is sewn at his shoulder and then cut off, leaving the outline. He will not say where he came from and he does not press. He will sit if you let him. He will not sit if you do not.",
+            "weight": 1.0,
+            "minDay": 38
+        },
+        {
+            "id": "incident_local_signal_intercept",
+            "title": "Local Signal Intercept",
+            "bodyText": "The set has a carrier that is on no schedule you own: a short tone, silence, then the tone again, every eleven minutes, precise enough to set a watch by. Strength puts the transmitter inside four kilometers. It is not calling anybody and not answering anything. It is only announcing, over and over, that it is there and that it works.",
+            "weight": 0.6,
+            "minDay": 41
+        },
+        {
+            "id": "incident_shelter_disease_outbreak",
+            "title": "Shelter Disease Outbreak",
+            "bodyText": "Three bunks in the same row went feverish overnight and a fourth this morning. Same symptoms, same row, same cup on the same bench. The medic has moved them to the isolation alcove and taped a line across the corridor. Panic is not the treatment; a roster of who touched what, a closed cup, and a count every four hours until the count stops rising is.",
+            "weight": 0.9,
+            "minDay": 44
+        },
+        {
+            "id": "incident_chemical_exposure",
+            "title": "Chemical Exposure",
+            "bodyText": "Somebody brought a drum in off the road and it wept in the store room overnight. Two have been coughing since and one has a rash along the forearm where a sleeve rode up. The drum is on the ramp now, in the weather where it belongs. The room needs a week of airflow before anyone sleeps near it, and the coughing needs names and hours written down.",
+            "weight": 0.5,
+            "minDay": 47
+        },
+        {
+            "id": "incident_survivor_collapse",
+            "title": "Survivor Collapse",
+            "bodyText": "A survivor went down in the pump room at the end of second shift: no cry, no drama, knees and then floor. They came round inside a minute and were embarrassed, which is the part to watch. The board says the shift pattern has run short-handed nine days. That is not a cause, it is a schedule. Rest them today and change the roster, or count this as the first of several.",
+            "weight": 1.1,
+            "minDay": 25
+        },
+        {
+            "id": "incident_ration_dispute",
+            "title": "Ration Dispute",
+            "bodyText": "The evening issue took eleven minutes too long because two people disagreed about a scoop, then four more had opinions about the scoop, then somebody said the word always. The board is on the wall and the board is not in dispute; what is in dispute is who keeps standing at the front of the line. Post the rotation where the line can read it. Do not adjudicate the past.",
+            "weight": 1.3,
+            "minDay": 8
+        },
+        {
+            "id": "incident_ideological_friction",
+            "title": "Ideological Friction",
+            "bodyText": "It started about the radio and became, inside a minute, about whether the shelter is a place or a plan. Two voices, eleven listeners, and the listeners carried it to their bunks. Nothing was decided and nothing needs deciding tonight. What needs doing is a job for the two of them tomorrow, in daylight, with a third person present.",
+            "weight": 0.8,
+            "minDay": 72
+        },
+        {
+            "id": "incident_grief_episode",
+            "title": "Grief Episode",
+            "bodyText": "Somebody is crying in the corridor at an hour when the corridor is meant to be empty, quietly, into a sleeve, because the bunk room is shared. Nobody stopped and nobody should have; that is not the failure. The failure is if this is the fourth night and the shelter has no hour in it where grief is expected. Name one. Put it on the board beside the water count.",
+            "weight": 1.0,
+            "minDay": 76
+        },
+        {
+            "id": "incident_generator_failure",
+            "title": "Generator Failure",
+            "bodyText": "The generator dropped load at the start of the evening cycle and did not come back on the first try. The fault is in the fuel line and it is small, and small faults in fuel lines are how nights get long. You have battery for the lights and about nine hours of it. Fix it tonight while there is still light on the bench, or the whole shelter learns the dark tomorrow.",
+            "weight": 1.2,
+            "minDay": 15
+        },
+        {
+            "id": "incident_air_filter_breakdown",
+            "title": "Air Filter Breakdown",
+            "bodyText": "The scrubber is pulling against a filter that has given what it has. The gauge sits in the amber and the amber is not a negotiation. There is one spare on the shelf and it has been there since before the storms, which means somebody has been saving it for a worse day. This is the worse day, or it is not, and whoever reads the gauge first decides which.",
+            "weight": 0.9,
+            "minDay": 22
+        },
+        {
+            "id": "incident_water_pipe_burst",
+            "title": "Water Pipe Burst",
+            "bodyText": "A joint let go above the store room and forty liters reached the floor before the valve was found. The grain on the low shelf is wet and wet grain has maybe a day in it before it is only compost. This is a bad joint, not a bad system: three more in that run are the same age and make. Shut it, drain it, and walk the whole run with a lamp while you are down there.",
+            "weight": 1.1,
+            "minDay": 50
+        },
+        {
+            "id": "incident_nearby_cache_discovered",
+            "title": "Nearby Cache Discovered",
+            "bodyText": "A crew came back with a bearing instead of a haul: a sealed service box under a collapsed lean-to, half a day out, unopened and marked with a municipal stencil. They did not open it, which was either discipline or superstition, and the difference matters less than the bearing. Somebody has to walk it out, and they should carry more than a pry bar.",
+            "weight": 0.4,
+            "minDay": 55
+        },
+        {
+            "id": "incident_supply_drop_near_shelter",
+            "title": "Supply Drop Near Shelter",
+            "bodyText": "Something came down on the ridge in the night and the sound carried: a crack, a long hiss, then nothing. The chute, if there was one, is out there, and whatever the canister held is out there, and so is whoever was meant to collect it. Two days of visibility left before the weather closes. Decide whether this is salvage, a trap, or somebody else's loss.",
+            "weight": 0.3,
+            "minDay": 80
+        },
+        {
+            "id": "incident_faction_patrol_nearby",
+            "title": "Faction Patrol Nearby",
+            "bodyText": "Four men walked the service road at mid-distance, unhurried, in the loose column of a patrol that has walked it before. The truck carries Iron Garrison marking and the truck is not stopped, which is the only reason this is a sighting and not a visit. Count them, note the direction and the hour, and put the numbers on the board. Counted patrols behave differently.",
+            "weight": 0.7,
+            "minDay": 58
+        },
+        {
+            "id": "incident_refugees_approaching",
+            "title": "Refugees Approaching",
+            "bodyText": "Nine people on the road, coming slow, carrying what they can and pushing one handcart. They are not armed in any way that matters and they have not left the road, which is the courtesy they are offering you. They reach your turn in about three hours. Whatever the shelter decides, decide it before they arrive, and decide it out loud, so the person at the hatch is not making policy with a hand on the door.",
+            "weight": 0.6,
+            "minDay": 84
+        },
+        {
+            "id": "incident_exchange_anniversary",
+            "title": "The Anniversary",
+            "bodyText": "Ninety days. The shelter did not vote on this and nobody put it on the board, but the corridors know: the work is lighter, the talk is quieter, and two people have asked for the same hour off. Somebody has set a tin on the mess table that nobody has claimed. There is nothing to fix and nothing to order. Let the day be what it is, keep the watch doubled anyway, and open the tin at the end of it.",
+            "weight": 1.0,
+            "minDay": 90
         }
     ]
 }

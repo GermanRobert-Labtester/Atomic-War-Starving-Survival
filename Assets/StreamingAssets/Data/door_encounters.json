@@ -3010,16 +3010,16 @@
     },
     {
       "encounterId": "door_encounter_tempest_barograph_seller",
-      "visitorName": "Kessa Vane, storm-chaser (The Tempest)",
+      "visitorName": "Meter-Reader Kessa Vane (The Tempest)",
       "visitorFaction": "faction_the_tempest",
-      "description": "She carries a barograph drum under one arm like a stolen hat, and two years of ink traces inside it. Her claim, delivered flat and fast: the storms are migrating. Same bearings, same intervals, walking a route like a patrol — and your sector sits on the line. The drum record proves it or doesn't. She wants fuel cells for the chase rig, and she is willing to be paid in warnings.",
+      "description": "She comes to read the meter on your exterior conduit, because the meter is read on a schedule and the schedule is the entire reason for the visit. Under her other arm is a barograph drum that is not on any contract: two years of her own traces, inked nightly, showing the storms walking a fixed bearing like a patrol. The Tempest has never once mentioned weather. It meters service and waits for a human to read the meter. She is the human, and she has kept opinions the machine does not have.",
       "minDay": 300,
       "maxDay": 360,
       "threatLevel": 1,
       "choices": [
         {
           "choiceId": "choice_buy_the_storm_record",
-          "text": "Two fuel cells for the drum and a copy of the route.",
+          "text": "Two fuel cells for the drum. The meter gets read either way; that part is not a transaction.",
           "requiredTrait": "",
           "requiredItemId": "fuel_cell",
           "requiredItemQuantity": 2,
@@ -3027,11 +3027,11 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_the_tempest",
           "factionStandingDelta": 10,
-          "outcomeDescription": "The copied trace goes up beside the hatch chart, and for the first time the sky has a schedule. Your watch starts calling storms by number instead of by dread. The first one she predicts lands within four hours of her window; the bunker seals with eleven minutes to spare and nobody panics, which is the actual purchase price of the fuel."
+          "outcomeDescription": "The copied trace goes up beside the hatch chart and, for the first time, the sky has a schedule. Your watch starts calling storms by number instead of by dread, and the first one she predicts lands inside four hours of her window. She writes the sale in a private book, because the Tempest's ledger has no column for weather and never will. The meter reading she files is accurate to the digit."
         },
         {
-          "choiceId": "choice_send_the_chaser_on",
-          "text": "Storms don't commute. Keep the fuel.",
+          "choiceId": "choice_decline_the_drum",
+          "text": "Storms do not commute. Let her read the meter and keep her own book.",
           "requiredTrait": "",
           "requiredItemId": "",
           "requiredItemQuantity": 0,
@@ -3039,7 +3039,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_the_tempest",
           "factionStandingDelta": -5,
-          "outcomeDescription": "Kessa Vane taps the drum once — not offended, just filing it — and walks back into the grey. Three weeks later a storm turns inside a window she could have sold you, and the watch rides it out on old reflex and luck. Afterwards nobody says her name in the corridor. Not saying it is its own kind of saying."
+          "outcomeDescription": "She reads the meter, stamps the card, and taps the drum once on the way back down the ladder: not offended, only filing it. Three weeks later a storm turns inside a window she could have sold you, and the watch rides it out on reflex and luck. Afterwards nobody says her name in the corridor. Not saying it is its own kind of saying."
         }
       ]
     },

@@ -41,12 +41,10 @@
     <Compile Remove="CollectibleCatalogIntegrityTests.cs" />
     <Compile Remove="CollectibleCatalogPerformanceTests.cs" />
     <Compile Remove="CollectibleEffectTargetResolutionTests.cs" />
-    <Compile Remove="Plan57IncidentTests.cs" />
     <Compile Remove="FoundryTreatyConsequenceExpansionTests.cs" />
     <Compile Remove="RegionalTreatyConsequenceTests.cs" />
     <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
     <Compile Remove="Integration/Plans72To75CampaignIntegrationTests.cs" /> <!-- TEMP; restored -->
-    <Compile Remove="Memorial/WastelandGraveEpitaphsCatalogTests.cs" />
     <Compile Remove="GreenhouseItemCatalogTests.cs" />
     <Compile Remove="Narrative/HoldfastNpcCatalogTests.cs" />
     <Compile Remove="DutyRoster/DutyRosterSeasonCatalogTests.cs" />
@@ -91,7 +89,6 @@
     <Compile Remove="Verdict/Plan82VerdictLocationsExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />
-    <Compile Remove="Warlords/WarlordPlan63DoctrineTests.cs" />
     <Compile Remove="Water/WaterAuthorityMassBalanceTests.cs" />
     <Compile Remove="WildlifeTrapping/TrappingOutputDeliveryTests.cs" />
     <Compile Remove="WildlifeTrapping/WildlifeTrappingBalanceTests.cs" />
@@ -103,7 +100,6 @@
     <Compile Remove="WildlifeTrapping/WildlifeTrappingNetworkTests.cs" />
     <Compile Remove="WildlifeTrapping/WildlifeTrappingPersistenceTests.cs" />
     <Compile Remove="WildlifeTrapping/WildlifeTrappingWeatheringTests.cs" />
-    <Compile Remove="WildlifeTrappingCatalogIntegrityTests.cs" />
     <Compile Remove="World/DamagedMapSystemTests.cs" />
     <Compile Remove="World/WeatherGateCrossSystemIntegrationTests.cs" />
     <Compile Remove="World/WeatherGateDebtInteractionTests.cs" />
