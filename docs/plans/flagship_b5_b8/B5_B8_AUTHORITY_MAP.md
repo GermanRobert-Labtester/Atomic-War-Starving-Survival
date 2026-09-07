@@ -11,7 +11,7 @@
 | Research unlocks | `ResearchSystem` (`IsManualUnlocked`, blueprints, points) | capability gates; unlocks ≠ built infrastructure |
 | Survivor busy / labor | duty roster / assignment authority (audit exact class in Phase 4) | greenhouse work, repairs, defense setup |
 | Water treatment | `WaterTreatmentSystem` (`water_treatment` section) | treatment quality/capacity authority; 4 modes, filter integrity |
-| Water spendable reservoir | `WaterAuthority` | **[CORRECTED]** exists with conservation tests; B7 consumers request from it |
+| Water spendable reservoir | `WaterTreatmentSystem` pools + inventory water items | **[CORRECTED]** live spendable authority is the treatment pools + inventory items + `ConsumeRation`. The quarantined `WaterAuthorityMassBalanceTests` suite (`Ashfall.Core.Tests/Water/WaterAuthorityMassBalanceTests.cs` is `Compile Remove`d — it targets an in-flight `DrawWater`/`IOutputSink` API not yet in Core) is the conservation contract its owning stream will land; until then `WaterRequestContracts` (Phase 1) is the shared consumer seam |
 | Brine / reject water | `BrineWaterSystem` | **[CORRECTED]** already a live system; B7 only audits consumer closure |
 | Sump / flood state | `SumpFloodingSystem` (`sump_flooding` section) | producer of flood/contamination incidents; pump state + condition live |
 | Power generation/loads | `PowerGridSystem` (`power_grid` section) + `power_grid.json` rooms | rooms = named loads with priorities/breakers; named source contributions |

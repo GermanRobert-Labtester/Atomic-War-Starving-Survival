@@ -8,6 +8,15 @@
 | Authority | File | Persisted quantity/quality fields | Save section |
 |---|---|---|---|
 | `WaterAuthority` | Core (see `WaterAuthorityMassBalanceTests`) | plant + inventory reservoir mass; quality classes incl. irradiated policy | its section |
+
+> **CORRECTION (Phase 1):** the `WaterAuthority` / `DrawWater` / `IOutputSink`
+> API referenced by `Ashfall.Core.Tests/Water/WaterAuthorityMassBalanceTests.cs`
+> is **not yet in Core** — that test file is quarantined via `Compile Remove`
+> in the test csproj, owned by an in-flight stream. The live spendable
+> authorities today are the `WaterTreatmentSystem` pools, inventory water
+> items, and `ConsumeRation`. Phase 1's `WaterRequestContracts`
+> (`Assets/Ashfall.Core/WaterRequest.cs`) is the shared consumer seam over the
+> live authority; the mass-balance suite governs conservation once landed.
 | `WaterTreatmentSystem` | `Assets/Ashfall.Core/WaterTreatmentSystem.cs` | `cleanWater`, `rawWater`, `brackishWater`, `irradiatedWater`, `filterIntegrity` (max `filterMaxIntegrity`), `charcoalSupply`, `distillationFuel`, `activeMode` (`TreatmentMode`), `isProcessing/Progress/Target`, `totalWaterProcessed`, `totalContaminationExposure`, `filterReplacements`, `completedJobs` (`WaterTreatmentJob`: mode, input, cleanOutput, wasteAmount, filterDegradation, fuelConsumed, contaminationRemoved, dayCompleted) | `water_treatment` (`WaterTreatmentSaveStore`) |
 | `SumpFloodingSystem` | `Assets/Ashfall.Core/SumpFloodingSystem.cs` | per `SumpNode`: `waterLevelCm`, `maxWaterLevelCm`, `hasSumpPump`, `pumpCondition`, `pumpPowered`, `hasFloatValve`, `hasSandbagMitigation`, `isFlooded`, `equipmentDisabled`, adjacency; global `groundwaterLevel`; `incidentLog` (`FloodIncident`) | `sump_flooding` |
 | `BrineWaterSystem` | `Assets/Ashfall.Core/BrineWaterSystem.cs` | brine loop state | its section |

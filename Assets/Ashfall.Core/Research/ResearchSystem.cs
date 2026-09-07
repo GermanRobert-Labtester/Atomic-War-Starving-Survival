@@ -61,6 +61,19 @@ namespace Ashfall.Core
         public bool IsManualUnlocked(string id) => !string.IsNullOrEmpty(id) && State.unlockedIds.Contains(id);
 
         /// <summary>
+        /// Stable capability-query contract (B5–B8 Phase 1). Consumer systems
+        /// (greenhouse, power builds, defense builds, water sources) ask this
+        /// single question instead of reaching into <see cref="IsManualUnlocked"/>
+        /// or caching unlock truth locally.
+        ///
+        /// Capability ≠ infrastructure: a <c>true</c> here gates what a player
+        /// may BUILD — it never grants the built instance, never applies an
+        /// invisible multiplier, and never substitutes for a canonical
+        /// item/recipe cost. Behaviorally identical to <see cref="IsManualUnlocked"/>.
+        /// </summary>
+        public bool HasCapability(string knowledgeId) => IsManualUnlocked(knowledgeId);
+
+        /// <summary>
         /// Evaluates research eligibility for a given knowledge ID under the current state.
         /// Pure projection without state mutations.
         /// </summary>
