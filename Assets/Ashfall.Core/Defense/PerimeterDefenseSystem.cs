@@ -32,6 +32,8 @@ namespace Ashfall.Core.Defense
         // ── Plan 203 additions (additive; old saves default safe) ──
         public List<PerimeterSectorState> sectors { get; set; } = new List<PerimeterSectorState>();
         public List<PerimeterIntrusionLogEntry> intrusion_log { get; set; } = new List<PerimeterIntrusionLogEntry>();
+        /// <summary>Plan 203 Wave F: assault sequence for day-derived jam rolls when the caller cannot supply a day.</summary>
+        public int assault_count { get; set; }
     }
 
     public sealed class AssaultSimulationResult
@@ -301,6 +303,7 @@ namespace Ashfall.Core.Defense
                 var sector = _state.sectors[i];
                 if (!sector.alarm_armed || sector.alarm_spent) continue;
 
+                int deviceIndex = 0;
                 foreach (var empId in sector.emplacement_ids)
                 {
                     var emp = FindEmplacement(empId);
@@ -308,7 +311,10 @@ namespace Ashfall.Core.Defense
                     if (!_defsById.TryGetValue(emp.defense_id, out var def)) continue;
                     if (!def.alert_device || def.false_alarm_rate_bp <= 0) continue;
 
-                    if (_rng.NextDouble() < def.false_alarm_rate_bp / 10000.0)
+                    // Wave F: day-derived fresh-seed roll (house pattern) — split-run safe.
+                    var alarmRng = new SeededRng(unchecked(day * 31 + i * 97 + deviceIndex * 7));
+                    deviceIndex++;
+                    if (alarmRng.NextDouble() < def.false_alarm_rate_bp / 10000.0)
                     {
                         TriggerSectorAlarm(sector, day, isFalse: true, emp.emplacement_id);
                         break; // one false trigger per sector per day
@@ -474,6 +480,7 @@ namespace Ashfall.Core.Defense
             int currentDay = -1)
         {
             var counters = attackerCounterTags != null ? new HashSet<string>(attackerCounterTags, StringComparer.Ordinal) : null;
+            _state.assault_count++;
             var result = new AssaultSimulationResult
             {
                 InitialRaiderStrength = raiderStrength,
@@ -543,10 +550,12 @@ namespace Ashfall.Core.Defense
                     // Barrel wear
                     emp.barrel_wear_percent = Math.Min(100f, emp.barrel_wear_percent + (burst * BarrelWearPerRound));
 
-                    // Jam check if barrel wear > 50%
+                    // Jam check if barrel wear > 50%. Wave F: day/sequence-derived
+                    // fresh-seed roll — split-run safe.
                     if (emp.barrel_wear_percent > 50f)
                     {
-                        double jamRoll = _rng.NextDouble();
+                        int jamSeed = unchecked((currentDay >= 0 ? currentDay : _state.assault_count + 1) * 613 + i * 97);
+                        double jamRoll = new SeededRng(jamSeed).NextDouble();
                         float jamChance = (emp.barrel_wear_percent - 50f) * 0.01f;
                         if (jamRoll < jamChance)
                         {

@@ -330,8 +330,12 @@ namespace Ashfall.Core.Shelter
                 return 0f;
 
             // ── Completion: hazard roll, then yields ──
+            // Plan 202 Wave F: the roll derives from the campaign day (fresh-seed
+            // house pattern) — identical outcomes for continuous and save/load
+            // split runs, since no engine-internal RNG sequence is carried.
             float risk = RollBatchRisk(profile, batch.operator_skill);
-            if (_rng.NextDouble() < risk)
+            var hazardRng = new SeededRng(unchecked(CurrentDay() * 7919 + 101));
+            if (hazardRng.NextDouble() < risk)
                 ApplyIncident(profile, batch);
 
             bool machineDestroyed = _state.machine_condition <= 0f;
@@ -372,7 +376,8 @@ namespace Ashfall.Core.Shelter
         {
             _state.total_incidents++;
             var hazard = _catalog.hazard_outcomes;
-            int roll = (int)(_rng.NextDouble() * 100);
+            var incidentRng = new SeededRng(unchecked(CurrentDay() * 613 + batch.started_day * 17 + 7));
+            int roll = (int)(incidentRng.NextDouble() * 100);
             int cumulative = 0;
 
             cumulative += hazard.quality_loss_weight_pct;

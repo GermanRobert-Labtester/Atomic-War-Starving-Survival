@@ -228,7 +228,11 @@ namespace Ashfall.Core.Farming
                 _inventory.RemoveById(BurnFuelItemId, 1);
 
             string preparation;
-            double roll = _rng.NextDouble();
+            // Wave F: day/plot-derived fresh-seed roll — split-run safe.
+            // (Stable plot index, not string hash — Invariant 4.)
+            int plotIndex = _state.plots.FindIndex(p => p.plotId == plotId);
+            var prepRng = new SeededRng(unchecked(CurrentDay() * 47 + Math.Max(0, plotIndex) * 101 + 11));
+            double roll = prepRng.NextDouble();
             if (roll < substrate.contamination_risk)
             {
                 preparation = SubstratePreparation.Compromised;
@@ -400,9 +404,19 @@ namespace Ashfall.Core.Farming
                 }
 
                 // Toxic bloom evaluation (seeded risk for saturated/wet toxic-prone beds).
-                if (plot.moisture >= 0.85f && (strain.category == "Toxic" || _rng.NextDouble() < 0.08))
+                // Wave F: day/plot-derived fresh-seed roll — split-run safe.
+                if (plot.moisture >= 0.85f)
                 {
-                    DeclareBloom(plot);
+                    if (strain.category == "Toxic")
+                    {
+                        DeclareBloom(plot);
+                    }
+                    else
+                    {
+                        var bloomRng = new SeededRng(unchecked(currentDay * 89 + i * 57 + 3));
+                        if (bloomRng.NextDouble() < 0.08)
+                            DeclareBloom(plot);
+                    }
                 }
             }
 

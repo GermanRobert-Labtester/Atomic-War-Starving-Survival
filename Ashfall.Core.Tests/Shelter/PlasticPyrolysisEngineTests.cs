@@ -290,16 +290,13 @@ namespace Ashfall.Core.Tests.Shelter
 
             double RiskWith(float skill)
             {
-                var sys = new PlasticPyrolysisSystem(new SeededRng(5));
-                sys.BindCatalog(catalog);
-                sys.DayProvider = () => 1;
-                sys.OperatorSkillProvider = () => skill;
-                // Re-derive risk through the public surface: run many trials and count incidents.
+                // Wave F: hazard rolls are day-derived — the deterministic
+                // variation axis across trials is the completion day.
                 int incidents = 0, trials = 400;
                 for (int i = 0; i < trials; i++)
                 {
                     var (s, _) = MakeSystem(1000 + i, catalog);
-                    s.DayProvider = () => 1;
+                    s.DayProvider = () => 1000 + i;
                     s.OperatorSkillProvider = () => skill;
                     Assert.True(s.ConstructMachine().IsSuccess);
                     Assert.True(s.StartBatch("feedstock_dirty").IsSuccess);

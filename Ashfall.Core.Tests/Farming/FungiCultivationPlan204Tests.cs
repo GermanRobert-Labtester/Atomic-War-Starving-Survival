@@ -76,21 +76,26 @@ namespace Ashfall.Core.Tests.Farming
             return (sys, inv);
         }
 
-        /// <summary>Finds a seed where cold preparation does not fail (deterministic search).</summary>
-        private static int FindSeedWithSuccessfulPrep(UndergroundFloraCatalog catalog)
+        /// <summary>
+        /// Finds a campaign day where cold preparation does not fail. Wave F:
+        /// prep rolls are day/plot-derived (fresh-seed house pattern), so the
+        /// deterministic variation axis is the day, not the constructor seed.
+        /// </summary>
+        private static int FindDayWithSuccessfulPrep(UndergroundFloraCatalog catalog)
         {
-            for (int seed = 1; seed <= 64; seed++)
+            for (int day = 1; day <= 64; day++)
             {
-                var (sys, _) = MakeSystem(seed, catalog);
+                var (sys, _) = MakeSystem(1, catalog);
+                sys.DayProvider = () => day;
                 sys.EnsurePlot("plot_p", "room_a");
                 var res = sys.PrepareSubstrate("plot_p", useHeat: false);
                 var plot = sys.State.plots[0];
                 if (res.IsSuccess &&
                     (plot.substratePreparation == SubstratePreparation.Prepared ||
                      plot.substratePreparation == SubstratePreparation.Clean))
-                    return seed;
+                    return day;
             }
-            throw new InvalidOperationException("No deterministic seed produced a successful preparation in 1..64.");
+            throw new InvalidOperationException("No deterministic day produced a successful preparation in 1..64.");
         }
 
         // ── Substrate preparation ───────────────────────────────────────
@@ -142,14 +147,15 @@ namespace Ashfall.Core.Tests.Farming
         public void PrepareSubstrate_PreparedSubstrate_ReducesStartingContamination()
         {
             var catalog = CreateTestCatalog();
-            int prepSeed = FindSeedWithSuccessfulPrep(catalog);
+            int prepDay = FindDayWithSuccessfulPrep(catalog);
 
-            var (prepped, _) = MakeSystem(prepSeed, catalog);
+            var (prepped, _) = MakeSystem(1, catalog);
+            prepped.DayProvider = () => prepDay;
             prepped.EnsurePlot("plot_p", "room_a");
             prepped.PrepareSubstrate("plot_p", useHeat: false);
             Assert.True(prepped.CultivateSpores("plot_p", "strain_edible", "substrate_test", 1).IsSuccess);
 
-            var (untreated, _) = MakeSystem(prepSeed, catalog);
+            var (untreated, _) = MakeSystem(1, catalog);
             untreated.EnsurePlot("plot_u", "room_a");
             Assert.True(untreated.CultivateSpores("plot_u", "strain_edible", "substrate_test", 1).IsSuccess);
 
