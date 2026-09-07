@@ -1,0 +1,1 @@
+{"systemId":"airlock_security","blastDoorIntegrity":87.5,"doorState":0,"sentryId":"survivor_7","alertness":92.25,"visitorId":"","visitorType":"","visitorQuarantined":false,"pendingDecision":0,"hasActiveIncident":false,"incidentLog":[{"day":40,"visitorId":"npc_traveler_3","decision":3,"outcome":"phase0 fixture outcome"}],"totalAdmissions":19,"totalTurnaways":6}

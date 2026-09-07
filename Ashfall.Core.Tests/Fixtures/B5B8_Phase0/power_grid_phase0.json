@@ -1,0 +1,1 @@
+{"SimDay":47,"GenerationWatts":813.5,"FuelUnits":62.25,"BatteryReserveWh":1234.5,"BatteryCapacityWh":4000,"ClosedBreakers":["room_workshop"],"TrippedRooms":["room_foundry"],"Priorities":[{"RoomId":"room_greenhouse","Priority":1},{"RoomId":"room_clinic","Priority":3}],"LastSurgeDay":31}
