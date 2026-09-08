@@ -118,7 +118,29 @@ rarity economy (rares also gate knowledge research), but means merchant collecti
 economics are effectively "hunt rares". Watch if uncommon/common collectibles are
 meant to matter as trade goods.
 
-## 6. Proposals (evidence-based; NOT applied — data authority untouched)
+## 6. Proposals — APPLIED (P1+P2, 2026-09-08)
+
+> **Executed as data-only changes** (see commit history, "plan86-balance"):
+>
+> - **P1 executed** — 8 theme-matched secondary placements (weight 3) into the
+>   barren funnel tables: `municipal_archive`←local_newspaper,
+>   `government_bunker`←deployment_order, `shopping_center`←team_pennant,
+>   `power_substation`←trade_guild_patch, `chemical_plant`←dosimeter_guide,
+>   `ordnance_shoulder`←topo_map, `warehouse`←folk_craft,
+>   `swimming_baths`←match_program. All 20 CI target tables now yield.
+> - **P2 executed** — `music_box` 2→3 (collapsed_structure),
+>   `survivor_map` 3→4 (recovery_yard).
+> - **Post-change gates verified:** 40/40 placed (56 entries, 28 touched
+>   tables), max per-table collectible share 11.2% (≤12% gate), reachability,
+>   no-dupes and unique-placement all hold.
+> - **Expected funnel mean 0.0356** (analytic) vs 0.0268 pre-change; a
+>   permanent 200-seed CI gate (`Funnel200_MeanFindRate_StaysAtOrAbove3Percent`
+>   in `CollectibleScavengingSimulationTests`) now asserts the mean stays
+>   ≥0.03. Finding B-2's seed-fragility is materially reduced (all 20 target
+>   tables can yield), though sub-0.02 seeds can still occur by low-weight
+>   sampling.
+
+Original proposals (for the record):
 
 1. **P1 — give the 8 barren funnel tables placements** (B-1): 8 tables × 1–2 entries
    at weight 2–4 would lift the mean find rate to ≈ 0.035 and shrink the sub-gate seed

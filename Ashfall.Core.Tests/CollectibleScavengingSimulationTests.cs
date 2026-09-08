@@ -183,6 +183,36 @@ namespace Ashfall.Core.Tests
             Assert.True(avgWeight < 1.0f, $"Average weight was {avgWeight:F2} kg, expected < 1.0 kg");
         }
 
+        /// <summary>
+        /// Plan 86 balance-sim follow-up (docs/discovery/BALANCE_SIM_COLLECTIBLE_PLACEMENT.md,
+        /// §6 P1+P2): after the 8 barren-target-table secondary placements and the two
+        /// weakest-table weight bumps, the mean find rate across the full 20-table
+        /// funnel must stay at or above 0.03 over 200 seeds. Deterministic — same
+        /// seeds always reproduce the same mean.
+        /// </summary>
+        [Fact]
+        public void Funnel200_MeanFindRate_StaysAtOrAbove3Percent()
+        {
+            var scavengingCatalog = ScavengingTableCatalog.LoadFromDirectory(DataDir, FileIO, Serializer);
+            var funnel = new List<double>();
+            for (int seed = 1; seed <= 200; seed++)
+            {
+                var rng = new SeededRng(seed);
+                int hits = 0;
+                foreach (var tableId in TargetTables)
+                    for (int action = 0; action < 5; action++)
+                    {
+                        var roll = scavengingCatalog.RollLoot(tableId, rng);
+                        if (roll != null && roll.ItemId.StartsWith("item_collectible_", StringComparison.Ordinal))
+                            hits++;
+                    }
+                funnel.Add(hits / 100.0);
+            }
+            Assert.True(funnel.Count == 200);
+            Assert.True(funnel.Average() >= 0.03f,
+                $"Mean funnel find rate across 200 seeds was {funnel.Average():F4}, expected >= 0.03.");
+        }
+
         [Fact]
         public void Simulation_50_50_SaveReplay_MatchesUninterrupted100()
         {

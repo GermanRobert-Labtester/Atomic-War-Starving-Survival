@@ -1300,6 +1300,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_team_pennant",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -1378,6 +1385,13 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_metro_3"
+        },
+        {
+          "item_id": "item_collectible_trade_guild_patch",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1449,6 +1463,13 @@
         {
           "item_id": "cassette_quarantine_tapes_3",
           "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_dosimeter_guide",
+          "weight": 3,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
@@ -1536,6 +1557,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_debt_default"
+        },
+        {
+          "item_id": "item_collectible_folk_craft",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -2543,7 +2571,7 @@
         },
         {
           "item_id": "item_collectible_music_box",
-          "weight": 2,
+          "weight": 3,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
@@ -2728,7 +2756,7 @@
         },
         {
           "item_id": "item_collectible_survivor_map",
-          "weight": 3,
+          "weight": 4,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
@@ -3223,6 +3251,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_deployment_map"
+        },
+        {
+          "item_id": "item_collectible_topo_map",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -3799,6 +3834,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_match_program",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -3999,6 +4041,13 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_court_2"
+        },
+        {
+          "item_id": "item_collectible_local_newspaper",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -4243,6 +4292,13 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_crater_2"
+        },
+        {
+          "item_id": "item_collectible_deployment_order",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
