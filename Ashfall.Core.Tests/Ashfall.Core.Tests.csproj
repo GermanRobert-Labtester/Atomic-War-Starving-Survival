@@ -38,9 +38,20 @@
     <!-- Audit #39: UtilityAiExpandedCatalogTests expects 20 actions; live catalog has 6 — rematch catalog or soften census. -->
     <Compile Remove="UtilityAiExpandedCatalogTests.cs" />
     <Compile Remove="ArchiveInksCatalogTests.cs" />
-    <Compile Remove="CollectibleCatalogIntegrityTests.cs" />
-    <Compile Remove="CollectibleCatalogPerformanceTests.cs" />
-    <Compile Remove="CollectibleEffectTargetResolutionTests.cs" />
+    <!-- RETIRED 2026-09-06 (quarantine evidence audit) — Collectible family:
+         collectibles.json landed (40 entries) but its integration never did:
+         (a) 0 collectibles placed in any scavenging/loot table (placement,
+         simulation and generation-channel drafts measure "got 0");
+         (b) 6 of 7 knowledge effect targets dangle (knowledge_field_medicine,
+         knowledge_basic_engineering, knowledge_diesel_mechanics,
+         knowledge_radio_repair, knowledge_water_treatment,
+         knowledge_radiation_measurement absent from research_knowledge.json);
+         (c) balance basket anchors on item "sandbags" which does not exist;
+         (d) CollectibleReplayTests uses inaccessible CollectibleCatalogFileRaw.
+         Re-enable per file when placement + effect-target content lands. -->
+<Compile Remove="CollectibleCatalogIntegrityTests.cs" />
+<Compile Remove="CollectibleCatalogPerformanceTests.cs" />
+<Compile Remove="CollectibleEffectTargetResolutionTests.cs" />
     <Compile Remove="FoundryTreatyConsequenceExpansionTests.cs" />
     <Compile Remove="RegionalTreatyConsequenceTests.cs" />
     <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
@@ -50,17 +61,17 @@
     <Compile Remove="DutyRoster/DutyRosterSeasonCatalogTests.cs" />
     <Compile Remove="MusterEpilogueMatrixTests.cs" />
     <Compile Remove="Endgame/EpilogueChronicleCatalogTests.cs" />
-    <Compile Remove="CollectibleMerchantBalanceTests.cs" />
-    <Compile Remove="CollectibleReplayFixture.cs" />
-    <Compile Remove="CollectibleReplayTests.cs" />
-    <Compile Remove="CollectibleScavengingSimulationTests.cs" />
+<Compile Remove="CollectibleMerchantBalanceTests.cs" />
+<Compile Remove="CollectibleReplayFixture.cs" />
+<Compile Remove="CollectibleReplayTests.cs" />
+<Compile Remove="CollectibleScavengingSimulationTests.cs" />
     <Compile Remove="CraftAttributionTradeSpecialtyTests.cs" />
     <Compile Remove="DebtBountyHandoffTests.cs" />
     <Compile Remove="DebtLifecycleSmokeTests.cs" />
     <Compile Remove="DebtStandingHandoffTests.cs" />
     <Compile Remove="Expeditions/ArmoredCrawlerExpeditionTests.cs" />
-    <Compile Remove="Expeditions/CollectibleGenerationChannelGateTests.cs" />
-    <Compile Remove="Expeditions/CollectibleScavengingPlacementTests.cs" />
+<Compile Remove="Expeditions/CollectibleGenerationChannelGateTests.cs" />
+<Compile Remove="Expeditions/CollectibleScavengingPlacementTests.cs" />
     <Compile Remove="FactionWarDialogueExpansionTests.cs" />
     <Compile Remove="GreenhouseEquipmentScalingTests.cs" />
     <Compile Remove="HardcoreEconomyTuningExpansionTests.cs" />
@@ -119,16 +130,27 @@
     <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />
     <Compile Remove="Water/WaterAuthorityMassBalanceTests.cs" />
-    <Compile Remove="WildlifeTrapping/TrappingOutputDeliveryTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingBalanceTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingBycatchReplayTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingContentUtilizationTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingEndToEndCampaignTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingInterferenceTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingLongHorizonBalanceTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingNetworkTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingPersistenceTests.cs" />
-    <Compile Remove="WildlifeTrapping/WildlifeTrappingWeatheringTests.cs" />
+    <!-- RETIRED 2026-09-06 (quarantine evidence audit) — WildlifeTrapping family:
+         the 10 drafts pin an un-landed trapping-depth redesign (458 compile
+         errors against live Core): TrapDefinition.theftChance/sabotageChance/
+         weatherDegradationRate, TrapSite.baitStolen/pendingWeatherWear,
+         WildlifeTrappingSystem.ResolveBycatchForSite/HarvestCatch/
+         ApplyNetworkDensityPenalty/SetOutputSink/OnBaitStolen/OnTrapSabotaged,
+         SetTrap(zoneId), GetEffectiveWeight(4), SelectEncounter(5),
+         ExpeditionSystem.CanDispatch, SeededRng.State capture. The live trapping
+         system and its acquisition content are pinned by live/untracked tests
+         (WildlifeTrappingCatalogTests + flagship-stream determinism/integration
+         suites). Re-enable per file when the depth mechanics land. -->
+<Compile Remove="WildlifeTrapping/TrappingOutputDeliveryTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingBalanceTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingBycatchReplayTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingContentUtilizationTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingEndToEndCampaignTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingInterferenceTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingLongHorizonBalanceTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingNetworkTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingPersistenceTests.cs" />
+<Compile Remove="WildlifeTrapping/WildlifeTrappingWeatheringTests.cs" />
     <Compile Remove="World/DamagedMapSystemTests.cs" />
     <Compile Remove="World/WeatherGateCrossSystemIntegrationTests.cs" />
     <Compile Remove="World/WeatherGateDebtInteractionTests.cs" />
@@ -136,12 +158,19 @@
     <Compile Remove="World/WeatherGateTerritoryInteractionTests.cs" />
     <Compile Remove="World/WeatherGateWarInteractionTests.cs" />
     <Compile Remove="World/WeatherSeasonExpansionTests.cs" />
-    <Compile Remove="MicroLocationRumorIntegrationTests.cs" />
-    <Compile Remove="MicroLocationRouteAffinityTests.cs" />
-    <Compile Remove="MicroLocationCatalogLoaderTests.cs" />
-    <Compile Remove="MicroLocationSimulationTests.cs" />
-    <Compile Remove="MicroLocationEthicsIntegrationTests.cs" />
-    <Compile Remove="MicroLocationStorytellingIntegrityTests.cs" />
+    <!-- RETIRED 2026-09-06 (quarantine evidence audit) — MicroLocation drafts:
+         RouteAffinity (70 errors), RumorIntegration (28), Simulation (12) pin
+         EncounterDefinition.routeAffinity and rumor/simulation APIs that do not
+         exist in live Core. Re-enable when those features land. -->
+<Compile Remove="MicroLocationRumorIntegrationTests.cs" />
+<Compile Remove="MicroLocationRouteAffinityTests.cs" />
+<!-- MicroLocationCatalogLoaderTests.cs reinstated 2026-09-06 quarantine audit: compiles against live loader, passes 14/14 (CatalogLoader minus F6_15), 10/10, 5/5 -->
+    <!-- <Compile Remove="MicroLocationCatalogLoaderTests.cs" /> -->
+<Compile Remove="MicroLocationSimulationTests.cs" />
+<!-- MicroLocationEthicsIntegrationTests.cs reinstated 2026-09-06 quarantine audit: compiles against live loader, passes 14/14 (CatalogLoader minus F6_15), 10/10, 5/5 -->
+    <!-- <Compile Remove="MicroLocationEthicsIntegrationTests.cs" /> -->
+<!-- MicroLocationStorytellingIntegrityTests.cs reinstated 2026-09-06 quarantine audit: compiles against live loader, passes 14/14 (CatalogLoader minus F6_15), 10/10, 5/5 -->
+    <!-- <Compile Remove="MicroLocationStorytellingIntegrityTests.cs" /> -->
   </ItemGroup>
 
 </Project>

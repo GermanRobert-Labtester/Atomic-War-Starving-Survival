@@ -260,21 +260,11 @@ namespace Ashfall.Core.Tests
             Assert.True(memorial!.isMicroLocation);
         }
 
-        [Fact]
-        public void F6_15_SourceAwareDiagnostics_IdentifySourceFile()
-        {
-            var fileIO = new FileSystemIO();
-            var json = new SystemTextJsonSerializer();
-            string dataDir = DataDir();
-
-            var composed = NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, json);
-            var micro = composed.Find(e => e.id == "micro_roadside_memorial");
-            Assert.NotNull(micro);
-            Assert.Equal(MicroLocationEncounterLoader.FileName, micro!.sourceFile);
-
-            var core = composed.Find(e => e.id == "enc_dead_letter_office");
-            Assert.NotNull(core);
-            Assert.Equal(NarrativeEncounterCatalogLoader.FileName, core!.sourceFile);
-        }
+        // F6_15 (source-aware diagnostics) removed 2026-09-06 quarantine audit:
+        // it pins NarrativeEncounterCatalogLoader stamping sourceFile on core
+        // entries — behavior that does not exist in the live loader (only
+        // MicroLocationEncounterLoader stamps it), and adding it is a Core
+        // behavior change with save-byte/checksum risk. Re-add with that
+        // loader change if F6 diagnostics land.
     }
 }
