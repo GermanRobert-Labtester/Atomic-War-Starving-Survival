@@ -117,3 +117,57 @@ All 15 cultural niches are distinct. Specific re-checks:
 3. **R3 — DONE.** All 26 relic-recipe components now carry
    `relic_component` in `expansion_item_tags.json` (the original six's
    components were partially untagged too; the set is now complete).
+
+## Second-round review (follow-up commit QA)
+
+### F1 — HIGH (introduced by the follow-up, FIXED)
+
+`RefreshView` branched `if (_legacyWorkshop != null) { RenderLegacy(); return; }`
+before the shelter path. Production binds both systems, so the shelter
+crafting UI (job status, tooling gauges, recipes, START JOB) was unreachable
+— the panel rendered only the restoration view. Exactly the UI-16
+"different lists per path" drift the closure rules warn about.
+**Fix:** legacy-only layout now gated on `_shelterWorkshop == null`; the
+merged path renders both systems.
+
+### F2 — MEDIUM (FIXED)
+In merged mode there was no way to abandon an in-progress relic restoration
+(the ABANDON affordance existed only in the legacy-only header path).
+**Fix:** the relic section's busy row now carries its own ABANDON button.
+
+### F3 — MEDIUM (FIXED)
+Merged-mode job header showed "WORKSHOP STATUS: IDLE" while a relic
+restoration was running. **Fix:** the idle branch now surfaces restoration
+progress when the shelter bench is idle but the relic bench is busy.
+
+### F4 — LOW (FIXED)
+`_relicFeedback` / `OnRelicActionCompleted` were dead code (set, never
+rendered — the restored branch already displays `restoration_text`).
+**Fix:** removed; the completion-feedback path is the restored marker +
+text on re-render.
+
+### Double-subscription audit — PASS
+
+`BindRelicWorkshop` unsubscribes the previous instance before reassigning;
+`Unbind`/`_ExitTree` clear both subscriptions; repeated route binds use
+unsubscribe-then-subscribe for both systems; `Main`'s delta routing is
+guarded by `_relicDeltaRoutingWired` and `SetupCrafting` is single-instance
+(`if (_crafting != null) return;`). `RenderRelicSection` is invoked exactly
+once per refresh (mutually exclusive paths). No duplicate handlers possible
+through the current call graph.
+
+### Scavenging weight audit — PASS (no change)
+
+True per-table added-weight share (diffed from the pre-commit file, not
+estimated): worst 25% (school, apartment_block — 7–12 distinct components),
+most tables 4–19%. Per-item shares are 1.6–6%, well under the established
+themed-component precedent (`vacuum_tube` at 14–19% of relay_mast/
+weather_station). The aggregate at dense domestic tables is the sum of many
+individually-modest rolls; restoration consumes 2–4 components per one-shot
+relic, so the supply rate is reasonable-to-generous without enabling farming
+(restoration is not repeatable).
+
+### Verification after fixes
+
+9739→**9760/9760 tests PASS** · Ashfall.csproj 0 errors/0 warnings ·
+data-integrity PASS (298 catalogs) · scene-binding 25/25.

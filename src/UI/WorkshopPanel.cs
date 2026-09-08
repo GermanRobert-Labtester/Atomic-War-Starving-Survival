@@ -37,7 +37,6 @@ namespace AtomicWar.GodotApp.UI
 
         private string _selectedRecipeId = string.Empty;
         private string _selectedRelicId = string.Empty;
-        private string _relicFeedback = string.Empty;
         private ItemCatalog? _itemCatalog;
         private string _currentRoomId = "room_workshop";
 
@@ -85,7 +84,6 @@ namespace AtomicWar.GodotApp.UI
             if (_legacyWorkshop != null)
             {
                 _legacyWorkshop.OnWorkshopStateChanged -= RefreshView;
-                _legacyWorkshop.OnActionCompleted -= OnRelicActionCompleted;
             }
             _legacyWorkshop = workshop;
             _inventory = inventory;
@@ -95,7 +93,6 @@ namespace AtomicWar.GodotApp.UI
             if (_legacyWorkshop != null)
             {
                 _legacyWorkshop.OnWorkshopStateChanged += RefreshView;
-                _legacyWorkshop.OnActionCompleted += OnRelicActionCompleted;
             }
 
             RefreshView();
@@ -107,7 +104,6 @@ namespace AtomicWar.GodotApp.UI
             if (_legacyWorkshop != null)
             {
                 _legacyWorkshop.OnWorkshopStateChanged -= RefreshView;
-                _legacyWorkshop.OnActionCompleted -= OnRelicActionCompleted;
             }
             _shelterWorkshop = null;
             _legacyWorkshop = null;
@@ -162,13 +158,12 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_detailContainer);
             if (_machineConditionContainer != null) AshfallUiHelpers.EmptyChildren(_machineConditionContainer);
 
-            if (_legacyWorkshop != null)
+            // Legacy-only layout (no shelter crafting system bound).
+            if (_shelterWorkshop == null)
             {
-                RenderLegacy();
+                if (_legacyWorkshop != null) RenderLegacy();
                 return;
             }
-
-            if (_shelterWorkshop == null) return;
 
             var state = _shelterWorkshop.State;
             var activeJob = state.jobs.FirstOrDefault(j => j.Status == WorkshopJobStatus.Active || j.Status == WorkshopJobStatus.CompletedPendingCollection);
@@ -194,6 +189,15 @@ namespace AtomicWar.GodotApp.UI
                 {
                     _cancelJobButton.Text = "ABORT JOB";
                 }
+            }
+            else if (_legacyWorkshop != null && _legacyWorkshop.IsBusy)
+            {
+                // Shelter bench idle but a relic restoration is on the bench.
+                var st = _legacyWorkshop.State;
+                var busyDef = _legacyWorkshop.GetRelic(st.selectedRelicId);
+                _activeJobHeader.Text = $"RESTORATION: {busyDef?.display_name ?? st.selectedRelicId}";
+                _activeJobProgressBar.Value = st.hoursRequired > 0 ? (st.progressHours / st.hoursRequired) * 100f : 0f;
+                _activeJobDetails.Text = $"Progress: {st.progressHours:F1} / {st.hoursRequired:F0} h";
             }
             else
             {
@@ -224,7 +228,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var btn = new Button { Text = r.DisplayName };
                 if (r.Id == _selectedRecipeId) btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-                btn.Pressed += () => { _selectedRecipeId = r.Id; _selectedRelicId = string.Empty; _relicFeedback = string.Empty; RefreshView(); };
+                btn.Pressed += () => { _selectedRecipeId = r.Id; _selectedRelicId = string.Empty; RefreshView(); };
                 _relicListContainer.AddChild(btn);
             }
 
@@ -296,11 +300,17 @@ namespace AtomicWar.GodotApp.UI
             {
                 var st = _legacyWorkshop.State;
                 var busyDef = _legacyWorkshop.GetRelic(st.selectedRelicId);
-                _relicListContainer.AddChild(new Label
+                var busyRow = new HBoxContainer();
+                busyRow.AddChild(new Label
                 {
                     Text = $"On the bench: {busyDef?.display_name ?? st.selectedRelicId} ({st.progressHours:F1}/{st.hoursRequired:F0} h)",
+                    SizeFlagsHorizontal = SizeFlags.ExpandFill,
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 });
+                var abandonBtn = new Button { Text = "ABANDON" };
+                abandonBtn.Pressed += OnLegacyCancelClicked;
+                busyRow.AddChild(abandonBtn);
+                _relicListContainer.AddChild(busyRow);
             }
 
             foreach (var relic in SortedRelics())
@@ -312,7 +322,7 @@ namespace AtomicWar.GodotApp.UI
                 var btn = new Button { Text = label };
                 if (relic.relic_id == _selectedRelicId) btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                 var capturedId = relic.relic_id;
-                btn.Pressed += () => { _selectedRelicId = capturedId; _selectedRecipeId = string.Empty; _relicFeedback = string.Empty; RefreshView(); };
+                btn.Pressed += () => { _selectedRelicId = capturedId; _selectedRecipeId = string.Empty; RefreshView(); };
                 _relicListContainer.AddChild(btn);
             }
         }
@@ -370,18 +380,6 @@ namespace AtomicWar.GodotApp.UI
                 RefreshView();
             };
             _detailContainer.AddChild(startBtn);
-        }
-
-        private void OnRelicActionCompleted(ActionResult result)
-        {
-            if (!result.IsSuccess || _legacyWorkshop == null) return;
-            if (!string.IsNullOrEmpty(_selectedRelicId))
-            {
-                var relic = _legacyWorkshop.GetRelic(_selectedRelicId);
-                if (relic != null && !string.IsNullOrEmpty(relic.restoration_text))
-                    _relicFeedback = relic.restoration_text;
-            }
-            // RefreshView follows via OnWorkshopStateChanged.
         }
 
         private void OnLegacyCancelClicked()
