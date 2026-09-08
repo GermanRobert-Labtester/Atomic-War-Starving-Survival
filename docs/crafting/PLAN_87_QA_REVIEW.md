@@ -171,3 +171,16 @@ relic, so the supply rate is reasonable-to-generous without enabling farming
 
 9739→**9760/9760 tests PASS** · Ashfall.csproj 0 errors/0 warnings ·
 data-integrity PASS (298 catalogs) · scene-binding 25/25.
+
+### Regression gate (added)
+
+`--workshop-relic-uitest` (Wave6-pattern headless verb) mechanically gates
+the F1 class: dual-binds both systems on the real panel scene and asserts
+the shelter recipes render beside the relic catalog (`buttonCount > relic
+count` fails under the legacy-branch takeover), plus the full UI-21 chain
+(select → component-gated start → tick-to-completion → morale/flag exactly
+once → save/reload without duplicates → re-repair blocked). 26/26
+assertions, exit 0. Gate proven by negative test: reintroducing the F1
+branch fails the verb at exactly the F1 assertion. Both CLI aliases are
+documented in PrintHelp (enforced by `HostCliHelpContractTests`, which
+caught the initial omission).
