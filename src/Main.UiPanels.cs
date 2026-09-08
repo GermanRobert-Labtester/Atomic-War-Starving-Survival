@@ -1380,12 +1380,15 @@ namespace AtomicWar.GodotApp
 
             // ── Main Menu (overlay, shown initially) ──
             _startingCohortSetupPanel = new StartingCohortSetupPanel();
-            _startingCohortSetupPanel.OnStartRequested += StartNewGame;
+            _startingCohortSetupPanel.OnStartRequested += selection =>
+                StartNewGame(
+                    selection.CohortProfileId,
+                    selection.StartingSuppliesProfileId);
             _startingCohortSetupPanel.OnCancel += CloseStartingCohortSetup;
             AddChild(_startingCohortSetupPanel);
 
             _mainMenu = new MainMenuPanel();
-            _mainMenu.OnNewGame += StartNewGame;
+            _mainMenu.OnNewGame += OpenStartingCohortSetup;
             _mainMenu.OnCohortSetup += OpenStartingCohortSetup;
             _mainMenu.OnContinue += ContinueGame;
             _mainMenu.OnSettings += () => { _settingsPanel.Open(); };
@@ -1450,7 +1453,7 @@ namespace AtomicWar.GodotApp
         {
             if (_state != GameState.Menu || _startingCohortSetupPanel == null) return;
             var catalog = EnsureStartingCohortCatalog();
-            _startingCohortSetupPanel.Bind(catalog);
+            _startingCohortSetupPanel.Bind(catalog, EnsureStartingSuppliesCatalog());
             _mainMenu.Visible = false;
             _startingCohortSetupPanel.Open();
         }

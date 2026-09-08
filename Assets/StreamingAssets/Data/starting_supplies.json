@@ -1,65 +1,141 @@
 {
-  "schema_version": 1,
-  "starting_supplies": [
+  "schema_version": 2,
+  "default_profile_id": "origin_standard_holdfast",
+  "profiles": [
     {
-      "itemId": "clean_water",
-      "amount": 12
+      "id": "origin_standard_holdfast",
+      "display_name": "Standard Holdfast",
+      "description": "The unchanged opening: balanced stores, treatment hardware, and protective gear. No origin advantage is implied.",
+      "supplies": [
+        { "itemId": "clean_water", "amount": 12 },
+        { "itemId": "canned_food", "amount": 16 },
+        { "itemId": "irradiated_water", "amount": 4 },
+        { "itemId": "item_air_filter_hepa", "amount": 2 },
+        { "itemId": "item_desal_membrane", "amount": 1 },
+        { "itemId": "iodine_pills", "amount": 4 },
+        { "itemId": "bandage", "amount": 2 },
+        { "itemId": "rad_away", "amount": 1 },
+        { "itemId": "item_dosimeter_pen", "amount": 1 },
+        { "itemId": "item_geiger_m3", "amount": 1 },
+        { "itemId": "gas_mask", "amount": 1 },
+        { "itemId": "hazmat_suit", "amount": 1 },
+        { "itemId": "battery", "amount": 4 },
+        { "itemId": "scrap_mechanical", "amount": 6 },
+        { "itemId": "scrap_electronic", "amount": 3 }
+      ]
     },
     {
-      "itemId": "canned_food",
-      "amount": 16
+      "id": "origin_waterworks_failure",
+      "display_name": "Waterworks Failure",
+      "description": "Treatment hardware survived, but the stores did not. Water security comes first; food, protection, and time are thin.",
+      "supplies": [
+        { "itemId": "clean_water", "amount": 6 },
+        { "itemId": "canned_food", "amount": 12 },
+        { "itemId": "irradiated_water", "amount": 4 },
+        { "itemId": "item_air_filter_hepa", "amount": 3 },
+        { "itemId": "item_desal_membrane", "amount": 2 },
+        { "itemId": "iodine_pills", "amount": 2 },
+        { "itemId": "bandage", "amount": 1 },
+        { "itemId": "rad_away", "amount": 1 },
+        { "itemId": "item_dosimeter_pen", "amount": 1 },
+        { "itemId": "item_geiger_m3", "amount": 1 },
+        { "itemId": "gas_mask", "amount": 1 },
+        { "itemId": "battery", "amount": 6 },
+        { "itemId": "scrap_mechanical", "amount": 10 },
+        { "itemId": "scrap_electronic", "amount": 4 },
+        { "itemId": "filter_pack", "amount": 2 }
+      ]
     },
     {
-      "itemId": "irradiated_water",
-      "amount": 4
+      "id": "origin_field_clinic",
+      "display_name": "Field Clinic Withdrawal",
+      "description": "The treatment room was evacuated in a hurry. Medical stock survived; pantry, repair bins, and water reserves did not.",
+      "supplies": [
+        { "itemId": "clean_water", "amount": 8 },
+        { "itemId": "canned_food", "amount": 10 },
+        { "itemId": "irradiated_water", "amount": 2 },
+        { "itemId": "item_air_filter_hepa", "amount": 1 },
+        { "itemId": "iodine_pills", "amount": 6 },
+        { "itemId": "bandage", "amount": 8 },
+        { "itemId": "rad_away", "amount": 3 },
+        { "itemId": "item_dosimeter_pen", "amount": 1 },
+        { "itemId": "item_geiger_m3", "amount": 1 },
+        { "itemId": "gas_mask", "amount": 1 },
+        { "itemId": "hazmat_suit", "amount": 1 },
+        { "itemId": "battery", "amount": 2 },
+        { "itemId": "scrap_mechanical", "amount": 2 },
+        { "itemId": "scrap_electronic", "amount": 1 },
+        { "itemId": "calibration_kit", "amount": 1 },
+        { "itemId": "filter_pack", "amount": 1 }
+      ]
     },
     {
-      "itemId": "item_air_filter_hepa",
-      "amount": 2
+      "id": "origin_machine_room",
+      "display_name": "Machine-Room Holdout",
+      "description": "The machine room kept its bins and lost its pantry. Repair potential is high; every meal and clean drink must be accounted for.",
+      "supplies": [
+        { "itemId": "clean_water", "amount": 6 },
+        { "itemId": "canned_food", "amount": 10 },
+        { "itemId": "irradiated_water", "amount": 4 },
+        { "itemId": "item_air_filter_hepa", "amount": 1 },
+        { "itemId": "iodine_pills", "amount": 2 },
+        { "itemId": "bandage", "amount": 1 },
+        { "itemId": "item_dosimeter_pen", "amount": 1 },
+        { "itemId": "item_geiger_m3", "amount": 1 },
+        { "itemId": "gas_mask", "amount": 1 },
+        { "itemId": "battery", "amount": 14 },
+        { "itemId": "scrap_mechanical", "amount": 24 },
+        { "itemId": "scrap_electronic", "amount": 18 },
+        { "itemId": "calibration_kit", "amount": 3 }
+      ]
     },
     {
-      "itemId": "item_desal_membrane",
-      "amount": 1
+      "id": "origin_greenhouse_remnant",
+      "display_name": "Greenhouse Remnant",
+      "description": "Growing stock remained when the pantry failed. The future harvest is possible, but the room, water, and first weeks remain fragile.",
+      "supplies": [
+        { "itemId": "clean_water", "amount": 8 },
+        { "itemId": "canned_food", "amount": 8 },
+        { "itemId": "irradiated_water", "amount": 2 },
+        { "itemId": "item_air_filter_hepa", "amount": 1 },
+        { "itemId": "item_desal_membrane", "amount": 1 },
+        { "itemId": "iodine_pills", "amount": 2 },
+        { "itemId": "bandage", "amount": 1 },
+        { "itemId": "item_geiger_m3", "amount": 1 },
+        { "itemId": "gas_mask", "amount": 1 },
+        { "itemId": "battery", "amount": 2 },
+        { "itemId": "scrap_mechanical", "amount": 2 },
+        { "itemId": "scrap_electronic", "amount": 1 },
+        { "itemId": "item_seed_mushroom", "amount": 6 },
+        { "itemId": "item_seed_tuber", "amount": 4 },
+        { "itemId": "item_seed_grain", "amount": 4 },
+        { "itemId": "item_planter_box", "amount": 2 },
+        { "itemId": "item_grow_medium", "amount": 4 },
+        { "itemId": "item_blight_treatment", "amount": 2 }
+      ]
     },
     {
-      "itemId": "iodine_pills",
-      "amount": 4
-    },
-    {
-      "itemId": "bandage",
-      "amount": 2
-    },
-    {
-      "itemId": "rad_away",
-      "amount": 1
-    },
-    {
-      "itemId": "item_dosimeter_pen",
-      "amount": 1
-    },
-    {
-      "itemId": "item_geiger_m3",
-      "amount": 1
-    },
-    {
-      "itemId": "gas_mask",
-      "amount": 1
-    },
-    {
-      "itemId": "hazmat_suit",
-      "amount": 1
-    },
-    {
-      "itemId": "battery",
-      "amount": 4
-    },
-    {
-      "itemId": "scrap_mechanical",
-      "amount": 6
-    },
-    {
-      "itemId": "scrap_electronic",
-      "amount": 3
+      "id": "origin_evacuated_checkpoint",
+      "display_name": "Evacuated Checkpoint",
+      "description": "Survey instruments and protective gear were left behind. Sustenance is shallow, and the equipment still needs batteries, filters, and judgment.",
+      "supplies": [
+        { "itemId": "clean_water", "amount": 6 },
+        { "itemId": "canned_food", "amount": 8 },
+        { "itemId": "irradiated_water", "amount": 4 },
+        { "itemId": "item_air_filter_hepa", "amount": 1 },
+        { "itemId": "iodine_pills", "amount": 4 },
+        { "itemId": "bandage", "amount": 1 },
+        { "itemId": "rad_away", "amount": 1 },
+        { "itemId": "item_dosimeter_pen", "amount": 2 },
+        { "itemId": "item_geiger_m3", "amount": 1 },
+        { "itemId": "gas_mask", "amount": 1 },
+        { "itemId": "hazmat_suit", "amount": 1 },
+        { "itemId": "battery", "amount": 8 },
+        { "itemId": "scrap_mechanical", "amount": 6 },
+        { "itemId": "scrap_electronic", "amount": 2 },
+        { "itemId": "filter_pack", "amount": 4 },
+        { "itemId": "calibration_kit", "amount": 2 }
+      ]
     }
   ]
 }

@@ -206,7 +206,7 @@ namespace Ashfall.Core.Tests
             f.Sanatorium.TickDay(1); // 1-day protocol completes
             // watchful-only therapist: 400 authored + 5 assist
             Assert.Equal(800 - 405, f.Conditions.Acute["survivor_patient_a"]);
-            Assert.Single(f.Sanatorium.Patients.Where(p => p.completed_therapy_count == 1));
+            Assert.Single(f.Sanatorium.Patients, p => p.completed_therapy_count == 1);
         }
 
         [Fact]

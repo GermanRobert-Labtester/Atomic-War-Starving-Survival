@@ -31,11 +31,37 @@ namespace AtomicWar.GodotApp
     {
         // ── Inventory fields (GAP-ARCH-01 Phase 1) ──
         private InventoryHostSession _inventory = null!;
+        private string _startingSuppliesProfileId = StartingSuppliesCatalog.StandardProfileId;
+        private StartingSuppliesCatalog _startingSuppliesCatalog = null!;
+
+        private StartingSuppliesCatalog EnsureStartingSuppliesCatalog()
+        {
+            if (_startingSuppliesCatalog != null) return _startingSuppliesCatalog;
+
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            var itemCatalog = ItemCatalogLoader.LoadCatalog(_dataDir, fileIO, serializer);
+            var loaded = ItemCatalogLoader.LoadStartingSuppliesCatalogDetailed(
+                _dataDir,
+                fileIO,
+                serializer,
+                itemCatalog);
+            foreach (var warning in loaded.Warnings)
+                GD.PushWarning("[StartingSupplies] " + warning);
+            foreach (var error in loaded.Errors)
+                GD.PushWarning("[StartingSupplies] " + error);
+            _startingSuppliesCatalog = loaded.Catalog;
+            return _startingSuppliesCatalog;
+        }
 
         private void SetupInventory()
         {
             if (_inventory != null) return;
-            _inventory = InventoryHostSession.Create(_dataDir);
+            _inventory = InventoryHostSession.Create(
+                _dataDir,
+                _startingSuppliesProfileId,
+                seedWhenNoSave: _campaignInitializationMode ==
+                    CampaignInitializationMode.FreshInitialize);
             if (_survivors != null)
             {
                 _inventory.Survivors = _survivors;

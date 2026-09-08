@@ -32,6 +32,8 @@ namespace AtomicWar.GodotApp
         public Func<string?>? DefaultSurvivorResolver { get; set; }
 
         public string LastEvent { get; private set; } = string.Empty;
+        private bool _startingSuppliesInitialized;
+
         public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!, ItemDescriptionCatalog descriptionCatalog = null!, ExpansionEnrichmentCatalog? enrichmentCatalog = null)
         {
             Inventory = inventory ?? new InventoryContainer();
@@ -45,7 +47,10 @@ namespace AtomicWar.GodotApp
             Inventory.OnInventoryChanged += () => RaiseStateChanged();
         }
 
-        public static InventoryHostSession Create(string dataDir)
+        public static InventoryHostSession Create(
+            string dataDir,
+            string? startingSuppliesProfileId = null,
+            bool seedWhenNoSave = true)
         {
             var fileIO = new FileSystemIO();
             var serializer = new SystemTextJsonSerializer();
@@ -61,9 +66,19 @@ namespace AtomicWar.GodotApp
                 session.RestoreSave(save);
                 session.LastEvent = "Inventory state restored from save.";
             }
+            else if (!seedWhenNoSave)
+            {
+                session.LastEvent =
+                    "No inventory save exists; fresh inventory seeding is deferred.";
+            }
             else
             {
-                session.LoadOrSeedStartingSupplies(dataDir, fileIO, serializer);
+                session.LoadOrSeedStartingSupplies(
+                    dataDir,
+                    fileIO,
+                    serializer,
+                    failClosed: false,
+                    profileId: startingSuppliesProfileId);
             }
             return session;
         }
@@ -76,11 +91,27 @@ namespace AtomicWar.GodotApp
             return ItemInspectionModel.Create(def, DescriptionCatalog, EnrichmentCatalog);
         }
 
-        public void LoadOrSeedStartingSupplies(string dataDir, IFileIO fileIO = null!, IJsonSerializer serializer = null!, bool failClosed = true)
+        public void LoadOrSeedStartingSupplies(
+            string dataDir,
+            IFileIO fileIO = null!,
+            IJsonSerializer serializer = null!,
+            bool failClosed = true,
+            string? profileId = null)
         {
+            if (_startingSuppliesInitialized)
+            {
+                LastEvent = "Starting supplies already initialized; duplicate seed ignored.";
+                return;
+            }
+
             fileIO ??= new FileSystemIO();
             serializer ??= new SystemTextJsonSerializer();
-            var detailed = ItemCatalogLoader.LoadStartingSuppliesDetailed(dataDir, fileIO, serializer, Catalog);
+            var detailed = ItemCatalogLoader.LoadStartingSuppliesDetailed(
+                dataDir,
+                fileIO,
+                serializer,
+                Catalog,
+                profileId);
             if (!detailed.IsSuccess)
             {
                 if (failClosed)
@@ -107,26 +138,32 @@ namespace AtomicWar.GodotApp
                     }
                 }
             }
+            _startingSuppliesInitialized = true;
+            if (!string.IsNullOrEmpty(profileId) &&
+                !string.Equals(profileId, detailed.SelectedProfileId, StringComparison.Ordinal))
+            {
+                GD.PushWarning(
+                    $"[InventoryHostSession] Unknown starting supplies profile '{profileId}'; " +
+                    $"using '{detailed.SelectedProfileId}'.");
+            }
             LastEvent = "Starting supplies loaded into Holdfast storage from JSON authority.";
         }
 
         public void SeedStartingSupplies()
         {
-            Add("clean_water", 12);
-            Add("canned_food", 16);
-            Add("irradiated_water", 4);
-            Add("item_air_filter_hepa", 2);
-            Add("item_desal_membrane", 1);
-            Add("iodine_pills", 4);
-            Add("bandage", 2);
-            Add("rad_away", 1);
-            Add("item_dosimeter_pen", 1);
-            Add("item_geiger_m3", 1);
-            Add("gas_mask", 1);
-            Add("hazmat_suit", 1);
-            Add("battery", 4);
-            Add("scrap_mechanical", 6);
-            Add("scrap_electronic", 3);
+            if (_startingSuppliesInitialized)
+            {
+                LastEvent = "Starting supplies already initialized; duplicate seed ignored.";
+                return;
+            }
+
+            var fallback = StartingSuppliesCatalog.CreateLegacyFallbackProfile();
+            for (int i = 0; i < fallback.supplies.Count; i++)
+            {
+                var entry = fallback.supplies[i];
+                Add(entry.itemId, entry.amount);
+            }
+            _startingSuppliesInitialized = true;
             LastEvent = "Starting supplies loaded into Holdfast storage.";
         }
 
@@ -576,7 +613,10 @@ namespace AtomicWar.GodotApp
 
         public InventorySaveState CaptureSave() => Inventory.CaptureState();
 
-        public void RestoreSave(InventorySaveState state) =>
+        public void RestoreSave(InventorySaveState state)
+        {
             Inventory.RestoreState(state, id => Catalog.Get(id));
+            _startingSuppliesInitialized = true;
+        }
     }
 }

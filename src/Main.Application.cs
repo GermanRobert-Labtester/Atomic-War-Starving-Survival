@@ -43,6 +43,11 @@ namespace AtomicWar.GodotApp
             var cliAction = HostCli.Parse(OS.GetCmdlineUserArgs());
 
             ResolveDataDir();
+            _startingSuppliesProfileId =
+                HostCli.ExtractArgValue(
+                    OS.GetCmdlineUserArgs(),
+                    "--starting-supplies-profile") ??
+                StartingSuppliesCatalog.StandardProfileId;
 
             // Validate required catalogs before any systems are initialized.
             // This ensures the game cannot start with missing or malformed required data.
@@ -330,6 +335,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.InventorySaveSelfTest:
                     GetTree().Quit(HostCli.RunInventorySaveSelfTest());
+                    return;
+                case HostCliAction.StartingSuppliesSelfTest:
+                    GetTree().Quit(HostCli.RunStartingSuppliesSelfTest(_dataDir));
                     return;
                 case HostCliAction.ExpeditionPanelUiTest:
                     RunExpeditionPanelUiTestAndQuit();

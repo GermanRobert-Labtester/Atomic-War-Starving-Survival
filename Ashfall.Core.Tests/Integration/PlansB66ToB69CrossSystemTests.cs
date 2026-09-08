@@ -293,7 +293,7 @@ namespace Ashfall.Core.Tests.Integration
             Assert.False(w.Radio.RecordBearing(intercept, 40));
             Assert.False(w.Radio.RecordBearing(intercept, 180));
             Assert.True(w.Radio.RecordBearing(intercept, 300));
-            Assert.True(w.Radio.State.discoveredLocationIds.Contains("loc_diesel_tank_farm"));
+            Assert.Contains("loc_diesel_tank_farm", w.Radio.State.discoveredLocationIds);
             int revealedCount = w.Radio.State.discoveredLocationIds
                 .FindAll(id => id == "loc_diesel_tank_farm").Count;
             Assert.Equal(1, revealedCount);

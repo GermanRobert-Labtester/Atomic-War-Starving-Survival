@@ -142,6 +142,7 @@ namespace AtomicWar.GodotApp
         MoralChoiceSelfTest,
         EvolvingWorldSelfTest,
         InventorySaveSelfTest,
+        StartingSuppliesSelfTest,
         MedicalWardSaveSelfTest,
         ChemicalDependencySaveSelfTest,
         WeatherSaveSelfTest,
@@ -465,6 +466,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.EvolvingWorldSelfTest;
             if (Has(args, "--inventory-save-selftest"))
                 return HostCliAction.InventorySaveSelfTest;
+            if (Has(args, "--starting-supplies-selftest") || Has(args, "--starting-profile-selftest"))
+                return HostCliAction.StartingSuppliesSelfTest;
             if (Has(args, "--medical-ward-save-selftest"))
                 return HostCliAction.MedicalWardSaveSelfTest;
             if (Has(args, "--chemical-dependency-save-selftest"))
@@ -598,6 +601,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --holdfast-save-selftest S1 save write → reload → restore → checksum/tamper checks");
             GD.Print("  --holdfast-trade-save-selftest Holdfast trade ledger and save store round-trip and tamper checks");
             GD.Print("  --inventory-save-selftest Inventory system save store round-trip, item serialization, and checksum verification");
+            GD.Print("  --starting-supplies-selftest / --starting-profile-selftest  Plan 134 six-profile fresh-inventory matrix, fallback, idempotence, and save bypass");
             GD.Print("  --journal-save-selftest  Journal system save store round-trip, entry ordering, and tamper checks");
             GD.Print("  --journal-selftest       Journal domain + save roundtrip");
             GD.Print("  --journal-weather-panel-selftest  Journal and Weather forecast panel integration and live data binding");

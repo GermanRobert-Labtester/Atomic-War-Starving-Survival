@@ -308,7 +308,7 @@ namespace Ashfall.Core.Tests.Medical
             for (int d = 0; d < 3; d++) e.TickDay(300 + d);
 
             Assert.Equal("rejected", e.State.machine_state);
-            Assert.Empty(e.OutputBuffer.Where(b => b.quantity > 0));
+            Assert.DoesNotContain(e.OutputBuffer, b => b.quantity > 0);
             Assert.Equal(0, Inv(e).Get("antibiotics")); // nothing entered inventory
             var claimed = e.ClaimOutputs();
             Assert.True(claimed == null || claimed.total_units == 0);

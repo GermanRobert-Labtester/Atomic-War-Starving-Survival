@@ -484,7 +484,7 @@ namespace Ashfall.Core.Tests.Expeditions
             var snap = e.BuildAvailability();
             Assert.Equal(3, snap.blocked_route_ids.Count);
             Assert.Empty(snap.open_route_ids);
-            Assert.Empty(e.State.junctions.Where(j => j.Value.signal_state == "fault"));
+            Assert.DoesNotContain(e.State.junctions, j => j.Value.signal_state == "fault");
         }
 
         [Fact]

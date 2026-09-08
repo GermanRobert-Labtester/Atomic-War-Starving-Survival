@@ -57,24 +57,58 @@ namespace Ashfall.Core.Inventory
         public int amount { get; set; } = 1;
     }
 
+    [Serializable]
+    internal sealed class StartingSuppliesProfileJsonDto
+    {
+        public string id { get; set; } = string.Empty;
+        public string display_name { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public List<StartingSupplyJsonDto> supplies { get; set; } =
+            new List<StartingSupplyJsonDto>();
+    }
+
+    [Serializable]
+    internal sealed class StartingSuppliesRootJsonDto
+    {
+        public int schema_version { get; set; } = 1;
+        public string default_profile_id { get; set; } = string.Empty;
+        public List<StartingSupplyJsonDto>? starting_supplies { get; set; }
+        public List<StartingSuppliesProfileJsonDto>? profiles { get; set; }
+    }
+
     public enum StartingSuppliesLoadStatus
     {
         Success,
         MissingFile,
         EmptyFile,
         ParseFailure,
+        UnsupportedSchema,
         InvalidRow,
         DuplicateRow,
-        UnknownItem
+        UnknownItem,
+        InvalidProfile
     }
 
     public sealed class StartingSuppliesLoadResult
     {
         public StartingSuppliesLoadStatus Status { get; set; } = StartingSuppliesLoadStatus.Success;
         public string ErrorMessage { get; set; } = string.Empty;
+        public string SelectedProfileId { get; set; } = StartingSuppliesCatalog.StandardProfileId;
         public List<(string itemId, int amount)> Supplies { get; } = new List<(string itemId, int amount)>();
         public int AcceptedRowCount => Supplies.Count;
         public bool IsSuccess => Status == StartingSuppliesLoadStatus.Success;
+    }
+
+    public sealed class StartingSuppliesCatalogLoadResult
+    {
+        public StartingSuppliesCatalog Catalog { get; internal set; } =
+            new StartingSuppliesCatalog(
+                new[] { StartingSuppliesCatalog.CreateLegacyFallbackProfile() },
+                StartingSuppliesCatalog.StandardProfileId);
+        public List<string> Errors { get; } = new List<string>();
+        public List<string> Warnings { get; } = new List<string>();
+        public bool UsedLegacyFallback { get; internal set; }
+        public bool IsUsable => Catalog.Profiles.Count > 0;
     }
 
     /// <summary>
@@ -202,97 +236,299 @@ namespace Ashfall.Core.Inventory
 
         public static List<(string itemId, int amount)> LoadStartingSupplies(string dataDir, IFileIO fileIO, IJsonSerializer serializer)
         {
-            var res = LoadStartingSuppliesDetailed(dataDir, fileIO, serializer);
+            var res = LoadStartingSuppliesDetailed(
+                dataDir,
+                fileIO,
+                serializer,
+                catalog: null,
+                profileId: StartingSuppliesCatalog.StandardProfileId);
             return res.IsSuccess ? res.Supplies : new List<(string itemId, int amount)>();
         }
 
-        public static StartingSuppliesLoadResult LoadStartingSuppliesDetailed(
+        public static StartingSuppliesCatalog LoadStartingSuppliesCatalog(
             string dataDir,
             IFileIO fileIO,
             IJsonSerializer serializer,
             ItemCatalog? catalog = null)
         {
-            var result = new StartingSuppliesLoadResult();
+            return LoadStartingSuppliesCatalogDetailed(dataDir, fileIO, serializer, catalog).Catalog;
+        }
+
+        public static StartingSuppliesCatalogLoadResult LoadStartingSuppliesCatalogDetailed(
+            string dataDir,
+            IFileIO fileIO,
+            IJsonSerializer serializer,
+            ItemCatalog? catalog = null)
+        {
+            var result = new StartingSuppliesCatalogLoadResult();
+            var fallback = StartingSuppliesCatalog.CreateLegacyFallbackProfile();
+            string path = string.IsNullOrEmpty(dataDir) || fileIO == null
+                ? StartingSuppliesFileName
+                : fileIO.Combine(dataDir, StartingSuppliesFileName);
+
             if (fileIO == null || serializer == null || string.IsNullOrEmpty(dataDir))
             {
-                result.Status = StartingSuppliesLoadStatus.MissingFile;
-                result.ErrorMessage = "fileIO, serializer, or dataDir is null or empty.";
+                result.Errors.Add("fileIO, serializer, or dataDir is null or empty.");
+                result.UsedLegacyFallback = true;
                 return result;
             }
 
-            string path = fileIO.Combine(dataDir, StartingSuppliesFileName);
             if (!fileIO.FileExists(path))
             {
-                result.Status = StartingSuppliesLoadStatus.MissingFile;
-                result.ErrorMessage = $"Authoritative starting supplies file missing: {path}";
+                result.Warnings.Add($"Authoritative starting supplies file missing: {path}");
+                result.UsedLegacyFallback = true;
                 return result;
             }
 
             string raw = fileIO.ReadAllText(path);
             if (string.IsNullOrWhiteSpace(raw))
             {
-                result.Status = StartingSuppliesLoadStatus.EmptyFile;
-                result.ErrorMessage = $"Authoritative starting supplies file is empty: {path}";
+                result.Warnings.Add($"Authoritative starting supplies file is empty: {path}");
+                result.UsedLegacyFallback = true;
                 return result;
             }
 
-            List<StartingSupplyJsonDto> dtos;
+            StartingSuppliesRootJsonDto? root;
             try
             {
-                dtos = CatalogLocator.LoadWrappedList<StartingSupplyJsonDto>(raw, SystemTextJsonSerializer.Options);
+                root = serializer.Deserialize<StartingSuppliesRootJsonDto>(raw);
             }
             catch (Exception ex)
             {
                 CatalogDiagnostics.Warn("ItemCatalogLoader", StartingSuppliesFileName, ex);
-                result.Status = StartingSuppliesLoadStatus.ParseFailure;
-                result.ErrorMessage = $"Failed to parse starting supplies from {path}: {ex.Message}";
+                result.Errors.Add($"Failed to parse starting supplies from {path}: {ex.Message}");
+                result.UsedLegacyFallback = true;
                 return result;
             }
 
-            if (dtos == null || dtos.Count == 0)
+            if (root == null)
             {
-                result.Status = StartingSuppliesLoadStatus.EmptyFile;
-                result.ErrorMessage = $"No supply entries found in {path}";
+                result.Errors.Add($"Starting supplies root is null: {path}");
+                result.UsedLegacyFallback = true;
                 return result;
+            }
+
+            if (root.schema_version == 1 &&
+                (root.profiles == null || root.profiles.Count == 0) &&
+                root.starting_supplies != null)
+            {
+                var standard = new StartingSuppliesProfile
+                {
+                    id = StartingSuppliesCatalog.StandardProfileId,
+                    display_name = "Standard Holdfast",
+                    description = "The unchanged legacy opening."
+                };
+                if (!TryPopulateProfile(
+                    standard,
+                    root.starting_supplies,
+                    catalog,
+                    path,
+                    "starting_supplies",
+                    result))
+                {
+                    result.UsedLegacyFallback = true;
+                    return result;
+                }
+
+                result.Catalog = new StartingSuppliesCatalog(
+                    new[] { standard },
+                    StartingSuppliesCatalog.StandardProfileId);
+                return result;
+            }
+
+            if (root.schema_version != 2)
+            {
+                result.Errors.Add(
+                    $"Unsupported starting supplies schema_version {root.schema_version}; expected 2.");
+                result.UsedLegacyFallback = true;
+                return result;
+            }
+
+            if (root.profiles == null || root.profiles.Count == 0)
+            {
+                result.Errors.Add("Starting supplies v2 has no profiles.");
+                result.UsedLegacyFallback = true;
+                return result;
+            }
+
+            string defaultProfileId = string.IsNullOrEmpty(root.default_profile_id)
+                ? StartingSuppliesCatalog.StandardProfileId
+                : root.default_profile_id;
+            var profiles = new List<StartingSuppliesProfile>();
+            var seenProfileIds = new HashSet<string>(StringComparer.Ordinal);
+            bool standardAccepted = false;
+
+            for (int i = 0; i < root.profiles.Count; i++)
+            {
+                var dto = root.profiles[i];
+                if (dto == null || string.IsNullOrEmpty(dto.id))
+                {
+                    result.Warnings.Add($"Profile[{i}] has no id and was skipped.");
+                    continue;
+                }
+
+                if (!seenProfileIds.Add(dto.id))
+                {
+                    result.Warnings.Add($"Duplicate profile id '{dto.id}' was skipped.");
+                    continue;
+                }
+
+                var profile = new StartingSuppliesProfile
+                {
+                    id = dto.id,
+                    display_name = dto.display_name ?? string.Empty,
+                    description = dto.description ?? string.Empty
+                };
+                bool valid = TryPopulateProfile(
+                    profile,
+                    dto.supplies,
+                    catalog,
+                    path,
+                    dto.id,
+                    result);
+
+                if (!valid)
+                {
+                    if (string.Equals(
+                        dto.id,
+                        StartingSuppliesCatalog.StandardProfileId,
+                        StringComparison.Ordinal))
+                    {
+                        result.Errors.Add(
+                            "Standard Holdfast profile is invalid; legacy fallback will be used.");
+                    }
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(profile.display_name) ||
+                    string.IsNullOrWhiteSpace(profile.description))
+                {
+                    result.Warnings.Add(
+                        $"Profile '{dto.id}' has incomplete presentation text and was skipped.");
+                    continue;
+                }
+
+                profiles.Add(profile);
+                if (string.Equals(
+                    dto.id,
+                    StartingSuppliesCatalog.StandardProfileId,
+                    StringComparison.Ordinal))
+                    standardAccepted = true;
+            }
+
+            if (!standardAccepted)
+            {
+                profiles.Insert(0, fallback);
+                result.UsedLegacyFallback = true;
+                defaultProfileId = StartingSuppliesCatalog.StandardProfileId;
+            }
+
+            if (profiles.Count == 0)
+            {
+                result.Errors.Add("No valid starting supplies profiles were found.");
+                result.UsedLegacyFallback = true;
+                return result;
+            }
+
+            bool defaultExists = false;
+            for (int i = 0; i < profiles.Count; i++)
+            {
+                if (string.Equals(profiles[i].id, defaultProfileId, StringComparison.Ordinal))
+                {
+                    defaultExists = true;
+                    break;
+                }
+            }
+            if (!defaultExists)
+            {
+                result.Warnings.Add(
+                    $"Unknown default profile '{defaultProfileId}'; Standard Holdfast selected.");
+                defaultProfileId = StartingSuppliesCatalog.StandardProfileId;
+                result.UsedLegacyFallback = true;
+            }
+
+            result.Catalog = new StartingSuppliesCatalog(profiles, defaultProfileId);
+            return result;
+        }
+
+        public static StartingSuppliesLoadResult LoadStartingSuppliesDetailed(
+            string dataDir,
+            IFileIO fileIO,
+            IJsonSerializer serializer,
+            ItemCatalog? catalog = null,
+            string? profileId = null)
+        {
+            var result = new StartingSuppliesLoadResult();
+            result.SelectedProfileId = profileId ?? StartingSuppliesCatalog.StandardProfileId;
+            var loaded = LoadStartingSuppliesCatalogDetailed(dataDir, fileIO, serializer, catalog);
+            var selected = loaded.Catalog.ResolveOrDefault(result.SelectedProfileId);
+            result.SelectedProfileId = selected.id;
+            for (int i = 0; i < selected.supplies.Count; i++)
+                result.Supplies.Add(selected.supplies[i]);
+
+            result.Status = StartingSuppliesLoadStatus.Success;
+            if (loaded.UsedLegacyFallback)
+            {
+                result.Status = StartingSuppliesLoadStatus.ParseFailure;
+                result.ErrorMessage = loaded.Errors.Count > 0
+                    ? string.Join(" ", loaded.Errors)
+                    : string.Join(" ", loaded.Warnings);
+            }
+            return result;
+        }
+
+        private static bool TryPopulateProfile(
+            StartingSuppliesProfile profile,
+            List<StartingSupplyJsonDto>? rows,
+            ItemCatalog? catalog,
+            string path,
+            string profileLabel,
+            StartingSuppliesCatalogLoadResult result)
+        {
+            if (rows == null || rows.Count == 0)
+            {
+                result.Warnings.Add($"Profile '{profileLabel}' has no supply rows.");
+                return false;
             }
 
             var seenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            for (int i = 0; i < dtos.Count; i++)
+            for (int i = 0; i < rows.Count; i++)
             {
-                var dto = dtos[i];
+                var dto = rows[i];
                 if (dto == null || string.IsNullOrWhiteSpace(dto.itemId))
                 {
-                    result.Status = StartingSuppliesLoadStatus.InvalidRow;
-                    result.ErrorMessage = $"Row {i + 1} has null or empty itemId in {path}";
-                    return result;
+                    result.Warnings.Add(
+                        $"Profile '{profileLabel}' row {i + 1} has no itemId in {path}.");
+                    return false;
                 }
 
                 if (dto.amount <= 0)
                 {
-                    result.Status = StartingSuppliesLoadStatus.InvalidRow;
-                    result.ErrorMessage = $"Row {i + 1} ('{dto.itemId}') has non-positive amount {dto.amount} in {path}";
-                    return result;
+                    result.Warnings.Add(
+                        $"Profile '{profileLabel}' row {i + 1} has non-positive amount {dto.amount}.");
+                    return false;
                 }
 
                 if (!seenIds.Add(dto.itemId))
                 {
-                    result.Status = StartingSuppliesLoadStatus.DuplicateRow;
-                    result.ErrorMessage = $"Row {i + 1} has duplicate itemId '{dto.itemId}' in {path}";
-                    return result;
+                    result.Warnings.Add(
+                        $"Profile '{profileLabel}' repeats itemId '{dto.itemId}'.");
+                    return false;
                 }
 
-                if (catalog != null && !catalog.Contains(dto.itemId) && !catalog.Contains(ItemAliases.ToCanonical(dto.itemId)))
+                string canonicalId = ItemAliases.ToCanonical(dto.itemId);
+                if (catalog != null && !catalog.Contains(dto.itemId) &&
+                    !catalog.Contains(canonicalId))
                 {
-                    result.Status = StartingSuppliesLoadStatus.UnknownItem;
-                    result.ErrorMessage = $"Row {i + 1} itemId '{dto.itemId}' not found in item catalog.";
-                    return result;
+                    result.Warnings.Add(
+                        $"Profile '{profileLabel}' references unknown item '{dto.itemId}'.");
+                    return false;
                 }
 
-                result.Supplies.Add((dto.itemId, dto.amount));
+                profile.supplies.Add((dto.itemId, dto.amount));
             }
 
-            result.Status = StartingSuppliesLoadStatus.Success;
-            return result;
+            return true;
         }
 
         private static void LoadFileInto(ItemCatalog catalog, string path, IFileIO fileIO, IJsonSerializer serializer)
@@ -361,7 +597,7 @@ namespace Ashfall.Core.Inventory
                     if (dto == null || string.IsNullOrEmpty(dto.id)) continue;
                     if (catalog.Contains(dto.id))
                     {
-                        result.AddWarning($"Duplicate item id '{dto.id}' encountered in '{path}'. Primary definition retained (provenance collision).");
+                        result.AddInfo($"Duplicate item id '{dto.id}' encountered in '{path}'. Primary definition retained (provenance collision).");
                         continue;
                     }
 

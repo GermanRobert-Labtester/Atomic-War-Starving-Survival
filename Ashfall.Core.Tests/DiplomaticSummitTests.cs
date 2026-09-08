@@ -197,7 +197,7 @@ namespace Ashfall.Core.Tests
             Assert.Equal(20 + 30, treaty.expiry_day); // framework duration_days = 30
             Assert.Equal(waterBefore - 4, f.Inventory.CountById("clean_water")); // authored concession
             Assert.Equal("ratified", f.Diplomacy.GetSummit(summitId)!.status);
-            Assert.False(f.Availability.Claims.Contains("survivor_envoy")); // delegates released
+            Assert.DoesNotContain("survivor_envoy", f.Availability.Claims); // delegates released
         }
 
         [Fact]

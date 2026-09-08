@@ -20,7 +20,7 @@ namespace Ashfall.Core
             "field_fauna_", "field_flora_", "field_guide_", "char_", "creature_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
             "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
-            "belief_profile_", "profession_", "background_", "phantom_background_",
+            "belief_profile_", "profession_", "background_", "phantom_background_", "origin_",
             "pre_war_profession_", "personal_keepsake_item_", "stance_", "belief_",
             "trauma_", "phantom_", "echo_", "arc_", "offer_", "graft_", "vouch_",
             "radio_", "broadcast_", "crisis_", "zone_", "step_", "fragment_",

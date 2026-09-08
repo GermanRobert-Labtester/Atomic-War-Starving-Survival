@@ -86,10 +86,17 @@ namespace AtomicWar.GodotApp
 
         private void StartNewGame()
         {
-            StartNewGame(Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId);
+            StartNewGame(
+                Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId,
+                StartingSuppliesCatalog.StandardProfileId);
         }
 
         private void StartNewGame(string profileId)
+        {
+            StartNewGame(profileId, StartingSuppliesCatalog.StandardProfileId);
+        }
+
+        private void StartNewGame(string cohortProfileId, string startingSuppliesProfileId)
         {
             // Fresh campaigns are transactions, not resets of the currently
             // selected campaign. Allocate the next deterministic slot before
@@ -120,9 +127,12 @@ namespace AtomicWar.GodotApp
             // existing campaign roots remain untouched on disk.
             ResetAllSessionsInMemory();
             _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
-            _startingCohortProfileId = string.IsNullOrEmpty(profileId)
+            _startingCohortProfileId = string.IsNullOrEmpty(cohortProfileId)
                 ? Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId
-                : profileId;
+                : cohortProfileId;
+            _startingSuppliesProfileId = string.IsNullOrEmpty(startingSuppliesProfileId)
+                ? StartingSuppliesCatalog.StandardProfileId
+                : startingSuppliesProfileId;
 
             // Compose all campaign-owned services before any panel opens.
             ComposeCampaign();

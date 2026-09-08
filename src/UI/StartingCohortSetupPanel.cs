@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp.UI
@@ -10,15 +11,32 @@ namespace AtomicWar.GodotApp.UI
     /// Optional, menu-only cohort selector. It owns no campaign state and
     /// emits only the selected stable profile ID when the player commits.
     /// </summary>
+    public sealed class StartingCohortSelection
+    {
+        public string CohortProfileId { get; }
+        public string StartingSuppliesProfileId { get; }
+
+        public StartingCohortSelection(
+            string cohortProfileId,
+            string startingSuppliesProfileId)
+        {
+            CohortProfileId = cohortProfileId;
+            StartingSuppliesProfileId = startingSuppliesProfileId;
+        }
+    }
+
     public partial class StartingCohortSetupPanel : Control
     {
-        public event Action<string>? OnStartRequested;
+        public event Action<StartingCohortSelection>? OnStartRequested;
         public event Action? OnCancel;
 
         private VBoxContainer _profileList = null!;
+        private VBoxContainer _originList = null!;
         private Label _preview = null!;
         private string _selectedProfileId = StartingCohortCatalog.StandardProfileId;
+        private string _selectedOriginId = StartingSuppliesCatalog.StandardProfileId;
         private StartingCohortCatalog? _catalog;
+        private StartingSuppliesCatalog? _suppliesCatalog;
 
         public override void _Ready()
         {
@@ -27,9 +45,15 @@ namespace AtomicWar.GodotApp.UI
             Visible = false;
         }
 
-        public void Bind(StartingCohortCatalog catalog)
+        public void Bind(
+            StartingCohortCatalog catalog,
+            StartingSuppliesCatalog? suppliesCatalog = null)
         {
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
+            _suppliesCatalog = suppliesCatalog ??
+                new StartingSuppliesCatalog(
+                    new[] { StartingSuppliesCatalog.CreateLegacyFallbackProfile() },
+                    StartingSuppliesCatalog.StandardProfileId);
             if (_profileList == null) return;
 
             AshfallUiHelpers.EmptyChildren(_profileList);
@@ -46,8 +70,23 @@ namespace AtomicWar.GodotApp.UI
                 _profileList.AddChild(button);
             }
 
+            AshfallUiHelpers.EmptyChildren(_originList);
+            foreach (var profile in _suppliesCatalog.Profiles)
+            {
+                var captured = profile.id;
+                var button = AshfallUiHelpers.MakeButton(
+                    $"{profile.display_name.ToUpperInvariant()}\n{profile.description}",
+                    () => SelectOrigin(captured));
+                button.Alignment = HorizontalAlignment.Left;
+                button.CustomMinimumSize = new Vector2(0, 62);
+                button.TooltipText = profile.description;
+                _originList.AddChild(button);
+            }
+
             if (!catalog.TryGet(_selectedProfileId, out _))
                 _selectedProfileId = catalog.DefaultProfileId;
+            if (!_suppliesCatalog.TryGet(_selectedOriginId, out _))
+                _selectedOriginId = _suppliesCatalog.DefaultProfileId;
             RefreshPreview();
         }
 
@@ -56,8 +95,10 @@ namespace AtomicWar.GodotApp.UI
             if (_catalog != null)
             {
                 _selectedProfileId = _catalog.DefaultProfileId;
-                RefreshPreview();
             }
+            if (_suppliesCatalog != null)
+                _selectedOriginId = _suppliesCatalog.DefaultProfileId;
+            RefreshPreview();
             Visible = true;
             GrabFirstProfileFocus();
         }
@@ -106,7 +147,13 @@ namespace AtomicWar.GodotApp.UI
                 SizeFlagsVertical = Control.SizeFlags.ExpandFill
             };
             _profileList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-            scroll.AddChild(_profileList);
+            var profileColumn = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("STARTING COHORT"));
+            profileColumn.AddChild(_profileList);
+            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("STARTING STORES"));
+            _originList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            profileColumn.AddChild(_originList);
+            scroll.AddChild(profileColumn);
             split.AddChild(scroll);
 
             var previewPanel = AshfallUiHelpers.MakePanel(360, 0);
@@ -130,7 +177,10 @@ namespace AtomicWar.GodotApp.UI
             actions.AddChild(cancel);
             var start = AshfallUiHelpers.MakeButton(
                 "START CAMPAIGN",
-                () => OnStartRequested?.Invoke(_selectedProfileId));
+                () => OnStartRequested?.Invoke(
+                    new StartingCohortSelection(
+                        _selectedProfileId,
+                        _selectedOriginId)));
             start.CustomMinimumSize = new Vector2(180, 40);
             actions.AddChild(start);
             root.AddChild(actions);
@@ -142,17 +192,28 @@ namespace AtomicWar.GodotApp.UI
             RefreshPreview();
         }
 
+        private void SelectOrigin(string profileId)
+        {
+            _selectedOriginId = profileId;
+            RefreshPreview();
+        }
+
         private void RefreshPreview()
         {
             if (_preview == null || _catalog == null) return;
             if (!_catalog.TryGet(_selectedProfileId, out var profile)) return;
+            var supplies = _suppliesCatalog?.ResolveOrDefault(_selectedOriginId);
+            if (supplies == null) return;
 
             _preview.Text =
                 $"{profile.display_name.ToUpperInvariant()}\n\n" +
                 $"{profile.description}\n\n" +
                 "MEMBERS\n" +
                 string.Join("\n", profile.members.Select(m =>
-                    $"• {m.displayName} — {DescribeInitialCondition(m)}"));
+                    $"• {m.displayName} — {DescribeInitialCondition(m)}")) +
+                "\n\nSTARTING STORES\n" +
+                $"{supplies.display_name.ToUpperInvariant()}\n" +
+                supplies.description;
         }
 
         private static string DescribeInitialCondition(StartingSurvivorDefinition member)

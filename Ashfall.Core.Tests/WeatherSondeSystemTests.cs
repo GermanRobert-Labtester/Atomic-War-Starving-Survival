@@ -408,6 +408,10 @@ namespace Ashfall.Core.Tests
         [InlineData("b4")]
         public void BandLookup_IsContinuous_AcrossAllBands(string bandId)
         {
+            var targetBand = Bands.Single(b => b.band_id == bandId);
+            Assert.NotNull(targetBand);
+            Assert.True(targetBand.altitude_max_m > targetBand.altitude_min_m);
+
             var sonde = CreateSonde();
             sonde.ApplySoundingCatalog(Bands, Payloads);
             Assert.True(sonde.Launch("s1", 1, 12f, 1f, 1f));

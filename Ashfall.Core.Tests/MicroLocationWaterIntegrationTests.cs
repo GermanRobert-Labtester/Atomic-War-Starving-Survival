@@ -111,7 +111,7 @@ namespace Ashfall.Core.Tests
 
             // collect (3) − test (2) = exactly one unit of difference, deterministic.
             Assert.Equal(1, invAfterCollect.CountById(CleanWaterId) - invAfterTest.CountById(CleanWaterId));
-            Assert.Equal(before, 5); // untouched fixture inventory
+            Assert.Equal(5, before); // untouched fixture inventory
         }
 
         // ── One-shot source ────────────────────────────────────────────

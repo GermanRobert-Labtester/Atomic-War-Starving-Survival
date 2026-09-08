@@ -409,12 +409,12 @@ namespace Ashfall.Core.Tests
             var distress = catalog.GetById("radio_faction_distress_patrol_ambush");
             Assert.Equal(BroadcastGenre.DistressSignal, distress!.Genre);
             Assert.Equal(BroadcastPriority.Urgent, distress.Priority);
-            Assert.True(distress.Tags.Contains("distress:freq_distress_55_6"));
+            Assert.Contains("distress:freq_distress_55_6", distress.Tags);
 
             var deadHand = catalog.GetById("radio_faction_dead_hand_readiness_check");
             Assert.Equal(BroadcastGenre.AutomatedLoop, deadHand!.Genre);
             Assert.Equal(SourceReliability.Automated, deadHand.Reliability);
-            Assert.True(deadHand.Tags.Contains("telemetry:event_orbital_dead_hand_repeating_ping"));
+            Assert.Contains("telemetry:event_orbital_dead_hand_repeating_ping", deadHand.Tags);
 
             var encrypted = catalog.GetById("radio_faction_encrypted_short_burst");
             Assert.Equal(BroadcastGenre.NumbersStation, encrypted!.Genre);

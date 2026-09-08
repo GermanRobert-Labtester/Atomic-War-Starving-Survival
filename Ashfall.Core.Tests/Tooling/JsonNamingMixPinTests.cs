@@ -33,6 +33,7 @@ namespace Ashfall.Core.Tests
             "verdict_items.json",
             "verdict_radio.json",
             "starting_survivor_cohorts.json",
+            "starting_supplies.json",
         };
 
         /// <summary>

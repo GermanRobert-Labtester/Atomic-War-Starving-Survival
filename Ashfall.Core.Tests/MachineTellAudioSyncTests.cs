@@ -94,7 +94,7 @@ namespace Ashfall.Core.Tests
             MachineTellAudioSync.Apply(catalog, below, audioBelow);
             Assert.Contains("machine_quirk_hepa_intake_whistle",
                 audioBelow.State.activeConditions.Select(c => c.conditionId));
-            Assert.Equal(outcomeAtFloor.Started.Count, 7); // at-floor stays personality-only
+            Assert.Equal(7, outcomeAtFloor.Started.Count); // at-floor stays personality-only
         }
 
         [Fact]
