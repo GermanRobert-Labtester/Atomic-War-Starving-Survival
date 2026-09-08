@@ -917,7 +917,7 @@ namespace Ashfall.Core.Tests
             var ctx1 = new WildlifeSelectionContext
             {
                 CurrentWeather = WeatherKind.Rain,
-                SeasonWindowId = "window_thaw"
+                SeasonWindowId = "window_spring_storms"
             };
             ctx1.HunterSkillLevels["hunter_dweller"] = 80f;
             sys1.SetSelectionContext(ctx1);
@@ -927,7 +927,7 @@ namespace Ashfall.Core.Tests
             // Verify savedState does NOT persist ephemeral context
             string json = new SystemTextJsonSerializer().Serialize(savedState);
             Assert.DoesNotContain("Rain", json);
-            Assert.DoesNotContain("window_thaw", json);
+            Assert.DoesNotContain("window_spring_storms", json);
             Assert.DoesNotContain("HunterSkillLevels", json);
 
             // Restore into fresh system
@@ -939,7 +939,7 @@ namespace Ashfall.Core.Tests
             var ctx2 = new WildlifeSelectionContext
             {
                 CurrentWeather = WeatherKind.Rain,
-                SeasonWindowId = "window_thaw"
+                SeasonWindowId = "window_spring_storms"
             };
             ctx2.HunterSkillLevels["hunter_dweller"] = 80f;
             sys2.SetSelectionContext(ctx2);
@@ -1126,7 +1126,7 @@ namespace Ashfall.Core.Tests
             // C. Season + Migration context
             var selectionCtx = new WildlifeSelectionContext
             {
-                SeasonWindowId = "window_thaw"
+                SeasonWindowId = "window_spring_storms"
             };
             selectionCtx.PresentMigrationSpecies.Add("species_cotton_hare");
             trapping.SetSelectionContext(selectionCtx);

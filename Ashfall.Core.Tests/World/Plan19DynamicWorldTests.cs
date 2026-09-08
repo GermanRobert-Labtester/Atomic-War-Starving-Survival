@@ -175,22 +175,31 @@ namespace Ashfall.Core.Tests.World
         // ────────────────────────────────────────────────────────────────────────
 
         [Fact]
-        public void SeasonModel_DefinesSixPhasesAcrossYear()
+        public void SeasonModel_DefinesTenPhasesAcrossYear()
         {
+            // Plan 83 expanded the Plan 19 six-phase model to ten windows.
             var weather = CreateWeather(100);
-            var p0 = weather.GetSeasonForDay(0);
-            var p1 = weather.GetSeasonForDay(75);
-            var p2 = weather.GetSeasonForDay(140);
-            var p3 = weather.GetSeasonForDay(200);
-            var p4 = weather.GetSeasonForDay(260);
-            var p5 = weather.GetSeasonForDay(320);
+            var expected = new (int day, string id)[]
+            {
+                (0, "window_first_thaw"),
+                (30, "window_ash_settling"),
+                (75, "window_deep_freeze"),
+                (100, "window_spring_storms"),
+                (140, "window_dry_ash"),
+                (165, "window_first_fallout"),
+                (190, "window_false_spring"),
+                (220, "window_deep_ash"),
+                (260, "window_long_winter"),
+                (320, "window_black_rain_season"),
+            };
 
-            Assert.Equal("window_ashfall", p0.id);
-            Assert.Equal("window_deep_freeze", p1.id);
-            Assert.Equal("window_thaw", p2.id);
-            Assert.Equal("window_black_bloom", p3.id);
-            Assert.Equal("window_high_cold", p4.id);
-            Assert.Equal("window_the_turning", p5.id);
+            var profile = WeatherProfileLoader.Load(DataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            Assert.NotNull(profile);
+            Assert.Equal(10, profile!.seasons.Count);
+            foreach (var (day, id) in expected)
+            {
+                Assert.Equal(id, weather.GetSeasonForDay(day).id);
+            }
         }
 
         [Fact]
@@ -203,10 +212,10 @@ namespace Ashfall.Core.Tests.World
             system.BindDefinitions(events);
 
             var rng = new SeededRng(4242);
-            // Simulate 60 days in Ashfall season
+            // Simulate 60 days in the ash-settling window (Plan 83: legacy "Ash Fall" events)
             for (int day = 1; day <= 60; day++)
             {
-                system.TickDay(day, "window_ashfall", rng);
+                system.TickDay(day, "window_ash_settling", rng);
             }
 
             Assert.NotEmpty(system.ActiveEvents);

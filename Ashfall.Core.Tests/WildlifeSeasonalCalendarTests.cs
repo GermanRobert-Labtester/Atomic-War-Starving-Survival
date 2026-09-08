@@ -76,13 +76,17 @@ namespace Ashfall.Core.Tests
             var profile = LoadProfile();
             Assert.NotNull(profile);
 
-            Assert.Equal("window_ashfall", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 0)!.id);
-            Assert.Equal("window_ashfall", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 59)!.id);
+            // Plan 83 ten-window schedule (0, 30, 60, 90, 120, 150, 180, 200, 240, 280).
+            Assert.Equal("window_first_thaw", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 0)!.id);
+            Assert.Equal("window_ash_settling", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 45)!.id);
             Assert.Equal("window_deep_freeze", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 60)!.id);
-            Assert.Equal("window_thaw", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 120)!.id);
-            Assert.Equal("window_black_bloom", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 200)!.id);
-            Assert.Equal("window_high_cold", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 240)!.id);
-            Assert.Equal("window_the_turning", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 500)!.id);
+            Assert.Equal("window_spring_storms", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 120 - 1)!.id);
+            Assert.Equal("window_dry_ash", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 120)!.id);
+            Assert.Equal("window_first_fallout", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 150)!.id);
+            Assert.Equal("window_false_spring", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 180)!.id);
+            Assert.Equal("window_deep_ash", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 200)!.id);
+            Assert.Equal("window_long_winter", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 240)!.id);
+            Assert.Equal("window_black_rain_season", WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 500)!.id);
 
             var weather = new WeatherSystem();
             weather.BindProfile(profile, 7);
@@ -128,8 +132,10 @@ namespace Ashfall.Core.Tests
             };
             var windowIds = new[]
             {
-                "window_ashfall", "window_deep_freeze", "window_thaw",
-                "window_black_bloom", "window_high_cold", "window_the_turning"
+                WildlifeSeasonalCalendar.SeasonAshfall, WildlifeSeasonalCalendar.SeasonDeepFreeze,
+                WildlifeSeasonalCalendar.SeasonThaw,
+                WildlifeSeasonalCalendar.SeasonBlackBloom, WildlifeSeasonalCalendar.SeasonHighCold,
+                WildlifeSeasonalCalendar.SeasonTheTurning
             };
 
             var peakWindows = new List<string>();
@@ -153,16 +159,16 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void FishRun_PeaksInThawAndBloom_EmptiesInDeepFreeze()
         {
-            Assert.Equal(0.2f, WildlifeSeasonalCalendar.AbundanceFactor(Window("window_deep_freeze"), MigrationArchetype.CoastalRunner), 3);
-            Assert.Equal(1.5f, WildlifeSeasonalCalendar.AbundanceFactor(Window("window_thaw"), MigrationArchetype.CoastalRunner), 3);
-            Assert.Equal(1.4f, WildlifeSeasonalCalendar.AbundanceFactor(Window("window_black_bloom"), MigrationArchetype.CoastalRunner), 3);
+            Assert.Equal(0.2f, WildlifeSeasonalCalendar.AbundanceFactor(Window(WildlifeSeasonalCalendar.SeasonDeepFreeze), MigrationArchetype.CoastalRunner), 3);
+            Assert.Equal(1.5f, WildlifeSeasonalCalendar.AbundanceFactor(Window(WildlifeSeasonalCalendar.SeasonThaw), MigrationArchetype.CoastalRunner), 3);
+            Assert.Equal(1.4f, WildlifeSeasonalCalendar.AbundanceFactor(Window(WildlifeSeasonalCalendar.SeasonBlackBloom), MigrationArchetype.CoastalRunner), 3);
         }
 
         [Fact]
         public void HungerFactor_WinterStarvesHerds_FasterThanThaw()
         {
-            float freeze = WildlifeSeasonalCalendar.HungerFactor(Window("window_deep_freeze"), MigrationArchetype.HerdGrazer);
-            float thaw = WildlifeSeasonalCalendar.HungerFactor(Window("window_thaw"), MigrationArchetype.HerdGrazer);
+            float freeze = WildlifeSeasonalCalendar.HungerFactor(Window(WildlifeSeasonalCalendar.SeasonDeepFreeze), MigrationArchetype.HerdGrazer);
+            float thaw = WildlifeSeasonalCalendar.HungerFactor(Window(WildlifeSeasonalCalendar.SeasonThaw), MigrationArchetype.HerdGrazer);
             Assert.InRange(freeze, 1.2f, 1.5f);
             Assert.InRange(thaw, 0.6f, 0.9f);
             Assert.True(freeze > thaw);

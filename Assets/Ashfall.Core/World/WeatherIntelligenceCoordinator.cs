@@ -139,7 +139,7 @@ namespace Ashfall.Core.World
             Orbital.TickDay(day);
 
             var season = _weather.GetSeasonForDay(day);
-            Seasonal.TickDay(day, season?.id ?? "window_ashfall", new SeededRng(unchecked(_rng.Seed * 31 + day)));
+            Seasonal.TickDay(day, season?.id ?? "window_first_thaw", new SeededRng(unchecked(_rng.Seed * 31 + day)));
         }
 
         // ── Read model ─────────────────────────────────────────────────────
@@ -152,7 +152,7 @@ namespace Ashfall.Core.World
 
             var rm = new WeatherIntelligenceReadModel
             {
-                seasonId = season?.id ?? "window_ashfall",
+                seasonId = season?.id ?? "window_first_thaw",
                 seasonDisplayName = season?.displayName ?? "Ash Fall",
                 stationInstalled = s.isInstalled,
                 stationCalibrated = s.isCalibrated,

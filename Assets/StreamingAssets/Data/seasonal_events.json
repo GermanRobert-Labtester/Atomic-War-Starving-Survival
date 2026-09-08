@@ -3,7 +3,7 @@
   "events": [
     {
       "id": "event_season_ash_filter_clog",
-      "season_id": "window_ashfall",
+      "season_id": "window_ash_settling",
       "name": "Coarse Ash Intake Clog",
       "description": "Ash descends in slow, grey curtains that look almost gentle — until the intake grilles choke on it and the scrubbers begin to gasp. The air inside thickens with a metallic aftertaste that coats every tongue.",
       "trigger_chance": 0.40,
@@ -16,7 +16,7 @@
     },
     {
       "id": "event_season_ash_roof_load",
-      "season_id": "window_ashfall",
+      "season_id": "window_ash_settling",
       "name": "Volumetric Ash Surcharge",
       "description": "The ceiling groans under wet ash that accumulates like grey snow, each hour adding invisible weight. Somewhere above, a support beam pops — a sound like a rifle shot that freezes the entire shelter mid-conversation.",
       "trigger_chance": 0.30,
@@ -29,7 +29,7 @@
     },
     {
       "id": "event_season_static_radio_blackout",
-      "season_id": "window_ashfall",
+      "season_id": "window_ash_settling",
       "name": "Particulate Ion Blackout",
       "description": "The radio dies mid-sentence. Ionized ash hanging in the stratosphere swallows every frequency — the dial sweeps through nothing but a hollow, electric hiss that sounds almost alive.",
       "trigger_chance": 0.35,
@@ -81,7 +81,7 @@
     },
     {
       "id": "event_season_thaw_sump_flood",
-      "season_id": "window_thaw",
+      "season_id": "window_spring_storms",
       "name": "Permafrost Slush Sump Inundation",
       "description": "The thaw comes fast. Snowmelt cascades down through every crack and drain, pooling ankle-deep around the generator housing. Someone shouts to kill the mains, but the water is already lapping at the terminal box, fizzing where it meets live current.",
       "trigger_chance": 0.40,
@@ -94,7 +94,7 @@
     },
     {
       "id": "event_season_thaw_ice_road_fracture",
-      "season_id": "window_thaw",
+      "season_id": "window_spring_storms",
       "name": "Estuary Slush Crack",
       "description": "A crack echoes across the estuary like a gunshot. The ice road that carried tonnes of freight all winter splits open along Span 4, dark water surging through fissures that widen as you watch.",
       "trigger_chance": 0.50,
@@ -107,7 +107,7 @@
     },
     {
       "id": "event_season_thaw_spoilage_acceleration",
-      "season_id": "window_thaw",
+      "season_id": "window_spring_storms",
       "name": "Thermal Humidity Bloom",
       "description": "The warmth is a betrayal. Rising humidity beads on the cold walls of the food vault, and by morning a creeping grey fur of mold has colonized three crates of rations. The smell is sour-sweet and unmistakable.",
       "trigger_chance": 0.35,
@@ -120,7 +120,7 @@
     },
     {
       "id": "event_season_bloom_greenhouse_spores",
-      "season_id": "window_black_bloom",
+      "season_id": "window_dry_ash",
       "name": "Black-Rust Fungal Infiltration",
       "description": "The first sign is a rust-coloured dusting on the lettuce leaves. By nightfall, entire trays of seedlings are webbed in black-orange filaments that pulse faintly when you breathe on them — the wasteland has found a way inside the seals.",
       "trigger_chance": 0.40,
@@ -133,7 +133,7 @@
     },
     {
       "id": "event_season_bloom_algal_water_taint",
-      "season_id": "window_black_bloom",
+      "season_id": "window_dry_ash",
       "name": "Warm-Water Algal Colony",
       "description": "The cistern water turns the colour of antifreeze overnight. A toxic algal bloom has erupted in the stagnant drainage pans, choking the filter screens with a slime that stinks of low tide and chemical rot.",
       "trigger_chance": 0.35,
@@ -146,7 +146,7 @@
     },
     {
       "id": "event_season_bloom_surface_rad_burst",
-      "season_id": "window_black_bloom",
+      "season_id": "window_dry_ash",
       "name": "Rad-Absorbing Pollen Wave",
       "description": "The mutant weeds bloom in silence — pale flowers that should be beautiful, releasing clouds of luminous yellow pollen that light up a dosimeter from fifty paces. Scouts learn to hold their breath when the wind carries the golden dust.",
       "trigger_chance": 0.30,
@@ -159,7 +159,7 @@
     },
     {
       "id": "event_season_highcold_generator_stall",
-      "season_id": "window_high_cold",
+      "season_id": "window_long_winter",
       "name": "Diesel Fuel Waxing Stall",
       "description": "The generator coughs, stutters, and dies. At minus-thirty, the diesel has turned to cold honey in the fuel lines — too thick to flow, too precious to waste. The silence that follows is absolute and terrifying.",
       "trigger_chance": 0.45,
@@ -172,7 +172,7 @@
     },
     {
       "id": "event_season_highcold_heater_overload",
-      "season_id": "window_high_cold",
+      "season_id": "window_long_winter",
       "name": "Heating Element Coil Burnout",
       "description": "The heating coil glows cherry-red, then white, then snaps with a bright pop and a curl of acrid smoke. The warmth drains from the quarters in minutes, and people pull blankets tighter around children who have already stopped complaining about the cold.",
       "trigger_chance": 0.35,
@@ -185,7 +185,7 @@
     },
     {
       "id": "event_season_highcold_frozen_caravan",
-      "season_id": "window_high_cold",
+      "season_id": "window_long_winter",
       "name": "Wasteland Caravan Sled Jam",
       "description": "A distress flare arcs over the ridge — red against the white. A merchant sledge team is pinned down five clicks out, their pack animals refusing to move and their fuel spent. The blizzard is closing in, and with it, the raiders who follow fresh tracks.",
       "trigger_chance": 0.30,
@@ -198,7 +198,7 @@
     },
     {
       "id": "event_season_turning_clear_sky_window",
-      "season_id": "window_the_turning",
+      "season_id": "window_false_spring",
       "name": "High-Pressure Clear Sky Opening",
       "description": "The sky clears for the first time in weeks — not the pale yellow haze, but actual blue. Sunlight hits the greenhouse glass and people stand in it like they're remembering a language they forgot. Four days, maybe. The wind will bring the ash back. It always does.",
       "trigger_chance": 0.50,
@@ -211,7 +211,7 @@
     },
     {
       "id": "event_season_turning_soil_reclamation",
-      "season_id": "window_the_turning",
+      "season_id": "window_false_spring",
       "name": "Spring Silt Siltation",
       "description": "The spring melt carries silt down from the hills — rich, dark soil that coats the lowland beds like a gift from a world that still remembers how to grow things. Old Suki kneels in it, tasting it off her fingers, and nods. This one might be clean.",
       "trigger_chance": 0.40,
@@ -224,7 +224,7 @@
     },
     {
       "id": "event_season_turning_migratory_surge",
-      "season_id": "window_the_turning",
+      "season_id": "window_false_spring",
       "name": "Wasteland Game Herd Migration",
       "description": "Something moves on the horizon — a dark smudge that resolves through binoculars into a ragged herd of thin-flanked reindeer threading the river valley, trailed by brine fowl picking at their droppings. The wasteland remembers spring before we do.",
       "trigger_chance": 0.45,

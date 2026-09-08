@@ -40,12 +40,26 @@ namespace Ashfall.Core
     public static class WildlifeSeasonalCalendar
     {
         // ── Season window ids (weather_seasons.json is the authority) ───
-        public const string SeasonAshfall = "window_ashfall";
+        // Plan 83 expanded the Plan 19 six-phase model to ten windows.
+        // Old → new migration: window_ashfall→window_ash_settling,
+        // window_thaw→window_spring_storms, window_black_bloom→window_dry_ash,
+        // window_high_cold→window_long_winter, window_the_turning→window_false_spring;
+        // window_deep_freeze kept its id.
+        public const string SeasonFirstThaw = "window_first_thaw";
+        public const string SeasonAshSettling = "window_ash_settling";
+        public const string SeasonAshfall = SeasonAshSettling;          // legacy Plan 19 name
         public const string SeasonDeepFreeze = "window_deep_freeze";
-        public const string SeasonThaw = "window_thaw";
-        public const string SeasonBlackBloom = "window_black_bloom";
-        public const string SeasonHighCold = "window_high_cold";
-        public const string SeasonTheTurning = "window_the_turning";
+        public const string SeasonThaw = "window_spring_storms";        // legacy Plan 19 name (wet interval)
+        public const string SeasonSpringStorms = SeasonThaw;
+        public const string SeasonDryAsh = "window_dry_ash";
+        public const string SeasonFirstFallout = "window_first_fallout";
+        public const string SeasonFalseSpring = "window_false_spring";
+        public const string SeasonDeepAsh = "window_deep_ash";
+        public const string SeasonLongWinter = "window_long_winter";
+        public const string SeasonBlackRainSeason = "window_black_rain_season";
+        public const string SeasonBlackBloom = SeasonDryAsh;            // legacy Plan 19 name
+        public const string SeasonHighCold = SeasonLongWinter;          // legacy Plan 19 name
+        public const string SeasonTheTurning = SeasonFalseSpring;       // legacy Plan 19 name
 
         /// <summary>Hunger factor bounds. 1.0 keeps the authored +0.05/day cadence.</summary>
         public const float HungerFactorMin = 0.6f;

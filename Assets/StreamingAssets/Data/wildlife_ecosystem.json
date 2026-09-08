@@ -23,6 +23,6 @@
   ],
   "seasonal_moves": [
     { "species_id": "species_cotton_hare", "season_window_id": "window_deep_freeze", "move_chance": 0.08 },
-    { "species_id": "species_ash_gull", "season_window_id": "window_thaw", "move_chance": 0.1 }
+    { "species_id": "species_ash_gull", "season_window_id": "window_spring_storms", "move_chance": 0.1 }
   ]
 }

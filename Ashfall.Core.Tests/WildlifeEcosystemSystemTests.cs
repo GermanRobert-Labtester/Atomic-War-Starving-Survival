@@ -88,7 +88,7 @@ namespace Ashfall.Core.Tests
             var m = SeededMigration();
             int preyBefore = eco.SectorSpeciesPopulation(m, "sector_4_hinterlands", "species_cotton_hare");
 
-            eco.TickDay(1, m, outdoorRadModifier: 100f, "window_thaw",
+            eco.TickDay(1, m, outdoorRadModifier: 100f, "window_spring_storms",
                 new SeededRng(1), new SeededRng(2), new SeededRng(3));
 
             int preyAfter = eco.SectorSpeciesPopulation(m, "sector_4_hinterlands", "species_cotton_hare");
@@ -108,7 +108,7 @@ namespace Ashfall.Core.Tests
             // radiological attrition on top of predation; blight rats (0.9) are
             // under their tolerance band, so only rad-dog predation touches them.
             for (int d = 1; d <= 5; d++)
-                eco.TickDay(d, m, outdoorRadModifier: 200f, "window_thaw",
+                eco.TickDay(d, m, outdoorRadModifier: 200f, "window_spring_storms",
                     new SeededRng(100 + d), new SeededRng(200 + d), new SeededRng(300 + d));
 
             int haresAfter = eco.SectorSpeciesPopulation(m, "sector_4_hinterlands", "species_cotton_hare");
@@ -126,7 +126,7 @@ namespace Ashfall.Core.Tests
                 var eco = MakeEcosystem(ShippedCatalog());
                 var m = SeededMigration();
                 for (int d = 1; d <= 10; d++)
-                    eco.TickDay(d, m, 150f, "window_thaw",
+                    eco.TickDay(d, m, 150f, "window_spring_storms",
                         new SeededRng(500 + d), new SeededRng(600 + d), new SeededRng(700 + d));
                 var sb = new System.Text.StringBuilder();
                 foreach (var p in m.State.packs)
@@ -145,14 +145,14 @@ namespace Ashfall.Core.Tests
             // Drive hares in sector 2 down to the floor by hand through the
             // one authority, then tick to evaluate flags.
             m.ThinSpeciesInSector("species_cotton_hare", "sector_2_north_ridge", 4, floor: 2);
-            eco.TickDay(1, m, 100f, "window_thaw", new SeededRng(1), new SeededRng(2), new SeededRng(3));
+            eco.TickDay(1, m, 100f, "window_spring_storms", new SeededRng(1), new SeededRng(2), new SeededRng(3));
             Assert.True(eco.IsLocallyExtinct("sector_2_north_ridge", "species_cotton_hare"),
                 "population at the threshold must flag local extinction");
 
             // Recolonization: migration brings numbers back past the bar.
             var pack = m.TryGetPack("pack_hare_b");
             pack!.population = WildlifeEcosystemSystem.RecolonizationPopulation + 2;
-            eco.TickDay(2, m, 100f, "window_thaw", new SeededRng(4), new SeededRng(5), new SeededRng(6));
+            eco.TickDay(2, m, 100f, "window_spring_storms", new SeededRng(4), new SeededRng(5), new SeededRng(6));
             Assert.False(eco.IsLocallyExtinct("sector_2_north_ridge", "species_cotton_hare"),
                 "recovered population must clear the extinction flag");
         }
@@ -168,7 +168,7 @@ namespace Ashfall.Core.Tests
 
             var a = new SeededRng(7);   // fresh stream each run
             for (int d = 1; d <= 6 && spotted == 0; d++)
-                eco.TickDay(d, m, 100f, "window_thaw", new SeededRng(1), new SeededRng(2), a);
+                eco.TickDay(d, m, 100f, "window_spring_storms", new SeededRng(1), new SeededRng(2), a);
 
             var b = new SeededRng(7);
             var eco2 = MakeEcosystem(ShippedCatalog());
@@ -177,7 +177,7 @@ namespace Ashfall.Core.Tests
             int spotted2 = 0;
             eco2.OnApexPredatorSpotted += (_, _) => spotted2++;
             for (int d = 1; d <= 6 && spotted2 == 0; d++)
-                eco2.TickDay(d, m2, 100f, "window_thaw", new SeededRng(1), new SeededRng(2), b);
+                eco2.TickDay(d, m2, 100f, "window_spring_storms", new SeededRng(1), new SeededRng(2), b);
 
             Assert.Equal(spotted, spotted2);
             Assert.True(spotted == 1 || spotted == 0, "at most one apex report per activation");
@@ -216,10 +216,10 @@ namespace Ashfall.Core.Tests
             var m = SeededMigration();
             eco.RecordHuntingPressure("sector_4_hinterlands", "species_cotton_hare", 3);
             Assert.Equal(3, eco.PressureOn("sector_4_hinterlands", "species_cotton_hare"));
-            eco.TickDay(1, m, 100f, "window_thaw", new SeededRng(1), new SeededRng(2), new SeededRng(3));
+            eco.TickDay(1, m, 100f, "window_spring_storms", new SeededRng(1), new SeededRng(2), new SeededRng(3));
             Assert.Equal(2, eco.PressureOn("sector_4_hinterlands", "species_cotton_hare"));
-            eco.TickDay(2, m, 100f, "window_thaw", new SeededRng(4), new SeededRng(5), new SeededRng(6));
-            eco.TickDay(3, m, 100f, "window_thaw", new SeededRng(7), new SeededRng(8), new SeededRng(9));
+            eco.TickDay(2, m, 100f, "window_spring_storms", new SeededRng(4), new SeededRng(5), new SeededRng(6));
+            eco.TickDay(3, m, 100f, "window_spring_storms", new SeededRng(7), new SeededRng(8), new SeededRng(9));
             Assert.Equal(0, eco.PressureOn("sector_4_hinterlands", "species_cotton_hare"));
         }
 
@@ -246,7 +246,7 @@ namespace Ashfall.Core.Tests
                 var eco = MakeEcosystem(ShippedCatalog());
                 var m = SeededMigration();
                 for (int d = 1; d <= 12; d++)
-                    eco.TickDay(d, m, 180f, "window_thaw",
+                    eco.TickDay(d, m, 180f, "window_spring_storms",
                         new SeededRng(800 + d), new SeededRng(850 + d), new SeededRng(900 + d));
                 var sb = new System.Text.StringBuilder();
                 foreach (var p in m.State.packs)
@@ -259,7 +259,7 @@ namespace Ashfall.Core.Tests
             var ecoB = MakeEcosystem(ShippedCatalog());
             var mB = SeededMigration();
             for (int d = 1; d <= 6; d++)
-                ecoB.TickDay(d, mB, 180f, "window_thaw",
+                ecoB.TickDay(d, mB, 180f, "window_spring_storms",
                     new SeededRng(800 + d), new SeededRng(850 + d), new SeededRng(900 + d));
             var ecoSave = ecoB.CaptureState();
             var packsSave = mB.CaptureState();
@@ -269,7 +269,7 @@ namespace Ashfall.Core.Tests
             var ecoB2 = MakeEcosystem(ShippedCatalog());
             ecoB2.RestoreState(ecoSave);
             for (int d = 7; d <= 12; d++)
-                ecoB2.TickDay(d, mB2, 180f, "window_thaw",
+                ecoB2.TickDay(d, mB2, 180f, "window_spring_storms",
                     new SeededRng(800 + d), new SeededRng(850 + d), new SeededRng(900 + d));
 
             var expected = run();

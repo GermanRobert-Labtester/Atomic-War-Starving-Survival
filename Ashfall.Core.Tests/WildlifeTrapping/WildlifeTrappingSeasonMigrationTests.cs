@@ -17,12 +17,17 @@ namespace Ashfall.Core.Tests
     /// window whose startDay &lt;= day", so each startDay is the FIRST day of
     /// its window and the previous window's last day is startDay - 1):
     ///
-    ///   window_ashfall      days   0..59
-    ///   window_deep_freeze  days  60..119
-    ///   window_thaw         days 120..179
-    ///   window_black_bloom  days 180..239
-    ///   window_high_cold    days 240..299
-    ///   window_the_turning  days 300..∞ (no wrap; last authored window)
+    /// Plan 83 ten-window schedule (weather_seasons.json is the authority):
+    ///   window_first_thaw     days   0..29
+    ///   window_ash_settling   days  30..59
+    ///   window_deep_freeze    days  60..89
+    ///   window_spring_storms  days  90..119
+    ///   window_dry_ash        days 120..149
+    ///   window_first_fallout  days 150..179
+    ///   window_false_spring   days 180..199
+    ///   window_deep_ash       days 200..239
+    ///   window_long_winter    days 240..279
+    ///   window_black_rain_season days 280..∞ (no wrap; last authored window)
     ///
     /// AUTHORED SEASON/PREY MATRIX (wildlife_trapping_catalog.json):
     ///
@@ -98,12 +103,16 @@ namespace Ashfall.Core.Tests
 
         private static readonly string[] AllWindows =
         {
-            WildlifeSeasonalCalendar.SeasonAshfall,
+            WildlifeSeasonalCalendar.SeasonFirstThaw,
+            WildlifeSeasonalCalendar.SeasonAshSettling,
             WildlifeSeasonalCalendar.SeasonDeepFreeze,
-            WildlifeSeasonalCalendar.SeasonThaw,
-            WildlifeSeasonalCalendar.SeasonBlackBloom,
-            WildlifeSeasonalCalendar.SeasonHighCold,
-            WildlifeSeasonalCalendar.SeasonTheTurning
+            WildlifeSeasonalCalendar.SeasonSpringStorms,
+            WildlifeSeasonalCalendar.SeasonDryAsh,
+            WildlifeSeasonalCalendar.SeasonFirstFallout,
+            WildlifeSeasonalCalendar.SeasonFalseSpring,
+            WildlifeSeasonalCalendar.SeasonDeepAsh,
+            WildlifeSeasonalCalendar.SeasonLongWinter,
+            WildlifeSeasonalCalendar.SeasonBlackRainSeason
         };
 
         private static readonly string[] AllMigrationSpecies =
@@ -115,40 +124,57 @@ namespace Ashfall.Core.Tests
         // ── B1/B3: authoritative calendar boundaries ────────────────────────
 
         [Fact]
-        public void Calendar_DeepFreezeToThawBoundary_IsExactlyDay120()
+        public void Calendar_DeepFreezeToSpringStormsBoundary_IsExactlyDay90()
         {
             var profile = SeasonProfile();
             Assert.Equal(WildlifeSeasonalCalendar.SeasonDeepFreeze,
-                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 118).id);
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 88).id);
             Assert.Equal(WildlifeSeasonalCalendar.SeasonDeepFreeze,
-                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 119).id); // last deep-freeze day
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonThaw,
-                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 120).id); // first thaw day
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonThaw,
-                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 121).id);
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 89).id); // last deep-freeze day
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonSpringStorms,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 90).id); // first wet-storm day
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonSpringStorms,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 91).id);
         }
 
         [Fact]
         public void Calendar_AllWindowBoundaries_NoOffByOne()
         {
             var profile = SeasonProfile();
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonAshfall,
+            // Plan 83 boundaries: 30, 60, 90, 120, 150, 180, 200, 240, 280.
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonFirstThaw,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 29).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonAshSettling,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 30).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonAshSettling,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 59).id);
             Assert.Equal(WildlifeSeasonalCalendar.SeasonDeepFreeze,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 60).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonThaw,
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonSpringStorms,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 119).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonDryAsh,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 120).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonDryAsh,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 149).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonFirstFallout,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 150).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonFirstFallout,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 179).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonBlackBloom,
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonFalseSpring,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 180).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonBlackBloom,
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonFalseSpring,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 199).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonDeepAsh,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 200).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonDeepAsh,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 239).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonHighCold,
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonLongWinter,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 240).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonHighCold,
-                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 299).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonTheTurning,
-                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 300).id);
-            Assert.Equal(WildlifeSeasonalCalendar.SeasonTheTurning,
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonLongWinter,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 279).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonBlackRainSeason,
+                WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 280).id);
+            Assert.Equal(WildlifeSeasonalCalendar.SeasonBlackRainSeason,
                 WildlifeSeasonalCalendar.SeasonWindowForDay(profile, 360).id);
         }
 

@@ -155,8 +155,10 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(catalog);
             var knownSeasons = new HashSet<string>
             {
-                "window_ashfall", "window_deep_freeze", "window_thaw",
-                "window_black_bloom", "window_high_cold", "window_the_turning"
+                "window_first_thaw", "window_ash_settling", "window_deep_freeze",
+                "window_spring_storms", "window_dry_ash", "window_first_fallout",
+                "window_false_spring", "window_deep_ash", "window_long_winter",
+                "window_black_rain_season"
             };
 
             foreach (var prey in catalog.Prey.Values)

@@ -38,16 +38,21 @@ namespace AtomicWar.GodotApp
             var json = new SystemTextJsonSerializer();
             var files = new FileSystemIO();
 
-            // 1. Weather Seasons & 6 Phases (weather_seasons.json)
+            // 1. Weather Seasons & 10 Phases (weather_seasons.json, Plan 83)
+            var expectedWindows = new[]
+            {
+                "window_first_thaw", "window_ash_settling", "window_deep_freeze",
+                "window_spring_storms", "window_dry_ash", "window_first_fallout",
+                "window_false_spring", "window_deep_ash", "window_long_winter",
+                "window_black_rain_season"
+            };
             var seasonProfile = WeatherProfileLoader.Load(dataDirectory, files, json);
             Check(seasonProfile != null, "Weather seasons profile loaded");
-            Check(seasonProfile != null && seasonProfile.seasons.Count >= 6, $"Season phase count (expected >= 6, got {seasonProfile?.seasons.Count ?? 0})");
-            Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == "window_ashfall"), "Season phase window_ashfall present");
-            Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == "window_deep_freeze"), "Season phase window_deep_freeze present");
-            Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == "window_thaw"), "Season phase window_thaw present");
-            Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == "window_black_bloom"), "Season phase window_black_bloom present");
-            Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == "window_high_cold"), "Season phase window_high_cold present");
-            Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == "window_the_turning"), "Season phase window_the_turning present");
+            Check(seasonProfile != null && seasonProfile.seasons.Count >= 10, $"Season phase count (expected >= 10, got {seasonProfile?.seasons.Count ?? 0})");
+            foreach (var windowId in expectedWindows)
+            {
+                Check(seasonProfile != null && seasonProfile.seasons.Any(s => s.id == windowId), $"Season phase {windowId} present");
+            }
 
             // 2. Weather System & Non-mutating Lookahead
             var weather = new WeatherSystem();
@@ -140,7 +145,7 @@ namespace AtomicWar.GodotApp
 
             var seasonalSys = new SeasonalEventSystem();
             seasonalSys.BindDefinitions(seasonalEvents);
-            seasonalSys.TickDay(1, "window_ashfall", new SeededRng(1111));
+            seasonalSys.TickDay(1, "window_first_thaw", new SeededRng(1111));
 
             // 7. Weather Intelligence Coordinator & Save Round-Trip
             var coord = new WeatherIntelligenceCoordinator(weather, armor, new SeededRng(777));

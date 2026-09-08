@@ -198,7 +198,7 @@
       "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
       "minSkillLevel": 5,
       "migrationSpeciesId": "species_cotton_hare",
-      "activeSeasons": ["window_thaw", "window_black_bloom", "window_the_turning"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
       "diseaseRisk": 0.1,
       "contaminationRisk": 0.05
     },
@@ -214,7 +214,7 @@
       "attractedByBaitIds": ["bait_berry_mash", "bait_salt_lick"],
       "minSkillLevel": 40,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_thaw", "window_black_bloom", "window_the_turning"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
       "diseaseRisk": 0.15,
       "contaminationRisk": 0.05
     },
@@ -230,7 +230,7 @@
       "attractedByBaitIds": ["bait_salt_lick", "bait_fat_cake"],
       "minSkillLevel": 60,
       "migrationSpeciesId": "species_ash_boar",
-      "activeSeasons": ["window_black_bloom", "window_the_turning"],
+      "activeSeasons": ["window_dry_ash", "window_false_spring"],
       "diseaseRisk": 0.2,
       "contaminationRisk": 0.1
     },
@@ -280,7 +280,7 @@
       "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
       "minSkillLevel": 5,
       "migrationSpeciesId": "species_ash_gull",
-      "activeSeasons": ["window_thaw", "window_black_bloom", "window_the_turning"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
       "diseaseRisk": 0.15,
       "contaminationRisk": 0.1
     },
@@ -296,7 +296,7 @@
       "attractedByBaitIds": ["bait_pheromone", "bait_grain_lure"],
       "minSkillLevel": 10,
       "migrationSpeciesId": "species_iron_crow",
-      "activeSeasons": ["window_thaw", "window_black_bloom", "window_the_turning"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
       "diseaseRisk": 0.25,
       "contaminationRisk": 0.15,
       "diseaseId": "disease_blood_fever",
@@ -314,7 +314,7 @@
       "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
       "minSkillLevel": 0,
       "migrationSpeciesId": "species_mirror_carp",
-      "activeSeasons": ["window_thaw", "window_black_bloom"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
       "diseaseRisk": 0.1,
       "contaminationRisk": 0.08
     },
@@ -330,7 +330,7 @@
       "attractedByBaitIds": ["bait_scrap_meat", "bait_fat_cake"],
       "minSkillLevel": 10,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_thaw", "window_black_bloom"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
       "diseaseRisk": 0.12,
       "contaminationRisk": 0.1
     },
@@ -364,7 +364,7 @@
       "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
       "minSkillLevel": 5,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_thaw", "window_black_bloom"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
       "diseaseRisk": 0.4,
       "contaminationRisk": 0.4,
       "diseaseId": "disease_zoonotic_flu",
@@ -400,7 +400,7 @@
       "attractedByBaitIds": ["bait_berry_mash", "bait_grain_lure"],
       "minSkillLevel": 10,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_thaw", "window_black_bloom", "window_the_turning"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
       "diseaseRisk": 0.2,
       "contaminationRisk": 0.15
     },
@@ -416,7 +416,7 @@
       "attractedByBaitIds": ["bait_berry_mash", "bait_grain_lure"],
       "minSkillLevel": 0,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_thaw", "window_black_bloom"],
+      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
       "diseaseRisk": 0.15,
       "contaminationRisk": 0.05
     }
