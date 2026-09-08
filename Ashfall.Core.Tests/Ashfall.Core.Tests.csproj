@@ -73,8 +73,11 @@
     <Compile Remove="NarrativeQuestlineCatalogTests.cs" />
     <Compile Remove="Plan55CraftingCatalogTests.cs" />
     <Compile Remove="Plan84WitnessExpansionTests.cs" />
-    <Compile Remove="Progression/Plan80LibraryManualsExpansionTests.cs" />
-    <Compile Remove="Radiation/Plan81DoseLocationsExpansionTests.cs" />
+    <!-- Plan 80 reinstated 2026-09-06: rewritten against the live 24-manual
+         library_manuals.json catalog (count, anchor parity, ref resolution,
+         DAG/reachability/depth, runtime enforcement, reward atomicity, save
+         round-trips). The prior draft expected a never-landed 15-manual
+         variant with stale facts and was quarantined for that reason. -->
     <Compile Remove="Shelter/NuclearCoreLifecycleTests.cs" />
     <Compile Remove="StandingRecordFactionExpansionTests.cs" />
     <Compile Remove="Survivors/DeathMemoryPipelineTests.cs" />

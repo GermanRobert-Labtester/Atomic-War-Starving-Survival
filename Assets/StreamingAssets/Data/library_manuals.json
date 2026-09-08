@@ -451,7 +451,7 @@
       "knowledge_unlocks": ["knowledge_defensive_tripwire_arrays"],
       "prerequisites": ["manual_improvised_weapons"],
       "requires_power": false,
-      "loot_table_ids": ["table_loot_military_depot", "table_loot_military_depot"],
+      "loot_table_ids": ["table_loot_military_depot"],
       "expedition_reward_ids": ["loc_denial_cut_substation"],
       "trader_pool_ids": ["caravan_flotilla_salt_run"],
       "origin_facility": "Combat Pioneer Manual #88",
