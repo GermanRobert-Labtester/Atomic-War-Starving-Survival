@@ -2,6 +2,13 @@
 
 **Status: COMPLETE — data expansion with placement deferred**
 
+> **QA review addendum:** `PLAN_87_QA_REVIEW.md` (QA PASS with findings).
+> Data tier verified defect-free. One pre-existing medium finding (R1):
+> relic repair has no player-facing UI route — `WorkshopPanel.RenderLegacy()`
+> is empty and nothing in production calls `StartRepair`. This applies
+> equally to the original six relics and matches AGENTS.md UI-13/UI-21.
+> Player-facing restoration loop is a follow-up UI wiring task.
+
 > Relic catalog expansion complete.
 > Collectible/expedition placement deferred until Plan 47/76 IDs are committed.
 
