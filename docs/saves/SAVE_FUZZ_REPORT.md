@@ -1,59 +1,88 @@
-# Save Fuzz Report — `wasteland_map` / `RegisteredMapFragments` (Plan 85 follow-up)
+# Save Fuzz Report — Dose & Collectible State Chains (Plans 81/86)
 
-Scope: the ashfall-save-fuzz battery applied to the wasteland-map save section —
-the persisted home of `RegisteredMapFragments`, the single fragment-progress
-authority for the Plan 85 damaged-map layer. Other stores/codecs are covered by
-their existing suites (`SaveStoreChecksumSweepTests`, `SaveWireContractTests`,
-`BareSaveStoreSealTests`) and were not re-fuzzed here.
+> **Scope:** persistence side of the dose registers and the collectible
+> flagship — `DoseLedgerSaveCodec`/`DoseLedgerSaveStore`, `DoseLedgerSystem`,
+> `SickListSystem`, `CohortSystem`, `VoluntaryRegisterSystem`, `QuestlineSystem`,
+> `CollectibleDiscoveryState`, `UniqueItemClaimRegistry`,
+> `CollectibleTutorialTracker`, `ScavengingTableCatalog`.
+> **Skill:** `ashfall-save-fuzz`. **Harness:** `Ashfall.Core.Tests/DoseCollectibleSaveFuzzTests.cs`
+> (16 cases, all deterministic, `ISeededRng` only).
+> **Result: 16/16 battery cases PASS. Full suite 9,739/9,739 PASS. No defects
+> found in production save code — all fuzz failures were test-authoring errors,
+> fixed in the test file.**
 
-## Persistence surface (Phase 1)
+---
 
-| Concern | Owner | Notes |
-|---|---|---|
-| State DTO | `Ashfall.Core.World.WastelandMapState` | `Discovered`, `Completed`, `Locked`, `Unlocked`, `RegisteredMapFragments`, `Knowledge` |
-| Capture/restore | `WastelandMapSystem.CaptureState` / `RestoreState` | Snapshot-isolated; `RegisteredMapFragments` copied verbatim (never sanitized — unknown ids persist and are inert) |
-| Store | `src/Host/WastelandMapSaveStore.cs` | Thin façade over Core `SaveStore<T>` via `SaveStoreHub.Checksummed` — checksummed envelope, atomic write, **`allowLegacyBareState: false`** |
-| Envelope contract | `Ashfall.Core.Save.SaveEnvelopeHelper` | Core-side; testable from the net9.0 test project |
-| Migration | n/a | `WastelandMapState` has no codec versions; envelope is the only on-disk format (bare-state pre-envelope files deliberately rejected) |
-| Known silent-loss types | n/a | `LocationEvolutionSaveable`/`WildlifeSaveable`/`LandmarkSaveable` are not part of this section (resolved per AGENTS audit note) |
+## 1. Persistence surface map (Phase 1)
 
-## Battery results (Phase 2–3)
+| Chain | Component | Save surface | Envelope |
+|---|---|---|---|
+| Dose | `DoseLedgerSystem` | `CaptureState/RestoreState` inside `DoseLedgerSave` v2 envelope | checksummed (`SaveChecksum`), versioned |
+| Dose | `SickListSystem` | section of the same v2 envelope | checksummed |
+| Dose | `CohortSystem` | section of the same v2 envelope | checksummed |
+| Dose | `VoluntaryRegisterSystem` | section of the same v2 envelope | checksummed |
+| Dose | `QuestlineSystem` | section of the same v2 envelope (v2 addition) | checksummed |
+| Dose (host) | `DoseLedgerSaveStore` | thin facade → `DoseLedgerSaveCodec.Decode` (reject path shared) | — |
+| Collectible | `CollectibleDiscoveryState` | `CollectibleDiscoverySave` (schema v2; v1 legacy restore) | bare-state DTO |
+| Collectible | `UniqueItemClaimRegistry` | `UniqueClaimSave` (schema v1, ordinal-sorted) | bare-state DTO |
+| Collectible | `CollectibleTutorialTracker` | `CollectibleTutorialSave` (schema v1) | bare-state DTO |
+| Collectible | `ScavengingTableCatalog` | **none — pinned data-only** (see §5) | — |
 
-New suite: `Ashfall.Core.Tests/World/WastelandMapFragmentPersistenceFuzzTests.cs` — 9 tests.
+Pre-existing coverage (not duplicated): `DoseLedgerSystemTests` (tamper-reject,
+checksumless-reject, capture/restore), `CollectibleDiscoveryPersistenceTests`
+(ordinal serialization, round-trip, pre-Plan-47 behavior), host verb
+`--dose-ledger-selftest`.
 
-| # | Case | Result |
-|---|---|---|
-| 1 | Clean round-trip through the live `DamagedMapSystem` (partial + completed/revealed zone): registration counts, completion, and reveal state preserved; replaying registrations after restore fires **zero** completions | PASS |
-| 2 | Checksummed-envelope round-trip via `SaveEnvelopeHelper.CaptureEnvelope`/`RestoreEnvelope` (exact host-store contract) | PASS |
-| 3 | Checksum mutation (one fragment id tampered in the persisted JSON) → rejected, error contains `Checksum mismatch` | PASS |
-| 4 | Null / empty checksum on the new-format envelope → rejected with `Checksum field missing` (no silent legacy fallback) | PASS |
-| 5 | Bare-state (pre-envelope) payload → rejected when `allowBareFallback: false` (the section's documented strictness) | PASS |
-| 6 | Byte-for-byte serialization determinism across two captures **and** across a restore generation (capture → restore → capture is identical) | PASS |
-| 7 | Seeded fuzz sweep — 25 iterations of random fragment subsets (with deliberate duplicate registrations) through the checksummed envelope; registration set stable, subset-of-catalog invariant holds, duplicates never double-count | PASS |
-| 8 | Unknown/rolled-back fragment id in an old save: loads without failure, does not corrupt zone progress, completion of the touched zone still works, and the unknown id round-trips untouched | PASS |
+## 2. Battery matrix (Phase 2) — `DoseCollectibleSaveFuzzTests`
 
-## Findings
+| Case | Dose codec | Discovery | Claims | Tutorial |
+|---|---|---|---|---|
+| Clean round-trip (all sections/state) | ✅ full 5-register + quest start | ✅ partitions + locations | ✅ claims + availability gate | ✅ seen + queue |
+| Checksum mutation reject | ✅ `checksum mismatch` | n/a (bare-state) | n/a | n/a |
+| Null-checksum reject | ✅ `no checksum` | n/a | n/a | n/a |
+| Legacy fallback | ✅ v1→v2 migration, empty quest section, re-stamped checksum | ✅ schema v1 restore marks all acknowledged | ✅ stale-id drop | ✅ null restore |
+| Version guard | ✅ future version rejected (`newer than supported`) | n/a | n/a | n/a |
+| Serialize-twice byte-identical | ✅ | ✅ (out-of-order insertion normalized) | ✅ (ordinal-sorted) | — |
+| Null restore honest-empty | — | ✅ | — | ✅ |
 
-1. **No defects in the section.** The envelope contract, checksum rejection,
-   bare-state strictness, and snapshot isolation all behaved exactly as
-   documented. `RegisteredMapFragments` is copied verbatim on capture/restore —
-   unknown ids are preserved faithfully, never rewritten (save bytes remain a
-   truthful record; plan §7.5 policy respected).
-2. **Gap closed:** the existing `WastelandMapPersistenceTests` covered every
-   state list *except* `RegisteredMapFragments` — the Plan 85 field had zero
-   persistence coverage. This battery closes that gap.
-3. **No guard was weakened.** The battery only asserts rejection behavior the
-   store already documents.
+## 3. Findings
 
-## Phase 4 — host-level smoke
+1. **No production defects.** The dose codec's reject paths fire with the exact
+   documented errors; the v1→v2 migration validates the checksum over the FROZEN
+   v1 shape and re-stamps the migrated payload; the collectible chain's
+   bare-state captures are ordinal-sorted and byte-stable across serializations.
+2. **`TryClaim` semantics documented by test:** claim-or-confirm — returns true
+   when the id was already claimed; the claim set stays idempotent. The initial
+   battery draft assumed a false-return no-op; the implementation is correct and
+   the contract is now pinned.
+3. **`UniqueClaimSave` stale-id drop verified:** ids no longer unique under the
+   current catalog are dropped on restore so a stale save cannot suppress an
+   ordinary item forever; currently-unique ids survive.
+4. **`ScavengingTableCatalog` pinned data-only** via reflection guard — a future
+   `CaptureState` on it forces a persistence-ownership review.
 
-- `godot --headless --path . -- --data-integrity-selftest` — PASS (298 catalogs, 0 findings).
-- Full `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` — all green
-  (see final counts in the run record; includes this battery).
+## 4. Determinism & wire parity (Phase 3)
 
-## Quality gate
+- `DoseLedgerSave`: two `Encode` calls on the same capture are byte-identical
+  (checksum recomputed deterministically over a stable field walk).
+- `CollectibleDiscoverySave`: two captures byte-identical even with
+  out-of-ordinal insertion (capture sorts every partition + location entries).
+- `UniqueClaimSave`: byte-identical with out-of-order claims (ordinal sort).
 
-- [x] `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` all green
-- [x] Section in scope has the five battery cases (clean round-trip, checksum
-      mutation reject, null/empty checksum reject, legacy bare-state behavior,
-      determinism) plus a fuzz sweep and an old-save unknown-id fixture
+## 5. Host-level smoke (Phase 4)
+
+```text
+godot --headless --path . -- --dose-ledger-selftest   → PASS
+godot --headless --path . -- --data-integrity-selftest → PASS (0 findings, 298 catalogs)
+dotnet test (full suite)                               → PASS 9,739/9,739
+```
+
+## 6. Residual risks (out of scope, noted)
+
+- `CollectibleDiscoverySave`/`UniqueClaimSave`/`CollectibleTutorialSave` are
+  bare-state DTOs without checksum envelopes. They ride inside host envelopes
+  (or are tamper-relevant only via the host's own integrity); if they ever ship
+  as standalone files, wrap them in the `SaveEnvelopeHelper` pattern per the
+  Initiative #41 convention.
+- `DoseLedgerSaveCodec` v1→v2 adoption of Year-of-Ash-carried quest progress
+  (`DoseQuestMigration`) is covered by `DoseQuestOwnershipTests`, not re-fuzzed here.
