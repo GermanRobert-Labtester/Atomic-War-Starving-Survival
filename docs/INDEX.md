@@ -1,12 +1,12 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 1839 | **Last Verified:** 2026-09-08
+**Total Indexed Documents:** 1840 | **Last Verified:** 2026-09-08
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
 | 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 1816 |
-| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 21 |
+| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 22 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
@@ -496,7 +496,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (1543 documents)
+## 9. General Project Guides & Archive Reference (1544 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2040,6 +2040,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_CLOSEOUT.md`](archive/PLAN78_CLOSEOUT.md) | **Plan 78 — Archive Inks Expansion — Closeout** — **Status: COMPLETE (verification + one-entry balance repair).** The 12-ink catalog was already |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_REGRESSION_MATRIX.md`](archive/PLAN78_REGRESSION_MATRIX.md) | **Archive Inks Regression Matrix** |
 | 🟡 `HISTORICAL` | [`docs/bodymind/FORENSIC_EVIDENCE_CHAIN.md`](bodymind/FORENSIC_EVIDENCE_CHAIN.md) | **Forensic Evidence Chain & Non-Natural Death Cases** — This document details the three authored forensic autopsy cases where dissection produces evidence records for the Ve... |
+| 🟡 `HISTORICAL` | [`docs/forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md`](forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md) | **Faction War Communiqué Player-Facing Surface — Forensic Report** — Target of analysis: the missing player-facing renderer for |
 | 🟡 `HISTORICAL` | [`docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md`](forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md) | **SHELTER CASCADE SEAMS — FORENSIC REPORT** — **Scope:** Three residual seams from the B42–B45 reconnaissance: |
 | 🟡 `HISTORICAL` | [`docs/forensics/plan09_medical_FORENSIC_REPORT.md`](forensics/plan09_medical_FORENSIC_REPORT.md) | **Plan 09 — Medical & Disease Depth — Forensic Report** — Three subsystems, one document: |
 | 🟡 `HISTORICAL` | [`docs/forensics/survivor_aggregate_FORENSIC_REPORT.md`](forensics/survivor_aggregate_FORENSIC_REPORT.md) | **1. Target** — Establish one canonical survivor identity and lifecycle model for the entire ASHFALL campaign, with domain-owned muta... |
