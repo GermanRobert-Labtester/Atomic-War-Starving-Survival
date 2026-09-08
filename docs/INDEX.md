@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 1840 | **Last Verified:** 2026-09-08
+**Total Indexed Documents:** 1841 | **Last Verified:** 2026-09-09
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 1816 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 1817 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 22 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -496,7 +496,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (1544 documents)
+## 9. General Project Guides & Archive Reference (1545 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1436,6 +1436,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/phantoms/PLAN_111_PHANTOM_BASELINE_MATRIX.md`](phantoms/PLAN_111_PHANTOM_BASELINE_MATRIX.md) | **Plan 111 Phantom Baseline Matrix** — The repository already contained 11 entries when Plan 111 was reconciled. |
 | 🟢 `CURRENT` | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) | **Crossing Hardening Implementation Log** — - Added an optional projection from Crossing choices to the existing campaign |
 | 🟢 `CURRENT` | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) | **F9–F12 Micro-Location Verification Wave — Implementation Log** — Plan: Flagship Micro-Location Persistence, Determinism, Utilization & Reward-Economy Verification (Tasks F9–F12). |
+| 🟢 `CURRENT` | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) | **Faction War Communiqué Player-Facing Surface — Integration Plan** — Built from `docs/forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md` (read-only |
 | 🟢 `CURRENT` | [`docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`](plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md) | **1. Objective** — Deliver a release-grade ASHFALL asset library through one flagship, dependency-ordered production program, with audio... |
 | 🟢 `CURRENT` | [`docs/plans/FLAGSHIP_XI_IMPLEMENTATION_LOG.md`](plans/FLAGSHIP_XI_IMPLEMENTATION_LOG.md) | **Flagship Integration Plan XI — Implementation Log** — Plans 154–157: Morale Contagion · Pathogen Outbreak · Subterranean Networks · PsyOps. |
 | 🟢 `CURRENT` | [`docs/plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md`](plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md) | **Holdfast Hardening Implementation Log** — - Rejected unknown non-built-in quest IDs when a catalog is bound. |
