@@ -1455,7 +1455,7 @@ namespace AtomicWar.GodotApp
             var catalog = EnsureStartingCohortCatalog();
             _startingCohortSetupPanel.Bind(catalog, EnsureStartingSuppliesCatalog());
             _mainMenu.Visible = false;
-            _startingCohortSetupPanel.Open();
+            _startingCohortSetupPanel.Open(_startingSuppliesProfileId);
         }
 
         private void CloseStartingCohortSetup()

@@ -43,10 +43,12 @@ namespace AtomicWar.GodotApp
             var cliAction = HostCli.Parse(OS.GetCmdlineUserArgs());
 
             ResolveDataDir();
-            _startingSuppliesProfileId =
+            _cliStartingSuppliesProfileId =
                 HostCli.ExtractArgValue(
                     OS.GetCmdlineUserArgs(),
-                    "--starting-supplies-profile") ??
+                    "--starting-supplies-profile");
+            _startingSuppliesProfileId =
+                _cliStartingSuppliesProfileId ??
                 StartingSuppliesCatalog.StandardProfileId;
 
             // Validate required catalogs before any systems are initialized.

@@ -32,6 +32,7 @@ namespace AtomicWar.GodotApp
         // ── Inventory fields (GAP-ARCH-01 Phase 1) ──
         private InventoryHostSession _inventory = null!;
         private string _startingSuppliesProfileId = StartingSuppliesCatalog.StandardProfileId;
+        private string? _cliStartingSuppliesProfileId;
         private StartingSuppliesCatalog _startingSuppliesCatalog = null!;
 
         private StartingSuppliesCatalog EnsureStartingSuppliesCatalog()

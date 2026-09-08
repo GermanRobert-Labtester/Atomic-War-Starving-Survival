@@ -517,6 +517,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --asset-coverage-report  Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
             GD.Print("  --asset-registry-selftest Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
             GD.Print("  --starting-cohort-lifecycle-selftest / --cohort-lifecycle-selftest  Plan 138 fresh-vs-restore lifecycle: preserve old slots, apply an alternate cohort, honor an empty saved roster, and reject failed restores without reseeding");
+            GD.Print("  --starting-supplies-profile <id>  Preselect an authored starting-store profile in the New Game selector; invalid IDs fall back to Standard Holdfast");
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --power-grid-catalog-selftest  Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal");
             GD.Print("  --core-selftest          Ice road + census headless demos");

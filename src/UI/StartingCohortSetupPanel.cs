@@ -90,14 +90,20 @@ namespace AtomicWar.GodotApp.UI
             RefreshPreview();
         }
 
-        public void Open()
+        public void Open(string? startingSuppliesProfileId = null)
         {
             if (_catalog != null)
             {
                 _selectedProfileId = _catalog.DefaultProfileId;
             }
             if (_suppliesCatalog != null)
-                _selectedOriginId = _suppliesCatalog.DefaultProfileId;
+            {
+                _selectedOriginId =
+                    !string.IsNullOrWhiteSpace(startingSuppliesProfileId) &&
+                    _suppliesCatalog.TryGet(startingSuppliesProfileId, out _)
+                        ? startingSuppliesProfileId
+                        : _suppliesCatalog.DefaultProfileId;
+            }
             RefreshPreview();
             Visible = true;
             GrabFirstProfileFocus();

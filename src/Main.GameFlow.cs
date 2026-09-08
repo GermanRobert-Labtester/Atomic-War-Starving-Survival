@@ -88,6 +88,7 @@ namespace AtomicWar.GodotApp
         {
             StartNewGame(
                 Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId,
+                _cliStartingSuppliesProfileId ??
                 StartingSuppliesCatalog.StandardProfileId);
         }
 

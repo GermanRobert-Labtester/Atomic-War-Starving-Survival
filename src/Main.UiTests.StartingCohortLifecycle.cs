@@ -81,7 +81,7 @@ namespace AtomicWar.GodotApp
 
                 // Campaign B: this must create a new root, reset only memory,
                 // and apply the selected alternate once.
-                StartNewGame("cohort_repair_crew");
+                StartNewGame("cohort_repair_crew", "origin_machine_room");
                 var campaignB = _saveLoadHost.ActiveSlotId!.Value;
                 Check(campaignB.Value == "slot_2", "second fresh campaign allocates slot_2");
                 Check(_saveLoadHost.GetSlots().Count >= 2,
@@ -98,6 +98,10 @@ namespace AtomicWar.GodotApp
                     _survivors.Find("survivor_dr_sarah_chen") == null &&
                     _inventory.Inventory.CountById(campaignMarker) == campaignBBaselineMarker,
                     "fresh campaign does not inherit the old roster or inventory marker");
+                Check(
+                    _inventory.Inventory.CountById("battery") == 14 &&
+                    _inventory.Inventory.CountById("scrap_mechanical") == 24,
+                    "selected Machine-Room Holdout supplies are applied to the fresh campaign");
                 Check(SaveAll(playCue: false), "campaign B saves its alternate cohort");
 
                 // Continue campaign A and prove its state is still present.
@@ -166,6 +170,10 @@ namespace AtomicWar.GodotApp
                             "elena_vasquez"
                         }),
                     "direct New Game still defaults to Standard Holdfast");
+                Check(
+                    _inventory.Inventory.CountById("battery") == 4 &&
+                    _inventory.Inventory.CountById("scrap_mechanical") == 6,
+                    "direct New Game still defaults to Standard Holdfast supplies");
 
                 HostCli.EmitSummary(
                     "starting_cohort_lifecycle_selftest",
