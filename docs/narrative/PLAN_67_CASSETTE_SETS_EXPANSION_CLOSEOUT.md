@@ -1,94 +1,68 @@
-# Plan 67 — Cassette Sets Expansion (4 → 12 Multi-Part Audio Narratives) Closeout Report
+# Plan 67 — Cassette Sets Expansion — Closeout
 
-## 1. Executive Summary
+**Status: COMPLETE**
 
-Plan 67 expands ASHFALL's multi-part audio narrative catalog from 4 baseline sets to **12 complete, authored cassette sets**, adding 34 new sequential parts (48 parts total across the catalog).
+Date: 2026-09-06. Mode: pure DATA + narrative-authoring pass. Zero Core/host code changes.
 
-Each set functions as a recovery loop:
-```text
-find part → recognize set → play fragment → search for missing parts → complete story → discover hidden cache
-```
+## Runtime schema (see `CASSETTE_SET_RUNTIME_CONTRACT.md`)
 
-Every recording adheres strictly to the non-negotiable narrative standards of ASHFALL:
-- Functional, professional, or personal recording motives (shift debriefs, dispatch logs, transmitter maintenance, botanical research, domestic contingency, hydroelectric control, classroom roll calls, clinical quarantine protocols).
-- Grounded, restrained prose with zero lore lectures or fourth-wall breaks.
-- Full integration with physical item definitions in `items.json` (`Media` type, stackMax 1, 0.1 kg).
-- Thematic scavenging placement across 8 active loot tables in `scavenging_tables.json`.
-- Complete completion narrative events registered in `events.json`.
+`cassette_sets.json` — sets of `{set_id, set_title, total_parts, parts[{part, item_id, title, description}], hidden_cache_location, hidden_cache_items, completion_narrative?}`. Part `item_id` is a definition position; `hidden_cache_*` and `completion_narrative` are integrity-validated references. No `location_hint` / `journal_unlock` fields exist; none were added.
 
----
+## Existing set audit
 
-## 2. Complete 12-Set Catalog Manifest
+4 existing sets audited and preserved untouched: `checkpoint_kilo` (military, 4 parts), `hospital_saint_maren` (hospital triage, 3), `family_bunker` (family bunker, 3), `resistance_broadcasts` (pirate radio, 4). Plan 06B's 23 echoes are single-object vignettes — no set-level overlap. Full matrix: `PLAN_67_CASSETTE_COVERAGE_MATRIX.md`.
 
-| # | Set ID | Title | Parts | Speaker & Role | Cache Location | Hidden Cache Contents |
-|---|---|---|---|---|---|---|
-| 1 | `checkpoint_kilo` | The Last Days of Checkpoint Kilo | 4 | Corporal Maren, Guard | `checkpoint_kilo_armory` | `military_mre`, `ammo_556`, `field_surgical_kit` |
-| 2 | `hospital_saint_maren` | The Saint Maren Tapes | 3 | Dr. Alistair, Surgeon | `hospital_pharmacy` | `antibiotics`, `morphine`, `surgical_suture`, `iodine_tablets` |
-| 3 | `family_bunker` | The Martinez Family Recordings | 3 | Mateo & Ana Martinez | `family_bunker_backyard_shed` | `clean_water_jug`, `canned_food`, `childrens_books` |
-| 4 | `resistance_broadcasts` | The Free Radio Tapes | 4 | Elena, Broadcaster | `old_library_cache` | `antibiotics`, `aa_batteries`, `seed_packets`, `water_filter` |
-| 5 | `field_hospital_7` | Field Hospital 7 | 5 | Sister Judith, Military Nurse | `prewar_medical_cache` | `surgical_suture`, `field_surgical_kit`, `antibiotics`, `bandage` |
-| 6 | `evacuation_train` | The Evacuation Train | 4 | Janos, Line Dispatcher | `loc_cut_abandoned_depot` | `canned_food`, `clean_water_jug`, `aa_batteries`, `scrap_metal` |
-| 7 | `station_14` | Station 14 | 6 | Pavel, Broadcast Engineer | `loc_radio_relay_mast` | `item_radio_vacuum_tube`, `radio_headset`, `battery_pack`, `electronic_scrap` |
-| 8 | `greenhouse_tapes` | The Greenhouse Tapes | 3 | Dr. Vane, Crop Botanist | `loc_seed_library_annex` | `seed_packets`, `water_filter`, `clean_water`, `scrap_metal` |
-| 9 | `fathers_tapes` | Father's Tapes | 4 | Thomas, Municipal Clerk | `loc_municipal_archive` | `childrens_books`, `canned_food`, `clean_water_jug`, `bandage` |
-| 10 | `dam_keeper_log` | The Dam Keeper's Log | 5 | Chief Operator Ericson | `loc_pump_station_nine` | `military_mre`, `battery`, `scrap_metal`, `aa_batteries` |
-| 11 | `teachers_recordings` | The Teacher's Recordings | 3 | Clara, Primary Teacher | `loc_school_gymnasium` | `childrens_books`, `bandage`, `canned_food` |
-| 12 | `quarantine_tapes` | The Quarantine Tapes | 4 | Dr. Corvo, Epidemiologist | `location_hospital_psych_wing` | `iodine_tablets`, `antibiotics`, `surgical_mask`, `gas_mask` |
+## Final catalog — 12 sets / 48 parts
 
----
+| # | set_id | Title | Parts | Speaker | Ending mode |
+|---|---|---|---:|---|---|
+| 1 | checkpoint_kilo | The Last Days of Checkpoint Kilo | 4 | corporal | final warning |
+| 2 | hospital_saint_maren | The Saint Maren Tapes | 3 | doctor | transfer of responsibility |
+| 3 | family_bunker | The Martinez Family Recordings | 3 | father | implied death |
+| 4 | resistance_broadcasts | The Free Radio Tapes | 4 | pirate broadcaster | sign-off under threat |
+| 5 | field_hospital_7 | Field Hospital 7 | 5 | nurse/orderly | departure; tags left behind |
+| 6 | evacuation_train | The Evacuation Train | 4 | conductor | dispersal at end of line |
+| 7 | station_14 | Station 14 | 6 | radio operator | operational continuity |
+| 8 | greenhouse_tapes | The Greenhouse Tapes | 3 | agri-technician | seed stock transferred |
+| 9 | fathers_tapes | Father's Tapes | 4 | father | unresolved apology |
+| 10 | dam_keeper_log | The Dam Keeper's Log | 5 | dam operator | deliberate manual shutdown |
+| 11 | teachers_recordings | The Teacher's Recordings | 3 | teacher | routine maintained |
+| 12 | quarantine_tapes | The Quarantine Tapes | 4 | public-health doctor | criteria without means |
 
-## 3. Data Integration & Cross-Catalog Wiring
+New parts: 5+4+6+3+4+5+3+4 = **34**. Every `total_parts` matches actual count; part numbers are ordered 1..N with no duplicates; new `item_id`s are unique.
 
-1. **`cassette_sets.json`:**
-   - 12 sets (4 baseline + 8 new).
-   - 48 total parts (14 baseline + 34 new).
-   - All `total_parts` match array lengths.
-   - Part numbers strictly sequential (1..N).
+## Items — 34 part records
 
-2. **`items.json`:**
-   - Added 48 discrete `Media` item records (`cassette_<set_id>_<part>`), each unique, non-stacking (`stackMax: 1`), weighing 0.1 kg, with distinct descriptive blurbs.
+34 `Media` items added to `items.json` (`cassette_<set>_<n>`, ids matching the part `item_id` definitions), `stackMax: 1`, `weight: 0.1`, `tradeValue` 8–9, `moraleEffect` 2–3 — consistent with the existing `item_cassette_tape` and the collectible-item pattern.
 
-3. **`events.json`:**
-   - Added 8 completion narrative events (`narrative_cassette_<set_id>_complete`), completing the narrative feedback loop for all sets.
+## Scavenging placement — all 8 new sets (target was 6)
 
-4. **`scavenging_tables.json`:**
-   - Added 61 rare drop entries distributed thematically across:
-     - `table_loot_hospital` & `table_loot_clinic` (Field Hospital 7 & Quarantine Tapes)
-     - `table_loot_rail_yard` & `table_loot_metro_station` (The Evacuation Train)
-     - `table_loot_observatory` & `table_loot_power_substation` (Station 14)
-     - `table_loot_greenhouse` & `table_loot_farm` (The Greenhouse Tapes)
-     - `table_loot_apartment_block` (Father's Tapes)
-     - `table_loot_power_substation` & `table_loot_industrial_district` (The Dam Keeper's Log)
-     - `table_loot_school` (The Teacher's Recordings)
+34 entries added to `scavenging_tables.json` (weight 4–6, quantity 1, uncommon for early parts / rare for later). Story-shaped spread, e.g. Station 14 across relay mast, observatory, metro, archive, concert hall, transit depot; Dam Keeper across substation, industrial district, waterworks, geothermal plant, tank farm. No unmerged table IDs used (Plan 46 tables were merged: 49 tables). Uniqueness via `stackMax: 1`; cassette parts cannot flood loot (low weights).
 
----
+## Hidden caches — 8 resolved references
 
-## 4. Verification Evidence
+Each new set carries a `hidden_cache_location` (existing locations: `prewar_medical_cache`, `loc_transit_authority_hq`, `loc_radio_relay_mast`, `loc_seed_library_annex`, `suburban_house`, `location_substation_omega`, `loc_school_gymnasium`, `loc_shelter_infirmary`) and `hidden_cache_items` (all resolving item ids).
 
-- **Data Integrity Selftest:**
-  ```text
-  DATA_INTEGRITY_SELFTEST PASS — 0 findings (10617 ids authored, 3598 reuses reserved) — 0 errors, 0 warnings across 208 catalogs
-  ```
-- **Content Utilization Selftest:**
-  ```text
-  CI Content Utilization Gate: PASS (0 orphaned, 0 unparsed)
-  ```
-- **Scene Binding Selftest:**
-  ```text
-  Summary: 22 passed, 0 failed (of 22)
-  ```
-- **Scene Lint:**
-  ```text
-  scene-lint: 27 production scenes checked; 0 errors; 0 warning(s)
-  ```
-- **xUnit Test Suite:**
-  ```text
-  Passed! - Failed: 0, Passed: 6623, Skipped: 0, Total: 6623
-  ```
+## Completion narratives — 4 journal hooks (target met)
 
----
+`narrative_cassette_field_hospital_7_complete`, `narrative_cassette_station_14_complete`, `narrative_cassette_dam_keeper_log_complete`, `narrative_cassette_quarantine_tapes_complete` added to `events.json` (`weight: 1`, `minDay: 18`, existing pattern). Each synthesizes what the whole set establishes beyond any single tape. Father's/Teacher's/Greenhouse/Train intentionally left without a codex summary per plan guidance.
 
-## 5. Completion Mode
+## Deferred / not applicable (verified, not failed)
 
-**COMPLETE — fully integrated.**
-All 12 sets, 48 parts, 48 items, 8 completion narratives, and 61 scavenging drops are fully authored, referenced, and verified clean.
+- **No set-cassette playback/collection runtime exists** (`RadioRecordingSystem` is a separate broadcast-recording feature). Sequencing, out-of-order discovery, duplicate-acquisition and save-round-trip behavior (67J.15–67J.17) therefore have no runtime state to exercise; the data layer is placement- and integrity-safe by construction. Runtime playback remains a future host feature and will read this catalog as-is.
+- No morale values added beyond item-level `moraleEffect`; `VinylMoraleSystem` untouched.
+- No new scavenging tables, no Plan 71 IDs, no canon expansion (fictional names only: Voss, Ostrowski, Kolar, Rehn, Ehlers, Halim, Mira, Havelkow, Mirefield, Havel Junction).
+
+## Verification record
+
+| Check | Result |
+|---|---|
+| `godot --headless -- --data-integrity-selftest` | **PASS** — 0 findings, 0 errors/0 warnings, 298 catalogs |
+| `godot --headless -- --content-utilization-selftest` | **PASS** — CI gate PASS, Orphaned 0, Unresolved 70 (unchanged from baseline) |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **PASS** — 9407/9407 (one intermediate failure — a transient `moraleEffect` string-typed field in my own batch — was fixed and re-run clean) |
+| `dotnet build Ashfall.csproj` | **PASS** — 0 warnings, 0 errors |
+| Catalog count validation | 12 sets / 48 parts / 34 new items / 34 placements — script-verified |
+
+## Concurrent-work note
+
+`items.json` and `scavenging_tables.json` carried pre-existing uncommitted description rewrites from another stream in the working tree. Those edits were preserved byte-for-byte (JSON round-trip); my changes are additive-only. Commit scoping should account for that in-flight work.

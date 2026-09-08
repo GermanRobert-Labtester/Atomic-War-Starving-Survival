@@ -1203,6 +1203,34 @@
       "minDay": 18
     },
     {
+      "id": "narrative_cassette_field_hospital_7_complete",
+      "title": "Field Hospital 7: Full Tape",
+      "bodyText": "The tapes from Field Hospital Seven play through in order. An orderly counts cots, argues an X into a star on a transfer list, and records a night shift by generator arithmetic. The last tape is left on the tag board: forty-one names, treatment given, treatment owed, and an instruction to send help where the tags are, not where the lights are.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_cassette_station_14_complete",
+      "title": "Station 14: Full Tape",
+      "bodyText": "The Station Fourteen tapes run in sequence. A broadcaster logs one strange minute in an ordinary schedule, then the network feed stops clean at 4:51, and the programme becomes whatever people need read to them: roads, water, the times tables. The final tape is technical. Keep the carrier up; check the mast first, the fuse second, the operator last.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_cassette_dam_keeper_log_complete",
+      "title": "The Dam Keeper's Log: Full Tape",
+      "bodyText": "The dam keeper's log plays through. Load shedding becomes islanding, islanding becomes a four-hour watch on a leaking gate, and when dispatch stops answering, the log becomes the dispatch. On the last tape the keeper walks the dam down on manual and hands the wheel to whoever comes after: fifty hertz, on purpose.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_cassette_quarantine_tapes_complete",
+      "title": "The Quarantine Tapes: Full Tape",
+      "bodyText": "The quarantine tapes play through in order. A case definition written in pencil, one door in and one door out, visitors replaced by notes written small on wristbands. On the final tape a doctor releases patients on time and a signature because the test kits left with a convoy that never returned. It was never the rules that failed; it was running out of the means to check them.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
       "id": "narrative_electrician_milestone_1",
       "title": "First Circuit Restored",
       "bodyText": "The first repaired circuit lights a single bulb in the workshop. It is not much: one bulb, one switch, one length of wire made whole. The electrician stands under it with their hands in their pockets, not moving.",

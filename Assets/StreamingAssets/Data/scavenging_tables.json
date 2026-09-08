@@ -107,6 +107,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_sector4_casualties"
+        },
+        {
+          "item_id": "cassette_field_hospital_7_2",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -179,6 +186,13 @@
         {
           "item_id": "item_welders_glass",
           "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "cassette_evacuation_train_2",
+          "weight": 6,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
@@ -265,6 +279,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_civil_defense"
+        },
+        {
+          "item_id": "cassette_teachers_recordings_1",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -378,6 +399,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_patrol_order"
+        },
+        {
+          "item_id": "cassette_field_hospital_7_4",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -492,6 +520,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_handwritten_will"
+        },
+        {
+          "item_id": "cassette_fathers_tapes_1",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -645,6 +680,27 @@
           "hazard_type": "disease",
           "hazard_chance": 0.1,
           "codex_unlock_id": "codex_fungi_subterranean"
+        },
+        {
+          "item_id": "cassette_evacuation_train_1",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "cassette_station_14_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_fathers_tapes_2",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -803,6 +859,13 @@
           "min_quantity": 1,
           "max_quantity": 2,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "cassette_dam_keeper_log_2",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -870,6 +933,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
+        },
+        {
+          "item_id": "cassette_fathers_tapes_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -927,6 +997,13 @@
         {
           "item_id": "dosimeter",
           "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "cassette_dam_keeper_log_1",
+          "weight": 6,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
@@ -994,6 +1071,13 @@
         {
           "item_id": "hazmat_suit",
           "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_quarantine_tapes_3",
+          "weight": 4,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
@@ -1141,6 +1225,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
+        },
+        {
+          "item_id": "cassette_greenhouse_tapes_2",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -1374,6 +1465,20 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "cassette_field_hospital_7_1",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "cassette_quarantine_tapes_1",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1434,6 +1539,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_station_14_2",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1502,6 +1614,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_fungi_bioluminescent"
+        },
+        {
+          "item_id": "cassette_greenhouse_tapes_1",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -1612,6 +1731,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_field_hospital_7_5",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -1702,6 +1828,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_quarantine_tapes_2",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1812,6 +1945,20 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_unsent_letter"
+        },
+        {
+          "item_id": "cassette_field_hospital_7_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_quarantine_tapes_4",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -1902,6 +2049,13 @@
           "rarity_tier": "uncommon",
           "hazard_type": "disease",
           "hazard_chance": 0.15
+        },
+        {
+          "item_id": "cassette_fathers_tapes_4",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -1984,6 +2138,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_requisition_4471"
+        },
+        {
+          "item_id": "cassette_evacuation_train_4",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -2136,6 +2297,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_requisition_4471"
+        },
+        {
+          "item_id": "cassette_dam_keeper_log_5",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -2197,6 +2365,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_personal_journal"
+        },
+        {
+          "item_id": "cassette_station_14_5",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -2561,6 +2736,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_station_14_1",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -2629,6 +2811,20 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_sector7_evacuation"
+        },
+        {
+          "item_id": "cassette_evacuation_train_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_station_14_6",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -2700,6 +2896,13 @@
         {
           "item_id": "item_document_maintenance_record",
           "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_dam_keeper_log_4",
+          "weight": 4,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
@@ -2915,6 +3118,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_dam_keeper_log_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -3031,6 +3241,13 @@
           "max_quantity": 1,
           "rarity_tier": "common",
           "comment": "veils"
+        },
+        {
+          "item_id": "cassette_greenhouse_tapes_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -3145,6 +3362,20 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_handwritten_will"
+        },
+        {
+          "item_id": "cassette_station_14_4",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cassette_teachers_recordings_2",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -3203,6 +3434,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_civil_defense"
+        },
+        {
+          "item_id": "cassette_teachers_recordings_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },

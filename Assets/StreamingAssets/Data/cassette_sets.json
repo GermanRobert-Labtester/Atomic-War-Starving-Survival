@@ -142,6 +142,322 @@
         "water_filter"
       ],
       "completion_narrative": "narrative_cassette_free_radio_complete"
+    },
+    {
+      "set_id": "greenhouse_tapes",
+      "set_title": "The Greenhouse Tapes",
+      "total_parts": 3,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_greenhouse_tapes_1",
+          "title": "Growth Trial",
+          "description": "A woman's voice over the hum of grow-lights, mid-sentence, as if the recorder simply caught her working: '—fourteen day marker on the trial beds. Row three under the filtered glass is ahead of row four again, and I am not going to fight the light limiter this quarter. Let the record show the technician won an argument with the budget for once. Envelope series G through K are logged, sealed, and shelved. If the yield curve holds, we present in spring.' A drawer closes. 'Saying it out loud so I don't have to write it. Back after the watering round.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_greenhouse_tapes_2",
+          "title": "Filtered Light",
+          "description": "The same voice, flatter, with wind audible behind the glass: 'Third week the sun's looked like this. Trial beds under the new panes are reading forty percent under baseline, and that's with the panes clean. I checked twice. It's not the glass.' A pause, pages turning. 'I'm moving everything edible to the shaded rows and running the lamps on the generator schedule, whatever that's worth. The flowers can fend for themselves. Who knew I'd ever write the word ration next to a light fixture.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_greenhouse_tapes_3",
+          "title": "Save the Seed",
+          "description": "The recorder placed close, voice low and unhurried: 'Trials are over. Not failed — over. Nobody will fund a yield curve and nobody will buy one. So this is what matters now.' The sound of envelopes being counted. 'Series G through K, one hundred and twelve packets, viable and labelled, going into the cold box at the seed library annex. Grain, tuber, legume, herb. Everything I could close the loop on. I used to say data outlives the season. Seeds are better data. Whoever gets these: they keep. That was the whole point of me.'"
+        }
+      ],
+      "hidden_cache_location": "loc_seed_library_annex",
+      "hidden_cache_items": [
+        "seed_packets",
+        "family_heirloom_seeds",
+        "item_seed_hardy_tuber"
+      ]
+    },
+    {
+      "set_id": "quarantine_tapes",
+      "set_title": "The Quarantine Tapes",
+      "total_parts": 4,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_quarantine_tapes_1",
+          "title": "Case Definition",
+          "description": "A calm voice, papers moving behind it: 'Case log, Tuesday. Fever, aching joints, and the rash that starts at the wrists — three confirmed at the clinic, one probable off the convoy. I'm writing the case definition on the door in pencil, because we keep learning things: not the water, we think now; not the blankets, which is a mercy. Wristbands at the entrance from tomorrow. Red means seen today; blank means waiting. Pencil, so we can be wrong politely.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_quarantine_tapes_2",
+          "title": "Separate Entrance",
+          "description": "'Works notice: the clinic has one door in and one door out now, and I've taped arrows on the floor, because people under fear read arrows better than signs. The staff shortage is real — two of the volunteers have fevers of their own, and I hate the arithmetic of that. Masks for anyone past the second arrow. The pharmacy is giving us its whole stock of the pale soap, which the pharmacy will regret and I will remember.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_quarantine_tapes_3",
+          "title": "No Visitors",
+          "description": "'Log. No visitors from today, and I would rather be reporting a fire. The rule stops at the door, but the reasons don't. A woman argued with me for ten minutes about her father behind the ward wall, and she was right for all ten of them, and the rule stayed. We've started carrying messages instead — notes written on the wristbands, which is a use nobody designed. People write small, to fit more in. You learn a family from what they can fit.'"
+        },
+        {
+          "part": 4,
+          "item_id": "cassette_quarantine_tapes_4",
+          "title": "Release Criteria",
+          "description": "'Case log, final page of the book. Release needs two clear readings three days apart, and the second batch of test kits went out with the convoy that isn't coming back. So I have one kit and a shelf of probably. I'm releasing on symptoms, on time, and on my own signature — which is a thing I was trained never to do — because the alternative is a ward that never empties.' A long pause. 'The definition stays in pencil. If you're reading this after us: it was never the rules that failed. It was running out of the means to check them. Dr. Ehlers.'"
+        }
+      ],
+      "hidden_cache_location": "loc_shelter_infirmary",
+      "hidden_cache_items": [
+        "surgical_mask",
+        "iodine_tablets",
+        "water_purification_tablets",
+        "medical_kit"
+      ],
+      "completion_narrative": "narrative_cassette_quarantine_tapes_complete"
+    },
+    {
+      "set_id": "field_hospital_7",
+      "set_title": "Field Hospital 7",
+      "total_parts": 5,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_field_hospital_7_1",
+          "title": "Intake",
+          "description": "A tired voice, clipboard in hand by the sound of it: 'Intake log, Field Hospital Seven, evening count. Forty-one cots, forty-one filled, six on the floor pads, which I'm told doesn't count. Two surgical cases waiting on the sterilizer, and the sterilizer is waiting on the heating element I requisitioned nine days ago. Supply discipline is holding, mostly because I count everything twice and Voss counts it a third time. Nobody's told us what day it is anymore, which I find restful.' A pen clicks. 'If you're hearing this in the staff area, the kettle still works. Small mercies.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_field_hospital_7_2",
+          "title": "Substitutions",
+          "description": "'Notes on substitutions, for the record and for whoever inherits this mess. We're out of the broad-spectrum tablets, so it's the yellow ones cut in half, and if anyone asks, the yellow ones are for soldiers, and these are soldiers. The sterilizer's down to boil-and-pray, so instruments go ten minutes and we rotate two sets. Halim closed a tray of lacerations by lamp light without losing the thread of his story, which is the sort of thing you remember.' Papers shuffle. 'Nobody's complaining. That's the part I don't like.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_field_hospital_7_3",
+          "title": "The Transfer List",
+          "description": "'Transfer list, read twice so it's on tape. Fourteen names for the convoy; non-transportable marked with an X. Voss says an X should mean first out, not left behind, and she's right, so the X is now a star and means first. Transport was due Tuesday. Today does not feel like Tuesday, but I couldn't swear to it.' A long pause, machinery in the background. 'The radio desk says the road is being re-prioritised. That's a new word. I'll read the list again tomorrow.'"
+        },
+        {
+          "part": 4,
+          "item_id": "cassette_field_hospital_7_4",
+          "title": "Night Shift",
+          "description": "'Night shift. Generator two is down and nobody has said the word aloud, but everyone has done the arithmetic: lighting, sterilizer, or the respirator — you can't run all three.' The voice drops. 'We moved the respirator to the tent end and gave the big lamp to post-op. The choice made itself, mostly. Voss sat with the Lewis boy until the lamp did, and didn't come out after.' A breath. 'I'm taping this at four because I don't want to be the only one awake. Back to the tags.'"
+        },
+        {
+          "part": 5,
+          "item_id": "cassette_field_hospital_7_5",
+          "title": "Leave the Tags",
+          "description": "'Last entry, I think. We walk out with the walking cases at first light — there's an aid point past the river, somebody said, which is how all the best intelligence arrives. I'm leaving the tags on the cots and this tape on the tag board. Forty-one names, treatment given, treatment owed. Voss initialed the stars.' A chair pushes back. 'If the hospital still stands when you find this, the sterilizer was never the problem. Send help where the tags are, not where the lights are. Orderly Rehn, Field Hospital Seven, out.'"
+        }
+      ],
+      "hidden_cache_location": "prewar_medical_cache",
+      "hidden_cache_items": [
+        "antibiotics",
+        "surgical_suture",
+        "item_medical_saline_salt",
+        "bandage"
+      ],
+      "completion_narrative": "narrative_cassette_field_hospital_7_complete"
+    },
+    {
+      "set_id": "evacuation_train",
+      "set_title": "The Evacuation Train",
+      "total_parts": 4,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_evacuation_train_1",
+          "title": "Departure Board",
+          "description": "A man's voice, platform noise behind it: 'Departure board, Tuesday: platform change, the four-twelve is now the four-forty from Platform 3, and yes, I know Platform 3 has no lights. Carriage nine's doors are jammed open, so we load through them, and there are more people than tickets, which is the whole story of this railway in one sentence. Conductor's log, Ostrowski, carriage count sixteen.' A whistle blows. 'Everyone onboard who could get onboard. We'll be late. Trains are always late, and then they arrive.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_evacuation_train_2",
+          "title": "Red Signal",
+          "description": "'Held at the red signal two hours now. There's a blockade in the cuttings — trees, somebody said, but trees don't fall in a row. We've taken on eleven more at the crossing, no tickets, no argument. Carriage sixteen is now carriage sixteen plus eleven.' The signal lamp clinks against its bracket. 'I'm keeping the lamp lit even though the box ahead isn't answering. A lit lamp means somebody's driving. That matters more than the signal does tonight.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_evacuation_train_3",
+          "title": "No Further East",
+          "description": "'Control finally answers, which would be good news if they'd said anything useful. Line's closed past Havel Junction — washout, they say. We're to reverse to Mirefield and wait for a decision.' The voice hardens slightly. 'I asked whose decision. They said pending. Three hundred people on this train and the railway is pending. I'm reversing, because a stopped train is a cold train, and there's water in the tanks at Mirefield. Log the mileage.'"
+        },
+        {
+          "part": 4,
+          "item_id": "cassette_evacuation_train_4",
+          "title": "End of the Line",
+          "description": "'End of the log. We got as far as the water tower past Mirefield, and the track ahead is full of people doing what I'd do — walking toward the houses they can see. Ostrowski's log, final carriage count: fewer than we started with, every one of them chose to go. I'm staying with the engine until the boiler's cold, then I lock the carriages and hang the lamps where they'll be seen.' A pause. 'It was a good train. Tell them the railway didn't stop. It ran out of somewhere to go.'"
+        }
+      ],
+      "hidden_cache_location": "loc_transit_authority_hq",
+      "hidden_cache_items": [
+        "dried_rations",
+        "thermal_blanket",
+        "handheld_radio",
+        "fuel_canister"
+      ]
+    },
+    {
+      "set_id": "station_14",
+      "set_title": "Station 14",
+      "total_parts": 6,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_station_14_1",
+          "title": "Scheduled Programming",
+          "description": "A woman's voice, studio-clean: 'Station Fourteen, log, Wednesday. Announcements at six, agriculture at seven, and at 7:40 I cut the weather for an emergency notice from the region — first one this quarter. I kept the record programme after it, because the notice said stand by for further information, and standing by is easier with music. Carrier's clean, transmitter's cool. A normal day with one strange minute in it.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_station_14_2",
+          "title": "Frequency Change",
+          "description": "'Log. New frequency allocations came down — we're sharing the medium wave band with a station I've never heard of, and half the dial is numbers now instead of names. Night interference is bad enough that I'm logging it. The region line says the changes are temporary. I've sat in this chair eleven years and filed four 'temporary' notices. Two of them outlived the stations they moved.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_station_14_3",
+          "title": "Caller List",
+          "description": "'Started a caller list. It was a broadcast-log form, but people don't want logs, they want somebody to write their name down. Havelkow. The Brandt family. A man from the coast road who wouldn't give a name, only asked me to say the shelters are open, twice. So the list has names on one side and what they asked on the other, and I read the questions on air between records. If someone asks me to say something, I say it. That's the job now, apparently. It might have been the job all along.'"
+        },
+        {
+          "part": 4,
+          "item_id": "cassette_station_14_4",
+          "title": "No Network Feed",
+          "description": "'The network feed stopped at 4:51. Not degraded — stopped, clean, in the middle of a sentence. I waited an hour, then read the shipping notice and the shelter list again, because I have them and nobody said to stop. Here is what I know: the transmitter works, the tower works, and the region line has a dial tone, if you count a dial tone as information. Programmes tonight are whatever is in the rack. I'm keeping the carrier up. A quiet station is still a station.'"
+        },
+        {
+          "part": 5,
+          "item_id": "cassette_station_14_5",
+          "title": "Open Microphone",
+          "description": "'Log. Read the road conditions for the crossroads, the water notice for the low district, and the Brandts' message — they made it to her sister's, say the Brandts. Took four calls about the clinic's power, which is the clinic's problem now, and I say that with love. Somebody at the school asked for a maths lesson for the children, so I read the times tables like a bulletin. Best signal figures of the week. People listen to what they need.'"
+        },
+        {
+          "part": 6,
+          "item_id": "cassette_station_14_6",
+          "title": "Carrier",
+          "description": "'Technical log, last one on this reel. I've switched to the low-power aerial to spare the insulators, and I'm running the transmitter on the battery float overnight, charge by day. The tower crew checks it twice a week whether it needs it or not.' A chair creaks. 'I'll keep the carrier up as long as there's someone to wind it. If you hear silence tomorrow: check the mast first, the fuse second, and me last. Station Fourteen, out of announcements, still on air.'"
+        }
+      ],
+      "hidden_cache_location": "loc_radio_relay_mast",
+      "hidden_cache_items": [
+        "civil_defense_radio",
+        "battery",
+        "aa_batteries",
+        "radio_headset"
+      ],
+      "completion_narrative": "narrative_cassette_station_14_complete"
+    },
+    {
+      "set_id": "fathers_tapes",
+      "set_title": "Father's Tapes",
+      "total_parts": 4,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_fathers_tapes_1",
+          "title": "For Saturday",
+          "description": "A man's voice, home-sounding, kitchen noise behind it: 'Saturday tape, for Mira. The bathroom tap drips — I know, I said I'd fix it, and I'm fixing it. The washer is on the windowsill, so don't throw it out. There's soup on the second shelf and your school shoes dried by the stove; mind the left one, the sole's lifting. I'll be back Sunday, later train, it's all fine.' A spoon taps a pot. 'Eat something green this week. For me. Go on.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_fathers_tapes_2",
+          "title": "If the Trains Stop",
+          "description": "'Mira — second tape. If the trains stop, stay with Aunt Ida and do what she says; she raised three of us on less than this. The papers in the blue tin are everything important. The tin is where the biscuits were. Don't sign anything at the bureau without reading it, and don't give anyone your ration card to hold.' A pause. 'I know that's a strange thing to tape. Everyone is taping stranger. I'll be home when the trains run.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_fathers_tapes_3",
+          "title": "The Blue Cup",
+          "description": "'This one isn't instructions, so skip it if you like. When you were small you had the blue cup and refused every other cup, and when it finally cracked you didn't cry — you buried it in the plant pot by the window and watered it for a month. Your mother said we should tell you. We decided to wait. I still think about that pot, Mira, and what you decided a broken thing needed. Most days I think you were right and we were just tired.'"
+        },
+        {
+          "part": 4,
+          "item_id": "cassette_fathers_tapes_4",
+          "title": "Keep This One",
+          "description": "'Mira — keep this one. Shoes in the box by the door are the next size up; they're yours. The coats are in the trunk, wool on top. Don't let them talk you into the line at the plaza — it's the queue that costs, not the ration.' A long silence, then, quieter: 'I'm sorry about the week I missed. It wasn't the trains.' The recorder clicks off, and on. 'Water the plant by the window. Even if it looks like nothing. Even if it looks like me. Keep this one.'"
+        }
+      ],
+      "hidden_cache_location": "suburban_house",
+      "hidden_cache_items": [
+        "childrens_books",
+        "wool_blanket",
+        "cigarette_lighter"
+      ]
+    },
+    {
+      "set_id": "dam_keeper_log",
+      "set_title": "The Dam Keeper's Log",
+      "total_parts": 5,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_dam_keeper_log_1",
+          "title": "Load Shedding",
+          "description": "A man's voice, unhurried, machinery behind it: 'Keeper's log, Tuesday. The region wants four megawatts shed between two and six, so the valley gets the break and the town doesn't. Switching order as posted. Gate One and Gate Three riding normal; the water is a hand's width under the mark. Nothing on the board is red, which, after this year, counts as a good week. Kolar takes the night board.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_dam_keeper_log_2",
+          "title": "Islanding",
+          "description": "'Log. The region line dropped again and the substation east of the pass is islanding us whether we like it or not. Running the valley on our own frequency now — thirteen towns, give or take, and every one of them believes their power is the kind that just arrives. I have Kolar teaching me the substation's phone tree, because mine stopped answering on Monday. We hold fifty hertz. Some days that's the whole job: fifty hertz, on purpose.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_dam_keeper_log_3",
+          "title": "Gate Two",
+          "description": "'Gate Two's hydraulic pack is leaking down, and the spare seal kit was signed out in August by a crew that never signed it back. Level above the gate is up a metre and the rain isn't finished. I can hold it manual — somebody in the gallery with a wheel, four hours on, off the record, because I don't have four names.' A wrench drops somewhere below. 'I'll take the first watch. The log shows it was inspected. The log will show it was inspected.'"
+        },
+        {
+          "part": 4,
+          "item_id": "cassette_dam_keeper_log_4",
+          "title": "Dispatch Is Gone",
+          "description": "'Dispatch hasn't answered in three days. Not busy — gone. The ring tone changed to nothing last week, and I'd tell you that means the exchange, not the people. The grid east of the pass is dead; west of us is us. So the log is the dispatch now. Kolar agrees. We keep the valley feed and shed everything past the ridge, same order as always, because whoever is left over there had a routine too, and mine can't reach them.'"
+        },
+        {
+          "part": 5,
+          "item_id": "cassette_dam_keeper_log_5",
+          "title": "Manual",
+          "description": "'Final entry. I'm putting her on manual and walking her down. Gates closed in sequence, gallery clear, the valley fed by penstock head only — enough for the pump stations and the hospital, nothing for the wires past the ridge. The board is red where red is honest.' A hand pats metal, twice. 'If you come after me: the wheel is yours now. Fifty hertz, on purpose. Everything in this building is labelled, including me. Keeper Voss.' The recording stops with the machinery still running, slower."
+        }
+      ],
+      "hidden_cache_location": "location_substation_omega",
+      "hidden_cache_items": [
+        "diesel_fuel",
+        "item_battery_electrolyte_concentrate",
+        "copper_wire_10m_of_10m"
+      ],
+      "completion_narrative": "narrative_cassette_dam_keeper_log_complete"
+    },
+    {
+      "set_id": "teachers_recordings",
+      "set_title": "The Teacher's Recordings",
+      "total_parts": 3,
+      "parts": [
+        {
+          "part": 1,
+          "item_id": "cassette_teachers_recordings_1",
+          "title": "Geography Lesson",
+          "description": "A woman's voice, classroom-quiet: 'Geography, Unit Four, for the three of you keeping up from home. Rivers: today we do the lower course, where the water stops hurrying. Notice the map — the town grew where the river quit arguing with the hills. That's homework question two. I'll leave the atlas open on my desk, the big one, pages 40 to 44, and yes, Dano, page 43 has the picture. Same time Thursday. There will be a Thursday.'"
+        },
+        {
+          "part": 2,
+          "item_id": "cassette_teachers_recordings_2",
+          "title": "Practical Arithmetic",
+          "description": "'Arithmetic, for everyone at home. Today's problems. If a household has five people and two rations, how is it split? The answer is not evenly — it's by need, and you show your working. How many days in six weeks. How many tins if you set aside two a week. Show the working, because the working is what keeps you honest when the numbers get bad.' Chalk taps the board. 'No reading for Thursday. Practice instead. Practical arithmetic is caring about people with a pencil.'"
+        },
+        {
+          "part": 3,
+          "item_id": "cassette_teachers_recordings_3",
+          "title": "Attendance",
+          "description": "'Attendance, Thursday. I'm reading the register because that is what Thursday is. Answers, mostly the mothers. Some say the children listen from the stairwell, so this counts — all of it counts. Dano? Here. Mira? Here. The Kessler twins? Here.' Pages turn. 'If whoever finds this school has children in it: the register is the blue book on my desk, and the atlas is already open. Homework question two is still the river. Class dismissed — for now. Line up quietly.'"
+        }
+      ],
+      "hidden_cache_location": "loc_school_gymnasium",
+      "hidden_cache_items": [
+        "childrens_books",
+        "slate_and_chalk",
+        "pocket_notebook"
+      ]
     }
   ]
 }
