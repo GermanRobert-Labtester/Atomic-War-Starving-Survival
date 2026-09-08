@@ -10,7 +10,7 @@
       "installation_description": "A pre-war emergency fuel reserve, sealed beneath a collapsed factory. The maps show a maintenance access through the old sewer junction.",
       "revealed_items": [
         "diesel_fuel",
-        "generator_parts"
+        "mechanical_parts"
       ],
       "fragments": [
         {
@@ -39,7 +39,7 @@
       "installation_description": "A community seed bank hidden in the basement of the old library. The vault is intact — seeds may still be viable.",
       "revealed_items": [
         "seed_packets",
-        "heirloom_seeds",
+        "family_heirloom_seeds",
         "growing_manual"
       ],
       "fragments": [
@@ -163,6 +163,184 @@
           "fragment_id": "damaged_map_scarp_2",
           "label": "Surveyor's Log Extract",
           "description": "Field notes from a pre-war cartographer referencing a subterranean cable vault above the snowline."
+        }
+      ]
+    },
+    {
+      "zone_id": "old_medical_quarter",
+      "zone_name": "Old Medical Quarter",
+      "total_fragments": 3,
+      "hidden_installation_id": "loc_sealed_triage_annex",
+      "hidden_installation_name": "Sealed Triage Annex",
+      "installation_description": "A municipal hospital expansion converted into a protected casualty intake annex shortly before the Exchange. Street entrances collapsed in the first winter, but a service stair beneath the older wing may still be walkable. The intake ledgers were never removed.",
+      "revealed_items": [
+        "surgical_suture",
+        "antiseptic_1l_of_1l",
+        "protective_rubber_gloves",
+        "splint",
+        "painkillers"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_medical_1",
+          "label": "Ambulance Approach",
+          "description": "A scorched street plan with emergency-lane arrows still legible. Someone circled a service entrance behind the old wing and wrote 'decon first' in the margin."
+        },
+        {
+          "fragment_id": "damaged_map_medical_2",
+          "label": "Utility Basement",
+          "description": "A water-bloomed engineering sheet showing an isolated stairwell and two negative-pressure rooms. A pencil note reads 'keep clear — intake route'."
+        },
+        {
+          "fragment_id": "damaged_map_medical_3",
+          "label": "Casualty Routing",
+          "description": "A torn triage overlay, grease-stained along one fold. Its colored arrows only make sense laid over the street plan and the utility sheet."
+        }
+      ]
+    },
+    {
+      "zone_id": "court_district",
+      "zone_name": "Court District",
+      "total_fragments": 3,
+      "hidden_installation_id": "loc_evidence_sub_basement",
+      "hidden_installation_name": "Evidence Sub-Basement",
+      "installation_description": "A courthouse evidence store sunk below the record halls, inventoried to the box and sealed for the evacuation. The freight lift was stripped for its copper, but the custody ledgers list every shelf that was never claimed.",
+      "revealed_items": [
+        "typewriter_ribbon",
+        "sealed_government_document",
+        "item_collectible_local_newspaper"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_court_1",
+          "label": "Property Index",
+          "description": "A index card sheet mapping case numbers to sub-basement shelving rows. Coffee rings blur the later entries; row K stays readable."
+        },
+        {
+          "fragment_id": "damaged_map_court_2",
+          "label": "Service Corridor",
+          "description": "A fire-escape plan of the courthouse showing a records corridor that appears on no public floor plan. Mold spots the margin."
+        },
+        {
+          "fragment_id": "damaged_map_court_3",
+          "label": "Transfer Sheet",
+          "description": "A typed transfer authorization, corner torn. 'Sub-basement, row K — hold until trial or dissolution.' A clerk's initials follow."
+        }
+      ]
+    },
+    {
+      "zone_id": "pasture_valley",
+      "zone_name": "Pasture Valley",
+      "total_fragments": 2,
+      "hidden_installation_id": "loc_quarantine_barn",
+      "hidden_installation_name": "Quarantine Barn",
+      "installation_description": "A sealed feed-and-herd quarantine barn stood off from the valley farms, built for the veterinary service and forgotten when the collective folded. The lime-stoned floor was meant to keep infection in; it may have kept the weather out instead.",
+      "revealed_items": [
+        "item_seed_hardy_tuber",
+        "item_seed_cold_legume",
+        "rope",
+        "mechanic_gloves"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_pasture_1",
+          "label": "Herd Ledger",
+          "description": "A veterinary ledger page listing quarantine rotations. A hand-drawn barn sketch in the back shows a lane that bypasses the main yard."
+        },
+        {
+          "fragment_id": "damaged_map_pasture_2",
+          "label": "Irrigation Run",
+          "description": "A faded parcel map of the valley fields, folded to death along the lane lines. The quarantine lane is inked over in a different hand: 'service only'."
+        }
+      ]
+    },
+    {
+      "zone_id": "north_woods",
+      "zone_name": "North Woods",
+      "total_fragments": 3,
+      "hidden_installation_id": "loc_forestry_emergency_store",
+      "hidden_installation_name": "Forestry Emergency Store",
+      "installation_description": "A fire-crew supply cache bermed into a slope off the logging spur, stocked against a bad season that arrived in a different form. The compartment grid was standard forestry practice; the location survived only in crew paperwork.",
+      "revealed_items": [
+        "fuel_canister",
+        "rope",
+        "item_insulated_boots"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_woods_1",
+          "label": "Firebreak Seven",
+          "description": "A compartment map of the firebreaks with bearing marks in greasy pencil. Firebreak Seven is scored out and re-marked 'cache side'."
+        },
+        {
+          "fragment_id": "damaged_map_woods_2",
+          "label": "Logging Spur",
+          "description": "A survey of the spur line east of the river, salt-stained from a winter in a cab pocket. A distance wheel annotation marks a pull-off below the bluffs."
+        },
+        {
+          "fragment_id": "damaged_map_woods_3",
+          "label": "Emergency Cache Grid",
+          "description": "A printed cache-grid form, never filed. The crew foreman's initials approve stocking for 'two crews, one season'."
+        }
+      ]
+    },
+    {
+      "zone_id": "university_quarter",
+      "zone_name": "University Quarter",
+      "total_fragments": 3,
+      "hidden_installation_id": "loc_materials_research_sublevel",
+      "hidden_installation_name": "Materials Research Sublevel",
+      "installation_description": "A restricted materials laboratory beneath the teaching block, reached through freight corridors rather than the campus proper. Equipment transfer sheets suggest the removal crews never finished the sublevel before the roads closed.",
+      "revealed_items": [
+        "machinist_caliper",
+        "item_reagent_clean",
+        "copper_wire_10m_of_10m"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_university_1",
+          "label": "Teaching Wing",
+          "description": "A campus orientation map, fold-abraded, with the teaching wing's service stair circled and labeled 'deliveries only'."
+        },
+        {
+          "fragment_id": "damaged_map_university_2",
+          "label": "Ventilation Spine",
+          "description": "A services drawing tracing the ventilation spine down past the basement. A maintenance stamp marks an access hatch at the sublevel landing."
+        },
+        {
+          "fragment_id": "damaged_map_university_3",
+          "label": "Freight-Lift Call Sheet",
+          "description": "A lift call sheet for the freight car, heat-warped at the edge. The sublevel button is annotated in pen: 'materials — badge or breaker'."
+        }
+      ]
+    },
+    {
+      "zone_id": "metro_service_ring",
+      "zone_name": "Metro Service Ring",
+      "total_fragments": 3,
+      "hidden_installation_id": "loc_electrical_maintenance_exchange",
+      "hidden_installation_name": "Electrical Maintenance Exchange",
+      "installation_description": "A nonpublic junction on the metro's service ring where traction-power rooms, pump controls and a staff refuge share one dry gallery. Public route maps never showed it; the utility's own wiring keys did.",
+      "revealed_items": [
+        "battery_pack",
+        "item_battery_reconditioned",
+        "copper_wire_10m_of_10m"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_metro_1",
+          "label": "Traction Feed",
+          "description": "A traction-power single-line diagram, oil-stained, showing the feed into a junction not on the passenger map."
+        },
+        {
+          "fragment_id": "damaged_map_metro_2",
+          "label": "Pump Gallery",
+          "description": "A sump-and-pump arrangement plan for the service ring. A fitter's note across the border: 'gallery stays dry, check the sticks'."
+        },
+        {
+          "fragment_id": "damaged_map_metro_3",
+          "label": "Junction Wiring Key",
+          "description": "A wiring key card matching breaker positions to rooms. The exchange junction is tabbed with a strip of masking tape."
         }
       ]
     }

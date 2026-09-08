@@ -229,7 +229,7 @@ namespace Ashfall.Core.Tests.Expeditions
             var catalog = ScavengingTableCatalog.LoadFromJson(
                 fileIO.ReadAllText(Path.Combine(_dataDir, "scavenging_tables.json")), serializer);
             var dests = LoadAuthoredDestinations();
-            Assert.Equal(55, dests.Count);
+            Assert.Equal(75, dests.Count);
 
             var itemValues = LoadItemValues(out var catalogsLoaded);
             Assert.True(itemValues.Count > 300, $"item value merge too small: {itemValues.Count}");

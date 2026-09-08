@@ -5,12 +5,12 @@
 | # | Gate | Result |
 |---|---|---|
 | 1 | `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — 0 errors |
-| 2 | `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — **6866/6866** (0 failed, 0 skipped) |
+| 2 | `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — **9620/9620** (0 failed, 0 skipped; includes the un-quarantined `DamagedMapSystemTests`, 13/13) |
 | 3 | `dotnet build Ashfall.csproj` | PASS — 0 errors, 0 warnings |
-| 4 | `godot --headless --path . -- --data-integrity-selftest` | PASS — 0 findings across 208 catalogs (10810 ids authored); `map_fragment_id` references enforced |
+| 4 | `godot --headless --path . -- --data-integrity-selftest` | PASS — 0 findings across 298 catalogs (11611 ids authored); `map_fragment_id` references enforced |
 | 5 | `godot --headless --path . -- --bridge-selftest` | PASS (stable CI verb, shim removal notice) |
 | 6 | `godot --headless --path . -- --content-utilization-selftest` | PASS — CI content-runtime gate green; orphaned 0 |
-| 7 | `godot --headless --path . -- --cartography-selftest` | 2 pre-existing failures only (aspirational thresholds: ≥60 nodes / ≥200 routes; catalog now 20/44 vs 9/22 baseline). All damaged-map assertions pass (12 zones) |
+| 7 | `godot --headless --path . -- --cartography-selftest` | 2 pre-existing failures only (aspirational thresholds: ≥60 nodes / ≥200 routes; catalog now 22 nodes/68 routes vs 11/26 at the re-land baseline). All damaged-map assertions pass (12 zones) |
 
 ## Test coverage added/updated
 

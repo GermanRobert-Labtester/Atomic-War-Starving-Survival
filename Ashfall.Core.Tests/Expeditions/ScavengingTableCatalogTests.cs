@@ -13,6 +13,7 @@ namespace Ashfall.Core.Tests.Expeditions
     {
         private readonly string _dataDir;
         private readonly ScavengingTableCatalog _catalog;
+        private readonly HashSet<string> _damagedMapFragmentIds;
 
         public ScavengingTableCatalogTests()
         {
@@ -27,6 +28,15 @@ namespace Ashfall.Core.Tests.Expeditions
 
             var fileIO = new FileSystemIO();
             _catalog = ScavengingTableCatalog.LoadFromDirectory(_dataDir, fileIO);
+
+            // Plan 85 — live damaged-map fragment ids for the fragment-entry gate.
+            var (damagedZones, damagedErrors) = Ashfall.Core.World.DamagedMapCatalogLoader.LoadWithValidation(
+                _dataDir, fileIO, new SystemTextJsonSerializer());
+            Assert.Empty(damagedErrors);
+            _damagedMapFragmentIds = damagedZones
+                .SelectMany(z => z.Fragments)
+                .Select(f => f.fragment_id)
+                .ToHashSet(StringComparer.Ordinal);
         }
 
         [Fact]
@@ -63,7 +73,16 @@ namespace Ashfall.Core.Tests.Expeditions
 
                 foreach (var entry in table.entries)
                 {
-                    Assert.False(string.IsNullOrEmpty(entry.item_id), $"Entry in {table.id} has empty item_id");
+                    // Plan 85 — fragment-only entries (empty item_id) are legal
+                    // when the entry carries a damaged-map fragment token that
+                    // resolves in the live catalog. Anything else with an empty
+                    // item_id remains a defect.
+                    if (string.IsNullOrEmpty(entry.item_id))
+                    {
+                        Assert.False(string.IsNullOrEmpty(entry.map_fragment_id),
+                            $"Entry in {table.id} has empty item_id and no map_fragment_id");
+                        Assert.Contains(entry.map_fragment_id, _damagedMapFragmentIds);
+                    }
                     Assert.True(entry.weight > 0, $"Entry {entry.item_id} in {table.id} has non-positive weight");
                     Assert.True(entry.min_quantity >= 1, $"Entry {entry.item_id} in {table.id} has min_quantity < 1");
                     Assert.True(entry.max_quantity >= entry.min_quantity, $"Entry {entry.item_id} in {table.id} has max_quantity < min_quantity");

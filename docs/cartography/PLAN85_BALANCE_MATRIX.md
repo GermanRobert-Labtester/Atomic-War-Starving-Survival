@@ -2,7 +2,7 @@
 
 ## Fragment economy (§85E.5–85E.6)
 
-- **32 fragments** across 12 zones (2–3 per zone), spread over **23 of 49** scavenging tables at weight 2.
+- **32 fragments** across 12 zones (2–3 per zone), spread over **23 of 54** scavenging tables at weight 2.
 - A loot roll fires per Looting tick with chance `0.5 + danger×0.05`; a fragment entry is then a ≈0.8–3% pick within its table. Expected fragments per sortie at a matching location: ≈0.05–0.2 — discovery stays an event, not a drip.
 - No inventory burden (fragments are not items); no duplicate clutter (tokens resolve to nothing after registration).
 - **Early cadence:** danger-2/3 destinations (farm, school, clinic, forestry, apartment, fire_station, veterinary) expose 15 fragments. **Mid:** relay_mast, tank_farm, metro_station, police_station, printworks, observatory, rail_yard, checkpoint, archive, hunting_cabin expose 14. **Late:** dead_hand_core + government_bunker gate the crater zone (3 fragments) behind ground-zero access.

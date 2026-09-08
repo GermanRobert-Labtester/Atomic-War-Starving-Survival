@@ -6,7 +6,7 @@
       "id": "table_loot_hospital",
       "location_type": "hospital",
       "display_name": "Urban Hospital Surgical & Pharmacy Ward",
-      "description": "Ransacked emergency rooms, triage corridors, and sealed pharmaceutical dispensaries.",
+      "description": "The emergency rooms were looted in the order people panic — reception first, pharmacy last — and the dispensary's sealed doors still carry the shift roster. The triage corridor's floor markings have been walked thin.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.15,
       "primary_hazard_type": "disease",
@@ -114,6 +114,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_medical_1"
         }
       ]
     },
@@ -121,7 +132,7 @@
       "id": "table_loot_rail_yard",
       "location_type": "rail_yard",
       "display_name": "Freight Rail Marshalling Yard & Roundhouse",
-      "description": "Industrial locomotives, maintenance pits, and heavy spare hardware stores.",
+      "description": "Locomotives stand in the roundhouse over their maintenance pits, dry and echoing. The heavy hardware stores were inventoried twice: once before the Exchange, once by whoever got here first.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.1,
       "primary_hazard_type": "chemical",
@@ -196,6 +207,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_industrial_3"
         }
       ]
     },
@@ -203,7 +225,7 @@
       "id": "table_loot_school",
       "location_type": "school",
       "display_name": "District Secondary School & Archive Library",
-      "description": "Classrooms, administration records, science laboratories, and cafeteria stores.",
+      "description": "The classrooms still hold the term's work on the walls. The science lab's reagent cupboard was cleaned out carefully, and the cafeteria stores were the first room emptied and the last room locked.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -286,6 +308,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_suburban_2"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_university_1"
         }
       ]
     },
@@ -293,7 +337,7 @@
       "id": "table_loot_military_depot",
       "location_type": "military_depot",
       "display_name": "Fortified Munitions & Quartermaster Depot",
-      "description": "Reinforced blast bunkers, weapon racks, and standard-issue ration stores.",
+      "description": "Reinforced bunkers with the racks still stencilled: contents, caliber, count. Someone worked from the inventory sheet and initialed each line. The ration stores were not initialed.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.2,
       "primary_hazard_type": "radiation",
@@ -406,6 +450,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_military_1"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_military_2"
         }
       ]
     },
@@ -413,7 +479,7 @@
       "id": "table_loot_apartment_block",
       "location_type": "apartment_block",
       "display_name": "Residential Tenement Block & Cellars",
-      "description": "Dense residential apartments with scattered domestic supplies and personal keepsakes.",
+      "description": "Four floors of the same afternoon: tables set, coats on hooks, supplies kept in the places people think nobody looks. The keepsakes were left behind, which tells you who came through.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -527,6 +593,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_suburban_1"
         }
       ]
     },
@@ -534,7 +611,7 @@
       "id": "table_loot_fire_station",
       "location_type": "fire_station",
       "display_name": "Municipal Fire Station & Emergency Bay",
-      "description": "Apparatus bays, rescue gear lockers, and high-durability emergency tools.",
+      "description": "The apparatus bays held their trucks longer than the town held its people. The rescue gear lockers are complete and oiled, because the building kept its habits after there was nobody left to keep them for.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.05,
       "primary_hazard_type": "chemical",
@@ -601,6 +678,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_medical_3"
         }
       ]
     },
@@ -608,7 +696,7 @@
       "id": "table_loot_metro_station",
       "location_type": "metro_station",
       "display_name": "Subterranean Metro Platform & Concourse",
-      "description": "Flooded rail platforms, electrical utility tunnels, and emergency passenger shelters.",
+      "description": "Flooded platforms under route lighting nobody powers. The utility tunnels run dry and warm, and the emergency shelters have been used, cleaned, and used again.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.15,
       "primary_hazard_type": "radiation",
@@ -701,6 +789,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_metro_1"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_metro_2"
         }
       ]
     },
@@ -708,7 +818,7 @@
       "id": "table_loot_police_station",
       "location_type": "police_station",
       "display_name": "Precinct Station & Armory Lockup",
-      "description": "Evidence lockers, officer duty desks, and small-arms armory cages.",
+      "description": "The evidence lockers still hold what was taken from people who will not collect it. Duty desks in a row, one still set for a shift that was called out. The armory cage was opened with its own keys.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -792,6 +902,17 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_weather_gate_warning"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_court_1"
         }
       ]
     },
@@ -799,7 +920,7 @@
       "id": "table_loot_industrial_district",
       "location_type": "industrial_district",
       "display_name": "Heavy Machine Works & Foundry Complex",
-      "description": "Metal stamping facilities, CNC lathe shops, and structural scrap piles.",
+      "description": "Stamping presses mid-cycle and lathes with their chucks still keyed. The scrap piles are sorted — copper, steel, brass — which means the district is being worked by people who plan to come back.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.1,
       "primary_hazard_type": "chemical",
@@ -866,6 +987,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_industrial_1"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_industrial_2"
         }
       ]
     },
@@ -873,7 +1016,7 @@
       "id": "table_loot_shopping_center",
       "location_type": "shopping_center",
       "display_name": "Commercial Shopping Mall & Department Store",
-      "description": "Sprawling retail stores, stripped shelves, and backroom inventory crates.",
+      "description": "The shelves were stripped in the first month; the backroom crates were found in the second winter, and the inventory office door is still propped with a trainer. The escalators hold the dust of everyone who ran up them.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -947,7 +1090,7 @@
       "id": "table_loot_power_substation",
       "location_type": "power_substation",
       "display_name": "High-Voltage Transformer Substation",
-      "description": "Step-down transformers, switchgear banks, and thick copper transmission cables.",
+      "description": "Step-down transformers hum for nobody, switchgear banks sit in their cages, and copper thick as a wrist runs out into the dark. The fence was cut in one place and repaired in another. Both repairs are good.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.1,
       "primary_hazard_type": "radiation",
@@ -1007,6 +1150,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_metro_3"
         }
       ]
     },
@@ -1014,7 +1168,7 @@
       "id": "table_loot_chemical_plant",
       "location_type": "chemical_plant",
       "display_name": "Industrial Chemical Synthesis Plant",
-      "description": "Corrosive chemical tanks, distillation columns, and hazardous reagent drums.",
+      "description": "The distillation columns stand like a cathedral that charged admission. The reagent drums are hazarded and labeled, and the labels are the most valuable thing here — whoever can read them owns what is inside.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.3,
       "primary_hazard_type": "chemical",
@@ -1088,7 +1242,7 @@
       "id": "table_loot_warehouse",
       "location_type": "warehouse",
       "display_name": "Logistics Distribution Warehouse",
-      "description": "High-bay pallet racking with mixed industrial hardware, dry goods, and crated materials.",
+      "description": "High-bay racking runs to the roof with the forklifts still plugged in at the charging bays. The manifest office has a board of outstanding orders. Some of them have been ticked off, recently, by somebody.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -1172,7 +1326,7 @@
       "id": "table_loot_farm",
       "location_type": "farm",
       "display_name": "Agricultural Allotment & Silo Grounds",
-      "description": "Cultivated fields, grain silos, seed sheds, and livestock pens.",
+      "description": "The fields have gone to a hardier weed and the silos hold their sealed grain like a held breath. The seed shed is the real treasure — labeled, dated, dry — and two livestock pens have new wire on them.",
       "depletion_model": "renewable",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -1232,6 +1386,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_pasture_2"
         }
       ]
     },
@@ -1239,7 +1404,7 @@
       "id": "table_loot_forestry_compound",
       "location_type": "forestry_compound",
       "display_name": "Forestry Depot & Sawmill Station",
-      "description": "Log sorting yards, diesel sawmills, and forestry maintenance huts.",
+      "description": "Log sorting yards with the stacks still square, a diesel sawmill cannibalized halfway and stopped halfway, and maintenance huts holding the good tools that outlive the hands which keep them.",
       "depletion_model": "renewable",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -1285,6 +1450,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_woods_1"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_woods_2"
         }
       ]
     },
@@ -1292,7 +1479,7 @@
       "id": "table_loot_hunting_cabin",
       "location_type": "hunting_cabin",
       "display_name": "Wilderness Hunting Lodge & Trapper Outpost",
-      "description": "Secluded timber cabins with field dressing tools, ammunition tins, and preserved venison.",
+      "description": "Secluded and stocked the way cabins are by people who expected the world to end quietly: dressing tools hung in order, ammunition tins rotated, venison salted down and re-salted by somebody who came back.",
       "depletion_model": "renewable",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -1345,6 +1532,28 @@
           "min_quantity": 1,
           "max_quantity": 2,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_scarp_2"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_woods_3"
         }
       ]
     },
@@ -1352,7 +1561,7 @@
       "id": "table_loot_monastery",
       "location_type": "monastery",
       "display_name": "Stone Sanctuary Priory & Cellar Scriptorium",
-      "description": "Ancient stone vaults, herbal drying racks, and hand-copied illuminated manuscripts.",
+      "description": "Stone vaults that kept their cool through the fires, herbal drying racks still hung with what the frost preserved, and manuscripts copied by hand through eight centuries. The copying did not stop at the Exchange. One desk is still set.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -1412,7 +1621,7 @@
       "id": "table_loot_clinic",
       "location_type": "clinic",
       "display_name": "Community Health Outpost & Dispensary",
-      "description": "Outpatient consultation rooms, basic medical supplies, and iodine tablets.",
+      "description": "An outpatient clinic that ran until its supplies made the decision for it: consultation rooms with the chairs angled for bad news, a dispensary counted down to single doses, and iodine issued against a list somebody kept.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.1,
       "primary_hazard_type": "disease",
@@ -1479,6 +1688,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_medical_2"
         }
       ]
     },
@@ -1486,7 +1706,7 @@
       "id": "table_loot_observatory",
       "location_type": "observatory",
       "display_name": "High-Altitude Optical & Radio Observatory",
-      "description": "Telescope domes, precision sensor racks, and optical electronics.",
+      "description": "The domes still turn — hand-cranked, oiled, maintained by whoever keeps the ridge — and the instrument racks hold optics the wasteland cannot make anymore. The logbooks record clear nights after the Exchange. Someone was still looking up.",
       "depletion_model": "finite",
       "base_hazard_chance": 0.05,
       "primary_hazard_type": "radiation",
@@ -1546,6 +1766,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_university_2"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_university_3"
         }
       ]
     },
@@ -1553,7 +1795,7 @@
       "id": "table_loot_greenhouse",
       "location_type": "greenhouse",
       "display_name": "Botanical Cultivar Nursery & Hydroponic Trays",
-      "description": "Glasshouse beds, irrigation tubing, seed cultivars, and growth nutrient concentrates.",
+      "description": "Glasshouse beds under patched panes, irrigation tubing repaired with sleeve clamps, and seed cultivars in labeled tins in the cool room. The nutrient concentrates are measured, not guessed. Someone is growing here on purpose.",
       "depletion_model": "renewable",
       "base_hazard_chance": 0.0,
       "primary_hazard_type": "none",
@@ -1738,6 +1980,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_pasture_1"
         }
       ]
     },
@@ -2304,6 +2557,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_coast_1"
         }
       ]
     },
@@ -2515,6 +2779,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_military_3"
         }
       ]
     },
@@ -2743,6 +3018,28 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_coast_2"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_scarp_1"
         }
       ]
     },
@@ -3376,6 +3673,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_court_2"
         }
       ]
     },
@@ -3441,6 +3749,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_court_3"
         }
       ]
     },
@@ -3591,6 +3910,17 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_crater_2"
         }
       ]
     },
@@ -3666,6 +3996,28 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_patrol_order"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_crater_1"
+        },
+        {
+          "item_id": "",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare",
+          "hazard_chance": 0.0,
+          "hazard_type": "",
+          "codex_unlock_id": "",
+          "map_fragment_id": "damaged_map_crater_3"
         }
       ]
     },
@@ -3827,6 +4179,271 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_weather_station",
+      "location_type": "weather_station",
+      "display_name": "Birchline Weather Station Instrument Deck",
+      "description": "The anemometer mast still turns when the wind is patient. Instrument racks were stripped in a hurry, but the recorder room's filing cabinets stayed sealed behind a jammed door.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "electronic_scrap",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "vacuum_tube",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "blueprint_roll",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "pocket_notebook",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "handheld_radio",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_geological_survey",
+      "location_type": "survey_site",
+      "display_name": "West Ridge Survey Camp",
+      "description": "Core-sample crates line the tent pads and the drill rig still leans where the crew left it. Someone marked the last good strata on a map that was never collected.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.12,
+      "primary_hazard_type": "structural",
+      "entries": [
+        {
+          "item_id": "mechanical_parts",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "blueprint_roll",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "book",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "rope",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "empty_brass_shell",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_forest_edge",
+      "location_type": "forest",
+      "display_name": "Mirrim Forest Edge",
+      "description": "The treeline starts abrupt, as if a property line were enforced. Bark past the third row of trees blisters where the fallout came down, and the game trails all bend away from the wind.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.2,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "scrap_wood",
+          "weight": 35,
+          "min_quantity": 3,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "roots",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "berries",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "trap_body_grip",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "wooden_plank",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_frozen_wetland",
+      "location_type": "wetland",
+      "display_name": "Marsh Hollow Reeds",
+      "description": "The reeds hold their shapes through the freeze and the ice sounds like crockery at night. Airholes the locals kept open are frozen over with a skin too thin to trust.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.15,
+      "primary_hazard_type": "cold",
+      "entries": [
+        {
+          "item_id": "trap_fish",
+          "weight": 30,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "roots",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "clean_water",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "trap_fish",
+          "weight": 10,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        }
+      ]
+    },
+    {
+      "id": "table_loot_burned_woodland",
+      "location_type": "burned_woodland",
+      "display_name": "The Charcoat Burns",
+      "description": "The fire came through fast and stood the trees up like chimneys. Charcoal is the only harvest that never ran out, and the sheet-metal roofs of the cabins are the only roofs left.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "structural",
+      "entries": [
+        {
+          "item_id": "scrap_wood",
+          "weight": 35,
+          "min_quantity": 3,
+          "max_quantity": 6,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wooden_plank",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "box_of_nails_10",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_metal",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     }

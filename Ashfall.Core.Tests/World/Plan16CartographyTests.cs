@@ -187,7 +187,7 @@ namespace Ashfall.Core.Tests.World
             var doc = System.Text.Json.JsonDocument.Parse(raw);
             var zones = doc.RootElement.GetProperty("zones");
 
-            Assert.Equal(6, zones.GetArrayLength());
+            Assert.Equal(12, zones.GetArrayLength());
 
             var (mapNodes, _) = WastelandMapCatalogLoader.Load(dataDir);
             var mapNodeIds = mapNodes.Select(n => n.Id).ToHashSet();

@@ -114,7 +114,7 @@ namespace Ashfall.Core.Tests.Expeditions
         public void AuthoredCatalog_LoadsAndKeepsOriginalTwoParity()
         {
             var defs = LoadAuthoredDestinations();
-            Assert.Equal(55, defs.Count);
+            Assert.Equal(75, defs.Count);
             Assert.Contains(defs, d => d.id == "loc_the_allotments");
             Assert.Contains(defs, d => d.id == "loc_denial_cut_substation");
         }
@@ -173,7 +173,7 @@ namespace Ashfall.Core.Tests.Expeditions
 
             Assert.True(broken.Count == 0,
                 "scavenging_table_id must resolve to a Plan 46 table. Unresolved:\n" + string.Join("\n", broken));
-            Assert.Equal(55, bound); // Every authored destination carries a Plan 46 table binding.
+            Assert.Equal(75, bound); // Every authored destination carries a Plan 46 table binding.
         }
 
         [Fact]

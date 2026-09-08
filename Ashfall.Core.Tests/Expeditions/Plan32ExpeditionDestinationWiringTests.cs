@@ -82,7 +82,7 @@ namespace Ashfall.Core.Tests.Expeditions
         public void ExpeditionsCatalog_LoadsAllAuthoredDestinations()
         {
             var defs = LoadPrimaryExpeditions();
-            Assert.Equal(55, defs.Count);
+            Assert.Equal(75, defs.Count);
         }
 
         [Fact]
@@ -142,10 +142,10 @@ namespace Ashfall.Core.Tests.Expeditions
                 else deep++;
             }
 
-            Assert.Equal(16, scavenge);
-            Assert.Equal(20, standard);
-            Assert.Equal(13, hazardous);
-            Assert.Equal(6, deep);
+            Assert.Equal(21, scavenge);
+            Assert.Equal(28, standard);
+            Assert.Equal(19, hazardous);
+            Assert.Equal(7, deep);
         }
 
         [Theory]

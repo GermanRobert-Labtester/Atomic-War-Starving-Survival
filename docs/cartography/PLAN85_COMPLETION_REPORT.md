@@ -1,5 +1,14 @@
 # Plan 85 — Completion Report
 
+> **Re-land note (2026-09-07).** The original Plan 85 session landed Core,
+> tests and docs but its **data authoring was never committed** and did not
+> survive in the working tree (catalog regressed to 6 zones; producers,
+> map nodes, destinations and the test un-quarantine were lost). This pass
+> re-landed the full data delta from the surviving design docs
+> (`DAMAGED_MAP_ZONE_MATRIX`, `FRAGMENT_ACQUISITION_MATRIX`,
+> `INSTALLATION_REVEAL_MATRIX`, `INSTALLATION_LOOT_PROVENANCE`) and
+> re-verified every gate. Counts below reflect the re-landed reality.
+
 ## Summary
 
 - **baseline damaged-map zone count:** 6 (repository truth; plan assumed 3 — delta rule §1.12 applied)
@@ -45,7 +54,7 @@
 
 ## Expedition/location integration
 
-- **Plan 76 destinations wired:** 12 of 12 installations (minimum was 3)
+- **Plan 76 destinations wired:** 12 of 12 installations (minimum was 3); expedition catalog totals 75 destinations (63 pre-Plan-85 working-tree baseline + 12 installations)
 - **other world-location reveals:** all 12 installations also appear on the wasteland map (Locked → Discovered on reveal)
 - **duplicate concepts avoided:** 5 (documented in reconciliation doc)
 
@@ -69,13 +78,19 @@
 
 ```text
 dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj : PASS (0 errors)
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj  : PASS (6866/6866)
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj  : PASS (9620/9620)
 dotnet build Ashfall.csproj                               : PASS (0 errors, 0 warnings)
---data-integrity-selftest                                 : PASS (0 findings, 208 catalogs)
+--data-integrity-selftest                                 : PASS (0 findings, 298 catalogs, 11611 ids)
 --bridge-selftest                                         : PASS
---content-utilization-selftest                            : PASS (CI gate green)
---cartography-selftest                                    : 2 pre-existing failures only (≥60 nodes/≥200 routes thresholds; 20/44 now vs 9/22 baseline) — predates Plan 85, recorded, not normalized
+--content-utilization-selftest                            : PASS (orphaned 0)
+--cartography-selftest                                    : 2 pre-existing failures only (aspirational ≥60 nodes/≥200 routes thresholds; now 22 nodes/68 routes vs 11/26 at this pass's baseline) — predates Plan 85, recorded, not normalized
 ```
+
+Damaged-map-specific gates in the same run: `DamagedMapSystemTests` 13/13
+(un-quarantined), `ScavengingTableCatalogTests` (incl. fragment-entry gate),
+`Plan76DestinationLootReferenceTests` (75 pins), `Plan32ExpeditionDestination
+WiringTests` (75; tiers 21/28/19/7), `Plan76BalanceSimulationTests` (75 pin),
+`Plan16CartographyTests` (12 zones).
 
 ## Deviations from the source plan (repository-truth driven)
 

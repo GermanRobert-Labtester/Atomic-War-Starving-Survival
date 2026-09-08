@@ -827,6 +827,298 @@
         "canned_food",
         "battery"
       ]
+    },
+    {
+      "id": "loc_vulcan_works_chemical",
+      "displayName": "Vulcan Works Chemical Plant",
+      "distanceTicks": 7,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 3.0,
+      "scavenging_table_id": "table_loot_chemical_plant",
+      "lootCategories": [
+        "chemicals",
+        "chemical_solvent",
+        "gas_mask",
+        "mechanic_gloves"
+      ]
+    },
+    {
+      "id": "loc_north_freight_yard",
+      "displayName": "North Freight Yard",
+      "distanceTicks": 9,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 2.8,
+      "scavenging_table_id": "table_loot_rail_yard",
+      "lootCategories": [
+        "mechanical_parts",
+        "metal_pipe",
+        "scrap_metal",
+        "rope"
+      ]
+    },
+    {
+      "id": "loc_blackridge_ammunition_depot",
+      "displayName": "Blackridge Ammunition Depot",
+      "distanceTicks": 11,
+      "dangerLevel": 8,
+      "encounterChancePerTick": 0.24,
+      "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_military_depot",
+      "lootCategories": [
+        "ammo_762",
+        "ammo_12g",
+        "smokeless_powder",
+        "military_radio"
+      ],
+      "requiresDiscovery": true
+    },
+    {
+      "id": "loc_birchline_weather_station",
+      "displayName": "Birchline Weather Station",
+      "distanceTicks": 13,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.1,
+      "baseStaminaDrainPerHour": 3.8,
+      "scavenging_table_id": "table_loot_weather_station",
+      "lootCategories": [
+        "electronic_scrap",
+        "vacuum_tube",
+        "blueprint_roll",
+        "pocket_notebook"
+      ]
+    },
+    {
+      "id": "loc_west_ridge_survey",
+      "displayName": "West Ridge Survey Camp",
+      "distanceTicks": 12,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.18,
+      "baseStaminaDrainPerHour": 3.4,
+      "scavenging_table_id": "table_loot_geological_survey",
+      "lootCategories": [
+        "mechanical_parts",
+        "metal_pipe",
+        "blueprint_roll",
+        "book"
+      ]
+    },
+    {
+      "id": "loc_mirrim_forest_edge",
+      "displayName": "Mirrim Forest Edge",
+      "distanceTicks": 9,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.2,
+      "baseStaminaDrainPerHour": 3.2,
+      "scavenging_table_id": "table_loot_forest_edge",
+      "lootCategories": [
+        "scrap_wood",
+        "roots",
+        "berries",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "loc_marsh_hollow",
+      "displayName": "Marsh Hollow",
+      "distanceTicks": 11,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.16,
+      "baseStaminaDrainPerHour": 3.6,
+      "scavenging_table_id": "table_loot_frozen_wetland",
+      "lootCategories": [
+        "trap_fish",
+        "roots",
+        "clean_water",
+        "cloth"
+      ]
+    },
+    {
+      "id": "loc_charcoat_burns",
+      "displayName": "The Charcoat Burns",
+      "distanceTicks": 6,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.6,
+      "scavenging_table_id": "table_loot_burned_woodland",
+      "lootCategories": [
+        "scrap_wood",
+        "wooden_plank",
+        "box_of_nails_10",
+        "cloth"
+      ]
+    },
+    {
+      "id": "loc_underground_fuel_depot",
+      "displayName": "Underground Fuel Depot",
+      "distanceTicks": 11,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.6,
+      "scavenging_table_id": "table_loot_tank_farm",
+      "lootCategories": [
+        "diesel_fuel",
+        "mechanical_parts"
+      ]
+    },
+    {
+      "id": "loc_municipal_seed_vault",
+      "displayName": "Municipal Seed Vault",
+      "distanceTicks": 8,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.11,
+      "baseStaminaDrainPerHour": 2.3,
+      "scavenging_table_id": "table_loot_farm",
+      "lootCategories": [
+        "seed_packets",
+        "family_heirloom_seeds",
+        "growing_manual"
+      ]
+    },
+    {
+      "id": "loc_blacksite_armory_7",
+      "displayName": "Blacksite Armory 7",
+      "distanceTicks": 18,
+      "dangerLevel": 6,
+      "encounterChancePerTick": 0.17,
+      "baseStaminaDrainPerHour": 2.9,
+      "scavenging_table_id": "table_loot_military_depot",
+      "lootCategories": [
+        "faraday_pack",
+        "military_radio",
+        "night_vision_scope",
+        "ammo_308"
+      ]
+    },
+    {
+      "id": "loc_excavation_command_vault",
+      "displayName": "Collapsed Command Vault",
+      "distanceTicks": 14,
+      "dangerLevel": 7,
+      "encounterChancePerTick": 0.185,
+      "baseStaminaDrainPerHour": 3.05,
+      "scavenging_table_id": "table_loot_dead_hand_core",
+      "lootCategories": [
+        "military_radio",
+        "military_rations",
+        "ammo_308"
+      ]
+    },
+    {
+      "id": "loc_deaddrop_command_shelter",
+      "displayName": "Dead-Drop Command Shelter",
+      "distanceTicks": 21,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.155,
+      "baseStaminaDrainPerHour": 2.75,
+      "scavenging_table_id": "table_loot_relay_mast",
+      "lootCategories": [
+        "diesel_fuel",
+        "water_filter",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "loc_hidden_relay_bunker",
+      "displayName": "Hidden Relay Bunker 09",
+      "distanceTicks": 13,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.6,
+      "scavenging_table_id": "table_loot_relay_mast",
+      "lootCategories": [
+        "item_comm_codebook_alpha",
+        "electronic_scrap",
+        "medical_kit"
+      ]
+    },
+    {
+      "id": "loc_sealed_triage_annex",
+      "displayName": "Sealed Triage Annex",
+      "distanceTicks": 8,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.125,
+      "baseStaminaDrainPerHour": 2.45,
+      "scavenging_table_id": "table_loot_hospital",
+      "lootCategories": [
+        "surgical_suture",
+        "antiseptic_1l_of_1l",
+        "protective_rubber_gloves",
+        "splint",
+        "painkillers"
+      ]
+    },
+    {
+      "id": "loc_evidence_sub_basement",
+      "displayName": "Evidence Sub-Basement",
+      "distanceTicks": 9,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.125,
+      "baseStaminaDrainPerHour": 2.45,
+      "scavenging_table_id": "table_loot_police_station",
+      "lootCategories": [
+        "typewriter_ribbon",
+        "sealed_government_document",
+        "item_collectible_local_newspaper"
+      ]
+    },
+    {
+      "id": "loc_quarantine_barn",
+      "displayName": "Quarantine Barn",
+      "distanceTicks": 12,
+      "dangerLevel": 2,
+      "encounterChancePerTick": 0.11,
+      "baseStaminaDrainPerHour": 2.3,
+      "scavenging_table_id": "table_loot_veterinary_surgery",
+      "lootCategories": [
+        "item_seed_hardy_tuber",
+        "item_seed_cold_legume",
+        "rope",
+        "mechanic_gloves"
+      ]
+    },
+    {
+      "id": "loc_forestry_emergency_store",
+      "displayName": "Forestry Emergency Store",
+      "distanceTicks": 16,
+      "dangerLevel": 3,
+      "encounterChancePerTick": 0.125,
+      "baseStaminaDrainPerHour": 2.45,
+      "scavenging_table_id": "table_loot_forestry_compound",
+      "lootCategories": [
+        "fuel_canister",
+        "rope",
+        "item_insulated_boots"
+      ]
+    },
+    {
+      "id": "loc_materials_research_sublevel",
+      "displayName": "Materials Research Sublevel",
+      "distanceTicks": 12,
+      "dangerLevel": 4,
+      "encounterChancePerTick": 0.14,
+      "baseStaminaDrainPerHour": 2.6,
+      "scavenging_table_id": "table_loot_observatory",
+      "lootCategories": [
+        "machinist_caliper",
+        "item_reagent_clean",
+        "copper_wire_10m_of_10m"
+      ]
+    },
+    {
+      "id": "loc_electrical_maintenance_exchange",
+      "displayName": "Electrical Maintenance Exchange",
+      "distanceTicks": 15,
+      "dangerLevel": 5,
+      "encounterChancePerTick": 0.155,
+      "baseStaminaDrainPerHour": 2.75,
+      "scavenging_table_id": "table_loot_power_substation",
+      "lootCategories": [
+        "battery_pack",
+        "item_battery_reconditioned",
+        "copper_wire_10m_of_10m"
+      ]
     }
   ]
 }

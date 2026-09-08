@@ -121,34 +121,681 @@
       "positionY": 550,
       "discoverable": true,
       "startingUnlocked": false
+    },
+    {
+      "id": "loc_underground_fuel_depot",
+      "displayName": "Underground Fuel Depot",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 780,
+      "positionY": 240,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_municipal_seed_vault",
+      "displayName": "Municipal Seed Vault",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "trade_goods",
+      "positionX": 460,
+      "positionY": 140,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_blacksite_armory_7",
+      "displayName": "Blacksite Armory 7",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_weapons",
+      "positionX": 860,
+      "positionY": 420,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_excavation_command_vault",
+      "displayName": "Collapsed Command Vault",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_rare",
+      "positionX": 220,
+      "positionY": 520,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_deaddrop_command_shelter",
+      "displayName": "Dead-Drop Command Shelter",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 680,
+      "positionY": 600,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_sealed_triage_annex",
+      "displayName": "Sealed Triage Annex",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 380,
+      "positionY": 320,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_evidence_sub_basement",
+      "displayName": "Evidence Sub-Basement",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "trade_goods",
+      "positionX": 300,
+      "positionY": 180,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_quarantine_barn",
+      "displayName": "Quarantine Barn",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 560,
+      "positionY": 100,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_forestry_emergency_store",
+      "displayName": "Forestry Emergency Store",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 900,
+      "positionY": 250,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_materials_research_sublevel",
+      "displayName": "Materials Research Sublevel",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_rare",
+      "positionX": 180,
+      "positionY": 300,
+      "discoverable": false,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_electrical_maintenance_exchange",
+      "displayName": "Electrical Maintenance Exchange",
+      "danger": "locked",
+      "faction": null,
+      "lootTable": "salvage_electronic",
+      "positionX": 520,
+      "positionY": 620,
+      "discoverable": false,
+      "startingUnlocked": false
     }
   ],
   "routes": [
-    { "from": "loc_holdfast", "to": "loc_cut_abandoned_depot", "distanceKm": 12, "weatherHazard": 0.2 },
-    { "from": "loc_cut_abandoned_depot", "to": "loc_holdfast", "distanceKm": 12, "weatherHazard": 0.2 },
-    { "from": "loc_holdfast", "to": "loc_cut_merchant_caravanserai", "distanceKm": 8, "weatherHazard": 0.1 },
-    { "from": "loc_cut_merchant_caravanserai", "to": "loc_holdfast", "distanceKm": 8, "weatherHazard": 0.1 },
-    { "from": "loc_holdfast", "to": "loc_cut_radiation_zone_alpha", "distanceKm": 18, "weatherHazard": 0.5 },
-    { "from": "loc_cut_radiation_zone_alpha", "to": "loc_holdfast", "distanceKm": 18, "weatherHazard": 0.5 },
-    { "from": "loc_cut_abandoned_depot", "to": "loc_cut_arsenal_ruin", "distanceKm": 9, "weatherHazard": 0.3 },
-    { "from": "loc_cut_arsenal_ruin", "to": "loc_cut_abandoned_depot", "distanceKm": 9, "weatherHazard": 0.3 },
-    { "from": "loc_cut_merchant_caravanserai", "to": "loc_cut_abandoned_depot", "distanceKm": 7, "weatherHazard": 0.15 },
-    { "from": "loc_cut_abandoned_depot", "to": "loc_cut_merchant_caravanserai", "distanceKm": 7, "weatherHazard": 0.15 },
-    { "from": "loc_cut_merchant_caravanserai", "to": "loc_black_flotilla_outpost", "distanceKm": 22, "weatherHazard": 0.4 },
-    { "from": "loc_black_flotilla_outpost", "to": "loc_cut_merchant_caravanserai", "distanceKm": 22, "weatherHazard": 0.4 },
-    { "from": "loc_holdfast", "to": "loc_black_flotilla_outpost", "distanceKm": 9, "weatherHazard": 0.35, "travelDomain": "water", "currentStrength": 0.3, "toxicContamination": 0.1 },
-    { "from": "loc_black_flotilla_outpost", "to": "loc_holdfast", "distanceKm": 9, "weatherHazard": 0.35, "travelDomain": "water", "currentStrength": -0.3, "toxicContamination": 0.1 },
-    { "from": "loc_cut_radiation_zone_alpha", "to": "loc_black_flotilla_outpost", "distanceKm": 14, "weatherHazard": 0.45 },
-    { "from": "loc_black_flotilla_outpost", "to": "loc_cut_radiation_zone_alpha", "distanceKm": 14, "weatherHazard": 0.45 },
-    { "from": "loc_holdfast", "to": "loc_hidden_relay_bunker", "distanceKm": 6, "weatherHazard": 0.1, "terrain_tags": ["vertical_rock"] },
-    { "from": "loc_hidden_relay_bunker", "to": "loc_holdfast", "distanceKm": 6, "weatherHazard": 0.1, "terrain_tags": ["vertical_rock"] },
-    { "from": "loc_holdfast", "to": "loc_logistics_reserve_cache", "distanceKm": 10, "weatherHazard": 0.15 },
-    { "from": "loc_logistics_reserve_cache", "to": "loc_holdfast", "distanceKm": 10, "weatherHazard": 0.15 },
-    { "from": "loc_holdfast", "to": "loc_broadcast_bunker_echo", "distanceKm": 15, "weatherHazard": 0.3, "terrain_tags": ["vertical_rock"] },
-    { "from": "loc_broadcast_bunker_echo", "to": "loc_holdfast", "distanceKm": 15, "weatherHazard": 0.3, "terrain_tags": ["vertical_rock"] },
-    { "from": "loc_holdfast", "to": "loc_diesel_tank_farm", "distanceKm": 16, "weatherHazard": 0.25 },
-    { "from": "loc_diesel_tank_farm", "to": "loc_holdfast", "distanceKm": 16, "weatherHazard": 0.25 },
-    { "from": "loc_holdfast", "to": "loc_recovery_yard", "distanceKm": 14, "weatherHazard": 0.2 },
-    { "from": "loc_recovery_yard", "to": "loc_holdfast", "distanceKm": 14, "weatherHazard": 0.2 }
+    {
+      "from": "loc_holdfast",
+      "to": "loc_cut_abandoned_depot",
+      "distanceKm": 12,
+      "weatherHazard": 0.2
+    },
+    {
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_holdfast",
+      "distanceKm": 12,
+      "weatherHazard": 0.2
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 8,
+      "weatherHazard": 0.1
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_holdfast",
+      "distanceKm": 8,
+      "weatherHazard": 0.1
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_cut_radiation_zone_alpha",
+      "distanceKm": 18,
+      "weatherHazard": 0.5
+    },
+    {
+      "from": "loc_cut_radiation_zone_alpha",
+      "to": "loc_holdfast",
+      "distanceKm": 18,
+      "weatherHazard": 0.5
+    },
+    {
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_cut_arsenal_ruin",
+      "distanceKm": 9,
+      "weatherHazard": 0.3
+    },
+    {
+      "from": "loc_cut_arsenal_ruin",
+      "to": "loc_cut_abandoned_depot",
+      "distanceKm": 9,
+      "weatherHazard": 0.3
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_cut_abandoned_depot",
+      "distanceKm": 7,
+      "weatherHazard": 0.15
+    },
+    {
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 7,
+      "weatherHazard": 0.15
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_black_flotilla_outpost",
+      "distanceKm": 22,
+      "weatherHazard": 0.4
+    },
+    {
+      "from": "loc_black_flotilla_outpost",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 22,
+      "weatherHazard": 0.4
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_black_flotilla_outpost",
+      "distanceKm": 9,
+      "weatherHazard": 0.35,
+      "travelDomain": "water",
+      "currentStrength": 0.3,
+      "toxicContamination": 0.1
+    },
+    {
+      "from": "loc_black_flotilla_outpost",
+      "to": "loc_holdfast",
+      "distanceKm": 9,
+      "weatherHazard": 0.35,
+      "travelDomain": "water",
+      "currentStrength": -0.3,
+      "toxicContamination": 0.1
+    },
+    {
+      "from": "loc_cut_radiation_zone_alpha",
+      "to": "loc_black_flotilla_outpost",
+      "distanceKm": 14,
+      "weatherHazard": 0.45
+    },
+    {
+      "from": "loc_black_flotilla_outpost",
+      "to": "loc_cut_radiation_zone_alpha",
+      "distanceKm": 14,
+      "weatherHazard": 0.45
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_hidden_relay_bunker",
+      "distanceKm": 6,
+      "weatherHazard": 0.1,
+      "terrain_tags": [
+        "vertical_rock"
+      ]
+    },
+    {
+      "from": "loc_hidden_relay_bunker",
+      "to": "loc_holdfast",
+      "distanceKm": 6,
+      "weatherHazard": 0.1,
+      "terrain_tags": [
+        "vertical_rock"
+      ]
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_logistics_reserve_cache",
+      "distanceKm": 10,
+      "weatherHazard": 0.15
+    },
+    {
+      "from": "loc_logistics_reserve_cache",
+      "to": "loc_holdfast",
+      "distanceKm": 10,
+      "weatherHazard": 0.15
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_broadcast_bunker_echo",
+      "distanceKm": 15,
+      "weatherHazard": 0.3,
+      "terrain_tags": [
+        "vertical_rock"
+      ]
+    },
+    {
+      "from": "loc_broadcast_bunker_echo",
+      "to": "loc_holdfast",
+      "distanceKm": 15,
+      "weatherHazard": 0.3,
+      "terrain_tags": [
+        "vertical_rock"
+      ]
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_diesel_tank_farm",
+      "distanceKm": 16,
+      "weatherHazard": 0.25
+    },
+    {
+      "from": "loc_diesel_tank_farm",
+      "to": "loc_holdfast",
+      "distanceKm": 16,
+      "weatherHazard": 0.25
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_recovery_yard",
+      "distanceKm": 14,
+      "weatherHazard": 0.2
+    },
+    {
+      "from": "loc_recovery_yard",
+      "to": "loc_holdfast",
+      "distanceKm": 14,
+      "weatherHazard": 0.2
+    },
+    {
+      "from": "loc_diesel_tank_farm",
+      "to": "loc_underground_fuel_depot",
+      "distanceKm": 4.7,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_underground_fuel_depot",
+      "to": "loc_diesel_tank_farm",
+      "distanceKm": 4.7,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_underground_fuel_depot",
+      "distanceKm": 4.5,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_underground_fuel_depot",
+      "to": "loc_cut_abandoned_depot",
+      "distanceKm": 4.5,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_municipal_seed_vault",
+      "distanceKm": 4.2,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_municipal_seed_vault",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 4.2,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_municipal_seed_vault",
+      "distanceKm": 8.2,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_municipal_seed_vault",
+      "to": "loc_holdfast",
+      "distanceKm": 8.2,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_arsenal_ruin",
+      "to": "loc_blacksite_armory_7",
+      "distanceKm": 4.6,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_blacksite_armory_7",
+      "to": "loc_cut_arsenal_ruin",
+      "distanceKm": 4.6,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_logistics_reserve_cache",
+      "to": "loc_blacksite_armory_7",
+      "distanceKm": 11.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_blacksite_armory_7",
+      "to": "loc_logistics_reserve_cache",
+      "distanceKm": 11.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_radiation_zone_alpha",
+      "to": "loc_excavation_command_vault",
+      "distanceKm": 7.2,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_excavation_command_vault",
+      "to": "loc_cut_radiation_zone_alpha",
+      "distanceKm": 7.2,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_black_flotilla_outpost",
+      "to": "loc_deaddrop_command_shelter",
+      "distanceKm": 6.4,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_deaddrop_command_shelter",
+      "to": "loc_black_flotilla_outpost",
+      "distanceKm": 6.4,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_recovery_yard",
+      "to": "loc_deaddrop_command_shelter",
+      "distanceKm": 11.8,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_deaddrop_command_shelter",
+      "to": "loc_recovery_yard",
+      "distanceKm": 11.8,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_holdfast",
+      "to": "loc_sealed_triage_annex",
+      "distanceKm": 6.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_sealed_triage_annex",
+      "to": "loc_holdfast",
+      "distanceKm": 6.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_sealed_triage_annex",
+      "distanceKm": 6.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_sealed_triage_annex",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 6.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_evidence_sub_basement",
+      "distanceKm": 5.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_evidence_sub_basement",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 5.1,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_hidden_relay_bunker",
+      "to": "loc_evidence_sub_basement",
+      "distanceKm": 4.3,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_evidence_sub_basement",
+      "to": "loc_hidden_relay_bunker",
+      "distanceKm": 4.3,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_merchant_caravanserai",
+      "to": "loc_quarantine_barn",
+      "distanceKm": 9.4,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_quarantine_barn",
+      "to": "loc_cut_merchant_caravanserai",
+      "distanceKm": 9.4,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_quarantine_barn",
+      "distanceKm": 8.6,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_quarantine_barn",
+      "to": "loc_cut_abandoned_depot",
+      "distanceKm": 8.6,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_diesel_tank_farm",
+      "to": "loc_forestry_emergency_store",
+      "distanceKm": 9.0,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_forestry_emergency_store",
+      "to": "loc_diesel_tank_farm",
+      "distanceKm": 9.0,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_forestry_emergency_store",
+      "distanceKm": 10.3,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_forestry_emergency_store",
+      "to": "loc_cut_abandoned_depot",
+      "distanceKm": 10.3,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_hidden_relay_bunker",
+      "to": "loc_materials_research_sublevel",
+      "distanceKm": 8.9,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_materials_research_sublevel",
+      "to": "loc_hidden_relay_bunker",
+      "distanceKm": 8.9,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_cut_radiation_zone_alpha",
+      "to": "loc_materials_research_sublevel",
+      "distanceKm": 7.8,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_materials_research_sublevel",
+      "to": "loc_cut_radiation_zone_alpha",
+      "distanceKm": 7.8,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_recovery_yard",
+      "to": "loc_electrical_maintenance_exchange",
+      "distanceKm": 4.9,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_electrical_maintenance_exchange",
+      "to": "loc_recovery_yard",
+      "distanceKm": 4.9,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_broadcast_bunker_echo",
+      "to": "loc_electrical_maintenance_exchange",
+      "distanceKm": 8.6,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    },
+    {
+      "from": "loc_electrical_maintenance_exchange",
+      "to": "loc_broadcast_bunker_echo",
+      "distanceKm": 8.6,
+      "weatherHazard": 0.6,
+      "travelDomain": "land",
+      "currentStrength": 0.0,
+      "toxicContamination": 0.0
+    }
   ]
 }
