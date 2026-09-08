@@ -114,7 +114,8 @@
     <!-- Accessibility + PanelSubscriptionHygiene restored (audit #12). -->
     <Compile Remove="UI/InputVerbRoutingTests.cs" />
     <Compile Remove="UI/RemediationPhase3PanelTests.cs" />
-    <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" />
+    <!-- Plan 93 reinstated: verdict_npcs.json expanded to the 18-NPC roster; all expansion points pass. -->
+    <!-- <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" /> -->
     <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />
     <Compile Remove="Water/WaterAuthorityMassBalanceTests.cs" />
     <!-- RETIRED 2026-09-06 (quarantine evidence audit) — WildlifeTrapping family:

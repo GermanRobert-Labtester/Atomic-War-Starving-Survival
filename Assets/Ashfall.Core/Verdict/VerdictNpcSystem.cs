@@ -13,8 +13,16 @@ namespace Ashfall.Core.Verdict
         public string name = string.Empty;
         public string role = string.Empty;
         public string kind = "paper_ghost";  // tape_echo | paper_ghost | living | readings
+
+        // Plan 93: verdict_npcs.json is snake_case data authority while the
+        // shared serializer options are case-insensitive only (no naming
+        // policy) — these fields need explicit mappings or they silently
+        // deserialize to defaults (empty gate/location, phaseMin 1).
+        [System.Text.Json.Serialization.JsonPropertyName("gating_flag")]
         public string gatingFlag = string.Empty;
+        [System.Text.Json.Serialization.JsonPropertyName("location_id")]
         public string locationId = string.Empty;
+        [System.Text.Json.Serialization.JsonPropertyName("phase_min")]
         public int phaseMin = 1;
         public List<string> dialogue = new List<string>();
     }

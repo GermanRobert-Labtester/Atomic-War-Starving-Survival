@@ -117,6 +117,133 @@
         "Every document has an origin, a transit, and a rest. If any of the three are missing, the page is illegitimate.",
         "I do not read what is written on the parchment; I inspect the rag fibres and the iron-gall ink."
       ]
+    },
+    {
+      "id": "npc_mara_elsen",
+      "name": "Mara Elsen",
+      "role": "Tide-gauge keeper, red-ink corrections on the harbour water-mark ledger",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_relay_read",
+      "location_id": "loc_abandoned_tide_gauge",
+      "phase_min": 1,
+      "dialogue": [
+        "The old high-water mark was wrong by six centimetres. I checked it three times.",
+        "No storm came through that night. The harbour climbed anyway.",
+        "They told me to stop writing the corrections in red. So I wrote them smaller."
+      ]
+    },
+    {
+      "id": "npc_ilya_venn",
+      "name": "Ilya Venn",
+      "role": "Meteorological-station observer, the paper chart behind the correction packets",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_fuse_world_read",
+      "location_id": "loc_coastal_meteorological_station",
+      "phase_min": 1,
+      "dialogue": [
+        "The pressure trace dropped after the wind had already turned. Instruments are not supposed to remember weather late.",
+        "Central sent a correction packet for numbers I took myself. I kept the paper chart.",
+        "After that, the forecast was always cleaner than the sky."
+      ]
+    },
+    {
+      "id": "npc_garrick_daal",
+      "name": "Garrick Daal",
+      "role": "Cliff-bunker signalman, the relay that acknowledged after the grid went black",
+      "kind": "tape_echo",
+      "gating_flag": "flag_verdict_cliff_signal_decoded",
+      "location_id": "loc_clifftop_observation_bunker",
+      "phase_min": 2,
+      "dialogue": [
+        "Channel four was civil traffic until someone changed the routing table.",
+        "After midnight, every third packet came back with a different origin.",
+        "I stopped acknowledging them. The system acknowledged for me."
+      ]
+    },
+    {
+      "id": "npc_sena_korr",
+      "name": "Dr. Sena Korr",
+      "role": "Marine-laboratory researcher, the sample labels that outlived the intake log",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_eden_log_recovered",
+      "location_id": "loc_sealed_marine_laboratory",
+      "phase_min": 2,
+      "dialogue": [
+        "The mussels changed before the water report did.",
+        "Sample twelve was discarded twice. I kept both labels.",
+        "Someone wanted the contamination to begin on a date."
+      ]
+    },
+    {
+      "id": "npc_torin_rask",
+      "name": "Torin Rask",
+      "role": "Forestry surveyor, fallout contours the burn maps would not carry",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_relay_read",
+      "location_id": "loc_forestry_survey_post",
+      "phase_min": 1,
+      "dialogue": [
+        "The dead stand starts seventy metres before the fire line.",
+        "I marked it as wind damage. The map came back without the mark.",
+        "Trees do not know where the administrative boundary runs."
+      ]
+    },
+    {
+      "id": "npc_oren_varek",
+      "name": "Oren Varek",
+      "role": "Core-sample technician, two labels and one depth",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_clerk_met",
+      "location_id": "loc_geological_core_vault",
+      "phase_min": 2,
+      "dialogue": [
+        "Core seven has two labels and one depth.",
+        "The ash layer sits below material they dated earlier.",
+        "I was told to file the duplicate under equipment error.",
+        "The downriver gauging station holds the baseline. Compare it before someone corrects it."
+      ]
+    },
+    {
+      "id": "npc_lena_rost",
+      "name": "Lena Rost",
+      "role": "River-gauge attendant, mud line over telemetry",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_fuse_world_read",
+      "location_id": "loc_river_gauging_station",
+      "phase_min": 1,
+      "dialogue": [
+        "The river rose without rain upstream.",
+        "Telemetry called it sensor drift. The concrete stairs were wet.",
+        "When the reading came back down, the mud line stayed."
+      ]
+    },
+    {
+      "id": "npc_tessa_mirn",
+      "name": "Tessa Mirn",
+      "role": "Agricultural-station botanist, the control trays that were renamed",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_shift_charter_restored",
+      "location_id": "loc_abandoned_agricultural_station",
+      "phase_min": 3,
+      "dialogue": [
+        "The control trays failed first.",
+        "That should have ended the trial. Instead they changed which trays were called control.",
+        "The seeds were honest. The labels were not."
+      ]
+    },
+    {
+      "id": "npc_karel_norn",
+      "name": "Karel Norn",
+      "role": "Border-relay operator, the last handoff between warning traffic and restricted channels",
+      "kind": "tape_echo",
+      "gating_flag": "flag_verdict_call_resolved",
+      "location_id": "loc_decommissioned_signal_relay",
+      "phase_min": 3,
+      "dialogue": [
+        "The warning crossed the border before the order authorizing it.",
+        "I logged the time twice because I thought the clock had slipped.",
+        "Then headquarters asked me which copy of the log I intended to keep."
+      ]
     }
   ]
 }

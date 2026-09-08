@@ -459,6 +459,7 @@ namespace Ashfall.Core
             "flag_verdict_call_resolved", "flag_verdict_relay_read",
             "flag_verdict_fuse_advanced", "flag_verdict_wing_slept",
             "flag_verdict_reid_enrolled", "flag_verdict_vane_enrolled", "flag_verdict_holt_enrolled",
+            "flag_verdict_cliff_signal_decoded", // Plan 93: materialized in VerdictHostSession (machine-log read depth)
             // Expansion 12 (Vel/Vigil) orphan-knock gating flag — set at runtime by
             // future exp-12 code; registered in whitelists/orphan_knocks.json as a
             // deliberate, canonically-tracked orphan door event.

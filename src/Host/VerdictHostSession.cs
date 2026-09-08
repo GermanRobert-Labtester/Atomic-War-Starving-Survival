@@ -53,6 +53,11 @@ namespace AtomicWar.GodotApp
             if (Evidence.IsEnrolled("evidence_fuse_linen")) flags.Add("flag_verdict_shift_charter_restored");
             if (Evidence.IsEnrolled("evidence_geophone_hymn")) flags.Add("flag_verdict_clerk_met");
             if (Reckoning.State.callResolved) flags.Add("flag_verdict_call_resolved");
+            // Plan 93 — investigation-site residue NPCs. The cliff-bunker signal
+            // decodes from sustained study of the machine's own log (a second
+            // read entry), the same progress surface that materializes the
+            // original gates above.
+            if (MachineLog.ReadCount() >= 2) flags.Add("flag_verdict_cliff_signal_decoded");
             return flags;
         }
 
