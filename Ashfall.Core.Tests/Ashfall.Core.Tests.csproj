@@ -71,7 +71,29 @@
     <Compile Remove="Narrative/AtmosphereTextSystemConsolidationTests.cs" />
     <Compile Remove="NarrativeEncounterCatalogRegressionTests.cs" />
     <Compile Remove="NarrativeQuestlineCatalogTests.cs" />
+    <!-- RETIRED 2026-09-06 (quarantine evidence audit): the 8 Plan-55 recipes
+         (craft_flatbread .. reload_762) no longer exist in recipes.json (now
+         106 recipes; reload recipes superseded by Plan 10's
+         reload_9x19/22lr/357_jhp/12g_buck/308_incendiary set, pinned live by
+         Plan10CatalogCoverageTests). The distiller-station recipe set grew
+         from the 4 pinned here to 7 (adds process_cloud_seeding_condensate,
+         batch_hydroponic_enrichment, synthesize_reagent_radaway). Re-enable
+         only after rematching every pinned ID/set against current authority. -->
     <Compile Remove="Plan55CraftingCatalogTests.cs" />
+    <!-- Plan 81 reinstated 2026-09-06 (quarantine evidence audit): the file
+         was unquarantined alongside Plan 80 (csproj line adjacency) and its
+         ledger calls repaired to the live DoseLedgerSystem.BookReading
+         signature. dose_locations.json matches the draft exactly: 14
+         locations, 5 bunker + 3 surface + 3 expedition + 2 external + 1
+         faction, all IDs/bounds/doses verified. 11/11 tests pass. -->
+    <!-- RETIRED 2026-09-06 (quarantine evidence audit): the 12 Plan-84
+         investigation witnesses (coastal/grain/foundry threads) were never
+         authored — muster_witnesses.json holds 15 (3 Voss + 12 Plan 25), and
+         the live catalog is pinned by MusterContentCatalogTests +
+         WitnessSelectionTests. The draft's body-mirrors-testimony[0]
+         invariant is also contradicted by all 15 live witnesses. Re-enable
+         only when the witness expansion content lands, and drop the mirror
+         invariant. -->
     <Compile Remove="Plan84WitnessExpansionTests.cs" />
     <!-- Plan 80 reinstated 2026-09-06: rewritten against the live 24-manual
          library_manuals.json catalog (count, anchor parity, ref resolution,
@@ -87,6 +109,12 @@
     <!-- Accessibility + PanelSubscriptionHygiene restored (audit #12). -->
     <Compile Remove="UI/InputVerbRoutingTests.cs" />
     <Compile Remove="UI/RemediationPhase3PanelTests.cs" />
+    <!-- RETIRED 2026-09-06 (quarantine evidence audit): verdict_locations.json
+         holds only the 4 original Tempest Array sites; the 11 investigation-arc
+         sites (Coastal Survey / Interior Caches / Border Wire) were never
+         authored. Current truth is pinned live by VerdictContentWebTests
+         .LoadLocations_ReturnsFourSites. Re-enable when the arc-site content
+         lands (the exactly-15 + four-arc assertions are otherwise sound). -->
     <Compile Remove="Verdict/Plan82VerdictLocationsExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />

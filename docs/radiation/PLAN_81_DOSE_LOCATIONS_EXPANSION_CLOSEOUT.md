@@ -19,6 +19,18 @@ Repository audit found the closeout claims above **not present in the committed 
 
 ---
 
+## ⚠ Correction — UI/accessibility section (2026-09-08)
+
+The `UI/accessibility` block below ("sector display: rendered in Dose Ledger
+UI", "risk display: numeric 0–8 scale supported", "radiation unit: truthful
+uSv/h display") describes data-model capability, **not implemented UI**.
+Source audit found `riskLevel` and `radiationUsv` have zero consumers in
+`src/`, and no surface renders the location sector. Evidence, verdicts and
+disposition: **`docs/radiation/PLAN81_UI_AUDIT_81AU_81AX.md`**. Do not cite
+this section as UI completion evidence.
+
+---
+
 ## 1. Regression & Gate Results
 
 ```text
