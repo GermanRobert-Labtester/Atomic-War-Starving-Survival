@@ -803,11 +803,7 @@
       "weight_kg": 1.2,
       "durability": 0.85,
       "value": 14,
-      "tags": [
-        "electronics",
-        "scientific",
-        "recovered"
-      ]
+      "tags": ["electronics", "scientific", "recovered"]
     },
     {
       "id": "solar_cell",
@@ -5891,7 +5887,7 @@
       "type": "Quest",
       "stackMax": 1,
       "weight": 0.6,
-      "tradeValue": 22,
+      "tradeValue": 18,
       "empShielded": false
     },
     {
@@ -7160,10 +7156,7 @@
       "weight_kg": 2.0,
       "durability": 0.9,
       "value": 8,
-      "tags": [
-        "cultural",
-        "craft"
-      ]
+      "tags": ["cultural", "craft"]
     },
     {
       "id": "microfiche_film",
@@ -7173,10 +7166,7 @@
       "weight_kg": 0.4,
       "durability": 0.95,
       "value": 12,
-      "tags": [
-        "cultural",
-        "archive"
-      ]
+      "tags": ["cultural", "archive"]
     },
     {
       "id": "acetate_blank_disc",
@@ -7186,10 +7176,7 @@
       "weight_kg": 0.5,
       "durability": 0.7,
       "value": 15,
-      "tags": [
-        "cultural",
-        "audio"
-      ]
+      "tags": ["cultural", "audio"]
     },
     {
       "id": "ammo_76mm_he_flak",
@@ -7199,10 +7186,7 @@
       "weight_kg": 7.5,
       "durability": 1.0,
       "value": 40,
-      "tags": [
-        "ordnance",
-        "sky_defense"
-      ]
+      "tags": ["ordnance", "sky_defense"]
     },
     {
       "id": "ammo_76mm_proximity_fuse",
@@ -7212,11 +7196,7 @@
       "weight_kg": 7.8,
       "durability": 1.0,
       "value": 60,
-      "tags": [
-        "ordnance",
-        "sky_defense",
-        "precision"
-      ]
+      "tags": ["ordnance", "sky_defense", "precision"]
     },
     {
       "id": "ammo_76mm_tungsten_penetrator",
@@ -7226,11 +7206,7 @@
       "weight_kg": 9.2,
       "durability": 1.0,
       "value": 85,
-      "tags": [
-        "ordnance",
-        "sky_defense",
-        "heavy"
-      ]
+      "tags": ["ordnance", "sky_defense", "heavy"]
     },
     {
       "id": "ammo_chaff_burst",
@@ -7240,11 +7216,7 @@
       "weight_kg": 3.1,
       "durability": 1.0,
       "value": 22,
-      "tags": [
-        "ordnance",
-        "sky_defense",
-        "utility"
-      ]
+      "tags": ["ordnance", "sky_defense", "utility"]
     },
     {
       "id": "ammo_76mm_beacon_smokey",
@@ -7254,11 +7226,7 @@
       "weight_kg": 6.4,
       "durability": 1.0,
       "value": 25,
-      "tags": [
-        "ordnance",
-        "sky_defense",
-        "utility"
-      ]
+      "tags": ["ordnance", "sky_defense", "utility"]
     },
     {
       "id": "ammo_76mm_shaped_charge",
@@ -7268,11 +7236,7 @@
       "weight_kg": 8.6,
       "durability": 1.0,
       "value": 70,
-      "tags": [
-        "ordnance",
-        "sky_defense",
-        "heavy"
-      ]
+      "tags": ["ordnance", "sky_defense", "heavy"]
     },
     {
       "id": "item_grain_flour",
@@ -8692,6 +8656,67 @@
       "isEquipable": false,
       "equipSlot": "",
       "tradeValue": 9,
+      "empShielded": false
+    },
+    {
+      "id": "medical_scissors",
+      "displayName": "Surgical Scissors",
+      "description": "Stainless bandage shears with the hooked tip that slides under dressing without nicking skin. The pivot is still tight. Field medics mark theirs with colored tape; these are unmarked, which means nobody is missing them yet.",
+      "type": "Component",
+      "stackMax": 3,
+      "weight": 0.15,
+      "tradeValue": 9,
+      "empShielded": false
+    },
+    {
+      "id": "protective_rubber_gloves",
+      "displayName": "Protective Rubber Gloves",
+      "description": "Long-cuff examination gloves in sealed pairs. The latex has not perished, which says the box sat somewhere dry. They go on before anything else and come off inside-out, one folded into the other.",
+      "type": "Medical",
+      "stackMax": 6,
+      "weight": 0.1,
+      "tradeValue": 5,
+      "healthEffect": 0,
+      "radProtection": 0,
+      "contamination": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "empShielded": false
+    },
+    {
+      "id": "sterilised_bandage",
+      "displayName": "Sterilised Dressing",
+      "description": "A pressure dressing in a boiled-autoclave pouch, the indicator strip still showing sterile. Cleaner than most of what passes for clean now.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.12,
+      "tradeValue": 12,
+      "healthEffect": 30,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "empShielded": false
+    },
+    {
+      "id": "sandbags",
+      "displayName": "Sandbags",
+      "description": "Burlap and whatever the river gives. Filled and stacked, they stop water, then bullets, then light. Every wall in this city is two sandbags deep where it matters.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 3.0,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "hungerRestore": 0,
+      "thirstRestore": 0,
+      "healthEffect": 0,
+      "radCleanse": 0,
+      "moraleEffect": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "tradeValue": 1,
       "empShielded": false
     }
   ]

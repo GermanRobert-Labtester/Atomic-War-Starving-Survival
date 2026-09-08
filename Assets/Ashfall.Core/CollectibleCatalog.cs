@@ -22,7 +22,10 @@ namespace Ashfall.Core
     }
 
     [Serializable]
-    internal sealed class CollectibleCatalogFileRaw
+    /// <summary>Schema-versioned wrapper DTO for collectibles.json. Public so
+    /// the integrity validator and test drafts can deserialize the raw file
+    /// shape (Plan 86 reinstatement).</summary>
+    public sealed class CollectibleCatalogFileRaw
     {
         public int schema_version = 1;
         public List<CollectibleDefinition> collectibles = new List<CollectibleDefinition>();

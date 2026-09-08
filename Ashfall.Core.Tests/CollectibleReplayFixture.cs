@@ -252,7 +252,8 @@ namespace Ashfall.Core.Tests
             : this(seed)
         {
             // Restore RNG state
-            Rng = new Ashfall.Core.SeededRng(seed, rngState);
+            Rng = new Ashfall.Core.SeededRng(seed);
+            Rng.SeekState(rngState);
 
             // Restore states
             Discovery.RestoreState(discoverySave);

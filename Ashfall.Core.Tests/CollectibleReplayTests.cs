@@ -72,7 +72,7 @@ namespace Ashfall.Core.Tests
             var researchState = fixtureB.Research.CaptureState();
             var journalSave = fixtureB.Journal.CaptureState();
             var mapState = fixtureB.Map.CaptureState();
-            ulong rngState = fixtureB.Rng.State;
+            ulong rngState = fixtureB.Rng.PeekState();
             var traceCopy = new List<CollectibleReplayTraceEntry>(fixtureB.Trace);
 
             // Fixture C: Restored run into fresh instance, continuing remaining 10 locations
@@ -254,7 +254,7 @@ namespace Ashfall.Core.Tests
 
             // Invariant 3: RNG consumption and resulting loot sequence must be strictly identical
             Assert.Equal(rollsWithTrace, rollsNoTrace);
-            Assert.Equal(fixtureWithTrace.Rng.State, fixtureNoTrace.Rng.State);
+            Assert.Equal(fixtureWithTrace.Rng.PeekState(), fixtureNoTrace.Rng.PeekState());
         }
     }
 }

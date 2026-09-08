@@ -125,6 +125,20 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_medical_1"
+        },
+        {
+          "item_id": "item_collectible_field_medicine_handbook",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_dosimeter_guide",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -330,6 +344,27 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_university_1"
+        },
+        {
+          "item_id": "item_collectible_concert_poster",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_exchange_day_newspaper",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_science_magazine",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -472,6 +507,55 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_military_2"
+        },
+        {
+          "item_id": "item_collectible_unit_photograph",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_unit_log_fragment",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_deployment_order",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_casualty_list",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_soldiers_letter",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_military_patch",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_topo_map",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -604,6 +688,62 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_suburban_1"
+        },
+        {
+          "item_id": "item_collectible_family_portrait",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_pre_war_novel",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_vinyl_chamber_record",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_vinyl_folk_compilation",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_hunting_magazine",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_mothers_letter",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_rejection_letter",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_childs_doll",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -689,6 +829,20 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_medical_3"
+        },
+        {
+          "item_id": "item_collectible_civil_defense_poster",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_civil_defense_badge",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -811,6 +965,20 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_metro_2"
+        },
+        {
+          "item_id": "item_collectible_radio_repair_guide",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_vinyl_civil_broadcast",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -913,6 +1081,34 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_court_1"
+        },
+        {
+          "item_id": "item_collectible_civil_defense_poster",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_propaganda_poster",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_road_map",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_civil_defense_badge",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1009,6 +1205,27 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_industrial_2"
+        },
+        {
+          "item_id": "item_collectible_diesel_service_manual",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_air_filter_manual",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_trade_guild_patch",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1699,6 +1916,20 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_medical_2"
+        },
+        {
+          "item_id": "item_collectible_field_medicine_handbook",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_dosimeter_guide",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -2309,6 +2540,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_music_box",
+          "weight": 2,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -2487,6 +2725,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_warehouse_discrepancy"
+        },
+        {
+          "item_id": "item_collectible_survivor_map",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -2636,6 +2881,27 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_team_pennant",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_match_program",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_collectible_folk_craft",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -2790,6 +3056,13 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_military_3"
+        },
+        {
+          "item_id": "item_collectible_civic_token",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -2858,6 +3131,20 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_deployment_order",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_soldiers_letter",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -3040,6 +3327,13 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_scarp_1"
+        },
+        {
+          "item_id": "item_collectible_vinyl_civil_broadcast",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -3122,6 +3416,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_transit_badge",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -3339,6 +3640,13 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_debt_default"
+        },
+        {
+          "item_id": "item_collectible_trade_guild_patch",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -3418,6 +3726,13 @@
         },
         {
           "item_id": "cassette_dam_keeper_log_3",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_collectible_water_treatment_handbook",
           "weight": 4,
           "min_quantity": 1,
           "max_quantity": 1,
@@ -3760,6 +4075,13 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_court_3"
+        },
+        {
+          "item_id": "item_collectible_local_newspaper",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },
@@ -4126,6 +4448,20 @@
           "max_quantity": 1,
           "rarity_tier": "rare",
           "codex_unlock_id": "codex_unsent_letter"
+        },
+        {
+          "item_id": "item_collectible_prayer_book",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_collectible_prayer_beads",
+          "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
         }
       ]
     },

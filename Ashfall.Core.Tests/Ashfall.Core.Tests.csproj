@@ -96,15 +96,10 @@
          signature. dose_locations.json matches the draft exactly: 14
          locations, 5 bunker + 3 surface + 3 expedition + 2 external + 1
          faction, all IDs/bounds/doses verified. 11/11 tests pass. -->
-    <!-- RETIRED 2026-09-06 (quarantine evidence audit): the 12 Plan-84
-         investigation witnesses (coastal/grain/foundry threads) were never
-         authored — muster_witnesses.json holds 15 (3 Voss + 12 Plan 25), and
-         the live catalog is pinned by MusterContentCatalogTests +
-         WitnessSelectionTests. The draft's body-mirrors-testimony[0]
-         invariant is also contradicted by all 15 live witnesses. Re-enable
-         only when the witness expansion content lands, and drop the mirror
-         invariant. -->
-    <Compile Remove="Plan84WitnessExpansionTests.cs" />
+    <!-- Plan 84 reinstated (Muster Witness Testimonies Expansion: 12 investigation
+         witnesses across coastal, grain, and foundry threads authored in muster_witnesses.json;
+         total 27 witnesses; all 15 tests pass). -->
+
     <!-- Plan 80 reinstated 2026-09-06: rewritten against the live 24-manual
          library_manuals.json catalog (count, anchor parity, ref resolution,
          DAG/reachability/depth, runtime enforcement, reward atomicity, save
@@ -119,13 +114,6 @@
     <!-- Accessibility + PanelSubscriptionHygiene restored (audit #12). -->
     <Compile Remove="UI/InputVerbRoutingTests.cs" />
     <Compile Remove="UI/RemediationPhase3PanelTests.cs" />
-    <!-- RETIRED 2026-09-06 (quarantine evidence audit): verdict_locations.json
-         holds only the 4 original Tempest Array sites; the 11 investigation-arc
-         sites (Coastal Survey / Interior Caches / Border Wire) were never
-         authored. Current truth is pinned live by VerdictContentWebTests
-         .LoadLocations_ReturnsFourSites. Re-enable when the arc-site content
-         lands (the exactly-15 + four-arc assertions are otherwise sound). -->
-    <Compile Remove="Verdict/Plan82VerdictLocationsExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" />
     <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />
     <Compile Remove="Water/WaterAuthorityMassBalanceTests.cs" />
@@ -155,7 +143,9 @@
     <Compile Remove="World/WeatherGateSeasonalInteractionTests.cs" />
     <Compile Remove="World/WeatherGateTerritoryInteractionTests.cs" />
     <Compile Remove="World/WeatherGateWarInteractionTests.cs" />
-    <Compile Remove="World/WeatherSeasonExpansionTests.cs" />
+    <!-- Plan 83 reinstated: weather_seasons.json expanded to the 10-window schedule;
+         all 74 scenario points pass against the live catalog. -->
+    <!-- <Compile Remove="World/WeatherSeasonExpansionTests.cs" /> -->
     <!-- RETIRED 2026-09-06 (quarantine evidence audit) — MicroLocation drafts:
          RouteAffinity (70 errors), RumorIntegration (28), Simulation (12) pin
          EncounterDefinition.routeAffinity and rumor/simulation APIs that do not
