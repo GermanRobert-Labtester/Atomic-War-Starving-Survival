@@ -430,6 +430,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "JOURNAL", "journal_detail");
             AddNavButton(content, "RADIATION", "radiation_detail");
             AddNavButton(content, "RAD HISTORY", "radiation_history");
+            AddNavButton(content, "DOSE ATLAS", "dose_geography");
             AddNavButton(content, "ACHIEVEMENTS", "achievements");
             AddNavButton(content, "HELP", "help");
             AddNavButton(content, "GUIDANCE", "guidance");

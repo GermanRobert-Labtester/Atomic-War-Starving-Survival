@@ -680,6 +680,7 @@ namespace AtomicWar.GodotApp
                 _mapDetailPanel, _eventDetailPanel, _openingProtocolModal,
                 _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
                 _pneumaticDispatchPanel,
+                _doseGeographyPanel,
                 _dailyBriefingModal
             };
 

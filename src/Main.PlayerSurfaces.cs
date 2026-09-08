@@ -510,6 +510,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _doseLedgerPanel.Open(),
                 closeAction: () => _doseLedgerPanel.Visible = false);
 
+            PanelRegistry.ConfigureActions("dose_geography",
+                bindAction: () => { SetupPhase0(); _doseGeographyPanel.Bind(_doseLedger); },
+                openAction: () => _doseGeographyPanel.Open(),
+                closeAction: () => _doseGeographyPanel.Close());
+
             PanelRegistry.ConfigureActions("caravan_barter",
                 openAction: () => _caravanBarterLedgerPanel.Open(),
                 closeAction: () => _caravanBarterLedgerPanel.Visible = false);

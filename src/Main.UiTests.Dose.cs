@@ -152,15 +152,42 @@ namespace AtomicWar.GodotApp
                 && contentTab.Contains("faction")
                 && contentTab.Contains("surface")
                 && !contentTab.Contains("Rooms — standing places:");
-            bool plan81UiPass = unitPrecision && provenanceName && sectorAware;
+            bool contentTabScrolls = _doseSurface?.ContentTabScrollable == true;
+            bool plan81UiPass = unitPrecision && provenanceName && sectorAware && contentTabScrolls;
             pass = pass && plan81UiPass;
+
+            // ---- Plan 81 route contract: dose_geography resolves through the
+            // PanelRegistry (route→bind→visible→rendered-strings, 81AU/81AW). ----
+            bool geoRouteRegistered = Ashfall.Core.UI.PanelRegistry.IsRegistered("dose_geography");
+            var geoDescriptor = Ashfall.Core.UI.PanelRegistry.Resolve("dose_geography", _ => { });
+            bool geoRouteWired = geoDescriptor != null && geoDescriptor.OpenAction != null;
+            if (geoDescriptor?.OpenAction != null)
+            {
+                geoDescriptor.Bind();
+                geoDescriptor.Open();
+            }
+            bool geoVisible = _doseGeographyPanel != null && _doseGeographyPanel.Visible;
+            string geoDump = _doseGeographyPanel?.RenderDump ?? string.Empty;
+            bool geoRendered = geoDump.Contains("Irradiated Forest Edge")
+                && geoDump.Contains("Military Depot Perimeter")
+                && geoDump.Contains("Garrison Checkpoint Gamma Exterior")
+                && geoDump.Contains("Shelter Exterior Approach")
+                && geoDump.Contains("µSv/h")
+                && geoDump.Contains("risk 7")
+                && geoDump.Contains("expedition")
+                && geoDump.Contains("faction");
+            geoDescriptor?.Close();
+            bool geoClosed = _doseGeographyPanel == null || !_doseGeographyPanel.Visible;
+            bool routePass = geoRouteRegistered && geoRouteWired && geoVisible && geoRendered && geoClosed;
+            pass = pass && routePass;
 
             GD.Print($"[DoseUiTest] surface={surface} npcs={npcs} book={book} diagnose={diagnose} " +
                      $"palliative={palliative} cohort={cohort} volunteer={volunteer} rendered={rendered}");
             GD.Print($"[DoseUiTest] medical: triage={triageNamed} source={triageSource} band={triageBand} " +
                      $"treated={treated} spent={spent} odds={oddsImproved} window={windowHeld} " +
                      $"clinical={clinical} vigil={vigilHeld}/{vigilRecorded}");
-            GD.Print($"[DoseUiTest] plan81-ui: units={unitPrecision} provenance={provenanceName} sectors={sectorAware}");
+            GD.Print($"[DoseUiTest] plan81-ui: units={unitPrecision} provenance={provenanceName} sectors={sectorAware} scroll={contentTabScrolls}");
+            GD.Print($"[DoseUiTest] plan81-route: registered={geoRouteRegistered} wired={geoRouteWired} visible={geoVisible} rendered={geoRendered} closed={geoClosed}");
             HostCli.EmitSummary("dose_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }

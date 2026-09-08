@@ -88,7 +88,13 @@ namespace AtomicWar.GodotApp.Dose
             label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             label.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
             label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
-            box.AddChild(label);
+            // Plan 81 UI audit: long content (14 locations × name + description)
+            // must scroll rather than truncate or overflow the fixed-height tab.
+            var scroll = new ScrollContainer();
+            scroll.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+            scroll.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            scroll.AddChild(label);
+            box.AddChild(scroll);
             return box;
         }
 
@@ -122,6 +128,10 @@ namespace AtomicWar.GodotApp.Dose
 
         /// <summary>Rendered Content-tab text, for headless UI assertions.</summary>
         internal string ContentTabText => _lblContent?.Text ?? string.Empty;
+
+        /// <summary>True when the Content tab label is wrapped in a scroll
+        /// container (bounds/truncation fix — content scrolls, never truncates).</summary>
+        internal bool ContentTabScrollable => _lblContent?.GetParent() is ScrollContainer;
 
         public void RefreshView()
         {

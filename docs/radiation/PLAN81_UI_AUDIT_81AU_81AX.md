@@ -117,6 +117,24 @@ capability, not an implemented UI.
 > (risk + baseline-rate rendering behind a real route) remains open by
 > design; item 5 is partially closed — the uitest asserts rendered strings
 > but bounds/truncation still require an interactive pass.
+>
+> **RESOLVED 2026-09-08 (route + bounds + leak-evidence pass):** item 4 is
+> now implemented — `src/UI/DoseGeographyPanel.cs` renders every dose
+> location with sector, `riskLevel` (numeral + tier word, never color-only)
+> and the truthful µSv/h baseline, registered as the `dose_geography`
+> expanded route (PanelRegistryBootstrap + ConfigureActions), reachable from
+> the dashboard nav ("DOSE ATLAS"), and enrolled in both overlay-lifecycle
+> lists (UI-16 discipline). `--dose-uitest` asserts the full
+> route→bind→visible→rendered-strings→close chain (`plan81-route` gate).
+> Item 5 is closed for the Content tab: all five tabs now wrap their labels
+> in a ScrollContainer (content scrolls, never truncates) and the uitest
+> asserts `scroll=True` plus text completeness. The RID leak report is
+> **systemic, not dose-specific**: survivors-uitest and phase0-uitest
+> produce the byte-identical fingerprint (12 texture + 219 ShapedTextData
+> + 2 FontAdvanced) despite constructing none of the dose panels — it is
+> the headless dummy-renderer/font-cache shutdown accounting, present in
+> every uitest; dose-uitest adds only +2 shaped strings from its own
+> assertions. Not fixable from C#; engine-side (UI-21 note updated).
 
 Plan 81's architecture rule kept it data-first; these are the resulting UI
 gaps, in priority order:

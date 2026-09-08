@@ -118,6 +118,7 @@ namespace Ashfall.Core.UI
             R("pneumatic_dispatch",  "Pneumatic Dispatch",              PanelGroup.Expanded,   new[] { "inventory", "power_grid" });
             R("expedition_radar",    "Expedition Radar",              PanelGroup.Secondary,  new[] { "expeditions" });
             R("dose_ledger",         "Dose Ledger",                   PanelGroup.Expanded,   new[] { "phase0" });
+            R("dose_geography",     "Dose Geography",               PanelGroup.Expanded,   new[] { "phase0" });
             R("caravan_barter",      "Caravan Barter Ledger",         PanelGroup.Secondary,  new[] { "economy" });
             R("faction_matrix",      "Faction Stance Matrix",         PanelGroup.Secondary,  new[] { "factions" });
             R("factions_narrative",  "Factions Narrative",            PanelGroup.Secondary,  new[] { "factions" });

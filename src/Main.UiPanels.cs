@@ -147,6 +147,7 @@ namespace AtomicWar.GodotApp
         private PneumaticDispatchPanel _pneumaticDispatchPanel = null!;
         private ExpeditionRadarPanel _expeditionRadarPanel = null!;
         private DoseLedgerPanel _doseLedgerPanel = null!;
+        private DoseGeographyPanel _doseGeographyPanel = null!;
         private CaravanBarterLedgerPanel _caravanBarterLedgerPanel = null!;
         private FactionMatrixPanel _factionMatrixPanel = null!;
         private FactionsNarrativePanel _factionsNarrativePanel = null!;
@@ -906,6 +907,10 @@ namespace AtomicWar.GodotApp
             _doseLedgerPanel = new DoseLedgerPanel { Visible = false };
             _doseLedgerPanel.OnClose += () => _doseLedgerPanel.Visible = false;
             AddChild(_doseLedgerPanel);
+
+            _doseGeographyPanel = new DoseGeographyPanel { Visible = false };
+            _doseGeographyPanel.OnClose += () => _doseGeographyPanel.Visible = false;
+            AddChild(_doseGeographyPanel);
 
             _caravanBarterLedgerPanel = new CaravanBarterLedgerPanel { Visible = false };
             _caravanBarterLedgerPanel.OnClose += () => _caravanBarterLedgerPanel.Visible = false;
