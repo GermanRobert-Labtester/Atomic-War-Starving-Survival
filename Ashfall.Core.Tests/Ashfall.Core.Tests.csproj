@@ -73,7 +73,6 @@
     <Compile Remove="NarrativeEncounterCatalogRegressionTests.cs" />
     <Compile Remove="NarrativeQuestlineCatalogTests.cs" />
     <Compile Remove="Plan55CraftingCatalogTests.cs" />
-    <Compile Remove="Plan68WallCarvingTests.cs" />
     <Compile Remove="Plan84WitnessExpansionTests.cs" />
     <Compile Remove="Progression/Plan80LibraryManualsExpansionTests.cs" />
     <Compile Remove="Radiation/Plan81DoseLocationsExpansionTests.cs" />

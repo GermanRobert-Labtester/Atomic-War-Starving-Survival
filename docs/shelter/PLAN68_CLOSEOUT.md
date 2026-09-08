@@ -1,120 +1,72 @@
-# Plan 68 — Wall Carving Templates Expansion: Closeout
+# Plan 68 — Wall Carving Templates — Closeout
 
-## Status: **COMPLETE** (pure data; consumer-absent finding documented)
+**Status: COMPLETE** — pure data + narrative expansion. Zero Core/host code changes.
 
-## Counts
+`NEW SYSTEM JUSTIFICATION: NOT REQUIRED` — the catalog is data-present and consumer-absent; no loader change was needed (see Consumer below).
 
-```text
-Baseline:  15  (5 per band — the plan's 60-target assumed a deeper start)
-Final:     60  (20 high / 20 medium / 20 low — exactly per plan)
-Existing templates preserved: 15/15 (all KEEP — no edits, no replacements)
-New templates authored:       45
-```
+## Summary
 
-## Consumer finding (§66/§67)
+`wall_carving_templates.json` expanded from 15 templates (5 per band) to exactly **60** (20 high / 20 medium / 20 low). Schema untouched: `morale_band` / `morale_min` / `morale_max` / bare-string `templates` / `carving_chance`. All 15 original templates preserved verbatim (KEEP per §1.4 — all are tonally correct, distinct, and pinned by contract tests).
 
-`wall_carving_templates.json` is **data-present and consumer-absent**: no
-Core, host, or UI code parses it. The content-utilization scanner maps it to
-`MemorialSystem`/`MemorialPanel` aspirationally; `MemorialSystem` owns the
-grief cascade and memorial plaques (ShelterDecorSystem), neither of which
-references carvings.
+## Baseline
 
-Per §66 the plan stays pure data — no loader, no selection runtime, no save
-DTO was added. Building selection/persistence/panel display is a separate
-feature (the §67 gate forbids folding it into this data expansion). The 13
-contract tests validate the JSON directly through a local probe DTO and
-record the consumer-absent status for the future feature.
+- 3 bands × 5 templates. Windows: high 60–100, medium 30–59, low 0–29. `carving_chance` 0.3 / 0.2 / 0.15.
+- Baseline suite: 9407/9407 tests, data-integrity 0 findings, build clean.
 
-## Schema contract (verified from data)
+## Consumer
 
-```json
-{ "schema_version": 1, "items": [ { "morale_band": "high|medium|low",
-  "morale_min": int, "morale_max": int, "templates": [ "bare strings" ] } ] }
-```
+`grep -rn "wall_carv\|WallCarv"` across Core/src finds **no runtime loader**: the content-utilization scanner maps the file to `MemorialSystem`/`MemorialPanel` aspirationally, and no Core/host/UI code parses it. Band selection, RNG, repeat handling, and save-state ownership are therefore **not exercised by any runtime today**. The pre-existing `Plan68WallCarvingTests.cs` (previously quarantined in the csproj, per the established pattern) records the same finding and validates the JSON directly through a probe DTO. When a carving consumer lands, it should adopt this shape; selection/RNG/persistence audits (§29–§35) become actionable at that point.
 
-- Band windows: high 60–100, medium 30–59, low 0–29 — the plan's conceptual
-  ranges matched exactly.
-- Templates are **bare strings, third-person descriptions of physical
-  marks**, with occasional quoted carved words (straight quotes) and
-  em-dashes — matching the existing 15's conventions (no curly typography).
-- No unsupported fields added (`weight`/`room_type`/`event_tag` etc.
-  omitted per §1.5).
+## Final counts
 
-## Existing-template audit (§3.5)
+20 / 20 / 20 = 60. No empty strings, no whitespace-only entries, all ≤140 characters.
 
-All 15 existing templates classified **KEEP**: tonally correct (tally marks,
-the sun drawing, `HOPE`/`STILL`, the imaginary cake recipe, the unanswered
-date question, the scratched-out name, the tiny `I'm sorry`, the handless
-clock, the desperate `WHY`), physically plausible, non-duplicative, and
-band-accurate. Preserved in original order (deterministic-selection note,
-§31).
+## Existing template audit
 
-## New-content tone profile
-
-- **High (15 new):** handprints, the TOMATOES—SPRING patch, door-frame
-  height marks, repair initials, the soup joke, the roster of the living,
-  planting rows, the circled SPRING date, the card-game tally, the
-  clean-water count rising, notes on a hand-ruled staff, the decorated
-  FIRST HARVEST, the birthday cake, the grease-pencil map home, joined
-  initials — solidarity, continuity, modest future orientation.
-- **Medium (15 new):** `FILTER 2 — CHANGE AGAIN`, the twice-corrected
-  ammunition count, the draft arrow, the carved duty roster, unbroken
-  water-ration marks, the battery countdown, the lost 13 wrench, the valve
-  reminder, the dented `HEAT 2-5 ONLY`, the bunk swap, the never-returned
-  tool, the cleaning rota, `ASK BEFORE TAKING`, the `SOON` pipe joint,
-  `RUN 6H MAX` — routine, logistics, dry irritation.
-- **Low (15 new):** the half-finished name line, the door warning, the
-  prayer worn to one word, twelve tallies then nothing, the chipped
-  `SORRY`, the empty ruled roster, the burial count that stops, the
-  crossed-out spring date, the rewritten family initials, the deep `COLD`,
-  the mid-row dots, the small `DIDN'T MEAN TO`, the missing-person mark,
-  the unfinished repair warning, the child-height handprint — grief, fear,
-  exhaustion, failed counting, ritual, restraint.
-
-## QA passes (§42–§46, automated where possible)
-
-- Mechanical: JSON valid, counts, schema, grammar, lengths (all ≤140 chars
-  — glance-readable), test-pinned.
-- Band accuracy: blind-vocabulary spot checks automated (SPRING/harvest in
-  high; FILTER/BATTERY/NIGHT SHIFT/WRENCH in medium; SORRY/DON'T SLEEP/COLD
-  in low).
-- Physicality: all 60 describe or quote a plausible surface mark; zero
-  narrator-exposition lines.
-- Repetition: zero exact duplicates within bands; zero exact duplicates
-  across bands; motif spread verified (names ≤5 in low, single tally
-  reference per band in the new corpus).
-- Cliché gate: the §50 blocklist (last hope, darkness swallowed, against
-  all odds, never give up, tomorrow will come, ashes of the old world…)
-  enforced by test — zero hits.
-- Modern-meme gate: no internet slang (spot-checked).
-- Child-writing gate: one child-adjacent template (existing black-sky
-  bunker drawing) — restrained, no invented misspellings.
-- Prayer gate: one low-band prayer reference, worn to ambiguity — no
-  invented religious canon.
-- Names/dates gates: initials and generic names only; relative/campaign
-  framing only (the one carved date is explicitly an intent mark).
-- Room-specificity gate: all new templates are global-context-safe (filter,
-  pipe, door-frame, bench references are shelter-wide concepts).
-- Epitaph/folklore boundary: no grave-epitaph or folklore catalog text
-  duplicated (formal memorials remain Plan 69/30A authorities).
-
-## Deferred (follow-on work, documented)
-
-1. **The carving consumer** — selection/persistence/display runtime
-   (MemorialPanel or a shelter-wall surface). The catalog, band windows,
-   and probe DTO define the shape; Plan 68 §75.5/75.6 event-conditioned and
-   survivor-authored extensions wait behind it.
-2. Room-aware selection (Plan 41), folklore cross-references (Plan 30A),
-   grave-epitaph boundary enforcement in a consumer (Plan 69).
-3. Localization extraction for the 60 strings (the general-series
-   localization task owns the extraction pass).
-
-## Verification
-
-| Gate | Result |
+| Band | Verdicts |
 |---|---|
-| `--data-integrity-selftest` | **PASS** 0 findings / 208 catalogs (10,619 ids) |
-| `dotnet test Ashfall.Core.Tests` | **PASS** 6,666/6,666 (13 new Plan-68 tests) |
-| `dotnet build Ashfall.csproj` | **PASS** 0 errors |
-| `--content-utilization-selftest` | **PASS** |
-| `--bridge-selftest` | **PASS** exit 0 |
+| high | 5/5 KEEP — tally, sun, stick figures, HOPE/STILL, imaginary cake (all pinned by test) |
+| medium | 5/5 KEEP — 47-day tally, date question, crossing-out list, black-sky drawing, miss coffee |
+| low | 5/5 KEEP — bare tallies, scratched-out name, tiny I'm sorry, empty clock, WHY |
+
+Replaced: 0. Light edits: 0.
+
+## Tone grammar
+
+- **high** — modest hope as evidence: tallies that keep going, children's drawings, names of the living, planting plans, repair pride, house rules, dry jokes. No triumphalism.
+- **medium** — documentary routine: ration grids, filter/battery counts, duty rosters, corrected lines, dry complaints, unfinished schedules.
+- **low** — grief/fear/exhaustion with restraint: stopped tallies, worn prayers, gouged counts, warnings nobody explains, one-word carvings, minimal ambiguous marks.
+
+## Duplication audit
+
+- Exact duplicates (normalized): **0** within bands, **0** across bands.
+- Opening-word distribution — high: a×8/someone×3/the×2; medium: the×5/a×4/someone×2; low: a×8/the×4 — no construction dominates.
+- Motif share: tally/mark-based entries 4/20 (high), 3/20 (medium), 3/20 (low) — under the 20–25% ceiling (§22).
+- Low-band name motifs: 5/20 — at the test ceiling (≤5), balanced by warnings, prayer, apology, burial marks, and minimal/ambiguous marks.
+- Cliché gate (last hope / darkness swallowed / against all odds / light at the end / never give up / tomorrow will come / ashes of the old world / …): **0 hits**.
+
+## Selection
+
+No runtime selector exists. `carving_chance` per band and band windows are preserved unchanged for the future consumer. Adding templates necessarily changes any future seeded sequence — accepted per §31; RNG authority remains unimplemented and untouched.
+
+## Persistence
+
+No save state exists for carvings today. Bare-string schema means any future string-persisted saves are immune to catalog reordering (§35); index-based persistence would need ordering stability — documented here for the future implementer.
+
+## Validation
+
+| Command | Result |
+|---|---|
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter Plan68WallCarving` | **13/13 PASS** (file unquarantined from csproj after compile+pass verification, per repo precedent) |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **9439/9439 PASS** |
+| `godot --headless -- --data-integrity-selftest` | **PASS** — 0 findings, 298 catalogs |
+| `godot --headless -- --content-utilization-selftest` | **PASS** — CI gate PASS |
+| `dotnet build Ashfall.csproj` | **PASS** — 0 warnings, 0 errors |
+| Script audits (counts, dups, phrase/motif frequency, anchors, clichés, length) | **PASS** — see Duplication audit |
+
+## Deferred
+
+- Room-aware selection / room metadata (Plan 41 integration).
+- Event-conditioned and survivor-attributed carvings (§75.5–75.6).
+- Runtime carving consumer with band selection, seeded RNG, no-repeat rotation, and save persistence — a future host feature, not a Plan 68 defect.
+- Folklore/grave-domain cross-linking (Plans 30A/69) — no verbatim duplication present.
