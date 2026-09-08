@@ -451,7 +451,11 @@ namespace AtomicWar.GodotApp
                 _m.SetupSurvivors();
                 _m._survivors.TickHour(24f);
                 _m.SetupShelterDecor();
-                int decorRecipients = _m._shelterDecor?.ApplyDailyMorale(day) ?? 0;
+                // Plan 71: room_common_mess_hall — communal comfort morale is a
+                // shed-able low-priority load (level gate, applied once per day;
+                // no per-tick penalty accumulation).
+                bool messHallPowered = _m._powerGrid?.System?.IsRoomPowered("room_common_mess_hall") ?? true;
+                int decorRecipients = messHallPowered ? (_m._shelterDecor?.ApplyDailyMorale(day) ?? 0) : 0;
                 if (decorRecipients > 0)
                     events.Add(new DayStateChangeEvent("shelter_decor_morale", "shelter_decor", null, null, decorRecipients));
                 // Flagship XI (Plan 154): contagion runs after needs + decor morale

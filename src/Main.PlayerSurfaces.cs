@@ -145,7 +145,17 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseRadiationDetailPanel());
 
             PanelRegistry.ConfigureActions("research",
-                bindAction: () => { _sharedResearch = EnsureSharedResearch(); _researchHostSession ??= ResearchHostSession.Create(_dataDir, _sharedResearch); _researchPanel.Bind(_sharedResearch, _researchHostSession); },
+                bindAction: () =>
+                {
+                    _sharedResearch = EnsureSharedResearch();
+                    _researchHostSession ??= ResearchHostSession.Create(_dataDir, _sharedResearch);
+                    // Plan 71: room_laboratory_research — new research requires a
+                    // powered laboratory (start-boundary gate; in-flight progress
+                    // is owned by the research authority and never touched here).
+                    _researchHostSession.StartResearchGate = () =>
+                        _powerGrid?.System?.IsRoomPowered("room_laboratory_research") ?? true;
+                    _researchPanel.Bind(_sharedResearch, _researchHostSession);
+                },
                 openAction: () => _researchPanel.Open(),
                 closeAction: () => CloseResearchPanel());
 
@@ -550,7 +560,13 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _questsAtlasPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("research_atlas",
-                bindAction: () => { _researchHostSession ??= ResearchHostSession.Create(_dataDir, EnsureSharedResearch()); _researchAtlasPanel.Bind(_researchHostSession); },
+                bindAction: () =>
+                {
+                    _researchHostSession ??= ResearchHostSession.Create(_dataDir, EnsureSharedResearch());
+                    _researchHostSession.StartResearchGate = () =>
+                        _powerGrid?.System?.IsRoomPowered("room_laboratory_research") ?? true;
+                    _researchAtlasPanel.Bind(_researchHostSession);
+                },
                 openAction: () => _researchAtlasPanel.Open(),
                 closeAction: () => _researchAtlasPanel.Visible = false);
 

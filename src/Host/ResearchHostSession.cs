@@ -79,7 +79,22 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public bool StartResearch(string id, int day) => TryStart(id, day, out _);
+        /// <summary>Plan 71 — optional grid gate for starting research. Returns
+        /// true when starting is allowed. Null means always allowed (tests).
+        /// The laboratory start boundary is host-owned; in-flight progress is
+        /// never touched by this gate.</summary>
+        public Func<bool>? StartResearchGate { get; set; }
+
+        public bool StartResearch(string id, int day)
+        {
+            if (StartResearchGate != null && !StartResearchGate())
+            {
+                LastEvent = "Cannot start research: the laboratory has no power.";
+                RaiseStateChanged();
+                return false;
+            }
+            return TryStart(id, day, out _);
+        }
 
         public bool TryStart(string id) => TryStart(id, CurrentDay, out _);
 

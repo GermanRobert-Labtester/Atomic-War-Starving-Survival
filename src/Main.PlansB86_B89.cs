@@ -100,12 +100,26 @@ namespace AtomicWar.GodotApp
             SetupPrecisionMetrology();
             if (_precisionMetrology == null) return;
 
-            _precisionMetrology.TickDay(day);
+            // Plan 71: room_workshop_precision — the calibration drift process is
+            // machine-driven; while the precision workshop is unpowered the
+            // daily drift tick pauses AND the projected workshop grade reads
+            // zero (calibration work unavailable downstream).
+            bool precisionPowered = _powerGrid?.System?.IsRoomPowered("room_workshop_precision") ?? true;
+            if (precisionPowered)
+                _precisionMetrology.TickDay(day);
 
             // Keep registered room Calibration in lockstep with metrology truth.
             EnsureShelterWorkshop();
             if (_shelterWorkshop != null)
+            {
                 _precisionMetrology.ProjectToWorkshop(_shelterWorkshop);
+                if (!precisionPowered)
+                {
+                    // Unpowered precision machinery presents zero calibration to
+                    // its consumers (ballistics workbench grade path).
+                    _shelterWorkshop.GetOrCreateMachineState("room_workshop_precision").Calibration = 0f;
+                }
+            }
 
             if (_precisionMetrologyDirty) SavePrecisionMetrology();
         }

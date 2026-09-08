@@ -386,7 +386,12 @@ namespace AtomicWar.GodotApp
 
             if (_radioStationSystem != null)
             {
-                _radioStationSystem.TickDay(day);
+                // Plan 71: room_radio_tuner — monitoring pauses while the radio
+                // room is unpowered (level gate). Expiry timestamps are absolute,
+                // so intercepts batch-expire on restoration; no state is lost.
+                bool radioPowered = _powerGrid?.System?.IsRoomPowered("room_radio_tuner") ?? true;
+                if (radioPowered)
+                    _radioStationSystem.TickDay(day);
                 _radioStationDirty = true;
 
                 foreach (var progress in _radioStationSystem.State.intercepts)

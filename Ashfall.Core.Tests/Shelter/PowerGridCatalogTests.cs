@@ -106,6 +106,19 @@ namespace Ashfall.Core.Tests.Shelter
                 ["fx_workshop_offline"] = "Main.World workshop power gate (room_workshop)",
                 ["fx_cryo_vault_unpowered"] = "CryoVaultSystem powerAvailableProvider ← Main.PlansB68_B69.IsCryoVaultPowered (room_cryo_vault)",
                 ["fx_quarantine_ventilation_off"] = "DiseaseQuarantineCoordinator isolationPowerCheck (Main.SetupDisease)",
+                // Plan 71 — nine new powered rooms. Consumers that were already
+                // querying these IDs before the entries existed (the dead-query
+                // bug class) become live with the data alone; the rest are wired
+                // at existing host call sites (see PLAN71_COMPLETION_REPORT.md).
+                ["fx_heating_off"] = "ResourceMassBalanceSimulator isNearHeatSource (room_heating)",
+                ["fx_kitchen_off"] = "ResourceMassBalanceSimulator kitchenPower (room_kitchen)",
+                ["fx_water_filtration_off"] = "ResourceMassBalanceSimulator waterPower (room_water_filtration)",
+                ["fx_airlock_decon_off"] = "PerimeterDefenseSystem assault airlock power (InfrastructureHeadlessDemo defense path)",
+                ["fx_radio_tuner_off"] = "ShelterRadioStationSystem.TickDay monitoring pause (Main.Plans46_49)",
+                ["fx_laboratory_offline"] = "ResearchHostSession.StartGate research-start block (Main.PlayerSurfaces)",
+                ["fx_precision_metrology_off"] = "PrecisionMetrology drift/projection pause (Main.PlansB86_B89 TickPrecisionMetrology)",
+                ["fx_common_mess_cold"] = "ShelterDecorHostSession.ApplyDailyMorale pause (Main.CampaignOwners SurvivorsNeedsDayOwner)",
+                ["fx_armory_service_off"] = "DefenseSystem isEmplacementPowered armory circuit (Main.Plans162_165 SetupDefense)",
             };
 
             var catalog = LoadCatalog();
@@ -187,6 +200,18 @@ namespace Ashfall.Core.Tests.Shelter
             Assert.Contains("room_workshop", ids);
             Assert.Contains("room_greenhouse", ids);
             Assert.Contains("room_clinic", ids);
+            // Plan 71: room IDs queried by downstream systems before their grid
+            // entries existed (the dead-query class) must now resolve.
+            Assert.Contains("room_heating", ids);
+            Assert.Contains("room_kitchen", ids);
+            Assert.Contains("room_water_filtration", ids);
+            Assert.Contains("room_airlock", ids);
+            // Plan 71: Plan 41 shelter rooms with electrical profiles.
+            Assert.Contains("room_radio_tuner", ids);
+            Assert.Contains("room_laboratory_research", ids);
+            Assert.Contains("room_workshop_precision", ids);
+            Assert.Contains("room_common_mess_hall", ids);
+            Assert.Contains("room_armory_munitions", ids);
         }
     }
 }

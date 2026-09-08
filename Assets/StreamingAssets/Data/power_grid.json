@@ -66,6 +66,69 @@
       "draw_watts": 90,
       "default_priority": "critical",
       "failure_effect_id": "fx_quarantine_ventilation_off"
+    },
+    {
+      "id": "room_heating",
+      "display_name": "Electric Heating",
+      "draw_watts": 240,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_heating_off"
+    },
+    {
+      "id": "room_kitchen",
+      "display_name": "Kitchen",
+      "draw_watts": 150,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_kitchen_off"
+    },
+    {
+      "id": "room_water_filtration",
+      "display_name": "Water Filtration",
+      "draw_watts": 140,
+      "default_priority": "critical",
+      "failure_effect_id": "fx_water_filtration_off"
+    },
+    {
+      "id": "room_airlock",
+      "display_name": "Airlock Decontamination",
+      "draw_watts": 130,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_airlock_decon_off"
+    },
+    {
+      "id": "room_radio_tuner",
+      "display_name": "Radio Room",
+      "draw_watts": 90,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_radio_tuner_off"
+    },
+    {
+      "id": "room_laboratory_research",
+      "display_name": "Laboratory",
+      "draw_watts": 260,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_laboratory_offline"
+    },
+    {
+      "id": "room_workshop_precision",
+      "display_name": "Precision Workshop",
+      "draw_watts": 240,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_precision_metrology_off"
+    },
+    {
+      "id": "room_common_mess_hall",
+      "display_name": "Common Mess Hall",
+      "draw_watts": 70,
+      "default_priority": "low",
+      "failure_effect_id": "fx_common_mess_cold"
+    },
+    {
+      "id": "room_armory_munitions",
+      "display_name": "Armory & Munitions",
+      "draw_watts": 60,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_armory_service_off"
     }
   ],
   "emp_storm_severity": 0.6,

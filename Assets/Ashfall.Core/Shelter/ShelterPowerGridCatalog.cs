@@ -177,7 +177,21 @@ namespace Ashfall.Core.Shelter
                 new ShelterPowerGridRoomDef { Id = "room_greenhouse", DisplayName = "Greenhouse", DrawWatts = 160f, DefaultPriority = "standard", FailureEffectId = "fx_grow_lights_off" },
                 new ShelterPowerGridRoomDef { Id = "room_foundry", DisplayName = "Silent Foundry", DrawWatts = 220f, DefaultPriority = "low", FailureEffectId = "fx_foundry_standstill" },
                 new ShelterPowerGridRoomDef { Id = "room_lighting_main", DisplayName = "Main Lighting", DrawWatts = 80f, DefaultPriority = "low", FailureEffectId = "fx_lighting_dim" },
-                new ShelterPowerGridRoomDef { Id = "room_workshop", DisplayName = "Workshop", DrawWatts = 300f, DefaultPriority = "low", FailureEffectId = "fx_workshop_offline" }
+                new ShelterPowerGridRoomDef { Id = "room_workshop", DisplayName = "Workshop", DrawWatts = 300f, DefaultPriority = "low", FailureEffectId = "fx_workshop_offline" },
+                // Plan 71 — keep the embedded fallback in lockstep with the
+                // authoritative catalog so downstream power queries resolve
+                // even when the file is missing.
+                new ShelterPowerGridRoomDef { Id = "room_cryo_vault", DisplayName = "Cryo Vault", DrawWatts = 280f, DefaultPriority = "critical", FailureEffectId = "fx_cryo_vault_unpowered" },
+                new ShelterPowerGridRoomDef { Id = "room_ward_quarantine", DisplayName = "Quarantine Ward", DrawWatts = 90f, DefaultPriority = "critical", FailureEffectId = "fx_quarantine_ventilation_off" },
+                new ShelterPowerGridRoomDef { Id = "room_heating", DisplayName = "Electric Heating", DrawWatts = 240f, DefaultPriority = "standard", FailureEffectId = "fx_heating_off" },
+                new ShelterPowerGridRoomDef { Id = "room_kitchen", DisplayName = "Kitchen", DrawWatts = 150f, DefaultPriority = "standard", FailureEffectId = "fx_kitchen_off" },
+                new ShelterPowerGridRoomDef { Id = "room_water_filtration", DisplayName = "Water Filtration", DrawWatts = 140f, DefaultPriority = "critical", FailureEffectId = "fx_water_filtration_off" },
+                new ShelterPowerGridRoomDef { Id = "room_airlock", DisplayName = "Airlock Decontamination", DrawWatts = 130f, DefaultPriority = "standard", FailureEffectId = "fx_airlock_decon_off" },
+                new ShelterPowerGridRoomDef { Id = "room_radio_tuner", DisplayName = "Radio Room", DrawWatts = 90f, DefaultPriority = "standard", FailureEffectId = "fx_radio_tuner_off" },
+                new ShelterPowerGridRoomDef { Id = "room_laboratory_research", DisplayName = "Laboratory", DrawWatts = 260f, DefaultPriority = "standard", FailureEffectId = "fx_laboratory_offline" },
+                new ShelterPowerGridRoomDef { Id = "room_workshop_precision", DisplayName = "Precision Workshop", DrawWatts = 240f, DefaultPriority = "standard", FailureEffectId = "fx_precision_metrology_off" },
+                new ShelterPowerGridRoomDef { Id = "room_common_mess_hall", DisplayName = "Common Mess Hall", DrawWatts = 70f, DefaultPriority = "low", FailureEffectId = "fx_common_mess_cold" },
+                new ShelterPowerGridRoomDef { Id = "room_armory_munitions", DisplayName = "Armory & Munitions", DrawWatts = 60f, DefaultPriority = "standard", FailureEffectId = "fx_armory_service_off" }
             }
         };
     }

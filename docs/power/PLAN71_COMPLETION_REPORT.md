@@ -1,101 +1,129 @@
-# Plan 71 — Power Grid Rooms Expansion: 6 → 18 Powered Rooms — Completion Report
+# Plan 71 — Power Grid Rooms Expansion — Completion Report
 
-> **Mission Complete:** Expanded shelter power-grid data from its 6-room footprint to a complete, strategically meaningful 18-room electrical topology covering all primary shelter functions present in the live repository, while preserving `PowerGridSystem` as the sole authority for generation, battery charge, fuel consumption, room draw, priority, load shedding, and power-loss state.
+**Status: COMPLETE.** Final catalog: **18 powered rooms** (9 existing + 9 new). Data-first with 5
+minimal host wiring gates and zero Core gameplay changes.
 
----
+## Summary
 
-## 1. Executive Summary
+`power_grid.json` expanded from 9 to 18 powered rooms. The plan's stated baseline of 6 was stale —
+repository truth at execution time was 9 (the cryo vault and quarantine ward had landed via the
+SHELTER_HARDENING wave). Delta = 9, per §1.4. All 9 original entries preserved byte-identical,
+in order, with stable IDs.
 
-- **Catalog Expanded:** `Assets/StreamingAssets/Data/power_grid.json` expanded from **6 rooms to exactly 18 powered rooms**.
-- **Original 6 Preserved:** All 6 baseline rooms (`room_air_filtration`, `room_clinic`, `room_water_pump`, `room_greenhouse`, `room_foundry`, `room_lighting_main`) were preserved byte-for-byte in their original order.
-- **12 New Rooms Added:** Mapped authoritatively to Plan 41 shelter rooms (`shelter_rooms.json`, `ShelterRoomCatalog.cs`) and canonical shelter life-support services:
-  - `room_workshop` (200 W, standard, `fx_workshop_unpowered`)
-  - `room_kitchen` (120 W, standard, `fx_kitchen_cold`)
-  - `room_radio_tuner` (100 W, standard, `fx_radio_static`)
-  - `room_laboratory_research` (300 W, standard, `fx_laboratory_offline`)
-  - `room_armory_munitions` (50 W, standard, `fx_armory_lockdown`)
-  - `room_storage_secure` (80 W, standard, `fx_cold_storage_spoilage`)
-  - `room_common_mess_hall` (40 W, low, `fx_mess_hall_dark`)
-  - `room_bunks` (30 W, low, `fx_dormitory_cold`)
-  - `room_water_treatment` (180 W, critical, `fx_water_contamination`)
-  - `room_surveillance` (90 W, standard, `fx_surveillance_blind`)
-  - `room_airlock` (110 W, critical, `fx_airlock_decon_disabled`)
-  - `room_ward_quarantine` (70 W, critical, `fx_quarantine_breach`)
-- **Total Nominal Draw:** **2,230 W** across all 18 rooms.
-- **Critical Core Budget:** **760 W** (sum of 6 critical rooms: air filtration, clinic, water pump, water treatment, airlock, quarantine). Fits cleanly within the baseline **800 W** diesel dynamo capacity with a 40 W safety margin.
+## Baseline (verified)
 
----
+- 9 rooms; total nominal draw **1530 W** vs `generation_watts_default` **800 W** — the shipped
+  design already runs deliberate early-game brownout pressure, escaped by building generation
+  (nuclear cores 100 W–5 kW, geothermal ORC up to 450+ kW).
+- Priority enum: `Disabled=0, Low=1, Standard=2, Critical=3`; JSON vocabulary
+  `critical`/`standard`/`low`/`disabled` (case-insensitive via `MapPriority`).
+- Identity model: **Model D (hybrid)** — entries are room definitions for canonical Plan 41 rooms
+  (`room_clinic`, `room_workshop`, `room_ward_quarantine`) *and* aggregate services
+  (`room_water_pump`, `room_lighting_main`, `room_air_filtration` ↔ Plan 41 `room_filtration`).
+- Generator boundary: **Outcome B** — generation is a source (`generation_watts_default` +
+  external contributions via `SetGenerationContribution`); no `room_generator_room` consumer was
+  added. The Plan 41 `room_generator` identity stays a room, not a grid consumer.
+- Save: `PowerGridState` (breakers/tripped/priorities/battery/fuel/lastSurgeDay) with unknown-ID
+  tolerance in `NormalizeAndValidate` — new catalog entries are additive-safe for old saves.
 
-## 2. Core Architecture Invariants & Boundaries
+## Final catalog (18)
 
-1. **`PowerGridSystem` is Sole Authority:** Electrical supply (`GenerationWatts`), storage (`BatteryReserveWh`, `BatteryCapacityWh`), fuel burn (`FuelUnits`), total demand calculation (`ComputeTotalDraw()`), brownout evaluation (`IsBrownout`), and circuit trip simulation remain strictly encapsulated in `Assets/Ashfall.Core/Shelter/PowerGridSystem.cs`.
-2. **Rejection of 0 W Generator Consumer:** In accordance with Constraint 1.2, a 0 W fake consumer was rejected because generator generation, fuel, and battery storage are already modeled as active sources. The slot was assigned to real, high-stakes consumers (`room_airlock` and `room_ward_quarantine`).
-3. **Model D (Hybrid Identity):** Reconciled physical room instances (`room_workshop`, `room_kitchen`, `room_radio_tuner`, `room_laboratory_research`, `room_armory_munitions`, `room_storage_secure`, `room_common_mess_hall`, `room_bunks`, `room_airlock`, `room_ward_quarantine`, `room_clinic`, `room_greenhouse`, `room_foundry`) with canonical life-support circuits (`room_air_filtration`, `room_water_pump`, `room_water_treatment`, `room_lighting_main`, `room_surveillance`).
-4. **Host Session Drift Resolved:** Updated `PowerGridHostSession.cs` so `LoadGridJson()` dynamically reads `power_grid.json` via `CatalogPath.ResolveDataDir()`, falling back to an updated 18-room `DefaultGrid()`.
+| # | id | draw W | priority | failure effect | consumer |
+|---|---|---:|---|---|---|
+| 1 | room_air_filtration | 180 | critical | fx_filtration_off | StartingLevelSystem powerAvailability01 |
+| 2 | room_clinic | 120 | critical | fx_clinic_off | MedicalPipelineCoordinator + disease day-owner |
+| 3 | room_water_pump | 100 | critical | fx_water_pressure_drop | Plan168 fluid day-owner |
+| 4 | room_greenhouse | 160 | standard | fx_grow_lights_off | agriculture lighting availability |
+| 5 | room_foundry | 220 | low | fx_foundry_standstill | SilentFoundry host power gate |
+| 6 | room_lighting_main | 80 | low | fx_lighting_dim | shelter schedule lighting demand |
+| 7 | room_workshop | 300 | low | fx_workshop_offline | crafting station sync (Main.World) |
+| 8 | room_cryo_vault | 280 | critical | fx_cryo_vault_unpowered | CryoVaultSystem power provider |
+| 9 | room_ward_quarantine | 90 | critical | fx_quarantine_ventilation_off | DiseaseQuarantineCoordinator |
+| 10 | **room_heating** | 240 | standard | fx_heating_off | ResourceMassBalanceSimulator isNearHeatSource *(dead query made live)* |
+| 11 | **room_kitchen** | 150 | standard | fx_kitchen_off | ResourceMassBalanceSimulator kitchenPower *(dead query made live)* |
+| 12 | **room_water_filtration** | 140 | critical | fx_water_filtration_off | ResourceMassBalanceSimulator waterPower *(dead query made live)* |
+| 13 | **room_airlock** | 130 | standard | fx_airlock_decon_off | raider-assault airlock power (perimeter defense path) *(dead query made live)* |
+| 14 | **room_radio_tuner** | 90 | standard | fx_radio_tuner_off | ShelterRadioStationSystem monitoring pause (new host gate) |
+| 15 | **room_laboratory_research** | 260 | standard | fx_laboratory_offline | research start-boundary gate (new host gate) |
+| 16 | **room_workshop_precision** | 240 | standard | fx_precision_metrology_off | metrology drift pause + zero calibration projection (new host gate) |
+| 17 | **room_common_mess_hall** | 70 | low | fx_common_mess_cold | daily decor-morale pause (new host gate) |
+| 18 | **room_armory_munitions** | 60 | standard | fx_armory_service_off | powered perimeter emplacements require armory circuit (new host gate) |
 
----
+## Load budget
 
-## 3. Load Budget & Shedding Hierarchy
+Total nominal **2910 W** — critical **910**, standard **1330**, low **670**; base generation 800 W.
 
-| Priority Band | Rooms Included | Total Draw | Strategic Role |
-|---|---|---|---|
-| **Critical** | `room_air_filtration`, `room_clinic`, `room_water_pump`, `room_water_treatment`, `room_airlock`, `room_ward_quarantine` | **760 W** | Survival core; protected from brownout under baseline 800 W generation |
-| **Standard** | `room_greenhouse`, `room_workshop`, `room_kitchen`, `room_radio_tuner`, `room_laboratory_research`, `room_armory_munitions`, `room_storage_secure`, `room_surveillance` | **1,100 W** | Productive and research operations; scheduled or toggled by player during energy deficit |
-| **Low** | `room_foundry`, `room_lighting_main`, `room_common_mess_hall`, `room_bunks` | **370 W** | Industrial batch casting and comfort; first tier shed when demand exceeds supply |
-| **Total** | 18 Powered Rooms | **2,230 W** | Requires upgraded dynamos or active circuit breaker management |
+| Scenario | Supply | Outcome |
+|---|---|---|
+| Early, all rooms, base gen | 800 W | net −2110 W → ~16 h brownout/day; standard/low breakers trip first (seeded); critical core carried by battery until reserve exhausts — **below-critical-envelope is live by design** (910 > 800), forcing generation build-up |
+| Mid, +2 kW pebble-bed core | 2800 W | near balance; priority decisions matter (shed low/standard to protect critical) |
+| Mid, +5 kW TRIGA | 5800 W | full surplus; battery charges |
+| Late, geothermal ORC | 450+ kW | trivial surplus (catalog ceiling by design) |
 
----
+Early-game viability is proven by the full-campaign economy tests (food/water/fuel ≥ 0, health ≥ 85
+across seeded multi-day runs) — passing with the 18-room grid.
 
-## 4. Downstream Integrations Verified
+## Failure effects / edge semantics
 
-1. **Failure Effects & Edge Semantics:** 17 level gates (pausing crafting, cooking, research, crop growth, medical diagnostics) and 1 delayed consequence (`fx_cold_storage_spoilage` initiating grace period before ration decay). Zero per-tick penalty spam.
-2. **6 Incident Hooks:**
-   - `incident_generator_failure`: Halves or drops dynamo generation.
-   - `incident_air_filter_breakdown`: Triggers circuit trip on `room_air_filtration`.
-   - `incident_water_pipe_burst`: Disables pump motor on `room_water_pump`.
-   - `incident_radiation_spike`: Drastically stresses `room_air_filtration`.
-   - `incident_water_contamination`: Overloads `room_water_treatment`.
-   - `incident_radio_interference`: Jams preamp on `room_radio_tuner`.
-3. **4 Primary Assignment Output Seams:**
-   - Workshop (`room_workshop`): Fabrication pauses without destroying scrap inventory.
-   - Greenhouse (`room_greenhouse`): Grow lamps go dark; crop timer halts without instant die-off.
-   - Laboratory (`room_laboratory_research`): Terminals sleep; decoding progress preserved.
-   - Kitchen (`room_kitchen`): Electric stoves cool; meal cooking halts while cold rations remain edible.
-4. **Schedule Compatibility:** Static draw model preserved; dynamic schedule-dependent draw cleanly isolated for Plan 70.
-5. **Save/Load Compatibility:** Pre-existing 6-room saves restore safely into 18-room systems via `NormalizeAndValidate`, preserving breaker states and defaulting new circuits to closed and untripped.
+All 9 new effects are **level gates** (true while unpowered, false on restore; no one-shot
+irreversible consequences, no per-tick accumulation — §8.1/§8.3). The G6 consumer map in
+`PowerGridCatalogTests` pins every fx ID to its named consumer. Four entries fixed the dead-query
+bug class: `IsRoomPowered("room_heating"/"room_kitchen"/"room_water_filtration"/"room_airlock")`
+previously always returned false because no catalog entry existed.
 
----
+## Host wiring (5 gates, all at existing call sites)
 
-## 5. Verification Matrix Evidence
+1. `Main.Plans46_49` — radio monitoring pauses while `room_radio_tuner` is unpowered (absolute
+   expiry timestamps batch-resume; no state loss).
+2. `Main.CampaignOwners` (SurvivorsNeedsDayOwner) — daily decor morale pauses while
+   `room_common_mess_hall` is unpowered (once-per-day, no accumulation).
+3. `Main.PlansB86_B89` (TickPrecisionMetrology) — drift tick pauses and the projected
+   workshop calibration grade reads zero while `room_workshop_precision` is unpowered.
+4. `Main.Plans162_165` — powered perimeter emplacements draw through the armory circuit: the raid
+   power delegate now requires `room_armory_munitions` in addition to grid health.
+5. `ResearchHostSession.StartResearchGate` (new optional host property, set in
+   `Main.PlayerSurfaces` at both creation sites) — new research cannot start while
+   `room_laboratory_research` is unpowered; in-flight progress is never touched.
 
-| Verification Gate | Command | Exit Code | Result | Evidence |
-|---|---|---|---|---|
-| **C# Unit Tests** | `dotnet test Ashfall.Core.Tests` | 0 | **6,653 / 6,653 PASS** | 0 failed, 0 skipped, 14 dedicated catalog tests in `PowerGridCatalogTests.cs` |
-| **Host Build** | `dotnet build Ashfall.csproj` | 0 | **0 Warnings, 0 Errors** | Compiles cleanly with Godot .NET Mono runtime |
-| **Data Integrity Gate** | `godot --headless --path . -- --data-integrity-selftest` | 0 | **PASS (0 findings)** | 10,619 IDs authored across 208 catalogs verified |
-| **Content Utilization Gate** | `godot --headless --path . -- --content-utilization-selftest` | 0 | **CI Gate PASS** | 490 catalogs scanned; 0 orphaned |
-| **Scene Binding Gate** | `godot --headless --path . -- --scene-binding-selftest` | 0 | **22 / 22 PASS** | All production panel bindings valid |
-| **Scene Linter** | `python3 scripts/ci/scene-lint.py` | 0 | **0 Errors, 0 Warnings** | 27 production scenes checked clean |
+`NEW CORE CHANGE JUSTIFICATION: NOT REQUIRED` — zero `Assets/Ashfall.Core/` gameplay changes.
+One embedded-fallback sync (`ShelterPowerGridCatalog.FallbackDefault`) keeps the missing-file boot
+path consistent with the catalog, per the loader's own documented contract.
 
----
+## Incidents / schedules
 
-## 6. Complete Documentation Deliverables
+Incident hooks (Plan 57) already flow through generation contributions and the surge path
+(`ApplySurgeDay` trips lowest-tier circuits deterministically, critical-exempt below 0.9 severity);
+no incident state was added to room data. Plan 70 schedule coupling: **deferred** — no
+dynamic-demand hook exists (Case B, §71D.6); static draw semantics preserved.
 
-All required engineering documentation files have been written to `docs/power/`:
-1. `docs/power/PLAN71_BASELINE.md`: Initial catalog state, parameters, and architecture.
-2. `docs/power/POWER_GRID_AUTHORITY_MAP.md`: Ownership boundaries between grid and downstream systems.
-3. `docs/power/POWER_ROOM_IDENTITY_MODEL.md`: Hybrid architecture model (Model D).
-4. `docs/power/POWER_GENERATOR_CONSUMER_BOUNDARY.md`: Formal rationale for rejecting 0 W generator consumer.
-5. `docs/power/PLAN41_POWER_ROOM_RECONCILIATION.md`: Mapping matrix between Plan 41 IDs and power consumers.
-6. `docs/power/POWER_ROOM_COVERAGE_MATRIX.md`: Complete 18-room specification table.
-7. `docs/power/POWER_LOAD_BUDGET_MATRIX.md`: Power budget, margin, and battery endurance calculations.
-8. `docs/power/POWER_PRIORITY_SHEDDING_MATRIX.md`: Load shedding tiers and deterministic tie-breaking.
-9. `docs/power/POWER_FAILURE_EFFECT_MATRIX.md`: Failure consequences and recovery behavior.
-10. `docs/power/POWER_EFFECT_EDGE_SEMANTICS.md`: Level gates, edge triggers, and anti-spam rules.
-11. `docs/power/POWER_INCIDENT_INTEGRATION.md`: 6 incident seams from Plan 57.
-12. `docs/power/POWER_ASSIGNMENT_OUTPUT_INTEGRATION.md`: 4 production seams from Plan 41.
-13. `docs/power/POWER_SCHEDULE_COMPATIBILITY.md`: Static draw contract and Plan 70 deferral.
-14. `docs/power/PLAN71_SAVE_COMPATIBILITY.md`: Backward compatibility, envelope capture, and migration.
-15. `docs/power/PLAN71_BALANCE_REPORT.md`: Early, mid, and late game power balance simulations.
-16. `docs/power/PLAN71_REGRESSION_MATRIX.md`: 20 regression test cases and validation criteria.
-17. `docs/power/PLAN71_COMPLETION_REPORT.md`: This comprehensive closeout document.
+## Save compatibility
+
+Old saves: unknown room IDs are pruned by `NormalizeAndValidate`; new rooms default to closed
+breakers and standard priority on first appearance; user-set priorities (stored overrides) win over
+catalog defaults everywhere (`ApplySurgeDay` reads overrides first). Battery/fuel round-trip is
+pinned by existing tests; no new persisted fields.
+
+## Determinism
+
+Shedding/surge ordering is tier-ascending then RoomId ordinal — independent of JSON order and
+dictionary iteration. Load-budget math is closed-form from static draws. The seeded load-spike and
+trip rolls are unchanged. `PowerGridDeterminismTests` green.
+
+## Verification
+
+| Command | Result |
+|---|---|
+| `dotnet test --filter PowerGrid + BalancePowerEconomy + SteamTurbine` | **109/109 PASS** |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **9461/9461 PASS** |
+| `godot --headless -- --data-integrity-selftest` | **PASS** — 0 findings, 298 catalogs |
+| `godot --headless -- --content-utilization-selftest` | **PASS** |
+| `godot --headless -- --power-grid-catalog-selftest` | **PASS** — rooms=18, fluidPower=1, surgeTrips=6 (deterministic), battery 3700 Wh after surge |
+| `godot --headless -- --real-campaign-journey-selftest` | **PASS** |
+| `dotnet build Ashfall.csproj` | **PASS** — 0 warnings, 0 errors |
+
+## Deferred
+
+- Plan 70 schedule-driven dynamic demand (no live hook).
+- Per-machine power gating inside `ShelterWorkshopSystem` (would need a Core API for per-room
+  labor gating; the precision/armory rooms are gated at their consumer boundaries instead).
+- Generator maintenance/efficiency depth, emergency presets, machine-personality outage reactions.

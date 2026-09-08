@@ -363,12 +363,15 @@ namespace AtomicWar.GodotApp
             var captureRng = _campaignDay != null
                 ? _campaignDay.Rng.Fork(CampaignStreamIds.DefenseCapture, day, 0)
                 : new SeededRng(1631 + day);
-            // Turrets draw from the grid: emplacements are exterior hardware,
-            // so their power query is the grid-level state (no invented room).
+            // Turrets draw from the grid: emplacements are exterior hardware.
+            // Plan 71: automated emplacements additionally draw through the
+            // room_armory_munitions circuit — while it is shed or tripped the
+            // turrets freeze even if the grid as a whole is healthy.
             return _defense.System.ResolvePreCombatRaid(
                 day, raiderStrength, isNight,
                 _perimeterDefense,
-                _ => _powerGrid?.System == null || !_powerGrid.System.IsBrownout,
+                id => (_powerGrid?.System == null || !_powerGrid.System.IsBrownout)
+                    && (_powerGrid?.System?.IsRoomPowered("room_armory_munitions") ?? true),
                 targetingRng, captureRng);
         }
 
