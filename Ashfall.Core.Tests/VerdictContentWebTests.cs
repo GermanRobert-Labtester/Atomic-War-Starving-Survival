@@ -89,14 +89,14 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void LoadLocations_ReturnsFourSites()
+        public void LoadLocations_ReturnsFifteenSites()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
 
             var locs = VerdictCatalogLoader.LoadLocations(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(4, locs.Count);
+            Assert.Equal(15, locs.Count);
             var ids = new HashSet<string>();
             foreach (var l in locs)
             {

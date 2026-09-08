@@ -387,6 +387,186 @@
           "body": "He explains the levy without shame: a road, a price, a chalk receipt. 'Bandits take. The Toll prices. You can hate both, but only one of them gives you paper.'"
         }
       ]
+    },
+    {
+      "id": "witness_harbor_master_kell",
+      "witness_name": "Harbor Master Kell",
+      "location_id": "loc_abandoned_tide_gauge",
+      "knowledge_key": "history_evacuation_harbor_clearance",
+      "day_min": 242,
+      "priority": 40,
+      "body": "He taps the brass bezel of the drowned tide recorder with a stained thumbnail. 'Three heavy barges cleared the outer breakwater before the radar mast buckled, each running blacked-out under auxiliary steam. The manifests were signed in purple ink by quartermasters who never boarded. If they went down in the shoals, they went down with empty holds while the crowds pounded on the dock gates.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He taps the brass bezel of the drowned tide recorder with a stained thumbnail. 'Three heavy barges cleared the outer breakwater before the radar mast buckled, each running blacked-out under auxiliary steam. The manifests were signed in purple ink by quartermasters who never boarded. If they went down in the shoals, they went down with empty holds while the crowds pounded on the dock gates.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_trawler_captain_maren",
+      "witness_name": "Trawler Captain Maren",
+      "location_id": "loc_maritime_icebreaker_dock",
+      "knowledge_key": "history_evacuation_trawler_sighting",
+      "day_min": 244,
+      "priority": 40,
+      "body": "She points out into the grey chop of the sound where ice floes grind against rusted pylons. 'The convoy never reached open water. Two transport hulls listed onto the north reef by midnight, burning from the engine rooms with scuttling charges blown through their own plates. I saw lifeboats launched without oarlocks, drifting north toward the brine shoals until the fog swallowed them.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "She points out into the grey chop of the sound where ice floes grind against rusted pylons. 'The convoy never reached open water. Two transport hulls listed onto the north reef by midnight, burning from the engine rooms with scuttling charges blown through their own plates. I saw lifeboats launched without oarlocks, drifting north toward the brine shoals until the fog swallowed them.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_coastal_refugee_nurse",
+      "witness_name": "Refugee Nurse Maeve",
+      "location_id": "loc_st_brigids_almshouse",
+      "knowledge_key": "history_evacuation_triage_intake",
+      "day_min": 246,
+      "priority": 40,
+      "body": "She wrings out a gray linen rag over a zinc basin before speaking. 'We received twenty-two naval ratings three nights after the fleet was supposed to have cleared the bay, none of them carrying shrapnel or immersion burns. Their skin was blistered with internal pipe steam from valve tampering, and their officer offered four tins of penicillin if we burned the intake register. I took the medicine and buried the dead in the vegetable plot behind the crypt.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "She wrings out a gray linen rag over a zinc basin before speaking. 'We received twenty-two naval ratings three nights after the fleet was supposed to have cleared the bay, none of them carrying shrapnel or immersion burns. Their skin was blistered with internal pipe steam from valve tampering, and their officer offered four tins of penicillin if we burned the intake register. I took the medicine and buried the dead in the vegetable plot behind the crypt.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_naval_conscript_brant",
+      "witness_name": "Naval Conscript Brant",
+      "location_id": "loc_clifftop_observation_bunker",
+      "knowledge_key": "history_evacuation_conscript_orders",
+      "day_min": 248,
+      "priority": 40,
+      "body": "He peers through the cracked slit of the rangefinder housing, squinting at the empty horizon. 'The teleprinter punched out battery targeting coordinates for the harbor mouth at dusk, not out to sea against raiders. We were ordered to sight on our own transport channel if any vessel cleared without senior command verification. The sergeant locked the firing relays with his master key, put two service revolvers in his haversack, and walked inland into the pines.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He peers through the cracked slit of the rangefinder housing, squinting at the empty horizon. 'The teleprinter punched out battery targeting coordinates for the harbor mouth at dusk, not out to sea against raiders. We were ordered to sight on our own transport channel if any vessel cleared without senior command verification. The sergeant locked the firing relays with his master key, put two service revolvers in his haversack, and walked inland into the pines.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_convoy_driver_tomas",
+      "witness_name": "Convoy Driver Tomas",
+      "location_id": "loc_grain_silo",
+      "knowledge_key": "history_grain_convoy_route_deviation",
+      "day_min": 243,
+      "priority": 40,
+      "body": "He rolls up his left trouser leg to expose jagged scar tissue knotted around a metal staple. 'I had five tons of winter seed rye in the second bed when the barricade slammed down across the culvert. There was no megaphone hail, no searchlight challenge, just automatic heavy caliber rounds tearing straight through the radiator blocks and cabs. We weren't flying bandit colors; the green Rebuilder tarps were tied down in plain view.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He rolls up his left trouser leg to expose jagged scar tissue knotted around a metal staple. 'I had five tons of winter seed rye in the second bed when the barricade slammed down across the culvert. There was no megaphone hail, no searchlight challenge, just automatic heavy caliber rounds tearing straight through the radiator blocks and cabs. We weren't flying bandit colors; the green Rebuilder tarps were tied down in plain view.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_rebuilder_field_medic",
+      "witness_name": "Rebuilder Field Medic Kora",
+      "location_id": "loc_denial_cut_substation",
+      "knowledge_key": "history_grain_convoy_casualty_patterns",
+      "day_min": 245,
+      "priority": 40,
+      "body": "She lays out a pair of bent surgical forceps on a wooden crate. 'I cut the projectiles out of seven survivors pulled from the ditch before the garrison cordons locked the valley. Not one slug came from military service carbines; they were lead balls and copper-jacketed hand loads scavenged from hunting pieces. When the garrison squads finally marched in with stretchers, they acted surprised to find any trucks intact.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "She lays out a pair of bent surgical forceps on a wooden crate. 'I cut the projectiles out of seven survivors pulled from the ditch before the garrison cordons locked the valley. Not one slug came from military service carbines; they were lead balls and copper-jacketed hand loads scavenged from hunting pieces. When the garrison squads finally marched in with stretchers, they acted surprised to find any trucks intact.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_garrison_picket_vaughn",
+      "witness_name": "Garrison Picket Vaughn",
+      "location_id": "loc_border_checkpoint_ruins",
+      "knowledge_key": "history_grain_convoy_warning_hail",
+      "day_min": 247,
+      "priority": 40,
+      "body": "He leans his shoulder against the charred sandbag parapet, shivering under a frayed overcoat. 'The lead truck accelerated right through the tripwires into the red gate zone without responding to flare signals. A submachine gun spray rattled off our sandbags from the passenger seat before our gunner ever touched the spade grips. In the sleet and the dark, an unflagged convoy barreling toward your post at forty miles an hour looks like a rolling demolition bomb.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He leans his shoulder against the charred sandbag parapet, shivering under a frayed overcoat. 'The lead truck accelerated right through the tripwires into the red gate zone without responding to flare signals. A submachine gun spray rattled off our sandbags from the passenger seat before our gunner ever touched the spade grips. In the sleet and the dark, an unflagged convoy barreling toward your post at forty miles an hour looks like a rolling demolition bomb.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_wayside_mechanic_yorin",
+      "witness_name": "Wayside Mechanic Yorin",
+      "location_id": "loc_weighbridge",
+      "knowledge_key": "history_grain_convoy_flank_muzzle_flash",
+      "day_min": 249,
+      "priority": 40,
+      "body": "He wipes oil-blackened fingers with a scrap of dry cotton waste. 'I was under the balance platform greasing the pivot knucklebones when the noise began up the pass. The first rifle flashes didn't come from the checkpoint or the road; they flashed from the scrub oaks high on the north ridge. Someone put three deliberate shots into the checkpoint dynamo, the lights died, and both sides started firing blind into the fog.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He wipes oil-blackened fingers with a scrap of dry cotton waste. 'I was under the balance platform greasing the pivot knucklebones when the noise began up the pass. The first rifle flashes didn't come from the checkpoint or the road; they flashed from the scrub oaks high on the north ridge. Someone put three deliberate shots into the checkpoint dynamo, the lights died, and both sides started firing blind into the fog.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_foundry_molder_hask",
+      "witness_name": "Foundry Molder Hask",
+      "location_id": "loc_vulcan_works_chemical",
+      "knowledge_key": "history_foundry_pressure_drop",
+      "day_min": 244,
+      "priority": 40,
+      "body": "He rubs the heat caliche on his palms together with a raspy hiss. 'The brine pressure dropped to zero forty minutes before the shift horn sounded, choking the tuyere jackets with boiled slag. The front office claimed the terrace pumps had failed or been sabotaged by bitter locals. I crawled the primary culvert with a hand torch after curfew; the supply gate was padlocked from the foundry side with fresh red lead on the shackle.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He rubs the heat caliche on his palms together with a raspy hiss. 'The brine pressure dropped to zero forty minutes before the shift horn sounded, choking the tuyere jackets with boiled slag. The front office claimed the terrace pumps had failed or been sabotaged by bitter locals. I crawled the primary culvert with a hand torch after curfew; the supply gate was padlocked from the foundry side with fresh red lead on the shackle.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_iceroad_hauler_sula",
+      "witness_name": "Ice-Road Hauler Sula",
+      "location_id": "loc_north_freight_yard",
+      "knowledge_key": "history_foundry_checkpoint_diverted_seals",
+      "day_min": 246,
+      "priority": 40,
+      "body": "She tightens the hemp lashing on her sled frame with a boot heel. 'Those chemical carboys never stopped leaving the freight depot; they just stopped arriving at the terrace settlement. Every second manifest was stamped for emergency agricultural redistricting and routed west into the old rail tunnels under private guard. The clerks in town knew exactly where the barrels went because their own families were drawing fuel rations from that spur.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "She tightens the hemp lashing on her sled frame with a boot heel. 'Those chemical carboys never stopped leaving the freight depot; they just stopped arriving at the terrace settlement. Every second manifest was stamped for emergency agricultural redistricting and routed west into the old rail tunnels under private guard. The clerks in town knew exactly where the barrels went because their own families were drawing fuel rations from that spur.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_arbitration_clerk_moran",
+      "witness_name": "Arbitration Clerk Moran",
+      "location_id": "loc_conscription_office",
+      "knowledge_key": "history_foundry_unregistered_amendment",
+      "day_min": 248,
+      "priority": 40,
+      "body": "He smooths an unsealed vellum fold against the scratched desktop with careful precision. 'The founding accord was legitimate, signed by three community proctors and the foundry liaison. But forty-eight hours prior to ratification, an administrative rider was stapled to the docket establishing mandatory chemical quotas backed by civil labor distraint. When the elders refused the rider, the foundry invoked clause nine and declared the entire treaty forfeit.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "He smooths an unsealed vellum fold against the scratched desktop with careful precision. 'The founding accord was legitimate, signed by three community proctors and the foundry liaison. But forty-eight hours prior to ratification, an administrative rider was stapled to the docket establishing mandatory chemical quotas backed by civil labor distraint. When the elders refused the rider, the foundry invoked clause nine and declared the entire treaty forfeit.'"
+        }
+      ]
+    },
+    {
+      "id": "witness_terrace_elder_marit",
+      "witness_name": "Terrace Elder Marit",
+      "location_id": "loc_river_gauging_station",
+      "knowledge_key": "history_foundry_unrecorded_verbal_clause",
+      "day_min": 250,
+      "priority": 40,
+      "body": "She rests both hands on a notched willow walking stick worn smooth by decades of river monitoring. 'The foundry took thirty thousand barrels of pure spring runoff for their turbine scrubbers and sent back heavy saline sediment that killed our lower irrigation ditches. We never shut the sluices out of malice; the valves simply froze in mineral crust because their return pipes were corroded through. When we carried the damaged gaskets to the gate to prove it, they trained sentry rifles on our cart and ordered us off the road.'",
+      "testimonies": [
+        {
+          "variant_id": "account",
+          "body": "She rests both hands on a notched willow walking stick worn smooth by decades of river monitoring. 'The foundry took thirty thousand barrels of pure spring runoff for their turbine scrubbers and sent back heavy saline sediment that killed our lower irrigation ditches. We never shut the sluices out of malice; the valves simply froze in mineral crust because their return pipes were corroded through. When we carried the damaged gaskets to the gate to prove it, they trained sentry rifles on our cart and ordered us off the road.'"
+        }
+      ]
     }
   ]
 }
