@@ -35,7 +35,10 @@ namespace Ashfall.Core.Tests
             var catalog = DoseContentCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
 
-            Assert.Equal(5, catalog.locations.Count);
+            // Plan 81 expanded the dose-location roster from 5 bunker rooms
+            // to 14 locations across five sectors (bunker/surface/expedition/
+            // external/faction). Item and quest counts are unchanged.
+            Assert.Equal(14, catalog.locations.Count);
             Assert.Equal(9, catalog.items.Count);
             Assert.Equal(12, catalog.quests.Count);
         }

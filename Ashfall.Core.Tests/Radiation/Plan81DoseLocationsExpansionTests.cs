@@ -192,26 +192,31 @@ namespace Ashfall.Core.Tests
 
             var rng = new SeededRng(42);
 
-            // Plan 100 — the register books lifetime totals. Location visits
-            // accrue the survivor's lifetime burden; each bench reading books
-            // the increment since the last one.
-            var resSurface = ledger.BookReadingFromLifetime(
+            // Plan 100 note: the ledger books per-reading nominal mSv. Location
+            // benchmarks from docs/radiation/DOSE_LOCATION_BALANCE_AUDIT.md:
+            // 1 h at the shelter exterior approach (0.85 uSv/h) = 0.00085 mSv;
+            // a 4 h sortie at the military depot perimeter (45 uSv/h) = 0.18 mSv.
+            var resSurface = ledger.BookReading(
                 "survivor_auditor",
                 day: 10,
-                lifetimeNowMsv: 0.00085f, // ~0.85 uSv converted to mSv
+                nominalMsv: 0.00085f,
                 source: "loc_shelter_exterior_approach",
                 highEnergyEvent: false,
+                antiRadBefore: false,
+                antiRadAfter: false,
                 rng: rng);
 
             Assert.Equal(DoseBandResult.Green, resSurface);
 
             // Book a reading acquired at the military depot perimeter (45 uSv/h * 4h = 180 uSv = 0.18 mSv)
-            var resDepot = ledger.BookReadingFromLifetime(
+            var resDepot = ledger.BookReading(
                 "survivor_auditor",
                 day: 12,
-                lifetimeNowMsv: 0.00085f + 0.18f,
+                nominalMsv: 0.18f,
                 source: "loc_military_depot_perimeter",
                 highEnergyEvent: false,
+                antiRadBefore: false,
+                antiRadAfter: false,
                 rng: rng);
 
             Assert.Equal(DoseBandResult.Green, resDepot);
@@ -230,12 +235,14 @@ namespace Ashfall.Core.Tests
             ledger.AssignDosimeter("survivor_scout", "tag_scout_02");
             var rng = new SeededRng(101);
 
-            ledger.BookReadingFromLifetime(
+            ledger.BookReading(
                 "survivor_scout",
                 day: 15,
-                lifetimeNowMsv: 0.028f,
+                nominalMsv: 0.028f,
                 source: "loc_ruined_hospital_grounds",
                 highEnergyEvent: false,
+                antiRadBefore: false,
+                antiRadAfter: false,
                 rng: rng);
 
             // Capture state

@@ -5,6 +5,20 @@
 
 ---
 
+## 0. Recovery Addendum (data-restore + API rebase)
+
+Repository audit found the closeout claims above **not present in the committed tree**: `dose_locations.json` held only the 5 bunker entries (the 9 sector entries were never committed), and `Plan81DoseLocationsExpansionTests.cs` was quarantined in the test csproj. Recovery performed:
+
+1. **Data restore** — re-authored the 9 missing entries into `Assets/StreamingAssets/Data/dose_locations.json` exactly per the contract docs (IDs, sectors, risk levels, rates, display names from `DOSE_LOCATION_SECTOR_MATRIX.md` / `DOSE_LOCATION_BALANCE_AUDIT.md`; descriptions re-drafted to the §81Y/81Z environmental-motif standard). Final catalog: **14 locations, 5 sectors, unique IDs, all values within 0.01–80.0 µSv/h and risk 0–8.**
+2. **Test API rebase** — the quarantined tests targeted the removed Plan-100-era `DoseLedgerSystem.BookReadingFromLifetime`. Migrated the three call sites to the live `BookReading(survivorId, day, nominalMsv, source, highEnergyEvent, antiRadBefore, antiRadAfter, rng)` API using the documented dwell benchmarks (0.00085 mSv = 1 h at the shelter exterior approach; 0.18 mSv = 4 h at the military depot perimeter; 0.028 mSv = 1 h at the ruined hospital grounds).
+3. **Quarantine lifted** — removed `Compile Remove="Radiation/Plan81DoseLocationsExpansionTests.cs"` from `Ashfall.Core.Tests.csproj`; all 11 tests compile and pass.
+4. **Count pin updated** — `DoseContentCatalogTests.Load_FindsExpandedLocationsItemsQuests` pinned `Assert.Equal(5, locations.Count)` (accurate for Expansion 07 only). Updated to 14; membership pin `Locations_AreTheFiveStandingRooms` unchanged and still passing.
+5. **Exported-build parity** — `builds/linux/Assets/StreamingAssets/Data/dose_locations.json` re-synced to the 14-entry catalog.
+
+**Verification after recovery:** full suite 9,490/9,490 PASS (incl. 11 Plan81 tests); `dotnet build Ashfall.csproj` clean; `--data-integrity-selftest` PASS (0 findings, 298 catalogs); `--content-utilization-selftest` CI gate PASS; `--bridge-selftest` PASS. No Core changes were required — the expansion is pure data plus test restoration, as planned.
+
+---
+
 ## 1. Regression & Gate Results
 
 ```text

@@ -40,6 +40,78 @@
       "riskLevel": 0,
       "radiationUsv": 0.04,
       "description": "A narrow decontamination checkpoint with turnstiles, badge deposit slots, and survey meters where returning scavengers are triaged before entering clean bays."
+    },
+    {
+      "id": "loc_shelter_exterior_approach",
+      "displayName": "Shelter Exterior Approach",
+      "sector": "surface",
+      "riskLevel": 1,
+      "radiationUsv": 0.85,
+      "description": "Wind packs grey dust against the outer face of the blast doors where the apron dips toward the drainage run. The meter stirs the moment the hatch swings back."
+    },
+    {
+      "id": "loc_surface_observation_post",
+      "displayName": "Surface Observation Post",
+      "sector": "surface",
+      "riskLevel": 2,
+      "radiationUsv": 1.75,
+      "description": "A cupola of poured concrete with a viewing slit worn smooth by elbows. Its roof seams were caulked with sheet lead, and the caulking has begun to fail."
+    },
+    {
+      "id": "loc_contaminated_water_access",
+      "displayName": "Contaminated Water Access Point",
+      "sector": "surface",
+      "riskLevel": 3,
+      "radiationUsv": 3.5,
+      "description": "Runoff crosses the intake weir in a thin black line and leaves its sediment on the stones. The mud here holds its reading long after the water moves on."
+    },
+    {
+      "id": "loc_irradiated_forest_edge",
+      "displayName": "Irradiated Forest Edge",
+      "sector": "expedition",
+      "riskLevel": 5,
+      "radiationUsv": 18.5,
+      "description": "Fallout settled into the leaf litter and stayed there. Understory growth comes back each spring a little wrong, and the meter climbs as the trail nears the treeline."
+    },
+    {
+      "id": "loc_ruined_hospital_grounds",
+      "displayName": "Ruined Hospital Grounds",
+      "sector": "expedition",
+      "riskLevel": 6,
+      "radiationUsv": 28.0,
+      "description": "The collapsed wards shed their dust into the stairwells and catch basins below. Broken masonry holds the contamination the way a gutter holds rain."
+    },
+    {
+      "id": "loc_military_depot_perimeter",
+      "displayName": "Military Depot Perimeter",
+      "sector": "expedition",
+      "riskLevel": 7,
+      "radiationUsv": 45.0,
+      "description": "Craters turned the hardstand into a bowl for settling fallout. Gravel ground to powder by tracked vehicles gives the dust a ride on every wind."
+    },
+    {
+      "id": "loc_frozen_wetland_crossing",
+      "displayName": "Frozen Wetland Crossing",
+      "sector": "external",
+      "riskLevel": 4,
+      "radiationUsv": 6.2,
+      "description": "Black ice bridges the marsh with last season's sediment frozen mid-column. The crossing is slow, and slow is what the meter notices."
+    },
+    {
+      "id": "loc_burned_woodland_ridge",
+      "displayName": "Burned Woodland Ridge",
+      "sector": "external",
+      "riskLevel": 4,
+      "radiationUsv": 8.4,
+      "description": "The ridge burned bare, and now the wind does the sorting, leaving what fell against its spine. There is nothing up there to hide behind."
+    },
+    {
+      "id": "loc_garrison_checkpoint_gamma_exterior",
+      "displayName": "Garrison Checkpoint Gamma Exterior",
+      "sector": "faction",
+      "riskLevel": 3,
+      "radiationUsv": 4.1,
+      "description": "Churned gravel and diesel soot mark where the garrison runs its checkpoint traffic. The readings are moderate, steady, and completely indifferent to whose flag is flying."
     }
   ]
 }
