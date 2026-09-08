@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-08
-**Total Catalogs:** 583 | **Total Definitions:** 10024 | **Domain Families:** 32
+**Total Catalogs:** 583 | **Total Definitions:** 10051 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -243,7 +243,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `trade_screen_scenarios.json` | 15 | `1.0.0` | `OPTIONAL` | `TradeScreenScenarios` |
 | `trade_specialties.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeSpecialtySystem` |
 | `trade_tell_lines.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeTellEngine` |
-| `trade_texts.json` | 9 | `1.0.0` | `OPTIONAL` | `TradeTextCatalogLoader` → `TradeScreenPresenter` / `TravelingCaravanPanel` |
+| `trade_texts.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeScreenPresenter` |
 
 ### Events (10 Catalogs, 392 Definitions)
 
@@ -269,7 +269,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `vehicle_modifications.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VehicleGarageCatalogLoader, VehicleGarageSystem` |
 | `vehicles.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionVehicleSystem` |
 
-### Factions (19 Catalogs, 276 Definitions)
+### Factions (19 Catalogs, 298 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -278,7 +278,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `faction_lore.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionIconCatalog, FactionIconLoader` |
 | `faction_radio_corpus.json` | 35 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_territory.json` | 24 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `faction_war_communiques.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
+| `faction_war_communiques.json` | 40 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_dialogue.json` | 40 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_events.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
 | `faction_war_journal.json` | 26 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FactionWarContentCatalog` |
@@ -330,7 +330,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `greenhouse_items.json` | 30 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GreenhouseExpansionCatalog` |
 | `holdfast_items.json` | 55 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
 | `item_degradation.json` | 0 | `1.0.0` | `OPTIONAL` | `Core default` |
-| `item_description_texts.json` | 0 | `1.0.0` | `OPTIONAL` | `ItemCatalogLoader` |
+| `item_description_texts.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemDescriptionCatalogLoader, ItemCatalogLoader` |
 | `items.json` | 659 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_items.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
@@ -756,11 +756,11 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `antigravity_survivor_fields.json` | 0 | `1.0.0` | `OPTIONAL` | `SurvivorCatalog` |
+| `antigravity_survivor_fields.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
 | `characters.json` | 84 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
-| `deep_lore_survivor_fields.json` | 0 | `1.0.0` | `OPTIONAL` | `SurvivorCatalog` |
+| `deep_lore_survivor_fields.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
 | `expansion_survivor_fields.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalog` |
-| `starting_survivor_cohorts.json` | 17 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `starting_survivor_cohorts.json` | 17 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StartingCohortCatalogLoader` |
 | `starting_survivors.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorStartingStateLoader` |
 | `survivors.json` | 129 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SurvivorCatalogLoader, SurvivorCatalog` |
 | `year_of_ash_survivors.json` | 36 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |

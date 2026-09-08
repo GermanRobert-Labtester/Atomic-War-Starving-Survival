@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 1834 | **Last Verified:** 2026-09-08
+**Total Indexed Documents:** 1839 | **Last Verified:** 2026-09-08
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 1811 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 1816 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 21 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -496,7 +496,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (1538 documents)
+## 9. General Project Guides & Archive Reference (1543 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -845,6 +845,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/audio/SILENCE_AUDIT.md`](audio/SILENCE_AUDIT.md) | **ASHFALL Silence Audit** — The audio system is structurally complete but almost entirely **unwired**. |
 | 🟢 `CURRENT` | [`docs/balance/BALANCE_SIM_EXPEDITION_DESTINATIONS.md`](balance/BALANCE_SIM_EXPEDITION_DESTINATIONS.md) | **Balance Sim — Expedition Destination Yield vs Tier (Plan 76.2)** — System: expedition destination loot economy — expected salvage value per |
 | 🟢 `CURRENT` | [`docs/balance/BALANCE_SIM_STARTING_COHORTS.md`](balance/BALANCE_SIM_STARTING_COHORTS.md) | **Starting Cohort Balance Simulation** — This is a deterministic first-30-day heuristic for Plan 138's six fresh |
+| 🟢 `CURRENT` | [`docs/balance/BALANCE_SIM_STARTING_PROFILES.md`](balance/BALANCE_SIM_STARTING_PROFILES.md) | **Starting Profile Balance Simulation** — The Plan 134 balance pass is a deterministic catalog calculation rather than a |
 | 🟢 `CURRENT` | [`docs/balance/COLLECTIBLE_BALANCE_AUDIT.md`](balance/COLLECTIBLE_BALANCE_AUDIT.md) | **ASHFALL Collectible Balance & Cross-Catalog Economic Audit** — **Scope:** Task 6 & Task 8 — 40-item full catalog pricing, weight normalization, reference crafting basket audit, rar... |
 | 🟢 `CURRENT` | [`docs/balance/COLLECTIBLE_SCAVENGING_BASELINE.md`](balance/COLLECTIBLE_SCAVENGING_BASELINE.md) | **ASHFALL Collectible Scavenging Baseline & Long-Run Simulation Report** — **Scope:** Task 7 — Deterministic 100-action scavenging simulation across 20 expedition tables. |
 | 🟢 `CURRENT` | [`docs/balance/MICRO_LOCATION_HAZARD_RISK_REWARD.md`](balance/MICRO_LOCATION_HAZARD_RISK_REWARD.md) | **Micro-Location Hazard Risk/Reward — Zoonotic Flu vs Dead-Livestock Salvage (F17)** — **Scope:** Closes the F17 open item — expected-cost analysis of the `micro_dead_livestock / scavenge_livestock` conta... |
@@ -959,6 +960,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/content/plan133/FACTION_WAR_COMMUNIQUE_VOICE_BIBLE.md`](content/plan133/FACTION_WAR_COMMUNIQUE_VOICE_BIBLE.md) | **Faction War Communiqué Voice Bible (Plan 133)** — **Register**: official continuity, sanitized causality, passive voice, procedural |
 | 🟢 `CURRENT` | [`docs/content/plan133/FACTION_WAR_EVENT_COMMUNIQUE_COVERAGE.md`](content/plan133/FACTION_WAR_EVENT_COMMUNIQUE_COVERAGE.md) | **Faction War Event ↔ Communiqué Coverage (Plan 133 recon)** — `evt_p25_marked_ruin` (200), `evt_p25_stopped_convoy` (220), `evt_p25_bitter_water` |
 | 🟢 `CURRENT` | [`docs/content/plan133/PLAN133_BASELINE.md`](content/plan133/PLAN133_BASELINE.md) | **Plan 133 Baseline — Faction War Communiqués (18 → 40)** — - File: `Assets/StreamingAssets/Data/faction_war_communiques.json`, `schema_version: 1`, |
+| 🟢 `CURRENT` | [`docs/content/plan133/PLAN133_COMPLETION_REPORT.md`](content/plan133/PLAN133_COMPLETION_REPORT.md) | **Plan 133 Completion Report — Faction War Communiqués 18 → 40** — **Allocation deviation from the §7 recommendation (G7/R6/A5/FR4 → G7/R7/A4/FR4)**, |
+| 🟢 `CURRENT` | [`docs/content/plan134/PLAN134_BASELINE.md`](content/plan134/PLAN134_BASELINE.md) | **Plan 134 Baseline** — `Assets/StreamingAssets/Data/starting_supplies.json` was a schema-version 1 |
+| 🟢 `CURRENT` | [`docs/content/plan134/STARTING_PROFILE_BALANCE_MATRIX.md`](content/plan134/STARTING_PROFILE_BALANCE_MATRIX.md) | **Starting Profile Balance Matrix** — Metrics use the live item catalog values and the authored quantities in |
+| 🟢 `CURRENT` | [`docs/content/plan134/STARTING_PROFILE_ITEM_ELIGIBILITY.md`](content/plan134/STARTING_PROFILE_ITEM_ELIGIBILITY.md) | **Starting Profile Item Eligibility** — Profile supplies use only existing item definitions from the authoritative item |
 | 🟢 `CURRENT` | [`docs/content/plan135/NARRATIVE_ACTIVATION_60_ROSTER.md`](content/plan135/NARRATIVE_ACTIVATION_60_ROSTER.md) | **Plan 135 — Narrative Activation 60 Roster** — **Status:** Approved & Verified (All 60 records resolve to exact authoritative catalog entries) |
 | 🟢 `CURRENT` | [`docs/content/plan135/NARRATIVE_DISCOVERY_PRODUCER_GRAPH.md`](content/plan135/NARRATIVE_DISCOVERY_PRODUCER_GRAPH.md) | **Plan 135 — Narrative Discovery Producer Graph** — Every activated record is connected to a reachable producer in the ASHFALL campaign graph. Discovery state is strictl... |
 | 🟢 `CURRENT` | [`docs/content/plan135/NARRATIVE_SCHEMA_FAMILY_CENSUS.md`](content/plan135/NARRATIVE_SCHEMA_FAMILY_CENSUS.md) | **Plan 135 — Narrative Schema Family Census** — **Total Narrative Catalogs Analyzed:** 279 |
