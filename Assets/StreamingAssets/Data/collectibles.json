@@ -376,7 +376,7 @@
       "category": "map",
       "rarity": "uncommon",
       "effect_type": "location_clue",
-      "effect_target": "loc_road_junction_cache",
+      "effect_target": "loc_logistics_reserve_cache",
       "effect_value": 0,
       "location_type": "civic",
       "unique": false
@@ -386,7 +386,7 @@
       "category": "map",
       "rarity": "rare",
       "effect_type": "location_clue",
-      "effect_target": "loc_military_outpost",
+      "effect_target": "loc_hidden_relay_bunker",
       "effect_value": 0,
       "location_type": "military",
       "unique": false
@@ -396,7 +396,7 @@
       "category": "map",
       "rarity": "rare",
       "effect_type": "location_clue",
-      "effect_target": "loc_survivor_cache",
+      "effect_target": "loc_deaddrop_command_shelter",
       "effect_value": 0,
       "location_type": "residential",
       "unique": true
