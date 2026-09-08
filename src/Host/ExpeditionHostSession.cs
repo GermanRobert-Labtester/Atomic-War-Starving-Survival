@@ -90,8 +90,7 @@ namespace AtomicWar.GodotApp
             // Plan 85 — hidden installations stay undispatchable until the
             // treasure map is completed and the site is revealed.
             if (Engine.DamagedMap != null && Engine.DamagedMap.IsDestinationLocked(locationId))
-                return "Map incomplete — location unidentified";
-            // F4 — clue-gated destinations stay undispatchable until an
+                return "Map incomplete — location unidentified";            // F4 — clue-gated destinations stay undispatchable until an
             // expedition encounter (e.g. observation post) reveals them.
             var def = Definitions.Find(d => d != null && d.id == locationId);
             if (def != null && def.requiresDiscovery && !Engine.IsLocationKnown(locationId))
@@ -106,6 +105,45 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Passthrough to the Core per-location encounter-chance multiplier (faction/territory danger).</summary>
         public void SetEncounterChanceMultiplier(Func<string, float> multiplier) => Engine.SetEncounterChanceMultiplier(multiplier);
+
+        /// <summary>
+        /// Plan 85 / UI-21 — binds the damaged-map layer to the host feedback
+        /// strip. Fragment discovery, map completion and installation reveal
+        /// surface through <see cref="LastEvent"/> (the single feedback strip),
+        /// so the player learns a fragment was found and what it completed.
+        /// Subscribes at most once per session; presentation only — all rules
+        /// stay in Core.
+        /// </summary>
+        public void AttachDamagedMapFeedback(DamagedMapSystem? damagedMap)
+        {
+            if (damagedMap == null || _damagedMapFeedbackAttached) return;
+            _damagedMapFeedbackAttached = true;
+
+            damagedMap.OnFragmentRegistered += fragmentId =>
+            {
+                var zone = damagedMap.FindZoneByFragment(fragmentId);
+                if (zone == null)
+                {
+                    LastEvent = "Map fragment found.";
+                }
+                else
+                {
+                    DamagedMapFragmentDef? def = null;
+                    foreach (var f in zone.Fragments)
+                        if (f != null && f.fragment_id == fragmentId) { def = f; break; }
+                    string label = def?.label ?? fragmentId;
+                    int count = damagedMap.RegisteredCount(zone.ZoneId);
+                    LastEvent = $"Map fragment found: {label} ({count}/{zone.Fragments.Count} — {zone.ZoneName}).";
+                }
+                RaiseStateChanged();
+            };
+
+            damagedMap.OnZoneCompleted += zone =>
+            {
+                LastEvent = $"Map completed: {zone.ZoneName} — {zone.InstallationName} revealed on the world map.";
+                RaiseStateChanged();
+            };
+        }
 
         private int _currentDay;
         /// <summary>Current sim day, supplied by Main so EncounterApplyChoice can pass day to Core.</summary>
@@ -133,6 +171,9 @@ namespace AtomicWar.GodotApp
         }
 
         public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>Guard: damaged-map feedback events are subscribed once per session.</summary>
+        private bool _damagedMapFeedbackAttached;
         /// <summary>Fired when Core rolls an encounter and the bridge surfaces a DTO. Host UI subscribes here.</summary>
         public event Action<ExpeditionEncounterBridge.EncounterSurfaced>? OnEncounterSurfaced;
 

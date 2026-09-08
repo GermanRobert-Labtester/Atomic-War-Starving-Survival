@@ -83,6 +83,9 @@ namespace AtomicWar.GodotApp
             if (_expeditions?.Engine == null || _world?.DamagedMap == null) return;
             if (_expeditions.Engine.DamagedMap == _world.DamagedMap) return;
             _expeditions.Engine.DamagedMap = _world.DamagedMap;
+            // Plan 85 / UI-21 — surface fragment discovery and map completion
+            // on the expedition host's LastEvent feedback strip.
+            _expeditions.AttachDamagedMapFeedback(_world.DamagedMap);
         }
 
         private void SetupExpeditions()
