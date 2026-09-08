@@ -32,9 +32,9 @@
     {
       "ink_id": "ink_lampblack",
       "display_name": "Lampblack",
-      "legibility_score": 0.65,
-      "archival_longevity_days": 250,
-      "fade_rate_per_day": 0.004,
+      "legibility_score": 0.72,
+      "archival_longevity_days": 120,
+      "fade_rate_per_day": 0.006,
       "required_item_id": "charcoal",
       "required_amount": 1
     },
