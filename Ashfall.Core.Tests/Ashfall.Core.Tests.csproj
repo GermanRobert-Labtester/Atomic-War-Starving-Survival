@@ -61,7 +61,6 @@
     <Compile Remove="Expeditions/ArmoredCrawlerExpeditionTests.cs" />
     <Compile Remove="Expeditions/CollectibleGenerationChannelGateTests.cs" />
     <Compile Remove="Expeditions/CollectibleScavengingPlacementTests.cs" />
-    <Compile Remove="FactionRadioBroadcastExpansionTests.cs" />
     <Compile Remove="FactionWarDialogueExpansionTests.cs" />
     <Compile Remove="GreenhouseEquipmentScalingTests.cs" />
     <Compile Remove="HardcoreEconomyTuningExpansionTests.cs" />
