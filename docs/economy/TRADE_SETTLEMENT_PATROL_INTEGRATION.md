@@ -1,48 +1,69 @@
-# Trade Settlement, Patrol & Debt Integration
+# Trade Settlement / Patrol / Debt Integration — Plan 61 (all DEFERRED)
 
-**Document Version:** 1.0.0
-**Authority:** `Assets/StreamingAssets/Data/settlements.json`, `Assets/Ashfall.Core/Economy/TradeCreditCoordinator.cs`
+> **Provenance (Plan 61).** This document supersedes the 2026-09-03 v1.0.0 planning
+> version of the same deliverable (authored before the catalog expansion landed).
+> The planning roster was never landed in `trade_screen_scenarios.json` (baseline
+> remained 3 scenarios) and its table design referenced item IDs absent from
+> `items.json` with per-item prices violating the global unit-price consistency
+> gate. This version is the implementation record for the landed 15-scenario
+> catalog; unique correct authority facts from the planning version are merged.
 
----
+Producer/consumer graph as actually implemented. **No fabricated linkage was
+committed**; every row states the repository evidence.
 
-## 1. Plan 43 Settlement Trade Integration
+## Producer/consumer graph (as implemented)
 
-The 15 trade scenarios link naturally to settlement archetypes established in `settlements.json`:
+| Scenario ID | Producer (verified) | Eligibility inputs | Consumer | Stock source | Price source | Feedback | Persistence owner |
+|---|---|---|---|---|---|---|---|
+| all 15 | consumer requests scenario **by ID** (tests, skin track `CreateBinding`, future encounter producers) | none — static content | `TradeScreenScenarioLoader` → `TradeScreenViewModel` / `TradeScreenPresenter` | authored table | authored `unit_price` + `TradePricing` bio rule | VM `Changed` event, radio ticker, fairness label | none required (static content) |
 
-| Settlement Archetype | Representative Settlement | Default Scenario | Archetype Role | Mechanics & Narrative Context |
-|---|---|---|---|---|
-| **Trade Post / Crossing** | `settlement_iron_siding` | `long_road_caravan` | `caravan_merchant` | Reliable general exchange hub along main transit corridors; food/water/tools. |
-| **Stronghold / Depot** | `settlement_garrison_redoubt` | `depot_window` | `faction_quartermaster` | Military ordnance depot; requires high standing ($\ge 40$ trust) for munitions and kits. |
-| **Refugee Camp / Wanderer Hub** | `settlement_ash_verge` | `road_knowledge` | `refugee_barter` | Impoverished barter; small scale trade of seeds, preserved meat, and route advice. |
-| **Agricultural Community / Silo** | `settlement_grain_reach` | `crate_lot` | `bulk_dealer` | High-volume staple distributor; wholesale exchange of water/fuel for food and scrap. |
+A scenario with no producer is content dead code **only if nothing can ever request
+it**; the skin-track/tests request every scenario by ID today, and the catalog is
+the documented surface for future encounter producers. The mechanical
+differentiation and binding gates prove each record loads, binds, and behaves.
 
----
+## Plan 43 — settlements: DEFERRED
 
-## 2. Plan 45 Patrol Encounter Integration
+Requested defaults (trade post → caravan, stronghold → quartermaster, refugee camp →
+refugee barter, community → bulk dealer) **cannot be wired**: no settlement→scenario
+default mechanism, override chain, or precedence rule exists in the trade-screen
+seam. `settlements.json` was checked; it has no consumer of
+`trade_screen_scenarios.json`. The intended mapping is preserved here for the future
+implementer:
 
-Mobile wasteland encounters interface with the trade screen when non-hostile contact occurs:
+- trade post → `long_road_caravan`
+- stronghold → `depot_window`
+- refugee camp → `road_knowledge`
+- community → `crate_lot`
 
-1. **Smuggler (`border_runner`):**
-   - Triggered when encountering mobile border scouts or independent couriers (`echo_bats`).
-   - Uses `ShareIntel` stance: offers both high-tier anti-radiation medicine and route advice.
-   - Non-hostile; does not require illegal crime meters.
+Precedence note for that future work: encounter/debt-specific context should
+outrank settlement-type defaults (plan §61C.2); no cached-scenario risk exists
+while scenarios are requested per open.
 
-2. **Clandestine Black Market (`back_room_exchange`):**
-   - Triggered at contested boundary checkpoints or black-box relay nodes (`wire_heads`).
-   - Sells specialized filter gear and ammunition away from faction surveillance.
+## Plan 45 — patrols: DEFERRED
 
-3. **Coercive Roadblock (`ledgerless_broker`):**
-   - Hostile shakedown encounter (`sump_dredgers`) using `Rob` stance.
-   - Demonstrates that hostile encounters cannot confirm legitimate trades.
+No patrol-encounter → trade transition exists in this seam. `border_runner`
+(smuggler) and the black-market scenarios are independently valid content reachable
+by ID. When patrol trade lands, the producer must respect existing disposition
+checks (plan §61C.3) — no scenario data change is required or permitted to fake it.
 
----
+## Plan 40 — debt: DEFERRED (presentation-only)
 
-## 3. Plan 40 Debt & Credit Integration
+`settlement_of_accounts` models the *moment* of being called to account: a bare
+player edge against a heavy ledger edge (`expected_fairness: short`,
+`confirm_succeeds: false`). The plan §61C.4 invariant holds by construction:
 
-1. **Encounter Producer:**
-   - Incurred debt with a faction creditor (such as `hydro_barons`) is tracked in `TradeCreditCoordinator`.
-   - When repayment is delinquent, routine merchant visits from that faction are intercepted by `settlement_of_accounts`.
+1. no debt state exists in this seam to duplicate;
+2. opening the scenario mutates nothing (zero-mutation presenter invariant, test-pinned);
+3. no price multiplier pretends to repay anything;
+4. save/load of real debt state belongs to the debt authority, untouched.
 
-2. **Boundary Invariant:**
-   - `TradeScreenScenario` does **not** own the debt ledger, interest rate, or principal balance.
-   - The scenario provides the dramatic framing (`Refuse` stance, heavy water demand) and closes routine trade until the debt is satisfied through the authoritative debt ledger.
+If the debt system later grows a trade-seam repayment action, this scenario is the
+natural presentation context — wired through `ITradeExecutionSink`, not through
+scenario data.
+
+## Plan 56 — economy goods: NOT APPLICABLE in this seam
+
+No goods/stock-profile registry feeds scenario tables. All references are to
+`items.json` (verified). If an economy-goods catalog later becomes the stock
+authority, the stock matrix above is the reconciliation map.

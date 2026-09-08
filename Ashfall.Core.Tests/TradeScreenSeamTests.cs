@@ -58,7 +58,9 @@ namespace Ashfall.Core.Tests
         {
             var scenarios = LoadScenarios();
 
-            Assert.Equal(3, scenarios.Count);
+            // Plan 61: catalog expanded from 3 to 15 (12 new scenarios across
+            // eight trader archetypes). The three originals remain pinned.
+            Assert.True(scenarios.Count >= 15, $"Expected at least 15 scenarios, got {scenarios.Count}");
             Assert.Contains(scenarios, s => s.Id == "fair_deal");
             Assert.Contains(scenarios, s => s.Id == "offer_short");
             Assert.Contains(scenarios, s => s.Id == "empty_table");

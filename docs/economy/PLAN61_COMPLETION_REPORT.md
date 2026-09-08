@@ -1,184 +1,130 @@
 # Plan 61 Completion Report — Trade Screen Scenarios Expansion (3 → 15)
 
-**Implementation Date:** 2026-09-03
-**Status:** COMPLETE & VERIFIED
-**Author:** Antigravity (ASHFALL Core Engineering)
-
----
+> **Provenance (Plan 61).** This document supersedes the 2026-09-03 v1.0.0 planning
+> version of the same deliverable (authored before the catalog expansion landed).
+> The planning roster was never landed in `trade_screen_scenarios.json` (baseline
+> remained 3 scenarios) and its table design referenced item IDs absent from
+> `items.json` with per-item prices violating the global unit-price consistency
+> gate. This version is the implementation record for the landed 15-scenario
+> catalog; unique correct authority facts from the planning version are merged.
 
 ## 14.1 Summary
 
-- **Baseline Scenario Count:** 3 (`fair_deal`, `offer_short`, `empty_table`).
-- **Final Scenario Count:** 15 (3 baseline preserved + 12 new expansion scenarios).
-- **Primary Files Changed:**
-  - `Assets/StreamingAssets/Data/trade_screen_scenarios.json` — Expanded from 3 to 15 scenarios.
-  - `Ashfall.Core.Tests/TradeScreenSeamTests.cs` — Added `Scenarios_LoadAllFifteenFromData`, `Scenarios_AllScenariosMatchExpectedFairness`, `Scenarios_AllItemReferencesResolveInEconomyGoods`, `Scenarios_AllFactionReferencesResolveInRadioCorpus`, `Scenarios_NewScenarios_CharacterizationProbes`.
-  - `docs/data/CATALOG_REGISTRY.md` — Updated definition count from 3 to 15.
-  - Fixes to pre-existing compile blocker in test suite: `Plan10CatalogCoverageTests.cs` (disambiguated Dictionary type & fixed plan 60 zero-fuel count assertion) and `src/Main.CampaignOwners.cs` (qualified `_m._dataDir`).
-  - Documentation Suite:
-    - `docs/economy/PLAN61_BASELINE.md`
-    - `docs/economy/TRADE_SCENARIO_SCHEMA_MAP.md`
-    - `docs/economy/TRADE_PRICE_AUTHORITY_MAP.md`
-    - `docs/economy/TRADE_SCENARIO_MATRIX.md`
-    - `docs/economy/TRADE_SCENARIO_ELIGIBILITY_MATRIX.md`
-    - `docs/economy/TRADE_SCENARIO_STOCK_MATRIX.md`
-    - `docs/economy/TRADE_NEGOTIATION_INTEGRATION.md`
-    - `docs/economy/TRADE_SETTLEMENT_PATROL_INTEGRATION.md`
-    - `docs/economy/TRADE_ARBITRAGE_AUDIT.md`
-    - `docs/economy/PLAN61_SAVE_COMPATIBILITY.md`
-    - `docs/economy/PLAN61_REGRESSION_MATRIX.md`
-    - `docs/economy/PLAN61_COMPLETION_REPORT.md`
-- **Architectural Purity:** Pure data-layer catalog expansion. Core architecture remained untouched; no new engine dependencies, no parallel economy authorities, and no duplicate state stores were introduced.
+- **Implementation date:** 2026-02
+- **Baseline scenario count:** 3 (`fair_deal`, `offer_short`, `empty_table`)
+- **Final scenario count:** **15**
+- **Work remained pure data:** **YES** — zero Core/runtime source changes. The runtime
+  schema already expressed every required dimension; the plan's provisional fields
+  (`trader_type`, `available_goods`, `price_modifier`, `special_condition`) do not
+  exist in the loader and were **not invented** (plan §6.1 data-first discipline).
+- **Justified deviations from the source plan:**
+  1. "Price posture via `price_modifier`" → expressed as **authored per-line
+     `unit_price` with a global per-item consistency rule** (the only price field the
+     runtime reads; direction ambiguity is structurally impossible — see
+     `TRADE_PRICE_AUTHORITY_MAP.md`).
+  2. "Trader archetype" → expressed through **faction identity + stance + trust band +
+     table composition** (archetype is a documentation/test mapping, not a field).
+  3. Refugee location clue → expressed as **real map items + `ShareIntel` stance**
+     (plan §1.8 option 1); no `loc_*` hack, no new reward primitive.
+  4. Bulk dealer → expressed as **unit-count profile at canonical worths**, not a
+     volume-pricing engine (plan §61B.10 fallback explicitly taken).
+  5. Settlement/patrol/debt producers → **deferred**, not faked (§14.4).
+  6. Contextual prose rides the **consumed `radio_ticker`** field; no dead
+     `description` field was added (plan §5.2).
 
----
+## 14.2 Existing scenario preservation
 
-## 14.2 Existing Scenario Preservation
+All three originals preserved **byte-identically in content**; locked by
+`Catalog_OriginalThreeScenariosKeepLockedContracts` (IDs, factions, stances, trust,
+fairness, confirm semantics) plus all 30 pre-existing seam tests, updated only in one
+count assertion (3 → ≥15). Before/after semantics: **unchanged**.
 
-All three baseline scenarios remain byte-level and semantically preserved:
+## 14.3 New scenario roster
 
-| ID | Stance | Player Offer Value | Faction Ask Value | Expected Fairness | Confirm Succeeds | Test Contract |
-|---|---|---|---|---|---|---|
-| `fair_deal` | `Trade` | 94.0 | 44.0 | `fair` | `true` | `Scenario_FairDeal_ComputedFairnessMatchesDataExpectation` |
-| `offer_short` | `Trade` | 18.0 | 80.0 | `short` | `false` | `Scenario_OfferShort_BlocksConfirmAndKeepsStanceLegible` |
-| `empty_table` | `Refuse` | 0.0 | 0.0 | `empty` | `false` | `Scenario_EmptyTable_IsDeliberateNotBroken` |
+Full matrix in `TRADE_SCENARIO_MATRIX.md`. Roster:
 
----
+| ID | Archetype | Producer (current truth) | Stock role | Price behavior | Negotiation role | Eligibility | Faction/world links | Player decision |
+|---|---|---|---|---|---|---|---|---|
+| `last_vials` | desperate_survivor | requested by ID (skin track/tests; future producer hook) | personal medicine+aid barter | canonical worths, fair/confirm | Trade/neutral tell | none (static) | sump_dredgers, CivilWar d18 | trade aid goods for a household's last medicine |
+| `winter_cart` | desperate_survivor | by ID | cold-weather stock-up | short/blocked; WinterDeepens ×1.6, fuel ×2.2 | Trade/wary | none | cult_of_the_glow, LongWinter d63 | urgency: their ask outweighs your cart |
+| `depot_window` | faction_quartermaster | by ID | curated military stock | fair/confirm; FactionWar ×1.4 | Trade/warm (only warm scenario) | none | military_remnants, d33 | spend trust on protected stock |
+| `emergency_requisition` | faction_quartermaster | by ID | crisis war materiel | short/blocked; FactionWar ×1.9, ammo ×1.7 | Trade/neutral | none | upland_militia, d48 | wartime terms cannot be met fairly |
+| `back_room_exchange` | black_market | by ID | scarce rad-medicine premium | fair/confirm; Convoy ×2.2, scarcity ×1.9/1.7 | Trade/neutral | none | faction_black_flotilla, d39 | pay the dark-market premium |
+| `ledgerless_broker` | black_market | by ID | favors/cipher/paperwork | fair/confirm; bio drawer BoneMarrow | **ShareIntel**/neutral | none | wire_heads, d26 | trade favors — or the drawer — for paperwork |
+| `long_road_caravan` | caravan_merchant | by ID | broad staples | fair/confirm; no shocks (dependable) | Trade/neutral | none | doomsday_preppers, d21 | reliable breadth at standard terms |
+| `salvage_caravan` | caravan_merchant | by ID | industrial inputs | fair/confirm; Convoy ×1.5, rail ×1.6 | Trade/neutral | none | faction_silent_foundry, d57 | scrap into industrial stock |
+| `settlement_of_accounts` | debt_collector | by ID | **demands-only ledger table** | short/blocked by design | Trade/wary, aggression 0.5 | none | custodians, d44 | face the obligation (presentation only — no debt math) |
+| `crate_lot` | bulk_dealer | by ID | highest unit count (9 ask units) | fair/confirm at canonical worths | Trade/neutral | none | hydro_barons, d71 | volume over margin |
+| `border_runner` | smuggler | by ID | rare comms single-units | fair/confirm; Convoy ×2.4, module ×1.8 | Trade/neutral | none | echo_bats, d52 | premium for route-run stock |
+| `road_knowledge` | refugee_barter | by ID | necessities + real map items | fair/confirm; WinterDeepens ×1.3 | **ShareIntel**/neutral | none | safe_haven_community, d35 | small charity goods for route knowledge |
 
-## 14.3 New Scenario Roster (12 Expansion Entries)
+Coverage: all eight requested archetypes in the exact 2/2/2/2/1/1/1/1 distribution
+(test-gated). Differentiation: every pair ≥2 dimensions (test-gated).
 
-1. **`last_vials` (`desperate_survivor`):**
-   - *Producer:* Safe Haven Community Infirmary (`safe_haven_community`, Dr. Aris Thorne).
-   - *Stock:* Sacrificing exploration tools (`crowbar`, `solar_cell`) for urgently needed `antibiotics`.
-   - *Valuation:* Offer 80.0 vs Ask 80.0 (Fair).
-   - *Decision:* Part with durable high-tier exploration tools to cure critical disease.
+## 14.4 Cross-plan integration status
 
-2. **`winter_cart` (`desperate_survivor`):**
-   - *Producer:* Wanderer push-cart encounter (`rot_farmers`, Harlan Frost).
-   - *Stock:* Scrap metal vs fuel in freezing conditions.
-   - *Valuation:* Offer 20.0 vs Ask 70.0 (Short).
-   - *Decision:* Demonstrates that low-value scrap cannot secure heating fuel during a permafrost front.
-
-3. **`depot_window` (`faction_quartermaster`):**
-   - *Producer:* Military Stronghold Depot (`military_remnants`, Captain Kroll).
-   - *Stock:* Munitions (`ammo_556`) and subsidized `medical_kit` in exchange for water and scrap.
-   - *Valuation:* Offer 88.0 vs Ask 88.0 (Fair).
-   - *Decision:* Allied standing ($\ge 40$ trust) grants access to military-grade firepower.
-
-4. **`emergency_requisition` (`faction_quartermaster`):**
-   - *Producer:* Military Checkpoint (`military_remnants`, Logistics Officer Brand).
-   - *Stock:* Military demanding `diesel_fuel`, offering basic bandages.
-   - *Valuation:* Offer 30.0 vs Ask 100.0 (Short).
-   - *Decision:* Depicts emergency requisition pressures where player cannot afford garrison demands.
-
-5. **`back_room_exchange` (`black_market`):**
-   - *Producer:* Contested Relay Station (`wire_heads`, Nix the Solderer).
-   - *Stock:* Clandestine exchange of `electronic_scrap` and biological offering (`PintOfBlood`) for `gas_mask` and `9mm_ammo`.
-   - *Valuation:* Offer 136.0 vs Ask 125.0 (Fair).
-   - *Decision:* Willingness to trade blood in the grim drawer to obtain sealed filter protection.
-
-6. **`ledgerless_broker` (`black_market`):**
-   - *Producer:* Sump Canal Shakedown (`sump_dredgers`, Corvo the Blind).
-   - *Stock:* Coercive demand for `weapon_sidearm` with `Rob` stance.
-   - *Valuation:* Offer 20.0 vs Ask 120.0 (Short).
-   - *Decision:* Hostile encounters cannot confirm legitimate trades.
-
-7. **`long_road_caravan` (`caravan_merchant`):**
-   - *Producer:* Trade Post Hub (`scavenger_camp`, Mistress Janna).
-   - *Stock:* Overland general staples: food rations and tobacco for water, rope, and duct tape.
-   - *Valuation:* Offer 104.0 vs Ask 104.0 (Fair).
-   - *Decision:* Dependable, standard-spread trade post exchange for travel supplies.
-
-8. **`salvage_caravan` (`caravan_merchant`):**
-   - *Producer:* Industrial Quarry Siding (`custodians`, Surveyor Vane).
-   - *Stock:* Industrial chemicals and electronic salvage for `mechanical_parts` and `water_filter`.
-   - *Valuation:* Offer 90.0 vs Ask 90.0 (Fair).
-   - *Decision:* Industrial component trade for shelter technical upgrades.
-
-9. **`settlement_of_accounts` (`debt_collector`):**
-   - *Producer:* Hydro Barons Credit Enforcement (`hydro_barons`, Enforcer Malik).
-   - *Stock:* Aggressive water collection with `Refuse` stance.
-   - *Valuation:* Offer 10.0 vs Ask 125.0 (Short).
-   - *Decision:* Highlights unresolved credit delinquency closing routine commerce.
-
-10. **`crate_lot` (`bulk_dealer`):**
-    - *Producer:* Agricultural Silo Clearance (`safe_haven_community`, Orin).
-    - *Stock:* Wholesale volume exchange: 6× water + 3× fuel for 8× canned food + 8× scrap metal.
-    - *Valuation:* Offer 120.0 vs Ask 120.0 (Fair).
-    - *Decision:* High-volume liquidation of surplus resources for survival stockpiles.
-
-11. **`border_runner` (`smuggler`):**
-    - *Producer:* Wasteland Perimeter Transit (`echo_bats`, Silt-Runner Kira).
-    - *Stock:* Fuel and luxury tobacco for `anti_rad` and `iodine_pills` with `ShareIntel` stance.
-    - *Valuation:* Offer 90.0 vs Ask 90.0 (Fair).
-    - *Decision:* Mobile runner offering valuable anti-rad pharmaceuticals and route intel.
-
-12. **`road_knowledge` (`refugee_barter`):**
-    - *Producer:* Displaced Wanderer Camp (`doomsday_preppers`, Old Sela).
-    - *Stock:* Agricultural `seed_packets` and `item_smoked_meat` for water and food.
-    - *Valuation:* Offer 50.0 vs Ask 50.0 (Fair).
-    - *Decision:* Humane barter supporting displaced families in exchange for seeds.
-
----
-
-## 14.4 Cross-Plan Integration Status
-
-| Cross-Plan Feature | Status | Evidence in Repository |
+| Plan | Status | Evidence |
 |---|---|---|
-| **Plan 40 (Debt & Credit)** | `LIVE` | `TradeCreditCoordinator.cs` models delinquent debt; `settlement_of_accounts` provides context without duplicating debt state. |
-| **Plan 43 (Settlement Defaults)** | `LIVE` | `settlements.json` archetypes map to 4 default scenario roles (`long_road_caravan`, `depot_window`, `road_knowledge`, `crate_lot`). |
-| **Plan 45 (Patrol Encounters)** | `LIVE` | `border_runner` (`ShareIntel`), `back_room_exchange`, and `ledgerless_broker` (`Rob`) provide distinct non-settlement encounter contexts. |
-| **Plan 56 (Economy Goods)** | `LIVE` | All 25 referenced item IDs resolve directly to `economy_goods.json`. |
-| **Plan 62 (Trade Tell Lines)** | `LIVE` | `trade_tell_lines.json` and `TradeTellEngine` select tells deterministically based on scenario stance and trust. |
+| Plan 40 debt | **DEFERRED** | no debt producer/consumer in the trade-screen seam; `settlement_of_accounts` is presentation-only (demands-only table, confirm blocked); debt authority untouched |
+| Plan 43 settlements | **DEFERRED** | no settlement→scenario default mechanism exists; intended mapping documented in `TRADE_SETTLEMENT_PATROL_INTEGRATION.md` |
+| Plan 45 patrols | **DEFERRED** | no patrol→trade transition exists; smuggler/black-market scenarios independently valid |
+| Plan 56 economy goods | **NOT APPLICABLE in this seam** | scenario goods reference `items.json` directly (test-verified); reconciliation map in `TRADE_SCENARIO_STOCK_MATRIX.md` |
+| Plan 62 trade tells | **LIVE — integrated** | `TradeTellEngine` + `trade_tell_lines.json` consumed via stance × trust band; seed-deterministic; zero tell IDs authored in scenarios |
 
----
+## 14.5 Economy balance
 
-## 14.5 Economy & Balance Findings
+- **Final "modifiers":** none exist — per-item canonical worths are the price authority
+  (`canned_food` 18, `clean_water` 22, `fuel` 40, `filter_pack` 28, …), globally
+  consistent across all 15 tables and both edges (test-locked, spread < 0.01).
+- **Representative verdicts:** fair/confirm on 9 of 12 new scenarios; short/blocked on
+  `winter_cart`, `emergency_requisition`, `settlement_of_accounts` — the urgency,
+  crisis, and obligation postures.
+- **Bulk quantity ranges:** `crate_lot` ask edge = 9 units over 2 lines (catalog max);
+  all at canonical worths — volume, not discount.
+- **Scarce-goods limits:** rare comms/medicine appear as single units at high worth;
+  bulk scenarios carry only common staples.
+- **Arbitrage findings:** structurally impossible (one worth per item, no buy/sell
+  spread, static tables, no currency loop) — full audit in `TRADE_ARBITRAGE_AUDIT.md`.
+- **Adjustments made:** table arithmetic tuned during authoring so every
+  `expected_fairness` matches the computed verdict; no runtime changes needed.
 
-- **Spread & Multipliers:** Scenarios employ thematic price shocks ($1.3\times - 2.5\times$) consistent with world conditions (`PlumePassing`, `WinterDeepens`, `FactionWar`, `ConvoyAmbush`).
-- **Arbitrage Proof:** No risk-free same-day buy-low/sell-high cycle is introduced; price differentials reflect legitimate transit freight costs and regional scarcity.
-- **Progression Safety:** Advanced unique quest items and high-end tech schematics remain excluded from scenario stock.
+## 14.6 Persistence / determinism
 
----
+- **Scenario save policy:** static content — nothing persisted; old saves unaffected;
+  all three original IDs locked (test-pinned).
+- **Stock save policy:** N/A (fixed tables; no generation/depletion).
+- **Negotiation save policy:** N/A (tells resolved per binding from seed).
+- **Determinism evidence:** `Catalog_TellSelectionIsSeedDeterministic` — same seed +
+  scenario ⇒ same tell ID and line; scenario selection itself has no RNG.
+- **Reroll-prevention evidence:** no selection/stock RNG exists to reroll; presenter
+  zero-mutation invariant test-pinned.
 
-## 14.6 Persistence & Determinism
+## 14.7 Verification
 
-- **Zero-Mutation Invariant:** Presentation reads providers and builds view models without side-effects on simulation state.
-- **Snapshot Round-Trip:** Selection states round-trip deterministically through `TradeSelectionSnapshot`.
-- **Deterministic Tells:** `ISeededRng` ensures reproducible tell selection given seed and world day.
+See `PLAN61_REGRESSION_MATRIX.md` — all gates green:
 
----
+- `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` — 0 errors
+- `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` — **9426/9426 PASS** (3 consecutive runs; trade subset 49/49)
+- `dotnet build Ashfall.csproj` — 0 errors, 0 warnings
+- `godot --headless --path . -- --data-integrity-selftest` — PASS (298 catalogs, 0 findings)
+- `godot --headless --path . -- --bridge-selftest` — PASS
+- `godot --headless --path . -- --economy-selftest` — PASS
+- `godot --headless --path . -- --content-utilization-selftest` — PASS (exit 0)
+- `godot --headless --path . -- --save-store-checksum-selftest` — PASS (21/21)
+- `godot --headless --path . -- --7-day-smoke-selftest` — PASS
+- `godot --headless --path . -- --real-campaign-journey-selftest` — PASS
 
-## 14.7 Verification Matrix Results
+## 14.8 Remaining risks / deferred work
 
-```bash
-# 1. Data Integrity Self-Test
-godot --headless --path . -- --data-integrity-selftest
-# Output: DATA_INTEGRITY_SELFTEST PASS — 0 findings (10307 ids authored, 3475 reuses reserved) — 0 errors across 208 catalogs
-
-# 2. xUnit Core Suite
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
-# Output: Passed! - Failed: 0, Passed: 6616, Skipped: 0, Total: 6616, Duration: 34 s
-
-# 3. Host Application Build
-dotnet build Ashfall.csproj
-# Output: Build succeeded. 0 Warning(s), 0 Error(s).
-
-# 4. Content Utilization Self-Test
-godot --headless --path . -- --content-utilization-selftest
-# Output: CI gate: PASS (490 catalogs scanned, 0 orphaned, 0 broken)
-
-# 5. Scene Binding Self-Test
-godot --headless --path . -- --scene-binding-selftest
-# Output: Summary: 22 passed, 0 failed (of 22)
-
-# 6. Production Scene Lint
-python3 scripts/ci/scene-lint.py
-# Output: scene-lint: 27 production scenes checked; 0 errors; 0 warning(s)
-```
-
----
-
-## 14.8 Remaining Risks & Deferred Work
-
-- **Dynamic Negotiation Minigame (Plan 62 Phase 2):** In-screen player bargaining actions (pushing for concessions) remain deferred to Plan 62's interactive phase; static posture tells are fully operational.
-- **Settlement Route AI Integration (Plan 43 Phase 3):** Dynamic migration of caravan entities along wasteland routes will continue to be expanded in world-simulation updates.
+1. **Settlement defaults (Plan 43):** four scenario→settlement-type mappings are
+   documented and ready; wiring requires the future settlement→trade producer.
+2. **Patrol trade (Plan 45):** `border_runner` + black-market scenarios await a
+   patrol-encounter producer that respects disposition checks.
+3. **Debt interaction (Plan 40):** real in-seam repayment needs a
+   `ITradeExecutionSink`-routed debt action; scenario data must not change.
+4. **Tell depth per archetype (Plan 62 follow-on):** archetype-flavored tell entries
+   belong in the tell corpus/engine, not in scenarios.
+5. **Suite flakiness (owned elsewhere):** two transient full-suite runs showed
+   order-dependent failures in catalog-sweep classes touching the concurrent stream's
+   modified catalogs; three consecutive final-state runs are fully green. Flagged in
+   the regression matrix for the owning stream.

@@ -1,24 +1,56 @@
-# Trade Scenario Matrix (15 Total)
+# Trade Scenario Matrix — Plan 61 final catalog (15 scenarios)
 
-**Document Version:** 1.0.0
-**Authority:** `Assets/StreamingAssets/Data/trade_screen_scenarios.json`
+> **Provenance (Plan 61).** This document supersedes the 2026-09-03 v1.0.0 planning
+> version of the same deliverable (authored before the catalog expansion landed).
+> The planning roster was never landed in `trade_screen_scenarios.json` (baseline
+> remained 3 scenarios) and its table design referenced item IDs absent from
+> `items.json` with per-item prices violating the global unit-price consistency
+> gate. This version is the implementation record for the landed 15-scenario
+> catalog; unique correct authority facts from the planning version are merged.
 
-This matrix catalogs all 15 scenarios (3 preserved original baseline + 12 new expansion scenarios) across the eight trader archetypes.
+Archetype is the economic role expressed through **repository-native dimensions**
+(faction identity, stance, trust band, table composition, shock/scarcity context).
+No `trader_type` field exists in the runtime schema (see `TRADE_SCENARIO_SCHEMA_MAP.md`).
 
-| ID | Archetype | Faction & Leader | Stance | Trust / Aggr | Offers (Player) | Demands (Faction) | Shocks / Scarcity | Expected Fairness | Player Decision / Strategic Trade-off |
-|---|---|---|---|---|---|---|---|---|---|
-| `fair_deal` | `caravan_merchant` (baseline) | `scavenger_camp`<br>Varek | `Trade` | 22 / 0.35 | 3× Canned Food (18)<br>1× Duct Tape (15)<br>1× Blood (25)<br>**Total: 94** | 2× Clean Water (22)<br><br>**Total: 44** | PlumePassing (2.5×)<br>Clean Water (2.0×) | `fair`<br>(Confirm: true) | Baseline fair exchange: parting with biological offerings to secure vital potable water under plume conditions. |
-| `offer_short` | `caravan_merchant` (baseline) | `upland_militia`<br>Sgt Oduya | `Trade` | -5 / 0.60 | 1× Canned Food (18)<br><br>**Total: 18** | 2× Fuel (40)<br><br>**Total: 80** | ConvoyAmbush (1.8×)<br>Fuel (1.8×) | `short`<br>(Confirm: false) | Baseline short deal: showing how military militia rejects a meager offering when fuel convoy was burned. |
-| `empty_table` | `desperate_survivor` (baseline) | `rot_farmers`<br>Mother Ilde | `Refuse` | -25 / 0.20 | None<br><br>**Total: 0** | None<br><br>**Total: 0** | None | `empty`<br>(Confirm: false) | Deliberate closed table: deep winter distrust causes the trader to refuse all interaction. |
-| `last_vials` | `desperate_survivor` | `safe_haven_community`<br>Dr. Aris Thorne | `Trade` | 10 / 0.10 | 1× Crowbar (35)<br>1× Solar Cell (45)<br>**Total: 80** | 1× Antibiotics (80)<br><br>**Total: 80** | WinterDeepens (1.5×)<br>Antibiotics (2.5×) | `fair`<br>(Confirm: true) | Desperation trade: sacrificing durable exploration tools (crowbar, solar cell) for life-saving antibiotics during freezing weather. |
-| `winter_cart` | `desperate_survivor` | `rot_farmers`<br>Harlan Frost | `Trade` | -15 / 0.25 | 5× Scrap Metal (4)<br><br>**Total: 20** | 2× Fuel (35)<br><br>**Total: 70** | WinterDeepens (2.0×)<br>Fuel (2.2×) | `short`<br>(Confirm: false) | Traveler cart in a blizzard: low-value scrap metal is insufficient to buy precious heating fuel. |
-| `depot_window` | `faction_quartermaster` | `military_remnants`<br>Capt. Kroll | `Trade` | 45 / 0.15 | 4× Clean Water (12)<br>10× Scrap Metal (4)<br>**Total: 88** | 2× 5.56mm Ammo (30)<br>1× Med Kit (28)<br>**Total: 88** | FactionWar (1.4×)<br>5.56mm Ammo (1.5×) | `fair`<br>(Confirm: true) | Allied logistics depot: high faction trust (45) allows turning basic camp salvage into standard military ammunition. |
-| `emergency_requisition` | `faction_quartermaster` | `military_remnants`<br>Logistics Off. Brand | `Trade` | 15 / 0.50 | 2× Bandages (15)<br><br>**Total: 30** | 2× Diesel Fuel (50)<br><br>**Total: 100** | ConvoyAmbush (2.2×)<br>Diesel Fuel (2.5×) | `short`<br>(Confirm: false) | Harsh garrison requisition: emergency decree demands diesel fuel that player cannot afford to match. |
-| `back_room_exchange` | `black_market` | `wire_heads`<br>Nix the Solderer | `Trade` | 5 / 0.30 | 3× Electronic Scrap (25)<br>2× Canned Food (18)<br>1× Blood (25)<br>**Total: 136** | 1× Gas Mask (75)<br>2× 9mm Ammo (25)<br><br>**Total: 125** | PlumePassing (1.6×)<br>Gas Mask (1.8×) | `fair`<br>(Confirm: true) | Clandestine electronics exchange: trading salvaged microcircuits and blood for sealed protective gear and pistol rounds. |
-| `ledgerless_broker` | `black_market` | `sump_dredgers`<br>Corvo the Blind | `Rob` | -35 / 0.70 | 4× Scrap Metal (5)<br><br>**Total: 20** | 1× Sidearm (120)<br><br>**Total: 120** | FactionWar (1.9×)<br>Sidearm (2.2×) | `short`<br>(Confirm: false) | Coercive back-alley broker: hostile `Rob` posture and exorbitant firearm demands prevent fair trade. |
-| `long_road_caravan` | `caravan_merchant` | `scavenger_camp`<br>Mistress Janna | `Trade` | 18 / 0.10 | 4× Canned Food (16)<br>2× Tobacco Pouch (20)<br>**Total: 104** | 3× Clean Water (14)<br>2× Rope (15)<br>2× Duct Tape (16)<br>**Total: 104** | Clean Water (1.2×) | `fair`<br>(Confirm: true) | Regular inter-settlement trade post: exchanging luxury comfort goods (tobacco) and food for expedition utility gear. |
-| `salvage_caravan` | `caravan_merchant` | `custodians`<br>Surveyor Vane | `Trade` | 12 / 0.20 | 2× Electronic Scrap (25)<br>2× Chemicals (20)<br>**Total: 90** | 2× Mechanical Parts (30)<br>1× Water Filter (30)<br>**Total: 90** | ConvoyAmbush (1.3×)<br>Mech Parts (1.6×) | `fair`<br>(Confirm: true) | Heavy salvage convoy: bartering raw industrial chemical stocks for precision filtration and mechanical assemblies. |
-| `settlement_of_accounts` | `debt_collector` | `hydro_barons`<br>Enforcer Malik | `Refuse` | -45 / 0.80 | 2× Scrap Metal (5)<br><br>**Total: 10** | 5× Clean Water (25)<br><br>**Total: 125** | FactionWar (2.0×)<br>Clean Water (2.4×) | `short`<br>(Confirm: false) | Debt enforcement visit: credit line in arrears; collector shuts down routine barter until overdue water debt is resolved. |
-| `crate_lot` | `bulk_dealer` | `safe_haven_community`<br>Orin | `Trade` | 25 / 0.05 | 6× Clean Water (10)<br>3× Fuel (20)<br>**Total: 120** | 8× Canned Food (12)<br>8× Scrap Metal (3)<br>**Total: 120** | Canned Food (0.85×) | `fair`<br>(Confirm: true) | Wholesale depot clearance: bulk exchange of fuel and water to obtain volume crates of food rations and repair metal. |
-| `border_runner` | `smuggler` | `echo_bats`<br>Silt-Runner Kira | `ShareIntel` | 20 / 0.35 | 2× Fuel (25)<br>2× Tobacco Pouch (20)<br>**Total: 90** | 1× Anti-Rad (50)<br>2× Iodine Pills (20)<br>**Total: 90** | PlumePassing (1.7×)<br>Anti-Rad (2.0×) | `fair`<br>(Confirm: true) | Border runner exchange: `ShareIntel` posture provides routing updates alongside scarce anti-radiation pharmaceutical exchange. |
-| `road_knowledge` | `refugee_barter` | `doomsday_preppers`<br>Old Sela | `Trade` | 10 / 0.10 | 2× Seed Packets (15)<br>1× Smoked Meat (20)<br>**Total: 50** | 2× Clean Water (15)<br>1× Canned Food (20)<br>**Total: 50** | WinterDeepens (1.3×)<br>Clean Water (1.5×) | `fair`<br>(Confirm: true) | Displaced family barter: trading agricultural seeds and preserved meat for immediate sustenance and clean water. |
+| # | Scenario ID | Archetype | Faction | Stance | Trust band | Shocks | Scarcity | Table shape (offer/ask lines) | Fairness | Confirm | Player decision created |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | `fair_deal` ★ | baseline | scavenger_camp | Trade | neutral (22) | Plume ×2.5 | clean_water ×2.0 | 2 (+1 bio) / 1 | fair | ✔ | straightforward barter anchor |
+| 2 | `offer_short` ★ | baseline | upland_militia | Trade | wary (−5) | Convoy ×1.8 | fuel ×1.8 | 1 / 1 | short | ✘ | sweeten the offer or walk |
+| 3 | `empty_table` ★ | baseline | rot_farmers | Refuse | wary (−25) | — | — | 0 / 0 | empty | ✘ | read a closed posture, don't trade |
+| 4 | `last_vials` | desperate_survivor | sump_dredgers | Trade | neutral (12) | — | iodine_pills ×1.6 | 2 / 2 | fair | ✔ | pay aid goods for a dying household's last medicine |
+| 5 | `winter_cart` | desperate_survivor | cult_of_the_glow | Trade | wary (−15) | WinterDeepens ×1.6 | fuel ×2.2 | 2 / 3 | short | ✘ | urgency trade — their warm goods outweigh what you brought |
+| 6 | `depot_window` | faction_quartermaster | military_remnants | Trade | warm (55) | FactionWar ×1.4 | filter_pack ×1.5 | 3 / 2 | fair | ✔ | spend institutional trust on curated military stock |
+| 7 | `emergency_requisition` | faction_quartermaster | upland_militia | Trade | neutral (18) | FactionWar ×1.9 | ammo_762 ×1.7 | 2 / 2 | short | ✘ | wartime terms — the militia cannot trade fairly mid-crisis |
+| 8 | `back_room_exchange` | black_market | faction_black_flotilla | Trade | neutral (8) | Convoy ×2.2 | rad_away ×1.9, anti_rad ×1.7 | 2 / 3 | fair | ✔ | pay a premium for rad-medicine you can't buy openly |
+| 9 | `ledgerless_broker` | black_market | wire_heads | ShareIntel | neutral (30) | — | — | 3 (+1 bio BoneMarrow) / 2 | fair | ✔ | trade favors, cipher goods — or the drawer — for paperwork |
+| 10 | `long_road_caravan` | caravan_merchant | doomsday_preppers | Trade | neutral (35) | — | clean_water ×1.4 | 2 / 2 | fair | ✔ | dependable broad staples at standard terms |
+| 11 | `salvage_caravan` | caravan_merchant | faction_silent_foundry | Trade | neutral (22) | Convoy ×1.5 | steel_rail_segment ×1.6 | 3 / 2 | fair | ✔ | low-value scrap into industrial stock — different strategic class |
+| 12 | `settlement_of_accounts` | debt_collector | custodians | Trade | wary (−20) | — | — | 0 / 3 (demands only) | short | ✘ | face the ledger: bare edge, heavy obligation |
+| 13 | `crate_lot` | bulk_dealer | hydro_barons | Trade | neutral (28) | — | — | 2 (6 units) / 2 (9 units) | fair | ✔ | volume trade — highest unit count in the catalog |
+| 14 | `border_runner` | smuggler | echo_bats | Trade | neutral (15) | Convoy ×2.4 | item_military_radio_module ×1.8 | 2 / 2 | fair | ✔ | premium for route-run comms stock that posts don't carry |
+| 15 | `road_knowledge` | refugee_barter | safe_haven_community | ShareIntel | neutral (40) | WinterDeepens ×1.3 | — | 2 / 3 | fair | ✔ | small necessities for maps and route knowledge (ShareIntel) |
+
+★ = original baseline scenario (preserved byte-identically in content).
+
+## Differentiation proof
+
+Mechanical gate: `Catalog_EveryScenarioDiffersFromNearestNeighborInTwoDimensions`
+requires ≥2 differing dimensions across every pair among: stance, trust band, table
+composition, shock kinds, scarcity items, fairness outcome. Notable pairs:
+
+- `offer_short` vs `emergency_requisition` (same faction): different shock kind, trust band, day, goods, aggression, scarcity, table size.
+- `back_room_exchange` vs `ledgerless_broker`: ShareIntel vs Trade, cipher/favor goods vs rad-medicine, bio drawer vs none, shocks vs none.
+- `long_road_caravan` vs `salvage_caravan`: staples vs industrial goods, different scarcity/shock, different price band.
+- `back_room_exchange` vs `border_runner`: fixed clandestine venue (flotilla) vs mobile route runner (echo bats), medicine vs comms stock — distinguished by producer fiction and goods class, not a risk meter.
+- `last_vials` vs `winter_cart`: fair/confirm vs short/blocked, different shocks/scarcity/goods/bands.
+- `empty_table` vs `settlement_of_accounts`: both bare-vs-heavy asymmetry, but Refuse/both-bare vs Trade/demands-only — a closed posture vs a called-in obligation.
+
+## Anti-exploit notes
+
+- No scenario selection RNG exists; no reroll surface exists (static content).
+- Global unit-price consistency per `item_id` (test-gated) makes cross-table
+  buy-low/sell-high structurally impossible.
+- `settlement_of_accounts` is presentation of an outstanding demand only; no debt
+  math exists in this seam and none was added.
+- `crate_lot` expresses bulk via unit count, not a discount engine; per-unit worths
+  are the canonical values.

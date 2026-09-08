@@ -1,114 +1,71 @@
-# Trade Scenario Schema Map
+# Trade Scenario Schema Map — actual runtime contract (Plan 61)
 
-**Document Version:** 1.0.0
-**Authority:** `Assets/StreamingAssets/Data/trade_screen_scenarios.json`
-**Consumer:** `Assets/Ashfall.Core/Economy/TradeScreenScenarios.cs` (`TradeScreenScenarioLoader`)
+> **Provenance (Plan 61).** This document supersedes the 2026-09-03 v1.0.0 planning
+> version of the same deliverable (authored before the catalog expansion landed).
+> The planning roster was never landed in `trade_screen_scenarios.json` (baseline
+> remained 3 scenarios) and its table design referenced item IDs absent from
+> `items.json` with per-item prices violating the global unit-price consistency
+> gate. This version is the implementation record for the landed 15-scenario
+> catalog; unique correct authority facts from the planning version are merged.
 
----
+Authoritative source: `Assets/Ashfall.Core/Economy/TradeScreenScenarios.cs`.
+This map documents the schema as implemented; it intentionally omits any field the
+loader does not read (no dead JSON is shipped).
 
-## 1. Document Structure
+## Catalog root
 
 ```json
 {
   "schema_version": 1,
   "$schema": "./schema/trade_screen_scenarios.schema.json",
   "version": 1,
-  "description": "string",
-  "scenarios": [
-    {
-      "id": "scenario_identifier",
-      "faction_id": "faction_identifier",
-      "faction_name": "Faction Display Name",
-      "leader_name": "Leader Name",
-      "succession_generation": 1,
-      "stance": "Trade",
-      "trust": 0.0,
-      "aggression": 0.0,
-      "consecutive_repels": 0,
-      "has_surrendered": false,
-      "can_demand_parley": false,
-      "world_phase": "CivilWar",
-      "world_day": 1,
-      "price_shocks": [],
-      "scarcity": [],
-      "player_offers": [],
-      "biological_offers": {},
-      "faction_demands": [],
-      "expected_fairness": "fair",
-      "confirm_succeeds": true,
-      "radio_ticker": "RADIO: ..."
-    }
-  ]
+  "description": "...",
+  "scenarios": [ { ...scenario... } ]
 }
 ```
 
----
+Only `scenarios` is read by `TradeScreenScenarioLoader.LoadFromJson`. The other keys
+are established catalog metadata convention and are preserved unchanged.
 
-## 2. Field Specifications
+## Scenario record
 
-| JSON Key | Type | Fallback | Runtime Destination | Live Consumer & Semantics |
-|---|---|---|---|---|
-| `id` | `string` | `""` | `TradeScreenScenario.Id` | Stable scenario key. Gated in tests; resolved in scenario lookups. |
-| `faction_id` | `string` | `""` | `TradeScreenScenario.FactionId` | Authoritative faction key. Queries `faction_radio_corpus.json` and `FactionStanceEngine`. |
-| `faction_name` | `string` | `FactionId` | `TradeScreenScenario.FactionName` | UI presentation label in header and quote summaries. |
-| `leader_name` | `string` | `""` | `TradeScreenScenario.LeaderName` | UI presentation label for faction leader. |
-| `succession_generation` | `int` | `1` | `TradeScreenScenario.SuccessionGeneration` | UI generation count indicator (`gen N`). |
-| `stance` | `string` | `Refuse` | `TradeScreenScenario.Stance` | Parsed to `TradeStance` (`Trade`, `Refuse`, `ShareIntel`, `Rob`, `HostileRaid`). Controls `willTrade` and `CanConfirm`. |
-| `trust` | `float` | `0.0f` | `TradeScreenScenario.Trust` | Table-edge trust meter (-100 to 100). Determines `TradeTellEngine` trust band (`hostile`, `wary`, `neutral`, `warm`). |
-| `aggression` | `float` | `0.0f` | `TradeScreenScenario.Aggression` | Table-edge raid aggression meter (0.0 to 1.0). |
-| `consecutive_repels` | `int` | `0` | `TradeScreenScenario.ConsecutiveRepels` | Faction presence meter on HUD. |
-| `has_surrendered` | `bool` | `false` | `TradeScreenScenario.HasSurrendered` | Gating flag for surrender terms. |
-| `can_demand_parley` | `bool` | `false` | `TradeScreenScenario.CanDemandParley` | Controls whether parley action is available. |
-| `world_phase` | `string` | `""` | `TradeScreenScenario.WorldPhase` | Displayed in "news from outside" strip. |
-| `world_day` | `int` | `1` | `TradeScreenScenario.WorldDay` | Campaign day context for news and radio intercept timing. |
-| `price_shocks` | `array` | `[]` | `TradeScreenScenario.PriceShocks` | List of `ShockBadgeData` (kind, multiplier, note) rendered as badges in market strip. |
-| `scarcity` | `array` | `[]` | `TradeScreenScenario.Scarcity` | List of `ScarcityBandData` (item_id, display_name, multiplier) rendered as scarcity multipliers. |
-| `player_offers` | `array` | `[]` | `TradeScreenScenario.PlayerOffers` | List of `TradeLineData` (item_id, display_name, quantity, unit_price). Contributes to `PlayerOfferValue`. |
-| `biological_offers` | `object` | `{}` | `TradeScreenScenario.BiologicalOffers` | Map of `BiologicalTradeItem` -> int quantity. Value computed via `TradePricing.BioUnitValue`. |
-| `faction_demands` | `array` | `[]` | `TradeScreenScenario.FactionDemands` | List of `TradeLineData` (item_id, display_name, quantity, unit_price). Contributes to `FactionAskValue`. |
-| `expected_fairness` | `string` | `EmptyTable` | `TradeScreenScenario.ExpectedFairness` | Parsed to `TradeFairness` (`fair` -> `Fair`, `short` -> `Short`, other -> `EmptyTable`). |
-| `confirm_succeeds` | `bool` | `false` | `TradeScreenScenario.ConfirmSucceeds` | Determines outcome of `MockTradeIntentSink.TryConfirmTrade()`. |
-| `radio_ticker` | `string` | `""` | `TradeScreenScenario.RadioTicker` | Diegetic atmospheric broadcast shown on the room's radio ticker. |
+| Field | Kind | Default if missing | Consumed by |
+|---|---|---|---|
+| `id` | string | `""` | identity / test lookups |
+| `faction_id` | string | `""` | `SetFaction` |
+| `faction_name` | string | `""` | `SetFaction` (falls back to faction_id in VM) |
+| `leader_name` | string | `""` | `SetFaction` |
+| `succession_generation` | int | `1` | `SetFaction` |
+| `stance` | enum key: `hostile_raid` / `rob` / `trade` / `share_intel` / `refuse` (PascalCase also accepted) | `Refuse` | `SetStance`; `Trade`/`ShareIntel` ⇒ `willTrade` ⇒ table can confirm |
+| `trust` | float | `0` | `SetMeters`; selects tell band via `TradeTellEngine` |
+| `aggression` | float | `0` | `SetMeters` |
+| `consecutive_repels` | int | `0` | `SetFactionPresence` |
+| `has_surrendered` | bool | `false` | `SetFactionPresence` |
+| `can_demand_parley` | bool | `false` | `SetFactionPresence` |
+| `world_phase` | string | `""` | `SetWorld` |
+| `world_day` | int | `1` | `SetWorld` (clamped ≥ 1) |
+| `price_shocks[]` | `{kind, multiplier, note}`; kind ∈ `PlumePassing` (default) / `ConvoyAmbush` / `FactionWar` / `WinterDeepens` | — | `SetShockBadges` (news strip) |
+| `scarcity[]` | `{item_id, display_name, multiplier}` | — | `SetScarcityBands` (news strip) |
+| `player_offers[]` | `{item_id, display_name, quantity, unit_price}` | — | player edge of table |
+| `faction_demands[]` | `{item_id, display_name, quantity, unit_price}` | — | faction edge of table |
+| `biological_offers{}` | keys `PintOfBlood` / `BoneMarrow` / `Plasma` / `Organ` → int count | — | "the drawer"; value priced by `TradePricing.BioUnitValue` |
+| `expected_fairness` | `fair` / `short` / anything-else ⇒ `empty` | `EmptyTable` | data-defined expectation (tests pin computed == expected) |
+| `confirm_succeeds` | bool | `false` | `MockTradeIntentSink.ConfirmResult` |
+| `radio_ticker` | string | `""` | `SetRadioTicker` — the scenario's contextual prose carrier |
 
----
+## Derived semantics (not authored)
 
-## 3. Sub-Object Schemas
+- **Fairness (computed):** table empty on both edges ⇒ `EmptyTable`; otherwise
+  `PlayerOfferValue >= FactionAskValue` ⇒ `Fair`, else `Short`.
+  `PlayerOfferValue = Σ(quantity × unit_price) + Σ BioUnitValue(kind) × count`.
+- **CanConfirm (computed):** `Fairness == Fair && stance ∈ {Trade, ShareIntel}`.
+- **Tell line:** auto-selected by `TradeTellEngine` from `stance × trust band`
+  (`hostile ≤ -40`, `wary -39..0`, `neutral 1..40`, `warm 41..100`), seed-deterministic
+  through `ISeededRng`. Scenarios never store tell IDs.
 
-### Price Shock Object
-```json
-{
-  "kind": "PlumePassing" | "ConvoyAmbush" | "FactionWar" | "WinterDeepens",
-  "multiplier": 1.5,
-  "note": "brief atmospheric context"
-}
-```
+## Rejected field proposals (plan §5.2 discipline)
 
-### Scarcity Object
-```json
-{
-  "item_id": "clean_water",
-  "display_name": "Clean Water",
-  "multiplier": 2.0
-}
-```
-
-### Trade Line Object (Offers & Demands)
-```json
-{
-  "item_id": "canned_food",
-  "display_name": "Canned Food",
-  "quantity": 3,
-  "unit_price": 18.0
-}
-```
-
-### Biological Offers Object
-```json
-{
-  "PintOfBlood": 1,
-  "BoneMarrow": 0,
-  "Plasma": 0,
-  "Organ": 0
-}
-```
-Unit values: `PintOfBlood` = 25, `BoneMarrow` = 50, `Plasma` = 75, `Organ` = 100.
+`trader_type`, `available_goods`, `price_modifier`, `negotiation_options`,
+`special_condition`, per-scenario `description` — **none exist in the loader**;
+none were authored. See `PLAN61_BASELINE.md` §2 for how each concern is expressed
+in repository-native semantics instead.

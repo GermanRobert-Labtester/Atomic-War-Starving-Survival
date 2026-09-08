@@ -1,56 +1,48 @@
-# Trade Negotiation & Tell Integration
+# Trade Negotiation Integration — Plan 61 × Plan 62 (LIVE)
 
-**Document Version:** 1.0.0
-**Authority:** `Assets/StreamingAssets/Data/trade_tell_lines.json`
-**Engine:** `Assets/Ashfall.Core/Economy/TradeTellEngine.cs`
-**Integration Status:** `LIVE` (Operational across all 15 scenarios)
+> **Provenance (Plan 61).** This document supersedes the 2026-09-03 v1.0.0 planning
+> version of the same deliverable (authored before the catalog expansion landed).
+> The planning roster was never landed in `trade_screen_scenarios.json` (baseline
+> remained 3 scenarios) and its table design referenced item IDs absent from
+> `items.json` with per-item prices violating the global unit-price consistency
+> gate. This version is the implementation record for the landed 15-scenario
+> catalog; unique correct authority facts from the planning version are merged.
 
----
+## Plan 62 status: LIVE
 
-## 1. Tell Selection Mechanism
+`trade_tell_lines.json` + `TradeTellEngine` exist and are consumed by both
+`TradeScreenScenarioLoader.CreateBinding` (skin track) and `TradeScreenPresenter`
+(live track). Pools exist for **all 5 stances × 4 trust bands**, so every scenario
+resolves a tell line (test-gated: `Catalog_EveryScenarioBindsWithTellAndLegibleState`).
 
-In ASHFALL, trade negotiation tells are not arbitrary strings hardcoded in UI views. They are data-defined in `trade_tell_lines.json` and selected deterministically by `TradeTellEngine.TrySelectTell`:
+## How scenarios integrate with negotiation (repository-native)
 
-```csharp
-public bool TrySelectTell(TradeStance stance, float trust, ISeededRng rng, out TradeTell tell)
-```
+Scenarios do **not** reference tell IDs. Integration is entirely through the two
+inputs `TradeTellEngine.TrySelectTell(stance, trust, rng, out tell)` reads:
 
-The tell engine maps:
-1. **Scenario Stance** (`HostileRaid`, `Rob`, `Refuse`, `Trade`, `ShareIntel`)
-2. **Scenario Trust** into four discrete trust bands:
-   - `hostile`: Trust $\in [-100, -40]$
-   - `wary`: Trust $\in [-39, 0]$
-   - `neutral`: Trust $\in [1, 40]$
-   - `warm`: Trust $\in [41, 100]$
-3. **Deterministic Selection:** `ISeededRng.Next(pool.Count)` picks the exact posture line.
+1. **Stance** — chosen per scenario to give the negotiation surface its identity
+   (`Trade` = barter available; `ShareIntel` = barter + road knowledge / favors —
+   used by `ledgerless_broker` and `road_knowledge` where the fiction is knowledge,
+   not goods).
+2. **Trust band** — `hostile ≤ −40`, `wary −39..0`, `neutral 1..40`, `warm 41..100`.
+   The 12 new scenarios spread across wary (winter_cart −15, settlement_of_accounts
+   −20), neutral (9 scenarios), and warm (depot_window 55).
 
----
+Selection is **seed-deterministic** through `ISeededRng`
+(test: `Catalog_TellSelectionIsSeedDeterministic`). Rotation rebinds never consume
+state; the same seed + scenario always yields the same line.
 
-## 2. Scenario-to-Tell Mapping Across All 15 Scenarios
+## Contract discipline (plan §61C.6)
 
-| Scenario ID | Stance | Trust | Resulting Trust Band | Representative Selected Tell Line |
-|---|---|---|---|---|
-| `fair_deal` | `Trade` | +22 | `neutral` | *"They count the crates twice. Standard procedure, no malice in it."* |
-| `offer_short` | `Trade` | -5 | `wary` | *"The sentry's hand stays resting on the holster flap."* |
-| `empty_table` | `Refuse` | -25 | `wary` | *"The shutters are drawn. A cardboard sign says 'Gone south'."* |
-| `last_vials` | `Trade` | +10 | `neutral` | *"Their hands tremble slightly as they set the scale weights."* |
-| `winter_cart` | `Trade` | -15 | `wary` | *"They wrap their coat tighter, eyeing the horizon, not your face."* |
-| `depot_window` | `Trade` | +45 | `warm` | *"The clerk stamps the docket without looking up. You're on the list."* |
-| `emergency_requisition` | `Trade` | +15 | `neutral` | *"An armed escort stands two paces behind the logistics officer."* |
-| `back_room_exchange` | `Trade` | +5 | `neutral` | *"Lantern turned low; shadows hide whatever is under the counter tarp."* |
-| `ledgerless_broker` | `Rob` | -35 | `wary` | *"Their eyes do the arithmetic on everything you carry."* |
-| `long_road_caravan` | `Trade` | +18 | `neutral` | *"Water bottles clink on the pack mules. Business as usual."* |
-| `salvage_caravan` | `Trade` | +12 | `neutral` | *"Grease on every finger. They weigh the iron, not the words."* |
-| `settlement_of_accounts`| `Refuse` | -45 | `hostile` | *"The debt ledger is open on the table with a red cross through your mark."* |
-| `crate_lot` | `Trade` | +25 | `neutral` | *"Forklift idling outside. They want pallets moved before dark."* |
-| `border_runner` | `ShareIntel` | +20 | `neutral` | *"They spread a greaseproof map under the edge of the battery pack."* |
-| `road_knowledge` | `Trade` | +10 | `neutral` | *"Children peek out from behind the handcart canvas. Anxious silence."* |
+- Every resolved tell comes from the live tell corpus — **no scenario-owned tell
+  text, no duplicate text ownership, no scenario-specific copy of the catalog**.
+- Option ordering is deterministic (corpus pools + seeded selection).
+- No unresolved forward references were committed; the corpus predates Plan 61 and
+  required zero changes.
+- Disabled-option UX: nothing to disable — scenarios expose no option IDs.
 
----
+## Post-Plan-61 depth (deferred, not owed)
 
-## 3. Plan 62 Tell Integration Status
-
-- **Status:** `LIVE`.
-- `trade_tell_lines.json` contains 4 trust bands and complete tell sets for all 5 stances.
-- `TradeScreenPresenter` and `TradeScreenScenarioLoader.CreateBinding` seamlessly bind tells onto `ITradeScreenViewModel.StanceTellLine` and `StanceTellId`.
-- No dangling tell IDs exist; tell line selection is fully verified in `TradeScreenSeamTests`.
+Tell-line depth per *archetype* (e.g., smuggler-specific phrasing) is a Plan 62
+follow-on: it belongs in the tell corpus as new stance×band entries or a future
+archetype selector owned by the tell engine — never as scenario-resident text.

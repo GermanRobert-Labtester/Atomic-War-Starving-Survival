@@ -2,7 +2,7 @@
   "schema_version": 1,
   "$schema": "./schema/trade_screen_scenarios.schema.json",
   "version": 1,
-  "description": "Negotiation Table mock scenarios for the skin track and convergence probes. Data-defined, never hardcoded: fair_deal, offer_short, empty_table. The empty table must feel deliberate, not broken.",
+  "description": "Negotiation Table scenarios for the skin track and convergence probes. Data-defined, never hardcoded: fair_deal, offer_short, empty_table pin the fairness verdicts; the twelve 61-series scenarios spread eight trader archetypes (desperate survivor, faction quartermaster, black market, caravan merchant, debt collector, bulk dealer, smuggler, refugee barter) across every stance and trust band. Unit prices are globally consistent per item_id. The empty table must feel deliberate, not broken.",
   "scenarios": [
     {
       "id": "fair_deal",
@@ -132,6 +132,720 @@
       "expected_fairness": "empty",
       "confirm_succeeds": false,
       "radio_ticker": "RADIO: [DEAD RELAY] Nothing but carrier hum. The table stays bare."
+    },
+    {
+      "id": "last_vials",
+      "faction_id": "sump_dredgers",
+      "faction_name": "Sump Dredgers",
+      "leader_name": "Wading Maret",
+      "succession_generation": 2,
+      "stance": "Trade",
+      "trust": 12,
+      "aggression": 0.15,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 18,
+      "price_shocks": [],
+      "scarcity": [
+        {
+          "item_id": "iodine_pills",
+          "display_name": "Iodine Pills",
+          "multiplier": 1.6
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "clean_water",
+          "display_name": "Clean Water",
+          "quantity": 2,
+          "unit_price": 22
+        },
+        {
+          "item_id": "item_salted_meat",
+          "display_name": "Salted Meat",
+          "quantity": 1,
+          "unit_price": 16
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "antibiotics",
+          "display_name": "Antibiotics",
+          "quantity": 1,
+          "unit_price": 45
+        },
+        {
+          "item_id": "splint",
+          "display_name": "Splint",
+          "quantity": 1,
+          "unit_price": 10
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [SUMP LINE] The dredgers are trading the medicine chest itself now. Nobody says the word sick on channel."
+    },
+    {
+      "id": "winter_cart",
+      "faction_id": "cult_of_the_glow",
+      "faction_name": "Cult of the Glow",
+      "leader_name": "Tender Casimir",
+      "succession_generation": 1,
+      "stance": "Trade",
+      "trust": -15,
+      "aggression": 0.25,
+      "consecutive_repels": 1,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "LongWinter",
+      "world_day": 63,
+      "price_shocks": [
+        {
+          "kind": "WinterDeepens",
+          "multiplier": 1.6,
+          "note": "the cold is eating the lamp oil faster than the shrines can bless it"
+        }
+      ],
+      "scarcity": [
+        {
+          "item_id": "fuel",
+          "display_name": "Fuel",
+          "multiplier": 2.2
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "item_grain_flour",
+          "display_name": "Grain Flour",
+          "quantity": 3,
+          "unit_price": 14
+        },
+        {
+          "item_id": "battery",
+          "display_name": "Battery",
+          "quantity": 1,
+          "unit_price": 14
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "item_heavy_wool_coat",
+          "display_name": "Heavy Wool Coat",
+          "quantity": 1,
+          "unit_price": 34
+        },
+        {
+          "item_id": "item_fur_mittens",
+          "display_name": "Fur Mittens",
+          "quantity": 1,
+          "unit_price": 14
+        },
+        {
+          "item_id": "charcoal",
+          "display_name": "Charcoal",
+          "quantity": 2,
+          "unit_price": 8
+        }
+      ],
+      "expected_fairness": "short",
+      "confirm_succeeds": false,
+      "radio_ticker": "RADIO: [GLOW WATCH] The waystation shrines are stacked with lamp oil. Winter takes its tithe either way."
+    },
+    {
+      "id": "depot_window",
+      "faction_id": "military_remnants",
+      "faction_name": "Military Remnants",
+      "leader_name": "Quartermaster Brann",
+      "succession_generation": 2,
+      "stance": "Trade",
+      "trust": 55,
+      "aggression": 0.3,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 33,
+      "price_shocks": [
+        {
+          "kind": "FactionWar",
+          "multiplier": 1.4,
+          "note": "remnant convoy priorities shifted to the forward positions"
+        }
+      ],
+      "scarcity": [
+        {
+          "item_id": "filter_pack",
+          "display_name": "Filter Pack",
+          "multiplier": 1.5
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "item_salted_meat",
+          "display_name": "Salted Meat",
+          "quantity": 3,
+          "unit_price": 16
+        },
+        {
+          "item_id": "item_trade_salt_sack",
+          "display_name": "Trade Salt Sack",
+          "quantity": 2,
+          "unit_price": 10
+        },
+        {
+          "item_id": "battery_pack",
+          "display_name": "Battery Pack",
+          "quantity": 1,
+          "unit_price": 20
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "gas_mask",
+          "display_name": "Gas Mask",
+          "quantity": 1,
+          "unit_price": 55
+        },
+        {
+          "item_id": "filter_pack",
+          "display_name": "Filter Pack",
+          "quantity": 1,
+          "unit_price": 28
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [REMNANT WIRE] Depot windows open to known faces only. The line outside says otherwise."
+    },
+    {
+      "id": "emergency_requisition",
+      "faction_id": "upland_militia",
+      "faction_name": "Upland Militia",
+      "leader_name": "Sergeant Oduya",
+      "succession_generation": 3,
+      "stance": "Trade",
+      "trust": 18,
+      "aggression": 0.7,
+      "consecutive_repels": 1,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 48,
+      "price_shocks": [
+        {
+          "kind": "FactionWar",
+          "multiplier": 1.9,
+          "note": "the ridge position is burning through cases faster than the convoys climb"
+        }
+      ],
+      "scarcity": [
+        {
+          "item_id": "ammo_762",
+          "display_name": "7.62 Ammunition",
+          "multiplier": 1.7
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "fuel",
+          "display_name": "Fuel",
+          "quantity": 2,
+          "unit_price": 40
+        },
+        {
+          "item_id": "scrap_chemical",
+          "display_name": "Chemical Scrap",
+          "quantity": 3,
+          "unit_price": 7
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "military_radio",
+          "display_name": "Military Radio",
+          "quantity": 1,
+          "unit_price": 70
+        },
+        {
+          "item_id": "item_radio_cipher_rotor",
+          "display_name": "Cipher Rotor",
+          "quantity": 1,
+          "unit_price": 45
+        }
+      ],
+      "expected_fairness": "short",
+      "confirm_succeeds": false,
+      "radio_ticker": "RADIO: [RIDGE POST] All cases to the ridge. Sign nothing, ask for nothing back."
+    },
+    {
+      "id": "back_room_exchange",
+      "faction_id": "faction_black_flotilla",
+      "faction_name": "Black Flotilla",
+      "leader_name": "Barge-Mistress Yeva",
+      "succession_generation": 1,
+      "stance": "Trade",
+      "trust": 8,
+      "aggression": 0.4,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 39,
+      "price_shocks": [
+        {
+          "kind": "ConvoyAmbush",
+          "multiplier": 2.2,
+          "note": "the flotilla ran the estuary checkpoints dark"
+        }
+      ],
+      "scarcity": [
+        {
+          "item_id": "rad_away",
+          "display_name": "Rad-Away",
+          "multiplier": 1.9
+        },
+        {
+          "item_id": "anti_rad",
+          "display_name": "Anti-Rad",
+          "multiplier": 1.7
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "clean_water_jug",
+          "display_name": "Clean Water Jug",
+          "quantity": 3,
+          "unit_price": 30
+        },
+        {
+          "item_id": "item_honey_pot",
+          "display_name": "Honey Pot",
+          "quantity": 1,
+          "unit_price": 18
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "rad_away",
+          "display_name": "Rad-Away",
+          "quantity": 1,
+          "unit_price": 38
+        },
+        {
+          "item_id": "anti_rad",
+          "display_name": "Anti-Rad",
+          "quantity": 1,
+          "unit_price": 35
+        },
+        {
+          "item_id": "filter_pack",
+          "display_name": "Filter Pack",
+          "quantity": 1,
+          "unit_price": 28
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [DEAD REACH] The flotilla came in with the lights off. Prices arrived the same way."
+    },
+    {
+      "id": "ledgerless_broker",
+      "faction_id": "wire_heads",
+      "faction_name": "Wire Heads",
+      "leader_name": "Splice",
+      "succession_generation": 4,
+      "stance": "ShareIntel",
+      "trust": 30,
+      "aggression": 0.3,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 26,
+      "price_shocks": [],
+      "scarcity": [],
+      "player_offers": [
+        {
+          "item_id": "item_logistics_cipher_sheet",
+          "display_name": "Logistics Cipher Sheet",
+          "quantity": 1,
+          "unit_price": 30
+        },
+        {
+          "item_id": "electronic_scrap",
+          "display_name": "Electronic Scrap",
+          "quantity": 2,
+          "unit_price": 10
+        },
+        {
+          "item_id": "cigarette_lighter",
+          "display_name": "Cigarette Lighter",
+          "quantity": 1,
+          "unit_price": 8
+        }
+      ],
+      "biological_offers": {
+        "BoneMarrow": 1
+      },
+      "faction_demands": [
+        {
+          "item_id": "item_comm_codebook_alpha",
+          "display_name": "Comm Codebook Alpha",
+          "quantity": 1,
+          "unit_price": 40
+        },
+        {
+          "item_id": "radio_headset",
+          "display_name": "Radio Headset",
+          "quantity": 1,
+          "unit_price": 25
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [STATIC CHOIR] No names on the wire tonight. The broker's favors don't need paperwork."
+    },
+    {
+      "id": "long_road_caravan",
+      "faction_id": "doomsday_preppers",
+      "faction_name": "Doomsday Preppers",
+      "leader_name": "Warden Tull",
+      "succession_generation": 1,
+      "stance": "Trade",
+      "trust": 35,
+      "aggression": 0.2,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "LongWinter",
+      "world_day": 21,
+      "price_shocks": [],
+      "scarcity": [
+        {
+          "item_id": "clean_water",
+          "display_name": "Clean Water",
+          "multiplier": 1.4
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "item_trade_salt_sack",
+          "display_name": "Trade Salt Sack",
+          "quantity": 4,
+          "unit_price": 10
+        },
+        {
+          "item_id": "cloth",
+          "display_name": "Cloth",
+          "quantity": 2,
+          "unit_price": 5
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "item_canned_grain_stew",
+          "display_name": "Canned Grain Stew",
+          "quantity": 2,
+          "unit_price": 15
+        },
+        {
+          "item_id": "item_grain_flour",
+          "display_name": "Grain Flour",
+          "quantity": 1,
+          "unit_price": 14
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [TRADE WIRE] The prepper train made the crossing with full crates. Breadth over bargains."
+    },
+    {
+      "id": "salvage_caravan",
+      "faction_id": "faction_silent_foundry",
+      "faction_name": "Silent Foundry",
+      "leader_name": "Factor Imke",
+      "succession_generation": 2,
+      "stance": "Trade",
+      "trust": 22,
+      "aggression": 0.25,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 57,
+      "price_shocks": [
+        {
+          "kind": "ConvoyAmbush",
+          "multiplier": 1.5,
+          "note": "the foundry's haul road lost a wagon at the culvert"
+        }
+      ],
+      "scarcity": [
+        {
+          "item_id": "steel_rail_segment",
+          "display_name": "Steel Rail Segment",
+          "multiplier": 1.6
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "scrap_metal",
+          "display_name": "Scrap Metal",
+          "quantity": 3,
+          "unit_price": 4
+        },
+        {
+          "item_id": "box_of_nails_10",
+          "display_name": "Box of Nails",
+          "quantity": 2,
+          "unit_price": 5
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "display_name": "Copper Wire",
+          "quantity": 1,
+          "unit_price": 12
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "steel_rail_segment",
+          "display_name": "Steel Rail Segment",
+          "quantity": 1,
+          "unit_price": 15
+        },
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "display_name": "Steel Billet",
+          "quantity": 1,
+          "unit_price": 18
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [FOUNDRY LINE] Another wagon for the culvert run. The mills eat what the roads give."
+    },
+    {
+      "id": "settlement_of_accounts",
+      "faction_id": "custodians",
+      "faction_name": "The Custodians",
+      "leader_name": "Record-Keeper Anselm",
+      "succession_generation": 3,
+      "stance": "Trade",
+      "trust": -20,
+      "aggression": 0.5,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 44,
+      "price_shocks": [],
+      "scarcity": [],
+      "player_offers": [],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "canned_food",
+          "display_name": "Canned Food",
+          "quantity": 2,
+          "unit_price": 18
+        },
+        {
+          "item_id": "fuel",
+          "display_name": "Fuel",
+          "quantity": 1,
+          "unit_price": 40
+        },
+        {
+          "item_id": "battery_pack",
+          "display_name": "Battery Pack",
+          "quantity": 1,
+          "unit_price": 20
+        }
+      ],
+      "expected_fairness": "short",
+      "confirm_succeeds": false,
+      "radio_ticker": "RADIO: [CUSTODIAN RECORD] Accounts come due regardless of weather. The ledger does not negotiate."
+    },
+    {
+      "id": "crate_lot",
+      "faction_id": "hydro_barons",
+      "faction_name": "Hydro Barons",
+      "leader_name": "Lockmaster Vess",
+      "succession_generation": 2,
+      "stance": "Trade",
+      "trust": 28,
+      "aggression": 0.2,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "LongWinter",
+      "world_day": 71,
+      "price_shocks": [],
+      "scarcity": [],
+      "player_offers": [
+        {
+          "item_id": "clean_water_jug",
+          "display_name": "Clean Water Jug",
+          "quantity": 5,
+          "unit_price": 30
+        },
+        {
+          "item_id": "item_honey_pot",
+          "display_name": "Honey Pot",
+          "quantity": 1,
+          "unit_price": 18
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "item_canned_grain_stew",
+          "display_name": "Canned Grain Stew",
+          "quantity": 5,
+          "unit_price": 15
+        },
+        {
+          "item_id": "item_grain_flour",
+          "display_name": "Grain Flour",
+          "quantity": 4,
+          "unit_price": 14
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [BARON TIDE] The barrels move by the crate now. Count your units before you count your coin."
+    },
+    {
+      "id": "border_runner",
+      "faction_id": "echo_bats",
+      "faction_name": "Echo Bats",
+      "leader_name": "Whistler Kane",
+      "succession_generation": 1,
+      "stance": "Trade",
+      "trust": 15,
+      "aggression": 0.45,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 52,
+      "price_shocks": [
+        {
+          "kind": "ConvoyAmbush",
+          "multiplier": 2.4,
+          "note": "the culvert run cost the runner a saddlebag"
+        }
+      ],
+      "scarcity": [
+        {
+          "item_id": "item_military_radio_module",
+          "display_name": "Military Radio Module",
+          "multiplier": 1.8
+        }
+      ],
+      "player_offers": [
+        {
+          "item_id": "fuel",
+          "display_name": "Fuel",
+          "quantity": 2,
+          "unit_price": 40
+        },
+        {
+          "item_id": "item_battery_reconditioned",
+          "display_name": "Reconditioned Battery",
+          "quantity": 1,
+          "unit_price": 25
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "item_military_radio_module",
+          "display_name": "Military Radio Module",
+          "quantity": 1,
+          "unit_price": 60
+        },
+        {
+          "item_id": "item_radio_vacuum_tube",
+          "display_name": "Radio Vacuum Tube",
+          "quantity": 1,
+          "unit_price": 18
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [BAT LINE] The runner crossed the culvert with saddlebags sealed. Ask what is inside at your own risk."
+    },
+    {
+      "id": "road_knowledge",
+      "faction_id": "safe_haven_community",
+      "faction_name": "Safe Haven Community",
+      "leader_name": "Door-Warden Pella",
+      "succession_generation": 1,
+      "stance": "ShareIntel",
+      "trust": 40,
+      "aggression": 0.1,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "LongWinter",
+      "world_day": 35,
+      "price_shocks": [
+        {
+          "kind": "WinterDeepens",
+          "multiplier": 1.3,
+          "note": "the camp is feeding forty on what ten ate"
+        }
+      ],
+      "scarcity": [],
+      "player_offers": [
+        {
+          "item_id": "canned_food",
+          "display_name": "Canned Food",
+          "quantity": 2,
+          "unit_price": 18
+        },
+        {
+          "item_id": "wool_blanket",
+          "display_name": "Wool Blanket",
+          "quantity": 1,
+          "unit_price": 24
+        }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        {
+          "item_id": "item_collectible_road_map",
+          "display_name": "Road Map",
+          "quantity": 1,
+          "unit_price": 20
+        },
+        {
+          "item_id": "item_document_evacuation_route_map",
+          "display_name": "Evacuation Route Map",
+          "quantity": 1,
+          "unit_price": 25
+        },
+        {
+          "item_id": "bandage",
+          "display_name": "Bandage",
+          "quantity": 1,
+          "unit_price": 12
+        }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [SAFE HAVEN] Forty mouths where ten ate. The road maps still know the way; the pantry doesn't."
     }
   ]
 }
