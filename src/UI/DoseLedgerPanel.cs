@@ -227,8 +227,7 @@ public partial class DoseLedgerPanel : Control, IBindablePanel
             {
                 var r = entry.readingsHistory[i];
                 if (r == null) continue;
-                string source = string.IsNullOrEmpty(r.source) ? "— exposure —" : r.source;
-                string line = $"D{r.day:00} · {source} · {r.nominalMsv:0.0}/{r.bookedMsv:0.0} mSv"
+                string line = $"D{r.day:00} · {AshfallUiHelpers.FormatDoseSource(_doseSession.Content, r.source)} · {AshfallUiHelpers.FormatDosePairMsv(r.nominalMsv, r.bookedMsv)}"
                     + (r.fluxAmbiguous ? " · FLUX" : "")
                     + (r.antiRadAfter ? " · ANTI-RAD" : "");
                 _detailBox.AddChild(AshfallUiHelpers.MakeSmall(line));

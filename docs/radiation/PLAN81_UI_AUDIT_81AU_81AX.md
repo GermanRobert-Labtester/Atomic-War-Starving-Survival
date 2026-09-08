@@ -107,6 +107,17 @@ capability, not an implemented UI.
 
 ## 4. Disposition (follow-up work, not Plan 81 scope)
 
+> **RESOLVED 2026-09-08 (UI-81AU/81AX fix pass):** items 1–3 below are now
+> implemented — µSv-precision formatters (`AshfallUiHelpers.FormatDoseMsv` /
+> `FormatDosePairMsv`), displayName provenance lookup
+> (`AshfallUiHelpers.FormatDoseSource`), and the sector-aware
+> "Places — bunker, surface, and beyond:" content header (with per-line
+> sector labels replacing the raw-ID list). `--dose-uitest` now asserts the
+> rendered strings (`plan81-ui: units/provenance/sectors` gate). Item 4
+> (risk + baseline-rate rendering behind a real route) remains open by
+> design; item 5 is partially closed — the uitest asserts rendered strings
+> but bounds/truncation still require an interactive pass.
+
 Plan 81's architecture rule kept it data-first; these are the resulting UI
 gaps, in priority order:
 

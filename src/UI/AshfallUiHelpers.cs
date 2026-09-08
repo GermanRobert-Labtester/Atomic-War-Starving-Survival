@@ -898,5 +898,50 @@ namespace AtomicWar.GodotApp.UI
                 child.Free();
             }
         }
+
+        // ── Dose formatting (Plan 81 UI audit 81AU/81AX fixes) ─────────
+        // Presentation only: the unit authority stays in DoseLedgerSystem (mSv).
+        // Values below 0.1 mSv are shown in µSv so the low-rate surface
+        // geography added by Plan 81 no longer renders as "0.0 mSv".
+
+        /// <summary>Format a ledger dose value for display. Sub-0.1 mSv values
+        /// switch to µSv precision; invalid values render as an honest dash.</summary>
+        public static string FormatDoseMsv(float msv)
+        {
+            if (float.IsNaN(msv) || float.IsInfinity(msv)) return "—";
+            if (msv < 0f) msv = 0f;
+            if (msv >= 0.1f) return $"{msv:0.0} mSv";
+            return $"{msv * 1000f:0.##} µSv";
+        }
+
+        /// <summary>Format a nominal/booked reading pair in one shared unit so
+        /// the pair stays comparable (audit fix: "0.0/0.0 mSv" hid surface doses).</summary>
+        public static string FormatDosePairMsv(float nominalMsv, float bookedMsv)
+        {
+            if (float.IsNaN(nominalMsv) || float.IsInfinity(nominalMsv)
+                || float.IsNaN(bookedMsv) || float.IsInfinity(bookedMsv))
+                return "—";
+            if (nominalMsv >= 0.1f || bookedMsv >= 0.1f)
+                return $"{nominalMsv:0.0}/{bookedMsv:0.0} mSv";
+            return $"{nominalMsv * 1000f:0.##}/{bookedMsv * 1000f:0.##} µSv";
+        }
+
+        /// <summary>Resolve a reading source ID to the dose location's display
+        /// name. Falls back to the raw ID when the catalog does not know the
+        /// source (e.g. "demo_scan") — never invents a label.</summary>
+        public static string FormatDoseSource(Ashfall.Core.DoseContentCatalog? content, string? sourceId)
+        {
+            if (string.IsNullOrEmpty(sourceId)) return "— exposure —";
+            if (content?.locations != null)
+            {
+                for (int i = 0; i < content.locations.Count; i++)
+                {
+                    var l = content.locations[i];
+                    if (l != null && l.id == sourceId && !string.IsNullOrEmpty(l.displayName))
+                        return l.displayName;
+                }
+            }
+            return sourceId;
+        }
     }
 }

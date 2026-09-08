@@ -131,11 +131,36 @@ namespace AtomicWar.GodotApp
 
             pass = pass && medicalPass;
 
+            // ---- Plan 81 UI fixes (docs/radiation/PLAN81_UI_AUDIT_81AU_81AX.md):
+            // truthful sub-resolution dose units, display-name provenance lookup,
+            // sector-aware content tab. Assert the rendered strings, not just
+            // construction (UI-21 rule). ----
+            string small = AshfallUiHelpers.FormatDoseMsv(0.00085f);
+            bool unitPrecision = small == "0.85 µSv"
+                && AshfallUiHelpers.FormatDoseMsv(120f) == "120.0 mSv"
+                && AshfallUiHelpers.FormatDosePairMsv(0.00085f, 0.00085f) == "0.85/0.85 µSv"
+                && AshfallUiHelpers.FormatDosePairMsv(120f, 72f) == "120.0/72.0 mSv"
+                && AshfallUiHelpers.FormatDoseMsv(float.NaN) == "—";
+            bool provenanceName = AshfallUiHelpers.FormatDoseSource(_doseLedger.Content, "loc_military_depot_perimeter") == "Military Depot Perimeter"
+                && AshfallUiHelpers.FormatDoseSource(_doseLedger.Content, "loc_shelter_exterior_approach") == "Shelter Exterior Approach"
+                && AshfallUiHelpers.FormatDoseSource(_doseLedger.Content, "demo_scan") == "demo_scan"
+                && AshfallUiHelpers.FormatDoseSource(_doseLedger.Content, null) == "— exposure —";
+            string contentTab = _doseSurface?.ContentTabText ?? string.Empty;
+            bool sectorAware = contentTab.Contains("Irradiated Forest Edge")
+                && contentTab.Contains("Military Depot Perimeter")
+                && contentTab.Contains("expedition")
+                && contentTab.Contains("faction")
+                && contentTab.Contains("surface")
+                && !contentTab.Contains("Rooms — standing places:");
+            bool plan81UiPass = unitPrecision && provenanceName && sectorAware;
+            pass = pass && plan81UiPass;
+
             GD.Print($"[DoseUiTest] surface={surface} npcs={npcs} book={book} diagnose={diagnose} " +
                      $"palliative={palliative} cohort={cohort} volunteer={volunteer} rendered={rendered}");
             GD.Print($"[DoseUiTest] medical: triage={triageNamed} source={triageSource} band={triageBand} " +
                      $"treated={treated} spent={spent} odds={oddsImproved} window={windowHeld} " +
                      $"clinical={clinical} vigil={vigilHeld}/{vigilRecorded}");
+            GD.Print($"[DoseUiTest] plan81-ui: units={unitPrecision} provenance={provenanceName} sectors={sectorAware}");
             HostCli.EmitSummary("dose_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }

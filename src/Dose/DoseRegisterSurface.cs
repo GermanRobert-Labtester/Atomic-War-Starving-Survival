@@ -120,6 +120,9 @@ namespace AtomicWar.GodotApp.Dose
             base._ExitTree();
         }
 
+        /// <summary>Rendered Content-tab text, for headless UI assertions.</summary>
+        internal string ContentTabText => _lblContent?.Text ?? string.Empty;
+
         public void RefreshView()
         {
             if (_session == null) return;
@@ -133,8 +136,7 @@ namespace AtomicWar.GodotApp.Dose
             _lblNpcs.Text = npcSb.Length > 0 ? npcSb.ToString().TrimEnd() : "The four who keep the books: absent from the register.";
             _lblNpcs.TooltipText = "Book / Name / Assign / Sign. Refusing to write is a valid entry; the ledger records it as silence.";
 
-            _lblLedger.Text = RenderLedger();
-            _lblSick.Text = RenderSick();
+            _lblLedger.Text = RenderLedger();            _lblSick.Text = RenderSick();
             _lblCohort.Text = RenderCohort();
             _lblVoluntary.Text = RenderVoluntary();
             _lblContent.Text = RenderContent();
@@ -157,7 +159,7 @@ namespace AtomicWar.GodotApp.Dose
                 var e = l.Entries[i];
                 if (e == null) continue;
                 int band = DoseLedgerSystem.BandFor(e.cumulativeMsv);
-                sb.Append(e.survivorId).Append(": ").Append(e.cumulativeMsv.ToString("F1"))
+                sb.Append(e.survivorId).Append(": ").Append(AshfallUiHelpers.FormatDoseMsv(e.cumulativeMsv))
                   .Append(" mSv [").Append(DoseRegistersCatalogLoader.BandLabel(_session.Registers, band))
                   .Append("]");
                 bool flux = false;
@@ -190,7 +192,9 @@ namespace AtomicWar.GodotApp.Dose
         }
 
         /// <summary>Render the Expansion 07 content bundle — the three standing
-        /// rooms (standing places, not interiors) and the book/tool story items, so
+        /// Render the Expansion 07 content bundle — the standing places
+        /// (bunker rooms plus the Plan 81 surface/expedition/external/faction
+        /// geography) and the book/tool story items, so
         /// the player sees what the four registers are written to serve.</summary>
         private string RenderContent()
         {
@@ -198,13 +202,13 @@ namespace AtomicWar.GodotApp.Dose
             var sb = new StringBuilder();
             if (_session.Content.locations != null && _session.Content.locations.Count > 0)
             {
-                sb.Append("Rooms — standing places:\n");
+                sb.Append("Places — bunker, surface, and beyond:\n");
                 for (int i = 0; i < _session.Content.locations.Count; i++)
                 {
                     var l = _session.Content.locations[i];
                     if (l == null || string.IsNullOrEmpty(l.displayName)) continue;
                     sb.Append("  • ").Append(l.displayName)
-                      .Append(" (").Append(l.id).Append(")\n");
+                      .Append(" — ").Append(l.sector).Append('\n');
                     if (!string.IsNullOrEmpty(l.description))
                         sb.Append("    ").Append(l.description).Append('\n');
                 }

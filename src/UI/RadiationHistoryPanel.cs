@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp.UI
                 foreach (var reading in entry.readingsHistory)
                 {
                     if (reading == null || shown >= 20) continue;
-                    AddRow(_eventsList, $"[Day {reading.day}] {FormatSurvivorName(entry.survivorId)} — {reading.bookedMsv:0.0} mSv ({reading.source})",
+                    AddRow(_eventsList, $"[Day {reading.day}] {FormatSurvivorName(entry.survivorId)} — {AshfallUiHelpers.FormatDoseMsv(reading.bookedMsv)} ({AshfallUiHelpers.FormatDoseSource(_dose?.Content, reading.source)})",
                         AshfallUiHelpers.ColorRadiationAcute);
                     shown++;
                     RenderedRowCount++;
