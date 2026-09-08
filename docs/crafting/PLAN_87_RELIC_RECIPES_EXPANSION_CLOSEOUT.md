@@ -1,146 +1,107 @@
-# Plan 87 — Relic Recipes Expansion: 6 → 15 Workshop Restoration Relics Closeout Report
+# Plan 87 — Relic Recipes Expansion Closeout
 
-## 1. Executive Summary
+**Status: COMPLETE — data expansion with placement deferred**
 
-- **Status:** **COMPLETE**
-- **Domain:** Workshop Relic Restoration Catalog Expansion
-- **Authoritative Data Authority:** `Assets/StreamingAssets/Data/relic_recipes.json`
-- **Scope Compliance:** Pure DATA and narrative authoring pass. Zero Core gameplay code modifications, zero new save DTOs, zero engine coupling.
+> Relic catalog expansion complete.
+> Collectible/expedition placement deferred until Plan 47/76 IDs are committed.
 
-Plan 87 successfully expands ASHFALL's workshop restoration progression from six pre-war cultural relics to a complete fifteen-relic arc. Each relic offers a distinct human and mechanical payoff, consuming scavenged pre-war components and granting a balanced one-time morale bonus, a narrative event in `events.json`, and a persistent world-state flag.
+Pure data + narrative-authoring pass. **No Core code changed. No save schema changed.**
 
----
+## Authoritative source file
 
-## 2. Authoritative Catalog & Schema Confirmation
+`Assets/StreamingAssets/Data/relic_recipes.json` — confirmed via
+`RelicCatalogLoader.cs` (`FileName` constant). The brief's `relic_inks.json`
+does not exist anywhere in the repository; it was a phantom reference.
+See `RELIC_RESTORATION_RUNTIME_CONTRACT.md` for the full resolved contract.
 
-- **Ambiguity Cleared:** `relic_inks.json` was an early drafting typo and does not exist in the codebase. `relic_recipes.json` is the sole authoritative catalog.
-- **Loader:** `Ashfall.Core.Crafting.RelicCatalogLoader`
-- **Runtime System:** `Ashfall.Core.WorkshopReverseEngineeringSystem`
-- **Total Relics in File:** 39 entries (15 cultural restoration relics + 24 technical reverse-engineering blueprints from Plan 04).
+A material discovery during audit: the catalog already contained 30 records —
+the 6 cultural relics (`category: "relic"`) plus 24 later functional
+`relic_tech_*` records. Plan 87's "six relics" evidence matched exactly the
+cultural tier, so the 6→15 target applies to cultural relics; the 24 tech
+records are preserved untouched (final total: 39 recipes).
 
----
+## Existing six (unchanged)
 
-## 3. The 15 Workshop Restoration Relics
+gramophone (8h/5), film_projector (6h/5), ham_radio (12h/5),
+music_box (4h/3), typewriter (3h/3), camera (5h/3).
 
-### The 6 Baseline Relics (Preserved Verbatim)
-1. **`gramophone` (Hand-Crank Gramophone)**
-   - Components: `vacuum_tube`, `spring_mechanism`, `phonograph_needle`
-   - Repair Time: 8 hours | Morale: +5
-   - Narrative Event: `narrative_gramophone_restored`
-   - World Flag: `relic_restored_gramophone`
-2. **`film_projector` (8mm Film Projector)**
-   - Components: `projector_bulb`, `lubricant_oil`, `film_reel`
-   - Repair Time: 6 hours | Morale: +5
-   - Narrative Event: `narrative_projector_restored`
-   - World Flag: `relic_restored_film_projector`
-3. **`ham_radio` (Vintage Ham Radio Set)**
-   - Components: `vacuum_tube`, `antenna_coil`, `soldering_kit`
-   - Repair Time: 12 hours | Morale: +5
-   - Narrative Event: `narrative_ham_radio_restored`
-   - World Flag: `relic_restored_ham_radio`
-4. **`music_box` (Antique Music Box)**
-   - Components: `music_box_comb`, `spring_key`
-   - Repair Time: 4 hours | Morale: +3
-   - Narrative Event: `narrative_music_box_restored`
-   - World Flag: `relic_restored_music_box`
-5. **`typewriter` (Mechanical Typewriter)**
-   - Components: `typewriter_ribbon`, `machine_oil`
-   - Repair Time: 3 hours | Morale: +3
-   - Narrative Event: `narrative_typewriter_restored`
-   - World Flag: `relic_restored_typewriter`
-6. **`camera` (Twin-Lens Reflex Camera)**
-   - Components: `camera_lens_cleaner`, `photographic_film`
-   - Repair Time: 5 hours | Morale: +3
-   - Narrative Event: `narrative_camera_restored`
-   - World Flag: `relic_restored_camera`
+## Final nine additions
 
-### The 9 Authored Additions (Plan 87)
-7. **`mantel_clock` (Brass Mantel Clock)**
-   - Niche: Shared Routine & Predictable Hours
-   - Components: `spring_mechanism`, `mechanical_parts`, `machine_oil`
-   - Repair Time: 6 hours | Morale: +4
-   - Narrative Event: `narrative_mantel_clock_restored`
-   - World Flag: `relic_restored_mantel_clock`
-8. **`sewing_machine` (Treadle Sewing Machine)**
-   - Niche: Domestic Craft & Mending as Care
-   - Components: `mechanical_parts`, `lubricant_oil`, `leather_strap`
-   - Repair Time: 7 hours | Morale: +4
-   - Narrative Event: `narrative_sewing_machine_restored`
-   - World Flag: `relic_restored_sewing_machine`
-9. **`telescope` (Brass Refractor Telescope)**
-   - Niche: Wonder & Gazing Beyond Immediate Danger
-   - Components: `optical_lens`, `mechanical_parts`, `scrap_metal`
-   - Repair Time: 9 hours | Morale: +5
-   - Narrative Event: `narrative_telescope_restored`
-   - World Flag: `relic_restored_telescope`
-10. **`hand_printing_press` (Tabletop Platen Press)**
-    - Niche: Public Communication, Memory, & Civic Voice
-    - Components: `mechanical_parts`, `empty_toner_cartridge`, `wooden_plank`
-    - Repair Time: 10 hours | Morale: +5
-    - Narrative Event: `narrative_printing_press_restored`
-    - World Flag: `relic_restored_printing_press`
-11. **`violin` (Spruce & Maple Violin)**
-    - Niche: Live Music Created by the Living
-    - Components: `wooden_plank`, `copper_wire_10m_of_10m`, `leather_strap`
-    - Repair Time: 8 hours | Morale: +5
-    - Narrative Event: `narrative_violin_restored`
-    - World Flag: `relic_restored_violin`
-12. **`laboratory_microscope` (Monocular Compound Microscope)**
-    - Niche: Disciplined Curiosity & Scientific Education *(Replaced proposed Slide Projector to eliminate duplicate visual projection niche)*
-    - Components: `optical_lens`, `camera_lens_cleaner`, `mechanical_parts`
-    - Repair Time: 8 hours | Morale: +4
-    - Narrative Event: `narrative_microscope_restored`
-    - World Flag: `relic_restored_laboratory_microscope`
-13. **`brass_compass` (Prismatic Marching Compass)**
-    - Niche: Direction & Physical Certainty
-    - Components: `spring_mechanism`, `mechanical_parts`, `scrap_metal`
-    - Repair Time: 4 hours | Morale: +3
-    - Narrative Event: `narrative_compass_restored`
-    - World Flag: `relic_restored_brass_compass`
-14. **`box_kite` (Weather-Station Box Kite)**
-    - Niche: Unadulterated Play & Beauty
-    - Components: `cloth`, `scrap_wood`, `rope`
-    - Repair Time: 3 hours | Morale: +2
-    - Narrative Event: `narrative_kite_restored`
-    - World Flag: `relic_restored_box_kite`
-15. **`coffee_grinder` (Cast-Iron Coffee Mill)**
-    - Niche: Domestic Morning Ritual & Hospitality
-    - Components: `mechanical_parts`, `scrap_metal`, `machine_oil`
-    - Repair Time: 4 hours | Morale: +3
-    - Narrative Event: `narrative_coffee_grinder_restored`
-    - World Flag: `relic_restored_coffee_grinder`
+| Relic | Time (h) | Morale | Components (all existing items) | Event | Flag |
+|---|---:|---:|---|---|---|
+| mantel_clock | 4 | 3 | spring_mechanism, mechanical_parts, machine_oil | narrative_mantel_clock_restored | relic_restored_mantel_clock |
+| sewing_machine | 6 | 5 | mechanical_parts, machine_oil, leather_strap | narrative_sewing_machine_restored | relic_restored_sewing_machine |
+| telescope | 9 | 5 | item_optical_flat, mechanical_components, scrap_wood | narrative_telescope_restored | relic_restored_telescope |
+| hand_printing_press | 12 | 5 | mechanical_components, paper_stock, machine_oil, scrap_wood | narrative_hand_printing_press_restored | relic_restored_hand_printing_press |
+| violin | 7 | 5 | wood_block, copper_wire_10m_of_10m, mechanical_parts | narrative_violin_restored | relic_restored_violin |
+| laboratory_microscope | 8 | 3 | item_optical_flat, item_cast_borosilicate_glass_blank, mechanical_parts, machine_oil | narrative_laboratory_microscope_restored | relic_restored_laboratory_microscope |
+| brass_compass | 3 | 3 | item_magnetic_bearing_coil, mechanical_parts, item_cast_borosilicate_glass_blank | narrative_brass_compass_restored | relic_restored_brass_compass |
+| box_kite | 2 | 3 | cloth, scrap_wood, rope | narrative_box_kite_restored | relic_restored_box_kite |
+| coffee_grinder | 4 | 3 | mechanical_parts, spring_mechanism, scrap_wood | narrative_coffee_grinder_restored | relic_restored_coffee_grinder |
 
----
+## Rejected / replaced proposals
 
-## 4. Component Economy & Item Additions
+- **Slide projector — replaced by laboratory_microscope.** The existing
+  `film_projector` already occupies the shared-visual-presentation niche.
+- No replacement-pool relics were needed; the remaining eight survived the
+  semantic-niche audit against the existing six.
 
-- **Component Reuse:** 8 of the 9 new relics consume exclusively existing items from `items.json` (`spring_mechanism`, `mechanical_parts`, `machine_oil`, `lubricant_oil`, `leather_strap`, `scrap_metal`, `empty_toner_cartridge`, `wooden_plank`, `copper_wire_10m_of_10m`, `camera_lens_cleaner`, `cloth`, `scrap_wood`, `rope`).
-- **Single Added Component:** `optical_lens` ("Optical Lens Element"). A reusable precision glass optical element shared between `telescope` and `laboratory_microscope`. Tagged as `relic_component` in `expansion_item_tags.json`.
-- **Item Tagging Parity:** All 9 new relics are registered with the `relic_restorable` tag in `expansion_item_tags.json`.
+## New component items
 
----
+**None.** All 27 component references across the nine new recipes reuse the
+existing `items.json` vocabulary. New-item threshold review in
+`RELIC_COMPONENT_INVENTORY.md` (clock_spring, telescope_lens, violin_string,
+printing_ink, compass_magnet, kite components — all rejected in favor of
+existing equivalents). No new item requires Core behavior.
 
-## 5. Integration Hooks (Plans 47 & 76)
+## Narrative events
 
-- **Plan 47 (Collectibles):**
-  The 3 primary cultural collectible candidates are `brass_compass`, `violin`, and `telescope`. Tagged with `relic_restorable` in `expansion_item_tags.json`.
-- **Plan 76 (Expedition Destinations):**
-  Committed world location anchors identified:
-  - `loc_summit_relay` / `loc_snowline_station` for `telescope`
-  - `loc_printworks` / `loc_municipal_archive` for `hand_printing_press`
-  - `loc_low_background_lab` for `laboratory_microscope`
+Nine new records added to `Assets/StreamingAssets/Data/events.json`, following
+the existing `{id, title, bodyText, weight, minDay}` schema and the
+`narrative_<relic_id>_restored` convention of the original six. Every
+`dialogue_event_id` is a Tier-2 validated reference (integrity PASS).
 
----
+## World flags
 
-## 6. Verification & Test Evidence
+Nine new flags following the existing `relic_restored_<relic_id>` convention,
+one per relic, no collisions (verified programmatically). Flags are emitted by
+the runtime as `flag_<world_flag>` deltas on repair completion.
 
-All canonical gates executed and verified clean:
+## Save behavior
 
-| Gate / Command | Result | Details |
-|---|---|---|
-| `dotnet test Ashfall.Core.Tests` | **PASS (0 failed)** | 6,893 tests passed (36s duration) |
-| `godot --headless --path . -- --data-integrity-selftest` | **PASS (0 findings)** | 10,838 IDs checked across 208 catalogs; 0 errors, 0 warnings |
-| `godot --headless --path . -- --content-utilization-selftest` | **PASS (CI gate PASS)** | 490 catalogs scanned; 0 orphans |
-| `godot --headless --path . -- --scene-binding-selftest` | **PASS (22/22)** | 22 scenes validated |
-| `python3 scripts/ci/scene-lint.py` | **PASS (0 errors)** | 27 production scenes checked |
-| `dotnet build Ashfall.csproj` | **PASS (0 errors)** | Clean host compilation |
+No change. Restoration state persists through the existing
+`WorkshopState.completedRelicIds` via `CraftingHostSession`
+(`save.WorkshopState`); one-shot completion, morale, and event semantics are
+guarded by the existing `WorkshopReverseEngineeringSystemTests`.
+
+## Plan 47 / Plan 76 status
+
+- **Plan 47 (collectibles):** `collectibles.json` has 40 entries, none
+  relic-linked; no committed relic collectible category or IDs. **Deferred.**
+- **Plan 76 (expedition destinations):** 75 destinations exist but relic
+  discovery routes through scavenging/loot tables (Plan 46 handoff); no
+  committed relic-placement IDs. **Deferred.**
+
+## Verification results
+
+| Check | Result |
+|---|---|
+| Catalog count (cultural tier) | **PASS** — 15 relics (6 + 9) |
+| Relic ID uniqueness | **PASS** (39 unique recipe IDs) |
+| Component refs | **PASS** — all resolve in items.json |
+| `research_unlock_id` contract | **PASS** — unchanged (16 resolved unlocks) |
+| `dotnet build Ashfall.Core.Tests` | **PASS** — 0 errors |
+| `dotnet test Ashfall.Core.Tests` | **PASS** — 9713/9713 (full re-run; one flaky unrelated `PanelLifecycleTests` UI failure in the first run, passes in isolation and has zero relic references) |
+| `dotnet build Ashfall.csproj` | **PASS** — 0 errors |
+| `--data-integrity-selftest` | **PASS** — 0 errors, 0 warnings, 298 catalogs |
+| `--content-utilization-selftest` | **PASS** |
+| `--bridge-selftest` | **PASS** — exit 0 |
+| Core code changes | **None** |
+| Save schema changes | **None** |
+
+## Restoration-text tone
+
+All nine restoration texts and event bodies follow the existing six's
+register: concrete machine detail, one human response, no symbolism
+explaining. Drafts from the plan's §87I quality bar were used, compressed
+where the event schema's existing body lengths demanded it.

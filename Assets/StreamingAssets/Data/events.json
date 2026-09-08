@@ -1175,6 +1175,69 @@
       "minDay": 14
     },
     {
+      "id": "narrative_mantel_clock_restored",
+      "title": "The Clock Keeps Time",
+      "bodyText": "The ticking starts small and grows until nobody can imagine the room without it. Before the day is out, someone has reset the shift schedule against the clock, and someone else has wound it without being told. It is the first thing in the shelter that simply goes on by itself.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_sewing_machine_restored",
+      "title": "The Needle Finds Its Mark",
+      "bodyText": "The treadle clacks through its first test seam, straight as a ruled line. A survivor brings out a garment kept folded for months and lays it on the table, saying it might manage this. It manages.",
+      "weight": 1,
+      "minDay": 12
+    },
+    {
+      "id": "narrative_telescope_restored",
+      "title": "The Sky Has Detail",
+      "bodyText": "The telescope is carried up to the surface hatch at dusk and aimed at a sky everyone usually reads only for weather. Two people quietly argue over which bright point is a planet. The argument lasts until the cold sends everyone below, and nobody settles it, and nobody minds.",
+      "weight": 1,
+      "minDay": 15
+    },
+    {
+      "id": "narrative_hand_printing_press_restored",
+      "title": "The Press Runs",
+      "bodyText": "The lever comes down and the first sheet peels off the platen, one corner dark and the rest clean. It is only a maintenance notice, but three people read it on the way to the pin board. The next sheet is a poem with a name under it.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_violin_restored",
+      "title": "The Third Note",
+      "bodyText": "The first note from the mended violin catches and dies. The second holds, thin and steady, and the corridor goes quiet. No one requests a song; they wait to hear whether there will be a third. There is.",
+      "weight": 1,
+      "minDay": 12
+    },
+    {
+      "id": "narrative_laboratory_microscope_restored",
+      "title": "The Lens Clears",
+      "bodyText": "The focus wheel stops slipping and the first slide is a scrap of onion skin, chosen because it was close at hand. By supper there is a line of people waiting to look at a thing they have eaten for years without ever seeing.",
+      "weight": 1,
+      "minDay": 15
+    },
+    {
+      "id": "narrative_brass_compass_restored",
+      "title": "North, Still There",
+      "bodyText": "The needle circles once and settles, exactly where it has always pointed. Someone lays it beside the shelter map and checks the bearing twice. It tells them nothing they did not know, and they check it again the next morning anyway.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_box_kite_restored",
+      "title": "Something Climbs",
+      "bodyText": "The kite goes up from the surface clearing on the first pull, old cloth sound against the wind. People gather to watch it climb, taking turns holding the line. It carries nothing, proves nothing, and everyone stays out longer than the cold allows.",
+      "weight": 1,
+      "minDay": 12
+    },
+    {
+      "id": "narrative_coffee_grinder_restored",
+      "title": "The Smell of Morning",
+      "bodyText": "The crank complains through its first turn and finds its rhythm by the fifth. There is barely enough coffee left to justify grinding, but someone measures out a handful anyway. The smell reaches the far corridor, and people find reasons to walk past the kitchen.",
+      "weight": 1,
+      "minDay": 12
+    },
+    {
       "id": "narrative_cassette_checkpoint_kilo_complete",
       "title": "Checkpoint Kilo: Full Tape",
       "bodyText": "The full tape from Checkpoint Kilo plays out to its end. A corporal's voice logs the sealing of the checkpoint, twelve personnel, air filtration nominal, and then, quietly, a count of who was not inside. The tape ends there.",

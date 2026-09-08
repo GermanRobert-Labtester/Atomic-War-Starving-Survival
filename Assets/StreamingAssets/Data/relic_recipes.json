@@ -88,6 +88,143 @@
       "restoration_text": "The camera captures the bunker in black and white — tired faces, patched walls, small kindnesses. Someone suggests a group portrait. For the first time since the exchange, everyone smiles at once.",
       "world_flag": "relic_restored_camera"
     },
+    {
+      "relic_id": "mantel_clock",
+      "display_name": "Mantel Clock",
+      "description": "A wooden mantel clock with a brass face, stopped at some hour nobody remembers. The case is sound; the movement is gummed with old oil and dust.",
+      "required_components": [
+        "spring_mechanism",
+        "mechanical_parts",
+        "machine_oil"
+      ],
+      "repair_time_hours": 4,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_mantel_clock_restored",
+      "restoration_text": "The repaired movement catches after two false starts, then settles into a dry, even ticking. Nobody says much about it. By evening, someone has moved the duty roster so the shift marks line up with the clock.",
+      "world_flag": "relic_restored_mantel_clock"
+    },
+    {
+      "relic_id": "sewing_machine",
+      "display_name": "Treadle Sewing Machine",
+      "description": "A cast-iron treadle sewing machine, decals worn to ghosts, belt rotted away. The needle bar still moves freely by hand.",
+      "required_components": [
+        "mechanical_parts",
+        "machine_oil",
+        "leather_strap"
+      ],
+      "repair_time_hours": 6,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_sewing_machine_restored",
+      "restoration_text": "The wheel turns stiffly at first, then the needle begins finding the same hole twice. A torn sleeve appears on the table before the test strip is finished. Someone has kept it folded for months.",
+      "world_flag": "relic_restored_sewing_machine"
+    },
+    {
+      "relic_id": "telescope",
+      "display_name": "Refractor Telescope",
+      "description": "A long brass refractor on a wooden tripod, objective clouded and one eyepiece crushed. The focuser rack is intact and the optics can be re-seated.",
+      "required_components": [
+        "item_optical_flat",
+        "mechanical_components",
+        "scrap_wood"
+      ],
+      "repair_time_hours": 9,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_telescope_restored",
+      "restoration_text": "The image swims until the final lens ring is tightened. That night, the shelter takes turns looking through it at a sky they usually check only for weather. For a while, nobody asks whether anything up there is useful.",
+      "world_flag": "relic_restored_telescope"
+    },
+    {
+      "relic_id": "hand_printing_press",
+      "display_name": "Hand Printing Press",
+      "description": "A small hand-lever press, rollers dried solid and platen off its slides. The frame is heavy cast iron and true; it only wants cleaning, re-seating, and fresh composition.",
+      "required_components": [
+        "mechanical_components",
+        "paper_stock",
+        "machine_oil",
+        "scrap_wood"
+      ],
+      "repair_time_hours": 12,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_hand_printing_press_restored",
+      "restoration_text": "The first sheet comes out uneven, one corner darker than the rest. It is only a maintenance notice, but three people read it before it is pinned up. The next sheet carries a name someone wants remembered.",
+      "world_flag": "relic_restored_hand_printing_press"
+    },
+    {
+      "relic_id": "violin",
+      "display_name": "Violin with Hard Case",
+      "description": "A well-made violin found in a buckled hard case: one string gone, bridge fallen, a clean crack along the flank. The scroll and fingerboard are undamaged.",
+      "required_components": [
+        "wood_block",
+        "copper_wire_10m_of_10m",
+        "mechanical_parts"
+      ],
+      "repair_time_hours": 7,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_violin_restored",
+      "restoration_text": "The first note catches and breaks. The second holds long enough for the room to go quiet. No one asks for a song; they wait to hear whether there will be a third.",
+      "world_flag": "relic_restored_violin"
+    },
+    {
+      "relic_id": "laboratory_microscope",
+      "display_name": "Laboratory Microscope",
+      "description": "A monocular laboratory microscope with three objectives, focus wheel slipping and stage clips bent. The optics are uncracked and the stand is solid.",
+      "required_components": [
+        "item_optical_flat",
+        "item_cast_borosilicate_glass_blank",
+        "mechanical_parts",
+        "machine_oil"
+      ],
+      "repair_time_hours": 8,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_laboratory_microscope_restored",
+      "restoration_text": "The focus wheel finally stops slipping. Someone places a scrap of onion skin under the glass because it is the first thing close at hand. By supper, half the shelter has looked at something they had spent years eating without ever seeing.",
+      "world_flag": "relic_restored_laboratory_microscope"
+    },
+    {
+      "relic_id": "brass_compass",
+      "display_name": "Brass Surveyor's Compass",
+      "description": "A surveyor's brass compass in a fitted case, needle bearing worn and crystal star-cracked. The card still reads true when the needle is freed.",
+      "required_components": [
+        "item_magnetic_bearing_coil",
+        "mechanical_parts",
+        "item_cast_borosilicate_glass_blank"
+      ],
+      "repair_time_hours": 3,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_brass_compass_restored",
+      "restoration_text": "The needle trembles, circles once, and settles. A survivor checks it against the shelter map, then checks it again. The instrument tells them nothing new, but the certainty seems to matter.",
+      "world_flag": "relic_restored_brass_compass"
+    },
+    {
+      "relic_id": "box_kite",
+      "display_name": "Box Kite",
+      "description": "A pre-war boxed cloth kite, two cells, spars snapped at the joints but recoverable. The tail ribbons are still sewn to the frame.",
+      "required_components": [
+        "cloth",
+        "scrap_wood",
+        "rope"
+      ],
+      "repair_time_hours": 2,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_box_kite_restored",
+      "restoration_text": "The repaired frame is lighter than it looks. When the wind catches it, everyone expects the old cloth to tear; it does not. For several minutes the shelter watches something climb that was never meant to carry supplies, signals, or weapons.",
+      "world_flag": "relic_restored_box_kite"
+    },
+    {
+      "relic_id": "coffee_grinder",
+      "display_name": "Hand Coffee Grinder",
+      "description": "A wall-mounted hand coffee grinder, hopper dented, burrs rusted together. The crank shaft turns after persuasion and the drawer still slides.",
+      "required_components": [
+        "mechanical_parts",
+        "spring_mechanism",
+        "scrap_wood"
+      ],
+      "repair_time_hours": 4,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_coffee_grinder_restored",
+      "restoration_text": "The crank complains through the first turn and smooths out by the fifth. There is barely enough coffee left to justify using it, but someone measures a handful anyway. The smell reaches the corridor before the cups do.",
+      "world_flag": "relic_restored_coffee_grinder"
+    },
 
     {
       "relic_id": "relic_hand_crunch_battery_charger",
