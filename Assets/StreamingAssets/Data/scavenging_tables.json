@@ -139,6 +139,20 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_optical_flat",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_cast_borosilicate_glass_blank",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -232,6 +246,20 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_industrial_3"
+        },
+        {
+          "item_id": "mechanical_components",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "machine_oil",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -362,6 +390,55 @@
         {
           "item_id": "item_collectible_science_magazine",
           "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_optical_flat",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_cast_borosilicate_glass_blank",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "rope",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "typewriter_ribbon",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "film_reel",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "wood_block",
+          "weight": 15,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
@@ -556,6 +633,20 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "antenna_coil",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "machine_oil",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -744,6 +835,90 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
+        },
+        {
+          "item_id": "spring_mechanism",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "spring_key",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "music_box_comb",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "machine_oil",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "typewriter_ribbon",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "photographic_film",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "camera_lens_cleaner",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "leather_strap",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_magnetic_bearing_coil",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "phonograph_needle",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "projector_bulb",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "film_reel",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -840,6 +1015,20 @@
         {
           "item_id": "item_collectible_civil_defense_badge",
           "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "machine_oil",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "spring_mechanism",
+          "weight": 8,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
@@ -1109,6 +1298,20 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "typewriter_ribbon",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "paper_stock",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1307,6 +1510,27 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
+        },
+        {
+          "item_id": "photographic_film",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "camera_lens_cleaner",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "leather_strap",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -1389,6 +1613,20 @@
         {
           "item_id": "item_collectible_trade_guild_patch",
           "weight": 3,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_magnetic_bearing_coil",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "mechanical_components",
+          "weight": 10,
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
@@ -2047,6 +2285,27 @@
           "hazard_type": "",
           "codex_unlock_id": "",
           "map_fragment_id": "damaged_map_university_3"
+        },
+        {
+          "item_id": "item_optical_flat",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "spring_mechanism",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "machine_oil",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -2930,6 +3189,27 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "phonograph_needle",
+          "weight": 4,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -3369,6 +3649,13 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "antenna_coil",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -4048,6 +4335,20 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
+        },
+        {
+          "item_id": "paper_stock",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "typewriter_ribbon",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },
@@ -4131,6 +4432,27 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "common"
+        },
+        {
+          "item_id": "paper_stock",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_components",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "machine_oil",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
         }
       ]
     },
@@ -4677,6 +4999,20 @@
           "min_quantity": 1,
           "max_quantity": 2,
           "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_magnetic_bearing_coil",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_cast_borosilicate_glass_blank",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },

@@ -28,6 +28,9 @@ namespace AtomicWar.GodotApp
 
         public string LastEvent { get; private set; } = string.Empty;
 
+        /// <summary>Full item catalog loaded from JSON (display-name lookups for panels). Null for seed-only sessions.</summary>
+        public ItemCatalog? LoadedItemCatalog { get; private set; }
+
         public CraftingHostSession(
             InventoryContainer inventory = null!,
             System.Collections.Generic.List<Recipe> recipes = null!,
@@ -96,6 +99,7 @@ namespace AtomicWar.GodotApp
             var recipes = RecipeCatalogLoader.Load(dataDir, fileIO, serializer, itemCatalog);
 
             var session = new CraftingHostSession(inventory, recipes, research, rng, log, seedDefaultWorkbench: false);
+            session.LoadedItemCatalog = itemCatalog;
 
             // When the session owns its research instance, load the authoritative
             // research_knowledge.json catalog (Plan 34: JSON is the sole authored

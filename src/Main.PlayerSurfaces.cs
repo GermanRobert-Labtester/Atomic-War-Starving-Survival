@@ -230,7 +230,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseCraftingPanel());
 
             PanelRegistry.ConfigureActions("workshop",
-                bindAction: () => { EnsureShelterWorkshop(); SetupInventory(); SetupEquipmentCondition(); SetupExpeditions(); SetupSurvivors(); _workshopPanel.Bind(_shelterWorkshop!, _inventory.Inventory, _equipmentCondition?.System, _expeditions?.Vehicles, _survivors); },
+                bindAction: () => { EnsureShelterWorkshop(); SetupInventory(); SetupEquipmentCondition(); SetupExpeditions(); SetupSurvivors(); SetupCrafting(); _workshopPanel.Bind(_shelterWorkshop!, _inventory.Inventory, _equipmentCondition?.System, _expeditions?.Vehicles, _survivors); _workshopPanel.BindRelicWorkshop(_crafting!.Workshop, _inventory.Inventory, _crafting.LoadedItemCatalog, _survivors); },
                 openAction: () => _workshopPanel.Open(),
                 closeAction: () => CloseWorkshopPanel());
 

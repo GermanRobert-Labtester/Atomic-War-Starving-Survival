@@ -641,6 +641,86 @@
         "heirloom",
         "personal_keepsake_candidate"
       ]
+    },
+    {
+      "item_id": "camera_lens_cleaner",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "cloth",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "copper_wire_10m_of_10m",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "electronic_scrap",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "item_cast_borosilicate_glass_blank",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "item_magnetic_bearing_coil",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "item_optical_flat",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "leather_strap",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "lubricant_oil",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "machine_oil",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "mechanical_components",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "mechanical_parts",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "music_box_comb",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "paper_stock",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "photographic_film",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "rope",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "scrap_wood",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "spring_key",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "typewriter_ribbon",
+      "tags": ["relic_component"]
+    },
+    {
+      "item_id": "wood_block",
+      "tags": ["relic_component"]
     }
   ]
 }

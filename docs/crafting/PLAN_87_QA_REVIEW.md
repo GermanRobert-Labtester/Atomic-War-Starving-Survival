@@ -96,3 +96,24 @@ All 15 cultural niches are distinct. Specific re-checks:
 2. **Plan 46 handoff execution** (R2/R5) — place relic components (old and
    new) into themed scavenging tables; data-only.
 3. **Tag the nine new components** `relic_component` (R3); data-only.
+
+## Follow-up dispositions (executed)
+
+1. **R1 — DONE.** `WorkshopPanel.BindRelicWorkshop` binds the relic catalog
+   alongside the shelter crafting system; the empty `RenderLegacy` stub is
+   now a full restoration view (catalog grouped cultural/technical,
+   per-component held/need readouts, RESTORED markers, start/abandon with
+   busy-state gating). Main binds it on the `workshop` route
+   (`Main.PlayerSurfaces.cs`) and routes completion deltas to the real
+   authorities: shelter-wide morale via `SurvivorsHostSession.Needs.Modify`
+   (Phase0 shelter-delta pattern) and `flag_*` deltas via
+   `CampaignConsequenceLedger.Set` (`Main.World.cs WireRelicRestorationDeltas`).
+   Both are one-shot by Core's `completedRelicIds` guard + ledger idempotence.
+2. **R2/R5 — DONE.** All 26 cultural-relic components now appear in themed
+   scavenging tables (observatory → optics, printworks/municipal_archive →
+   press components, concert_hall → violin, school/hospital → microscope,
+   apartment_block → domestic relics, geological_survey/power_substation →
+   compass coil, etc.). Zero unobtainable components remain.
+3. **R3 — DONE.** All 26 relic-recipe components now carry
+   `relic_component` in `expansion_item_tags.json` (the original six's
+   components were partially untagged too; the set is now complete).

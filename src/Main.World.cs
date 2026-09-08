@@ -190,6 +190,47 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        private bool _relicDeltaRoutingWired;
+
+        /// <summary>
+        /// Plan 87 follow-up: route relic restoration completion deltas to the
+        /// real campaign authorities — shelter-wide morale through the survivors'
+        /// needs system, and the restoration world flag through the campaign
+        /// consequence ledger. The Core system emits each delta exactly once per
+        /// relic (guarded by completedRelicIds); this routing is idempotent.
+        /// </summary>
+        private void WireRelicRestorationDeltas(WorkshopReverseEngineeringSystem workshop)
+        {
+            if (_relicDeltaRoutingWired || workshop == null) return;
+            _relicDeltaRoutingWired = true;
+
+            workshop.OnActionCompleted += result =>
+            {
+                if (!result.IsSuccess) return;
+
+                if (result.Deltas.TryGetValue("morale_bonus", out var morale) && morale > 0 && _survivors != null)
+                {
+                    var roster = _survivors.RosterState;
+                    for (int i = 0; i < roster.Count; i++)
+                    {
+                        var s = roster[i];
+                        if (s != null && s.IsAliveState)
+                            _survivors.Needs.Modify(s, NeedKind.Morale, (float)morale);
+                    }
+                }
+
+                foreach (var kvp in result.Deltas)
+                {
+                    if (kvp.Key != null && kvp.Key.StartsWith("flag_", System.StringComparison.Ordinal) && kvp.Value > 0)
+                        _consequenceLedger.Set(
+                            kvp.Key.Substring("flag_".Length),
+                            WorkshopReverseEngineeringSystem.SystemId,
+                            result.MessageKey,
+                            _core != null ? _core.Clock.Day : _simDay);
+                }
+            };
+        }
+
         private void SetupCrafting()
         {
             if (_crafting != null) return;
@@ -207,6 +248,8 @@ namespace AtomicWar.GodotApp
                 if (def.traitIds != null && def.traitIds.Contains("skill_scavenge_efficiency")) skill += 0.3f;
                 return skill;
             });
+
+            WireRelicRestorationDeltas(_crafting.Workshop);
 
             _crafting.PharmaLab.BindSkillEvaluator(chemistId =>
             {
