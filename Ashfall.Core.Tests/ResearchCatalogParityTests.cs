@@ -52,10 +52,10 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void LegacyFixture_Has31Defs_Original15First()
+        public void LegacyFixture_Has37Defs_Original15First()
         {
             var legacy = ResearchLegacyCatalogFixture.CreateLegacyDefinitions();
-            Assert.Equal(31, legacy.Count);
+            Assert.Equal(37, legacy.Count); // 31 legacy + 6 Plan 86 collectible-taught nodes
             for (int i = 0; i < ResearchLegacyCatalogFixture.Original15Ids.Length; i++)
                 Assert.Equal(ResearchLegacyCatalogFixture.Original15Ids[i], legacy[i].id);
         }

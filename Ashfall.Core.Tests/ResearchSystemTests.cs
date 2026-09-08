@@ -36,10 +36,10 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void AuthoritativeCatalog_LoadsAll56Nodes()
+        public void AuthoritativeCatalog_LoadsAll62Nodes()
         {
             var engine = BuildEngine();
-            Assert.Equal(56, engine.CatalogCount);
+            Assert.Equal(62, engine.CatalogCount); // 56 legacy + 6 Plan 86 collectible-taught nodes
         }
 
         [Fact]

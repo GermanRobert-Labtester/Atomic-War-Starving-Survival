@@ -154,6 +154,33 @@ namespace Ashfall.Core.Tests
                     "knowledge_surgical_robot_blueprint", "Surgical Manipulator Assembly Blueprint", "medical",
                     "Micron-precision servo manipulator blueprint for autonomous emergency trauma surgery.",
                     12, breakthroughItem: "item_surgical_arm_servo"),
+
+                // ── Plan 86: collectible-taught study nodes (research_knowledge.json
+                // extension — prerequisite-free, no breakthrough items) ──
+                new ResearchKnowledgeDef(
+                    "knowledge_field_medicine", "Field Medicine", "medical",
+                    "Triage order, splinting, and wound closure with what the clinic still had when the ambulances stopped.",
+                    6),
+                new ResearchKnowledgeDef(
+                    "knowledge_basic_engineering", "Basic Engineering", "engineering",
+                    "Load, leverage, and safe repair practice — knowing which wall holds and which bolt is worth turning.",
+                    5),
+                new ResearchKnowledgeDef(
+                    "knowledge_diesel_mechanics", "Diesel Mechanics", "engineering",
+                    "Diagnosis and overhaul of diesel gensets and pumps: fuel paths, compression, and the patience of a cold start.",
+                    12),
+                new ResearchKnowledgeDef(
+                    "knowledge_radio_repair", "Radio Repair", "engineering",
+                    "Handset and loudspeaker repair, antenna matching, and solder salvaged from dead boards.",
+                    10),
+                new ResearchKnowledgeDef(
+                    "knowledge_water_treatment", "Water Treatment", "survival",
+                    "Settling beds, multi-stage sand and charcoal columns, and measured chlorination for cistern-scale water.",
+                    9),
+                new ResearchKnowledgeDef(
+                    "knowledge_radiation_measurement", "Radiation Measurement", "science",
+                    "Dosimeter calibration, survey meter maintenance, and dose mapping that turns a hot street into numbers.",
+                    8),
             };
             return defs;
         }

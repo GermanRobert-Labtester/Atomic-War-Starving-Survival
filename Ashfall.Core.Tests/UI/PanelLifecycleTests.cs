@@ -129,7 +129,7 @@ namespace Ashfall.Core.Tests.UI
             var research = new ResearchSystem();
             ResearchLegacyCatalogFixture.LoadAuthoritativeCatalogInto(research);
 
-            Assert.Equal(56, research.CatalogCount);
+            Assert.Equal(62, research.CatalogCount); // 56 legacy + 6 Plan 86 nodes
 
             string[] disciplines = { "survival", "engineering", "medical", "science", "scavenging", "combat" };
             foreach (var d in disciplines)
