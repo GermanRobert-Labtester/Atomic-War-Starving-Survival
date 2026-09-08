@@ -32,6 +32,94 @@
       "dangerLevel": 9,
       "travelHours": 8.5,
       "baseRadsPerHour": 48
+    },
+    {
+      "id": "loc_abandoned_tide_gauge",
+      "displayName": "Greywater Tide Gauge Station",
+      "description": "A salt-stained concrete turret bolted over a tidal rock shelf, accessible only when the tide withdraws across the black gravel bar. Inside the spray-crusted wellhead, a perforated copper stilling well houses a counterweighted float whose clockwork chart drum froze four winters ago. The brass decommissioning plate screwed to the hatchway is stamped Year -3, yet the vulcanized neoprene telemetry cable running out the landward sleeve bears purple wax inspection seals dated thirteen months later. Mara Elsen's red-ink marginalia on the harbor water-mark ledger show systematic height offsets entered weeks after the station was formally struck from maritime rolls. The heavy cable does not terminate at the roadbed, but climbs into the maritime pines toward the high headland of Cape Wrath.",
+      "dangerLevel": 5,
+      "travelHours": 5.0,
+      "baseRadsPerHour": 28.0
+    },
+    {
+      "id": "loc_coastal_meteorological_station",
+      "displayName": "Cape Wrath Meteorological Station",
+      "description": "A wind-scoured timber shelter perched on the highest promontory of Cape Wrath, its guy wires whistling in the perpetual ocean draft. The roof-mounted anemometer cups have seized with coastal salt and fallout soot, but the instrument rack inside houses an eight-channel galvanometric recorder where the civil aviation manifest specifies only three. Dumped across the floorboards are bundles of wax-coated barograph charts annotated in Ilya Venn's cramped hand, recording rapid pressure transients tagged with unlisted three-digit station prefixes. Departmental inventory slips confirm the station was re-tasked to monitor high-altitude launch traces four days before civilian airspace was closed. A penciled azimuth line drawn across the plotting table points directly north-northwest toward the slit trench of the North Cliff Observation Bunker.",
+      "dangerLevel": 6,
+      "travelHours": 6.5,
+      "baseRadsPerHour": 32.0
+    },
+    {
+      "id": "loc_clifftop_observation_bunker",
+      "displayName": "North Cliff Observation Bunker",
+      "description": "A low-profile reinforced concrete casemate recessed into the basalt cliff face, overlooking the grey swell of the northern shelf. Monocular periscopes with thick quartz lenses still peer through armored embrasures, their brass azimuth rings locked into counterbalanced gimbals. Banked along the rear blast wall are heavy lead-acid accumulator cells wired into heavy copper Tempest busbars, far exceeding the power requirements of a simple civil lookout. A greaseboard target grid dividing the horizon into five sectors has sector five scored with deep grease pencil, bearing inland directly toward the Twelve-Gauge Array on the far ridge. Signalman Garrick Daal's logbook sits open beside a burned-out vacuum repeater, its final entry noting automated routing table acknowledgments received long after the coastal grid went black.",
+      "dangerLevel": 7,
+      "travelHours": 7.5,
+      "baseRadsPerHour": 36.0
+    },
+    {
+      "id": "loc_sealed_marine_laboratory",
+      "displayName": "St. Jude Marine Laboratory",
+      "description": "A cluster of zinc-roofed laboratories nestled in a tidal cove, surrounded by rust-bleached brine intake conduits and dry holding tanks. Within the darkened basement storage vault, rows of galvanized racks support hundreds of paraffin-sealed benthic core cylinders extracted from the continental trench. Each cylinder is bound with coarse rag-linen specimen tags stamped with purple dye, matching the material and weave of the shift charters in the Fuse World. Dr. Sena Korr's research log indicates the cryogenic sample bays were kept powered by auxiliary diesel generators for seven months following university closure. A stamped shipping manifest on the packing desk records sixteen crates of sediment data reels transferred under Department of the Interior escort to the Archive Tape-Silo.",
+      "dangerLevel": 8,
+      "travelHours": 8.5,
+      "baseRadsPerHour": 44.0
+    },
+    {
+      "id": "loc_forestry_survey_post",
+      "displayName": "Blackwood Forestry Survey Post",
+      "description": "A soot-blackened timber ranger post set beside an overgrown logging haul road in the deep pines of the Blackwood. The front dispatch office has been ransacked for firewood, but the padlocked zinc floor locker in the back pantry remains undisturbed. Inside the locker rest dozens of sealed glass sample jars containing sorted needle ash, humus layers, and soil cores labeled with isotope count ratios. Forestry surveyor Torin Rask's field grid maps show collection tracks that ignore timber yields, instead plotting isotopic fallout deposition contours synchronized with regional storm dates. Carbon-copied voucher receipts pinned to the clipboard were issued by the Census Machine, while the shipping stubs route all duplicate soil samples to the Highland Core-Sample Repository.",
+      "dangerLevel": 5,
+      "travelHours": 4.5,
+      "baseRadsPerHour": 26.0
+    },
+    {
+      "id": "loc_geological_core_vault",
+      "displayName": "Highland Core-Sample Repository",
+      "description": "A subterranean adit driven straight into a dry shale bluff, protected by an unhung steel mesh security gate. Inside, endless rows of industrial steel shelving hold thousands of cylindrical drill cores arranged in stamped zinc troughs. Bay Twelve has been hastily relabeled PROGRAM SEVEN in white enamel, the previous commercial mineral survey plates cleanly scraped away with razor blades. An open wooden core box on the inspection bench is stenciled REF: VALE and contains deep strata samples alongside a surveyor's polished brass plumb bob. Technician Oren Varek's inspection log records discrepancies between official seismic depth charts and the true strata profiles, cross-referencing hydrologic baseline data held downriver at the Karsk River Gauging Station.",
+      "dangerLevel": 7,
+      "travelHours": 7.0,
+      "baseRadsPerHour": 38.0
+    },
+    {
+      "id": "loc_river_gauging_station",
+      "displayName": "Karsk River Gauging Station",
+      "description": "A hexagonal concrete gauging tower rising directly from the rocky gorge wall of the Karsk River, its lower catwalk twisted by spring ice dams. The upper chamber houses a brass float mechanism and an unlisted pneumatic water sampler connected to copper intake tubes that siphon directly from the deep riverbed. A strontium thermoelectric generator in the crawlspace hums faintly, having kept the digital telemeter transmitter alive for eighteen months after the regional power grid collapsed. Glass sample ampoules lined in lead-shielded racks carry Department of the Interior requisition stamps and chemical titration tallies in attendant Lena Rost's neat script. Carbon receipts for the specialized reagent vials show regular supply deliveries dispatched from the Valley Experimental Agronomy Station.",
+      "dangerLevel": 6,
+      "travelHours": 6.0,
+      "baseRadsPerHour": 30.0
+    },
+    {
+      "id": "loc_abandoned_agricultural_station",
+      "displayName": "Valley Experimental Agronomy Station",
+      "description": "A sprawling complex of shattered greenhouse bays and brick administration offices sprawled across the fertile river terrace. Beneath the broken glass panes, hundreds of galvanized soil flats lie dry, their metal plant markers stenciled with isotopic half-lives rather than cultivar numbers. In the secure basement seed annex, botanist Tessa Mirn's handwritten log documents germination failure rates under acute radiation gradients, dated months prior to public conflict warnings. A heavy green buckram ledger titled Nutritional Floor Projections — Mortar Interval calculates minimum caloric survival quotas for shelter populations per administrative sector. Pinned to the dispatch board, teletype shipping records confirm bulk shipments of sealed seed stock routed up the mountain pass toward the Pass 4 Signal Relay Mast.",
+      "dangerLevel": 7,
+      "travelHours": 6.5,
+      "baseRadsPerHour": 35.0
+    },
+    {
+      "id": "loc_decommissioned_signal_relay",
+      "displayName": "Pass 4 Signal Relay Mast",
+      "description": "A four-legged steel lattice mast anchored to a freezing alpine col, its parabolic microwave feedhorns aimed dead south along the high border fence line. The corrugated transmitter shack at the base was officially decommissioned four years before the war, yet the vacuum-tube amplifiers are clean of grime and rewired with modern ceramic busbars. The main transmitter chassis continues to cycle in silence, broadcasting an unmodulated 99.0 MHz carrier pulse powered by a buried subterranean battery vault. Operator Karel Norn's clipped teletype log records automated machine cipher packets received over the mountain line at four-hour intervals. Heavy armored cable leaves the shack floor and drops into a blasted rock trench running along the ridge toward the Gate Seven Border Checkpoint.",
+      "dangerLevel": 6,
+      "travelHours": 7.0,
+      "baseRadsPerHour": 36.0
+    },
+    {
+      "id": "loc_border_checkpoint_ruins",
+      "displayName": "Gate Seven Border Checkpoint",
+      "description": "A fortified mountain pass bottleneck choked with crumbling concrete chicane barriers, rusted razor wire, and overturned transport hulls. The above-ground guardhouses show only bullet-pocked counters and civilian logbooks recording zero commercial transit in the final months. However, an armored hatch concealed beneath a diesel spill in the inspection pit leads down into a soundproofed subterranean control bunker. Yellow carbon copies of convoy clearance manifests track forty-two nocturnal transport runs carrying uninspected magnetic media stamped with the Tempest anchor crest. A clipboard hanging by the secure radio desk holds a dispatch order signed by clerk Selya Saltmarsh, routing the final sealed media convoys past the Pylon 19 Observation Post.",
+      "dangerLevel": 8,
+      "travelHours": 8.0,
+      "baseRadsPerHour": 40.0
+    },
+    {
+      "id": "loc_minefield_observation_tower",
+      "displayName": "Pylon 19 Observation Post",
+      "description": "A hexagonal reinforced concrete watchtower looming over an expanse of marked border minefields and dead pine stumps on the southern crest. The upper observation platform features a heavy brass plotting table engraved with azimuth lines that align every major valley installation into a single geometric grid. The green buckram watch logs abandoned on the plotting shelf record zero border incursions, instead cataloging ionization flashes, seismic tremors, and high-altitude soundings. A tape transcription log notes repeated machine-voice broadcasts matching the cadence of the Census window voice of Maro Veen. The final handwritten log entry confirms that all plotting sheets and telemetry reels were transferred into the custody of the Archive Tape-Silo.",
+      "dangerLevel": 8,
+      "travelHours": 9.0,
+      "baseRadsPerHour": 46.0
     }
   ]
 }
