@@ -79,6 +79,7 @@ namespace AtomicWar.GodotApp
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
+        WorkshopRelicUiTest,
 
         GeodeticSurveyUiTest,
 
@@ -288,6 +289,10 @@ namespace AtomicWar.GodotApp
             if (Has(args, "--decon-airlock-selftest") || Has(args, "--decon-airlock-uitest"))
 
                 return HostCliAction.DeconAirlockUiTest;
+
+            if (Has(args, "--workshop-relic-uitest") || Has(args, "--workshop-relic-selftest"))
+
+                return HostCliAction.WorkshopRelicUiTest;
 
             if (Has(args, "--geodetic-survey-selftest") || Has(args, "--geodetic-survey-uitest"))
 
@@ -629,6 +634,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-operations-selftest / --shelter-ops-selftest / --operations-selftest Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification");
             GD.Print("  --silent-foundry-uitest   Silent Foundry trade panel UI construction, binding, and trade loop");
             GD.Print("  --decon-airlock-uitest     Decon Airlock UI data grid panel bindings");
+            GD.Print("  --workshop-relic-uitest / --workshop-relic-selftest  Workshop dual-bind relic restoration smoke: render, select, repair, deltas, save/reload");
             GD.Print("  --decon-airlock-selftest   Decon Airlock UI data grid panel bindings");
             GD.Print("  --geodetic-survey-uitest   Geodetic Survey UI data grid panel bindings");
             GD.Print("  --geodetic-survey-selftest Geodetic Survey UI data grid panel bindings");

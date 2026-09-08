@@ -187,6 +187,12 @@ namespace AtomicWar.GodotApp
 
                     return;
 
+                case HostCliAction.WorkshopRelicUiTest:
+
+                    RunWorkshopRelicUiTestAndQuit();
+
+                    return;
+
                 case HostCliAction.GeodeticSurveyUiTest:
 
                     RunGeodeticSurveyUiTestAndQuit();
