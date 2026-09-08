@@ -200,12 +200,12 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseSurvivalDetailPanel());
 
             PanelRegistry.ConfigureActions("survivor_detail",
-                bindAction: () => { SetupSurvivors(); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first); },
+                bindAction: () => { SetupSurvivors(); SetupEnrichment(); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
                 openAction: () => _survivorDetailPanel.Open(),
                 closeAction: () => CloseSurvivorDetailPanel());
 
             PanelRegistry.ConfigureActions("inventory_detail",
-                bindAction: () => { SetupInventory(); var first = _inventory?.Inventory?.FindSlot("bandage")?.Item?.id ?? "bandage"; _inventoryDetailPanel.Bind(_inventory, first); },
+                bindAction: () => { SetupInventory(); SetupEnrichment(); var first = _inventory?.Inventory?.FindSlot("bandage")?.Item?.id ?? "bandage"; _inventoryDetailPanel.Bind(_inventory, first, null, _enrichment); },
                 openAction: () => _inventoryDetailPanel.Open(),
                 closeAction: () => CloseInventoryDetailPanel());
 

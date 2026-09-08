@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS0649
 using Ashfall.Core;
+using Ashfall.Core.Narrative;
 
 namespace AtomicWar.Journal
 {
@@ -70,10 +71,13 @@ namespace AtomicWar.Journal
         public List<GameEventData> VerdictHistory = new List<GameEventData>();
         /// <summary>Shelter room-history vignettes (shelter_room_identities.json, Plan 29 29A).</summary>
         public List<RoomHistoryCodexData> RoomHistories = new List<RoomHistoryCodexData>();
+        /// <summary>Plan 135 activated world narrative discoveries.</summary>
+        public NarrativeDiscoveryCatalog? NarrativeDiscoveries;
 
         public bool IsEmpty =>
             Items.Count == 0 && Locations.Count == 0 && Survivors.Count == 0 && Events.Count == 0
-            && VerdictHistory.Count == 0 && RoomHistories.Count == 0;
+            && VerdictHistory.Count == 0 && RoomHistories.Count == 0
+            && (NarrativeDiscoveries == null || NarrativeDiscoveries.Count == 0);
     }
 
     public static class CatalogJsonLoader
@@ -94,6 +98,10 @@ namespace AtomicWar.Journal
             catalogs.Events = LoadList<GameEventData>(fileIO, fileIO.Combine(dataDir, "events.json"));
             catalogs.VerdictHistory = LoadVerdictHistory(fileIO, dataDir);
             catalogs.RoomHistories = LoadRoomHistories(fileIO, dataDir);
+
+            catalogs.NarrativeDiscoveries = new NarrativeDiscoveryCatalog();
+            catalogs.NarrativeDiscoveries.LoadFromFiles(dataDir, fileIO);
+
             return catalogs;
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 #pragma warning disable CS8618
 
 using Ashfall.Core.Shelter;
@@ -17,22 +18,53 @@ namespace Ashfall.Core
         public float lightingDemand = 0.5f;
         public List<SleepAssignment> assignments = new List<SleepAssignment>();
         public int lastTransitionDay = -1;
+        public string activeScheduleId = "default";
     }
 
     [Serializable]
     public sealed class ScheduleDefinition
     {
-        public string schedule_id = string.Empty;
-        public string display_name = string.Empty;
-        public float dayStartHour = 6f;
-        public float dayEndHour = 22f;
-        public float curfewStartHour = 22f;
-        public float curfewEndHour = 6f;
-        public float fatigueRecoveryModifier = 1f;
-        public float lightingDemandDay = 0.5f;
-        public float lightingDemandNight = 0.8f;
-        public float lightingDemandCurfew = 0.3f;
-        public bool allowEmergencyOverride = true;
+        [JsonPropertyName("schedule_id")]
+        public string schedule_id { get; set; } = string.Empty;
+
+        [JsonPropertyName("display_name")]
+        public string display_name { get; set; } = string.Empty;
+
+        [JsonPropertyName("day_start_hour")]
+        public float dayStartHour { get; set; } = 6f;
+
+        [JsonPropertyName("day_end_hour")]
+        public float dayEndHour { get; set; } = 22f;
+
+        [JsonPropertyName("curfew_start_hour")]
+        public float curfewStartHour { get; set; } = 22f;
+
+        [JsonPropertyName("curfew_end_hour")]
+        public float curfewEndHour { get; set; } = 6f;
+
+        [JsonPropertyName("fatigue_recovery_modifier")]
+        public float fatigueRecoveryModifier { get; set; } = 1f;
+
+        [JsonPropertyName("lighting_demand_day")]
+        public float lightingDemandDay { get; set; } = 0.5f;
+
+        [JsonPropertyName("lighting_demand_night")]
+        public float lightingDemandNight { get; set; } = 0.8f;
+
+        [JsonPropertyName("lighting_demand_curfew")]
+        public float lightingDemandCurfew { get; set; } = 0.3f;
+
+        [JsonPropertyName("allow_emergency_override")]
+        public bool allowEmergencyOverride { get; set; } = true;
+
+        [JsonPropertyName("shift_pattern")]
+        public string shiftPattern { get; set; } = "single_shift";
+
+        [JsonPropertyName("trigger_condition")]
+        public string triggerCondition { get; set; } = string.Empty;
+
+        [JsonPropertyName("description")]
+        public string description { get; set; } = string.Empty;
     }
 
     [Serializable]
@@ -62,6 +94,26 @@ namespace Ashfall.Core
         public bool IsEmergencyOverride => _state.emergencyOverride;
         public float FatigueRecoveryModifier => _state.fatigueRecoveryModifier;
         public float LightingDemand => _state.lightingDemand;
+        public string ActiveScheduleId => _activeScheduleId;
+
+        public IReadOnlyCollection<ScheduleDefinition> GetAllSchedules() => _catalog.Values;
+
+        public ScheduleDefinition? GetSchedule(string scheduleId) =>
+            _catalog.TryGetValue(scheduleId, out var def) ? def : null;
+
+        public bool TryActivateScheduleByTrigger(string triggerCondition)
+        {
+            if (string.IsNullOrEmpty(triggerCondition)) return false;
+            foreach (var kvp in _catalog)
+            {
+                if (string.Equals(kvp.Value.triggerCondition, triggerCondition, StringComparison.OrdinalIgnoreCase))
+                {
+                    var res = SetSchedule(kvp.Key);
+                    return res.IsSuccess;
+                }
+            }
+            return false;
+        }
 
         public event Action<SchedulePhase> OnPhaseChanged;
         public event Action OnScheduleChanged;
@@ -97,6 +149,7 @@ namespace Ashfall.Core
                 return ActionResult.Failed("unknown_schedule", "schedule.unknown");
 
             _activeScheduleId = scheduleId;
+            _state.activeScheduleId = scheduleId;
             _log.Info($"[Schedule] switched to {def.display_name}");
             OnScheduleChanged?.Invoke();
             return ActionResult.Success("schedule.set");
@@ -224,12 +277,17 @@ namespace Ashfall.Core
             }
         }
 
-        public ShelterScheduleState CaptureState() => CloneState(_state);
+        public ShelterScheduleState CaptureState()
+        {
+            _state.activeScheduleId = _activeScheduleId;
+            return CloneState(_state);
+        }
 
         public void RestoreState(ShelterScheduleState saved)
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            _activeScheduleId = string.IsNullOrEmpty(_state.activeScheduleId) ? "default" : _state.activeScheduleId;
         }
 
         private static ShelterScheduleState CloneState(ShelterScheduleState src)

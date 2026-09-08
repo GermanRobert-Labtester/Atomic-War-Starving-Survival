@@ -486,6 +486,11 @@
             "day": 4,
             "clarity": 0.9,
             "text": "Repeat at the stated hour tomorrow. The grounds are on. The grounds stay on."
+        },
+        {
+            "day": 5,
+            "clarity": 0.98,
+            "text": "Final maintenance band. The survey crew has not arrived. I am leaving the switching order and the copper request at the east gate; if the grid wakes, it will be because someone chose to read it first."
         }
     ]
 },

@@ -1,0 +1,605 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "discovery_id": "disc_glitch_radiator_header",
+      "source_catalog": "narrative/bunker_maintenance_glitches.json",
+      "source_record_id": "glitch_01_radiator_header_steam_fracture",
+      "channel": "location_inspection",
+      "producer_id": "room_bunker_corridor",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glitch_artesian_intake",
+      "source_catalog": "narrative/bunker_maintenance_glitches.json",
+      "source_record_id": "glitch_02_artesian_intake_cavitation_hammer",
+      "channel": "location_inspection",
+      "producer_id": "room_water_pump",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glitch_substation_neutral",
+      "source_catalog": "narrative/bunker_maintenance_glitches.json",
+      "source_record_id": "glitch_03_main_substation_neutral_ground_loop",
+      "channel": "location_inspection",
+      "producer_id": "room_workshop",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glitch_air_filter_mold",
+      "source_catalog": "narrative/bunker_maintenance_glitches.json",
+      "source_record_id": "glitch_04_intake_air_filter_black_mold_clog",
+      "channel": "location_inspection",
+      "producer_id": "room_filtration",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_boiler_deaerator_oxygen_pitting",
+      "source_catalog": "narrative/boiler_feedwater_deaerator_audits.json",
+      "source_record_id": "boiler_deaerator_dissolved_oxygen_pitting",
+      "channel": "location_inspection",
+      "producer_id": "location_geo_thermal_plant_ruins",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_boiler_deaerator_sulfite_depletion",
+      "source_catalog": "narrative/boiler_feedwater_deaerator_audits.json",
+      "source_record_id": "boiler_deaerator_sodium_sulfite_scavenger_depletion",
+      "channel": "location_inspection",
+      "producer_id": "location_geo_thermal_plant_ruins",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_boiler_deaerator_mud_drum_sludge",
+      "source_catalog": "narrative/boiler_feedwater_deaerator_audits.json",
+      "source_record_id": "boiler_deaerator_bottom_mud_drum_sludge_compaction",
+      "channel": "location_inspection",
+      "producer_id": "location_geo_thermal_plant_ruins",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_blueprint_surface_airlock",
+      "source_catalog": "narrative/bunker_blueprints_codex.json",
+      "source_record_id": "room_bp_01_surface_airlock_vestibule",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_airlock",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_blueprint_ventilation_blower",
+      "source_catalog": "narrative/bunker_blueprints_codex.json",
+      "source_record_id": "room_bp_03_central_ventilation_blower_station",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_filtration",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_blueprint_artesian_well_pump",
+      "source_catalog": "narrative/bunker_blueprints_codex.json",
+      "source_record_id": "room_bp_04_deep_artesian_well_pump_room",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_water_pump",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_blueprint_hydroponic_greenhouse",
+      "source_catalog": "narrative/bunker_blueprints_codex.json",
+      "source_record_id": "room_bp_07_underground_hydroponic_greenhouse",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_greenhouse",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_moonshine_still",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_01_the_air_duct_moonshine_still",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_chore_chit_forgery",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_02_the_counterfeit_chore_chit_ring",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_accordion_recital",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_03_unauthorized_curfew_accordion_recital",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_smuggled_calico_cat",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_04_the_smuggled_airlock_calico_cat",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_wire_vel_iodine",
+      "source_catalog": "narrative/wire_confessions.json",
+      "source_record_id": "wire_01_dr_vel_day14",
+      "channel": "radio_archive",
+      "producer_id": "room_radio_tuner",
+      "min_day": 14,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_wire_morozov_lock4",
+      "source_catalog": "narrative/wire_confessions.json",
+      "source_record_id": "wire_02_morozov_day40",
+      "channel": "radio_archive",
+      "producer_id": "room_radio_tuner",
+      "min_day": 40,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_wire_sonya_buttons",
+      "source_catalog": "narrative/wire_confessions.json",
+      "source_record_id": "wire_03_sonya_age10",
+      "channel": "radio_archive",
+      "producer_id": "room_radio_tuner",
+      "min_day": 10,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_trade_salt_gauze",
+      "source_catalog": "narrative/bunker_trade_ledger_batch_2.json",
+      "source_record_id": "trade_b2_001",
+      "channel": "scavenging_document",
+      "producer_id": "room_storage_bay",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_trade_kerosene_barter",
+      "source_catalog": "narrative/bunker_trade_ledger_batch_2.json",
+      "source_record_id": "trade_b2_002",
+      "channel": "scavenging_document",
+      "producer_id": "location_sub_level_4_transit",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_trade_weld_grain_audit",
+      "source_catalog": "narrative/bunker_trade_ledger_batch_2.json",
+      "source_record_id": "trade_b2_003",
+      "channel": "scavenging_document",
+      "producer_id": "room_storage_bay",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_treaty_lock4_sluice",
+      "source_catalog": "narrative/regional_treaty_protocols.json",
+      "source_record_id": "treaty_01_lock_4_sluice_and_brine_concession",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 5,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_treaty_north_ridge_timber",
+      "source_catalog": "narrative/regional_treaty_protocols.json",
+      "source_record_id": "treaty_02_north_ridge_timber_and_cordon_pact",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 5,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_treaty_upper_gorge_hydro",
+      "source_catalog": "narrative/regional_treaty_protocols.json",
+      "source_record_id": "treaty_03_hydro_power_sharing_compact",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 5,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_scav_route_bridge_toll",
+      "source_catalog": "narrative/scavenger_expedition_route_notes.json",
+      "source_record_id": "scav_route_bridge_toll_ambush_point",
+      "channel": "scavenging_document",
+      "producer_id": "stranger_cache",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_scav_route_frozen_swamp",
+      "source_catalog": "narrative/scavenger_expedition_route_notes.json",
+      "source_record_id": "scav_route_frozen_swamp_sledge_run",
+      "channel": "scavenging_document",
+      "producer_id": "stranger_cache",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_scav_route_collapsed_tunnel",
+      "source_catalog": "narrative/scavenger_expedition_route_notes.json",
+      "source_record_id": "scav_route_collapsed_tunnel_air_draught",
+      "channel": "scavenging_document",
+      "producer_id": "stranger_cache",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_topo_ground_zero_basin",
+      "source_catalog": "narrative/surface_radiation_topo_sheets.json",
+      "source_record_id": "topo_sheet_ground_zero_trinitite_basin",
+      "channel": "location_inspection",
+      "producer_id": "location_silent_observatory",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_topo_ridge_crest_divide",
+      "source_catalog": "narrative/surface_radiation_topo_sheets.json",
+      "source_record_id": "topo_sheet_ridge_crest_windward_hot_plume",
+      "channel": "location_inspection",
+      "producer_id": "location_silent_observatory",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_topo_river_delta_confluence",
+      "source_catalog": "narrative/surface_radiation_topo_sheets.json",
+      "source_record_id": "topo_sheet_alluvial_fan_isotope_silt_delta",
+      "channel": "location_inspection",
+      "producer_id": "location_silent_observatory",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_case_radiation_syndrome",
+      "source_catalog": "narrative/surgeons_casebook_batch_2.json",
+      "source_record_id": "case_b2_001_acute_radiation_syndrome",
+      "channel": "quest_aftermath",
+      "producer_id": "abandoned_hospital",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_case_radiation_pneumonitis",
+      "source_catalog": "narrative/surgeons_casebook_batch_2.json",
+      "source_record_id": "case_b2_002_chronic_radiation_pneumonitis",
+      "channel": "quest_aftermath",
+      "producer_id": "abandoned_hospital",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_case_compound_fracture",
+      "source_catalog": "narrative/surgeons_casebook_batch_2.json",
+      "source_record_id": "case_b2_003_compound_fracture_mechanic",
+      "channel": "quest_aftermath",
+      "producer_id": "room_clinic",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_case_dysentery_outbreak",
+      "source_catalog": "narrative/surgeons_casebook_batch_2.json",
+      "source_record_id": "case_b2_004_dysentery_outbreak",
+      "channel": "quest_aftermath",
+      "producer_id": "room_clinic",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_germination_red_fife_wheat",
+      "source_catalog": "narrative/ragdoll_germination_assays.json",
+      "source_record_id": "ragdoll_germination_blotter_paper_radicle_emergence",
+      "channel": "item_examination",
+      "producer_id": "item_seed_ash_grain",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_germination_golden_bantam_corn",
+      "source_catalog": "narrative/ragdoll_germination_assays.json",
+      "source_record_id": "ragdoll_germination_tetrazolium_chloride_dehydrogenase_stain",
+      "channel": "item_examination",
+      "producer_id": "family_heirloom_seeds",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_germination_crimson_clover",
+      "source_catalog": "narrative/ragdoll_germination_assays.json",
+      "source_record_id": "ragdoll_germination_abnormal_seedling_coleoptile_split",
+      "channel": "item_examination",
+      "producer_id": "item_seed_leafy_green",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_well_tritium_spike",
+      "source_catalog": "narrative/artesian_well_contamination_logs.json",
+      "source_record_id": "well_contam_tritium_percolation_spike",
+      "channel": "location_inspection",
+      "producer_id": "location_abandoned_desalination",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_well_strontium_leach",
+      "source_catalog": "narrative/artesian_well_contamination_logs.json",
+      "source_record_id": "well_contam_strontium_90_limestone_leach",
+      "channel": "location_inspection",
+      "producer_id": "location_abandoned_desalination",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_well_iron_slime",
+      "source_catalog": "narrative/artesian_well_contamination_logs.json",
+      "source_record_id": "well_contam_ferro_bacterial_iron_slime",
+      "channel": "location_inspection",
+      "producer_id": "room_water_pump",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_slow_sand_biofilm_maturation",
+      "source_catalog": "narrative/slow_sand_schmutzdecke_logs.json",
+      "source_record_id": "slow_sand_biofilm_schmutzdecke_maturation",
+      "channel": "location_inspection",
+      "producer_id": "location_municipal_sewage",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_slow_sand_skin_scraping",
+      "source_catalog": "narrative/slow_sand_schmutzdecke_logs.json",
+      "source_record_id": "slow_sand_scraping_skin_head_loss_recovery",
+      "channel": "location_inspection",
+      "producer_id": "location_municipal_sewage",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_slow_sand_uniformity_coeff",
+      "source_catalog": "narrative/slow_sand_schmutzdecke_logs.json",
+      "source_record_id": "slow_sand_effective_size_uniformity_coefficient",
+      "channel": "location_inspection",
+      "producer_id": "room_filtration",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_folklore_clicking_beetle",
+      "source_catalog": "narrative/bunker_children_folklore.json",
+      "source_record_id": "folklore_children_the_clicking_beetle_rhyme",
+      "channel": "scavenging_document",
+      "producer_id": "room_bunks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_folklore_grey_man_vents",
+      "source_catalog": "narrative/bunker_children_folklore.json",
+      "source_record_id": "folklore_children_the_grey_man_of_the_vents",
+      "channel": "scavenging_document",
+      "producer_id": "room_bunks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_folklore_yellow_lamp_sun",
+      "source_catalog": "narrative/bunker_children_folklore.json",
+      "source_record_id": "folklore_children_the_sun_is_a_yellow_lamp",
+      "channel": "scavenging_document",
+      "producer_id": "room_kitchen",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_folklore_iron_door_whisper",
+      "source_catalog": "narrative/bunker_children_folklore.json",
+      "source_record_id": "folklore_children_the_iron_door_whisper",
+      "channel": "scavenging_document",
+      "producer_id": "room_bunks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_directive_seismic_trigger",
+      "source_catalog": "narrative/dead_hand_directives.json",
+      "source_record_id": "directive_01_perimeter_sensor_trigger",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 4,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_directive_kinetic_harrow",
+      "source_catalog": "narrative/dead_hand_directives.json",
+      "source_record_id": "directive_02_orbital_kinetic_harrow_arming",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 4,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_directive_deep_strata_lockdown",
+      "source_catalog": "narrative/dead_hand_directives.json",
+      "source_record_id": "directive_04_deep_strata_quarantine_mandate",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 4,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_dispatch_salt_runner",
+      "source_catalog": "narrative/courier_dispatches_master.json",
+      "source_record_id": "dispatch_01_the_salt_runner_letter",
+      "channel": "scavenging_document",
+      "producer_id": "location_sub_level_4_transit",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_dispatch_deserters_farewell",
+      "source_catalog": "narrative/courier_dispatches_master.json",
+      "source_record_id": "dispatch_02_the_deserters_farewell",
+      "channel": "scavenging_document",
+      "producer_id": "location_sub_level_4_transit",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_dispatch_smugglers_parley",
+      "source_catalog": "narrative/courier_dispatches_master.json",
+      "source_record_id": "dispatch_03_the_smugglers_parley_at_lock_4",
+      "channel": "scavenging_document",
+      "producer_id": "location_sub_level_4_transit",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_clepsydra_jeweled_orifice",
+      "source_catalog": "narrative/water_clock_orifice_silt_records.json",
+      "source_record_id": "clepsydra_silt_jeweled_orifice_calcite_crust",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_clepsydra_overflow_weir",
+      "source_catalog": "narrative/water_clock_orifice_silt_records.json",
+      "source_record_id": "clepsydra_silt_overflow_weir_constant_head_surge",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_clepsydra_vessel_sediment",
+      "source_catalog": "narrative/water_clock_orifice_silt_records.json",
+      "source_record_id": "clepsydra_silt_parabolic_inflow_vessel_sediment",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 2,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glass_melt_potash_fining",
+      "source_catalog": "narrative/pot_furnace_glass_melts.json",
+      "source_record_id": "glass_melt_quartz_sand_potash_batch_fining",
+      "channel": "location_inspection",
+      "producer_id": "room_foundry",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glass_melt_iron_oxide_green",
+      "source_catalog": "narrative/pot_furnace_glass_melts.json",
+      "source_record_id": "glass_melt_iron_oxide_green_bottle_tint",
+      "channel": "location_inspection",
+      "producer_id": "room_foundry",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glass_melt_cobalt_blue_smalt",
+      "source_catalog": "narrative/pot_furnace_glass_melts.json",
+      "source_record_id": "glass_melt_cobalt_blue_smalt_pigment",
+      "channel": "location_inspection",
+      "producer_id": "room_foundry",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_glass_melt_arsenic_decolorizing",
+      "source_catalog": "narrative/pot_furnace_glass_melts.json",
+      "source_record_id": "glass_melt_arsenic_trioxide_decolorizing_agent",
+      "channel": "location_inspection",
+      "producer_id": "room_foundry",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true
+    }
+  ]
+}

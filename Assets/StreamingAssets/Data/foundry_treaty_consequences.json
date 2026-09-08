@@ -105,6 +105,166 @@
           "reason": "The marked lane closes; the foundry's road anchors sit in the yard without haulage."
         }
       ]
+    },
+    {
+      "treaty_id": "treaty_saltworks_access",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "met",
+      "standing_delta": 3.0,
+      "reason": "Saltworks access met: the measured pipe walk stays on the maintenance roster and the posted draw is accepted without dispute.",
+      "market_modifiers": [
+        {
+          "good_id": "clean_water",
+          "demand_delta": -0.2,
+          "reason": "The saltworks draw is measured and serviced; clean-water demand eases while the access lane remains open."
+        },
+        {
+          "good_id": "item_foundry_brine_pipe",
+          "demand_delta": -0.15,
+          "reason": "Inspection and upkeep keep replacement brine-pipe stock moving at the agreed service rate."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_saltworks_access",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "violated",
+      "standing_delta": -10.0,
+      "reason": "Saltworks access violated: an unentered diversion or refused maintenance call removes the Foundry from priority service review.",
+      "market_modifiers": [
+        {
+          "good_id": "clean_water",
+          "demand_delta": 0.35,
+          "reason": "The measured draw is suspended pending inspection; replacement clean water becomes scarcer along the pipe walk."
+        },
+        {
+          "good_id": "water_filter",
+          "demand_delta": 0.25,
+          "reason": "Deferred pipe service sends more filtration work to the ordinary market while the access dispute is reviewed."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_coal_window",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "met",
+      "standing_delta": 3.0,
+      "reason": "Coal window met: the declared ice-road haul is staged on time and the Foundry receives its place in the charging-floor queue.",
+      "market_modifiers": [
+        {
+          "good_id": "coal",
+          "demand_delta": -0.25,
+          "reason": "A cleared haul window prevents emergency coal buying and returns the column to ordinary terms."
+        },
+        {
+          "good_id": "fuel",
+          "demand_delta": -0.15,
+          "reason": "Safe staging avoids the extra winch and escort burn charged to a late coal column."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_coal_window",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "missed",
+      "standing_delta": -5.0,
+      "reason": "Coal window missed: the ice-road notice expires before the column reaches the gate, so the next safe slot is offered to another carrier.",
+      "market_modifiers": [
+        {
+          "good_id": "coal",
+          "demand_delta": 0.3,
+          "reason": "The Foundry must source coal outside the marked window; short-haul scarcity raises the ordinary price."
+        },
+        {
+          "good_id": "fuel",
+          "demand_delta": 0.15,
+          "reason": "A missed slot leaves engines and winches waiting through the next road notice, increasing fuel demand."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_membrane_repair",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "met",
+      "standing_delta": 4.0,
+      "reason": "Membrane repair met: the scheduled plates and test crew are accepted at the hall, and the commissioning record is signed.",
+      "market_modifiers": [
+        {
+          "good_id": "item_foundry_brine_pipe",
+          "demand_delta": -0.2,
+          "reason": "Accepted repair work clears the emergency replacement queue for brine-pipe components."
+        },
+        {
+          "good_id": "clean_water",
+          "demand_delta": -0.15,
+          "reason": "A signed commissioning test reduces the need for stopgap water purchases around the membrane hall."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_membrane_repair",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "violated",
+      "standing_delta": -12.0,
+      "reason": "Membrane repair violated: the agreed repair crew or acceptance inspection is refused, leaving the hall on restricted service terms.",
+      "market_modifiers": [
+        {
+          "good_id": "item_foundry_brine_pipe",
+          "demand_delta": 0.35,
+          "reason": "Unaccepted repair work keeps replacement pipe stock in dispute and pushes demand into the open market."
+        },
+        {
+          "good_id": "water_filter",
+          "demand_delta": 0.35,
+          "reason": "Restricted membrane service increases the filter burden on ordinary water treatment stores."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_crisis_mutual_aid",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "met",
+      "standing_delta": 4.0,
+      "reason": "Crisis mutual aid met: the Foundry's bounded reserve and repair crew arrive inside the declared emergency window and are entered in the common ledger.",
+      "market_modifiers": [
+        {
+          "good_id": "clean_water",
+          "demand_delta": -0.2,
+          "reason": "Logged emergency deliveries keep relief water moving without an unpriced panic premium."
+        },
+        {
+          "good_id": "fuel",
+          "demand_delta": -0.2,
+          "reason": "Shared staging and convoy passage reduce the duplicated fuel burn of separate emergency columns."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_crisis_mutual_aid",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "violated",
+      "standing_delta": -14.0,
+      "reason": "Crisis mutual aid violated: the Foundry withholds its bounded commitment after declaration, and the signatories reopen cost-recovery inspection.",
+      "market_modifiers": [
+        {
+          "good_id": "clean_water",
+          "demand_delta": 0.4,
+          "reason": "Relief water is withheld during the declared crisis; emergency stores become scarce until another column is found."
+        },
+        {
+          "good_id": "fuel",
+          "demand_delta": 0.4,
+          "reason": "The missing repair and convoy support forces each signatory to run a separate emergency route."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_the_incident_book",
+      "faction_id": "faction_silent_foundry",
+      "outcome": "met",
+      "standing_delta": 2.0,
+      "reason": "Incident Book obligation met: the qualifying entry, copy receipt, and amendment trail are accepted before the next charter sitting.",
+      "market_modifiers": []
     }
   ]
 }

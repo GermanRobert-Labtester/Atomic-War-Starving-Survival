@@ -32,8 +32,15 @@ namespace Ashfall.Core
             report.LocationCount = session.Catalog.Locations.Count;
             report.QuestCount = session.Catalog.Quests.Count;
 
-            Check(session.Catalog.Factions.Count == 3, "three Crossing blocs (not faction_lore.json)");
+            Check(session.Catalog.Factions.Count >= 8, "eight Crossing blocs (not faction_lore.json)");
             Check(session.Catalog.GetFaction(CrossingIds.FactionScale) != null, "faction_the_scale");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionUnderwrite) != null, "faction_the_underwrite");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionCompact) != null, "faction_the_compact");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionLamplighters) != null, "faction_the_lamplighters");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionGranaryWardens) != null, "faction_the_granary_wardens");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionWaterCommittee) != null, "faction_the_water_committee");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionQuarantinePost) != null, "faction_the_quarantine_post");
+            Check(session.Catalog.GetFaction(CrossingIds.FactionSmugglersCourt) != null, "faction_the_smugglers_court");
             Check(session.Catalog.Quests.Count >= 12, "twelve Nobody's Charter quests");
             Check(session.Catalog.GetQuest(CrossingIds.TheVouch) != null, "quest_crossing_the_vouch exists");
             Check(session.Catalog.GetQuest(CrossingIds.FirstWeigh) != null, "quest_crossing_first_weigh");
@@ -43,7 +50,7 @@ namespace Ashfall.Core
             Check(session.Catalog.GetQuest("quest_crossing_three_dry_pages") != null, "quest_crossing_three_dry_pages exists");
             Check(session.Catalog.GetQuest("quest_crossing_who_holds_the_ledger") != null, "quest_crossing_who_holds_the_ledger exists");
             Check(session.Catalog.GetQuest("quest_crossing_companion_mattis") != null, "quest_crossing_companion_mattis exists");
-            Check(session.Catalog.Items.Count >= 11, "eleven Crossing items loaded");
+            Check(session.Catalog.Items.Count == 25, "twenty-five Crossing items loaded");
             Check(session.Catalog.GetItem("item_charter_three_pages") != null, "item_charter_three_pages present");
             Check(session.Catalog.GetItem("item_debt_contract_copy") != null, "item_debt_contract_copy present");
             Check(session.Catalog.Encounters.Count >= 10, "ten Crossing encounters loaded");

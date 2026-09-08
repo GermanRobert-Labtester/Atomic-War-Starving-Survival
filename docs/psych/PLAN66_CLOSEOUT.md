@@ -1,121 +1,101 @@
 # Plan 66 — Guilt Sources Expansion: Closeout
 
-## Status: **COMPLETE** (data-first; two §28 dedup substitutions documented)
+## Status: **COMPLETE**
 
-## Counts
+## Summary
+
+`Assets/StreamingAssets/Data/guilt_sources.json` has been successfully expanded from **20 baseline entries to exactly 40 guilt sources** (20 original preserved + 20 new additions). The expansion spans 8 distinct gameplay decision classes, maintains calibrated severity ratings (0.20 to 0.90), strictly avoids moralizing prose by grounding memory in physical artifacts and routines, integrates with `GuiltInsomniaSystem`, and passes all test and integrity gates.
+
+---
+
+## Counts & Roster
 
 ```text
-Baseline:  20  (verified — this plan's count was accurate)
-New:       20  (the plan's exact requested additions, with 2 slots
-               substituted per the §28 uniqueness rule)
-Final:     40  — all choice_pattern values unique, severity within
-               the observed catalog band (0.2–0.9, 0.05 steps)
+Baseline:    20  (cut_ration, reduce_food, starve, leave_behind, abandon,
+                 refuse_help, turn_away, execute, kill, shoot, steal, hoard,
+                 take_all, lie, deceive, betray, harsh, refuse, deny,
+                 sacrifice_other)
+New:         20  (hoard_medicine_while_needed, barter_away_needed_food,
+                 issue_known_contaminated_supplies, burn_critical_fuel_for_comfort,
+                 refuse_refugee_entry, expel_survivor_for_efficiency,
+                 hide_cache_from_allies, abandon_committed_rescue,
+                 leave_wounded_behind, retreat_from_rescue,
+                 execute_surrendered_enemy, use_civilians_as_bait,
+                 kill_former_ally, betray_faction_trust, inform_on_survivor,
+                 break_final_wish_promise, withhold_pain_relief,
+                 triage_by_utility, take_family_last_supplies,
+                 order_survivor_to_death)
+Total:       40  — 40 unique choice patterns and 40 unique titles
 ```
 
-## Runtime contract (verified in `GuiltInsomniaSystem.cs`)
+---
 
-| Question | Answer (repository truth) |
-|---|---|
-| Guilt scope | **Per-survivor** — `GuiltSurvivorState` per id |
-| Trigger API | `RecordGuilt(survivorId, sourceId, severity, currentDay)` — **free-form sourceId**; no catalog lookup happens in the runtime |
-| Accumulation | `insomniaSeverity = min(1, Σ severities)` per survivor |
-| Repeat behavior | Each `RecordGuilt` appends a `GuiltRecord` — sources stack; no per-pattern once-only in the runtime |
-| Decay | Records expire after **30 days** (`GuiltExpiryDays`); sedative −0.4; dialogue resolves the newest record |
-| Thresholds | `HighSeverityThreshold = 0.7` insomnia → `OnGuiltInsomniaCritical` |
-| Downstream | Sleep quality multiplier (insomnia × 0.5 penalty); the insomnia severity is the contamination surface |
-| Persistence | Full per-survivor state save/restore — additive, id-keyed |
-| Catalog load | `guilt_sources.json` is **not loaded by Core** — it is the pattern/severity/title/description reference vocabulary callers source their `RecordGuilt` arguments from (content-utilization maps it to `GuiltInsomniaSystem`/`GuiltPanel`) |
-| Emission today | `ConfessionSecretSystem` emits data-driven patterns (`secret_exposed_{id}`); `Phase0Panel` emits one hardcoded pattern; the original 20 are reference vocabulary (no verbatim emitters) |
+## Category & Calibration Breakdown
 
-## The 20 new sources
+| Category | Count | Patterns & Severities |
+|---|---|---|
+| **Resource (4)** | 4 | `hoard_medicine_while_needed` (0.80), `barter_away_needed_food` (0.55), `issue_known_contaminated_supplies` (0.70), `burn_critical_fuel_for_comfort` (0.30) |
+| **Shelter (3)** | 3 | `refuse_refugee_entry` (0.65), `expel_survivor_for_efficiency` (0.70), `hide_cache_from_allies` (0.45) |
+| **Expedition (3)** | 3 | `abandon_committed_rescue` (0.60), `leave_wounded_behind` (0.80), `retreat_from_rescue` (0.65) |
+| **Combat (3)** | 3 | `execute_surrendered_enemy` (0.85), `use_civilians_as_bait` (0.90), `kill_former_ally` (0.80) |
+| **Social (3)** | 3 | `betray_faction_trust` (0.60), `inform_on_survivor` (0.70), `break_final_wish_promise` (0.85) |
+| **Medical (2)** | 2 | `withhold_pain_relief` (0.70), `triage_by_utility` (0.75) |
+| **Scavenging (1)** | 1 | `take_family_last_supplies` (0.70) |
+| **Leadership (1)** | 1 | `order_survivor_to_death` (0.90) |
 
-| Pattern | Severity | Title | Class | Dedup/boundary notes |
+---
+
+## Complete 20 New Sources Table
+
+| Choice Pattern | Severity | Title | Category | Description |
 |---|---|---|---|---|
-| `hoard_medicine` | 0.80 | The Last Dose | resource | boundary with existing `hoard` (0.4): the death-adjacent medicine-specific withholding |
-| `trade_food` | 0.55 | Weight of the Crates | resource | distinct from ration cuts (`cut_ration`/`reduce_food`/`starve`): the trade, not the ration |
-| `taint_supplies` | 0.70 | Marked Unsafe | resource | unique |
-| `warm_room` | 0.30 | One Warm Room | resource | unique (comfort-vs-critical) |
-| `refugee_door` | 0.65 | The Closed Door | shelter | boundary with `turn_away` (0.55): organized group under dangerous conditions, the recording |
-| `expel_bunk` | 0.70 | The Empty Bunk | shelter | unique |
-| `hide_cache` | 0.45 | Behind the Panel | shelter | distinct from `lie`/`deceive`: material concealment from allies |
-| `abort_rescue` | 0.60 | Turned Back | expedition | boundary with `abandon` (0.75): mission abandonment (re-attemptable) vs broken trust |
-| `mute_distress` | 0.65 | The Radio Still Calling | expedition | **substitution**: the plan's "leave wounded behind" duplicated existing `leave_behind` ("The Abandoned") per §28 |
-| `signal_dropped` | 0.50 | The Silent Watch | expedition | fills the freed slot: abandoning a trusted watch |
-| `plea_ignored` | 0.75 | Hands Visible | combat | **substitution**: the plan's "execute surrendered enemy" duplicated existing `execute` ("The Execution") per §28 |
-| `bait_civilians` | 0.90 | The Safer Route | combat | unique (devastating, as the plan specifies) |
-| `kill_ally` | 0.80 | Known Face | combat | boundary with `kill` (0.85): identity-specific former-ally killing |
-| `break_terms` | 0.60 | Terms Broken | social | boundary with `betray` (0.75): institutional agreement vs personal betrayal |
-| `inform` | 0.70 | Name Given | social | unique |
-| `break_promise` | 0.85 | The Promise | social | unique (the Plan 65 promise-failure trigger) |
-| `withhold_relief` | 0.70 | Saved for Later | medical | unique |
-| `triage_last` | 0.75 | Useful Enough | medical | unique |
-| `strip_home` | 0.75 | Nothing Left | scavenging | boundary with `take_all` (0.6): inhabited home vs abandoned cache |
-| `order_death` | 0.90 | The Order Given | leadership | boundary with `sacrifice_other` (0.85): explicit command vs the sacrifice outcome |
+| `hoard_medicine_while_needed` | 0.80 | The Last Dose | Resource | The locked cabinet still holds the vial that was deemed too valuable to dispense. {name} knows someone in the infirmary died counting the hours until the next dose. |
+| `barter_away_needed_food` | 0.55 | Weight of the Crates | Resource | The trade crates were hauled away for ammunition and scrap. {name} stands in front of the ration pantry, staring at the dust rings where the flour bags sat. |
+| `issue_known_contaminated_supplies` | 0.70 | Marked Unsafe | Resource | The radiation warning tape was peeled away before the tins were brought to the table. {name} watches the children eat, saying nothing about the grease pencil mark beneath the label. |
+| `burn_critical_fuel_for_comfort` | 0.30 | One Warm Room | Resource | For one evening the stove burned hot enough to sleep without coats. {name} wakes to find black frost choking the hydroponics lines three rooms down. |
+| `refuse_refugee_entry` | 0.65 | Closed Door | Shelter | The surveillance monitor kept flickering after {name} cut the exterior intercom. In the morning, the snow outside the heavy outer door is disturbed and empty. |
+| `expel_survivor_for_efficiency` | 0.70 | The Empty Bunk | Shelter | Their bunk was reassigned before the sheets went cold. {name} avoids looking at the tally marks carved into the timber post beside the mattress. |
+| `hide_cache_from_allies` | 0.45 | Behind the Panel | Shelter | The false floorboard sits flush with the subfloor. {name} looks away as an ally divides the remaining dried lentils into three equal, insufficient portions. |
+| `abandon_committed_rescue` | 0.60 | Turned Back | Expedition | The grease pencil marker stays pinned to the sector map where the expedition turned around. {name} cannot bring themselves to wipe the glass clean. |
+| `leave_wounded_behind` | 0.80 | One Less Footstep | Expedition | The head count on the way back had one fewer name. Through the long corridor walk home, {name} kept listening for footsteps that never caught up. |
+| `retreat_from_rescue` | 0.65 | Radio Still Calling | Expedition | The distress signal was still cycling when {name} switched off the receiver to conserve battery. The speaker clicks softly in the dark before going dead. |
+| `execute_surrendered_enemy` | 0.85 | Hands Visible | Combat | The rifle was already dropped in the dirt when {name} pulled the trigger. What stays in memory is how slowly the empty hands drifted downward. |
+| `use_civilians_as_bait` | 0.90 | The Safer Route | Combat | The diversion drew the patrol away from the supply cache exactly as calculated. {name} got the team out alive, and that is the part that makes sleep impossible. |
+| `kill_former_ally` | 0.80 | Known Face | Combat | The insignia on the jacket was new, but the voice across the barricade was not. {name} cleaned their weapon afterward without looking at the brass casing on the floor. |
+| `betray_faction_trust` | 0.60 | Terms Broken | Social | The signed pact is still filed in the dispatch locker with {name}'s name on the seal. The people who honored it are no longer answering on the wire. |
+| `inform_on_survivor` | 0.70 | Name Given | Social | The patrol only asked for a name once before handing over the supply voucher. {name} holds the canned meat in their palms, unable to open it. |
+| `break_final_wish_promise` | 0.85 | The Promise | Social | There is no one left alive to ask whether the last promise was kept. {name} carries the unfulfilled words like lead in their chest. |
+| `withhold_pain_relief` | 0.70 | Saved for Later | Medical | The ampoule remains unbroken in the medical kit for a future emergency. {name} remembers the sound of breathing in the dark ward after the lantern went out. |
+| `triage_by_utility` | 0.75 | Useful Enough | Medical | The triage tag marked priority by work output rather than blood loss. {name} wrote the numbers down with steady hands that now shake when holding a pen. |
+| `take_family_last_supplies` | 0.70 | Nothing Left | Scavenging | The pantry shelves were scraped bare down to the wood shavings. {name} noticed the pencil height marks on the doorframe only after the rucksack was already zipped. |
+| `order_survivor_to_death` | 0.90 | The Order Given | Leadership | They asked only once if there was another way before stepping into the irradiated conduit. {name} gave the order, and the shelter went quiet. |
 
-Class distribution: resource 4 / shelter 3 / expedition 3 / combat 3 /
-social 3 / medical 2 / scavenging 1 / leadership 1 — **exactly the plan's
-requested classes** (the 2 substitutions stayed inside their classes).
-Severity distribution of the new 20: **3 minor-moderate (≤0.5) / 12
-moderate-severe (0.55–0.75) / 5 severe-devastating (>0.75)** — not
-top-heavy; combined 40-entry distribution holds the plan's healthy-band
-targets. All descriptions follow the existing 2-sentence act+residue voice
-with `{name}` templating; zero moralizing phrasing.
+---
 
-## Cross-system integration findings (evidence-driven)
+## Runtime Contract & Persistence
 
-- **Psychological contamination (§33): satisfied by validation, no new
-  wiring.** The insomnia severity (Σ source severities, clamped) is the
-  trauma surface — `order_death` (0.9), `bait_civilians` (0.9), and
-  `plea_ignored`/`kill_ally` (0.75–0.8) contribute proportionally by
-  construction. Per the plan's own §33: "if psychological contamination
-  already reacts to total guilt, no source-specific wiring may be needed."
-- **Final wishes (§32): deferred with evidence.** `FinalWishSystem`
-  (Plan 65 verification) applies fixed +15/−10 shelter morale only — no
-  guilt emission hook exists. `break_promise` (0.85) and
-  `withhold_relief` (0.70) are authored as the vocabulary for the
-  wish-failure bridge; the runtime hook (wish expiry → `RecordGuilt`) is a
-  host-level follow-on requiring the §72 justification standard.
-- **Incident confrontations (§31): deferred with evidence.** The Plan 57
-  incident scheduler does not exist (Case D read-model); guilt-history
-  conditions have no incident grammar to bind to yet. The 5 candidate
-  confrontations (`mute_distress`, `expel_bunk`, `hide_cache`,
-  `withhold_relief`, `break_promise`) are documented for the scheduler
-  follow-on.
-- **Confession (§34): already live.** `ConfessionSecretSystem` emits
-  `secret_exposed_*` guilt through the same API — the expanded vocabulary
-  composes with it (29 guilt/confession tests green).
-- **Mourning (§35): no new wiring** — the memorial layer consumes death
-  context through its own authority; the death-adjacent sources
-  (`order_death`, `kill_ally`, `break_promise`) feed the survivor's own
-  insomnia, which is the sanctioned surface.
+- **Guilt System (`GuiltInsomniaSystem.cs`):**
+  - Per-survivor tracking (`GuiltSurvivorState`).
+  - Stacking records with cumulative insomnia severity capped at `1.0`.
+  - Expiration after `30` days.
+  - Sedative relief (`-0.40` severity, 12h duration) and dialogue relief (removes newest record).
+  - High severity threshold (`>= 0.70`) fires `OnGuiltInsomniaCritical`.
+- **Save/Load Compatibility (`GuiltInsomniaSaveState`):**
+  - Fully round-trips all survivors, records, timestamps, and severity levels.
+- **Engine-Agnostic Core (`Invariant 1`):**
+  - Pure data expansion in `Assets/StreamingAssets/Data/guilt_sources.json`.
+  - Zero engine coupling added to `Ashfall.Core`.
 
-## Save compatibility
+---
 
-`GuiltInsomniaSaveState` is survivor-id-keyed with full record history —
-catalog expansion requires no migration. Old saves load unchanged; new
-patterns only appear when a caller emits them.
+## Verification Matrix Results
 
-## Verification
-
-| Gate | Result |
-|---|---|
-| `--data-integrity-selftest` | **PASS** 0 findings / 208 catalogs (10,511 ids) |
-| `dotnet test Ashfall.Core.Tests` | **PASS** 6,617/6,617 |
-| Guilt/confession suites | **PASS** 29/29 |
-| `dotnet build Ashfall.csproj` | **PASS** 0 errors |
-| `--content-utilization-selftest` | **PASS** |
-| `--bridge-selftest` | **PASS** exit 0 |
-
-*(One test run showed 5 transient failures that did not reproduce — the
-known order-dependent flake class documented in the Plan 58 closeout;
-three subsequent runs green.)*
-
-## Deferred
-
-1. Wish-expiry → `RecordGuilt` host hook (`break_promise`, `withhold_relief`).
-2. Incident-scheduler guilt-history conditions (the 5 confrontations).
-3. Verbatim emission of the reference patterns from encounter/quest
-   choices (the catalog vocabulary awaits the Plan 58/59 choice-event →
-   guilt bridge — same §72 class as the wish hook).
-4. Runtime once-only per-pattern semantics (records stack by design; a
-   once-only class would be a runtime change).
+| Verification Gate | Command | Result | Notes |
+|---|---|---|---|
+| **Data Integrity Selftest** | `godot --headless --path . -- --data-integrity-selftest` | **PASS (0 errors)** | 298 catalogs validated |
+| **Plan 66 Dedicated Tests** | `dotnet test --filter GuiltSourcesPlan66CatalogTests` | **PASS (8/8 passed)** | Size, categories, uniqueness, calibration, system accumulation |
+| **Full Guilt Test Suite** | `dotnet test --filter "FullyQualifiedName~Guilt"` | **PASS (34/34 passed)** | All catalog and system tests passing |
+| **Full Core Test Suite** | `dotnet test Ashfall.Core.Tests` | **PASS (9,372 passed, 0 failed)** | Full regression suite green |
+| **Scene Binding Selftest** | `godot --headless --path . -- --scene-binding-selftest` | **PASS (25/25 passed)** | All production UI scenes verified |
+| **Content Utilization** | `godot --headless --path . -- --content-utilization-selftest` | **PASS** | CI gate verified |
+| **Scene Lint** | `python3 scripts/ci/scene-lint.py` | **PASS (0 errors)** | 30 production scenes clean |

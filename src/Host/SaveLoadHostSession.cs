@@ -68,6 +68,32 @@ public partial class SaveLoadHostSession : Node
     }
 
     /// <summary>
+    /// Allocate the first deterministic free slot for a fresh campaign.
+    /// Existing slot roots and envelopes are never reset or deleted.
+    /// </summary>
+    public bool TryCreateFreshCampaignSlot(out SaveSlotId slotId)
+    {
+        slotId = default;
+        if (_slotService == null) return false;
+
+        var existing = GetSlots();
+        int nextIndex = 1;
+        while (existing.Any(s =>
+            string.Equals(s.Value, $"slot_{nextIndex}", StringComparison.Ordinal)))
+        {
+            nextIndex++;
+        }
+
+        var candidate = new SaveSlotId($"slot_{nextIndex}");
+        if (!CreateSlot(candidate))
+            return false;
+
+        slotId = candidate;
+        GD.Print($"[SaveLoad] Fresh campaign transaction allocated: {candidate}");
+        return true;
+    }
+
+    /// <summary>
     /// Clear the default slot as part of an explicit new-game transition.
     /// This is intentionally stronger than user-facing DeleteSlot: a new run
     /// must not inherit an old campaign envelope, derived projections, or

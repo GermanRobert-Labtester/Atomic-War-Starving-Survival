@@ -164,7 +164,7 @@
     },
     {
       "survivor_id": "the_courier",
-      "phantom_background_id": "generic",
+      "phantom_background_id": "driver",
       "pre_war_profession_id": "",
       "belief_profile_id": "pragmatic_individualism",
       "personal_keepsake_item_id": "bicycle_bell"
@@ -381,7 +381,7 @@
     },
     {
       "survivor_id": "survivor_speleologist",
-      "phantom_background_id": "generic",
+      "phantom_background_id": "miner",
       "pre_war_profession_id": "",
       "belief_profile_id": "atheist_rationalist",
       "personal_keepsake_item_id": "cave_map"

@@ -1060,6 +1060,436 @@
           "set_flag": "flag_sr_summit_cairn_dark"
         }
       ]
+    },
+    {
+      "id": "quest_record_the_survey_nail",
+      "display_name": "The Survey Nail",
+      "type": "expedition",
+      "briefing": "A survey nail driven into bedrock marks the boundary between Sector 4 and District 8. Its position conflicts with later cadastral drawings by forty centimetres. Decide whether the physical iron outranks the municipal map.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 80,
+      "knowledge_key": "",
+      "target_location_id": "loc_cut_kilometre_19",
+      "complete_mutation": "mutation_survey_nail_verified",
+      "fail_mutation": "mutation_survey_nail_disputed",
+      "stages": [
+        {
+          "id": "stage_inspect_nail",
+          "text": "Inspect the cut-down ice-spike driven at the permafrost seam."
+        },
+        {
+          "id": "stage_measure_offset",
+          "text": "Measure the forty-centimetre discrepancy against the municipal cadastral sheet."
+        },
+        {
+          "id": "stage_trace_seam_line",
+          "text": "Trace the packed ash dividing Sector 4 from District 8 rime."
+        },
+        {
+          "id": "stage_file_ruling",
+          "text": "Render the territorial ruling into the Standing Record."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_uphold_physical_nail",
+          "text": "Uphold the nail where it stands. Physical iron outranks subsequent drafting.",
+          "set_flag": "flag_sr_nail_upheld"
+        },
+        {
+          "id": "choice_realign_to_cadastral",
+          "text": "Realign the boundary to match the newer municipal cadastral drawing.",
+          "set_flag": "flag_sr_nail_realigned"
+        },
+        {
+          "id": "choice_leave_seam_contested",
+          "text": "Declare the seam contested and refuse to certify either line.",
+          "set_flag": "flag_sr_nail_contested"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_overlay_pigment",
+      "display_name": "Overlay Pigment",
+      "type": "expedition",
+      "briefing": "Solvent testing on a sector-lamp crate reveals lampblack pigment mixed with linseed oil, used to obscure an older municipal stencil before a brass plate was seated. Trace the provenance of the alteration.",
+      "prereq_quest_id": "quest_record_the_survey_nail",
+      "min_day": 85,
+      "knowledge_key": "",
+      "target_location_id": "loc_cut_kilometre_19",
+      "complete_mutation": "mutation_overlay_pigment_exposed",
+      "fail_mutation": "mutation_overlay_pigment_sealed",
+      "stages": [
+        {
+          "id": "stage_crate_solvent",
+          "text": "Apply chemical solvent to the screw holes of the spare plate crate."
+        },
+        {
+          "id": "stage_pigment_layers",
+          "text": "Scrape the pigment layers beneath the rim of the brass number plate."
+        },
+        {
+          "id": "stage_compare_stencil_dates",
+          "text": "Compare the stencil formula against the depot delivery manifest."
+        },
+        {
+          "id": "stage_record_provenance",
+          "text": "Certify the plate as a legitimate field update or unauthorized overwrite."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_expose_overwrite",
+          "text": "Record the plate as an unauthorized overwrite of the municipal stencil.",
+          "set_flag": "flag_sr_pigment_overwrite_exposed"
+        },
+        {
+          "id": "choice_certify_overlay",
+          "text": "Certify the brass plate as official retroactive district numbering.",
+          "set_flag": "flag_sr_pigment_overlay_certified"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_second_count",
+      "display_name": "The Second Count",
+      "type": "expedition",
+      "briefing": "A second field survey across Sector 4 totals twenty-six reflector posts, but the municipal register records only twenty-four. Reconcile whether the extra posts are uncertified survivor installations or deliberate ghost entries.",
+      "prereq_quest_id": "quest_record_the_overlay_pigment",
+      "min_day": 95,
+      "knowledge_key": "",
+      "target_location_id": "loc_municipal_archive",
+      "complete_mutation": "mutation_second_count_reconciled",
+      "fail_mutation": "mutation_second_count_discrepancy",
+      "stages": [
+        {
+          "id": "stage_tally_survey_sheets",
+          "text": "Cross-reference field surveyor tally sheets against the archive ledger."
+        },
+        {
+          "id": "stage_audit_unlisted_posts",
+          "text": "Locate the two unlisted reflector posts along the eastern rail cut."
+        },
+        {
+          "id": "stage_interrogate_clerk",
+          "text": "Review archive clerk notes on duplicate numbering in the snow."
+        },
+        {
+          "id": "stage_close_count",
+          "text": "Register the definitive lamp count in the municipal gazetteer."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_register_extra_posts",
+          "text": "Enter all twenty-six lamps onto the official maintenance roll.",
+          "set_flag": "flag_sr_count_twenty_six"
+        },
+        {
+          "id": "choice_strike_ghost_posts",
+          "text": "Strike the two phantom posts as unmaintained temporary markers.",
+          "set_flag": "flag_sr_count_twenty_four"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_lamp_keepers_oath",
+      "display_name": "The Keeper's Oath",
+      "type": "expedition",
+      "briefing": "An unsworn keeper's oath obligates maintenance of dead Post 7 at the bridge approach. Relighting the lamp requires scarce oil stores, but striking it deprives northern caravans of a certified marker.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_bridge_seven",
+      "complete_mutation": "mutation_lamp_keeper_relit",
+      "fail_mutation": "mutation_lamp_keeper_retired",
+      "stages": [
+        {
+          "id": "stage_examine_wick_reservoir",
+          "text": "Inspect the dry wick and cracked glass chimney on Post 7."
+        },
+        {
+          "id": "stage_read_keeper_tablet",
+          "text": "Read the lead oath-tablet wired to the bridge mounting bracket."
+        },
+        {
+          "id": "stage_decide_fuel_allocation",
+          "text": "Calculate fuel consumption against caravan transit visibility."
+        },
+        {
+          "id": "stage_execute_verdict",
+          "text": "Relight the lamp or formally strike it from the official registry."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_relight_post",
+          "text": "Fill the reservoir and relight Post 7 in fulfillment of the keeper's oath.",
+          "set_flag": "flag_sr_lamp_relit"
+        },
+        {
+          "id": "choice_retire_post",
+          "text": "Decommission the post and stamp the record DARK / RETIRED.",
+          "set_flag": "flag_sr_lamp_retired"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_boundary_dispute",
+      "display_name": "The Disputed Traverse",
+      "type": "expedition",
+      "briefing": "The Compact and The Garrison both claim jurisdiction over a forty-metre highway strip. Each cites conflicting survey nails hammered into the asphalt. Arbitrate the territorial boundary before armed confrontation erupts.",
+      "prereq_quest_id": "quest_record_the_survey_nail",
+      "min_day": 100,
+      "knowledge_key": "",
+      "target_location_id": "loc_highway_checkpoint",
+      "complete_mutation": "mutation_boundary_dispute_settled",
+      "fail_mutation": "mutation_boundary_dispute_unresolved",
+      "stages": [
+        {
+          "id": "stage_survey_road_markers",
+          "text": "Sift frozen road gravel to locate both conflicting survey nails."
+        },
+        {
+          "id": "stage_hear_compact_advocate",
+          "text": "Examine The Compact's pre-war cadastral deed claims."
+        },
+        {
+          "id": "stage_hear_garrison_sentry",
+          "text": "Inspect The Garrison's fortified checkpoint perimeter claims."
+        },
+        {
+          "id": "stage_render_boundary_decree",
+          "text": "Render an authoritative territorial ruling into the record."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_rule_compact_boundary",
+          "text": "Award parcel rights to The Compact per historical cadastral deeds.",
+          "set_flag": "flag_sr_boundary_compact"
+        },
+        {
+          "id": "choice_rule_garrison_boundary",
+          "text": "Grant jurisdiction to The Garrison for tactical road security.",
+          "set_flag": "flag_sr_boundary_garrison"
+        },
+        {
+          "id": "choice_split_neutral_demarcation",
+          "text": "Establish a neutral demilitarized buffer bisecting the two nails.",
+          "set_flag": "flag_sr_boundary_neutral"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_missing_plate",
+      "display_name": "The Stripped Post",
+      "type": "expedition",
+      "briefing": "A salt-crusted mounting plate on Greywater Tide Gauge was pried away with an iron crowbar, leaving only mounting holes and a scarred concrete pedestal. Trace the missing marker and restore the record.",
+      "prereq_quest_id": "quest_record_the_overlay_pigment",
+      "min_day": 105,
+      "knowledge_key": "",
+      "target_location_id": "loc_abandoned_tide_gauge",
+      "complete_mutation": "mutation_missing_plate_recovered",
+      "fail_mutation": "mutation_missing_plate_recorded_lost",
+      "stages": [
+        {
+          "id": "stage_inspect_mounting_holes",
+          "text": "Measure hole spacing on the spray-crusted tidal wellhead."
+        },
+        {
+          "id": "stage_dredge_shallows",
+          "text": "Dredge gravel pools below the tide gauge outfall."
+        },
+        {
+          "id": "stage_find_hammered_scrap",
+          "text": "Recover the hammered brass plate bearing the stamped number 18."
+        },
+        {
+          "id": "stage_certify_loss_or_restoration",
+          "text": "Refasten the plate or officially log the station as unnumbered."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_reaffix_recovered_plate",
+          "text": "Fasten the plate with stainless wire and certify the station live.",
+          "set_flag": "flag_sr_plate_reaffixed"
+        },
+        {
+          "id": "choice_chisel_loss_record",
+          "text": "Chisel STATION 18 LOST into the concrete collar and file the void.",
+          "set_flag": "flag_sr_plate_voided"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_cold_survey",
+      "display_name": "The Ridge Traverse",
+      "type": "expedition",
+      "briefing": "Traverse the frozen bluffs to West Ridge Survey Camp to inspect ice-covered triangulation cairns. Winter rime threatens to obscure the brass azimuth plates that anchor the valley's baseline.",
+      "prereq_quest_id": "quest_record_the_survey_nail",
+      "min_day": 110,
+      "knowledge_key": "",
+      "target_location_id": "loc_west_ridge_survey",
+      "complete_mutation": "mutation_cold_survey_completed",
+      "fail_mutation": "mutation_cold_survey_abandoned",
+      "stages": [
+        {
+          "id": "stage_traverse_ridge_bluff",
+          "text": "Ascend the wind-scoured western ridge through heavy snowdrifts."
+        },
+        {
+          "id": "stage_uncover_survey_cairn",
+          "text": "Chisel frozen rime from the primary copper azimuth plate."
+        },
+        {
+          "id": "stage_take_theodolite_bearings",
+          "text": "Sight against Birchline Spire to calculate triangulation drift."
+        },
+        {
+          "id": "stage_submit_winter_correction",
+          "text": "File winter baseline drift corrections into the central record."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_certify_cairn_bearings",
+          "text": "Certify the high triangulation network as verified for winter travel.",
+          "set_flag": "flag_sr_cairn_certified"
+        },
+        {
+          "id": "choice_condemn_ridge_route",
+          "text": "Condemn the high ridge route as unstable and erase the trail marker.",
+          "set_flag": "flag_sr_ridge_condemned"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_lamp_oil_ledger",
+      "display_name": "The Siphoned Drum",
+      "type": "expedition",
+      "briefing": "At the weighbridge, the fuel oil ledger records four hundred litres delivered to Sector 4 lamps, yet storage drums at Grange Hall sit nearly dry. Audit the supply trail and identify the diversion.",
+      "prereq_quest_id": "quest_record_the_lamp_keepers_oath",
+      "min_day": 115,
+      "knowledge_key": "",
+      "target_location_id": "loc_weighbridge",
+      "complete_mutation": "mutation_oil_ledger_audited",
+      "fail_mutation": "mutation_oil_ledger_suppressed",
+      "stages": [
+        {
+          "id": "stage_cross_reference_drums",
+          "text": "Gauge the dipsticks in the reserve storage barrels."
+        },
+        {
+          "id": "stage_audit_osric_entries",
+          "text": "Scrutinize Osric Tann's mass tickets against warehouse dockets."
+        },
+        {
+          "id": "stage_track_clandestine_siphoning",
+          "text": "Follow oil drips from the pump house to an unlisted generator shed."
+        },
+        {
+          "id": "stage_conclude_audit",
+          "text": "Expose the diversion to auditors or ratify it as life-support emergency."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_prosecute_oil_diversion",
+          "text": "File embezzlement charges with The Scale and seal the siphoned pump.",
+          "set_flag": "flag_sr_oil_prosecuted"
+        },
+        {
+          "id": "choice_authorize_emergency_draw",
+          "text": "Retroactively classify the diverted oil as emergency civilian heating.",
+          "set_flag": "flag_sr_oil_authorized"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_rejected_survey",
+      "display_name": "The Red Diagonal",
+      "type": "expedition",
+      "briefing": "In the meteorological station archive, a coastal boundary survey bears a heavy red diagonal stamp: REJECTED BY CADASTRE. Reconstruct the razor-excised marginal notes to discover why the survey was suppressed.",
+      "prereq_quest_id": "quest_record_the_second_count",
+      "min_day": 120,
+      "knowledge_key": "",
+      "target_location_id": "loc_coastal_meteorological_station",
+      "complete_mutation": "mutation_rejected_survey_resolved",
+      "fail_mutation": "mutation_rejected_survey_shelved",
+      "stages": [
+        {
+          "id": "stage_examine_blade_slits",
+          "text": "Analyze razor slits across parchment folio 48 under magnification."
+        },
+        {
+          "id": "stage_match_draftsman_watermark",
+          "text": "Match the paper watermark against draftsman Ilya Venn's field logs."
+        },
+        {
+          "id": "stage_reconstruct_erased_contours",
+          "text": "Reconstruct erased contour lines documenting coastal cliff subsidence."
+        },
+        {
+          "id": "stage_reopen_or_uphold_rejection",
+          "text": "Determine whether to uphold the historic rejection or reinstate the survey."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_reinstate_survey",
+          "text": "Ratify the coastal survey as valid, expanding certified travel bounds.",
+          "set_flag": "flag_sr_survey_reinstated"
+        },
+        {
+          "id": "choice_uphold_rejection_stamp",
+          "text": "Uphold the rejection stamp and enforce the coastal hazard cordon.",
+          "set_flag": "flag_sr_survey_rejected"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_last_sector",
+      "display_name": "The Unlit Frontier",
+      "type": "expedition",
+      "briefing": "Sector 9 beyond Birchline Weather Station sits completely unlit on all maps—no nails, no plates, no stencils. Decide whether to incorporate the territory by planting the final benchmark or seal it as the permanent dark margin.",
+      "prereq_quest_id": "quest_record_the_cold_survey",
+      "min_day": 140,
+      "knowledge_key": "",
+      "target_location_id": "loc_birchline_weather_station",
+      "complete_mutation": "mutation_last_sector_incorporated",
+      "fail_mutation": "mutation_last_sector_declared_void",
+      "stages": [
+        {
+          "id": "stage_scout_unlit_boundary",
+          "text": "Cross the final survey cairn into unmapped Sector 9."
+        },
+        {
+          "id": "stage_measure_atmospheric_baseline",
+          "text": "Read barometric recorders at the abandoned weather station."
+        },
+        {
+          "id": "stage_plant_terminal_monument",
+          "text": "Drive the numbered bronze benchmark into the granite ledge."
+        },
+        {
+          "id": "stage_proclaim_frontier_status",
+          "text": "Author the terminal frontier entry in The Standing Record."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_incorporate_sector",
+          "text": "Plant Benchmark 100, light the sector beacon, and extend the map.",
+          "set_flag": "flag_sr_sector_incorporated"
+        },
+        {
+          "id": "choice_declare_permanent_dark",
+          "text": "Hammer a marker stamped LIMIT / UNRECORDED and seal the frontier.",
+          "set_flag": "flag_sr_sector_dark"
+        }
+      ]
     }
   ]
 }

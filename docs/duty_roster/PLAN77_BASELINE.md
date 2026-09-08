@@ -1,56 +1,66 @@
-# Plan 77 — Duty Roster Baseline Reconnaissance
+# Plan 77 — Baseline
 
-> **Status:** Grounded baseline inspection completed 2026-09-03.
-> **Authority:** `Assets/Ashfall.Core/DutyRoster/`, `Assets/StreamingAssets/Data/duty_roster_seasons.json`, `src/Host/DutyRosterHostSession.cs`.
+Verified 2026-09 from active source.
 
----
+## Catalog & DTO
 
-## 1. Executive Summary
+`Assets/StreamingAssets/Data/duty_roster_seasons.json` — wrapped list (`schema_version` + `items`), loaded by `DutyRosterCatalogLoader` into `DutyRosterCatalog.Seasons` (file order preserved, no sorting).
 
-`Assets/StreamingAssets/Data/duty_roster_seasons.json` previously contained **1 season**:
-```json
-{
-  "schema_version": 1,
-  "items": [
-    {
-      "id": "season_second_winter",
-      "windowMinDays": 8,
-      "windowMaxDays": 12,
-      "encounterWeight": 1.6,
-      "steamTripChanceBoost": 0.08
-    }
-  ]
-}
-```
+`DutyRosterSeasonEntry` fields (exactly five, all live schema):
 
-This single entry covered only days 8–12. Before day 8 and after day 12, no season was defined, leaving the shelter in an unvaried, static temporal state for the vast majority of the campaign.
+| Field | Type | Baseline value (`season_second_winter`) |
+|---|---|---|
+| `id` | string | `season_second_winter` |
+| `windowMinDays` | int | 8 |
+| `windowMaxDays` | int | 12 |
+| `encounterWeight` | float | 1.6 |
+| `steamTripChanceBoost` | float | 0.08 |
 
----
+Baseline catalog count: **1 season**.
 
-## 2. Codebase Forensics & Field Consumers
+## Selection semantics (proven)
 
-1. **`DutyRosterSeasonEntry` (`Assets/Ashfall.Core/DutyRoster/DutyRosterCatalog.cs`):**
-   - `id`: unique snake_case string (defaults to `DutyRosterIds.SeasonSecondWinter`).
-   - `windowMinDays`: starting day bound (inclusive, defaults to 8).
-   - `windowMaxDays`: ending day bound (inclusive, defaults to 12).
-   - `encounterWeight`: float multiplier (defaults to 1.6f).
-   - `steamTripChanceBoost`: float probability boost (defaults to 0.0f).
+- **No day selector existed.** `DutyRosterCatalog` exposed only `GetSeason(string id)`. The pre-existing test contract (`Ashfall.Core.Tests/DutyRoster/DutyRosterSeasonCatalogTests.cs`) requires `GetSeasonForDay(int)`.
+- **Bounds are inclusive/inclusive** (test: day 7 → first_ashfall, day 8 → second_winter, day 12 → second_winter, day 13 → settling, day 365 → long_winter). Contiguity rule: `next.min == current.max + 1`.
+- **First supported day: 0** (test: first season min must be 0; negative days → null).
+- **Post-final-window policy: carry-forward.** Days > 365 resolve to the last season (repository convention shared with `WeatherSystem.GetSeasonForDay` / `WildlifeSeasonalCalendar`: last window whose start ≤ day).
+- **Exactly-one-match property** asserted for every day 0–365.
+- JSON order is nonsemantic for correctness; tests assume chronological authoring (`Seasons[0].min == 0`). Selector is order-robust (max `windowMinDays ≤ day`, first-listed wins ties).
 
-2. **`DutyRosterCatalog` (`DutyRosterCatalog.cs`):**
-   - Holds `List<DutyRosterSeasonEntry> Seasons`.
-   - Populated by `DutyRosterCatalogLoader.LoadList` from `duty_roster_seasons.json`.
-   - Exposes `GetSeason(string id)` by unique ID.
+## Campaign-day authority
 
-3. **`encounterWeight` Consumer:**
-   - In `ShelterEncounterSystem.cs`: `SetSecondWinter(float multiplier, int day)` sets `_state.encounterWeightMultiplier = multiplier <= 0f ? 1f : multiplier;`.
-   - In `DutyRosterHostSession.cs`: `ActivateSecondWinter()` calls `Encounters.SetSecondWinter(DutyRosterIds.SecondWinterEncounterWeight, Clock.Day)`.
-   - Represents a multiplicative scale factor for shelter-internal encounter occurrence during intense pressure phases.
+`SimClock` (day counter) is the authoritative campaign clock; `DutyRosterHostSession.Clock.Day` feeds all roster logic. Season selection is a pure function of that day — no second clock, no persisted season state.
 
-4. **`steamTripChanceBoost` Consumer:**
-   - Traced to steam system / brine infrastructure (`BrineWaterSystem.cs`).
-   - In `BrineWaterSystem`: A "steam trip" is an emergency shutdown/trip of the shelter's steam generation/filtration plant when membrane integrity drops below `SteamTripIntegrity` (15%).
-   - `steamTripChanceBoost` represents an additional probability of steam plant malfunction/trip during severe weather and duty cycles.
+## Modifier consumers
 
-5. **Day Window Bounds:**
-   - Both `windowMinDays` and `windowMaxDays` are evaluated as **INCLUSIVE** integer days: `day >= windowMinDays && day <= windowMaxDays`.
-   - For example, `season_second_winter` with `windowMinDays: 8` and `windowMaxDays: 12` covers days 8, 9, 10, 11, and 12 (5 full days).
+### `encounterWeight` — LIVE consumer
+Chain: catalog season → `DutyRosterHostSession.ActivateSecondWinter()` → `ShelterEncounterSystem.SetSecondWinter(multiplier, day)` → `encounterWeightMultiplier` state.
+- **Replacement semantics** (assignment, not accumulation): `multiplier <= 0 → 1`; `ClearSecondWinter()` resets to 1.
+- Persisted in `ShelterEncounterSystemState` (save round-trip covered by existing codec tests).
+- It is a relative weight multiplier on shelter-encounter pressure — **not a probability**.
+
+### `steamTripChanceBoost` — authored data, no live consumer
+No runtime consumer exists outside catalog/demo/tests. The only "steam trip" mechanic in Core is `BrineWaterSystem`'s membrane-integrity threshold event, which is unrelated and does not read this field. Validated range [0.0, 0.15] only. **Documented as deferred; no consumer was invented.**
+
+## Save behavior
+
+Active season is **derived, not persisted**. `DutyRosterSaveCodec` persists sim day + encounter multiplier state; on restore, the season re-resolves from the restored day (pinned by `SaveRoundTrip_RestoresSimDayAndReResolvesActiveSeasonCleanly`, day 150 → `season_first_siege`).
+
+## Cross-plan availability
+
+| System | Status |
+|---|---|
+| Weather seasons (`weather_seasons.json`, `WeatherSystem.GetSeasonForDay`) | live — alignment only |
+| Plan 74 chapters | display-only metadata, day-agnostic |
+| Plan 57 incidents | no season wiring |
+| Plan 70 schedules | not present in this area |
+
+## Tests referencing the existing season
+
+- `DutyRosterSeasonCatalogTests.Catalog_PreservesSecondWinterIdentityAndValues` (pins id + all four values)
+- `DutyRosterSystemTests` (value parity with `DutyRosterIds` constants)
+- `DutyRosterHeadlessDemo` (profile presence, window/weight parity)
+
+## Baseline exit-gate answers
+
+Both bounds inclusive · day 0 valid (campaigns start day 1, day 0 is the ashfall arrival day) · no max playable day (SimClock unbounded) · post-365 carries forward · overlaps forbidden (exactly-one) · gaps forbidden (contiguous 0–365) · JSON order nonsemantic · `encounterWeight` = replacement multiplier on shelter-encounter pressure · `steamTripChanceBoost` = range-validated authored data, consumer deferred · neither cached as season identity in saves · `season_second_winter` referenced by tests/`DutyRosterIds` only (stable ID preserved) · weather seasons ≠ duty seasons (separate authorities) · chapters are day-agnostic display rows.

@@ -127,7 +127,9 @@ namespace Ashfall.Core.Economy
                 {
                     template_id = "bounty_template_raider_warlord",
                     display_name = "Eliminate Raider Warlord",
-                    issuer_faction_id = "faction_holdfast_schedule",
+                    // The Office is the canonical Holdfast issuer. Do not
+                    // resurrect the retired Holdfast schedule alias.
+                    issuer_faction_id = "faction_the_office",
                     min_payout = 120.0f,
                     max_payout = 250.0f,
                     posting_cost = 40.0f,

@@ -1009,5 +1009,76 @@ namespace Ashfall.Core.Tests
             sys.TickDay(7);
             Assert.Equal(3, sys.State.trapSites[0].remainingDurability);
         }
+
+        [Fact]
+        public void CalculateRepairBill_SnareTrap_ComputesCeilHalf()
+        {
+            var trap = new TrapDefinition
+            {
+                trap_id = "trap_snare",
+                setupCosts = new List<TrapSetupCost>
+                {
+                    new TrapSetupCost { itemId = "rope", amount = 1 }
+                }
+            };
+
+            var bill = trap.CalculateRepairBill();
+            Assert.Single(bill.Costs);
+            Assert.Equal("rope", bill.Costs[0].ItemId);
+            Assert.Equal(1, bill.Costs[0].Amount); // ceil(1 * 0.5) = 1
+        }
+
+        [Fact]
+        public void CalculateRepairBill_CageTrap_ComputesCeilHalfPerItem()
+        {
+            var trap = new TrapDefinition
+            {
+                trap_id = "trap_cage",
+                setupCosts = new List<TrapSetupCost>
+                {
+                    new TrapSetupCost { itemId = "scrap_metal", amount = 3 },
+                    new TrapSetupCost { itemId = "box_of_nails_10", amount = 1 }
+                }
+            };
+
+            var bill = trap.CalculateRepairBill();
+            Assert.Equal(2, bill.Costs.Count);
+            Assert.Equal("scrap_metal", bill.Costs[0].ItemId);
+            Assert.Equal(2, bill.Costs[0].Amount); // ceil(3 * 0.5) = 2
+            Assert.Equal("box_of_nails_10", bill.Costs[1].ItemId);
+            Assert.Equal(1, bill.Costs[1].Amount); // ceil(1 * 0.5) = 1
+        }
+
+        [Fact]
+        public void CalculateRepairBill_AggregatesDuplicateItemsBeforeHalving()
+        {
+            var trap = new TrapDefinition
+            {
+                trap_id = "trap_box",
+                setupCosts = new List<TrapSetupCost>
+                {
+                    new TrapSetupCost { itemId = "scrap_wood", amount = 1 },
+                    new TrapSetupCost { itemId = "scrap_wood", amount = 2 }
+                }
+            };
+
+            var bill = trap.CalculateRepairBill();
+            Assert.Single(bill.Costs);
+            Assert.Equal("scrap_wood", bill.Costs[0].ItemId);
+            Assert.Equal(2, bill.Costs[0].Amount); // total 3 -> ceil(3 * 0.5) = 2
+        }
+
+        [Fact]
+        public void CalculateRepairBill_EmptySetupCosts_YieldsEmptyBill()
+        {
+            var trap = new TrapDefinition
+            {
+                trap_id = "trap_empty",
+                setupCosts = new List<TrapSetupCost>()
+            };
+
+            var bill = trap.CalculateRepairBill();
+            Assert.Empty(bill.Costs);
+        }
     }
 }

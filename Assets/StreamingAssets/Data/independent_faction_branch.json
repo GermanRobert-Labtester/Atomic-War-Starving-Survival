@@ -108,6 +108,97 @@
         { "ending_id": "ending_ind_8b_revered_legend", "band_min": "positive", "band_max": "very_positive", "display_name": "The Revered Legend" },
         { "ending_id": "ending_ind_8c_forgotten_legend", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Forgotten Legend" }
       ]
+    },
+    {
+      "id": "branch_ind_9_hermit",
+      "display_name": "The Hermit",
+      "ponr_flag": "flag_branch_ind_9_ponr",
+      "ponr_trigger": "They turn away the final delegation and commit to living beyond every settlement's protection.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_9a_quiet_holding", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Quiet Holding" },
+        { "ending_id": "ending_ind_9b_unlatched_door", "band_min": "positive", "band_max": "very_positive", "display_name": "The Unlatched Door" },
+        { "ending_id": "ending_ind_9c_no_smoke", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "No Smoke on the Ridge" }
+      ]
+    },
+    {
+      "id": "branch_ind_10_mediator",
+      "display_name": "The Mediator",
+      "ponr_flag": "flag_branch_ind_10_ponr",
+      "ponr_trigger": "They sign their name to a negotiated partition that sacrifices one outpost to preserve the peace of three others.",
+      "entry_band_min": "slightly_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_10a_open_table", "band_min": "positive", "band_max": "very_positive", "display_name": "The Open Table" },
+        { "ending_id": "ending_ind_10b_necessary_liar", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Necessary Liar" },
+        { "ending_id": "ending_ind_10c_no_safe_chair", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "No Safe Chair" }
+      ]
+    },
+    {
+      "id": "branch_ind_11_scavenger_king",
+      "display_name": "The Scavenger King",
+      "ponr_flag": "flag_branch_ind_11_ponr",
+      "ponr_trigger": "They seal their primary supply cache against communal commandeering, declaring that access requires individual barter contracts.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "slightly_positive",
+      "endings": [
+        { "ending_id": "ending_ind_11a_quartermaster", "band_min": "positive", "band_max": "very_positive", "display_name": "Quartermaster Without a Flag" },
+        { "ending_id": "ending_ind_11b_locked_rooms", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Locked Rooms" },
+        { "ending_id": "ending_ind_11c_dead_mans_inventory", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "Inventory of a Dead Man" }
+      ]
+    },
+    {
+      "id": "branch_ind_12_caretaker",
+      "display_name": "The Caretaker",
+      "ponr_flag": "flag_branch_ind_12_ponr",
+      "ponr_trigger": "They defy the exclusion order and bring three contaminated orphans into their own quarters under personal bond.",
+      "entry_band_min": "neutral",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_12a_extra_chairs", "band_min": "positive", "band_max": "very_positive", "display_name": "House With Extra Chairs" },
+        { "ending_id": "ending_ind_12b_hands_full", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "Hands Full" },
+        { "ending_id": "ending_ind_12c_broken_promise", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "The Promise That Broke" }
+      ]
+    },
+    {
+      "id": "branch_ind_13_witness",
+      "display_name": "The Witness",
+      "ponr_flag": "flag_branch_ind_13_ponr",
+      "ponr_trigger": "They post the unredacted ration ledger on the commons wall, exposing the rationing council's hidden diversion.",
+      "entry_band_min": "slightly_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_13a_record_stands", "band_min": "positive", "band_max": "very_positive", "display_name": "The Record Stands" },
+        { "ending_id": "ending_ind_13b_margin_notes", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "Annotations in the Margin" },
+        { "ending_id": "ending_ind_13c_missing_pages", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "Missing Pages" }
+      ]
+    },
+    {
+      "id": "branch_ind_14_engineer",
+      "display_name": "The Engineer",
+      "ponr_flag": "flag_branch_ind_14_ponr",
+      "ponr_trigger": "They cut auxiliary steam to the lower barracks to ensure the main generator core survives the blizzard.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_14a_load_bearing", "band_min": "positive", "band_max": "very_positive", "display_name": "Load-Bearing" },
+        { "ending_id": "ending_ind_14b_necessary_failure", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "Necessary Failure" },
+        { "ending_id": "ending_ind_14c_name_on_breakdown", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "The Name on the Breakdown" }
+      ]
+    },
+    {
+      "id": "branch_ind_15_prophet",
+      "display_name": "The Prophet",
+      "ponr_flag": "flag_branch_ind_15_ponr",
+      "ponr_trigger": "They climb the water tower during the black rain and proclaim the storm a judgment that demands public penance.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_15a_keeper_of_vigils", "band_min": "positive", "band_max": "very_positive", "display_name": "Keeper of Vigils" },
+        { "ending_id": "ending_ind_15b_voice_in_the_hall", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Voice in the Hall" },
+        { "ending_id": "ending_ind_15c_ash_gospel", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "Ash Gospel" }
+      ]
     }
   ]
 }

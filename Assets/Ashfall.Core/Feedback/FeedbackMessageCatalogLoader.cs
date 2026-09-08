@@ -29,6 +29,7 @@ namespace Ashfall.Core.Feedback
                 var container = json.Deserialize<FeedbackMessageContainer>(raw);
                 if (container != null && container.messages != null && container.messages.Count > 0)
                 {
+                    ValidateContainer(container);
                     return container;
                 }
             }
@@ -42,7 +43,9 @@ namespace Ashfall.Core.Feedback
                 var list = CatalogLocator.LoadWrappedList<FeedbackMessageTemplate>(raw, SystemTextJsonSerializer.Options);
                 if (list != null && list.Count > 0)
                 {
-                    return new FeedbackMessageContainer { schema_version = 1, messages = list };
+                    var container = new FeedbackMessageContainer { schema_version = 1, messages = list };
+                    ValidateContainer(container);
+                    return container;
                 }
             }
             catch (Exception ex)
@@ -50,7 +53,22 @@ namespace Ashfall.Core.Feedback
                 CatalogDiagnostics.Warn(FileName, "<root>", ex);
             }
 
-            return CreateDefaultContainer();
+            var fallback = CreateDefaultContainer();
+            ValidateContainer(fallback);
+            return fallback;
+        }
+
+        public static void ValidateContainer(FeedbackMessageContainer container)
+        {
+            if (container?.messages == null) return;
+            foreach (var msg in container.messages)
+            {
+                if (msg == null) continue;
+                if (msg.display_duration_seconds <= 0f)
+                    msg.display_duration_seconds = 3.0f;
+                else
+                    msg.display_duration_seconds = Math.Clamp(msg.display_duration_seconds, 1.0f, 15.0f);
+            }
         }
 
         public static FeedbackMessageCatalog LoadCatalog(string dataDir, IFileIO fileIO, IJsonSerializer json)

@@ -279,6 +279,11 @@ namespace Ashfall.Core
         public const string FactionScale = "faction_the_scale";
         public const string FactionUnderwrite = "faction_the_underwrite";
         public const string FactionCompact = "faction_the_compact";
+        public const string FactionLamplighters = "faction_the_lamplighters";
+        public const string FactionGranaryWardens = "faction_the_granary_wardens";
+        public const string FactionWaterCommittee = "faction_the_water_committee";
+        public const string FactionQuarantinePost = "faction_the_quarantine_post";
+        public const string FactionSmugglersCourt = "faction_the_smugglers_court";
 
         /// <summary>Canonical quest ids (bible §4.1 main questline + §4.2 side).</summary>
         public static class Quests

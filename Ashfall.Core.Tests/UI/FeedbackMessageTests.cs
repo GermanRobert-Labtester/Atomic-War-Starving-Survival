@@ -171,5 +171,108 @@ namespace Ashfall.Core.Tests.UI
             Assert.Equal(FeedbackSeverity.Info, catalog.GetSeverity("unknown_key"));
             Assert.Equal(3.0f, catalog.GetDisplayDuration("unknown_key"));
         }
+
+        [Fact]
+        public void DisplayDuration_ClampedToPresentationBounds()
+        {
+            var catalog = new FeedbackMessageCatalog();
+            catalog.RegisterTemplate(new FeedbackMessageTemplate
+            {
+                key = "too_short",
+                template = "Short",
+                display_duration_seconds = 0.2f
+            });
+            catalog.RegisterTemplate(new FeedbackMessageTemplate
+            {
+                key = "too_long",
+                template = "Long",
+                display_duration_seconds = 60.0f
+            });
+
+            Assert.Equal(1.0f, catalog.GetDisplayDuration("too_short"));
+            Assert.Equal(15.0f, catalog.GetDisplayDuration("too_long"));
+        }
+
+        [Fact]
+        public void FeedbackService_EmitsResolvedMessage_WithSafeFormatting()
+        {
+            var catalog = FeedbackMessageCatalogLoader.CreateDefaultContainer();
+            var service = new FeedbackService(new FeedbackMessageCatalog(catalog.messages));
+
+            ResolvedFeedbackMessage? received = null;
+            service.OnFeedbackEmitted += msg => received = msg;
+
+            var evt = new FeedbackEvent("trade_success", new object[] { "100 Scrap", "20 Fuel" });
+            bool emitted = service.Emit(evt);
+
+            Assert.True(emitted);
+            Assert.NotNull(received);
+            Assert.Equal("trade_success", received.Key);
+            Assert.Equal("success", received.Category);
+            Assert.Equal(FeedbackSeverity.Success, received.Severity);
+            Assert.Equal("Trade completed! Received 100 Scrap in exchange for 20 Fuel.", received.FormattedText);
+        }
+
+        [Fact]
+        public void FeedbackService_SeparatesDeveloperDiagnostics_FromPlayerMessages()
+        {
+            var service = new FeedbackService();
+
+            ResolvedFeedbackMessage? playerMessage = null;
+            ResolvedFeedbackMessage? diagMessage = null;
+            service.OnFeedbackEmitted += msg => playerMessage = msg;
+            service.OnDiagnosticEmitted += msg => diagMessage = msg;
+
+            // Diagnostic key: missing_id
+            var diagEvt = new FeedbackEvent("missing_id", new object[] { "item_unknown" });
+            bool emitted = service.Emit(diagEvt);
+
+            Assert.True(emitted);
+            Assert.Null(playerMessage); // Did NOT leak into player toast stream!
+            Assert.NotNull(diagMessage); // Was safely routed to diagnostics!
+            Assert.True(diagMessage.IsDiagnosticOnly);
+        }
+
+        [Fact]
+        public void FeedbackDeduplicator_SuppressesSpam_AllowsEscalation()
+        {
+            var dedupe = new FeedbackDeduplicator(cooldownSeconds: 5.0f);
+
+            // First event: warning at t=1.0s -> not suppressed
+            Assert.False(dedupe.ShouldSuppress("food_low", FeedbackSeverity.Warning, 1.0f));
+            dedupe.Record("food_low", FeedbackSeverity.Warning, 1.0f);
+
+            // Second identical event at t=2.0s -> suppressed!
+            Assert.True(dedupe.ShouldSuppress("food_low", FeedbackSeverity.Warning, 2.0f));
+
+            // Escalation to Critical at t=3.0s -> NOT suppressed (escalation bypass)!
+            Assert.False(dedupe.ShouldSuppress("food_low", FeedbackSeverity.Critical, 3.0f));
+            dedupe.Record("food_low", FeedbackSeverity.Critical, 3.0f);
+
+            // Third identical event at t=4.0s (Critical) -> suppressed!
+            Assert.True(dedupe.ShouldSuppress("food_low", FeedbackSeverity.Critical, 4.0f));
+
+            // Fourth event after cooldown at t=9.0s -> not suppressed!
+            Assert.False(dedupe.ShouldSuppress("food_low", FeedbackSeverity.Critical, 9.0f));
+        }
+
+        [Fact]
+        public void FeedbackDeduplicator_TransitionTracker_FiresOnlyOnThresholdCross()
+        {
+            var dedupe = new FeedbackDeduplicator();
+
+            // Entering alert: false -> true
+            Assert.True(dedupe.EvaluateTransition("starvation", true));
+
+            // Still in alert next tick: true -> true (no re-fire)
+            Assert.False(dedupe.EvaluateTransition("starvation", true));
+            Assert.False(dedupe.EvaluateTransition("starvation", true));
+
+            // Recovered: true -> false (cleared)
+            Assert.False(dedupe.EvaluateTransition("starvation", false));
+
+            // Entering alert again: false -> true (fires again!)
+            Assert.True(dedupe.EvaluateTransition("starvation", true));
+        }
     }
 }

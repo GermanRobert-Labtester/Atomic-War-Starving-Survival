@@ -36,7 +36,7 @@ namespace Ashfall.Core.Tests.Foundry
             // Plan 70: the catalog grows concurrently (recovery melts etc.) —
             // pin a floor rather than an exact count, and pin the sump-cake
             // recovery melt explicitly (item_sludge_cake → scrap_metal).
-            Assert.True(catalog.ProductCount >= 26, $"production catalog regressed: {catalog.ProductCount}");
+            Assert.Equal(35, catalog.ProductCount);
             Assert.Equal(catalog.ProductCount, catalog.AllProducts.Count);
             var melt = catalog.GetProduct("foundry_prod_sludge_cake_recovery_melt");
             Assert.NotNull(melt);
@@ -70,6 +70,15 @@ namespace Ashfall.Core.Tests.Foundry
         [InlineData("foundry_prod_weather_canister", "item_foundry_weather_canister", "abstract_ordnance")]
         [InlineData("foundry_prod_cast_shot", "item_foundry_cast_shot", "abstract_ordnance")]
         [InlineData("foundry_prod_casing_blanks", "item_foundry_casing_blanks", "abstract_ordnance")]
+        [InlineData("foundry_prod_bronze_datum_plate", "item_datum_plate_bronze", "survey_datum")]
+        [InlineData("foundry_prod_flywheel_rotor_shaft", "item_forged_rotor_shaft", "rotor_shaft")]
+        [InlineData("foundry_prod_flywheel_containment_ring", "item_containment_ring_steel", "containment_ring")]
+        [InlineData("foundry_prod_culvert_brace", "item_high_tensile_steel_culvert_brace", "structural_brace")]
+        [InlineData("foundry_prod_sealed_lead_pig", "item_sealed_lead_pig", "radiation_container")]
+        [InlineData("foundry_prod_ground_anchor_spikes", "item_hardened_ground_anchor_spikes", "defense_anchor")]
+        [InlineData("foundry_prod_turbine_blade_blank", "item_superalloy_turbine_blade_blank", "turbine_blank")]
+        [InlineData("foundry_prod_rail_grinding_head", "item_rail_grinding_head", "rail_tooling")]
+        [InlineData("foundry_prod_press_tooling_set", "item_press_tooling_set", "press_tooling")]
         public void ProductionProduct_HasValidProperties(string productId, string expectedResultItem, string expectedCategory)
         {
             var catalog = LoadCatalog();

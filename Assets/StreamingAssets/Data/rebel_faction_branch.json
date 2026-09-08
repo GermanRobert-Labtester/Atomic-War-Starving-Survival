@@ -105,6 +105,97 @@
         { "ending_id": "ending_rebel_8b_survivor", "band_min": "slightly_evil", "band_max": "neutral", "display_name": "The Survivor" },
         { "ending_id": "ending_rebel_8c_warlord", "band_min": "very_evil", "band_max": "evil", "display_name": "The Warlord" }
       ]
+    },
+    {
+      "id": "branch_rebel_9_bombmaker",
+      "display_name": "The Bombmaker",
+      "ponr_flag": "flag_branch_rebel_9_ponr",
+      "ponr_trigger": "A device built for the movement kills civilians instead, and they choose whether to face the families or hide behind the cause.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_9a_repentant_defector", "band_min": "positive", "band_max": "very_positive", "display_name": "The Repentant Defector" },
+        { "ending_id": "ending_rebel_9b_scarred_survivor", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Scarred Survivor" },
+        { "ending_id": "ending_rebel_9c_unrepentant_zealot", "band_min": "very_evil", "band_max": "evil", "display_name": "The Unrepentant Zealot" }
+      ]
+    },
+    {
+      "id": "branch_rebel_10_courier",
+      "display_name": "The Courier",
+      "ponr_flag": "flag_branch_rebel_10_ponr",
+      "ponr_trigger": "At the Understory relay, they intercept a message that could save an enemy household and decide whether the warning leaves their hands.",
+      "entry_band_min": "evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_10a_trusted_network", "band_min": "positive", "band_max": "very_positive", "display_name": "The Trusted Network" },
+        { "ending_id": "ending_rebel_10b_broken_route", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Broken Route" },
+        { "ending_id": "ending_rebel_10c_executed_traitor", "band_min": "very_evil", "band_max": "evil", "display_name": "The Executed Traitor" }
+      ]
+    },
+    {
+      "id": "branch_rebel_11_propagandist",
+      "display_name": "The Propagandist",
+      "ponr_flag": "flag_branch_rebel_11_ponr",
+      "ponr_trigger": "A broadcast written to rally the districts incites a riot, and they must answer for the crowd it moved.",
+      "entry_band_min": "slightly_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_11a_voice_of_the_people", "band_min": "positive", "band_max": "very_positive", "display_name": "The Voice of the People" },
+        { "ending_id": "ending_rebel_11b_broadcast_in_ash", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Broadcast in Ash" },
+        { "ending_id": "ending_rebel_11c_silenced_by_their_own", "band_min": "very_evil", "band_max": "evil", "display_name": "Silenced by Their Own" }
+      ]
+    },
+    {
+      "id": "branch_rebel_12_dissident",
+      "display_name": "The Dissident",
+      "ponr_flag": "flag_branch_rebel_12_ponr",
+      "ponr_trigger": "They approach the enemy with terms for a ceasefire, making their doubt visible to both sides before either can answer.",
+      "entry_band_min": "neutral",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_12a_reconciled_civilian", "band_min": "positive", "band_max": "very_positive", "display_name": "The Reconciled Civilian" },
+        { "ending_id": "ending_rebel_12b_unwelcome_witness", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Unwelcome Witness" },
+        { "ending_id": "ending_rebel_12c_killed_in_defection", "band_min": "very_evil", "band_max": "evil", "display_name": "Killed in Defection" }
+      ]
+    },
+    {
+      "id": "branch_rebel_13_protector",
+      "display_name": "The Protector",
+      "ponr_flag": "flag_branch_rebel_13_ponr",
+      "ponr_trigger": "At the petition camp, they refuse an assault order to keep the civilians under their guard, leaving the movement to decide what protection is worth.",
+      "entry_band_min": "neutral",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_13a_community_shield", "band_min": "positive", "band_max": "very_positive", "display_name": "The Community Shield" },
+        { "ending_id": "ending_rebel_13b_postkeeper", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Postkeeper" },
+        { "ending_id": "ending_rebel_13c_overwhelmed_guard", "band_min": "very_evil", "band_max": "evil", "display_name": "The Overwhelmed Guard" }
+      ]
+    },
+    {
+      "id": "branch_rebel_14_saboteur",
+      "display_name": "The Saboteur",
+      "ponr_flag": "flag_branch_rebel_14_ponr",
+      "ponr_trigger": "At Bridge Seven, they destroy infrastructure meant to stop the enemy and discover that civilians depend on the same line to live.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_14a_resistance_hero", "band_min": "positive", "band_max": "very_positive", "display_name": "The Resistance Hero" },
+        { "ending_id": "ending_rebel_14b_bitter_liberator", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Bitter Liberator" },
+        { "ending_id": "ending_rebel_14c_starved_freedom", "band_min": "very_evil", "band_max": "evil", "display_name": "The Freedom That Starved" }
+      ]
+    },
+    {
+      "id": "branch_rebel_15_negotiator",
+      "display_name": "The Negotiator",
+      "ponr_flag": "flag_branch_rebel_15_ponr",
+      "ponr_trigger": "They sign an accord with the opposing faction before the movement consents, binding their name to terms the cause rejects.",
+      "entry_band_min": "slightly_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_15a_peacemaker", "band_min": "positive", "band_max": "very_positive", "display_name": "The Peacemaker" },
+        { "ending_id": "ending_rebel_15b_uneasy_accord", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Uneasy Accord" },
+        { "ending_id": "ending_rebel_15c_marked_collaborator", "band_min": "very_evil", "band_max": "evil", "display_name": "The Marked Collaborator" }
+      ]
     }
   ]
 }

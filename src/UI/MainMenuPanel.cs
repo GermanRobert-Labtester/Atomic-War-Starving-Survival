@@ -15,6 +15,7 @@ namespace AtomicWar.GodotApp
     public partial class MainMenuPanel : Control
     {
         public event Action? OnNewGame;
+        public event Action? OnCohortSetup;
         public event Action? OnContinue;
         public event Action? OnSettings;
         public event Action? OnCodex;
@@ -153,6 +154,13 @@ namespace AtomicWar.GodotApp
             _btnNewGame.CustomMinimumSize = new Vector2(320, 46);
             _btnNewGame.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH3);
             vbox.AddChild(_btnNewGame);
+
+            var btnCohortSetup = AshfallUiHelpers.MakeButton(
+                "OPTIONAL: CHOOSE STARTING COHORT",
+                () => OnCohortSetup?.Invoke());
+            btnCohortSetup.CustomMinimumSize = new Vector2(320, 36);
+            btnCohortSetup.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+            vbox.AddChild(btnCohortSetup);
 
             _btnSettings = AshfallUiHelpers.MakeButton("SETTINGS & CONFIGURATION", () => OnSettings?.Invoke());
             _btnSettings.CustomMinimumSize = new Vector2(320, 40);

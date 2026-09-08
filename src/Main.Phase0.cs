@@ -45,9 +45,13 @@ namespace AtomicWar.GodotApp
             _phantomMemory = PhantomMemoryHostSession.Create(_dataDir, rng);
             _phantomMemory.StateChanged += () => SavePhantomMemory();
             SetupSurvivors();
+            SetupEnrichment();
             if (_survivors != null)
             {
-                _phantomMemory.BindSurvivors(_survivors);
+                // Enrichment is the explicit background authority when present;
+                // profession mapping remains the fallback for roster entries
+                // that do not have an enrichment row.
+                _phantomMemory.BindSurvivors(_survivors, _enrichment);
             }
             SetupInventory();
             if (_inventory != null)

@@ -752,6 +752,12 @@ namespace Ashfall.Core
         /// <summary>Get the quarry catalog for UI display.</summary>
         public IReadOnlyDictionary<string, QuarrySpecies> GetQuarryCatalog() => _quarryCatalog;
 
+        /// <summary>Plan 36 / Tasks 5-8: Get the trap definition catalog for runtime lookup and deployment proof.</summary>
+        public IReadOnlyDictionary<string, TrapDefinition> GetTrapDefinitionCatalog() => _trapDefinitionCatalog;
+
+        /// <summary>Plan 36 / Tasks 5-8: Get the prey definition catalog for runtime lookup and disease/contamination verification.</summary>
+        public IReadOnlyDictionary<string, PreyDefinition> GetPreyDefinitionCatalog() => _preyDefinitionCatalog;
+
         /// <summary>
         /// Plan 36: Roll disease risk for a caught species using deterministic RNG.
         /// Returns true if disease should be applied.

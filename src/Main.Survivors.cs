@@ -34,6 +34,10 @@ namespace AtomicWar.GodotApp
         // ── Survivor / UtilityAI fields (GAP-ARCH-01 Phase 1) ──
         private SurvivorsHostSession _survivors = null!;
         private UtilityAiHostSession _utilityAi = null!;
+        private StartingCohortCatalog _startingCohortCatalog = null!;
+        private string _startingCohortProfileId = StartingCohortCatalog.StandardProfileId;
+        private bool _survivorInitializationApplied;
+        private bool _isRestoringSurvivorState;
 
         private static string FormatSurvivorName(string id)
         {
@@ -43,41 +47,44 @@ namespace AtomicWar.GodotApp
 
         private void SetupSurvivors()
         {
-            if (_survivors != null) return;
-            _survivors = new SurvivorsHostSession();
-            _survivors.LoadCatalog(_dataDir);
-            _survivors.LoadStartingRoster(_dataDir);
+            if (_survivors == null)
+            {
+                _survivors = new SurvivorsHostSession();
+                _survivors.LoadCatalog(_dataDir);
+                SetupEnrichment();
 
-            // Wire environmental exposure from location catalogs, weather, and active expeditions
-            var locRads = ExposureEnvironmentResolver.LoadLocationRadRates(
-                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            _survivors.ExposureResolver.LocationRadRateProvider = locId =>
-                locRads.TryGetValue(locId, out float r) ? r : ExposureEnvironmentResolver.DefaultWastelandOutdoorRadRate;
-            _survivors.ExposureResolver.WeatherRadModifierProvider = () => _world?.Weather?.OutdoorRadModifier ?? 0f;
-            // Fallout plume contamination overlays expedition/outdoor exposure when clouds overlap a location.
-            _survivors.ExposureResolver.FalloutContaminationProvider = locId =>
-            {
-                if (_fallout == null || string.IsNullOrEmpty(locId)) return 0f;
-                return _fallout.GetLocationContamination(locId);
-            };
-            _survivors.ExposureResolver.SurvivorLocationQuery = id =>
-            {
-                if (_expeditions?.Engine != null &&
-                    _expeditions.Engine.Active.TryGetValue(id, out var exp))
+                // Wire environmental exposure from location catalogs, weather, and active expeditions
+                var locRads = ExposureEnvironmentResolver.LoadLocationRadRates(
+                    _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                _survivors.ExposureResolver.LocationRadRateProvider = locId =>
+                    locRads.TryGetValue(locId, out float r) ? r : ExposureEnvironmentResolver.DefaultWastelandOutdoorRadRate;
+                _survivors.ExposureResolver.WeatherRadModifierProvider = () => _world?.Weather?.OutdoorRadModifier ?? 0f;
+                // Fallout plume contamination overlays expedition/outdoor exposure when clouds overlap a location.
+                _survivors.ExposureResolver.FalloutContaminationProvider = locId =>
                 {
-                    return (SurvivorExposureLocation.Expedition, exp.locationId);
-                }
-                return (SurvivorExposureLocation.ShelterInterior, "");
-            };
+                    if (_fallout == null || string.IsNullOrEmpty(locId)) return 0f;
+                    return _fallout.GetLocationContamination(locId);
+                };
+                _survivors.ExposureResolver.SurvivorLocationQuery = id =>
+                {
+                    if (_expeditions?.Engine != null &&
+                        _expeditions.Engine.Active.TryGetValue(id, out var exp))
+                    {
+                        return (SurvivorExposureLocation.Expedition, exp.locationId);
+                    }
+                    return (SurvivorExposureLocation.ShelterInterior, "");
+                };
 
-            _survivors.StateChanged += () =>
-            {
-                SaveSurvivors();
-                _survivorsOverlay?.RefreshView();
-                _medicalPanel?.RefreshView();
-                _shelterPanel?.RefreshView();
-                if (_state == GameState.Playing) UpdateHud();
-            };
+                _survivors.StateChanged += () =>
+                {
+                    SaveSurvivors();
+                    _survivorsOverlay?.RefreshView();
+                    _medicalPanel?.RefreshView();
+                    _shelterPanel?.RefreshView();
+                    if (_state == GameState.Playing && !_isRestoringSurvivorState)
+                        UpdateHud();
+                };
+            }
 
             if (_inventory != null)
             {
@@ -89,9 +96,71 @@ namespace AtomicWar.GodotApp
                 _holdfastRuntime.Survivors = _survivors;
             }
 
-            var save = SurvivorsSaveStore.TryLoad();
-            if (save != null && save.survivors.Count > 0)
-                _survivors.RestoreSave(save);
+            if (_campaignInitializationMode == CampaignInitializationMode.FreshInitialize &&
+                _survivors.RosterState.Count == 0)
+            {
+                var cohort = ResolveStartingCohort(_startingCohortProfileId);
+                _survivors.LoadStartingCohort(cohort);
+                _survivorInitializationApplied = true;
+            }
+            else if (_campaignInitializationMode == CampaignInitializationMode.Restore &&
+                     !_survivorInitializationApplied)
+            {
+                var save = SurvivorsSaveStore.TryLoad();
+                if (save != null)
+                {
+                    _isRestoringSurvivorState = true;
+                    try
+                    {
+                        _survivors.RestoreSave(save);
+                    }
+                    finally
+                    {
+                        _isRestoringSurvivorState = false;
+                    }
+                    GD.Print(
+                        $"[Ashfall Godot] Survivors restore applied: slices={save.survivors?.Count ?? 0} " +
+                        $"roster={save.roster?.entries?.Count ?? 0} live={_survivors.RosterState.Count}.");
+                }
+                // A missing save is also a completed restore decision. Never
+                // fall through to a fresh cohort on a later SetupSurvivors.
+                _survivorInitializationApplied = true;
+            }
+        }
+
+        private StartingCohortCatalog EnsureStartingCohortCatalog()
+        {
+            if (_startingCohortCatalog != null) return _startingCohortCatalog;
+
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            var canonical = SurvivorCatalogLoader.Load(_dataDir, fileIO, serializer);
+            var loaded = StartingCohortCatalogLoader.LoadDetailed(
+                _dataDir,
+                fileIO,
+                serializer,
+                canonical);
+
+            if (loaded.Errors.Count > 0)
+            {
+                throw new InvalidOperationException(
+                    "Starting cohort catalog is invalid: " +
+                    string.Join("; ", loaded.Errors));
+            }
+
+            _startingCohortCatalog = loaded.Catalog;
+            return _startingCohortCatalog;
+        }
+
+        private StartingCohortProfile ResolveStartingCohort(string profileId)
+        {
+            var catalog = EnsureStartingCohortCatalog();
+            if (catalog.TryGet(profileId, out var profile))
+                return profile;
+
+            GD.PushWarning(
+                $"[Ashfall Godot] Unknown starting cohort '{profileId}', using Standard Holdfast.");
+            return catalog.DefaultProfile;
         }
 
         private void SetupUtilityAi()

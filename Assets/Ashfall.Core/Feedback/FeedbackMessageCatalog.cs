@@ -122,15 +122,15 @@ namespace Ashfall.Core.Feedback
         public float GetDisplayDuration(string key, float defaultDuration = 3.0f)
         {
             if (_templatesByKey.TryGetValue(key, out var t) && t != null && t.display_duration_seconds > 0)
-                return t.display_duration_seconds;
-            return defaultDuration;
+                return Math.Clamp(t.display_duration_seconds, 1.0f, 15.0f);
+            return Math.Clamp(defaultDuration, 1.0f, 15.0f);
         }
 
         public float GetDisplayDuration(string category, string key, float defaultDuration = 3.0f)
         {
             if (TryGetTemplate(category, key, out var t) && t != null && t.display_duration_seconds > 0)
-                return t.display_duration_seconds;
-            return defaultDuration;
+                return Math.Clamp(t.display_duration_seconds, 1.0f, 15.0f);
+            return Math.Clamp(defaultDuration, 1.0f, 15.0f);
         }
 
         public string Format(string key, params object[] args)

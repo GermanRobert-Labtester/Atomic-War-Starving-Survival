@@ -17,6 +17,7 @@ using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.Feedback;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
@@ -89,16 +90,14 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Drop every session reference and clear the on-disk saves so a new game
-        /// starts from a clean slate. The Godot user:// store is the only place the
-        /// run history lives; deleting it is what makes Continue unavailable.
+        /// Legacy helper retained for composition-root tests. Production New
+        /// Game allocates a new slot and does not delete prior campaigns.
         /// </summary>
         private void ResetAllSessions()
         {
             ResetAllSessionsInMemory();
-            _saveLoadHost?.ResetSlotForNewGame(new SaveSlotId("slot_1"));
             DeleteGlobalSavesOnDisk();
-            GD.Print("[Ashfall Godot] New game: all sessions reset, saves cleared.");
+            GD.Print("[Ashfall Godot] Sessions reset; persisted campaign slots preserved.");
         }
 
         /// <summary>
@@ -119,6 +118,11 @@ namespace AtomicWar.GodotApp
             if (!loaded || !result.IsSuccess)
             {
                 GD.PrintErr($"[Ashfall Godot] Restore aborted for slot '{slotId}': {message}");
+                FeedbackMessages.Emit(new FeedbackEvent(
+                    key: "load_failed",
+                    category: "system",
+                    dedupeKey: "load_failed"
+                ));
                 return false;
             }
 
@@ -126,6 +130,7 @@ namespace AtomicWar.GodotApp
             // live session instances before setup so guarded SetupXxx methods
             // cannot retain state, event subscriptions, or panels from the
             // previously active slot.
+            _campaignInitializationMode = CampaignInitializationMode.Restore;
             ResetAllSessionsInMemory();
 
             _state = GameState.Playing;
@@ -139,6 +144,12 @@ namespace AtomicWar.GodotApp
 
             if (_statusLabel != null)
                 _statusLabel.Text = message;
+
+            FeedbackMessages.Emit(new FeedbackEvent(
+                key: "load_success",
+                category: "system",
+                dedupeKey: "load_success"
+            ));
 
             return true;
         }
@@ -424,6 +435,11 @@ namespace AtomicWar.GodotApp
                 if (_sectionCaptureFailed)
                 {
                     GD.PrintErr("[Ashfall Godot] SaveAll aborted: one or more sections failed to capture; previous campaign envelope preserved.");
+                    FeedbackMessages.Emit(new FeedbackEvent(
+                        key: "save_failed",
+                        category: "system",
+                        dedupeKey: "save_failed"
+                    ));
                     return false;
                 }
 
@@ -434,11 +450,23 @@ namespace AtomicWar.GodotApp
                         ? "no save/load host is wired in this context"
                         : "campaign envelope was not committed";
                     GD.PrintErr($"[Ashfall Godot] SaveAll failed: {reason}; previous envelope preserved.");
+                    FeedbackMessages.Emit(new FeedbackEvent(
+                        key: "save_failed",
+                        category: "system",
+                        dedupeKey: "save_failed"
+                    ));
                     return false;
                 }
 
                 if (playCue)
+                {
                     _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
+                    FeedbackMessages.Emit(new FeedbackEvent(
+                        key: "save_success",
+                        category: "system",
+                        dedupeKey: "save_success"
+                    ));
+                }
                 return true;
             }
             finally

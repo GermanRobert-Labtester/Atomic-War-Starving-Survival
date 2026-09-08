@@ -1,6 +1,6 @@
 # Plan 62 — Trade Tell Lines Expansion: 4 Trust Bands → 60 Posture Tells
 **Closeout Report**
-**Date:** 2026-09-03
+**Date:** 2026-09-08
 **Status:** COMPLETE — ALL GATES PASSING
 
 ---
@@ -111,10 +111,10 @@ In accordance with Plan 62's hard constraints, this is a **pure data and narrati
 | Verification Gate | Command | Result | Telemetry / Status |
 |---|---|---|---|
 | **Corpus Test Suite** | `dotnet test Ashfall.Core.Tests --filter FullyQualifiedName~TradeTellCorpusTests` | **PASS (exit 0)** | 7/7 passed: 20 pools, band math, seed determinism, tone lint |
-| **All Trade Unit Tests** | `dotnet test Ashfall.Core.Tests --filter FullyQualifiedName~Trade` | **PASS (exit 0)** | 147/147 passed (TradeScreenPresenter, Scenarios, Tells) |
+| **All Trade Unit Tests** | `dotnet test Ashfall.Core.Tests --filter FullyQualifiedName~Trade` | **PASS (exit 0)** | 164/164 passed (TradeScreenPresenter, Scenarios, Tells) |
 | **DocLink Validation Gate** | `dotnet test Ashfall.Core.Tests --filter FullyQualifiedName~DocLinkValidationGateTests` | **PASS (exit 0)** | 2/2 passed; no machine-specific absolute URIs |
-| **Host Data Integrity** | `godot --headless --path . -- --data-integrity-selftest` | **PASS (exit 0)** | 0 findings across 208 catalogs |
+| **Host Data Integrity** | `godot --headless --path . -- --data-integrity-selftest` | **PASS (exit 0)** | 0 findings across 298 catalogs |
 | **Host Economy Self-Test** | `godot --headless --path . -- --economy-selftest` | **PASS (exit 0)** | 11/11 passed |
 | **Content Utilization** | `godot --headless --path . -- --content-utilization-selftest` | **PASS (exit 0)** | CI gate PASS; `trade_tell_lines.json` verified consumed |
 | **Core Build** | `dotnet build Ashfall.csproj` | **PASS (exit 0)** | 0 warnings, 0 errors |
-| **Core Test Suite** | `dotnet test Ashfall.Core.Tests` | **PASS (exit 0)** | 6,617 passed, 0 failed, 0 skipped |
+| **Core Test Suite** | `dotnet test Ashfall.Core.Tests` | **PASS (exit 0)** | 9,351 passed, 0 failed, 0 skipped |

@@ -33,9 +33,24 @@ namespace AtomicWar.GodotApp.UI
         private SurvivorsHostSession? _survivorsHost;
         private InventoryHostSession? _inventoryHost;
         private RespiratoryDegenerationSystem? _respiratory;
+        private MedicalTextCatalog? _medicalTexts;
 
         public bool IsBound => _medicalHost != null;
         public int RenderedHealthCount => _healthStats?.GetChildCount() ?? 0;
+
+        private static MedicalTextCatalog? LoadDefaultMedicalTexts()
+        {
+            try
+            {
+                string dataDir = CatalogPath.ResolveDataDir();
+                var fileIo = CatalogPath.CreateFileIOForDataDir(dataDir);
+                return MedicalTextCatalog.LoadFromDirectory(dataDir, fileIo);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         private static string FormatSurvivorName(string id)
         {
@@ -65,11 +80,16 @@ namespace AtomicWar.GodotApp.UI
             MedicalHostSession medical,
             SurvivorsHostSession? survivors = null,
             InventoryHostSession? inventory = null,
-            RespiratoryDegenerationSystem? respiratory = null)
+            RespiratoryDegenerationSystem? respiratory = null,
+            MedicalTextCatalog? medicalTexts = null)
         {
             _medicalHost = medical;
             _survivorsHost = survivors;
             _inventoryHost = inventory;
+            if (medicalTexts != null)
+                _medicalTexts = medicalTexts;
+            else if (_medicalTexts == null)
+                _medicalTexts = LoadDefaultMedicalTexts();
 
             // Unsubscribe before re-subscribing to avoid duplicate events if Bind is called again
             if (_respiratory != null)
@@ -285,6 +305,27 @@ namespace AtomicWar.GodotApp.UI
                         }
 
                         card.AddChild(inhalerRow);
+                    }
+
+                    // ── Clinical context note (Plan 141) ─────────────────
+                    string? clinicalConditionKey = currentDose >= 50f
+                        ? MedicalTreatmentCatalog.RadiationSicknessId
+                        : (respDeg >= RespiratoryDegenerationSystem.SevereCoughThreshold
+                            ? MedicalTreatmentCatalog.RespiratoryDegenerationId
+                            : (survivor.Health < 30f ? MedicalTreatmentCatalog.HealthDeficitId : null));
+
+                    if (clinicalConditionKey != null && _medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, clinicalConditionKey, survivor.Id);
+                        if (prose != null)
+                        {
+                            var noteRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                            string summary = prose.DiagnosisSummary.Length > 80 ? prose.DiagnosisSummary.Substring(0, 77) + "..." : prose.DiagnosisSummary;
+                            var noteLabel = AshfallUiHelpers.MakeMetadata($"[CLINICAL NOTE] {prose.DisplayName}: {summary} · Observe: {prose.SymptomLine}");
+                            noteLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                            noteRow.AddChild(noteLabel);
+                            card.AddChild(noteRow);
+                        }
                     }
 
                     var panelWrap = AshfallUiHelpers.MakePanel();
@@ -523,6 +564,20 @@ namespace AtomicWar.GodotApp.UI
 
                     _treatmentList.AddChild(row);
                     anyRow = true;
+
+                    if (!unidentified && _medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, affliction.AfflictionId, survivor.Id);
+                        if (prose != null)
+                        {
+                            var subRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                            string summary = prose.DiagnosisSummary.Length > 80 ? prose.DiagnosisSummary.Substring(0, 77) + "..." : prose.DiagnosisSummary;
+                            var clinicalLabel = AshfallUiHelpers.MakeMetadata($"  ↳ [CLINICAL NOTE] {summary} · Observe: {prose.SymptomLine}");
+                            clinicalLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                            subRow.AddChild(clinicalLabel);
+                            _treatmentList.AddChild(subRow);
+                        }
+                    }
                 }
             }
             if (!anyRow)

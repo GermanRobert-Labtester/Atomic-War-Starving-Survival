@@ -2808,23 +2808,6 @@
       "system_integration": "Tool. Breaks soil. Essential for gardening and farming."
     },
     {
-      "item_id": "tool_rake",
-      "category": "tool",
-      "base_description": "A rake, with steel tines and a wooden handle. The tines are bent. The handle is cracked. The rake works.",
-      "current_state": "Functional but bent. The steel is scratched. The handle is cracked. The rake works.",
-      "visual_indicators": "Steel rake, bent tines, cracked handle. Looks like it was used a lot.",
-      "functional_description": "Gathering tool. Gathers leaves and debris. Essential for gardening and cleanup.",
-      "sensory_details": "Light in your hands. The steel is cold. The handle is rough. The rake is bent.",
-      "emotional_weight": "Labor. The kind of thing that gathers leaves. The kind of thing that cleans up.",
-      "hazards": "Can be fragile. Can be unwieldy. Can be stolen.",
-      "dependencies": "Needs to be swung. Needs to be straightened. Needs to be maintained.",
-      "contamination_status": "Clean. The steel is sealed.",
-      "preservation_state": "Fair. The steel is bending. The handle is cracking. The rake works.",
-      "makeshift_utility": "Can be used as a weapon. Can be used as a weight. Can be used as a tool.",
-      "alternatives": "A broom is different. A hoe is different. Nothing replaces a rake for gathering.",
-      "system_integration": "Tool. Gathers debris. Essential for gardening and cleanup."
-    },
-    {
       "item_id": "tool_sickle",
       "category": "tool",
       "base_description": "A sickle, with a curved blade and wooden handle. The blade is dull. The handle is cracked. The sickle works.",

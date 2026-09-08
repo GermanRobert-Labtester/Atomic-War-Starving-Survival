@@ -19,8 +19,8 @@
 | **Save / Restore** | One-shot firing, fired IDs round-trip, no re-triggering | `VerdictRadioExpansionTests.OneShot_And_State_RoundTrip` | **PASS** |
 | **Unified Radio** | 30 broadcasts registered into `UnifiedRadioBroadcast` catalog | `VerdictRadioExpansionTests.UnifiedRadioBroadcast_Catalog_Loads_Verdict_Broadcasts` | **PASS** |
 | **Audio Cue Hygiene** | No un-registered audio cues authored | `VerdictRadioExpansionTests.AudioCueIntegrity_No_New_Broadcasts_Define_Dangling_Cues` | **PASS** |
-| **Data Integrity Gate** | 0 errors across 208 catalogs | `godot --headless --path . -- --data-integrity-selftest` | **PASS** |
+| **Data Integrity Gate** | 0 errors across 298 catalogs | `godot --headless --path . -- --data-integrity-selftest` | **PASS** |
 | **Content Utilization** | Clean boot, 0 orphaned catalogs | `godot --headless --path . -- --content-utilization-selftest` | **PASS** |
-| **Scene Binding** | 22/22 scenes verified | `godot --headless --path . -- --scene-binding-selftest` | **PASS** |
-| **Scene Lint** | 0 errors across 27 scenes | `python3 scripts/ci/scene-lint.py` | **PASS** |
+| **Scene Binding** | 25/25 scenes verified | `godot --headless --path . -- --scene-binding-selftest` | **PASS** |
+| **Scene Lint** | 0 errors across 30 scenes | `python3 scripts/ci/scene-lint.py` | **PASS** |
 | **Dotnet Host Build** | 0 errors, 0 warnings | `dotnet build Ashfall.csproj` | **PASS** |

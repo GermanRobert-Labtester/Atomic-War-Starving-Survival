@@ -8,6 +8,8 @@ using Ashfall.Core.World;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Radio;
+using Ashfall.Core.Inventory;
+using Ashfall.Core.IO;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -27,7 +29,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── GODOT-NODE CALLBACK PANEL BIND/UNBIND/REBIND SELF-TEST ──");
             int passedGates = 0;
-            int totalGates = 15;
+            int totalGates = 16;
 
             try
             {
@@ -736,6 +738,171 @@ namespace AtomicWar.GodotApp
 
                 triPanel.QueueFree();
                 GD.Print("[PASS] Gate 15: Repeated Bind subscription symmetry verified across WeatherHistory, GeigerCalibration, FireIncident, and Triangulation.");
+                passedGates++;
+
+                // ── GATE 16: WildlifeTrappingPanel Multi-Site Status Rail & Targeted Repair UX ──
+                GD.Print("\n[Gate 16] Testing WildlifeTrappingPanel Multi-Site Status Rail & Targeted Repair UX...");
+                var wtSys = new WildlifeTrappingSystem(new SeededRng(1986), log);
+                var wildlifeSession = new WildlifeTrappingHostSession(wtSys);
+                var fileIO = new FileSystemIO();
+                var json = new SystemTextJsonSerializer();
+                var wtCatalog = WildlifeTrappingCatalogLoader.Load(dataDir, fileIO, json);
+                wildlifeSession.Catalog = wtCatalog;
+
+                var invSys = new Inventory();
+                var itemCat = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, json);
+                var invSession = new InventoryHostSession(invSys, itemCat);
+                wildlifeSession.Inventory = invSession;
+
+                var wtPanel = new WildlifeTrappingPanel();
+                wtPanel.Bind(wildlifeSession);
+                wtPanel._Ready();
+
+                // 1. 0 sites: placeholder "empty" card with "NO SITES"
+                if (!wtPanel.StatusRail!.HasCard("empty") || wtPanel.StatusRail.GetCard("empty")?.Value != "—")
+                {
+                    GD.PrintErr("[FAIL] Gate 16: 0 sites should display placeholder empty card with '—'.");
+                    return 1;
+                }
+                if (wtPanel.RepairButton!.Visible)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Repair button should be hidden when 0 sites exist.");
+                    return 1;
+                }
+
+                // 2. Deploy site 1 (snare with 8 durability)
+                wtSys.SetTrap("site_alpha", "bait_grain_lure", "hunter_1", "snare", "trap_snare", 2, 8);
+                wtPanel.RefreshView();
+
+                if (wtPanel.StatusRail.HasCard("empty"))
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Placeholder card should be removed when sites exist.");
+                    return 1;
+                }
+                var cardAlpha = wtPanel.StatusRail.GetCard("site_site_alpha");
+                if (cardAlpha == null || cardAlpha.Label != "Wire Snare" || cardAlpha.Value != "8/8" || cardAlpha.CurrentCriticality != AshfallMetricCard.Criticality.Normal)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Card for site_alpha should show 'Wire Snare' '8/8' Normal, got '{cardAlpha?.Label}' '{cardAlpha?.Value}' {cardAlpha?.CurrentCriticality}.");
+                    return 1;
+                }
+
+                // 3. Low durability test: remainingDurability = 2 (<= 8/3)
+                var alphaState = wtSys.State.trapSites.Find(s => s.siteId == "site_alpha")!;
+                alphaState.remainingDurability = 2;
+                wtPanel.RefreshView();
+                if (cardAlpha.CurrentCriticality != AshfallMetricCard.Criticality.Warn)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Low durability should set Warn criticality, got {cardAlpha.CurrentCriticality}.");
+                    return 1;
+                }
+
+                // 4. Broken site test (1 broken site):
+                alphaState.isBroken = true;
+                alphaState.remainingDurability = 0;
+                wtPanel.RefreshView();
+                if (cardAlpha.Value != "BROKEN" || cardAlpha.CurrentCriticality != AshfallMetricCard.Criticality.Critical)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Broken site should show 'BROKEN' Critical, got '{cardAlpha.Value}' {cardAlpha.CurrentCriticality}.");
+                    return 1;
+                }
+                if (!wtPanel.RepairButton.Visible || wtPanel.RepairSiteDropdown!.Visible)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Exactly 1 broken site should show repair button and hide dropdown.");
+                    return 1;
+                }
+                if (wtPanel.SelectedRepairSiteId != "site_alpha")
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Single broken site should be auto-selected, got '{wtPanel.SelectedRepairSiteId}'.");
+                    return 1;
+                }
+
+                // 5. Affordability preflight:
+                // Without materials, button should be disabled and tooltip should not leak raw IDs
+                if (!wtPanel.RepairButton.Disabled)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Repair button should be disabled when player cannot afford repair.");
+                    return 1;
+                }
+                string tooltip = wtPanel.RepairButton.TooltipText;
+                if (!tooltip.Contains("Rope") || tooltip.Contains("item_") || tooltip.Contains("trap_snare"))
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Tooltip should display catalog item name 'Rope' without raw IDs, got: {tooltip}");
+                    return 1;
+                }
+
+                // Add rope to inventory -> button becomes enabled
+                invSession.Add("rope", 5);
+                wtPanel.RefreshView();
+                if (wtPanel.RepairButton.Disabled)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Repair button should be enabled when materials are present.");
+                    return 1;
+                }
+
+                // 6. Multi-site targeted repair: add second broken trap (cage trap)
+                wtSys.SetTrap("site_beta", "bait_meat_scraps", "hunter_2", "cage", "trap_cage", 2, 15);
+                var betaState = wtSys.State.trapSites.Find(s => s.siteId == "site_beta")!;
+                betaState.isBroken = true;
+                betaState.remainingDurability = 0;
+                wtPanel.RefreshView();
+
+                if (!wtPanel.RepairSiteDropdown.Visible)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Multiple broken traps should show repair dropdown.");
+                    return 1;
+                }
+                if (wtPanel.RepairSiteDropdown.ItemCount != 2)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Dropdown should contain 2 items, got {wtPanel.RepairSiteDropdown.ItemCount}.");
+                    return 1;
+                }
+
+                // Select site_beta: requires scrap_metal and box_of_nails_10, which inventory lacks
+                wtPanel.SelectRepairSite("site_beta");
+                if (wtPanel.SelectedRepairSiteId != "site_beta")
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Selecting site_beta failed, current is {wtPanel.SelectedRepairSiteId}.");
+                    return 1;
+                }
+                if (!wtPanel.RepairButton.Disabled)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: site_beta should be unaffordable without metal/nails.");
+                    return 1;
+                }
+                string betaTooltip = wtPanel.RepairButton.TooltipText;
+                if (!betaTooltip.Contains("Scrap Metal") || (!betaTooltip.Contains("Box of Nails") && !betaTooltip.Contains("Nails")))
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: site_beta tooltip should display item display names, got: {betaTooltip}");
+                    return 1;
+                }
+
+                // 7. Execute repair on site_alpha
+                wtPanel.SelectRepairSite("site_alpha");
+                var repairRes = wildlifeSession.TryRepairTrap("site_alpha");
+                if (!repairRes.IsSuccess || alphaState.isBroken || alphaState.remainingDurability != 8)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: TryRepairTrap failed: {repairRes.MessageKey}, isBroken={alphaState.isBroken}, dur={alphaState.remainingDurability}.");
+                    return 1;
+                }
+                wtPanel.RefreshView();
+                // After repair, only site_beta is broken, so dropdown hides again
+                if (wtPanel.RepairSiteDropdown.Visible)
+                {
+                    GD.PrintErr("[FAIL] Gate 16: After repairing site_alpha, exactly 1 broken site remains so dropdown should hide.");
+                    return 1;
+                }
+
+                // 8. Site removal removes card from status rail
+                wtSys.State.trapSites.RemoveAll(s => s.siteId == "site_alpha");
+                wtPanel.RefreshView();
+                if (wtPanel.StatusRail.HasCard("site_site_alpha"))
+                {
+                    GD.PrintErr("[FAIL] Gate 16: Removed site_alpha should no longer have a card in the status rail.");
+                    return 1;
+                }
+
+                wtPanel.QueueFree();
+                GD.Print("[PASS] Gate 16: WildlifeTrappingPanel Multi-Site Status Rail & Targeted Repair UX verified cleanly.");
                 passedGates++;
 
                 GD.Print($"\n=== PANEL BIND LIFECYCLE SELF-TEST PASS ({passedGates}/{totalGates} gates verified) ===");

@@ -46,6 +46,7 @@ namespace AtomicWar.GodotApp
         public RadioDistressSystem DistressSystem { get; }
         public RadioRecordingSystem RecordingSystem { get; }
         public RadioSignalLog SignalLog { get; }
+        public DistressRescueMissionManager RescueMissions { get; }
         public ISeededRng Rng { get; }
         public IReadOnlyList<RadioIntercept> History => _history;
         public int Day { get; private set; }
@@ -53,6 +54,23 @@ namespace AtomicWar.GodotApp
         public RadioIntercept? LastIntercept { get; private set; }
         public ScheduledBroadcastResult? LastScheduledBroadcast { get; private set; }
         public string LastEvent { get; private set; } = string.Empty;
+        public Func<string>? WeatherConditionProvider { get; set; }
+        public Func<WeatherKind>? WeatherKindProvider { get; set; }
+
+        public RadioReceiverBand CurrentBand => RadioReceiverPlan.GetBandForFrequencyMhz(CurrentFrequency);
+
+        public void SetBand(string bandId)
+        {
+            int idx = RadioReceiverPlan.GetBandIndex(bandId);
+            var band = RadioReceiverPlan.GetBandByIndex(idx);
+            Listen(band.MinMhz);
+        }
+
+        public void CycleBand()
+        {
+            var next = RadioReceiverPlan.NextBand(CurrentBand);
+            Listen(next.MinMhz);
+        }
 
         public RadioHostSession(
             FactionRadioEngine engine,
@@ -63,7 +81,8 @@ namespace AtomicWar.GodotApp
             RadioStationCatalog? stationCatalog = null,
             RadioDistressSystem? distressSystem = null,
             RadioRecordingSystem? recordingSystem = null,
-            RadioSignalLog? signalLog = null)
+            RadioSignalLog? signalLog = null,
+            DistressRescueMissionManager? rescueMissions = null)
         {
             Engine = engine ?? new FactionRadioEngine();
             Triangulation = triangulation ?? new SignalTriangulationSystem();
@@ -76,12 +95,14 @@ namespace AtomicWar.GodotApp
             DistressSystem = distressSystem ?? new RadioDistressSystem();
             RecordingSystem = recordingSystem ?? new RadioRecordingSystem();
             SignalLog = signalLog ?? new RadioSignalLog();
+            RescueMissions = rescueMissions ?? new DistressRescueMissionManager();
 
             CurrentFrequency = FirstFrequency();
             Triangulation.OnStateChanged += _ => RaiseStateChanged();
             Triangulation.OnLocationRevealed += id => { LastEvent = $"Location discovered: {id}"; RaiseStateChanged(); };
             DistressSystem.OnSignalIntercepted += (def, state) => { LastEvent = $"Distress intercepted: {def.SourceName}"; RaiseStateChanged(); };
             DistressSystem.OnSignalExpired += (def, state) => { LastEvent = $"Distress expired: {def.SourceName}"; RaiseStateChanged(); };
+            RescueMissions.OnStageChanged += (m, stage) => { LastEvent = $"Distress mission {m.QuestId}: {stage}"; RaiseStateChanged(); };
         }
 
         public static RadioHostSession Create(string dataDir, int day = 1)
@@ -99,15 +120,19 @@ namespace AtomicWar.GodotApp
             broadcastCatalog.LoadFromDataDirectory(actualDataDir, new Ashfall.Core.FileSystemIO(), new Ashfall.Core.SystemTextJsonSerializer());
 
             var distressSystem = new RadioDistressSystem();
-            string distressPath = Path.Combine(actualDataDir, "radio_distress_signals.json");
-            if (File.Exists(distressPath))
-            {
-                distressSystem.LoadFromJson(File.ReadAllText(distressPath));
-            }
+            // Built-ins are compatibility fallbacks for sparse fixtures. Load
+            // the expansion layer first so it can replace those fallbacks, then
+            // load the primary Plan 50 authority last so duplicate IDs in the
+            // optional layer cannot override the canonical primary definitions.
             string distressExpPath = Path.Combine(actualDataDir, "radio_distress_signals_expansion.json");
             if (File.Exists(distressExpPath))
             {
                 distressSystem.LoadFromJson(File.ReadAllText(distressExpPath));
+            }
+            string distressPath = Path.Combine(actualDataDir, "radio_distress_signals.json");
+            if (File.Exists(distressPath))
+            {
+                distressSystem.LoadFromJson(File.ReadAllText(distressPath));
             }
 
             var stationCatalog = new RadioStationCatalog();
@@ -153,6 +178,7 @@ namespace AtomicWar.GodotApp
         {
             Day = Math.Max(1, day);
             DistressSystem.TickDaily(Day);
+            RescueMissions.TickDaily(Day);
         }
 
         public string Listen(float? frequencyMhz = null)
@@ -172,6 +198,7 @@ namespace AtomicWar.GodotApp
             if (distress != null)
             {
                 DistressSystem.Intercept(distress.FrequencyId, Day);
+                RescueMissions.RecordSignalHeard(distress.FrequencyId, Day);
             }
 
             var intercept = Engine.GetBroadcastAtFrequency(CurrentFrequency, Day, Rng);
@@ -242,7 +269,8 @@ namespace AtomicWar.GodotApp
 
         public void TuneDelta(float deltaMhz)
         {
-            float target = (float)Math.Round(Math.Clamp(CurrentFrequency + deltaMhz, 88.0f, 150.0f), 2);
+            var band = RadioReceiverPlan.GetBandForFrequencyMhz(CurrentFrequency);
+            float target = (float)Math.Round(band.ClampMhz(CurrentFrequency + deltaMhz), 2);
             Listen(target);
         }
 
@@ -255,6 +283,10 @@ namespace AtomicWar.GodotApp
                 ? LastIntercept.Value.FactionId
                 : $"freq_{CurrentFrequency:000.0}";
 
+            string weather = WeatherConditionProvider?.Invoke()
+                ?? WeatherKindProvider?.Invoke().ToString()
+                ?? "Clear";
+
             var obs = new RadioObservation
             {
                 signalId = sigId,
@@ -266,7 +298,7 @@ namespace AtomicWar.GodotApp
                 signalStrength = (LastIntercept.HasValue ? LastIntercept.Value.SignalStrength : 2) / 5.0f,
                 noiseLevel = 0.05f,
                 frequencyMhz = CurrentFrequency,
-                weatherCondition = "Clear",
+                weatherCondition = weather,
                 operatorSkill = 0.9f
             };
 
@@ -292,6 +324,7 @@ namespace AtomicWar.GodotApp
             var candidate = Triangulation.Triangulate(sigId, Rng);
             if (candidate != null)
             {
+                RescueMissions.RecordSignalIdentified(sigId);
                 bool discovered = Triangulation.IsLocationDiscovered(candidate.locationId);
                 LastEvent = discovered
                     ? $"Triangulation confirmed: {candidate.displayName} at ({candidate.estimatedX:F1}, {candidate.estimatedY:F1}) [Conf: {candidate.confidence:P0}]."

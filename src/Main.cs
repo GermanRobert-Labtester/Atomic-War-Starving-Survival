@@ -53,6 +53,8 @@ namespace AtomicWar.GodotApp
         // read-only projection is the only way host code reads it. (1 until
         // SetupCampaignDay initializes the coordinator.)
         private int _simDay => _campaignDay?.Calendar?.CurrentDay ?? 1;
+        private CampaignInitializationMode _campaignInitializationMode =
+            CampaignInitializationMode.Restore;
 
         // Diagnostics strip throttling. Engine.GetVersionInfo() allocates a Godot
         // Dictionary, so the version string is resolved once and cached for the process.

@@ -29,6 +29,7 @@ namespace Ashfall.Core.Journal
         private int _seq;
         private Func<JournalEntry> _entryFactory;
         private Action<JournalEntry> _entryRecycler;
+        private JournalCorpusAdapter? _authoredCorpus;
 
         /// <summary>Active tab index (0 = Log). Clamped to [0, TabCount).</summary>
         public int ActiveTab { get; private set; }
@@ -108,6 +109,7 @@ namespace Ashfall.Core.Journal
         public bool UnlockRoomHistorySeen(string vignetteId) => UnlockCodex(KnowledgeKeys.RoomHistorySeen(vignetteId));
         public bool UnlockGlitchNoted(string glitchId) => UnlockCodex(KnowledgeKeys.GlitchNoted(glitchId));
         public bool UnlockWildlifeCaught(string speciesId) => UnlockCodex(KnowledgeKeys.WildlifeSpeciesCaught(speciesId));
+        public bool UnlockNarrativeDiscovered(string discoveryId) => UnlockCodex(KnowledgeKeys.NarrativeDiscovered(discoveryId));
         public bool AddKnowledgeEvidence(string survivorId, string knowledgeKey) => UnlockCodex(knowledgeKey);
 
         public bool IsItemSeen(string itemId) => _knowledge.Has(KnowledgeKeys.ItemSeen(itemId));
@@ -117,6 +119,7 @@ namespace Ashfall.Core.Journal
         public bool IsRoomHistorySeen(string vignetteId) => _knowledge.Has(KnowledgeKeys.RoomHistorySeen(vignetteId));
         public bool IsGlitchNoted(string glitchId) => _knowledge.Has(KnowledgeKeys.GlitchNoted(glitchId));
         public bool IsWildlifeCaught(string speciesId) => _knowledge.Has(KnowledgeKeys.WildlifeSpeciesCaught(speciesId));
+        public bool IsNarrativeDiscovered(string discoveryId) => _knowledge.Has(KnowledgeKeys.NarrativeDiscovered(discoveryId));
 
         private bool UnlockCodex(string key)
         {
@@ -138,6 +141,31 @@ namespace Ashfall.Core.Journal
         }
 
         public KnowledgeBase Knowledge => _knowledge;
+        /// <summary>
+        /// Optional immutable authored-corpus adapter. This changes only the
+        /// source body/attribution for a matching producer key; it does not
+        /// create another journal state machine or schedule discoveries.
+        /// </summary>
+        public void BindAuthoredCorpus(JournalCorpusAdapter? adapter)
+        {
+            _authoredCorpus = adapter;
+        }
+
+        /// <summary>
+        /// Activate one authored record from a real producer. Unknown keys are
+        /// ignored so generated producer behavior remains unchanged.
+        /// </summary>
+        public JournalEntry? TryAddAuthoredEntry(
+            string knowledgeKey,
+            ISurvivorAuthor? fallbackAuthor = null)
+        {
+            if (!TryGetAuthoredRecord(knowledgeKey, out var authored))
+                return null;
+            if (!CanInsertAuthored(authored)) return null;
+            if (!_knowledge.Discover(authored.KnowledgeKey)) return null;
+            return InsertAuthored(authored, fallbackAuthor);
+        }
+
         /// <summary>Newest-first log.</summary>
         public IReadOnlyList<JournalEntry> Entries => _entries;
         public int EntryCount => _entries.Count;
@@ -161,6 +189,12 @@ namespace Ashfall.Core.Journal
             float hour = -1f)
         {
             if (string.IsNullOrEmpty(knowledgeKey)) return null;
+            if (TryGetAuthoredRecord(knowledgeKey, out var authored))
+            {
+                if (!CanInsertAuthored(authored)) return null;
+                if (!_knowledge.Discover(authored.KnowledgeKey)) return null;
+                return InsertAuthored(authored, author);
+            }
             if (!_knowledge.Discover(knowledgeKey)) return null;
 
             var bias = author != null ? author!.RiskBias : RiskBiasTrait.Realist;
@@ -184,6 +218,14 @@ namespace Ashfall.Core.Journal
             float hour = -1f)
         {
             if (string.IsNullOrEmpty(knowledgeKey)) return null;
+            if (TryGetAuthoredRecord(knowledgeKey, out var authored))
+            {
+                if (!CanInsertAuthored(authored)) return null;
+                if (!_knowledge.Discover(authored.KnowledgeKey)) return null;
+                CodexUnlockCount++;
+                OnCodexUnlocked?.Invoke(authored.KnowledgeKey);
+                return InsertAuthored(authored, author);
+            }
             if (!_knowledge.Discover(knowledgeKey)) return null; // single dedup gate
 
             CodexUnlockCount++;
@@ -206,6 +248,14 @@ namespace Ashfall.Core.Journal
             float hour = -1f)
         {
             if (string.IsNullOrEmpty(knowledgeKey) || string.IsNullOrEmpty(text)) return null;
+            if (TryGetAuthoredRecord(knowledgeKey, out var authored))
+            {
+                if (!CanInsertAuthored(authored)) return null;
+                if (!_knowledge.Discover(authored.KnowledgeKey)) return null;
+                CodexUnlockCount++;
+                OnCodexUnlocked?.Invoke(authored.KnowledgeKey);
+                return InsertAuthored(authored, author);
+            }
             if (!_knowledge.Discover(knowledgeKey)) return null;
 
             CodexUnlockCount++;
@@ -226,8 +276,58 @@ namespace Ashfall.Core.Journal
             float hour = -1f)
         {
             if (string.IsNullOrEmpty(knowledgeKey) || string.IsNullOrEmpty(text)) return null;
+            if (TryGetAuthoredRecord(knowledgeKey, out var authored))
+            {
+                if (!CanInsertAuthored(authored)) return null;
+                if (!_knowledge.Discover(authored.KnowledgeKey)) return null;
+                return InsertAuthored(authored, author);
+            }
             if (!_knowledge.Discover(knowledgeKey)) return null;
             return InsertEntry(knowledgeKey, text, author, day, hour);
+        }
+
+        private bool TryGetAuthoredRecord(
+            string key,
+            out JournalCorpusRecord record)
+        {
+            if (_authoredCorpus != null && _authoredCorpus.TryGet(key, out record))
+                return true;
+            record = null!;
+            return false;
+        }
+
+        private bool CanInsertAuthored(JournalCorpusRecord record)
+        {
+            for (int i = 0; i < _entries.Count; i++)
+            {
+                var existing = _entries[i];
+                if (!string.Equals(existing.Id, record.Id, StringComparison.Ordinal))
+                    continue;
+                return false;
+            }
+            return true;
+        }
+
+        private JournalEntry InsertAuthored(
+            JournalCorpusRecord record,
+            ISurvivorAuthor? fallbackAuthor)
+        {
+            ISurvivorAuthor author = _authoredCorpus!.ResolveAuthor(record, fallbackAuthor);
+            string name = !string.IsNullOrEmpty(author.DisplayName)
+                ? author.DisplayName
+                : (!string.IsNullOrEmpty(author.Id) ? author.Id : "Unknown");
+
+            var entry = _entryFactory != null ? _entryFactory() : new JournalEntry();
+            entry.Id = record.Id;
+            entry.Text = record.Text;
+            entry.Timestamp = record.Timestamp;
+            entry.AuthorName = name;
+            entry.AuthorId = author.Id ?? string.Empty;
+            entry.KnowledgeKey = record.KnowledgeKey;
+            entry.Day = record.Day > 0 ? record.Day : 1;
+            entry.Hour = record.Hour;
+            PublishEntry(entry);
+            return entry;
         }
 
         private JournalEntry InsertEntry(
@@ -252,6 +352,12 @@ namespace Ashfall.Core.Journal
             entry.Day = day > 0 ? day : 1;
             entry.Hour = hour;
 
+            PublishEntry(entry);
+            return entry;
+        }
+
+        private void PublishEntry(JournalEntry entry)
+        {
             _entries.Insert(0, entry);
             JournalEntry? evicted = null;
             if (_entries.Count > MaxEntries)
@@ -270,7 +376,6 @@ namespace Ashfall.Core.Journal
             // mirrored list inside OnEntryAdded and must drop the reference first.
             if (evicted != null)
                 _entryRecycler?.Invoke(evicted);
-            return entry;
         }
 
         public void AcknowledgePing()

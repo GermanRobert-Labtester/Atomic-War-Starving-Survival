@@ -1,44 +1,54 @@
 # Utility Action Tag Matrix
 
-> **Tag Contract:** Interaction matrix between authored action tags and survivor trait vetoes (`UtilityTags` & `UtilityActionScorer.IsForbiddenByTraits`).
+## Recognized Tags (runtime consumers)
 
----
+| Tag | Constant | Consumer | Effect |
+|-----|----------|----------|--------|
+| `loud_labor` | `UtilityTags.TagLoudLabor` | `IsForbiddenByTraits` | Coward vetoes |
+| `menial_labor` | `UtilityTags.TagMenialLabor` | `IsForbiddenByTraits` | GodComplex vetoes |
+| `dirty_labor` | `UtilityTags.TagDirtyLabor` | `ApplyTraitBiases` | Politician 0.6x |
+| `weapon` | `UtilityTags.TagWeapon` | `IsForbiddenByTraits` | Pacifist vetoes |
+| `gun` | `UtilityTags.TagGun` | `IsForbiddenByTraits` | Blind vetoes |
+| `order` | `UtilityTags.TagOrder` | `IsForbiddenByTraits` | ExCon vetoes |
+| `medical_triage` | `UtilityTags.TagMedicalTriage` | `IsForbiddenByTraits` | Hitman vetoes; Germaphobe vetoes w/o hazmat |
+| `farming` | `UtilityTags.TagFarming` | `IsForbiddenByTraits` | Hitman vetoes |
+| `medical` | `UtilityTags.TagMedical` | (none) | Informational / display only |
+| `quiet_labor` | (none) | (none) | Informational — used in existing actions |
 
-## 1. Trait Veto Matrix
+## Informational Tags (no runtime consumer)
 
-| Tag Name | Constant | Trait Gate / Veto | Consequence |
-|---|---|---|---|
-| `loud_labor` | `UtilityTags.TagLoudLabor` | `coward` | Survivor with `coward` trait refuses action (score = 0) |
-| `menial_labor` | `UtilityTags.TagMenialLabor` | `god_complex` | Survivor with `god_complex` trait refuses action (score = 0) |
-| `weapon` | `UtilityTags.TagWeapon` | `pacifist` | Survivor with `pacifist` trait refuses weapon actions (score = 0) |
-| `gun` | `UtilityTags.TagGun` | `blind` | Survivor with `blind` trait refuses gun actions (score = 0) |
-| `order` | `UtilityTags.TagOrder` | `ex_con` | Survivor with `ex_con` trait refuses authority/order actions (score = 0) |
-| `medical_triage` | `UtilityTags.TagMedicalTriage` | `hitman`, `germaphobe` | `hitman` refuses triage; `germaphobe` refuses triage unless `context.HasHazmat` |
-| `farming` | `UtilityTags.TagFarming` | `hitman` | `hitman` refuses agricultural labor (score = 0) |
+These tags have no veto/bias behavior but are valid in the catalog:
+- `quiet_labor` — used by existing `action_audit_inventory`, `action_file_report`
 
----
+## Tag Usage in Plan 72 (20-action catalog)
 
-## 2. 20-Action Tag Distribution
+| Action ID | Tags | Tag Effect |
+|-----------|------|------------|
+| `action_weigh_goods` | `loud_labor` | Coward veto |
+| `action_read_contract` | — | — |
+| `action_canvas_support` | `menial_labor` | GodComplex veto |
+| `action_run_vouch` | — | — |
+| `action_audit_inventory` | `quiet_labor` | — |
+| `action_file_report` | `quiet_labor` | — |
+| `action_repair_equipment` | `loud_labor` | Coward veto |
+| `action_inspect_housing` | `quiet_labor` | — |
+| `action_treat_wounded` | `medical_triage` | Hitman veto; Germaphobe gate |
+| `action_seek_treatment` | `medical` | — |
+| `action_cook_food` | `quiet_labor` | — |
+| `action_preserve_food` | `menial_labor` | GodComplex veto |
+| `action_purify_water` | `loud_labor` | Coward veto |
+| `action_socialize` | — | — |
+| `action_resolve_conflict` | `order` | ExCon veto |
+| `action_train_skill` | `quiet_labor` | — |
+| `action_teach_skill` | `quiet_labor` | — |
+| `action_stand_watch` | `weapon` | Pacifist veto |
+| `action_conduct_research` | `quiet_labor` | — |
+| `action_rest` | — | — |
 
-| Action ID | Tags Assigned | Active Trait Gates | Category |
-|---|---|---|---|
-| `action_weigh_goods` | `["loud_labor"]` | `coward` | Administrative |
-| `action_read_contract` | `[]` | None | Administrative |
-| `action_canvas_support` | `["menial_labor"]` | `god_complex` | Administrative |
-| `action_run_vouch` | `[]` | None | Administrative |
-| `action_audit_inventory` | `["quiet_labor"]` | None | Administrative |
-| `action_file_report` | `["quiet_labor"]` | None | Administrative |
-| `action_repair_equipment` | `["loud_labor", "maintenance", "crafting"]` | `coward` | Maintenance |
-| `action_inspect_housing` | `["quiet_labor", "maintenance"]` | None | Maintenance |
-| `action_treat_wounded` | `["medical_triage", "medical"]` | `hitman`, `germaphobe` (needs hazmat) | Medical |
-| `action_seek_treatment` | `["medical"]` | None | Medical |
-| `action_cook_food` | `["quiet_labor", "food"]` | None | Food |
-| `action_preserve_food` | `["menial_labor", "food"]` | `god_complex` | Food |
-| `action_purify_water` | `["loud_labor", "water"]` | `coward` | Water |
-| `action_socialize` | `["social"]` | None | Social |
-| `action_resolve_conflict` | `["order", "social"]` | `ex_con` | Social |
-| `action_train_skill` | `["quiet_labor", "training"]` | None | Training |
-| `action_teach_skill` | `["social", "training"]` | None | Training |
-| `action_stand_watch` | `["weapon", "security"]` | `pacifist` | Security |
-| `action_conduct_research` | `["quiet_labor", "research"]` | None | Research |
-| `action_rest` | `["rest"]` | None | Rest |
+## Design Notes
+
+- Tags are primarily for the trait veto/bias matrix
+- `quiet_labor` is informational (no consumer) but used for categorization
+- `medical` is informational (no consumer) but used for categorization
+- Three actions have no tags — they're universally available to all traits
+- The veto matrix is intentionally sparse — only 8 pairs in the matrix

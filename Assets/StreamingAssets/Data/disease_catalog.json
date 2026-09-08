@@ -1300,6 +1300,338 @@
           "care_modifier": 2.0
         }
       ]
+    },
+    {
+      "id": "disease_dysentery",
+      "display_name": "Bacillary Dysentery",
+      "vector": "water",
+      "lethality": 0.25,
+      "incubation_days": 1,
+      "illness_days": 6,
+      "infectivity": 0.45,
+      "spread_interval_days": 1,
+      "spread_radius": 4,
+      "countermeasure_item_id": "clean_water",
+      "guidance": "Boil the water and keep the cooking ladle out of the sick room. The blood in the stool is the warning; the dehydration is what kills.",
+      "source_note": "Failed latrines and a cracked return pipe put the same organisms through the shelter twice: first in the water, then on every hand that trusted the tap. A crowded ward can empty its clean-water reserve before it admits the source was the pipe.",
+      "treatments": [
+        {
+          "item_id": "antibiotics",
+          "role": "curative",
+          "max_days": 3,
+          "lethality_reduction": 0.2
+        },
+        {
+          "item_id": "clean_water",
+          "role": "supportive",
+          "max_days": 0,
+          "lethality_reduction": 0.05
+        }
+      ],
+      "tell": "bloody diarrhoea with a low, persistent fever",
+      "tell_secondary": "tenesmus, abdominal pain, and a dry tongue",
+      "timing_clue": "one or two days after a failed latrine or suspect water draw",
+      "immunity_duration_days": 21,
+      "immunity_strength": 0.95,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 1,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "gut_colonization"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.25,
+          "symptom_tags": [
+            "abdominal_griping",
+            "low_fever"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 2,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "bloody_stool",
+            "tenesmus",
+            "dehydration"
+          ],
+          "work_modifier": 0.25,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "hypovolemic_shock",
+            "intestinal_cramping",
+            "confusion"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.7
+        }
+      ]
+    },
+    {
+      "id": "disease_meningococcal_fever",
+      "display_name": "Meningococcal Fever",
+      "vector": "air",
+      "lethality": 0.6,
+      "incubation_days": 2,
+      "illness_days": 5,
+      "infectivity": 0.3,
+      "spread_interval_days": 2,
+      "spread_radius": 2,
+      "countermeasure_item_id": "gas_mask",
+      "guidance": "Seal the sleeping room and treat the fever as an emergency, not a bad night. A rash that does not fade under pressure means the ward has hours, not days.",
+      "source_note": "The carrier arrived from a winter camp where everyone shared blankets and the same tin cup. In the bunker it moves through close sleeping quarters before the first patient can name the headache.",
+      "treatments": [
+        {
+          "item_id": "antibiotics",
+          "role": "curative",
+          "max_days": 2,
+          "lethality_reduction": 0.3
+        },
+        {
+          "item_id": "medical_kit",
+          "role": "supportive",
+          "max_days": 0,
+          "lethality_reduction": 0.1
+        }
+      ],
+      "tell": "sudden fever with a severe headache and stiff neck",
+      "tell_secondary": "light hurts the eyes; purple spots spread across the skin",
+      "timing_clue": "one to three days after crowded sleeping quarters or a shared cup",
+      "immunity_duration_days": 30,
+      "immunity_strength": 1.0,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 2,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "nasopharyngeal_colonization"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.35,
+          "symptom_tags": [
+            "sudden_chills",
+            "severe_headache"
+          ],
+          "work_modifier": 0.55,
+          "care_modifier": 1.2
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 2,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "neck_rigidity",
+            "photophobia",
+            "vomiting"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.6
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "petechial_rash",
+            "septic_shock",
+            "delirium"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 2.0
+        }
+      ]
+    },
+    {
+      "id": "disease_bloodborne_hepatitis",
+      "display_name": "Bloodborne Hepatitis",
+      "vector": "blood",
+      "lethality": 0.35,
+      "incubation_days": 10,
+      "illness_days": 18,
+      "infectivity": 0.12,
+      "spread_interval_days": 7,
+      "spread_radius": 1,
+      "countermeasure_item_id": "antibiotics",
+      "guidance": "One needle, one patient, one sealed dressing. There is no quick cure in the cupboard; finding the jaundice early is the difference between rest and organ failure.",
+      "source_note": "The virus survived in a field-clinic needle box after the clinic ran out of alcohol. It is slow enough to hide behind ordinary exhaustion, and persistent enough to make every shared instrument a decision.",
+      "treatments": [
+        {
+          "item_id": "medical_kit",
+          "role": "supportive",
+          "max_days": 0,
+          "lethality_reduction": 0.1
+        },
+        {
+          "item_id": "herbal_tea",
+          "role": "symptomatic",
+          "max_days": 0,
+          "lethality_reduction": 0.0
+        }
+      ],
+      "tell": "unusual fatigue followed by yellowing in the eyes",
+      "tell_secondary": "dark urine, pale stool, and tenderness under the ribs",
+      "timing_clue": "weeks after a shared needle, transfusion, or unsterilised procedure",
+      "immunity_duration_days": 30,
+      "immunity_strength": 0.9,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 10,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "hepatic_colonization"
+          ],
+          "work_modifier": 1.0,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 3,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "malaise",
+            "loss_of_appetite",
+            "joint_ache"
+          ],
+          "work_modifier": 0.75,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 6,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "jaundice",
+            "dark_urine",
+            "right_upper_quadrant_pain"
+          ],
+          "work_modifier": 0.35,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 6,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "coagulopathy",
+            "hepatic_confusion",
+            "fluid_retention"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.8
+        },
+        {
+          "stage": "Critical",
+          "duration_days": 3,
+          "contagiousness": 0.8,
+          "symptom_tags": [
+            "acute_liver_failure",
+            "internal_bleeding"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 2.0
+        }
+      ]
+    },
+    {
+      "id": "disease_spore_wound_dermatitis",
+      "display_name": "Spore-Wound Dermatitis",
+      "vector": "spore",
+      "lethality": 0.22,
+      "incubation_days": 3,
+      "illness_days": 8,
+      "infectivity": 0.22,
+      "spread_interval_days": 3,
+      "spread_radius": 2,
+      "countermeasure_item_id": "hazmat_suit",
+      "guidance": "Cover every cut before clearing a bloom and keep the suit on until the dust is down. The first red ring is small; the fever behind it is not.",
+      "source_note": "Spores from a collapsed grow room settled into open hands and boot seams. This strain favors damaged skin rather than the lungs, but the contaminated dressings carry it to the next patient.",
+      "treatments": [
+        {
+          "item_id": "antiseptic_1l_of_1l",
+          "role": "suppressive",
+          "max_days": 3,
+          "lethality_reduction": 0.1
+        },
+        {
+          "item_id": "medical_kit",
+          "role": "supportive",
+          "max_days": 0,
+          "lethality_reduction": 0.1
+        }
+      ],
+      "tell": "a red ring spreading from a dust-exposed cut",
+      "tell_secondary": "black pinpricks in the wound and fever after the dressing changes",
+      "timing_clue": "two to four days after unsealed work in a mold-heavy room",
+      "immunity_duration_days": 14,
+      "immunity_strength": 0.85,
+      "phases": [
+        {
+          "stage": "Incubating",
+          "duration_days": 3,
+          "contagiousness": 0.0,
+          "symptom_tags": [
+            "spore_lodgement"
+          ],
+          "work_modifier": 0.9,
+          "care_modifier": 1.0
+        },
+        {
+          "stage": "Prodromal",
+          "duration_days": 1,
+          "contagiousness": 0.2,
+          "symptom_tags": [
+            "itching_lesion",
+            "red_wound_edge"
+          ],
+          "work_modifier": 0.7,
+          "care_modifier": 1.1
+        },
+        {
+          "stage": "Symptomatic",
+          "duration_days": 3,
+          "contagiousness": 1.0,
+          "symptom_tags": [
+            "black_pustules",
+            "lymphangitis",
+            "fever"
+          ],
+          "work_modifier": 0.3,
+          "care_modifier": 1.3
+        },
+        {
+          "stage": "Severe",
+          "duration_days": 2,
+          "contagiousness": 1.2,
+          "symptom_tags": [
+            "tissue_necrosis",
+            "bacteremia_risk",
+            "rigors"
+          ],
+          "work_modifier": 0.0,
+          "care_modifier": 1.7
+        }
+      ]
     }
   ],
   "vector_protocols": [

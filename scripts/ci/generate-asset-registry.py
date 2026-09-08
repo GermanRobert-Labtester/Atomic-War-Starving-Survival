@@ -61,6 +61,11 @@ ITEM_ALIASES = {
     "item_hot_dust_drum":    "item_process_barrel",
     "item_tailings_drum":    "item_sealed_lead_pig",
     "item_sludge_cake":      "sawdust_block",
+    "item_pocket_dosimeter": "item_dosimeter_pen",
+    "item_shielding_apron":  "item_lead_apron",
+    "item_potassium_iodide_pack": "item_potassium_iodide",
+    "item_dose_register_book": "item_dose_ledger",
+    "item_cohort_baseline_card": "item_cohort_first_board",
 }
 
 CATEGORY_SEARCH_PATHS = {

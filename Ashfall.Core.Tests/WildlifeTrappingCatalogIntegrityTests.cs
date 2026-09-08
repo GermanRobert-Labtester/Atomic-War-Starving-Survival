@@ -118,6 +118,48 @@ namespace Ashfall.Core.Tests
             Assert.Contains(report.Errors, e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
         }
 
+        [Theory]
+        [InlineData("PositiveInfinity")]
+        [InlineData("NegativeInfinity")]
+        [InlineData("Infinity")]
+        public void ContaminationDose_Infinity_Rejected(string doseStr)
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":\"" +
+                    doseStr + "\"}]}");
+            });
+
+            Assert.Contains(report.Errors, e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
+        }
+
+        [Fact]
+        public void ContaminationDose_ExactAcuteThreshold_PassesWithoutWarning()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":80.0}]}");
+            });
+
+            Assert.True(report.Clean, "Dose at exactly AcuteThreshold must pass: " + string.Join("\n", report.Errors));
+            Assert.DoesNotContain(report.Warnings, w => w.Contains("contaminationDose"));
+        }
+
+        [Fact]
+        public void ContaminationDose_ExceedsAcuteThreshold_PassesWithWarning()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":100.0}]}");
+            });
+
+            Assert.True(report.Clean, "Dose > AcuteThreshold must still pass as error-free: " + string.Join("\n", report.Errors));
+            Assert.Contains(report.Warnings, w => w.Contains("contaminationDose") && w.Contains("exceeds acute threshold") && w.Contains("prey 'prey_test'"));
+        }
+
         [Fact]
         public void DiseaseId_ValidReference_ResolvesCleanly()
         {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using Xunit;
 using Ashfall.Core;
 using Ashfall.Core.IO;
@@ -26,36 +25,19 @@ namespace Ashfall.Core.Tests.Narrative
         }
 
         [Fact]
-        public void ExportAndVerify_All8Questlines_MatchBaselineExact()
+        public void CanonicalCatalog_ExistingEightQuestlines_MatchBuiltInBaseline()
         {
             var baseline = BuiltInQuestlineCatalog.CreateAll();
             Assert.Equal(8, baseline.Count);
 
-            var container = new YearOfAshQuestContainer
-            {
-                schema_version = 1,
-                quests = baseline
-            };
-
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                IncludeFields = true
-            };
-            string jsonString = JsonSerializer.Serialize(container, options);
-
             string dataDir = FindDataDir();
             var fileIO = new FileSystemIO();
-            string targetPath = fileIO.Combine(dataDir, YearOfAshCatalogLoader.QuestlinesFile);
-
-            // Write the canonical year_of_ash_questlines.json
-            fileIO.WriteAllText(targetPath, jsonString);
 
             // Load back through Core catalog loader
             var serializer = new SystemTextJsonSerializer();
             var loaded = YearOfAshCatalogLoader.LoadQuestlines(dataDir, fileIO, serializer);
 
-            Assert.Equal(baseline.Count, loaded.Count);
+            Assert.Equal(15, loaded.Count);
 
             for (int i = 0; i < baseline.Count; i++)
             {
@@ -116,6 +98,29 @@ namespace Ashfall.Core.Tests.Narrative
                     }
                 }
             }
+        }
+
+        [Fact]
+        public void CanonicalCatalog_ContainsExactlySevenPlan114Questlines()
+        {
+            string dataDir = FindDataDir();
+            var loaded = YearOfAshCatalogLoader.LoadQuestlines(
+                dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+
+            var expected = new[]
+            {
+                "quest_garrison_amnesty_offer",
+                "quest_ash_sign_pilgrimage",
+                "quest_rebuilder_irrigation",
+                "quest_hydro_baron_water_tax",
+                "quest_black_ops_blackmail",
+                "quest_garrison_mutiny",
+                "quest_rebuilder_seed_failure"
+            };
+
+            Assert.Equal(15, loaded.Count);
+            foreach (var id in expected)
+                Assert.Contains(loaded, quest => quest.questlineId == id);
         }
 
         [Fact]

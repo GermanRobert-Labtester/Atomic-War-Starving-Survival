@@ -98,11 +98,11 @@ namespace Ashfall.Core.Tests.Medical
         // // ── Catalog conformance ────────────────────────────────────
 
         [Fact]
-        public void Catalog_LoadsSixteenDiseases_FromDataDirectory()
+        public void Catalog_LoadsTwentyDiseases_FromDataDirectory()
         {
             var catalog = LoadCatalog();
             Assert.False(catalog.HasErrors, string.Join("; ", catalog.Errors));
-            Assert.Equal(16, catalog.Count);
+            Assert.Equal(20, catalog.Count);
         }
 
         [Fact]

@@ -19,6 +19,7 @@ namespace Ashfall.Core.Narrative
         public string outcome;
         public string doctor_margin_note;
         public string[] tags;
+        public string? doc_type;
     }
 
     [Serializable]
@@ -30,7 +31,8 @@ namespace Ashfall.Core.Narrative
     }
 
     /// <summary>
-    /// Engine-agnostic loader and query interface for The 40 Dweller Medical Casebook & Trauma Profiles.
+    /// Engine-agnostic loader and query interface for The 40 Dweller Medical Casebook & Trauma Profiles
+    /// and the Medical Documents Expansion.
     /// </summary>
     public sealed class DwellerMedicalCatalog
     {
@@ -41,6 +43,8 @@ namespace Ashfall.Core.Narrative
 
         public IReadOnlyList<DwellerMedicalCaseEntry> AllCases => _allCases;
 
+        public int Count => _allCases.Count;
+
         public void Load(string json, IJsonSerializer serializer)
         {
             if (string.IsNullOrEmpty(json) || serializer == null) return;
@@ -50,9 +54,45 @@ namespace Ashfall.Core.Narrative
             foreach (var c in file.cases)
             {
                 if (c == null || string.IsNullOrEmpty(c.case_id)) continue;
+                if (_byId.ContainsKey(c.case_id)) continue;
                 _byId[c.case_id] = c;
                 _allCases.Add(c);
             }
+        }
+
+        public static DwellerMedicalCatalog LoadFromDirectory(string dataDir, IFileIO fileIo, IJsonSerializer serializer)
+        {
+            var catalog = new DwellerMedicalCatalog();
+            if (string.IsNullOrWhiteSpace(dataDir) || fileIo == null || serializer == null)
+                return catalog;
+
+            string canonicalPath = fileIo.Combine(dataDir, "narrative", "dweller_medical_casebook.json");
+            if (fileIo.FileExists(canonicalPath))
+            {
+                try
+                {
+                    catalog.Load(fileIo.ReadAllText(canonicalPath), serializer);
+                }
+                catch (Exception ex)
+                {
+                    Ashfall.Core.IO.CatalogDiagnostics.Warn(canonicalPath, "DwellerMedicalCasebookFile", ex);
+                }
+            }
+
+            string expansionPath = fileIo.Combine(dataDir, "narrative", "medical_documents_expansion.json");
+            if (fileIo.FileExists(expansionPath))
+            {
+                try
+                {
+                    catalog.Load(fileIo.ReadAllText(expansionPath), serializer);
+                }
+                catch (Exception ex)
+                {
+                    Ashfall.Core.IO.CatalogDiagnostics.Warn(expansionPath, "MedicalDocumentsExpansionFile", ex);
+                }
+            }
+
+            return catalog;
         }
 
         public DwellerMedicalCaseEntry? GetById(string caseId)

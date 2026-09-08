@@ -2,10 +2,19 @@
 
 ## 1. Catalog Inventory Summary
 
-The journal voice catalog (`Assets/StreamingAssets/Data/journal_voice_prose.json`) contains **33 situation and lore keys**:
-- **5 Baseline Survival Keys**: `high_co2`, `has_seen_radiation`, `has_experienced_storm`, `filter_failing`, `freezing_shelter`.
-- **16 Baseline History / Muster Keys**: `history_continuity_reclamation_decree`, `history_hydro_baron_rate_card_origin`, `history_deserter_coalition_founding`, `history_cold_count_before_the_lab`, `history_the_provisioned_advance_knowledge`, `history_checkpoint_conscripts_confession`, `history_quartermasters_paperwork`, `history_the_intercepted_cipher`, `history_the_ledger_nobody_signed`, `history_evacuation_harbor_manifest`, `history_evacuation_offshore_flash`, `history_evacuation_casualty_arrival`, `history_evacuation_quayside_order`, `history_grain_convoy_cargo_manifest`, `history_grain_convoy_ballistic_triage`, `history_grain_convoy_rules_of_engagement`, `history_grain_convoy_third_flank`, `history_foundry_pressure_drop`, `history_foundry_diverted_seals`, `history_foundry_unserved_amendment`, `history_foundry_unwritten_covenant`.
-- **12 New Situation Keys (Plan 95)**: Detailed below.
+The current journal voice catalog contains **39 keys**:
+- **5 baseline survival keys**: `high_co2`, `has_seen_radiation`, `has_experienced_storm`, `filter_failing`, `freezing_shelter`.
+- **20 existing history/faction/journal keys**.
+- **12 Plan 95 situation candidates**, detailed below.
+- **2 existing micro-location keys**: `micro_radio_tower_log`, `micro_dead_livestock_tags`.
+
+The Plan 95 candidate corpus contains 84 core variants (12 keys × 7 core voice buckets). The current JSON also carries optional `empath` and `sociopath` fields on these 12 entries because those fields are part of the live DTO and were present in the recovered data snapshot. They are not additional Plan 95 core buckets.
+
+### Reachability status
+
+All 12 Plan 95 candidates are **DEFERRED**. A repository-wide search found no exact `TryDiscover`/`TryDiscoverKnowledge` call, narrative `journalUnlockId`, collectible `effect_target`, or equivalent mapping for these keys. Similar feedback IDs such as `low_food`, `disease_outbreak`, and `power_failure` are UI/catalog labels, not journal producers.
+
+The prose remains implementation-ready in this matrix and the data snapshot, but no candidate should be described as an active campaign trigger until an existing producer is mapped in a later integration task.
 
 ---
 

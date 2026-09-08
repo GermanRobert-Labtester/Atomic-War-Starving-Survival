@@ -157,7 +157,7 @@
         "Strengthen your bones with calcium if you can find it."
       ],
       "long_term_effects": [
-        "The bone is stronger at the break point. But the memory is weaker.",
+        "The bone remodels at the break point, but requires weeks of protection to regain normal strength. The memory of the break lingers.",
         "Reduced mobility if the fracture is not properly set.",
         "Chronic pain in cold or damp weather."
       ],
@@ -221,12 +221,12 @@
       "pain_descriptions": [
         "Nausea, like your stomach is trying to escape.",
         "Fatigue, like your body is made of lead.",
-        "Warmth, like you're burning from the inside."
+        "Feverishness and metallic taste from high acute dose."
       ],
       "mental_state": "You think about the exposure. How much? How long? What's the damage?",
       "physical_state": "Your body is fighting. Your immune system is working. Your energy is low.",
       "emotional_impact": "Another exposure. Another calculation. Another day you survived the invisible enemy.",
-      "system_integration": "Increases radiation level. Iodine and anti-rad reduce radiation. Can lead to radiation sickness."
+      "system_integration": "Increases radiation level. Potassium iodide protects thyroid uptake only; chelation agents assist decorporation. Can lead to acute radiation sickness."
     },
     {
       "id": "medical_infection",
@@ -4153,63 +4153,6 @@
       "physical_state": "Your thyroid is swollen. Your neck is enlarged. Your energy is low.",
       "emotional_impact": "Another day with goiter. Another day of swelling. Another day you survived the deficiency.",
       "system_integration": "Nutritional disease. Requires iodine. Can be dangerous."
-    },
-    {
-      "id": "medical_dehydration_severe",
-      "category": "emergency",
-      "display_name": "Severe Dehydration",
-      "diagnosis_text": "Your body is shutting down. Your mouth is desert dry. Your urine is brown. You need water now.",
-      "symptom_descriptions": [
-        "Extreme thirst. Your body is desperate for water.",
-        "No urine. Your kidneys have shut down.",
-        "Confusion. Your brain is shutting down."
-      ],
-      "treatment_steps": [
-        "Drink water immediately. Clean water. As much as you can.",
-        "Rest. Your body needs time to absorb the water.",
-        "Eat something salty if you can. It helps your body retain water.",
-        "Get out of the heat. Heat makes dehydration worse."
-      ],
-      "required_items": ["clean_water"],
-      "success_chances": {
-        "immediate_water": 0.8,
-        "delayed_water": 0.4,
-        "no_water": 0.05
-      },
-      "failure_consequences": [
-        "Organ failure. Your kidneys shut down first.",
-        "Seizures. Your brain can't function without water.",
-        "Death. Severe dehydration is fatal within days."
-      ],
-      "recovery_descriptions": [
-        "The water goes down. Your body absorbs it. Your mouth moistens.",
-        "The cramps stop. Your muscles relax. Your vision clears.",
-        "You feel human again. The water is life."
-      ],
-      "complication_warnings": [
-        "Watch for seizures. That's your brain shutting down.",
-        "Watch for no urine. That's your kidneys failing.",
-        "Watch for confusion. That's your brain shutting down."
-      ],
-      "prevention_advice": [
-        "Drink regularly, even when you're not thirsty.",
-        "Carry water at all times. Never leave without it.",
-        "Ration your water. But don't ration it too much."
-      ],
-      "long_term_effects": [
-        "Kidney damage. Severe dehydration destroys kidneys.",
-        "Brain damage. The brain needs water to function.",
-        "Increased susceptibility to future dehydration."
-      ],
-      "pain_descriptions": [
-        "Dry. Like your mouth is full of dust.",
-        "Cramping. Like your muscles are tying themselves in knots.",
-        "Foggy. Like your brain is shutting down."
-      ],
-      "mental_state": "You think about water. Only water. Nothing else matters.",
-      "physical_state": "Your body is shutting down. Your organs are failing. Your brain is foggy.",
-      "emotional_impact": "Another day without water. Another day you survived the desert.",
-      "system_integration": "Critical health reduction. Immediate water required. Can be fatal."
     },
     {
       "id": "medical_deep_wound",

@@ -41,6 +41,7 @@ namespace Ashfall.Core.MoralChoice
     {
         public List<string> VeryPositive { get; set; } = new List<string>();
         public List<string> Positive { get; set; } = new List<string>();
+        public List<string> SlightlyPositive { get; set; } = new List<string>();
         public List<string> Neutral { get; set; } = new List<string>();
         public List<string> SlightlyEvil { get; set; } = new List<string>();
         public List<string> Evil { get; set; } = new List<string>();

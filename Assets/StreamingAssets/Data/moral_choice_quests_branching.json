@@ -15,6 +15,7 @@
           "label": "Open the gate and share rations",
           "moral_delta": 12,
           "empathy_delta": 2,
+          "set_flag": "flag_shared_rations",
           "outcome_text": "You open the gate. Eleven people file in, soaked, silent, grateful in a way that has no words. The rations stretch thinner. Nobody complains — not tonight. Tomorrow is tomorrow's arithmetic.",
           "epitaph": "Opened the gate to eleven strangers in the rain. The rations stretched thinner. Nobody complained."
         },
@@ -575,6 +576,7 @@
           "label": "Accept the alliance on equal terms",
           "moral_delta": 10,
           "empathy_delta": 2,
+          "set_flag": "flag_chosen_faction_side",
           "outcome_text": "The Crossroads Collective joins the pact. Their trade route opens. Your corridor stretches from the ridge to the southern water. For the first time, what you built feels like it might be called a community.",
           "epitaph": "Allied with the Crossroads Collective. Their trade route opened. What I built might be a community now."
         },
@@ -742,6 +744,7 @@
           "label": "Community service — he works off the debt to community trust",
           "moral_delta": 8,
           "empathy_delta": 1,
+          "set_flag": "flag_honored_debt",
           "outcome_text": "Six months of heavy labor: wall repair, latrine duty, the jobs nobody wants. Tomas accepts. The community watches. By month four, most have forgiven. The raider's friends haven't. But the line holds.",
           "epitaph": "Sentenced Tomas to six months of hard community labor. Most forgave by month four. The line held."
         },
@@ -2807,6 +2810,7 @@
           "label": "\"They stay at the Table. Archived. Safe. For when someone needs them.\"",
           "moral_delta": 10,
           "empathy_delta": 3,
+          "set_flag": "flag_preserved_archive",
           "outcome_text": "The knowledge keeper nods. 'A keeper,' they say. 'The archive needs those.' You place your journal on the shelf with the others — dozens of them, each one a life's worth of listening. The room becomes a library of human experience. Someday, someone will need the doctor's diagrams, or the soldier's bridge, or the child's water map. They'll find them here. You've built something that outlasts you. The candles go out. The archive remains. You walk into the dawn lighter than you've been in weeks.",
           "epitaph": "Archived the stories. Built a library of human experience. It will outlast me. That's the point."
         },
@@ -2847,6 +2851,7 @@
           "label": "Keep the pills for your own people",
           "moral_delta": -8,
           "empathy_delta": 0,
+          "set_flag": "flag_hoarded_medicine",
           "outcome_text": "You tell yourself the arithmetic: your people first. The coughing stops by morning. When Maren's boy dies three days later, you don't attend the burial. You were busy. You were always busy.",
           "epitaph": "Kept the pills. The boy died on day three. I was busy. I was always busy."
         },
@@ -2967,6 +2972,7 @@
           "label": "Plant the missing tools in Kessler's storage",
           "moral_delta": -15,
           "empathy_delta": 0,
+          "set_flag": "flag_forged_record",
           "outcome_text": "You move the wrenches and wire to the shelf under Kessler's name during the night shift. In the morning, the inventory audit finds them. Kessler's face goes white. 'I didn't take these,' he says, but his name is right there. The committee suspends him. He leaves the shelter within the week. You win the election unopposed.",
           "epitaph": "Planted the tools under his name. His name was right there. He left within the week."
         },
@@ -3014,6 +3020,7 @@
           "label": "Sabotage the talks so you can take the seed bank alone",
           "moral_delta": -18,
           "empathy_delta": 0,
+          "set_flag": "flag_broke_treaty",
           "outcome_text": "You arrange for the talks to collapse — a leaked insult, a missed deadline, a forged message. Both groups retreat, furious at each other. You go to the abandoned homesteads alone at dawn and take the entire seed bank. It's a king's ransom in calories. The two groups don't speak to each other for months. They don't speak to you either.",
           "epitaph": "Burned the talks. Took the seed bank alone. A king's ransom in calories. Two alliances in ashes."
         },
@@ -3167,6 +3174,7 @@
           "label": "Expel Bray from the shelter",
           "moral_delta": -14,
           "empathy_delta": 0,
+          "set_flag": "flag_expelled_survivor",
           "outcome_text": "You announce the expulsion at the morning briefing. Bray doesn't argue. She picks up her pack — it's light, almost empty — and walks through the gate. Nobody follows. The curfew holds perfectly after that. The shelter is quiet in a way that isn't peace. It's the quiet of a held breath.",
           "epitaph": "Expelled Bray. Her pack was almost empty. The curfew held perfectly after that."
         },
@@ -3240,6 +3248,7 @@
           "label": "Fix it immediately and ask for nothing",
           "moral_delta": 6,
           "empathy_delta": 2,
+          "set_flag": "flag_repaired_infrastructure",
           "outcome_text": "You walk to the pump house, pull the gasket, replace it with the spare you've been carrying. Water flows within the hour. People cheer. You wave it off. The committee never knows how close the gasket was to failing completely. You've saved them and asked for nothing. The debt is invisible and infinite.",
           "epitaph": "Fixed it in an hour. Asked for nothing. The debt is invisible and infinite."
         },
@@ -3527,6 +3536,7 @@
           "label": "Sabotage the merger and take Renna's resources by force",
           "moral_delta": -18,
           "empathy_delta": 0,
+          "set_flag": "flag_sabotaged_rival",
           "outcome_text": "You arrange for the merger talks to collapse — then move on Renna's shelter while her people are confused and leaderless. It takes one night. Renna surrenders to avoid bloodshed. She looks at you across the room where you've known each other for two years. 'I trusted you,' she says. You have everything you wanted. The sentence echoes.",
           "epitaph": "Collapsed the talks. Moved in one night. 'I trusted you,' she said. I have everything I wanted."
         },

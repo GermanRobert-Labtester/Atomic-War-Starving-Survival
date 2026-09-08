@@ -429,6 +429,726 @@
           "threshold": 0.7
         }
       ]
+    },
+    {
+      "id": "warlord_doctrine_lightning_raider",
+      "display_name": "Lightning Strike",
+      "description": "Fast motorized strikes on unprotected perimeters, withdrawing before organized defense can muster. Supplies are snatched from road caches and field rations rather than gathered through prolonged sieges. The column moves on fuel and audacity, breaking contact the moment heavy resistance appears.",
+      "risk_tolerance": 0.85,
+      "preferred_goal": "loot",
+      "eligible_actions": [
+        "raid",
+        "contest",
+        "withdraw"
+      ],
+      "action_weights": {
+        "raid": 5,
+        "contest": 2,
+        "withdraw": 1
+      },
+      "resource_priority": [
+        "fuel",
+        "ammo_556"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_lightning_raider_doctrine",
+      "radio_key": "radio_warlord_lightning_raider",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_vulture_raider",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_annexation",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 3
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "supply_ratio",
+          "condition": "lt",
+          "threshold": 0.5
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_vulture_raider",
+      "display_name": "The Scavenger's Talon",
+      "description": "Follows the wake of third-party clashes, picking through contested zones after the primary combatants have spent their ammunition. Demands tribute from weakened outposts and cuts off retreating supply wagons. Avoids initiating battles against entrenched forces.",
+      "risk_tolerance": 0.35,
+      "preferred_goal": "scavenge",
+      "eligible_actions": [
+        "raid",
+        "demand_tribute",
+        "withdraw"
+      ],
+      "action_weights": {
+        "raid": 4,
+        "demand_tribute": 2,
+        "withdraw": 2
+      },
+      "resource_priority": [
+        "scrap_metal",
+        "canned_food"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_vulture_raider_doctrine",
+      "radio_key": "radio_warlord_vulture_raider",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_lightning_raider",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.3
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.7
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_iron_perimeter",
+      "display_name": "The Iron Perimeter",
+      "description": "Rigid border defense anchored on pre-war infrastructure and fixed observation bunkers. Crossings are surveyed with interlocking fire lanes and fortified berms. Patrols do not chase raiders into the wastes; they hold the transit line and tax passing traffic.",
+      "risk_tolerance": 0.25,
+      "preferred_goal": "defense",
+      "eligible_actions": [
+        "defend",
+        "contest",
+        "demand_tribute"
+      ],
+      "action_weights": {
+        "defend": 5,
+        "contest": 2,
+        "demand_tribute": 1
+      },
+      "resource_priority": [
+        "ammo_556",
+        "scrap_metal"
+      ],
+      "target_rule": "nearest_chokepoint",
+      "journal_key": "jrnl_warlord_iron_perimeter_doctrine",
+      "radio_key": "radio_warlord_iron_perimeter",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_layered_redoubt",
+          "signal": "rival_pressure",
+          "condition": "gte",
+          "threshold": 0.6
+        },
+        {
+          "to": "warlord_doctrine_toll_kingdom",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.8
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_layered_redoubt",
+      "display_name": "Layered Redoubts",
+      "description": "Nested defensive rings designed for fighting withdrawals. Outlying trenches and barricades are conceded once pressed, funneling attackers into pre-sighted kill zones around fortified masonry basements. Survival is bought through structural depth.",
+      "risk_tolerance": 0.2,
+      "preferred_goal": "attrition",
+      "eligible_actions": [
+        "defend",
+        "withdraw",
+        "contest"
+      ],
+      "action_weights": {
+        "defend": 5,
+        "withdraw": 3,
+        "contest": 1
+      },
+      "resource_priority": [
+        "canned_food",
+        "clean_water"
+      ],
+      "target_rule": "nearest_chokepoint",
+      "journal_key": "jrnl_warlord_layered_redoubt_doctrine",
+      "radio_key": "radio_warlord_layered_redoubt",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_iron_perimeter",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.1
+        },
+        {
+          "to": "warlord_doctrine_silent_garrison",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_pressed_ranks",
+      "display_name": "Pressed Ranks",
+      "description": "Aggressive recruitment through coercion, debt collection, and press-gang sweeps across fringe settlements. Conscripts are placed under veteran quartermasters and pushed to expand territorial claims. Numbers substitute for refined equipment.",
+      "risk_tolerance": 0.65,
+      "preferred_goal": "manpower",
+      "eligible_actions": [
+        "raid",
+        "contest",
+        "demand_tribute",
+        "defend"
+      ],
+      "action_weights": {
+        "raid": 4,
+        "contest": 3,
+        "demand_tribute": 2,
+        "defend": 1
+      },
+      "resource_priority": [
+        "canned_food",
+        "bandage"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_pressed_ranks_doctrine",
+      "radio_key": "radio_warlord_pressed_ranks",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_chains_of_work",
+          "signal": "supply_ratio",
+          "condition": "lt",
+          "threshold": 0.7
+        },
+        {
+          "to": "warlord_doctrine_annexation",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_borrowed_voices",
+      "display_name": "Borrowed Voices",
+      "description": "Information manipulation, false-flag radio intercepts, and sabotage of communication links. Operatives seed conflicting orders among rival garrisons and strike high-value warehouses while defenders chase phantom incursions.",
+      "risk_tolerance": 0.5,
+      "preferred_goal": "subversion",
+      "eligible_actions": [
+        "contest",
+        "raid",
+        "demand_tribute",
+        "withdraw"
+      ],
+      "action_weights": {
+        "contest": 4,
+        "raid": 2,
+        "demand_tribute": 2,
+        "withdraw": 1
+      },
+      "resource_priority": [
+        "ammo_556",
+        "fuel"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_borrowed_voices_doctrine",
+      "radio_key": "radio_warlord_borrowed_voices",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_proxy_provocation",
+          "signal": "rival_pressure",
+          "condition": "gte",
+          "threshold": 0.5
+        },
+        {
+          "to": "warlord_doctrine_lightning_raider",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_toll_kingdom",
+      "display_name": "The Toll Kingdom",
+      "description": "Institutionalized extortion over regional trade arteries. Roadblocks are fortified into permanent stone bastions, and transit tariffs are enforced by armored gun trucks. Non-compliance is met with systemic trade embargoes and selective punitive raids.",
+      "risk_tolerance": 0.55,
+      "preferred_goal": "tribute",
+      "eligible_actions": [
+        "demand_tribute",
+        "defend",
+        "raid",
+        "contest"
+      ],
+      "action_weights": {
+        "demand_tribute": 5,
+        "defend": 3,
+        "raid": 2,
+        "contest": 1
+      },
+      "resource_priority": [
+        "canned_food",
+        "clean_water"
+      ],
+      "target_rule": "nearest_chokepoint",
+      "journal_key": "jrnl_warlord_toll_kingdom_doctrine",
+      "radio_key": "radio_warlord_toll_kingdom",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "player_tribute_reliability",
+          "condition": "gte",
+          "threshold": 0.8
+        },
+        {
+          "to": "warlord_doctrine_convoy_interdiction",
+          "signal": "player_tribute_reliability",
+          "condition": "lt",
+          "threshold": 0.4
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_sacred_campaign",
+      "display_name": "The Sacred Crusade",
+      "description": "Religious fervor fused with military expansionism. Believers march behind rad-shielded relics and treat every captured depot as divine mandate. Conscripts undergo ritual initiation, and retreat is treated as doctrinal heresy.",
+      "risk_tolerance": 0.85,
+      "preferred_goal": "conversion",
+      "eligible_actions": [
+        "annex",
+        "contest",
+        "raid",
+        "defend"
+      ],
+      "action_weights": {
+        "annex": 4,
+        "contest": 4,
+        "raid": 2,
+        "defend": 1
+      },
+      "resource_priority": [
+        "iodine_pills",
+        "clean_water"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_sacred_campaign_doctrine",
+      "radio_key": "radio_warlord_sacred_campaign",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_ashprophet",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_scorched_earth",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 3
+        },
+        {
+          "to": "warlord_doctrine_annexation",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_salvage_supremacy",
+      "display_name": "Salvage Supremacy",
+      "description": "Prioritizes the acquisition, restoration, and deployment of pre-war technological assets. Fuel refineries, electrical substations, and machining shops are defended with high firepower. Troops maintain equipment scrupulously, relying on superior gear to offset smaller numbers.",
+      "risk_tolerance": 0.6,
+      "preferred_goal": "technology",
+      "eligible_actions": [
+        "contest",
+        "defend",
+        "annex",
+        "raid"
+      ],
+      "action_weights": {
+        "contest": 4,
+        "defend": 3,
+        "annex": 2,
+        "raid": 2
+      },
+      "resource_priority": [
+        "fuel",
+        "scrap_metal"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_salvage_supremacy_doctrine",
+      "radio_key": "radio_warlord_salvage_supremacy",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_resource_stranglehold",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.3
+        },
+        {
+          "to": "warlord_doctrine_silent_garrison",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_chains_of_work",
+      "display_name": "Chains of Labor",
+      "description": "Expansion powered by forced labor details working agricultural strips and quarry sites under armed guard. Raids focus on capturing able-bodied survivors rather than material goods. Fortifications prioritize captive containment over field combat.",
+      "risk_tolerance": 0.6,
+      "preferred_goal": "labor",
+      "eligible_actions": [
+        "raid",
+        "contest",
+        "demand_tribute",
+        "defend"
+      ],
+      "action_weights": {
+        "raid": 5,
+        "contest": 3,
+        "demand_tribute": 1,
+        "defend": 1
+      },
+      "resource_priority": [
+        "canned_food",
+        "clean_water"
+      ],
+      "target_rule": "isolated_convoy",
+      "journal_key": "jrnl_warlord_chains_of_work_doctrine",
+      "radio_key": "radio_warlord_chains_of_work",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_traffic",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.2
+        },
+        {
+          "to": "warlord_doctrine_pressed_ranks",
+          "signal": "rival_pressure",
+          "condition": "gte",
+          "threshold": 0.6
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_many_knives",
+      "display_name": "Council of Many Knives",
+      "description": "Decentralized confederation of autonomous captains bound by mutual defense pacts and shared tribute shares. Multiple warbands strike along divergent axes simultaneously, preventing rivals from concentrating defensive forces against a single front.",
+      "risk_tolerance": 0.5,
+      "preferred_goal": "coalition",
+      "eligible_actions": [
+        "contest",
+        "demand_tribute",
+        "raid",
+        "defend"
+      ],
+      "action_weights": {
+        "contest": 3,
+        "demand_tribute": 3,
+        "raid": 2,
+        "defend": 2
+      },
+      "resource_priority": [
+        "ammo_556",
+        "canned_food"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_many_knives_doctrine",
+      "radio_key": "radio_warlord_many_knives",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll_kingdom",
+          "signal": "player_tribute_reliability",
+          "condition": "gte",
+          "threshold": 0.7
+        },
+        {
+          "to": "warlord_doctrine_proxy_provocation",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_scorched_earth",
+      "display_name": "Scorched Earth",
+      "description": "Systematic destruction of grain silos, water cisterns, and fuel caches in contested territories to deny sustenance to advancing enemies. Troops contaminate wells and mine road bridges before falling back to hardened strongholds.",
+      "risk_tolerance": 0.75,
+      "preferred_goal": "denial",
+      "eligible_actions": [
+        "contest",
+        "withdraw",
+        "raid"
+      ],
+      "action_weights": {
+        "contest": 4,
+        "withdraw": 3,
+        "raid": 2
+      },
+      "resource_priority": [
+        "fuel",
+        "ammo_556"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_scorched_earth_doctrine",
+      "radio_key": "radio_warlord_scorched_earth",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.7
+        },
+        {
+          "to": "warlord_doctrine_layered_redoubt",
+          "signal": "supply_ratio",
+          "condition": "lt",
+          "threshold": 0.6
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_convoy_interdiction",
+      "display_name": "Road Interdiction",
+      "description": "Specialized road ambush tactics aimed at starving fortified settlements by severing inbound supply convoys. Obstacles and caltrops are deployed at blind mountain turns to disable transport vehicles for rapid boarding.",
+      "risk_tolerance": 0.55,
+      "preferred_goal": "chokepoint",
+      "eligible_actions": [
+        "raid",
+        "demand_tribute",
+        "contest"
+      ],
+      "action_weights": {
+        "raid": 4,
+        "demand_tribute": 3,
+        "contest": 2
+      },
+      "resource_priority": [
+        "fuel",
+        "canned_food"
+      ],
+      "target_rule": "isolated_convoy",
+      "journal_key": "jrnl_warlord_convoy_interdiction_doctrine",
+      "radio_key": "radio_warlord_convoy_interdiction",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_lightning_raider",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.2
+        },
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "player_tribute_reliability",
+          "condition": "gte",
+          "threshold": 0.7
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_silent_garrison",
+      "display_name": "The Silent Garrison",
+      "description": "Static defense concealed within abandoned surface structures. Defenders do not man outer walls openly, allowing enemy scouts to advance unmolested before initiating close-range ambushes with pre-sighted defensive firepower.",
+      "risk_tolerance": 0.3,
+      "preferred_goal": "ambush",
+      "eligible_actions": [
+        "defend",
+        "contest",
+        "demand_tribute"
+      ],
+      "action_weights": {
+        "defend": 5,
+        "contest": 2,
+        "demand_tribute": 1
+      },
+      "resource_priority": [
+        "ammo_556",
+        "scrap_metal"
+      ],
+      "target_rule": "nearest_chokepoint",
+      "journal_key": "jrnl_warlord_silent_garrison_doctrine",
+      "radio_key": "radio_warlord_silent_garrison",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_iron_perimeter",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.1
+        },
+        {
+          "to": "warlord_doctrine_layered_redoubt",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.75
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_proxy_provocation",
+      "display_name": "Shadow Proxies",
+      "description": "Arming splinter militias and desperate scavengers to harass rival borders while maintaining formal neutrality. The warlord provides munitions and safe harbor in exchange for intelligence and a percentage of salvaged goods.",
+      "risk_tolerance": 0.4,
+      "preferred_goal": "subterfuge",
+      "eligible_actions": [
+        "contest",
+        "raid",
+        "demand_tribute"
+      ],
+      "action_weights": {
+        "contest": 4,
+        "raid": 3,
+        "demand_tribute": 1
+      },
+      "resource_priority": [
+        "clean_water",
+        "ammo_556"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_proxy_provocation_doctrine",
+      "radio_key": "radio_warlord_proxy_provocation",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_borrowed_voices",
+          "signal": "rival_pressure",
+          "condition": "gte",
+          "threshold": 0.6
+        },
+        {
+          "to": "warlord_doctrine_many_knives",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_resource_stranglehold",
+      "display_name": "The Cistern Clamp",
+      "description": "Concentrates force exclusively on uncontaminated water sources, pharmaceutical caches, and functional generator hubs. Surrounding territories are left ungarrisoned, forcing all regional factions to negotiate on the warlord's terms.",
+      "risk_tolerance": 0.5,
+      "preferred_goal": "stranglehold",
+      "eligible_actions": [
+        "annex",
+        "defend",
+        "contest",
+        "demand_tribute"
+      ],
+      "action_weights": {
+        "annex": 4,
+        "defend": 3,
+        "contest": 2,
+        "demand_tribute": 2
+      },
+      "resource_priority": [
+        "clean_water",
+        "iodine_pills"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_resource_stranglehold_doctrine",
+      "radio_key": "radio_warlord_resource_stranglehold",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll_kingdom",
+          "signal": "player_tribute_reliability",
+          "condition": "gte",
+          "threshold": 0.6
+        },
+        {
+          "to": "warlord_doctrine_salvage_supremacy",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.3
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.7
+        }
+      ]
     }
   ],
   "faction_alias_warnings": [
@@ -507,6 +1227,102 @@
     },
     {
       "id": "journal_warlord_procedure_doctrine"
+    },
+    {
+      "id": "radio_warlord_lightning_raider"
+    },
+    {
+      "id": "journal_warlord_lightning_raider_doctrine"
+    },
+    {
+      "id": "radio_warlord_vulture_raider"
+    },
+    {
+      "id": "journal_warlord_vulture_raider_doctrine"
+    },
+    {
+      "id": "radio_warlord_iron_perimeter"
+    },
+    {
+      "id": "journal_warlord_iron_perimeter_doctrine"
+    },
+    {
+      "id": "radio_warlord_layered_redoubt"
+    },
+    {
+      "id": "journal_warlord_layered_redoubt_doctrine"
+    },
+    {
+      "id": "radio_warlord_pressed_ranks"
+    },
+    {
+      "id": "journal_warlord_pressed_ranks_doctrine"
+    },
+    {
+      "id": "radio_warlord_borrowed_voices"
+    },
+    {
+      "id": "journal_warlord_borrowed_voices_doctrine"
+    },
+    {
+      "id": "radio_warlord_toll_kingdom"
+    },
+    {
+      "id": "journal_warlord_toll_kingdom_doctrine"
+    },
+    {
+      "id": "radio_warlord_sacred_campaign"
+    },
+    {
+      "id": "journal_warlord_sacred_campaign_doctrine"
+    },
+    {
+      "id": "radio_warlord_salvage_supremacy"
+    },
+    {
+      "id": "journal_warlord_salvage_supremacy_doctrine"
+    },
+    {
+      "id": "radio_warlord_chains_of_work"
+    },
+    {
+      "id": "journal_warlord_chains_of_work_doctrine"
+    },
+    {
+      "id": "radio_warlord_many_knives"
+    },
+    {
+      "id": "journal_warlord_many_knives_doctrine"
+    },
+    {
+      "id": "radio_warlord_scorched_earth"
+    },
+    {
+      "id": "journal_warlord_scorched_earth_doctrine"
+    },
+    {
+      "id": "radio_warlord_convoy_interdiction"
+    },
+    {
+      "id": "journal_warlord_convoy_interdiction_doctrine"
+    },
+    {
+      "id": "radio_warlord_silent_garrison"
+    },
+    {
+      "id": "journal_warlord_silent_garrison_doctrine"
+    },
+    {
+      "id": "radio_warlord_proxy_provocation"
+    },
+    {
+      "id": "journal_warlord_proxy_provocation_doctrine"
+    },
+    {
+      "id": "radio_warlord_resource_stranglehold"
+    },
+    {
+      "id": "journal_warlord_resource_stranglehold_doctrine"
     }
   ]
 }

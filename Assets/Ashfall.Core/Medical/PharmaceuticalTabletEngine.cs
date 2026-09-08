@@ -495,6 +495,8 @@ namespace Ashfall.Core.Medical
 
         private void ResolveBatch(int day, TabletFormulationDef formulation, TabletReleaseClassDef? release)
         {
+            if (_activeBatch == null) return;
+
             _state.machine_state = "quality_check";
             _activeBatch.machine_state_at_save = "quality_check";
 

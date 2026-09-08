@@ -23,7 +23,7 @@
 | `treaty_id` | string | Yes | Snake_case string | Treaty ID resolving against `foundry_accords.json`. |
 | `faction_id` | string | Yes | Snake_case string | Signatory faction ID resolving against `foundry_accords.json` and canonical faction records. |
 | `outcome` | string | Yes | `"met" \| "missed" \| "violated"` | Outcome classification triggering this consequence. |
-| `standing_delta` | float | Yes | `[-20.0, +10.0]` | Faction trust adjustment applied to the signatory faction. |
+| `standing_delta` | float | Yes | authored bounded float | Faction trust adjustment accumulated by the Foundry consequence ledger. |
 | `reason` | string | Yes | Non-empty string | Institutional description of what physically and diplomatically changed. |
 | `market_modifiers` | array | Yes | List of modifiers | Structured list of economic/market demand impacts. |
 
@@ -45,3 +45,10 @@
 - **Lookup Method:** `SilentFoundryConsequencePolicyCatalog.Find(string treatyId, FoundryTreatyOutcome outcome)`
 - **Uniqueness Constraint:** Exactly one policy may exist for any `(treaty_id, outcome)` pair. Duplicate keys cause load errors.
 - **Missing Policy Rule:** If a treaty resolves an outcome without an authored policy, `Find` returns `null` and the outcome is recorded without error (neutral fallback).
+
+## 5. Roadmap vocabulary reconciliation
+
+The live schema has no `mechanical_effect` field. Its supported mechanical
+surface is `standing_delta` plus `market_modifiers`. The plan's term
+“breached” is authored as the runtime value `violated`; `breached` is not an
+accepted JSON outcome.

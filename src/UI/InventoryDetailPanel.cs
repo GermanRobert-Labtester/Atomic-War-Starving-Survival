@@ -2,6 +2,7 @@ using System;
 using Godot;
 using Ashfall.Core.UI;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 
 namespace AtomicWar.GodotApp.UI;
 
@@ -32,15 +33,20 @@ public partial class InventoryDetailPanel : Control
     private ColorRect _backdrop = null!;
 
     private InventoryHostSession? _inventory;
+    private ItemDescriptionCatalog? _descriptions;
+    private ExpansionEnrichmentCatalog? _enrichment;
     private string _itemId = string.Empty;
 
     public bool IsBound => _inventory != null && !string.IsNullOrEmpty(_itemId);
     public int RenderedRowCount { get; private set; }
+    public ItemInspectionModel? CurrentInspection { get; private set; }
 
-    public void Bind(InventoryHostSession? inventory, string itemId)
+    public void Bind(InventoryHostSession? inventory, string itemId, ItemDescriptionCatalog? descriptions = null, ExpansionEnrichmentCatalog? enrichment = null)
     {
         _inventory = inventory;
         _itemId = itemId ?? string.Empty;
+        _descriptions = descriptions ?? inventory?.DescriptionCatalog;
+        _enrichment = enrichment ?? inventory?.EnrichmentCatalog;
         RefreshView();
     }
 
@@ -75,6 +81,7 @@ public partial class InventoryDetailPanel : Control
         AshfallUiHelpers.EmptyChildren(_itemActions);
 
         RenderedRowCount = 0;
+        CurrentInspection = null;
 
         if (_inventory?.Inventory == null || string.IsNullOrEmpty(_itemId))
         {
@@ -91,31 +98,74 @@ public partial class InventoryDetailPanel : Control
 
         var def = slot.Item;
         int count = _inventory.Inventory.CountById(_itemId);
+        var inspection = ItemInspectionModel.Create(def, _descriptions ?? _inventory?.DescriptionCatalog, _enrichment ?? _inventory?.EnrichmentCatalog);
+        CurrentInspection = inspection;
 
         // ── Item info ──
-        AddRow(_itemInfo, $"Name: {def.displayName}", Ashfall.Core.UI.Theme.Pale);
-        AddRow(_itemInfo, $"ID: {def.id}", Ashfall.Core.UI.Theme.Dim);
-        AddRow(_itemInfo, $"Type: {def.type}", Ashfall.Core.UI.Theme.Lethe);
+        AddRow(_itemInfo, $"Name: {inspection.DisplayName}", Ashfall.Core.UI.Theme.Pale);
+        AddRow(_itemInfo, $"ID: {inspection.ItemId}", Ashfall.Core.UI.Theme.Dim);
+        AddRow(_itemInfo, $"Type: {inspection.Type}", Ashfall.Core.UI.Theme.Lethe);
         AddRow(_itemInfo, $"In Stock: {count}", count > 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
         RenderedRowCount += 4;
 
-        if (!string.IsNullOrEmpty(def.description))
+        if (inspection.IsKeepsakeCandidate)
         {
-            AddRow(_itemInfo, def.description, Ashfall.Core.UI.Theme.Dim);
+            AddRow(_itemInfo, "Keepsake: Suitable as a personal keepsake", Ashfall.Core.UI.Theme.Warm);
             RenderedRowCount++;
         }
 
+        if (!string.IsNullOrEmpty(inspection.BaseDescription))
+        {
+            AddRow(_itemInfo, inspection.BaseDescription, Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount++;
+        }
+
+        if (inspection.HasEnhancedDescription)
+        {
+            if (!string.IsNullOrEmpty(inspection.VisualIndicators))
+            {
+                AddRow(_itemInfo, $"Visual: {inspection.VisualIndicators}", Ashfall.Core.UI.Theme.Pale);
+                RenderedRowCount++;
+            }
+            if (!string.IsNullOrEmpty(inspection.SensoryDetails))
+            {
+                AddRow(_itemInfo, $"Sensory: {inspection.SensoryDetails}", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
+            }
+            if (!string.IsNullOrEmpty(inspection.CurrentState))
+            {
+                AddRow(_itemInfo, $"Condition: {inspection.CurrentState}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
+            }
+            if (!string.IsNullOrEmpty(inspection.Hazards))
+            {
+                AddRow(_itemInfo, $"Hazards: {inspection.Hazards}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
+            }
+            if (!string.IsNullOrEmpty(inspection.PreservationState))
+            {
+                AddRow(_itemInfo, $"Preservation: {inspection.PreservationState}", Ashfall.Core.UI.Theme.Pale);
+                RenderedRowCount++;
+            }
+            if (!string.IsNullOrEmpty(inspection.MakeshiftUtility))
+            {
+                AddRow(_itemInfo, $"Makeshift: {inspection.MakeshiftUtility}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+        }
+
         // ── Stats ──
-        if (def.radProtection > 0) { AddRow(_itemStats, $"Rad Protection: {def.radProtection * 100f:0}%", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-        if (def.durability > 0) { AddRow(_itemStats, $"Durability: {def.durability:0}", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; }
-        if (def.hungerRestore > 0) { AddRow(_itemStats, $"Hunger Restore: {def.hungerRestore:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
-        if (def.thirstRestore > 0) { AddRow(_itemStats, $"Thirst Restore: {def.thirstRestore:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
-        if (def.healthEffect > 0) { AddRow(_itemStats, $"Health Effect: +{def.healthEffect:0}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-        if (def.radCleanse > 0) { AddRow(_itemStats, $"Rad Cleanse: −{def.radCleanse:0} mSv", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-        if (def.moraleEffect > 0) { AddRow(_itemStats, $"Morale Effect: +{def.moraleEffect:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
-        if (def.tradeValue > 0) { AddRow(_itemStats, $"Trade Value: {def.tradeValue:0} (tier {def.tradeTier})", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; }
-        if (def.isEquipable) { AddRow(_itemStats, $"Equipable: {def.equipSlot}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-        if (RenderedRowCount == 4)
+        int statCount = 0;
+        if (def.radProtection > 0) { AddRow(_itemStats, $"Rad Protection: {def.radProtection * 100f:0}%", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; statCount++; }
+        if (def.durability > 0) { AddRow(_itemStats, $"Durability: {def.durability:0}", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; statCount++; }
+        if (def.hungerRestore > 0) { AddRow(_itemStats, $"Hunger Restore: {def.hungerRestore:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; statCount++; }
+        if (def.thirstRestore > 0) { AddRow(_itemStats, $"Thirst Restore: {def.thirstRestore:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; statCount++; }
+        if (def.healthEffect > 0) { AddRow(_itemStats, $"Health Effect: +{def.healthEffect:0}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; statCount++; }
+        if (def.radCleanse > 0) { AddRow(_itemStats, $"Rad Cleanse: −{def.radCleanse:0} mSv", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; statCount++; }
+        if (def.moraleEffect > 0) { AddRow(_itemStats, $"Morale Effect: +{def.moraleEffect:0}", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; statCount++; }
+        if (def.tradeValue > 0) { AddRow(_itemStats, $"Trade Value: {def.tradeValue:0} (tier {def.tradeTier})", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; statCount++; }
+        if (def.isEquipable) { AddRow(_itemStats, $"Equipable: {def.equipSlot}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; statCount++; }
+        if (statCount == 0)
             _itemStats.AddChild(MakeDimLine("No special stats."));
 
         // ── Actions (contextual) ──
@@ -149,7 +199,7 @@ public partial class InventoryDetailPanel : Control
 
     private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
     {
-        var label = new Label { Text = text };
+        var label = new Label { Text = text, AutowrapMode = TextServer.AutowrapMode.WordSmart };
         label.CustomMinimumSize = new Vector2(400, 0);
         label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
         label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));

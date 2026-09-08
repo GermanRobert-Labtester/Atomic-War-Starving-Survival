@@ -1,31 +1,31 @@
 # Duty Season Modifier Semantics
 
-> **Modifier Mechanics:** Mathematical behavior, clamping, consumer paths, and composition formulas for `encounterWeight` and `steamTripChanceBoost`.
+## `encounterWeight` — live consumer, traced chain
 
----
+```
+catalog.GetSeasonForDay(day).encounterWeight          (relative weight, not a probability)
+  → DutyRosterHostSession.ActivateSecondWinter()      (src/Host/DutyRosterHostSession.cs:288)
+  → ShelterEncounterSystem.SetSecondWinter(multiplier, day)
+  → _state.encounterWeightMultiplier = multiplier <= 0f ? 1f : multiplier   (assignment)
+  → persisted in ShelterEncounterSystemState (save round-trip via DutyRosterSaveCodec)
+  → cleared by ClearSecondWinter() → resets to 1f
+```
 
-## 1. `encounterWeight` Semantics
+Properties:
+- **Replacement, not accumulation.** Each activation assigns the value; transitions never stack. A multi-season future consumer must call `SetSecondWinter(newWeight, day)` — the old value is overwritten, so "season replaces prior season" is guaranteed by the existing setter.
+- **Clamp:** non-positive → 1.0 at the setter. Upper clamp: none in code; catalog validation bounds it to [0.5, 2.5].
+- **Sampled:** at activation time (host action), not per tick — no repeated-tick accumulation.
+- It is a **relative weight multiplier** on shelter-encounter pressure. UI prose must not claim "N× as many encounters" unless selection math proves a linear frequency relationship.
 
-- **Consumer:** `ShelterEncounterSystem` (`Assets/Ashfall.Core/DutyRoster/ShelterEncounterSystem.cs`).
-- **Nature:** Multiplicative factor scaling shelter-internal encounter frequency.
-- **Formula:**
-  ```csharp
-  _state.encounterWeightMultiplier = season.encounterWeight;
-  ```
-- **Clamp Behavior:** If `<= 0f`, defaults to `1.0f`. Clamped to reasonable bounds `[0.5, 2.5]`.
-- **Application:** Evaluated when rolling nocturnal shelter visitor/incident queues. Does not directly spawn raids or incidents; it modulates the density and likelihood of internal survivor encounters.
-- **Replacement Semantics:** When advancing from Season A to Season B, Season B's `encounterWeight` overwrites Season A's multiplier. It does NOT accumulate.
+## `steamTripChanceBoost` — authored data, consumer deferred
 
----
+- **No live runtime consumer exists** (verified by grep across Core, src, and tests). The only Core "steam trip" mechanic is `BrineWaterSystem`'s membrane-integrity threshold event, which does not read this field.
+- The catalog loader parses it; `DutyRosterSeasonCatalogTests` validates its range ([0.0, 0.15]) and the pinned `season_first_siege` value (0.03).
+- Base chance, additive-vs-multiplicative composition, and clamps are **unknown because no consumer exists** — they were not invented. Balance targets treat it as a bounded authored signal for a future consumer (most plausibly an external-trip opportunity modifier, per the planning brief).
+- **Follow-on requirement:** any future consumer must (a) define composition against its base chance, (b) clamp the final probability to [0,1], (c) apply the seasonal value exactly once per decision, (d) replace (not accumulate) across season transitions.
 
-## 2. `steamTripChanceBoost` Semantics
+## Application-exactly-once guarantees
 
-- **Consumer:** Infrastructure / Steam Heating System (`BrineWaterSystem.cs`).
-- **Nature:** Additive probability boost to steam-plant emergency trips during adverse seasonal conditions.
-- **Formula:**
-  ```csharp
-  effectiveTripChance = Math.Clamp(baseTripChance + season.steamTripChanceBoost, 0f, 1f);
-  ```
-- **Range:** `0.0f` to `0.15f` (0% to +15% additional trip risk).
-- **Physical Meaning:** In deep winter (`season_long_winter`) and sudden freeze/thaw (`season_second_winter`, `season_spring_thaw`), thermal shock and frozen condensation lines increase mechanical failure risks for the central heating boiler and brine filters.
-- **Replacement Semantics:** Replaced cleanly upon season transition; never stacks across multiple days.
+- Encounter weight enters state exactly once per activation (assignment semantics).
+- Season selection itself applies no modifiers — it returns the entry; consumers read fields directly.
+- No second multiplication site exists anywhere in Core/src for either field (verified by grep).

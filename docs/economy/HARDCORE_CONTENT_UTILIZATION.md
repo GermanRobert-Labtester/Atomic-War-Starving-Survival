@@ -5,7 +5,12 @@
 `hardcore_economy_tuning.json` is tracked by `ContentUtilizationScanner.cs`:
 
 - **Primary Consumer:** `HardcoreEconomyTuningLoader`
-- **Secondary Systems:** `MarketSystem`, `TradeScreenPresenter`, `TradeScreenGodotPanel`, `HostCli.PanelTests.cs`
+- **Runtime host consumer:** `Main.OpenTradeScreen`, which loads the JSON and
+  passes the overlay through the existing `IPriceShockProvider` seam.
+- **Presentation consumers:** `TradeScreenPresenter`, `TradeScreenGodotPanel`,
+  and `HostCli.PanelTests.cs`.
+- `MarketSystem` remains the base demand/price authority. It is not silently
+  replaced by a second hardcore pricing implementation.
 
 ```mermaid
 graph TD
@@ -13,8 +18,9 @@ graph TD
     Loader --> Bundle[HardcoreEconomyTuningBundle]
     Bundle --> Tuning[HardcoreEconomyTuning Overlay]
     Tuning --> Presenter[TradeScreenPresenter / Badges]
-    Tuning --> Market[MarketSystem / Price Evaluation]
-    Tuning --> Panel[TradeScreenGodotPanel]
+    Tuning --> Trade[Existing trade overlay seam]
+    Trade --> Presenter[TradeScreenPresenter]
+    Trade --> Panel[TradeScreenGodotPanel]
 ```
 
 ### CI Verification

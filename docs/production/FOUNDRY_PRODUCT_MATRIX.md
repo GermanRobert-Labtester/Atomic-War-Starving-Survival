@@ -1,6 +1,6 @@
-# Foundry Product Matrix (25 Products)
+# Foundry Product Matrix (35 Products)
 
-This document establishes the canonical catalog of all 25 cast foundry products in ASHFALL, their input materials, labor and heat bands, output item IDs, and downstream consumer systems.
+This document establishes the canonical catalog of all 35 cast foundry products in ASHFALL, their input materials, labor and heat bands, output item IDs, and downstream consumer systems. The live 26-product roster is preserved; the final nine rows are the additive Plan 129 expansion.
 
 ---
 
@@ -63,3 +63,18 @@ This document establishes the canonical catalog of all 25 cast foundry products 
 | `foundry_prod_weather_canister` | Weather Canister Shell Body | `abstract_ordnance` | `item_foundry_weather_canister` | Scrap ×10, Additive ×2, Flux ×2 | 12 | 4 | 6 | 80 | 78 | Atmospheric Dispersal & Skyfall Mitigation |
 | `foundry_prod_cast_shot` | Heavy Cast Shot (canister) | `abstract_ordnance` | `item_foundry_cast_shot` | Scrap ×8, Flux ×1 | 6 | 2 | 3 | 35 | 66 | Perimeter Defenses & Trap Enclosures |
 | `foundry_prod_casing_blanks` | Brass-Alloy Casing Blank Set | `abstract_ordnance` | `item_foundry_casing_blanks` | Scrap ×6, Additive ×3, Flux ×2 | 10 | 4 | 5 | 70 | 82 | Garrison Trade Quota & Defense Stores |
+
+## 6. Recovery & Plan 129 Industrial Components (Products 26–35)
+
+| Product ID | Display Name | Category | Result Item ID | Ingredients | Labor (h) | Cast (h) | Fuel | Water (L) | Quality Target | Consumer System |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `foundry_prod_sludge_cake_recovery_melt` | Sludge Cake Recovery Melt | `recovery_melt` | `scrap_metal` | Sludge Cake ×4, Flux ×1 | 6 | 4 | 6 | 60 | 40 | Sump recovery and scrap reclamation |
+| `foundry_prod_bronze_datum_plate` | Bronze Survey Datum Plate | `survey_datum` | `item_datum_plate_bronze` | Scrap ×4, Additive ×1, Flux ×1 | 6 | 2 | 3 | 40 | 72 | Geodetic survey monuments |
+| `foundry_prod_flywheel_rotor_shaft` | Flywheel Rotor Shaft | `rotor_shaft` | `item_forged_rotor_shaft` | Mechanical Scrap ×8, Steel Billet ×2, Flux ×2 | 20 | 7 | 10 | 110 | 84 | Kinetic storage construction |
+| `foundry_prod_flywheel_containment_ring` | Flywheel Containment Ring | `containment_ring` | `item_containment_ring_steel` | Scrap ×18, Steel Billet ×3, Flux ×3 | 24 | 8 | 12 | 140 | 86 | Kinetic storage containment |
+| `foundry_prod_culvert_brace` | High-Tensile Culvert Brace | `structural_brace` | `item_high_tensile_steel_culvert_brace` | Scrap ×12, Steel Billet ×1, Flux ×2 | 14 | 5 | 7 | 90 | 78 | Access works and culvert repair |
+| `foundry_prod_sealed_lead_pig` | Sealed Lead Source Pig | `radiation_container` | `item_sealed_lead_pig` | Scrap ×10, Additive ×2, Flux ×2 | 12 | 4 | 6 | 75 | 76 | Sealed-source handling and shielding |
+| `foundry_prod_ground_anchor_spikes` | Hardened Ground Anchor Spikes | `defense_anchor` | `item_hardened_ground_anchor_spikes` | Scrap ×10, Steel Billet ×1, Additive ×1, Flux ×2 | 12 | 4 | 6 | 75 | 80 | Barrier and tactical-shield anchoring |
+| `foundry_prod_turbine_blade_blank` | Superalloy Turbine Blade Blank | `turbine_blank` | `item_superalloy_turbine_blade_blank` | Steel Billet ×3, Additive ×3, Flux ×3 | 22 | 8 | 12 | 130 | 88 | EB-PVD turbine coating line |
+| `foundry_prod_rail_grinding_head` | Rail Grinding Head | `rail_tooling` | `item_rail_grinding_head` | Scrap ×7, Tool Blank ×1, Flux ×1 | 10 | 3 | 4 | 55 | 80 | Railway maintenance |
+| `foundry_prod_press_tooling_set` | Tablet Press Tooling Set | `press_tooling` | `item_press_tooling_set` | Scrap ×8, Additive ×2, Flux ×2 | 14 | 5 | 7 | 85 | 82 | Tablet manufacturing |

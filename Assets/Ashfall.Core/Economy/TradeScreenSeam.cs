@@ -133,6 +133,9 @@ namespace Ashfall.Core.Economy
         string StanceBadgeText { get; }
         string StanceTellId { get; }
         string StanceTellLine { get; }
+        string TraderProfileId { get; }
+        string TraderDisplayName { get; }
+        string TraderVoiceLine { get; }
 
         // Ledger-edge meters
         float Trust { get; }
@@ -218,6 +221,9 @@ namespace Ashfall.Core.Economy
         public string StanceBadgeText { get; private set; } = "[ STANCE: REFUSE ]";
         public string StanceTellId { get; private set; } = string.Empty;
         public string StanceTellLine { get; private set; } = string.Empty;
+        public string TraderProfileId { get; private set; } = string.Empty;
+        public string TraderDisplayName { get; private set; } = string.Empty;
+        public string TraderVoiceLine { get; private set; } = string.Empty;
         public float Trust { get; private set; }
         public float Aggression { get; private set; }
         public int ConsecutiveRepels { get; private set; }
@@ -258,6 +264,17 @@ namespace Ashfall.Core.Economy
         {
             StanceTellId = tellId ?? string.Empty;
             StanceTellLine = tellLine ?? string.Empty;
+            Bump();
+            return this;
+        }
+        public TradeScreenViewModel SetTraderVoice(
+            string profileId,
+            string displayName,
+            string line)
+        {
+            TraderProfileId = profileId ?? string.Empty;
+            TraderDisplayName = displayName ?? string.Empty;
+            TraderVoiceLine = line ?? string.Empty;
             Bump();
             return this;
         }

@@ -120,6 +120,126 @@
       "severity": 0.85,
       "description": "Sacrificing another to save the many. The math is sound; the heart rejects it completely.",
       "title": "The Sacrifice of Another"
+    },
+    {
+      "choice_pattern": "hoard_medicine_while_needed",
+      "severity": 0.8,
+      "description": "The locked cabinet still holds the vial that was deemed too valuable to dispense. {name} knows someone in the infirmary died counting the hours until the next dose.",
+      "title": "The Last Dose"
+    },
+    {
+      "choice_pattern": "barter_away_needed_food",
+      "severity": 0.55,
+      "description": "The trade crates were hauled away for ammunition and scrap. {name} stands in front of the ration pantry, staring at the dust rings where the flour bags sat.",
+      "title": "Weight of the Crates"
+    },
+    {
+      "choice_pattern": "issue_known_contaminated_supplies",
+      "severity": 0.7,
+      "description": "The radiation warning tape was peeled away before the tins were brought to the table. {name} watches the children eat, saying nothing about the grease pencil mark beneath the label.",
+      "title": "Marked Unsafe"
+    },
+    {
+      "choice_pattern": "burn_critical_fuel_for_comfort",
+      "severity": 0.3,
+      "description": "For one evening the stove burned hot enough to sleep without coats. {name} wakes to find black frost choking the hydroponics lines three rooms down.",
+      "title": "One Warm Room"
+    },
+    {
+      "choice_pattern": "refuse_refugee_entry",
+      "severity": 0.65,
+      "description": "The surveillance monitor kept flickering after {name} cut the exterior intercom. In the morning, the snow outside the heavy outer door is disturbed and empty.",
+      "title": "Closed Door"
+    },
+    {
+      "choice_pattern": "expel_survivor_for_efficiency",
+      "severity": 0.7,
+      "description": "Their bunk was reassigned before the sheets went cold. {name} avoids looking at the tally marks carved into the timber post beside the mattress.",
+      "title": "The Empty Bunk"
+    },
+    {
+      "choice_pattern": "hide_cache_from_allies",
+      "severity": 0.45,
+      "description": "The false floorboard sits flush with the subfloor. {name} looks away as an ally divides the remaining dried lentils into three equal, insufficient portions.",
+      "title": "Behind the Panel"
+    },
+    {
+      "choice_pattern": "abandon_committed_rescue",
+      "severity": 0.6,
+      "description": "The grease pencil marker stays pinned to the sector map where the expedition turned around. {name} cannot bring themselves to wipe the glass clean.",
+      "title": "Turned Back"
+    },
+    {
+      "choice_pattern": "leave_wounded_behind",
+      "severity": 0.8,
+      "description": "The head count on the way back had one fewer name. Through the long corridor walk home, {name} kept listening for footsteps that never caught up.",
+      "title": "One Less Footstep"
+    },
+    {
+      "choice_pattern": "retreat_from_rescue",
+      "severity": 0.65,
+      "description": "The distress signal was still cycling when {name} switched off the receiver to conserve battery. The speaker clicks softly in the dark before going dead.",
+      "title": "Radio Still Calling"
+    },
+    {
+      "choice_pattern": "execute_surrendered_enemy",
+      "severity": 0.85,
+      "description": "The rifle was already dropped in the dirt when {name} pulled the trigger. What stays in memory is how slowly the empty hands drifted downward.",
+      "title": "Hands Visible"
+    },
+    {
+      "choice_pattern": "use_civilians_as_bait",
+      "severity": 0.9,
+      "description": "The diversion drew the patrol away from the supply cache exactly as calculated. {name} got the team out alive, and that is the part that makes sleep impossible.",
+      "title": "The Safer Route"
+    },
+    {
+      "choice_pattern": "kill_former_ally",
+      "severity": 0.8,
+      "description": "The insignia on the jacket was new, but the voice across the barricade was not. {name} cleaned their weapon afterward without looking at the brass casing on the floor.",
+      "title": "Known Face"
+    },
+    {
+      "choice_pattern": "betray_faction_trust",
+      "severity": 0.6,
+      "description": "The signed pact is still filed in the dispatch locker with {name}'s name on the seal. The people who honored it are no longer answering on the wire.",
+      "title": "Terms Broken"
+    },
+    {
+      "choice_pattern": "inform_on_survivor",
+      "severity": 0.7,
+      "description": "The patrol only asked for a name once before handing over the supply voucher. {name} holds the canned meat in their palms, unable to open it.",
+      "title": "Name Given"
+    },
+    {
+      "choice_pattern": "break_final_wish_promise",
+      "severity": 0.85,
+      "description": "There is no one left alive to ask whether the last promise was kept. {name} carries the unfulfilled words like lead in their chest.",
+      "title": "The Promise"
+    },
+    {
+      "choice_pattern": "withhold_pain_relief",
+      "severity": 0.7,
+      "description": "The ampoule remains unbroken in the medical kit for a future emergency. {name} remembers the sound of breathing in the dark ward after the lantern went out.",
+      "title": "Saved for Later"
+    },
+    {
+      "choice_pattern": "triage_by_utility",
+      "severity": 0.75,
+      "description": "The triage tag marked priority by work output rather than blood loss. {name} wrote the numbers down with steady hands that now shake when holding a pen.",
+      "title": "Useful Enough"
+    },
+    {
+      "choice_pattern": "take_family_last_supplies",
+      "severity": 0.7,
+      "description": "The pantry shelves were scraped bare down to the wood shavings. {name} noticed the pencil height marks on the doorframe only after the rucksack was already zipped.",
+      "title": "Nothing Left"
+    },
+    {
+      "choice_pattern": "order_survivor_to_death",
+      "severity": 0.9,
+      "description": "They asked only once if there was another way before stepping into the irradiated conduit. {name} gave the order, and the shelter went quiet.",
+      "title": "The Order Given"
     }
   ]
 }

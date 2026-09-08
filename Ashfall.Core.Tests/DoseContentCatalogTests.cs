@@ -37,9 +37,9 @@ namespace Ashfall.Core.Tests
 
             // Plan 81 expanded the dose-location roster from 5 bunker rooms
             // to 14 locations across five sectors (bunker/surface/expedition/
-            // external/faction). Item and quest counts are unchanged.
+            // external/faction). Plan 106 expanded items from 9 to 15.
             Assert.Equal(14, catalog.locations.Count);
-            Assert.Equal(9, catalog.items.Count);
+            Assert.Equal(15, catalog.items.Count);
             Assert.Equal(12, catalog.quests.Count);
         }
 
@@ -79,6 +79,12 @@ namespace Ashfall.Core.Tests
             Assert.Contains("item_forged_clean_bill_chit", ids);
             Assert.Contains("item_chelation_decorporation_course", ids);
             Assert.Contains("item_shielded_badge_case", ids);
+            Assert.Contains("item_pocket_dosimeter", ids);
+            Assert.Contains("item_radiation_survey_meter", ids);
+            Assert.Contains("item_dose_register_book", ids);
+            Assert.Contains("item_cohort_baseline_card", ids);
+            Assert.Contains("item_shielding_apron", ids);
+            Assert.Contains("item_potassium_iodide_pack", ids);
         }
 
         [Fact]

@@ -50,16 +50,16 @@ namespace Ashfall.Core.UtilityAI
 
             var picked = sys.SelectAction(ctx, defs, new SeededRng(99), scorer);
             Check(picked != null, "selection returns an action");
-            // weigh 0.40+0.7*0.25=0.575+0.1=0.675 beats canvas 0.45+0.7*0.15+0.1=0.655.
-            Check(picked != null && picked.id == "action_weigh_goods",
-                "weigh goods (0.675) wins at low fatigue with skill 0.7");
+            // treat_wounded 0.55+0.7*0.3=0.76+0.1=0.86 is highest at low fatigue with skill 0.7
+            Check(picked != null && picked.id == "action_treat_wounded",
+                "treat wounded (0.86) wins at low fatigue with skill 0.7");
 
-            // Fatigue 87: weigh (gate 85) and canvas (gate 80) gated; read
-            // contract (gate 90) wins.
+            // Fatigue 87: weigh (gate 85), canvas (gate 80), repair/cook/purify (gate 80)
+            // are gated; treat_wounded (gate 90) still active and wins.
             ctx.Fatigue = 87f;
             var gated = sys.SelectAction(ctx, defs, new SeededRng(99), scorer);
-            Check(gated != null && gated.id == "action_read_contract",
-                "fatigue gates veto weigh/canvas; read contract wins");
+            Check(gated != null && gated.id == "action_treat_wounded",
+                "fatigue gates veto low-gate actions; treat wounded (gate 90) wins at fatigue 87");
 
             // Veto matrix: coward refuses loud labor (weigh-goods is tagged loud_labor).
             ctx.Fatigue = 30f;

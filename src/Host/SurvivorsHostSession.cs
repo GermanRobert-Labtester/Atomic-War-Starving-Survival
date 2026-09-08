@@ -146,31 +146,55 @@ namespace AtomicWar.GodotApp
 
         public SurvivorRosterSystem Roster { get; } = new SurvivorRosterSystem();
 
-        /// <summary>Load starting roster and initial conditions from starting_survivors.json (the authority).</summary>
+        /// <summary>
+        /// Load the legacy Standard Holdfast roster. Kept for focused host
+        /// tests and compatibility callers; production New Game supplies an
+        /// explicit StartingCohortProfile.
+        /// </summary>
         public void LoadStartingRoster(string dataDir, bool failClosed = true)
         {
-            if (RosterState.Count > 0) return;
-            var fileIO = new FileSystemIO();
-            var serializer = new SystemTextJsonSerializer();
-            var detailed = SurvivorStartingStateLoader.LoadDetailed(dataDir, fileIO, serializer);
-            if (!detailed.IsSuccess)
+            var legacy = SurvivorStartingStateLoader.LoadDetailed(
+                dataDir,
+                new FileSystemIO(),
+                new SystemTextJsonSerializer());
+            if (!legacy.IsSuccess)
             {
-                if (failClosed)
-                {
-                    LastEvent = $"ERROR: Failed to load authoritative starting survivors: {detailed.ErrorMessage}";
-                    GD.PrintErr($"[SurvivorsHostSession] {LastEvent}");
-                    throw new InvalidOperationException(LastEvent);
-                }
-                else
-                {
-                    SeedDemoRoster();
-                    return;
-                }
+                HandleStartingRosterFailure(legacy.ErrorMessage, failClosed);
+                return;
             }
 
-            for (int i = 0; i < detailed.Survivors.Count; i++)
+            LoadStartingCohort(
+                new StartingCohortProfile
+                {
+                    profile_id = StartingCohortCatalog.StandardProfileId,
+                    display_name = "Standard Holdfast",
+                    description = "The unchanged legacy opening.",
+                    members = legacy.Survivors
+                },
+                failClosed);
+        }
+
+        /// <summary>
+        /// Apply one validated cohort to a fresh in-memory survivor session.
+        /// This method never loads persisted survivor state and is intentionally
+        /// separate from RestoreSave.
+        /// </summary>
+        public void LoadStartingCohort(
+            StartingCohortProfile profile,
+            bool failClosed = true)
+        {
+            if (RosterState.Count > 0) return;
+            if (profile == null || profile.members == null || profile.members.Count == 0)
             {
-                var s = detailed.Survivors[i];
+                HandleStartingRosterFailure(
+                    "Starting cohort is missing or contains no members.",
+                    failClosed);
+                return;
+            }
+
+            for (int i = 0; i < profile.members.Count; i++)
+            {
+                var s = profile.members[i];
                 if (!AddSurvivor(s.id, s.displayName, s.health, s.hunger, s.thirst, s.warmth, s.morale, s.lifetimeDose, s.acuteRad))
                 {
                     if (failClosed)
@@ -178,6 +202,16 @@ namespace AtomicWar.GodotApp
                         throw new InvalidOperationException($"Failed to register starting survivor '{s.id}': duplicate survivor ID.");
                     }
                 }
+            }
+        }
+
+        private void HandleStartingRosterFailure(string error, bool failClosed)
+        {
+            LastEvent = $"ERROR: Failed to load authoritative starting survivors: {error}";
+            if (failClosed)
+            {
+                GD.PrintErr($"[SurvivorsHostSession] {LastEvent}");
+                throw new InvalidOperationException(LastEvent);
             }
         }
 

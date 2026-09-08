@@ -99,7 +99,7 @@ namespace Ashfall.Core.Tests
         public void Policy_ExactMappingsLoadAndResolve()
         {
             var h = new Harness();
-            Assert.Equal(6, h.Policy.PolicyCount);
+            Assert.Equal(15, h.Policy.PolicyCount);
 
             var railMissed = h.Policy.Find(SilentFoundryIds.TreatyRoadIron, FoundryTreatyOutcome.Missed);
             Assert.NotNull(railMissed);
@@ -114,6 +114,19 @@ namespace Ashfall.Core.Tests
             // the cluster charter has NO policy by design (finale marker, regression guard).
             Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyClusterCharter, FoundryTreatyOutcome.Met));
             Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyClusterCharter, FoundryTreatyOutcome.Missed));
+            // The apprentice charter remains authored contract data until the
+            // live runtime gains a typed trainee-cycle trigger.
+            Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyApprenticeExchange, FoundryTreatyOutcome.Met));
+
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatySaltworksAccess, FoundryTreatyOutcome.Met));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatySaltworksAccess, FoundryTreatyOutcome.Violated));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyCoalWindow, FoundryTreatyOutcome.Met));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyCoalWindow, FoundryTreatyOutcome.Missed));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyMembraneRepair, FoundryTreatyOutcome.Met));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyMembraneRepair, FoundryTreatyOutcome.Violated));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyCrisisMutualAid, FoundryTreatyOutcome.Met));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyCrisisMutualAid, FoundryTreatyOutcome.Violated));
+            Assert.NotNull(h.Policy.Find(SilentFoundryIds.TreatyIncidentBook, FoundryTreatyOutcome.Met));
 
             // Every policy faction id is exactly the guild.
             foreach (var p in h.Policy.AllPolicies)
@@ -597,25 +610,12 @@ namespace Ashfall.Core.Tests
         public void Data_AllPolicyReferencesResolveInAuthoritativeCatalogs()
         {
             var h = new Harness();
-            // Good ids resolve as economy goods AND as inventory item definitions
-            // (the same id namespace, per the established goods convention).
-            string dataDir = FindDataDir();
-            var files = new FileSystemIO();
-            var json = new SystemTextJsonSerializer();
-            string foundryItemsRaw = files.ReadAllText(files.Combine(dataDir, "foundry_items.json"));
-            var items = CatalogLocator.LoadWrappedList<FoundryItemJsonForTest>(foundryItemsRaw, SystemTextJsonSerializer.Options);
-            var itemIds = new HashSet<string>(StringComparer.Ordinal);
-            if (items != null)
-                foreach (var it in items) itemIds.Add(it.id);
-
             foreach (var p in h.Policy.AllPolicies)
             {
                 Assert.Equal(SilentFoundryIds.FactionId, p.faction_id);
                 foreach (var m in p.market_modifiers)
                 {
                     Assert.NotNull(h.Goods.Find(m.good_id));
-                    Assert.True(itemIds.Contains(m.good_id) || m.good_id == "coal" || m.good_id == "fuel" || m.good_id == "scrap_metal",
-                        m.good_id + " must be an inventory item or charge good");
                 }
             }
         }

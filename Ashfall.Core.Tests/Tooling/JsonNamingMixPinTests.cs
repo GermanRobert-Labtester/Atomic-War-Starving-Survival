@@ -31,6 +31,8 @@ namespace Ashfall.Core.Tests
             "crossing_locations.json",
             "dive_sites.json",
             "verdict_items.json",
+            "verdict_radio.json",
+            "starting_survivor_cohorts.json",
         };
 
         /// <summary>
@@ -38,9 +40,7 @@ namespace Ashfall.Core.Tests
         /// are not reclassified as "new" if they tip over the threshold later).
         /// </summary>
         private static readonly string[] PinnedBelowThresholdMixedRelativePaths =
-        {
-            "verdict_radio.json",
-        };
+            Array.Empty<string>();
 
         private static string DataRoot()
         {

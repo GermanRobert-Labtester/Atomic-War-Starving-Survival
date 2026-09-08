@@ -1,25 +1,44 @@
-# Utility Override Contract
+# Utility Override Action Contract
 
-> **Emergency Precedence:** Semantics and constraints governing `isOverrideAction` in `UtilityActionScorer.cs`.
+Derived from `UtilityActionScorer.Score()` and `UtilityAiSystem.SelectAction()` in Core.
 
----
+## Override Semantics
 
-## 1. Override Mechanics
+When `isOverrideAction = true`:
+1. The action is scored normally through the pipeline
+2. The final `clamp01` is **skipped** — the score can exceed 1.0
+3. This allows override actions to dominate even when normal actions reach 1.0
 
-Standard utility actions clamp their final score to `[0.0, 1.0]`.
+## When Override Wins
 
-When `isOverrideAction == true`:
-```csharp
-if (action.isOverrideAction)
-    return Math.Max(0f, score); // Unclamped > 1.0 allows override dominance
-```
+Since override actions skip the upper clamp, an override with weight > 1 can produce scores > 1.0, beating any normal action clamped at 1.0.
 
-This allows actions with high weight (e.g. `weight = 2.0` or `5.0`) to produce scores of `1.5`, `2.0`, or higher, instantly preempting any standard action (which is capped at `1.0`).
+Example:
+- Normal action: baseScore 0.9, weight 1.0 → (0.9 + 0.1) × 1.0 = 1.0 (clamped)
+- Override: baseScore 0.3, weight 4.0 → (0.3 + 0.1) × 4.0 = 1.6 (unclamped)
+- Override wins: 1.6 > 1.0
 
----
+## Override vs Override
 
-## 2. Strict Constraints
+Multiple override actions compete normally — highest score wins, with deterministic noise tie-breaking.
 
-1. **Rarity:** `isOverrideAction = true` is reserved strictly for life-safety emergency interrupts (such as fleeing toxic fire or acute trauma response).
-2. **Discretionary Actions Are Never Overrides:** Routine maintenance, cooking, water purification, training, social chat, and research are NEVER marked `isOverrideAction = true`.
-3. **Player Command Precedence:** Explicit DutyRoster assignments and direct player commands take precedence over autonomous scheduling unless an acute emergency override is active.
+## Veto Precedence
+
+Vetoes (hard, score → 0) apply **before** the override check. A coward vetoes `loud_labor` even if it's an override.
+
+## Existing Override Actions
+
+**None.** All 6 existing actions have `isOverrideAction: false`.
+
+## Plan 72 Design Rules
+
+1. Override is reserved for states where normal scheduling should stop
+2. Appropriate candidates: flee danger, emergency medical response, fire response (if executor exists)
+3. Inappropriate: maintenance, training, socializing, research, cooking, cleaning
+4. Only mark override if the runtime executor supports emergency interruption
+
+## Plan 72 Decision
+
+Given the current Utility AI is companion-bias (not general shelter autonomy), and no executor supports emergency interruption via the Utility AI pipeline, **no new override actions are added in Plan 72**.
+
+All 20 actions remain `isOverrideAction: false`.

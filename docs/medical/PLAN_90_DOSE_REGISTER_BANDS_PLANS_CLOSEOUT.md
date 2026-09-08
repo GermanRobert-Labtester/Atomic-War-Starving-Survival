@@ -1,11 +1,5 @@
 # PLAN 90 — DOSE REGISTER BANDS & PLANS EXPANSION — CLOSEOUT
 
-> **SUPERSEDED (Plan 90B):** the blocker below was subsequently resolved and the
-> 12-band / 8-plan expansion shipped. See
-> `docs/medical/PLAN_90B_DOSE_REGISTER_UNBLOCK_CLOSEOUT.md` for the final
-> thresholds, plans, save migration, and verification results. This document is
-> retained as the historical audit record.
-
 **Final status: ❌ BLOCKED — Core band-selection ladder is hardcoded to four bands.**
 
 Plan 90's own BLOCKED criteria are met in full:

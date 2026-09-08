@@ -34,6 +34,8 @@ namespace Ashfall.Core.Economy
         private readonly ISeededRng _rng;
         private readonly Func<string, float> _unitPrice;
         private readonly Func<string, string> _displayName;
+        private readonly TradeVoiceResolver? _voiceResolver;
+        private TradeVoiceContext _voiceContext = new TradeVoiceContext();
 
         private readonly Dictionary<string, int> _playerOfferCounts = new();
         private readonly Dictionary<string, int> _factionAskCounts = new();
@@ -109,7 +111,8 @@ namespace Ashfall.Core.Economy
             Func<string, float>? unitPriceLookup = null,
             Func<string, string>? displayNameLookup = null,
             ITradeExecutionSink? executionSink = null,
-            IFactionRadioProvider? radioProvider = null)
+            IFactionRadioProvider? radioProvider = null,
+            TradeVoiceResolver? voiceResolver = null)
         {
             _stance = stanceProvider;
             _shocks = priceShockProvider;
@@ -119,6 +122,29 @@ namespace Ashfall.Core.Economy
             _execution = executionSink;
             _unitPrice = unitPriceLookup ?? (_ => 10f);
             _displayName = displayNameLookup ?? (id => (id ?? string.Empty).Replace('_', ' '));
+            _voiceResolver = voiceResolver;
+        }
+
+        /// <summary>
+        /// Sets presentation context only. The context is copied into the
+        /// resolver on refresh; it never becomes trade or faction state.
+        /// </summary>
+        public void SetVoiceContext(TradeVoiceContext context)
+        {
+            context ??= new TradeVoiceContext();
+            _voiceContext = new TradeVoiceContext
+            {
+                TraderProfileId = context.TraderProfileId,
+                ScenarioId = context.ScenarioId,
+                FactionId = context.FactionId,
+                CaravanId = context.CaravanId,
+                CaravanOriginRegion = context.CaravanOriginRegion,
+                SpecialtyId = context.SpecialtyId,
+                Stance = context.Stance,
+                Trust = context.Trust,
+                StableContextKey = context.StableContextKey
+            };
+            Recalculate();
         }
 
         /// <summary>World context for the news strip (phase label + day).</summary>
@@ -217,6 +243,26 @@ namespace Ashfall.Core.Economy
                 ViewModel.SetTell(tell.Id, tell.Line);
             }
 
+            if (_voiceResolver != null)
+            {
+                var context = new TradeVoiceContext
+                {
+                    TraderProfileId = _voiceContext.TraderProfileId,
+                    ScenarioId = _voiceContext.ScenarioId,
+                    FactionId = string.IsNullOrEmpty(_voiceContext.FactionId)
+                        ? factionId
+                        : _voiceContext.FactionId,
+                    CaravanId = _voiceContext.CaravanId,
+                    CaravanOriginRegion = _voiceContext.CaravanOriginRegion,
+                    SpecialtyId = _voiceContext.SpecialtyId,
+                    Stance = stance,
+                    Trust = trust,
+                    StableContextKey = _voiceContext.StableContextKey
+                };
+                var voice = _voiceResolver.ResolveGreeting(context);
+                ApplyVoice(voice);
+            }
+
             if (_radio != null)
             {
                 var intercept = _radio.GetFactionEvent(factionId, RadioEventKind.InterceptChatter, _worldDay, _rng);
@@ -249,6 +295,27 @@ namespace Ashfall.Core.Economy
                 }
             }
             ClearOffers();
+            if (_voiceResolver != null)
+            {
+                var context = new TradeVoiceContext
+                {
+                    TraderProfileId = _voiceContext.TraderProfileId,
+                    ScenarioId = _voiceContext.ScenarioId,
+                    FactionId = string.IsNullOrEmpty(_voiceContext.FactionId)
+                        ? ViewModel.FactionId
+                        : _voiceContext.FactionId,
+                    CaravanId = _voiceContext.CaravanId,
+                    CaravanOriginRegion = _voiceContext.CaravanOriginRegion,
+                    SpecialtyId = _voiceContext.SpecialtyId,
+                    Stance = ViewModel.Stance,
+                    Trust = ViewModel.Trust,
+                    StableContextKey = _voiceContext.StableContextKey
+                };
+                ApplyVoice(_voiceResolver.ResolveLine(
+                    context,
+                    TradeVoiceLineFamily.Acceptance,
+                    "pleased"));
+            }
             if (_radio != null)
             {
                 var reaction = _radio.GetFactionEvent(ViewModel.FactionId, RadioEventKind.TradeReaction, _worldDay, _rng);
@@ -325,6 +392,15 @@ namespace Ashfall.Core.Economy
             return string.Join(", ", parts);
         }
 
+        private void ApplyVoice(TradeVoiceResult voice)
+        {
+            string displayName = _voiceResolver != null &&
+                _voiceResolver.Catalog.TryGetTrader(voice.ProfileId, out var trader)
+                ? trader.display_name
+                : "The Merchant";
+            ViewModel.SetTraderVoice(voice.ProfileId, displayName, voice.Text);
+        }
+
         private string JoinBioLines()
         {
             var parts = new List<string>();
@@ -348,7 +424,15 @@ namespace Ashfall.Core.Economy
             return lines;
         }
 
-        private static readonly PriceShockKind[] s_allShockKinds = (PriceShockKind[])Enum.GetValues(typeof(PriceShockKind));
+        private static readonly PriceShockKind[] s_allShockKinds =
+        {
+            PriceShockKind.PlumePassing,
+            PriceShockKind.ConvoyAmbush,
+            PriceShockKind.FactionConflict,
+            PriceShockKind.SeasonalScarcity,
+            PriceShockKind.DiseaseOutbreak,
+            PriceShockKind.FuelShortage
+        };
 
         private List<ShockBadgeData> CollectShockBadges()
         {

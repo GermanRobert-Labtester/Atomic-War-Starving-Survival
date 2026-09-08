@@ -3,8 +3,8 @@ using System.Collections.Generic;
 namespace Ashfall.Core.MoralChoice
 {
     /// <summary>
-    /// Wire shape for moral_choice_flags.json — flag definitions that gate
-    /// quest access and branch locking in the moral choice system.
+    /// Wire shape for moral_choice_flags.json — persistent moral-history
+    /// definitions used by quest access, branch locking, and later predicates.
     /// </summary>
     public sealed class MoralChoiceFlagDefinitions
     {

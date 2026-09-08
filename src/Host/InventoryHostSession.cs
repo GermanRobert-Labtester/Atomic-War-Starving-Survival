@@ -20,6 +20,8 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public InventoryContainer Inventory { get; }
         public ItemCatalog Catalog { get; }
+        public ItemDescriptionCatalog DescriptionCatalog { get; set; }
+        public ExpansionEnrichmentCatalog? EnrichmentCatalog { get; set; }
 
         public SurvivorsHostSession? Survivors { get; set; }
 
@@ -30,10 +32,12 @@ namespace AtomicWar.GodotApp
         public Func<string?>? DefaultSurvivorResolver { get; set; }
 
         public string LastEvent { get; private set; } = string.Empty;
-        public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!)
+        public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!, ItemDescriptionCatalog descriptionCatalog = null!, ExpansionEnrichmentCatalog? enrichmentCatalog = null)
         {
             Inventory = inventory ?? new InventoryContainer();
             Catalog = catalog ?? new ItemCatalog();
+            DescriptionCatalog = descriptionCatalog ?? new ItemDescriptionCatalog();
+            EnrichmentCatalog = enrichmentCatalog;
             // A bare session (tests / direct construction) needs the catalog
             // seeded too, or RestoreSave cannot resolve item ids.
             if (Catalog.Count == 0)
@@ -46,7 +50,10 @@ namespace AtomicWar.GodotApp
             var fileIO = new FileSystemIO();
             var serializer = new SystemTextJsonSerializer();
             var catalog = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
-            var session = new InventoryHostSession(null!, catalog);
+            var descriptions = ItemDescriptionCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
+            var enrichmentLoader = new ExpansionEnrichmentCatalogLoader(fileIO, serializer);
+            var enrichment = enrichmentLoader.Load(dataDir);
+            var session = new InventoryHostSession(null!, catalog, descriptions, enrichment);
 
             var save = InventorySaveStore.TryLoad();
             if (save != null)
@@ -59,6 +66,14 @@ namespace AtomicWar.GodotApp
                 session.LoadOrSeedStartingSupplies(dataDir, fileIO, serializer);
             }
             return session;
+        }
+
+        public ItemInspectionModel? GetInspection(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return null;
+            var def = Catalog.Get(itemId);
+            if (def == null) return null;
+            return ItemInspectionModel.Create(def, DescriptionCatalog, EnrichmentCatalog);
         }
 
         public void LoadOrSeedStartingSupplies(string dataDir, IFileIO fileIO = null!, IJsonSerializer serializer = null!, bool failClosed = true)

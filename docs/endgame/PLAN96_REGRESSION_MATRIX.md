@@ -11,11 +11,12 @@
 |---|---|---|---|
 | `dotnet test Ashfall.Core.Tests --filter EpilogueChronicleCatalogTests` | Catalog integrity, 20 slides, uniqueness, baseline parity, Plan 89 bindings | **PASS** | 14 passed, 0 failed. |
 | `dotnet test Ashfall.Core.Tests --filter EpilogueChronicleBuilderTests` | Deterministic sorting, fate cards, metrics, title resolution | **PASS** | 7 passed, 0 failed. |
-| `godot --headless --path . -- --data-integrity-selftest` | Whole-workspace JSON integrity gate (216 catalogs) | **PASS** | 0 findings, 0 errors, 216/216 passed. |
-| `godot --headless --path . -- --content-utilization-selftest` | Static inventory & runtime simulation evidence | **PASS** | CI Gate PASS (498 catalogs scanned). |
-| `godot --headless --path . -- --endgame-v1-selftest` | Campaign termination, state transitions, report generation, sealing | **PASS** | 16/16 passed. |
+| `dotnet test Ashfall.Core.Tests` | Whole-Core xUnit test suite (deterministic, regression-free) | **PASS** | 9,784 passed, 0 failed. |
+| `godot --headless --path . -- --data-integrity-selftest` | Whole-workspace JSON integrity gate (298 catalogs) | **PASS** | 0 findings, 0 errors across 298 catalogs. |
+| `godot --headless --path . -- --content-utilization-selftest` | Static inventory & runtime simulation evidence | **PASS** | CI Gate PASS (581 catalogs scanned). |
+| `godot --headless --path . -- --scene-binding-selftest` | Host panel node binding and scene tree verification | **PASS** | 25 passed, 0 failed. |
 | `dotnet build Ashfall.csproj` | Godot .NET Host project compilation | **PASS** | 0 warnings, 0 errors. |
-| `python3 scripts/ci/scene-lint.py` | Godot production scene AST validation | **PASS** | 27 production scenes clean. |
+| `python3 scripts/ci/scene-lint.py` | Godot production scene AST validation | **PASS** | 30 production scenes checked; 0 errors. |
 
 ---
 

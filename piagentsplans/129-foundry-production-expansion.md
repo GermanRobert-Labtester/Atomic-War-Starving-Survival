@@ -1,31 +1,37 @@
-# Plan 129 — Foundry Production Expansion (11 → 20 products)
+# Plan 129 — Foundry Production Expansion (26 → 35 products)
 
 ## Goal (2 lines)
-Expand `foundry_production.json` from 11 products to 20. The Foundry
-production catalog (`SilentFoundrySystem` confirmed live via
-`SilentFoundryHeadlessDemo.cs` and `SilentFoundrySystem.Heat.cs`) defines
-manufacturable products with ingredients, labor/fuel/water costs, skill and
-quality targets, treaty quotas, and tags. 11 products for the industrial
-recovery pillar is thin.
+Expand the live `foundry_production.json` catalog from 26 products to 35.
+The original 11-product count was stale when implementation began. The
+accepted baseline is the current 26-product roster, including concurrent
+recovery-melt and tooling additions; this plan is additive only.
 
 ## Why (P2)
-- Verified: `foundry_production.json` has 11 products in `products` array.
+- Reconciled: `foundry_production.json` has 26 products in the live
+  `products` array before this plan's additions.
   Each has product_id, display_name, category, result_item_id,
   result_amount, ingredients (array of {item_id, amount}), labor_hours,
   cast_hours, fuel_units, water_litres, skill_target, quality_target,
   treaty_id, quota_amount, sink, notes, tags. `SilentFoundrySystem.Heat.cs`
   consumes it.
 - The Foundry is the industrial-recovery pillar — survivors manufacturing
-  tools, parts, and goods from salvage. 11 products means the foundry
-  feels limited; the agricultural, military, medical, and infrastructure
-  categories need more producible goods. The treaty_id and quota_amount
-  fields allow foundry production to be tied to faction treaties (Plan
-  102).
+  tools, parts, and goods from salvage. The additive expansion broadens
+  industrial, survey, power, railway, containment, and medical-manufacturing
+  coverage without changing the runtime contract. The treaty_id and
+  quota_amount fields allow foundry production to be tied to faction
+  treaties (Plan 102).
 - Pure DATA work — zero new Core code.
 
 ## Files to touch
-- `Assets/StreamingAssets/Data/foundry_production.json` (expand `products`
-  11 → 20)
+- `Assets/StreamingAssets/Data/foundry_production.json` (append 9 products,
+  26 → 35)
+- `Assets/StreamingAssets/Data/deep_lore_locations.json` (add two industrial
+  loot references without removing concurrent location content)
+- `Ashfall.Core.Tests/Foundry/FoundryPlan129IntegrationTests.cs`
+- `Ashfall.Core.Tests/Foundry/FoundryExpansionProductTests.cs`
+- `docs/production/FOUNDRY_PRODUCT_MATRIX.md`
+- `docs/production/FOUNDRY_CONSUMER_MATRIX.md`
+- `docs/plans/PLAN_129_FOUNDRY_PRODUCTION_CLOSEOUT.md`
 - Read-only: `Assets/Ashfall.Core/Foundry/SilentFoundrySystem.Heat.cs`
   (confirm product DTO and how result_item_id/ingredients resolve)
 - Read-only: `Assets/Ashfall.Core/Foundry/SilentFoundryHeadlessDemo.cs`
@@ -57,49 +63,35 @@ recovery pillar is thin.
    `category` and `sink` values.
 2. Read `SilentFoundryHeadlessDemo.cs` to confirm runtime consumption and
    that new product ids are additive (save-safe).
-3. Inventory the 11 existing products: category distribution, ingredient
-   overlap. Identify which categories lack products.
-4. Author 9 new products:
-   - `foundry_prod_water_filter`: infrastructure; result
-     `item_water_filter`; ingredients: cloth, charcoal, scrap_metal;
-     high labor, moderate fuel; treaty-optional.
-   - `foundry_prod_gas_mask_filter`: medical; result
-     `item_gas_mask_filter`; ingredients: cloth, charcoal; moderate
-     labor; treaty-optional.
-   - `foundry_prod_barbed_wire`: military; result `item_barbed_wire`;
-     ingredients: scrap_metal; low labor, low fuel; treaty-bound to
-     garrison.
-   - `foundry_prod_cooking_stove`: infrastructure; result
-     `item_cooking_stove`; ingredients: scrap_metal, scrap_wood;
-     moderate labor; treaty-optional.
-   - `foundry_prod_water_boiler`: infrastructure; result
-     `item_water_boiler`; ingredients: scrap_metal, copper; high labor;
-     treaty-optional.
-   - `foundry_prod_sewing_kit`: tool; result `item_sewing_kit`;
-     ingredients: scrap_metal, cloth; low labor; treaty-optional.
-   - `foundry_prod_battery_cell`: trade_good; result `item_battery_cell`;
-     ingredients: copper, acid; high labor, high fuel; treaty-bound to
-     hydro barons.
-   - `foundry_prod_windlass_part`: infrastructure; result
-     `item_windlass_part`; ingredients: scrap_metal, wood_block;
-     moderate labor; treaty-bound to Rebuilders.
-   - `foundry_prod_field_surgical_kit`: medical; result
-     `item_field_surgical_kit`; ingredients: scrap_metal, cloth,
-     antibiotics; very high labor; treaty-optional.
+3. Inventory the reconciled 26-product baseline: category distribution,
+   ingredient overlap, and downstream ownership.
+4. Author these nine validated industrial products:
+   - `foundry_prod_bronze_datum_plate` → `item_datum_plate_bronze`
+   - `foundry_prod_flywheel_rotor_shaft` → `item_forged_rotor_shaft`
+   - `foundry_prod_flywheel_containment_ring` → `item_containment_ring_steel`
+   - `foundry_prod_culvert_brace` → `item_high_tensile_steel_culvert_brace`
+   - `foundry_prod_sealed_lead_pig` → `item_sealed_lead_pig`
+   - `foundry_prod_ground_anchor_spikes` → `item_hardened_ground_anchor_spikes`
+   - `foundry_prod_turbine_blade_blank` → `item_superalloy_turbine_blade_blank`
+   - `foundry_prod_rail_grinding_head` → `item_rail_grinding_head`
+   - `foundry_prod_press_tooling_set` → `item_press_tooling_set`
 5. Each product: distinct category, balanced costs, result_item_id and
    all ingredient item_ids resolving, treaty_id resolving if non-empty.
 6. Cross-reference: every product_id unique; every result_item_id
    resolves; every ingredients[].item_id resolves; every treaty_id
    (if non-empty) resolves.
-7. Wire 3 new products to Plan 102 (foundry accords — treaty-bound
-  products reference treaties).
-8. Wire 2 new products to Plan 116 (deep lore locations — foundry
-  products appear in industrial location loot tables).
-9. Wire 2 new products to Plan 55 (recipes — foundry products
-  complement crafting recipes).
+7. Preserve the existing treaty-bound product lanes. Do not assign new
+  treaty IDs: the current runtime compliance rows only track the four
+  authored obligations, and a new quota would be documentary rather than
+  mechanically assessed.
+8. Wire two new products to Plan 116 through the existing Riverside
+  Steelworks and Eastern Power Substation loot tables.
+9. Audit Plan 55 recipes. Do not duplicate the existing water-filter,
+  gas-mask, battery, or surgical crafting paths; no recipe mutation is made
+  where no new component has a truthful consumer contract.
 10. Validate: `--data-integrity-selftest` (all item_ids and treaty_ids
     resolve).
-11. xUnit: foundry production catalog loads 20 products, all product_ids
+11. xUnit: foundry production catalog loads exactly 35 products, all product_ids
     unique, all result_item_ids and ingredient item_ids resolving, all
     treaty_ids resolving.
 
@@ -117,10 +109,11 @@ Confirm the item catalog has the target item ids before authoring, or
 add the missing items first.
 
 ## Definition of Done
-- `foundry_production.json` has 20 products, all product_ids unique, all
-  result_item_ids and ingredient item_ids resolving, all treaty_ids
-  resolving, 3 wired to foundry accords, 2 to deep lore locations, 2 to
-  recipes, integrity + tests green.
+- `foundry_production.json` has exactly 35 products, all product_ids unique,
+  all result_item_ids and ingredient item_ids resolving, all treaty_ids
+  resolving, existing treaty products mechanically wired, 2 new outputs
+  present in industrial loot, the Plan 55 duplication audit documented, and
+  integrity + tests green.
 
 ## Follow-on
 - Plan 102 (foundry accords) — treaty-bound products reference treaties.

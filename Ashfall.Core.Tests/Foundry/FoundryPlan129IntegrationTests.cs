@@ -10,7 +10,7 @@ using Xunit;
 namespace Ashfall.Core.Tests.Foundry
 {
     /// <summary>
-    /// Plan 129 — Foundry Production Expansion (11 -> 20+ Products) Integration Suite.
+    /// Plan 129 — Foundry Production Expansion (26 -> 35 Products) Integration Suite.
     /// Validates catalog cardinality, foreign-key resolution, numeric ranges,
     /// downstream role coverage, save/load stability, determinism, and the three
     /// canonical strategic choice scenarios (Winter Fuel Conflict, Treaty vs Internal,
@@ -101,11 +101,12 @@ namespace Ashfall.Core.Tests.Foundry
         // =================================================================
 
         [Fact]
-        public void CatalogCardinality_MeetsAndExceedsTwentyProductFloor()
+        public void CatalogCardinality_IsExactlyThirtyFiveProducts()
         {
             var (catalog, production, _, _) = LoadFullData();
-            // Plan 129 target is 20 products; live repository has 26 verified products.
-            Assert.True(production.products.Count >= 20, $"Expected >= 20 products, got {production.products.Count}");
+            // The repository had 26 verified products when Plan 129 was
+            // reconciled. The accepted target is additive: 26 + 9 = 35.
+            Assert.Equal(35, production.products.Count);
             Assert.Equal(production.products.Count, catalog.ProductCount);
             Assert.Equal(production.products.Count, catalog.AllProducts.Count);
         }
@@ -189,6 +190,59 @@ namespace Ashfall.Core.Tests.Foundry
             Assert.Contains("road", sinks);
             Assert.Contains("saltworks", sinks);
             Assert.Contains("agriculture", sinks);
+        }
+
+        [Fact]
+        public void Plan129Additions_ResolveToCanonicalIndustrialConsumers()
+        {
+            var (catalog, _, itemIds, _) = LoadFullData();
+            var expected = new Dictionary<string, string>
+            {
+                ["foundry_prod_bronze_datum_plate"] = "item_datum_plate_bronze",
+                ["foundry_prod_flywheel_rotor_shaft"] = "item_forged_rotor_shaft",
+                ["foundry_prod_flywheel_containment_ring"] = "item_containment_ring_steel",
+                ["foundry_prod_culvert_brace"] = "item_high_tensile_steel_culvert_brace",
+                ["foundry_prod_sealed_lead_pig"] = "item_sealed_lead_pig",
+                ["foundry_prod_ground_anchor_spikes"] = "item_hardened_ground_anchor_spikes",
+                ["foundry_prod_turbine_blade_blank"] = "item_superalloy_turbine_blade_blank",
+                ["foundry_prod_rail_grinding_head"] = "item_rail_grinding_head",
+                ["foundry_prod_press_tooling_set"] = "item_press_tooling_set"
+            };
+
+            foreach (var pair in expected)
+            {
+                var product = catalog.GetProduct(pair.Key);
+                Assert.NotNull(product);
+                Assert.Equal(pair.Value, product!.result_item_id);
+                Assert.True(itemIds.Contains(pair.Value), $"{pair.Key} output is not canonical.");
+                Assert.NotEmpty(product.ingredients);
+                Assert.Contains(product.tags, tag => tag == "foundry");
+            }
+        }
+
+        [Fact]
+        public void Plan116Loot_ContainsTwoNewIndustrialOutputs()
+        {
+            string dataDir = FindDataDir();
+            string path = Path.Combine(dataDir, "deep_lore_locations.json");
+            using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(path));
+            var locations = doc.RootElement.GetProperty("locations");
+            var steelworks = locations.EnumerateArray()
+                .Single(location => location.GetProperty("id").GetString() == "location_steelworks");
+            var steelworksLootIds = steelworks.GetProperty("lootTable")
+                .EnumerateArray()
+                .Select(entry => entry.GetProperty("itemId").GetString())
+                .ToHashSet(StringComparer.Ordinal);
+
+            var powerSubstation = locations.EnumerateArray()
+                .Single(location => location.GetProperty("id").GetString() == "location_power_substation");
+            var powerLootIds = powerSubstation.GetProperty("lootTable")
+                .EnumerateArray()
+                .Select(entry => entry.GetProperty("itemId").GetString())
+                .ToHashSet(StringComparer.Ordinal);
+
+            Assert.Contains("item_superalloy_turbine_blade_blank", steelworksLootIds);
+            Assert.Contains("item_forged_rotor_shaft", powerLootIds);
         }
 
         // =================================================================

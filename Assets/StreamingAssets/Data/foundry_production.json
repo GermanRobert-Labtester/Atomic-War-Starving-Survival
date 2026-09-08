@@ -902,6 +902,343 @@
         "contaminated",
         "sludge"
       ]
+    },
+    {
+      "product_id": "foundry_prod_bronze_datum_plate",
+      "display_name": "Bronze Survey Datum Plate",
+      "category": "survey_datum",
+      "result_item_id": "item_datum_plate_bronze",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
+      ],
+      "labor_hours": 6,
+      "cast_hours": 2,
+      "fuel_units": 3,
+      "water_litres": 40,
+      "skill_target": 0.5,
+      "quality_target": 72,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "survey",
+      "notes": "Cast benchmark plates for geodetic survey monuments. The plate is the fixed point; the survey crew supplies the measurement.",
+      "tags": [
+        "foundry",
+        "survey",
+        "bronze",
+        "geodetic"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_flywheel_rotor_shaft",
+      "display_name": "Flywheel Rotor Shaft",
+      "category": "rotor_shaft",
+      "result_item_id": "item_forged_rotor_shaft",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_mechanical",
+          "amount": 8
+        },
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 20,
+      "cast_hours": 7,
+      "fuel_units": 10,
+      "water_litres": 110,
+      "skill_target": 0.75,
+      "quality_target": 84,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "kinetic_storage",
+      "notes": "Heavy forged shaft stock for the kinetic-storage flywheel line. Final journal and keyway work remains with the storage workshop.",
+      "tags": [
+        "foundry",
+        "flywheel",
+        "shaft",
+        "kinetic_storage"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_flywheel_containment_ring",
+      "display_name": "Flywheel Containment Ring",
+      "category": "containment_ring",
+      "result_item_id": "item_containment_ring_steel",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 18
+        },
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "amount": 3
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 3
+        }
+      ],
+      "labor_hours": 24,
+      "cast_hours": 8,
+      "fuel_units": 12,
+      "water_litres": 140,
+      "skill_target": 0.8,
+      "quality_target": 86,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "kinetic_storage",
+      "notes": "Forged containment ring for the flywheel vault. It is structural safety stock, not a power-storage product.",
+      "tags": [
+        "foundry",
+        "flywheel",
+        "containment",
+        "kinetic_storage"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_culvert_brace",
+      "display_name": "High-Tensile Culvert Brace",
+      "category": "structural_brace",
+      "result_item_id": "item_high_tensile_steel_culvert_brace",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 12
+        },
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 14,
+      "cast_hours": 5,
+      "fuel_units": 7,
+      "water_litres": 90,
+      "skill_target": 0.62,
+      "quality_target": 78,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "infrastructure",
+      "notes": "Replacement brace for culvert crossings and shelter access works. Salvaged braces remain valid loot; this is the reproducible Foundry route.",
+      "tags": [
+        "foundry",
+        "structural",
+        "culvert",
+        "infrastructure"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_sealed_lead_pig",
+      "display_name": "Sealed Lead Source Pig",
+      "category": "radiation_container",
+      "result_item_id": "item_sealed_lead_pig",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 10
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 12,
+      "cast_hours": 4,
+      "fuel_units": 6,
+      "water_litres": 75,
+      "skill_target": 0.6,
+      "quality_target": 76,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "containment",
+      "notes": "Cast lead shielding container for sealed source handling. The Foundry supplies the shell; radiation work remains governed by the receiving system.",
+      "tags": [
+        "foundry",
+        "lead",
+        "radiation",
+        "containment"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_ground_anchor_spikes",
+      "display_name": "Hardened Ground Anchor Spikes",
+      "category": "defense_anchor",
+      "result_item_id": "item_hardened_ground_anchor_spikes",
+      "result_amount": 4,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 10
+        },
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 12,
+      "cast_hours": 4,
+      "fuel_units": 6,
+      "water_litres": 75,
+      "skill_target": 0.65,
+      "quality_target": 80,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "defense",
+      "notes": "Hardened spikes for locking a tactical shield or barrier into frozen ground. No weapon payload or combat calculation is involved.",
+      "tags": [
+        "foundry",
+        "defense",
+        "anchor",
+        "shelter"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_turbine_blade_blank",
+      "display_name": "Superalloy Turbine Blade Blank",
+      "category": "turbine_blank",
+      "result_item_id": "item_superalloy_turbine_blade_blank",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "amount": 3
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 3
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 3
+        }
+      ],
+      "labor_hours": 22,
+      "cast_hours": 8,
+      "fuel_units": 12,
+      "water_litres": 130,
+      "skill_target": 0.82,
+      "quality_target": 88,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "power",
+      "notes": "Precision-cast blank for the turbine coating line. Coating, inspection, and final fit remain with the EB-PVD authority.",
+      "tags": [
+        "foundry",
+        "turbine",
+        "superalloy",
+        "power"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_rail_grinding_head",
+      "display_name": "Rail Grinding Head",
+      "category": "rail_tooling",
+      "result_item_id": "item_rail_grinding_head",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 7
+        },
+        {
+          "item_id": "item_metallurgy_tool_blank",
+          "amount": 1
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
+      ],
+      "labor_hours": 10,
+      "cast_hours": 3,
+      "fuel_units": 4,
+      "water_litres": 55,
+      "skill_target": 0.68,
+      "quality_target": 80,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "railway",
+      "notes": "Modular grinding head for the rail maintenance line. Abrasive dressing and route work remain railway-system responsibilities.",
+      "tags": [
+        "foundry",
+        "railway",
+        "maintenance",
+        "tooling"
+      ]
+    },
+    {
+      "product_id": "foundry_prod_press_tooling_set",
+      "display_name": "Tablet Press Tooling Set",
+      "category": "press_tooling",
+      "result_item_id": "item_press_tooling_set",
+      "result_amount": 1,
+      "ingredients": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
+      ],
+      "labor_hours": 14,
+      "cast_hours": 5,
+      "fuel_units": 7,
+      "water_litres": 85,
+      "skill_target": 0.72,
+      "quality_target": 82,
+      "treaty_id": "",
+      "quota_amount": 0,
+      "sink": "medical_manufacturing",
+      "notes": "Matched die and punch set for the tablet press. The pharmaceutical line owns dose quality; the Foundry only supplies the hardened tooling.",
+      "tags": [
+        "foundry",
+        "tooling",
+        "pharma",
+        "press"
+      ]
     }
   ]
 }

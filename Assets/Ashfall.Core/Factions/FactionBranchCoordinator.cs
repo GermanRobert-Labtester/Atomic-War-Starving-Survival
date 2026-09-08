@@ -54,9 +54,9 @@ namespace Ashfall.Core.Factions
     /// Unified coordinator for "The Weight of Choices" faction progression layer.
     ///
     /// Manages the four constituent systems:
-    /// - MilitaryBranchSystem (8 Military branches, faction alignment, PoNR)
-    /// - RebelBranchSystem (8 Rebel branches, faction alignment, PoNR)
-    /// - IndependentBranchSystem (8 Independent branches, cross-faction relations, PoNR)
+    /// - MilitaryBranchSystem (15 Military branches, faction alignment, PoNR)
+    /// - RebelBranchSystem (15 Rebel branches, faction alignment, PoNR)
+    /// - IndependentBranchSystem (15 Independent branches, cross-faction relations, PoNR)
     /// - PrpfStandingSystem (PRPF third-power standing, alignment, join/oppose)
     ///
     /// Invariants:

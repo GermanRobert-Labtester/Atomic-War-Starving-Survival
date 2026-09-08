@@ -18,6 +18,36 @@
       "voice": "The Fleet speaks in manifests, tides, and berths. A completed trade is logged like a vessel cleared to sail. Paper trails matter more than cargo.",
       "rejected": "The manifest does not clear. Either the berth is closed or the hold cannot accept the transfer.",
       "sold": "Logged and cleared. The Fleet manifest now shows the item transferred to your custody."
+    },
+    "faction_black_flotilla": {
+      "register": "privateer",
+      "voice": "The Black Flotilla speaks in boarding lines, salvage claims, and sea-wash. If it was raised from the shelf, it carries a finder's tag; if you want it dry, pay the boarding price before the tide turns.",
+      "rejected": "Claim unacknowledged. The Flotilla does not lower tackle or part with raised stock without verified barter in the net.",
+      "sold": "Brought across the gunwale. The dive ledger records the exchange and the deck watch tallies the balance."
+    },
+    "faction_supply_corps": {
+      "register": "allocation",
+      "voice": "The Supply Corps speaks in allocation cards, issue windows, and indelible pencil. Terms are read twice before the cage unlatches. What you draw today is deducted from the district's tomorrow.",
+      "rejected": "Requisition declined. Your allotment chit lacks valid quota authorization or the district issue window has expired.",
+      "sold": "Delivered to the depot cage. The supply tally is marked off and credit is posted to the district ledger."
+    },
+    "faction_railway_guild": {
+      "register": "logistics",
+      "voice": "The Railway Guild speaks in axle tonnage, diesel vouchers, and clear track. We keep the south line hot for those who settle their freight. If the account goes red, the spur stays locked.",
+      "rejected": "Waybill refused. The tonnage exceeds your line credit or the destination switch remains clamped.",
+      "sold": "Loaded onto the freight flatcar. The waybill is countersigned and transit credit is logged to your siding."
+    },
+    "faction_hydro_barons": {
+      "register": "monopoly",
+      "voice": "The Hydro Barons speak in litres, resin drums, and sealed valves. We control the aquifer intake because thirst negotiates faster than words. Every draw from the pipe is metered and owed.",
+      "rejected": "Tap closed. No discharge authorized until previous draw accounts are cleared or certified filter stock is provided.",
+      "sold": "Poured into the cistern manifold. The intake meter ticks and clean-water allowance is credited to your valve."
+    },
+    "faction_ordnance_foundry": {
+      "register": "foundry",
+      "voice": "The Ordnance Foundry speaks in slag, tool-steel, and press runs. We do not barter on credit we cannot recast into rounds or plates. What leaves the loading dock is guaranteed true to bore.",
+      "rejected": "Batch declined. The forge cannot accept uncertified scrap or float requisitions against unproved alloy.",
+      "sold": "Weighed at the charging dock. The casting tally is notched and munitions credit is struck in the yard book."
     }
   },
   "items": {

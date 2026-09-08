@@ -48,10 +48,10 @@ namespace Ashfall.Core.Tests
             Assert.Equal(1, file.schema_version);
             Assert.Equal("foundry_district8_accords", file.collection_id);
 
-            // Meets and exceeds the Plan 102 minimum requirement of 10 accords.
-            Assert.True(catalog.AllTreaties.Count >= 10,
-                $"Expected at least 10 accords, found {catalog.AllTreaties.Count}");
-            Assert.Equal(12, catalog.AllTreaties.Count);
+            // The file retains eight pre-existing regional accords plus the
+            // ten-accord Foundry-signatory District 8 network.
+            Assert.Equal(18, catalog.AllTreaties.Count);
+            Assert.Equal(10, catalog.GetByExactSignatoryFaction(SilentFoundryIds.FactionId).Count);
         }
 
         // ── 2. Baseline Parity Preservation ─────────────────────────────
@@ -106,6 +106,36 @@ namespace Ashfall.Core.Tests
             Assert.Contains("faction_the_fleet", charter.signatory_factions);
         }
 
+        [Fact]
+        public void FoundryRoster_ContainsExactlyTheSixNewDependencyReadyAccords()
+        {
+            var (_, catalog) = LoadAccords();
+            var expected = new HashSet<string>(StringComparer.Ordinal)
+            {
+                SilentFoundryIds.TreatySaltworksAccess,
+                SilentFoundryIds.TreatyMembraneRepair,
+                SilentFoundryIds.TreatyCoalWindow,
+                SilentFoundryIds.TreatyApprenticeExchange,
+                SilentFoundryIds.TreatyCrisisMutualAid,
+                SilentFoundryIds.TreatyIncidentBook
+            };
+
+            var foundryIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var treaty in catalog.GetByExactSignatoryFaction(SilentFoundryIds.FactionId))
+                foundryIds.Add(treaty.treaty_id);
+
+            Assert.Equal(10, foundryIds.Count);
+            foreach (var treatyId in expected)
+                Assert.Contains(treatyId, foundryIds);
+
+            // Plan 103 is live: all consequence policies resolve to known
+            // treaty IDs in the catalog, including the expanded accord definitions.
+            var consequence = SilentFoundryConsequenceCatalogLoader.Load(FindDataDir(), new FileSystemIO(), new SystemTextJsonSerializer());
+            Assert.NotEmpty(consequence.policies);
+            foreach (var policy in consequence.policies)
+                Assert.NotNull(catalog.GetById(policy.treaty_id));
+        }
+
         // ── 3. Treaty ID Uniqueness & Grammar ───────────────────────────
 
         [Fact]
@@ -140,7 +170,11 @@ namespace Ashfall.Core.Tests
                 "faction_rebuilders",
                 "faction_ash_sign",
                 "faction_forward_roster",
-                "faction_the_scale"
+                "faction_the_scale",
+                "faction_archivists",
+                "faction_grain_exchange",
+                "faction_hydro_barons",
+                "faction_scavenger_guild"
             };
 
             foreach (var treaty in catalog.AllTreaties)
@@ -222,7 +256,8 @@ namespace Ashfall.Core.Tests
                 "forward_roster", "switchback", "scarp", "fuel", "the_scale",
                 "trade", "suburbs", "convention", "scrap", "salvage", "industrial",
                 "neutral_ground", "demilitarization", "border", "water", "aquifer",
-                "observatory", "sanctuary"
+                "observatory", "sanctuary", "access", "maintenance", "logistics", "training", "inspection",
+                "emergency", "security", "records", "accountability"
             };
 
             foreach (var treaty in catalog.AllTreaties)
@@ -253,21 +288,21 @@ namespace Ashfall.Core.Tests
                     $"Treaty '{treaty.treaty_id}' must have positive ratified_day");
                 Assert.True(treaty.ratified_day <= 365,
                     $"Treaty '{treaty.treaty_id}' must occur within campaign year 1 (<= 365)");
-
-                // The accords array is chronologically sequenced from Day 120 to Day 365
-                // Note: District 8 accords start at Day 280 (first 4 records), while
-                // wasteland regional accords start at Day 120.
             }
+
+            // Ratification days are the chronology authority; the original
+            // regional records remain in their authored order and the six new
+            // Foundry records are appended without rewriting legacy entries.
 
             // Verify query by ratification day
             var day200Treaties = catalog.GetRatifiedByDay(200);
             Assert.Equal(2, day200Treaties.Count); // grain tithe (120), saline corridor (180)
 
             var day300Treaties = catalog.GetRatifiedByDay(300);
-            Assert.Equal(7, day300Treaties.Count);
+            Assert.Equal(9, day300Treaties.Count);
 
             var day365Treaties = catalog.GetRatifiedByDay(365);
-            Assert.Equal(12, day365Treaties.Count);
+            Assert.Equal(18, day365Treaties.Count);
         }
 
         // ── 9. Functional Diversity Audit ───────────────────────────────

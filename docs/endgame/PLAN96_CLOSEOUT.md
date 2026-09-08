@@ -59,21 +59,29 @@ dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter EpilogueChroni
 dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter EpilogueChronicleBuilderTests
 # Result: Passed! 7 passed, 0 failed.
 
-# 3. Whole Workspace Data Integrity (216 catalogs)
-godot --headless --path . -- --data-integrity-selftest
-# Result: DATA_INTEGRITY_SELFTEST PASS — 0 findings, 0 errors across 216 catalogs.
+# 3. Whole-Core xUnit Test Suite (9,784 tests)
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+# Result: Passed! Failed: 0, Passed: 9784, Skipped: 0, Total: 9784.
 
-# 4. Host Compilation
+# 4. Whole Workspace Data Integrity (298 catalogs)
+godot --headless --path . -- --data-integrity-selftest
+# Result: DATA_INTEGRITY_SELFTEST PASS — 0 findings, 0 errors across 298 catalogs.
+
+# 5. Host Compilation
 dotnet build Ashfall.csproj
 # Result: Build succeeded. 0 Warning(s), 0 Error(s).
 
-# 5. Endgame V1 Host Self-Test
-godot --headless --path . -- --endgame-v1-selftest
-# Result: 16/16 passed, ENDGAME_V1_SELFTEST PASS.
+# 6. Scene Binding Self-Test
+godot --headless --path . -- --scene-binding-selftest
+# Result: 25 passed, 0 failed (of 25).
 
-# 6. Content Utilization Self-Test
+# 7. Content Utilization Self-Test
 godot --headless --path . -- --content-utilization-selftest
-# Result: CI Content Utilization Gate: PASS.
+# Result: CI Content Utilization Gate: PASS (581 catalogs scanned).
+
+# 8. Scene Lint AST Validation
+python3 scripts/ci/scene-lint.py
+# Result: scene-lint: 30 production scenes checked; 0 errors; 0 warning(s).
 ```
 
 ---

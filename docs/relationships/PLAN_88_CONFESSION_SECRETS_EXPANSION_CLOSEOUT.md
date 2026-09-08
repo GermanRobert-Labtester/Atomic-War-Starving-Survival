@@ -12,22 +12,22 @@
 The mission was to expand `confession_secrets.json` so ASHFALL's confession system has full archetype coverage across 20 distinct survivor secrets without repeating interpersonal revelations.
 
 ### Architectural Reconciliation
-- **Discovered Baseline:** `confession_secrets.json` previously contained 26 entries (16 personal, 6 faction institutional, 4 bunker internal).
-- **Test Integrity:** `Ashfall.Core.Tests/ConfessionSecretSystemTests.cs:42` pinned `catalog.AllSecrets.Count >= 26` and tested specific faction secrets (`secret_faction_military_rigged_census`).
-- **Expansion Execution:** Retained all 26 existing records, and authored the 4 missing requested archetypes (`the_nurse`, `the_carpenter`, `the_child`, `the_old_man`), bringing personal survivor secrets from 16 to **exactly 20 personal survivor confession secrets** (8 baseline + 12 requested). Total records in catalog is now 30.
+- **Discovered Baseline:** `confession_secrets.json` previously contained 34 entries (16 primary personal, 6 faction institutional, 4 bunker internal, plus 8 secondary narrative depth entries).
+- **Test Integrity:** `Ashfall.Core.Tests/ConfessionSecretSystemTests.cs` pinned `catalog.AllSecrets.Count >= 26` and tested specific faction secrets (`secret_faction_military_rigged_census`).
+- **Expansion Execution:** Retained all 34 existing records, and authored the 4 missing requested archetypes (`the_nurse`, `the_carpenter`, `the_child`, `the_old_man`), bringing personal survivor secrets from 16 to **exactly 20 primary personal survivor confession secrets** (8 baseline + 12 requested). Total records in catalog is now 38.
 
 ---
 
 ## 2. Inventory of the 20 Survivor Confessions
 
 1. `the_surgeon`: `secret_surgeon_lost_patient` ("The Patient They Lost")
-2. `the_soldier`: `secret_soldier_civilian_order` ("The Evacuation Gate Order")
-3. `the_pharmacist`: `secret_pharmacist_stolen_morphine` ("The Stolen Stockpile")
-4. `the_mother`: `secret_mother_child_left` ("The Child Left at the Bridge")
-5. `the_mechanic`: `secret_mechanic_sabotaged_generator` ("The Sabotaged Turbine")
-6. `the_teacher`: `secret_teacher_burned_books` ("The Burned History")
-7. `the_refugee`: `secret_refugee_stolen_identity` ("The Borrowed Pass")
-8. `the_electrician`: `secret_electrician_blackout` ("The Blackout Protocol")
+2. `the_soldier`: `secret_soldier_civilian_order` ("The Order They Followed")
+3. `the_pharmacist`: `secret_pharmacist_stolen_morphine` ("The Stolen Morphine")
+4. `the_mother`: `secret_mother_child_left` ("The Child Left Behind")
+5. `the_mechanic`: `secret_mechanic_sabotaged_generator` ("The Sabotaged Generator")
+6. `the_teacher`: `secret_teacher_burned_books` ("The Burned Books")
+7. `the_refugee`: `secret_refugee_stolen_identity` ("The Stolen Identity")
+8. `the_electrician`: `secret_electrician_blackout` ("The Blackout")
 9. `the_cook`: `secret_cook_ration_cache` ("The Private Pantry Cache")
 10. `the_engineer`: `secret_engineer_unreinforced_span` ("The Unreinforced Span")
 11. `the_farmer`: `secret_farmer_scorched_seeds` ("The Scorched Seed Reserve")
@@ -47,21 +47,23 @@ The mission was to expand `confession_secrets.json` so ASHFALL's confession syst
 
 | File | Change Type | Description |
 |---|---|---|
-| `Assets/StreamingAssets/Data/confession_secrets.json` | Modified | Added 4 new personal survivor confession secrets (`the_nurse`, `the_carpenter`, `the_child`, `the_old_man`). Total items: 30. |
-| `Ashfall.Core.Tests/ConfessionSecretSystemTests.cs` | Modified | Added tests verifying 20 personal survivor secrets, 30 total secrets, valid fields, and interpersonal resolution mechanics on new entries. |
-| `docs/relationships/PLAN88_BASELINE.md` | Created | Baseline discovery, forensic reconciliation, and architecture mapping. |
-| `docs/relationships/CONFESSION_SECRET_SCHEMA.md` | Created | Full catalog schema specification, validation rules, and placeholder definitions. |
-| `docs/relationships/CONFESSION_ARCHETYPE_COVERAGE.md` | Created | 20-archetype coverage matrix with secret IDs, discovery items, and flags. |
-| `docs/relationships/CONFESSION_CONSEQUENCE_RANGE_MATRIX.md` | Created | Full parameter matrix of affinity, morale, guilt, hardening, and trust values. |
-| `docs/relationships/PLAN_88_CONFESSION_SECRETS_EXPANSION_CLOSEOUT.md` | Created | This closeout report. |
+| `Assets/StreamingAssets/Data/confession_secrets.json` | Modified | Added 4 new personal survivor confession secrets (`the_nurse`, `the_carpenter`, `the_child`, `the_old_man`). Total items: 38. |
+| `builds/linux/Assets/StreamingAssets/Data/confession_secrets.json` | Modified | Synchronized with authoritative catalog. |
+| `Ashfall.Core.Tests/ConfessionSecretSystemTests.cs` | Modified | Added tests verifying 20 personal survivor secrets, 38 total secrets, valid fields, and interpersonal resolution mechanics on new entries. |
+| `docs/relationships/PLAN88_BASELINE.md` | Updated | Baseline discovery, forensic reconciliation, and architecture mapping. |
+| `docs/relationships/CONFESSION_SECRET_SCHEMA.md` | Maintained | Full catalog schema specification, validation rules, and placeholder definitions. |
+| `docs/relationships/CONFESSION_ARCHETYPE_COVERAGE.md` | Maintained | 20-archetype coverage matrix with secret IDs, discovery items, and flags. |
+| `docs/relationships/CONFESSION_CONSEQUENCE_RANGE_MATRIX.md` | Maintained | Full parameter matrix of affinity, morale, guilt, hardening, and trust values. |
+| `docs/relationships/PLAN_88_CONFESSION_SECRETS_EXPANSION_CLOSEOUT.md` | Updated | This closeout report. |
 
 ---
 
 ## 4. Verification Evidence
 
-1. `dotnet test Ashfall.Core.Tests`: **6,895 passed, 0 failed** (duration 31s).
-2. `godot --headless --path . -- --data-integrity-selftest`: **0 errors, 0 warnings across 208 catalogs** (10,848 IDs authored, 3,905 reuses reserved).
-3. `godot --headless --path . -- --content-utilization-selftest`: **PASS**.
-4. `godot --headless --path . -- --scene-binding-selftest`: **22/22 passed**.
-5. `python3 scripts/ci/scene-lint.py`: **0 errors across 27 scenes**.
-6. `dotnet build Ashfall.csproj`: **0 errors, 0 warnings**.
+1. `dotnet test Ashfall.Core.Tests`: **9,713 passed, 0 failed** (duration 51s).
+2. `dotnet test Ashfall.Core.Tests --filter ConfessionSecretSystemTests`: **10 passed, 0 failed**.
+3. `godot --headless --path . -- --data-integrity-selftest`: **0 errors, 0 warnings across 298 catalogs** (11,695 IDs authored, 4,317 reuses reserved).
+4. `godot --headless --path . -- --content-utilization-selftest`: **CI Content Utilization Gate: PASS**.
+5. `godot --headless --path . -- --scene-binding-selftest`: **25/25 passed, 0 failed**.
+6. `python3 scripts/ci/scene-lint.py`: **0 errors across 30 production scenes**.
+7. `dotnet build Ashfall.csproj`: **0 errors, 0 warnings**.

@@ -106,14 +106,14 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void LoadFrom_LoadsThirteenAuthoredBroadcasts()
+        public void LoadFrom_LoadsThirtyAuthoredBroadcasts()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
             var sys = new VerdictRadioSystem();
             int n = sys.LoadFrom(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(13, n);
-            Assert.Equal(13, sys.Corpus.Count);
+            Assert.Equal(30, n);
+            Assert.Equal(30, sys.Corpus.Count);
         }
 
         [Fact]

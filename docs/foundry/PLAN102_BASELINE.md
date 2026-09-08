@@ -13,9 +13,9 @@ The historical roadmap item for Plan 102 (`piagentsplans/102-foundry-accords-exp
 
 In the active codebase:
 - Baseline District 8 accords: 4 treaties (`treaty_brine_pipe_and_iodine_exchange`, `treaty_cluster_labour_schedule`, `treaty_road_iron_charter`, `treaty_the_cluster_charter`).
-- Regional expansion accords: 8 treaties spanning the Verge, Flotilla Shallows, High Scarp, Caravanserai, Recovery Yard, Neutral Ground buffer, and Deep Coast.
-- Total accords active in authority: **12 treaties** (exceeding the 10-treaty target).
-- All 12 treaties are active, loaded by `RegionalTreatyCatalog`, and tested by `Plan16CartographyTests.cs`, `SilentFoundryHeadlessDemo.cs`, and `FoundryAccordExpansionTests.cs`.
+- Pre-existing non-Foundry regional accords: 8 treaties spanning the Verge, Flotilla Shallows, High Scarp, Caravanserai, Recovery Yard, Neutral Ground buffer, and Deep Coast.
+- Plan 102 additions: 6 new exact-signatory Foundry accords, taking the Foundry subset from 4 to **10**.
+- Total records in authority: **18 treaties**. All 18 load through `RegionalTreatyCatalog`; the Foundry subset is checked by `SilentFoundryHeadlessDemo.cs` and `FoundryAccordExpansionTests.cs`.
 
 ---
 

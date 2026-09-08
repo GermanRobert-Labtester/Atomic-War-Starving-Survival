@@ -22,6 +22,12 @@ Every boundary in `demarcated_territory` is grounded in established world locati
 | `treaty_roster_border_demilitarization_pact` | The Neutral Ground five-kilometer buffer zone | Demilitarized Buffer | Neutral Ground Corridor |
 | `treaty_deep_coast_aquifer_protection_treaty` | Pump Station Nine and coastal marsh intake tributaries | Water Intake Marsh | Pump Station Nine & Coastal Intake Tributaries |
 | `treaty_high_scarp_observatory_sanctuary` | The Summit Relay Spire and Low-Background Laboratory enclosure | High-Altitude Facility | Summit Relay Spire & Low-Background Lab |
+| `treaty_saltworks_access` | The east pipe walk between the smelter bay casting floor and the saltworks membrane hall | Measured Facility Right-of-Way | Existing brine exchange pipe walk |
+| `treaty_membrane_repair` | The membrane hall service corridor from the brine intake valves to the iodine store test bench | Repair Corridor | Existing membrane hall / iodine store terms |
+| `treaty_coal_window` | The marked ice-road lane from the Cut weigh-hut to the Foundry coal gate and its charging-floor staging apron | Seasonal Freight Corridor | Existing Cut, weigh-hut, ice-road, and charging-floor terms |
+| `treaty_apprentice_exchange` | The charging floor, the Cluster school bell, and the registered salvage-claim desk at the works' outer gate | Training Boundary | Existing Cluster school and Scavenger Guild claim-desk practice |
+| `treaty_crisis_mutual_aid` | The smelter bay, the marked ice-road staging yards, and the Office's Cluster cistern approach | Bounded Emergency Service Zone | Existing Foundry, Cut, and Cluster service anchors |
+| `treaty_the_incident_book` | The Foundry incident desk, the Office register hall, and the Archivists' copy shelf at the Cluster school | Recordkeeping Jurisdiction | Existing incident book, register hall, and Archivist copy practice |
 
 ---
 

@@ -1,51 +1,139 @@
-# Plan 72 — Utility AI Baseline Reconnaissance
+# Plan 72 — Baseline Reconnaissance
 
-> **Status:** Grounded baseline inspection completed 2026-09-03.
-> **Authority:** `Assets/Ashfall.Core/UtilityAI/`, `Assets/StreamingAssets/Data/utility_actions.json`, `src/Host/UtilityAiHostSession.cs`, `src/UtilityAI/UtilityAiPanel.cs`.
+## Core Utility AI (`Assets/Ashfall.Core/UtilityAI/`)
 
----
+### Files
+| File | Purpose |
+|------|---------|
+| `UtilityAction.cs` | Action DTO, `ResponseCurve`, `AIActionContext`, `UtilityTags` |
+| `UtilityActionScorer.cs` | Scoring pipeline, veto matrix, trait biases |
+| `UtilityAiSystem.cs` | Selection engine, catalog loader |
+| `UtilityAiHeadlessDemo.cs` | Headless verification harness |
 
-## 1. Executive Summary
+### Action Schema (`UtilityActionDef`)
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `id` | `string` | `""` | Unique `action_*` identifier |
+| `displayName` | `string` | `""` | Human-readable label |
+| `description` | `string` | `""` | Flavor/behavior text |
+| `basePriority` | `float` | `0.1` | Additive to curved score |
+| `weight` | `float` | `1.0` | Multiplicative after curve+priority |
+| `isOverrideAction` | `bool` | `false` | If true, skips final clamp01 |
+| `tags` | `string[]` | `[]` | Tag array for veto/bias matrix |
+| `curvePoints` | `CurvePoint[]` | required | Piecewise-linear response curve |
+| `baseScore` | `float` | `0` | Static EvaluateRaw baseline |
+| `fatigueGate` | `float` | `0` | 0=off; raw→0 when fatigue exceeds |
+| `skillBonusFactor` | `float` | `0` | `CraftingSkill * factor` added to raw |
 
-`Assets/StreamingAssets/Data/utility_actions.json` previously contained **6 actions**:
-1. `action_weigh_goods` (Base 0.40, Priority 0.1, Weight 1.0, Gate 85, SkillBonus 0.25, `["loud_labor"]`)
-2. `action_read_contract` (Base 0.35, Priority 0.1, Weight 1.0, Gate 90, SkillBonus 0.20, `[]`)
-3. `action_canvas_support` (Base 0.45, Priority 0.1, Weight 1.0, Gate 80, SkillBonus 0.15, `["menial_labor"]`)
-4. `action_run_vouch` (Base 0.30, Priority 0.1, Weight 1.0, Gate 88, SkillBonus 0.10, `[]`)
-5. `action_audit_inventory` (Base 0.35, Priority 0.1, Weight 1.0, Gate 80, SkillBonus 0.00, `["quiet_labor"]`)
-6. `action_file_report` (Base 0.35, Priority 0.1, Weight 1.0, Gate 80, SkillBonus 0.00, `["quiet_labor"]`)
+### Scoring Formula
 
-These 6 actions represent administrative, depot calibration, and companion-bias tasks from the crossing companion systems. They completely lack basic shelter operational actions: maintenance, medical response, cooking, water purification, social interaction, skill training, security watch, scientific research, and fatigue rest.
+```
+rawScore = baseScore + CraftingSkill * skillBonusFactor   // clamped 0-1
+         = 0 if !IsAlive or (fatigueGate > 0 && Fatigue > fatigueGate)
 
----
+curvedScore = ResponseCurve.Evaluate(rawScore)
 
-## 2. Core System Architecture
+score = (curvedScore + basePriority) * weight
 
-1. **`UtilityActionDef` (`UtilityAction.cs`):** Defines catalog properties loaded from `utility_actions.json`:
-   - `id`: unique action identifier (e.g. `action_*`).
-   - `displayName`: human-readable UI label.
-   - `description`: flavor and mechanic intent.
-   - `basePriority`: additive baseline priority (default 0.1).
-   - `weight`: multiplicative score multiplier (default 1.0).
-   - `isOverrideAction`: bypasses normal clamping (allows scores > 1.0 to guarantee winning).
-   - `tags`: string array checked against trait veto matrix (`loud_labor`, `menial_labor`, `weapon`, `gun`, `order`, `medical_triage`, `farming`, etc.).
-   - `curvePoints`: response curve keys `[{x, y}, ...]` with linear interpolation and endpoint clamping.
-   - `baseScore`: baseline raw score before curve transformation.
-   - `fatigueGate`: threshold above which `rawScore` drops to 0.
-   - `skillBonusFactor`: multiplier scaling `CraftingSkill` into bonus raw score.
+score = ApplyTraitBiases(score, action, context)  // soft multiplier
 
-2. **`AIActionContext` (`UtilityAction.cs`):** Per-evaluation snapshot:
-   - `SurvivorId`, `IsAlive`, `Fatigue` (0..100), `CraftingSkill` (0..1), `IsListless`, `HasHazmat`, `Traits` (HashSet).
+if IsListless: score -= 0.08
 
-3. **`UtilityActionScorer` (`UtilityActionScorer.cs`):**
-   - Evaluates hard trait vetoes (`IsForbiddenByTraits`).
-   - Computes `rawScore = action.EvaluateRaw(context)` (gated by life and fatigue).
-   - Transforms raw score via `action.Curve.Evaluate(rawScore)`.
-   - Calculates `score = (curvedScore + action.basePriority) * action.weight`.
-   - Subtracts `ListlessScorePenalty` (0.08) if `IsListless`.
-   - Clamps to `[0, 1]` unless `isOverrideAction == true`.
+if isOverrideAction: return max(0, score)  // no upper clamp
+else: return clamp01(score)
+```
 
-4. **`UtilityAiSystem` (`UtilityAiSystem.cs`):**
-   - Evaluates candidate actions using `scorer.Score(candidate, context)`.
-   - Adds deterministic noise: `score += (float)(rng.NextDouble() * 0.0001d)`.
-   - Selects action with `score > 0` and highest value. First-in-order wins exact ties.
+### Curve Points (`ResponseCurve`)
+- `x` = rawScore input (0-1)
+- `y` = curved output
+- Piecewise-linear interpolation
+- Points auto-sorted by x ascending
+- Clamps to first/last point y at boundaries
+- Empty/null → identity passthrough
+- Single point → returns that point's y
+- Duplicate x → second point wins (sort-stable)
+
+### Known Tags (used in veto/bias matrix)
+| Tag | Veto/Bias |
+|-----|-----------|
+| `loud_labor` | Coward vetoes |
+| `menial_labor` | GodComplex vetoes |
+| `dirty_labor` | Politician 0.6x bias |
+| `weapon` | Pacifist vetoes |
+| `gun` | Blind vetoes |
+| `order` | ExCon vetoes |
+| `medical_triage` | Hitman vetoes; Germaphobe vetoes without hazmat |
+| `farming` | Hitman vetoes |
+| `medical` | (informational only) |
+| `quiet_labor` | (informational only) |
+
+### Selection Engine (`UtilityAiSystem`)
+- Scores all candidates, picks highest
+- Deterministic seeded noise: `+ rng.NextDouble() * 0.0001`
+- Ties: first-wins (candidate list order IS the contract)
+- Only positive scores compete (score > 0)
+- All-vetoed → returns null
+- Stateless: no save state, no cooldown, no commitment
+
+### AIActionContext
+| Field | Type | Description |
+|-------|------|-------------|
+| `SurvivorId` | `string` | Survivor identifier |
+| `IsAlive` | `bool` | Dead → score 0 |
+| `Fatigue` | `float` | 0-100 scale |
+| `CraftingSkill` | `float` | 0-1 scale |
+| `IsListless` | `bool` | -0.08 penalty |
+| `HasHazmat` | `bool` | Germaphobe gate |
+| `Traits` | `HashSet<string>` | Trait flags for vetoes |
+
+**No fields for:** hunger, thirst, health, morale, equipment degradation, room availability, inventory, threats.
+
+## Host Utility AI (`src/UtilityAI/`, `src/Host/`)
+
+### Files
+| File | Purpose |
+|------|---------|
+| `src/Host/UtilityAiHostSession.cs` | Thin host session: loads catalog, demo evaluation |
+| `src/UtilityAI/UtilityAiPanel.cs` | Godot UI panel for debug display |
+| `src/Main.Survivors.cs` | Wires UtilityAiHostSession into Main |
+| `src/Main.UiTests.UtilityAi.cs` | Headless UI smoke test |
+
+### Host Session (`UtilityAiHostSession`)
+- Loads catalog via `UtilityActionCatalogLoader.Load()`
+- `Engine` (`UtilityAiSystem`) with `OnActionSelected` event → `LastEvent` + `RaiseStateChanged()`
+- `EvaluateDemo()` creates context from parameters, selects action
+- No save state, no cooldown, no reevaluation cadence
+
+## Existing 6 Actions
+
+| # | ID | baseScore | fatigueGate | skillBonus | Tags |
+|---|----|-----------|-------------|------------|------|
+| 1 | `action_weigh_goods` | 0.4 | 85 | 0.25 | `loud_labor` |
+| 2 | `action_read_contract` | 0.35 | 90 | 0.2 | — |
+| 3 | `action_canvas_support` | 0.45 | 80 | 0.15 | `menial_labor` |
+| 4 | `action_run_vouch` | 0.3 | 88 | 0.1 | — |
+| 5 | `action_audit_inventory` | 0.35 | 80 | 0.0 | `quiet_labor` |
+| 6 | `action_file_report` | 0.35 | 80 | 0.0 | `quiet_labor` |
+
+All 6 use identity curves: `[(0,0),(1,1)]`, basePriority 0.1, weight 1.0, no overrides.
+
+These are companion-bias actions — narrative flavor for NPC companions.
+
+## Key Architectural Limitations
+
+1. **No state-driven scoring**: `EvaluateRaw` is `baseScore + skill * factor` only. No hunger, equipment degradation, threat level, or medical urgency inputs.
+2. **No action executor**: Core selects an action ID; the host/executor must decide what to do with it.
+3. **No commitment/cooldown**: Core is stateless. Reevaluation cadence and action duration are host responsibilities.
+4. **No target selection in Core**: The AI picks an action, not a target. Target resolution is executor-owned.
+5. **No room/workstation/recipe requirements in schema**: Eligibility checks must be in the executor.
+6. **No save state**: Core has nothing to persist. Host may persist current action externally.
+
+## Plan 72 Design Implications
+
+Given the architecture, the 14 new actions:
+- Use the same schema (baseScore, fatigueGate, skillBonusFactor, tags, curvePoints)
+- baseScore establishes the priority hierarchy
+- Tags wire into the existing veto/bias matrix
+- fatigueGate prevents exhausted survivors from attempting work
+- State sensitivity (checking if food is needed, equipment is degraded, etc.) belongs in the executor, not the action data
+- Actions are `action_*` IDs that the executor resolves to subsystem calls

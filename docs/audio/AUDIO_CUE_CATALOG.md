@@ -3,7 +3,7 @@
 > **Living Architecture Authority**: Documents all registered audio cues, target Godot audio buses, asset resource paths, loop behavior, volume trim, and cooldown timers in `src/Audio/AudioCueCatalog.cs`.
 
 **Total Registered Cues:** `196`<br>
-**Last Verified:** `2026-09-07`<br>
+**Last Verified:** `2026-09-08`<br>
 **Drift Gated:** `python3 scripts/ci/generate-audio-catalog.py --check`
 
 ---

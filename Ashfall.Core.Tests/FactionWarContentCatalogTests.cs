@@ -186,21 +186,31 @@ namespace Ashfall.Core.Tests
         public void LocationOverrides_HaveRequiredFieldsAndConsistentDayWindowRule()
         {
             var catalog = LoadReal();
-            Assert.NotEmpty(catalog.LocationOverrides);
+            Assert.Equal(20, catalog.LocationOverrides.Count);
             foreach (var o in catalog.LocationOverrides)
             {
                 Assert.False(string.IsNullOrEmpty(o.id), "override id present");
+                Assert.StartsWith("loc_override_", o.id);
                 Assert.False(string.IsNullOrEmpty(o.locationId), "override locationId present");
-                Assert.Contains(o.overrideType, new[] { "pre_strike", "post_strike", "ambient_addendum" });
+                Assert.Contains(o.overrideType, new[]
+                {
+                    "pre_strike", "post_strike", "ambient_addendum",
+                    "occupied", "abandoned", "fortified", "liberated", "reclaimed", "contaminated"
+                });
+                Assert.False(string.IsNullOrEmpty(o.displayName), "override displayName present");
                 Assert.False(string.IsNullOrEmpty(o.description), "override description present");
 
-                // Documented rule (NARRATIVE_NEEDS.md §3): activeUntilDay is
-                // bounded only for pre_strike; post_strike/ambient_addendum
-                // are open-ended (activeUntilDay left at its 0 default).
+                // Bounded windows must have activeUntilDay >= activeFromDay.
+                // Pre-strike entries are strictly bounded.
                 if (o.overrideType == "pre_strike")
+                {
                     Assert.True(o.activeUntilDay > 0, $"{o.id} (pre_strike) must have a bounded activeUntilDay");
-                else
-                    Assert.Equal(0, o.activeUntilDay);
+                    Assert.True(o.activeUntilDay >= o.activeFromDay, $"{o.id} activeUntilDay >= activeFromDay");
+                }
+                else if (o.activeUntilDay > 0)
+                {
+                    Assert.True(o.activeUntilDay >= o.activeFromDay, $"{o.id} activeUntilDay >= activeFromDay");
+                }
             }
         }
 

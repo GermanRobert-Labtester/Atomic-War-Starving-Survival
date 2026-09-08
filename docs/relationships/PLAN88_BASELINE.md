@@ -11,18 +11,19 @@
 Plan 88 requested expanding `confession_secrets.json` from a supposed 8-entry baseline to 20 confession secrets covering 12 specific survivor archetypes (`the_engineer`, `the_nurse`, `the_cook`, `the_farmer`, `the_priest`, `the_journalist`, `the_pilot`, `the_scientist`, `the_carpenter`, `the_child`, `the_old_man`, `the_hunter`).
 
 Forensic analysis of the live repository revealed an evolved reality:
-1. **Catalog State Prior to Plan 88:** `confession_secrets.json` had 26 entries authored across three categories:
+1. **Catalog State Prior to Plan 88:** `confession_secrets.json` had 34 entries authored across categories:
    - **8 Original Personal Secrets:** `the_surgeon`, `the_soldier`, `the_pharmacist`, `the_mother`, `the_mechanic`, `the_teacher`, `the_refugee`, `the_electrician` (entries 1–8).
    - **8 Expansion Personal Secrets:** `the_cook`, `the_engineer`, `the_farmer`, `the_priest`, `the_journalist`, `the_pilot`, `the_scientist`, `the_hunter` (entries 9–16).
    - **6 Faction Institutional Secrets:** `faction_independent`, `faction_military`, `faction_rebel`, `faction_iron_clique`, `faction_meridian`, `faction_order` (entries 17–22).
    - **4 Bunker Internal Secrets:** `the_quartermaster`, `the_overseer`, `the_pharmacist` (morphine cache), `the_guard` (entries 23–26).
+   - **8 Narrative Depth Secrets:** Added in commit 04806918 (entries 27–34).
 2. **Active Test Assertion:** `Ashfall.Core.Tests/ConfessionSecretSystemTests.cs:42` pinned `catalog.AllSecrets.Count >= 26` and explicitly asserted faction and personal secrets. Shrinking the file to 20 total records would have broken existing tests.
 3. **Archetype Delta:** Of the 12 requested archetypes in Plan 88, exactly 8 were already authored in entries 9–16. Exactly 4 remained unauthored:
    - `the_nurse` (Task 88N)
    - `the_carpenter` (Task 88U)
    - `the_child` (Task 88V)
    - `the_old_man` (Task 88W)
-4. **Target Reconciliation:** Authoring the 4 missing archetypes brings the personal survivor confession count from 16 to **exactly 20 personal survivor confession secrets** (8 baseline + 12 requested). Total records in `confession_secrets.json` becomes 30 (20 personal + 6 faction + 4 bunker), maintaining 100% backward compatibility and fulfilling every requested archetype and story prompt.
+4. **Target Reconciliation:** Authoring the 4 missing archetypes brings the primary personal survivor confession count from 16 to **exactly 20 primary personal survivor confession secrets** (8 baseline + 12 requested). Total records in `confession_secrets.json` becomes 38 (20 primary personal + 6 faction + 4 bunker + 8 narrative depth), maintaining 100% backward compatibility and fulfilling every requested archetype and story prompt.
 
 ---
 

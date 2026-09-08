@@ -3,6 +3,11 @@
 **Authority File:** `Assets/StreamingAssets/Data/foundry_accords.json`
 **C# Models:** `Assets/Ashfall.Core/Narrative/RegionalTreatyCatalog.cs`
 
+The authority currently contains 18 regional treaty records: 10 exact-signatory
+accords for `faction_silent_foundry` and 8 pre-existing non-Foundry regional
+accords. The Plan 102 target is the Foundry-signatory subset, not permission to
+delete the other regional records.
+
 ---
 
 ## 1. Root Structure (`RegionalTreatiesFile`)
@@ -30,6 +35,7 @@
 | `treaty_articles` | string | Yes | Formatted string | Structured legal articles (`ARTICLE 1: ... ARTICLE 2: ... ARTICLE 3: ...`). |
 | `penalties` | string | Yes | Non-empty string | Enforceable legal and diplomatic consequences upon default or breach. |
 | `tags` | array of strings | Yes | Non-empty array | Normalized thematic classification tags. |
+| `term_days` | float | No | `0` or positive | Optional treaty term; absent/zero means indefinite. Present in the DTO, not authored by the current catalog. |
 
 ---
 
@@ -42,3 +48,8 @@
 2. **Signatory Array Requirement:**
    - The array must list concrete, resolved faction IDs.
    - The wildcard `"all_factions"` is prohibited; all participants are explicitly enumerated.
+
+3. **Runtime ownership:** `RegionalTreatyCatalog` deserializes and indexes the
+   records; it does not itself validate faction IDs, resource realism, or legal
+   prose. Those checks are pinned by `FoundryAccordExpansionTests` and the
+   Foundry headless smoke harness.

@@ -46,7 +46,7 @@ Temporary Immunity (Persisted resistance window: e.g. 14–30 days)
 
 ---
 
-## 2. Complete Disease Coverage Inventory (16 Diseases)
+## 2. Complete Disease Coverage Inventory (20 Diseases)
 
 | ID | Name | Vector | Incubation | Total Days | Contagious Stages | Lethality | Care & Treatment Paths | Immunity Window | Bridges & Sources |
 |---|---|---|---|---|---|---|---|---|---|
@@ -66,6 +66,10 @@ Temporary Immunity (Persisted resistance window: e.g. 14–30 days)
 | `disease_deep_excavation_mold_lung` | Deep Excavation Mold Lung | Spore | 6d | 16d | Symptomatic, Severe, Critical | 0.65 | `inhaler` (suppressive -0.10), `medical_kit` (supportive -0.10) | 14 days | Deep shelter excavation |
 | `disease_silo_lung` | Silo Lung | Spore | 9d | 11d | Symptomatic, Severe | 0.30 | `inhaler` (suppressive -0.15), `field_surgical_kit` (-0.05) | 21 days | Compacted grain storage |
 | `disease_prion_tremor` | Prion Tremor Syndrome | Blood | 14d | 21d | None (Non-communicable) | 0.85 | `herbal_tea` (palliative comfort -0.05) | None (0 days) | Taboo cannibal rations |
+| `disease_dysentery` | Bacillary Dysentery | Water | 1d | 6d | Prodromal, Symptomatic, Severe | 0.25 | `antibiotics` (curative -0.20), `clean_water` (supportive -0.05) | 21 days | Failed latrines, contaminated return pipes |
+| `disease_meningococcal_fever` | Meningococcal Fever | Air | 2d | 5d | Prodromal, Symptomatic, Severe | 0.60 | `antibiotics` (curative -0.30), `medical_kit` (supportive -0.10) | 30 days | Crowded winter camps |
+| `disease_bloodborne_hepatitis` | Bloodborne Hepatitis | Blood | 10d | 18d | Prodromal, Symptomatic, Severe, Critical | 0.35 | `medical_kit` (supportive -0.10), `herbal_tea` (symptomatic) | 30 days | Shared needles, field clinics |
+| `disease_spore_wound_dermatitis` | Spore-Wound Dermatitis | Spore | 3d | 8d | Prodromal, Symptomatic, Severe | 0.22 | `antiseptic_1l_of_1l` (suppressive -0.10), `medical_kit` (supportive -0.10) | 14 days | Mold-heavy work through damaged skin |
 
 ---
 

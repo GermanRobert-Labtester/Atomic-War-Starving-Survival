@@ -44,11 +44,13 @@ namespace AtomicWar.GodotApp
             {
                 TryLoadItemCatalog(dataDir, files, json, instr);
                 TryLoadSurvivorCatalog(dataDir, files, json, instr);
+                TryLoadStartingCohortCatalog(dataDir, files, json, instr);
                 TryLoadNarrativeEncounters(dataDir, files, json, instr);
                 TryLoadQuestlineMaster(dataDir, files, json, instr);
                 TryLoadExpeditionCatalog(dataDir, files, json, instr);
                 TryLoadRadioCatalog(dataDir, files, json, instr);
                 TryLoadEconomyCatalog(dataDir, files, json, instr);
+                TryLoadTradeTextCatalog(dataDir, files, json, instr);
                 TryLoadWastelandMap(dataDir, files, json, instr);
                 TryLoadWeatherCatalog(dataDir, files, json, instr);
                 TryLoadEventsCatalog(dataDir, files, json, instr);
@@ -69,6 +71,7 @@ namespace AtomicWar.GodotApp
                 TryLoadEspionageMissionCatalog(dataDir, files, json, instr);
                 TryLoadFluidInfrastructureCatalog(dataDir, files, json, instr);
                 TryLoadQuestTemplateCatalog(dataDir, files, json, instr);
+                TryLoadJournalCorpus(dataDir, files, json, instr);
 
                 // Simulate representative queries for N days
                 RunRepresentativeQueries(instr, 7);
@@ -88,6 +91,51 @@ namespace AtomicWar.GodotApp
         }
 
         // ── Individual catalog load helpers ──────────────────────────
+
+        private static void TryLoadJournalCorpus(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                var catalog = new Ashfall.Core.Journal.JournalCorpusCatalogLoader(files, json)
+                    .Load(dataDir);
+                string[] paths =
+                {
+                    "journal_entries_expansion_05.json",
+                    "narrative/journals_expansion.json",
+                    "narrative/journal_entries_batch_1.json",
+                    "narrative/journal_entries_batch_2.json",
+                    "narrative/journal_entries_batch_3.json"
+                };
+
+                foreach (string relativePath in paths)
+                {
+                    string path = Path.Combine(dataDir, relativePath.Replace('/', Path.DirectorySeparatorChar));
+                    if (!files.FileExists(path)) continue;
+                    int count = catalog.Records.Count(r =>
+                        r.SourcePath.EndsWith(relativePath, StringComparison.Ordinal));
+                    instr.RecordCatalogOpened(relativePath, "JournalCorpusCatalogLoader");
+                    instr.RecordCatalogDeserialized(relativePath, count);
+                    instr.RecordDefinitionsRegistered(relativePath, "JournalSystem", count);
+                    if (count > 0)
+                    {
+                        instr.RecordDefinitionQueried(
+                            relativePath,
+                            "corpus_load",
+                            "JournalCorpusCatalogLoader.Load",
+                            "JournalSystem",
+                            1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] journal corpus: {ex.Message}");
+            }
+        }
 
         private static void TryLoadItemCatalog(string dataDir, IFileIO files, IJsonSerializer json,
             ContentUtilizationInstrumentation instr)
@@ -128,6 +176,51 @@ namespace AtomicWar.GodotApp
                         instr.RecordDefinitionQueried("survivors.json", survs[i].id, "SurvivorCatalog.GetById", "SurvivorsHostSession", 1);
             }
             catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] survivors.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadStartingCohortCatalog(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, StartingCohortCatalogLoader.FileName);
+                if (!files.FileExists(path)) return;
+
+                instr.RecordCatalogOpened(
+                    StartingCohortCatalogLoader.FileName,
+                    "StartingCohortCatalogLoader");
+                var canonical = SurvivorCatalogLoader.Load(dataDir, files, json);
+                var result = StartingCohortCatalogLoader.LoadDetailed(
+                    dataDir,
+                    files,
+                    json,
+                    canonical);
+                int count = result.Catalog.Profiles.Count;
+                instr.RecordCatalogDeserialized(
+                    StartingCohortCatalogLoader.FileName,
+                    count);
+                instr.RecordDefinitionsRegistered(
+                    StartingCohortCatalogLoader.FileName,
+                    "StartingCohortCatalog.Profiles",
+                    count);
+                foreach (var profile in result.Catalog.Profiles)
+                {
+                    instr.RecordDefinitionQueried(
+                        StartingCohortCatalogLoader.FileName,
+                        profile.profile_id,
+                        "StartingCohortCatalog.TryGet",
+                        "StartingCohortSetupPanel",
+                        1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr(
+                    $"[RuntimeEvidence] {StartingCohortCatalogLoader.FileName}: {ex.Message}");
+            }
         }
 
         private static void TryLoadNarrativeEncounters(string dataDir, IFileIO files, IJsonSerializer json,
@@ -241,6 +334,82 @@ namespace AtomicWar.GodotApp
                 instr.RecordDefinitionsRegistered("economy_goods.json", "GoodsCatalog", count);
             }
             catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] economy_goods.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadTradeTextCatalog(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, TradeTextCatalogLoader.FileName);
+                if (!files.FileExists(path)) return;
+
+                instr.RecordCatalogOpened(
+                    TradeTextCatalogLoader.FileName,
+                    "TradeTextCatalogLoader");
+                var load = TradeTextCatalogLoader.Load(dataDir, files, json);
+                instr.RecordCatalogDeserialized(
+                    TradeTextCatalogLoader.FileName,
+                    load.Catalog.TraderCount + load.Catalog.ScenarioCount);
+                instr.RecordDefinitionsRegistered(
+                    TradeTextCatalogLoader.FileName,
+                    "TradeTextCatalog",
+                    load.Catalog.TraderCount + load.Catalog.ScenarioCount);
+
+                if (load.UsedFallback) return;
+
+                var resolver = new TradeVoiceResolver(load.Catalog);
+                var context = new TradeVoiceContext
+                {
+                    FactionId = "faction_silent_foundry",
+                    ScenarioId = "salvage_caravan",
+                    StableContextKey = "content_utilization_trade_voice",
+                    Trust = 20f
+                };
+                var greeting = resolver.ResolveGreeting(context);
+                instr.RecordDefinitionQueried(
+                    TradeTextCatalogLoader.FileName,
+                    greeting.ProfileId,
+                    "TradeVoiceResolver.ResolveGreeting",
+                    "TradeScreenPresenter",
+                    1);
+                instr.RecordDefinitionSelected(
+                    TradeTextCatalogLoader.FileName,
+                    greeting.ProfileId,
+                    "TradeScreenPresenter",
+                    1);
+                instr.RecordDefinitionConsumed(
+                    TradeTextCatalogLoader.FileName,
+                    greeting.ProfileId,
+                    "TradeScreenGodotPanel",
+                    "presentation voice line displayed",
+                    1);
+
+                var scenario = resolver.ResolveScenarioTraderText(context, "fair_deal");
+                if (!scenario.UsedFallback)
+                {
+                    instr.RecordDefinitionQueried(
+                        TradeTextCatalogLoader.FileName,
+                        "fair_deal",
+                        "TradeVoiceResolver.ResolveScenarioTraderText",
+                        "TradeScreenPresenter",
+                        1);
+                    instr.RecordDefinitionConsumed(
+                        TradeTextCatalogLoader.FileName,
+                        "fair_deal",
+                        "TradeScreenGodotPanel",
+                        "scenario presentation text displayed",
+                        1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr(
+                    $"[RuntimeEvidence] {TradeTextCatalogLoader.FileName}: {ex.Message}");
+            }
         }
 
         private static void TryLoadWastelandMap(string dataDir, IFileIO files, IJsonSerializer json,

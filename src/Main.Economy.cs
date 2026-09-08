@@ -36,6 +36,7 @@ namespace AtomicWar.GodotApp
         private bool _caravansDirty;
         private AtomicWar.GodotApp.Economy.TradeScreenGodotPanel _tradePanel = null!;
         private Ashfall.Core.Radio.FactionRadioEngine _tradeRadio = null!;
+        private TradeVoiceResolver _tradeVoiceResolver = null!;
 
         private void FlushCaravanIfDirty()
         {
@@ -183,6 +184,48 @@ namespace AtomicWar.GodotApp
             _tradePanel.Visible = false;
         }
 
+        private TradeVoiceResolver GetTradeVoiceResolver()
+        {
+            if (_tradeVoiceResolver != null) return _tradeVoiceResolver;
+
+            var load = TradeTextCatalogLoader.Load(
+                _dataDir,
+                new FileSystemIO(),
+                new SystemTextJsonSerializer());
+            if (!load.IsValid)
+            {
+                GD.PushWarning("[Ashfall Godot] Trade voice catalog using fallback: "
+                    + (load.Errors.Count == 0
+                        ? "catalog missing"
+                        : string.Join("; ", load.Errors)));
+            }
+
+            _tradeVoiceResolver = new TradeVoiceResolver(load.Catalog);
+            return _tradeVoiceResolver;
+        }
+
+        private HardcoreEconomyTuning LoadHardcoreEconomyTuning()
+        {
+            var tuning = new HardcoreEconomyTuning();
+            string path = Path.Combine(_dataDir, "hardcore_economy_tuning.json");
+            if (!File.Exists(path))
+            {
+                GD.PushWarning($"[Ashfall Godot] Hardcore economy tuning missing: {path}");
+                return tuning;
+            }
+
+            var result = HardcoreEconomyTuningLoader.Load(File.ReadAllText(path));
+            if (!result.IsValid || result.Bundle == null)
+            {
+                GD.PushWarning("[Ashfall Godot] Hardcore economy tuning rejected: "
+                    + string.Join("; ", result.Errors));
+                return tuning;
+            }
+
+            tuning.Apply(result.Bundle);
+            return tuning;
+        }
+
         /// <summary>
         /// Open the live trade screen bound to the Foundry Guild's real stance
         /// engine (derived from the durable consequence ledger). The panel's
@@ -197,13 +240,15 @@ namespace AtomicWar.GodotApp
                 _tradeRadio = Ashfall.Core.Radio.FactionRadioEngine.LoadFromJson(
                     System.IO.File.Exists(radioPath) ? System.IO.File.ReadAllText(radioPath) : "{}");
             }
-            var tuning = new Ashfall.Core.Economy.HardcoreEconomyTuning();
-            tuning.Apply(new Ashfall.Core.Economy.HardcoreEconomyTuningBundle(
-                Array.Empty<Ashfall.Core.Economy.ScarcityEntry>(),
-                Array.Empty<Ashfall.Core.Economy.FactionTradePreference>(),
-                Array.Empty<Ashfall.Core.Economy.PriceShockRule>()));
+            var tuning = LoadHardcoreEconomyTuning();
             SetupCampaignDay();
-            _tradePanel.BindSession(_economy, _silentFoundry.GuildStanceEngine, tuning, _tradeRadio, _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Economy).Rng);
+            _tradePanel.BindSession(
+                _economy,
+                _silentFoundry.GuildStanceEngine,
+                tuning,
+                _tradeRadio,
+                _campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Economy).Rng,
+                GetTradeVoiceResolver());
             _tradePanel.SetActiveFaction(Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
             // Live refresh when a treaty consequence moves the guild's standing
             // (subscribe once per open; CloseTradePanel removes it).

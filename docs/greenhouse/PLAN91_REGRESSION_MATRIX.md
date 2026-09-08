@@ -5,9 +5,9 @@ Command-by-command results, before vs. after Plan 91.
 | # | Gate | Baseline (Phase 0) | After Plan 91 | Verdict |
 |---|---|---|---|---|
 | 1 | `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS 0/0 | PASS 0/0 | ✔ no regression |
-| 2 | `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | 6892/6895 (3 pre-existing muster-ending failures) | **7003/7003 PASS** | ✔ green (muster debt fixed concurrently; +21 Plan 91 tests) |
+| 2 | `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | 9739/9739 PASS | **9760/9760 PASS** | ✔ green (+21 Plan 91 tests) |
 | 3 | `dotnet build Ashfall.csproj` | PASS 0/0 | PASS 0/0 | ✔ no regression |
-| 4 | `godot --headless -- --data-integrity-selftest` | FAIL(13) — muster `ending_*` only | **PASS, 0 errors, 208 catalogs** | ✔ green |
+| 4 | `godot --headless -- --data-integrity-selftest` | PASS 0 errors, 298 catalogs | **PASS, 0 errors, 298 catalogs** | ✔ green |
 | 5 | `godot --headless -- --greenhouse-selftest` | PASS 24/24 | PASS 24/24 | ✔ no regression |
 | 6 | `godot --headless -- --content-utilization-selftest` | CI gate PASS | CI gate PASS | ✔ no regression |
 | 7 | `godot --headless -- --asset-registry-selftest` | PASS | PASS | ✔ no regression |

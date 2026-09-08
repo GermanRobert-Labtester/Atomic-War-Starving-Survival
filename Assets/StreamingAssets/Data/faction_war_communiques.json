@@ -2,6 +2,24 @@
   "schema_version": 1,
   "communiques": [
     {
+      "id": "comm_d489_garrison_manifest_inspection",
+      "eventChainId": "evt_d488_manifest_holdup",
+      "factionId": "faction_central_garrison",
+      "day": 489,
+      "title": "Manifest Procedure at Checkpoint Gamma: An Assessment",
+      "body": "The Continuity Office has reviewed the manifest inspection conducted at Checkpoint Gamma, and its assessment follows. The inspection was routine. A commercial load whose documentation did not match its counted weight was delayed, not detained, while the discrepancy — three sacks, on paper — was brought under assessment. Inspection procedure is not seizure procedure, and residents repeating the word 'seized' are encouraged to note that the load has completed its movement. Coordination between carriers and this office's inspection staff remains the most reliable path to timely movement. Carriers whose paperwork reconciles have never once been delayed at this checkpoint, a record this office is content to let speak for itself.",
+      "authorNote": "Accurate but incomplete — the count difference was real on paper, but the Office omits that the checkpoint's platform scale reads consistently heavy in the Office's favor, a calibration no outside party has ever been permitted to verify."
+    },
+    {
+      "id": "comm_d490_rebuilders_two_scales",
+      "eventChainId": "evt_d488_manifest_holdup",
+      "factionId": "faction_rebuilders",
+      "day": 490,
+      "title": "Three Sacks, Two Scales, and One Open Ledger",
+      "body": "The Continuity Office describes a three-sack discrepancy at Checkpoint Gamma as under assessment. Here is our assessment. The load was weighed at the Exchange before it left, by our scale, in front of the carrier and two of our own people, and the manifest matched the count to the sack. If the checkpoint's platform reads three sacks heavy, that is a calibration question, and we will bring our scale to any gate in this district and weigh in front of whoever wants to watch. We are not calling anyone a thief. We are saying the numbers in this district should not have a uniform, and that whichever scale is wrong, one of them is.",
+      "authorNote": "Honest and correct — the Exchange's count was right and the checkpoint platform does read heavy; the Rebuilders suspect an honest calibration drift rather than a policy, and have no proof of intent."
+    },
+    {
       "id": "comm_d497_garrison_clean_strike",
       "eventChainId": "evt_d495_the_clean_strike",
       "factionId": "faction_central_garrison",
@@ -24,6 +42,42 @@
       "day": 498,
       "title": "A Ground Chosen, Not Struck",
       "body": "Where the ash lands and does not spread is a choice, and the shrine has taught this for years to congregations that mostly nodded politely. Perhaps now the district will hear it differently. We do not know whose hand made this choice. We know it was a hand, and not chance, and that distinction has always been the whole of our teaching."
+    },
+    {
+      "id": "comm_d505_garrison_labor_quota",
+      "eventChainId": "evt_d503_conscription_lists",
+      "factionId": "faction_central_garrison",
+      "day": 505,
+      "title": "Continuity of Service: The Revised Labor Quota",
+      "body": "Notice 504-A, issued by this office, revises the district's labor quota upward for the coming quarter per Continuity Decree. The revision is not a punishment, an appetite, or a policy debate. It is arithmetic: the district's defended perimeter has grown, and the hands required to hold it have not. Service allocation remains the district's oldest continuous institution, older than the exchange it now feeds, and continuity of service is continuity of the district itself. Exemption petitions continue to be accepted through standing channels, where they will be assessed against the criteria that have always applied.",
+      "authorNote": "Accurate as stated, misleading in emphasis — the quota arithmetic is real, but the revision was drafted to backfill desertion from the previous quarter, which the notice does not say and the Office does not intend to say."
+    },
+    {
+      "id": "comm_d507_rebuilders_quota_arithmetic",
+      "eventChainId": "evt_d503_conscription_lists",
+      "factionId": "faction_rebuilders",
+      "day": 507,
+      "title": "The Office's Arithmetic, Checked",
+      "body": "The Continuity Office calls its labor quota arithmetic, so we checked it. The district's food moves on maybe forty backs that both know the routes and can be spared from the stalls, and this week the Office's notices reached more than half of them. We are not arguing the quota is imaginary — the perimeter is real and so are the hands it needs. We are publishing the other half of the sum the notice doesn't do: every carrier conscripted is a stall that doesn't open and a route that doesn't run, and the perimeter the quota defends will go hungry behind its own fence before spring. If continuity wants the grain moved, it can start by not collecting the people who move it. We will keep the roster current either way. Someone has to.",
+      "authorNote": "Accurate — the Exchange counted the notices and the carriers, and the arithmetic is exactly as stated; the Office never answered it, only posted the next notice."
+    },
+    {
+      "id": "comm_d513_garrison_span_readiness",
+      "eventChainId": "evt_d509_border_clash_span44",
+      "factionId": "faction_central_garrison",
+      "day": 513,
+      "title": "Administrative Responsibility for the Railway Span",
+      "body": "Accounts describing a 'standoff' on Railway Span 44-Alpha have reached this office, and the office's assessment is now a matter of record. Two patrols arrived near the same crossing within the same watch, exchanged no fire, and departed without incident, exactly as training and procedure intend. There was no standoff; there was a watch with two patrols in it. Separately, and unrelated to any account of the above, demolition readiness at the span has been restored to its standing pre-war condition. The span remains a designated crossing under Continuity administration, and its charges are a defensive measure, not a message. Reading messages into routine readiness is a habit this district should have outgrown by now.",
+      "authorNote": "False in framing — there was a genuine standoff; both patrols stood on the bridge for a full watch, visibly uncertain whether the other would fire, and the charges were re-armed on the Office's order the same day as an act of face-saving, not routine maintenance."
+    },
+    {
+      "id": "comm_d514_rebuilders_span_record",
+      "eventChainId": "evt_d509_border_clash_span44",
+      "factionId": "faction_rebuilders",
+      "day": 514,
+      "title": "The Bridge Was Neutral for Three Years",
+      "body": "Both patrols walked off that span alive, and we want that said first, because it's the only part of the story nobody is disputing. What follows is the record we keep. The span was a shared crossing for three years — our carriers on it, pilgrims on it, the Garrison's own quartermasters on it — and it held that neutrality through every week of the district shooting at itself, because nobody had made it a grid to claim yet. Five days ago, two patrols arrived within the same watch. Now there are demolition charges on the span, and the Garrison's bulletin calls this 'readiness.' We call it the day the span stopped being a road and became a line, and we invite the district to notice which side of that line their bread still has to cross.",
+      "authorNote": "Accurate — the Exchange's carriers used the span for three years without incident, and the Rebuilders' account of what the re-arming costs is the true one: the bridge's shared neutrality is gone, whatever either patrol says."
     },
     {
       "id": "comm_d519_garrison_almshouse",
@@ -51,6 +105,42 @@
       "title": "The Reading Was Given",
       "body": "A pilgrim carried our warning to that quarter three days before the strike, plainly, without embellishment: the reading had turned, and the ground should be left. We do not claim to know whose ordnance fell. We claim only that the shrine's numbers moved first, and that this district has grown practiced at ignoring numbers it finds inconvenient.",
       "authorNote": "True and mundane — the shrine's preachers are attentive to real tension patterns (troop movements, emplacement activity) and dress ordinary vigilance in doctrinal language; no supernatural foreknowledge is involved."
+    },
+    {
+      "id": "comm_d523_ash_sign_pilgrim_toll",
+      "eventChainId": "evt_d522_switchback_toll",
+      "factionId": "faction_ash_sign",
+      "day": 523,
+      "title": "The Road May Charge. The Reading Does Not.",
+      "body": "Pilgrims have come down the switchback reporting a new fee at the waystation, and they are asking whether the shrine will pay it, contest it, or curse it. We will do none of the three. The road is not ours, the men at the table are not ours, and the measure of our teaching has never been who owns the ground but who can read it. Pay what the road asks if you must cross it. Count what you carry, count what you pay, and keep the count: the district is entering a season in which every fee will be argued over again, and the pilgrim who kept the count will be believed. The cairn charges nothing and never has. What we measure at the shrine is not money. It is whether the ground is being kept, and by whom, and that reading continues regardless of what any table collects.",
+      "authorNote": "Accurate — the shrine neither paid nor contested the toll; the advice to keep counts is ordinary practical vigilance dressed in doctrinal language, and it is why the pilgrims' toll tallies later matter to the district's memory of the war."
+    },
+    {
+      "id": "comm_d526_garrison_waystation_fee",
+      "eventChainId": "evt_d522_switchback_toll",
+      "factionId": "faction_central_garrison",
+      "day": 526,
+      "title": "The Waystation Access Fee, Rescinded on Review",
+      "body": "The waystation access fee assessed at the Switchback Waystation on and after the 522nd day has been rescinded following review, and residents are advised that no further access fees are contemplated at that location at this time. The fee was an administrative measure applied to recover the cost of checkpoint services at a transit point experiencing increased traffic, and its rescission reflects this office's ongoing calibration of which measures serve continuity and which merely invite friction. The Office records, for completeness, that a rescinded measure is not an apologized-for measure. It is a corrected one.",
+      "authorNote": "True as stated, incomplete in spirit — the fee was rescinded because the corporal at Gamma had exceeded his standing orders and the shrine's neutrality was worth more than the toll income; the Office declined to say so, since admitting the corporal overstepped invites the question of what else has been overstepped."
+    },
+    {
+      "id": "comm_d527_rebuilders_guard_detail",
+      "eventChainId": "evt_d524_market_price_spike",
+      "factionId": "faction_rebuilders",
+      "day": 527,
+      "title": "Four on the Door, and a Vote That Barely Passed",
+      "body": "Since the district started shelling itself, the Exchange has been its one no-guns ground, held by a rope line and an honor rule no uniform ever enforced. This week the roster voted on a guard detail, the vote was close, and we are not going to pretend either of those things away. Four people now stand at the rope holding more than a rope. The argument that carried the vote was plain: better to put our own four at the door than to let the district watch a stranger's four arrive there first, and say so in the Garrison's language. We are telling the district in ours. The stalls are the same. The scale is the same. The rope is heavier now, and everyone who crosses it should know exactly who weighed it and why. Come and see. Watching was always free here.",
+      "authorNote": "Accurate — the vote was genuinely close and the Exchange's own leadership recorded its dissent against it; the statement is the Exchange telling its own story before the Garrison's 'armed civilians' framing could define it."
+    },
+    {
+      "id": "comm_d530_garrison_recorded_concern",
+      "eventChainId": "evt_d524_market_price_spike",
+      "factionId": "faction_central_garrison",
+      "day": 530,
+      "title": "Armed Civilians at Unlicensed Venues: A Recorded Concern",
+      "body": "The Continuity Office notes, with concern but without accusation, the recent appearance of an armed detail at the grain exchange, a venue this office has historically declined to regulate. The Office's assessment is that an unlicensed armed formation, however small, standing at the district's principal food distribution point constitutes a standing risk to continuity of supply, and the Office further notes that the exchange's own leadership accepted the detail over its own stated reservations. This office records its concern now, in filing order, so that no party can later claim surprise. Sanctioned security remains available to any venue that requests coordination through standing channels, and this filing is not a demand. It is a dated page.",
+      "authorNote": "False by intent — the 'concern' memo was authored to build the paper trail the inspection-post order later cites; the Office had already drafted the order for the exchange when this statement was released."
     },
     {
       "id": "comm_d537_garrison_exchange_checkpoint",
@@ -96,12 +186,75 @@
       "authorNote": "Closest to true in spirit, though the preachers don't yet know the strike shares an origin with the day-495 clean strike; they read the plaza's precision correctly without understanding its source."
     },
     {
+      "id": "comm_d556_rebuilders_fracture",
+      "eventChainId": "evt_d552_rebuilders_fracture",
+      "factionId": "faction_rebuilders",
+      "day": 556,
+      "title": "The Twelve Who Walked Out",
+      "body": "We will keep this in the register we keep everything else in. On the evening of the 552nd day, the roster met to decide what the Exchange does next in a district that has started arming its marketplaces. Twelve members left that meeting together, and we understand they have since taken ground out along the spur road. We are not calling them deserters; they worked our scales and walked our routes for years, and the district knows their names. We are not calling the meeting's survivors the winners either, because a roster that loses twelve people in one night has not won anything. What we hold is the same rule it has always been: the scale is the scale, the rope is the rope, and the door of the meeting hall is the kind of door that has to stay possible to walk out of — even when what walks out takes a road we would rather it hadn't. That is our record of it. The ledger stays current. Someone always has to keep it.",
+      "authorNote": "Accurate and quietly wounded — the Exchange's account matches what the meeting survivors know, including the part where they decline to disown the twelve; the Exchange's own leadership records not sleeping that night."
+    },
+    {
+      "id": "comm_d561_ash_sign_dead_channel",
+      "eventChainId": "evt_d558_ln74_signal_intercept",
+      "factionId": "faction_ash_sign",
+      "day": 561,
+      "title": "A Voice Repeating on a Dead Channel",
+      "body": "Pilgrims and relay hands alike report a voice on a frequency that has been silent for years — a short count of words, repeating, on a band no licensed operator transmits on. We are asked what the reading says. Here is what the reading says: nothing, yet. Our instruments measure the ground, not the air, and a voice on a dead channel is not a sign until someone can say what it counts. What we offer is the discipline, not the meaning. Something is repeating. It repeats in a pattern, or it repeats without one, and the difference between those two things is real, and can be measured by hands more patient than ours. We do not yet know which it is. We will not yet teach either.",
+      "authorNote": "Honest uncertainty — the shrine has no radio and knows the burst only from pilgrim accounts; the statement deliberately neither claims nor denies a pattern because the shrine's own count of the reports had not settled. What the traffic is, and whose, remains unknown to them."
+    },
+    {
+      "id": "comm_d568_rebuilders_pumphouse_questions",
+      "eventChainId": "evt_d565_hydro_leverage_break",
+      "factionId": "faction_rebuilders",
+      "day": 568,
+      "title": "Which Slopes, On Whose Ledger",
+      "body": "The Terrace Pumphouse has a new arrangement, we are told, between 'authorized custodians.' We have asked three questions through every standing channel the Continuity Office keeps, and we will publish the answers when they arrive, if they arrive. The questions are not complicated. Which terraces lose their water, and on what schedule. What the custodians were paid, and by whom. And what the word 'seasonal' means when the upper slope's allotment has never once been interrupted in the years anyone here has been keeping records. 'Administrative' is not an answer; it is a curtain. We have kept this district fed for three years on the practice of writing numbers where the district can read them, and we extend the practice to the pumphouse: publish the arrangement, or expect it to be audited by everyone whose water it touches.",
+      "authorNote": "Accurate — the Exchange genuinely has no answers yet; the arrangement was brokered quietly and every request for its terms has been refused, which is why the statement asks instead of asserting."
+    },
+    {
+      "id": "comm_d570_garrison_pumphouse_coordination",
+      "eventChainId": "evt_d565_hydro_leverage_break",
+      "factionId": "faction_central_garrison",
+      "day": 570,
+      "title": "Custodial Coordination at the Terrace Pumphouse",
+      "body": "Infrastructure coordination has commenced between authorized custodians regarding the Terrace Pumphouse and its distribution schedule, and the district will be informed of any development the district is required to be informed of. Coordination of this kind is administrative, not political, and does not require publication, consultation, or the district's commentary. Water infrastructure is a continuity asset, and continuity assets are administered under continuity authority. Upper-terrace service has been reallocated to standard seasonal sources per the arrangement — a variation the Office had documented before the district thought to be interested in it. Questions regarding the arrangement may be raised through the usual channels. The Office notes, for efficiency, that the office assessing such questions is the same office that authored the arrangement.",
+      "authorNote": "False by omission — the arrangement redirected terrace water toward garrison-linked accounts in exchange for forgiven debt; the slope's season without water is the payment, and 'seasonal' is doing more work in this statement than any other word."
+    },
+    {
       "id": "comm_d573_forward_roster_checkpoint",
       "eventChainId": "evt_d570_forward_roster_first_action",
       "factionId": "faction_forward_roster",
       "day": 573,
       "title": "What We Are, Plainly, Since People Keep Asking",
       "body": "We are not the Garrison, whatever the coats we're wearing might suggest at a distance. We are not raiders, whatever the checkpoint might suggest to anyone who's had to pay it. We are twelve people who became thirty who watched a scale we used to trust get occupied and decided somebody should stand where the occupying starts before it reaches the rest of us. The toll is the price of that standing. We are not apologizing for it."
+    },
+    {
+      "id": "comm_d575_forward_roster_origin",
+      "eventChainId": "evt_d552_rebuilders_fracture",
+      "factionId": "faction_forward_roster",
+      "day": 575,
+      "title": "About the Door We Walked Out Of",
+      "body": "People keep asking if we're at war with the Exchange, because that's the only shape this district knows for two groups that used to be one. We are not. We walked out of a meeting — a long one, a loud one, the kind where the losing side knows it's lost before the count is done — and we walked up a road instead of out of the district. The Exchange keeps the scale and the rope. We keep the spur road. Those are different jobs, and the district is entitled to both. What we won't accept is the story where twelve people leaving a meeting is a betrayal. If anybody wants the word 'betrayal,' the district can look at how many years it spent deciding who guards what while the people doing the guarding went home to cold floors. We are not the Exchange's shame. We're the bill for the parts it voted not to think about, and the road is where we're keeping it.",
+      "authorNote": "Accurate — the Roster's account of its origin matches what the meeting survivors know; the 'bill' framing is the Roster's own, and the twelve were the harder line of the old guard detail."
+    },
+    {
+      "id": "comm_d576_forward_roster_passage_rules",
+      "eventChainId": "evt_d570_forward_roster_first_action",
+      "factionId": "faction_forward_roster",
+      "day": 576,
+      "title": "The Rate, and What Clean Passage Means at Our Post",
+      "body": "Since the first column slowed for us, the questions at the post have been the same three, so here are the answers, in ink, where anyone can come read them. The rate is two units standard goods or equivalent, per cart, per crossing, and it is the same rate for a Garrison quartermaster as for anyone else — the post doesn't read banners, it reads loads. Clean passage means we count what you carry, we don't take what you carry, and nobody gets searched past the count. Medical wagons cross free and always will; if somebody ever charges one, the person charging it isn't ours, and we would like to know. Night crossing by arrangement at the post, not by luck. We are not the road's owners. We're its standing fee — and the difference between us and the Toll that used to run the weighbridge is the difference between a posted rate and a moving one. Ours is in ink.",
+      "authorNote": "Accurate — the Roster genuinely runs the post exactly as posted; the medical exemption and count-only search rules are real, and the comparison to the Weighbridge Toll is deliberate self-definition, not rivalry."
+    },
+    {
+      "id": "comm_d577_ash_sign_restless_numbers",
+      "eventChainId": "evt_d578_shrine_strike_anomaly",
+      "factionId": "faction_ash_sign",
+      "day": 577,
+      "title": "The Numbers Are Restless, and We Are Not Done Counting",
+      "body": "This is not a warning, because we cannot yet say what the numbers are restless about. Since the almshouse fell, the readings have moved more days than they have held, and in the past week the movement has come closer to the shrine's own ground than at any time in years. We have gone from measuring weekly to measuring twice daily. Pilgrims ask whether they should stay home. The honest answer is that we do not know, and we will not paper the gap with a verse. Keep to the lower paths this week if your errand permits it; if it does not, cross quickly and count your own steps. What we promise is the count. The shrine keeps measuring, in front of anyone who wants to watch, and the readings will be posted as they come — whatever they turn out to be.",
+      "authorNote": "True but misread in direction — the shrine read the restlessness as danger to the district's low paths, not to itself; the ground that was never supposed to be hit was struck the next day, and no reading anyone kept predicted it."
     },
     {
       "id": "comm_d581_garrison_shrine_strike",
@@ -139,6 +292,15 @@
       "body": "Pilgrims are returning to the cairn and asking what the pause means, and we owe them the same answer we have owed since the strike: we do not fully know. The dosimeter still reads. It no longer tells us who is spared and who is not, and we will not invent a verse to cover that gap simply because the guns have gone quiet enough to make silence feel like an answer. What we can say is smaller than what we used to claim. The reading has calmed. We have not. We are still counting what does not add up."
     },
     {
+      "id": "comm_d592_garrison_standdown",
+      "eventChainId": "evt_d588_ceasefire_by_exhaustion",
+      "factionId": "faction_central_garrison",
+      "day": 592,
+      "title": "The Stand-Down of Offensive Operations",
+      "body": "This office records, by formal statement, the stand-down of offensive operations, effective the 589th day, pending further notice. The Continuity Office offers no armistice, recognizes no party, and revises no prior administrative claim. The stand-down reflects operational judgment — not exhaustion, negotiation, or the district's enthusiasm for the word 'peace.' Separately, the Office's review of earlier impact assessments is ongoing, and where review corrects an assessment, the corrected record will be filed. Residents are reminded that a stand-down is a posture, not a pardon, and that distribution, inspection, and service schedules remain in continuous operation. The district is as administered today as it was yesterday, and continuity thanks itself for that.",
+      "authorNote": "Accurate — and the 'review of earlier impact assessments' clause is the Office quietly preparing a path to retract the ration plaza convoy claim without ever saying one was made."
+    },
+    {
       "id": "comm_d593_forward_roster_ceasefire_toll",
       "eventChainId": "evt_d570_forward_roster_first_action",
       "factionId": "faction_forward_roster",
@@ -147,12 +309,48 @@
       "body": "Whatever gets signed, or doesn't, under that silo roof isn't ours to weigh in on and we won't pretend otherwise. The spur road checkpoint went up before anyone called this a war worth pausing and it'll still be standing after somebody decides it's over. Two units standard goods, same as always. We didn't get a vote when the Garrison put a post at the Exchange rope and we're not asking for one now. We're also not taking the toll down because two bigger outfits are tired. Come through clean, pay the rate, keep walking."
     },
     {
+      "id": "comm_d594_rebuilders_ceasefire_benchmark",
+      "eventChainId": "evt_d588_ceasefire_by_exhaustion",
+      "factionId": "faction_rebuilders",
+      "day": 594,
+      "title": "We'll Call It Peace When the Post Comes Down",
+      "body": "The Office has issued its stand-down, and the district is asking us whether it's peace, so here is the Exchange's position, in full, in daylight. We are taking the quiet. Our crews have gone back to the stalls, the shelling has stopped, and we are not such fools as to spit on a quiet week in this district. But we are not calling it peace, and we would encourage everyone to hold the word back too, because peace is not a weather that arrives; it is a state of affairs — and the state of our affairs still includes an inspection post at our own entrance rope, with a clipboard that decides whether our grain is ours. The measure we will use is the one we can see from the door: when the post at the Exchange comes down, we will take up the word. Until then, quiet is a mercy and the ledger is still open. Trade continues. Come through the rope — ours, not theirs.",
+      "authorNote": "Accurate — the Exchange means the benchmark; the post does not come down anywhere in the arc, and they never do take up the word."
+    },
+    {
+      "id": "comm_d599_forward_roster_crates",
+      "eventChainId": "evt_d570_forward_roster_first_action",
+      "factionId": "faction_forward_roster",
+      "day": 599,
+      "title": "About the Crates, Since the Relay Won't Ask Us",
+      "body": "The civilian relay spent a night telling the district about crates moving out past the old rail spur — quiet, organized, done before daylight — and we're not writing to complain about the telling. The description was accurate, and we would rather the district heard a true rumor than false comfort. The crates were ours. Winter stores, salvage, and timber for a second roof frame, moved at night because the road's daytime traffic doesn't need a convoy's dust in its eyes, and because we have all seen what the district does with a column that moves in daylight. Everything on that manifest is signed, the manifest is pinned at the post, and anyone who wants to read it can come read it. We wear coats some of you don't like the look of, and we take a toll some of you don't like the price of, and the cure for both is the same: ask at the post. We sign our work. It's the only standing we've got.",
+      "authorNote": "Accurate — the crates were the camp's winter build; the Roster is touchy about smuggling rumors precisely because their coats are ex-Garrison salvage and the comparison is one they cannot afford."
+    },
+    {
+      "id": "comm_d602_ash_sign_the_question",
+      "eventChainId": "evt_d600_theory_surfaces",
+      "factionId": "faction_ash_sign",
+      "day": 602,
+      "title": "The Question Pilgrims Carry Up the Switchback",
+      "body": "A question has started coming up the mountain with the pilgrims, carried by a few people who compare notes at the cairn, and the shrine owes the pilgrims a position on it. The question is whether the ground that was spared and the ground that was struck were chosen by the same hand, and what that hand might be. Here is the shrine's position. The count is real. The readings moved before the strikes, and the sparing held for three years in a district that shelled itself the whole time — those are measurements, and we will not unmake them to sound humble. What the count means is not yet ours to say, and we have stopped teaching what we do not know; we paid for that lesson at the cairn's edge and will not bill the pilgrims for it twice. Bring your count. Set it beside ours at the stone, in the open, in daylight. When the pattern finishes showing us what it is, it will not need a doctrine to make it true. Until then: measure, record, and hold the meaning loosely.",
+      "authorNote": "Doctrinal humility, deliberately precise — the shrine's keeper has heard the theory that one hand directed both the sparing and the strikes, and neither confirms nor teaches it yet; 'hold the meaning loosely' is the closest the shrine comes to saying the hand might be a person, not a pattern."
+    },
+    {
       "id": "comm_d607_garrison_forward_roster_recognition",
       "eventChainId": "evt_d605_post_ceasefire_forward_roster",
       "factionId": "faction_central_garrison",
       "day": 607,
       "title": "On the Unlicensed Checkpoint, Spur Road West",
       "body": "The Continuity Office is aware of an unlicensed toll operation at the western supply spur and notes, without endorsing, that its conduct to date has not required a punitive response. This should not be read as recognition, tolerance, or precedent. It should be read as the Office having a war's worth of higher priorities than a checkpoint that, so far, has caused this office no measurable inconvenience."
+    },
+    {
+      "id": "comm_d608_forward_roster_non_recognition",
+      "eventChainId": "evt_d605_post_ceasefire_forward_roster",
+      "factionId": "faction_forward_roster",
+      "day": 608,
+      "title": "The Office's Generous Non-Recognition",
+      "body": "The Continuity Office has issued a statement about our post, in which it manages to say that we exist, that we have caused it no measurable inconvenience, and that none of this means anything — and we have to admire a paragraph that can do all three at once. Our position is shorter. We didn't ask for a license. A license is permission, and roads don't give permission; they take a rate, and we are the ones who took the rate instead of the road. As for tolerance and precedent: the precedent was set when twelve people chose to stand where the occupying starts, and it will hold exactly as long as the road needs standing, and not one day less. If we were what the district's gossips call us, the Office would not need three paragraphs to explain why it isn't stopping us. The war is tired, not over; we read the notices same as everyone. The post is open. The rate is posted. Come through clean.",
+      "authorNote": "Accurate — the Roster neither sought nor wanted recognition; 'the war is tired, not over' is the most honest reading of the ceasefire any faction has published, and they didn't need a bulletin to know it."
     }
   ]
 }

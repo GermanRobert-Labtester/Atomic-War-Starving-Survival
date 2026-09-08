@@ -1,41 +1,26 @@
-# Foundry Treaty Outcome Vocabulary & State Lifecycle Contract
+# Foundry Treaty Outcome Contract
 
-**Runtime Source:** `Assets/Ashfall.Core/Foundry/SilentFoundryConsequencePolicy.cs`
-**C# Enum:** `Ashfall.Core.Foundry.FoundryTreatyOutcome`
+**Runtime source:** `Assets/Ashfall.Core/Foundry/SilentFoundryConsequencePolicy.cs`
 
----
+The closed policy vocabulary is exactly:
 
-## 1. Outcome Vocabulary
+| JSON value | Enum | Meaning |
+|---|---|---|
+| `met` | `FoundryTreatyOutcome.Met` | obligation fulfilled |
+| `missed` | `FoundryTreatyOutcome.Missed` | recoverable shortfall |
+| `violated` | `FoundryTreatyOutcome.Violated` | active breach/refusal |
 
-The runtime code enforces an exact, closed string vocabulary via `SilentFoundryConsequencePolicyCatalog.KnownOutcomes`:
+`NotRatified` and `Pending` are neutral enum states and have no policy rows.
+The plan's word “breached” is documentation shorthand only; writing
+`"breached"` to JSON fails the live catalog validator.
 
-```csharp
-public static readonly string[] KnownOutcomes = { "met", "missed", "violated" };
-```
+The current assessor distinguishes missed quota/delivery from active labour
+violation. The nine new rows preserve that distinction in authored data, but
+the new Plan 102 contracts do not yet have typed assessment triggers.
 
-| String Value | C# Enum Value | Numeric Value | Description | Carries Consequence? |
-|---|---|---|---|---|
-| `""` | `FoundryTreatyOutcome.NotRatified` | `0` | Pre-ratification day; neutral baseline. | No |
-| `""` | `FoundryTreatyOutcome.Pending` | `1` | Ratified, but initial 30-day assessment cycle unreached. | No |
-| `"met"` | `FoundryTreatyOutcome.Met` | `2` | Obligations upheld, quotas met, or peace observed. | **Yes** |
-| `"missed"` | `FoundryTreatyOutcome.Missed` | `3` | Quota shortfall, tariff delay, or logistical default without malice. | **Yes** |
-| `"violated"` | `FoundryTreatyOutcome.Violated` | `4` | Active breach, unauthorized overtime, strike, pollution, or armed incursion. | **Yes** |
+## One-shot lifecycle
 
-> [!IMPORTANT]
-> **Roadmap Vocabulary Note:** While high-level design prose sometimes uses the colloquial synonym `"breached"`, the authoritative runtime enum and string validator in `SilentFoundryConsequencePolicy.cs` strictly accepts `"violated"`. Authoring `"breached"` directly into the JSON triggers `SilentFoundryConsequencePolicyCatalog` load errors. All breach policies are therefore authored with `"violated"`.
-
----
-
-## 2. Transition & Terminal Semantics
-
-1. **Cycle-Based Evaluation:**
-   - Evaluated periodically on assessment days derived from `ratified_day + n * 30`.
-   - Each assessment cycle evaluates the conditions for that interval and resolves to `Met`, `Missed`, or `Violated`.
-
-2. **Idempotency Key:**
-   - `(treaty_id, cycleMarker)` where `cycleMarker = assessmentDay`.
-   - An outcome consequence cannot apply more than once for the same cycle, regardless of save/load, UI reopen, or re-assessment on the same sim day.
-
-3. **Distinction Between Missed and Violated:**
-   - `Missed`: A failure of production, delivery, or volume (e.g. 2/4 pipes cast, fuel payment delayed). Penalties are bounded (`-5.0` to `-6.0`) and focus on economic friction and temporary access gating.
-   - `Violated`: A breach of fundamental conduct rules (e.g. strike/overtime on charging floor, toxic bilge dumping into aquifer, armed skirmish in neutral buffer). Penalties are severe (`-8.0` to `-15.0`) and provoke route closures, embargoes, and potential faction war escalation.
+`ApplyConsequence` rejects neutral outcomes, looks up `(treaty_id, outcome)`,
+and checks `IsApplied(treatyId, assessmentDay)` before changing standing or
+copying market modifiers. Reassessment on the same day and save/reload do not
+apply the row twice.

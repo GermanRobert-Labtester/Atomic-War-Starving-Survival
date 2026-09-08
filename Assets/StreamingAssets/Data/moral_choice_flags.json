@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Flag definitions for the moral choice system. These flags gate quest access and branch locking.",
+  "description": "Persistent moral-history flags used by the moral choice system and downstream narrative predicates.",
   "flags": [
     { "id": "flag_betrayed_ally", "display_name": "Betrayed an Ally" },
     { "id": "flag_betrayed_faction", "display_name": "Betrayed a Faction" },
@@ -11,6 +11,21 @@
     { "id": "flag_branch_mercy_road_locked", "display_name": "Mercy Road Locked" },
     { "id": "flag_branch_iron_way_locked", "display_name": "Iron Way Locked" },
     { "id": "flag_branch_listener_locked", "display_name": "Listener's Thread Locked" },
-    { "id": "flag_branch_broken_compact_locked", "display_name": "Broken Compact Locked" }
+    { "id": "flag_branch_broken_compact_locked", "display_name": "Broken Compact Locked" },
+    { "id": "flag_spared_raider", "display_name": "Spared a Raider" },
+    { "id": "flag_executed_prisoner", "display_name": "Executed a Prisoner" },
+    { "id": "flag_shared_rations", "display_name": "Shared Rations" },
+    { "id": "flag_hoarded_medicine", "display_name": "Hoarded Medicine" },
+    { "id": "flag_sheltered_refugee", "display_name": "Sheltered a Refugee" },
+    { "id": "flag_expelled_survivor", "display_name": "Expelled a Survivor" },
+    { "id": "flag_repaired_infrastructure", "display_name": "Repaired Shared Infrastructure" },
+    { "id": "flag_sabotaged_rival", "display_name": "Sabotaged a Rival" },
+    { "id": "flag_broke_treaty", "display_name": "Broke a Treaty" },
+    { "id": "flag_honored_debt", "display_name": "Honored a Debt" },
+    { "id": "flag_ignored_distress", "display_name": "Ignored a Distress Call" },
+    { "id": "flag_responded_distress", "display_name": "Responded to Distress" },
+    { "id": "flag_forged_record", "display_name": "Forged a Record" },
+    { "id": "flag_preserved_archive", "display_name": "Preserved an Archive" },
+    { "id": "flag_chosen_faction_side", "display_name": "Chose a Faction Side" }
   ]
 }

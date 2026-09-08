@@ -54,10 +54,23 @@ namespace AtomicWar.GodotApp
                 if (_journalBook.ActiveTabContent.Length > 0) tabsWithContent++;
                 GD.Print($"[JournalUiTest] tab {t} ({_journalBook.ActiveTab}) content={_journalBook.ActiveTabContent.Length} chars · status=\"{_journalBook.StatusLine}\"");
             }
+            _journal.SwitchTab(0);
+            var authored = _journal.TryAddRawEntry(
+                "journal_day_32_rationing_decision",
+                "UI producer fallback text.",
+                null!,
+                day: 1);
+            bool authoredVisible = (authored != null
+                || _journal.Entries.Any(e => e.KnowledgeKey == "journal_day_32_rationing_decision"))
+                && _journalBook.ActiveTabContent.Contains("bunker is running low on food", StringComparison.Ordinal)
+                && _journalBook.ActiveTabContent.Contains("Elena Vasquez", StringComparison.Ordinal)
+                && _journalBook.ActiveTabContent.Contains("Day 32", StringComparison.Ordinal);
             _journalBook.Close();
             bool closed = !_journalBook.IsOpen && !_journalBook.Visible;
 
-            bool pass = opened && closed && logLen > 0 && summaryLen > 0 && tabsWithContent == JournalSystem.TabCount;
+            bool pass = opened && closed && logLen > 0 && summaryLen > 0
+                && tabsWithContent == JournalSystem.TabCount
+                && authoredVisible;
             HostCli.EmitSummary("journal_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }

@@ -75,6 +75,105 @@
       "activeFromDay": 586,
       "displayName": "The Understory Relay",
       "description": "The call log taped inside the stairwell door has always run thin, a handful of entries a week, no names attached. Lately it runs thick, two and three lines stacked to a night, more hands adding to it than the relay chain has ever needed before. Whatever is moving through Sector 4 this month, both checkpoints want a piece of what The Understory can tell them, and neither has managed to trace where the antenna moves to next. Eighteen rads an hour, low as ever, still the reason nobody's found this stairwell. The extra traffic hasn't slowed the relay's habit of moving on after a single broadcast. If anything, it's moving faster."
+    },
+    {
+      "id": "loc_override_checkpoint_occupied",
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "overrideType": "occupied",
+      "activeFromDay": 200,
+      "activeUntilDay": 250,
+      "displayName": "Garrison-Held Checkpoint Gamma",
+      "description": "Coil wire and split cedar logs funnel the road down to a single gravel lane under the guard shack. Stenciled iron plates bearing the garrison transit stamp are nailed over the provincial highway marker, and coal smoke drifts from a welded drum beside the barrier. Passing wagons pull to the verge to wait out the document tally before the drop-pole lifts."
+    },
+    {
+      "id": "loc_override_granary_burned",
+      "locationId": "loc_crossing_granary_pledge",
+      "overrideType": "post_strike",
+      "activeFromDay": 220,
+      "activeUntilDay": 260,
+      "displayName": "Burned Pledged Granary",
+      "description": "The timber siding has collapsed inward across the bins, leaving charred rye mounded in damp piles under the exposed ceiling beams. A greasy smell of scorched hull and wet wood clings to the loading dock, where spilled grain forms a black crust along the wagon ruts. Wyn Sabler's tally board still hangs by one rusted nail near the door, its chalk figures smeared by rainwater."
+    },
+    {
+      "id": "loc_override_well_contaminated",
+      "locationId": "location_municipal_water_reservoir",
+      "overrideType": "contaminated",
+      "activeFromDay": 240,
+      "activeUntilDay": 280,
+      "displayName": "Contaminated Municipal Reservoir",
+      "description": "A cordon of red wire and grease-penciled quarantine cards rings the valve house perimeter, warning travelers away from the open holding basin. An oily yellow scum films the surface around the intake grates, and the brass outflow taps have been padlocked shut with heavy chain. Empty canteen straps and tipped buckets lie abandoned on the concrete rim where scavengers retreated in haste."
+    },
+    {
+      "id": "loc_override_rail_yard_fortified",
+      "locationId": "loc_sector_4_rail_switchyard",
+      "overrideType": "fortified",
+      "activeFromDay": 260,
+      "activeUntilDay": 320,
+      "displayName": "Fortified Sector 4 Switchyard",
+      "description": "Derailers have been clamped to the main spur, and three empty boxcars stand chained across the switching throat as an improvised redoubt. Sheet-steel shields have been bolted along the upper catwalks of the sand tower, overlooking the approach tracks. The yard office lantern burns day and night, where sentries keep watch over the points with lanterns shuttered toward the siding."
+    },
+    {
+      "id": "loc_override_village_abandoned",
+      "locationId": "loc_settlement_iron_siding",
+      "overrideType": "abandoned",
+      "activeFromDay": 280,
+      "activeUntilDay": 340,
+      "displayName": "Evacuated Iron Siding",
+      "description": "Cottage doors stand latched with wire or swung wide to the drafts, the stove ashes inside gone cold and gray. Two handcarts with broken axles sit abandoned in the central thoroughfare amid dropped bundles of mended bedding and hearth iron. Wind rattles loose tin on the workshop lean-to, but no chimneys show smoke across the entire terraced settlement."
+    },
+    {
+      "id": "loc_override_factory_occupied",
+      "locationId": "location_chemical_plant",
+      "overrideType": "occupied",
+      "activeFromDay": 300,
+      "activeUntilDay": 350,
+      "displayName": "Occupied Chemical Works",
+      "description": "Faction sentries in quilted coats patrol the perimeter catwalks above the settling ponds, rifles slung muzzle-down against the sleet. A low thrum vibrates through the foundation slab as selected processing retorts operate on irregular shifts under armed supervision. Crudely stenciled faction insignia mark the freight bay doors, where boxed saltpeter and acid carboys are loaded under torchlight."
+    },
+    {
+      "id": "loc_override_bridge_destroyed",
+      "locationId": "loc_bridge_seven",
+      "overrideType": "post_strike",
+      "activeFromDay": 310,
+      "activeUntilDay": 360,
+      "displayName": "Shattered Bridge Seven",
+      "description": "The central concrete span was severed by explosive charges to halt an advancing column, dropping sixty feet of highway bed into the dark gorge below. Twisted rebar and cracked slab hang suspended like fringe above the river rapids. Faint surveyor stakes on the near abutment mark where engineers measured the gap before deciding it could not be bridged before winter."
+    },
+    {
+      "id": "loc_override_roadblock_liberated",
+      "locationId": "loc_ash_militia_deadfall_barrier",
+      "overrideType": "liberated",
+      "activeFromDay": 330,
+      "activeUntilDay": 370,
+      "displayName": "Dismantled Upland Deadfall",
+      "description": "Heavy log revetments and piled ballast rock have been dragged aside into the road ditches, reopening the pass to wagon traffic. Trampled field caps, discarded ration tins, and broken pick handles litter the muddy turnout where the garrison stood watch. Civilian traders pass through without pausing, glancing only briefly at the blackened embers of the abandoned checkpoint shack."
+    },
+    {
+      "id": "loc_override_camp_overrun",
+      "locationId": "loc_crossing_petition_tent",
+      "overrideType": "abandoned",
+      "activeFromDay": 340,
+      "activeUntilDay": 380,
+      "displayName": "Overrun Petition Camp",
+      "description": "The canvas pavilions of the petition camp have been torn down and trampled into frozen muck by charging boots. Perrin Ashby's drafting table lies overturned in a drift of snow, its draft charters and petition rolls scattered across the gravel flats. A ring of cold stones and scattered cooking pots marks where families gathered before the raid scattered them into the hills."
+    },
+    {
+      "id": "loc_override_station_reclaimed",
+      "locationId": "location_metro_station",
+      "overrideType": "reclaimed",
+      "activeFromDay": 350,
+      "activeUntilDay": 400,
+      "displayName": "Reclaimed Metro Concourse",
+      "description": "Survivors have cleared broken glass from the ticket hall and secured the steel security grilles with forged padlock hasps. A wood stove vented through an intake grate warms the mezzanine, where blankets hang between the tiled pillars to divide sleeping bays. A hand-lettered board near the stairs lists communal watch shifts and current water allotments in neat chalk."
+    },
+    {
+      "id": "loc_override_field_scorched",
+      "locationId": "location_burned_woodland",
+      "overrideType": "post_strike",
+      "activeFromDay": 360,
+      "activeUntilDay": 400,
+      "displayName": "Shell-Scored Pine Belt",
+      "description": "Artillery bombardments have sheared the pine trunks into splintered snags rising from blackened, churned earth. Deep shell hollows collect dark meltwater among scattered scrap metal, wire fragments, and scorched timber. Low-hanging ash mist drifts between the stumps, and warning markers cut from red cloth hang tied to the boundary boughs to deter scavengers from venturing off the path."
     }
   ]
 }

@@ -122,6 +122,159 @@
       "signalStrength": "S3",
       "kind": "call",
       "audio_cue": "radio_vo_verdict_reckoning"
+    },
+    {
+      "id": "radio_verdict_barometric_spread",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 268,
+      "source": "Cape Wrath Meteorological Station",
+      "message": "Barometric spread logged: 982 hPa measured vs 1014 hPa central model. Local barograph deviation retained without manual override.",
+      "signalStrength": "S2",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_service_cycle_greywater",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 272,
+      "source": "Greywater Tide Gauge Station",
+      "message": "Stilling well purge cycle complete. Backwash filter cleared. Fault count: zero. Next scheduled service in 30 days.",
+      "signalStrength": "S2",
+      "kind": "maintenance"
+    },
+    {
+      "id": "radio_verdict_stilling_well_delta",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 275,
+      "source": "Greywater Tide Gauge Station",
+      "message": "Stilling well datum reads +6 cm against baseline brass scale. Tidal harmonic model predicts -14 cm. Discrepancy logged as sensor offset.",
+      "signalStrength": "S2",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_subsector_ledger_update",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 280,
+      "source": "Census Carrier, Machine Registers",
+      "message": "Subsector ledger update acknowledged. Registered entities: 412. Unreconciled balance carries forward to reckoning window.",
+      "signalStrength": "S3",
+      "kind": "census"
+    },
+    {
+      "id": "radio_verdict_geophone_offset_recal",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 284,
+      "source": "Geophone Pit, Array 1",
+      "message": "Array 1 baseline recalibration: geophone offset drift -0.04 Hz. Hardware correction rejected by safety interlock. Running on uncorrected baseline.",
+      "signalStrength": "S1",
+      "kind": "calibration"
+    },
+    {
+      "id": "radio_verdict_strata_density_drift",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 288,
+      "source": "Highland Core-Sample Repository",
+      "message": "Subsurface core layer 7 acoustic density reads 1.48 g/cm³ against archived 2.12 g/cm³. Core rack sealed. Re-audit scheduled.",
+      "signalStrength": "S1",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_relay_switch_pass4",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 295,
+      "source": "Pass 4 Signal Relay Mast",
+      "message": "Pass 4 automatic battery switchover cycle verified. Auxiliary cells charged to 24.2 V. Decommissioned line impedance nominal.",
+      "signalStrength": "S1",
+      "kind": "maintenance"
+    },
+    {
+      "id": "radio_verdict_unscheduled_burst_88",
+      "frequency": "88.5 MHz",
+      "dayTrigger": 300,
+      "source": "Unregistered Carrier Bleed",
+      "message": "Unscheduled carrier burst on civil channel: 420 ms duration. Modulation index inconsistent with broadcast schedule. Logged without attribution.",
+      "signalStrength": "S1",
+      "kind": "anomaly"
+    },
+    {
+      "id": "radio_verdict_river_stage_deviation",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 304,
+      "source": "Karsk River Gauging Station",
+      "message": "River stage telemetry: 4.12 m at station sensor. No upstream rain event registered by telemetry basin. Offset flagged.",
+      "signalStrength": "S2",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_core_vault_desiccant_purge",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 312,
+      "source": "Highland Core-Sample Repository",
+      "message": "Desiccant purge valve cycle complete. Vault interior relative humidity maintained at 18 percent. Nitrogen atmosphere sealed.",
+      "signalStrength": "S2",
+      "kind": "maintenance"
+    },
+    {
+      "id": "radio_verdict_unverified_household_tally",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 318,
+      "source": "Census Carrier, Machine Registers",
+      "message": "Interim census registry: 419 entities entered. Seven unverified entries held in provisional ledger pending verification.",
+      "signalStrength": "S3",
+      "kind": "census"
+    },
+    {
+      "id": "radio_verdict_repeater_origin_mismatch",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 326,
+      "source": "North Cliff Observation Bunker",
+      "message": "Packet 884 origin header mismatch: physical path deviates from routing table. Packet forwarded as valid.",
+      "signalStrength": "S2",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_spectrometry_drift_stjude",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 330,
+      "source": "St. Jude Marine Laboratory",
+      "message": "Sample rack 12 isotope drift: +0.08 permille. Hardware offset retained. Analysis valid as filed.",
+      "signalStrength": "S2",
+      "kind": "calibration"
+    },
+    {
+      "id": "radio_verdict_substation_breaker_test",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 338,
+      "source": "The Fuse World, Bus Isolation",
+      "message": "Automated bus isolation test executed. High-voltage breaker trip latency: 12 ms. Distribution grid continuity intact.",
+      "signalStrength": "S3",
+      "kind": "maintenance"
+    },
+    {
+      "id": "radio_verdict_holding_capacity_parity",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 344,
+      "source": "The Office of Censuses",
+      "message": "Holding capacity parity calculation: quota 420, presented count 419. Margin: 1 entity. Reconciliation window remaining.",
+      "signalStrength": "S3",
+      "kind": "census"
+    },
+    {
+      "id": "radio_verdict_telemetry_phase_inversion",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 352,
+      "source": "Pass 4 Signal Relay Mast",
+      "message": "Ground shock arrival detected with 180 degree phase inversion. Primary wave precedes secondary by 18 ms. Calibration verified.",
+      "signalStrength": "S2",
+      "kind": "anomaly"
+    },
+    {
+      "id": "radio_verdict_carrier_override_standby",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 360,
+      "source": "The Office of Censuses — Master Terminal",
+      "message": "Carrier override engaged. Routine telemetry schedule suspended. Auxiliary registers sealed. The census window is closed.",
+      "signalStrength": "S4",
+      "kind": "emergency"
     }
   ]
 }

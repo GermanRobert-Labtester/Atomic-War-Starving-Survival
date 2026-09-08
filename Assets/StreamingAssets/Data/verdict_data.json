@@ -135,6 +135,48 @@
       "title": "The Count",
       "discovery_location_id": "loc_archive_tape_silo",
       "body_summary": "The count is presented. It names the shelter's persons, by name. A machine does not reason. It counts. This is the count."
+    },
+    {
+      "layer": 7,
+      "knowledge_key": "lore_verdict_second_geophone",
+      "title": "The Second Geophone Pit",
+      "discovery_location_id": "loc_twelve_gauge_array",
+      "body_summary": "The second array is not a copy of the first. Its stations fire into the ridge and listen for the answer, a deeper register built to compare one machine's patience with another's."
+    },
+    {
+      "layer": 8,
+      "knowledge_key": "lore_verdict_cable_run_east",
+      "title": "The Cable Run East",
+      "discovery_location_id": "loc_decommissioned_signal_relay",
+      "body_summary": "The cable does not terminate at a weapon. It runs from the sounding stations to a relay mast, where the line is converted into a schedule the counting house can carry. The machines were built to serve the interval between a reading and the order that follows it."
+    },
+    {
+      "layer": 9,
+      "knowledge_key": "lore_verdict_counting_house_origin",
+      "title": "The Counting House Before the Count",
+      "discovery_location_id": "location_radar_site",
+      "body_summary": "The radar annex predates the census language. Its target grid is a list of what might cross the horizon, and the first count began as a promise that no movement would go unrecorded. The later register only changed the object being counted."
+    },
+    {
+      "layer": 10,
+      "knowledge_key": "lore_verdict_first_halt",
+      "title": "The First Halt",
+      "discovery_location_id": "location_weather_station",
+      "body_summary": "The barograph shows a clean break in the transmission record: eleven minutes with no pressure, no wind, and no machine status. Then the carrier returns under a new station prefix, and the log marks the restart as routine. No one signed the line."
+    },
+    {
+      "layer": 11,
+      "knowledge_key": "lore_verdict_last_hand",
+      "title": "The Last Hand",
+      "discovery_location_id": "loc_clifftop_observation_bunker",
+      "body_summary": "The final operator left a grease mark on the bus valve and a correction to the horizon grid. The mark is human, the correction is careful, and the duty roster says the station was already empty. The machine kept the hand as an unresolved maintenance event."
+    },
+    {
+      "layer": 12,
+      "knowledge_key": "lore_verdict_open_count",
+      "title": "The Open Count",
+      "discovery_location_id": "loc_border_checkpoint_ruins",
+      "body_summary": "The checkpoint ledger closes every convoy except the one that carried the count onward. Forty-two entries remain without a destination, so the register keeps the window open rather than call them absent. A count that cannot close becomes a duty passed from office to office."
     }
   ],
   "corruption_corpus": [
@@ -145,6 +187,23 @@
     "the meter read. The meter read. The meter read.",
     "CENSUS WINDOW: [garbled]. Persons present: [garbled].",
     "the archive does not require a reader. the archive does not —",
-    "— held pending count. held pending count. held —"
+    "— held pending count. held pending count. held —",
+    "[03:14:00] — sector [unreadable] holds at [unreadable].",
+    "CENSUS WINDOW: persons present: [garbled] [garbled] [garbled].",
+    "valve. valve. the valve does not —",
+    "— signal lost mid-verbose. — signal lost mid-verbose. —",
+    "the count is the count is the count is —",
+    "[03:40:12] carrier acknowledged. acknowledgement not received.",
+    "REGISTER ENTRY: [blank] / RESPONSIBLE HAND: [blank] / STATUS: CONTINUING.",
+    "maintenance interval expired. maintenance interval expires. maintenance —",
+    "the archive does not require — the archive does not —",
+    "sector halts. sector — sector halts.",
+    "READOUT 04: [unreadable] / READOUT 04: [unreadable] / READOUT 04:",
+    "personnel total revised downward by [garbled]. reason for revision: [garbled].",
+    "the hand was scheduled. the hand was absent. the valve was turned.",
+    "[tone] [silence] [tone] — carrier remains within specification.",
+    "FAILURE CODE 36: operator record incomplete. repeat operator record. repeat —",
+    "counting house online. counting house vacant. counting house online.",
+    "CLOSE REQUEST DENIED. CENSUS WINDOW OPEN. CENSUS WINDOW OPEN."
   ]
 }

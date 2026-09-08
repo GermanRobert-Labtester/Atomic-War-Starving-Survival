@@ -203,15 +203,37 @@ namespace Ashfall.Core.MoralChoice
         public const string FlagBecomeWarlord = "flag_become_warlord";
         public const string FlagThroneOfAsh = "flag_throne_of_ash";
 
+        // ── Persistent moral-memory flags (Plan 125) ──────────────────
+        public const string FlagSparedRaider = "flag_spared_raider";
+        public const string FlagExecutedPrisoner = "flag_executed_prisoner";
+        public const string FlagSharedRations = "flag_shared_rations";
+        public const string FlagHoardedMedicine = "flag_hoarded_medicine";
+        public const string FlagShelteredRefugee = "flag_sheltered_refugee";
+        public const string FlagExpelledSurvivor = "flag_expelled_survivor";
+        public const string FlagRepairedInfrastructure = "flag_repaired_infrastructure";
+        public const string FlagSabotagedRival = "flag_sabotaged_rival";
+        public const string FlagBrokeTreaty = "flag_broke_treaty";
+        public const string FlagHonoredDebt = "flag_honored_debt";
+        public const string FlagIgnoredDistress = "flag_ignored_distress";
+        public const string FlagRespondedDistress = "flag_responded_distress";
+        public const string FlagForgedRecord = "flag_forged_record";
+        public const string FlagPreservedArchive = "flag_preserved_archive";
+        public const string FlagChosenFactionSide = "flag_chosen_faction_side";
+
         /// <summary>Set when the Dying Messenger's packet is delivered unopened — a Storykeeper key.</summary>
         public const string FlagMessengerKept = "flag_moral_messenger_kept";
 
-        /// <summary>All 11 moral flag ids.</summary>
+        /// <summary>All 26 moral flag ids, including the external messenger marker.</summary>
         public static readonly string[] AllFlags =
         {
             FlagMercyRoadLocked, FlagIronWayLocked, FlagListenerLocked, FlagBrokenCompactLocked,
             FlagBetrayedAlly, FlagBetrayedFaction, FlagBetrayedTrust, FlagBrokenPact,
-            FlagBecomeWarlord, FlagThroneOfAsh, FlagMessengerKept
+            FlagBecomeWarlord, FlagThroneOfAsh,
+            FlagSparedRaider, FlagExecutedPrisoner, FlagSharedRations, FlagHoardedMedicine,
+            FlagShelteredRefugee, FlagExpelledSurvivor, FlagRepairedInfrastructure,
+            FlagSabotagedRival, FlagBrokeTreaty, FlagHonoredDebt, FlagIgnoredDistress,
+            FlagRespondedDistress, FlagForgedRecord, FlagPreservedArchive, FlagChosenFactionSide,
+            FlagMessengerKept
         };
 
         // ── Branch ids ──────────────────────────────────────────────────

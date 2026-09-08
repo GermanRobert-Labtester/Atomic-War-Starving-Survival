@@ -323,5 +323,17 @@ namespace Ashfall.Core.Tests
             // Default fallback when querying non-existent faction
             Assert.False(tuning.TryGetFactionPreference("unregistered_raider_band", out _));
         }
+
+        [Fact]
+        public void FactionPreferences_GarrisonLegacyKeyAndSystemsAliasResolveTogether()
+        {
+            var tuning = new HardcoreEconomyTuning();
+            tuning.Apply(LoadAuthoritativeBundle());
+
+            Assert.True(tuning.TryGetFactionPreference("central_garrison_remnants", out var legacy));
+            Assert.True(tuning.TryGetFactionPreference("faction_central_garrison", out var systems));
+            Assert.Equal(legacy.FactionId, systems.FactionId);
+            Assert.Equal("central_garrison_remnants", legacy.FactionId);
+        }
     }
 }

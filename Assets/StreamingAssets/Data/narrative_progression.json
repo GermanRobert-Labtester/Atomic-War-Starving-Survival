@@ -20,6 +20,46 @@
         {
             "description": "Chapter 5 Pending: The Long Winter — Nuclear winter conditions setting in",
             "order": 5
+        },
+        {
+            "description": "Chapter 6 Pending: The Consolidation — The camps that lasted begin calling themselves permanent. Roads acquire owners, favors become obligations, and staying independent starts to require its own kind of loyalty.",
+            "order": 6
+        },
+        {
+            "description": "Chapter 7 Pending: The Long Dark — The cold becomes routine, which is worse than surprise. Work still gets done, but the shelter has begun measuring what it spends in sleep, patience, and people.",
+            "order": 7
+        },
+        {
+            "description": "Chapter 8 Pending: The Thaw — Water starts moving under the ice and the roads return by pieces. Expeditions range farther, caravans reappear, and every reopened route brings strangers with it.",
+            "order": 8
+        },
+        {
+            "description": "Chapter 9 Pending: The Schism — The old agreements no longer hold everyone they were meant to hold. Factions split over what they can afford to become, and neutrality starts looking like a choice made for someone else.",
+            "order": 9
+        },
+        {
+            "description": "Chapter 10 Pending: The Black Market — The official markets still open, but the rare goods move somewhere else. Names, favors, and quiet introductions begin buying what ordinary currency cannot.",
+            "order": 10
+        },
+        {
+            "description": "Chapter 11 Pending: The Reckoning — Nothing owed has disappeared just because it went uncollected. Old promises surface beside old grievances, and the shelter begins paying for decisions everyone hoped were finished.",
+            "order": 11
+        },
+        {
+            "description": "Chapter 12 Pending: The Rebuilding — For the first time, repair means more than keeping something alive another week. Crews begin restoring systems meant to outlast the people doing the work.",
+            "order": 12
+        },
+        {
+            "description": "Chapter 13 Pending: The Second Winter — Winter returns to a world that has learned how to prepare and how to take. The shelter is harder to kill now; so are the people outside it.",
+            "order": 13
+        },
+        {
+            "description": "Chapter 14 Pending: The Muster — Those who endured gather to decide what comes next. Delegations, banners, old flags brought out of storage — the question is no longer who survives, but who speaks for them.",
+            "order": 14
+        },
+        {
+            "description": "Chapter 15 Pending: The Inheritance — The question is no longer whether the shelter can endure another season. It is what will be handed forward, who will inherit it, and what they will be told it cost.",
+            "order": 15
         }
     ]
 }

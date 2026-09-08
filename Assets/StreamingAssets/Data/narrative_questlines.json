@@ -195,6 +195,398 @@
           "description": "Elena's arc concludes. With Healer's Soul, she synthesizes the Ash Rot Remedy — a permanent cure for chronic fallout lung rot — using botanical spores from the Overgrown Nursery. With Cold Triage, she sacrifices her own safety during a biological containment breach to save the shelter's population."
         }
       ]
+    },
+    {
+      "quest_id": "quest_the_machinists_regret",
+      "survivor_id": "marcus_olejnik",
+      "title": "The Machinist's Regret",
+      "target_location_id": "loc_recovery_yard",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "Marcus finds a serialized pneumatic firing block among the scrap salvaged from the Recovery Yard. He recognizes the stamp — his own apprentice mark from the municipal machine works, thirty years before the Exchange. It belongs to an improvised siege projector designed to launch incendiary canisters into civilian crowd corridors during the food riots.",
+          "objective_items": [
+            "blueprint_roll"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Marcus traces the weapon's assembly through old work manifests. The projector was never decommissioned; it was mounted on an armored flatbed at the yard and used until its breech cracked. He needs tools and replacement fittings to disassemble the mechanism before scavengers rearm it.",
+          "objective_items": [
+            "scrap_metal",
+            "soldering_kit"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "A raider war-party is scouting the perimeter and Marcus's modified projector could wipe out their lead technical vehicle in one salvo. Marcus stands over the breech with a cutting torch in one hand and ignition fuses in the other. He begs you not to make him fire his life's worst sin again.",
+          "branch_a": {
+            "id": "dismantle_weapon",
+            "label": "Cut the Breech",
+            "description": "Order Marcus to destroy the projector permanently. He gains Scrupulous Machinist trait, improving maintenance efficiency and reducing tool breakdown across all shelter machinery.",
+            "trait_granted": "trait_scrupulous_machinist",
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "fire_salvo",
+            "label": "Fire the Projector",
+            "description": "Force Marcus to fire the weapon. The raiders are obliterated, but Marcus hardens into an Unflinching Pragmatist, permanently increasing combat weapon crafting speed while suffering periodic bouts of melancholic silence.",
+            "trait_granted": "trait_unflinching_pragmatist",
+            "morale_delta": -15
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "Marcus's past is laid to rest. As a Scrupulous Machinist, he rebuilds the shelter's primary turbine array to run on recycled turbine seals without fault. As an Unflinching Pragmatist, he constructs automated perimeter defenses that keep the compound safe at the permanent expense of his own peace of mind."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_abandoned_school",
+      "survivor_id": "the_teacher",
+      "title": "The Empty Desks",
+      "target_location_id": "loc_school_gymnasium",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Teacher rings his hand bell at dawn, but his voice breaks as he pulls an old class attendance ledger from his coat. On the first day of the Exchange, he dismissed thirty-four pupils to the School Gymnasium intake station. He has kept their names in pencil, counting how many never returned.",
+          "objective_items": [
+            "childrens_books"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "The Teacher requests an expedition to the School Gymnasium. He needs to recover personal effects left in the gym lockers — drawings, spelling notebooks, and warm sweaters — before winter moisture and radon seep rot them away completely.",
+          "objective_items": [
+            "pocket_notebook",
+            "bandage"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "In the gymnasium locker room, the Teacher discovers that three of his former students survived the initial strike and left diary entries before dying of exposure days later. Grief threatens to swallow him whole. He asks whether the shelter should build a classroom for the camp's orphans or train them strictly for manual labor and survival.",
+          "branch_a": {
+            "id": "restore_classroom",
+            "label": "Found the School",
+            "description": "Commit resources to teaching reading and history. The Teacher gains Persistent Educator trait, boosting shelter learning speed and raising morale during dark winter cycles.",
+            "trait_granted": "trait_persistent_educator",
+            "morale_delta": 15
+          },
+          "branch_b": {
+            "id": "practical_survival",
+            "label": "Drill for Survival",
+            "description": "Dedicate children strictly to work shifts and defense drills. The Teacher adopts a Stoic Disciplinarian mindset, increasing labor output by young survivors while extinguishing childhood folklore.",
+            "trait_granted": "trait_stoic_disciplinarian",
+            "morale_delta": -10
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The Teacher's curriculum shapes the bunker's next generation. With Persistent Educator, his students compile the Settlement Archive, teaching future generations the lessons that prevented another war. With Stoic Disciplinarian, his students grow into unbreakable sentries who secure the outer walls without question."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_final_harvest",
+      "survivor_id": "the_chef",
+      "title": "The Bitter Broth",
+      "target_location_id": "loc_forward_roster_camp",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Chef is found late at night staring at a pot of grey root broth, refusing to serve it. He confesses that during the first winter, while captured at the Forward Roster Camp, he laced a banquet stew with spindle-berry extract to poison an entire raider brigade before escaping into the ash.",
+          "objective_items": [
+            "canned_food"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Word reaches the kitchen that surviving kin of the poisoned raiders are among the refugee caravans seeking entry. The Chef insists on recovering his original spice kit and stockpots from the camp to prove that good food can sustain life rather than deliver death.",
+          "objective_items": [
+            "fuel",
+            "clean_water"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "A desperate delegation from the outer encampments confronts the Chef, accusing him of holding back clean provisions while feeding contaminated mash to newcomers. The Chef offers to publicly cook a communal banquet from his prized private reserves, or ration them into emergency tinctures.",
+          "branch_a": {
+            "id": "communal_banquet",
+            "label": "Host the Banquet",
+            "description": "Feed the entire settlement a rich, morale-boosting feast. The Chef gains Merciful Provider trait, maximizing nutrition from low-grade food and permanently reducing hunger decay across the crew.",
+            "trait_granted": "trait_merciful_provider",
+            "morale_delta": 20
+          },
+          "branch_b": {
+            "id": "conserve_extracts",
+            "label": "Lock the Pantry",
+            "description": "Hold back the rations and maintain cold kitchen discipline. The Chef bears the Poisoner's Burden trait, improving preservative crafting and food storage duration at the cost of personal warmth.",
+            "trait_granted": "trait_poisoners_burden",
+            "morale_delta": -15
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The Chef's kitchen anchors the community's survival. As Merciful Provider, he establishes the Great Mess Hall, where every traveler finds hot stew regardless of origin. With Poisoner's Burden, he perfects vacuum-cured ration cakes that allow long-range expeditions to cross the desert without supply drops."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_irradiated_soil",
+      "survivor_id": "suki_tanaka",
+      "title": "The Salted Furrows",
+      "target_location_id": "loc_agricultural_coop",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "Suki brings a jar of dark dirt into the common room and spits onto the table. The soil from the Razed Agricultural Co-op is heavy with cesium salts, but she identifies faint rhizome mycelium fighting through the crust. Her family's generational tomato seeds are in her pocket, waiting for ground.",
+          "objective_items": [
+            "seed_packets"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Suki drafts a soil recovery plan requiring chemical amendment and clean irrigation to flush out radionuclides before the heirloom seeds can germinate. Without fertilizer and clean water, the seedlings will absorb fallout isotopes and wither within hours.",
+          "objective_items": [
+            "item_ammonium_nitrate_sack",
+            "clean_water"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "The first crop sprouts, but high ambient radiation threatens the seedlings. Suki can either perform a slow, multi-generational soil-cleansing cycle with minimal immediate yield, or dose the beds with mutagenic fertilizers to force a high-yield emergency harvest that may contaminate future soil.",
+          "branch_a": {
+            "id": "cleanse_soil",
+            "label": "Slow Remediation",
+            "description": "Protect the pure genetics and restore the soil patiently. Suki gains Soil Custodian trait, boosting greenhouse crop disease resistance and guaranteeing pure seed yield over time.",
+            "trait_granted": "trait_soil_custodian",
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "force_growth",
+            "label": "Force Yield Now",
+            "description": "Force the growth cycle with chemical additives to feed starving survivors today. Suki gains Forward Planter trait, increasing greenhouse yield by 40% while slightly elevating food radiation risk.",
+            "trait_granted": "trait_forward_planter",
+            "morale_delta": -10
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "Suki's green thumb changes the shelter's destiny. As Soil Custodian, she establishes the Valley Seed Library, safeguarding pure pre-war heirloom genetics for the reclamation era. As Forward Planter, she turns the subterranean hydroponics bays into an industrialized food engine that ends famine forever."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_crisis_of_faith",
+      "survivor_id": "the_priest",
+      "title": "The Ash Confessional",
+      "target_location_id": "loc_ash_sign_shrine",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Priest stops speaking mid-vespers, drops his tin cross onto the concrete, and walks into the darkness of the lower corridors. He spent the first winter administering last rites to dozens of ARS casualties, and the god he served never answered a single prayer.",
+          "objective_items": [
+            "item_collectible_prayer_book"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "The Priest is found sitting at the base of the Ash Sign Shrine, staring at the irradiated sky. He asks for basic medical dressings and water, not for himself, but to wash the radiation sores of the pilgrims huddling outside the shrine walls.",
+          "objective_items": [
+            "bandage",
+            "clean_water"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "A dying pilgrim begs the Priest for absolution, admitting to murder during the fall of the city. The Priest confesses that he no longer believes in divine grace. He asks whether he should offer comforting lies in God's name or speak the cold, secular truth of human accountability.",
+          "branch_a": {
+            "id": "offer_grace",
+            "label": "Grant Absolution",
+            "description": "Lie to give the dying peace. The Priest rekindles his role as a spiritual shepherd, gaining Faithful Anchor trait — dramatically reducing mental breakdown rates across the shelter during disasters.",
+            "trait_granted": "trait_faithful_anchor",
+            "morale_delta": 15
+          },
+          "branch_b": {
+            "id": "speak_truth",
+            "label": "Preach Human Truth",
+            "description": "Refuse dogma and teach people to find strength in each other. The Priest gains Honest Skeptic trait, improving crisis counseling efficiency and eliminating superstition-based unrest.",
+            "trait_granted": "trait_honest_skeptic",
+            "morale_delta": -5
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The Priest redefines his calling. As Faithful Anchor, he leads the Sanctuary of Ash, giving hope to hundreds of broken travelers across the wasteland. As Honest Skeptic, he establishes a mutual-aid covenant that teaches survivors to trust in human solidarity rather than absent heavens."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_truth_of_day_30",
+      "survivor_id": "the_reporter",
+      "title": "The Buried Headline",
+      "target_location_id": "loc_printworks",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Reporter is caught prying open a locked filing drawer in the communications bay. She reveals that on Day 30 after the strike, she uncovered documents proving the regional military command triggered the second salvo knowingly, sacrificing the valley's towns to save a hardened bunker network.",
+          "objective_items": [
+            "pocket_notebook"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "The Reporter leads a mission to the ruined Printworks to recover the original master typesetting plates and audiotape interviews with command dispatchers before atmospheric moisture corrodes the evidence.",
+          "objective_items": [
+            "item_cassette_tape",
+            "signal_source_report"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "The presses are ready to print broadsheets detailing the Day 30 betrayal. If distributed, the truth could trigger civil war between former military personnel and civilian survivors. The Reporter asks: print the brutal truth and let the chips fall, or burn the plates to preserve fragile peace?",
+          "branch_a": {
+            "id": "publish_truth",
+            "label": "Print the Truth",
+            "description": "Publish the broadsheet. Riots threaten the gates, but the truth clears the air. The Reporter gains Uncompromising Journalist trait, increasing intel gathering and unlocking rare investigative dialogue choices.",
+            "trait_granted": "trait_uncompromising_journalist",
+            "morale_delta": -20
+          },
+          "branch_b": {
+            "id": "burn_plates",
+            "label": "Burn the Proof",
+            "description": "Suppress the publication to keep the peace. The Reporter gains Protective Censor trait, reducing faction friction and panic during diplomatic incidents at the cost of personal integrity.",
+            "trait_granted": "trait_protective_censor",
+            "morale_delta": 5
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The Reporter's legacy echoes across the wastes. With Uncompromising Journalist, her Wasteland Chronicle becomes the authoritative free press of the post-exchange world. With Protective Censor, she acts as chief civic mediator, steering factions away from bloody conflict through calculated discretion."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_substation_ghost",
+      "survivor_id": "the_electrician",
+      "title": "The Ghost on the Wire",
+      "target_location_id": "loc_substation_yard",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Electrician refuses to touch the main breaker box during routine shelter maintenance. He admits that on the night of the Exchange, his frantic attempt to isolate the civilian grid triggered a catastrophic transformer explosion at Substation Yard, blacking out the hospital district and trapping hundreds in sealed basements.",
+          "objective_items": [
+            "battery"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "The Electrician detects anomalous current leaking back from Substation Yard along dead high-tension lines. He needs heavy battery packs and soldering tools to trace the source of the phantom draw and ground the line safely.",
+          "objective_items": [
+            "battery_pack",
+            "soldering_kit"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "At the substation, the Electrician discovers an automated military capacitor bank charging toward critical overload. He can safely isolate and discharge the system to safeguard the grid forever, or bridge the busbars to redirect a massive surge into the shelter's industrial battery bank at severe risk of electrical fire.",
+          "branch_a": {
+            "id": "safe_grounding",
+            "label": "Discharge Safely",
+            "description": "Ground the charge safely. The Electrician gains Grid Walker trait, completely eliminating electrical accidents in the shelter and reducing generator fuel consumption.",
+            "trait_granted": "trait_grid_walker",
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "harness_surge",
+            "label": "Harness the Surge",
+            "description": "Capture the dangerous overload. The Electrician gains Cold Technician trait, maximizing power output from all connected machines while increasing catastrophic breakdown severity.",
+            "trait_granted": "trait_cold_technician",
+            "morale_delta": -10
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The Electrician's circuits power the valley's future. As Grid Walker, he interconnects isolated survival pods into a stable regional microgrid. As Cold Technician, he overclocks the shelter's industrial fabrication foundries, accelerating high-tier component manufacturing to wartime speeds."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_white_elk",
+      "survivor_id": "the_hunter",
+      "title": "The White Elk",
+      "target_location_id": "loc_ash_woodland",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Hunter cleans his marksman rifle with mechanical repetition, his knuckles white. He reveals that in the first blizzard after the Exchange, he fired at movement in the blinding ash mist of Ash Woodland, believing he was tracking a mutated beast — only to find he had mortally wounded his hunting partner, Jonas.",
+          "objective_items": [
+            "ammo_308"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "The Hunter reports sightings of a legendary albino elk in Ash Woodland, wearing Jonas's brass compass caught in its antlers. He asks to venture into the deep woodland with his rifle and medical kits to recover Jonas's remains and face the beast.",
+          "objective_items": [
+            "weapon_marksman_rifle",
+            "medkit"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "Deep in the timber, the white elk stands cornered in a clearing, magnificent and untouched by ash rot. Taking the beast will provide hundreds of pounds of clean, unmutated venison for the shelter's starving infirmary. Sparing it will break the Hunter's cycle of bloodshed and let Jonas rest.",
+          "branch_a": {
+            "id": "spare_the_elk",
+            "label": "Lower the Rifle",
+            "description": "Order the Hunter to lower his weapon. He gently frees Jonas's compass and lets the elk vanish into the mist, gaining Vigilant Tracker trait — greatly increasing wilderness scouting stealth and survival foraging.",
+            "trait_granted": "trait_vigilant_tracker",
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "cull_the_beast",
+            "label": "Take the Shot",
+            "description": "Order the shot. The clean meat feeds the entire shelter, but the Hunter hardens into a Haunted Marksman — gaining superior sniper critical chance while suffering permanent insomnia penalties.",
+            "trait_granted": "trait_haunted_marksman",
+            "morale_delta": -15
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The Hunter's redemption reshapes the wild fringe. As Vigilant Tracker, he maps safe transit routes through predator territory, guiding caravans without losing a single soul. As Haunted Marksman, he guards the high canyon pass against raider incursions, a solitary ghost who never misses a shot."
+        }
+      ]
     }
   ]
 }

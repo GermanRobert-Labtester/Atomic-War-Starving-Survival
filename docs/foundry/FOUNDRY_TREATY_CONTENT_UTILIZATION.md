@@ -1,37 +1,28 @@
-# Foundry Treaty Content Utilization Report
+# Foundry Treaty Consequence Content Utilization
 
-**Tool:** `godot --headless --path . -- --content-utilization-selftest`
-**CI Gate:** PASS
+**Authority:** `Assets/StreamingAssets/Data/foundry_treaty_consequences.json`
 
----
+## Final catalog
 
-## 1. Catalog Utilization Profile
+- 15 policy rows load through `SilentFoundryConsequencePolicyCatalog`.
+- 15 unique `(treaty_id, outcome)` keys.
+- 15 treaty IDs resolve in `foundry_accords.json`.
+- 15 faction IDs are verified signatories; all are
+  `faction_silent_foundry`, the current affected-faction authority.
+- All market modifier good IDs resolve in `economy_goods.json`.
+- Eight of ten Foundry accords have at least one policy row.
+- Apprentice Exchange and Cluster Charter are explicitly staged because no
+  typed outcome trigger exists for them.
 
-- **Catalog:** `Assets/StreamingAssets/Data/foundry_treaty_consequences.json`
-- **Total Rows Authored:** 15
-- **Referenced Treaties in Catalog:** 8 distinct treaties
-  - All 8 treaties resolve in `foundry_accords.json` (100% utilization rate).
-- **Referenced Factions in Catalog:** 5 distinct factions
-  - `faction_silent_foundry`, `faction_the_fleet`, `faction_ash_sign`, `faction_central_garrison`, `faction_the_scale`
-  - All 5 factions resolve in `factions.json` / `foundry_faction.json` (100% resolution).
-- **Referenced Market Goods in Catalog:** 8 distinct goods
-  - `coal`, `fuel`, `clean_water`, `canned_food`, `water_filter`, `scrap_metal`, `item_foundry_brine_pipe`, `item_foundry_ice_anchor`
-  - All 8 goods resolve in `economy_goods.json` and item definitions (100% resolution).
+The nine new rows are not dead catalog entries: they are indexed by the live
+policy lookup and validated by the headless smoke test. Their assessment
+triggers remain a documented downstream seam rather than an invented runtime.
 
----
+## Gate evidence
 
-## 2. CI Verification Evidence
-
-```
-[Ashfall Godot] Initializing ASHFALL: Atomic War - Starving Survival...
-Catalog Boot Report:
-  Total: 29 (Required: 13, Optional: 16, DevOnly: 0)
-  Success: 29
-  Warnings: 0
-  Errors: 0
-
-DATA_INTEGRITY_SELFTEST PASS — 0 findings (11104 ids authored, 3917 reuses reserved) — 0 errors, 0 warnings across 215 catalogs
-CONTENT_UTILIZATION_SELFTEST PASS — CI gate: PASS
-```
-
-Zero orphaned entries, zero dangling foreign keys, and zero unreferenced catalog rows.
+The Plan 103-specific expansion suite is active and covers exact count,
+references, outcomes, supported goods, uniqueness, coverage, representative
+new rows, idempotency, save compatibility, and balance bounds. The full
+content-utilization self-test remains the repository-wide authority for
+orphaned catalogs; this document does not claim that an authored policy can
+be triggered when its owning outcome system is not yet present.

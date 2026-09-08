@@ -28,14 +28,14 @@ namespace Ashfall.Core.Tests.Progression
         }
 
         [Fact]
-        public void Load_Loads9ProceduresFromCatalog()
+        public void Load_Loads12ProceduresFromCatalog()
         {
             string dataDir = ResolveDataDir();
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
 
             var procedures = AutopsyProcedureCatalogLoader.Load(dataDir, fileIO, json);
-            Assert.Equal(9, procedures.Count);
+            Assert.Equal(12, procedures.Count);
         }
 
         [Fact]

@@ -52,14 +52,11 @@
 <Compile Remove="CollectibleCatalogIntegrityTests.cs" />
 <Compile Remove="CollectibleCatalogPerformanceTests.cs" />
 <Compile Remove="CollectibleEffectTargetResolutionTests.cs" />
-    <Compile Remove="FoundryTreatyConsequenceExpansionTests.cs" />
     <Compile Remove="RegionalTreatyConsequenceTests.cs" />
     <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
     <Compile Remove="Integration/Plans72To75CampaignIntegrationTests.cs" /> <!-- TEMP; restored -->
-    <Compile Remove="GreenhouseItemCatalogTests.cs" />
     <Compile Remove="Narrative/HoldfastNpcCatalogTests.cs" />
     <Compile Remove="DutyRoster/DutyRosterSeasonCatalogTests.cs" />
-    <Compile Remove="Endgame/EpilogueChronicleCatalogTests.cs" />
 <Compile Remove="CollectibleMerchantBalanceTests.cs" />
 <Compile Remove="CollectibleReplayFixture.cs" />
 <Compile Remove="CollectibleReplayTests.cs" />
@@ -71,16 +68,15 @@
     <Compile Remove="Expeditions/ArmoredCrawlerExpeditionTests.cs" />
 <Compile Remove="Expeditions/CollectibleGenerationChannelGateTests.cs" />
 <Compile Remove="Expeditions/CollectibleScavengingPlacementTests.cs" />
-    <Compile Remove="FactionWarDialogueExpansionTests.cs" />
     <Compile Remove="GreenhouseEquipmentScalingTests.cs" />
-    <Compile Remove="HardcoreEconomyTuningExpansionTests.cs" />
+    <!-- Plan 99 reinstated: authoritative hardcore economy catalog now has the
+         expanded enum/matcher support and exact 8/8/6 data contract. -->
     <Compile Remove="Integration/InfrastructureSystemsIntegrationTests.cs" />
     <Compile Remove="LateGameInstitutionCrossSystemTests.cs" />
     <Compile Remove="LateGameInstitutionReplayTests.cs" />
     <Compile Remove="Medical/AdvancedSurgicalWardTests.cs" />
     <Compile Remove="Narrative/AtmosphereTextSystemConsolidationTests.cs" />
     <Compile Remove="NarrativeEncounterCatalogRegressionTests.cs" />
-    <Compile Remove="NarrativeQuestlineCatalogTests.cs" />
     <!-- RETIRED 2026-09-06 (quarantine evidence audit): the 8 Plan-55 recipes
          (craft_flatbread .. reload_762) no longer exist in recipes.json (now
          106 recipes; reload recipes superseded by Plan 10's
@@ -106,7 +102,6 @@
          round-trips). The prior draft expected a never-landed 15-manual
          variant with stale facts and was quarantined for that reason. -->
     <Compile Remove="Shelter/NuclearCoreLifecycleTests.cs" />
-    <Compile Remove="StandingRecordFactionExpansionTests.cs" />
     <Compile Remove="Survivors/DeathMemoryPipelineTests.cs" />
     <Compile Remove="Survivors/LeadershipAffinityMaturationTests.cs" />
     <Compile Remove="Survivors/SeededSurvivorIdentityJourneyTests.cs" />
@@ -116,7 +111,8 @@
     <Compile Remove="UI/RemediationPhase3PanelTests.cs" />
     <!-- Plan 93 reinstated: verdict_npcs.json expanded to the 18-NPC roster; all expansion points pass. -->
     <!-- <Compile Remove="Verdict/VerdictNpcExpansionTests.cs" /> -->
-    <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" />
+    <!-- Plan 94 reinstated: verdict_radio.json expanded to the 30-broadcast roster; all expansion points pass. -->
+    <!-- <Compile Remove="Verdict/VerdictRadioExpansionTests.cs" /> -->
     <Compile Remove="Water/WaterAuthorityMassBalanceTests.cs" />
     <!-- RETIRED 2026-09-06 (quarantine evidence audit) — WildlifeTrapping family:
          the 10 drafts pin an un-landed trapping-depth redesign (458 compile

@@ -460,6 +460,8 @@ namespace AtomicWar.GodotApp
         public void ResetAllSessionsInMemory()
         {
             RegisterLifecycleParticipants();
+            _isRestoringSurvivorState = false;
+            _survivorInitializationApplied = false;
             _sectionPayloads.Clear();
             _sectionCaptureFailed = false;
             _lifecycleRegistry.ResetAll();

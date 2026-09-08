@@ -23,7 +23,7 @@ namespace Ashfall.Core.Tests
             new MoralChoiceSystem(new StubRng(seed));
 
         [Fact]
-        public void Catalog_LoadsAllEightBranchesWithThreeEndingsEach()
+        public void Catalog_LoadsAllFifteenBranchesWithThreeEndingsEach()
         {
             var catalog = LoadCatalog();
             Assert.Equal(RebelBranchIds.BranchCount, catalog.Count);

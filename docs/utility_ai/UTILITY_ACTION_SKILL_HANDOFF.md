@@ -1,26 +1,50 @@
 # Utility Action Skill Handoff
 
-> **Skill Seams:** Mapping between skill-sensitive utility actions and Plan 33 skill IDs (`skills.json`).
+## Architecture
 
----
+The Utility AI Core uses a single skill field: `CraftingSkill` (float 0-1). This is the only skill dimension in `AIActionContext`.
 
-## 1. Three Core Skill-Integrated Actions
+The `skillBonusFactor` field on each action determines how much `CraftingSkill` contributes to `EvaluateRaw`:
 
-1. **`action_repair_equipment` → `skill_rough_repairs` / `skill_workshop_sense`**
-   - *Authority:* Plan 33 crafting/mechanic skills.
-   - *Mechanic:* Survivor's `CraftingSkill` scales `skillBonusFactor = 0.3`. A skilled mechanic scores repair work significantly higher than an untrained survivor, naturally drawing them to the workshop.
+```
+rawScore = baseScore + CraftingSkill * skillBonusFactor
+```
 
-2. **`action_treat_wounded` → `skill_field_dressing` / `skill_steady_hands`**
-   - *Authority:* Plan 33 medical skills.
-   - *Mechanic:* `skillBonusFactor = 0.2`. Medics with medical training experience a higher baseline drive to administer aid, while traits like `hitman` or `germaphobe` gate inappropriate actors.
+## Actions with Skill Integration
 
-3. **`action_conduct_research` → `skill_cold_analysis`**
-   - *Authority:* Plan 33 science/analysis skills.
-   - *Mechanic:* `skillBonusFactor = 0.25`. Analytical survivors have elevated raw scores for deciphering pre-war engineering schematics and laboratory logs.
+| Action ID | skillBonusFactor | Skill Effect |
+|-----------|-----------------|--------------|
+| `action_repair_equipment` | 0.25 | Skilled crafters repair more readily |
+| `action_treat_wounded` | 0.30 | Skilled medics treat more readily |
+| `action_conduct_research` | 0.30 | Skilled researchers research more readily |
+| `action_teach_skill` | 0.25 | Skilled teachers teach more readily |
+| `action_weigh_goods` | 0.25 | (existing) |
+| `action_read_contract` | 0.20 | (existing) |
+| `action_canvas_support` | 0.15 | (existing) |
+| `action_run_vouch` | 0.10 | (existing) |
+| `action_cook_food` | 0.20 | Skilled cooks cook more readily |
+| `action_preserve_food` | 0.15 | Skilled preserve more readily |
+| `action_purify_water` | 0.15 | Skilled purify more readily |
+| `action_train_skill` | 0.20 | Skilled train more readily |
+| `action_resolve_conflict` | 0.10 | Skilled mediate more readily |
+| `action_stand_watch` | 0.15 | Skilled guards watch more readily |
+| `action_inspect_housing` | 0.10 | Skilled inspect more readily |
 
----
+## Skill Specialization
 
-## 2. Dynamic Training & Teaching Seams
+The current `AIActionContext` has only `CraftingSkill` — a single generic skill. There is no medical skill, repair skill, cooking skill, etc.
 
-- **`action_train_skill`:** Dynamically targets the survivor's lowest non-maxed skill relevant to their background (e.g. `skill_field_dressing`, `skill_rough_repairs`, `skill_ration_stretcher`).
-- **`action_teach_skill`:** Requires the mentor's skill tier to exceed the apprentice's tier, transferring modest XP increments without unbounded farming.
+The `skillBonusFactor` uses the same `CraftingSkill` value for all actions. This means:
+- A survivor with high `CraftingSkill` scores higher on ALL skill-bonus actions
+- There is no domain-specific skill matching
+
+This is a simplification that works for the companion-bias Utility AI. A more sophisticated skill system would require expanding `AIActionContext` with domain-specific skill fields.
+
+## Plan 72 Position
+
+Three actions have explicit skill integration via `skillBonusFactor > 0`:
+1. `action_repair_equipment` (0.25)
+2. `action_treat_wounded` (0.30)
+3. `action_conduct_research` (0.30)
+
+These use the existing `CraftingSkill` field. Domain-specific skill matching (e.g., checking if the survivor has `skill_medicine` before treating) is deferred to the executor.

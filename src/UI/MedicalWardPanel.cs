@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Medical;
 using Ashfall.Core.UI;
+using Ashfall.Core.Feedback;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
@@ -396,6 +397,15 @@ namespace AtomicWar.GodotApp.UI
                                             var outcome = _disease.Treat(
                                                 activeAdmission.PatientId, diseaseId, option.item_id, _host.SimDay);
                                             _eventLogLabel.Text = outcome.Reason + ": " + _disease.LastEvent;
+                                            if (!outcome.Accepted)
+                                            {
+                                                FeedbackMessages.Emit(new FeedbackEvent(
+                                                    key: "medical_failure",
+                                                    arguments: new object[] { activeAdmission.PatientId },
+                                                    category: "failure",
+                                                    dedupeKey: $"treatment_fail_{activeAdmission.PatientId}_{_host.SimDay}"
+                                                ));
+                                            }
                                             RefreshView();
                                         });
                                     _inspectorContainer.AddChild(btnTreat);

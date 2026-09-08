@@ -55,6 +55,106 @@
       "signature_quote": "There is a document now, stained with ash and thumbprints. Let them argue with the paper instead of each other's throats.",
       "access_rule": "Sign the blood-flecked draft and you are on the record. Perrin will not ratify a clause he knows will break a man—but he has not yet seen every way the words can be twisted.",
       "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_lamplighters",
+      "display_name": "The Lamplighters",
+      "alignment": "conditional",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "fuel_stores",
+        "reflector_glass"
+      ],
+      "offers": [
+        "street_lighting",
+        "night_watch_escort",
+        "route_visibility"
+      ],
+      "signature_quote": "A dark street is an argument someone decided to settle with iron; keep the wicks trimmed and the town remembers what it agreed to.",
+      "access_rule": "Contribute fuel stores or clean reflector glass to the maintenance pool to ensure uninterrupted sector lighting; tampering with street lanterns or siphoning communal oil causes street lamps in your quarter to go dark.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_granary_wardens",
+      "display_name": "The Granary Wardens",
+      "alignment": "conditional",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "staple_grain",
+        "burlap_sacks"
+      ],
+      "offers": [
+        "ration_distribution",
+        "emergency_grain_draw",
+        "spoilage_inspection"
+      ],
+      "signature_quote": "The lock on the grain crib is not to keep hunger out; it is to ensure there is still seed in the hopper ninety days from now.",
+      "access_rule": "Honor minuted ration allotments and return dry grain sacks intact; unauthorized withdrawals or concealing spoilage revokes access to the communal reserve.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_water_committee",
+      "display_name": "The Water Committee",
+      "alignment": "conditional",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "filter_media",
+        "sanitation_salts"
+      ],
+      "offers": [
+        "clean_water_rights",
+        "well_head_access",
+        "quality_certification"
+      ],
+      "signature_quote": "You can argue with the charter all afternoon, but the sand filter does not care about your politics—run tainted water through it and everybody drinks poison.",
+      "access_rule": "Submit all bulk draw containers for sediment inspection and contribute clean filter charcoal or chlorine titration chits; drawing from closed filtration beds voids communal tap rights.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_quarantine_post",
+      "display_name": "The Quarantine Post",
+      "alignment": "neutral",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "medical_tinctures",
+        "respirator_masks"
+      ],
+      "offers": [
+        "gate_health_screening",
+        "quarantine_clearance",
+        "outbreak_warning"
+      ],
+      "signature_quote": "We do not weigh your goods or examine your coins; we look at the sweat on your collar and the rattling in your lungs.",
+      "access_rule": "Submit to mandatory forty-eight-hour isolation during outbreak declarations and declare pulmonary symptoms; forging health clearance slips or breaking containment cordons results in immediate gate expulsion.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_smugglers_court",
+      "display_name": "The Smugglers' Court",
+      "alignment": "conditional",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "unchartered_salvage",
+        "route_intelligence"
+      ],
+      "offers": [
+        "off_ledger_trade",
+        "culvert_transit",
+        "discreet_arbitration"
+      ],
+      "signature_quote": "What the Scale will not weigh and the Compact will not write down still has to cross the ditch; we only charge for the dark.",
+      "access_rule": "Keep informal transport routes strictly unrecorded and settle off-ledger cargo losses privately; leading official gate wardens to a culvert cache closes all discreet transit routes permanently.",
+      "badge_asset_id": ""
     }
   ]
 }

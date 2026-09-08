@@ -1,21 +1,39 @@
 # Utility Action Resource Policy
 
-> **Resource Policy:** Guardrails preventing autonomous consumption of scarce or quest-critical items.
+## Architecture
 
----
+The Utility AI Core does **not** consume resources. It selects an action ID. The executor in the host layer is responsible for:
+1. Checking resource availability
+2. Reserving/consuming resources
+3. Producing outputs
 
-## 1. Protected Resource Tiers
+The action data (`baseScore`, `fatigueGate`, `skillBonusFactor`) influences how likely an action is to be selected, but does not control resource consumption.
 
-| Tier | Items / Resources | Policy |
-|---|---|---|
-| **Tier 1: Quest / Unique** | Stamped letters, sealed canisters, keycards, rare relics | **Strictly Forbidden:** Utility actions can NEVER reserve or consume |
-| **Tier 2: Rare Medicine** | Broad-spectrum antibiotics, rad-purge ampoules, surgical kits | **Strict Threshold:** Consumed only for acute lethal conditions, never for minor fatigue or slight bruises |
-| **Tier 3: Industrial Stock** | Heavy motors, electronic components, precision solder | **Player Gated:** Only consumed if active repair / construction orders permit |
-| **Tier 4: Bulk Consumables** | Raw produce, clean water, firewood, scrap metal, cloth | **Stock-Gated:** Consumed freely up to shelter quota, paused if reserve falls below emergency reserve buffer |
+## Resource-Consuming Actions
 
----
+| Action ID | Resources Consumed | Resources Produced | Guardrail |
+|-----------|-------------------|-------------------|-----------|
+| `action_cook_food` | Ingredients, fuel | Prepared food | Recipe system validates |
+| `action_preserve_food` | Perishables, salt/containers | Preserved food | Preservation system validates |
+| `action_purify_water` | Unsafe water, fuel/filters | Clean water | Water system validates |
+| `action_treat_wounded` | Medical supplies | Treated patient | Medical system validates |
+| `action_seek_treatment` | Medical supplies | Self-treatment | Medical system validates |
+| `action_repair_equipment` | Repair materials | Repaired equipment | Repair system validates |
 
-## 2. Failed Action Suppression
+## Resource Safety Rules
 
-- If an action fails resource validation (e.g. `action_cook_food` attempts to run but no raw food exists), the subsystem rejects execution.
-- The failure suppresses the action for that survivor for the current AI cycle, preventing infinite retry loops and log spam.
+1. **Never consume protected/quest items**: The executor must check item flags before consuming.
+2. **Don't consume from insufficient stock**: The executor validates availability before starting.
+3. **Don't overproduce**: Stop cooking/purifying when stock targets are met.
+4. **Don't waste rare resources**: Medical actions should prefer common supplies over rare ones.
+5. **Failed actions don't consume**: If the action can't complete, resources should not be consumed.
+
+## Bounded Autonomy
+
+The Utility AI should not be able to:
+- Cook through all ingredients leaving nothing for emergencies
+- Use rare medicine for trivial symptoms
+- Purify water when clean water is already sufficient
+- Repair equipment that isn't degraded
+
+These bounds are enforced by the executor, not the action data. The action data only makes the action more or less likely to be selected.

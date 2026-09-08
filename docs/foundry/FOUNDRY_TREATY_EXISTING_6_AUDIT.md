@@ -2,7 +2,8 @@
 
 **File:** `Assets/StreamingAssets/Data/foundry_treaty_consequences.json`
 **Baseline Policies Count:** 6
-**Status:** Audited and preserved byte-for-byte in Plan 103 expansion.
+**Status:** Audited and preserved field-for-field in the Plan 103 expansion;
+only the JSON delimiter after the sixth row changed to append new records.
 
 ---
 

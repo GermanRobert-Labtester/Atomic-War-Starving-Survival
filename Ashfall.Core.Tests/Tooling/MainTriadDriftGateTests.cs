@@ -62,6 +62,7 @@ namespace Ashfall.Core.Tests
                 "UtilityAi",
                 "WeatherSonde",
                 "WildlifeTrappingIfBound",
+                "Enrichment", // Read-only static catalog projection + journal knowledge persistence; no standalone save store
             };
 
         [Fact]

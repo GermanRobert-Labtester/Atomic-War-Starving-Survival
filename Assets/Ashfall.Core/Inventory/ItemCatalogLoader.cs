@@ -85,6 +85,7 @@ namespace Ashfall.Core.Inventory
     {
         public const string PrimaryFileName = "items.json";
         public const string StartingSuppliesFileName = "starting_supplies.json";
+        public const string ItemDescriptionsFileName = ItemDescriptionCatalogLoader.PrimaryFileName;
 
         private static readonly string[] SecondaryItemFiles =
         {
@@ -119,6 +120,16 @@ namespace Ashfall.Core.Inventory
                 if (def != null) list.Add(def);
             }
             return list;
+        }
+
+        public static ItemDescriptionCatalog LoadDescriptionCatalog(string dataDir, IFileIO fileIO, IJsonSerializer serializer)
+        {
+            return ItemDescriptionCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
+        }
+
+        public static CatalogLoadResult<ItemDescriptionCatalog> LoadDescriptionCatalogWithResult(string dataDir, IFileIO fileIO, IJsonSerializer serializer)
+        {
+            return ItemDescriptionCatalogLoader.LoadCatalogWithResult(dataDir, fileIO, serializer);
         }
 
         public static CatalogLoadResult<ItemCatalog> LoadCatalogWithResult(

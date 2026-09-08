@@ -72,6 +72,9 @@ namespace Ashfall.Core.Journal
 
         /// <summary>"wildlife_species_caught_" + speciesId — first successful catch of a prey species (WT-INT-01).</summary>
         public static string WildlifeSpeciesCaught(string speciesId) => "wildlife_species_caught_" + speciesId;
+
+        /// <summary>"narrative_disc_" + discoveryId — a narrative codex record was discovered in the world (Plan 135).</summary>
+        public static string NarrativeDiscovered(string discoveryId) => "narrative_disc_" + discoveryId;
     }
 
     /// <summary>

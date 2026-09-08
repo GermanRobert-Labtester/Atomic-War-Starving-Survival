@@ -146,7 +146,7 @@ namespace Ashfall.Core.Tests
             var production = SilentFoundryCatalogLoader.LoadProduction(dataDir, files, json);
             Assert.NotNull(production);
             Assert.Equal(1, production.schema_version);
-            Assert.Equal(26, production.products.Count);
+            Assert.Equal(35, production.products.Count);
 
             var faction = SilentFoundryCatalogLoader.LoadFaction(dataDir, files, json);
             Assert.NotNull(faction);
@@ -154,7 +154,7 @@ namespace Ashfall.Core.Tests
 
             var catalog = new SilentFoundryCatalog();
             catalog.Load(production, faction);
-            Assert.Equal(26, catalog.ProductCount);
+            Assert.Equal(35, catalog.ProductCount);
             Assert.NotNull(catalog.GetProduct("foundry_prod_ice_anchor"));
             Assert.NotNull(catalog.GetProduct("foundry_prod_brine_pipe"));
             Assert.Null(catalog.GetProduct("foundry_prod_missing"));
@@ -264,7 +264,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void Treaties_GuildIsExactSignatoryOfFourFoundryTreaties()
+        public void Treaties_GuildIsExactSignatoryOfTenFoundryTreaties()
         {
             string dataDir = FindDataDir();
             var files = new FileSystemIO();
@@ -273,11 +273,17 @@ namespace Ashfall.Core.Tests
             treaties.Load(files.ReadAllText(files.Combine(dataDir, "foundry_accords.json")), json);
 
             var foundry = treaties.GetByExactSignatoryFaction(SilentFoundryIds.FactionId);
-            Assert.Equal(4, foundry.Count);
+            Assert.Equal(10, foundry.Count);
             Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyBrinePipe);
             Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyLabourSchedule);
             Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyRoadIron);
             Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyClusterCharter);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatySaltworksAccess);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyMembraneRepair);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyCoalWindow);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyApprenticeExchange);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyCrisisMutualAid);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyIncidentBook);
 
             // The exact match must not leak the narrative treaty corpus (valley layer).
             var narrative = new RegionalTreatyCatalog();

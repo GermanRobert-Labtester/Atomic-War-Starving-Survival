@@ -2,6 +2,7 @@ using System;
 using Godot;
 using Ashfall.Core.UI;
 using Ashfall.Core.Medical;
+using AtomicWar.GodotApp.Host;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -33,19 +34,36 @@ namespace AtomicWar.GodotApp.UI
         private SurvivorsHostSession? _survivors;
         private InventoryHostSession? _inventory;
         private RespiratoryDegenerationSystem? _respiratory;
+        private MedicalTextCatalog? _medicalTexts;
 
         public void Bind(
             MedicalHostSession? medical = null,
             SurvivorsHostSession? survivors = null,
             InventoryHostSession? inventory = null,
-            RespiratoryDegenerationSystem? respiratory = null)
+            RespiratoryDegenerationSystem? respiratory = null,
+            MedicalTextCatalog? medicalTexts = null)
         {
             _medical = medical;
             _survivors = survivors;
             _inventory = inventory;
             _respiratory = respiratory;
+            _medicalTexts = medicalTexts ?? LoadDefaultMedicalTexts();
             IsBound = _medical != null || _survivors != null;
             RefreshView();
+        }
+
+        private static MedicalTextCatalog? LoadDefaultMedicalTexts()
+        {
+            try
+            {
+                string dataDir = CatalogPath.ResolveDataDir();
+                var fileIo = CatalogPath.CreateFileIOForDataDir(dataDir);
+                return MedicalTextCatalog.LoadFromDirectory(dataDir, fileIo);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public override void _Ready()
@@ -98,18 +116,45 @@ namespace AtomicWar.GodotApp.UI
                     AddAffliction(_activeList, $"{Name(s.Id)} — Critical health ({s.Health:0}/100)",
                         Ashfall.Core.UI.Theme.Critical);
                     RenderedActiveCount++;
+                    if (_medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, MedicalTreatmentCatalog.HealthDeficitId, s.Id);
+                        if (prose != null)
+                        {
+                            string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                            AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                        }
+                    }
                 }
                 if (rad is { HasAcuteRadiationSickness: true })
                 {
                     AddAffliction(_activeList, $"{Name(s.Id)} — Acute radiation sickness (dose {rad.RadiationDose:0} mSv)",
                         Ashfall.Core.UI.Theme.Critical);
                     RenderedActiveCount++;
+                    if (_medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, MedicalTreatmentCatalog.RadiationSicknessId, s.Id);
+                        if (prose != null)
+                        {
+                            string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                            AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                        }
+                    }
                 }
                 if (respDeg >= RespiratoryDegenerationSystem.SevereCoughThreshold)
                 {
                     AddAffliction(_activeList, $"{Name(s.Id)} — Severe respiratory degeneration ({respDeg:0}%)",
                         Ashfall.Core.UI.Theme.Critical);
                     RenderedActiveCount++;
+                    if (_medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, MedicalTreatmentCatalog.RespiratoryDegenerationId, s.Id);
+                        if (prose != null)
+                        {
+                            string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                            AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                        }
+                    }
                 }
                 else if (respDeg > 0f)
                 {
@@ -154,12 +199,30 @@ namespace AtomicWar.GodotApp.UI
                             AddAffliction(_activeList,
                                 $"{Name(s.Id)} — {affliction.StageLabel}",
                                 critical ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm);
+                            if (_medicalTexts != null)
+                            {
+                                var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, affliction.AfflictionId, s.Id);
+                                if (prose != null)
+                                {
+                                    string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                                    AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                                }
+                            }
                         }
                         else
                         {
                             AddAffliction(_activeList,
                                 $"{Name(s.Id)} — {affliction.StageLabel} (day {affliction.SeverityValue:0})",
                                 Ashfall.Core.UI.Theme.Critical);
+                            if (_medicalTexts != null)
+                            {
+                                var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, affliction.AfflictionId, s.Id);
+                                if (prose != null)
+                                {
+                                    string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                                    AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                                }
+                            }
                         }
                         RenderedActiveCount++;
                     }
@@ -189,11 +252,29 @@ namespace AtomicWar.GodotApp.UI
                     AddAffliction(_chronicList, $"{Name(s.Id)} — Chronic radiation illness (lifetime {rad.LifetimeRadiationExposure:0} mSv)",
                         Ashfall.Core.UI.Theme.Entropy);
                     chronicCount++;
+                    if (_medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, "chronic_radiation", s.Id);
+                        if (prose != null)
+                        {
+                            string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                            AddDimSubline(_chronicList, $"   ↳ {summary}");
+                        }
+                    }
                 }
                 if (_respiratory is { } r && r.HasPermanentLungDamage(s.Id))
                 {
                     AddAffliction(_chronicList, $"{Name(s.Id)} — Permanent lung damage", Ashfall.Core.UI.Theme.Entropy);
                     chronicCount++;
+                    if (_medicalTexts != null)
+                    {
+                        var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, "permanent_lung_damage", s.Id);
+                        if (prose != null)
+                        {
+                            string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                            AddDimSubline(_chronicList, $"   ↳ {summary}");
+                        }
+                    }
                 }
             }
 
@@ -208,6 +289,15 @@ namespace AtomicWar.GodotApp.UI
                             AddAffliction(_chronicList, $"{Name(kv.Key)} — {dep.kind} dependency ({dep.dependencyLevel:P0})",
                                 Ashfall.Core.UI.Theme.Entropy);
                             chronicCount++;
+                            if (_medicalTexts != null)
+                            {
+                                var prose = MedicalConditionResolver.GetClinicalProse(_medicalTexts, MedicalTreatmentCatalog.ChemicalDependencyId, kv.Key);
+                                if (prose != null)
+                                {
+                                    string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
+                                    AddDimSubline(_chronicList, $"   ↳ {summary}");
+                                }
+                            }
                         }
                     }
                 }
@@ -253,6 +343,15 @@ namespace AtomicWar.GodotApp.UI
             label.CustomMinimumSize = new Vector2(400, 0);
             label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private void AddDimSubline(VBoxContainer parent, string text)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             parent.AddChild(label);
         }
 

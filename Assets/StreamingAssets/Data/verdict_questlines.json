@@ -791,6 +791,958 @@
           ]
         }
       ]
+    },
+    {
+      "questlineId": "quest_verdict_the_dead_frequency",
+      "title": "The Dead Frequency",
+      "synopsis": "A decommissioned transmitter at the Pass 4 relay mast continues to cycle an unmodulated 99.0 MHz carrier pulse, repeating a census window count that was formally closed four winters ago.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_dead_freq_carrier",
+      "minDay": 170,
+      "maxDay": 340,
+      "stages": [
+        {
+          "stageId": "stage_dead_freq_carrier",
+          "title": "The Phantom Pulse",
+          "narrativePrompt": "High in the freezing alpine col at the Pass 4 Signal Relay Mast, the vacuum tubes in the transmitter shack glow cherry red. The unmodulated carrier pulse on 99.0 MHz has been broadcasting into the dead band for four winters without a technician.",
+          "unlockOnDay": 170,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_dead_freq_inspect_chassis",
+              "text": "Inspect the transmitter chassis and teletype log.",
+              "nextStageId": "stage_dead_freq_relay_troughs",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The dials register a continuous plate draw. Operator Karel Norn's clipped teletype log indicates the pulses are driven from deep subterranean accumulator banks."
+            },
+            {
+              "choiceId": "choice_dead_freq_ignore_pulse",
+              "text": "Leave the Alpine transmitter cycling into the empty air.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The shack door bangs against its frame in the mountain draft. The tubes hum in the dark, indifferent to human absence."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_dead_freq_relay_troughs",
+          "title": "The Buried Busbars",
+          "narrativePrompt": "Heavy armored cabling leaves the shack floor and drops into a blasted rock trench running along the ridge toward the border. The line draws current from an unmapped auxiliary vault.",
+          "unlockOnDay": 170,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_dead_freq_trace_trench",
+              "text": "Follow the cable trench down the ridge to the buried bunker trap.",
+              "nextStageId": "stage_dead_freq_crypto_vault",
+              "moraleDelta": 1,
+              "grantItemId": "evidence_call_calibration",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The snow has melted above the buried busbars. Beneath an iron manhole lies a pressurized relay crypt, smelling of ozone and desiccated wax."
+            },
+            {
+              "choiceId": "choice_dead_freq_snip_antenna",
+              "text": "Sever the primary feedhorn feeder cable at the mast base.",
+              "nextStageId": "stage_dead_freq_verdict",
+              "moraleDelta": -1,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The heavy copper braid parts with a sharp snap. The high-altitude hum drops an octave, leaving only the sound of wind in the lattice tower."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_dead_freq_crypto_vault",
+          "title": "The Subterranean Vault",
+          "narrativePrompt": "Beneath an armored blast trap, an automated mechanical drum keys the transmitter with pre-war census rosters. The names looping in the signal belong to valley families who never reported to the Tempest registries.",
+          "unlockOnDay": 170,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_dead_freq_extract_ledger",
+              "text": "Extract the roster drum and prepare the carrier for formal disposition.",
+              "nextStageId": "stage_dead_freq_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_census_draft",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The brass cylinder lifts from its escapement. The names of forty-two unrecorded families are preserved in machine-punched steel."
+            },
+            {
+              "choiceId": "choice_dead_freq_rekey_frequency",
+              "text": "Retune the oscillator to repeat the loop across civilian emergency bands.",
+              "nextStageId": "stage_dead_freq_verdict",
+              "moraleDelta": 1,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": -1,
+              "outcomeNarrative": "The variable capacitor slides into the civilian band. The valley's radios crackle as the ghost names begin echoing in every living room."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_dead_freq_verdict",
+          "title": "Carrier Disposition",
+          "narrativePrompt": "The Pass 4 relay mast stands ready for final disposition. How will the tribunal and the Tempest log the phantom carrier?",
+          "unlockOnDay": 170,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_dead_freq_preserve_carrier",
+              "text": "Certify the pulse into the Tempest network as permanent baseline telemetry.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The Tempest logs the carrier as permanent telemetry. The valley hears the pulse in its sleep, an unchanging mechanical clock counting what was lost."
+            },
+            {
+              "choiceId": "choice_dead_freq_terminate_pulse",
+              "text": "Pull the main breaker and let the transmitter tubes go cold forever.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "guiltDelta": -1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The filaments die from orange to dull crimson to soot. For the first time in five years, the dead frequency is silent."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_missing_reel",
+      "title": "The Missing Reel",
+      "synopsis": "A single recorded magnetic tape reel is missing from Bay Fourteen of the Archive Tape-Silo; the twenty-four minute gap in the two-thousand-reel count corresponds to the erasure of a high-ranking civic surveyor.",
+      "factionTag": "faction_archivists",
+      "firstStageId": "stage_missing_reel_lectern",
+      "minDay": 180,
+      "maxDay": 350,
+      "stages": [
+        {
+          "stageId": "stage_missing_reel_lectern",
+          "title": "The Blank Spindle",
+          "narrativePrompt": "Inside the cavernous Archive Tape-Silo, Chief Archival Custodian Kasper Holt stands before Rack Fourteen. Spindle 1832 sits bare, its brass retaining collar polished by removal rather than time.",
+          "unlockOnDay": 180,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_missing_reel_audit_racks",
+              "text": "Cross-check the linen manifest against the shelf catalog to identify the missing reel.",
+              "nextStageId": "stage_missing_reel_manifest_audit",
+              "moraleDelta": 1,
+              "grantItemId": "evidence_reels_matter",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The registry index lists Reel 1832 as 'Surveyor General Torin Rask — Blackwood Soil Core Deposition'. The checkout card was signed using purple indelible pencil."
+            },
+            {
+              "choiceId": "choice_missing_reel_dismiss",
+              "text": "Advise Holt that one lost tape out of two thousand is acceptable attrition.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "Holt stares in quiet disdain through his wire spectacles. The gap remains uninvestigated, a hole in the collective memory."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_missing_reel_manifest_audit",
+          "title": "The Excised Identity",
+          "narrativePrompt": "The withdrawal slip matches the handwriting of Census Machine dispatchers. The surveyor was summoned to the Blackwood Forestry Survey Post shortly before his records were expunged.",
+          "unlockOnDay": 180,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_missing_reel_search_bunkers",
+              "text": "Travel to the Blackwood Forestry Survey Post to search for Rask's field cache.",
+              "nextStageId": "stage_missing_reel_field_post",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The haul road through the blackened pine trunks leads to the ranger post. The zinc floor locker in the back pantry shows signs of a forced latch."
+            },
+            {
+              "choiceId": "choice_missing_reel_search_clerks",
+              "text": "Interrogate the municipal desk at the Fuse World for the requisition authorization.",
+              "nextStageId": "stage_missing_reel_field_post",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "A clerk produces a carbon routing slip: Rask's personal telemetry was diverted to the forestry post during the final emergency evacuation."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_missing_reel_field_post",
+          "title": "The Cedar Stash",
+          "narrativePrompt": "Concealed beneath a cedar floorboard in the ranger post lies a lead canister. Inside, the spliced magnetic ribbon of Reel 1832 has been annotated with razor cuts and acetate tape.",
+          "unlockOnDay": 180,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_missing_reel_recover_tape",
+              "text": "Recover the spliced tape and inspect the excised audio segments.",
+              "nextStageId": "stage_missing_reel_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "item_archive_tape_silo_key",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The tape heads play Rask's strained voice: he was ordered to falsify soil isotope counts to hide fallout plumes over agricultural sectors."
+            },
+            {
+              "choiceId": "choice_missing_reel_burn_evidence",
+              "text": "Incinerate the excised tape to shield the surviving forestry staff from retribution.",
+              "nextStageId": "stage_missing_reel_verdict",
+              "moraleDelta": 0,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The magnetic ribbon curls and bubbles in the stove flue. The truth turns into acrid black smoke, leaving only silence."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_missing_reel_verdict",
+          "title": "The Archive's Accounting",
+          "narrativePrompt": "Return to the Archive Tape-Silo. The missing twenty-four minutes can either be restored to the historical canon or sealed permanently.",
+          "unlockOnDay": 180,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_missing_reel_restore_to_archivist",
+              "text": "Mount Reel 1832 back onto Spindle Fourteen and enter the full transcript into the register.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The Archivists re-rack Reel 1832. The erasure is documented as an administrative crime against the Before. History is whole again."
+            },
+            {
+              "choiceId": "choice_missing_reel_release_to_militia",
+              "text": "Provide a copy of the falsified fallout logs to the Ash Militia.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The Militia reads Rask's confession from the Grange Hall steps. Old betrayals fuel new resolve among the valley's laborers."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_cold_reading",
+      "title": "The Cold Reading",
+      "synopsis": "The Cape Wrath Meteorological Station logged background radiation at zero during a lethal regional fallout inversion; forensic analysis must determine whether the sensor failed or the operator fabricated the log.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_cold_read_weather_post",
+      "minDay": 190,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_cold_read_weather_post",
+          "title": "The Silent Barograph",
+          "narrativePrompt": "At the wind-scoured Cape Wrath Meteorological Station, the eight-channel galvanometric recorder displays flatline ink traces on Day 42, while nearby settlements suffered acute radiation sickness.",
+          "unlockOnDay": 190,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_cold_read_inspect_galvanometer",
+              "text": "Inspect the galvanometer coils and pen drive mechanisms for mechanical failure.",
+              "nextStageId": "stage_cold_read_bench_test",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The galvanometer pivots move freely. The mechanical clockwork is sound, yet the ink trace remains pinned to zero."
+            },
+            {
+              "choiceId": "choice_cold_read_leave_mystery",
+              "text": "Close the meteorological shelter and accept the contradictory log as historical anomaly.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The shutter swings shut against the sea wind. A fatal bureaucratic lie remains unchallenged."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_cold_read_bench_test",
+          "title": "The Lead Shunt",
+          "narrativePrompt": "Beneath the instrument rack, technician Ilya Venn's handwritten annotations reveal an unauthorized copper bypass shunt soldered across the ionization chamber terminals.",
+          "unlockOnDay": 190,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_cold_read_desolder_shunt",
+              "text": "Desolder the shunt and test the ionization chamber with a portable sensor probe.",
+              "nextStageId": "stage_cold_read_operator_journal",
+              "moraleDelta": 1,
+              "grantItemId": "item_portable_pid_detector",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The sensor immediately needle-pegs into the red. The ambient chamber was receiving massive gamma doses that the soldered shunt bled directly to ground."
+            },
+            {
+              "choiceId": "choice_cold_read_audit_orders",
+              "text": "Search the station desk for departmental directives mandating data suppression.",
+              "nextStageId": "stage_cold_read_operator_journal",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "A water-damaged carbon voucher orders Station Cape Wrath to maintain 'public baseline continuity' regardless of atmospheric transients."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_cold_read_operator_journal",
+          "title": "The Panic Memo",
+          "narrativePrompt": "Tucked inside Venn's personal barograph ledger is an unfiled memorandum: civil defense ordered the zero-reading to prevent thirty thousand civilian evacuees from rushing the mountain passes.",
+          "unlockOnDay": 190,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_cold_read_preserve_memo",
+              "text": "Secure the memorandum as forensic proof of deliberate civil defense falsification.",
+              "nextStageId": "stage_cold_read_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_call_plain",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The memorandum is preserved in a protective envelope. The paper trail directly links administrative orders to thousands of preventable casualties."
+            },
+            {
+              "choiceId": "choice_cold_read_attribute_sensor_fault",
+              "text": "Attribute the anomaly strictly to sensor corrosion in your formal docket entry.",
+              "nextStageId": "stage_cold_read_verdict",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The paperwork blames salt air and copper oxide. Venn's memory is sheltered from disgrace, but the state's betrayal is buried."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_cold_read_verdict",
+          "title": "The Calibrated Truth",
+          "narrativePrompt": "The tribunal bench awaits the final finding on the Cape Wrath cold reading. How will the historical record classify the silent instruments?",
+          "unlockOnDay": 190,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_cold_read_expose_state_deceit",
+              "text": "Enter the evidence into the tribunal as deliberate state suppression of life-safety data.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The tribunal registers the cold reading as institutional fraud. The surviving families finally receive written confirmation of why no warning sirens sounded."
+            },
+            {
+              "choiceId": "choice_cold_read_seal_as_fog_of_war",
+              "text": "Seal the inquiry under the emergency triage doctrine to preserve administrative legitimacy.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The report is stamped classified and shelved in the Fuse World cabinets. The state protects its own continuity, even when the state is merely a memory."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_unsigned_tally",
+      "title": "The Unsigned Tally",
+      "synopsis": "An unnotarized census ledger page found in the rubble of Gate Seven lists sixty-four names against only twenty-two excavated burial trenches; the discrepancies point to an uncounted survival trek.",
+      "factionTag": "faction_archivists",
+      "firstStageId": "stage_unsigned_tally_ledger",
+      "minDay": 200,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_unsigned_tally_ledger",
+          "title": "The Discrepancy",
+          "narrativePrompt": "In the rusted inspection bunker beneath Gate Seven Border Checkpoint, a water-damaged ledger sheet holds a list of sixty-four refugees processed during the final blizzard. The cemetery above has only twenty-two markers.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_unsigned_tally_cross_reference",
+              "text": "Cross-reference the refugee roster against Selya Saltmarsh's master county census.",
+              "nextStageId": "stage_unsigned_tally_cemetery_survey",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The handwriting matches the checkpoint guardhouse logs, but no departure stamps were ever applied. Forty-two people vanished from the rolls between the barrier and the graves."
+            },
+            {
+              "choiceId": "choice_unsigned_tally_leave_sheet",
+              "text": "Put the damp ledger back in the locker; dead men cannot be recounted.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The mold advances another millimeter across the paper. The names fade into pulp."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_unsigned_tally_cemetery_survey",
+          "title": "The Trenches",
+          "narrativePrompt": "Surveyor's stakes mark the rocky ground behind the concrete chicane. Physical measurement confirms only twenty-two trench burials were ever dug; forty-two individuals left no bodies in the border soil.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_unsigned_tally_search_convoy_tracks",
+              "text": "Survey the southern canyon rim with precision optics for signs of an unrecorded escape route.",
+              "nextStageId": "stage_unsigned_tally_highland_shelter",
+              "moraleDelta": 1,
+              "grantItemId": "item_theodolite_brass_precision",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The crosshairs reveal an overgrown sled trail cutting up through the limestone scree toward the highland plateau."
+            },
+            {
+              "choiceId": "choice_unsigned_tally_interview_saltmarsh",
+              "text": "Consult Selya Saltmarsh regarding her recollections of the final checkpoint convoy.",
+              "nextStageId": "stage_unsigned_tally_highland_shelter",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "Saltmarsh recalls convoy trucks diverting onto the old forestry spur before the gates were mined. 'They had children,' she whispers."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_unsigned_tally_highland_shelter",
+          "title": "The Unmarked Hollow",
+          "narrativePrompt": "Two miles south in a sheltered blind ravine, an abandoned bivouac reveals spent medical ampoules, civilian knapsacks, and children's snowshoes. The forty-two crossed into the southern valley alive.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_unsigned_tally_document_escape",
+              "text": "Catalog the bivouac artifacts to formally substantiate the survival of the forty-two.",
+              "nextStageId": "stage_unsigned_tally_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_census_draft",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "Every canteen, shoe size, and notebook is recorded. The paper trail proves that the casualty figures were overstated."
+            },
+            {
+              "choiceId": "choice_unsigned_tally_conceal_survival",
+              "text": "Conceal the bivouac to shield the southern homesteads from raider scouts and tax levies.",
+              "nextStageId": "stage_unsigned_tally_verdict",
+              "moraleDelta": 1,
+              "guiltDelta": -1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "You scatter pine needles over the hearth stones. The living are entitled to their obscurity."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_unsigned_tally_verdict",
+          "title": "Closing the Count",
+          "narrativePrompt": "Present the findings to the Archivists and the Census Bureau. The unsigned tally sheet can either amend the casualty list or remain an open question.",
+          "unlockOnDay": 200,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_unsigned_tally_record_survival",
+              "text": "Register the forty-two individuals as surviving emigrants in the permanent census.",
+              "nextStageId": "",
+              "moraleDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The ledger is amended with green verification ink. Forty-two names are struck from the dead rolls. Even in ash, a census can bring good news."
+            },
+            {
+              "choiceId": "choice_unsigned_tally_strike_fictitious",
+              "text": "Mark the entries as bureaucratic duplication and close the book at twenty-two casualties.",
+              "nextStageId": "",
+              "moraleDelta": -1,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The names are ruled clerical ghosts. The paperwork is neat, the grave count matches the page, and the living remain safely forgotten."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_interference_pattern",
+      "title": "The Interference Pattern",
+      "synopsis": "A persistent phase-cancelled ghost signal on 99.0 MHz indicates a second unsanctioned transmitter broadcasting from the coastal headlands, interfering with the automated census relays.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_pattern_sweep",
+      "minDay": 220,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_pattern_sweep",
+          "title": "Phase Cancellation",
+          "narrativePrompt": "At the North Cliff Observation Bunker, the radio direction finder detects a comb-filter null across the 99.0 MHz band. A second transmitter is operating ninety degrees out of phase, scrubbing the machine's broadcasts.",
+          "unlockOnDay": 220,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_pattern_triangulate",
+              "text": "Set up a directional antenna array to triangulate the secondary transmission node.",
+              "nextStageId": "stage_pattern_triangulation",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "Signalman Garrick Daal's plotting board shows twin lobes. The shadow carrier is emitting from the sea-caves below the marine laboratory."
+            },
+            {
+              "choiceId": "choice_pattern_ignore",
+              "text": "Write off the phase distortion as natural maritime ionospheric flutter.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The needle wanders in the static. The shadow station keeps whispering its null count into the sea."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pattern_triangulation",
+          "title": "The Sea Cave Cable",
+          "narrativePrompt": "The bearing intersects the tidal gravel bars near the St. Jude Marine Laboratory. An armored undersea telemetry cable runs into a submerged tidal cave.",
+          "unlockOnDay": 220,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_pattern_enter_cave",
+              "text": "Wade through the freezing brine pool at low tide to locate the concealed repeater.",
+              "nextStageId": "stage_pattern_shadow_repeater",
+              "moraleDelta": 1,
+              "grantItemId": "item_faraday_mesh",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "Inside the sea cave, protected by rubber gaskets and zinc anodes, a humming repeater frame glowers in the gloom."
+            },
+            {
+              "choiceId": "choice_pattern_divert_power",
+              "text": "Jam the coastal power feed from the clifftop bunker busbar.",
+              "nextStageId": "stage_pattern_shadow_repeater",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The power cut trips an internal emergency battery bank. The repeater switches to accumulator reserve without missing a pulse."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pattern_shadow_repeater",
+          "title": "The Scrambler Rig",
+          "narrativePrompt": "Inside the dry upper cavern sits a homemade vacuum-tube scrambler rig powered by salvaged lead batteries. It takes the Tempest census broadcast, strips the person-count data, and retransmits pure white noise.",
+          "unlockOnDay": 220,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_pattern_decode_tamper",
+              "text": "Recover the scrambler's delay-line memory coils to identify who built the jamming rig.",
+              "nextStageId": "stage_pattern_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_call_calibration",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The circuit schematics bear the stamp of an independent radio engineer: 'The count is how they find the hungry; the silence is how we stay alive.'"
+            },
+            {
+              "choiceId": "choice_pattern_smash_rig",
+              "text": "Sledgehammer the vacuum tubes and restore uninhibited reception to the valley.",
+              "nextStageId": "stage_pattern_verdict",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "Glass and tungsten scatter across the wet rock. The null signal collapses instantly."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pattern_verdict",
+          "title": "The Clean Wave",
+          "narrativePrompt": "The interference pattern has been unmasked. The player must choose whether to protect the census broadcast or preserve the coastal shield.",
+          "unlockOnDay": 220,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_pattern_dismantle_jamming",
+              "text": "Dismantle the scrambler and turn the components over to the Tempest for integration.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The 99.0 MHz carrier rings clean from the cliffs to the basin. The Tempest commends your vigilance; the counting machines have their broadcast restored."
+            },
+            {
+              "choiceId": "choice_pattern_protect_jamming",
+              "text": "Re-tune the scrambler to shield survivor settlements from automated machine locator beacons.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The null zone holds. In three valleys along the coast, radios hear only soft ocean hiss. The machines search for persons, but find only empty water."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_last_entry",
+      "title": "The Last Entry",
+      "synopsis": "The final entry in the St. Jude Marine Laboratory logbook is written in fresh graphite three weeks after the facility was sealed; forensic evidence points to an unauthorized inhabitant who lived inside the cold vault.",
+      "factionTag": "faction_archivists",
+      "firstStageId": "stage_last_entry_vault_door",
+      "minDay": 240,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_last_entry_vault_door",
+          "title": "The Dogged Hatch",
+          "narrativePrompt": "The dog-latches of the St. Jude Marine Laboratory basement are sealed with lead tamper wire, but the wire was threaded from the inside. Someone locked themselves into the specimen vaults.",
+          "unlockOnDay": 240,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_last_entry_cut_wire",
+              "text": "Cut the tamper wire and descend into the dark, paraffin-scented benthic vault.",
+              "nextStageId": "stage_last_entry_specimen_racks",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The hatch swings inward with a pneumatic groan. The cold air smells of formaldehyde, ocean brine, and tallow candle wax."
+            },
+            {
+              "choiceId": "choice_last_entry_leave_vault",
+              "text": "Honor the internal seal and leave the laboratory tomb undisturbed.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The lead seal remains intact. Whatever was written in the dark stays in the dark."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_last_entry_specimen_racks",
+          "title": "The Salted Quarters",
+          "narrativePrompt": "Amidst hundreds of glass jars of deep-trench sediment, a makeshift cot is made of folded linen specimen tags. On the dissecting table rests Dr. Sena Korr's research log, open to an unnumbered page.",
+          "unlockOnDay": 240,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_last_entry_read_log",
+              "text": "Transcribe the handwritten margins on the benthic core charts.",
+              "nextStageId": "stage_last_entry_benthic_core",
+              "moraleDelta": 1,
+              "grantItemId": "evidence_fuse_linen",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The linen tags are covered in dense chemical formulas. Korr was titrating sea-water samples long after the university's emergency fuel ran dry."
+            },
+            {
+              "choiceId": "choice_last_entry_inspect_supplies",
+              "text": "Check the empty ration containers to estimate how long the inhabitant survived.",
+              "nextStageId": "stage_last_entry_benthic_core",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "Seventy-two tins of emergency pemmican, scraped completely clean. She lived in total isolation for seven months."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_last_entry_benthic_core",
+          "title": "The Deep Water Reading",
+          "narrativePrompt": "The final graphite entry documents deep-water isotopic stratification: the ocean did not boil, and the abyssal trenches remained alive. The inhabitant left the laboratory through the seaward intake pipe when the food ran out.",
+          "unlockOnDay": 240,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_last_entry_secure_manuscript",
+              "text": "Seal the research log in an archival specimen pouch for the Archivists of the Before.",
+              "nextStageId": "stage_last_entry_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_eden_log",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The notebook is safely wrapped. The core readings prove that marine life survived below two hundred fathoms."
+            },
+            {
+              "choiceId": "choice_last_entry_track_pipe",
+              "text": "Inspect the tidal cove where the seawater intake pipe empties onto the rocks.",
+              "nextStageId": "stage_last_entry_verdict",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_scavengers",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "Footprints in the black gravel lead south along the shoreline toward the scavenger coves. She made it out to the sea-trails."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_last_entry_verdict",
+          "title": "The Sea Record",
+          "narrativePrompt": "Dr. Korr's survival log is the only scientific accounting of the ocean's recovery. How should this final record be entered into the verdict dockets?",
+          "unlockOnDay": 240,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_last_entry_canonize_archivist",
+              "text": "Deposit the ocean research into the central library of the Archivists as foundational recovery science.",
+              "nextStageId": "",
+              "moraleDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The Archivists bind the water-stained notebook in buckram. The deep trenches are proven viable; the sea becomes the first chapter of what comes after."
+            },
+            {
+              "choiceId": "choice_last_entry_trade_for_medicine",
+              "text": "Trade the isotopic hydrography charts to the coastal scavengers for medical supplies.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_scavengers",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The scavengers chart safe fishing grounds from the trench data. Science buys penicillin and flour. The dead researcher feeds the living."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_open_count",
+      "title": "The Open Count",
+      "synopsis": "The machine's five-year census window is entering its final forty-eight hours without a registered holder; the player must decide whether to submit the valley's living, lock the register blank, or destroy the counting core.",
+      "factionTag": "",
+      "firstStageId": "stage_open_count_call_loop",
+      "minDay": 250,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_open_count_call_loop",
+          "title": "The Final Window",
+          "narrativePrompt": "Every radio in the sector repeats the monotone summons of Maro Veen: 'The count is open. All persons having custody of persons must present them. Window closes in two cycles.' The machine waits for a master.",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_open_count_approach_silo",
+              "text": "Journey to the central Archive Tape-Silo to access the master registry console.",
+              "nextStageId": "stage_open_count_registry_dais",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The steel doors of the Tape-Silo stand open. Inside the central nave, the reading lectern glows under auxiliary emergency filaments."
+            },
+            {
+              "choiceId": "choice_open_count_shelter_silence",
+              "text": "Refuse the summons and bar the shelter doors against the census deadline.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "outcomeNarrative": "The shelter bolts shoot home. Outside, the census carrier broadcast loops its warning until the carrier signal fades to grey hiss."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_open_count_registry_dais",
+          "title": "The Master Console",
+          "narrativePrompt": "Beneath the cathedral vaults of the Tape-Silo, the master registration console clicks rhythmically. A brass card-feed waits for the census submission. Representatives from the Tempest, the Archivists, and the Militia gather in the shadows.",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_open_count_examine_ledgers",
+              "text": "Review the conflicting counts submitted by each faction before certifying the total.",
+              "nextStageId": "stage_open_count_contested_tallies",
+              "moraleDelta": 1,
+              "grantItemId": "evidence_census_draft",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The tallies diverge wildly: the Tempest counts laborers, the Archivists count households, and the Militia lists only armed volunteers."
+            },
+            {
+              "choiceId": "choice_open_count_demand_terms",
+              "text": "Force the three faction envoys to state their civic demands on the record.",
+              "nextStageId": "stage_open_count_contested_tallies",
+              "moraleDelta": 1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "Envoys argue under the towering racks of magnetic tape. Each claims that control of the count is the sole legitimate mandate to rule."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_open_count_contested_tallies",
+          "title": "The Contested Tallies",
+          "narrativePrompt": "The Tempest demands the names be registered to enforce labor conscription. The Archivists want the ledger preserved untouchable as a sacred artifact. The Militia demands the list be destroyed so no tyrant can tax the survivors.",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_open_count_deliberate",
+              "text": "Take the quill and the punch-card stylus to make the definitive civic decision.",
+              "nextStageId": "stage_open_count_verdict",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_veen_your_people",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The card blanks are heavy linen rag. The names of every living soul in your care are in your hands."
+            },
+            {
+              "choiceId": "choice_open_count_consult_survivors",
+              "text": "Poll your shelter's survivors on whether they wish their names to be recorded in history.",
+              "nextStageId": "stage_open_count_verdict",
+              "moraleDelta": 2,
+              "guiltDelta": -1,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The survivors speak: some want the world to remember they were here; others dread the return of taxes and uniforms."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_open_count_verdict",
+          "title": "The Final Judgment",
+          "narrativePrompt": "The clock solenoid hums. The slot is open. The count of the living belongs to you. Enter the decree.",
+          "unlockOnDay": 250,
+          "isTerminal": true,
+          "choices": [
+            {
+              "choiceId": "choice_open_count_deliver_to_tempest",
+              "text": "Register all persons into the Tempest state roster to secure civil order, protection, and ration distributions.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "The cards click through the feeder. The machine seals the roster. The valley is organized, numbered, and governed once more. Order has returned, and order has a cost."
+            },
+            {
+              "choiceId": "choice_open_count_deliver_to_archivists",
+              "text": "Hand the complete registry to the Archivists to be preserved in the deep vaults, shielded from any military use.",
+              "nextStageId": "",
+              "moraleDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "The ledger is carried into the dark chapel of the silo. The names are remembered, but they will never be used to command or conscript. Memory belongs to everyone."
+            },
+            {
+              "choiceId": "choice_open_count_burn_the_register",
+              "text": "Throw the punch cards into the furnace and smash the registration solenoids. The people will be uncounted and free.",
+              "nextStageId": "",
+              "moraleDelta": 3,
+              "guiltDelta": -2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "Blue flames consume the card stock. The speakers emit a high squeal and fall dead. The count is closed forever. In the ash of the old world, the people are finally unowned."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

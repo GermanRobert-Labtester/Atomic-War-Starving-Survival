@@ -1,6 +1,6 @@
 # Foundry Consumer Matrix (Downstream Traceability)
 
-Every cast product authored in `foundry_production.json` must map to a real in-game consumer system, repair action, construction requirement, or regional trade flow.
+Every cast product authored in `foundry_production.json` must map to a real in-game consumer system, repair action, construction requirement, or regional trade flow. The matrix covers the live 26-product baseline plus the nine additive Plan 129 products.
 
 ---
 
@@ -33,3 +33,13 @@ Every cast product authored in `foundry_production.json` must map to a real in-g
 | `foundry_prod_weather_canister` | `item_foundry_weather_canister`| Atmospheric Dispersal | Skyfall Fallout Scrub | Fictional / Abstract | Canister body for weather mitigation aerosol firing |
 | `foundry_prod_cast_shot` | `item_foundry_cast_shot` | Perimeter Deadfall Traps| Sentry Enclosure Defense | Defense | Fictional defensive pellets for automated perimeter traps |
 | `foundry_prod_casing_blanks` | `item_foundry_casing_blanks` | Garrison Trade Delivery| Armory Reserve Barter | Trade / Accord | Fulfills Garrison ammunition-casing barter contracts |
+| `foundry_prod_sludge_cake_recovery_melt` | `scrap_metal` | Sump Recovery | Scrap Reclamation | Recovery | Recovers a bounded scrap yield from dewatered sludge cake |
+| `foundry_prod_bronze_datum_plate` | `item_datum_plate_bronze` | Geodetic Survey | Monument Benchmarks | Periodic | Supplies the fixed datum plate required by survey monuments |
+| `foundry_prod_flywheel_rotor_shaft` | `item_forged_rotor_shaft` | Kinetic Storage | Flywheel Construction | High-Tier | Supplies the rotor shaft shared by the flywheel class catalog |
+| `foundry_prod_flywheel_containment_ring` | `item_containment_ring_steel` | Kinetic Storage | Rotor Safety | High-Tier | Supplies the containment ring required around heavy rotors |
+| `foundry_prod_culvert_brace` | `item_high_tensile_steel_culvert_brace` | Access Works | Culvert Repair | Structural | Replaces a failed brace in access and crossing work |
+| `foundry_prod_sealed_lead_pig` | `item_sealed_lead_pig` | Radiation Handling | Metallurgy Shielding | Containment | Provides a sealed lead container for the receiving authority |
+| `foundry_prod_ground_anchor_spikes` | `item_hardened_ground_anchor_spikes` | Defense Infrastructure | Barrier Anchoring | Fortification | Anchors tactical barriers to concrete or frozen ground |
+| `foundry_prod_turbine_blade_blank` | `item_superalloy_turbine_blade_blank` | Power Maintenance | EB-PVD Coating | High-Tier | Feeds the turbine blank into the coating and inspection line |
+| `foundry_prod_rail_grinding_head` | `item_rail_grinding_head` | Railway System | Rail Reprofiling | Maintenance | Replaces the modular abrasive head on the rail grinder |
+| `foundry_prod_press_tooling_set` | `item_press_tooling_set` | Tablet Manufacturing | Press Maintenance | Maintenance | Replaces worn die-and-punch tooling before dose quality drifts |

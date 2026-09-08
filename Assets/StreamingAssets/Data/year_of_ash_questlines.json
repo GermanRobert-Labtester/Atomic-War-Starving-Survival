@@ -1362,6 +1362,1551 @@
           "choices": []
         }
       ]
+    },
+    {
+      "questlineId": "quest_garrison_amnesty_offer",
+      "title": "The Amnesty Ledger",
+      "synopsis": "The garrison offers conditional amnesty to deserters sheltering under your roof. The offer would make the shelter legible to military law, but refusing it may turn every protected name into a bargaining chip.",
+      "factionTag": "faction_central_garrison",
+      "firstStageId": "stage_amnesty_notice",
+      "minDay": 195,
+      "maxDay": 275,
+      "stages": [
+        {
+          "stageId": "stage_amnesty_notice",
+          "title": "The Amnesty Notice",
+          "narrativePrompt": "A garrison clerk leaves a stamped ledger at the outer hatch. Deserters who register before the next muster may receive reduced sentences; anyone hidden after that date becomes a shelter accomplice. Three names in your roster have gone very still.",
+          "unlockOnDay": 195,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_amnesty_call_hearing",
+              "text": "Call a shelter hearing and ask each listed deserter to speak for themselves.",
+              "nextStageId": "stage_amnesty_testimony",
+              "moraleDelta": 4,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The names are read aloud. Nobody is protected by silence, but nobody is surrendered by rumor either."
+            },
+            {
+              "choiceId": "choice_amnesty_hide_names",
+              "text": "Move the deserters off the roster and refuse the garrison's list.",
+              "nextStageId": "stage_amnesty_shelter_roll",
+              "moraleDelta": 10,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The clerk marks the ledger refused. From then on, every garrison inspection carries a second question."
+            },
+            {
+              "choiceId": "choice_amnesty_trade_terms",
+              "text": "Offer the garrison names and a written apology in exchange for reduced service terms.",
+              "nextStageId": "stage_amnesty_bargain",
+              "moraleDelta": -4,
+              "guiltDelta": 12,
+              "grantItemId": "item_amnesty_petition_dossier",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The garrison accepts the petition for review. The deserters understand exactly what was spent to buy that review."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_amnesty_testimony",
+          "title": "Names Under the Lamp",
+          "narrativePrompt": "The testimony separates the three cases. One left after a civilian evacuation order, one stole a ration allotment, and one simply vanished during a night march. The garrison wants one clean answer; the shelter has three different debts in front of it.",
+          "unlockOnDay": 202,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_amnesty_register_charter",
+              "text": "Register the deserters under shelter protection and ask for civilian terms.",
+              "nextStageId": "stage_amnesty_final_terms",
+              "moraleDelta": 6,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The garrison does not accept the charter, but it agrees to read it before sending wardens."
+            },
+            {
+              "choiceId": "choice_amnesty_forward_testimony",
+              "text": "Forward the testimony unchanged and let the garrison decide which cases deserve mercy.",
+              "nextStageId": "stage_amnesty_final_terms",
+              "moraleDelta": -2,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The record leaves your hands. The people named in it do not."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_amnesty_shelter_roll",
+          "title": "The Second Roster",
+          "narrativePrompt": "The hidden roster is already becoming a second institution. A Rebuilder courier offers work tickets and a place on their maintenance crews if the shelter will stand behind the deserters as civilian laborers.",
+          "unlockOnDay": 204,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_amnesty_keep_hidden",
+              "text": "Keep the names hidden and accept the cost of a garrison search.",
+              "nextStageId": "stage_amnesty_breach",
+              "moraleDelta": 8,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The outer doors are reinforced. Nobody calls it a victory when the shelter starts counting patrols instead of meals."
+            },
+            {
+              "choiceId": "choice_amnesty_move_to_rebuilders",
+              "text": "Move the deserters onto the Rebuilder work roster before the garrison returns.",
+              "nextStageId": "stage_amnesty_final_terms",
+              "moraleDelta": 4,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders take the names without asking for the old uniforms. The garrison calls it concealment."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_amnesty_bargain",
+          "title": "Terms in the Margin",
+          "narrativePrompt": "The garrison's counteroffer arrives with three blank lines for service and one line for custody. A signature would make the shelter an intermediary in the amnesty, not a neutral roof over it.",
+          "unlockOnDay": 206,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_amnesty_accept_limited_terms",
+              "text": "Accept limited service terms and keep civilian custody inside the shelter.",
+              "nextStageId": "stage_amnesty_final_terms",
+              "moraleDelta": 0,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The garrison gets service. The deserters keep their doors. The arrangement is called mercy by one side and leverage by the other."
+            },
+            {
+              "choiceId": "choice_amnesty_refuse_ledger",
+              "text": "Refuse the custody line and return the unsigned ledger.",
+              "nextStageId": "stage_amnesty_breach",
+              "moraleDelta": 5,
+              "guiltDelta": 6,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The next message contains no threat. It contains a list of supplies the garrison will no longer certify."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_amnesty_final_terms",
+          "title": "A Shelter With a Name",
+          "narrativePrompt": "The revised ledger carries the shelter seal. The deserters remain under your roof, but their status is no longer invisible. A legal name has been purchased at the price of future questions.",
+          "unlockOnDay": 215,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_amnesty_breach",
+          "title": "The Search Notice",
+          "narrativePrompt": "The garrison posts a search notice at the road fork and removes your shelter from the reduced-service list. The deserters are still inside. So is the argument over what protection means.",
+          "unlockOnDay": 215,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_ash_sign_pilgrimage",
+      "title": "The Pilgrim Road",
+      "synopsis": "The Ash Sign announces a pilgrimage through a contaminated corridor. The route is a religious procession to them, a hazardous movement of people to everyone responsible for its passage.",
+      "factionTag": "faction_ash_sign",
+      "firstStageId": "stage_pilgrimage_proclamation",
+      "minDay": 215,
+      "maxDay": 320,
+      "stages": [
+        {
+          "stageId": "stage_pilgrimage_proclamation",
+          "title": "The Procession Notice",
+          "narrativePrompt": "Ash Sign messengers nail a route notice to the shelter board. Forty pilgrims intend to cross the old service cut before the next storm cycle, carrying ash cloths and sealed water jars. They ask for a gate, a guide, or a public refusal.",
+          "unlockOnDay": 215,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pilgrimage_open_route",
+              "text": "Open the shelter route under a written daylight limit.",
+              "nextStageId": "stage_pilgrimage_route_survey",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The pilgrimage receives a route marker, not a blessing. The difference is recorded by both sides."
+            },
+            {
+              "choiceId": "choice_pilgrimage_restrict_passage",
+              "text": "Refuse passage through the shelter perimeter and post the reason publicly.",
+              "nextStageId": "stage_pilgrimage_pressure",
+              "moraleDelta": -2,
+              "guiltDelta": 6,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The refusal is clear enough to prevent a rumor, but not clear enough to prevent a grudge."
+            },
+            {
+              "choiceId": "choice_pilgrimage_request_rebuilder_guides",
+              "text": "Ask the Rebuilders to provide a dosimeter-marked escort route.",
+              "nextStageId": "stage_pilgrimage_route_survey",
+              "moraleDelta": 3,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders agree to mark the route. The Ash Sign says the marks are useful, even if they are not sacred."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pilgrimage_route_survey",
+          "title": "The Route on Paper",
+          "narrativePrompt": "The safe corridor is narrower than the pilgrimage notice claimed. One drainage trench carries a reading nobody wants to explain, and the old road has collapsed where the procession would need to turn back.",
+          "unlockOnDay": 222,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pilgrimage_allow_ceremony",
+              "text": "Allow the ceremony at the marked gate and keep the procession outside the inner shelter.",
+              "nextStageId": "stage_pilgrimage_route_terms",
+              "moraleDelta": 4,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The rite takes place in the cold. Your guards count the jars twice and let the procession continue."
+            },
+            {
+              "choiceId": "choice_pilgrimage_reclassify_expedition",
+              "text": "Treat the crossing as an expedition and register it through the existing travel authority.",
+              "nextStageId": "stage_pilgrimage_route_terms",
+              "moraleDelta": 2,
+              "guiltDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -5,
+              "unlockEncounterId": "door_encounter_radiation_pilgrim_congregation",
+              "conditions": [],
+              "outcomeNarrative": "The route becomes a travel record. The Ash Sign accepts the paper because the alternative is walking without one."
+            },
+            {
+              "choiceId": "choice_pilgrimage_close_high_dose_pass",
+              "text": "Close the high-dose pass and make the procession choose another road.",
+              "nextStageId": "stage_pilgrimage_fallout",
+              "moraleDelta": 0,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The road closes behind a chain and a warning board. Nobody calls it an evacuation."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pilgrimage_pressure",
+          "title": "At the Outer Marker",
+          "narrativePrompt": "The procession waits beyond the warning posts. Several shelter families want the pilgrims admitted; others point at the water jars and ask who inspected them. The Ash Sign messenger asks whether fear is now your only law.",
+          "unlockOnDay": 225,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pilgrimage_offer_beds",
+              "text": "Offer a controlled shelter bed to the sickest traveler and keep the rest outside.",
+              "nextStageId": "stage_pilgrimage_arrival",
+              "moraleDelta": 6,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": 6,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "One pilgrim crosses the threshold. The others remain at the marker and watch the door."
+            },
+            {
+              "choiceId": "choice_pilgrimage_turn_procession_back",
+              "text": "Turn the procession back before the waiting families become a crowd.",
+              "nextStageId": "stage_pilgrimage_fallout",
+              "moraleDelta": -8,
+              "guiltDelta": 12,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The procession turns around under guard. By nightfall, the road carries a different story about your gate."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pilgrimage_route_terms",
+          "title": "A Route With Conditions",
+          "narrativePrompt": "The Ash Sign asks for an escort through the marked corridor and a place to leave the empty jars. In return, the pilgrims will keep their rite outside the shelter and carry a public account of the route's limits.",
+          "unlockOnDay": 230,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_pilgrimage_post_limits",
+              "text": "Publish the route limits and permit the crossing under shelter escort.",
+              "nextStageId": "stage_pilgrimage_arrival",
+              "moraleDelta": 4,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The route is no longer private doctrine. It is a public promise with a posted limit."
+            },
+            {
+              "choiceId": "choice_pilgrimage_require_rebuilder_escort",
+              "text": "Require Rebuilder guides to walk the first leg and record the crossing.",
+              "nextStageId": "stage_pilgrimage_arrival",
+              "moraleDelta": 2,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "door_encounter_radiation_pilgrim_congregation",
+              "conditions": [],
+              "outcomeNarrative": "The pilgrimage becomes a shared route record. The Ash Sign dislikes the witnesses and keeps the appointment."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_pilgrimage_arrival",
+          "title": "The Road Holds",
+          "narrativePrompt": "The procession reaches the far marker without entering the worst of the corridor. The shelter's route notes travel with them, copied into a dozen hands. Belief has not been settled; movement has been made possible.",
+          "unlockOnDay": 245,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_pilgrimage_fallout",
+          "title": "The Road Closes",
+          "narrativePrompt": "The pilgrimage leaves without the shelter's route mark. The Ash Sign does not threaten retaliation; it simply removes your gate from its list of places where a warning can be trusted.",
+          "unlockOnDay": 245,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_rebuilder_irrigation",
+      "title": "The Shared Channel",
+      "synopsis": "The Rebuilders propose an irrigation channel that could restore a food margin, but the hydro barons claim the diversion crosses their measured flow. The work is simple on paper and sovereign in practice.",
+      "factionTag": "faction_rebuilders",
+      "firstStageId": "stage_irrigation_proposal",
+      "minDay": 225,
+      "maxDay": 320,
+      "stages": [
+        {
+          "stageId": "stage_irrigation_proposal",
+          "title": "The Channel Claim",
+          "narrativePrompt": "A Rebuilder survey team unrolls a charcoal map across the ration table. Their channel would reach three dry plots before the next melt, but the line crosses a hydro baron meter station. The proposal carries no signature from the barons.",
+          "unlockOnDay": 225,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_irrigation_publish_ledger",
+              "text": "Publish the shelter's water ledger before discussing the route.",
+              "nextStageId": "stage_irrigation_survey",
+              "moraleDelta": 4,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The ledger makes the shortage visible. It also gives the hydro barons a precise place to point when they object."
+            },
+            {
+              "choiceId": "choice_irrigation_meet_hydro_first",
+              "text": "Take the Rebuilder map to the hydro barons before promising any work.",
+              "nextStageId": "stage_irrigation_hydro_objection",
+              "moraleDelta": 2,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The barons do not reject the crops. They reject the assumption that a map is permission."
+            },
+            {
+              "choiceId": "choice_irrigation_start_without_permission",
+              "text": "Let the Rebuilders begin the first cut before the barons can close the route.",
+              "nextStageId": "stage_irrigation_hydro_objection",
+              "moraleDelta": 8,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The first trench is shallow and real. By evening, the hydro barons have posted a counterclaim at both ends."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_irrigation_survey",
+          "title": "The Meter Line",
+          "narrativePrompt": "The survey finds that the channel can be fed without emptying the main reservoir, but only if its flow is measured every shift. The Rebuilders call that oversight. The hydro barons call it the minimum condition for cooperation.",
+          "unlockOnDay": 232,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_irrigation_accept_hydro_meter",
+              "text": "Accept a hydro meter and a posted daily drawdown limit.",
+              "nextStageId": "stage_irrigation_counterproposal",
+              "moraleDelta": 2,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The meter goes in before the first channel stone. The Rebuilders keep working because the water is still moving."
+            },
+            {
+              "choiceId": "choice_irrigation_mark_shared_channel",
+              "text": "Mark the channel as shared infrastructure and issue a public allocation writ.",
+              "nextStageId": "stage_irrigation_counterproposal",
+              "moraleDelta": 6,
+              "guiltDelta": 2,
+              "grantItemId": "item_water_allocation_writ",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The writ gives the channel a public identity. The barons say a paper boundary is still a boundary."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_irrigation_hydro_objection",
+          "title": "The Objection",
+          "narrativePrompt": "Hydro workers arrive with their own figures and a sealed valve key. They will allow a pilot draw if the Rebuilders accept a shared schedule. The Rebuilders answer that a schedule written by one side is a tax with better handwriting.",
+          "unlockOnDay": 235,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_irrigation_submit_shared_drawdown",
+              "text": "Submit a shared drawdown schedule for hydro review.",
+              "nextStageId": "stage_irrigation_counterproposal",
+              "moraleDelta": 1,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The valve key remains on the table while both sides amend the same schedule. That is progress of a narrow kind."
+            },
+            {
+              "choiceId": "choice_irrigation_hold_rebuilder_line",
+              "text": "Tell the Rebuilders to hold the line and let the hydro workers close the valve.",
+              "nextStageId": "stage_irrigation_dispute",
+              "moraleDelta": 7,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Nobody draws a weapon. The channel stops anyway, and the dry plots become the argument's witness."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_irrigation_counterproposal",
+          "title": "The Shared Schedule",
+          "narrativePrompt": "The compromise divides the draw by shift and names a review point after the first harvest. It gives neither bloc the right to call the channel its own, which is why both blocs can still sign it.",
+          "unlockOnDay": 245,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_irrigation_sign_schedule",
+              "text": "Sign the shared schedule and appoint both factions to inspect the meter.",
+              "nextStageId": "stage_irrigation_resolved",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The channel opens under two seals. The first water reaches the plots before either side can claim victory."
+            },
+            {
+              "choiceId": "choice_irrigation_reject_meter_terms",
+              "text": "Reject the meter terms and let the Rebuilders keep the channel outside hydro control.",
+              "nextStageId": "stage_irrigation_broken",
+              "moraleDelta": 8,
+              "guiltDelta": 12,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders call it independence. The barons call it an unmetered draw and close the larger gate."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_irrigation_dispute",
+          "title": "The Dry Plots",
+          "narrativePrompt": "The channel remains dry while both factions wait for you to name the authority that can reopen it. The shelter can force a private branch, or make the dispute visible to a wider arbitration record.",
+          "unlockOnDay": 245,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_irrigation_pause_for_arbitration",
+              "text": "Pause the work and submit the allocation to public arbitration.",
+              "nextStageId": "stage_irrigation_resolved",
+              "moraleDelta": -2,
+              "guiltDelta": 4,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The plots wait another week. The decision gains witnesses, which is not the same as gaining agreement."
+            },
+            {
+              "choiceId": "choice_irrigation_cut_private_branch",
+              "text": "Authorize a private branch and accept responsibility for the unmetered flow.",
+              "nextStageId": "stage_irrigation_broken",
+              "moraleDelta": 6,
+              "guiltDelta": 15,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The branch carries water for three nights. Then the hydro barons classify the channel as a breach."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_irrigation_resolved",
+          "title": "Water With Witnesses",
+          "narrativePrompt": "The irrigation channel runs under a shared schedule. The food margin is small, the inspection burden is permanent, and every harvest will renew the argument over who made it possible.",
+          "unlockOnDay": 265,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_irrigation_broken",
+          "title": "The Valve Is Closed",
+          "narrativePrompt": "The channel is sealed before the first full harvest. Rebuilder crews keep the map; hydro workers keep the valve key. The shelter has gained a political boundary and lost the season's easy answer.",
+          "unlockOnDay": 265,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_hydro_baron_water_tax",
+      "title": "The Water Levy",
+      "synopsis": "The hydro barons add a charge to shelter water access and call it maintenance. The notice arrives with a meter reading, a queue number, and no avenue for appeal.",
+      "factionTag": "faction_hydro_barons",
+      "firstStageId": "stage_water_tax_notice",
+      "minDay": 245,
+      "maxDay": 345,
+      "stages": [
+        {
+          "stageId": "stage_water_tax_notice",
+          "title": "The Levy Notice",
+          "narrativePrompt": "A hydro clerk posts a new water rate beside the intake schedule. The charge is small enough to sound temporary and large enough to remove a meal from every ration week. The notice calls the difference a service guarantee.",
+          "unlockOnDay": 245,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_water_tax_pay_levy",
+              "text": "Pay the levy and request a stamped service queue.",
+              "nextStageId": "stage_water_tax_accounting",
+              "moraleDelta": -3,
+              "guiltDelta": 4,
+              "grantItemId": "item_water_allocation_writ",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "door_encounter_hydro_baron_water_debt_notice",
+              "conditions": [],
+              "outcomeNarrative": "The queue number makes the water arrive on paper. The pantry still has to absorb the cost."
+            },
+            {
+              "choiceId": "choice_water_tax_resist_notice",
+              "text": "Refuse the levy and post the shelter's own water allocation in reply.",
+              "nextStageId": "stage_water_tax_accounting",
+              "moraleDelta": 7,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The reply is copied onto the barons' ledger under refusal. The intake continues for now."
+            },
+            {
+              "choiceId": "choice_water_tax_call_rebuilders",
+              "text": "Ask the Rebuilders to witness the meter and propose a shared rate.",
+              "nextStageId": "stage_water_tax_coalition",
+              "moraleDelta": 4,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders arrive with a second measuring line. The barons object to the witnesses before they object to the figures."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_water_tax_accounting",
+          "title": "The Meter Book",
+          "narrativePrompt": "The barons bring the meter book to the shelter door. It includes a late fee for disputed readings and a warning that unpaid accounts will be moved behind emergency priority.",
+          "unlockOnDay": 253,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_water_tax_accept_meter",
+              "text": "Accept the meter book and negotiate a fixed emergency rate.",
+              "nextStageId": "stage_water_tax_settlement",
+              "moraleDelta": -2,
+              "guiltDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The late fee is removed. The rate remains. A concession can still be a lock if it has no exit."
+            },
+            {
+              "choiceId": "choice_water_tax_publish_shortfall",
+              "text": "Publish the disputed readings and ask other factions to audit the shortage.",
+              "nextStageId": "stage_water_tax_coalition",
+              "moraleDelta": 5,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The readings become public. So does the fact that the shelter has been paying under protest."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_water_tax_coalition",
+          "title": "A Second Measure",
+          "narrativePrompt": "The Rebuilders offer to guarantee a portion of the shelter's maintenance labor if the barons suspend the levy during repair weeks. It is a counter-alliance built from schedules, not speeches.",
+          "unlockOnDay": 258,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_water_tax_request_guarantee",
+              "text": "Accept the Rebuilder guarantee and ask the barons for a repair-week exemption.",
+              "nextStageId": "stage_water_tax_settlement",
+              "moraleDelta": 5,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders put their labor on the line. The hydro barons call the arrangement an unauthorized rate board."
+            },
+            {
+              "choiceId": "choice_water_tax_trade_repair_labor",
+              "text": "Offer shelter repair labor directly and keep the levy schedule intact.",
+              "nextStageId": "stage_water_tax_settlement",
+              "moraleDelta": -1,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The intake is serviced by shelter hands. The charge becomes easier to defend because the labor is visible."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_water_tax_settlement",
+          "title": "The Rate Holds",
+          "narrativePrompt": "The settlement sets a review date and preserves emergency access, but it does not erase the levy. The shelter will keep water and keep a record of what it paid for it.",
+          "unlockOnDay": 265,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_water_tax_accept_time_limited",
+              "text": "Accept the time-limited levy and the public review date.",
+              "nextStageId": "stage_water_tax_resolved",
+              "moraleDelta": -1,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The notice is amended in ink. It is still a tax, but it now has an end date that both sides can point to."
+            },
+            {
+              "choiceId": "choice_water_tax_refuse_and_ration",
+              "text": "Refuse the settlement and move the shelter onto a rationed emergency draw.",
+              "nextStageId": "stage_water_tax_broken",
+              "moraleDelta": -8,
+              "guiltDelta": 6,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -25,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The ration schedule holds for now. Every cup becomes an argument about sovereignty."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_water_tax_resolved",
+          "title": "Water Under Review",
+          "narrativePrompt": "The levy is posted with a review date and an emergency exemption. The hydro barons still own the meter, but the shelter has made the price of access a political fact instead of a private bill.",
+          "unlockOnDay": 285,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_water_tax_broken",
+          "title": "The Dry Ledger",
+          "narrativePrompt": "The barons remove the shelter from ordinary priority. The emergency draw remains, but every future delivery will begin with the old refusal written beside your name.",
+          "unlockOnDay": 285,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_black_ops_blackmail",
+      "title": "The Blackmail Packet",
+      "synopsis": "A black-ops operative offers a sealed intelligence packet in exchange for sheltering a defector wanted by the garrison. The information may protect the shelter; the bargain may make it complicit.",
+      "factionTag": "faction_black_ops",
+      "firstStageId": "stage_blackmail_contact",
+      "minDay": 265,
+      "maxDay": 345,
+      "stages": [
+        {
+          "stageId": "stage_blackmail_contact",
+          "title": "The Unmarked Packet",
+          "narrativePrompt": "A courier leaves a black envelope inside the outer drain and waits where the cameras cannot see her face. She says the person beside her knows the garrison's next inspection route. She will trade the route for a bed and no questions.",
+          "unlockOnDay": 265,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_blackmail_hear_defector",
+              "text": "Bring the defector inside and hear the offer under shelter rules.",
+              "nextStageId": "stage_blackmail_defector",
+              "moraleDelta": 5,
+              "guiltDelta": 4,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": 5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The defector enters without a uniform. The packet stays sealed until the door is closed."
+            },
+            {
+              "choiceId": "choice_blackmail_call_garrison_observer",
+              "text": "Call a garrison observer and disclose that a black-ops offer is at the door.",
+              "nextStageId": "stage_blackmail_inquiry",
+              "moraleDelta": -2,
+              "guiltDelta": 6,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The garrison arrives asking for the packet first and the defector second. Your answer will decide which order holds."
+            },
+            {
+              "choiceId": "choice_blackmail_seal_hatch",
+              "text": "Seal the hatch and refuse to become the exchange point.",
+              "nextStageId": "stage_blackmail_buried",
+              "moraleDelta": 3,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The courier retrieves the envelope. The defector remains outside long enough for the road to become empty."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blackmail_defector",
+          "title": "The Defector's Preview",
+          "narrativePrompt": "The defector names two garrison supply routes and one black-ops listening post. Nothing is proved by the telling. The shelter has to decide whether information is a thing to verify, a thing to use, or a thing to refuse.",
+          "unlockOnDay": 272,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_blackmail_demand_corroboration",
+              "text": "Demand corroboration before offering a longer shelter term.",
+              "nextStageId": "stage_blackmail_inquiry",
+              "moraleDelta": 1,
+              "guiltDelta": 2,
+              "grantItemId": "item_meridian_archive_copy",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The packet yields one archive copy and no certainty. The defector understands that trust is being purchased by the hour."
+            },
+            {
+              "choiceId": "choice_blackmail_shelter_without_terms",
+              "text": "Shelter the defector for seven days without asking for the packet.",
+              "nextStageId": "stage_blackmail_inquiry",
+              "moraleDelta": 8,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The packet remains closed. The defector sleeps near the boiler and begins helping with the night roster."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blackmail_inquiry",
+          "title": "The Garrison Question",
+          "narrativePrompt": "The garrison asks whether the shelter has seen a particular coat, then asks whether it has accepted any black-ops material. The questions are polite because the answer is expected to be useful either way.",
+          "unlockOnDay": 275,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_blackmail_offer_limited_access",
+              "text": "Offer the garrison a limited inspection window with no access to the defector.",
+              "nextStageId": "stage_blackmail_decision",
+              "moraleDelta": 0,
+              "guiltDelta": 7,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The inspection produces no body and no confession. The garrison leaves knowing the shelter has chosen a boundary."
+            },
+            {
+              "choiceId": "choice_blackmail_hide_in_repair_crew",
+              "text": "Hide the defector in the repair crew and deny the coat entirely.",
+              "nextStageId": "stage_blackmail_decision",
+              "moraleDelta": 5,
+              "guiltDelta": 10,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The repair crew takes a longer route through the shelter. Every person on it now knows what the lie protects."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blackmail_buried",
+          "title": "No Exchange",
+          "narrativePrompt": "The packet disappears from the drain, but its existence has already entered the road gossip. A garrison patrol and a black-ops courier both return within the week, each asking what the other wanted.",
+          "unlockOnDay": 275,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_blackmail_return_defector",
+              "text": "Return the defector at the outer road and close the shelter record.",
+              "nextStageId": "stage_blackmail_broken",
+              "moraleDelta": -8,
+              "guiltDelta": 18,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The road takes the defector back. The shelter records no name, but the people who watched the gate remember it."
+            },
+            {
+              "choiceId": "choice_blackmail_trade_for_passage",
+              "text": "Trade the defector's route information for a temporary garrison passage guarantee.",
+              "nextStageId": "stage_blackmail_decision",
+              "moraleDelta": -3,
+              "guiltDelta": 12,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The garrison signs the guarantee and asks where the information came from. You do not answer the second question."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blackmail_decision",
+          "title": "The Packet Opens",
+          "narrativePrompt": "The sealed packet is opened at last. It contains enough route information to matter and not enough to make anyone safe. The shelter can publish it, keep it for leverage, or hand the defector to the authority that wants the story closed.",
+          "unlockOnDay": 285,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_blackmail_publish_intelligence",
+              "text": "Publish the intelligence to every faction that can verify it.",
+              "nextStageId": "stage_blackmail_exposed",
+              "moraleDelta": 6,
+              "guiltDelta": 6,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": -25,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The information spreads faster than the shelter can amend it. The routes change, and so does the value of being trusted with one."
+            },
+            {
+              "choiceId": "choice_blackmail_keep_source_secret",
+              "text": "Keep the source secret and retain the intelligence for shelter use.",
+              "nextStageId": "stage_blackmail_exposed",
+              "moraleDelta": 2,
+              "guiltDelta": 4,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_black_ops",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "door_encounter_black_ops_asset_extraction",
+              "conditions": [],
+              "outcomeNarrative": "The shelter keeps the packet under seal. The black-ops courier returns once, not to thank you, but to confirm the seal remains."
+            },
+            {
+              "choiceId": "choice_blackmail_hand_over_for_access",
+              "text": "Hand the defector over in exchange for a garrison passage guarantee.",
+              "nextStageId": "stage_blackmail_broken",
+              "moraleDelta": -10,
+              "guiltDelta": 22,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 25,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The guarantee is stamped. The defector is gone. The shelter has become useful to the garrison in exactly the way the packet warned."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_blackmail_exposed",
+          "title": "Information With a Cost",
+          "narrativePrompt": "The shelter has kept or published the packet, and the road has adjusted around it. No faction calls the decision clean. They call it a precedent, which may be more durable.",
+          "unlockOnDay": 305,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_blackmail_broken",
+          "title": "The Door Closes on the Story",
+          "narrativePrompt": "The immediate passage is secured and the intelligence trail is cut short. The shelter gains a written guarantee and loses the presumption that its doors are neutral.",
+          "unlockOnDay": 305,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_garrison_mutiny",
+      "title": "The Garrison Split",
+      "synopsis": "The central garrison divides over who has the right to issue orders after a failed winter command. Both sides ask the shelter for supplies, recognition, and the legitimacy of being answered.",
+      "factionTag": "faction_central_garrison",
+      "firstStageId": "stage_mutiny_split",
+      "minDay": 285,
+      "maxDay": 350,
+      "stages": [
+        {
+          "stageId": "stage_mutiny_split",
+          "title": "Two Orders",
+          "narrativePrompt": "Two garrison messages arrive on the same radio frequency. One bears the colonel's seal; the other bears the field council's ration stamp. Both claim the other command has abandoned the road.",
+          "unlockOnDay": 285,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_mutiny_recognize_command",
+              "text": "Recognize the existing command until the garrison resolves its own dispute.",
+              "nextStageId": "stage_mutiny_loyalist_demand",
+              "moraleDelta": -2,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The colonel's courier accepts the answer. The field council writes your shelter into its list of provisional enemies."
+            },
+            {
+              "choiceId": "choice_mutiny_meet_field_council",
+              "text": "Meet the field council before accepting any order from the colonel.",
+              "nextStageId": "stage_mutiny_mutineer_demand",
+              "moraleDelta": 4,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -10,
+              "unlockEncounterId": "door_encounter_garrison_defection_officer",
+              "conditions": [],
+              "outcomeNarrative": "The field council asks for no oath. It asks whether the shelter can tell the difference between obedience and continuity."
+            },
+            {
+              "choiceId": "choice_mutiny_issue_neutral_notice",
+              "text": "Issue a neutral notice: no side receives shelter supplies until both sign one schedule.",
+              "nextStageId": "stage_mutiny_supply_choice",
+              "moraleDelta": 6,
+              "guiltDelta": 4,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "",
+              "factionStandingDelta": 0,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The notice is copied by both commands. Neither calls it fair, which makes it the first thing they agree on."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_loyalist_demand",
+          "title": "The Loyalist Requisition",
+          "narrativePrompt": "The colonel's side requests a ration release and asks the shelter to keep its checkpoint signal unchanged. In return, it promises that the road will remain under one chain of command.",
+          "unlockOnDay": 292,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_mutiny_release_rations",
+              "text": "Release a limited ration allotment to the existing garrison command.",
+              "nextStageId": "stage_mutiny_supply_choice",
+              "moraleDelta": -8,
+              "guiltDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The ration seal changes hands. The shelter's stores are smaller, and the colonel's road report is cleaner."
+            },
+            {
+              "choiceId": "choice_mutiny_refuse_army_claim",
+              "text": "Refuse the requisition and keep the signal under shelter control.",
+              "nextStageId": "stage_mutiny_confrontation",
+              "moraleDelta": 5,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The garrison changes its patrol route. The road is quieter because fewer people are willing to answer your calls."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_mutineer_demand",
+          "title": "The Field Council's Terms",
+          "narrativePrompt": "The mutineers ask for recognition as a temporary field council and offer to share checkpoint logs with the Rebuilders. They say the old command has made the garrison a private inheritance.",
+          "unlockOnDay": 294,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_mutiny_recognize_field_council",
+              "text": "Recognize the field council provisionally and copy its logs to the Rebuilders.",
+              "nextStageId": "stage_mutiny_supply_choice",
+              "moraleDelta": 7,
+              "guiltDelta": 3,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders accept the logs as evidence, not authority. The field council accepts both readings."
+            },
+            {
+              "choiceId": "choice_mutiny_require_shared_watch",
+              "text": "Require both sides to share one watch schedule before the shelter answers either.",
+              "nextStageId": "stage_mutiny_confrontation",
+              "moraleDelta": 3,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The schedule is returned unsigned. The demand has at least forced both factions to name what they will not share."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_supply_choice",
+          "title": "The Checkpoint Signal",
+          "narrativePrompt": "The shelter's signal is the only one both garrison groups still recognize. Changing it would not decide who is legitimate, but it would decide who can move through the road without asking twice.",
+          "unlockOnDay": 300,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_mutiny_keep_checkpoint_neutral",
+              "text": "Keep the checkpoint signal neutral and publish the current watch list.",
+              "nextStageId": "stage_mutiny_resolved",
+              "moraleDelta": 8,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -5,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The signal remains shelter property. Both sides can use it, and neither side can claim it as a vote."
+            },
+            {
+              "choiceId": "choice_mutiny_issue_joint_watch",
+              "text": "Issue a joint watch roster and make passage conditional on both seals.",
+              "nextStageId": "stage_mutiny_resolved",
+              "moraleDelta": 2,
+              "guiltDelta": 5,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The road slows to a crawl. It also stops pretending that one command can speak for both."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_confrontation",
+          "title": "The Roadside Choice",
+          "narrativePrompt": "A checkpoint crew arrives without a shared watch list. The shelter has one chance to name which authority its signal recognizes, or to deny both sides the shelter's confirmation.",
+          "unlockOnDay": 302,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_mutiny_back_field_council",
+              "text": "Back the field council and withdraw recognition from the colonel's checkpoint.",
+              "nextStageId": "stage_mutiny_resolved",
+              "moraleDelta": 5,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": -25,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The field council gets the signal. The colonel's men stop calling the shelter by its name."
+            },
+            {
+              "choiceId": "choice_mutiny_back_colonel",
+              "text": "Back the colonel and deny the field council passage through the road.",
+              "nextStageId": "stage_mutiny_broken",
+              "moraleDelta": -7,
+              "guiltDelta": 12,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The old command survives the day. The road learns that the shelter chose a side before the garrison did."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_mutiny_resolved",
+          "title": "A Command With Witnesses",
+          "narrativePrompt": "The garrison split remains unresolved, but the shelter's signal has a recorded policy. Passage, supplies, and recognition now move through a rule others can challenge instead of a name they must trust.",
+          "unlockOnDay": 320,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_mutiny_broken",
+          "title": "One Flag at the Gate",
+          "narrativePrompt": "The colonel's signal is restored and the field council disappears from the road notices. The shelter has a recognized command to deal with, and a faction of soldiers who will remember how recognition was bought.",
+          "unlockOnDay": 320,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_rebuilder_seed_failure",
+      "title": "The Empty Seed Ledger",
+      "synopsis": "The Rebuilders report that a recovered seed reserve will not produce the promised crop. Before the next planting window closes, the shelter must decide whether the failure belongs to storage, contamination, transport, or the people who promised the harvest.",
+      "factionTag": "faction_rebuilders",
+      "firstStageId": "stage_seed_failure_report",
+      "minDay": 300,
+      "maxDay": 355,
+      "stages": [
+        {
+          "stageId": "stage_seed_failure_report",
+          "title": "The Empty Tin",
+          "narrativePrompt": "The Rebuilder agronomist opens the reserve tin in front of the shelter council. The packets are sealed, dry, and mostly dead. The report does not name a culprit, which is why everyone arrives with one.",
+          "unlockOnDay": 300,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_seed_failure_open_ledger",
+              "text": "Open the seed ledger and reconstruct every handoff before assigning blame.",
+              "nextStageId": "stage_seed_failure_evidence",
+              "moraleDelta": 3,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 10,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The ledger grows across three tables. Its gaps are more useful than its neatest entries."
+            },
+            {
+              "choiceId": "choice_seed_failure_blame_surface_team",
+              "text": "Blame the surface team that carried the reserve through the ash weather.",
+              "nextStageId": "stage_seed_failure_accusation",
+              "moraleDelta": -6,
+              "guiltDelta": 15,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": -15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The surface crew is suspended before the evidence is complete. The empty tin remains exactly as empty."
+            },
+            {
+              "choiceId": "choice_seed_failure_request_hydro_audit",
+              "text": "Ask the hydro barons to audit the storage conditions before the next reserve is opened.",
+              "nextStageId": "stage_seed_failure_hydro_review",
+              "moraleDelta": 1,
+              "guiltDelta": 0,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Hydro inspectors agree to review the vault. The Rebuilders hear the request as doubt and the barons hear it as jurisdiction."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_failure_evidence",
+          "title": "The Handoff Gaps",
+          "narrativePrompt": "The ledger shows a warm transit interval, a missing temperature note, and a storage seal replaced without a witness. None proves sabotage. Together they prove that the reserve was treated as a promise before it was treated as a crop.",
+          "unlockOnDay": 306,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_seed_failure_publish_storage_loss",
+              "text": "Publish the storage loss and let the Rebuilders audit their own chain.",
+              "nextStageId": "stage_seed_failure_accusation",
+              "moraleDelta": 2,
+              "guiltDelta": 4,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 8,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders receive the gaps as evidence rather than accusation. Their internal review still produces three names."
+            },
+            {
+              "choiceId": "choice_seed_failure_seal_report",
+              "text": "Seal the report until a second planting test can establish a cleaner cause.",
+              "nextStageId": "stage_seed_failure_decision",
+              "moraleDelta": -3,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": -18,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The report goes under seal. The rumor does not."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_failure_accusation",
+          "title": "The Blame Table",
+          "narrativePrompt": "The Rebuilders bring the surface crew, the storekeeper, and the hydro clerk into the same room. Each can explain one gap. None can explain why the reserve was never tested before the planting promise was announced.",
+          "unlockOnDay": 310,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_seed_failure_accept_liability",
+              "text": "Accept shelter liability for the missed test and fund a second attempt.",
+              "nextStageId": "stage_seed_failure_decision",
+              "moraleDelta": -5,
+              "guiltDelta": 8,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The shelter accepts the missing test as its failure. The Rebuilders stop asking for a culprit and start asking for labor."
+            },
+            {
+              "choiceId": "choice_seed_failure_name_contamination_route",
+              "text": "Name the storage route as the likely contamination point and preserve the surviving packets.",
+              "nextStageId": "stage_seed_failure_decision",
+              "moraleDelta": 3,
+              "guiltDelta": 10,
+              "grantItemId": "item_seed_packet_nonhybrid",
+              "grantItemQuantity": 4,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": -12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "Four packets survive the accusation. The hydro barons call the route claim unproven and begin their own ledger."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_failure_hydro_review",
+          "title": "The Vault Review",
+          "narrativePrompt": "The hydro audit finds a storage room with a stable reading and a transfer crate that was never logged into it. The barons offer a reserve draw if the Rebuilders accept an external seal on the next batch.",
+          "unlockOnDay": 310,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_seed_failure_request_shared_reserve",
+              "text": "Request a shared reserve and an external seal for the next planting batch.",
+              "nextStageId": "stage_seed_failure_decision",
+              "moraleDelta": 1,
+              "guiltDelta": 2,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_hydro_barons",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The reserve is offered under a second seal. The Rebuilders accept the water and argue about the hand that must open it."
+            },
+            {
+              "choiceId": "choice_seed_failure_call_rebuilder_replanting",
+              "text": "Reject external custody and ask the Rebuilders to replant from the surviving packets.",
+              "nextStageId": "stage_seed_failure_decision",
+              "moraleDelta": 5,
+              "guiltDelta": 4,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 12,
+              "unlockEncounterId": "door_encounter_rebuilder_seed_tin",
+              "conditions": [],
+              "outcomeNarrative": "The Rebuilders choose a smaller planting and their own witnesses. The hydro barons keep the reserve behind the seal."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_failure_decision",
+          "title": "The Second Planting",
+          "narrativePrompt": "The next planting window is nearly closed. A second attempt can preserve a narrow food margin, but it will consume labor and expose the shelter to another public failure. Closing the program will save those hands and end the promise.",
+          "unlockOnDay": 322,
+          "isTerminal": false,
+          "terminalOutcome": 2,
+          "choices": [
+            {
+              "choiceId": "choice_seed_failure_fund_second_attempt",
+              "text": "Fund the second attempt and publish the test schedule before planting.",
+              "nextStageId": "stage_seed_failure_resolved",
+              "moraleDelta": 6,
+              "guiltDelta": 3,
+              "grantItemId": "item_seed_packet_nonhybrid",
+              "grantItemQuantity": 12,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": 15,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The second planting is smaller and witnessed. It may fail honestly, which is the first improvement the ledger can prove."
+            },
+            {
+              "choiceId": "choice_seed_failure_close_program",
+              "text": "Close the program and distribute the remaining packets as private household stores.",
+              "nextStageId": "stage_seed_failure_broken",
+              "moraleDelta": -8,
+              "guiltDelta": 6,
+              "grantItemId": "",
+              "grantItemQuantity": 0,
+              "targetFactionId": "faction_rebuilders",
+              "factionStandingDelta": -20,
+              "unlockEncounterId": "",
+              "conditions": [],
+              "outcomeNarrative": "The program ends without a final verdict. The surviving packets disappear into private cupboards, where no ledger can lose them."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_seed_failure_resolved",
+          "title": "A Smaller Harvest",
+          "narrativePrompt": "The second planting produces a narrow crop and a complete record. It does not restore the old promise. It gives the Rebuilders a basis for the next one and the shelter a reason to keep answering for its part.",
+          "unlockOnDay": 340,
+          "isTerminal": true,
+          "terminalOutcome": 2,
+          "choices": []
+        },
+        {
+          "stageId": "stage_seed_failure_broken",
+          "title": "The Ledger Closes",
+          "narrativePrompt": "The Rebuilders close the seed program and remove the shelter from the next planting notice. The remaining packets are safe in scattered hands, but no longer count as a shared reserve.",
+          "unlockOnDay": 340,
+          "isTerminal": true,
+          "terminalOutcome": 3,
+          "choices": []
+        }
+      ]
     }
   ]
 }

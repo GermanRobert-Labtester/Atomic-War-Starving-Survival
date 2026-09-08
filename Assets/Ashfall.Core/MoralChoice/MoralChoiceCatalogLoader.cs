@@ -35,6 +35,7 @@ namespace Ashfall.Core.MoralChoice
         public string label = string.Empty;
         public int moral_delta;
         public int empathy_delta;
+        public string set_flag = string.Empty;
         public string outcome_text = string.Empty;
         public string epitaph = string.Empty;
     }
@@ -114,6 +115,7 @@ namespace Ashfall.Core.MoralChoice
             Label = o.label,
             MoralDelta = o.moral_delta,
             EmpathyDelta = o.empathy_delta,
+            SetFlag = o.set_flag,
             OutcomeText = o.outcome_text,
             Epitaph = o.epitaph
         };

@@ -245,6 +245,311 @@
         "direct": "Give me what I want, or I take it, and taking makes the road ugly.",
         "desperate": "I'll do anything for [item]. Anything. The road taught me that word too."
       }
+    },
+    {
+      "id": "trader_quartermaster",
+      "display_name": "The Quartermaster",
+      "profile": "Uniform repaired past recognition, inventory sheets folded into a waterproof sleeve. The quartermaster speaks for a depot and treats every exchange as an allocation that must survive the next shortage.",
+      "greetings": {
+        "hostile": "State your business. The depot has no room for trouble or unlisted hands.",
+        "wary": "Show the goods and keep the tally visible. We issue nothing on trust alone.",
+        "neutral": "The depot is open. We have a list, you have an offer. Begin.",
+        "warm": "You kept your last terms. That earns a cleaner look at today's inventory."
+      },
+      "item_examinations": {
+        "valuable": "That belongs on a serious requisition. Put it beside the tally.",
+        "worthless": "It has no place in a depot count. Take it back.",
+        "interesting": "Not on the list, but useful stock can change a list. Name the terms.",
+        "dangerous": "Mark it clearly. I will not put an unlabelled hazard into a supply column."
+      },
+      "offers": {
+        "fair": "[item] for [item]. The quantities balance against the requisition.",
+        "generous": "[item] for [item]. The depot will record the margin and use it well.",
+        "stingy": "[item] for [item]. That does not cover the issue cost.",
+        "desperate": "We need [item]. We can release [item]. The forward stores are already short."
+      },
+      "counter_offers": {
+        "accept": "Accepted. I will mark the requisition closed.",
+        "reject": "Rejected. The count does not survive inspection.",
+        "negotiate": "Offer [item] instead. It serves the same column.",
+        "insulted": "Do not mistake a uniform for an empty head. Leave the desk."
+      },
+      "acceptance": {
+        "pleased": "Good. The stores gain more than they issue.",
+        "relieved": "That fills a gap we could not leave open.",
+        "indifferent": "Recorded. Move the goods and clear the desk.",
+        "suspicious": "Recorded. The seal stays on your side until the count is checked."
+      },
+      "rejection": {
+        "polite": "Not this issue cycle. Return when the list changes.",
+        "annoyed": "You brought no usable count. Step away.",
+        "angry": "Leave the depot before I log you as a disruption.",
+        "sad": "The stores need it. Need does not make an empty crate appear."
+      },
+      "regret": {
+        "buyer": "I released too much. The next count will show the gap.",
+        "seller": "We accepted too little. The depot will carry that shortage.",
+        "mutual": "Both columns closed cleanly. That is enough for one day."
+      },
+      "insult": {
+        "mild": "Keep the language outside the requisition.",
+        "moderate": "Pressure is not a supply category. Try the offer again.",
+        "severe": "Leave before I close the depot to you."
+      },
+      "flattery": {
+        "subtle": "You read a manifest better than most visitors.",
+        "obvious": "You are generous with scarce stock. The record will show it.",
+        "excessive": "Praise does not move a crate. The terms might."
+      },
+      "threat": {
+        "veiled": "The depot has sentries and a written incident log.",
+        "direct": "Threats do not open a supply cage.",
+        "desperate": "We need [item]. Do not turn a requisition into a breach."
+      }
+    },
+    {
+      "id": "trader_bulk_dealer",
+      "display_name": "The Bulk Dealer",
+      "profile": "A broad cart, tied-down bundles, and a scale that has outlived three owners. The bulk dealer thinks in loads and empty space, not single pieces, and never forgets what a long haul costs.",
+      "greetings": {
+        "hostile": "If you came to pick through the load, keep walking. I sell weight, not arguments.",
+        "wary": "Show me the size of the order before we waste a morning on small talk.",
+        "neutral": "The load is sound. Take enough to matter and name what you can trade.",
+        "warm": "You came prepared for a real load. Good. The cart is easier when both sides carry."
+      },
+      "item_examinations": {
+        "valuable": "That fills space with a reason. I can move it.",
+        "worthless": "It takes room and returns nothing. Leave it off the cart.",
+        "interesting": "A useful line item if the quantity is there. What do you want?",
+        "dangerous": "Pack that apart from the rest. One bad crate ruins a whole load."
+      },
+      "offers": {
+        "fair": "[item] for [item]. The load stays balanced.",
+        "generous": "[item] for [item]. Take the lot before I have to move it again.",
+        "stingy": "[item] for [item]. That is a handoff, not a load.",
+        "desperate": "I need [item] by the next stop. I will give you [item] to clear the space."
+      },
+      "counter_offers": {
+        "accept": "That volume works. We can move it.",
+        "reject": "Too little for the handling. I will not split the load for that.",
+        "negotiate": "Take [item] with it. The numbers make sense at the larger size.",
+        "insulted": "You are pricing the cart, not the goods. Leave the scale alone."
+      },
+      "acceptance": {
+        "pleased": "Good exchange. The cart leaves lighter and better balanced.",
+        "relieved": "That saves a stop. I can live with the terms.",
+        "indifferent": "Done. Tie your side and clear the wheel.",
+        "suspicious": "Done. Count it twice before the road counts it for you."
+      },
+      "rejection": {
+        "polite": "Not enough to justify the haul. Try again with a proper load.",
+        "annoyed": "You brought a handful to a cart. No deal.",
+        "angry": "Step away from the goods before I close the tailgate.",
+        "sad": "The load is needed elsewhere. I cannot cut it down for pity."
+      },
+      "regret": {
+        "buyer": "I paid for empty space. The cart will remind me.",
+        "seller": "I let a good load go thin. The road charges for that mistake.",
+        "mutual": "Both carts carry what they came for. That is a sound exchange."
+      },
+      "insult": {
+        "mild": "Insults do not reduce the weight. Make a real offer.",
+        "moderate": "I move goods, not your pride.",
+        "severe": "Away from the cart. Now."
+      },
+      "flattery": {
+        "subtle": "You understand that quantity is its own kind of value.",
+        "obvious": "Best tally I have seen this week. Do not make me regret hearing it.",
+        "excessive": "Words take no space, but they still slow the loading."
+      },
+      "threat": {
+        "veiled": "A cart leaves tracks. So do the people who tamper with it.",
+        "direct": "Touch the load again and the exchange is over.",
+        "desperate": "I need [item]. Do not make me choose between the load and the road."
+      }
+    },
+    {
+      "id": "trader_medical_supplier",
+      "display_name": "The Medical Supplier",
+      "profile": "Clean hands where clean hands are still possible, labels written twice, and a case that never leaves reach. The medical supplier trades in usable care, not miracle claims or comfortable stories.",
+      "greetings": {
+        "hostile": "Say what you need. Do not touch the case without permission.",
+        "wary": "I will show the stock. You will tell me where it is going.",
+        "neutral": "The supplies are sealed and counted. We can discuss an exchange.",
+        "warm": "You kept the last bundle dry. That matters here. Let us see what you brought."
+      },
+      "item_examinations": {
+        "valuable": "That could keep someone alive. Put it beside the sterile stock.",
+        "worthless": "It will not help a patient. I cannot trade care for clutter.",
+        "interesting": "Useful, if the label is honest. What are you asking?",
+        "dangerous": "Keep it away from the case. Contamination starts with careless hands."
+      },
+      "offers": {
+        "fair": "[item] for [item]. The exchange keeps both shelves usable.",
+        "generous": "[item] for [item]. That leaves enough margin for the next patient.",
+        "stingy": "[item] for [item]. It does not cover the treatment risk.",
+        "desperate": "I need [item]. I will release [item]. Someone is waiting for it."
+      },
+      "counter_offers": {
+        "accept": "Agreed. Keep the package sealed until it reaches the patient.",
+        "reject": "No. The arithmetic would take care away from someone who needs it.",
+        "negotiate": "Use [item] instead. It is safer for the shelf.",
+        "insulted": "Do not make a ward out of this table. Leave."
+      },
+      "acceptance": {
+        "pleased": "Good. The case is better supplied than it was.",
+        "relieved": "Thank you. That buys time where time is thin.",
+        "indifferent": "Recorded. Keep the seal intact.",
+        "suspicious": "Done. I will inspect every label before use."
+      },
+      "rejection": {
+        "polite": "Not enough to release the stock. I am sorry.",
+        "annoyed": "You are asking me to gamble with a patient. No.",
+        "angry": "Leave the case alone and leave the room.",
+        "sad": "I needed that supply. Need does not make unsafe goods safe."
+      },
+      "regret": {
+        "buyer": "I released more than the case could spare.",
+        "seller": "I kept the wrong margin. Someone will feel that gap.",
+        "mutual": "The exchange leaves both shelves usable. That is the measure."
+      },
+      "insult": {
+        "mild": "Do not bring contempt into a treatment supply.",
+        "moderate": "Urgency is not permission to be cruel.",
+        "severe": "Out. The case stays closed."
+      },
+      "flattery": {
+        "subtle": "You brought something useful. That speaks more clearly.",
+        "obvious": "Kind words are welcome. Dry bandages are better.",
+        "excessive": "Praise cannot sterilize a package. Check the label."
+      },
+      "threat": {
+        "veiled": "The case is guarded because people are frightened and sick.",
+        "direct": "Threaten the ward again and the exchange ends.",
+        "desperate": "I need [item]. Do not turn a patient's shortage into a fight."
+      }
+    },
+    {
+      "id": "trader_foundry_broker",
+      "display_name": "The Foundry Broker",
+      "profile": "Soot in the seams, heat scars on the gloves, and a quota sheet marked in hard pencil. The Foundry broker speaks in tolerances and output because every trade must survive the next run.",
+      "greetings": {
+        "hostile": "Keep clear of the heat line. State the offer or leave the bay.",
+        "wary": "Show the grade and the quantity. The Foundry has no use for soft claims.",
+        "neutral": "The line is running. We can trade while the next pour cools.",
+        "warm": "You brought material that held under load. That earns a fair hearing."
+      },
+      "item_examinations": {
+        "valuable": "That has a place in the next run. Put it with the measured stock.",
+        "worthless": "It will not survive the work. Do not make me store it.",
+        "interesting": "The grade is uncertain, but the use may be real. Name the terms.",
+        "dangerous": "Keep it away from the furnace feed. One mistake ruins more than a bargain."
+      },
+      "offers": {
+        "fair": "[item] for [item]. The tolerances match.",
+        "generous": "[item] for [item]. That keeps the line ahead of quota.",
+        "stingy": "[item] for [item]. The heat and labor cost more than that.",
+        "desperate": "We need [item] before the run. We will release [item] to keep the line moving."
+      },
+      "counter_offers": {
+        "accept": "Accepted. Mark the batch and move it under cover.",
+        "reject": "Rejected. The grade does not meet the work.",
+        "negotiate": "Use [item] instead. It will hold better in the line.",
+        "insulted": "You are bargaining against the furnace. Do not blame me for its answer."
+      },
+      "acceptance": {
+        "pleased": "Good material. The next run will show it.",
+        "relieved": "That keeps the line from stopping. Thank you.",
+        "indifferent": "Recorded. Clear the bay.",
+        "suspicious": "Recorded. We test the batch before it enters production."
+      },
+      "rejection": {
+        "polite": "Not at this grade. Bring a cleaner batch.",
+        "annoyed": "You brought scrap and called it stock. No.",
+        "angry": "Away from the line before you cause damage.",
+        "sad": "The line needs more than we can release today."
+      },
+      "regret": {
+        "buyer": "I paid for a grade the furnace will not forgive.",
+        "seller": "I let useful stock leave below its work value.",
+        "mutual": "Both sides leave with material that can still be used."
+      },
+      "insult": {
+        "mild": "The furnace does not care what you call me.",
+        "moderate": "Call the grade wrong if you like. Bring a better one.",
+        "severe": "Leave the bay before the guards remove you."
+      },
+      "flattery": {
+        "subtle": "You noticed the work. Most people only notice the smoke.",
+        "obvious": "Good words. Better material would be more useful.",
+        "excessive": "The line will judge the batch. I will not."
+      },
+      "threat": {
+        "veiled": "The Foundry keeps watch over its stores and its people.",
+        "direct": "Do not bring violence into a running line.",
+        "desperate": "We need [item]. Do not make the next run wait for your anger."
+      }
+    },
+    {
+      "id": "trader_flotilla_salvager",
+      "display_name": "The Flotilla Salvager",
+      "profile": "Salt dried into the coat, rope burns across both palms, and a cargo list written around the weather. The flotilla salvager values anything that keeps a hull, pump, or crew moving through bad water.",
+      "greetings": {
+        "hostile": "Keep your hands off the cargo. Say what you want and mind the tide.",
+        "wary": "Show the goods. Water ruins liars faster than I do.",
+        "neutral": "The hold is open for a short while. Make your offer.",
+        "warm": "You kept your word at the last landing. Come see what made it through."
+      },
+      "item_examinations": {
+        "valuable": "That keeps a pump working. I know what it is worth.",
+        "worthless": "It will sink the hold before it helps the crew.",
+        "interesting": "Could be useful below deck. What do you need for it?",
+        "dangerous": "Keep it sealed. Saltwater and careless cargo make a bad crossing."
+      },
+      "offers": {
+        "fair": "[item] for [item]. Both holds carry the weight.",
+        "generous": "[item] for [item]. That buys the crew a quieter crossing.",
+        "stingy": "[item] for [item]. The tide charges more than that.",
+        "desperate": "I need [item] before we cast off. I will give you [item]."
+      },
+      "counter_offers": {
+        "accept": "Agreed. Move it before the water turns.",
+        "reject": "No. I cannot carry that bargain across open water.",
+        "negotiate": "How about [item] instead? It travels better in a wet hold.",
+        "insulted": "You mistake a weathered crew for an easy mark. Step ashore."
+      },
+      "acceptance": {
+        "pleased": "Good trade. The pumps will notice.",
+        "relieved": "That is one less gap in the hold.",
+        "indifferent": "Done. Tie your side and clear the gangway.",
+        "suspicious": "Done. Count it before the spray reaches the deck."
+      },
+      "rejection": {
+        "polite": "Not on this crossing. Try us at the next landing.",
+        "annoyed": "You are burning tide time. No.",
+        "angry": "Off the gangway before this becomes a boarding.",
+        "sad": "I needed that cargo. The water does not care."
+      },
+      "regret": {
+        "buyer": "I paid too much and still have a wet hold.",
+        "seller": "I sold it too cheap. The tide will collect the difference.",
+        "mutual": "Both crews carry what they came for. That is enough."
+      },
+      "insult": {
+        "mild": "The water has heard worse. Make a real offer.",
+        "moderate": "We are tired, not foolish.",
+        "severe": "Off the gangway. Now."
+      },
+      "flattery": {
+        "subtle": "You know which cargo keeps a crew alive.",
+        "obvious": "Keep talking after you help tie the load.",
+        "excessive": "The tide does not care who praises the captain."
+      },
+      "threat": {
+        "veiled": "The current carries sound a long way between hulls.",
+        "direct": "Do not threaten the crew on the gangway.",
+        "desperate": "I need [item]. Do not make the crossing harder than it is."
+      }
     }
   ],
   "trade_scenarios": {

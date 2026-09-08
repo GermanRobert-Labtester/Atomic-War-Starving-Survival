@@ -161,12 +161,14 @@ namespace Ashfall.Core.Tests
         {
             var wild = FreshWild();
 
-            // Drive a collapse via heavy harvest pressure.
+            // Drive a collapse via heavy harvest pressure across key foraging corridors.
             for (int day = 1; day <= 60; day++)
             {
                 wild.TickDay(day, DayFork(day, 3));
                 wild.ApplyHarvestPressure("sector_8_lowlands", 2);
                 wild.ApplyHarvestPressure("sector_4_hinterlands", 1);
+                wild.ApplyHarvestPressure("sector_4_orchards", 2);
+                wild.ApplyHarvestPressure("sector_8_docklands", 2);
             }
             var collapsed = wild.GetGlobalPopulationRatio();
             Assert.True(collapsed < 0.85f, "collapse scenario must actually collapse the ratio");

@@ -217,5 +217,117 @@ namespace Ashfall.Core.Tests
             Assert.Equal("keep", record.choice);
             Assert.Equal(26, record.dayResolved);
         }
+
+        [Fact]
+        public void ConfessionSecretCatalog_All20PersonalSurvivorSecrets_HaveValidContract()
+        {
+            var catalog = CreateLoadedCatalog();
+            Assert.True(catalog.AllSecrets.Count >= 38, $"Expected at least 38 secrets, got {catalog.AllSecrets.Count}");
+
+            string[] twentyArchetypeSecrets = new[]
+            {
+                "secret_surgeon_lost_patient",
+                "secret_soldier_civilian_order",
+                "secret_pharmacist_stolen_morphine",
+                "secret_mother_child_left",
+                "secret_mechanic_sabotaged_generator",
+                "secret_teacher_burned_books",
+                "secret_refugee_stolen_identity",
+                "secret_electrician_blackout",
+                "secret_cook_ration_cache",
+                "secret_engineer_unreinforced_span",
+                "secret_farmer_scorched_seeds",
+                "secret_priest_silent_prayers",
+                "secret_journalist_killed_story",
+                "secret_pilot_refused_sortie",
+                "secret_scientist_altered_assays",
+                "secret_hunter_treeline_shot",
+                "secret_nurse_missed_medication",
+                "secret_carpenter_faulty_shoring",
+                "secret_child_left_friend",
+                "secret_old_man_quiet_compliance"
+            };
+
+            foreach (var secretId in twentyArchetypeSecrets)
+            {
+                var secret = catalog.GetById(secretId);
+                Assert.NotNull(secret);
+                Assert.Equal("npc_personal", secret.category);
+                Assert.StartsWith("the_", secret.archetype_id);
+                Assert.False(string.IsNullOrWhiteSpace(secret.secret_title));
+                Assert.Contains("{name}", secret.secret_text);
+                Assert.False(string.IsNullOrWhiteSpace(secret.discovery_source_id));
+                Assert.StartsWith("flag_secret_", secret.gating_flag);
+
+                // Range checks
+                Assert.InRange(secret.forgiveness_affinity, 5f, 30f);
+                Assert.InRange(secret.forgiveness_morale, 5f, 20f);
+                Assert.InRange(secret.grudge_affinity, -50f, -5f);
+                Assert.InRange(secret.grudge_morale, -30f, -5f);
+                Assert.True(secret.keep_trust_delta >= 20f);
+            }
+        }
+
+        [Fact]
+        public void ConfessionSecretSystem_Plan88NewSecrets_ResolveInterpersonalAndLeverage()
+        {
+            var catalog = CreateLoadedCatalog();
+            var system = new ConfessionSecretSystem(catalog);
+            var rng = new SeededRng(101);
+            var relations = new SurvivorRelationsSystem(rng);
+            var guilt = new GuiltInsomniaSystem();
+            var moral = new MoralBranchingSystem();
+            moral.Register(new MoralBranchState { SurvivorId = "the_child" });
+
+            // 1. Nurse: Interpersonal Forgiveness
+            var nurseRel = relations.GetOrCreateRelationship("the_nurse", "listener_a");
+            nurseRel.affinity = 50f;
+            system.DiscoverSecret("secret_nurse_missed_medication", currentDay: 30, sourceId: "nurse_fob_watch");
+            bool nurseForgiven = system.ResolveInterpersonal(
+                "secret_nurse_missed_medication",
+                currentDay: 31,
+                forgive: true,
+                confessorId: "the_nurse",
+                listenerId: "listener_a",
+                relations: relations);
+            Assert.True(nurseForgiven);
+            Assert.Equal(65f, nurseRel.affinity); // 50 + 15
+
+            // 2. Carpenter: Expose path
+            system.DiscoverSecret("secret_carpenter_faulty_shoring", currentDay: 32, sourceId: "box_of_nails_10");
+            string exposedFaction = null;
+            float exposedDelta = 0f;
+            bool carpenterExposed = system.ExposeSecret(
+                "secret_carpenter_faulty_shoring",
+                currentDay: 33,
+                needs: null,
+                guilt: guilt,
+                onFactionStandingChanged: (f, d) => { exposedFaction = f; exposedDelta = d; });
+            Assert.True(carpenterExposed);
+            Assert.Equal("faction_independent", exposedFaction);
+            Assert.Equal(-12f, exposedDelta);
+            Assert.True(guilt.GetGuiltSourceCount("the_carpenter") > 0);
+
+            // 3. Child: Blackmail path
+            system.DiscoverSecret("secret_child_left_friend", currentDay: 34, sourceId: "childs_drawing");
+            bool childBlackmailed = system.BlackmailSecret(
+                "secret_child_left_friend",
+                currentDay: 35,
+                moral: moral);
+            Assert.True(childBlackmailed);
+            Assert.True(moral.GetState("the_child")!.NumbedResilienceLevel > 0);
+
+            // 4. Old Man: Keep path
+            var oldManRel = relations.GetOrCreateRelationship("the_old_man", "listener_b");
+            oldManRel.trust = 40f;
+            system.DiscoverSecret("secret_old_man_quiet_compliance", currentDay: 36, sourceId: "tarnished_pocket_watch");
+            bool oldManKept = system.KeepSecret(
+                "secret_old_man_quiet_compliance",
+                currentDay: 37,
+                relations: relations,
+                confidantSurvivorId: "listener_b");
+            Assert.True(oldManKept);
+            Assert.Equal(65f, oldManRel.trust); // 40 + 25
+        }
     }
 }

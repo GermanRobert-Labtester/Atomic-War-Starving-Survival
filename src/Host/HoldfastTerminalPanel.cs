@@ -170,6 +170,7 @@ namespace AtomicWar.GodotApp
             if (result.Success)
             {
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionTrade);
+                AtomicWar.GodotApp.UI.FeedbackMessages.Emit("trade_success", $"{result.Quantity} {result.ItemId}", $"{result.TotalValue} Value");
                 _session.HasPurchasedThisSession = true;
                 _dispatch?.OnPurchase(result.ItemId, result.Quantity, result.TotalValue, _selectedFactionId);
                 if (_session.HasPurchasedThisSession && _session.Trade.GetHeld(_selectedItemId) == result.Quantity)
@@ -182,6 +183,7 @@ namespace AtomicWar.GodotApp
             else
             {
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiInvalidAction);
+                AtomicWar.GodotApp.UI.FeedbackMessages.Emit("trade_failed", string.IsNullOrEmpty(_selectedFactionId) ? "Merchant" : _selectedFactionId);
                 _dispatch?.OnRejected(result, _selectedFactionId);
                 // Plan IV: an insufficient-funds refusal may OFFER credit —
                 // never sign it. The offer is a projection of the debt template.
@@ -211,6 +213,7 @@ namespace AtomicWar.GodotApp
             if (result.Success)
             {
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionTrade);
+                AtomicWar.GodotApp.UI.FeedbackMessages.Emit("trade_success", $"{result.TotalValue} Value", $"{result.Quantity} {result.ItemId}");
                 _dispatch?.OnSale(result.ItemId, result.Quantity, result.TotalValue, _selectedFactionId);
                 if (_session.Trade.GetHeld(result.ItemId) == 0)
                     _dispatch?.OnHoldingEmptied(result.ItemId, _selectedFactionId);
@@ -218,6 +221,7 @@ namespace AtomicWar.GodotApp
             else
             {
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiInvalidAction);
+                AtomicWar.GodotApp.UI.FeedbackMessages.Emit("trade_failed", string.IsNullOrEmpty(_selectedFactionId) ? "Merchant" : _selectedFactionId);
                 _dispatch?.OnRejected(result, _selectedFactionId);
             }
             ShowTradeResult(result);

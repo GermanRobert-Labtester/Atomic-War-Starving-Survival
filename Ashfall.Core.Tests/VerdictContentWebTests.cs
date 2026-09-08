@@ -110,9 +110,9 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void LoadRadio_LoadsThirteenAuthoredBroadcasts()
+        public void LoadRadio_LoadsThirtyAuthoredBroadcasts()
         {
-            // verdict_radio.json is now authored (13 broadcasts) — the loader
+            // verdict_radio.json is now authored (30 broadcasts) — the loader
             // must return them all without a single broadcast lost.
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
@@ -120,7 +120,7 @@ namespace Ashfall.Core.Tests
             var radio = VerdictCatalogLoader.LoadRadio(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
             Assert.NotNull(radio);
-            Assert.Equal(13, radio.Count);
+            Assert.Equal(30, radio.Count);
             var meter = radio.Find(r => r.id == "radio_verdict_meter_reads_1142");
             Assert.NotNull(meter);
             Assert.Equal("radio_vo_verdict_meter", meter!.audio_cue);

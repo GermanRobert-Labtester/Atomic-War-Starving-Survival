@@ -32,6 +32,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Headless smoke: survivors rosters build, needs tick, rad exposure, iodine/anti-rad, save roundtrip.</summary>
         private void RunSurvivorsUiTestAndQuit()
         {
+            _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
             BuildUserInterface();
             SetupSurvivors();
 

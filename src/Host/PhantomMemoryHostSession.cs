@@ -226,12 +226,40 @@ namespace AtomicWar.GodotApp
             string p = profession.ToLowerInvariant();
             if (p.Contains("soldier") || p.Contains("gunner") || p.Contains("artillery") || p.Contains("guard") || p.Contains("military"))
                 return "former_soldier";
-            if (p.Contains("nurse") || p.Contains("paramedic") || p.Contains("surgeon") || p.Contains("doctor") || p.Contains("medic"))
+            if (p.Contains("nurse"))
                 return "nurse";
+            if (p.Contains("paramedic") || p.Contains("surgeon") || p.Contains("doctor") || p.Contains("medic") || p.Contains("orderly"))
+                return "medic";
             if (p.Contains("teacher") || p.Contains("professor") || p.Contains("instructor"))
                 return "teacher";
-            if (p.Contains("machinist") || p.Contains("mechanic") || p.Contains("engineer") || p.Contains("technician"))
+            if (p.Contains("electrician") || p.Contains("lineman"))
+                return "electrician";
+            if (p.Contains("engineer") || p.Contains("architect") || p.Contains("structural") || p.Contains("builder"))
+                return p.Contains("architect") || p.Contains("structural") || p.Contains("builder")
+                    ? "architect"
+                    : "engineer";
+            if (p.Contains("machinist") || p.Contains("mechanic") || p.Contains("technician"))
                 return "machinist";
+            if (p.Contains("farmer") || p.Contains("botanist") || p.Contains("agronomist") || p.Contains("grower") || p.Contains("composter"))
+                return "farmer";
+            if (p.Contains("cook") || p.Contains("chef"))
+                return "cook";
+            if (p.Contains("laborer") || p.Contains("foreman") || p.Contains("worker"))
+                return "laborer";
+            if (p.Contains("chemist") || p.Contains("pharmacist") || p.Contains("radiochem"))
+                return "chemist";
+            if (p.Contains("courier") || p.Contains("driver") || p.Contains("navigator") || p.Contains("convoy"))
+                return "driver";
+            if (p.Contains("priest") || p.Contains("preacher") || p.Contains("monk") || p.Contains("cleric") || p.Contains("cult"))
+                return "cleric";
+            if (p.Contains("scavenger") || p.Contains("scrap") || p.Contains("nomad"))
+                return "scavenger";
+            if (p.Contains("radio") || p.Contains("telegraph") || p.Contains("telecomm") || p.Contains("sonar"))
+                return "radio_operator";
+            if (p.Contains("miner") || p.Contains("mining") || p.Contains("speleologist") || p.Contains("cave") || p.Contains("tunnel"))
+                return "miner";
+            if (p.Contains("librarian") || p.Contains("archivist") || p.Contains("historian") || p.Contains("bureaucrat"))
+                return "librarian";
             if (p.Contains("child") || p.Contains("orphan") || p.Contains("refugee"))
                 return "child_refugee";
             return "generic";

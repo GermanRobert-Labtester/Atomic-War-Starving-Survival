@@ -66,9 +66,10 @@ The mission was to expand `muster_epilogues.json` from 12 verified campaign endi
 
 ## 4. Verification Evidence
 
-1. `dotnet test Ashfall.Core.Tests`: **6,913 passed, 0 failed** (includes new `MusterEpilogueMatrixTests` covering all 18 test fixtures).
-2. `godot --headless --path . -- --data-integrity-selftest`: **0 errors, 0 warnings across 208 catalogs**.
-3. `godot --headless --path . -- --content-utilization-selftest`: **CI Content Utilization Gate: PASS**.
-4. `godot --headless --path . -- --scene-binding-selftest`: **22/22 passed**.
-5. `python3 scripts/ci/scene-lint.py`: **0 errors across 27 scenes**.
-6. `dotnet build Ashfall.csproj`: **0 errors, 0 warnings**.
+1. `dotnet test Ashfall.Core.Tests`: **9,711 passed, 0 failed** (includes `MusterEpilogueMatrixTests` covering all 83 test scenarios).
+2. `dotnet test --filter "FullyQualifiedName~MusterEpilogueMatrixTests"`: **83 passed, 0 failed**.
+3. `godot --headless --path . -- --data-integrity-selftest`: **0 errors, 0 warnings across 298 catalogs** (11,657 authored IDs, 4,316 reuses reserved).
+4. `godot --headless --path . -- --content-utilization-selftest`: **CI Content Utilization Gate: PASS**.
+5. `godot --headless --path . -- --scene-binding-selftest`: **25/25 passed, 0 failed**.
+6. `python3 scripts/ci/scene-lint.py`: **0 errors across 30 production scenes**.
+7. `dotnet build Ashfall.csproj`: **0 errors, 0 warnings**.

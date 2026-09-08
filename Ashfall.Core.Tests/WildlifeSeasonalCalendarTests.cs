@@ -242,9 +242,11 @@ namespace Ashfall.Core.Tests
             var seeds = LoadSeeds();
             Assert.NotNull(seeds);
             var water = seeds!.sectors.Where(s => s.water).Select(s => s.sector_id).ToHashSet();
-            Assert.Equal(2, water.Count);
+            Assert.Equal(4, water.Count);
             Assert.Contains("sector_4_river", water);
             Assert.Contains("sector_8_estuary", water);
+            Assert.Contains("sector_8_reed_flats", water);
+            Assert.Contains("sector_8_deep_shelf", water);
 
             var wild = SeededWildlife(seeds, LoadProfile());
             for (int day = 1; day <= 360; day++)
@@ -367,9 +369,11 @@ namespace Ashfall.Core.Tests
             var seeds = LoadSeeds();
             Assert.NotNull(seeds);
             var water = seeds!.sectors.Where(s => s.water).Select(s => s.sector_id).ToList();
-            Assert.Equal(2, water.Count);
+            Assert.Equal(4, water.Count);
             Assert.Contains("sector_4_river", water);
             Assert.Contains("sector_8_estuary", water);
+            Assert.Contains("sector_8_reed_flats", water);
+            Assert.Contains("sector_8_deep_shelf", water);
         }
 
         private static WildlifePackRecord? Pack(WildlifeMigrationSystem wild, string packId) => wild.TryGetPack(packId);

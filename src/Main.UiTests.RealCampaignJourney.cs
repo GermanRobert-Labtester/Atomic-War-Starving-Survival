@@ -61,6 +61,8 @@ namespace AtomicWar.GodotApp
                 Check(_saveLoadHost.ActiveSlotId != null, "New Game selected an active save slot");
                 Check(_campaignDay != null && _survivors != null && _inventory != null && _world != null,
                     "ComposeCampaign() constructed the real campaign services");
+                Check(_survivors!.RosterState.Count == 3,
+                    $"fresh campaign applies exactly three starting survivors (got {_survivors.RosterState.Count})");
                 int dayAtStart = _campaignDay!.Calendar.CurrentDay;
                 Check(dayAtStart == 1, $"campaign starts on day 1 (was {dayAtStart})");
 

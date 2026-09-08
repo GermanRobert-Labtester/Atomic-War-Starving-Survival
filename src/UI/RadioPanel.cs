@@ -276,6 +276,31 @@ namespace AtomicWar.GodotApp.UI
             presetCol.SizeFlagsStretchRatio = 0.95f;
             presetCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             presetCol.AddChild(AshfallUiHelpers.MakeSectionHeader("FREQUENCY TUNER"));
+            // Multi-Band Navigation Controls
+            var bandRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var btnPrevBand = AshfallUiHelpers.MakeButton("< BAND", () =>
+            {
+                if (_radioHost != null)
+                {
+                    var prev = RadioReceiverPlan.PreviousBand(_radioHost.CurrentBand);
+                    _radioHost.SetBand(prev.BandId);
+                    RefreshView();
+                }
+            });
+            btnPrevBand.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            bandRow.AddChild(btnPrevBand);
+
+            var btnNextBand = AshfallUiHelpers.MakeButton("BAND >", () =>
+            {
+                if (_radioHost != null)
+                {
+                    _radioHost.CycleBand();
+                    RefreshView();
+                }
+            });
+            btnNextBand.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            bandRow.AddChild(btnNextBand);
+            presetCol.AddChild(bandRow);
 
             // Manual Stepper Controls
             var stepRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);

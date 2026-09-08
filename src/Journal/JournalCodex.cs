@@ -268,7 +268,34 @@ namespace AtomicWar.Journal
                 }
             }
 
+            AppendNarrativeDiscoveryRows(rows);
+
             return rows;
+        }
+
+        private void AppendNarrativeDiscoveryRows(List<JournalCodexRow> rows)
+        {
+            if (_catalogs?.NarrativeDiscoveries == null) return;
+            var records = _catalogs.NarrativeDiscoveries.AllRecords;
+            for (int i = 0; i < records.Count; i++)
+            {
+                var rec = records[i];
+                if (rec == null || string.IsNullOrEmpty(rec.DiscoveryId)) continue;
+                if (_journal.IsNarrativeDiscovered(rec.DiscoveryId))
+                {
+                    rows.Add(new JournalCodexRow
+                    {
+                        DisplayName = rec.Title,
+                        Meta = $"{rec.Category} · {rec.Subtitle}",
+                        Body = rec.BodyText,
+                        IsLocked = false
+                    });
+                }
+                else
+                {
+                    rows.Add(JournalCodexRow.Locked($"{rec.Category} — undiscovered"));
+                }
+            }
         }
     }
 }

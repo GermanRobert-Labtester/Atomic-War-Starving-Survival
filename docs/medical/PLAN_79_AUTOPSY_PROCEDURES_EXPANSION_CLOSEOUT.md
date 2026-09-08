@@ -1,74 +1,51 @@
-# Plan 79 — Autopsy Procedures Expansion (3 → 12) — Closeout Report
+# Plan 79 — Autopsy Procedures Expansion Closeout
 
-> **Mission Complete:** Expanded `autopsy_procedures.json` into a complete twelve-procedure post-mortem investigation catalog covering the full spectrum of survival death families in ASHFALL, supported by 100% item resolution, validated findings, and canonical research unlocks.
+## Summary
 
----
+Expanded `autopsy_procedures.json` from **9 → 12 procedures** (the plan's stated baseline of 3 was stale — concurrent work had already authored six of the plan's proposed procedures) and fixed a **pre-existing critical data defect** that made the entire autopsy system unplayable. Pure data; zero Core changes; zero save-schema changes.
 
-## 1. Executive Summary
+## Stale-premise reconciliation
 
-- **Plan:** 79 — Autopsy Procedures Expansion
-- **Baseline:** 3 procedures (`procedure_rad_pathology`, `procedure_toxicology`, `procedure_containment_autopsy`)
-- **Intermediate Baseline:** 9 procedures (Plan 27 added blunt trauma, ballistics, respiratory, hypothermia, spore, and poison assay)
-- **Final Roster:** 12 procedures (added deprivation pathology, blast overpressure trauma, and forensic suspicious death inquest)
-- **Hard Constraints Honored:** Pure DATA plan. Zero Core code added or changed. Zero save schema changes.
+Baseline audit found 9 procedures, not 3: the plan's working slate P4–P8 (blunt, ballistic, respiratory, hypothermia, spore isolation, neurotoxin assay) already existed alongside the original three (radiation, toxicology, containment). The gap analysis (see [PLAN_79_AUTOPSY_COVERAGE_MATRIX.md](PLAN_79_AUTOPSY_COVERAGE_MATRIX.md)) identified exactly **three uncovered death families**, which became the three new procedures:
 
----
+1. **`procedure_deprivation_pathology`** — Deprivation & Wasting Pathology (starvation/dehydration; lowest risk tier; 3h; `finding_starvation_wasting` / `finding_severe_dehydration` / `finding_immune_collapse`; unlocks `knowledge_food_preservation`)
+2. **`procedure_blast_injury`** — Blast Overpressure Forensics (primary blast injury distinct from ballistic fragment extraction; 5h; `finding_blast_lung` / `finding_overpressure_hemorrhage` / `finding_concussive_trauma`; unlocks `knowledge_fortified_chokepoints`)
+3. **`procedure_forensic_unknown`** — Full Forensic Examination (broad uncertain/mixed cause; longest at 7h; moderate risk, not auto-highest; `finding_concealed_trauma` / `finding_mixed_cause` / `finding_toxin_indicator`; unlocks `knowledge_pathogen_containment`)
 
-## 2. Complete Twelve-Procedure Roster
+"Chemical exposure" and "suspicious death" from the working slate were **skipped as duplicates** (covered by existing toxicology/neurotoxin assay; suspicious-death folded into the forensic exam).
 
-| # | Procedure ID | Display Name | Air Risk | Pathogen Risk | Hours | Tools | Consumables | Research Unlocks |
-|---|---|---|:---:|:---:|:---:|---|---|---|
-| 1 | `procedure_rad_pathology` | Radiation Pathology | 0.15 | 0.05 | 4 | `medical_scissors`, `protective_rubber_gloves`, `field_surgical_kit` | `sterilised_bandage`, `clean_water` | `knowledge_radiation_basics` |
-| 2 | `procedure_toxicology` | Toxicology Screen | 0.10 | 0.08 | 3 | `medical_scissors`, `protective_rubber_gloves` | `bandage`, `clean_water` | `knowledge_pathogen_containment` |
-| 3 | `procedure_containment_autopsy` | Containment Autopsy | 0.30 | 0.20 | 6 | `medical_scissors`, `protective_rubber_gloves`, `field_surgical_kit`, `surgical_mask` | `sterilised_bandage`, `clean_water`, `antibiotics` | `knowledge_pathogen_containment` |
-| 4 | `procedure_blunt_trauma` | Blunt Force & Crush Forensics | 0.05 | 0.02 | 3 | `medical_scissors`, `field_surgical_kit` | `bandage`, `clean_water` | `knowledge_field_trauma_surgery` |
-| 5 | `procedure_ballistic_forensics` | Ballistic & Shrapnel Extraction Forensics | 0.05 | 0.03 | 4 | `medical_scissors`, `protective_rubber_gloves`, `field_surgical_kit` | `bandage`, `clean_water` | `knowledge_field_trauma_surgery` |
-| 6 | `procedure_respiratory_contamination` | Pulmonary Asbestos & Rad-Dust Screen | 0.25 | 0.05 | 4 | `medical_scissors`, `protective_rubber_gloves`, `surgical_mask` | `clean_water`, `sterilised_bandage` | `knowledge_radiation_basics` |
-| 7 | `procedure_hypothermia_pathology` | Severe Hypothermia & Frostbite Pathology | 0.02 | 0.02 | 3 | `medical_scissors`, `protective_rubber_gloves` | `clean_water` | `knowledge_field_trauma_surgery` |
-| 8 | `procedure_spore_infection_isolation` | Fungal Spore & Bio-Contaminant Isolation | 0.35 | 0.25 | 5 | `medical_scissors`, `protective_rubber_gloves`, `field_surgical_kit`, `surgical_mask` | `sterilised_bandage`, `clean_water`, `antibiotics` | `knowledge_pharmacology_synthesis` |
-| 9 | `procedure_poison_biochemical_assay` | Neurotoxin & Heavy Metal Assay | 0.15 | 0.10 | 5 | `protective_rubber_gloves`, `field_surgical_kit` | `clean_water`, `sterilised_bandage` | `knowledge_pharmacology_synthesis` |
-| 10 | `procedure_deprivation_pathology` | Severe Starvation & Dehydration Pathology | 0.02 | 0.02 | 3 | `medical_scissors`, `scalpel`, `forceps` | `clean_water`, `bandage` | `knowledge_food_preservation` |
-| 11 | `procedure_blast_overpressure_trauma` | Blast Overpressure & Barotrauma Forensics | 0.05 | 0.03 | 4 | `medical_scissors`, `protective_rubber_gloves`, `field_surgical_kit` | `sterilised_bandage`, `clean_water` | `knowledge_field_trauma_surgery` |
-| 12 | `procedure_forensic_inquest_suspicious` | Forensic Inquest & Suspicious Death Examination | 0.15 | 0.10 | 6 | `medical_scissors`, `protective_rubber_gloves`, `field_surgical_kit`, `surgical_mask` | `sterilised_bandage`, `clean_water` | `knowledge_pathogen_containment` |
+## Critical defect fixed (data)
 
----
+`medical_scissors`, `protective_rubber_gloves`, `sterilised_bandage` existed in **no item catalog** — only as refs in the procedure file. All 9 baseline procedures required at least one phantom, so every `QueueAutopsy` returned `Blocked("missing_tool")`. Added the three items to `items.json` as ordinary schema-valid entries (plan §9/§12 exception). The autopsy system is now fully playable end-to-end.
 
-## 3. Forensic Finding Coverage
+## Final values
 
-All 12 procedures define 2–3 distinct findings, registered in `possible_findings`:
-- `finding_acute_rad_burn`, `finding_bone_marrow_failure`, `finding_organ_fibrosis`
-- `finding_chemical_exposure`, `finding_organ_damage`
-- `finding_pathogen_strain`, `finding_contamination_source`
-- `finding_crush_fracture`, `finding_internal_hemorrhage`
-- `finding_bullet_trajectory`, `finding_shrapnel_fragment`
-- `finding_pulmonary_silicosis`, `finding_rad_dust_inhalation`
-- `finding_cellular_frostbite`, `finding_vascular_collapse`
-- `finding_mycotoxin_spore`, `finding_fungal_hyphae`
-- `finding_organophosphate_toxin`, `finding_heavy_metal_deposit`
-- `finding_hepatic_lipidosis`, `finding_cachexia_atrophy`, `finding_electrolyte_dehydration`
-- `finding_blast_lung_barotrauma`, `finding_tympanic_perforation`, `finding_visceral_concussion`
-- `finding_concealed_smothering`, `finding_ligature_strangulation`, `finding_occult_neurotoxin`
+Full 12-procedure matrix with risks, hours, findings, and research: [PLAN_79_AUTOPSY_COVERAGE_MATRIX.md](PLAN_79_AUTOPSY_COVERAGE_MATRIX.md). Tool/consumable profiles: [AUTOPSY_TOOL_CONSUMABLE_INVENTORY.md](AUTOPSY_TOOL_CONSUMABLE_INVENTORY.md).
 
----
+- All findings are inline `finding_*` strings per the actual schema (no external finding catalog exists — none manufactured as orphans; all follow the existing naming register).
+- All research unlocks resolve against `research_knowledge.json` (56 `knowledge_*` nodes) — 0 invented IDs.
+- `pathogenRisk` remains authored-but-unconsumed data (runtime only rolls `airborneRisk`); documented in the runtime contract for future consumers, values authored to the plan's relative-risk ladder.
+- `procedure_hours` is int per DTO; new values 3/5/7 following the existing ladder.
+- Runtime semantics honored: findings are a seeded random single pick; all research unlocks fire on completion; tools are consumed like supplies (existing behavior); one autopsy per specimen.
 
-## 4. Item Resolution & Schema Conformance
+## Plan 09 / cross-plan integration
 
-- Merged canonical definitions from `tools/item_text_batches/items_out_batch_3.json` into `Assets/StreamingAssets/Data/items.json`:
-  - `medical_scissors` (stackMax: 5, weight: 0.2 kg, wear: 80)
-  - `protective_rubber_gloves` (stackMax: 5, weight: 0.2 kg, wear: 40)
-  - `sterilised_bandage` (stackMax: 10, weight: 0.1 kg, healthEffect: 25)
-- All 10 items referenced across all 12 procedures exist and resolve in `items.json`.
+- Pathogen/containment procedures (#3, #8) + forensic (#12) connect to existing medical/ventilation content through existing IDs and the owned `VentilationSystem` — no new disease runtime.
+- Research links are prevention-oriented: deprivation → food preservation, blast → fortification, forensic/containment → pathogen containment.
+- Plan 65/69/55: no coupling added (documented handoffs only).
 
----
+## Verification
 
-## 5. Verification Matrix Results
+| Gate | Result |
+|---|---|
+| `dotnet build Ashfall.Core.Tests` | PASS — 0 errors |
+| Autopsy tests | PASS — **22/22** (catalog-expansion pin updated 9 → 12, the established pattern for pre-written contract tests) |
+| Full `Ashfall.Core.Tests` | PASS — **9461/9461** |
+| `dotnet build Ashfall.csproj` | PASS — 0 warnings, 0 errors |
+| `--data-integrity-selftest` | PASS — 0 errors, 0 warnings, 298 catalogs (11548 ids) |
+| `--content-utilization-selftest` | PASS — CI gate PASS |
+| Programmatic audit | 12/12 unique IDs · 0 unresolved item refs · 0 unresolved knowledge refs · risk/hours in range · 12 unique finding sets |
 
-| Verification Gate | Command | Result | Notes |
-|---|---|---|---|
-| **C# Build** | `dotnet build Ashfall.csproj` | **PASS** | 0 warnings, 0 errors |
-| **xUnit Unit Tests** | `dotnet test Ashfall.Core.Tests` | **PASS** | **6,756 passed, 0 failed, 0 skipped** (incl. 12 new tests in `AutopsyProceduresCatalogTests`) |
-| **Data Integrity** | `godot --headless --path . -- --data-integrity-selftest` | **PASS** | 0 errors across 208 catalogs (10,698 IDs verified) |
-| **Content Utilization** | `godot --headless --path . -- --content-utilization-selftest` | **PASS** | CI gate PASS |
-| **Scene Binding** | `godot --headless --path . -- --scene-binding-selftest` | **PASS** | 22/22 production panels passed |
-| **Shelter Operations Demo** | `godot --headless --path . -- --shelter-operations-selftest` | **PASS** | Full medical triage, expedition & crafting demo passed |
-| **Scene Lint** | `python3 scripts/ci/scene-lint.py` | **PASS** | 27 production scenes checked, 0 errors |
+## Final status
+
+**COMPLETE.** Twelve reference-clean, clinically distinct procedures cover ASHFALL's meaningful death families, use existing medical logistics (plus three ordinary items that should always have existed), expose real findings and existing research, and require no new Core code, save schema, or medical architecture.

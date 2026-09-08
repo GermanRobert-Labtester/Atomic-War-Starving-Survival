@@ -51,20 +51,61 @@ namespace Ashfall.Core.Tests
         {
             var catalog = LoadSeeds();
             Assert.NotNull(catalog);
-            Assert.Equal(11, catalog!.sectors.Count);
-            Assert.Equal(13, catalog.packs.Count);
-            Assert.Equal(10, catalog.landmarks.Count);
-            Assert.Equal(12, catalog.location_seeds.Count);
+            Assert.Equal(24, catalog!.sectors.Count);
+            Assert.Equal(24, catalog.packs.Count);
+            Assert.Equal(30, catalog.landmarks.Count);
+            Assert.Equal(40, catalog.location_seeds.Count);
             Assert.False(string.IsNullOrEmpty(catalog.shelter_sector_id));
-            Assert.NotEmpty(catalog.scarcity_goods);
+            Assert.Equal(4, catalog.scarcity_goods.Count);
+            Assert.Contains("canned_food", catalog.scarcity_goods);
+            Assert.Contains("cooked_meat", catalog.scarcity_goods);
+            Assert.Contains("item_smoked_meat", catalog.scarcity_goods);
+            Assert.Contains("clean_water", catalog.scarcity_goods);
 
             // Every sector link points at a known sector.
             var known = catalog.sectors.Select(s => s.sector_id).ToHashSet();
             Assert.All(catalog.sectors, s =>
-                Assert.All(s.neighbors, n => Assert.True(known.Contains(n), $"unknown sector link {n}")));
+            {
+                Assert.DoesNotContain(s.sector_id, s.neighbors); // No self-loops
+                Assert.All(s.neighbors, n => Assert.True(known.Contains(n), $"unknown sector link {n}"));
+            });
+
+            // Adjacency graph is strictly symmetric.
+            var neighborMap = catalog.sectors.ToDictionary(s => s.sector_id, s => s.neighbors.ToHashSet());
+            foreach (var sector in catalog.sectors)
+            {
+                foreach (var neighborId in sector.neighbors)
+                {
+                    Assert.True(neighborMap.ContainsKey(neighborId), $"Missing neighbor {neighborId}");
+                    Assert.True(neighborMap[neighborId].Contains(sector.sector_id),
+                        $"Asymmetric adjacency: {sector.sector_id} -> {neighborId} but not vice versa");
+                }
+            }
+
+            // Graph is connected: all sectors reachable from shelter sector.
+            var visited = new HashSet<string>();
+            var queue = new Queue<string>();
+            queue.Enqueue(catalog.shelter_sector_id);
+            visited.Add(catalog.shelter_sector_id);
+            while (queue.Count > 0)
+            {
+                var curr = queue.Dequeue();
+                foreach (var neighbor in neighborMap[curr])
+                {
+                    if (visited.Add(neighbor))
+                        queue.Enqueue(neighbor);
+                }
+            }
+            Assert.Equal(catalog.sectors.Count, visited.Count);
 
             // Every pack stands in a known sector.
             Assert.All(catalog.packs, p => Assert.True(known.Contains(p.sector_id), $"{p.pack_id} in unknown sector"));
+
+            // Species come from canonical wildlife ecosystem.
+            var ecosystemJson = System.IO.Path.Combine(DataDirectory, "wildlife_ecosystem.json");
+            var ecoRaw = new FileSystemIO().ReadAllText(ecosystemJson);
+            Assert.All(catalog.packs, p =>
+                Assert.True(ecoRaw.Contains("\"" + p.species_id + "\""), $"Unknown species {p.species_id}"));
 
             // Location seeds reference the real locations authority.
             var locationsJson = System.IO.Path.Combine(DataDirectory, "locations.json");
@@ -87,7 +128,7 @@ namespace Ashfall.Core.Tests
 
             Assert.Equal(a.wild.State.packs.Count, b.wild.State.packs.Count);
             Assert.Equal(a.land.State.landmarks.Count, b.land.State.landmarks.Count);
-            Assert.Equal(13, a.wild.State.packs.Count);
+            Assert.Equal(24, a.wild.State.packs.Count);
 
             // Re-seeded records keep their seeded baseline.
             Assert.All(a.wild.State.packs, p => Assert.Equal(p.population, p.seededPopulation));

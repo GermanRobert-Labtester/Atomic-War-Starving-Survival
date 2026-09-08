@@ -1215,7 +1215,7 @@
     {
       "id": "loc_iron_crest",
       "displayName": "Iron Crest Peak",
-      "description": "A high ridgeline survey station atop the Iron Crest massif, used by geodetic teams for triangulation benchmarks.",
+      "description": "A high ridgeline survey station atop the Iron Crest massif, used by geodetic teams for triangulation benchmarks. The view is total, the shelter is none, and the readings are worth both.",
       "dangerLevel": 3,
       "travelHours": 6.0,
       "baseRadsPerHour": 8
@@ -1231,7 +1231,7 @@
     {
       "id": "loc_wind_gap_ridge",
       "displayName": "Wind Gap Ridge",
-      "description": "A narrow mountain pass swept by near-constant high winds. Surveyors use it for line-of-sight triangulation.",
+      "description": "A narrow mountain pass swept by near-constant high wind. Surveyors use it for line-of-sight triangulation, and have learned to shout their readings in the gaps between gusts.",
       "dangerLevel": 3,
       "travelHours": 4.5,
       "baseRadsPerHour": 6
@@ -1239,7 +1239,7 @@
     {
       "id": "loc_signal_hill_tower",
       "displayName": "Signal Hill Tower Ruin",
-      "description": "A collapsed pre-war signal relay tower on a prominent hill. The steel frame still stands and serves as a survey datum.",
+      "description": "A collapsed pre-war signal relay tower on a prominent hill. The steel frame still stands and serves as a survey sight — the last signal it will ever carry is somebody else's line of measurement.",
       "dangerLevel": 2,
       "travelHours": 3.0,
       "baseRadsPerHour": 10
@@ -1247,7 +1247,7 @@
     {
       "id": "loc_river_bend_outpost",
       "displayName": "River Bend Datum Monument",
-      "description": "A flood-scoured river bend where pre-war survey crews placed a permanent datum monument. Accessible only at low water.",
+      "description": "A flood-scoured river bend where pre-war survey crews set a permanent datum monument. Accessible only at low water; the monument has outwaited every flood that tried to argue with it.",
       "dangerLevel": 2,
       "travelHours": 2.5,
       "baseRadsPerHour": 12
@@ -1255,7 +1255,7 @@
     {
       "id": "loc_rusted_span_bridge",
       "displayName": "Rusted Span Bridge",
-      "description": "A partially collapsed iron rail bridge. The remaining abutment is stable enough to mount a survey instrument.",
+      "description": "A partially collapsed iron rail bridge. The remaining abutment is stable enough to mount a survey instrument, and steady enough that the theodolite reads truer here than on solid ground.",
       "dangerLevel": 3,
       "travelHours": 2.0,
       "baseRadsPerHour": 14
@@ -1263,7 +1263,7 @@
     {
       "id": "loc_old_crematory_stacks",
       "displayName": "Old Crematory Industrial Stacks",
-      "description": "Decommissioned industrial chimneys from a pre-war crematory complex, repurposed as vertical survey markers.",
+      "description": "Decommissioned industrial chimneys from a pre-war crematory complex, repurposed as vertical survey markers. The crews who use them for sightings have stopped saying what they were, which is its own kind of respect.",
       "dangerLevel": 2,
       "travelHours": 1.5,
       "baseRadsPerHour": 20
@@ -1271,7 +1271,7 @@
     {
       "id": "loc_north_gate_water_tower",
       "displayName": "North Gate Water Tower",
-      "description": "A surviving water tower at the northern perimeter of a collapsed settlement. Provides excellent unobstructed sightlines.",
+      "description": "A surviving water tower at the northern perimeter of a collapsed settlement, offering unobstructed sightlines in every direction. It has been empty for years, and nobody has decided whether that is a loss or a mercy.",
       "dangerLevel": 1,
       "travelHours": 1.0,
       "baseRadsPerHour": 8
@@ -1303,7 +1303,7 @@
     {
       "id": "loc_south_beacon_tower",
       "displayName": "South Beacon Tower Ruin",
-      "description": "A partially collapsed pre-war navigation beacon tower. The lower floors are accessible and serve as a survey datum point.",
+      "description": "A partially collapsed pre-war navigation beacon tower. The lower floors are accessible and serve as a survey datum; the lamp room is not accessible, and nobody has stopped wondering what is up there.",
       "dangerLevel": 2,
       "travelHours": 3.0,
       "baseRadsPerHour": 9

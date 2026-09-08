@@ -1,6 +1,8 @@
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.Feedback;
+using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
 {
@@ -60,6 +62,13 @@ namespace AtomicWar.GodotApp
                 // Memorial/journal/duty/roster save lanes are flagged by their
                 // own OnMemorialized/OnEntryAdded/OnAssignmentChanged handlers;
                 // this handler only marks the fate lane dirty.
+                var name = FormatSurvivorName(fate.survivorId);
+                FeedbackMessages.Emit(new FeedbackEvent(
+                    key: "survivor_lost",
+                    arguments: new object[] { name },
+                    category: "failure",
+                    dedupeKey: $"survivor_lost_{fate.survivorId}"
+                ));
             };
             _survivorFate.OnLastSurvivorDied += OnLastSurvivorDied;
 

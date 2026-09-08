@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -23,10 +25,21 @@ namespace AtomicWar.GodotApp.UI
         private Button _setTrapBtn = null!;
         private Button _checkTrapBtn = null!;
         private Button _repairBtn = null!;
+        private OptionButton _repairSiteDropdown = null!;
+
+        private readonly List<TrapSite> _brokenSites = new();
+        private readonly List<string> _knownSiteCardKeys = new();
+        private string? _selectedRepairSiteId;
 
         private WildlifeTrappingHostSession? _host;
 
         public bool IsBound => _host != null;
+
+        // Test / inspection accessors
+        public string? SelectedRepairSiteId => _selectedRepairSiteId;
+        public Button? RepairButton => _repairBtn;
+        public OptionButton? RepairSiteDropdown => _repairSiteDropdown;
+        public AshfallStatusRail? StatusRail => _statusRail;
 
         public void Bind(WildlifeTrappingHostSession session)
         {
@@ -47,8 +60,6 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-
-
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -59,8 +70,6 @@ namespace AtomicWar.GodotApp.UI
             _statusRail = _shell.SetStatusRail();
             _statusRail.AddCard("traps_active", "Active Snares", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("total_catch", "Total Harvest", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
-            _statusRail.AddCard("trap_type", "Trap Type", "—", AshfallMetricCard.Criticality.Normal, minWidth: 140);
-            _statusRail.AddCard("trap_condition", "Condition", "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
 
             _contentStack = new VBoxContainer();
             _contentStack.AddThemeConstantOverride("separation", 12);
@@ -88,20 +97,24 @@ namespace AtomicWar.GodotApp.UI
             _checkTrapBtn.Pressed += () => _host?.CheckTraps();
             buttonRow.AddChild(_checkTrapBtn);
 
+            _repairSiteDropdown = new OptionButton { CustomMinimumSize = new Vector2(200, 36), Visible = false };
+            _repairSiteDropdown.ItemSelected += (index) =>
+            {
+                if (index >= 0 && index < _brokenSites.Count)
+                {
+                    _selectedRepairSiteId = _brokenSites[(int)index].siteId;
+                    UpdateRepairButtonState();
+                }
+            };
+            buttonRow.AddChild(_repairSiteDropdown);
+
             _repairBtn = new Button { Text = "Repair Trap", CustomMinimumSize = new Vector2(140, 36) };
             _repairBtn.Pressed += () =>
             {
-                if (_host != null)
+                if (_host != null && !string.IsNullOrEmpty(_selectedRepairSiteId))
                 {
-                    // Repair first broken catalog-linked trap
-                    foreach (var site in _host.System.State.trapSites)
-                    {
-                        if (site.isBroken && !string.IsNullOrEmpty(site.trapId))
-                        {
-                            _host.TryRepairTrap(site.siteId);
-                            break;
-                        }
-                    }
+                    _host.TryRepairTrap(_selectedRepairSiteId);
+                    RefreshView();
                 }
             };
             _repairBtn.Visible = false;
@@ -119,6 +132,22 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        public void SelectRepairSite(string siteId)
+        {
+            if (string.IsNullOrEmpty(siteId)) return;
+            for (int i = 0; i < _brokenSites.Count; i++)
+            {
+                if (_brokenSites[i].siteId == siteId)
+                {
+                    _selectedRepairSiteId = siteId;
+                    if (_repairSiteDropdown != null && _repairSiteDropdown.Visible)
+                        _repairSiteDropdown.Select(i);
+                    UpdateRepairButtonState();
+                    return;
+                }
+            }
+        }
+
         public void RefreshView()
         {
             if (_host == null || _statusRail == null) return;
@@ -127,51 +156,167 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("traps_active", s.trapSites.Count.ToString(), AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("total_catch", s.totalCatch.ToString(), AshfallMetricCard.Criticality.Normal);
 
-            // Show first trap's type and condition in status rail
-            bool hasBroken = false;
-            if (s.trapSites.Count > 0)
+            // Multi-site dynamic cards
+            var activeKeys = new HashSet<string>(StringComparer.Ordinal);
+            if (s.trapSites.Count == 0)
             {
-                var first = s.trapSites[0];
-                string trapName = first.trapType;
-                if (_host.Catalog != null && !string.IsNullOrEmpty(first.trapId)
-                    && _host.Catalog.Traps.TryGetValue(first.trapId, out var trapDef))
-                    trapName = trapDef.displayName;
-                _statusRail.Set("trap_type", trapName, AshfallMetricCard.Criticality.Normal);
+                // Clean up any site cards
+                for (int i = _knownSiteCardKeys.Count - 1; i >= 0; i--)
+                {
+                    _statusRail.RemoveCard(_knownSiteCardKeys[i]);
+                }
+                _knownSiteCardKeys.Clear();
 
-                if (first.isBroken)
+                if (!_statusRail.HasCard("empty"))
                 {
-                    _statusRail.Set("trap_condition", "BROKEN", AshfallMetricCard.Criticality.Critical);
-                    hasBroken = true;
-                }
-                else if (first.remainingDurability > 0)
-                {
-                    int max = first.remainingDurability; // approximate; actual max from catalog
-                    if (_host.Catalog != null && !string.IsNullOrEmpty(first.trapId)
-                        && _host.Catalog.Traps.TryGetValue(first.trapId, out var def))
-                        max = def.durabilityChecks;
-                    _statusRail.Set("trap_condition", $"{first.remainingDurability}/{max}",
-                        first.remainingDurability <= max / 3 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
-                }
-                else
-                {
-                    _statusRail.Set("trap_condition", "—", AshfallMetricCard.Criticality.Normal);
+                    _statusRail.AddCard("empty", "NO SITES", "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
                 }
             }
             else
             {
-                _statusRail.Set("trap_type", "—", AshfallMetricCard.Criticality.Normal);
-                _statusRail.Set("trap_condition", "—", AshfallMetricCard.Criticality.Normal);
+                // Remove placeholder empty card
+                if (_statusRail.HasCard("empty"))
+                {
+                    _statusRail.RemoveCard("empty");
+                }
+
+                for (int i = 0; i < s.trapSites.Count; i++)
+                {
+                    var site = s.trapSites[i];
+                    string cardKey = "site_" + site.siteId;
+                    activeKeys.Add(cardKey);
+
+                    string trapName = site.trapType;
+                    int maxDurability = 0;
+                    if (_host.Catalog != null && !string.IsNullOrEmpty(site.trapId)
+                        && _host.Catalog.Traps.TryGetValue(site.trapId, out var trapDef))
+                    {
+                        trapName = trapDef.displayName;
+                        maxDurability = trapDef.durabilityChecks;
+                    }
+                    else if (site.remainingDurability > 0)
+                    {
+                        maxDurability = site.remainingDurability;
+                    }
+
+                    string condition;
+                    AshfallMetricCard.Criticality crit;
+
+                    if (site.isBroken)
+                    {
+                        condition = "BROKEN";
+                        crit = AshfallMetricCard.Criticality.Critical;
+                    }
+                    else if (site.remainingDurability > 0)
+                    {
+                        condition = $"{site.remainingDurability}/{maxDurability}";
+                        crit = (maxDurability > 0 && site.remainingDurability <= maxDurability / 3)
+                            ? AshfallMetricCard.Criticality.Warn
+                            : AshfallMetricCard.Criticality.Normal;
+                    }
+                    else
+                    {
+                        condition = "—";
+                        crit = AshfallMetricCard.Criticality.Normal;
+                    }
+
+                    string valueText = site.hasCatch ? $"{condition} • CATCH" : condition;
+
+                    if (_statusRail.HasCard(cardKey))
+                    {
+                        _statusRail.Set(cardKey, valueText, crit);
+                        _statusRail.SetLabel(cardKey, trapName);
+                    }
+                    else
+                    {
+                        _statusRail.AddCard(cardKey, trapName, valueText, crit, minWidth: 130);
+                    }
+
+                    _statusRail.ReorderCard(cardKey, i + 2);
+                }
+
+                // Remove stale site cards
+                for (int i = _knownSiteCardKeys.Count - 1; i >= 0; i--)
+                {
+                    string k = _knownSiteCardKeys[i];
+                    if (!activeKeys.Contains(k))
+                    {
+                        _statusRail.RemoveCard(k);
+                        _knownSiteCardKeys.RemoveAt(i);
+                    }
+                }
+
+                _knownSiteCardKeys.Clear();
+                _knownSiteCardKeys.AddRange(activeKeys);
             }
 
-            // Show repair button only when a broken catalog-linked trap exists
-            if (_repairBtn != null)
-                _repairBtn.Visible = hasBroken;
+            // Update broken sites list for targeted repair
+            _brokenSites.Clear();
+            foreach (var site in s.trapSites)
+            {
+                if (site.isBroken && !string.IsNullOrEmpty(site.trapId))
+                {
+                    _brokenSites.Add(site);
+                }
+            }
 
-            // Deploy/replace control state — a direct projection of the Core
-            // SetTrap replaceability contract (trap_active guard), NOT a
-            // parallel rule: a site is replaceable when it has a pending
-            // catch, was never armed (legacy setDay <= 0), or its trap is
-            // broken. A healthy active trap blocks the action.
+            if (_brokenSites.Count == 0)
+            {
+                _selectedRepairSiteId = null;
+                if (_repairSiteDropdown != null) _repairSiteDropdown.Visible = false;
+                if (_repairBtn != null) _repairBtn.Visible = false;
+            }
+            else if (_brokenSites.Count == 1)
+            {
+                _selectedRepairSiteId = _brokenSites[0].siteId;
+                if (_repairSiteDropdown != null) _repairSiteDropdown.Visible = false;
+                if (_repairBtn != null)
+                {
+                    _repairBtn.Visible = true;
+                    UpdateRepairButtonState();
+                }
+            }
+            else
+            {
+                if (_repairSiteDropdown != null)
+                {
+                    _repairSiteDropdown.Visible = true;
+                    _repairSiteDropdown.Clear();
+
+                    int selectedIdx = -1;
+                    for (int i = 0; i < _brokenSites.Count; i++)
+                    {
+                        var bSite = _brokenSites[i];
+                        string trapName = bSite.trapType;
+                        if (_host.Catalog != null && !string.IsNullOrEmpty(bSite.trapId)
+                            && _host.Catalog.Traps.TryGetValue(bSite.trapId, out var td))
+                        {
+                            trapName = td.displayName;
+                        }
+                        _repairSiteDropdown.AddItem($"{trapName} ({bSite.siteId})", i);
+                        if (_selectedRepairSiteId == bSite.siteId)
+                        {
+                            selectedIdx = i;
+                        }
+                    }
+
+                    if (selectedIdx == -1)
+                    {
+                        selectedIdx = 0;
+                        _selectedRepairSiteId = _brokenSites[0].siteId;
+                    }
+
+                    _repairSiteDropdown.Select(selectedIdx);
+                }
+
+                if (_repairBtn != null)
+                {
+                    _repairBtn.Visible = true;
+                    UpdateRepairButtonState();
+                }
+            }
+
+            // Deploy/replace control state
             var managedSite = s.trapSites.Find(t => t.siteId == ManagedSiteId);
             if (_setTrapBtn != null)
             {
@@ -206,6 +351,67 @@ namespace AtomicWar.GodotApp.UI
                 text += $"\nTotal Toxins Neutralized: {s.totalToxicRemoved} | Last Event: {_host.LastEvent}";
                 _detailText.Text = text;
             }
+        }
+
+        private void UpdateRepairButtonState()
+        {
+            if (_repairBtn == null) return;
+
+            if (_host == null || string.IsNullOrEmpty(_selectedRepairSiteId))
+            {
+                _repairBtn.Disabled = true;
+                _repairBtn.TooltipText = string.Empty;
+                return;
+            }
+
+            bool hasBill = _host.TryGetRepairBill(_selectedRepairSiteId, out var bill, out string reason);
+            if (!hasBill)
+            {
+                _repairBtn.Disabled = true;
+                _repairBtn.TooltipText = string.IsNullOrEmpty(reason) ? "Repair unavailable." : $"Repair unavailable: {reason}";
+                return;
+            }
+
+            string formattedCost = FormatBill(bill);
+            bool canAfford = _host.CanAffordRepair(_selectedRepairSiteId, out _, out string failureReason);
+
+            if (canAfford)
+            {
+                _repairBtn.Disabled = false;
+                _repairBtn.TooltipText = $"Repair: {formattedCost}";
+            }
+            else
+            {
+                _repairBtn.Disabled = true;
+                string failMsg = failureReason == "trapping.insufficient_materials"
+                    ? "Insufficient materials"
+                    : failureReason;
+                _repairBtn.TooltipText = $"Repair: {formattedCost}\n({failMsg})";
+            }
+        }
+
+        private string FormatBill(InventoryBill bill)
+        {
+            if (bill == null || bill.Costs.Count == 0) return "Free";
+            var parts = new List<string>();
+            foreach (var cost in bill.Costs)
+            {
+                string name = ResolveItemDisplayName(cost.ItemId);
+                parts.Add($"{name} x{cost.Amount}");
+            }
+            return string.Join(", ", parts);
+        }
+
+        private string ResolveItemDisplayName(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return string.Empty;
+            if (_host?.Inventory?.Catalog != null)
+            {
+                var def = _host.Inventory.Catalog.Get(itemId);
+                if (def != null && !string.IsNullOrEmpty(def.displayName))
+                    return def.displayName;
+            }
+            return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(itemId.Replace('_', ' '));
         }
 
         public override void _ExitTree()

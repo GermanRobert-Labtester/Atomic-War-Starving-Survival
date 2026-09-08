@@ -22,8 +22,9 @@ namespace Ashfall.Core.MoralChoice
     }
 
     /// <summary>
-    /// Loads moral_choice_flags.json — flag definitions for branch locking
-    /// and quest gating. Engine-agnostic.
+    /// Loads moral_choice_flags.json — persistent moral-history definitions
+    /// used by branch locking, quest gating, and downstream predicates.
+    /// Engine-agnostic.
     /// </summary>
     public static class MoralChoiceFlagCatalogLoader
     {

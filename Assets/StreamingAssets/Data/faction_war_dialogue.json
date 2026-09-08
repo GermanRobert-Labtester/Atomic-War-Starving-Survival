@@ -6,14 +6,14 @@
       "locationId": "loc_garrison_checkpoint_gamma",
       "minDay": 482,
       "speakerTag": "Two Garrison quartermasters, reconciling manifests",
-      "body": "\"Exchange numbers don't match ours again.\" \"They never match. That's what a second ledger's for — so both sides can be right at the same time.\" \"Harven doesn't see it that way.\" \"Harven doesn't do inventory. Harven does decrees. Different skill."
+      "body": "\"Exchange numbers don't match ours again.\" \"They never match. That's what a second ledger's for \u2014 so both sides can be right at the same time.\" \"Harven doesn't see it that way.\" \"Harven doesn't do inventory. Harven does decrees. Different skill."
     },
     {
       "id": "dlg_d483_exchange_lean_pool",
       "locationId": "loc_grain_silo",
       "minDay": 483,
       "speakerTag": "Two traders under the leaning silo",
-      "body": "\"Still hasn't picked a direction.\" \"Three years. I've got money down it falls east.\" \"Everyone's got money down east, that's why it hasn't fallen east yet — this whole silo's just waiting to make somebody wrong on purpose.\" \"That's not how buildings work.\" \"You explain that to the silo.\""
+      "body": "\"Still hasn't picked a direction.\" \"Three years. I've got money down it falls east.\" \"Everyone's got money down east, that's why it hasn't fallen east yet \u2014 this whole silo's just waiting to make somebody wrong on purpose.\" \"That's not how buildings work.\" \"You explain that to the silo.\""
     },
     {
       "id": "dlg_d488_understory_relay_move",
@@ -125,7 +125,161 @@
       "locationId": "loc_shrine_switchback_waystation",
       "minDay": 591,
       "speakerTag": "Two pilgrims resting at the switchback waystation",
-      "body": "\"They still haven't repainted the board at the cairn.\" \"What would they even write? The old line wasn't wrong for three years, and then one morning it was.\" \"Toma won't say 'spared' anymore. I asked her straight and she just showed me the crater.\" \"Can't blame her. Hard to keep teaching a word once you've stood in the hole it used to mean.\" \"You think somebody was choosing what falls.\" \"I think somebody was, for years, and now they're not, or they can't anymore. That's the part that keeps me climbing — I'd rather not have an answer than have the wrong one and build a shrine on it again.\""
+      "body": "\"They still haven't repainted the board at the cairn.\" \"What would they even write? The old line wasn't wrong for three years, and then one morning it was.\" \"Toma won't say 'spared' anymore. I asked her straight and she just showed me the crater.\" \"Can't blame her. Hard to keep teaching a word once you've stood in the hole it used to mean.\" \"You think somebody was choosing what falls.\" \"I think somebody was, for years, and now they're not, or they can't anymore. That's the part that keeps me climbing \u2014 I'd rather not have an answer than have the wrong one and build a shrine on it again.\""
+    },
+    {
+      "id": "dlg_d485_exchange_wet_grain_scale",
+      "locationId": "loc_grain_silo",
+      "minDay": 485,
+      "speakerTag": "An Exchange weigher and an upland farmer at the table",
+      "body": "\"Bag's damp at the corner. That's water weight, not rye.\" \"Rye pulled out of the frost has dew on the husk, that's natural moisture.\" \"Natural moisture doesn't pay the transit levy. We deduct four ounces for drying or you haul it back up the switchbacks.\" \"Four ounces is robbery.\" \"Four ounces is the rule since Tuesday. Robbery starts at six.\""
+    },
+    {
+      "id": "dlg_d486_garrison_crate_seal",
+      "locationId": "loc_garrison_motor_pool",
+      "minDay": 486,
+      "speakerTag": "Two Garrison quartermasters, inspecting a stack of ordnance cases",
+      "body": "\"Wire's cut on this third one.\" \"Cut or snapped?\" \"Clean shears. Snapped leaves a burr you can feel with your thumb.\" \"Then someone took their four clips before the truck crossed the culvert.\" \"Who do I bill for the seal?\" \"Bill the road. Harven doesn't inspect burrs; he inspects totals, and the total's short four.\""
+    },
+    {
+      "id": "dlg_d487_civilian_parsnip_stew_scrap",
+      "locationId": "loc_the_allotments",
+      "minDay": 487,
+      "speakerTag": "Two allotment workers sitting on overturned soil buckets",
+      "body": "\"Take the thick heel of the bread.\" \"I had the turnip end already. You take it.\" \"I dropped it in the dirt anyway. It's half ash. Eat it before the wind steals the warmth.\" \"Tastes better with ash. Cuts the bitterness.\""
+    },
+    {
+      "id": "dlg_d489_exchange_drum_bung_dispute",
+      "locationId": "loc_water_station",
+      "minDay": 489,
+      "speakerTag": "Two haulers in the water queue",
+      "body": "\"Your bung's leaking into the drip trough.\" \"It's just splash from the fill pipe.\" \"It's grey water running back into the clean intake. Pull your barrel back before the supervisor sees it.\" \"Supervisor's inside warming his hands on the steam pipe.\" \"Doesn't mean his ledger's blind. Move the barrel.\""
+    },
+    {
+      "id": "dlg_d492_understory_porcelain_insulator",
+      "locationId": "loc_understory_transmitter",
+      "minDay": 492,
+      "speakerTag": "Two relay technicians repairing a guy wire",
+      "body": "\"Hairline crack right across the ceramic bell.\" \"Wrap it with vulcanized tape and haul it back up.\" \"Tape won't stop fifty watts of RF arc when the frost melts.\" \"Then keep the transmitter down at twenty watts.\" \"Twenty watts won't clear the ridge into the valley.\" \"It clears the ridge if nobody's running a diesel generator to jam it. Now tighten the turnbuckle.\""
+    },
+    {
+      "id": "dlg_d494_garrison_boot_leather",
+      "locationId": "loc_snowline_station",
+      "minDay": 494,
+      "speakerTag": "Two Garrison patrolmen drying wool wraps by the hearth",
+      "body": "\"Left heel's giving again.\" \"Grease it with tallow before you turn in.\" \"Tallow's for the breech blocks now, Corporal says.\" \"Corporal sleeps in the interior bunk with dry socks. Take the lard from the mess tin and don't tell the cook.\" \"Cook knows already. That's why the soup tastes like harness leather.\""
+    },
+    {
+      "id": "dlg_d498_independent_chalk_boundary",
+      "locationId": "loc_sector_4_rail_switchyard",
+      "minDay": 498,
+      "speakerTag": "Two scavengers inspecting a chalked railcar",
+      "body": "\"Mark says three crosses. That's Miller's crew.\" \"Miller's crew hasn't been north of the Cut since the second blizzard.\" \"Chalk doesn't wash off in snow. Mark's still dry.\" \"Mark's on a rusted door with no hinges. Take the brake shoes and leave the axle. If Miller complains, he can carry the axle himself.\""
+    },
+    {
+      "id": "dlg_d502_foundry_cracked_flask_sand",
+      "locationId": "loc_granite_arsenal_foundry",
+      "minDay": 502,
+      "speakerTag": "A master molder and an apprentice over a split casting",
+      "body": "\"Look at that scab. What did I tell you about the vent needle?\" \"I vented every two inches like the board says.\" \"You vented two inches from the pattern, not the wall. Steam had nowhere to go but straight into the molten bronze.\" \"Can we remelt it?\" \"Bronze takes coal, boy. Coal doesn't grow on slag heaps. Chip the sand out and ram it again.\""
+    },
+    {
+      "id": "dlg_d508_exchange_axle_grease_delay",
+      "locationId": "loc_weighbridge",
+      "minDay": 508,
+      "speakerTag": "Two merchants waiting on the ramp",
+      "body": "\"Three hours behind schedule. The team should have cleared the pass at dawn.\" \"Axle grease froze in the hubs again. Happens every third cold snap.\" \"You'd think after three winters they'd learn to cut the grease with kerosene.\" \"Kerosene costs six chits a liter. Sticking in a snowdrift is free until someone starts shooting.\""
+    },
+    {
+      "id": "dlg_d516_garrison_kerosene_stove",
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "minDay": 516,
+      "speakerTag": "Two sentries huddled behind the sandbag berm",
+      "body": "\"Staff tent's got the blue heater going again.\" \"You smell it from here?\" \"Paraffin smoke has a drift to it. You don't mistake that for coal.\" \"Let them have the heater. Cold keeps a sentry from dozing off.\" \"That's what they wrote in the manual so they wouldn't have to haul a second drum up the slope.\""
+    },
+    {
+      "id": "dlg_d518_understory_log_overrun",
+      "locationId": "loc_radio_relay_mast",
+      "minDay": 518,
+      "speakerTag": "An operator and a log keeper by the transmitter board",
+      "body": "\"The 21:00 window was ninety seconds over.\" \"The casualty names ran long. You want me to cut someone's kin off mid-syllable?\" \"I want the battery pack to last until midnight. Every second past the mark is plate voltage we don't get back.\" \"Tell the battery pack that when the lists arrive.\""
+    },
+    {
+      "id": "dlg_d520_civilian_valve_handle_toy",
+      "locationId": "loc_ration_queue_plaza",
+      "minDay": 520,
+      "speakerTag": "A mother mending a glove while her boy spins a brass valve wheel",
+      "body": "\"What did the big wheel turn before the noise, Ma?\" \"Turned water into the basement heaters, sweet. Made the radiators clink in the morning.\" \"Can it turn the water back on now?\" \"No, love. The pipe's broken under the street. Stop spinning it, you'll work the bolt loose.\" \"I like the clink.\""
+    },
+    {
+      "id": "dlg_d528_foundry_crucible_heat_window",
+      "locationId": "loc_granite_arsenal_foundry",
+      "minDay": 528,
+      "speakerTag": "A melter and a pour hand watching the hearth",
+      "body": "\"Flame's pale straw. We're at temperature.\" \"Billet team's still lining the ingot troughs with loam.\" \"Tell them they have four minutes before the pot cools off. I'm not blowing another hour of bellows work because their shovels are cold.\" \"They're coming. Don't drop the tongs.\""
+    },
+    {
+      "id": "dlg_d530_exchange_stamped_chits",
+      "locationId": "loc_supply_corps_highway_redoubt",
+      "minDay": 530,
+      "speakerTag": "Two traders examining stamped transit chits",
+      "body": "\"Garrison stamp is purple this month. Last month was green.\" \"Means the old passes are scrap paper.\" \"I've got forty bushels cleared under the green mark.\" \"Then you sell twenty to pay for the purple mark, or you sit here until the snow melts and eat the difference.\""
+    },
+    {
+      "id": "dlg_d534_independent_tripwire_slack",
+      "locationId": "loc_forward_roster_camp",
+      "minDay": 534,
+      "speakerTag": "Two camp guards tightening perimeter cord",
+      "body": "\"Line's dragging in the thistle again.\" \"Wind caught the tin cans. Sounded like a patrol three times last watch.\" \"Tie a stone to the dropper to keep the tension even.\" \"Only got three stones left that aren't frozen to the clay.\" \"Then chip one out. Better a sore wrist than an empty shoulder.\""
+    },
+    {
+      "id": "dlg_d542_garrison_sick_list_billet",
+      "locationId": "loc_conscription_office",
+      "minDay": 542,
+      "speakerTag": "A roster sergeant and an orderly, over the slate",
+      "body": "\"Vane's got blood in his spit. He can't stand the cut watch.\" \"He's marked fit on the morning roster.\" \"He's marked fit because the pencil was in your hand, not because his lungs cleared.\" \"Three posts are empty at the culvert. Either Vane stands there with his coat buttoned, or you take his carbine and stand there yourself.\" \"I'll tell him to wear two shirts.\""
+    },
+    {
+      "id": "dlg_d546_understory_smudged_pad_entry",
+      "locationId": "loc_sub_level_maintenance_shaft_9",
+      "minDay": 546,
+      "speakerTag": "Two message runners checking a dispatch slip",
+      "body": "\"Is that a seven or a one?\" \"Graphite smeared when the condensation dripped off the pipe.\" \"One means the cache is at the switchback; seven means the culvert.\" \"Run the culvert first. If the charges are primed, you'll know it was seven.\" \"Very funny. Hand me the dry sleeve.\""
+    },
+    {
+      "id": "dlg_d556_foundry_slag_billet_reject",
+      "locationId": "loc_rebuilder_brickworks_kiln",
+      "minDay": 556,
+      "speakerTag": "Two laborers sorting scrap iron outside the kiln",
+      "body": "\"Inspector flagged the second rail bundle. Says there's sulfur inclusion.\" \"Everything from the yard has sulfur. The coal was unwashed.\" \"He says it won't weld for truss beams.\" \"It'll weld fine for fence stakes. Stack it on the left and tell him it's for the perimeter ditch.\""
+    },
+    {
+      "id": "dlg_d562_garrison_fuel_drum_tare",
+      "locationId": "loc_garrison_motor_pool",
+      "minDay": 562,
+      "speakerTag": "A transport driver and a fuel depot clerk",
+      "body": "\"Drum's two gallons light on the dipstick.\" \"Sludge at the bottom takes up volume. Sits heavy as lard.\" \"Sludge doesn't ignite in the injector, does it?\" \"It ignites if you heat the lines first.\" \"You want me to build a charcoal fire under three hundred liters of diesel?\" \"I want you to sign the receipt so I can close the bay door before my tea freezes.\""
+    },
+    {
+      "id": "dlg_d566_independent_blanket_tally",
+      "locationId": "loc_mountain_tunnel_refuge",
+      "minDay": 566,
+      "speakerTag": "Two refuge stewards dividing supplies in a bus aisle",
+      "body": "\"Four wool blankets for six cots.\" \"Double up the children. They generate more heat than the stove does anyway.\" \"Mother's coughing into a rag.\" \"Give her the canvas tarp over the blanket. Keeps the damp out. If we open another bale, there's nothing left for the next convoy.\""
+    },
+    {
+      "id": "dlg_d574_civilian_kettle_scouring_mutter",
+      "locationId": "loc_second_winter_homestead",
+      "minDay": 574,
+      "speakerTag": "An elderly homesteader scouring a soot-blackened pot by the stone wall",
+      "body": "\"Left flue first. Always the left flue, then the damper, then the ash drawer... No, three turns on the damper, Arthur said... Three turns and the smoke stays out of the larder. If you don't clean the throat, the frost gets in the flour. Always the left flue...\""
+    },
+    {
+      "id": "dlg_d576_understory_copper_splice_tale",
+      "locationId": "loc_continental_radio_beacon",
+      "minDay": 576,
+      "speakerTag": "A veteran rigger and an apprentice on the mast platform",
+      "body": "\"Always three wraps on the standing wire, then solder, then pitch.\" \"Old man at the terminal just twists them and knots the cord.\" \"Old man at the terminal has never climbed a hundred meters in a gale to find a loose joint buzzing like a hornet. Three wraps. Solder. Pitch.\""
     }
   ]
 }

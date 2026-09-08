@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-04T21:53:57.605686+00:00",
-  "strict_mode": true,
+  "generated_at": "2026-09-08T14:24:40.619806+00:00",
+  "strict_mode": false,
   "summary": {
-    "total_ids": 1504,
-    "loaded": 502,
-    "fallback": 1002,
+    "total_ids": 1646,
+    "loaded": 507,
+    "fallback": 1139,
     "missing": 0,
-    "coverage_pct": 33.38,
+    "coverage_pct": 30.8,
     "by_category": {
       "item": {
-        "total": 826,
-        "loaded": 337,
-        "fallback": 489,
+        "total": 913,
+        "loaded": 342,
+        "fallback": 571,
         "missing": 0
       },
       "portrait": {
@@ -22,20 +22,180 @@
         "missing": 0
       },
       "location": {
-        "total": 342,
+        "total": 375,
         "loaded": 54,
-        "fallback": 288,
+        "fallback": 321,
         "missing": 0
       },
       "faction": {
-        "total": 69,
+        "total": 91,
         "loaded": 1,
-        "fallback": 68,
+        "fallback": 90,
         "missing": 0
       }
     }
   },
   "entries": [
+    {
+      "id": "item_decon_chelator_concentrate",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_lead_lined_effluent_filter",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_heavy_neoprene_scrub_brush",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_sealed_waste_bin",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_theodolite_brass_precision",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_surveyor_stadia_rod",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_datum_plate_bronze",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_concrete_mix",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_forged_rotor_shaft",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_magnetic_bearing_coil",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_high_vacuum_pump",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_containment_ring_steel",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_reinforced_concrete_vault",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_seismic_damper_pad",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_vacuum_pump_oil",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_bearing_grease",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rotor_balancing_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_portable_pid_detector",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_detector_sensor_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hermetic_sample_ampoule",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
     {
       "id": "item_hot_dust_drum",
       "category": "item",
@@ -451,14 +611,6 @@
       "resolved_path": "res://assets/art/photographic_film.jpg",
       "status": "LOADED",
       "is_fallback": false
-    },
-    {
-      "id": "optical_lens",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
     },
     {
       "id": "item_acoustic_decoy",
@@ -1051,6 +1203,30 @@
       "resolved_path": "res://assets/art/plastic_material.jpg",
       "status": "LOADED",
       "is_fallback": false
+    },
+    {
+      "id": "scrap_plastic",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "synthetic_fuel_canister",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "carbon_black_powder",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
     },
     {
       "id": "protective_childs_coat",
@@ -1909,30 +2085,6 @@
       "is_fallback": true
     },
     {
-      "id": "medical_scissors",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/art/medical_scissors.jpg",
-      "status": "LOADED",
-      "is_fallback": false
-    },
-    {
-      "id": "protective_rubber_gloves",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/art/protective_rubber_gloves.jpg",
-      "status": "LOADED",
-      "is_fallback": false
-    },
-    {
-      "id": "sterilised_bandage",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/art/sterilised_bandage.jpg",
-      "status": "LOADED",
-      "is_fallback": false
-    },
-    {
       "id": "dog_tags",
       "category": "item",
       "source_catalog": "items.json",
@@ -2126,6 +2278,38 @@
     },
     {
       "id": "machinist_caliper",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_gauge_block_set",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_optical_flat",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_surface_plate",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_micrometer_set",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4013,7 +4197,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_vehicle_kit_bicycle",
+      "id": "item_geophone_probe",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4021,7 +4205,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_vehicle_kit_cargo_cart",
+      "id": "item_low_noise_sensor_amplifier",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4029,7 +4213,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_vehicle_kit_scout_motorcycle",
+      "id": "item_vibration_dampening_mount",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4037,7 +4221,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_checkpoint_kilo_1",
+      "id": "item_bedrock_sensor_rig",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4045,7 +4229,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_checkpoint_kilo_2",
+      "id": "item_iron_pyrite_ore",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4053,7 +4237,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_checkpoint_kilo_3",
+      "id": "item_industrial_acid_carboy",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4061,7 +4245,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_checkpoint_kilo_4",
+      "id": "item_industrial_oxidizer_reagent",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4069,7 +4253,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_saint_maren_1",
+      "id": "item_oxidizer_reagent_flask",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4077,7 +4261,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_saint_maren_2",
+      "id": "item_battery_electrolyte_concentrate",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4085,7 +4269,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_saint_maren_3",
+      "id": "item_foundry_pickling_reagent",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4093,7 +4277,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_family_bunker_1",
+      "id": "item_neutralizer_lime_bag",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4101,7 +4285,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_family_bunker_2",
+      "id": "item_battery_maintenance_fluid",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4109,7 +4293,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_family_bunker_3",
+      "id": "paper_stock",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4117,7 +4301,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_free_radio_1",
+      "id": "microfiche_film",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4125,7 +4309,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_free_radio_2",
+      "id": "acetate_blank_disc",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4133,7 +4317,7 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_free_radio_3",
+      "id": "ammo_76mm_he_flak",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4141,7 +4325,703 @@
       "is_fallback": true
     },
     {
-      "id": "cassette_free_radio_4",
+      "id": "ammo_76mm_proximity_fuse",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "ammo_76mm_tungsten_penetrator",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "ammo_chaff_burst",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "ammo_76mm_beacon_smokey",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "ammo_76mm_shaped_charge",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_grain_flour",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_silo_pest_treatment",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_oxygen_supply",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_nitrogen_supply",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rock_salt_sack",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_liquid_bleach_carboy",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_caustic_soda_flakes",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_industrial_cell_anode",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_parabolic_aluminum_dish_segment",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_dual_axis_tracking_gimbal",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_focal_stirling_engine_generator",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_cast_borosilicate_glass_blank",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_precision_rangefinder_achromat",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_cerium_oxide_polishing_rouge",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_optical_pitch_lap",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_foucault_tester_rig",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_titanium_breaching_shield",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_laminated_ballistic_viewport_glass",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hardened_ground_anchor_spikes",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_ebpvd_ceramic_target_ingot",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_electron_gun_tungsten_filament",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_mcraly_bond_coat_powder",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_superalloy_turbine_blade_blank",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_coated_turbine_blade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_coated_combustor_tile",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_coated_diesel_injector",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_ebpvd_vacuum_pump_seal",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_mine_flail_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hardened_flail_chain",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hydraulic_drive_motor",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_armored_blast_shield",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_pdms_silicone_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_microfluidic_reader",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_assay_reagent_pack",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_microfluidic_cartridge_general",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rail_grinding_head",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_abrasive_grinding_stone",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rail_profiling_cylinder",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_spark_suppression_manifold",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_blowtorch",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_manual_generator_maintenance",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_manual_field_medicine",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_manual_rough_repairs",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_manual_seismology",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_iron_ingot",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_copper_ingot",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_steel_billet",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_solder_stock",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_heavy_i_beam",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_shoring_plate",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_spring_steel_billet",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_gear_blank",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_shaft_stock",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_shielding_plate",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_metallurgy_tool_blank",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_aeroponic_medicinal_root",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_aeroponic_food_leaf",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_insect_larvae_meal",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofilter_media",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_aquaponic_fish",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_ballistics_cleaning_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_pneumatic_capsule_50mm",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_pneumatic_capsule_100mm",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_geothermal_descaling_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_manual_bolt_shears",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hydraulic_wire_cutter",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_mechanical_breach_ram",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_expedition_winch_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_linear_breach_section",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_groundwater_sensor",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_aquifer_isolation_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_well_maintenance_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_switch_stand_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_signal_lamp_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rail_control_component",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_track_maintenance_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_tablet_binder",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_sealed_packaging_foil",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_press_tooling_set",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_tablet_coating_base",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_greenhouse_tapes_1",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_greenhouse_tapes_2",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_greenhouse_tapes_3",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4262,30 +5142,6 @@
     },
     {
       "id": "cassette_station_14_6",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "cassette_greenhouse_tapes_1",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "cassette_greenhouse_tapes_2",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "cassette_greenhouse_tapes_3",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4421,239 +5277,31 @@
       "is_fallback": true
     },
     {
-      "id": "anesthetic_ether",
+      "id": "medical_scissors",
       "category": "item",
       "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/medical_scissors.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
-      "id": "sterile_gauze",
+      "id": "protective_rubber_gloves",
       "category": "item",
       "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/protective_rubber_gloves.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
-      "id": "surgical_scalpel",
+      "id": "sterilised_bandage",
       "category": "item",
       "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "chemical_filter",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "electrical_wire",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "copper_fuse",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/sterilised_bandage.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "sandbags",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "flare_tripwire",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "lead_sheet",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "scram_boron_canister",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_high_energy_binder",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_precision_primer_compound",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_corrosive_acid_reagent",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_hemostatic_coagulant",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_toxic_agent_neutralizer",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_industrial_catalyst",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_antiseptic_wash",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_polymer_sealant",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_desiccant_matrix",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "synth_solvent_extract",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_living_quarters",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_machine_lathe",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_heavy_plating",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_auxiliary_tank",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_roof_turret",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_reinforced_treads",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_scavenger_crane",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_medical_bay",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_communications_mast",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "module_crawler_radiation_shield",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -5107,6 +5755,54 @@
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
       "status": "FALLBACK",
       "is_fallback": true
+    },
+    {
+      "id": "item_pocket_dosimeter",
+      "category": "item",
+      "source_catalog": "dose_items.json",
+      "resolved_path": "res://assets/art/item_dosimeter_pen.jpg",
+      "status": "LOADED",
+      "is_fallback": false
+    },
+    {
+      "id": "item_radiation_survey_meter",
+      "category": "item",
+      "source_catalog": "dose_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_dose_register_book",
+      "category": "item",
+      "source_catalog": "dose_items.json",
+      "resolved_path": "res://assets/art/item_dose_ledger.jpg",
+      "status": "LOADED",
+      "is_fallback": false
+    },
+    {
+      "id": "item_cohort_baseline_card",
+      "category": "item",
+      "source_catalog": "dose_items.json",
+      "resolved_path": "res://assets/art/item_cohort_first_board.jpg",
+      "status": "LOADED",
+      "is_fallback": false
+    },
+    {
+      "id": "item_shielding_apron",
+      "category": "item",
+      "source_catalog": "dose_items.json",
+      "resolved_path": "res://assets/art/item_lead_apron.jpg",
+      "status": "LOADED",
+      "is_fallback": false
+    },
+    {
+      "id": "item_potassium_iodide_pack",
+      "category": "item",
+      "source_catalog": "dose_items.json",
+      "resolved_path": "res://assets/art/item_potassium_iodide.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "item_foundry_grey_iron_ingot",
@@ -9989,6 +10685,150 @@
       "is_fallback": true
     },
     {
+      "id": "loc_iron_crest",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_ash_needle",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_wind_gap_ridge",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_signal_hill_tower",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_river_bend_outpost",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_rusted_span_bridge",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_old_crematory_stacks",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_north_gate_water_tower",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_junction_box_rail",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_sulfur_knob",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_gravel_backbone",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_south_beacon_tower",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_frozen_well_station",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_rail_trestle_gorge",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_foundry_west_stacks",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_reservoir_water_tower",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_forestry_compound",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_warehouse_district",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
       "id": "loc_crossing_viaduct_gate",
       "category": "location",
       "source_catalog": "crossing_locations.json",
@@ -10166,6 +11006,126 @@
     },
     {
       "id": "location_television_studio",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_apartment_block",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_metro_station",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_police_station",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_chemical_plant",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_steelworks",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_power_substation",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_ammunition_depot",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_radar_site",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_weather_station",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_agricultural_research",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_metro_tunnel",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_drainage_network",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_irradiated_forest",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_frozen_wetland",
+      "category": "location",
+      "source_catalog": "deep_lore_locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "location_burned_woodland",
       "category": "location",
       "source_catalog": "deep_lore_locations.json",
       "resolved_path": "(none)",
@@ -12062,6 +13022,182 @@
     },
     {
       "id": "faction_doctrine_archetype_procedure",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_archivists",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_lamplighters",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_quiet_house",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_grain_exchange",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_sun_seekers",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_osteophages",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_tally",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_undertow",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_cold_count",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_deserter_coalition",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_provisioned",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_long_walk",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_scavenger_guild",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_iron_raiders",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_tempest",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_black_flotilla",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_silent_foundry",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_office",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_cutters",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_compact",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_fleet",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_scale",
       "category": "faction",
       "source_catalog": "faction_lore.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",

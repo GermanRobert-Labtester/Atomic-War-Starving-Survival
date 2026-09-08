@@ -16,6 +16,7 @@ using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.Feedback;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
@@ -461,6 +462,32 @@ namespace AtomicWar.GodotApp
                     $"treatment_{survivorId}_{day}_{diseaseId}",
                     $"{survivorId}: {role} treatment with {itemId} for {diseaseId}.",
                     null!, day);
+
+                var patientName = FormatSurvivorName(survivorId);
+                FeedbackMessages.Emit(new FeedbackEvent(
+                    key: "medical_treatment_success",
+                    arguments: new object[] { patientName },
+                    category: "success",
+                    dedupeKey: $"treatment_{survivorId}_{day}"
+                ));
+            };
+
+            _disease.Engine.OnInfection += (survivorId, diseaseId) =>
+            {
+                FeedbackMessages.Emit(new FeedbackEvent(
+                    key: "disease_alert",
+                    category: "alert",
+                    dedupeKey: $"disease_alert_{survivorId}"
+                ));
+            };
+
+            _disease.Engine.OnOutbreakDeclared += (diseaseId) =>
+            {
+                FeedbackMessages.Emit(new FeedbackEvent(
+                    key: "disease_outbreak",
+                    category: "warning",
+                    dedupeKey: $"disease_outbreak_{diseaseId}"
+                ));
             };
 
             GD.Print("[Ashfall Godot] Disease Expansion ward ready (contagion · quarantine · outbreak · treatment).");

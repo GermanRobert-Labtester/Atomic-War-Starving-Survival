@@ -25,6 +25,78 @@
         "water_filter"
       ],
       "rationale": "Infections set in. Filters clog. Fuel runs low."
+    },
+    {
+      "tier": "Moderate",
+      "multiplier": 1.6,
+      "day_range_label": "Days 41-100",
+      "affected_item_ids": [
+        "scrap_mechanical",
+        "calibration_kit",
+        "antibiotics",
+        "water_filter"
+      ],
+      "rationale": "The first medical panic passes; repairs and calibration become the daily tax."
+    },
+    {
+      "tier": "Stable",
+      "multiplier": 1.3,
+      "day_range_label": "Days 101-160",
+      "affected_item_ids": [
+        "seed_packets",
+        "item_seed_ash_grain",
+        "scrap_mechanical",
+        "engine"
+      ],
+      "rationale": "Calories settle while seed stock and working prime movers carry the next season."
+    },
+    {
+      "tier": "Reconstruction",
+      "multiplier": 1.5,
+      "day_range_label": "Days 161-220",
+      "affected_item_ids": [
+        "engine",
+        "item_foundry_roof_armor_plate",
+        "scrap_mechanical",
+        "seed_packets"
+      ],
+      "rationale": "Shelters rebuild their roofs and workshops, pulling heavy parts back into scarcity."
+    },
+    {
+      "tier": "LateScarcity",
+      "multiplier": 1.8,
+      "day_range_label": "Days 221-280",
+      "affected_item_ids": [
+        "fuel",
+        "ammo_*",
+        "medical_kit",
+        "canned_food"
+      ],
+      "rationale": "The old caches are gone and every route guards fuel, ammunition, and preserved food."
+    },
+    {
+      "tier": "DeepWinter",
+      "multiplier": 2.2,
+      "day_range_label": "Days 281-340",
+      "affected_item_ids": [
+        "fuel",
+        "canned_food",
+        "clean_water",
+        "medical_kit"
+      ],
+      "rationale": "Frozen routes and wells make heat, food, water, and treatment hard to replace."
+    },
+    {
+      "tier": "Endgame",
+      "multiplier": 2.4,
+      "day_range_label": "Days 341+",
+      "affected_item_ids": [
+        "item_seed_ash_grain",
+        "engine",
+        "medical_kit",
+        "dosimeter"
+      ],
+      "rationale": "Long survival makes irreplaceable germplasm, machinery, treatment, and measurement priceless."
     }
   ],
   "faction_preferences": [
@@ -64,6 +136,97 @@
         "item_teddy_bear"
       ],
       "trade_currency": "Dry cloth, medicine, fuel, and salvage with paper on it"
+    },
+    {
+      "faction_id": "faction_the_scale",
+      "buys_at_premium": [
+        "water_filter",
+        "clean_water",
+        "item_foundry_brine_pipe",
+        "brass_fittings",
+        "scrap_mechanical"
+      ],
+      "refuses": [
+        "jewelry",
+        "cigarette_pack_sealed",
+        "family_photograph"
+      ],
+      "trade_currency": "Volumetric water chits, calibrated valve bodies, and pipe sealant"
+    },
+    {
+      "faction_id": "faction_the_compact",
+      "buys_at_premium": [
+        "paper_scrap",
+        "book",
+        "dosimeter",
+        "geiger_counter"
+      ],
+      "refuses": [
+        "ammo_*",
+        "item_hot_dust_drum",
+        "item_tailings_drum"
+      ],
+      "trade_currency": "Archival deeds, survey boundary chits, and legal arbitration chits"
+    },
+    {
+      "faction_id": "faction_the_underwrite",
+      "buys_at_premium": [
+        "fuel",
+        "ammo_*",
+        "medical_kit",
+        "calibration_kit"
+      ],
+      "refuses": [
+        "item_sludge_cake",
+        "item_hot_dust_drum",
+        "item_tailings_drum"
+      ],
+      "trade_currency": "Fuel vouchers, convoy insurance underwriters, and escort chits"
+    },
+    {
+      "faction_id": "faction_the_cutters",
+      "buys_at_premium": [
+        "fuel",
+        "engine",
+        "scrap_mechanical",
+        "canned_food"
+      ],
+      "refuses": [
+        "jewelry",
+        "paper_scrap",
+        "book"
+      ],
+      "trade_currency": "Black coal, haulage sledges, and cleared pass transit chits"
+    },
+    {
+      "faction_id": "faction_the_rebuilders",
+      "buys_at_premium": [
+        "seed_packets",
+        "item_seed_ash_grain",
+        "clean_water",
+        "antibiotics"
+      ],
+      "refuses": [
+        "item_hot_dust_drum",
+        "item_tailings_drum",
+        "item_sludge_cake"
+      ],
+      "trade_currency": "Grain bushels, heirloom seed credits, and communal silo storage chits"
+    },
+    {
+      "faction_id": "faction_the_overlay",
+      "buys_at_premium": [
+        "brass_fittings",
+        "dosimeter",
+        "geiger_counter",
+        "paper_scrap"
+      ],
+      "refuses": [
+        "jewelry",
+        "cigarette_pack_sealed",
+        "item_sludge_cake"
+      ],
+      "trade_currency": "Cadastral keys, triangulation data, and travel correction warrants"
     }
   ],
   "price_shock_rules": [
@@ -75,6 +238,61 @@
         "*"
       ],
       "trigger": "fallout storm crosses a trade route"
+    },
+    {
+      "kind": "ConvoyAmbush",
+      "multiplier": 1.6,
+      "duration_days": 3,
+      "affected_item_ids": [
+        "fuel",
+        "canned_food",
+        "medical_kit"
+      ],
+      "trigger": "a major supply convoy is intercepted and destroyed on the route"
+    },
+    {
+      "kind": "FactionConflict",
+      "multiplier": 1.7,
+      "duration_days": 5,
+      "affected_item_ids": [
+        "ammo_*",
+        "medical_kit",
+        "fuel"
+      ],
+      "trigger": "an armed border conflict closes the safest faction crossings"
+    },
+    {
+      "kind": "SeasonalScarcity",
+      "multiplier": 1.5,
+      "duration_days": 7,
+      "affected_item_ids": [
+        "canned_food",
+        "clean_water",
+        "seed_packets"
+      ],
+      "trigger": "a sudden blizzard disrupts foraging and greenhouse transport"
+    },
+    {
+      "kind": "DiseaseOutbreak",
+      "multiplier": 2.0,
+      "duration_days": 4,
+      "affected_item_ids": [
+        "antibiotics",
+        "medical_kit",
+        "clean_water"
+      ],
+      "trigger": "a waterborne outbreak spreads through crowded shelter housing"
+    },
+    {
+      "kind": "FuelShortage",
+      "multiplier": 1.9,
+      "duration_days": 3,
+      "affected_item_ids": [
+        "fuel",
+        "engine",
+        "scrap_mechanical"
+      ],
+      "trigger": "a regional pumping failure stalls fuel distribution"
     }
   ]
 }

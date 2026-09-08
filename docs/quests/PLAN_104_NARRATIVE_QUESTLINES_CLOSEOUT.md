@@ -1,0 +1,61 @@
+# Plan 104 — Narrative Questlines Expansion: Closeout Report
+
+**Document ID:** `docs/quests/PLAN_104_NARRATIVE_QUESTLINES_CLOSEOUT.md`
+**Execution Scope:** Expand `narrative_questlines.json` from 4 baseline questlines to 12 survivor-specific personal arcs.
+**Catalog Authority:** `Assets/StreamingAssets/Data/narrative_questlines.json` (mirrored in `builds/linux/Assets/StreamingAssets/Data/narrative_questlines.json`)
+**Core Classes:** `Assets/Ashfall.Core/Narrative/NarrativeQuestlineCatalog.cs`, `Assets/Ashfall.Core/Narrative/NarrativeQuestlineData.cs`
+**Test Suite:** `Ashfall.Core.Tests/NarrativeQuestlineCatalogTests.cs` (10/10 PASS, unquarantined)
+**Full Test Suite:** `dotnet test Ashfall.Core.Tests` (9,852/9,852 PASS)
+**Status:** **COMPLETE & FULLY VERIFIED**
+
+---
+
+## 1. Executive Summary
+
+Plan 104 deepens the personal dimension of ASHFALL by authoring eight new four-stage survivor-specific narrative questlines. The named survivor roster shifts from mechanical stat containers into people carrying unresolved guilt, professional trauma, ideological struggle, and personal obligations across the nuclear winter.
+
+All twelve questlines are strictly schema-compliant (`schema_version: 1`), topologically validated (DAG with zero cycles, linear progression stages 1-3 leading to a binary crisis branch at stage 4), cross-referenced against authoritative item catalogs (`items.json`) and location registries (`locations.json`), and integrated with recurring NPC hooks and journal voice dispatches.
+
+---
+
+## 2. Complete 12-Questline Roster
+
+| # | Questline ID | Focus Survivor | Starting Location | Objective Items | Crisis Branch Traits |
+|---:|:---|:---|:---|:---|:---|
+| 1 | `quest_the_cracked_floor` *(baseline)* | `the_engineer` | `loc_shelter_bunker` | `scrap_metal` | — |
+| 2 | `quest_the_dying_signal` *(baseline)* | `the_electrician` | `loc_radio_tower` | `battery_pack` | — |
+| 3 | `quest_the_refugee_mass_influx` *(baseline)* | `the_doctor` | `loc_hospital_ruins` | `antibiotics` | — |
+| 4 | `quest_the_ars_crisis` *(baseline)* | `the_doctor` | `loc_hospital_ruins` | `anti_radiation_pills` | — |
+| 5 | `quest_the_machinists_regret` | `marcus_olejnik` | `loc_recovery_yard` | `blueprint_roll`, `scrap_metal`, `soldering_kit` | `trait_scrupulous_machinist`, `trait_unflinching_pragmatist` |
+| 6 | `quest_the_abandoned_school` | `the_teacher` | `loc_school_gymnasium` | `childrens_books`, `pocket_notebook`, `bandage` | `trait_persistent_educator`, `trait_stoic_disciplinarian` |
+| 7 | `quest_the_final_harvest` | `the_chef` | `loc_forward_roster_camp` | `canned_food`, `fuel`, `clean_water` | `trait_merciful_provider`, `trait_poisoners_burden` |
+| 8 | `quest_the_irradiated_soil` | `suki_tanaka` | `loc_agricultural_coop` | `seed_packets`, `item_ammonium_nitrate_sack` | `trait_soil_custodian`, `trait_forward_planter` |
+| 9 | `quest_crisis_of_faith` | `the_priest` | `loc_ash_sign_shrine` | `item_collectible_prayer_book` | `trait_faithful_anchor`, `trait_honest_skeptic` |
+| 10 | `quest_truth_of_day_30` | `the_reporter` | `loc_printworks` | `item_cassette_tape`, `signal_source_report` | `trait_uncompromising_journalist`, `trait_protective_censor` |
+| 11 | `quest_the_substation_ghost` | `the_electrician` | `loc_substation_yard` | `battery`, `soldering_kit` | `trait_grid_walker`, `trait_cold_technician` |
+| 12 | `quest_the_white_elk` | `the_hunter` | `loc_ash_woodland` | `ammo_308`, `weapon_marksman_rifle`, `medkit` | `trait_vigilant_tracker`, `trait_haunted_marksman` |
+
+---
+
+## 3. Architecture & Structural Validation
+
+- **Zero Cycles & Strict Reachability:** Each 4-stage quest progresses sequentially through Stages 1, 2, and 3, terminating in Stage 4 where a binary branch grants one of two mutually exclusive survivor traits.
+- **Item Reference Integrity:** All required and granted items exist in `Assets/StreamingAssets/Data/items.json`.
+- **Location Reference Integrity:** All referenced locations resolve in `Assets/StreamingAssets/Data/locations.json`.
+- **Recurring-NPC Seams:** `quest_crisis_of_faith` and `quest_truth_of_day_30` wire directly to Plan 52 recurring-NPCs `the_priest` and `the_reporter`.
+- **Journal Voice Seams:** `quest_the_abandoned_school` and `quest_truth_of_day_30` dispatch narrative events aligned with Plan 95 journal voice conventions (`the_teacher` and `the_reporter`).
+- **Unquarantined Test Suite:** `Ashfall.Core.Tests/NarrativeQuestlineCatalogTests.cs` re-enabled in `Ashfall.Core.Tests.csproj` and passes all 10 unit and integrity assertions.
+
+---
+
+## 4. Verification Matrix
+
+| Check | Tool / Command | Result |
+|---|---|---|
+| C# Assembly Build | `dotnet build Ashfall.csproj` | **0 errors, 0 warnings** |
+| Narrative Questline Suite | `dotnet test Ashfall.Core.Tests --filter NarrativeQuestlineCatalogTests` | **10 passed, 0 failed** |
+| Full xUnit Regression Suite | `dotnet test Ashfall.Core.Tests` | **9,852 passed, 0 failed** |
+| Content Utilization Self-Test | `godot --headless --path . -- --content-utilization-selftest` | **CI Gate: PASS** |
+| Data Integrity Self-Test | `godot --headless --path . -- --data-integrity-selftest` | **0 errors across 298 catalogs** |
+| Scene Binding Self-Test | `godot --headless --path . -- --scene-binding-selftest` | **25/25 passed** |
+| Production Scene Lint | `python3 scripts/ci/scene-lint.py` | **30 scenes, 0 errors, 0 warnings** |

@@ -55,6 +55,252 @@
       ]
     },
     {
+      "background_id": "radio_operator",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_radio_headset",
+          "item_category": "work_tool",
+          "item_id": "radio_headset",
+          "motivation_chance": 0.35,
+          "description": "{name} reaches for the headset before checking whether the set has power. Their hand stops at the frequency mark.",
+          "motivation_text": "{name} powers the set, clears the dial, and starts a fresh listening log.",
+          "breakdown_text": "{name} turns the volume down until the static disappears completely.",
+          "affinity_background": "radio_operator",
+          "morale_payload": 13.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_radio_battery",
+          "item_category": "generic",
+          "item_id": "battery",
+          "motivation_chance": 0.3,
+          "description": "{name} checks the battery date, then the terminals, then the date again.",
+          "motivation_text": "{name} sorts the cells by remaining charge and marks the strongest for communications.",
+          "breakdown_text": "{name} leaves the battery disconnected despite the good reading.",
+          "affinity_background": "radio_operator",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_radio_log",
+          "item_category": "correspondence",
+          "item_id": "item_document_radio_log",
+          "motivation_chance": 0.45,
+          "description": "{name} reads the radio log until the entries stop, then checks the timestamp of the last unanswered call.",
+          "motivation_text": "{name} copies the surviving frequencies into a new log and resumes the watch.",
+          "breakdown_text": "{name} folds the log at the unanswered call and refuses to tune past that mark.",
+          "affinity_background": "radio_operator",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "miner",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_miner_tag",
+          "item_category": "work_tool",
+          "item_id": "miners_tag",
+          "motivation_chance": 0.3,
+          "description": "{name} taps the miner's tag against the floor and listens as if the room extends farther than its walls.",
+          "motivation_text": "{name} checks the number against the roster and asks who is assigned to the next shift.",
+          "breakdown_text": "{name} stares at the tag after the sound and will not enter the lower passage.",
+          "affinity_background": "miner",
+          "morale_payload": 11.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_miner_lamp",
+          "item_category": "generic",
+          "item_id": "item_signal_lamp_module",
+          "motivation_chance": 0.4,
+          "description": "{name} cups the lamp module and watches the filament more closely than the light it gives.",
+          "motivation_text": "{name} cleans the housing and says a failing lamp should warn you before the dark does.",
+          "breakdown_text": "{name} refuses to carry the lamp into the next room.",
+          "affinity_background": "miner",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_miner_salt",
+          "item_category": "generic",
+          "item_id": "item_rock_salt_sack",
+          "motivation_chance": 0.35,
+          "description": "{name} weighs the salt sack and studies the torn seam as if it were a roof support under load.",
+          "motivation_text": "{name} patches the seam and marks the stock for the next work crew.",
+          "breakdown_text": "{name} steps away from the sack when the dust settles and checks the ceiling twice.",
+          "affinity_background": "miner",
+          "morale_payload": 10.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "librarian",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_librarian_book",
+          "item_category": "generic",
+          "item_id": "book",
+          "motivation_chance": 0.45,
+          "description": "{name} opens the book near the middle first, checking the binding before the words.",
+          "motivation_text": "{name} sets the intact books aside and starts making a preservation list.",
+          "breakdown_text": "{name} closes the book when the paper crackles and cannot reopen it.",
+          "affinity_background": "librarian",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_librarian_archive",
+          "item_category": "correspondence",
+          "item_id": "item_archive_index_cylinder",
+          "motivation_chance": 0.35,
+          "description": "{name} sorts the archive cylinder by date and hand until one missing record stops the whole process.",
+          "motivation_text": "{name} files the cylinder with the surviving records and writes down what is absent.",
+          "breakdown_text": "{name} gathers the records into one pile and walks away before they are ordered.",
+          "affinity_background": "librarian",
+          "morale_payload": 11.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_librarian_photo",
+          "item_category": "photograph",
+          "item_id": "family_photograph",
+          "motivation_chance": 0.3,
+          "description": "{name} turns the photograph over before studying the faces, looking first for a date or name on the back.",
+          "motivation_text": "{name} writes what can still be identified and stores the photograph with the records.",
+          "breakdown_text": "{name} leaves the back blank even after remembering the name.",
+          "affinity_background": "librarian",
+          "morale_payload": 10.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "cleric",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_cleric_beads",
+          "item_category": "generic",
+          "item_id": "item_collectible_prayer_beads",
+          "motivation_chance": 0.3,
+          "description": "{name} brushes dust from the beads with two fingers and pauses before setting them upright.",
+          "motivation_text": "{name} leaves them where others can see them and says the silence may mean what people need it to mean.",
+          "breakdown_text": "{name} turns the beads face down and cannot bring themselves to turn them back.",
+          "affinity_background": "cleric",
+          "morale_payload": 10.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_cleric_prayer_book",
+          "item_category": "correspondence",
+          "item_id": "item_collectible_prayer_book",
+          "motivation_chance": 0.4,
+          "description": "{name} opens the prayer book to a marked page, then looks at the names written in the margin instead of the verse.",
+          "motivation_text": "{name} copies the names into the shelter register without deciding what the record means.",
+          "breakdown_text": "{name} closes the book when the page crackles and leaves the names unspoken.",
+          "affinity_background": "cleric",
+          "morale_payload": 11.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_cleric_civic_token",
+          "item_category": "ordinary_object",
+          "item_id": "item_collectible_civic_token",
+          "motivation_chance": 0.45,
+          "description": "{name} turns the civic token over, thumb resting on the worn seal where a promise used to be legible.",
+          "motivation_text": "{name} places it beside the ration ledger and begins naming what the shelter still owes its people.",
+          "breakdown_text": "{name} pockets the token and refuses to discuss the institution it once represented.",
+          "affinity_background": "cleric",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "scavenger",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_scavenger_dog_tags",
+          "item_category": "work_tool",
+          "item_id": "item_dog_tags_scavenged",
+          "motivation_chance": 0.35,
+          "description": "{name} checks the tags for sharp edges before looking at the names. The order of those actions is older than the shelter.",
+          "motivation_text": "{name} sorts the tags with the salvage and writes down where they were found.",
+          "breakdown_text": "{name} closes their hand around the tags and tells someone else to carry the rest.",
+          "affinity_background": "scavenger",
+          "morale_payload": 11.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_scavenger_crate",
+          "item_category": "generic",
+          "item_id": "military_supply_crate",
+          "motivation_chance": 0.25,
+          "description": "{name} tests the crate's weight and listens for movement inside before touching the latch.",
+          "motivation_text": "{name} opens it from the side, checks the hinges, and starts sorting what can be carried fastest.",
+          "breakdown_text": "{name} steps away from the latch and tells nobody what was found beside a crate like this.",
+          "affinity_background": "scavenger",
+          "morale_payload": 10.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_scavenger_key",
+          "item_category": "personal_item",
+          "item_id": "family_apartment_key",
+          "motivation_chance": 0.4,
+          "description": "{name} turns the key over before trying it, studying the polished edge where another hand used it every day.",
+          "motivation_text": "{name} labels the key with the place it came from and adds it to the recoverable metal.",
+          "breakdown_text": "{name} holds the key too long, then leaves it on the floor instead of the salvage tray.",
+          "affinity_background": "scavenger",
+          "morale_payload": 10.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "cook",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_cook_ration",
+          "item_category": "generic",
+          "item_id": "canned_food",
+          "motivation_chance": 0.5,
+          "description": "{name} smells the ration before opening it and closes their eyes at a spice that is barely there.",
+          "motivation_text": "{name} separates what can still become a proper meal and starts assigning portions.",
+          "breakdown_text": "{name} loses their appetite before the pot is warm.",
+          "affinity_background": "cook",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_cook_recipe",
+          "item_category": "correspondence",
+          "item_id": "recipe_card",
+          "motivation_chance": 0.4,
+          "description": "{name} reads the recipe card from the bottom upward, following a substitution written in a different hand.",
+          "motivation_text": "{name} adapts the recipe to the stores and calls for a second pot.",
+          "breakdown_text": "{name} stops at the final instruction and cannot decide who was meant to eat first.",
+          "affinity_background": "cook",
+          "morale_payload": 13.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_cook_tin",
+          "item_category": "ordinary_object",
+          "item_id": "recipe_tin",
+          "motivation_chance": 0.35,
+          "description": "{name} taps the recipe tin twice before opening it, listening for the rattle of cards that should be there.",
+          "motivation_text": "{name} dries the surviving cards and starts a shelter meal register.",
+          "breakdown_text": "{name} closes the tin when the empty space inside becomes more familiar than the recipes.",
+          "affinity_background": "cook",
+          "morale_payload": 11.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
       "background_id": "former_soldier",
       "triggers": [
         {
@@ -347,30 +593,165 @@
       ]
     },
     {
-      "background_id": "urban_survivor",
+      "background_id": "architect",
       "triggers": [
         {
-          "trigger_id": "phantom_trigger_p8_house_key",
-          "item_category": "personal_item",
-          "item_id": "family_apartment_key",
-          "motivation_chance": 0.3,
-          "description": "A brass door key on a leather fob stamped '4B'. The high-rise it locked was incinerated in the first hour.",
-          "motivation_text": "{name} drops the key into a scrap bucket. 'Brass melts. We need the raw material,' they say.",
-          "breakdown_text": "{name} turns the key in their fingers. 'I locked the deadbolt when the sirens started. As if a wooden door mattered.'",
-          "affinity_background": "urban_survivor",
+          "trigger_id": "phantom_trigger_plan111_architect_map",
+          "item_category": "correspondence",
+          "item_id": "item_collectible_topo_map",
+          "motivation_chance": 0.4,
+          "description": "{name} unfolds the topographic map and traces the contour lines until the paper gives out at the edge of the old project.",
+          "motivation_text": "{name} marks a safer shelter route from memory and asks for a pencil.",
+          "breakdown_text": "{name} keeps tracing the missing section, unable to say where the planned building was meant to stand.",
+          "affinity_background": "architect",
           "morale_payload": 10.0,
           "guilt_payload": 5.0
         },
         {
-          "trigger_id": "phantom_trigger_p7_pocket_notebook",
+          "trigger_id": "phantom_trigger_plan111_architect_theodolite",
+          "item_category": "work_tool",
+          "item_id": "item_theodolite_brass_precision",
+          "motivation_chance": 0.35,
+          "description": "{name} levels the theodolite before looking through it. The habit survives even though there is no survey crew left to answer.",
+          "motivation_text": "{name} takes a bearing on the shelter doors and begins checking their alignment.",
+          "breakdown_text": "{name} turns the instrument away from the empty horizon and packs it without recording the reading.",
+          "affinity_background": "architect",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_architect_plank",
+          "item_category": "generic",
+          "item_id": "wooden_plank",
+          "motivation_chance": 0.35,
+          "description": "{name} runs a hand along the plank and finds the weak grain before turning it over. The shelter wall has the same fault.",
+          "motivation_text": "{name} marks a brace line and starts measuring the timber for a repair.",
+          "breakdown_text": "{name} follows the split to its end and steps away from the wall as if it has already fallen.",
+          "affinity_background": "architect",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "chemist",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_chemist_solvent",
+          "item_category": "generic",
+          "item_id": "chemical_solvent",
+          "motivation_chance": 0.3,
+          "description": "{name} reads the solvent label from the bottom upward, then checks the cap before allowing anyone else near it.",
+          "motivation_text": "{name} isolates the bottle, marks the uncertainty, and lists the tests that could identify it.",
+          "breakdown_text": "{name} seals the bottle inside two more bags and will not stay in the room with it.",
+          "affinity_background": "chemist",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_chemist_notebook",
           "item_category": "correspondence",
           "item_id": "pocket_notebook",
+          "motivation_chance": 0.45,
+          "description": "{name} opens the notebook to a page of crossed-out ratios. One correction has been written over the paper until the fibers shine.",
+          "motivation_text": "{name} copies the surviving formula cleanly and labels every assumption before continuing.",
+          "breakdown_text": "{name} closes the notebook at the same page and cannot decide which result was safe to trust.",
+          "affinity_background": "chemist",
+          "morale_payload": 13.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_chemist_kit",
+          "item_category": "medical",
+          "item_id": "medical_kit",
+          "motivation_chance": 0.4,
+          "description": "{name} checks the kit seals, batch marks, and discoloration before reading the medicine names.",
+          "motivation_text": "{name} sorts stable stock from uncertain doses and writes the reason beside each pile.",
+          "breakdown_text": "{name} leaves both piles untouched when no label answers the question.",
+          "affinity_background": "chemist",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "medic",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_medic_dressing",
+          "item_category": "medical",
+          "item_id": "field_dressing_kit",
           "motivation_chance": 0.35,
-          "description": "A pocket notebook of daily errands, dry cleaner receipts, and phone numbers. The entries stop mid-sentence on page fourteen.",
-          "motivation_text": "{name} tears out the used pages to use as tinder. 'Clean paper for the ledger,' they state.",
-          "breakdown_text": "{name} reads the final entry: 'Pick up anniversary cake at 5.' They close the book and walk away.",
-          "affinity_background": "urban_survivor",
-          "morale_payload": 8.0,
+          "description": "{name} folds the dressing into a field pad without thinking, then stops with the last corner tucked exactly as before.",
+          "motivation_text": "{name} reopens the kit, checks the stock, and rebuilds it for the next emergency.",
+          "breakdown_text": "{name} cannot unfold the dressing again once it is packed.",
+          "affinity_background": "medic",
+          "morale_payload": 14.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_medic_triage",
+          "item_category": "correspondence",
+          "item_id": "item_document_triage_record",
+          "motivation_chance": 0.3,
+          "description": "{name} reads the triage record twice, stopping at the blank space where a name should be.",
+          "motivation_text": "{name} fills in the missing details in a steady hand and returns the form to the file.",
+          "breakdown_text": "{name} leaves the name field blank and closes the folder.",
+          "affinity_background": "medic",
+          "morale_payload": 12.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_medic_surgical_kit",
+          "item_category": "medical",
+          "item_id": "item_surgical_kit",
+          "motivation_chance": 0.5,
+          "description": "{name} lays the instruments out in order, checking the clean edge of each one before the old urgency returns.",
+          "motivation_text": "{name} repacks the kit for field use and asks who needs the next assessment.",
+          "breakdown_text": "{name} stops at the final instrument and cannot bring themselves to close the case.",
+          "affinity_background": "medic",
+          "morale_payload": 15.0,
+          "guilt_payload": 0.0
+        }
+      ]
+    },
+    {
+      "background_id": "driver",
+      "triggers": [
+        {
+          "trigger_id": "phantom_trigger_plan111_driver_map",
+          "item_category": "correspondence",
+          "item_id": "item_collectible_road_map",
+          "motivation_chance": 0.45,
+          "description": "{name} opens the road map with both hands and checks an old junction before looking at where the shelter actually is.",
+          "motivation_text": "{name} marks two alternate roads and starts calculating which one can carry a loaded vehicle.",
+          "breakdown_text": "{name} keeps one finger on the same junction and does not turn the page.",
+          "affinity_background": "driver",
+          "morale_payload": 13.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_driver_fuel",
+          "item_category": "generic",
+          "item_id": "fuel_canister",
+          "motivation_chance": 0.3,
+          "description": "{name} smells the fuel before checking the container seal. The habit is automatic; the silence afterward is not.",
+          "motivation_text": "{name} measures the usable amount and writes the distance it can still cover.",
+          "breakdown_text": "{name} caps the canister and moves away before anyone asks what road they remembered.",
+          "affinity_background": "driver",
+          "morale_payload": 11.0,
+          "guilt_payload": 0.0
+        },
+        {
+          "trigger_id": "phantom_trigger_plan111_driver_winch",
+          "item_category": "work_tool",
+          "item_id": "item_expedition_winch_kit",
+          "motivation_chance": 0.4,
+          "description": "{name} tests the winch cable by hand, finding the polished section where a load once slipped loose.",
+          "motivation_text": "{name} lays out the repair parts and asks for a second pair of hands before the next crossing.",
+          "breakdown_text": "{name} coils the cable again and will not let anyone attach it to a vehicle.",
+          "affinity_background": "driver",
+          "morale_payload": 12.0,
           "guilt_payload": 0.0
         }
       ]

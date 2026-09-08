@@ -105,6 +105,97 @@
         { "ending_id": "ending_mil_8b_survivor", "band_min": "slightly_evil", "band_max": "neutral", "display_name": "The Survivor" },
         { "ending_id": "ending_mil_8c_warlord", "band_min": "very_evil", "band_max": "evil", "display_name": "The Warlord" }
       ]
+    },
+    {
+      "id": "branch_mil_9_quartermaster",
+      "display_name": "The Quartermaster",
+      "ponr_flag": "flag_branch_mil_9_ponr",
+      "ponr_trigger": "They falsify military store manifests to divert food and medical crates to starving civilians, making the shortage irreversible.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_mil_9a_keeper_of_stores", "band_min": "positive", "band_max": "very_positive", "display_name": "The Keeper of Stores" },
+        { "ending_id": "ending_mil_9b_civilian_quartermaster", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Civilian Quartermaster" },
+        { "ending_id": "ending_mil_9c_black_ledger", "band_min": "very_evil", "band_max": "evil", "display_name": "The Black Ledger" }
+      ]
+    },
+    {
+      "id": "branch_mil_10_combat_medic",
+      "display_name": "The Combat Medic",
+      "ponr_flag": "flag_branch_mil_10_ponr",
+      "ponr_trigger": "They lower their weapon in front of their unit, claiming the wounded enemy as a patient instead of an operational target.",
+      "entry_band_min": "slightly_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_mil_10a_field_healer", "band_min": "positive", "band_max": "very_positive", "display_name": "The Field Healer" },
+        { "ending_id": "ending_mil_10b_unit_outcast", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Unit Outcast" },
+        { "ending_id": "ending_mil_10c_hardened_triage", "band_min": "very_evil", "band_max": "evil", "display_name": "The Hardened Triage" }
+      ]
+    },
+    {
+      "id": "branch_mil_11_conscript_parent",
+      "display_name": "The Conscript Parent",
+      "ponr_flag": "flag_branch_mil_11_ponr",
+      "ponr_trigger": "They refuse a punitive sweep order against their home settlement, identifying themselves openly as a defender of their own household.",
+      "entry_band_min": "evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_mil_11a_community_protector", "band_min": "positive", "band_max": "very_positive", "display_name": "The Community Protector" },
+        { "ending_id": "ending_mil_11b_divided_household", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Divided Household" },
+        { "ending_id": "ending_mil_11c_permanent_fugitive", "band_min": "very_evil", "band_max": "evil", "display_name": "The Permanent Fugitive" }
+      ]
+    },
+    {
+      "id": "branch_mil_12_intelligence_officer",
+      "display_name": "The Intelligence Officer",
+      "ponr_flag": "flag_branch_mil_12_ponr",
+      "ponr_trigger": "They burn a verified civilian informant register and purge the archive before command can dispatch retaliatory death squads.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_mil_12a_public_witness", "band_min": "positive", "band_max": "very_positive", "display_name": "The Public Witness" },
+        { "ending_id": "ending_mil_12b_trusted_analyst", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Trusted Analyst" },
+        { "ending_id": "ending_mil_12c_silenced_liability", "band_min": "very_evil", "band_max": "evil", "display_name": "The Silenced Liability" }
+      ]
+    },
+    {
+      "id": "branch_mil_13_peacekeeper",
+      "display_name": "The Peacekeeper",
+      "ponr_flag": "flag_branch_mil_13_ponr",
+      "ponr_trigger": "They step between a firing squad and an unarmed crowd of protesters, locking their weapon's safety and barring the advance.",
+      "entry_band_min": "neutral",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_mil_13a_community_shield", "band_min": "positive", "band_max": "very_positive", "display_name": "The Community Shield" },
+        { "ending_id": "ending_mil_13b_disarmed_mediator", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Disarmed Mediator" },
+        { "ending_id": "ending_mil_13c_overrun", "band_min": "very_evil", "band_max": "evil", "display_name": "The Overrun Sentinel" }
+      ]
+    },
+    {
+      "id": "branch_mil_14_fugitive_deserter",
+      "display_name": "The Fugitive Deserter",
+      "ponr_flag": "flag_branch_mil_14_ponr",
+      "ponr_trigger": "They ignore the emergency muster klaxon, burn their uniform in the barracks stove, and disappear into the civilian crowd.",
+      "entry_band_min": "evil",
+      "entry_band_max": "positive",
+      "endings": [
+        { "ending_id": "ending_mil_14a_integrated_civilian", "band_min": "positive", "band_max": "very_positive", "display_name": "The Integrated Civilian" },
+        { "ending_id": "ending_mil_14b_hunted_fugitive", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Hunted Fugitive" },
+        { "ending_id": "ending_mil_14c_armed_defector", "band_min": "very_evil", "band_max": "evil", "display_name": "The Armed Defector" }
+      ]
+    },
+    {
+      "id": "branch_mil_15_dissident_officer",
+      "display_name": "The Dissident Officer",
+      "ponr_flag": "flag_branch_mil_15_ponr",
+      "ponr_trigger": "They issue a written counter-order halting an artillery bombardment of refugee encampments, countersigning it before the battalion staff.",
+      "entry_band_min": "neutral",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_mil_15a_reform_command", "band_min": "positive", "band_max": "very_positive", "display_name": "The Reform Commander" },
+        { "ending_id": "ending_mil_15b_broken_officer", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Broken Officer" },
+        { "ending_id": "ending_mil_15c_mutineer", "band_min": "very_evil", "band_max": "evil", "display_name": "The Mutineer" }
+      ]
     }
   ]
 }

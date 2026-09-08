@@ -149,9 +149,10 @@ namespace Ashfall.Core.Economy
         {
             preference = default;
             if (!IsActive || string.IsNullOrEmpty(factionId)) return false;
+            string requestedFactionId = NormalizeFactionId(factionId);
             foreach (var f in _bundle.FactionPreferences)
             {
-                if (string.Equals(f.FactionId, factionId, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(NormalizeFactionId(f.FactionId), requestedFactionId, StringComparison.Ordinal))
                 {
                     preference = f;
                     return true;
@@ -183,20 +184,28 @@ namespace Ashfall.Core.Economy
         private static bool MatchesDay(ScarcityEntry entry, int currentDay)
         {
             if (currentDay < 1) return false;
-            var label = entry.DayRangeLabel ?? string.Empty;
-            var parts = label.Split(new[] { ' ', '-', '+' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length >= 2 && int.TryParse(parts[^2], out var start))
+            var label = (entry.DayRangeLabel ?? string.Empty).Trim();
+            if (label.StartsWith("Days ", StringComparison.OrdinalIgnoreCase))
+                label = label.Substring("Days ".Length).Trim();
+
+            if (label.EndsWith("+", StringComparison.Ordinal))
             {
-                if (label.Contains('+', StringComparison.Ordinal))
-                    return currentDay >= start;
-                if (parts.Length >= 3 && int.TryParse(parts[^1], out var end))
-                    return currentDay >= start && currentDay <= end;
-                return currentDay >= start;
+                return int.TryParse(label.Substring(0, label.Length - 1).Trim(), out var start)
+                    && currentDay >= start;
             }
-            return false;
+
+            int separator = label.IndexOf('-', StringComparison.Ordinal);
+            if (separator < 0) return false;
+            return int.TryParse(label.Substring(0, separator).Trim(), out var rangeStart)
+                && int.TryParse(label.Substring(separator + 1).Trim(), out var rangeEnd)
+                && currentDay >= rangeStart
+                && currentDay <= rangeEnd;
         }
 
-        /// <summary>Exact token match (no substring false positives).</summary>
+        /// <summary>
+        /// Matches exact item IDs, the universal wildcard, and trailing prefix
+        /// wildcards such as "ammo_*" without substring false positives.
+        /// </summary>
         private static bool MatchesItem(IReadOnlyList<string> affectedIds, string itemId)
         {
             if (affectedIds.Count == 0) return true; // empty list = all items
@@ -205,8 +214,27 @@ namespace Ashfall.Core.Economy
                 var trimmed = token.Trim();
                 if (trimmed == "*" || string.Equals(trimmed, itemId, StringComparison.OrdinalIgnoreCase))
                     return true;
+                if (trimmed.EndsWith("*", StringComparison.Ordinal)
+                    && trimmed.Length > 1
+                    && itemId.StartsWith(trimmed.Substring(0, trimmed.Length - 1),
+                        StringComparison.OrdinalIgnoreCase))
+                    return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// The tuning catalog preserves the historical trade key
+        /// "central_garrison_remnants", while standing and world systems use
+        /// "faction_central_garrison". Treat those two names as one lookup key
+        /// without changing the catalog's stored identity.
+        /// </summary>
+        private static string NormalizeFactionId(string factionId)
+        {
+            string normalized = factionId.Trim().ToLowerInvariant();
+            return normalized == "central_garrison_remnants"
+                ? "faction_central_garrison"
+                : normalized;
         }
     }
 

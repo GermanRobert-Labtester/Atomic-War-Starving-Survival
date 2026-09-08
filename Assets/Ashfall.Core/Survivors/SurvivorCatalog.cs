@@ -16,6 +16,12 @@ namespace Ashfall.Core.Survivors
         public string bio = string.Empty;
         public float baseHealth = 100f;
         public List<string> traitIds = new List<string>();
+        /// <summary>
+        /// Authored later-entry quest ownership. Starting-cohort validation
+        /// rejects definitions with this set so a profile cannot bypass a
+        /// recruitment/reveal premise.
+        /// </summary>
+        public string activeQuestlineId = string.Empty;
     }
 
     [Serializable]

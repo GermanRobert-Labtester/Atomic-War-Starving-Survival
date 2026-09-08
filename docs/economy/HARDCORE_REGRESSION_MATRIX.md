@@ -16,6 +16,7 @@
 | `HardcoreEconomyTuningExpansionTests` | `NegativeFixture_InvalidTier_ReturnsFailure` | Unknown/unsupported tier string safely rejected | PASS |
 | `HardcoreEconomyTuningExpansionTests` | `NegativeFixture_DuplicateFaction_ReturnsFailure` | Duplicate faction ID definition safely rejected | PASS |
 | `HardcoreEconomyTuningExpansionTests` | `Persistence_OldSaveSimulation_OperatesSafely` | Old save compatibility and missing faction fallbacks | PASS |
+| `HardcoreEconomyTuningExpansionTests` | `FactionPreferences_GarrisonLegacyKeyAndSystemsAliasResolveTogether` | Legacy and systems garrison IDs resolve to one stored preference | PASS |
 | `Plan23FlotillaFactionDepthTests` | `TradePreference_FlotillaSalvageSpecialty_LoadsFromTuningAuthority` | Flotilla salvage preference preserved | PASS |
 | `TradeThemeAndEconomyTests` | `HardcoreEconomyTuning_PriceShocks_LoadsRulesAndCalculatesMultipliers` | Dynamic price shocks and wildcard queries pass | PASS |
 | `EconomySystemTests` | `Load_ValidJson_ReturnsSuccess` | Economy tuning loader regression suite passes | PASS |

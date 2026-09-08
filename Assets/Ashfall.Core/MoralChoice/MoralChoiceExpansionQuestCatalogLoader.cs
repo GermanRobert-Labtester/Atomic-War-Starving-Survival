@@ -61,6 +61,7 @@ namespace Ashfall.Core.MoralChoice
             Label = o.label,
             MoralDelta = o.moral_delta,
             EmpathyDelta = o.empathy_delta,
+            SetFlag = o.set_flag,
             OutcomeText = o.outcome_text,
             Epitaph = o.epitaph
         };

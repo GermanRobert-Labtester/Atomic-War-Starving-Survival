@@ -111,6 +111,30 @@ namespace Ashfall.Core
                     return Seasons[i];
             return null;
         }
+
+        /// <summary>
+        /// Resolves the active roster season for a campaign day (pure
+        /// derivation from the authoritative campaign clock — no state).
+        /// Windows are inclusive on both bounds; the matching rule is the
+        /// repository's open-ended window convention (last season whose
+        /// windowMinDays &lt;= day — see WeatherSystem.GetSeasonForDay), so
+        /// days beyond the final window carry the last season forward and
+        /// days before the first window return null. Ties keep the first
+        /// listed entry, making selection deterministic regardless of file
+        /// ordering.
+        /// </summary>
+        public DutyRosterSeasonEntry? GetSeasonForDay(int day)
+        {
+            DutyRosterSeasonEntry? best = null;
+            for (int i = 0; i < Seasons.Count; i++)
+            {
+                var s = Seasons[i];
+                if (s == null || day < s.windowMinDays) continue;
+                if (best == null || s.windowMinDays > best.windowMinDays)
+                    best = s;
+            }
+            return best;
+        }
     }
 
     /// <summary>

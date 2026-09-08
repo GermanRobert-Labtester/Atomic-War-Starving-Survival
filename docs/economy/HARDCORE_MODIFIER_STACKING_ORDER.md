@@ -1,8 +1,14 @@
 # Hardcore Modifier Stacking Order
 
+> This is the composition contract for consumers of the hardcore overlay. It
+> does not create a second `MarketSystem` price authority. The current live
+> market still calculates base price × demand; the trade presentation seam
+> queries scarcity and shock values from `HardcoreEconomyTuning`.
+
 ## 1. Mathematical Stacking Model
 
-When calculating the final trade valuation of a commodity, economic modifiers stack multiplicatively according to a strict hierarchical pipeline:
+When a future trade valuation consumer composes the overlay with an item quote,
+economic modifiers stack multiplicatively according to this strict hierarchy:
 
 $$\text{FinalPrice} = \text{BaseValue} \times M_{\text{ScarcityTier}} \times M_{\text{FactionPreference}} \times M_{\text{PriceShock}}$$
 
@@ -17,8 +23,8 @@ flowchart TD
 ### Modifier Layers:
 1. **Layer 1 — Base Trade Value:** Defined in `Assets/StreamingAssets/Data/items.json` (`tradeValue`).
 2. **Layer 2 — Scarcity Tier ($M_{\text{ScarcityTier}}$):** Derived from `HardcoreEconomyTuning.GetScarcityMultiplier(day, itemId)` (ranging from `1.3x` to `2.5x`).
-3. **Layer 3 — Faction Premium ($M_{\text{FactionPreference}}$):** If the trading partner's faction lists the item in `buys_at_premium`, a standard trade premium (typically `1.2x` to `1.5x`) applies.
-4. **Layer 4 — Transient Price Shock ($M_{\text{PriceShock}}$):** If a dynamic event shock is active for the commodity, the shock multiplier (ranging from `1.5x` to `2.0x`) applies.
+3. **Layer 3 — Faction Preference ($M_{\text{FactionPreference}}$):** Read from `TryGetFactionPreference`; the preference lists are policy inputs, not a second price table.
+4. **Layer 4 — Transient Price Shock ($M_{\text{PriceShock}}$):** Read from `TryGetPriceShock` when an event owner supplies the shock's day offset.
 
 ---
 

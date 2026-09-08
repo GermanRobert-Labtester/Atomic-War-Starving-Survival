@@ -177,102 +177,103 @@ namespace Ashfall.Core.Tests
             Assert.Equal(7, twoPolicyTreaties);
             Assert.Equal(1, onePolicyTreaties);
 
-            // Verified 8 covered treaties:
+            // Verified 8 covered treaties: three baseline Foundry obligations
+            // plus five Plan 102 accords with live policy rows.
             Assert.True(outcomesByTreaty.ContainsKey("treaty_brine_pipe_and_iodine_exchange"));
             Assert.True(outcomesByTreaty.ContainsKey("treaty_cluster_labour_schedule"));
             Assert.True(outcomesByTreaty.ContainsKey("treaty_road_iron_charter"));
-            Assert.True(outcomesByTreaty.ContainsKey("treaty_flotilla_saline_corridor_concordat"));
-            Assert.True(outcomesByTreaty.ContainsKey("treaty_switchback_fuel_and_passage_accord"));
-            Assert.True(outcomesByTreaty.ContainsKey("treaty_deep_coast_aquifer_protection_treaty"));
-            Assert.True(outcomesByTreaty.ContainsKey("treaty_garrison_grain_tithe_compact"));
-            Assert.True(outcomesByTreaty.ContainsKey("treaty_scale_suburban_fair_trade_convention"));
+            Assert.True(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatySaltworksAccess));
+            Assert.True(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatyCoalWindow));
+            Assert.True(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatyMembraneRepair));
+            Assert.True(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatyCrisisMutualAid));
+            Assert.True(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatyIncidentBook));
 
-            // Cluster Charter is intentionally exempt (0 policies by design).
-            Assert.False(outcomesByTreaty.ContainsKey("treaty_the_cluster_charter"));
+            // These treaties have no live outcome trigger in SilentFoundrySystem:
+            // the charter is a finale marker and apprentice exchange is a
+            // training contract, not a quota cycle.
+            Assert.False(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatyClusterCharter));
+            Assert.False(outcomesByTreaty.ContainsKey(SilentFoundryIds.TreatyApprenticeExchange));
         }
 
         // ── Task 103CR, 103CS, 103CT: Representative Outcomes ───────────
 
         [Fact]
-        public void RepresentativePolicy_SalineCorridorMetAndMissed()
+        public void RepresentativePolicy_SaltworksMetAndViolated()
         {
             var (_, catalog, _, _) = LoadFixtures();
-            var met = catalog.Find("treaty_flotilla_saline_corridor_concordat", FoundryTreatyOutcome.Met);
+            var met = catalog.Find(SilentFoundryIds.TreatySaltworksAccess, FoundryTreatyOutcome.Met);
             Assert.NotNull(met);
-            Assert.Equal("faction_the_fleet", met.faction_id);
-            Assert.Equal(3.0f, met.standing_delta);
-            Assert.Contains(met.market_modifiers, m => m.good_id == "fuel" && m.demand_delta < 0f);
-            Assert.Contains(met.market_modifiers, m => m.good_id == "clean_water" && m.demand_delta < 0f);
-
-            var missed = catalog.Find("treaty_flotilla_saline_corridor_concordat", FoundryTreatyOutcome.Missed);
-            Assert.NotNull(missed);
-            Assert.Equal("faction_the_fleet", missed.faction_id);
-            Assert.Equal(-5.0f, missed.standing_delta);
-            Assert.Contains(missed.market_modifiers, m => m.good_id == "fuel" && m.demand_delta > 0f);
-        }
-
-        [Fact]
-        public void RepresentativePolicy_SwitchbackMetAndViolated()
-        {
-            var (_, catalog, _, _) = LoadFixtures();
-            var met = catalog.Find("treaty_switchback_fuel_and_passage_accord", FoundryTreatyOutcome.Met);
-            Assert.NotNull(met);
-            Assert.Equal("faction_ash_sign", met.faction_id);
-            Assert.Equal(4.0f, met.standing_delta);
-            Assert.Contains(met.market_modifiers, m => m.good_id == "fuel" && m.demand_delta < 0f);
-
-            var violated = catalog.Find("treaty_switchback_fuel_and_passage_accord", FoundryTreatyOutcome.Violated);
-            Assert.NotNull(violated);
-            Assert.Equal("faction_ash_sign", violated.faction_id);
-            Assert.Equal(-10.0f, violated.standing_delta);
-            Assert.Contains(violated.market_modifiers, m => m.good_id == "fuel" && m.demand_delta > 0f);
-        }
-
-        [Fact]
-        public void RepresentativePolicy_AquiferProtectionMetAndViolated()
-        {
-            var (_, catalog, _, _) = LoadFixtures();
-            var met = catalog.Find("treaty_deep_coast_aquifer_protection_treaty", FoundryTreatyOutcome.Met);
-            Assert.NotNull(met);
-            Assert.Equal("faction_the_fleet", met.faction_id);
+            Assert.Equal(SilentFoundryIds.FactionId, met.faction_id);
             Assert.Equal(3.0f, met.standing_delta);
             Assert.Contains(met.market_modifiers, m => m.good_id == "clean_water" && m.demand_delta < 0f);
 
-            var violated = catalog.Find("treaty_deep_coast_aquifer_protection_treaty", FoundryTreatyOutcome.Violated);
+            var violated = catalog.Find(SilentFoundryIds.TreatySaltworksAccess, FoundryTreatyOutcome.Violated);
             Assert.NotNull(violated);
-            Assert.Equal("faction_the_fleet", violated.faction_id);
+            Assert.Equal(SilentFoundryIds.FactionId, violated.faction_id);
             Assert.Equal(-10.0f, violated.standing_delta);
             Assert.Contains(violated.market_modifiers, m => m.good_id == "clean_water" && m.demand_delta > 0f);
+        }
+
+        [Fact]
+        public void RepresentativePolicy_CoalWindowMetAndMissed()
+        {
+            var (_, catalog, _, _) = LoadFixtures();
+            var met = catalog.Find(SilentFoundryIds.TreatyCoalWindow, FoundryTreatyOutcome.Met);
+            Assert.NotNull(met);
+            Assert.Equal(SilentFoundryIds.FactionId, met.faction_id);
+            Assert.Equal(3.0f, met.standing_delta);
+            Assert.Contains(met.market_modifiers, m => m.good_id == "coal" && m.demand_delta < 0f);
+
+            var missed = catalog.Find(SilentFoundryIds.TreatyCoalWindow, FoundryTreatyOutcome.Missed);
+            Assert.NotNull(missed);
+            Assert.Equal(SilentFoundryIds.FactionId, missed.faction_id);
+            Assert.Equal(-5.0f, missed.standing_delta);
+            Assert.Contains(missed.market_modifiers, m => m.good_id == "coal" && m.demand_delta > 0f);
+        }
+
+        [Fact]
+        public void RepresentativePolicy_MembraneRepairMetAndViolated()
+        {
+            var (_, catalog, _, _) = LoadFixtures();
+            var met = catalog.Find(SilentFoundryIds.TreatyMembraneRepair, FoundryTreatyOutcome.Met);
+            Assert.NotNull(met);
+            Assert.Equal(SilentFoundryIds.FactionId, met.faction_id);
+            Assert.Equal(4.0f, met.standing_delta);
+            Assert.Contains(met.market_modifiers, m => m.good_id == "item_foundry_brine_pipe" && m.demand_delta < 0f);
+
+            var violated = catalog.Find(SilentFoundryIds.TreatyMembraneRepair, FoundryTreatyOutcome.Violated);
+            Assert.NotNull(violated);
+            Assert.Equal(SilentFoundryIds.FactionId, violated.faction_id);
+            Assert.Equal(-12.0f, violated.standing_delta);
             Assert.Contains(violated.market_modifiers, m => m.good_id == "water_filter" && m.demand_delta > 0f);
         }
 
         [Fact]
-        public void RepresentativePolicy_GrainTitheMetAndViolated()
+        public void RepresentativePolicy_CrisisMutualAidMetAndViolated()
         {
             var (_, catalog, _, _) = LoadFixtures();
-            var met = catalog.Find("treaty_garrison_grain_tithe_compact", FoundryTreatyOutcome.Met);
+            var met = catalog.Find(SilentFoundryIds.TreatyCrisisMutualAid, FoundryTreatyOutcome.Met);
             Assert.NotNull(met);
-            Assert.Equal("faction_central_garrison", met.faction_id);
+            Assert.Equal(SilentFoundryIds.FactionId, met.faction_id);
             Assert.Equal(4.0f, met.standing_delta);
-            Assert.Contains(met.market_modifiers, m => m.good_id == "canned_food" && m.demand_delta < 0f);
+            Assert.Contains(met.market_modifiers, m => m.good_id == "clean_water" && m.demand_delta < 0f);
 
-            var violated = catalog.Find("treaty_garrison_grain_tithe_compact", FoundryTreatyOutcome.Violated);
+            var violated = catalog.Find(SilentFoundryIds.TreatyCrisisMutualAid, FoundryTreatyOutcome.Violated);
             Assert.NotNull(violated);
-            Assert.Equal("faction_central_garrison", violated.faction_id);
-            Assert.Equal(-12.0f, violated.standing_delta);
-            Assert.Contains(violated.market_modifiers, m => m.good_id == "canned_food" && m.demand_delta > 0f);
+            Assert.Equal(SilentFoundryIds.FactionId, violated.faction_id);
+            Assert.Equal(-14.0f, violated.standing_delta);
             Assert.Contains(violated.market_modifiers, m => m.good_id == "fuel" && m.demand_delta > 0f);
         }
 
         [Fact]
-        public void RepresentativePolicy_FairTradeMet()
+        public void RepresentativePolicy_IncidentBookMet()
         {
             var (_, catalog, _, _) = LoadFixtures();
-            var met = catalog.Find("treaty_scale_suburban_fair_trade_convention", FoundryTreatyOutcome.Met);
+            var met = catalog.Find(SilentFoundryIds.TreatyIncidentBook, FoundryTreatyOutcome.Met);
             Assert.NotNull(met);
-            Assert.Equal("faction_the_scale", met.faction_id);
-            Assert.Equal(3.0f, met.standing_delta);
-            Assert.Contains(met.market_modifiers, m => m.good_id == "scrap_metal" && m.demand_delta < 0f);
+            Assert.Equal(SilentFoundryIds.FactionId, met.faction_id);
+            Assert.Equal(2.0f, met.standing_delta);
+            Assert.Empty(met.market_modifiers);
         }
 
         // ── Task 103AR: Idempotency & Ledgers ────────────────────────────
@@ -281,21 +282,21 @@ namespace Ashfall.Core.Tests
         public void Idempotency_RecordStateTracksAssessmentDayCycleKey()
         {
             var state = new SilentFoundryConsequenceState();
-            Assert.False(state.IsApplied("treaty_flotilla_saline_corridor_concordat", 180));
+            Assert.False(state.IsApplied(SilentFoundryIds.TreatySaltworksAccess, 285));
 
             state.applied.Add(new FoundryConsequenceRecord
             {
-                treatyId = "treaty_flotilla_saline_corridor_concordat",
+                treatyId = SilentFoundryIds.TreatySaltworksAccess,
                 outcome = FoundryTreatyOutcome.Met,
-                appliedDay = 180,
-                cycleMarker = 180,
+                appliedDay = 285,
+                cycleMarker = 285,
                 standingDelta = 3.0f,
-                reason = "Saline corridor concordat honored"
+                reason = "Saltworks access honored"
             });
 
-            Assert.True(state.IsApplied("treaty_flotilla_saline_corridor_concordat", 180));
-            Assert.False(state.IsApplied("treaty_flotilla_saline_corridor_concordat", 210));
-            Assert.False(state.IsApplied("treaty_garrison_grain_tithe_compact", 180));
+            Assert.True(state.IsApplied(SilentFoundryIds.TreatySaltworksAccess, 285));
+            Assert.False(state.IsApplied(SilentFoundryIds.TreatySaltworksAccess, 315));
+            Assert.False(state.IsApplied(SilentFoundryIds.TreatyMembraneRepair, 285));
         }
 
         // ── Task 103AD & 103BW: Balance & Severity Bands ────────────────

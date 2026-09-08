@@ -244,7 +244,6 @@ namespace Ashfall.Core.Tests
             var def = traps.Traps["trap_improvised_wire"];
 
             var sys = new WildlifeTrappingSystem(new SeededRng(42));
-            def.checkIntervalDays = def.checkIntervalDays; // no-op; documents derivation below
             sys.RegisterTrapDefinition(traps.Traps["trap_improvised_wire"]);
 
             const int deployDay = 7;

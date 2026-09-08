@@ -242,6 +242,255 @@
           "result": "The heavy crate rolls through unchecked. Your fuel tanks are filled."
         }
       ]
+    },
+    {
+      "id": "enc_nc_bonded_caravan_ambush",
+      "name": "Bonded Caravan Ambush",
+      "target_location": "loc_crossing_scalehouse",
+      "description": "A bonded caravan has stopped beneath the Scalehouse awning. Two guards are down, the cargo seals are intact, and the attackers are arguing over whether the Crossing's bond makes the goods valuable or dangerous to touch.",
+      "threat_level": "High",
+      "choices": [
+        {
+          "text": "Stand with the caravan and preserve the sealed cargo.",
+          "cost_items": [
+            "item_trade_manifest_blank"
+          ],
+          "result": "The blank manifest becomes a witness record. The attackers withdraw before the cargo seal is broken."
+        },
+        {
+          "text": "Offer a measured share to get the road open.",
+          "result": "The convoy moves again, but the first broken seal becomes an argument at the next Standing."
+        },
+        {
+          "text": "Record the breach and leave the claim to the Crossing.",
+          "result": "You leave the cargo untouched. The Scale receives a precise account and a difficult responsibility."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_smuggler_checkpoint",
+      "name": "Smuggler Checkpoint",
+      "target_location": "loc_crossing_watchtower",
+      "description": "An improvised barrier blocks the unmarked road below the Watchtower. The people holding it call the payment a road fee; the charter has no record of the road or the fee.",
+      "threat_level": "Moderate",
+      "choices": [
+        {
+          "text": "Pay the fee and keep the convoy moving.",
+          "cost_items": [
+            "item_crossing_traded_salt"
+          ],
+          "result": "The barrier opens. The receipt is new, but the authority it claims is not."
+        },
+        {
+          "text": "Ask the Watchtower to test the checkpoint's jurisdiction.",
+          "result": "The watch records both names and orders the barrier lowered until the claim is heard."
+        },
+        {
+          "text": "Turn back before an unofficial toll becomes a recognized one.",
+          "result": "The road remains closed to you, and the checkpoint keeps collecting from those with less time."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_frozen_barge",
+      "name": "Frozen Barge",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "A cargo barge has frozen into the Drown's edge below the viaduct. Its manifest is locked in the cabin, the crew are gone, and three different claim marks have already appeared on the hull.",
+      "threat_level": "High",
+      "choices": [
+        {
+          "text": "Secure the manifest and ask the Records Room to hold the claim.",
+          "cost_items": [
+            "item_trade_manifest_blank"
+          ],
+          "result": "The cargo stays sealed while the first legible claim is copied into the Crossing record."
+        },
+        {
+          "text": "Take only the supplies needed to free the route.",
+          "result": "The passage clears, but every claimant can point to the moment the seal was disturbed."
+        },
+        {
+          "text": "Leave the barge frozen and move the convoy around it.",
+          "result": "No property changes hands. The ice and the claims remain in place for whoever comes next."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_toll_bridge_claim",
+      "name": "Toll Bridge Claim",
+      "target_location": "loc_crossing_weighbridge",
+      "description": "A faction crew has raised a barrier across the Deck Scale approach, calling common passage a maintained service. Their receipt book is new. Their rifles are not.",
+      "threat_level": "Moderate",
+      "choices": [
+        {
+          "text": "Pay the toll and keep the crossing from becoming a firefight.",
+          "cost_items": [
+            "item_crossing_traded_salt"
+          ],
+          "result": "The barrier lifts. The payment buys safety and gives the new toll a history."
+        },
+        {
+          "text": "Present the charter pages and demand the common route remain open.",
+          "cost_items": [
+            "item_charter_three_pages"
+          ],
+          "result": "The crew reads the clause twice. Nobody agrees what it means, but the rifles lower for now."
+        },
+        {
+          "text": "Take the longer approach and leave the claim untested.",
+          "result": "Your cargo arrives late. The bridge crew keeps calling the delay proof that their toll is necessary."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_collapsed_crossing",
+      "name": "Collapsed Crossing",
+      "target_location": "loc_crossing_watchtower",
+      "description": "A section of the approach has fallen away, leaving a narrow span built from doors and cable. Someone has chalked load limits on both sides, and the numbers do not agree.",
+      "threat_level": "High",
+      "choices": [
+        {
+          "text": "Cross one load at a time under the Watchtower's count.",
+          "result": "The span holds. The watch records the load order as a temporary rule."
+        },
+        {
+          "text": "Stop and ask the Crossing to close the route until it is reinforced.",
+          "result": "The road goes quiet. Traders complain, but nobody has to explain a second collapse."
+        },
+        {
+          "text": "Let another convoy test the chalked limit first.",
+          "result": "You keep your people back. The route remains open in theory and less trustworthy in practice."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_contaminated_ford",
+      "name": "Contaminated Ford",
+      "target_location": "loc_crossing_scalehouse",
+      "description": "Oily residue clings to the water casks arriving at the Scalehouse. A trader insists the contamination is old; the loading crew wants the next convoy cleared before the source is named.",
+      "threat_level": "High",
+      "choices": [
+        {
+          "text": "Hold the casks and enter the discrepancy in the load record.",
+          "result": "The cargo waits under seal. The argument moves from rumor to a page that can be read by everyone."
+        },
+        {
+          "text": "Accept the trader's assurance and keep the route open.",
+          "result": "The convoy leaves on time. If the residue was fresh, the record will show who chose speed."
+        },
+        {
+          "text": "Reroute around the ford and warn the next carrier.",
+          "result": "The safer route costs a day. The warning travels farther than the original claim."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_ice_fracture",
+      "name": "Ice Fracture",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "The ice gives a low cracking report beneath the first loaded sled at the viaduct approach. The shortest route stays straight ahead; the safer bank adds hours and exposes the convoy to the wind.",
+      "threat_level": "Severe",
+      "choices": [
+        {
+          "text": "Unload and shuttle the cargo across in smaller weights.",
+          "result": "The crossing takes longer, but the manifest survives with every seal accounted for."
+        },
+        {
+          "text": "Take the bank route and accept the lost daylight.",
+          "result": "The convoy arrives late and intact. Nobody calls the detour wasteful after dark."
+        },
+        {
+          "text": "Continue straight with only the lightest loads aboard.",
+          "result": "The route holds for now. The next convoy will not be able to say it was unwarned."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_uxo_field_crossing",
+      "name": "Uncleared Field",
+      "target_location": "loc_crossing_founders_marker",
+      "description": "Old warning stakes emerge from the snow around the Founders' Marker. Beyond them, disturbed ground and one half-buried casing suggest the approach was never cleared.",
+      "threat_level": "Extreme",
+      "choices": [
+        {
+          "text": "Backtrack and mark the approach closed.",
+          "result": "The route costs time, but the warning stakes gain a fresh line in the Crossing record."
+        },
+        {
+          "text": "Follow the old marked line without leaving it.",
+          "result": "The convoy passes one careful step at a time. The safe line becomes a fragile piece of shared knowledge."
+        },
+        {
+          "text": "Send no one into the field and wait for another route.",
+          "result": "The crossing is abandoned for the day. Nothing is gained except the chance to try again alive."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_refugee_blockade",
+      "name": "Refugee Blockade",
+      "target_location": "loc_crossing_petition_tent",
+      "description": "A group denied immediate admission has stopped carts outside the Petition Tent and refuses to clear the road until someone from the Crossing hears their request.",
+      "threat_level": "Tense",
+      "choices": [
+        {
+          "text": "Hear the petition before asking the carts to move.",
+          "result": "The road stays blocked, but the names and needs in the petition become part of the public record."
+        },
+        {
+          "text": "Offer a temporary place in the Annex under a named sponsor.",
+          "cost_items": [
+            "item_crossing_pledge_slip"
+          ],
+          "result": "The carts clear one lane. The sponsor accepts a duty that can be read back later."
+        },
+        {
+          "text": "Enforce the road's passage and leave admission to the next assembly.",
+          "result": "The route opens by order. The petition remains, and so does the grievance."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_family_ledger_gate",
+      "name": "Family at the Ledger Gate",
+      "target_location": "loc_crossing_the_annex",
+      "description": "A family presents an admission chit issued months ago by a sponsor who is now missing. The gate clerk calls the paper valid; the ration office says the absent sponsor voids the obligation.",
+      "threat_level": "Low",
+      "choices": [
+        {
+          "text": "Honor the chit under the household named on it.",
+          "result": "The family receives a place in the Annex. The ledger gains an obligation no office can pretend not to see."
+        },
+        {
+          "text": "Require a new sponsor before entry.",
+          "result": "The paper remains intact, but the family waits outside the rule it was meant to invoke."
+        },
+        {
+          "text": "Grant temporary entry while the Records Room verifies the claim.",
+          "result": "The family gets a night indoors. Tomorrow's ruling will decide whether the temporary measure becomes a precedent."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_child_at_gate",
+      "name": "Child at the Gate",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "A child arrives alone with an adult's charter token and a surname the gate clerk recognizes. No guardian follows, and the token belongs to a household that has not drawn rations in weeks.",
+      "threat_level": "Low",
+      "choices": [
+        {
+          "text": "Admit the child under the old household record.",
+          "result": "The gate honors the name before anyone can prove what happened to the household behind it."
+        },
+        {
+          "text": "Hold the child in the Annex while the Records Room checks the token.",
+          "result": "The child is safe for the night. The Crossing must decide whether verification is protection or delay."
+        },
+        {
+          "text": "Seek a current sponsor before opening the gate.",
+          "result": "The request moves through the Petition Tent. The token remains a claim, not yet an admission."
+        }
+      ]
     }
   ],
   "crises": [
@@ -304,6 +553,90 @@
       ],
       "description": "The final confrontation determining whether Scale, Underwrite, Compact, or Collapse governs Sector 4.",
       "resolution": "One of four canonical faction resolutions is established."
+    },
+    {
+      "id": "crisis_the_water_claim",
+      "name": "The Water Claim",
+      "phases": [
+        "Claim",
+        "Counter-Petition",
+        "Arbitration",
+        "Ruling"
+      ],
+      "description": "A maintenance bloc claims that keeping the Crossing's water source working gives it the right to control access. Others answer that common water is written into the charter because nobody survives a private monopoly.",
+      "resolution": "The dispute is settled through the existing arbitration path: common access, a maintenance concession, or a publicly recorded usage rule."
+    },
+    {
+      "id": "crisis_the_grain_riot",
+      "name": "The Grain Riot",
+      "phases": [
+        "Shortage",
+        "Hoarding Accusation",
+        "Distribution",
+        "Calm or Collapse"
+      ],
+      "description": "Grain deliveries fall behind ration promises, and the warehouse inventory no longer matches the public ledger. The crowd outside wants the doors opened before an audit can finish.",
+      "resolution": "An existing vote, arbitration, or forfeit path determines whether the grain is distributed, held for proof, or seized under a recorded obligation."
+    },
+    {
+      "id": "crisis_the_charter_amendment",
+      "name": "The Charter Amendment",
+      "phases": [
+        "Proposal",
+        "Debate",
+        "Vote",
+        "Enactment"
+      ],
+      "description": "A bloc proposes narrowing charter protection for residents it calls temporary. The amendment is legal enough to reach the floor, which makes the argument more dangerous than an open threat.",
+      "resolution": "The existing Crossing vote path records a clean, contested, or failed amendment without creating a new charter-law interpreter."
+    },
+    {
+      "id": "crisis_the_debt_forgiveness",
+      "name": "Debt Forgiveness",
+      "phases": [
+        "Demand",
+        "Counteroffer",
+        "Assembly",
+        "Verdict"
+      ],
+      "description": "A debtor bloc asks that emergency obligations from the last season be erased together. Creditors argue that forgiving them now means no one will extend supplies on promise again.",
+      "resolution": "Existing assembly or arbitration mechanics produce a recorded settlement, partial forfeit, or refusal; no new debt authority is implied."
+    },
+    {
+      "id": "crisis_the_refugee_admission",
+      "name": "Refugee Admission",
+      "phases": [
+        "Arrival",
+        "Vetting",
+        "Resource Test",
+        "Admission or Refusal"
+      ],
+      "description": "A refugee group requests admission under the Crossing's nobody-owned charter. The claim is morally simple and administratively expensive: food, space, and names must be entered into systems already under strain.",
+      "resolution": "The existing vote or arbitration route records admission, sponsorship, or refusal without adding a refugee simulation."
+    },
+    {
+      "id": "crisis_the_arbitrator_bribe",
+      "name": "The Arbitrator Bribe",
+      "phases": [
+        "Accusation",
+        "Evidence",
+        "Hearing",
+        "Replacement or Vindication"
+      ],
+      "description": "Payment records suggest an arbitrator received supplies from one side of a pending claim. The arbitrator says the transfer was repayment of an older debt and asks to remain seated.",
+      "resolution": "Existing arbitration and backer mechanics determine whether the ruling is held, challenged, or re-called; no tribunal subsystem is introduced."
+    },
+    {
+      "id": "crisis_the_quarantine_break",
+      "name": "The Quarantine Break",
+      "phases": [
+        "Break",
+        "Exposure Trace",
+        "Containment",
+        "Reconciliation"
+      ],
+      "description": "A resident leaves quarantine before clearance and spends several hours near the market district. The medical question is urgent; the civic question begins when people ask whether the resident still has charter protection.",
+      "resolution": "The existing Crossing political path records containment and reintegration decisions; disease state remains owned by the active disease system."
     }
   ]
 }

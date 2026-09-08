@@ -2229,6 +2229,82 @@
       "resultAmount": 1,
       "craftingTimeHours": 1.25,
       "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_greenhouse_trowel",
+      "recipeName": "Planting Trowel",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "wood_block",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_greenhouse_trowel",
+      "resultAmount": 1,
+      "craftingTimeHours": 0.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_greenhouse_watering_can",
+      "recipeName": "Galvanized Watering Can",
+      "ingredients": [
+        {
+          "itemId": "scrap_metal",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "item_greenhouse_watering_can",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_greenhouse_drip_kit",
+      "recipeName": "Drip Irrigation Kit",
+      "ingredients": [
+        {
+          "itemId": "rubber_hose",
+          "amount": 1
+        },
+        {
+          "itemId": "plastic_material",
+          "amount": 1
+        },
+        {
+          "itemId": "mechanical_parts",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_greenhouse_drip_kit",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_greenhouse_catchment_kit",
+      "recipeName": "Catchment Liner Kit",
+      "ingredients": [
+        {
+          "itemId": "plastic_material",
+          "amount": 2
+        },
+        {
+          "itemId": "wood_block",
+          "amount": 1
+        },
+        {
+          "itemId": "mechanical_parts",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_greenhouse_catchment_kit",
+      "resultAmount": 1,
+      "craftingTimeHours": 2.0,
+      "requiredStationId": "workbench"
     }
   ]
 }

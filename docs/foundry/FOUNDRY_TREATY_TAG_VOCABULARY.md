@@ -6,7 +6,7 @@
 
 ## 1. Normalized Tag Vocabulary
 
-The 12 treaties use a normalized vocabulary of 42 lowercase keyword tags. Synonyms (such as `labor` vs `labour` or `aid` vs `mutual_aid`) are strictly avoided:
+The 18 treaty records use a normalized vocabulary of 52 lowercase keyword tags. Synonyms (such as `labor` vs `labour` or `aid` vs `mutual_aid`) are strictly avoided:
 
 | Semantic Family | Normalized Tags |
 |---|---|
@@ -14,7 +14,7 @@ The 12 treaties use a normalized vocabulary of 42 lowercase keyword tags. Synony
 | **Locations & Geography** | `district8`, `cluster`, `verge`, `coast`, `scarp`, `suburbs`, `neutral_ground` |
 | **Commodities & Resources** | `brine`, `iodine`, `grain`, `fuel`, `scrap`, `water`, `ice`, `anchors` |
 | **Infrastructure & Works** | `saltworks`, `school`, `road`, `saline`, `switchback`, `salvage`, `aquifer`, `observatory`, `sanctuary` |
-| **Governance & Diplomacy** | `exchange`, `schedule`, `charter`, `tithe`, `convention`, `demilitarization`, `border`, `industrial` |
+| **Governance & Diplomacy** | `exchange`, `schedule`, `charter`, `tithe`, `convention`, `demilitarization`, `border`, `industrial`, `access`, `maintenance`, `logistics`, `training`, `inspection`, `emergency`, `security`, `records`, `accountability` |
 
 ---
 

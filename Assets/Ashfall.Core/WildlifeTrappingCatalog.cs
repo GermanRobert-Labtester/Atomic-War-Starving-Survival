@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.IO;
+using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core
 {
@@ -22,8 +23,69 @@ namespace Ashfall.Core
         public List<string> compatiblePrey = new List<string>();
         public bool requiresWater = false;
         public float weatherSensitivity = 0.0f;
+        public float networkPenaltyPerTrap = 0f;
         public float bycatchChance = 0f; // Plan 36 III: probability of bycatch on successful catch
         public List<BycatchCandidate> bycatchSpecies = new List<BycatchCandidate>(); // Plan 36 III: weighted bycatch pool
+
+        /// <summary>
+        /// Workstream D: Authoritative repair bill calculation:
+        /// ceil(setup cost × 0.5) per item, aggregated by itemId.
+        /// Preserves catalog setupCosts order when iterating.
+        /// </summary>
+        public InventoryBill CalculateRepairBill()
+        {
+            var bill = new InventoryBill();
+            var aggregated = new Dictionary<string, int>(StringComparer.Ordinal);
+            var itemOrder = new List<string>();
+            foreach (var cost in setupCosts)
+            {
+                if (string.IsNullOrEmpty(cost.itemId) || cost.amount <= 0) continue;
+                if (!aggregated.ContainsKey(cost.itemId))
+                    itemOrder.Add(cost.itemId);
+                aggregated.TryGetValue(cost.itemId, out int existing);
+                aggregated[cost.itemId] = existing + cost.amount;
+            }
+            foreach (var itemId in itemOrder)
+            {
+                int repairQty = (int)Math.Ceiling(aggregated[itemId] * 0.5);
+                if (repairQty > 0)
+                    bill.AddCost(itemId, repairQty);
+            }
+            return bill;
+        }
+
+        public bool Validate(out string error)
+        {
+            if (string.IsNullOrEmpty(trap_id))
+            {
+                error = "trap_id cannot be empty";
+                return false;
+            }
+            if (!float.IsFinite(bycatchChance) || bycatchChance < 0f || bycatchChance > 1f)
+            {
+                error = $"bycatchChance must be between 0 and 1, got {bycatchChance}";
+                return false;
+            }
+            if (bycatchSpecies != null)
+            {
+                for (int i = 0; i < bycatchSpecies.Count; i++)
+                {
+                    var bc = bycatchSpecies[i];
+                    if (bc == null || string.IsNullOrEmpty(bc.speciesId))
+                    {
+                        error = $"bycatch candidate [{i}] has empty speciesId";
+                        return false;
+                    }
+                    if (!float.IsFinite(bc.weight) || bc.weight <= 0f)
+                    {
+                        error = $"bycatch candidate '{bc.speciesId}' has non-positive weight: {bc.weight}";
+                        return false;
+                    }
+                }
+            }
+            error = string.Empty;
+            return true;
+        }
     }
 
     [Serializable]
@@ -69,6 +131,33 @@ namespace Ashfall.Core
         public float contaminationDose = 0f; // Plan 36 Closure II: explicit contamination dose in rads
 
         public const string FallbackDiseaseId = "disease_zoonotic_flu";
+        public const float FallbackContaminationDose = 2.0f;
+
+        public bool Validate(out string error)
+        {
+            if (string.IsNullOrEmpty(speciesId))
+            {
+                error = "speciesId cannot be empty";
+                return false;
+            }
+            if (!float.IsFinite(contaminationDose) || contaminationDose < 0f)
+            {
+                error = $"contaminationDose must be finite and non-negative, got {contaminationDose}";
+                return false;
+            }
+            if (!float.IsFinite(diseaseRisk) || diseaseRisk < 0f || diseaseRisk > 1f)
+            {
+                error = $"diseaseRisk must be between 0 and 1, got {diseaseRisk}";
+                return false;
+            }
+            if (!float.IsFinite(contaminationRisk) || contaminationRisk < 0f || contaminationRisk > 1f)
+            {
+                error = $"contaminationRisk must be between 0 and 1, got {contaminationRisk}";
+                return false;
+            }
+            error = string.Empty;
+            return true;
+        }
 
         /// <summary>
         /// Resolve disease ID: explicit per-species mapping wins, otherwise tier fallback.

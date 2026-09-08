@@ -258,7 +258,7 @@ namespace AtomicWar.GodotApp
             if (_travelingCaravanPanel != null && _travelingCaravanPanel.IsInsideTree())
                 RemoveChild(_travelingCaravanPanel);
             _travelingCaravanPanel = new TravelingCaravanPanel();
-            _travelingCaravanPanel.Bind(_travelingCaravan);
+            _travelingCaravanPanel.Bind(_travelingCaravan, GetTradeVoiceResolver());
             _travelingCaravanPanel.Visible = false;
             AddChild(_travelingCaravanPanel);
         }
@@ -267,6 +267,14 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterAssignment != null) return;
             SetupCampaignDay();
+            // Restore paths may reach shelter assignment before the expanded
+            // shelter bundle has rebuilt its thermal authority. Keep this
+            // dependency explicit so a restore cannot dereference stale null
+            // state after the in-memory lifecycle reset.
+            if (_shelterThermal == null)
+                SetupShelterThermal();
+            if (_campaignDay == null || _shelterThermal == null)
+                return;
             _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter).Rng);
             if (!_shelterAssignment.TryLoad())
             {

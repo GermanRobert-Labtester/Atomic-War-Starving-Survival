@@ -28,15 +28,17 @@ namespace AtomicWar.GodotApp.UI
         private Button _closeButton = null!;
 
         private SurvivorsHostSession? _survivors;
+        private Ashfall.Core.Survivors.SurvivorEnrichmentService? _enrichmentService;
         private string _survivorId = string.Empty;
 
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
-        public void Bind(SurvivorsHostSession? survivors, string survivorId)
+        public void Bind(SurvivorsHostSession? survivors, string survivorId, Ashfall.Core.Survivors.SurvivorEnrichmentService? enrichmentService = null)
         {
             _survivors = survivors;
             _survivorId = survivorId ?? string.Empty;
+            _enrichmentService = enrichmentService;
             RefreshView();
         }
 
@@ -84,12 +86,29 @@ namespace AtomicWar.GodotApp.UI
             }
 
             var rad = _survivors.RadStateFor(s.Id);
+            var def = _survivors.Roster?.FindDefinition(s.Id);
+            var view = _enrichmentService?.GetView(s.Id, def);
 
             // ── Survivor info ──
-            AddRow(_survivorInfo, $"Name: {Name(s.Id)}", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_survivorInfo, $"Name: {view?.DisplayName ?? Name(s.Id)}", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_survivorInfo, $"Profession: {view?.ProfessionLabel ?? (!string.IsNullOrEmpty(def?.profession) ? def.profession : "Unspecified")}", Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 2;
+
+            if (view != null && !string.IsNullOrEmpty(view.BeliefProfileLabel) && !string.IsNullOrEmpty(view.BeliefProfileId))
+            {
+                AddRow(_survivorInfo, $"Worldview: {view.BeliefProfileLabel}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+
+            if (view != null && !string.IsNullOrEmpty(view.PersonalKeepsakeItemId))
+            {
+                AddRow(_survivorInfo, $"Associated Keepsake: {view.KeepsakeItemLabel}", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
+            }
+
             AddRow(_survivorInfo, $"Alive: {s.IsAlive}", s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);
             AddRow(_survivorInfo, $"Max Health Cap: {s.MaxHealthCap:0}", Ashfall.Core.UI.Theme.Dim);
-            RenderedRowCount += 3;
+            RenderedRowCount += 2;
 
             // ── Needs ──
             AddRow(_needsList, $"Health: {s.Health:0} / {s.MaxHealthCap:0}", s.Health < 30 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);

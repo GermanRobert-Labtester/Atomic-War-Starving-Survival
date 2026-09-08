@@ -1,64 +1,72 @@
 # Utility Scoring Contract
 
-> **Mathematical Specification:** Exact scoring pipeline implemented in `Assets/Ashfall.Core/UtilityAI/UtilityActionScorer.cs`.
+Derived from `UtilityActionScorer.Score()` in `Assets/Ashfall.Core/UtilityAI/UtilityActionScorer.cs`.
 
----
+## Scoring Pipeline
 
-## 1. Step-by-Step Scoring Pipeline
+```
+1. IsForbiddenByTraits(action, context) → 0 if vetoed
+2. EvaluateRaw(context) → rawScore
+   - 0 if !IsAlive
+   - 0 if fatigueGate > 0 && Fatigue > fatigueGate
+   - baseScore + CraftingSkill * skillBonusFactor (clamped 0-1)
+3. rawScore ≤ 0 → score = 0 (stop)
+4. Curve.Evaluate(rawScore) → curvedScore
+5. (curvedScore + basePriority) * weight → score
+6. ApplyTraitBiases(score, action, context) → score
+7. if IsListless: score -= 0.08
+8. if isOverrideAction: return max(0, score)  // no upper clamp
+9. return clamp01(score)
+```
 
-Given an action definition `action` and decision context `context`:
+## Formula
 
-1. **Null & Life Validation:**
-   ```csharp
-   if (action == null || context == null || !context.IsAlive) return 0f;
-   ```
+```
+score = clamp01(
+    bias(
+        (curve(baseScore + skill * skillBonus) + basePriority) * weight
+    ) - listlessPenalty
+)
+```
 
-2. **Hard Trait Veto Check:**
-   ```csharp
-   if (UtilityActionScorer.IsForbiddenByTraits(action, context)) return 0f;
-   ```
+Where:
+- `curve(x)` = piecewise-linear interpolation of curvePoints
+- `bias(s)` = trait soft multiplier (e.g., Politician × 0.6 on dirty_labor)
+- `listlessPenalty` = 0.08 if IsListless, else 0
+- Override actions skip the final `clamp01`
 
-3. **Fatigue Gate Check:**
-   ```csharp
-   if (action.fatigueGate > 0f && context.Fatigue > action.fatigueGate) return 0f;
-   ```
+## Veto Matrix (Hard, score → 0)
 
-4. **Raw Baseline & Skill Contribution:**
-   ```csharp
-   float rawScore = action.baseScore;
-   if (action.skillBonusFactor > 0f && context.CraftingSkill > 0f)
-       rawScore += context.CraftingSkill * action.skillBonusFactor;
-   rawScore = Math.Clamp(rawScore, 0f, 1f);
-   if (rawScore <= 0f) return 0f;
-   ```
+| Trait | Tag | Condition |
+|-------|-----|-----------|
+| `coward` | `loud_labor` | Always |
+| `god_complex` | `menial_labor` | Always |
+| `pacifist` | `weapon` | Always |
+| `blind` | `gun` | Always |
+| `ex_con` | `order` | Always |
+| `hitman` | `medical_triage` | Always |
+| `hitman` | `farming` | Always |
+| `germaphobe` | `medical_triage` | Without hazmat |
 
-5. **Response Curve Transformation:**
-   ```csharp
-   float curvedScore = action.Curve.Evaluate(rawScore);
-   ```
+## Bias Matrix (Soft, multiplier)
 
-6. **Base Priority & Weight Multiplier:**
-   ```csharp
-   float score = (curvedScore + action.basePriority) * action.weight;
-   ```
+| Trait | Tag | Multiplier |
+|-------|-----|------------|
+| `politician` | `dirty_labor` | 0.6x |
 
-7. **Listless Morale Penalty:**
-   ```csharp
-   if (context.IsListless)
-       score -= UtilityActionScorer.ListlessScorePenalty; // 0.08f
-   ```
+Bias multiplier clamped to [0.1, 2.0].
 
-8. **Override vs. Standard Clamping:**
-   ```csharp
-   if (action.isOverrideAction)
-       return Math.Max(0f, score); // Unclamped > 1.0 allows override dominance
+## Selection (UtilityAiSystem.SelectAction)
 
-   return Math.Clamp(score, 0f, 1f);
-   ```
+```
+For each candidate:
+  score = scorer.Score(candidate, context)
+  if score > 0: score += rng.NextDouble() * 0.0001  // deterministic noise
+  if score > 0 && score > bestScore: best = candidate
+Return best (or null if all ≤ 0)
+```
 
-9. **Deterministic Noise & Tie-Breaking (`UtilityAiSystem.SelectAction`):**
-   ```csharp
-   if (score > 0f && rng != null)
-       score += (float)(rng.NextDouble() * 0.0001d);
-   ```
-   If two actions have the exact same score without RNG, the first action in candidate list order wins.
+- Ties: first-wins over candidate list order
+- Candidate list order IS the deterministic contract
+- Noise scale: 0.0001 (Unity parity)
+- Only positive scores compete

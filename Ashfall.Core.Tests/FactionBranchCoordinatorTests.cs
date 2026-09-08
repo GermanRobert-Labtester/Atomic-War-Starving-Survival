@@ -392,7 +392,7 @@ namespace Ashfall.Core.Tests
             var moral = MakeMoralChoice();
 
             var options = coordinator.GetBranchOptions(moral);
-            Assert.Equal(24, options.Count); // 8 Military + 8 Rebel + 8 Independent
+            Assert.Equal(MilitaryBranchIds.BranchCount + RebelBranchIds.BranchCount + IndependentBranchIds.BranchCount, options.Count); // 15 Military + 8 Rebel + 15 Independent
 
             var standings = coordinator.GetFactionStandingSummaries();
             Assert.Equal(3, standings.Count); // Military, Rebel, PRPF

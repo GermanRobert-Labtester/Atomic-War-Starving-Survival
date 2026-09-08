@@ -374,5 +374,151 @@ namespace Ashfall.Core.Tests
             Assert.False(string.IsNullOrEmpty(entry.title));
             Assert.False(string.IsNullOrEmpty(entry.prose));
         }
+
+        // ====================================================================
+        // Additional Overlap, Failure Precedence, and Plan 96 Integration Tests
+        // ====================================================================
+
+        [Fact]
+        public void Evaluate_Failure_BeatsPositiveResource_Individually()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                ShelterFallen = true,
+                WaterPlantHeld = true
+            };
+            Assert.Equal(EpilogueMatrix.ShelterFalls, EpilogueMatrix.Evaluate(input));
+        }
+
+        [Fact]
+        public void Evaluate_Failure_BeatsPositiveFaction_Individually()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                ShelterFallen = true,
+                FactionOutcome = FactionTerminalOutcome.GarrisonAbsorbed
+            };
+            Assert.Equal(EpilogueMatrix.ShelterFalls, EpilogueMatrix.Evaluate(input));
+        }
+
+        [Fact]
+        public void Evaluate_Failure_BeatsPositiveMoral_Individually()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                ShelterFallen = true,
+                MercyPattern = true
+            };
+            Assert.Equal(EpilogueMatrix.ShelterFalls, EpilogueMatrix.Evaluate(input));
+        }
+
+        [Fact]
+        public void Evaluate_Overlap_IndependentAndWater_FactionWins()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                FactionOutcome = FactionTerminalOutcome.Independent,
+                WaterPlantHeld = true
+            };
+            Assert.Equal(EpilogueMatrix.CoalitionIndependent, EpilogueMatrix.Evaluate(input));
+        }
+
+        [Fact]
+        public void Evaluate_Overlap_GarrisonAndWater_FactionWins()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                FactionOutcome = FactionTerminalOutcome.GarrisonAbsorbed,
+                WaterPlantHeld = true
+            };
+            Assert.Equal(EpilogueMatrix.GarrisonAbsorbsCoalition, EpilogueMatrix.Evaluate(input));
+        }
+
+        [Fact]
+        public void Evaluate_Overlap_GrainAndListener_ResourceWins()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                GrainSiloCaptured = true,
+                DiplomacyPattern = true
+            };
+            Assert.Equal(EpilogueMatrix.GrainSiloCaptured, EpilogueMatrix.Evaluate(input));
+        }
+
+        [Fact]
+        public void Evaluate_PureFunction_DoesNotMutateInput()
+        {
+            var input = new EpilogueMatrixInput
+            {
+                FactionOutcome = FactionTerminalOutcome.FoundryAnnexed,
+                WaterPlantHeld = true,
+                GrainSiloCaptured = false,
+                FuelDepotBurned = false,
+                MercyPattern = false,
+                IronPattern = true,
+                DiplomacyPattern = false,
+                ShelterFallen = false,
+                VerdictEndingKey = string.Empty,
+                MusterEndingKey = string.Empty
+            };
+
+            string res = EpilogueMatrix.Evaluate(input);
+            Assert.Equal(EpilogueMatrix.FoundryAnnexation, res);
+
+            // Assert input state was unaffected
+            Assert.Equal(FactionTerminalOutcome.FoundryAnnexed, input.FactionOutcome);
+            Assert.True(input.WaterPlantHeld);
+            Assert.False(input.GrainSiloCaptured);
+            Assert.False(input.FuelDepotBurned);
+            Assert.False(input.MercyPattern);
+            Assert.True(input.IronPattern);
+            Assert.False(input.DiplomacyPattern);
+            Assert.False(input.ShelterFallen);
+            Assert.Equal(string.Empty, input.VerdictEndingKey);
+            Assert.Equal(string.Empty, input.MusterEndingKey);
+        }
+
+        [Theory]
+        [InlineData(EpilogueMatrix.TheOpenMuster)]
+        [InlineData(EpilogueMatrix.TheAmnesty)]
+        [InlineData(EpilogueMatrix.TheCorridor)]
+        [InlineData(EpilogueMatrix.TheBloodPrice)]
+        [InlineData(EpilogueMatrix.TheRateCardRevised)]
+        [InlineData(EpilogueMatrix.TheAdministrator)]
+        [InlineData(EpilogueMatrix.TheMeasuredTruthContested)]
+        [InlineData(EpilogueMatrix.TheMeasuredTruth)]
+        [InlineData(EpilogueMatrix.Unwritten)]
+        [InlineData(EpilogueMatrix.VerdictSectorRecounts)]
+        [InlineData(EpilogueMatrix.VerdictCountHeld)]
+        [InlineData(EpilogueMatrix.VerdictOfferLease)]
+        [InlineData(EpilogueMatrix.GarrisonAbsorbsCoalition)]
+        [InlineData(EpilogueMatrix.RebuildersJoined)]
+        [InlineData(EpilogueMatrix.CoalitionIndependent)]
+        [InlineData(EpilogueMatrix.FoundryAnnexation)]
+        [InlineData(EpilogueMatrix.WaterPlantHeld)]
+        [InlineData(EpilogueMatrix.GrainSiloCaptured)]
+        [InlineData(EpilogueMatrix.FuelDepotBurned)]
+        [InlineData(EpilogueMatrix.MercyRoad)]
+        [InlineData(EpilogueMatrix.IronWay)]
+        [InlineData(EpilogueMatrix.ListenersThread)]
+        [InlineData(EpilogueMatrix.MercyWaterHeld)]
+        [InlineData(EpilogueMatrix.IronFuelAsh)]
+        [InlineData(EpilogueMatrix.ShelterFalls)]
+        public void Plan96_All25Keys_CanBeBuiltIntoEpilogueChronicle(string key)
+        {
+            var builder = new Ashfall.Core.Endgame.EpilogueChronicleBuilder();
+            var chronicle = builder.Build(new Ashfall.Core.Endgame.EpilogueChronicleInput
+            {
+                EndingKey = key,
+                Day = 360,
+                BuildSeed = 12345
+            });
+
+            Assert.NotNull(chronicle);
+            Assert.Equal(key, chronicle.EndingKey);
+            Assert.Equal(360, chronicle.GeneratedDay);
+            Assert.Equal(12345, chronicle.BuildSeed);
+            Assert.False(string.IsNullOrEmpty(chronicle.Title));
+        }
     }
 }

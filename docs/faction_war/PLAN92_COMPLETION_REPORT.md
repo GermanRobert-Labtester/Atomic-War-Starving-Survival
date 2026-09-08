@@ -114,11 +114,12 @@ All 22 new snippets reference existing canonical `loc_*` IDs from `locations.jso
 
 | Suite | Command | Exit Code | Result |
 |---|---|---|---|
-| **Data Integrity Gate** | `godot --headless --path . -- --data-integrity-selftest` | 0 | **PASS — 0 errors, 0 warnings across 208 catalogs** |
+| **Data Integrity Gate** | `godot --headless --path . -- --data-integrity-selftest` | 0 | **PASS — 0 errors, 0 warnings across 298 catalogs** |
 | **Faction War Dialogue Suite** | `dotnet test Ashfall.Core.Tests --filter FullyQualifiedName~FactionWarDialogueExpansionTests` | 0 | **PASS — 9 passed, 0 failed** |
-| **Content Utilization Gate** | `godot --headless --path . -- --content-utilization-selftest` | 0 | **PASS — CI gate PASS** |
-| **Scene Binding Gate** | `godot --headless --path . -- --scene-binding-selftest` | 0 | **PASS — 22/22 passed** |
-| **Scene Lint** | `python3 scripts/ci/scene-lint.py` | 0 | **PASS — 0 errors across 27 scenes** |
+| **Full Core Test Suite** | `dotnet test Ashfall.Core.Tests` | 0 | **PASS — 9,806 passed, 0 failed** |
+| **Content Utilization Gate** | `godot --headless --path . -- --content-utilization-selftest` | 0 | **PASS — CI gate PASS (581 catalogs)** |
+| **Scene Binding Gate** | `godot --headless --path . -- --scene-binding-selftest` | 0 | **PASS — 25/25 passed** |
+| **Scene Lint** | `python3 scripts/ci/scene-lint.py` | 0 | **PASS — 0 errors across 30 scenes** |
 | **Host Application Build** | `dotnet build Ashfall.csproj` | 0 | **PASS — 0 errors, 0 warnings** |
 
 ---

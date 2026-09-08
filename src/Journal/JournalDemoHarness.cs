@@ -79,7 +79,7 @@ namespace AtomicWar.Journal
             return crew[index % crew.Count];
         }
 
-        private static Dictionary<string, DemoSurvivor> BuildAuthors(JournalCatalogs catalogs)
+        public static Dictionary<string, DemoSurvivor> BuildAuthors(JournalCatalogs catalogs)
         {
             var authors = new Dictionary<string, DemoSurvivor>();
             if (catalogs?.Survivors == null) return authors;

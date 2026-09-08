@@ -151,6 +151,7 @@ namespace AtomicWar.GodotApp
         {
             if (_world != null) return;
             _world = WorldHostSession.Create(_dataDir);
+            BindJournalWorldProducerIfReady();
             WireSurgeAdapters();
             _world.StateChanged += () =>
             {
@@ -160,6 +161,24 @@ namespace AtomicWar.GodotApp
                 if (_state == GameState.Playing) UpdateHud();
             };
             GD.Print("[Ashfall Godot] World host ready.");
+        }
+
+        private bool _journalWorldProducerBound;
+
+        private void BindJournalWorldProducerIfReady()
+        {
+            if (_journalWorldProducerBound
+                || _journal == null
+                || _world?.WastelandMap == null)
+                return;
+
+            _world.WastelandMap.OnNodeDiscovered += OnJournalWorldNodeDiscovered;
+            _journalWorldProducerBound = true;
+        }
+
+        private void OnJournalWorldNodeDiscovered(string locationId)
+        {
+            _journal?.TryAddAuthoredEntry(locationId);
         }
 
         private void SetupWeatherSonde()

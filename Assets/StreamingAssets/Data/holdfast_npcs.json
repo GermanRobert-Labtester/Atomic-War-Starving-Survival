@@ -82,7 +82,7 @@
     {
       "id": "npc_leva_quist",
       "display_name": "Shift Lead Leva Quist",
-      "faction_id": "hydro_barons",
+      "faction_id": "faction_hydro_barons",
       "role": "Plant Foreman",
       "description": "A municipal engineer who was already at the plant when the Exchange happened. She calls the allocated 'the indoors' and the unlisted 'the ones who actually do the work.'",
       "dialogue_fragments": [

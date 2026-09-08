@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Economy;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -26,17 +27,23 @@ namespace AtomicWar.GodotApp.UI
         private Label _eventLogLabel = null!;
 
         private TravelingCaravanHostSession? _host;
+        private TradeVoiceResolver? _voiceResolver;
         private string? _selectedCaravanId;
+        private string _voiceEvent = string.Empty;
 
         public bool IsBound => _host != null;
+        public string CurrentTraderProfileId { get; private set; } = string.Empty;
 
-        public void Bind(TravelingCaravanHostSession session)
+        public void Bind(
+            TravelingCaravanHostSession session,
+            TradeVoiceResolver? voiceResolver = null)
         {
             if (_host != null)
             {
                 _host.StateChanged -= RefreshView;
             }
             _host = session;
+            _voiceResolver = voiceResolver;
             if (_host != null)
             {
                 _host.StateChanged += RefreshView;
@@ -168,7 +175,11 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("routes", "SECURE", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("status", totalCaravans > 0 ? "TRACKING" : "IDLE", AshfallMetricCard.Criticality.Normal);
 
-            if (!string.IsNullOrEmpty(_host.LastEvent))
+            if (!string.IsNullOrEmpty(_voiceEvent))
+            {
+                _eventLogLabel.Text = _voiceEvent;
+            }
+            else if (!string.IsNullOrEmpty(_host.LastEvent))
             {
                 _eventLogLabel.Text = _host.LastEvent;
             }
@@ -231,31 +242,29 @@ namespace AtomicWar.GodotApp.UI
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Current Waypoint", curCaravan.currentNodeId, AshfallUiHelpers.ToColor(DesignTheme.Warm)));
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Scheduled Route", string.Join(" -> ", curCaravan.routeNodeIds), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
 
+                string voiceLine = ResolveCaravanVoice(curCaravan);
+                if (!string.IsNullOrWhiteSpace(voiceLine))
+                {
+                    _caravanInspector.AddChild(AshfallUiHelpers.MakeSeparator());
+                    _caravanInspector.AddChild(AshfallUiHelpers.MakeSubsectionHeader("CARAVAN VOICE"));
+                    var voiceLabel = AshfallUiHelpers.MakeMetadata(voiceLine);
+                    voiceLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+                    _caravanInspector.AddChild(voiceLabel);
+                }
+
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeSeparator());
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeSubsectionHeader("BARTER TRANSACTIONS"));
 
                 var btnBuyMed = AshfallUiHelpers.MakeButton("BARTER FOR ANTIBIOTICS (5 RATIONS)", () =>
-                {
-                    int rations = 10;
-                    _host.Engine.TryBuyItem(curCaravan.caravanId, "item_antibiotics", 1, ref rations);
-                    RefreshView();
-                });
+                    TryCaravanPurchase(curCaravan, "item_antibiotics", 1));
                 _caravanInspector.AddChild(btnBuyMed);
 
                 var btnBuyWater = AshfallUiHelpers.MakeButton("BARTER FOR CLEAN WATER (1 RATION)", () =>
-                {
-                    int rations = 10;
-                    _host.Engine.TryBuyItem(curCaravan.caravanId, "item_clean_water", 2, ref rations);
-                    RefreshView();
-                });
+                    TryCaravanPurchase(curCaravan, "item_clean_water", 2));
                 _caravanInspector.AddChild(btnBuyWater);
 
                 var btnBuyFood = AshfallUiHelpers.MakeButton("BARTER FOR CANNED FOOD (2 RATIONS)", () =>
-                {
-                    int rations = 10;
-                    _host.Engine.TryBuyItem(curCaravan.caravanId, "item_canned_food", 1, ref rations);
-                    RefreshView();
-                });
+                    TryCaravanPurchase(curCaravan, "item_canned_food", 1));
                 _caravanInspector.AddChild(btnBuyFood);
             }
             else
@@ -269,9 +278,64 @@ namespace AtomicWar.GodotApp.UI
 
             _routeLogContainer.AddChild(AshfallUiHelpers.MakeSeparator());
             _routeLogContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("CARAVAN RADIO CHATTER"));
-            _routeLogContainer.AddChild(AshfallUiHelpers.MakeMono("Menders Radio: 'Approaching Holdfast perimeter with fresh salvage and medical supplies.'"));
-            _routeLogContainer.AddChild(AshfallUiHelpers.MakeMono("Salt Merchant: 'Transit cleared through Sector 4. No raider sightings.'"));
+            if (curCaravan != null)
+            {
+                string voiceLine = ResolveCaravanVoice(curCaravan);
+                _routeLogContainer.AddChild(AshfallUiHelpers.MakeMono(
+                    string.IsNullOrWhiteSpace(voiceLine)
+                        ? "No caravan voice signal."
+                        : voiceLine));
+            }
+            else
+            {
+                _routeLogContainer.AddChild(AshfallUiHelpers.MakeMono("No caravan selected."));
+            }
         }
+
+        private string ResolveCaravanVoice(CaravanEntry caravan)
+        {
+            CurrentTraderProfileId = string.Empty;
+            if (_voiceResolver == null) return string.Empty;
+
+            var result = _voiceResolver.ResolveGreeting(CreateCaravanVoiceContext(caravan));
+            CurrentTraderProfileId = result.ProfileId;
+            string displayName = VoiceDisplayName(result.ProfileId);
+            return $"{displayName}: {result.Text}";
+        }
+
+        private void TryCaravanPurchase(CaravanEntry caravan, string itemId, int amount)
+        {
+            if (_host == null) return;
+
+            _voiceEvent = string.Empty;
+            int rations = 10;
+            bool success = _host.Engine.TryBuyItem(caravan.caravanId, itemId, amount, ref rations);
+            if (_voiceResolver != null)
+            {
+                var result = _voiceResolver.ResolveLine(
+                    CreateCaravanVoiceContext(caravan),
+                    success ? TradeVoiceLineFamily.Acceptance : TradeVoiceLineFamily.Rejection,
+                    success ? "pleased" : "polite");
+                _voiceEvent = $"{VoiceDisplayName(result.ProfileId)}: {result.Text}";
+            }
+            RefreshView();
+        }
+
+        private TradeVoiceContext CreateCaravanVoiceContext(CaravanEntry caravan) =>
+            new TradeVoiceContext
+            {
+                CaravanId = caravan.caravanId,
+                CaravanOriginRegion = caravan.originRegion,
+                FactionId = caravan.factionId,
+                StableContextKey = caravan.caravanId,
+                Trust = 0f
+            };
+
+        private string VoiceDisplayName(string profileId) =>
+            _voiceResolver != null &&
+            _voiceResolver.Catalog.TryGetTrader(profileId, out var trader)
+                ? trader.display_name
+                : "The Merchant";
 
         public override void _UnhandledInput(InputEvent @event)
         {

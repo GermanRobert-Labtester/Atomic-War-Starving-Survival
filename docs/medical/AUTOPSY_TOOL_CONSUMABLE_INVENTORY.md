@@ -1,34 +1,44 @@
 # Autopsy Tool & Consumable Inventory
 
-> **Supply Authority:** `Assets/StreamingAssets/Data/items.json` and `Assets/StreamingAssets/Data/autopsy_procedures.json`.
+## Critical pre-existing defect found and fixed
 
----
+Baseline audit found that **`medical_scissors`, `protective_rubber_gloves`, and `sterilised_bandage` existed in no item catalog** — only as references inside `autopsy_procedures.json`. Every one of the 9 baseline procedures required at least one phantom, so `QueueAutopsy` always returned `Blocked("missing_tool")` and **the autopsy system was unplayable**.
 
-## 1. Inventory Alignment
+Per the plan's §12 exception (clear data bug), the fix is pure data: the three items were added to `items.json` as ordinary, schema-valid entries (plan §9 "good candidate" class — ordinary medical tools/consumables, no new mechanics):
 
-All tools and consumables specified across the 12 autopsy procedures resolve directly against canonical item definitions in `items.json`.
+| Item | Type | Schema notes |
+|---|---|---|
+| `medical_scissors` | Component | stainless bandage shears; stack 3, weight 0.15, trade 9 |
+| `protective_rubber_gloves` | Medical | long-cuff exam gloves; stack 6, weight 0.1, trade 5 |
+| `sterilised_bandage` | Medical | sterile pressure dressing; stack 10, healthEffect 30, trade 12 (parallel to existing `bandage`) |
 
-### Reusable Tools
-| Item ID | Display Name | Stack Max | Weight | Category / Type | Durability | Acquisition Source |
-|---|---|:---:|:---:|---|:---:|---|
-| `medical_scissors` | Medical Scissors | 5 | 0.20 kg | Medical / Surgical | 80 | Clinic salvage, crafting, triage kit |
-| `protective_rubber_gloves`| Protective Rubber Gloves | 5 | 0.20 kg | Medical / PPE | 40 | Lab salvage, hazmat lockers |
-| `field_surgical_kit` | Field Surgical Kit | 5 | 1.00 kg | Medical / Surgical | 0 (Fixed) | Hospital ruins, military ambulance |
-| `surgical_mask` | Surgical Mask | 10 | 0.05 kg | Component / PPE | 0 (Fixed) | Clinic drawers, emergency caches |
-| `scalpel` | Scalpel | 5 | 0.10 kg | Component / Tool | 0 (Fixed) | Clinic blister packs, surgical trays |
-| `forceps` | Forceps | 3 | 0.20 kg | Component / Tool | 0 (Fixed) | Medical lockers, field surgeon kit |
+No autopsy-table fiction (§79C.3 — no workstation modeled as a portable item). No new tools beyond the three missing IDs.
 
-### Consumable Supplies
-| Item ID | Display Name | Stack Max | Weight | Health Effect | Acquisition Source |
-|---|---|:---:|:---:|:---:|---|
-| `bandage` | Bandage | 10 | 0.10 kg | +15 HP | Cloth crafting, scavenged first aid |
-| `sterilised_bandage` | Sterilised Bandage | 10 | 0.10 kg | +25 HP | Medkit salvage, pharmaceutical sealed stock |
-| `clean_water` | Clean Water | 10 | 0.50 kg | +15 Thirst | Water treatment plant, filtration still |
-| `antibiotics` | Antibiotics | 10 | 0.05 kg | Infection Cure | Pharmacy ruins, clinic safes, rare trade |
+## Item vocabulary (final)
 
----
+**Tools** (3, all now real): `medical_scissors`, `field_surgical_kit`, `surgical_mask`, plus `scalpel` (forensic only) and `protective_rubber_gloves` (PPE) — 5 core IDs reused across all 12 procedures; no one-off tools.
 
-## 2. Item Discipline & Preservation Principles
+**Consumables** (4): `bandage`, `sterilised_bandage`, `clean_water`, `antibiotics`.
 
-1. **No Portable Workstation Fiction:** Autopsies do not model an "autopsy table" as an inventory item. Autopsies are performed using hand tools and sterile prep at the clinic/infirmary station.
-2. **Consumable Prudence:** Antibiotics are strictly reserved for high-containment biohazard dissections (`procedure_containment_autopsy` and `procedure_spore_infection_isolation`) where active chemical sterilization of tissue samples is mandatory to prevent room contamination. Routine examinations consume only standard clean water, bandages, and sterilised dressings.
+## Antibiotics note (§2.6)
+
+`antibiotics` is consumed by `procedure_containment_autopsy` (pre-existing) and the new `procedure_forensic_unknown` (justified: broad-opening a corpse of unknown cause is the one scenario with justified contamination-control use beyond the containment protocol). All low-risk procedures use only dressings/water.
+
+## Final tool/consumable profile matrix
+
+| Procedure | Tools | Consumables | Cost tier |
+|---|---|---|---|
+| hypothermia | scissors, gloves | water | light |
+| **deprivation (new)** | scissors, gloves, kit | water, sterile dressing | light |
+| blunt | scissors, kit | bandage, water | light |
+| toxicology | scissors, gloves | bandage, water | light |
+| ballistic | scissors, gloves, kit | bandage, water | light-mid |
+| **blast (new)** | scissors, gloves, kit | bandage, sterile dressing | mid |
+| rad pathology | scissors, gloves, kit | sterile dressing, water | mid |
+| respiratory | scissors, gloves, mask | water, sterile dressing | mid |
+| poison assay | gloves, kit | water, sterile dressing | mid |
+| **forensic (new)** | scissors, gloves, kit, scalpel | sterile dressing, water, antibiotics | heavy |
+| containment | scissors, gloves, kit, mask | sterile dressing, water, antibiotics | heavy |
+| spore isolation | scissors, gloves, kit, mask | sterile dressing, water, antibiotics | heavy |
+
+Preparation requirements differentiate procedures (mask/kit/scalpel gates, consumable weight) without one-off item tax.

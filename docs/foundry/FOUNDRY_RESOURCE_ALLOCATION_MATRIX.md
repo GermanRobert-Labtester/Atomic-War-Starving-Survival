@@ -4,7 +4,7 @@
 
 ---
 
-## 1. Resource Allocations Across All 12 Accords
+## 1. Resource Allocations Across All 18 Records
 
 | Treaty ID | Water (lpm) | Power (kW) | Operational Meaning & Physical Justification |
 |---|---:|---:|---|
@@ -20,6 +20,12 @@
 | `treaty_roster_border_demilitarization_pact` | 0.0 | 0.0 | Demilitarized buffer pact; utilities explicitly barred to prevent fortification. |
 | `treaty_deep_coast_aquifer_protection_treaty` | 60.0 | 14.0 | Desalination intake volume and pump station sediment centrifuge power. |
 | `treaty_high_scarp_observatory_sanctuary` | 5.0 | 20.0 | High-altitude cistern reserve and transmission antenna amplifier array. |
+| `treaty_saltworks_access` | 30.0 | 0.0 | Measured process-water draw along the saltworks pipe walk; the compact carries no power transfer. |
+| `treaty_membrane_repair` | 12.0 | 18.0 | Bounded commissioning flush and temporary repair/test power for the membrane hall. |
+| `treaty_coal_window` | 0.0 | 0.0 | Timing-only logistics schedule; coal haulage uses existing road terms rather than a utility allocation. |
+| `treaty_apprentice_exchange` | 0.0 | 0.0 | Training and supervision agreement; no invented utility transfer. |
+| `treaty_crisis_mutual_aid` | 20.0 | 10.0 | Foundry's bounded emergency commitment for up to three days, not a per-signatory guarantee. |
+| `treaty_the_incident_book` | 0.0 | 0.0 | Recordkeeping covenant; resource state remains owned by the existing systems. |
 
 ---
 

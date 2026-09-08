@@ -1,95 +1,51 @@
-# Narrative Progression — Runtime Contract
+# Narrative Progression Runtime Contract
 
-_ASHFALL · docs/narrative · Plan 74_
-
----
-
-## Authority
-
-`Assets/StreamingAssets/Data/narrative_progression.json` is the **sole authority** for the ordered chapter list.
-
----
-
-## Schema
-
-```json
-{
-  "schema_version": 1,
-  "entries": [
-    {
-      "description": "Chapter N <Status>: <Title> — <one-sentence summary>",
-      "order": N
-    }
-  ]
-}
-```
-
-### Fields
-
-| Field | Type | Constraint |
-|---|---|---|
-| `schema_version` | int | Must be `1`; required by CatalogIntegrityValidator |
-| `entries` | array | Ordered list of chapter entries |
-| `description` | string | Human-readable; display only — no engine parsing |
-| `order` | int | 1-based; must be unique within the file |
-
-### Fields that do NOT exist in the runtime DTO
-
-Do **not** add any of these — they are silently dropped by the deserializer:
-
-- `trigger_day` — belongs to the incident/event system
-- `phase` — belongs to the expansion phase system
-- `world_state_changes` — belongs to IEventBus / flag system
-- `winter_window` — belongs to WeatherSystem
-- `faction_unlock` — belongs to faction catalogs
-
----
+Verified 2026-09 from active source.
 
 ## Consumer
 
-`src/Host/EventsHostSession.cs` → `LoadNarrativeProgression()` → `NarrativeRoot` → `List<NarrativeEntryData>`
+**`src/Host/EventsHostSession.cs`** (`EventsHostSession`, a Godot `Node`) is the sole runtime consumer of `narrative_progression.json`.
 
-```csharp
-public class NarrativeEntryData
-{
-    public string Description { get; set; } = string.Empty;
-    public int Order { get; set; }
-}
-```
+- Loads `res://Assets/StreamingAssets/Data/narrative_progression.json` in `_Ready()` via `LoadNarrativeProgression()`.
+- Deserializes into `NarrativeRoot { SchemaVersion, Entries: List<NarrativeEntryData> }`.
+- `NarrativeEntryData` has exactly two properties: `Description` (string), `Order` (int).
+- Exposes `GetNarrativeProgression()` → `List<NarrativeEntry>` (same two fields).
 
-Exposed via `GetNarrativeProgression()` for `NarrativePanel` (UI display) and `NarrativeEncounterSystem` (encounter gating by chapter order).
+## UI Consumer
 
----
+**`src/UI/EventsLogPanel.cs`** renders every entry as a static Label, sorted by `Order`, on every panel refresh. **All entries are always displayed** — there is no "current chapter" filter.
 
-## Chapter Status Tokens
+**`src/UI/EventDetailPanel.cs`** also reads `GetNarrativeProgression()`.
 
-Display convention in the `description` field. The runtime does not parse these:
+## Trigger Model
 
-| Token | Meaning (display) |
-|---|---|
-| `Complete:` | Chapter finished |
-| `Active:` | Current chapter |
-| `Pending:` | Future chapter |
-| _(none)_ | Mid/late-game chapters without pre-authored status |
+**Model E — hardcoded progression / display-only metadata.**
 
----
+- There are **no trigger fields** in the schema: no `trigger_day`, no `trigger_flag`, no `phase`, no `world_state_changes`, no `on_enter`.
+- There is no chapter-advancement runtime: no day-threshold evaluator, no flag condition, no story-event hook, no transition event, no callback.
+- "Current chapter" does not exist as runtime state. The Complete/Active/Pending status embedded in each description string is **static authored text**, not runtime state.
+- Chapter status prefixes (e.g. "Chapter 3 Active:") are baked into the description strings and displayed verbatim.
 
-## Ordering Contract
+## Save Model
 
-- `order` values 1–5 are legacy and must not be renumbered.
-- `order` values 6–15 are Plan 74 additions and are now stable.
-- New campaigns may extend beyond 15 with the next sequential integer.
-- The runtime loads all entries; no filtering by `order` range is applied.
+**No save state.** `EventsHostSession` "intentionally has no save state" (per its own doc comment). Nothing about progression is persisted; nothing is derived after load. The `HostEventSaveStore` mentioned in the session doc comment belongs to dynamic trigger progress (HostEventAdapter), not to chapters.
 
----
+## Transition Events
 
-## Modification Rules
+**None.** Chapter "transitions" do not exist as a runtime concept. There is nothing for incidents (Plan 57), territory (Plan 44), or seasons (19C) to subscribe to at the progression layer.
 
-1. Read `EventsHostSession.cs` (the DTO) before adding any field.
-2. Never add fields not in `NarrativeEntryData`.
-3. Never renumber existing chapters 1–15.
-4. Run `--data-integrity-selftest` after every edit.
+## Localization
 
----
+Raw English strings. Titles are embedded in the description text (`"Chapter N <Status>: Title — text"`), not separate fields or keys.
 
-_Last updated: Plan 74 — 2026-09-03_
+## Catalog Integrity
+
+`CatalogIntegrityRules.cs` / `CatalogIntegrityValidator.cs` contain no special-case rules for `narrative_progression.json`. It is validated as a generic root-object catalog (requires top-level `schema_version`). Entries have no `id` fields, so no definition-ID validation applies.
+
+## Content Utilization
+
+`ContentUtilizationScanner.cs` maps the file (by filename) to `NarrativeEncounterSystem` / `NarrativePanel` consumers. The mapping is file-level; record count does not affect scanner behavior.
+
+## Conclusion for Plan 74
+
+Completion mode: **COMPLETE — narrative spine only.** The catalog is display/order metadata. Ten new chapter entries are safe pure data. No trigger, phase, or effect fields may be added (they would be silently ignored dead data requiring Core changes to become live). Cross-system transition effects remain owned by existing/future incident, territory, season, economy, guilt, warlord, rebuilding, and epilogue integrations.

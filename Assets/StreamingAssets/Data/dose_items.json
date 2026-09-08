@@ -72,6 +72,54 @@
       "tradeValue": 30,
       "category": "tool",
       "description": "A lead-lined alloy badge holder designed to protect dormant photographic dosimeter film from ambient background fogging before assignment."
+    },
+    {
+      "id": "item_pocket_dosimeter",
+      "name": "Pocket Dosimeter",
+      "weightKg": 0.15,
+      "tradeValue": 45,
+      "category": "tool",
+      "description": "A clip-on direct-reading quartz-fiber dosimeter with an internal optical scale and inspection stamp, measuring cumulative ionizing exposure during hazardous duties."
+    },
+    {
+      "id": "item_radiation_survey_meter",
+      "name": "Radiation Survey Meter",
+      "weightKg": 1.4,
+      "tradeValue": 75,
+      "category": "tool",
+      "description": "A portable ionization chamber survey meter with a sliding beta shield and manual range selector, deployed to map ambient radiation gradients across sectors."
+    },
+    {
+      "id": "item_dose_register_book",
+      "name": "Dose Register Book",
+      "weightKg": 0.9,
+      "tradeValue": 0,
+      "category": "story",
+      "description": "A hardbound administrative logbook ruled with carbon-transfer duplicates, recording assigned exposure quotas, registrar initials, and official band certifications."
+    },
+    {
+      "id": "item_cohort_baseline_card",
+      "name": "Cohort Baseline Card",
+      "weightKg": 0.02,
+      "tradeValue": 0,
+      "category": "story",
+      "description": "A stiff registry card stamped with intake dates and tracking columns for quarterly thyroid palpation and baseline exposure checks among shelter cohorts."
+    },
+    {
+      "id": "item_shielding_apron",
+      "name": "Examiner Shielding Apron",
+      "weightKg": 1.8,
+      "tradeValue": 60,
+      "category": "protective",
+      "description": "A heavy vinyl-clad composite apron worn during close-contact triage and screening inspections to provide localized torso attenuation against scattered radiation."
+    },
+    {
+      "id": "item_potassium_iodide_pack",
+      "name": "Potassium Iodide Pack",
+      "weightKg": 0.05,
+      "tradeValue": 50,
+      "category": "medical",
+      "description": "A sealed foil blister pack of stable potassium iodide tablets intended strictly for thyroid blocking prophylaxis against acute radioiodine uptake."
     }
   ]
 }

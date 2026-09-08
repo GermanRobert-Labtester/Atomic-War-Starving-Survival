@@ -299,11 +299,27 @@ namespace AtomicWar.GodotApp.UI
             {"performance_warning", "Performance warning: {0}% CPU usage. Optimize your settings."}
         };
 
+        public static Ashfall.Core.Feedback.IFeedbackService? Service { get; set; }
+
+        public static bool Emit(Ashfall.Core.Feedback.FeedbackEvent evt)
+        {
+            return Service?.Emit(evt) ?? false;
+        }
+
+        public static bool Emit(string key, params object[] args)
+        {
+            return Service?.Emit(new Ashfall.Core.Feedback.FeedbackEvent(key, args)) ?? false;
+        }
+
         /// <summary>
         /// Gets a success message by key.
         /// </summary>
         public static string GetSuccessMessage(string key, params object[] args)
         {
+            if (Service?.Catalog != null && Service.Catalog.TryGetTemplate("success", key, out var tmpl) && tmpl != null)
+            {
+                return Ashfall.Core.Feedback.FeedbackMessageCatalog.SafeFormat(tmpl.template, args);
+            }
             if (_successMessages.TryGetValue(key, out var message))
             {
                 return string.Format(message, args);

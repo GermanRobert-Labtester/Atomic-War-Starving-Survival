@@ -86,6 +86,24 @@ namespace AtomicWar.GodotApp
 
         private void StartNewGame()
         {
+            StartNewGame(Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId);
+        }
+
+        private void StartNewGame(string profileId)
+        {
+            // Fresh campaigns are transactions, not resets of the currently
+            // selected campaign. Allocate the next deterministic slot before
+            // tearing down live sessions so an existing campaign remains
+            // loadable if allocation fails.
+            if (_saveLoadHost != null &&
+                !_saveLoadHost.TryCreateFreshCampaignSlot(out _))
+            {
+                GD.PrintErr("[Ashfall Godot] New Game aborted: no fresh campaign slot could be allocated.");
+                if (_statusLabel != null)
+                    _statusLabel.Text = "Unable to allocate a fresh campaign slot.";
+                return;
+            }
+
             _state = GameState.Playing;
             _mainMenu.Visible = false;
             _gameOver.Visible = false;
@@ -97,13 +115,14 @@ namespace AtomicWar.GodotApp
             _audio?.PlayGameplayMusic();
             _audio?.StartBunkerAmbience();
 
-            // A new game must not inherit the previous run's in-memory sessions or
-            // on-disk saves. Null every session so the next SetupXxx re-creates clean,
-            // and delete the store files so Continue stays disabled for a fresh run.
-            ResetAllSessions();
-
-            // Ensure an active save slot is selected before initializing sessions
-            _saveLoadHost?.SelectOrCreateDefaultSlot("slot_1");
+            // A new game must not inherit the previous run's in-memory sessions.
+            // Reset only memory: the newly allocated slot is empty and all
+            // existing campaign roots remain untouched on disk.
+            ResetAllSessionsInMemory();
+            _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
+            _startingCohortProfileId = string.IsNullOrEmpty(profileId)
+                ? Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId
+                : profileId;
 
             // Compose all campaign-owned services before any panel opens.
             ComposeCampaign();
@@ -582,6 +601,35 @@ namespace AtomicWar.GodotApp
             _hudOverlay.UpdateState(_holdfastRuntime.Day, value, faction, weather);
             _hudOverlay.UpdateHealth(_holdfastRuntime.Health, HoldfastRuntimeSession.MaxHealth);
             _hudOverlay.UpdateRadiation(_holdfastRuntime.Radiation);
+
+            // Plan 140 — evaluate critical survival transitions
+            if (_feedbackService != null)
+            {
+                if (_feedbackService.Deduplicator.EvaluateTransition("health_injury_critical", _holdfastRuntime.Health <= 25))
+                {
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("injury_critical", new object[] { "Dr. Sarah Chen" }, category: "health_warning", dedupeKey: "health_injury_critical"));
+                }
+                if (_feedbackService.Deduplicator.EvaluateTransition("survival_food_critical", _holdfastRuntime.Hunger >= 90))
+                {
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("food_critical", new object[] { _holdfastRuntime.Hunger }, category: "resource_warning", dedupeKey: "survival_food_critical"));
+                }
+                else if (_feedbackService.Deduplicator.EvaluateTransition("survival_food_low", _holdfastRuntime.Hunger >= 70 && _holdfastRuntime.Hunger < 90))
+                {
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("food_low", new object[] { 100 - _holdfastRuntime.Hunger }, category: "resource_warning", dedupeKey: "survival_food_low"));
+                }
+                if (_feedbackService.Deduplicator.EvaluateTransition("survival_dehydration_imminent", _holdfastRuntime.Thirst >= 90))
+                {
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("dehydration_imminent", new object[] { "Dr. Sarah Chen" }, category: "health_warning", dedupeKey: "survival_dehydration_imminent"));
+                }
+                else if (_feedbackService.Deduplicator.EvaluateTransition("survival_water_low", _holdfastRuntime.Thirst >= 70 && _holdfastRuntime.Thirst < 90))
+                {
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("water_low", new object[] { 100 - _holdfastRuntime.Thirst }, category: "resource_warning", dedupeKey: "survival_water_low"));
+                }
+                if (_feedbackService.Deduplicator.EvaluateTransition("radiation_high_rate", _holdfastRuntime.Radiation >= 50f))
+                {
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("radiation_high", new object[] { (int)_holdfastRuntime.Radiation }, category: "health_warning", dedupeKey: "radiation_high_rate"));
+                }
+            }
 
             int totalSurvivors = 0;
             int livingSurvivors = 0;

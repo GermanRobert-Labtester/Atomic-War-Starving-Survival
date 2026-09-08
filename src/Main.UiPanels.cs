@@ -41,6 +41,7 @@ namespace AtomicWar.GodotApp
 
         // ── UI Panel fields (GAP-ARCH-01 Phase 1) ──
         private MainMenuPanel _mainMenu = null!;
+        private StartingCohortSetupPanel _startingCohortSetupPanel = null!;
         private GameOverPanel _gameOver = null!;
         private GameHudOverlay _hudOverlay = null!;
         private GameDashboardPanel _dashboard = null!;
@@ -198,6 +199,19 @@ namespace AtomicWar.GodotApp
         private Ashfall.Core.UI.CrisisPresentationSnapshot _crisisPresentationSnapshot = new Ashfall.Core.UI.CrisisPresentationSnapshot();
         private Ashfall.Core.UI.CrisisPresentationCoordinator _crisisCoordinator = null!;
 
+        // ── Plan 140 Feedback & Confirmation Layer ──
+        private Ashfall.Core.Feedback.IFeedbackService _feedbackService = null!;
+        public Ashfall.Core.Feedback.IFeedbackService FeedbackService => _feedbackService;
+        private FeedbackPanel _feedbackPanel = null!;
+        public FeedbackPanel FeedbackPanel => _feedbackPanel;
+        private ConfirmationModal _confirmationModal = null!;
+        public ConfirmationModal ConfirmationModal => _confirmationModal;
+
+        public void PromptConfirmation(string title, string message, Action onConfirm, Action? onCancel = null)
+        {
+            _confirmationModal.Prompt(title, message, onConfirm, onCancel);
+        }
+
         private void BuildUserInterface()
         {
             // Root full-rect styling
@@ -252,10 +266,29 @@ namespace AtomicWar.GodotApp
             _hudOverlay.OnMenuRequested += ReturnToMenu;
             gameUiContainer.AddChild(_hudOverlay);
 
+            // ── Feedback Service & Toast Overlay (Plan 140) ──
+            var fbFileIo = CatalogPath.CreateFileIOForDataDir(_dataDir);
+            var fbCatalog = Ashfall.Core.Feedback.FeedbackMessageCatalogLoader.LoadCatalog(_dataDir, fbFileIo, new SystemTextJsonSerializer());
+            _feedbackService = new Ashfall.Core.Feedback.FeedbackService(fbCatalog);
+            FeedbackMessages.Service = _feedbackService;
+
+            _feedbackPanel = new FeedbackPanel();
+            _feedbackPanel.Bind(_feedbackService);
+            AddChild(_feedbackPanel);
+
+            _confirmationModal = new ConfirmationModal();
+            AddChild(_confirmationModal);
+
             // ── Settings panel (overlay) ──
             _settingsPanel = new SettingsPanel();
             _settingsPanel.OnClose += CloseSettingsPanel;
-            _settingsPanel.OnTutorialResetRequested += ResetOnboardingJourney;
+            _settingsPanel.OnTutorialResetRequested += () =>
+            {
+                PromptConfirmation(
+                    "RESET ONBOARDING",
+                    "Are you sure you want to reset your onboarding journey? Progress will be lost.",
+                    ResetOnboardingJourney);
+            };
             _settingsPanel.OnSettingsApplied += ApplyOnboardingSettings;
             AddChild(_settingsPanel);
 
@@ -1346,8 +1379,14 @@ namespace AtomicWar.GodotApp
             _doorModal.OnChoiceClicked += OnDoorEncounterChoiceClicked;
 
             // ── Main Menu (overlay, shown initially) ──
+            _startingCohortSetupPanel = new StartingCohortSetupPanel();
+            _startingCohortSetupPanel.OnStartRequested += StartNewGame;
+            _startingCohortSetupPanel.OnCancel += CloseStartingCohortSetup;
+            AddChild(_startingCohortSetupPanel);
+
             _mainMenu = new MainMenuPanel();
             _mainMenu.OnNewGame += StartNewGame;
+            _mainMenu.OnCohortSetup += OpenStartingCohortSetup;
             _mainMenu.OnContinue += ContinueGame;
             _mainMenu.OnSettings += () => { _settingsPanel.Open(); };
             _mainMenu.OnCodex += () => { OpenPlayerPanel("codex"); };
@@ -1405,6 +1444,22 @@ namespace AtomicWar.GodotApp
                           System.IO.File.Exists(SurvivorsSaveStore.SavePath);
             }
             _mainMenu?.EnableContinue(hasSave);
+        }
+
+        private void OpenStartingCohortSetup()
+        {
+            if (_state != GameState.Menu || _startingCohortSetupPanel == null) return;
+            var catalog = EnsureStartingCohortCatalog();
+            _startingCohortSetupPanel.Bind(catalog);
+            _mainMenu.Visible = false;
+            _startingCohortSetupPanel.Open();
+        }
+
+        private void CloseStartingCohortSetup()
+        {
+            _startingCohortSetupPanel?.Close();
+            if (_state == GameState.Menu)
+                _mainMenu.Visible = true;
         }
 
         private void AddMenuButton(string text, Action callback)

@@ -76,9 +76,9 @@ Authored 17 documentation deliverables in `docs/verdict/`:
 
 ## 3. Verification Matrix Evidence
 
-- `dotnet test Ashfall.Core.Tests`: **PASS (7,043 passed, 0 failed)**
-- `godot --headless --path . -- --data-integrity-selftest`: **PASS (0 findings across 208 catalogs)**
+- `dotnet test Ashfall.Core.Tests`: **PASS (9,770 passed, 0 failed)**
+- `godot --headless --path . -- --data-integrity-selftest`: **PASS (0 findings across 298 catalogs)**
 - `godot --headless --path . -- --content-utilization-selftest`: **PASS (CI gate PASS)**
-- `godot --headless --path . -- --scene-binding-selftest`: **PASS (22/22 passed)**
-- `python3 scripts/ci/scene-lint.py`: **PASS (0 errors across 27 scenes)**
+- `godot --headless --path . -- --scene-binding-selftest`: **PASS (25/25 passed)**
+- `python3 scripts/ci/scene-lint.py`: **PASS (0 errors across 30 scenes)**
 - `dotnet build Ashfall.csproj`: **PASS (0 errors, 0 warnings)**

@@ -32,14 +32,19 @@ namespace AtomicWar.GodotApp
 
             _survivorSocial.RationPolicy = Ashfall.Core.StartingLevel.RationPolicy.Standard;
 
-            // Register beliefs from survivor catalog traits (best-effort mapping).
+            SetupEnrichment();
+
+            // Register beliefs from authored enrichment data, falling back to trait inference for unenriched survivors.
             if (_survivors?.Roster?.Roster != null)
             {
                 foreach (var entry in _survivors.Roster.Roster)
                 {
                     if (entry == null || !entry.isAlive) continue;
                     var def = _survivors.Roster.FindDefinition(entry.definitionId);
-                    string belief = InferBeliefProfile(def);
+                    var fields = _enrichment?.GetSurvivorFields(entry.survivorId);
+                    string belief = !string.IsNullOrEmpty(fields?.belief_profile_id)
+                        ? fields.belief_profile_id
+                        : InferBeliefProfile(def);
                     if (!string.IsNullOrEmpty(belief))
                         _survivorSocial.RegisterBelief(entry.survivorId, belief);
                 }

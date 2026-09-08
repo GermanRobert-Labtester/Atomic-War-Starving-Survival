@@ -1,27 +1,56 @@
 # Utility Action Target Matrix
 
-> **Target Arbitration:** Selection, occupancy, and reservation semantics for targeted actions.
+## Target Selection Architecture
 
----
+The Core Utility AI (`UtilityAiSystem.SelectAction`) selects an **action ID**, not a target. Target selection is the responsibility of the action executor in the host layer.
 
-## 1. Targeted Actions Overview
+The `AIActionContext` carries:
+- `SurvivorId` — the actor making the decision
+- No target field
 
-| Action ID | Target Type | Selection Criteria | Concurrency / Reservation Rule |
-|---|---|---|---|
-| `action_treat_wounded` | Survivor (Patient) | Highest trauma/affliction severity, nearest proximity | Exclusive reservation: only one medic claims a patient |
-| `action_socialize` | Survivor (Partner) | High compatibility, low stress, not sleeping/working | Mutual reservation: temporarily binds both participants |
-| `action_resolve_conflict` | Survivor Pair (Disputants) | Highest friction pair | Single mediator claims the conversation |
-| `action_teach_skill` | Survivor (Learner) | Receptive survivor with lower skill | Exclusive pairing: one mentor to one student |
-| `action_repair_equipment` | Item / Fixture | Lowest durability % below repair threshold | Exclusive reservation on workstation and item |
-| `action_cook_food` | Workstation (`room_kitchen`) | Available range burner | Max occupancy bounded by room capacity (2) |
-| `action_conduct_research` | Tech Node / Lab Terminal | Active assigned research node | Up to 2 researchers in laboratory concurrently |
-| `action_purify_water` | Water Plant | Treatment vat / doser | 1 operator per active treatment cycle |
-| `action_stand_watch` | Security Post | Airlock / perimeter sentry spot | 1 guard per watch post |
-| `action_rest` | Bunk | Unoccupied bed in bunks | 1 sleeper per bunk |
+## Target-Dependent Actions
 
----
+| Action ID | Target Type | Target Selection | Concurrency |
+|-----------|------------|------------------|-------------|
+| `action_treat_wounded` | Injured survivor | Executor selects most urgent untreated patient | Must avoid duplicate treatment |
+| `action_socialize` | Compatible survivor | Executor selects available partner | Avoid same-pair loops |
+| `action_resolve_conflict` | Conflicting pair | Executor selects active conflict | One mediator per conflict |
+| `action_teach_skill` | Learner survivor | Executor selects valid learner | Avoid duplicate teaching |
+| `action_repair_equipment` | Degraded equipment | Executor selects most degraded item | Avoid duplicate repair |
 
-## 2. Deterministic Tie-Breaking & Reservation
+## Non-Target Actions
 
-- When multiple targets meet the same selection criteria, the target with the lower ordinal ID (e.g. `survivor_01` before `survivor_02`) is selected deterministically.
-- Unsuccessful claims immediately cause the action to fail eligibility on the current tick, allowing the survivor to select their next best candidate action rather than freezing.
+These actions operate on the survivor or shelter state without a specific target:
+
+| Action ID | Implicit Target |
+|-----------|----------------|
+| `action_rest` | Self |
+| `action_seek_treatment` | Self |
+| `action_train_skill` | Self |
+| `action_cook_food` | Kitchen/workstation |
+| `action_preserve_food` | Preservation station |
+| `action_purify_water` | Water treatment |
+| `action_stand_watch` | Watch post |
+| `action_conduct_research` | Research lab |
+| `action_inspect_housing` | Shelter |
+| `action_weigh_goods` | Depot |
+| `action_read_contract` | Self |
+| `action_canvas_support` | Shelter halls |
+| `action_run_vouch` | Gate |
+| `action_audit_inventory` | Storage |
+| `action_file_report` | Self |
+
+## Deterministic Target Selection
+
+When an executor selects a target, it must be deterministic:
+- Same survivor state + same shelter state → same target
+- Use `ISeededRng` for any randomization
+- Prefer urgency-based ordering (e.g., most injured first)
+- Document the selection algorithm
+
+## Concurrency Rules
+
+1. **Medical**: One medic per patient. If a patient is already being treated, exclude them from target selection.
+2. **Social**: Don't pair the same two survivors repeatedly. Track recent social interactions.
+3. **Teaching**: One teacher per learner. Don't assign the same teacher to multiple learners simultaneously.
+4. **Repair**: One repairer per equipment item. Claim the item before starting work.

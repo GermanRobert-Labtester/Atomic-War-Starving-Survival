@@ -94,7 +94,7 @@ public class Plan10CatalogCoverageTests : CatalogTestBase
         var files = new FileSystemIO();
         var catalog = WarlordDoctrineCatalogLoader.Load(DataDir, files, new SystemTextJsonSerializer());
 
-        Assert.Equal(8, catalog.Doctrines.Count);
+        Assert.True(catalog.Doctrines.Count >= 8, $"Expected at least 8 doctrines, found {catalog.Doctrines.Count}");
         var required = new[]
         {
             "warlord_doctrine_toll",

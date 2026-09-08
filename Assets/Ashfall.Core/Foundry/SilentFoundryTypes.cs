@@ -22,6 +22,12 @@ namespace Ashfall.Core.Foundry
         public const string TreatyLabourSchedule = "treaty_cluster_labour_schedule";
         public const string TreatyRoadIron = "treaty_road_iron_charter";
         public const string TreatyClusterCharter = "treaty_the_cluster_charter";
+        public const string TreatySaltworksAccess = "treaty_saltworks_access";
+        public const string TreatyMembraneRepair = "treaty_membrane_repair";
+        public const string TreatyCoalWindow = "treaty_coal_window";
+        public const string TreatyApprenticeExchange = "treaty_apprentice_exchange";
+        public const string TreatyCrisisMutualAid = "treaty_crisis_mutual_aid";
+        public const string TreatyIncidentBook = "treaty_the_incident_book";
 
         // Charge/consumable material ids (items.json / foundry_items.json).
         public const string ItemScrapMetal = "scrap_metal";

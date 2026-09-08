@@ -22,3 +22,20 @@
 - **Day Invariant:** Ratified days remain Day 280, 305, 330, and 365.
 - **Content Invariant:** Articles, penalties, water allocations, and power quotas match original authored values identically.
 - **Test Gate:** Verified by `FoundryAccordExpansionTests.Parity_BaselineFourDistrict8AccordsPreserved`.
+
+## 3. Plan 102 Additions
+
+The six additions are appended after the 12 pre-existing regional records so
+the original 12 records are not rewritten or reordered:
+
+| Treaty ID | Ratified Day | Distinct Function | Foundry Signatory | Live Consequence Policy |
+|---|---:|---|---|---|
+| `treaty_saltworks_access` | 285 | Measured saltworks right-of-way and water access | Yes | Dependency-ready |
+| `treaty_membrane_repair` | 300 | Technical membrane-hall repair and acceptance | Yes | Dependency-ready |
+| `treaty_coal_window` | 320 | Safe ice-road haul timing | Yes | Dependency-ready |
+| `treaty_apprentice_exchange` | 345 | Supervised casting/salvage training | Yes | Dependency-ready |
+| `treaty_crisis_mutual_aid` | 350 | Bounded emergency service pool | Yes | Dependency-ready |
+| `treaty_the_incident_book` | 355 | Witnessed incident reporting and amendment control | Yes | Dependency-ready |
+
+The catalog therefore has 18 records overall and exactly 10 records returned by
+`RegionalTreatyCatalog.GetByExactSignatoryFaction("faction_silent_foundry")`.

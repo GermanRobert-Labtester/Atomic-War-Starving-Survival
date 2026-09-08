@@ -48,10 +48,10 @@ namespace AtomicWar.GodotApp
             _holdfastTerminal.OpenTerminal();
 
             bool panel = _holdfastTerminal.IsBound;
-            bool catalogs = _holdfastTerminal.PresentedItemCount == 40
-                && _holdfastTerminal.PresentedFactionCount == 3;
+            bool catalogs = _holdfastTerminal.PresentedItemCount == 55
+                && _holdfastTerminal.PresentedFactionCount == 9;
 
-            // ── Catalog rendering sweep: all 40 items and 3 factions ──
+            // ── Catalog rendering sweep: all 55 trade items and 9 factions ──
             bool allItemsRender = true;
             bool allFactionsRender = true;
             var preSaveSupplyDetails = new Dictionary<string, string>();

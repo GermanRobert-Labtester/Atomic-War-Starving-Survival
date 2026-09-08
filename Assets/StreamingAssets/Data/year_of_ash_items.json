@@ -87,7 +87,7 @@
       "weightKg": 14.0,
       "tradeValue": 60,
       "category": "survival_gear",
-      "description": "Soldered tin holding fortified oat-tallow biscuits. Resistant to humidity, mold, and freezing."
+      "description": "A soldered tin of fortified oat-tallow biscuits, proof against humidity, mould, and freezing. They taste like the inside of a tin and they keep anyway. The issue was to people taught not to complain, and the teaching held."
     },
     {
       "id": "item_continental_maritime_transponder",
@@ -199,7 +199,7 @@
       "weightKg": 22.0,
       "tradeValue": 60,
       "category": "engineering_supplies",
-      "description": "Corrosion-inhibited coolant required to prime subterranean geothermal heat loops down to -45°C."
+      "description": "Corrosion-inhibited coolant for priming the subterranean geothermal loops down to minus forty-five. The warmth of the ground arrives through pipes that must first be taught not to freeze, and this is the teaching."
     },
     {
       "id": "item_hermetic_hatch_silicone_gasket",
@@ -231,7 +231,7 @@
       "weightKg": 4.0,
       "tradeValue": 75,
       "category": "engineering_supplies",
-      "description": "500 meters of rubber-insulated firing cable with twenty instantaneous bridge-wire detonators."
+      "description": "Five hundred meters of rubber-insulated firing cable and twenty instantaneous bridge-wire detonators. Everything here belongs to somebody's demolition plan, and the plan is the only part missing."
     },
     {
       "id": "item_lead_shielded_sample_cask",
@@ -263,7 +263,7 @@
       "weightKg": 19.0,
       "tradeValue": 70,
       "category": "engineering_supplies",
-      "description": "Heavy screw jack for shoring up cracked bunker roof beams under heavy spring mud surcharge."
+      "description": "A heavy screw jack for holding cracked bunker roof beams against the spring mud surcharge. It is turned a quarter at a time by people standing underneath it while they work, which is how everyone knows it holds."
     },
     {
       "id": "item_surgical_bone_chisel",
@@ -367,7 +367,7 @@
       "weightKg": 8.5,
       "tradeValue": 55,
       "category": "engineering_supplies",
-      "description": "Hydrogen-rich block for moderating fast neutrons around active radioactive sample vaults."
+      "description": "A hydrogen-rich block stacked around the active sample vaults to take the speed out of fast neutrons. Whatever is behind the vault door is worth keeping; the block's whole job is making sure nothing leaves that should not."
     },
     {
       "id": "item_zinc_bromide_shielding_window",
@@ -375,7 +375,7 @@
       "weightKg": 32.0,
       "tradeValue": 190,
       "category": "engineering_supplies",
-      "description": "High-density optical fluid viewing pane providing gamma shielding equivalent to thick lead."
+      "description": "A high-density optical fluid pane that stops gamma the way thick lead does, and lets you see through. The fluid yellows with age and dose. A window still clear is a window that has not been working."
     },
     {
       "id": "item_potassium_permanganate_crystals",

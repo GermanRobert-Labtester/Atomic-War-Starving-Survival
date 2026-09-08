@@ -1,111 +1,56 @@
-# Plan 76 — Baseline Reconnaissance Record
+# Plan 76 — Baseline Reconnaissance
 
-> Phase 0 evidence record. All findings verified against the working tree on the day of execution.
+## Stale-premise reconciliation
 
-## 1. Baseline gate results (all PASS before any change)
+The plan brief stated a "verified baseline of 2 destinations." **Repository truth at implementation time: 55 destinations** in `expeditions.json`, with Plan 46's `scavenging_table_id` binding live on every entry, `requiresDiscovery` gating on 2 entries, and danger up to 10. Per §1.1 (repository truth overrides the planning grammar), the plan was executed as a **gap-closure expansion (55 → 63)**, not a 2 → 15 build-out.
 
-| Gate | Command | Result |
+## Concept-coverage audit (plan's 13 proposed concepts vs. the existing 55)
+
+| Plan concept | Existing coverage | Gap? |
 |---|---|---|
-| Godot host build | `dotnet build Ashfall.csproj` | 0 errors, 0 warnings |
-| Core test suite | `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | 6680 / 6680 PASS |
-| Catalog integrity | `godot --headless --path . -- --data-integrity-selftest` | PASS — 0 findings, 208 catalogs, 10 640 ids authored |
-| Expedition selftest | `godot --headless --path . -- --expedition-selftest` | PASS — 19/19 (headless demo + 9 vehicle gates) |
+| Urban hospital | `abandoned_hospital`, `hospital_pharmacy`, `prewar_medical_cache`, `loc_st_brigids_almshouse` | no |
+| Urban metro | `location_flooded_subway_depot` | no |
+| Urban shopping center | `loc_department_store` (Vansen's) | no |
+| Industrial chemical plant | `table_loot_chemical_plant` exists (bound to water_station) but **no true plant destination** | **YES** |
+| Industrial rail yard | `table_loot_rail_yard` exists and is **completely unused** | **YES** |
+| Industrial substation | `electrical_substation`, `loc_denial_cut_substation` | no |
+| Military ammunition depot | `loc_ordnance_shoulder` (ammo); **`table_loot_military_depot` unused** | **YES** (depot-scale, distinct from ordnance shoulder) |
+| Military checkpoint | `checkpoint_kilo_armory`, `loc_garrison_checkpoint_gamma` | no |
+| Scientific weather station | none (observatory is astronomy) | **YES** |
+| Scientific geological survey | none | **YES** |
+| Wilderness irradiated forest | none (`loc_forestry_compound` is industrial) | **YES** |
+| Wilderness frozen wetland | none | **YES** |
+| Wilderness burned woodland | none | **YES** |
 
-## 2. Repository truth vs. plan assumption
+**Result: 8 genuine gaps closed (55 → 63); 5 concepts skipped as already covered (often multiple times).** Adding the skipped 5 would duplicate existing sites, violating §33/§52.
 
-Plan 76 assumed a **2-destination** catalog. The verified baseline is:
+## Loader contract (read end-to-end)
 
-| Surface | Count | Source |
-|---|---:|---|
-| Authored destinations in `expeditions.json` | **53** | counted at execution |
-| Loader-merged expedition-capable ids (expeditions.json + locations_expansion3 + locations + year_of_ash_locations + holdfast_locations) | **263** | `ExpeditionCatalogLoader.Load` merge, first-seen dedupe |
+`ExpeditionCatalogLoader` — wrapped list, `ExpeditionJsonDto` (id, displayName, distanceTicks, travelHours fallback, dangerLevel, encounterChancePerTick, baseStaminaDrainPerHour, lootCategories, scavenging_table_id, requiresDiscovery). Loads `expeditions.json` then 4 location catalogs (first-seen ID wins). Defaults/clamps: encounterChance `clamp(0.10 + danger*0.02, 0.05, 0.50)` when absent; drain `clamp(1.5 + danger*0.25, 1.0, 5.0)`; distance fallback `travelHours * 2`. Registers into `ExpeditionDefinitionRegistry`.
 
-The 2 → 15 expansion target is therefore **already exceeded 3.5×** by authored
-records and 17× by the dispatchable merged surface. Per Plan 76 §1.1
-(repository truth overrides the planning grammar), the quantitative expansion
-objective is recorded as **superseded**, not executed as written.
+## Range semantics (from tests + runtime)
 
-## 3. Parity oracle — the original two destinations
+- `distanceTicks` ≥ 1 (existing spread 2–18)
+- `dangerLevel` 1–10 (int-rounded)
+- `encounterChancePerTick` ∈ (0, 1), clamped ≤ 0.50
+- `baseStaminaDrainPerHour` > 0, clamped ≤ 5.0
+- All 8 new entries carry explicit values within these bounds.
 
-Frozen from `expeditions.json` (also pinned by
-`Plan32ExpeditionDestinationWiringTests.Expeditions_OriginalTwoRecordsArePreserved`):
+## Baseline health (55-state, pre-change)
 
-| id | displayName | distanceTicks | dangerLevel | encounter/tick | stamina/hr | table | lootCategories |
-|---|---|---:|---:|---:|---:|---|---|
-| `loc_the_allotments` | The Works Allotment Commune | 5 | 2 | 0.12 | 2.0 | `table_loot_farm` | scrap_metal, clean_water, bandage*, dried_rations* |
-| `loc_denial_cut_substation` | The Denial Cut Substation | 8 | 4 | 0.18 | 3.0 | `table_loot_power_substation` | dosimeter, copper_wire_10m_of_10m*, fuel, item_hydro_baron_queue_chit |
+- All 55 `scavenging_table_id` refs resolved; 0 range violations; 0 duplicate IDs.
+- 8 unused Plan 46 tables — `rail_yard`, `military_depot`, `chemical_plant` (partially), `clinic`, `fire_station`, `greenhouse`, `hunting_cabin`, `monastery`, `police_station` — reuse-first bindings chosen for 3 of them.
 
-\* = values repaired by Plan 76 (were `bandages`, `food_rations`, `copper_wire`).
-IDs, names, distance, danger, encounter chance and stamina drain are **unchanged**.
+## Loot authority (reconciled with Plan 46 — LIVE)
 
-## 4. Loader semantics (read end-to-end)
+Case C/D hybrid: `scavenging_table_id` is the authoritative weighted-loot binding (Plan 46 `scavenging_tables.json`, 49 → 54 tables); `lootCategories` remains a display/signature field validated by `ExpeditionLootValidator` through `ExpeditionLootReferenceResolver` (item IDs across merged item catalogs, or semantic category tokens). Both were kept consistent for every new entry. No new items were created (§32 gate).
 
-`Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs`:
+## Cross-plan seams audited
 
-1. Loads `expeditions.json` first (primary authority), then merges
-   `locations_expansion3.json`, `locations.json`, `year_of_ash_locations.json`,
-   `holdfast_locations.json`. First-seen wins (`seen` set) → expeditions.json
-   records take precedence on id collisions.
-2. Every location entry is loaded as an expedition-capable destination with
-   loader defaults: `distanceTicks` = `round(travelHours × 2)` (else 8),
-   `encounterChancePerTick` = `Clamp(0.10 + danger × 0.02, 0.05, 0.50)`,
-   `baseStaminaDrainPerHour` = `Clamp(1.5 + danger × 0.25, 1.0, 5.0)`.
-3. Registered into the static `ExpeditionDefinitionRegistry` (last write wins).
-4. Parse failures route through `CatalogDiagnostics.Warn` (path + shape + exception).
+- **Plan 49 micro-locations:** `micro_locations.json` binds by location identity; no destination-ID→approach hook is wired in the loader. The three target concepts (hospital, metro, checkpoint) already have destinations; new stable IDs are binding-ready. **Deferred, no dangling refs.**
+- **Plan 48 weather gates:** weather gating has no destination-eligibility field in the current schema. **Deferred; no authored weather locks.**
+- **Plan 58/50/59:** stable `loc_*` IDs are the delivered hook; no narrative content authored here.
 
-## 5. Runtime semantics verified
+## Baseline gates (55-state, all green before edits)
 
-From `Assets/Ashfall.Core/Expeditions/ExpeditionSystem.cs`:
-
-- **Dispatch:** `Start(def, survivorId, …)` — one active expedition per survivor;
-  no world-topology routing. Reachability = presence in the registry
-  (§34 resolved: the expedition system uses abstract distance; documented).
-- **Encounters:** `RollEncounter` fires **every tick hour** (outbound, looting,
-  inbound), chance = `encounterChancePerTick` × host multiplier × 0.5 in Stealth,
-  clamped [0,1]. Round trip ≈ `2 × distanceTicks + 3` looting ticks.
-- **Stamina:** `baseStaminaDrainPerHour × hours` + encumbrance penalty
-  (≤15/tick at full load) × survivor multiplier; capacity 100.
-- **Loot authority (dual-mode, Plan 46 live):**
-  1. `scavenging_table_id` present + table in `ScavengingTableCatalog` →
-     authoritative weighted table roll;
-  2. else `lootCategories` strings are used **directly as item ids**
-     (`PickLootCategory` → `AddLoot` → inventory).
-- **Availability:** no discovery/unlock gate in core; the UI enumerates all
-  `Definitions` (additive visibility). Host blocking hooks:
-  `IsLocationBlocked` (Crossing gate + `ExtraBlocked`).
-- **Save:** mid-expedition state persists `locationId` + travel progress;
-  round-trip covered by `MidExpeditionSaveAndRestore_MaintainsDestinationIntegrity`.
-
-## 6. Existing test gates preserved (untouched)
-
-`Ashfall.Core.Tests/Expeditions/Plan32ExpeditionDestinationWiringTests.cs` pins:
-count = 53; unique ids; ranges (distance ≥ 1, danger 1–10, encounter
-0.05–0.50, stamina 1.0–5.0, non-empty lootCategories); original-two parity;
-tier distribution 16/18/13/6; representative dispatch & completion;
-mid-expedition save/restore.
-
-## 7. Cross-catalog audits
-
-- **Location identity (§33):** all 53 authored ids exist in the location
-  catalogs (Model A — shared canonical identity). No new expedition-only ids.
-- **Family coverage (§14):** every planned family role is covered by at least
-  one distinct physical site in the merged surface — urban hospital
-  (`abandoned_hospital`), metro (`location_flooded_subway_depot`), shopping
-  (`loc_department_store`); industrial chemical/tank (`loc_diesel_tank_farm`),
-  rail yard (`loc_sector_4_rail_switchyard`, `loc_cut_abandoned_depot`,
-  `loc_railway_guild_roundhouse`), substation (`electrical_substation`);
-  military depot (`loc_ordnance_shoulder`, `checkpoint_kilo_armory`), checkpoint
-  (`loc_garrison_checkpoint_gamma`); scientific weather
-  (`loc_granite_pass_weather_observatory`), survey/observatory
-  (`location_silent_observatory`, `location_geo_thermal_plant_ruins`);
-  wilderness burned woodland (`loc_ash_woodland`), radioactive wetland
-  (`loc_black_thaw_drainage_basin`, `loc_poison_gas_culvert_marsh`), treeline
-  (`loc_muster_treeline_camp`).
-  → Adding the plan's 13 literal entries would duplicate these physical sites
-  and violate §1.4 / §33 / §52 (no dead destination).
-- **Weather gating (§37/§38):** no destination-level weather fields exist;
-  weather blocking belongs to the host `ExtraBlocked` seam. No bindings authored
-  (documented as deferred).
-- **Micro-locations (§35/§36):** no destination-level binding field exists in
-  the current schema; stable ids remain available for a future seam. No
-  dangling refs authored.
+`--data-integrity-selftest` PASS · `--expedition-selftest` PASS · full xUnit green · build clean.

@@ -114,12 +114,13 @@ inventory instances of new IDs serialize through the existing item-id path
 | Command | Result |
 |---|---|
 | `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — 0 errors, 0 warnings |
-| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **PASS — 7003/7003** (incl. 21 new Plan 91 tests) |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **PASS — 9760/9760** (incl. 21 Plan 91 tests) |
 | `dotnet build Ashfall.csproj` | PASS — 0 errors, 0 warnings |
-| `godot --headless --path . -- --data-integrity-selftest` | **PASS — 0 errors, 208 catalogs** |
+| `godot --headless --path . -- --data-integrity-selftest` | **PASS — 0 errors, 298 catalogs** |
 | `godot --headless --path . -- --greenhouse-selftest` | PASS — 24/24 |
 | `godot --headless --path . -- --content-utilization-selftest` | CI gate PASS |
-| `godot --headless --path . -- --asset-registry-selftest` | PASS |
+| `godot --headless --path . -- --scene-binding-selftest` | PASS — 25/25 |
+| `python3 scripts/ci/scene-lint.py` | PASS — 30 scenes, 0 errors |
 
 (Phase 0 baseline had 3 pre-existing muster-ending test failures and a
 13-finding integrity FAIL; both were fixed by a concurrent agent's muster

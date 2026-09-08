@@ -35,8 +35,13 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void RunPlayerPanelsUiTestAndQuit()
         {
+            _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
             BuildUserInterface();
             SetupSurvivors();
+            if (_survivors.RosterState.Count == 0)
+            {
+                _survivors.LoadStartingCohort(ResolveStartingCohort(_startingCohortProfileId));
+            }
             SetupInventory();
             SetupMedical();
             SetupWorld();

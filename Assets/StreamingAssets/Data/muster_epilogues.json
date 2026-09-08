@@ -60,6 +60,71 @@
       "ending_key": "ending_verdict_the_offer_is_a_lease",
       "title": "The Offer Is a Lease",
       "prose": "The count converts into a lease: quarterly maintenance, a reading per season, a census every 1,827 days, enforceable by the machine's own registers. The last image: a quarterly invoice, printed on a machine that stopped printing anything else in Year One, delivered to a door that opens, because the door is counted."
+    },
+    {
+      "ending_key": "ending_garrison_absorbs_coalition",
+      "title": "Under Their Watch",
+      "prose": "The shelter kept its perimeter wire and lost its old chain of command. Central Garrison stencils appeared above the intake manifold before anyone formally announced the demobilization. Routine patrols arrive precisely on the hour, trading rifle ammunition for quarterly ration signatures. The gates stay locked from dusk until dawn, and every requisition order requires three carbon copies."
+    },
+    {
+      "ending_key": "ending_rebuilders_joined",
+      "title": "Hands on the Ruins",
+      "prose": "The coalition banner was folded into the archive, replaced by the yellow chalk markers of the reconstruction crews. Work gangs clear the culverts along Highway 9 on alternating shifts, mixing lime and aggregate by hand. Rations are tied to cubic yards cleared rather than old shelter registry lines. The road opens five miles further each season, though the dust never settles."
+    },
+    {
+      "ending_key": "ending_coalition_independent",
+      "title": "No Banner",
+      "prose": "No regional colors hang over the gate, and no courier brings orders stamped by a distant commander. The shelter trades scrap bar stock and dried mash at its own fence, weighing each transaction on an uncalibrated beam scale. Without garrison escorts, freight teams travel armed and take two days longer through the salt cuts. The watch rotates among the living, six hours on and six off, without exception."
+    },
+    {
+      "ending_key": "ending_foundry_annexation",
+      "title": "Stamped in Steel",
+      "prose": "The cupola furnace burns day and night, fed by scrap hauled from the southern rail siding. Ingot tallies are stamped directly onto copper tags issued to each shift supervisor, dictating the calorie allocation for the barracks below. Steam from the quench tanks hangs thick across the compound, masking the scent of burning oil. The shelter produces iron without pause, and the foundry's inspectors never miss an audit."
+    },
+    {
+      "ending_key": "ending_water_plant_held",
+      "title": "The Last Clean Line",
+      "prose": "Desalination Unit 4 hums against the bedrock, delivering twelve thousand liters of potable permeate into the valley main each dawn. The shelter guards the intake manifold with fixed machine guns, trading water vouchers for dried legumes and machine lubricants. Filter media must be backwashed with raw brine twice daily to prevent calcification. The pumps keep turning, but every replacement bearing requires a blood price from the scavengers."
+    },
+    {
+      "ending_key": "ending_grain_silo_captured",
+      "title": "The Grain Count",
+      "prose": "The corrugated concrete silos hold thirty tons of sealed winter rye, protected from moisture and weevils by nitrogen purging. Every morning, two armed tallymen measure out bushel allocations under the watchful gaze of queued sector delegates. Bread replaces boiled tubers in the shelter mess, though the perimeter watch is doubled against nighttime tunneling. The ledger of grain debts grows longer than the cemetery roll."
+    },
+    {
+      "ending_key": "ending_fuel_depot_burned",
+      "title": "Fire at the Depot",
+      "prose": "The storage farm at Railhead Six is a field of buckled steel plates and scorched soil that smells of sour kerosene. Without diesel, trucks sit axle-deep in frozen mud along the perimeter, stripped of batteries and glass. Freight moves on handcarts pulled by pairs of weary scavengers who sleep wrapped in canvas tarps. Winter heating falls entirely on green timber cut from the river bottoms, filling the lower bunks with bitter smoke."
+    },
+    {
+      "ending_key": "ending_mercy_road",
+      "title": "The Mercy Road",
+      "prose": "Those who surrendered were not lined against the revetment; their names were written into the ration rolls with crossed-out unit numbers. Former enforcers work the pump handles alongside the families they once evicted, sharing the midday potato broth in guarded silence. The outer barricades stand unmanned at midday, though knives are still kept sharpened under sleeping pallets. Survival was bought without a firing squad, but trust is counted one day at a time."
+    },
+    {
+      "ending_key": "ending_iron_way",
+      "title": "The Iron Way",
+      "prose": "No rival gang approaches within rifle shot of the shelter gate, and the approach cuts remain completely clear of scavengers. Curfew begins at sundown; doors are bolted from the outside by appointed section wardens who carry weighted truncheons. Theft is answered with immediate exile beyond the wire, regardless of weather or family ties. The corridors are quiet, the rations are never short, and nobody speaks the names of the missing above a whisper."
+    },
+    {
+      "ending_key": "ending_listeners_thread",
+      "title": "The Listener's Thread",
+      "prose": "The copper aerial array on the ridge picks up signals from nine valley settlements, trading weather soundings and transit notices on scheduled quarter-hours. Disagreements over boundary markers are brought to the radio room rather than settled with carbines on the road. The batteries are constantly failing, and three settlements refused to ratify the pasture accord. Yet every night at dusk, the operator signs off with the call signs of every station that answered."
+    },
+    {
+      "ending_key": "ending_mercy_water_held",
+      "title": "Water for the Road",
+      "prose": "The desalination plant delivers a daily reserve to the public cistern outside the gate, where any traveler with a clean canteen may drink without paying in brass. Former combatants work the maintenance tunnels under shared oversight, scraping mineral crust from the reverse-osmosis tubes. The orchard plots behind the spillway show green shoots for the first time since the war. The supply is measured to the half-liter, but nobody is turned away parched."
+    },
+    {
+      "ending_key": "ending_iron_fuel_ash",
+      "title": "Ash in the Tanks",
+      "prose": "The enemies who contested the fuel reserve were wiped out to the last man, but the depot they defended burned down to the concrete footings. In the shelter below, survivors sleep in three layers of wool around an iron brazier fueled by scrap fence posts. Heavy sleds are hauled by teams of five men bound together with tow straps through waist-deep drifts. Order is absolute because waste is death, and the ashes of the tanks blow across the snow forever."
+    },
+    {
+      "ending_key": "ending_shelter_falls",
+      "title": "What They Found",
+      "prose": "The outer blast door was held ajar by a calcified boot wedged beneath the sill. Inside, water dripping from a burst condensation pipe had frozen into cloudy pillars across the dispensary floor. The duty roster on the wall still carried names penciled in three different hands, trailing off halfway through the third month of winter. A scavenger with a pry bar took the brass latches from the lockers and left the logbook lying in the snow."
     }
   ]
 }

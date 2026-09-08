@@ -1,36 +1,41 @@
-# Foundry Treaty Consequence Bindings (Plan 102 ↔ Plan 103 Seam)
+# Foundry Treaty Consequence Bindings
 
-**Accord Authority:** `Assets/StreamingAssets/Data/foundry_accords.json` (Plan 102)
-**Consequence Authority:** `Assets/StreamingAssets/Data/foundry_treaty_consequences.json` (Plan 103)
+**Treaty authority:** `Assets/StreamingAssets/Data/foundry_accords.json`
 
----
+**Policy authority:** `Assets/StreamingAssets/Data/foundry_treaty_consequences.json`
 
-## 1. Consequence Policy Seam
+## Policy seam
 
-Plan 102 authored the contractual agreements. Plan 103 authored the mechanical consequence policies triggered by compliance (`met`), shortfall (`missed`), or active breach (`violated`).
+The live catalog is a static lookup from `(treaty_id, outcome)` to a policy.
+The policy carries the affected signatory, a bounded standing delta, and
+market demand modifiers. `SilentFoundrySystem` owns application and records
+the result in `SilentFoundryConsequenceState`.
 
-### Current 15-Policy Coverage Across Plan 102 Treaties
-
-| Accord ID | Title | Live Consequence Policies | Factions Impacted |
+| Treaty | Live outcomes | Affected faction | Runtime trigger |
 |---|---|---|---|
-| `treaty_brine_pipe_and_iodine_exchange` | The Brine Pipe & Iodine Exchange | `met`, `missed` | `faction_silent_foundry` |
-| `treaty_cluster_labour_schedule` | The Cluster Labour Schedule | `met`, `violated` | `faction_silent_foundry` |
-| `treaty_road_iron_charter` | The Road Iron Charter | `met`, `missed` | `faction_silent_foundry` |
-| `treaty_the_cluster_charter` | The Cluster Charter | *None (Exempt finale marker)* | — |
-| `treaty_garrison_grain_tithe_compact` | The Garrison Grain Tithe Compact | `met`, `violated` | `faction_central_garrison` |
-| `treaty_flotilla_saline_corridor_concordat` | The Flotilla Saline Corridor Concordat | `met`, `missed` | `faction_the_fleet` |
-| `treaty_switchback_fuel_and_passage_accord` | The Switchback Fuel & Passage Accord | `met`, `violated` | `faction_ash_sign` |
-| `treaty_scale_suburban_fair_trade_convention` | The Scale Suburban Fair Trade Convention | `met` | `faction_the_scale` |
-| `treaty_deep_coast_aquifer_protection_treaty` | The Deep Coast Aquifer Protection Treaty | `met`, `violated` | `faction_the_fleet` |
-| `treaty_scrap_salvage_demarcation` | The Scrap Salvage Demarcation | *Staged follow-on* | `faction_the_cutters` |
-| `treaty_roster_border_demilitarization_pact` | The Roster Border Demilitarization Pact | *Staged follow-on* | `faction_forward_roster` |
-| `treaty_high_scarp_observatory_sanctuary` | The High Scarp Observatory Sanctuary | *Staged follow-on* | `faction_ash_sign` |
+| `treaty_brine_pipe_and_iodine_exchange` | `met`, `missed` | `faction_silent_foundry` | live quota cycle |
+| `treaty_cluster_labour_schedule` | `met`, `violated` | `faction_silent_foundry` | live labour cycle |
+| `treaty_road_iron_charter` | `met`, `missed` | `faction_silent_foundry` | live quota cycle |
+| `treaty_saltworks_access` | `met`, `violated` | `faction_silent_foundry` | data-ready; trigger deferred |
+| `treaty_membrane_repair` | `met`, `violated` | `faction_silent_foundry` | data-ready; trigger deferred |
+| `treaty_coal_window` | `met`, `missed` | `faction_silent_foundry` | data-ready; trigger deferred |
+| `treaty_crisis_mutual_aid` | `met`, `violated` | `faction_silent_foundry` | data-ready; trigger deferred |
+| `treaty_the_incident_book` | `met` | `faction_silent_foundry` | data-ready; reporting trigger deferred |
 
----
+`treaty_apprentice_exchange` and `treaty_the_cluster_charter` intentionally
+have no policy rows. The current Core has no typed trainee-cycle or charter
+outcome trigger, and this plan does not create one.
 
-## 2. Dispatch Discipline
+## Consequence authority separation
 
-1. Treaties define rights, allocations, tariffs, and penalties.
-2. The runtime looks up consequences via `SilentFoundryConsequencePolicyCatalog.Find(treaty_id, outcome)`.
-3. If a treaty is not yet bound to a policy (e.g. `scrap_salvage`), `Find` returns `null` safely and no unintended mechanics fire.
-4. Pinned by `FoundryAccordExpansionTests.ConsequenceSeam_Plan103PoliciesResolveAgainstTheseAccords`.
+- Treaty definitions remain in `foundry_accords.json`.
+- Policy lookup and one-shot application remain in Core.
+- Standing remains mirrored through the existing Foundry stance host.
+- Market demand remains owned by `MarketSystem`.
+- Access, production, contamination, war, dialogue, and epilogue systems are
+  downstream consumers only; no unsupported policy fields or fake flags were
+  added.
+
+The nine new policies are therefore stable, validated data seams. A future
+typed assessment trigger can call the existing `Find`/`ApplyConsequence`
+path without changing the catalog contract.

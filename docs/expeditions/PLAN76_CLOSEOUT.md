@@ -1,96 +1,49 @@
-# Plan 76 — Expedition Destinations — Closeout
-
-**Status: COMPLETE (verification pass).** The expansion was already implemented and committed
-(`1426438e` "plan76: expedition destination catalog validation, loot-table migration, and balance
-sim" + follow-on `ef67d600`). This pass verified the full acceptance matrix against repository
-truth. **Zero data or code changes required.**
+# Plan 76 — Regression Matrix & Closeout
 
 ## Summary
 
-The plan's stated baseline of "2 destinations" was stale: repository truth at Plan 76 execution
-time was already a **55-destination catalog** — the expansion target was superseded by repository
-truth and then exceeded (55 > 15), exactly as the plan's own §1.1 ("repository truth overrides the
-planning grammar") directs. The prior implementation completed the plan's three numbered
-sub-efforts: 76.0 catalog validation + loot-reference repair, 76.1 Plan 46 scavenging-table
-binding (49 tables, renewable/one-time depletion models), 76.2 deterministic balance simulation
-(200 seeded runs × 53 destinations, two-pass determinism proof), 76.3 owner-approved balance trims.
+Plan 76 shipped as a **gap-closure expansion (55 → 63 destinations + 5 new scavenging tables)** after baseline reconnaissance proved the plan's "2 → 15" premise stale: 55 destinations already existed with Plan 46 table bindings live. Five of the plan's thirteen proposed concepts were already covered (hospital ×4, metro, shopping center, substations ×2, checkpoints ×2); the remaining eight genuine gaps were closed with distinct, grounded destinations. **Zero new Core code**; test-count pins updated (55 → 63; tier distribution 16/20/13/6 → 16/23/17/7) to reflect the expanded authored catalog.
 
-## Baseline
+## Destination roster (new)
 
-- `expeditions.json` root: `{schema_version, expeditions[]}` — 55 destination records.
-- Original planned pair `loc_the_allotments` (Works Allotment Commune) and
-  `loc_denial_cut_substation` (Denial Cut Substation) present and intact.
-- Baseline gates (this pass): suite 9461/9461, data-integrity 0 findings, build clean,
-  expedition-selftest PASS (40 checks), content-utilization PASS.
+| ID | Name | Family | D/Dgr/p/Stam | Table (reuse/new) |
+|---|---|---|---|---|
+| `loc_vulcan_works_chemical` | Vulcan Works Chemical Plant | Industrial | 7/7/0.20/3.0 | chemical_plant (reuse) |
+| `loc_north_freight_yard` | North Freight Yard | Industrial | 9/5/0.20/2.8 | rail_yard (**was unused**) |
+| `loc_blackridge_ammunition_depot` | Blackridge Ammunition Depot | Military | 11/8/0.24/3.2 | military_depot (**was unused**), discovery-gated |
+| `loc_birchline_weather_station` | Birchline Weather Station | Scientific | 13/5/0.10/3.8 | weather_station (new) |
+| `loc_west_ridge_survey` | West Ridge Survey Camp | Scientific | 12/6/0.18/3.4 | geological_survey (new) |
+| `loc_mirrim_forest_edge` | Mirrim Forest Edge | Wilderness | 9/7/0.20/3.2 | forest_edge (new) |
+| `loc_marsh_hollow` | Marsh Hollow | Wilderness | 11/6/0.16/3.6 | frozen_wetland (new) |
+| `loc_charcoat_burns` | The Charcoat Burns | Wilderness | 6/5/0.14/2.6 | burned_woodland (new) |
 
-## Schema (actual)
+## DoD highlights
 
-`{id, displayName, distanceTicks, dangerLevel, encounterChancePerTick, baseStaminaDrainPerHour,
-scavenging_table_id, lootCategories[], requiresDiscovery?}` — Plan 46 Case B/C is live:
-`scavenging_table_id` binds the authoritative weighted table while `lootCategories` remains as
-item-ID flavor metadata. `requiresDiscovery` (2 destinations) is the §43/§44 availability seam.
+- Existing destinations: all 55 preserved; the plan's "original two" (`loc_the_allotments`, `loc_denial_cut_substation`) pinned by parity test.
+- 63 unique IDs; 0 collisions with `locations.json`/expansion catalogs; grounded names throughout (no `area_01` placeholders).
+- All numeric ranges valid (Plan 32 bounds tests); distance spread 2–18; danger spread 1–10 with meaningful distribution (16/23/17/7 across tiers).
+- Loot: 63/63 table bindings resolve; 0 unresolved loot tokens; 0 new items; distinct loot signature per destination.
+- No destination strictly dominates; no dead destination (each new entry has a unique family/role/hazard identity).
+- Determinism: `BalanceSweep_Deterministic_WithSanityBounds` byte-for-byte two-pass proof green.
+- Old saves: additive expansion; discovery-gated entries follow the existing `requiresDiscovery` policy (3 total); no expedition-state migration.
 
-## Location authority
-
-54/55 destination IDs are canonical `locations.json` world-site IDs (the exception is a derived
-sub-site with its own cross-catalog identity). No duplicate `loc_*` identity exists.
-
-## Destination roster
-
-55 destinations spanning near (2–5 ticks, 32), midrange (6–9, 15), and far (10+, 8) bands;
-danger 2–10 spread across 9 levels; every planned family covered (urban, industrial, military,
-scientific, wilderness, settlements-as-trade under Plan 43 social rules). Parity: all 53
-destinations shared with the Plan 76 commit are byte-identical except two intentional later
-additions (`requiresDiscovery` on rural gas station / government bunker, plus the Forestry
-Compound record).
-
-## Distance / Danger / Stamina
-
-All values within runtime ranges; no monotonic ladder; stamina 1.2–4.0/hour tiered with
-distance/danger bands. Highest cumulative encounter pressure: The Dead Hand Core (0.998),
-Arcology Sector 4 (0.995), Silent Observatory (0.985) — deliberate endgame gatekeeping.
-
-## Loot authority
-
-- All 55 `scavenging_table_id` refs resolve against `scavenging_tables.json` (Plan 46 authority).
-- `lootCategories` validated through `ExpeditionLootValidator` + the canonical multi-catalog
-  `ItemCatalogLoader` (items.json **plus** expansion catalogs incl. `crossing_items.json`).
-  Two Crossing-catalog refs (`item_crossing_traded_salt`, `item_hydro_baron_queue_chit`) are
-  canonical items outside items.json — not orphans.
-- Active regression gates: `Plan76DestinationLootReferenceTests` (5/5),
-  `Plan76BalanceSimulationTests`, `Plan32ExpeditionDestinationWiringTests` (19/19 combined).
-
-## Balance findings
-
-- No strictly dominated destination on same-table axes except 11 pairs that are dominated
-  **numerically only** — each retains a unique cross-catalog hook (cassette hidden caches,
-  distress/quest sites, settlement trade, narrative locations), satisfying §52's
-  "no unique content hook" escape clause. Numeric dominance is a documented balance observation,
-  not a defect requiring data churn against a shipped, simulated catalog.
-
-## Micro-locations / Weather
-
-Plan 49/48 seams operate through `micro_locations.json` and the weather/travel systems; the 55
-stable destination IDs are the binding surface. No destination-embedded bindings exist (per §36/§38).
-
-## Determinism / Save
-
-`--expedition-selftest` PASS (40 checks: dispatch, travel, looting, vehicle gates, 21
-micro-location gates); balance sim is two-pass seeded-deterministic by construction; discovery
-flag on old saves is additive-safe.
-
-## Validation
+## Verification
 
 | Command | Result |
 |---|---|
-| `godot --headless -- --expedition-selftest` | **PASS** — 40/40 |
-| `godot --headless -- --data-integrity-selftest` | **PASS** — 0 findings, 298 catalogs |
-| `godot --headless -- --content-utilization-selftest` | **PASS** — CI gate |
-| `dotnet test --filter Plan76 + Plan32ExpeditionDestination` | **19/19 PASS** |
-| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | **9461/9461 PASS** |
-| `dotnet build Ashfall.csproj` | **PASS** — 0 errors |
+| `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — 0 errors |
+| `dotnet test Ashfall.Core.Tests` (expedition/scavenging filter) | PASS — **327/327** |
+| `dotnet test Ashfall.Core.Tests` (full) | 9460/9461 — 1 failure in `PowerGridCatalogTests` from **pre-existing concurrent power-grid work** (uncommitted `power_grid.json` on branch), unrelated to expeditions |
+| `dotnet build Ashfall.csproj` | PASS — 0 warnings, 0 errors |
+| `--data-integrity-selftest` | PASS — 0 errors, 0 warnings, 298 catalogs |
+| `--expedition-selftest` | PASS |
+| `--content-utilization-selftest` | PASS — CI gate PASS |
+| Programmatic audits | 63/63 table refs resolve · 0 unresolved loot tokens · 0 duplicate IDs · cumulative-encounter review per new destination |
 
-## Deferred
+## Deferred (explicit)
 
-None outstanding for Plan 76 scope. Downstream consumers (Plans 49/48/58/50/59) bind through the
-55 stable destination IDs as designed.
+- **Plan 49 micro-locations:** no destination-ID approach seam exists; stable IDs delivered (`abandoned_hospital`, `location_flooded_subway_depot`, `checkpoint_kilo_armory`, `loc_garrison_checkpoint_gamma`, `loc_north_freight_yard`).
+- **Plan 48 weather gates:** no destination-eligibility field; stable IDs delivered (`loc_marsh_hollow`, `loc_mirrim_forest_edge`).
+- **Plan 58/50/59:** narrative encounter pools, distress-signal sources, quest targets — stable IDs are the hook.
+- **Plan 46 enrichment:** new tables authored to current schema; weighted tuning can deepen with playtest telemetry.
+- Unused Plan 46 tables remaining: `clinic`, `fire_station`, `greenhouse`, `hunting_cabin`, `monastery`, `police_station` — future binding candidates, no dangling refs.

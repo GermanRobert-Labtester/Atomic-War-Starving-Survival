@@ -30,13 +30,13 @@
 4. **Testing Suite & Gates**:
    - Created `Ashfall.Core.Tests/MoralChoiceFactionReactionsExpansionTests.cs` (10 tests covering catalog parsing, 6 canonical IDs, 3-faction dialogue completeness, speaker/location validity, journal entries, bounty baseline parity, band crossing triggers, overflow legends, and save/restore persistence).
    - All 10 expansion tests pass (10/10).
-   - Full repository test suite passes (**7,425 / 7,425 tests pass**, 0 failures).
-   - Godot headless self-tests pass:
-     - `data-integrity-selftest`: PASS (0 findings across 216 catalogs).
-     - `content-utilization-selftest`: PASS (CI gate PASS).
-     - `scene-binding-selftest`: PASS (22/22 scenes).
-     - `scene-lint`: PASS (0 errors across 27 production scenes).
-     - `Ashfall.csproj` build: PASS (0 errors, 0 warnings).
+    - Full repository test suite passes (**9,784 / 9,784 tests pass**, 0 failures).
+    - Godot headless self-tests pass:
+      - `data-integrity-selftest`: PASS (0 findings across 298 catalogs).
+      - `content-utilization-selftest`: PASS (CI gate PASS, 581 catalogs).
+      - `scene-binding-selftest`: PASS (25/25 scenes).
+      - `scene-lint`: PASS (0 errors across 30 production scenes).
+      - `Ashfall.csproj` build: PASS (0 errors, 0 warnings).
 
 5. **Documentation Suite**:
    - Authored `docs/moral/PLAN100_BASELINE.md`
@@ -61,7 +61,7 @@
 - `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter FullyQualifiedName~MoralChoiceFactionReactionsExpansionTests`: **10 Passed, 0 Failed**
 - `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter FullyQualifiedName~MoralChoiceBranchGossipTests`: **36 Passed, 0 Failed**
 - `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter FullyQualifiedName~MoralChoiceSystemTests`: **46 Passed, 0 Failed**
-- `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`: **7,425 Passed, 0 Failed**
+- `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`: **9,784 Passed, 0 Failed**
 - `dotnet build Ashfall.csproj`: **Build succeeded (0 errors, 0 warnings)**
 - `godot --headless --path . -- --data-integrity-selftest`: **PASS**
 - `godot --headless --path . -- --content-utilization-selftest`: **PASS**

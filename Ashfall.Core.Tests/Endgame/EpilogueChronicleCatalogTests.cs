@@ -182,8 +182,8 @@ namespace Ashfall.Core.Tests.Endgame
 
             Assert.Equal(20, slides.Count);
 
-            // Shuffle input to test builder sorting
-            var shuffled = slides.OrderBy(_ => Guid.NewGuid()).ToList();
+            // Permute input out-of-order to test builder sorting
+            var shuffled = slides.OrderBy(s => (s.Order * 7 + 11) % 20).ToList();
 
             var builder = new EpilogueChronicleBuilder();
             var chronicle = builder.Build(new EpilogueChronicleInput

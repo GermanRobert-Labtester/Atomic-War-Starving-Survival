@@ -254,14 +254,15 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void Catalog_LoadsFourCrossingActionsWithBoundFields()
+        public void Catalog_LoadsExpandedCatalogWithOriginalActionsPreserved()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
 
             var defs = UtilityActionCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(6, defs.Count);
+            Assert.Equal(20, defs.Count);
+            // Original 6 actions preserved
             Assert.Contains(defs, d => d.id == "action_weigh_goods");
             Assert.Contains(defs, d => d.id == "action_read_contract");
             Assert.Contains(defs, d => d.id == "action_canvas_support");

@@ -53,7 +53,7 @@ namespace Ashfall.Core.Tests.Narrative
             var leva = catalog.GetById("npc_leva_quist");
             Assert.NotNull(leva);
             Assert.True(leva!.IsCompanion);
-            Assert.Equal("hydro_barons", leva.FactionId);
+            Assert.Equal("faction_hydro_barons", leva.FactionId);
 
             var yara = catalog.GetById("npc_yara_holm");
             Assert.NotNull(yara);

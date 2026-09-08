@@ -64,6 +64,8 @@ namespace Ashfall.Core.MoralChoice
 
         public int MoralDelta { get; set; }
         public int EmpathyDelta { get; set; }
+        /// <summary>Optional canonical historical flag written after this choice commits.</summary>
+        public string SetFlag { get; set; } = string.Empty;
         public string OutcomeText { get; set; } = string.Empty;
         public string Epitaph { get; set; } = string.Empty;
     }
@@ -451,6 +453,13 @@ namespace Ashfall.Core.MoralChoice
                 epitaph = choice.Epitaph
             };
             _state.resolutions.Add(resolution);
+
+            // Historical moral memory is part of the committed resolution.
+            // SetFlag is idempotent, and the existing save state remains the
+            // sole persistence authority for the resulting active flag set.
+            if (!string.IsNullOrEmpty(choice.SetFlag))
+                SetFlag(choice.SetFlag);
+
             OnQuestResolved?.Invoke(resolution);
 
             // Overflow never lands mid-scene: flag it, settle it overnight.

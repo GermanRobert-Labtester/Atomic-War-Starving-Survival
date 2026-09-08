@@ -53,19 +53,25 @@ Each doctrine defines a complete, bounded strategic profile:
 ## 3. Verification & Compliance Evidence
 
 - **`WarlordCatalogValidator.Validate`:** Clean (0 errors, alias warnings preserved).
-- **`CatalogIntegrityValidator`:**
+- **`WarlordHeadlessDemo` (`--warlord-selftest`):** 33/33 PASSED (100%).
+- **`CatalogIntegrityValidator` (`--data-integrity-selftest`):**
   ```
-  DATA_INTEGRITY_SELFTEST PASS — 0 findings (10575 ids authored, 3489 reuses reserved) — 0 errors, 0 warnings across 208 catalogs
+  DATA_INTEGRITY_SELFTEST PASS — 0 findings (11338 ids authored, 4029 reuses reserved) — 0 errors, 0 warnings across 298 catalogs
   ```
-- **`ContentUtilizationScanner`:**
+- **`ContentUtilizationScanner` (`--content-utilization-selftest`):**
   ```
-  CI Content Utilization Gate: PASS (0 orphaned, 0 unparsed)
+  CI Content Utilization Gate: PASS
+  Total catalogs: 581 | Gameplay-consumed: 208 | Codex-only: 279 | Orphaned: 0
   ```
-- **`SceneBindingSelfTest`:** 22/22 scenes passed.
-- **`SceneLint`:** 27 production scenes checked; 0 errors; 0 warnings.
-- **`WarlordPlan63DoctrineTests`:** 6/6 tests passed including:
-  - 24 distinct doctrine verification.
-  - Original 8 preservation test.
-  - 16 new profile structural completeness test.
-  - Action weights and transition network validity test.
-  - Seeded multi-day replay simulation determinism test.
+- **`SceneBindingSelfTest` (`--scene-binding-selftest`):** 25/25 passed, 0 failed.
+- **`SceneLint` (`scene-lint.py`):** 30 production scenes checked; 0 errors; 0 warning(s).
+- **`WarlordPlan63DoctrineTests` & Warlord Suite:**
+  - 49/49 Warlord-related tests passed (`dotnet test Ashfall.Core.Tests --filter FullyQualifiedName~Warlord`).
+  - 6/6 `WarlordPlan63DoctrineTests` passed:
+    - 24 distinct doctrine verification.
+    - Original 8 preservation test.
+    - 16 new profile structural completeness test.
+    - Action weights and transition network validity test.
+    - Seeded multi-day replay simulation determinism test.
+- **Full Test Suite (`dotnet test Ashfall.Core.Tests`):**
+  - **9,357 / 9,357 PASSED** (0 failed, 0 skipped, 31s duration).

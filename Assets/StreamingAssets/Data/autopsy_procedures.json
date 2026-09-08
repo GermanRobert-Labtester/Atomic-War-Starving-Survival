@@ -5,101 +5,283 @@
     {
       "procedure_id": "procedure_rad_pathology",
       "display_name": "Radiation Pathology",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves", "field_surgical_kit"],
-      "required_consumables": ["sterilised_bandage", "clean_water"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit"
+      ],
+      "required_consumables": [
+        "sterilised_bandage",
+        "clean_water"
+      ],
       "airborne_risk": 0.15,
       "pathogen_risk": 0.05,
       "procedure_hours": 4,
-      "possible_findings": ["finding_acute_rad_burn", "finding_bone_marrow_failure", "finding_organ_fibrosis"],
-      "research_unlocks": ["knowledge_radiation_basics"]
+      "possible_findings": [
+        "finding_acute_rad_burn",
+        "finding_bone_marrow_failure",
+        "finding_organ_fibrosis"
+      ],
+      "research_unlocks": [
+        "knowledge_radiation_basics"
+      ]
     },
     {
       "procedure_id": "procedure_toxicology",
       "display_name": "Toxicology Screen",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves"],
-      "required_consumables": ["bandage", "clean_water"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves"
+      ],
+      "required_consumables": [
+        "bandage",
+        "clean_water"
+      ],
       "airborne_risk": 0.1,
       "pathogen_risk": 0.08,
       "procedure_hours": 3,
-      "possible_findings": ["finding_chemical_exposure", "finding_organ_damage"],
-      "research_unlocks": ["knowledge_pathogen_containment"]
+      "possible_findings": [
+        "finding_chemical_exposure",
+        "finding_organ_damage"
+      ],
+      "research_unlocks": [
+        "knowledge_pathogen_containment"
+      ]
     },
     {
       "procedure_id": "procedure_containment_autopsy",
       "display_name": "Containment Autopsy",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves", "field_surgical_kit", "surgical_mask"],
-      "required_consumables": ["sterilised_bandage", "clean_water", "antibiotics"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit",
+        "surgical_mask"
+      ],
+      "required_consumables": [
+        "sterilised_bandage",
+        "clean_water",
+        "antibiotics"
+      ],
       "airborne_risk": 0.3,
       "pathogen_risk": 0.2,
       "procedure_hours": 6,
-      "possible_findings": ["finding_pathogen_strain", "finding_contamination_source"],
-      "research_unlocks": ["knowledge_pathogen_containment"]
+      "possible_findings": [
+        "finding_pathogen_strain",
+        "finding_contamination_source"
+      ],
+      "research_unlocks": [
+        "knowledge_pathogen_containment"
+      ]
     },
     {
       "procedure_id": "procedure_blunt_trauma",
       "display_name": "Blunt Force & Crush Forensics",
-      "required_tools": ["medical_scissors", "field_surgical_kit"],
-      "required_consumables": ["bandage", "clean_water"],
+      "required_tools": [
+        "medical_scissors",
+        "field_surgical_kit"
+      ],
+      "required_consumables": [
+        "bandage",
+        "clean_water"
+      ],
       "airborne_risk": 0.05,
       "pathogen_risk": 0.02,
       "procedure_hours": 3,
-      "possible_findings": ["finding_crush_fracture", "finding_internal_hemorrhage"],
-      "research_unlocks": ["knowledge_field_trauma_surgery"]
+      "possible_findings": [
+        "finding_crush_fracture",
+        "finding_internal_hemorrhage"
+      ],
+      "research_unlocks": [
+        "knowledge_field_trauma_surgery"
+      ]
     },
     {
       "procedure_id": "procedure_ballistic_forensics",
       "display_name": "Ballistic & Shrapnel Extraction Forensics",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves", "field_surgical_kit"],
-      "required_consumables": ["bandage", "clean_water"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit"
+      ],
+      "required_consumables": [
+        "bandage",
+        "clean_water"
+      ],
       "airborne_risk": 0.05,
       "pathogen_risk": 0.03,
       "procedure_hours": 4,
-      "possible_findings": ["finding_bullet_trajectory", "finding_shrapnel_fragment"],
-      "research_unlocks": ["knowledge_field_trauma_surgery"]
+      "possible_findings": [
+        "finding_bullet_trajectory",
+        "finding_shrapnel_fragment"
+      ],
+      "research_unlocks": [
+        "knowledge_field_trauma_surgery"
+      ]
     },
     {
       "procedure_id": "procedure_respiratory_contamination",
       "display_name": "Pulmonary Asbestos & Rad-Dust Screen",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves", "surgical_mask"],
-      "required_consumables": ["clean_water", "sterilised_bandage"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "surgical_mask"
+      ],
+      "required_consumables": [
+        "clean_water",
+        "sterilised_bandage"
+      ],
       "airborne_risk": 0.25,
       "pathogen_risk": 0.05,
       "procedure_hours": 4,
-      "possible_findings": ["finding_pulmonary_silicosis", "finding_rad_dust_inhalation"],
-      "research_unlocks": ["knowledge_radiation_basics"]
+      "possible_findings": [
+        "finding_pulmonary_silicosis",
+        "finding_rad_dust_inhalation"
+      ],
+      "research_unlocks": [
+        "knowledge_radiation_basics"
+      ]
     },
     {
       "procedure_id": "procedure_hypothermia_pathology",
       "display_name": "Severe Hypothermia & Frostbite Pathology",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves"],
-      "required_consumables": ["clean_water"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves"
+      ],
+      "required_consumables": [
+        "clean_water"
+      ],
       "airborne_risk": 0.02,
       "pathogen_risk": 0.02,
       "procedure_hours": 3,
-      "possible_findings": ["finding_cellular_frostbite", "finding_vascular_collapse"],
-      "research_unlocks": ["knowledge_field_trauma_surgery"]
+      "possible_findings": [
+        "finding_cellular_frostbite",
+        "finding_vascular_collapse"
+      ],
+      "research_unlocks": [
+        "knowledge_field_trauma_surgery"
+      ]
     },
     {
       "procedure_id": "procedure_spore_infection_isolation",
       "display_name": "Fungal Spore & Bio-Contaminant Isolation",
-      "required_tools": ["medical_scissors", "protective_rubber_gloves", "field_surgical_kit", "surgical_mask"],
-      "required_consumables": ["sterilised_bandage", "clean_water", "antibiotics"],
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit",
+        "surgical_mask"
+      ],
+      "required_consumables": [
+        "sterilised_bandage",
+        "clean_water",
+        "antibiotics"
+      ],
       "airborne_risk": 0.35,
       "pathogen_risk": 0.25,
       "procedure_hours": 5,
-      "possible_findings": ["finding_mycotoxin_spore", "finding_fungal_hyphae"],
-      "research_unlocks": ["knowledge_pharmacology_synthesis"]
+      "possible_findings": [
+        "finding_mycotoxin_spore",
+        "finding_fungal_hyphae"
+      ],
+      "research_unlocks": [
+        "knowledge_pharmacology_synthesis"
+      ]
     },
     {
       "procedure_id": "procedure_poison_biochemical_assay",
       "display_name": "Neurotoxin & Heavy Metal Assay",
-      "required_tools": ["protective_rubber_gloves", "field_surgical_kit"],
-      "required_consumables": ["clean_water", "sterilised_bandage"],
+      "required_tools": [
+        "protective_rubber_gloves",
+        "field_surgical_kit"
+      ],
+      "required_consumables": [
+        "clean_water",
+        "sterilised_bandage"
+      ],
       "airborne_risk": 0.15,
       "pathogen_risk": 0.1,
       "procedure_hours": 5,
-      "possible_findings": ["finding_organophosphate_toxin", "finding_heavy_metal_deposit"],
-      "research_unlocks": ["knowledge_pharmacology_synthesis"]
+      "possible_findings": [
+        "finding_organophosphate_toxin",
+        "finding_heavy_metal_deposit"
+      ],
+      "research_unlocks": [
+        "knowledge_pharmacology_synthesis"
+      ]
+    },
+    {
+      "procedure_id": "procedure_deprivation_pathology",
+      "display_name": "Deprivation & Wasting Pathology",
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit"
+      ],
+      "required_consumables": [
+        "clean_water",
+        "sterilised_bandage"
+      ],
+      "airborne_risk": 0.02,
+      "pathogen_risk": 0.02,
+      "procedure_hours": 3,
+      "possible_findings": [
+        "finding_starvation_wasting",
+        "finding_severe_dehydration",
+        "finding_immune_collapse"
+      ],
+      "research_unlocks": [
+        "knowledge_food_preservation"
+      ]
+    },
+    {
+      "procedure_id": "procedure_blast_injury",
+      "display_name": "Blast Overpressure Forensics",
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit"
+      ],
+      "required_consumables": [
+        "bandage",
+        "sterilised_bandage"
+      ],
+      "airborne_risk": 0.08,
+      "pathogen_risk": 0.04,
+      "procedure_hours": 5,
+      "possible_findings": [
+        "finding_blast_lung",
+        "finding_overpressure_hemorrhage",
+        "finding_concussive_trauma"
+      ],
+      "research_unlocks": [
+        "knowledge_fortified_chokepoints"
+      ]
+    },
+    {
+      "procedure_id": "procedure_forensic_unknown",
+      "display_name": "Full Forensic Examination",
+      "required_tools": [
+        "medical_scissors",
+        "protective_rubber_gloves",
+        "field_surgical_kit",
+        "scalpel"
+      ],
+      "required_consumables": [
+        "sterilised_bandage",
+        "clean_water",
+        "antibiotics"
+      ],
+      "airborne_risk": 0.18,
+      "pathogen_risk": 0.12,
+      "procedure_hours": 7,
+      "possible_findings": [
+        "finding_concealed_trauma",
+        "finding_mixed_cause",
+        "finding_toxin_indicator"
+      ],
+      "research_unlocks": [
+        "knowledge_pathogen_containment"
+      ]
     }
   ]
 }

@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "default_profile_id": "cohort_standard_holdfast",
+  "profiles": [
+    {
+      "profile_id": "cohort_standard_holdfast",
+      "display_name": "Standard Holdfast",
+      "description": "The unchanged legacy opening: medicine, security, and food resilience under pressure.",
+      "members": [
+        {
+          "id": "survivor_dr_sarah_chen",
+          "displayName": "Dr. Sarah Chen (Trauma Surgeon)",
+          "health": 90.0,
+          "hunger": 20.0,
+          "thirst": 25.0,
+          "warmth": 85.0,
+          "morale": 70.0,
+          "lifetimeDose": 14.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "survivor_gunner_mikhail",
+          "displayName": "Gunner Mikhail (Heavy Artillery Loader)",
+          "health": 80.0,
+          "hunger": 35.0,
+          "thirst": 30.0,
+          "warmth": 75.0,
+          "morale": 55.0,
+          "lifetimeDose": 38.0,
+          "acuteRad": true,
+          "joinedDay": 0
+        },
+        {
+          "id": "elena_vasquez",
+          "displayName": "Elena Vasquez (Aridoculture Engineer)",
+          "health": 95.0,
+          "hunger": 15.0,
+          "thirst": 20.0,
+          "warmth": 90.0,
+          "morale": 65.0,
+          "lifetimeDose": 8.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        }
+      ]
+    },
+    {
+      "profile_id": "cohort_triage_ward",
+      "display_name": "Triage Ward",
+      "description": "Three people who can stabilize a crisis, but the shelter still needs food and repairs.",
+      "members": [
+        {
+          "id": "riley_cooper",
+          "displayName": "Riley Cooper",
+          "health": 86.0,
+          "hunger": 32.0,
+          "thirst": 34.0,
+          "warmth": 84.0,
+          "morale": 58.0,
+          "lifetimeDose": 16.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "ariana_cruz",
+          "displayName": "Ariana Cruz",
+          "health": 84.0,
+          "hunger": 30.0,
+          "thirst": 36.0,
+          "warmth": 82.0,
+          "morale": 62.0,
+          "lifetimeDose": 18.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "jamie_chen",
+          "displayName": "Jamie Chen",
+          "health": 88.0,
+          "hunger": 28.0,
+          "thirst": 33.0,
+          "warmth": 86.0,
+          "morale": 55.0,
+          "lifetimeDose": 12.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        }
+      ]
+    },
+    {
+      "profile_id": "cohort_repair_crew",
+      "display_name": "Repair Crew",
+      "description": "Practical hands for a failing shelter, with less medical resilience at the start.",
+      "members": [
+        {
+          "id": "jamie_chen",
+          "displayName": "Jamie Chen",
+          "health": 92.0,
+          "hunger": 30.0,
+          "thirst": 36.0,
+          "warmth": 86.0,
+          "morale": 58.0,
+          "lifetimeDose": 13.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "casey_garcia",
+          "displayName": "Casey Garcia",
+          "health": 84.0,
+          "hunger": 34.0,
+          "thirst": 38.0,
+          "warmth": 80.0,
+          "morale": 55.0,
+          "lifetimeDose": 22.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "hayden_reyes",
+          "displayName": "Hayden Reyes",
+          "health": 88.0,
+          "hunger": 32.0,
+          "thirst": 35.0,
+          "warmth": 90.0,
+          "morale": 63.0,
+          "lifetimeDose": 9.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        }
+      ]
+    },
+    {
+      "profile_id": "cohort_growers_stewards",
+      "display_name": "Growers & Stewards",
+      "description": "Food-minded caretakers with thin expedition and perimeter coverage.",
+      "members": [
+        {
+          "id": "taylor_morgan",
+          "displayName": "Taylor Morgan",
+          "health": 88.0,
+          "hunger": 24.0,
+          "thirst": 34.0,
+          "warmth": 86.0,
+          "morale": 68.0,
+          "lifetimeDose": 13.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "sage_green",
+          "displayName": "Sage Green",
+          "health": 82.0,
+          "hunger": 30.0,
+          "thirst": 36.0,
+          "warmth": 82.0,
+          "morale": 64.0,
+          "lifetimeDose": 16.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "reese_flores",
+          "displayName": "Reese Flores",
+          "health": 90.0,
+          "hunger": 26.0,
+          "thirst": 30.0,
+          "warmth": 88.0,
+          "morale": 70.0,
+          "lifetimeDose": 7.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        }
+      ]
+    },
+    {
+      "profile_id": "cohort_convoy_remnant",
+      "display_name": "Convoy Remnant",
+      "description": "People used to moving through bad country, arriving with the cost already on them.",
+      "members": [
+        {
+          "id": "alex_raymond",
+          "displayName": "Alex Raymond",
+          "health": 80.0,
+          "hunger": 42.0,
+          "thirst": 40.0,
+          "warmth": 74.0,
+          "morale": 55.0,
+          "lifetimeDose": 28.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "morgan_lee",
+          "displayName": "Morgan Lee",
+          "health": 84.0,
+          "hunger": 38.0,
+          "thirst": 42.0,
+          "warmth": 72.0,
+          "morale": 52.0,
+          "lifetimeDose": 34.0,
+          "acuteRad": true,
+          "joinedDay": 0
+        },
+        {
+          "id": "drew_paterson",
+          "displayName": "Drew Paterson",
+          "health": 88.0,
+          "hunger": 36.0,
+          "thirst": 38.0,
+          "warmth": 76.0,
+          "morale": 58.0,
+          "lifetimeDose": 24.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        }
+      ]
+    },
+    {
+      "profile_id": "cohort_civilian_improvisers",
+      "display_name": "Civilian Improvisers",
+      "description": "A flexible group with useful hands and no single specialist to carry the opening.",
+      "members": [
+        {
+          "id": "jordan_kim",
+          "displayName": "Jordan Kim",
+          "health": 90.0,
+          "hunger": 26.0,
+          "thirst": 32.0,
+          "warmth": 86.0,
+          "morale": 68.0,
+          "lifetimeDose": 10.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "rowan_king",
+          "displayName": "Rowan King",
+          "health": 85.0,
+          "hunger": 30.0,
+          "thirst": 34.0,
+          "warmth": 84.0,
+          "morale": 72.0,
+          "lifetimeDose": 12.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        },
+        {
+          "id": "elliot_bennett",
+          "displayName": "Elliot Bennett",
+          "health": 82.0,
+          "hunger": 34.0,
+          "thirst": 36.0,
+          "warmth": 80.0,
+          "morale": 60.0,
+          "lifetimeDose": 19.0,
+          "acuteRad": false,
+          "joinedDay": 0
+        }
+      ]
+    }
+  ]
+}

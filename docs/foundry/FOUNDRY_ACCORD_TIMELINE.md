@@ -33,4 +33,23 @@ As the campaign progresses from Day 1 to Day 365, `RegionalTreatyCatalog.GetRati
 - Day 250: 4 accords active.
 - Day 300: 7 accords active.
 - Day 350: 11 accords active.
-- Day 365: All 12 accords active.
+- Day 365: All 18 accord records active; the Foundry-signatory subset is 10.
+
+## 3. Plan 102 Foundry-Signatory Sequence
+
+The original 12 records retain their authored array order. Ratification day,
+not JSON position, is the chronology authority. The six appended Foundry
+accords fit between the existing District 8 milestones as follows:
+
+| Day | Treaty ID | Why this day is plausible |
+|---:|---|---|
+| 285 | `treaty_saltworks_access` | The first brine exchange has exposed the need to measure the pipe walk rather than leave access implied. |
+| 300 | `treaty_membrane_repair` | A repair pact follows the initial brine lane and precedes the winter labour peak. |
+| 320 | `treaty_coal_window` | The Cutters formalize safe haul timing before the ice-road iron quota is due. |
+| 345 | `treaty_apprentice_exchange` | Training follows the labour schedule and precedes the year-end civic signature. |
+| 350 | `treaty_crisis_mutual_aid` | The network accepts a bounded emergency protocol before the charter sitting. |
+| 355 | `treaty_the_incident_book` | The shared record covenant gives the final charter sitting an auditable paper trail. |
+
+No new accord supersedes an existing one. The coal schedule explicitly leaves
+the Road Iron Charter's quotas untouched, and the Incident Book supplies a
+renewal/inspection hook without adding a temporal precedence engine.

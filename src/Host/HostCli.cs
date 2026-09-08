@@ -162,6 +162,7 @@ namespace AtomicWar.GodotApp
         CampaignFuzzSelfTest,
         CompositionRootSelfTest,
         RealCampaignJourneySelfTest,
+        StartingCohortLifecycleSelfTest,
         WorldExplorationSelfTest,
         CartographySelfTest,
         ExpansionDepthSelfTest,
@@ -490,6 +491,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CompositionRootSelfTest;
             if (Has(args, "--real-campaign-journey-selftest") || Has(args, "--campaign-journey-selftest") || Has(args, "--real-main-journey-selftest"))
                 return HostCliAction.RealCampaignJourneySelfTest;
+            if (Has(args, "--starting-cohort-lifecycle-selftest") || Has(args, "--cohort-lifecycle-selftest"))
+                return HostCliAction.StartingCohortLifecycleSelfTest;
             if (Has(args, "--expansion-depth-selftest") || Has(args, "--plan18-selftest"))
                 return HostCliAction.ExpansionDepthSelfTest;
             if (Has(args, "--dynamic-world-selftest") || Has(args, "--plan19-selftest"))
@@ -510,6 +513,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --accessibility-selftest / --ui-accessibility-selftest / --ui-access-selftest Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels");
             GD.Print("  --asset-coverage-report  Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
             GD.Print("  --asset-registry-selftest Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
+            GD.Print("  --starting-cohort-lifecycle-selftest / --cohort-lifecycle-selftest  Plan 138 fresh-vs-restore lifecycle: preserve old slots, apply an alternate cohort, honor an empty saved roster, and reject failed restores without reseeding");
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --power-grid-catalog-selftest  Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal");
             GD.Print("  --core-selftest          Ice road + census headless demos");

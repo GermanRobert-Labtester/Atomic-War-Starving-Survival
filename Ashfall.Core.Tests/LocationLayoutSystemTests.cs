@@ -250,10 +250,10 @@ namespace Ashfall.Core.Tests
             var json = new SystemTextJsonSerializer();
             var factions = CatalogLocator.LoadWrappedList<StandingRecordFactionStub>(File.ReadAllText(path), SystemTextJsonSerializer.Options);
             Assert.NotNull(factions);
-            Assert.Single(factions);
-            Assert.Equal("faction_the_overlay", factions[0].id);
-            Assert.Equal("The Overlay", factions[0].display_name);
-            Assert.Contains("Ground does not argue", factions[0].signature_quote);
+            var overlay = factions.Find(f => f.id == "faction_the_overlay");
+            Assert.NotNull(overlay);
+            Assert.Equal("The Overlay", overlay.display_name);
+            Assert.Contains("Ground does not argue", overlay.signature_quote);
         }
 
         private class StandingRecordFactionStub

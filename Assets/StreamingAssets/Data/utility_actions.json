@@ -97,7 +97,7 @@
       "id": "action_audit_inventory",
       "fatigueGate": 80,
       "displayName": "Audit Inventory",
-      "description": "",
+      "description": "Counts and verifies shelter stockpiles against the ledger. Inventory-accuracy companion bias.",
       "basePriority": 0.1,
       "weight": 1.0,
       "isOverrideAction": false,
@@ -121,7 +121,7 @@
       "id": "action_file_report",
       "fatigueGate": 80,
       "displayName": "File Report",
-      "description": "",
+      "description": "Drafts and files a shelter operations report for the standing record.",
       "basePriority": 0.1,
       "weight": 1.0,
       "isOverrideAction": false,
@@ -139,6 +139,338 @@
         }
       ],
       "baseScore": 0.35,
+      "skillBonusFactor": 0.0
+    },
+    {
+      "id": "action_repair_equipment",
+      "displayName": "Repair Equipment",
+      "description": "Inspects and repairs degraded shelter equipment. Workshop-companion bias.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "loud_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.35,
+      "fatigueGate": 80,
+      "skillBonusFactor": 0.25
+    },
+    {
+      "id": "action_inspect_housing",
+      "displayName": "Inspect Housing",
+      "description": "Walks the shelter checking seals, filters, and structural integrity. Preventive-maintenance companion bias.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "quiet_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.25,
+      "fatigueGate": 85,
+      "skillBonusFactor": 0.1
+    },
+    {
+      "id": "action_treat_wounded",
+      "displayName": "Treat Wounded",
+      "description": "Attends to an injured survivor using available medical supplies. Medical-triage companion bias.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "medical_triage"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.55,
+      "fatigueGate": 90,
+      "skillBonusFactor": 0.3
+    },
+    {
+      "id": "action_seek_treatment",
+      "displayName": "Seek Treatment",
+      "description": "A sick or injured survivor seeks medical attention from available care.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "medical"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.45,
+      "fatigueGate": 95,
+      "skillBonusFactor": 0.0
+    },
+    {
+      "id": "action_cook_food",
+      "displayName": "Cook Food",
+      "description": "Prepares a meal from available ingredients in the shelter kitchen.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "quiet_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.4,
+      "fatigueGate": 80,
+      "skillBonusFactor": 0.2
+    },
+    {
+      "id": "action_preserve_food",
+      "displayName": "Preserve Food",
+      "description": "Preserves perishable food to extend shelf life. Cold-storage and drying work.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "menial_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.3,
+      "fatigueGate": 80,
+      "skillBonusFactor": 0.15
+    },
+    {
+      "id": "action_purify_water",
+      "displayName": "Purify Water",
+      "description": "Processes unsafe water through filtration and treatment equipment.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "loud_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.45,
+      "fatigueGate": 80,
+      "skillBonusFactor": 0.15
+    },
+    {
+      "id": "action_socialize",
+      "displayName": "Socialize",
+      "description": "Spends time with another survivor — talking, sharing a meal, or sitting together.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.2,
+      "fatigueGate": 85,
+      "skillBonusFactor": 0.0
+    },
+    {
+      "id": "action_resolve_conflict",
+      "displayName": "Resolve Conflict",
+      "description": "Attempts to mediate an active interpersonal friction between survivors.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "order"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.35,
+      "fatigueGate": 85,
+      "skillBonusFactor": 0.1
+    },
+    {
+      "id": "action_train_skill",
+      "displayName": "Train Skill",
+      "description": "Practices a trainable skill during idle time. Slow, steady improvement.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "quiet_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.15,
+      "fatigueGate": 70,
+      "skillBonusFactor": 0.2
+    },
+    {
+      "id": "action_teach_skill",
+      "displayName": "Teach Skill",
+      "description": "A qualified survivor teaches another survivor a skill they have mastered.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "quiet_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.15,
+      "fatigueGate": 70,
+      "skillBonusFactor": 0.25
+    },
+    {
+      "id": "action_stand_watch",
+      "displayName": "Stand Watch",
+      "description": "Takes a watch post to monitor for threats and maintain shelter security.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "weapon"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.35,
+      "fatigueGate": 85,
+      "skillBonusFactor": 0.15
+    },
+    {
+      "id": "action_conduct_research",
+      "displayName": "Conduct Research",
+      "description": "Advances an active research project in the shelter laboratory.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [
+        "quiet_labor"
+      ],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.2,
+      "fatigueGate": 75,
+      "skillBonusFactor": 0.3
+    },
+    {
+      "id": "action_rest",
+      "displayName": "Rest",
+      "description": "Takes time to recover from fatigue. Essential for long-term survivor health.",
+      "basePriority": 0.1,
+      "weight": 1.0,
+      "isOverrideAction": false,
+      "tags": [],
+      "curvePoints": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0
+        }
+      ],
+      "baseScore": 0.5,
+      "fatigueGate": 0,
       "skillBonusFactor": 0.0
     }
   ]

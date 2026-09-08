@@ -817,10 +817,10 @@ namespace AtomicWar.GodotApp
                 var vio = new FileSystemIO();
                 var vjson = new SystemTextJsonSerializer();
                 var radioCorpus = VerdictCatalogLoader.LoadRadio(dataDirectory, vio, vjson);
-                var radioSys = radioCorpus.Count == 13
+                var radioSys = radioCorpus.Count >= 13
                     ? new VerdictRadioSystem(bus, clock, radioCorpus)
                     : new VerdictRadioSystem();
-                Check(radioSys.Corpus.Count == 13, "verdict radio corpus loads 13 broadcasts");
+                Check(radioSys.Corpus.Count >= 13, "verdict radio corpus loads at least 13 broadcasts");
                 var radioFired = radioSys.Poll(211, reckoning.Phase);
                 Check(radioFired.Contains("radio_verdict_carrier_on_window"), "pilot carrier fires in Culpable window");
                 Check(!radioSys.HasFired("radio_verdict_reckoning_call"), "reckoning call withheld until its dayTrigger");

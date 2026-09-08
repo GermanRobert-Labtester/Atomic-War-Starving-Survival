@@ -48,6 +48,12 @@ namespace AtomicWar.GodotApp
             // the generic "Something changed." placeholder. LoadDefault resolves
             // the data dir and degrades to an empty catalog if absent.
             JournalVoice.BindCatalog(JournalVoiceProseCatalogLoader.LoadDefault());
+            var authoredCorpus = new JournalCorpusCatalogLoader(
+                new FileSystemIO(),
+                new SystemTextJsonSerializer()).Load(_dataDir);
+            var authoredAuthors = JournalDemoHarness.BuildAuthors(catalogs).Values;
+            _journal.BindAuthoredCorpus(new JournalCorpusAdapter(authoredCorpus, authoredAuthors));
+            BindJournalWorldProducerIfReady();
             // Mark dirty rather than writing the whole save file per entry; the
             // _Process tick flushes it. Seeding adds many entries in one frame and
             // used to rewrite journal_save.json once for each of them.

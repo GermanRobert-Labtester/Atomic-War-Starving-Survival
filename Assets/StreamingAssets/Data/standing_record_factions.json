@@ -20,6 +20,153 @@
       "signature_quote": "The Schedule named households. The Record names ground. Ground does not argue.",
       "access_rule": "Scrape three plates without writing a lived name or a Continuity number, and Overlay labour withdraws. They do not raid. Rooms go dark of juniors. Posts stay posts.",
       "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_scale",
+      "display_name": "The Scale",
+      "alignment": "conditional",
+      "home_region": "industrial_belt",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "brass_valve_bodies",
+        "filter_charcoal",
+        "pipe_sealant"
+      ],
+      "offers": [
+        "potable_ration_quota",
+        "sluice_transit_clearance",
+        "flow_rate_telemetry"
+      ],
+      "signature_quote": "Water is counted because uncounted water disappears into someone else's cellar.",
+      "access_rule": "Maintain metered cistern quotas and settle overdraw debts before each dawn bell; tampering with flow restrictors terminates drawing rights at every district conduit.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_compact",
+      "display_name": "The Compact",
+      "alignment": "neutral",
+      "home_region": "dead_suburbs",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "parchment_rolls",
+        "iron_gall_ink",
+        "surveyor_transit_glass"
+      ],
+      "offers": [
+        "cadastral_boundary_deeds",
+        "arbitration_records",
+        "survey_marker_waypoints"
+      ],
+      "signature_quote": "The war burned the houses, but the property line between the ashes remains recorded.",
+      "access_rule": "Submit boundary disputes to formal council hearing and accept sworn survey markers; violence against field registrars voids all historical parcel claims.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_underwrite",
+      "display_name": "The Underwrite",
+      "alignment": "conditional",
+      "home_region": "industrial_belt",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "hardened_plate_carriers",
+        "heavy_machine_oil",
+        "sealed_logistics_manifests"
+      ],
+      "offers": [
+        "convoy_underwriting",
+        "armed_escort_vouchers",
+        "depot_fuel_draws"
+      ],
+      "signature_quote": "Nothing in the dust is safe; safety is only the premium someone agreed to pay.",
+      "access_rule": "Pay risk premiums in advance and report cargo manifests honestly; concealing hazardous goods or defaulting on contract indemnity forfeits depot protection.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_cutters",
+      "display_name": "The Cutters",
+      "alignment": "conditional",
+      "home_region": "the_cut",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "hardened_ice_spikes",
+        "black_coal_briquettes",
+        "steel_winch_cable"
+      ],
+      "offers": [
+        "cleared_corridor_passage",
+        "heavy_haulage_sledges",
+        "span_waystation_shelter"
+      ],
+      "signature_quote": "The road doesn't belong to the banner flying over it; it belongs to the crew chipping ice at four in the morning.",
+      "access_rule": "Pay column road maintenance tolls in iron or coal and obey bridge axle limits; running a closed pass during blizzard warnings closes all waystation gates to your wagons.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_fleet",
+      "display_name": "The Fleet",
+      "alignment": "conditional",
+      "home_region": "deep_coast",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "tarred_hemp_rigging",
+        "marine_pitch_caulk",
+        "copper_hull_nails"
+      ],
+      "offers": [
+        "barge_ferry_berth",
+        "coastal_salvage_tolls",
+        "tide_table_nav_charts"
+      ],
+      "signature_quote": "The tide doesn't care whose seal is on the parchment; if the seams aren't pitched, the cargo sinks.",
+      "access_rule": "Register cargo manifests at Berth 9 and pay wharfage in copper or pitch; docking uninspected hulls or discharging tainted bilge bars your vessels from coastal waterways.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_rebuilders",
+      "display_name": "The Rebuilders",
+      "alignment": "neutral",
+      "home_region": "ash_flats",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "viable_heirloom_seeds",
+        "refractory_kiln_bricks",
+        "sterilized_field_dressings"
+      ],
+      "offers": [
+        "staple_grain_bushels",
+        "soil_rotation_almanac",
+        "communal_silo_storage"
+      ],
+      "signature_quote": "You cannot eat an imperial victory; you can eat what four women planted in the muck ninety days ago.",
+      "access_rule": "Honor minuted trade quotas and refrain from carrying weapons onto the grain exchange floor; hoarding seed chits during planting season results in immediate civic expulsion.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_garrison",
+      "display_name": "The Garrison",
+      "alignment": "conditional",
+      "home_region": "ash_flats",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "smokeless_powder_kegs",
+        "machined_rifle_extractors",
+        "preserved_medical_plasma"
+      ],
+      "offers": [
+        "checkpoint_transit_chits",
+        "sentry_perimeter_watch",
+        "tactical_hazard_briefings"
+      ],
+      "signature_quote": "A border isn't a line on paper; it's the ditch someone agreed to stand in with loaded rifles.",
+      "access_rule": "Present authorized travel chits at the outer wire and submit to weapons inspection; evading road checkpoints or concealing contraband results in immediate internment.",
+      "badge_asset_id": ""
     }
   ]
 }

@@ -1,56 +1,44 @@
 # Plan 74 — Chapter Pacing Matrix
 
-_ASHFALL · docs/narrative · Plan 74_
+Day targets are **pacing documentation only**. The progression schema has no trigger fields (see runtime contract); the authoritative calendar is `weather_seasons.json`.
 
-> **Important:** Day ranges are narrative design targets only. They are NOT encoded in `narrative_progression.json` and will NOT be read by the runtime. WeatherSystem, NarrativeEncounterSystem, and the incident system are the actual pacing authorities.
+## Authoritative season calendar (weather_seasons.json, profile `default_winter`)
 
----
+| Season window | Start day | Character |
+|---|---:|---|
+| Ash Fall | 0 | ashfall 2.2, fallout storms 1.0 |
+| The Deep Freeze | 60 | blizzard 2.5 — winter onset |
+| The Thaw | 120 | rain 2.2 — mobility returns |
+| The Black Bloom | 180 | ashfall 1.6, black rain 0.9 — ash returns |
+| High Cold | 240 | blizzard 2.6 — second deep winter |
+| The Turning | 300 | clearest window — relative calm |
 
-## Pacing Table
+## Campaign duration authority
 
-| # | Title | Intended Day Range | Pacing Notes |
-|---|---|---|---|
-| 1 | The Exchange | Day 0 | Instantaneous; the inciting event |
-| 2 | Ashfall | Days 1–3 | Immediate survival horizon; radiation peak |
-| 3 | The Bunker | Days 4–14 | Shelter establishment; early resource pressure |
-| 4 | First Contact | Days 10–20 | Overlaps The Bunker; first external encounter |
-| 5 | The Long Winter | Days 15–40 | Nuclear winter onset; confirmed by WeatherSystem |
-| 6 | The Consolidation | Days 20–45 | Shelter systems stabilise; community rules emerge |
-| 7 | The First Winter | Days 35–60 | Cold peak; fuel crisis; trade and exclusion choices |
-| 8 | The Long Dark | Days 50–75 | Mid-winter crisis; morale collapse; identity stress |
-| 9 | The Thaw | Days 70–90 | Weather easing; expeditions viable; faction contact |
-| 10 | The Schism | Days 80–100 | Internal fracture; decision point for group direction |
-| 11 | The Black Market | Days 90–120 | External trade networks emerge; entanglement risk |
-| 12 | The Reckoning | Days 110–140 | Evidence of exchange causes; moral reckoning |
-| 13 | The Rebuilding | Days 130–170 | Infrastructure; alliances; generational ambition |
-| 14 | The Second Winter | Days 160–200 | Harder winter; tests earlier choices and alliances |
-| 15 | The Inheritance | Days 190+ | Campaign close; legacy; succession |
+The epilogue (`CampaignEpilogueEngine`) takes `FinalDay` from the live runtime (`Main.GameFlow.cs`: HoldfastRuntime day / sim day). No fixed campaign-length cap exists in the runtime; campaigns run as long as the shelter survives. Day 300+ is reachable, so a Turning-era final chapter is not unreachable.
 
----
+## Chapter pacing vs. real calendar
 
-## Intended Overlaps
+| Chapter | Title | Proposed timing | Actual valid anchor | Seasonal relation |
+|---:|---|---|---|---|
+| 1 | The Exchange | day 0 | campaign start | Ash Fall |
+| 2 | Ashfall | days 1–14 | fallout period | Ash Fall |
+| 3 | The Bunker | days ~7–30 | shelter establishment | Ash Fall |
+| 4 | First Contact | days ~20–40 | first expeditions/traders | Ash Fall |
+| 5 | The Long Winter | ~day 60 | **Deep Freeze onset (day 60)** | The Deep Freeze |
+| 6 | The Consolidation | ~days 35–60 | late Ash Fall, before Deep Freeze | Ash Fall → Deep Freeze |
+| 7 | The Long Dark | ~days 60–120 | interior of Deep Freeze | The Deep Freeze |
+| 8 | The Thaw | ~day 120 | **Thaw onset (day 120)** | The Thaw |
+| 9 | The Schism | ~days 120–160 | mid-Thaw political maturity | The Thaw |
+| 10 | The Black Market | ~days 150–180 | late Thaw / scarcity under renewal | Thaw → Black Bloom |
+| 11 | The Reckoning | ~days 180–210 | ash returns; debts resurface | The Black Bloom |
+| 12 | The Rebuilding | ~days 200–240 | infrastructure recovery capacity | The Black Bloom |
+| 13 | The Second Winter | ~day 240 | **High Cold onset (day 240)** | High Cold |
+| 14 | The Muster | ~days 240–300 | after second winter, before calm | High Cold → The Turning |
+| 15 | The Inheritance | ~day 300+ | **The Turning (day 300)** / endgame | The Turning |
 
-Several chapters run concurrently by design:
+## Notes
 
-- **Chs. 4 & 5:** First Contact can occur during Long Winter onset.
-- **Chs. 5 & 6:** Consolidation begins while nuclear winter deepens.
-- **Chs. 9 & 10:** Thaw opens expedition routes while Schism resolves internally.
-- **Chs. 11 & 12:** Black Market networks carry Reckoning evidence forward.
-
----
-
-## WeatherSystem Cross-Reference
-
-| Chapter | Seasonal alignment | Authority |
-|---|---|---|
-| 5 | Nuclear winter onset | WeatherSystem |
-| 7 | First Winter peak | WeatherSystem |
-| 8 | Mid-winter duration | WeatherSystem |
-| 9 | Thaw timing | WeatherSystem |
-| 14 | Second winter severity | WeatherSystem |
-
-Plan 74 descriptions reference seasonal conditions in prose only. WeatherSystem is authoritative.
-
----
-
-_Last updated: Plan 74 — 2026-09-03_
+- Because chapters are display-only, "timing" here is thematic alignment, not a runtime trigger. Descriptions deliberately avoid hard day claims.
+- Season titles were checked against the authoritative windows: "The Thaw" chapter name matches the season window `window_thaw` exactly; "The Long Winter" (existing) matches the profile display name "The Year of Ash and Ice" winter framing; "The Second Winter" aligns with High Cold.
+- No chapter declares weather the season system does not support (no "spring bloom" language; the thaw chapter mentions water/rain, which is what `window_thaw` actually weights).

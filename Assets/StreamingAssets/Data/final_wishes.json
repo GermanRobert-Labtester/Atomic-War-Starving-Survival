@@ -181,40 +181,491 @@
       "buff_id": "their_memory_lives_on"
     },
     {
-      "archetype_id": "the_quartermaster",
-      "wish_type": "die_with_dignity",
-      "wish_title": "The Final Audit",
-      "wish_description": "{name} refuses to lay down until the quarterly inventory is balanced. 'I brought us this far by counting every grain of rice,' they say, coughing into a rag. 'I will not leave a broken ledger for the next poor bastard.'",
+      "archetype_id": "the_pharmacist",
+      "wish_type": "teach_lesson",
+      "wish_title": "The Compounding Table",
+      "wish_description": "{name} cleans the residue from the scale pan with a dried thumb. 'If you crush the pellets unevenly, half the dose binds to the filler,' they say. 'Watch the mortar. Once more.'",
       "steps": [
         {
-          "step_id": "gather_ledgers",
-          "description": "Collect the scattered inventory logs from the past three months."
+          "step_id": "weigh_the_filler",
+          "description": "Weigh the binding powder against the reference weight on the brass pan.",
+          "required_items": [
+            "iodine_pills"
+          ]
         },
         {
-          "step_id": "balance_the_books",
-          "description": "Sit with {name} through the night as they meticulously cross-reference every calorie consumed against the supply."
+          "step_id": "demonstrate_dilution",
+          "description": "{name} guides a survivor's hands as they grind and divide five uniform powders.",
+          "skill_transfer": "skill_field_dressing"
         }
       ],
-      "completion_text": "{name} draws a perfectly straight red line under the final tally, closes the ledger, and hands you the pen. 'We are in the black for exactly six more days,' they whisper. 'Good luck.'",
+      "completion_text": "The powders lie in neat parchment folds, equal to the milligram. {name} sets the horn spoon in the jar and closes the drawer. 'They'll do,' they say. 'Don't let them crowd the scale.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
     {
-      "archetype_id": "the_miner",
-      "wish_type": "die_with_dignity",
-      "wish_title": "The Sound of the Seam",
-      "wish_description": "{name} asks to be carried down to the lowest excavated level of the bunker. 'I don't want to die listening to the generators,' they say. 'I want to hear the bedrock shifting. I want to hear the earth.'",
+      "archetype_id": "the_plumber",
+      "wish_type": "teach_lesson",
+      "wish_title": "Where the Weight Sits",
+      "wish_description": "{name} leans against the cold pipe manifold, listening with an ear pressed to the flange. 'Solder holds pressure, but vibration loosens the sleeves,' they say. 'Someone has to know which valve creeps first.'",
       "steps": [
         {
-          "step_id": "descend_to_bedrock",
-          "description": "Carry {name} past the warning signs down to Level 5, where the concrete ends and the raw granite begins."
+          "step_id": "inspect_manifold_sleeves",
+          "description": "Inspect the drainage network joints and tighten the support saddles.",
+          "required_items": [
+            "scrap_metal",
+            "box_of_nails_10"
+          ]
         },
         {
-          "step_id": "sit_in_silence",
-          "description": "Wait in total darkness with {name} until the deep subterranean acoustic shifts can be heard."
+          "step_id": "map_valve_sequence",
+          "description": "{name} marks the shutoff order on the bulkhead with red grease pencil.",
+          "skill_transfer": "skill_rough_repairs"
         }
       ],
-      "completion_text": "In the pitch black, a deep, resonant groan echoes through the granite. It is a terrifying sound to surface dwellers, but {name} smiles in the dark. 'She's settling,' they say. 'We're safe here.'",
+      "completion_text": "The red grease marks stand out on the rusted steel. The apprentice repeats the five-valve sequence without hesitating. {name} taps the header pipe once. 'It won't flood on your shift,' they say.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_hunter",
+      "wish_type": "teach_lesson",
+      "wish_title": "Reading the Runs",
+      "wish_description": "{name} pulls a loop of rusted wire taut between two scarred fingers. 'A rabbit runs low when the crust freezes,' they say. 'Hang the noose two fingers above the snow, not four. Come here.'",
+      "steps": [
+        {
+          "step_id": "rig_hair_trigger",
+          "description": "Form and notch three hair-trigger pegs using salvaged wire.",
+          "required_items": [
+            "trap_improvised_wire"
+          ]
+        },
+        {
+          "step_id": "set_test_line",
+          "description": "Walk the drainage perimeter with {name} and place the triggers along natural runways.",
+          "skill_transfer": "skill_trap_setter"
+        }
+      ],
+      "completion_text": "The wire snare blends into the scrub brush, trembling slightly in the draught. {name} nods once. 'You watched the ground,' they say. 'Now leave it alone until dawn.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_courier",
+      "wish_type": "deliver_letter",
+      "wish_title": "The Last Waybill",
+      "wish_description": "{name} unbuttons their oilcloth breast pocket and slides out a folded manifest. 'I carried this out of Fort Karkov when the gates went down,' they say. 'It belongs at Cape Beacon. Finish the route.'",
+      "steps": [
+        {
+          "step_id": "take_sealed_waybill",
+          "description": "Take the sealed route manifest and verify the destination stamp.",
+          "required_items": [
+            "item_document_field_report"
+          ]
+        },
+        {
+          "step_id": "deliver_to_cape_beacon",
+          "description": "Carry the document across the wasteland to the outpost at Cape Beacon.",
+          "requires_location": "loc_settlement_cape_beacon"
+        }
+      ],
+      "completion_text": "The station master at Cape Beacon breaks the seal, checks the route number, and signs the dispatch ledger without looking up. {name}'s route is officially closed.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_reporter",
+      "wish_type": "deliver_letter",
+      "wish_title": "Attribution Sealed",
+      "wish_description": "{name} flattens an envelope typed on scrap paper against their lap. 'Mara needs to read what actually happened to the water convoy,' they say. 'No rumors. Just the cargo numbers.'",
+      "steps": [
+        {
+          "step_id": "receive_typed_dispatch",
+          "description": "Accept the typed dispatch containing the verified convoy casualty record.",
+          "required_items": [
+            "item_document_field_report"
+          ]
+        },
+        {
+          "step_id": "hand_to_mara",
+          "description": "Hand the sealed statement directly to Mara Veln.",
+          "requires_npc": "npc_mara_veln"
+        }
+      ],
+      "completion_text": "Mara reads the single page twice, folds it into four squares, and slips it into her ledger. 'I know whose handwriting this is,' she says quietly. 'Tell them the record is straight.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_blind_preacher",
+      "wish_type": "deliver_letter",
+      "wish_title": "Words for the Stone",
+      "wish_description": "{name} traces the creased edge of a notebook page written in ink long dry. 'I buried twelve people in the ash dunes before my eyes went dark,' they say. 'Lay this under the cairn marker.'",
+      "steps": [
+        {
+          "step_id": "carry_funeral_collect",
+          "description": "Take the folded collect containing twelve names written in pencil.",
+          "required_items": [
+            "item_document_field_report"
+          ]
+        },
+        {
+          "step_id": "place_at_dune_cemetery",
+          "description": "Place the paper beneath the central stone marker at the Ash Dune Cemetery.",
+          "requires_location": "location_ash_dune_cemetery"
+        }
+      ],
+      "completion_text": "The paper is wedged deep beneath the grey ballast stones where the salt wind cannot lift it. Back in the bunker, {name} breathes out a long, quiet sigh. 'That is the last of them,' they say.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_misanthrope",
+      "wish_type": "see_a_place",
+      "wish_title": "The Grey Water",
+      "wish_description": "{name} stares toward the bulkhead door without blinking. 'I haven't smelled open water in nine years,' they say. 'Just grease and wet rust. Take me where the tide still breaks.'",
+      "steps": [
+        {
+          "step_id": "escort_to_coastal_ridge",
+          "description": "Escort {name} on an expedition toward the windswept shore at Cape Beacon.",
+          "requires_location": "loc_settlement_cape_beacon"
+        },
+        {
+          "step_id": "stand_at_high_water",
+          "description": "Stand beside {name} at the headland as the slate-grey swell washes over the rocks."
+        }
+      ],
+      "completion_text": "The sea wind carries a sharp tang of iodine and salt. {name} pulls their coat collar tight, watches three waves crash against the concrete breakwater, and turns back toward the track. 'All right,' they say. 'That's enough.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_botanist",
+      "wish_type": "see_a_place",
+      "wish_title": "The Overgrown Sill",
+      "wish_description": "{name} rubs soil from under their fingernails. 'Before the sirens, I kept eight heirloom pear saplings on the terrace,' they say. 'I want to see what came up through the stone.'",
+      "steps": [
+        {
+          "step_id": "travel_to_terrace_ruin",
+          "description": "Accompany {name} to the ruined terrace pumphouse outside the perimeter.",
+          "requires_location": "loc_terrace_pumphouse"
+        },
+        {
+          "step_id": "gather_wild_foliage",
+          "description": "Examine the scrub brush rooted in the cracked foundation.",
+          "required_items": [
+            "crop_leafy_green"
+          ]
+        }
+      ],
+      "completion_text": "A twisted bramble has split the terrace flagstone, leaves yellowed by frost but alive. {name} snaps a dry twig, sniffs the pulp, and puts it in their pocket. 'It took root,' they whisper. 'The ground didn't quit.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_prisoner",
+      "wish_type": "reconcile",
+      "wish_title": "The Discharged Grudge",
+      "wish_description": "{name} sits with elbows on knees, looking across the hall at the watchman's post. 'Marek still thinks I took his rifle sling when they locked the block,' they say. 'Tell him to come over here.'",
+      "steps": [
+        {
+          "step_id": "summon_watchman",
+          "description": "Bring Marek Voln to {name}'s bunk for a quiet conversation.",
+          "requires_npc": "npc_marek_voln"
+        },
+        {
+          "step_id": "settle_the_quarrel",
+          "description": "Sit in silence as the two men exchange short, bitter memories and finally clear the ledger."
+        }
+      ],
+      "completion_text": "Marek stands up, wipes his palm on his coat, and clasps {name}'s shoulder for a split second before stepping away. {name} leans back against the rough wall. 'That's done,' they say. 'No debts left.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_defector",
+      "wish_type": "reconcile",
+      "wish_title": "The Broken Signal",
+      "wish_description": "{name} stares down at their scarred palms. 'When I ran from the cult at the switchback, I left Ilze behind in the storm,' they say. 'I need her to know I didn't point them to her trail.'",
+      "steps": [
+        {
+          "step_id": "request_doctors_audience",
+          "description": "Arrange a private moment with Dr. Ilze Kaar during her morning rounds.",
+          "requires_npc": "npc_ilze_kaar"
+        },
+        {
+          "step_id": "speak_the_omission",
+          "description": "Let {name} tell Dr. Kaar the true sequence of Day 14 at the switchback shrine."
+        }
+      ],
+      "completion_text": "Dr. Kaar listens without interrupting, then sets down her clipboard and takes {name}'s pulse. 'I found my own way out,' she says evenly. 'You don't carry that anymore.' {name} closes their eyes.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_undertaker",
+      "wish_type": "die_with_dignity",
+      "wish_title": "Apart from the Wards",
+      "wish_description": "{name} gestures toward the crowded infirmary corridor with a tired nod. 'I've wrapped eighty-four bodies in this trench,' they say. 'I don't want someone elbowing my cot to reach a drip stand. Give me a quiet corner.'",
+      "steps": [
+        {
+          "step_id": "partition_store_alcove",
+          "description": "Clear and drape a secluded alcove in the lower storage corridor away from the wards."
+        },
+        {
+          "step_id": "lay_clean_canvas",
+          "description": "Prepare a cot with clean canvas and sit vigil while the corridor quietens."
+        }
+      ],
+      "completion_text": "The storage alcove is dim and cool, smelling only of damp masonry and clean canvas. {name} lies back with their hands resting on their chest. 'Good,' they say softly. 'A proper room.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_pacifist",
+      "wish_type": "die_with_dignity",
+      "wish_title": "The Last Office",
+      "wish_description": "{name} draws a small, dry pouch from their tunic. 'No needles and no shouting,' they whisper. 'Just steep the bitter herb on the burner and sit with me while the lamp burns out.'",
+      "steps": [
+        {
+          "step_id": "prepare_herb_pot",
+          "description": "Boil a pot of water with dried herbs on the shelter stove.",
+          "required_items": [
+            "item_dried_herb_packets",
+            "clean_water"
+          ]
+        },
+        {
+          "step_id": "maintain_the_vigil",
+          "description": "Sit beside {name}'s cot in silence as the herbal steam clears the heavy air."
+        }
+      ],
+      "completion_text": "The sharp, bitter scent of thyme and sage drifts through the partition. {name}'s breathing slows to a peaceful rhythm in the warm stillness. 'Thank you,' they murmur. 'Peace upon this house.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_watchmaker",
+      "wish_type": "die_with_dignity",
+      "wish_title": "The Final Balance",
+      "wish_description": "{name} cleans their small screwdrivers one by one on oiled cloth. 'I don't need speeches or a gathering,' they say. 'Just let me set my bench in order before my fingers stiffen.'",
+      "steps": [
+        {
+          "step_id": "align_bench_tools",
+          "description": "Help {name} arrange tweezers, loupes, and movement trays in numerical order."
+        },
+        {
+          "step_id": "wind_the_regulator",
+          "description": "Watch {name} give the brass pendulum clock its weekly forty turns."
+        }
+      ],
+      "completion_text": "The brass escapement ticks with a steady, hollow resonance against the bulkhead. {name} places the key in the centre of the felt pad. 'Seven days of accurate time,' they say. 'Keep it wound.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_chef",
+      "wish_type": "last_meal",
+      "wish_title": "The Simmered Root",
+      "wish_description": "{name} swallows hard, their throat dry from fever. 'Ration paste tastes like tin,' they say. 'Boil two tubers with coarse salt until the water turns sweet. Just like the kitchen in winter.'",
+      "steps": [
+        {
+          "step_id": "gather_pot_provisions",
+          "description": "Bring fresh tubers and preservation salt to the galley stove.",
+          "required_items": [
+            "crop_hardy_tuber",
+            "item_preservation_salt",
+            "clean_water"
+          ]
+        },
+        {
+          "step_id": "simmer_the_broth",
+          "description": "Simmer the roots slowly until tender and bring a hot bowl to {name}."
+        }
+      ],
+      "completion_text": "{name} spoons the clear, salty broth slowly, savoring every swallow. A faint trace of color touches their cheeks. 'The steam smells like home,' they whisper. 'The real kitchen.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_exhausted_father",
+      "wish_type": "last_meal",
+      "wish_title": "Porridge for the Dawn",
+      "wish_description": "{name} sits on their bunk holding an empty tin cup. 'I haven't shared a hot breakfast with the children since the power failed,' they say. 'Heat a tin of beans with water so they can eat first.'",
+      "steps": [
+        {
+          "step_id": "warm_the_rations",
+          "description": "Heat preserved rations and clean water over the galley burner.",
+          "required_items": [
+            "canned_food",
+            "clean_water"
+          ]
+        },
+        {
+          "step_id": "serve_the_children",
+          "description": "Sit with {name} as their child eats from the warm cup before dawn."
+        }
+      ],
+      "completion_text": "The child scrapes the bottom of the tin clean and smiles. {name} rests a heavy hand on the boy's hair, breathing shallowly. 'They're fed,' they say. 'They have what they need.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_hoarder",
+      "wish_type": "confess",
+      "wish_title": "The Floorboard Cache",
+      "wish_description": "{name} pulls you down close by the collar. 'Under the ventilation trunk on Sub-Level 2,' they wheeze. 'Three tins of meat and two rolls of bandage. I stole them during the rationing panic.'",
+      "steps": [
+        {
+          "step_id": "record_cache_location",
+          "description": "Write down the exact coordinates of the hidden sub-floor cache.",
+          "required_items": [
+            "item_document_field_report"
+          ]
+        },
+        {
+          "step_id": "recover_stashed_stores",
+          "description": "Retrieve the hidden stores from beneath the ventilation duct.",
+          "required_items": [
+            "canned_food",
+            "bandage"
+          ]
+        }
+      ],
+      "completion_text": "The recovered tins and bandages are logged back into the common store. {name} lets go of your sleeve and exhales a ragged breath. 'Put it on the open shelves,' they say. 'It was never mine.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_general",
+      "wish_type": "confess",
+      "wish_title": "The Sealed Bulkhead",
+      "wish_description": "{name} looks up with hollow, sleepless eyes. 'On Day 3, when the blast alarm sounded, I gave the order to seal Outer Hatch C,' they say. 'There were forty people on the ramp. Write it down.'",
+      "steps": [
+        {
+          "step_id": "take_sworn_statement",
+          "description": "Transcribe {name}'s unvarnished account of the Outer Hatch C lockout order.",
+          "required_items": [
+            "item_document_field_report"
+          ]
+        },
+        {
+          "step_id": "file_in_bunker_chronicle",
+          "description": "File the signed statement into the official bunker archive."
+        }
+      ],
+      "completion_text": "The ledger page is stamped and placed into the permanent casualty files. {name} stares at their hands, unclenched for the first time in years. 'They deserve to have it written true,' they say.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_fierce_mother",
+      "wish_type": "protect_someone",
+      "wish_title": "Who Watches Lina",
+      "wish_description": "{name} grips your wrist with surprising strength. 'My girl cannot stand the dark alone,' they whisper. 'Promise me Lina gets a place near the heater, and that someone walks her to the washroom.'",
+      "steps": [
+        {
+          "step_id": "confirm_guardian_agreement",
+          "description": "Speak with Lina and establish a formal guardianship assignment in the roster.",
+          "requires_npc": "npc_lina"
+        },
+        {
+          "step_id": "secure_cot_assignment",
+          "description": "Reassign Lina's sleeping space to the warm alcove beside the duty station."
+        }
+      ],
+      "completion_text": "Lina's bedding is laid out in the warm nook near the central stove. {name} watches from across the room, her grip finally softening. 'She will be warm,' she whispers. 'Thank you.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_martyr",
+      "wish_type": "protect_someone",
+      "wish_title": "The Steady Watch",
+      "wish_description": "{name} glances toward Niko, who is shivering in the corridor corner. 'Niko does whatever anyone asks of him until he drops,' they say. 'Make sure someone checks his rations every day.'",
+      "steps": [
+        {
+          "step_id": "speak_to_niko",
+          "description": "Assure Niko that his daily allocation and work shifts are protected.",
+          "requires_npc": "npc_niko"
+        },
+        {
+          "step_id": "assign_roster_monitor",
+          "description": "Log a permanent note in the duty roster ensuring Niko's rest shifts are enforced."
+        }
+      ],
+      "completion_text": "Niko holds his ration card with both hands, nodding timidly. {name} rests their head back against the pillow. 'He was always too quiet to ask,' they say. 'Watch over him.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_burglar",
+      "wish_type": "return_a_relic",
+      "wish_title": "Put It Back",
+      "wish_description": "{name} reaches deep under their mattress and pulls out a silver medal wrapped in felt. 'I took this off an altar at Switchback Waystation,' they mutter. 'It belongs on the memorial. Take it back.'",
+      "steps": [
+        {
+          "step_id": "take_stolen_medal",
+          "description": "Accept the tarnished silver medal and check the inscribed regimental number.",
+          "required_items": [
+            "tarnished_medal"
+          ]
+        },
+        {
+          "step_id": "return_to_switchback",
+          "description": "Travel to Switchback Waystation and place the medal back upon the shrine altar.",
+          "requires_location": "loc_shrine_switchback_waystation"
+        }
+      ],
+      "completion_text": "The silver medal rests once more in the weathered stone niche above the mountain track. Back in the shelter, {name} breathes easier. 'I carried that curse four hundred miles,' they say. 'It's home.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_historian",
+      "wish_type": "return_a_relic",
+      "wish_title": "The Iron Cenotaph",
+      "wish_description": "{name} opens a small tin box containing personal military identification tags. 'These belonged to the surveyor who mapped the aquifer before the bombs,' they say. 'Hang them on the Memorial Wall.'",
+      "steps": [
+        {
+          "step_id": "verify_identification_tags",
+          "description": "Inspect the embossed serial number on the personal dog tags.",
+          "required_items": [
+            "dog_tags_personal"
+          ]
+        },
+        {
+          "step_id": "inscribe_and_hang",
+          "description": "Inscribe the surveyor's name into the memorial ledger and hang the tags on the steel wall."
+        }
+      ],
+      "completion_text": "The dog tags click softly against the steel wall before hanging still. {name} traces the embossed letters one last time. 'Names outlast governments,' they whisper. 'Remember him.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_quartermaster",
+      "wish_type": "name_a_successor",
+      "wish_title": "The Keys and Ledger",
+      "wish_description": "{name} places a ring of heavy brass keys on top of the quarterly inventory ledger. 'The supply room cannot have two masters,' they say. 'Call Oskar in. He knows how to count without stealing.'",
+      "steps": [
+        {
+          "step_id": "summon_successor",
+          "description": "Bring Oskar Ruut to the quartermaster's desk to receive the inventory balance.",
+          "requires_npc": "npc_oskar_ruut",
+          "required_items": [
+            "item_document_field_report"
+          ]
+        },
+        {
+          "step_id": "transfer_the_keys",
+          "description": "Formally hand over the supply room keys and the signed handover ledger.",
+          "required_items": [
+            "box_of_nails_10"
+          ]
+        }
+      ],
+      "completion_text": "Oskar takes the heavy key ring, testing the weight in his hand, and signs his initials beside {name}'s last entry. {name} nods, their duty discharged. 'Count it twice on Tuesdays,' they say.",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     }

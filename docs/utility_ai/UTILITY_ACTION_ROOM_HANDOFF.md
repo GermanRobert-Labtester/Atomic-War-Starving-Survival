@@ -1,32 +1,28 @@
 # Utility Action Room Handoff
 
-> **Room Seams:** Integration between 5 room-linked utility actions and Plan 41 shelter rooms (`shelter_rooms.json`, `ShelterRoomCatalog.cs`).
+## Architecture
 
----
+The Utility AI Core has **no room/workstation schema field**. Room prerequisites are executor-owned.
 
-## 1. Five Primary Room-Linked Actions
+The action ID serves as a contract: the executor maps the action ID to a room/workstation check.
 
-1. **`action_cook_food` → `room_kitchen` (Galley Kitchen)**
-   - *Room Authority:* `ShelterRoomCatalog.cs` defines `room_kitchen` with capacity 2, function `Kitchen`.
-   - *Operational Seam:* Action checks `IsRoomPowered("room_kitchen")` (Plan 71 power grid) and that kitchen condition > 0.
-   - *Behavior When Room Disabled/Unpowered:* Action becomes ineligible; raw score drops to 0.
+## Action → Room Mapping
 
-2. **`action_repair_equipment` → `room_workshop` (General Workshop)**
-   - *Room Authority:* `room_workshop`, capacity 2, required skill `skill_rough_repairs`.
-   - *Operational Seam:* Checks `IsRoomPowered("room_workshop")` and tool workstation availability.
-   - *Behavior When Room Disabled/Unpowered:* Workbench lathe and vices cannot run; action is suppressed.
+| Action ID | Conceptual Room | Room Check | Plan 41 ID |
+|-----------|----------------|------------|------------|
+| `action_cook_food` | Kitchen | Kitchen exists + has workstation | `room_kitchen_shelter` |
+| `action_repair_equipment` | Workshop | Workshop exists + has workstation | `room_workshop_shelter` |
+| `action_conduct_research` | Laboratory | Lab exists + has workstation | `room_laboratory_shelter` |
+| `action_stand_watch` | Security post | Security post exists | `room_security_post_shelter` |
+| `action_purify_water` | Water treatment | Water treatment exists + has equipment | `room_water_treatment_shelter` |
 
-3. **`action_conduct_research` → `room_laboratory_research` (Science & Research Lab)**
-   - *Room Authority:* `room_laboratory_research`, capacity 2, function `Laboratory`.
-   - *Operational Seam:* Checks `IsRoomPowered("room_laboratory_research")` and tech terminal availability.
-   - *Behavior When Room Disabled/Unpowered:* Research terminals offline (`fx_laboratory_offline`); action is suppressed.
+## Room Handoff Contract
 
-4. **`action_stand_watch` → `room_airlock` (Decontamination Airlock & Sentry Hatch)**
-   - *Room Authority:* `room_airlock`, capacity 2, function `Airlock`.
-   - *Operational Seam:* Checks airlock presence and security post availability.
-   - *Behavior When Room Disabled/Unpowered:* Sentry monitors switch to manual peephole watch.
+1. **Executor checks room**: Before executing the action, the executor verifies the room exists and is operational.
+2. **Unavailable room → ineligible**: If the room doesn't exist, is destroyed, or is unpowered, the executor reports the action as ineligible.
+3. **Occupied workstation → wait or skip**: If the workstation is occupied, the executor either queues the action or makes it ineligible.
+4. **No room IDs in action data**: The room reference lives in the executor, not in `utility_actions.json`.
 
-5. **`action_purify_water` → `room_water_treatment` (Water Treatment Plant)**
-   - *Room Authority:* Canonical water treatment utility facility.
-   - *Operational Seam:* Checks `IsRoomPowered("room_water_treatment")` and raw water supply.
-   - *Behavior When Room Disabled/Unpowered:* Electric pumps unpowered (`fx_water_contamination`); action is suppressed.
+## Plan 72 Position
+
+All five room-linked actions are added to the catalog with appropriate scoring. The room checks are deferred to the executor implementation. The action data does not contain room references.

@@ -144,6 +144,16 @@ namespace Ashfall.Core.Content
             return relativePath.Replace('\\', '/').StartsWith("narrative/", StringComparison.OrdinalIgnoreCase);
         }
 
+        private static bool IsPlan142JournalFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/journals_expansion.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/journal_entries_batch_1.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/journal_entries_batch_2.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/journal_entries_batch_3.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("journal_entries_expansion_05.json", StringComparison.OrdinalIgnoreCase);
+        }
+
         public static bool IsAuthoritativeCatalog(string fileName)
         {
             return AuthoritativeCatalogs.Contains(fileName);
@@ -265,6 +275,7 @@ namespace Ashfall.Core.Content
                 ["recipes.json"] = new[] { "RecipeCatalogLoader" },
                 ["locations.json"] = new[] { "LocationLayoutSystem", "WastelandMapCatalogLoader" },
                 ["survivors.json"] = new[] { "SurvivorCatalogLoader", "SurvivorCatalog" },
+                ["starting_survivor_cohorts.json"] = new[] { "StartingCohortCatalogLoader" },
                 ["faction_lore.json"] = new[] { "FactionIconCatalog", "FactionIconLoader" },
                 ["economy_goods.json"] = new[] { "GoodsCatalog" },
                 ["events.json"] = new[] { "EventsHostSession" },
@@ -393,7 +404,11 @@ namespace Ashfall.Core.Content
                 ["expansion_item_tags.json"] = new[] { "ItemCatalogLoader" },
                 ["audio_logs_expansion_05.json"] = new[] { "AudioConditionSystem" },
                 ["environmental_texts_expansion_05.json"] = new[] { "NarrativeEncounterSystem" },
-                ["journal_entries_expansion_05.json"] = new[] { "JournalSystem" },
+                ["journal_entries_expansion_05.json"] = new[] { "JournalCorpusCatalogLoader" },
+                ["journals_expansion.json"] = new[] { "JournalCorpusCatalogLoader" },
+                ["journal_entries_batch_1.json"] = new[] { "JournalCorpusCatalogLoader" },
+                ["journal_entries_batch_2.json"] = new[] { "JournalCorpusCatalogLoader" },
+                ["journal_entries_batch_3.json"] = new[] { "JournalCorpusCatalogLoader" },
                 ["memorials_expansion_05.json"] = new[] { "MemorialSystem" },
                 ["quests_expansion_05.json"] = new[] { "ExpansionQuestSystem" },
                 ["quests_expansion_06.json"] = new[] { "ExpansionQuestSystem" },
@@ -402,7 +417,7 @@ namespace Ashfall.Core.Content
                 ["narrative_progression.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_questlines.json"] = new[] { "NarrativeEncounterSystem" },
                 ["characters.json"] = new[] { "SurvivorCatalog" },
-                ["item_description_texts.json"] = new[] { "ItemCatalogLoader" },
+                ["item_description_texts.json"] = new[] { "ItemDescriptionCatalogLoader", "ItemCatalogLoader" },
                 ["wall_carving_templates.json"] = new[] { "MemorialSystem" },
                 ["wasteland_grave_epitaphs.json"] = new[] { "MemorialSystem" },
                 ["damaged_map_zones.json"] = new[] { "WastelandMapSystem" },
@@ -553,6 +568,7 @@ namespace Ashfall.Core.Content
                 ["campaign_epilogues.json"] = "CampaignEpilogueEngine",
                 ["starting_supplies.json"] = "StartingLevelSystem",
                 ["starting_survivors.json"] = "SurvivorStartingStateLoader",
+                ["starting_survivor_cohorts.json"] = "StartingCohortCatalogLoader",
                 ["dive_sites.json"] = "DiveSiteCatalog",
                 ["deep_lore_locations.json"] = "DeepLoreLocationCatalogLoader",
                 ["black_flotilla_items.json"] = "ProceduralScavengeSystem",
@@ -608,7 +624,11 @@ namespace Ashfall.Core.Content
                 ["expansion_item_tags.json"] = "ItemCatalog",
                 ["audio_logs_expansion_05.json"] = "AudioConditionSystem",
                 ["environmental_texts_expansion_05.json"] = "NarrativeEncounterSystem",
-                ["journal_entries_expansion_05.json"] = "JournalSystem",
+                ["journal_entries_expansion_05.json"] = "JournalCorpusCatalogLoader",
+                ["journals_expansion.json"] = "JournalCorpusCatalogLoader",
+                ["journal_entries_batch_1.json"] = "JournalCorpusCatalogLoader",
+                ["journal_entries_batch_2.json"] = "JournalCorpusCatalogLoader",
+                ["journal_entries_batch_3.json"] = "JournalCorpusCatalogLoader",
                 ["memorials_expansion_05.json"] = "MemorialSystem",
                 ["quests_expansion_05.json"] = "ExpansionQuestSystem",
                 ["quests_expansion_06.json"] = "ExpansionQuestSystem",
@@ -617,7 +637,7 @@ namespace Ashfall.Core.Content
                 ["narrative_progression.json"] = "NarrativeEncounterSystem",
                 ["narrative_questlines.json"] = "NarrativeEncounterSystem",
                 ["characters.json"] = "SurvivorCatalog",
-                ["item_description_texts.json"] = "ItemCatalog",
+                ["item_description_texts.json"] = "ItemDescriptionCatalog",
                 ["wall_carving_templates.json"] = "MemorialSystem",
                 ["wasteland_grave_epitaphs.json"] = "MemorialSystem",
                 ["damaged_map_zones.json"] = "WastelandMapSystem",
@@ -757,6 +777,7 @@ namespace Ashfall.Core.Content
                 ["holdfast_flavor.json"] = new[] { "HoldfastRuntimeSession" },
                 ["starting_supplies.json"] = new[] { "StartingLevelSystem" },
                 ["starting_survivors.json"] = new[] { "SurvivorsHostSession" },
+                ["starting_survivor_cohorts.json"] = new[] { "SurvivorsHostSession", "StartingCohortSetupPanel" },
                 ["standing_record_factions.json"] = new[] { "ExpansionHubSession" },
                 ["standing_record_layouts.json"] = new[] { "LocationLayoutSystem" },
                 ["standing_record_memory.json"] = new[] { "LocationMemorySystem" },
@@ -783,6 +804,10 @@ namespace Ashfall.Core.Content
                 ["audio_logs_expansion_05.json"] = new[] { "AudioConditionSystem" },
                 ["environmental_texts_expansion_05.json"] = new[] { "NarrativeEncounterSystem" },
                 ["journal_entries_expansion_05.json"] = new[] { "JournalSystem" },
+                ["journals_expansion.json"] = new[] { "JournalSystem" },
+                ["journal_entries_batch_1.json"] = new[] { "JournalSystem" },
+                ["journal_entries_batch_2.json"] = new[] { "JournalSystem" },
+                ["journal_entries_batch_3.json"] = new[] { "JournalSystem" },
                 ["memorials_expansion_05.json"] = new[] { "MemorialSystem" },
                 ["quests_expansion_05.json"] = new[] { "ExpansionQuestSystem" },
                 ["quests_expansion_06.json"] = new[] { "ExpansionQuestSystem" },
@@ -791,7 +816,7 @@ namespace Ashfall.Core.Content
                 ["narrative_progression.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_questlines.json"] = new[] { "NarrativeEncounterSystem" },
                 ["characters.json"] = new[] { "SurvivorsHostSession" },
-                ["item_description_texts.json"] = new[] { "InventorySystem" },
+                ["item_description_texts.json"] = new[] { "InventoryHostSession", "InventorySystem" },
                 ["wall_carving_templates.json"] = new[] { "MemorialSystem" },
                 ["wasteland_grave_epitaphs.json"] = new[] { "MemorialSystem" },
                 ["damaged_map_zones.json"] = new[] { "WastelandMapSystem" },
@@ -1023,7 +1048,7 @@ namespace Ashfall.Core.Content
                 ["narrative_progression.json"] = new[] { "NarrativePanel" },
                 ["narrative_questlines.json"] = new[] { "NarrativePanel" },
                 ["characters.json"] = new[] { "SurvivorsPanel" },
-                ["item_description_texts.json"] = new[] { "InventoryPanel" },
+                ["item_description_texts.json"] = new[] { "InventoryDetailPanel", "InventoryPanel" },
                 ["holdfast_factions.json"] = new[] { "HoldfastTerminal" },
                 ["holdfast_items.json"] = new[] { "HoldfastTerminal" },
                 ["holdfast_locations.json"] = new[] { "HoldfastTerminal" },
@@ -1348,7 +1373,8 @@ namespace Ashfall.Core.Content
                 string fileName = Path.GetFileName(cat.Path);
 
                 // Narrative subdirectory files are codex-only
-                if (IsNarrativeSubdirectoryFile(cat.Path))
+                if (IsNarrativeSubdirectoryFile(cat.Path)
+                    && !IsPlan142JournalFile(cat.Path))
                 {
                     cat.Classification = ContentClassification.CODEX_ONLY;
                     continue;

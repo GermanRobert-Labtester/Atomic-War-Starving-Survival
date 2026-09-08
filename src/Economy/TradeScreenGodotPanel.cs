@@ -27,10 +27,12 @@ namespace AtomicWar.GodotApp.Economy
         private EconomyHostSession _session;
         private IFactionStanceProvider _stanceProvider;
         private IPriceShockProvider _priceShockProvider;
+        private TradeVoiceResolver _voiceResolver;
         private ITradeScreenViewModel _viewModel;
         private ITradeIntentSink _intentSink;
 
         private string _activeFactionId = "scavenger_camp";
+        private string _activeTraderProfileId = string.Empty;
         private readonly Dictionary<string, int> _playerOfferCounts = new();
         private readonly Dictionary<string, int> _factionAskCounts = new();
         private readonly Dictionary<BiologicalTradeItem, int> _bioOfferCounts = new();
@@ -44,6 +46,7 @@ namespace AtomicWar.GodotApp.Economy
         private Label _lblLeader;
         private Label _badgeStance;
         private Label _lblTellPlate;
+        private Label _lblTraderVoice;
         private Label _lblTrust;
         private Label _lblAggression;
         private Label _lblRepels;
@@ -91,6 +94,8 @@ namespace AtomicWar.GodotApp.Economy
         public bool HasParleyButton => _btnDemandParley != null;
         public bool HasRadioTicker => _lblRadioTicker != null;
         public bool HasTellPlate => !string.IsNullOrEmpty(_lblTellPlate?.Text);
+        public bool HasTraderVoice => !string.IsNullOrEmpty(_lblTraderVoice?.Text);
+        public string TraderProfileId => _viewModel?.TraderProfileId ?? _activeTraderProfileId;
         public bool HasNewsStrip => _newsStrip != null && _newsStrip.GetChildCount() > 0;
         public bool HasArbitratorScale => _scalePlayerFill != null && _scaleFactionFill != null;
         public bool IsGrimDrawerCollapsed => _grimDrawerBody == null || !_grimDrawerBody.Visible;
@@ -221,6 +226,16 @@ namespace AtomicWar.GodotApp.Economy
             _lblTellPlate.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
             _lblTellPlate.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Muted));
             mainVbox.AddChild(_lblTellPlate);
+
+            _lblTraderVoice = new Label
+            {
+                Text = "",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                AutowrapMode = TextServer.AutowrapMode.WordSmart
+            };
+            _lblTraderVoice.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
+            _lblTraderVoice.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Pale));
+            mainVbox.AddChild(_lblTraderVoice);
 
             // 2. News from Outside strip — the world intruding on the deal
             _newsStrip = new HBoxContainer();
@@ -464,13 +479,15 @@ namespace AtomicWar.GodotApp.Economy
             IFactionStanceProvider stanceProvider = null!,
             IPriceShockProvider priceShockProvider = null!,
             IFactionRadioProvider radioProvider = null!,
-            ISeededRng rng = null!)
+            ISeededRng rng = null!,
+            TradeVoiceResolver voiceResolver = null!)
         {
             _session = session;
             _stanceProvider = stanceProvider;
             _priceShockProvider = priceShockProvider;
             _radioProvider = radioProvider;
             _rng = rng ?? new SeededRng(2026);
+            _voiceResolver = voiceResolver;
 
             if (_viewModel != null)
             {
@@ -491,6 +508,20 @@ namespace AtomicWar.GodotApp.Economy
         {
             _activeFactionId = factionId;
             RefreshView();
+        }
+
+        public void SetTraderVoiceContext(TradeVoiceContext context)
+        {
+            if (_voiceResolver == null) return;
+            var result = _voiceResolver.ResolveGreeting(context);
+            _activeTraderProfileId = result.ProfileId;
+            string displayName = _voiceResolver.Catalog.TryGetTrader(
+                result.ProfileId,
+                out var trader)
+                ? trader.display_name
+                : "The Merchant";
+            if (_lblTraderVoice != null)
+                _lblTraderVoice.Text = $"{displayName}: {result.Text}";
         }
 
         public void AddPlayerOffer(string itemId, int count)
@@ -518,6 +549,7 @@ namespace AtomicWar.GodotApp.Economy
 
             // The tell plate is seam-driven; clear it in session mode.
             if (_lblTellPlate != null) _lblTellPlate.Text = "";
+            if (_lblTraderVoice != null) _lblTraderVoice.Text = "";
 
             // 1. Update Header Fields
             _lblFactionName.Text = $"FACTION: {_activeFactionId.ToUpper().Replace('_', ' ')}";
@@ -534,6 +566,15 @@ namespace AtomicWar.GodotApp.Economy
             _lblTrust.Text = $"Trust: {trust:+0;-0;0}";
             _lblAggression.Text = $"Aggression: {aggression:0.00}";
             _lblRepels.Text = "Holds: x0";
+            if (_voiceResolver != null)
+            {
+                SetTraderVoiceContext(new TradeVoiceContext
+                {
+                    FactionId = _activeFactionId,
+                    Stance = stance,
+                    Trust = trust
+                });
+            }
 
             // 2. Update Market & Shocks Banner
             int day = _session.Market?.Day ?? 1;
@@ -543,7 +584,15 @@ namespace AtomicWar.GodotApp.Economy
 
             if (_priceShockProvider != null)
             {
-                var kinds = new[] { PriceShockKind.PlumePassing, PriceShockKind.ConvoyAmbush, PriceShockKind.FactionWar, PriceShockKind.WinterDeepens };
+                var kinds = new[]
+                {
+                    PriceShockKind.PlumePassing,
+                    PriceShockKind.ConvoyAmbush,
+                    PriceShockKind.FactionConflict,
+                    PriceShockKind.SeasonalScarcity,
+                    PriceShockKind.DiseaseOutbreak,
+                    PriceShockKind.FuelShortage
+                };
                 var activeBadges = new List<ShockBadgeData>();
                 foreach (var k in kinds)
                 {
@@ -588,6 +637,9 @@ namespace AtomicWar.GodotApp.Economy
 
             // 2. Tell plate — posture readable from the plate alone
             _lblTellPlate.Text = vm.StanceTellLine;
+            _lblTraderVoice.Text = string.IsNullOrWhiteSpace(vm.TraderVoiceLine)
+                ? string.Empty
+                : $"{vm.TraderDisplayName}: {vm.TraderVoiceLine}";
 
             // 3. Ledger-edge meters
             _lblTrust.Text = $"Trust: {vm.Trust:+0;-0;0}";
@@ -912,8 +964,10 @@ namespace AtomicWar.GodotApp.Economy
             {
                 case PriceShockKind.PlumePassing: return "res://assets/ui/Icons/icon_shock_plume.png";
                 case PriceShockKind.ConvoyAmbush: return "res://assets/ui/Icons/icon_shock_convoy.png";
-                case PriceShockKind.FactionWar: return "res://assets/ui/Icons/icon_shock_war.png";
-                case PriceShockKind.WinterDeepens: return "res://assets/ui/Icons/icon_shock_winter.png";
+                case PriceShockKind.FactionConflict: return "res://assets/ui/Icons/icon_shock_war.png";
+                case PriceShockKind.SeasonalScarcity: return "res://assets/ui/Icons/icon_shock_winter.png";
+                case PriceShockKind.DiseaseOutbreak: return "res://assets/ui/Icons/icon_shock_plume.png";
+                case PriceShockKind.FuelShortage: return "res://assets/ui/Icons/icon_shock_convoy.png";
                 default: return "res://assets/ui/Icons/icon_shock_plume.png";
             }
         }

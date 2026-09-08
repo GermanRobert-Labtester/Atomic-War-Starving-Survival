@@ -1,42 +1,31 @@
 # Duty Season Schema Contract
 
-> **Schema Authority:** `Assets/Ashfall.Core/DutyRoster/DutyRosterCatalog.cs` (`DutyRosterSeasonEntry`) and `Assets/StreamingAssets/Data/duty_roster_seasons.json`.
+## Schema (repository-native — no added fields)
 
----
+Wrapped catalog: `{"schema_version": 1, "items": [...]}`, loaded via `CatalogLocator.LoadWrappedList<DutyRosterSeasonEntry>`.
 
-## 1. JSON Schema
+| Field | Type | Valid range | Semantics |
+|---|---|---|---|
+| `id` | string | `season_*` prefix, unique, snake_case | Stable identity |
+| `windowMinDays` | int | ≥ 0 | First included day (inclusive) |
+| `windowMaxDays` | int | ≥ `windowMinDays` | Final included day (inclusive) |
+| `encounterWeight` | float | [0.5, 2.5] | Shelter-encounter pressure multiplier (replacement semantics via `ShelterEncounterSystem.SetSecondWinter`) |
+| `steamTripChanceBoost` | float | [0.0, 0.15] | Authored modifier; range-validated; live consumer deferred |
 
-```json
-{
-  "schema_version": 1,
-  "items": [
-    {
-      "id": "season_example",
-      "windowMinDays": 0,
-      "windowMaxDays": 7,
-      "encounterWeight": 1.5,
-      "steamTripChanceBoost": 0.02
-    }
-  ]
-}
-```
+## Selector contract (`DutyRosterCatalog.GetSeasonForDay`)
 
----
+- Pure derivation from the authoritative campaign day — no state, no second clock.
+- Matching rule (repository open-ended-window convention): **last season whose `windowMinDays <= day`**; ties keep the first-listed entry (deterministic regardless of file order).
+- Inclusive bounds: day `d` matches season `s` iff `s.windowMinDays <= d <= s.windowMaxDays`.
+- Day before the first window (incl. negative days) → `null`.
+- Day after the final window → final season (carry-forward).
 
-## 2. Field Specifications
+## Coverage contract (authored catalog)
 
-| Field Name | Type | Required | Default | Valid Range / Description |
-|---|---|---|---|---|
-| `id` | `string` | **Yes** | `"season_second_winter"` | Unique snake_case identifier with `season_` prefix |
-| `windowMinDays` | `int` | **Yes** | `8` | Start day of the season window (inclusive), `windowMinDays >= 0` |
-| `windowMaxDays` | `int` | **Yes** | `12` | End day of the season window (inclusive), `windowMaxDays >= windowMinDays` |
-| `encounterWeight` | `float` | **Yes** | `1.6` | Encounter frequency multiplier `[0.5, 2.5]` |
-| `steamTripChanceBoost` | `float` | **Yes** | `0.0` | Additive steam infrastructure malfunction risk boost `[0.0, 0.15]` |
+- Chronological, **gap-free, overlap-free**: `next.windowMinDays == prev.windowMaxDays + 1`.
+- First window starts at day 0; final window ends at day 365.
+- Every day 0–365 matches **exactly one** season; days ≥ 366 match the final season; days < 0 match none.
 
----
+## Non-fields (deliberately absent)
 
-## 3. Deserializer Rules & Invariants
-
-- Deserialized via `CatalogLocator.LoadWrappedList<DutyRosterSeasonEntry>` under the `"items"` wrapper property.
-- All 8 seasons must have strictly non-overlapping, ascending, continuous day intervals.
-- For contiguous coverage: `season[i].windowMinDays == season[i-1].windowMaxDays + 1`.
+No display names, descriptions, weather IDs, chapter IDs, schedule IDs, flags, or tags — the DTO has no such fields and no consumers. Narrative phase prose lives in the coverage matrix docs.

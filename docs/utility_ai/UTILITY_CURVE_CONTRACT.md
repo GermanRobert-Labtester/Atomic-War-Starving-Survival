@@ -1,33 +1,62 @@
-# Utility Curve Contract
+# Utility Curve Point Contract
 
-> **Curve Specification:** Structure, sorting, interpolation, and boundary handling implemented in `Assets/Ashfall.Core/UtilityAI/UtilityAction.cs` (`ResponseCurve`).
+Derived from `ResponseCurve` in `Assets/Ashfall.Core/UtilityAI/UtilityAction.cs`.
 
----
+## Data Shape
 
-## 1. Mathematical Structure
-
-- **Representation:** An array of `CurvePoint` instances: `{ "x": float, "y": float }`.
-- **Pre-Processing / Sorting:** `ResponseCurve` sorts points by ascending `x`. Malformed JSON out-of-order points are sorted in-memory during construction.
-- **Empty Curve Fallback:** `ResponseCurve.Identity` (`x=0, y=0; x=1, y=1`) returns the input `x` unchanged.
-- **Single Point:** If only 1 point exists, `Evaluate(x)` returns `points[0].y` for all `x`.
-
----
-
-## 2. Interpolation Formula
-
-For `x` between `points[i-1]` and `points[i]`:
-```text
-span = b.x - a.x
-if span <= 1e-6:
-    return b.y
-t = (x - a.x) / span
-return a.y + (b.y - a.y) * t
+```json
+"curvePoints": [
+  { "x": 0.0, "y": 0.0 },
+  { "x": 1.0, "y": 1.0 }
+]
 ```
 
----
+## X-Axis: rawScore
 
-## 3. Boundary & Clamping Behavior
+`x` = rawScore output from `EvaluateRaw()`, which is:
 
-- **Left-Clamp (`x <= points[0].x`):** Returns `points[0].y`.
-- **Right-Clamp (`x >= points[last].x`):** Returns `points[last].y`.
-- Extrapolation is explicitly forbidden: points outside the authored range clamp safely to the nearest boundary key.
+```
+rawScore = baseScore + CraftingSkill * skillBonusFactor
+```
+
+clamped to [0, 1].
+
+This means the x-axis is **not** a direct world-state value (like hunger or equipment condition). It is the static priority + skill bonus. The curve shapes how this static value maps to the final utility.
+
+## Y-Axis: curved output
+
+`y` = curved multiplier fed into `(curved + basePriority) * weight`.
+
+## Interpolation
+
+Piecewise-linear between consecutive points.
+
+- Points are sorted by x ascending at construction time
+- x ≤ first.x → first.y
+- x ≥ last.x → last.y
+- Between points: `t = (x - a.x) / (b.x - a.x)`, `result = a.y + (b.y - a.y) * t`
+- Zero-span segment (b.x ≈ a.x) → b.y
+
+## Special Cases
+
+| Case | Behavior |
+|------|----------|
+| null/empty | Identity: `f(x) = x` |
+| Single point | Returns that point's y for all x |
+| Duplicate x | Second point wins (sort-stable) |
+| Unsorted points | Auto-sorted at construction |
+
+## Design Implications for Plan 72
+
+Since x is the rawScore (0-1 static priority), the curve primarily serves to:
+1. Shape the response at different rawScore levels (e.g., low-priority actions get minimal curve boost)
+2. Allow non-linear mapping of the static priority
+
+For the existing 6 actions, all curves are identity: `[(0,0),(1,1)]`. This means the curved output equals the rawScore directly.
+
+For most Plan 72 actions, identity curves are appropriate since the priority hierarchy is established through baseScore values. Non-identity curves could be used to:
+- Make an action score very low until a rawScore threshold is crossed
+- Give diminishing returns at high rawScore
+- Create a sharp activation threshold
+
+But non-identity curves are optional and should only be used when the static baseScore + skill model needs shaping.

@@ -157,6 +157,84 @@
       "treaty_articles": "ARTICLE 1: The Observatory remains neutral scientific territory. ARTICLE 2: Scale brokers permitted access for signal telemetry testing. ARTICLE 3: Ash Sign guardians protect scientific archives from looters.",
       "penalties": "Sabotage of transmission equipment triggers total embargo on mountain fuel deliveries.",
       "tags": ["ash_sign", "the_scale", "observatory", "scarp", "sanctuary"]
+    },
+    {
+      "treaty_id": "treaty_saltworks_access",
+      "ratified_day": 285,
+      "treaty_title": "The Saltworks Access Compact",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office", "faction_the_scale"],
+      "demarcated_territory": "The east pipe walk between the smelter bay casting floor and the saltworks membrane hall",
+      "water_allocation_lpm": 30.0,
+      "power_quota_kw": 0.0,
+      "tariff_schedule": "The Office releases up to thirty litres per minute of measured process water; the Foundry supplies one valve body per assessment cycle, and the Scale waives ordinary weigh-house duty on that draw.",
+      "treaty_articles": "ARTICLE 1: The east pipe walk remains open to inspected maintenance crews during declared daylight shifts. ARTICLE 2: The Office maintains the allocation mark and the Foundry maintains the pipe markers; the Scale witnesses one meter reading per cycle. ARTICLE 3: Any draw above thirty litres per minute is entered in the common ledger before the next pump cycle.",
+      "penalties": "Two unentered diversions in one assessment cycle suspend the compact's water allocation for seven days and restore the ordinary salt tariff pending an Office and Scale review.",
+      "tags": ["foundry", "saltworks", "brine", "water", "exchange", "district8", "access"]
+    },
+    {
+      "treaty_id": "treaty_membrane_repair",
+      "ratified_day": 300,
+      "treaty_title": "The Membrane Hall Repair Pact",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office"],
+      "demarcated_territory": "The membrane hall service corridor from the brine intake valves to the iodine store test bench",
+      "water_allocation_lpm": 12.0,
+      "power_quota_kw": 18.0,
+      "tariff_schedule": "The Office supplies two filter meshes and the iodine test lots; the Foundry casts the repair plates and receives no duty charge on the twelve-litre commissioning flush.",
+      "treaty_articles": "ARTICLE 1: The Office delivers the named meshes and test lots before the first repair shift; the Foundry provides the plates, fasteners, and a crew qualified to work cold. ARTICLE 2: Repair access is limited to two daylight shifts, with the hall isolated from ordinary brine traffic and the power draw capped at eighteen kilowatts. ARTICLE 3: Acceptance is signed after a measured twelve-litre flush and one iodine reading; the original fault note remains attached to the hall ledger.",
+      "penalties": "A repair that fails acceptance twice costs the Foundry a replacement plate from its next heat and permits the Office to withhold iodine credit on the repair lane until a witnessed re-test passes.",
+      "tags": ["foundry", "saltworks", "brine", "iodine", "maintenance", "district8"]
+    },
+    {
+      "treaty_id": "treaty_coal_window",
+      "ratified_day": 320,
+      "treaty_title": "The Coal Window Schedule",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_cutters"],
+      "demarcated_territory": "The marked ice-road lane from the Cut weigh-hut to the Foundry coal gate and its charging-floor staging apron",
+      "water_allocation_lpm": 0.0,
+      "power_quota_kw": 0.0,
+      "tariff_schedule": "For each declared haul window the Foundry sets aside twelve anchor blanks for Cutters road work; the Cutters waive the ordinary late-column surcharge on coal loads booked before the notice closes.",
+      "treaty_articles": "ARTICLE 1: The Cutters issue a lit or dark road notice before the evening bell; no coal column enters the marked lane on a dark notice. ARTICLE 2: The Foundry stages counted loads at the coal gate and clears empty sleds before the next window. ARTICLE 3: This schedule fixes timing only and does not amend the Road Iron Charter's anchor or winch-drum quotas.",
+      "penalties": "A missed declared window loses the Foundry's next priority slot and one anchor credit; an unauthorized night haul is entered in the accident book and pays the full late-column surcharge.",
+      "tags": ["foundry", "road", "ice", "fuel", "schedule", "district8", "logistics"]
+    },
+    {
+      "treaty_id": "treaty_apprentice_exchange",
+      "ratified_day": 345,
+      "treaty_title": "The Apprentice Exchange Charter",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office", "faction_scavenger_guild"],
+      "demarcated_territory": "The charging floor, the Cluster school bell, and the registered salvage-claim desk at the works' outer gate",
+      "water_allocation_lpm": 0.0,
+      "power_quota_kw": 0.0,
+      "tariff_schedule": "Registered trainees carry teaching tools and unworked scrap across the marked road without ordinary duty; each signatory supplies one supervised mentor shift per quarter.",
+      "treaty_articles": "ARTICLE 1: The Foundry teaches casting safety and tool care; the Scavenger Guild teaches claim marks and site restraint; the Office keeps the attendance and medical copy. ARTICLE 2: The exchange admits adult trainees and supervised school observers only; no minor performs productive heat, salvage, or surface work. ARTICLE 3: A trainee does not count toward a production quota or replace a paid shift until both the mentor and the ledger clerk record certification.",
+      "penalties": "A signatory that converts a trainee into quota labor loses the next intake, replaces damaged teaching tools, and accepts a joint inspection of the affected bench or claim desk.",
+      "tags": ["foundry", "cluster", "school", "labour", "training", "inspection", "district8"]
+    },
+    {
+      "treaty_id": "treaty_crisis_mutual_aid",
+      "ratified_day": 350,
+      "treaty_title": "The Crisis Mutual-Aid Protocol",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office", "faction_the_cutters", "faction_the_fleet", "faction_archivists", "faction_grain_exchange", "faction_hydro_barons", "faction_scavenger_guild"],
+      "demarcated_territory": "The smelter bay, the marked ice-road staging yards, and the Office's Cluster cistern approach",
+      "water_allocation_lpm": 20.0,
+      "power_quota_kw": 10.0,
+      "tariff_schedule": "For a jointly declared fallout storm, siege, structural fire, or intake failure, emergency passage and relief move without ordinary tariff for seventy-two hours; recorded fuel, water, and component costs are settled afterward at column rates.",
+      "treaty_articles": "ARTICLE 1: Two signatories must declare the incident and name its bounded service period; this protocol guarantees no open-ended reserve. ARTICLE 2: The Foundry may commit up to twenty litres per minute of water and ten kilowatts of repair power for three days, while the other signatories provide the named shelter, road, cargo, record, food, or water service they can actually carry. ARTICLE 3: Every draw and refusal is entered before the service period closes, and the emergency lane ends when the declaration expires.",
+      "penalties": "A signatory that refuses a named service without a recorded capacity reason loses the no-tariff privilege at the next declared incident and permits cost-recovery inspection; the protocol grants no automatic territory or standing transfer.",
+      "tags": ["foundry", "district8", "water", "road", "charter", "emergency", "security"]
+    },
+    {
+      "treaty_id": "treaty_the_incident_book",
+      "ratified_day": 355,
+      "treaty_title": "The Incident Book Covenant",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office", "faction_archivists"],
+      "demarcated_territory": "The Foundry incident desk, the Office register hall, and the Archivists' copy shelf at the Cluster school",
+      "water_allocation_lpm": 0.0,
+      "power_quota_kw": 0.0,
+      "tariff_schedule": "No commodity tariff applies; the Foundry supplies one duplicate ledger per assessment cycle, and the Office and Archivists exchange witnessed copies without charge.",
+      "treaty_articles": "ARTICLE 1: A worker injury requiring treatment, burst pipe, unplanned outage, power diversion, or road closure caused by a Foundry load receives an entry before the next daylight shift ends. ARTICLE 2: The Office receives a copy, the Archivists retain a sealed copy, and the Foundry may append a response without erasing the original line. ARTICLE 3: Every amendment carries its day, writer, and witness; an open entry is read at the next charter or renewal sitting.",
+      "penalties": "A missing or altered entry permits an unannounced joint inspection and suspends the Foundry's next tariff exemption until the original, amendment, and witness are entered together; the covenant does not decide guilt by itself.",
+      "tags": ["foundry", "cluster", "charter", "schedule", "records", "accountability", "district8"]
     }
   ]
 }

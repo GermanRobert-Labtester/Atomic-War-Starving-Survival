@@ -1363,35 +1363,35 @@
     {
       "id": "quest_scavenger_alliance",
       "title": "The Scavenger Alliance",
-      "synopsis": "A desperate faction of scavengers offers an alliance, but their loyalty is questionable.",
+      "synopsis": "The scavengers who came to the door are not the ones who came last season, and their offer of alliance is written in the grammar of the desperate. The shelter must decide whether loyalty survives its first hard winter, and whether that can be decided in advance.",
       "factionTag": "scavengers",
       "status": "active"
     },
     {
       "id": "quest_farmers_bargain",
       "title": "The Farmer's Bargain",
-      "synopsis": "A group of farmers offers a trade agreement for fresh food in exchange for protection.",
+      "synopsis": "The growers offer fresh food for protection, and the offer is careful, because both sides know what protection becomes when it fails. The food is real. The arithmetic of what the shelter would owe is also real.",
       "factionTag": "farmers",
       "status": "active"
     },
     {
       "id": "quest_radio_signal",
       "title": "Mysterious Radio Signal",
-      "synopsis": "A strange radio signal is detected from a nearby ruin. It could be survivors... or something else.",
+      "synopsis": "Something is transmitting from the ruin on the ridge, on a schedule, too clean for a survivor and too weak for a station. The radio log has it twice a day. Nobody has written down what they think it is.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_medical_supply_run",
       "title": "Medical Supply Run",
-      "synopsis": "A nearby settlement is in desperate need of medical supplies. Will you risk an expedition to help them?",
+      "synopsis": "The settlement down-valley is out of medicine and asked correctly, without exaggeration, which is what makes it land. The expedition is dangerous; the asking is why it is dangerous.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_black_flotilla_trade",
       "title": "Black Flotilla Trade Negotiation",
-      "synopsis": "The notorious Black Flotilla offers a lucrative trade deal, but their reputation precedes them.",
+      "synopsis": "The Black Flotilla offers terms generous enough to be suspicious, and the suspicion is the terms. Their reputation arrives before their boats, and the boats arrive anyway.",
       "factionTag": "black_flotilla",
       "status": "active"
     },
@@ -1405,140 +1405,140 @@
     {
       "id": "quest_bunker_upgrade",
       "title": "Bunker Expansion Project",
-      "synopsis": "The survivors propose expanding the bunker to accommodate more people and better facilities.",
+      "synopsis": "The survivors have drafted an expansion: more beds, better facilities. The drafting is the point, because people plan for futures they intend to see. The walls will want labor, and the labor will want convincing.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_radiation_study",
       "title": "Radiation Study Expedition",
-      "synopsis": "Scientists from a distant settlement want to study the radiation effects in your area.",
+      "synopsis": "Scientists from a distant settlement want to measure the radiation here, and they ask the way people with instruments ask. What they find will be written down, and what is written down eventually travels.",
       "factionTag": "scientists",
       "status": "active"
     },
     {
       "id": "quest_survivor_rescue",
       "title": "Survivor Rescue Mission",
-      "synopsis": "A lone survivor is spotted injured near the perimeter. Rescue them or leave them to their fate?",
+      "synopsis": "A lone figure lies injured near the perimeter fence, in camera range, in the open, for hours. Rescue means opening a door; leaving means everyone keeps watching the camera, which is its own kind of answer.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_raider_peace_offer",
       "title": "Raider Peace Offer",
-      "synopsis": "A raider faction offers a temporary truce in exchange for tribute.",
+      "synopsis": "The raiders offer a truce for tribute, and the offer is polite, and the politeness is arithmetic. Tribute paid once is tribute expected forever, and everyone at the table knows the real question is which.",
       "factionTag": "raiders",
       "status": "active"
     },
     {
       "id": "quest_expedition_equipment",
       "title": "Expedition Equipment Upgrade",
-      "synopsis": "Upgrade your expedition gear to improve safety and efficiency.",
+      "synopsis": "The expedition gear is failing in stages — straps, seals, soles — and the stages are logged in the injury reports. Upgrades cost; not upgrading also costs, and that bill is already arriving.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_medical_triage",
       "title": "Medical Triage Decision",
-      "synopsis": "A critical medical emergency requires triage. Who do you save first?",
+      "synopsis": "Two patients, one course of treatment, one night. The medic has laid the arithmetic on the table and refuses to do it alone, which is both the right thing and the hard thing.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_scout_training",
       "title": "Scout Training Program",
-      "synopsis": "Establish a training program to improve your scouts' skills and survival rates.",
+      "synopsis": "The scouts keep coming back hurt, and the word keep is the finding. A training program: drills, routes, and the unglamorous habits that keep people alive in the unglamorous places.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_food_storage_theft",
       "title": "Food Storage Theft",
-      "synopsis": "Someone is stealing food from the bunker's storage. Investigate and stop the thief.",
+      "synopsis": "The stores are lighter than the ledger, three nights running. The theft is small and it is inside, and the investigation will end at a name everyone suspects and nobody wants to say.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_medical_experiment",
       "title": "Medical Experiment",
-      "synopsis": "A desperate medic proposes an untested medical procedure to cure radiation sickness.",
+      "synopsis": "A desperate medic proposes an untested procedure for radiation sickness, and the word untested is doing a great deal of work in that sentence. The patient has volunteered; the volunteering is informed, which is the only shield anyone can offer.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_survivor_leadership",
       "title": "Survivor Leadership Challenge",
-      "synopsis": "A charismatic survivor challenges your leadership. Do you allow a vote or suppress the challenge?",
+      "synopsis": "A charismatic survivor is asking, politely and in public, who decided what. The question is legitimate, and the legitimacy is exactly what makes it dangerous. A vote or a refusal; both are answers.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_raider_ambush",
       "title": "Raider Ambush",
-      "synopsis": "Your expedition is ambushed by raiders. Fight, flee, or negotiate?",
+      "synopsis": "The expedition walked into an ambush on a route that was supposed to be quiet. Fight, run, or talk — the choice is being made in the open, and the raiders are watching to see which kind of shelter this is.",
       "factionTag": "raiders",
       "status": "active"
     },
     {
       "id": "quest_bunker_defense",
       "title": "Bunker Defense Drill",
-      "synopsis": "Prepare the bunker for a potential raider attack with a defense drill.",
+      "synopsis": "A raid is a rumor with a direction, and the drill is how the shelter argues with it. Stations, doors, signals — practiced until the practice is boring, because boring survives.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_survivor_memorial",
       "title": "Survivor Memorial",
-      "synopsis": "Hold a memorial for the survivors who have passed away.",
+      "synopsis": "The names have accumulated faster than the ceremony. The shelter owes its dead one, and the living owe it to themselves to be present while it is paid.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_food_rationing",
       "title": "Food Rationing Crisis",
-      "synopsis": "Food supplies are critically low. Impose rationing or risk starvation?",
+      "synopsis": "Stores have dropped past the line where arithmetic becomes policy. Rationing keeps people; not rationing keeps kindness, for a while. The council must choose which word to keep.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_technology_scavenging",
       "title": "Technology Scavenging Expedition",
-      "synopsis": "Send an expedition to scavenge for pre-war technology in a dangerous ruin.",
+      "synopsis": "Pre-war technology sits in a ruin the survey flagged twice, both flags about the dose. The expedition is a cost-benefit argument where the cost is measured in rem.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_medical_training",
       "title": "Medical Training Program",
-      "synopsis": "Establish a medical training program to improve the bunker's healthcare capabilities.",
+      "synopsis": "The infirmary runs on one person's knowledge, and that person sleeps. Train hands: dressings, doses, and the arithmetic of fever. The shelter's medicine should outlive its best medic.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_survivor_skills_assessment",
       "title": "Survivor Skills Assessment",
-      "synopsis": "Assess the skills of your survivors to better allocate labor and improve efficiency.",
+      "synopsis": "Who can do what has never been written down, and the not-writing is starting to cost. Assess the survivors, put labor where labor fits, and find out what the shelter has been carrying all along.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_bunker_medical_bay",
       "title": "Medical Bay Expansion",
-      "synopsis": "Expand the bunker's medical bay to improve healthcare capabilities.",
+      "synopsis": "The medical bay is two beds and a curtain pretending to be a ward. Expansion means a second table, better light, and a door that closes. The patients deserve a room that deserves them.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_survivor_romance",
       "title": "Survivor Romance",
-      "synopsis": "Two survivors have developed feelings for each other. Do you acknowledge their relationship or ignore it?",
+      "synopsis": "Two survivors have stopped being careful around each other, and the bunker — which notices everything — has started placing bets. Acknowledging or ignoring it are both governance of something that was never yours.",
       "factionTag": "neutral",
       "status": "active"
     },
     {
       "id": "quest_fuel_crisis",
       "title": "Fuel Crisis",
-      "synopsis": "Fuel reserves are critically low. Do you send an expedition to scavenge or conserve what little you have?",
+      "synopsis": "Fuel has dropped below the number where the generator starts making decisions. Scavenge and send people into the cold, or conserve and let the bunker get colder by degrees. Both choices are a schedule; only one has names on it.",
       "factionTag": "neutral",
       "status": "active"
     },
@@ -1824,7 +1824,37 @@
       "id": "quest_record_sub_basement_blueprint"
     },
     {
+      "id": "quest_record_the_boundary_dispute"
+    },
+    {
+      "id": "quest_record_the_cold_survey"
+    },
+    {
+      "id": "quest_record_the_lamp_keepers_oath"
+    },
+    {
+      "id": "quest_record_the_lamp_oil_ledger"
+    },
+    {
+      "id": "quest_record_the_last_sector"
+    },
+    {
       "id": "quest_record_the_last_watch_beacon"
+    },
+    {
+      "id": "quest_record_the_missing_plate"
+    },
+    {
+      "id": "quest_record_the_overlay_pigment"
+    },
+    {
+      "id": "quest_record_the_rejected_survey"
+    },
+    {
+      "id": "quest_record_the_second_count"
+    },
+    {
+      "id": "quest_record_the_survey_nail"
     },
     {
       "id": "quest_record_the_unmarked_plaque"
@@ -1894,18 +1924,25 @@
       "status": "active",
       "signalId": "freq_distress_88_3",
       "deadlineDays": 3,
-      "rewardItems": ["scrap_metal", "mechanical_parts"],
+      "rewardItems": [
+        "scrap_metal",
+        "mechanical_parts"
+      ],
       "rewardReputation": 5
     },
     {
       "id": "quest_distress_injured_trader",
       "title": "Rescue: Injured Trader",
-      "synopsis": "A distress signal on 156.8 MHz reports an injured trader on Route 6. He has trade goods to share if rescued.",
+      "synopsis": "A distress signal on 156.8 MHz: a trader down on Route 6, injured, offering to share his goods with whoever reaches him. The frequency is honest. The offer is the part that needs eyes on it.",
       "factionTag": "neutral",
       "status": "active",
       "signalId": "freq_distress_156_8",
       "deadlineDays": 2,
-      "rewardItems": ["bandage", "battery", "iodine_pills"],
+      "rewardItems": [
+        "bandage",
+        "battery",
+        "iodine_pills"
+      ],
       "rewardReputation": 3
     },
     {
@@ -1916,7 +1953,10 @@
       "status": "active",
       "signalId": "freq_distress_445_2",
       "deadlineDays": 2,
-      "rewardItems": ["clean_water", "canned_food"],
+      "rewardItems": [
+        "clean_water",
+        "canned_food"
+      ],
       "rewardReputation": 8
     },
     {
@@ -1939,7 +1979,10 @@
       "status": "active",
       "signalId": "freq_distress_901_2",
       "deadlineDays": 3,
-      "rewardItems": ["ammo_556", "field_dressing_kit"],
+      "rewardItems": [
+        "ammo_556",
+        "field_dressing_kit"
+      ],
       "rewardReputation": 10
     },
     {
@@ -2243,7 +2286,5 @@
       "factionTag": "none",
       "status": "active"
     }
-
-
   ]
 }

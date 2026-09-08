@@ -3,6 +3,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 using System.IO;
 using System.Text.Json;
+using Ashfall.Core.Radiation;
 
 namespace Ashfall.Core
 {
@@ -170,7 +171,9 @@ namespace Ashfall.Core
             // Plans 62-65 — Pre-war Archives, Captives, Food Preservation, Epilogues
             "archive_", "captive_", "topic_", "preservation_", "recipe_cure_", "recipe_smoke_", "epilogue_",
             // Plans 50-53 — Vehicle Garage, Faction Espionage, Survivor Mental Health, Subterranean Acoustics
-            "vmod_", "fop_", "fdrop_", "acue_"
+            "vmod_", "fop_", "fdrop_", "acue_",
+            // Plan 135 — Narrative Codex Discovery
+            "disc_"
         };
 
         /// <summary>
@@ -192,7 +195,7 @@ namespace Ashfall.Core
             "setWorldFlag", "trait_granted", "latentExpertTrait", "inspectKey",
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
-            "ponr_flag", "ending_id",
+            "ponr_flag", "ending_id", "ending_key",
             "recipe_id", "silo_id", "gear_id", "key",
             // Plan 20
             "choice_id", "chain_id",
@@ -224,7 +227,9 @@ namespace Ashfall.Core
             // Plans 54-57 — Thermodynamics, Seismic, Barter, Apprenticeship
             "insulation_id", "fault_id", "caravan_id", "mentorship_id", "legacy_trait_id",
             // Plan 73 — Rail Logistics
-            "rail_edge_id"
+            "rail_edge_id",
+            // Plan 135 — Narrative Codex Discovery
+            "discovery_id"
         };
 
         /// <summary>
@@ -269,7 +274,9 @@ namespace Ashfall.Core
             // anchors, psyops faction targets
             "strain_of", "mutation_targets", "surface_anchor_id", "target_faction_id",
             // Plans 62-65
-            "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id"
+            "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id",
+            // Wildlife trapping prey definition: non-empty value = explicit disease-catalog reference; empty value = valid runtime tier fallback.
+            "diseaseId"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -428,7 +435,9 @@ namespace Ashfall.Core
             // Plans 62-65
             "encryption_grade", "intel_category", "allowed_food_types",
             // Plans 50-53
-            "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile"
+            "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile",
+            // Plan 135 — Narrative Discovery Manifest vocabulary & foreign keys
+            "channel", "source_record_id", "source_catalog", "producer_type"
         };
 
         /// <summary>
@@ -542,6 +551,7 @@ namespace Ashfall.Core
             /// bare ids must also resolve). False = generic position (Tier 1:
             /// only prefixed ids are checked).</summary>
             public bool Strict;
+            public string? EntityContext;
         }
 
         public static CatalogIntegrityReport Validate(string dataDirectory, IFileIO files)
@@ -597,8 +607,11 @@ namespace Ashfall.Core
                 bool prefixed = StartsWithAny(r.Value, IdPrefixes);
                 if (ctx.Registry.ContainsKey(r.Value)) continue;
                 if (prefixed || r.Strict)
+                {
+                    string contextSuffix = !string.IsNullOrEmpty(r.EntityContext) ? " (" + r.EntityContext + ")" : string.Empty;
                     report.Error("unresolved " + (prefixed ? "id '" : "reference '")
-                        + r.Value + "' at " + r.Path);
+                        + r.Value + "' at " + r.Path + contextSuffix);
+                }
             }
 
             // Plan 45 / F15: Patrol encounter specific integrity validation
@@ -690,6 +703,85 @@ namespace Ashfall.Core
                 }
             }
 
+            // Plan 135: Narrative discovery manifest integrity validation
+            string narrativeManifestPath = Path.Combine(dataDirectory, "narrative_discovery_manifest.json");
+            if (files.FileExists(narrativeManifestPath))
+            {
+                try
+                {
+                    string manifestJson = files.ReadAllText(narrativeManifestPath);
+                    using var manifestDoc = JsonDocument.Parse(manifestJson);
+                    if (manifestDoc.RootElement.TryGetProperty("entries", out var entriesProp) && entriesProp.ValueKind == JsonValueKind.Array)
+                    {
+                        var sourceCatalogCache = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+                        int entryIndex = 0;
+                        foreach (var entryElem in entriesProp.EnumerateArray())
+                        {
+                            string entryPath = $"narrative_discovery_manifest.json/entries[{entryIndex}]";
+                            string discId = entryElem.TryGetProperty("discovery_id", out var dIdProp) ? dIdProp.GetString() ?? "" : "";
+                            string sourceCatalog = entryElem.TryGetProperty("source_catalog", out var scProp) ? scProp.GetString() ?? "" : "";
+                            string sourceRecordId = entryElem.TryGetProperty("source_record_id", out var sriProp) ? sriProp.GetString() ?? "" : "";
+                            string producerId = entryElem.TryGetProperty("producer_id", out var piProp) ? piProp.GetString() ?? "" : "";
+
+                            if (string.IsNullOrEmpty(discId))
+                            {
+                                report.Error($"{entryPath}: missing or empty discovery_id");
+                            }
+
+                            if (string.IsNullOrEmpty(sourceCatalog))
+                            {
+                                report.Error($"{entryPath}: missing or empty source_catalog");
+                            }
+                            else
+                            {
+                                string fullCatalogPath = Path.Combine(dataDirectory, sourceCatalog);
+                                if (!files.FileExists(fullCatalogPath))
+                                {
+                                    report.Error($"{entryPath}: source_catalog '{sourceCatalog}' does not exist on disk");
+                                }
+                                else if (!string.IsNullOrEmpty(sourceRecordId))
+                                {
+                                    if (!sourceCatalogCache.TryGetValue(sourceCatalog, out var catalogIds))
+                                    {
+                                        catalogIds = new HashSet<string>(StringComparer.Ordinal);
+                                        try
+                                        {
+                                            string catJson = files.ReadAllText(fullCatalogPath);
+                                            using var catDoc = JsonDocument.Parse(catJson);
+                                            CollectCatalogIds(catDoc.RootElement, catalogIds);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            report.Error($"{entryPath}: failed to parse source_catalog '{sourceCatalog}': {ex.Message}");
+                                        }
+                                        sourceCatalogCache[sourceCatalog] = catalogIds;
+                                    }
+
+                                    if (!catalogIds.Contains(sourceRecordId))
+                                    {
+                                        report.Error($"{entryPath}: source_record_id '{sourceRecordId}' not found in '{sourceCatalog}'");
+                                    }
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(producerId))
+                            {
+                                if (!ctx.Registry.ContainsKey(producerId) && !IsKnownRuntimeId(producerId))
+                                {
+                                    report.Error($"{entryPath}: producer_id '{producerId}' is not registered");
+                                }
+                            }
+
+                            entryIndex++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    report.Error("narrative discovery manifest validator error: " + ex.Message);
+                }
+            }
+
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
 
@@ -742,21 +834,76 @@ namespace Ashfall.Core
                 report.Error("catalog '" + file + "': missing required top-level 'schema_version'");
         }
 
-        private static void Walk(JsonElement element, string path, Ctx ctx)
+        private static void Walk(JsonElement element, string path, Ctx ctx, string? parentEntityDesc = null)
         {
             switch (element.ValueKind)
             {
                 case JsonValueKind.Object:
+                    string? entityDesc = null;
+                    if (path.Contains("bycatchSpecies"))
+                    {
+                        entityDesc = parentEntityDesc;
+                    }
+                    else if (element.TryGetProperty("speciesId", out var spProp) && spProp.ValueKind == JsonValueKind.String && !string.IsNullOrEmpty(spProp.GetString()))
+                    {
+                        entityDesc = "prey '" + spProp.GetString() + "'";
+                    }
+                    else if (element.TryGetProperty("trap_id", out var trProp) && trProp.ValueKind == JsonValueKind.String && !string.IsNullOrEmpty(trProp.GetString()))
+                    {
+                        entityDesc = "trap '" + trProp.GetString() + "'";
+                    }
+                    else if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind == JsonValueKind.String && !string.IsNullOrEmpty(idProp.GetString()))
+                    {
+                        entityDesc = "entity '" + idProp.GetString() + "'";
+                    }
+                    else
+                    {
+                        entityDesc = parentEntityDesc;
+                    }
+
                     foreach (JsonProperty property in element.EnumerateObject())
                     {
                         string childPath = path + "/" + property.Name;
                         JsonElement value = property.Value;
 
+                        if (property.Name == "contaminationDose")
+                        {
+                            ValidateContaminationDose(value, childPath, entityDesc, ctx);
+                        }
+
+                        if (property.Name == "bycatchChance")
+                        {
+                            ValidateBycatchChance(value, childPath, entityDesc, ctx);
+                        }
+
+                        if (property.Name == "speciesId" && value.ValueKind == JsonValueKind.String)
+                        {
+                            string? spId = value.GetString();
+                            if (!string.IsNullOrEmpty(spId))
+                            {
+                                if (childPath.Contains("bycatchSpecies"))
+                                {
+                                    ctx.PendingRefs.Add(new Ref
+                                    {
+                                        Value = spId,
+                                        Path = childPath,
+                                        Strict = true,
+                                        EntityContext = entityDesc ?? parentEntityDesc
+                                    });
+                                }
+                                else
+                                {
+                                    Register(property.Name, spId, childPath, ctx);
+                                }
+                            }
+                            continue;
+                        }
+
                         if (value.ValueKind == JsonValueKind.String)
                         {
                             string? text = value.GetString();
                             if (string.IsNullOrEmpty(text) || IsVocabularyKey(property.Name)) continue;
-                            RegisterOrReference(property.Name, text, childPath, ctx);
+                            RegisterOrReference(property.Name, text, childPath, entityDesc, ctx);
                             continue;
                         }
 
@@ -786,7 +933,8 @@ namespace Ashfall.Core
                                         {
                                             Value = item.GetString()!,
                                             Path = childPath + "[]",
-                                            Strict = true
+                                            Strict = true,
+                                            EntityContext = entityDesc
                                         });
                                 }
                             }
@@ -841,7 +989,7 @@ namespace Ashfall.Core
                             CheckRange(property.Name, rangeVal, childPath, ctx);
                         }
 
-                        Walk(value, childPath, ctx);
+                        Walk(value, childPath, ctx, entityDesc ?? parentEntityDesc);
                     }
                     break;
 
@@ -849,7 +997,7 @@ namespace Ashfall.Core
                     int index = 0;
                     foreach (JsonElement item in element.EnumerateArray())
                     {
-                        Walk(item, path + "[" + index + "]", ctx);
+                        Walk(item, path + "[" + index + "]", ctx, parentEntityDesc);
                         index++;
                     }
                     break;
@@ -862,7 +1010,7 @@ namespace Ashfall.Core
             }
         }
 
-        private static void RegisterOrReference(string key, string value, string path, Ctx ctx)
+        private static void RegisterOrReference(string key, string value, string path, string? entityContext, Ctx ctx)
         {
             if (IsDefinitionKey(key))
             {
@@ -870,13 +1018,13 @@ namespace Ashfall.Core
             }
             if (IsReferenceKey(key))
             {
-                ctx.PendingRefs.Add(new Ref { Value = value, Path = path, Strict = true });
+                ctx.PendingRefs.Add(new Ref { Value = value, Path = path, Strict = true, EntityContext = entityContext });
             }
             else if (!IsDefinitionKey(key) && StartsWithAny(value, IdPrefixes))
             {
                 // Any prefixed string in a non-id position is still a reference
                 // (Tier 1) — e.g. a narrative field naming an item id.
-                ctx.PendingRefs.Add(new Ref { Value = value, Path = path, Strict = false });
+                ctx.PendingRefs.Add(new Ref { Value = value, Path = path, Strict = false, EntityContext = entityContext });
             }
         }
 
@@ -957,6 +1105,104 @@ namespace Ashfall.Core
                     + " > max " + memo.Max.Value);
         }
 
+        /// <summary>
+        /// Workstream B: Validates contaminationDose authored bounds.
+        /// Contract:
+        /// - Finite and non-negative required (NaN, +Inf, -Inf, < 0 are content errors).
+        /// - 0 is valid (runtime tier fallback).
+        /// - > 0 and <= AcuteThreshold is valid.
+        /// - > AcuteThreshold emits a warning (high exposure content is intentional/legal).
+        /// Does not mutate or clamp data.
+        /// </summary>
+        private static void ValidateContaminationDose(JsonElement value, string childPath, string? entityContext, Ctx ctx)
+        {
+            string contextSuffix = !string.IsNullOrEmpty(entityContext) ? " (" + entityContext + ")" : string.Empty;
+            if (value.ValueKind == JsonValueKind.Number)
+            {
+                if (value.TryGetDouble(out double dVal))
+                {
+                    if (double.IsNaN(dVal) || double.IsInfinity(dVal))
+                    {
+                        ctx.Report.Error($"catalog '{ctx.File}': non-finite contaminationDose ({dVal}) at {childPath}{contextSuffix}");
+                    }
+                    else if (dVal < 0.0)
+                    {
+                        ctx.Report.Error($"catalog '{ctx.File}': negative contaminationDose ({dVal}) at {childPath}{contextSuffix}");
+                    }
+                    else if (dVal > RadiationSystem.AcuteThreshold)
+                    {
+                        ctx.Report.Warn($"catalog '{ctx.File}': single exposure contaminationDose ({dVal} rads) exceeds acute threshold ({RadiationSystem.AcuteThreshold} rads) at {childPath}{contextSuffix}");
+                    }
+                }
+                else
+                {
+                    ctx.Report.Error($"catalog '{ctx.File}': unparseable numeric contaminationDose at {childPath}{contextSuffix}");
+                }
+            }
+            else if (value.ValueKind == JsonValueKind.String)
+            {
+                string? str = value.GetString();
+                if (string.Equals(str, "PositiveInfinity", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(str, "+Infinity", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(str, "NegativeInfinity", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(str, "-Infinity", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(str, "Infinity", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(str, "NaN", StringComparison.OrdinalIgnoreCase))
+                {
+                    ctx.Report.Error($"catalog '{ctx.File}': non-finite contaminationDose ({str}) at {childPath}{contextSuffix}");
+                }
+                else if (double.TryParse(str, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double parsed))
+                {
+                    if (double.IsNaN(parsed) || double.IsInfinity(parsed))
+                    {
+                        ctx.Report.Error($"catalog '{ctx.File}': non-finite contaminationDose ({str}) at {childPath}{contextSuffix}");
+                    }
+                    else if (parsed < 0.0)
+                    {
+                        ctx.Report.Error($"catalog '{ctx.File}': negative contaminationDose ({parsed}) at {childPath}{contextSuffix}");
+                    }
+                    else if (parsed > RadiationSystem.AcuteThreshold)
+                    {
+                        ctx.Report.Warn($"catalog '{ctx.File}': single exposure contaminationDose ({parsed} rads) exceeds acute threshold ({RadiationSystem.AcuteThreshold} rads) at {childPath}{contextSuffix}");
+                    }
+                }
+                else
+                {
+                    ctx.Report.Error($"catalog '{ctx.File}': non-numeric contaminationDose '{str}' at {childPath}{contextSuffix}");
+                }
+            }
+            else
+            {
+                ctx.Report.Error($"catalog '{ctx.File}': invalid contaminationDose format ({value.ValueKind}) at {childPath}{contextSuffix}");
+            }
+        }
+
+        private static void ValidateBycatchChance(JsonElement value, string childPath, string? entityContext, Ctx ctx)
+        {
+            string contextSuffix = !string.IsNullOrEmpty(entityContext) ? " (" + entityContext + ")" : string.Empty;
+            if (value.ValueKind == JsonValueKind.Number)
+            {
+                if (value.TryGetDouble(out double bc))
+                {
+                    if (!double.IsFinite(bc) || bc < 0.0 || bc > 1.0)
+                        ctx.Report.Error($"catalog '{ctx.File}': bycatchChance out of range ({bc}) at {childPath}{contextSuffix}");
+                }
+            }
+            else if (value.ValueKind == JsonValueKind.String)
+            {
+                string? sVal = value.GetString();
+                if (double.TryParse(sVal, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double parsedBc))
+                {
+                    if (!double.IsFinite(parsedBc) || parsedBc < 0.0 || parsedBc > 1.0)
+                        ctx.Report.Error($"catalog '{ctx.File}': bycatchChance out of range ({parsedBc}) at {childPath}{contextSuffix}");
+                }
+                else
+                {
+                    ctx.Report.Error($"catalog '{ctx.File}': non-numeric bycatchChance '{sVal}' at {childPath}{contextSuffix}");
+                }
+            }
+        }
+
         private sealed class RangeMemoEntry
         {
             public int? Min;
@@ -996,6 +1242,42 @@ namespace Ashfall.Core
                 if (value.StartsWith(prefixes[i], StringComparison.Ordinal))
                     return true;
             return false;
+        }
+
+        private static void CollectCatalogIds(JsonElement element, HashSet<string> ids)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Object:
+                    foreach (JsonProperty prop in element.EnumerateObject())
+                    {
+                        if (prop.Value.ValueKind == JsonValueKind.String)
+                        {
+                            string? str = prop.Value.GetString();
+                            if (!string.IsNullOrEmpty(str))
+                            {
+                                if (prop.Name == "id" || prop.Name == "glitch_id" || prop.Name == "room_id" ||
+                                    prop.Name == "case_id" || prop.Name == "confession_id" || prop.Name == "tx_id" ||
+                                    prop.Name == "treaty_id" || prop.Name == "directive_id" || prop.Name == "dispatch_id" ||
+                                    prop.Name == "report_id" || prop.Name == "audit_id")
+                                {
+                                    ids.Add(str);
+                                }
+                            }
+                        }
+                        else if (prop.Value.ValueKind == JsonValueKind.Object || prop.Value.ValueKind == JsonValueKind.Array)
+                        {
+                            CollectCatalogIds(prop.Value, ids);
+                        }
+                    }
+                    break;
+                case JsonValueKind.Array:
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        CollectCatalogIds(item, ids);
+                    }
+                    break;
+            }
         }
     }
 }

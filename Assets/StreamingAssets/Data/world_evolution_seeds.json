@@ -1,10 +1,13 @@
 {
   "schema_version": 1,
   "collection_id": "world_evolution_seeds",
-  "description": "Initial world state for the evolving-world systems: sector graph for wildlife migration, wildlife packs, landmark integrity baselines, and location ownership/contamination seeds. Seeded once per fresh save; never overwrites a restored ledger. Plan 28: water flags mark the river/estuary waterway pair; pack_river_carp_run and pack_lowlands_moth_bloom add the coastal fish run and the warm-damp insect bloom archetypes.",
+  "description": "Initial world state for the evolving-world systems: 24-sector graph for wildlife migration, 24 wildlife packs across 12 canonical species, 30 landmark integrity baselines, 40 location ownership/contamination seeds, and 4 wildlife-linked market scarcity goods. Seeded once per fresh save; never overwrites a restored ledger. Plan 132 expands the regional topology, water corridor, pack ecologies, and landmark baselines.",
   "shelter_sector_id": "sector_4_hinterlands",
   "scarcity_goods": [
-    "canned_food"
+    "canned_food",
+    "cooked_meat",
+    "item_smoked_meat",
+    "clean_water"
   ],
   "sectors": [
     {
@@ -12,7 +15,8 @@
       "neighbors": [
         "sector_4_hills",
         "sector_4_floodplain",
-        "sector_4_highway_junction"
+        "sector_4_highway_junction",
+        "sector_4_orchards"
       ]
     },
     {
@@ -20,7 +24,8 @@
       "neighbors": [
         "sector_4_hinterlands",
         "sector_4_canyon",
-        "sector_4_railway_cut"
+        "sector_4_railway_cut",
+        "sector_4_uplands"
       ]
     },
     {
@@ -28,7 +33,8 @@
       "neighbors": [
         "sector_4_hinterlands",
         "sector_4_river",
-        "sector_8_lowlands"
+        "sector_8_lowlands",
+        "sector_4_waterworks"
       ]
     },
     {
@@ -36,7 +42,8 @@
       "neighbors": [
         "sector_4_hills",
         "sector_4_railway_cut",
-        "sector_8_quarries"
+        "sector_8_quarries",
+        "sector_4_chemical_corridor"
       ]
     },
     {
@@ -44,14 +51,16 @@
       "neighbors": [
         "sector_4_hills",
         "sector_4_canyon",
-        "sector_4_highway_junction"
+        "sector_4_highway_junction",
+        "sector_4_rail_yard"
       ]
     },
     {
       "sector_id": "sector_4_river",
       "neighbors": [
         "sector_4_floodplain",
-        "sector_8_estuary"
+        "sector_8_estuary",
+        "sector_4_waterworks"
       ],
       "water": true
     },
@@ -60,7 +69,8 @@
       "neighbors": [
         "sector_4_hinterlands",
         "sector_4_railway_cut",
-        "sector_8_bluffs"
+        "sector_8_bluffs",
+        "sector_4_civic_exchange"
       ]
     },
     {
@@ -68,7 +78,8 @@
       "neighbors": [
         "sector_4_highway_junction",
         "sector_8_lowlands",
-        "sector_8_quarries"
+        "sector_8_quarries",
+        "sector_8_docklands"
       ]
     },
     {
@@ -76,14 +87,17 @@
       "neighbors": [
         "sector_8_bluffs",
         "sector_4_floodplain",
-        "sector_8_estuary"
+        "sector_8_estuary",
+        "sector_8_reed_flats"
       ]
     },
     {
       "sector_id": "sector_8_estuary",
       "neighbors": [
         "sector_8_lowlands",
-        "sector_4_river"
+        "sector_4_river",
+        "sector_8_reed_flats",
+        "sector_8_deep_shelf"
       ],
       "water": true
     },
@@ -91,8 +105,118 @@
       "sector_id": "sector_8_quarries",
       "neighbors": [
         "sector_8_bluffs",
-        "sector_4_canyon"
+        "sector_4_canyon",
+        "sector_4_industrial_works"
       ]
+    },
+    {
+      "sector_id": "sector_4_orchards",
+      "neighbors": [
+        "sector_4_hinterlands",
+        "sector_4_waterworks",
+        "sector_4_northern_timber"
+      ]
+    },
+    {
+      "sector_id": "sector_4_waterworks",
+      "neighbors": [
+        "sector_4_floodplain",
+        "sector_4_river",
+        "sector_4_orchards",
+        "sector_4_civic_exchange"
+      ]
+    },
+    {
+      "sector_id": "sector_4_civic_exchange",
+      "neighbors": [
+        "sector_4_highway_junction",
+        "sector_4_waterworks",
+        "sector_4_industrial_works",
+        "sector_4_checkpoint_belt"
+      ]
+    },
+    {
+      "sector_id": "sector_4_industrial_works",
+      "neighbors": [
+        "sector_4_civic_exchange",
+        "sector_8_quarries",
+        "sector_4_chemical_corridor",
+        "sector_4_rail_yard"
+      ]
+    },
+    {
+      "sector_id": "sector_4_chemical_corridor",
+      "neighbors": [
+        "sector_4_canyon",
+        "sector_4_industrial_works",
+        "sector_4_ground_zero"
+      ]
+    },
+    {
+      "sector_id": "sector_4_rail_yard",
+      "neighbors": [
+        "sector_4_railway_cut",
+        "sector_4_industrial_works",
+        "sector_4_checkpoint_belt"
+      ]
+    },
+    {
+      "sector_id": "sector_4_uplands",
+      "neighbors": [
+        "sector_4_hills",
+        "sector_4_northern_timber",
+        "sector_4_ground_zero"
+      ]
+    },
+    {
+      "sector_id": "sector_4_northern_timber",
+      "neighbors": [
+        "sector_4_orchards",
+        "sector_4_uplands",
+        "sector_4_checkpoint_belt"
+      ]
+    },
+    {
+      "sector_id": "sector_4_checkpoint_belt",
+      "neighbors": [
+        "sector_4_civic_exchange",
+        "sector_4_rail_yard",
+        "sector_4_northern_timber"
+      ]
+    },
+    {
+      "sector_id": "sector_4_ground_zero",
+      "neighbors": [
+        "sector_4_uplands",
+        "sector_4_chemical_corridor"
+      ]
+    },
+    {
+      "sector_id": "sector_8_docklands",
+      "neighbors": [
+        "sector_8_bluffs",
+        "sector_8_reed_flats",
+        "sector_8_deep_shelf"
+      ]
+    },
+    {
+      "sector_id": "sector_8_reed_flats",
+      "neighbors": [
+        "sector_8_lowlands",
+        "sector_8_estuary",
+        "sector_8_docklands",
+        "sector_8_deep_shelf"
+      ],
+      "water": true
+    },
+    {
+      "sector_id": "sector_8_deep_shelf",
+      "neighbors": [
+        "sector_8_estuary",
+        "sector_8_docklands",
+        "sector_8_reed_flats"
+      ],
+      "water": true
     }
   ],
   "packs": [
@@ -173,6 +297,72 @@
       "species_id": "species_ghost_moth",
       "sector_id": "sector_8_lowlands",
       "population": 16
+    },
+    {
+      "pack_id": "pack_orchard_hares",
+      "species_id": "species_cotton_hare",
+      "sector_id": "sector_4_orchards",
+      "population": 11
+    },
+    {
+      "pack_id": "pack_civic_rats",
+      "species_id": "species_blight_rat",
+      "sector_id": "sector_4_civic_exchange",
+      "population": 14
+    },
+    {
+      "pack_id": "pack_railyard_dogs",
+      "species_id": "species_rad_dog",
+      "sector_id": "sector_4_rail_yard",
+      "population": 5
+    },
+    {
+      "pack_id": "pack_waterworks_herons",
+      "species_id": "species_gray_heron",
+      "sector_id": "sector_4_waterworks",
+      "population": 4
+    },
+    {
+      "pack_id": "pack_upland_lynx",
+      "species_id": "species_dust_lynx",
+      "sector_id": "sector_4_uplands",
+      "population": 3
+    },
+    {
+      "pack_id": "pack_timber_wolves",
+      "species_id": "species_wolf",
+      "sector_id": "sector_4_northern_timber",
+      "population": 5
+    },
+    {
+      "pack_id": "pack_checkpoint_crows",
+      "species_id": "species_iron_crow",
+      "sector_id": "sector_4_checkpoint_belt",
+      "population": 8
+    },
+    {
+      "pack_id": "pack_dockland_gulls",
+      "species_id": "species_ash_gull",
+      "sector_id": "sector_8_docklands",
+      "population": 12
+    },
+    {
+      "pack_id": "pack_reedflats_boars",
+      "species_id": "species_ash_boar",
+      "sector_id": "sector_8_reed_flats",
+      "population": 6
+    },
+    {
+      "pack_id": "pack_deepshelf_carp_run",
+      "species_id": "species_mirror_carp",
+      "sector_id": "sector_8_deep_shelf",
+      "population": 15
+    },
+    {
+      "pack_id": "pack_chemical_moth_bloom",
+      "species_id": "species_ghost_moth",
+      "sector_id": "sector_4_chemical_corridor",
+      "population": 12
     }
   ],
   "landmarks": [
@@ -225,6 +415,106 @@
       "landmark_id": "landmark_gymnasium_trusses",
       "location_id": "loc_school_gymnasium",
       "integrity": 84
+    },
+    {
+      "landmark_id": "landmark_archive_vault_dome",
+      "location_id": "loc_municipal_archive",
+      "integrity": 78
+    },
+    {
+      "landmark_id": "landmark_transit_antenna_tower",
+      "location_id": "loc_transit_authority_hq",
+      "integrity": 62
+    },
+    {
+      "landmark_id": "landmark_almshouse_belfry",
+      "location_id": "loc_st_brigids_almshouse",
+      "integrity": 53
+    },
+    {
+      "landmark_id": "landmark_baths_glass_atrium",
+      "location_id": "loc_public_swimming_baths",
+      "integrity": 42
+    },
+    {
+      "landmark_id": "landmark_dentists_colonnade",
+      "location_id": "loc_dentists_row",
+      "integrity": 88
+    },
+    {
+      "landmark_id": "landmark_department_clock_face",
+      "location_id": "loc_department_store",
+      "integrity": 73
+    },
+    {
+      "landmark_id": "landmark_apiary_retaining_wall",
+      "location_id": "loc_apiary_rows",
+      "integrity": 85
+    },
+    {
+      "landmark_id": "landmark_surgery_brick_chimney",
+      "location_id": "loc_veterinary_surgery",
+      "integrity": 66
+    },
+    {
+      "landmark_id": "landmark_seed_library_cold_cellar",
+      "location_id": "loc_seed_library_annex",
+      "integrity": 91
+    },
+    {
+      "landmark_id": "landmark_reversal_loop_shelter",
+      "location_id": "loc_bus_reversal_loop",
+      "integrity": 49
+    },
+    {
+      "landmark_id": "landmark_recovery_overhead_crane",
+      "location_id": "loc_recovery_yard",
+      "integrity": 59
+    },
+    {
+      "landmark_id": "landmark_snowline_cable_trestle",
+      "location_id": "loc_snowline_station",
+      "integrity": 67
+    },
+    {
+      "landmark_id": "landmark_avalanche_concrete_gallery",
+      "location_id": "loc_avalanche_gallery",
+      "integrity": 75
+    },
+    {
+      "landmark_id": "landmark_summit_radio_parabola",
+      "location_id": "loc_summit_relay",
+      "integrity": 51
+    },
+    {
+      "landmark_id": "landmark_lock_gate_winch",
+      "location_id": "loc_lock_gate_four",
+      "integrity": 63
+    },
+    {
+      "landmark_id": "landmark_pump_intake_grate",
+      "location_id": "loc_pump_station_nine",
+      "integrity": 46
+    },
+    {
+      "landmark_id": "landmark_cold_store_ammonia_compressor",
+      "location_id": "loc_cold_store_atlantic",
+      "integrity": 57
+    },
+    {
+      "landmark_id": "landmark_cinema_marquee_steel",
+      "location_id": "loc_drowned_cinema",
+      "integrity": 38
+    },
+    {
+      "landmark_id": "landmark_shallows_stilt_platform",
+      "location_id": "loc_the_shallows_market",
+      "integrity": 65
+    },
+    {
+      "landmark_id": "landmark_checkpoint_searchlight_pylon",
+      "location_id": "loc_garrison_checkpoint_gamma",
+      "integrity": 77
     }
   ],
   "location_seeds": [
@@ -319,6 +609,214 @@
       "contamination": 0.05,
       "threats": [],
       "sector_id": "sector_4_river"
+    },
+    {
+      "location_id": "loc_cider_press",
+      "owner": "none",
+      "contamination": 0.08,
+      "threats": [],
+      "sector_id": "sector_4_orchards"
+    },
+    {
+      "location_id": "loc_the_allotments",
+      "owner": "none",
+      "contamination": 0.12,
+      "threats": [],
+      "sector_id": "sector_4_orchards"
+    },
+    {
+      "location_id": "loc_apiary_rows",
+      "owner": "none",
+      "contamination": 0.05,
+      "threats": [],
+      "sector_id": "sector_4_orchards"
+    },
+    {
+      "location_id": "loc_seed_library_annex",
+      "owner": "faction_the_compact",
+      "contamination": 0.02,
+      "threats": [],
+      "sector_id": "sector_4_orchards"
+    },
+    {
+      "location_id": "loc_terrace_pumphouse",
+      "owner": "faction_the_scale",
+      "contamination": 0.18,
+      "threats": [],
+      "sector_id": "sector_4_waterworks"
+    },
+    {
+      "location_id": "loc_pump_station_nine",
+      "owner": "none",
+      "contamination": 0.22,
+      "threats": [
+        "threat_rad_squatters"
+      ],
+      "sector_id": "sector_4_waterworks"
+    },
+    {
+      "location_id": "loc_lock_gate_four",
+      "owner": "none",
+      "contamination": 0.15,
+      "threats": [],
+      "sector_id": "sector_4_waterworks"
+    },
+    {
+      "location_id": "loc_municipal_archive",
+      "owner": "faction_the_office",
+      "contamination": 0.08,
+      "threats": [],
+      "sector_id": "sector_4_civic_exchange"
+    },
+    {
+      "location_id": "loc_department_store",
+      "owner": "none",
+      "contamination": 0.15,
+      "threats": [
+        "threat_rad_squatters"
+      ],
+      "sector_id": "sector_4_civic_exchange"
+    },
+    {
+      "location_id": "loc_dentists_row",
+      "owner": "none",
+      "contamination": 0.1,
+      "threats": [],
+      "sector_id": "sector_4_civic_exchange"
+    },
+    {
+      "location_id": "loc_printworks",
+      "owner": "faction_the_office",
+      "contamination": 0.14,
+      "threats": [],
+      "sector_id": "sector_4_industrial_works"
+    },
+    {
+      "location_id": "loc_alloc_12b",
+      "owner": "faction_the_underwrite",
+      "contamination": 0.3,
+      "threats": [],
+      "sector_id": "sector_4_chemical_corridor"
+    },
+    {
+      "location_id": "loc_railway_span_44_alpha",
+      "owner": "none",
+      "contamination": 0.16,
+      "threats": [
+        "threat_wild_beasts"
+      ],
+      "sector_id": "sector_4_rail_yard"
+    },
+    {
+      "location_id": "loc_pilgrim_switchbacks",
+      "owner": "none",
+      "contamination": 0.05,
+      "threats": [],
+      "sector_id": "sector_4_uplands"
+    },
+    {
+      "location_id": "loc_snowline_station",
+      "owner": "none",
+      "contamination": 0.08,
+      "threats": [
+        "threat_wild_beasts"
+      ],
+      "sector_id": "sector_4_uplands"
+    },
+    {
+      "location_id": "loc_summit_relay",
+      "owner": "faction_the_compact",
+      "contamination": 0.04,
+      "threats": [],
+      "sector_id": "sector_4_uplands"
+    },
+    {
+      "location_id": "loc_avalanche_gallery",
+      "owner": "none",
+      "contamination": 0.06,
+      "threats": [],
+      "sector_id": "sector_4_uplands"
+    },
+    {
+      "location_id": "loc_forward_roster_camp",
+      "owner": "iron_garrison",
+      "contamination": 0.1,
+      "threats": [],
+      "sector_id": "sector_4_northern_timber"
+    },
+    {
+      "location_id": "loc_understory_transmitter",
+      "owner": "none",
+      "contamination": 0.05,
+      "threats": [],
+      "sector_id": "sector_4_northern_timber"
+    },
+    {
+      "location_id": "loc_garrison_checkpoint_gamma",
+      "owner": "iron_garrison",
+      "contamination": 0.12,
+      "threats": [],
+      "sector_id": "sector_4_checkpoint_belt"
+    },
+    {
+      "location_id": "loc_school_gymnasium",
+      "owner": "none",
+      "contamination": 0.14,
+      "threats": [],
+      "sector_id": "sector_4_checkpoint_belt"
+    },
+    {
+      "location_id": "loc_the_vessels_cell",
+      "owner": "cult_of_ash_sign",
+      "contamination": 0.55,
+      "threats": [],
+      "sector_id": "sector_4_ground_zero"
+    },
+    {
+      "location_id": "loc_cold_store_atlantic",
+      "owner": "faction_the_cutters",
+      "contamination": 0.2,
+      "threats": [],
+      "sector_id": "sector_8_docklands"
+    },
+    {
+      "location_id": "loc_drowned_cinema",
+      "owner": "none",
+      "contamination": 0.25,
+      "threats": [
+        "threat_wild_beasts"
+      ],
+      "sector_id": "sector_8_docklands"
+    },
+    {
+      "location_id": "loc_the_shallows_market",
+      "owner": "faction_the_cutters",
+      "contamination": 0.15,
+      "threats": [],
+      "sector_id": "sector_8_reed_flats"
+    },
+    {
+      "location_id": "loc_bathymetric_boat",
+      "owner": "faction_the_fleet",
+      "contamination": 0.1,
+      "threats": [],
+      "sector_id": "sector_8_deep_shelf"
+    },
+    {
+      "location_id": "loc_public_swimming_baths",
+      "owner": "none",
+      "contamination": 0.24,
+      "threats": [
+        "threat_rad_squatters"
+      ],
+      "sector_id": "sector_4_civic_exchange"
+    },
+    {
+      "location_id": "loc_st_brigids_almshouse",
+      "owner": "none",
+      "contamination": 0.12,
+      "threats": [],
+      "sector_id": "sector_4_hinterlands"
     }
   ]
 }

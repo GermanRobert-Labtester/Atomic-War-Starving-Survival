@@ -538,6 +538,801 @@
           "spawnChance": 0.8
         }
       ]
+    },
+    {
+      "id": "location_apartment_block",
+      "displayName": "The Split Apartment Block",
+      "radiationUSv": 10.0,
+      "dangerLevel": 3,
+      "travelHours": 1.8,
+      "lootTable": [
+        {
+          "itemId": "cloth",
+          "minQty": 10,
+          "maxQty": 35,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "wool_blanket",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "family_photograph",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "canned_food",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.5,
+          "degradationChance": 0.5,
+          "degradedItemId": "spoiled_canned_food"
+        },
+        {
+          "itemId": "clean_water",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.45,
+          "degradationChance": 0.4,
+          "degradedItemId": "dirty_water"
+        },
+        {
+          "itemId": "item_heavy_wool_coat",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.15
+        },
+        {
+          "itemId": "book",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.6,
+          "degradationChance": 0.4,
+          "degradedItemId": "paper_scrap"
+        }
+      ]
+    },
+    {
+      "id": "location_metro_station",
+      "displayName": "Central Metro Concourse",
+      "radiationUSv": 16.0,
+      "dangerLevel": 4,
+      "travelHours": 2.2,
+      "lootTable": [
+        {
+          "itemId": "battery",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "paper_scrap",
+          "minQty": 15,
+          "maxQty": 60,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "duct_tape",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "gas_mask",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.2
+        },
+        {
+          "itemId": "cardboard_box",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.65,
+          "degradationChance": 0.5,
+          "degradedItemId": "paper_scrap"
+        }
+      ]
+    },
+    {
+      "id": "location_police_station",
+      "displayName": "District Police Station",
+      "radiationUSv": 12.0,
+      "dangerLevel": 5,
+      "travelHours": 2.5,
+      "lootTable": [
+        {
+          "itemId": "ammo_9x19",
+          "minQty": 2,
+          "maxQty": 16,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "pistol_cz75_9x19",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        },
+        {
+          "itemId": "sealed_government_document",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.35
+        },
+        {
+          "itemId": "alcohol_wipes_box_10_of_10",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "item_suitcase_locked",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.3
+        },
+        {
+          "itemId": "bandage",
+          "minQty": 2,
+          "maxQty": 8,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 5,
+          "maxQty": 20,
+          "spawnChance": 0.75
+        }
+      ]
+    },
+    {
+      "id": "location_chemical_plant",
+      "displayName": "North Chemical Works",
+      "radiationUSv": 22.0,
+      "dangerLevel": 6,
+      "travelHours": 3.8,
+      "lootTable": [
+        {
+          "itemId": "chemicals",
+          "minQty": 8,
+          "maxQty": 40,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "industrial_bleach",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "gas_mask",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.35
+        },
+        {
+          "itemId": "rubber_hose",
+          "minQty": 3,
+          "maxQty": 15,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "item_co2_scrubber_cartridge",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.3
+        },
+        {
+          "itemId": "ammonia_tank",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "item_prussian_blue_chelating_pellets",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.2
+        }
+      ]
+    },
+    {
+      "id": "location_steelworks",
+      "displayName": "Riverside Steelworks",
+      "radiationUSv": 15.0,
+      "dangerLevel": 5,
+      "travelHours": 3.2,
+      "lootTable": [
+        {
+          "itemId": "scrap_metal",
+          "minQty": 25,
+          "maxQty": 90,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "item_galvanized_rebar",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "box_of_nails_10",
+          "minQty": 3,
+          "maxQty": 15,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "fuel_1l",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "pipe_wrench",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "item_high_tensile_steel_culvert_brace",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "item_superalloy_turbine_blade_blank",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        }
+      ]
+    },
+    {
+      "id": "location_power_substation",
+      "displayName": "Eastern Power Substation",
+      "radiationUSv": 14.0,
+      "dangerLevel": 4,
+      "travelHours": 2.8,
+      "lootTable": [
+        {
+          "itemId": "electronic_scrap",
+          "minQty": 10,
+          "maxQty": 45,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "battery",
+          "minQty": 6,
+          "maxQty": 25,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "brass_fittings",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "item_faraday_mesh",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "vacuum_tube",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.65
+        },
+        {
+          "itemId": "duct_tape",
+          "minQty": 2,
+          "maxQty": 8,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 10,
+          "maxQty": 35,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "item_forged_rotor_shaft",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        }
+      ]
+    },
+    {
+      "id": "location_ammunition_depot",
+      "displayName": "Reserve Ammunition Depot",
+      "radiationUSv": 20.0,
+      "dangerLevel": 8,
+      "travelHours": 5.2,
+      "lootTable": [
+        {
+          "itemId": "ammo_762x54r_jhp_ap",
+          "minQty": 2,
+          "maxQty": 14,
+          "spawnChance": 0.45
+        },
+        {
+          "itemId": "ammo_9x19",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "item_mine_prod",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.35
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 15,
+          "maxQty": 50,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "item_ash_ghillie",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.1
+        },
+        {
+          "itemId": "sealed_government_document",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "military_grade_hatchet",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.2
+        }
+      ]
+    },
+    {
+      "id": "location_radar_site",
+      "displayName": "Hill Radar Annex",
+      "radiationUSv": 24.0,
+      "dangerLevel": 6,
+      "travelHours": 4.8,
+      "lootTable": [
+        {
+          "itemId": "electronic_scrap",
+          "minQty": 15,
+          "maxQty": 60,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "vacuum_tube",
+          "minQty": 4,
+          "maxQty": 18,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "battery",
+          "minQty": 4,
+          "maxQty": 20,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "item_faraday_mesh",
+          "minQty": 1,
+          "maxQty": 5,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "sealed_government_document",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "cassette_tape",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "item_detector_sensor_module",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25
+        }
+      ]
+    },
+    {
+      "id": "location_weather_station",
+      "displayName": "Upper Ridge Weather Station",
+      "radiationUSv": 18.0,
+      "dangerLevel": 4,
+      "travelHours": 4.0,
+      "lootTable": [
+        {
+          "itemId": "item_radiosonde",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "battery",
+          "minQty": 4,
+          "maxQty": 16,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "electronic_scrap",
+          "minQty": 8,
+          "maxQty": 30,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "paper_scrap",
+          "minQty": 10,
+          "maxQty": 50,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "item_thermal_parka",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.18
+        },
+        {
+          "itemId": "antiseptic_1l_of_1l",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "vacuum_tube",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.5
+        }
+      ]
+    },
+    {
+      "id": "location_agricultural_research",
+      "displayName": "Agricultural Research Annex",
+      "radiationUSv": 12.0,
+      "dangerLevel": 3,
+      "travelHours": 3.0,
+      "lootTable": [
+        {
+          "itemId": "item_seed_tuber",
+          "minQty": 2,
+          "maxQty": 8,
+          "spawnChance": 0.65
+        },
+        {
+          "itemId": "item_seed_grain",
+          "minQty": 3,
+          "maxQty": 12,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "item_seed_wheat",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.15
+        },
+        {
+          "itemId": "item_grow_medium",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "item_ammonium_nitrate_sack",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "clean_water",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.7,
+          "degradationChance": 0.3,
+          "degradedItemId": "dirty_water"
+        },
+        {
+          "itemId": "paper_scrap",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.8
+        }
+      ]
+    },
+    {
+      "id": "location_metro_tunnel",
+      "displayName": "Service Tunnel Six",
+      "radiationUSv": 14.0,
+      "dangerLevel": 6,
+      "travelHours": 2.6,
+      "lootTable": [
+        {
+          "itemId": "item_rebreather_scrubber",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.3
+        },
+        {
+          "itemId": "canned_food",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.55,
+          "degradationChance": 0.4,
+          "degradedItemId": "spoiled_canned_food"
+        },
+        {
+          "itemId": "item_radon_detector_electret",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 4,
+          "maxQty": 18,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "rubber_hose",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 10,
+          "maxQty": 40,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "battery",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.75
+        }
+      ]
+    },
+    {
+      "id": "location_drainage_network",
+      "displayName": "South Drainage Network",
+      "radiationUSv": 16.0,
+      "dangerLevel": 5,
+      "travelHours": 2.4,
+      "lootTable": [
+        {
+          "itemId": "pipe_wrench",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.45
+        },
+        {
+          "itemId": "brass_fittings",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "rubber_hose",
+          "minQty": 4,
+          "maxQty": 16,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 12,
+          "maxQty": 50,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "clean_water",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.4,
+          "degradationChance": 0.6,
+          "degradedItemId": "dirty_water"
+        },
+        {
+          "itemId": "industrial_bleach",
+          "minQty": 1,
+          "maxQty": 5,
+          "spawnChance": 0.65
+        },
+        {
+          "itemId": "item_sludge_cake",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.7
+        }
+      ]
+    },
+    {
+      "id": "location_irradiated_forest",
+      "displayName": "The Grey Forest",
+      "radiationUSv": 28.0,
+      "dangerLevel": 7,
+      "travelHours": 4.2,
+      "lootTable": [
+        {
+          "itemId": "wood_block",
+          "minQty": 15,
+          "maxQty": 65,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "scrap_wood",
+          "minQty": 20,
+          "maxQty": 80,
+          "spawnChance": 1.0
+        },
+        {
+          "itemId": "sawdust_block",
+          "minQty": 5,
+          "maxQty": 30,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "item_hot_dust_drum",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "item_prussian_blue_chelating_pellets",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.2
+        },
+        {
+          "itemId": "item_frostbite_salve",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "raw_meat",
+          "minQty": 2,
+          "maxQty": 15,
+          "spawnChance": 0.4,
+          "degradationChance": 0.7,
+          "degradedItemId": "spoiled_meat"
+        }
+      ]
+    },
+    {
+      "id": "location_frozen_wetland",
+      "displayName": "Frozen Reed Marsh",
+      "radiationUSv": 15.0,
+      "dangerLevel": 5,
+      "travelHours": 5.0,
+      "lootTable": [
+        {
+          "itemId": "item_fur_mittens",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.35
+        },
+        {
+          "itemId": "item_insulated_boots",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.2
+        },
+        {
+          "itemId": "item_ice_pick",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.45
+        },
+        {
+          "itemId": "cloth",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "wool_blanket",
+          "minQty": 1,
+          "maxQty": 4,
+          "spawnChance": 0.65
+        },
+        {
+          "itemId": "clean_water",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.6,
+          "degradationChance": 0.3,
+          "degradedItemId": "dirty_water"
+        },
+        {
+          "itemId": "item_frostbite_salve",
+          "minQty": 1,
+          "maxQty": 3,
+          "spawnChance": 0.55
+        }
+      ]
+    },
+    {
+      "id": "location_burned_woodland",
+      "displayName": "Burned Pine Belt",
+      "radiationUSv": 22.0,
+      "dangerLevel": 6,
+      "travelHours": 3.6,
+      "lootTable": [
+        {
+          "itemId": "scrap_wood",
+          "minQty": 25,
+          "maxQty": 90,
+          "spawnChance": 1.0
+        },
+        {
+          "itemId": "sawdust_block",
+          "minQty": 8,
+          "maxQty": 40,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "fuel_1l",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 10,
+          "maxQty": 35,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "box_of_nails_10",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.65
+        },
+        {
+          "itemId": "military_grade_hatchet",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.2
+        },
+        {
+          "itemId": "item_ash_ghillie",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.12
+        }
+      ]
     }
   ]
 }

@@ -162,7 +162,7 @@ namespace Ashfall.Core.Tests.World
             var catalog = new RegionalTreatyCatalog();
             catalog.Load(files.ReadAllText(Path.Combine(dataDir, "foundry_accords.json")), json);
 
-            Assert.Equal(12, catalog.AllTreaties.Count);
+            Assert.Equal(18, catalog.AllTreaties.Count);
 
             foreach (var treaty in catalog.AllTreaties)
             {

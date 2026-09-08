@@ -1,28 +1,53 @@
 # Utility Action Requirement Matrix
 
-> **Eligibility Requirements:** Pre-conditions, facility dependencies, and inventory gates for all 20 actions.
+## How Action Eligibility Works
 
----
+The current Utility AI Core (`UtilityActionDef`, `UtilityActionScorer`) does **not** have a built-in requirement/eligibility system beyond:
+1. `fatigueGate` — rawScore → 0 if fatigue exceeds gate
+2. Trait vetoes — hard score → 0 for specific trait×tag pairs
+3. `IsAlive` — dead survivors score 0 on all actions
 
-| Action ID | Room / Facility Dependency | Workstation Requirement | Minimum Resource Input | Survivor Prerequisite |
-|---|---|---|---|---|
-| `action_weigh_goods` | Storage Bay | Scale Bench | None | Fatigue <= 85 |
-| `action_read_contract` | Any quiet area / Bunks | None | None | Fatigue <= 90 |
-| `action_canvas_support` | Access Corridor / Mess Hall | None | None | Fatigue <= 80 |
-| `action_run_vouch` | Airlock / Gate | Gate intercom | None | Fatigue <= 88 |
-| `action_audit_inventory` | Storage Bay | Shelf racks | None | Fatigue <= 80 |
-| `action_file_report` | Archive / Radio Tuner | Ledger desk | None | Fatigue <= 80 |
-| `action_repair_equipment` | `room_workshop` | Workbench / Vise | Scrap Metal / Parts | Crafting Skill > 0, Fatigue <= 75 |
-| `action_inspect_housing` | Corridor / Utility conduits | Structural inspection | None | Fatigue <= 80 |
-| `action_treat_wounded` | `room_clinic` | Triage table | Antiseptic / Bandage | Untreated patient exists, Fatigue <= 90 |
-| `action_seek_treatment` | `room_clinic` | Clinic triage bed | None | Survivor is wounded/afflicted, Fatigue <= 95 |
-| `action_cook_food` | `room_kitchen` | Galley range | Raw rations / water | Edible food target unmet, Fatigue <= 85 |
-| `action_preserve_food` | `room_kitchen` / Cold Store | Salting / canning station | Salt / Jars / Produce | Perishables at risk, Fatigue <= 80 |
-| `action_purify_water` | `room_water_treatment` | Filter / chemical doser | Raw water / Charcoal | Clean water low, Fatigue <= 85 |
-| `action_socialize` | `room_common_mess_hall` | Mess bench | None | Eligible partner available, Fatigue <= 90 |
-| `action_resolve_conflict` | Common area / Concourse | None | None | Active survivor friction exists, Fatigue <= 88 |
-| `action_train_skill` | Workshop / Library / Firing bay | Practice dummy / books | None | Trainable skill not maxed, Fatigue <= 75 |
-| `action_teach_skill` | Workshop / Classroom | Shared workstation | None | Teacher skill > Learner skill, Fatigue <= 80 |
-| `action_stand_watch` | `room_airlock` / Surveillance | Sentry camera / watch hatch | Weapon | Fatigue <= 85 |
-| `action_conduct_research` | `room_laboratory_research` | Analysis terminal | None | Active uncompleted tech node, Fatigue <= 75 |
-| `action_rest` | `room_bunks` | Dormitory bunk | None | None (fatigueGate = 0; fatigue drives urgency) |
+There is no schema field for:
+- Room requirements
+- Workstation requirements
+- Item/resource requirements
+- Recipe availability
+- Patient existence
+- Conflict existence
+- Skill trainability
+- Research node availability
+- Security need
+
+## Plan 72 Design Decision
+
+All eligibility checks beyond fatigue and traits are **executor-owned**. The Utility AI selects an action ID; the host/executor is responsible for:
+1. Checking if the action is actually possible (room exists, resources available, etc.)
+2. Making the action ineligible if prerequisites aren't met
+3. Handling the failure gracefully (not re-selecting the same action endlessly)
+
+This means the action data is purely about scoring priority, not about checking whether the action can actually be performed.
+
+## Action Category × Eligibility Summary
+
+| Action ID | Fatigue Gate | Trait Vetoes | Executor-Owned Checks |
+|-----------|-------------|--------------|----------------------|
+| `action_weigh_goods` | 85 | Coward → loud_labor | Depot availability |
+| `action_read_contract` | 90 | — | Contract availability |
+| `action_canvas_support` | 80 | GodComplex → menial_labor | Petition campaign active |
+| `action_run_vouch` | 88 | — | Stranger at gate |
+| `action_audit_inventory` | 80 | — | Inventory exists |
+| `action_file_report` | 80 | — | Report system available |
+| `action_repair_equipment` | 80 | Coward → loud_labor | Degraded equipment, workshop, materials |
+| `action_inspect_housing` | 85 | — | Shelter structure |
+| `action_treat_wounded` | 90 | Hitman → medical_triage; Germaphobe → medical_triage (w/o hazmat) | Injured survivor, medical supplies |
+| `action_seek_treatment` | 95 | — | Own injury/illness, medical care available |
+| `action_cook_food` | 80 | — | Kitchen, ingredients, recipe |
+| `action_preserve_food` | 80 | GodComplex → menial_labor | Perishables, preservation station |
+| `action_purify_water` | 80 | Coward → loud_labor | Unsafe water, treatment equipment |
+| `action_socialize` | 85 | — | Compatible partner, safe context |
+| `action_resolve_conflict` | 85 | ExCon → order | Active conflict, mediator role |
+| `action_train_skill` | 70 | — | Trainable skill, energy |
+| `action_teach_skill` | 70 | — | Qualified teacher, willing learner |
+| `action_stand_watch` | 85 | Pacifist → weapon | Watch post, security need |
+| `action_conduct_research` | 75 | — | Lab, active research node |
+| `action_rest` | 0 | — | Always available |

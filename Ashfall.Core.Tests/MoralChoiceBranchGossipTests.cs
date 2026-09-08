@@ -188,10 +188,10 @@ namespace Ashfall.Core.Tests
         // ── Flag catalog loader ─────────────────────────────────────────
 
         [Fact]
-        public void FlagCatalogLoadsTenFlags()
+        public void FlagCatalogLoadsTwentyFiveFlags()
         {
             var data = MoralChoiceFlagCatalogLoader.Load(DataDirectory, s_files, s_json);
-            Assert.Equal(10, data.Flags.Count);
+            Assert.Equal(25, data.Flags.Count);
             Assert.All(data.Flags, f =>
             {
                 Assert.StartsWith("flag_", f.Id);
@@ -602,9 +602,9 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void StaticIds_AllFlagsHasElevenEntries()
+        public void StaticIds_AllFlagsHasTwentySixEntries()
         {
-            Assert.Equal(11, MoralChoiceIds.AllFlags.Length);
+            Assert.Equal(26, MoralChoiceIds.AllFlags.Length);
             Assert.All(MoralChoiceIds.AllFlags, id =>
                 Assert.StartsWith("flag_", id));
         }

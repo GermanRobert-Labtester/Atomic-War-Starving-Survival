@@ -100,16 +100,124 @@ namespace Ashfall.Core
             return result;
         }
 
-        internal void AddSurvivorFields(ExpansionSurvivorFields fields)
+        /// <summary>
+        /// Returns survivors matching a pre-war profession ID.
+        /// </summary>
+        public List<string> GetSurvivorsByProfession(string professionId)
         {
-            if (fields == null || string.IsNullOrEmpty(fields.survivor_id)) return;
-            _survivorFields[fields.survivor_id] = fields;
+            var result = new List<string>();
+            if (string.IsNullOrEmpty(professionId)) return result;
+            foreach (var kvp in _survivorFields)
+            {
+                if (string.Equals(kvp.Value.pre_war_profession_id, professionId, StringComparison.Ordinal))
+                    result.Add(kvp.Key);
+            }
+            return result;
         }
 
-        internal void AddItemTags(ExpansionItemTags tags)
+        /// <summary>
+        /// Returns the personal keepsake item ID for a survivor, or empty string.
+        /// </summary>
+        public string GetKeepsakeItemId(string survivorId)
+        {
+            var fields = GetSurvivorFields(survivorId);
+            return fields?.personal_keepsake_item_id ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Returns the philosophical stance for a survivor, or empty string.
+        /// </summary>
+        public string GetPhilosophicalStance(string survivorId)
+        {
+            var fields = GetSurvivorFields(survivorId);
+            return fields?.philosophical_stance ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Returns the manifesto law code for a survivor, or empty string.
+        /// </summary>
+        public string GetManifestoLawCode(string survivorId)
+        {
+            var fields = GetSurvivorFields(survivorId);
+            return fields?.manifesto_law_code ?? string.Empty;
+        }
+
+        public void AddSurvivorFields(ExpansionSurvivorFields fields)
+        {
+            MergeSurvivorFields(fields, isSpecialistOverlay: false);
+        }
+
+        /// <summary>
+        /// Merges survivor enrichment fields deterministically.
+        /// Baseline fields take precedence for core fields; specialist overlays
+        /// contribute supplemental fields (e.g. stance, manifesto_law_code) without
+        /// clobbering existing non-empty values.
+        /// </summary>
+        public void MergeSurvivorFields(ExpansionSurvivorFields fields, bool isSpecialistOverlay = false)
+        {
+            if (fields == null || string.IsNullOrEmpty(fields.survivor_id)) return;
+
+            if (!_survivorFields.TryGetValue(fields.survivor_id, out var existing))
+            {
+                _survivorFields[fields.survivor_id] = fields;
+                return;
+            }
+
+            // Field-level merge
+            if (!string.IsNullOrEmpty(fields.phantom_background_id))
+            {
+                if (string.IsNullOrEmpty(existing.phantom_background_id) || !isSpecialistOverlay)
+                    existing.phantom_background_id = fields.phantom_background_id;
+            }
+
+            if (!string.IsNullOrEmpty(fields.pre_war_profession_id))
+            {
+                if (string.IsNullOrEmpty(existing.pre_war_profession_id) || !isSpecialistOverlay)
+                    existing.pre_war_profession_id = fields.pre_war_profession_id;
+            }
+
+            if (!string.IsNullOrEmpty(fields.belief_profile_id))
+            {
+                if (string.IsNullOrEmpty(existing.belief_profile_id) || !isSpecialistOverlay)
+                    existing.belief_profile_id = fields.belief_profile_id;
+            }
+
+            if (!string.IsNullOrEmpty(fields.personal_keepsake_item_id))
+            {
+                if (string.IsNullOrEmpty(existing.personal_keepsake_item_id) || !isSpecialistOverlay)
+                    existing.personal_keepsake_item_id = fields.personal_keepsake_item_id;
+            }
+
+            if (!string.IsNullOrEmpty(fields.philosophical_stance))
+            {
+                existing.philosophical_stance = fields.philosophical_stance;
+            }
+
+            if (!string.IsNullOrEmpty(fields.manifesto_law_code))
+            {
+                existing.manifesto_law_code = fields.manifesto_law_code;
+            }
+        }
+
+        public void AddItemTags(ExpansionItemTags tags)
         {
             if (tags == null || string.IsNullOrEmpty(tags.item_id)) return;
-            _itemTags[tags.item_id] = tags;
+            if (_itemTags.TryGetValue(tags.item_id, out var existing))
+            {
+                if (tags.tags != null && existing.tags != null)
+                {
+                    for (int i = 0; i < tags.tags.Count; i++)
+                    {
+                        string t = tags.tags[i];
+                        if (!string.IsNullOrEmpty(t) && !existing.tags.Contains(t))
+                            existing.tags.Add(t);
+                    }
+                }
+            }
+            else
+            {
+                _itemTags[tags.item_id] = tags;
+            }
         }
     }
 
@@ -119,31 +227,38 @@ namespace Ashfall.Core
     [Serializable]
     public sealed class ExpansionSurvivorFields
     {
-        public string survivor_id = string.Empty;
-        public string phantom_background_id = string.Empty;
-        public string pre_war_profession_id = string.Empty;
-        public string belief_profile_id = string.Empty;
-        public string personal_keepsake_item_id = string.Empty;
+        public string survivor_id { get; set; } = string.Empty;
+        public string phantom_background_id { get; set; } = string.Empty;
+        public string pre_war_profession_id { get; set; } = string.Empty;
+        public string belief_profile_id { get; set; } = string.Empty;
+        public string personal_keepsake_item_id { get; set; } = string.Empty;
+        public string philosophical_stance { get; set; } = string.Empty;
+        /// <summary>Alias for philosophical_stance in specialist overlay schemas.</summary>
+        public string stance { get => philosophical_stance; set => philosophical_stance = value; }
+        public string manifesto_law_code { get; set; } = string.Empty;
     }
 
     /// <summary>Narrative tags for a single item.</summary>
     [Serializable]
     public sealed class ExpansionItemTags
     {
-        public string item_id = string.Empty;
-        public List<string> tags = new List<string>();
+        public string item_id { get; set; } = string.Empty;
+        public List<string> tags { get; set; } = new List<string>();
     }
 
     // ── Loader ───────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Loads <c>expansion_survivor_fields.json</c> and <c>expansion_item_tags.json</c>
-    /// into an <see cref="ExpansionEnrichmentCatalog"/>.
+    /// Loads <c>expansion_survivor_fields.json</c> and <c>expansion_item_tags.json</c>,
+    /// along with specialist overlays (<c>deep_lore_survivor_fields.json</c>,
+    /// <c>antigravity_survivor_fields.json</c>), into an <see cref="ExpansionEnrichmentCatalog"/>.
     /// </summary>
     public sealed class ExpansionEnrichmentCatalogLoader
     {
         public const string SurvivorFieldsFile = "expansion_survivor_fields.json";
         public const string ItemTagsFile = "expansion_item_tags.json";
+        public const string DeepLoreSurvivorFieldsFile = "deep_lore_survivor_fields.json";
+        public const string AntigravitySurvivorFieldsFile = "antigravity_survivor_fields.json";
 
         private readonly IFileIO _files;
         private readonly IJsonSerializer _json;
@@ -165,7 +280,14 @@ namespace Ashfall.Core
                 return catalog;
             }
 
-            LoadSurvivorFields(_files.Combine(dataDirectory, SurvivorFieldsFile), catalog);
+            // 1. Primary authored baseline
+            LoadSurvivorFields(_files.Combine(dataDirectory, SurvivorFieldsFile), catalog, isSpecialistOverlay: false);
+
+            // 2. Specialist overlays
+            LoadSurvivorFields(_files.Combine(dataDirectory, DeepLoreSurvivorFieldsFile), catalog, isSpecialistOverlay: true);
+            LoadSurvivorFields(_files.Combine(dataDirectory, AntigravitySurvivorFieldsFile), catalog, isSpecialistOverlay: true);
+
+            // 3. Item tags
             LoadItemTags(_files.Combine(dataDirectory, ItemTagsFile), catalog);
 
             _log.Info($"Expansion enrichment loaded: {catalog.SurvivorFieldCount} survivors, " +
@@ -174,15 +296,29 @@ namespace Ashfall.Core
             return catalog;
         }
 
-        private void LoadSurvivorFields(string path, ExpansionEnrichmentCatalog catalog)
+        private void LoadSurvivorFields(string path, ExpansionEnrichmentCatalog catalog, bool isSpecialistOverlay)
         {
-            if (!_files.FileExists(path)) { _log.Warn("Missing: " + path); return; }
+            if (!_files.FileExists(path))
+            {
+                if (!isSpecialistOverlay) _log.Warn("Missing: " + path);
+                return;
+            }
             try
             {
                 var list = CatalogLocator.LoadWrappedList<ExpansionSurvivorFields>(_files.ReadAllText(path), SystemTextJsonSerializer.Options);
                 if (list == null) return;
+                var seen = new HashSet<string>(StringComparer.Ordinal);
                 for (int i = 0; i < list.Count; i++)
-                    catalog.AddSurvivorFields(list[i]);
+                {
+                    var item = list[i];
+                    if (item == null || string.IsNullOrEmpty(item.survivor_id)) continue;
+                    if (!seen.Add(item.survivor_id))
+                    {
+                        _log.Warn($"Duplicate survivor_id '{item.survivor_id}' in {path}");
+                        continue;
+                    }
+                    catalog.MergeSurvivorFields(item, isSpecialistOverlay);
+                }
             }
             catch (Exception ex) { _log.Warn("Parse failed " + path + ": " + ex.Message); }
         }
@@ -194,8 +330,14 @@ namespace Ashfall.Core
             {
                 var list = CatalogLocator.LoadWrappedList<ExpansionItemTags>(_files.ReadAllText(path), SystemTextJsonSerializer.Options);
                 if (list == null) return;
+                var seen = new HashSet<string>(StringComparer.Ordinal);
                 for (int i = 0; i < list.Count; i++)
-                    catalog.AddItemTags(list[i]);
+                {
+                    var item = list[i];
+                    if (item == null || string.IsNullOrEmpty(item.item_id)) continue;
+                    seen.Add(item.item_id);
+                    catalog.AddItemTags(item);
+                }
             }
             catch (Exception ex) { _log.Warn("Parse failed " + path + ": " + ex.Message); }
         }

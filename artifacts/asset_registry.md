@@ -1,17 +1,17 @@
 # ASHFALL Authoritative Asset Registry
 
-**Generated:** 2026-09-04T21:53:57.605686+00:00
-**Total IDs Audited:** 1504
-**Directly Loaded:** 502 (33.38%)
-**Fallbacks Used:** 1002
+**Generated:** 2026-09-08T14:24:40.619806+00:00
+**Total IDs Audited:** 1646
+**Directly Loaded:** 507 (30.8%)
+**Fallbacks Used:** 1139
 
 ## Family Coverage Summary
 
 | Category | Total IDs | Loaded | Fallbacks | Coverage |
 |---|---|---|---|---|
-| `faction` | 69 | 1 | 68 | 1.4% |
-| `item` | 826 | 337 | 489 | 40.8% |
-| `location` | 342 | 54 | 288 | 15.8% |
+| `faction` | 91 | 1 | 90 | 1.1% |
+| `item` | 913 | 342 | 571 | 37.5% |
+| `location` | 375 | 54 | 321 | 14.4% |
 | `portrait` | 267 | 110 | 157 | 41.2% |
 
 ## Verification Policy

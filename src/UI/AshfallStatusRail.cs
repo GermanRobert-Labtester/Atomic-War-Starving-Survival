@@ -88,4 +88,42 @@ public partial class AshfallStatusRail : PanelContainer
     {
         GetCard(key)?.SetLabel(label);
     }
+
+    public bool HasCard(string key)
+    {
+        if (string.IsNullOrEmpty(key)) return false;
+        return _cards.ContainsKey(key);
+    }
+
+    public bool RemoveCard(string key)
+    {
+        if (string.IsNullOrEmpty(key) || !_cards.TryGetValue(key, out var card))
+            return false;
+
+        _cards.Remove(key);
+        _strip.RemoveChild(card);
+        card.QueueFree();
+        return true;
+    }
+
+    public void ClearCards()
+    {
+        foreach (var card in _cards.Values)
+        {
+            _strip.RemoveChild(card);
+            card.QueueFree();
+        }
+        _cards.Clear();
+    }
+
+    public void ReorderCard(string key, int targetIndex)
+    {
+        if (string.IsNullOrEmpty(key) || !_cards.TryGetValue(key, out var card))
+            return;
+
+        int count = _strip.GetChildCount();
+        if (count <= 0) return;
+        int bounded = Math.Clamp(targetIndex, 0, count - 1);
+        _strip.MoveChild(card, bounded);
+    }
 }

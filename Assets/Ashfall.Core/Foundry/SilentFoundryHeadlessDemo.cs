@@ -67,14 +67,42 @@ namespace Ashfall.Core
             if (!string.IsNullOrEmpty(accordsPath) && files.FileExists(accordsPath))
                 treaties.Load(files.ReadAllText(accordsPath), json);
             var foundryTreaties = treaties.GetByExactSignatoryFaction(SilentFoundryIds.FactionId);
-            Check(foundryTreaties.Count == 4, "the foundry is exact signatory of exactly 4 District 8 accords");
+            Check(foundryTreaties.Count == 10, "the foundry is exact signatory of exactly 10 District 8 accords");
+            var expectedTreatyIds = new[]
+            {
+                SilentFoundryIds.TreatyBrinePipe,
+                SilentFoundryIds.TreatyLabourSchedule,
+                SilentFoundryIds.TreatyRoadIron,
+                SilentFoundryIds.TreatyClusterCharter,
+                SilentFoundryIds.TreatySaltworksAccess,
+                SilentFoundryIds.TreatyMembraneRepair,
+                SilentFoundryIds.TreatyCoalWindow,
+                SilentFoundryIds.TreatyApprenticeExchange,
+                SilentFoundryIds.TreatyCrisisMutualAid,
+                SilentFoundryIds.TreatyIncidentBook
+            };
+            bool allFoundryAccordsResolve = true;
+            for (int i = 0; i < expectedTreatyIds.Length; i++)
+                allFoundryAccordsResolve &= treaties.GetById(expectedTreatyIds[i]) != null;
+            Check(allFoundryAccordsResolve, "all 10 Foundry accord ids resolve");
             Check(treaties.GetById(SilentFoundryIds.TreatyBrinePipe)?.ratified_day == 280, "brine pipe accord ratified day 280");
             Check(treaties.GetById(SilentFoundryIds.TreatyRoadIron)?.ratified_day == 330, "road iron charter ratified day 330");
 
             // Consequence policy loads and its good refs resolve in the economy catalog.
             var policy = new SilentFoundryConsequencePolicyCatalog();
             policy.Load(SilentFoundryConsequenceCatalogLoader.Load(dataDirectory, files, json));
-            Check(!policy.HasErrors && policy.PolicyCount >= 5, "foundry_treaty_consequences.json validates");
+            Check(!policy.HasErrors && policy.PolicyCount == 15, "foundry_treaty_consequences.json contains exactly 15 supported policies");
+            bool plan103RowsResolve =
+                policy.Find(SilentFoundryIds.TreatySaltworksAccess, FoundryTreatyOutcome.Met) != null
+                && policy.Find(SilentFoundryIds.TreatySaltworksAccess, FoundryTreatyOutcome.Violated) != null
+                && policy.Find(SilentFoundryIds.TreatyCoalWindow, FoundryTreatyOutcome.Met) != null
+                && policy.Find(SilentFoundryIds.TreatyCoalWindow, FoundryTreatyOutcome.Missed) != null
+                && policy.Find(SilentFoundryIds.TreatyMembraneRepair, FoundryTreatyOutcome.Met) != null
+                && policy.Find(SilentFoundryIds.TreatyMembraneRepair, FoundryTreatyOutcome.Violated) != null
+                && policy.Find(SilentFoundryIds.TreatyCrisisMutualAid, FoundryTreatyOutcome.Met) != null
+                && policy.Find(SilentFoundryIds.TreatyCrisisMutualAid, FoundryTreatyOutcome.Violated) != null
+                && policy.Find(SilentFoundryIds.TreatyIncidentBook, FoundryTreatyOutcome.Met) != null;
+            Check(plan103RowsResolve, "all nine Plan 103 policy keys resolve");
             var goodsLoad = Ashfall.Core.Economy.GoodsCatalogLoader.Load(dataDirectory, files, json);
             if (!goodsLoad.HasErrors)
             {

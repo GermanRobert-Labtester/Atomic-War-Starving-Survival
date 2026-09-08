@@ -1,20 +1,28 @@
 # Utility Action Research Handoff
 
-> **Research Seams:** Interface between `action_conduct_research` and Plan 34 knowledge research systems (`research_knowledge.json`).
+## Architecture
 
----
+The Utility AI Core has **no research state fields** in `AIActionContext`. There is no research node progress, lab availability, or research skill.
 
-## 1. Authority Model
+Research is scored purely on static priority:
+- `action_conduct_research`: baseScore 0.20 (long-horizon, low priority)
 
-1. **Utility AI Owns Worker Commitment:** Scores whether an idle survivor with scientific affinity should walk to the lab and spend a shift studying technical schematics.
-2. **`ResearchSystem` Owns Progression:**
-   - Tracks active project nodes and accumulated research points.
-   - If no project is actively queued by the player, `action_conduct_research` evaluates to ineligible (score = 0).
-   - When active, work ticks contribute deterministic progress towards the active node.
+## Research Action Contract
 
----
+1. **Action selection**: Utility AI selects `action_conduct_research` when it's the highest-scoring eligible action.
+2. **Executor checks eligibility**: The executor checks if:
+   - An active research node exists
+   - The laboratory is available
+   - The survivor has appropriate research skill
+3. **No active research → ineligible**: If no research project is active, the action is ineligible.
+4. **Research authority**: The research system owns node progress, unlocks, and resource requirements.
 
-## 2. Preemption Rules
+## Research Safety Rules
 
-- Survival needs (severe hunger, critical radiation, emergency medical trauma) strictly preempt research work.
-- If the shelter power grid experiences brownout or `room_laboratory_research` is unpowered (`fx_laboratory_offline`), the action is immediately disabled.
+1. **No progress during crisis**: The executor should suppress research when survival needs are urgent (this is handled by the scoring priority — research has low baseScore, so survival actions win).
+2. **Don't progress without a node**: The executor must verify an active research node exists.
+3. **Resource validation**: Verify research materials before starting.
+
+## Plan 72 Position
+
+One research action is added to the catalog. Research authority remains with the research system. The low baseScore (0.20) ensures research only wins during safe idle periods when no survival or maintenance actions are needed.

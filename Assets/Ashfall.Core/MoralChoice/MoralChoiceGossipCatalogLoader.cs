@@ -48,6 +48,7 @@ namespace Ashfall.Core.MoralChoice
         public string description = string.Empty;
         public List<string> very_positive = new List<string>();
         public List<string> positive = new List<string>();
+        public List<string> slightly_positive = new List<string>();
         public List<string> neutral = new List<string>();
         public List<string> slightly_evil = new List<string>();
         public List<string> evil = new List<string>();
@@ -124,6 +125,7 @@ namespace Ashfall.Core.MoralChoice
                 {
                     VeryPositive = whispers.very_positive ?? new List<string>(),
                     Positive = whispers.positive ?? new List<string>(),
+                    SlightlyPositive = whispers.slightly_positive ?? new List<string>(),
                     Neutral = whispers.neutral ?? new List<string>(),
                     SlightlyEvil = whispers.slightly_evil ?? new List<string>(),
                     Evil = whispers.evil ?? new List<string>(),

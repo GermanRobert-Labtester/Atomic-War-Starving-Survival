@@ -31,7 +31,7 @@ namespace Ashfall.Core.Factions
     public static class IndependentBranchIds
     {
         public const string FactionId = "faction_independent";
-        public const int BranchCount = 8;
+        public const int BranchCount = 15;
 
         // ── Base branches ──────────────────────────────────────────────
         public const string BranchSurvivor = "branch_ind_1_survivor";
@@ -42,11 +42,20 @@ namespace Ashfall.Core.Factions
         public const string BranchLegend = "branch_ind_6_legend";
         public const string BranchGhost = "branch_ind_7_ghost";
         public const string BranchWastelandMyth = "branch_ind_8_wasteland_myth";
+        public const string BranchHermit = "branch_ind_9_hermit";
+        public const string BranchMediator = "branch_ind_10_mediator";
+        public const string BranchScavengerKing = "branch_ind_11_scavenger_king";
+        public const string BranchCaretaker = "branch_ind_12_caretaker";
+        public const string BranchWitness = "branch_ind_13_witness";
+        public const string BranchEngineer = "branch_ind_14_engineer";
+        public const string BranchProphet = "branch_ind_15_prophet";
 
         public static readonly string[] AllBranches =
         {
             BranchSurvivor, BranchMercenary, BranchPeacekeeperDiplomat, BranchExile,
-            BranchKingmaker, BranchLegend, BranchGhost, BranchWastelandMyth
+            BranchKingmaker, BranchLegend, BranchGhost, BranchWastelandMyth,
+            BranchHermit, BranchMediator, BranchScavengerKing, BranchCaretaker,
+            BranchWitness, BranchEngineer, BranchProphet
         };
 
         // ── Point-of-no-return flags (one per branch, set once, irreversible) ──
@@ -58,6 +67,13 @@ namespace Ashfall.Core.Factions
         public const string FlagPonrLegend = "flag_branch_ind_6_ponr";
         public const string FlagPonrGhost = "flag_branch_ind_7_ponr";
         public const string FlagPonrWastelandMyth = "flag_branch_ind_8_ponr";
+        public const string FlagPonrHermit = "flag_branch_ind_9_ponr";
+        public const string FlagPonrMediator = "flag_branch_ind_10_ponr";
+        public const string FlagPonrScavengerKing = "flag_branch_ind_11_ponr";
+        public const string FlagPonrCaretaker = "flag_branch_ind_12_ponr";
+        public const string FlagPonrWitness = "flag_branch_ind_13_ponr";
+        public const string FlagPonrEngineer = "flag_branch_ind_14_ponr";
+        public const string FlagPonrProphet = "flag_branch_ind_15_ponr";
 
         /// <summary>PoNR flag id for a given base branch id, in branch declaration order.</summary>
         public static string PonrFlagFor(string branchId) => branchId switch
@@ -70,6 +86,13 @@ namespace Ashfall.Core.Factions
             BranchLegend => FlagPonrLegend,
             BranchGhost => FlagPonrGhost,
             BranchWastelandMyth => FlagPonrWastelandMyth,
+            BranchHermit => FlagPonrHermit,
+            BranchMediator => FlagPonrMediator,
+            BranchScavengerKing => FlagPonrScavengerKing,
+            BranchCaretaker => FlagPonrCaretaker,
+            BranchWitness => FlagPonrWitness,
+            BranchEngineer => FlagPonrEngineer,
+            BranchProphet => FlagPonrProphet,
             _ => throw new ArgumentException($"Unknown Independent branch id '{branchId}'.", nameof(branchId))
         };
 
@@ -105,5 +128,33 @@ namespace Ashfall.Core.Factions
         public const string EndingWastelandMythA = "ending_ind_8a_feared_legend";
         public const string EndingWastelandMythB = "ending_ind_8b_revered_legend";
         public const string EndingWastelandMythC = "ending_ind_8c_forgotten_legend";
+
+        public const string EndingHermitA = "ending_ind_9a_quiet_holding";
+        public const string EndingHermitB = "ending_ind_9b_unlatched_door";
+        public const string EndingHermitC = "ending_ind_9c_no_smoke";
+
+        public const string EndingMediatorA = "ending_ind_10a_open_table";
+        public const string EndingMediatorB = "ending_ind_10b_necessary_liar";
+        public const string EndingMediatorC = "ending_ind_10c_no_safe_chair";
+
+        public const string EndingScavengerKingA = "ending_ind_11a_quartermaster";
+        public const string EndingScavengerKingB = "ending_ind_11b_locked_rooms";
+        public const string EndingScavengerKingC = "ending_ind_11c_dead_mans_inventory";
+
+        public const string EndingCaretakerA = "ending_ind_12a_extra_chairs";
+        public const string EndingCaretakerB = "ending_ind_12b_hands_full";
+        public const string EndingCaretakerC = "ending_ind_12c_broken_promise";
+
+        public const string EndingWitnessA = "ending_ind_13a_record_stands";
+        public const string EndingWitnessB = "ending_ind_13b_margin_notes";
+        public const string EndingWitnessC = "ending_ind_13c_missing_pages";
+
+        public const string EndingEngineerA = "ending_ind_14a_load_bearing";
+        public const string EndingEngineerB = "ending_ind_14b_necessary_failure";
+        public const string EndingEngineerC = "ending_ind_14c_name_on_breakdown";
+
+        public const string EndingProphetA = "ending_ind_15a_keeper_of_vigils";
+        public const string EndingProphetB = "ending_ind_15b_voice_in_the_hall";
+        public const string EndingProphetC = "ending_ind_15c_ash_gospel";
     }
 }

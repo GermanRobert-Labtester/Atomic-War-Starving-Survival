@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-06<br>
-**Total Registered Actions:** 149 entries / 218 flag tokens (aliases included)
+**Last Verified:** 2026-09-08<br>
+**Total Registered Actions:** 152 entries / 223 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -17,6 +17,7 @@
 | `--accessibility-selftest` | `--ui-accessibility-selftest`, `--ui-access-selftest` | Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels |
 | `--asset-coverage-report` | — | Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list |
 | `--asset-registry-selftest` | — | Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/ |
+| `--starting-cohort-lifecycle-selftest` | `--cohort-lifecycle-selftest` | Plan 138 fresh-vs-restore lifecycle: preserve old slots, apply an alternate cohort, honor an empty saved roster, and reject failed restores without reseeding |
 | `--bridge-selftest` | — | Report UnityEngine shim removal (shim is gone; always exits 0) |
 | `--power-grid-catalog-selftest` | — | Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal |
 | `--core-selftest` | — | Ice road + census headless demos |
@@ -54,6 +55,7 @@
 | `--greenhouse-selftest` | `--glass-orchard-selftest` | GreenhouseHeadlessDemo (Exp 05) |
 | `--psychology-selftest` | — | Psychology Arc Expansion (Plan 164): breakdown arcs, sustained-stress triggers, catharsis, treatment |
 | `--wildlife-selftest` | — | Wildlife Ecosystem (Plan 165): fauna catalog, predation/radiation pressure, apex, taming, save round-trip |
+| `--trapping-selftest` | — | Wildlife trapping host path: TrySetTrap billing, broken-trap replacement, atomic failure, trap-recipe identity |
 | `--holdfast-briefing` | — | Print location count and every Holdfast quest briefing |
 | `--holdfast-selftest` | — | Holdfast S1 survival loop, ice road, and trade verification |
 | `--ice-road-selftest` | — | IceRoadHeadlessDemo (Exp 01) |
@@ -134,6 +136,7 @@
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
 | `--decon-airlock-uitest` | — | Decon Airlock UI data grid panel bindings |
+| `--workshop-relic-uitest` | `--workshop-relic-selftest` | Workshop dual-bind relic restoration smoke: render, select, repair, deltas, save/reload |
 | `--decon-airlock-selftest` | — | Decon Airlock UI data grid panel bindings |
 | `--geodetic-survey-uitest` | — | Geodetic Survey UI data grid panel bindings |
 | `--geodetic-survey-selftest` | — | Geodetic Survey UI data grid panel bindings |

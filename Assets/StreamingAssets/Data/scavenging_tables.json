@@ -2381,6 +2381,27 @@
           "min_quantity": 1,
           "max_quantity": 1,
           "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_greenhouse_glass_pane",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_greenhouse_uv_sheeting",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_greenhouse_drip_kit",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
         }
       ]
     },

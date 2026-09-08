@@ -149,7 +149,9 @@ namespace Ashfall.Core
             "allowed_mold_ids", "output_item_id", "refractory_item_id", "descale_item_id",
             "install_item_ids", "repair_item_ids", "dampening_item_id",
             // Plans 62-65
-            "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id"
+            "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id",
+            // Wildlife trapping prey definition: non-empty value = explicit disease-catalog reference; empty value = valid runtime tier fallback.
+            "diseaseId"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>

@@ -144,166 +144,148 @@
       "contamination": 0.6
     },
     {
-      "id": "item_seed_hardy_tuber",
-      "displayName": "Frost Tuber Eyes",
-      "description": "Black rutabaga root cuttings with deep dormant eyes. Survives frost and damp soil that would rot ordinary roots.",
-      "type": "Material",
-      "stackMax": 15,
-      "weight": 0.25,
-      "tradeValue": 7
-    },
-    {
-      "id": "crop_hardy_tuber",
-      "displayName": "Frost Tuber",
-      "description": "Dense, fibrous winter root vegetable. Earthy and filling, it stores well through sub-zero seasons.",
-      "type": "Food",
-      "stackMax": 15,
-      "weight": 0.35,
-      "tradeValue": 6,
-      "hungerRestore": 14,
-      "thirstRestore": 1,
-      "moraleEffect": 1
-    },
-    {
-      "id": "item_seed_ash_grain",
-      "displayName": "Ash-Barley Seed",
-      "description": "Heavy soot-coated barley grains selected for resistance to acid fallout and low sunlight.",
-      "type": "Material",
-      "stackMax": 30,
-      "weight": 0.05,
+      "id": "item_greenhouse_trowel",
+      "displayName": "Planting Trowel",
+      "description": "A forged steel hand trowel with a turned wooden handle. Indispensable for working tight planter flats and setting delicate rootings.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 0.4,
       "tradeValue": 6
     },
     {
-      "id": "crop_ash_grain",
-      "displayName": "Ash-Barley Grain",
-      "description": "Rough, dark grain with a smokey aroma. Makes heavy flatbread and durable survival porridge.",
-      "type": "Food",
-      "stackMax": 30,
-      "weight": 0.1,
-      "tradeValue": 7,
-      "hungerRestore": 20,
-      "moraleEffect": 2
-    },
-    {
-      "id": "item_seed_biolum_mushroom",
-      "displayName": "Phosphor Cap Culture",
-      "description": "Agar slant infused with faint greenish bioluminescent mycelium. Thrives in cold dark sumps.",
-      "type": "Material",
-      "stackMax": 20,
-      "weight": 0.1,
-      "tradeValue": 8
-    },
-    {
-      "id": "crop_biolum_mushroom",
-      "displayName": "Phosphor Cap Fungi",
-      "description": "Luminescent fungal caps with a mild sedative effect. Harvested for calm-inducing teas and pharma extraction.",
-      "type": "Food",
-      "stackMax": 20,
-      "weight": 0.1,
-      "tradeValue": 9,
-      "hungerRestore": 5,
-      "moraleEffect": 3
-    },
-    {
-      "id": "item_seed_nutrient_algae",
-      "displayName": "Chlorella Starter Inoculant",
-      "description": "A dense vial of resilient green microalgae adapted to shallow nutrient trays and warm grow-troughs.",
-      "type": "Material",
-      "stackMax": 10,
-      "weight": 0.2,
+      "id": "item_greenhouse_pruning_shears",
+      "displayName": "Pruning Shears",
+      "description": "Short bypass shears with carbon-steel blades and a wire latch. Clean cuts prevent stem rot and preserve growing vines.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 0.35,
       "tradeValue": 10
     },
     {
-      "id": "crop_nutrient_algae",
-      "displayName": "Nutrient Algae Slurry",
-      "description": "Thick protein-rich green paste skimmed from greenhouse cultivation basins. Bitter but life-sustaining.",
-      "type": "Food",
-      "stackMax": 25,
-      "weight": 0.2,
-      "tradeValue": 5,
-      "hungerRestore": 15,
-      "healthEffect": 1,
-      "moraleEffect": 0
-    },
-    {
-      "id": "item_seed_medicinal_herb",
-      "displayName": "Yarrow & Fever-Bark Cutting",
-      "description": "Rooted herbal cuttings wrapped in damp sphagnum moss. Supplies the shelter dispensary with natural antipyretics.",
-      "type": "Material",
-      "stackMax": 15,
-      "weight": 0.1,
-      "tradeValue": 12
-    },
-    {
-      "id": "crop_medicinal_herb",
-      "displayName": "Medicinal Herb Bundle",
-      "description": "Aromatic bundle of harvested fever-bark and dried yarrow leaves. Brewed to reduce fever and cleanse wounds.",
-      "type": "Medical",
-      "stackMax": 20,
-      "weight": 0.1,
-      "tradeValue": 14,
-      "hungerRestore": 2,
-      "moraleEffect": 2,
-      "healthEffect": 3
-    },
-    {
-      "id": "item_seed_leafy_green",
-      "displayName": "Winter Cress Seed",
-      "description": "Tiny seeds of peppery, cold-hardy cruciferous greens that germinate within days.",
-      "type": "Material",
-      "stackMax": 30,
-      "weight": 0.05,
-      "tradeValue": 5
-    },
-    {
-      "id": "crop_leafy_green",
-      "displayName": "Fresh Winter Cress",
-      "description": "Crisp, peppery green leaves packed with essential vitamin C. The primary shelter defense against scurvy.",
-      "type": "Food",
-      "stackMax": 20,
-      "weight": 0.1,
-      "tradeValue": 5,
-      "hungerRestore": 8,
-      "moraleEffect": 3,
-      "healthEffect": 1
-    },
-    {
-      "id": "item_seed_oilseed",
-      "displayName": "Sun-Flax Seed",
-      "description": "Golden oil-rich seed heads selected for high lipid yield under concentrated grow lamps.",
-      "type": "Material",
-      "stackMax": 30,
-      "weight": 0.05,
-      "tradeValue": 8
-    },
-    {
-      "id": "crop_oilseed",
-      "displayName": "Harvested Sun-Flax",
-      "description": "Ripe flax pods ready for mechanical pressing into lamp oil, culinary fat, and durable fiber.",
-      "type": "Material",
-      "stackMax": 25,
-      "weight": 0.15,
-      "tradeValue": 10
-    },
-    {
-      "id": "item_seed_cold_legume",
-      "displayName": "Iron Pea Pods",
-      "description": "Hard dried pea pods with nitrogen-fixing root nodules that replenish exhausted greenhouse soil.",
-      "type": "Material",
-      "stackMax": 25,
-      "weight": 0.1,
+      "id": "item_greenhouse_watering_can",
+      "displayName": "Galvanized Watering Can",
+      "description": "A seam-soldered tin-plate watering can with a perforated brass rose. Delivers gentle irrigation without washing away topsoil.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 0.9,
       "tradeValue": 7
     },
     {
-      "id": "crop_cold_legume",
-      "displayName": "Harvested Iron Peas",
-      "description": "Dense, starchy legumes packed with vegetable protein. Essential for hearty survival potages and brines.",
-      "type": "Food",
-      "stackMax": 25,
+      "id": "item_greenhouse_hand_cultivator",
+      "displayName": "Hand Cultivator",
+      "description": "A three-pronged steel claw for breaking up soil crust and raking out root tangles between dense greenhouse rows.",
+      "type": "Tool",
+      "stackMax": 1,
+      "weight": 0.5,
+      "tradeValue": 8
+    },
+    {
+      "id": "item_greenhouse_compost",
+      "displayName": "Screened Compost",
+      "description": "Rich, dark organic humus sifted from aerated decay bins. Replenishes depleted nitrogen and restores soil structure.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 1.5,
+      "tradeValue": 3
+    },
+    {
+      "id": "item_greenhouse_ash_fertilizer",
+      "displayName": "Wood Ash Fertilizer",
+      "description": "Fine, grey hardwood ash rich in potassium and carbonate. Sweetens sour, acidic soils and bolsters stalk rigidity.",
+      "type": "Material",
+      "stackMax": 12,
+      "weight": 0.8,
+      "tradeValue": 2
+    },
+    {
+      "id": "item_greenhouse_fish_emulsion",
+      "displayName": "Fish Emulsion Extract",
+      "description": "A foul-smelling liquid concentrate brewed from hydrolyzed fish scrap. Highly concentrated nutrition for fast vegetative growth.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 0.4,
+      "tradeValue": 9
+    },
+    {
+      "id": "item_greenhouse_insecticidal_soap",
+      "displayName": "Insecticidal Soap Wash",
+      "description": "Potassium fatty-acid concentrate that suffocates mites, thrips, and aphids without poisoning edible foliage.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 0.3,
+      "tradeValue": 6
+    },
+    {
+      "id": "item_greenhouse_sticky_traps",
+      "displayName": "Sticky Trap Sheets",
+      "description": "Bright yellow adhesive cards hung above crop canopies. Intercepts flying insect pests and monitors infestation pressure.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.15,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_greenhouse_pest_mesh",
+      "displayName": "Insect Exclusion Mesh",
+      "description": "Fine woven nylon barrier netting for greenhouse vents and planter hoods. Stops burrowing and crawling pests physically.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 0.6,
+      "tradeValue": 8
+    },
+    {
+      "id": "item_greenhouse_drip_kit",
+      "displayName": "Drip Irrigation Kit",
+      "description": "Coiled micro-tubing, barbed emitter stakes, and junction tees. Channels metered water directly to roots with minimal evaporative loss.",
+      "type": "Material",
+      "stackMax": 2,
+      "weight": 1.6,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_greenhouse_line_filter",
+      "displayName": "Irrigation Line Filter",
+      "description": "An inline stainless-mesh cartridge that strains fine sediment and algae flakes before they foul micro-irrigation emitters.",
+      "type": "Filter",
+      "stackMax": 6,
       "weight": 0.2,
-      "tradeValue": 8,
-      "hungerRestore": 16,
-      "moraleEffect": 1
+      "tradeValue": 12
+    },
+    {
+      "id": "item_greenhouse_catchment_kit",
+      "displayName": "Catchment Liner Kit",
+      "description": "A heavy reinforced vinyl membrane with drain grommets and collector brackets for channeling condensation and runoff.",
+      "type": "Material",
+      "stackMax": 2,
+      "weight": 1.8,
+      "tradeValue": 14
+    },
+    {
+      "id": "item_greenhouse_glass_pane",
+      "displayName": "Horticultural Glass Pane",
+      "description": "A clear tempered glass pane salvaged from an agricultural bay. Replaces shattered roof panels to admit full spectrum light.",
+      "type": "Material",
+      "stackMax": 3,
+      "weight": 2.6,
+      "tradeValue": 16
+    },
+    {
+      "id": "item_greenhouse_uv_sheeting",
+      "displayName": "UV-Stable Sheeting",
+      "description": "Tough, treated polyethylene film designed to withstand continuous ultraviolet exposure without yellowing or brittle failure.",
+      "type": "Material",
+      "stackMax": 5,
+      "weight": 1.2,
+      "tradeValue": 13
+    },
+    {
+      "id": "item_greenhouse_shade_cloth",
+      "displayName": "Woven Shade Cloth",
+      "description": "Knitted agricultural netting that blocks scorching solar radiation and cuts heat stress across sensitive seedling beds.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 0.8,
+      "tradeValue": 7
     }
   ]
 }

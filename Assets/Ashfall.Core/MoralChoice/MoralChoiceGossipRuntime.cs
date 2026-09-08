@@ -86,6 +86,7 @@ namespace Ashfall.Core.MoralChoice
             {
                 MoralPathBand.VeryPositive => _data.WhisperLines.VeryPositive,
                 MoralPathBand.Positive => _data.WhisperLines.Positive,
+                MoralPathBand.SlightlyPositive => _data.WhisperLines.SlightlyPositive,
                 MoralPathBand.Neutral => _data.WhisperLines.Neutral,
                 MoralPathBand.SlightlyEvil => _data.WhisperLines.SlightlyEvil,
                 MoralPathBand.Evil => _data.WhisperLines.Evil,

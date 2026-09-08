@@ -15,6 +15,7 @@
           "label": "Dispatch rescue expedition",
           "moral_delta": 12,
           "empathy_delta": 2,
+          "set_flag": "flag_responded_distress",
           "outcome_text": "You commit to the rescue and dispatch a crew to the rail depot. Daria is extracted from the collapsed crane and joins your network.",
           "epitaph": "Heard a voice under iron and sent help. The crane was heavy, but living people are heavier."
         },
@@ -22,6 +23,7 @@
           "label": "Disregard the transmission",
           "moral_delta": -8,
           "empathy_delta": -1,
+          "set_flag": "flag_ignored_distress",
           "outcome_text": "You turn off the radio. Days later, the frequency falls permanently silent as the beam shifts.",
           "epitaph": "Left Daria under the crane. Silence came on the fifth day."
         }

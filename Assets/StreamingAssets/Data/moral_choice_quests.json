@@ -79,10 +79,10 @@
       "discovery": "A raider lies bleeding in the dirt, their firearm visibly fractured. 'I am unarmed and bleeding out. Requesting quarter,' they state, formally submitting.",
       "location_id": "", "min_day": 0, "max_day": 0,
       "choices": [
-        { "label": "Give medical supplies", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "You dress the wound. They assess your utility, then dictate their faction's next patrol schedule as payment.", "epitaph": "Treated hostile combatant. Acquired patrol schedules as payment." },
-        { "label": "Give food", "moral_delta": 3, "empathy_delta": 1, "outcome_text": "You transfer a standard ration. They consume it rapidly while monitoring their perimeter.", "epitaph": "Transferred rations to hostile combatant. Subject prioritized immediate consumption." },
+        { "label": "Give medical supplies", "moral_delta": 5, "empathy_delta": 1, "set_flag": "flag_spared_raider", "outcome_text": "You dress the wound. They assess your utility, then dictate their faction's next patrol schedule as payment.", "epitaph": "Treated hostile combatant. Acquired patrol schedules as payment." },
+        { "label": "Give food", "moral_delta": 3, "empathy_delta": 1, "set_flag": "flag_shared_rations", "outcome_text": "You transfer a standard ration. They consume it rapidly while monitoring their perimeter.", "epitaph": "Transferred rations to hostile combatant. Subject prioritized immediate consumption." },
         { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You maintain operational distance. They expel saliva in your direction; it falls short.", "epitaph": "Maintained distance from hostile combatant. Ignored minor provocation." },
-        { "label": "Finish them", "moral_delta": -2, "empathy_delta": 0, "outcome_text": "You execute the subject. They spend their last breath updating their faction's threat assessment on you.", "epitaph": "Executed hostile combatant. Expected reprisal logged." }
+        { "label": "Finish them", "moral_delta": -2, "empathy_delta": 0, "set_flag": "flag_executed_prisoner", "outcome_text": "You execute the subject. They spend their last breath updating their faction's threat assessment on you.", "epitaph": "Executed hostile combatant. Expected reprisal logged." }
       ]
     },
     {
@@ -751,7 +751,7 @@
       "discovery": "A severe pressure drop is imminent. An unknown asset arrives at your perimeter. 'Requesting temporary structural cover. No aggressive intent,' they state.",
       "location_id": "", "min_day": 0, "max_day": 0,
       "choices": [
-        { "label": "Authorize structural entry", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You permit entry. The unit powers down in a corner. At dawn, they have departed, leaving a bundle of dry combustion fuel as payment.", "epitaph": "Authorized structural entry for refugee. Acquired combustion fuel payment." },
+        { "label": "Authorize structural entry", "moral_delta": 8, "empathy_delta": 2, "set_flag": "flag_sheltered_refugee", "outcome_text": "You permit entry. The unit powers down in a corner. At dawn, they have departed, leaving a bundle of dry combustion fuel as payment.", "epitaph": "Authorized structural entry for refugee. Acquired combustion fuel payment." },
         { "label": "Authorize perimeter cover", "moral_delta": 3, "empathy_delta": 1, "outcome_text": "You allow them to utilize the exterior structural overhang. They survive the thermal drop and depart at first light.", "epitaph": "Authorized perimeter cover for refugee. Thermal drop survived." },
         { "label": "Deny cover", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You secure your perimeter. The unit is forced back into the hazard zone. The probability of their survival is statistically low.", "epitaph": "Denied cover to environmental refugee. Survival probability low." },
         { "label": "Execute perimeter defense", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "You present lethal force to ensure they do not compromise your structure. They retreat into the lethal weather.", "epitaph": "Executed perimeter defense. Forced refugee into lethal weather." }

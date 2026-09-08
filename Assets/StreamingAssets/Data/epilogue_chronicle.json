@@ -2,9 +2,24 @@
   "schema_version": 1,
   "default_slides": [
     { "order": 0, "title": "Opening", "art_asset_id": "epilogue_opening_placeholder" },
-    { "order": 1, "title": "The Bunker", "art_asset_id": "epilogue_bunker_placeholder" },
-    { "order": 2, "title": "What Remains", "art_asset_id": "epilogue_remains_placeholder" },
-    { "order": 3, "title": "Survivors", "art_asset_id": "epilogue_survivors_placeholder" },
-    { "order": 4, "title": "Final Word", "art_asset_id": "epilogue_final_placeholder" }
+    { "order": 1, "title": "After the Flash", "art_asset_id": "epilogue_exchange_placeholder" },
+    { "order": 2, "title": "The Bunker", "art_asset_id": "epilogue_bunker_placeholder" },
+    { "order": 3, "title": "First Winter", "art_asset_id": "epilogue_first_winter_placeholder" },
+    { "order": 4, "title": "Water and Heat", "art_asset_id": "epilogue_resources_placeholder" },
+    { "order": 5, "title": "Survivors", "art_asset_id": "epilogue_survivors_placeholder" },
+    { "order": 6, "title": "Empty Bunks", "art_asset_id": "epilogue_empty_bunks_placeholder" },
+    { "order": 7, "title": "The Factions", "art_asset_id": "epilogue_factions_placeholder" },
+    { "order": 8, "title": "Lines on the Map", "art_asset_id": "epilogue_trade_roads_placeholder" },
+    { "order": 9, "title": "Voices in Static", "art_asset_id": "epilogue_radio_placeholder" },
+    { "order": 10, "title": "The Verdict", "art_asset_id": "epilogue_investigations_placeholder" },
+    { "order": 11, "title": "The Witnesses", "art_asset_id": "epilogue_witnesses_placeholder" },
+    { "order": 12, "title": "Restored Relics", "art_asset_id": "epilogue_relics_placeholder" },
+    { "order": 13, "title": "What We Chose", "art_asset_id": "epilogue_key_decisions_placeholder" },
+    { "order": 14, "title": "The Muster", "art_asset_id": "epilogue_coalition_placeholder" },
+    { "order": 15, "title": "The Resolution", "art_asset_id": "epilogue_resolution_placeholder" },
+    { "order": 16, "title": "The Census", "art_asset_id": "epilogue_census_placeholder" },
+    { "order": 17, "title": "What Remains", "art_asset_id": "epilogue_remains_placeholder" },
+    { "order": 18, "title": "After Us", "art_asset_id": "epilogue_future_placeholder" },
+    { "order": 19, "title": "Final Word", "art_asset_id": "epilogue_final_placeholder" }
   ]
 }

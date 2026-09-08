@@ -32,6 +32,94 @@
     {
       "cause": "unspecified",
       "epitaph": "Termination logged. Rations redistributed. Underneath, the newest carving on the stone: still owe them a name. Working on it."
+    },
+    {
+      "cause": "radiation",
+      "epitaph": "The dosimeter film on her lapel turned jet black before the relief shift arrived."
+    },
+    {
+      "cause": "radiation",
+      "epitaph": "He said the air tasted of copper two hours before the fever took his legs."
+    },
+    {
+      "cause": "combat",
+      "epitaph": "Three people made it through the culvert gate because she stayed behind to draw the fire."
+    },
+    {
+      "cause": "combat",
+      "epitaph": "He dropped behind the fuel tank and never had the chance to unshoulder his rifle."
+    },
+    {
+      "cause": "starvation",
+      "epitaph": "Her name was still on the distribution clipboard when the last sack of meal spoiled."
+    },
+    {
+      "cause": "starvation",
+      "epitaph": "He weighed less than thirty kilos when they carried him up from the boiler trench."
+    },
+    {
+      "cause": "exhaustion",
+      "epitaph": "She laid her wrench on the pump casing and leaned her forehead against the cool pipe."
+    },
+    {
+      "cause": "disease",
+      "epitaph": "His name was crossed off the ward roster before the second dose of penicillin arrived."
+    },
+    {
+      "cause": "expedition",
+      "epitaph": "They found his pack three miles past the radio mast with the compass dial smashed inward."
+    },
+    {
+      "cause": "trauma",
+      "epitaph": "The winch cable snapped during the generator hoist and left no time for anyone to yell."
+    },
+    {
+      "cause": "exposure",
+      "epitaph": "The wind tore her tarp away while she was searching for the road marker in the dark."
+    },
+    {
+      "cause": "exposure",
+      "epitaph": "Found kneeling inside the hollowed boiler with his damp wool coat stiffened by the rime."
+    },
+    {
+      "cause": "suicide",
+      "epitaph": "We carved her name where she used to sit because no one found words for the rest."
+    },
+    {
+      "cause": "suicide",
+      "epitaph": "An empty bunk in Section Four that nobody in the squad has the heart to reassign."
+    },
+    {
+      "cause": "infection",
+      "epitaph": "We boiled the needle three times, but the red line crept past his elbow anyway."
+    },
+    {
+      "cause": "old_age",
+      "epitaph": "He remembered what grass looked like under clear sunlight and told the children until his voice failed."
+    },
+    {
+      "cause": "old_age",
+      "epitaph": "Eighty-two winters counted on the beam, which is sixty more than anyone had reason to expect."
+    },
+    {
+      "cause": "drowning",
+      "epitaph": "The pontoon rope snapped in the spring current before anyone on the bank could throw another."
+    },
+    {
+      "cause": "frostbite",
+      "epitaph": "Blackened boots left beside the fire shovel because the numbness had already reached his knees."
+    },
+    {
+      "cause": "poisoning",
+      "epitaph": "Drank from the condensate drip behind the transformer vault before the test strip turned bright purple."
+    },
+    {
+      "cause": "execution",
+      "epitaph": "They brought him out to the gravel pit at sunrise and read no charges from the ledger."
+    },
+    {
+      "cause": "unknown",
+      "epitaph": "No tags, no journal, and only three brass buttons left in the gravel beneath the cairn."
     }
   ]
 }

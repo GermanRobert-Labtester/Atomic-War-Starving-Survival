@@ -10,9 +10,9 @@
 | Subsystem | Integration Point | Continuity Assessment |
 |---|---|---|
 | **Silent Foundry Simulation** (`SilentFoundrySystem.cs`) | Assesses District 8 accords on compliance days; checks road iron, brine pipe, and labor quotas. | **PASS** — District 8 accords preserved with identical IDs; simulation intact. |
-| **Silent Foundry Headless Demo** (`SilentFoundryHeadlessDemo.cs`) | Checks exact signatory count for `faction_silent_foundry` (`== 4`). | **PASS** — Exactly 4 District 8 accords signed by the Foundry. |
-| **Regional Treaty Feed** (`RegionalTreatyFeed.cs` / `Main.ShelterSocial.cs`) | Maps `RegionalTreatyEntry` definitions into shelter social news feed. | **PASS** — All 12 treaties populate the social newspaper feed cleanly. |
-| **Cartography & Map Zones** (`Plan16CartographyTests.cs`) | Validates all 12 regional accords load with demarcation and tariffs. | **PASS** — 12 accords match expected count. |
+| **Silent Foundry Headless Demo** (`SilentFoundryHeadlessDemo.cs`) | Checks exact signatory count for `faction_silent_foundry` (`== 10`) and resolves all ten stable IDs. | **PASS** — Ten District 8 accords are signed by the Foundry. |
+| **Regional Treaty Feed** (`RegionalTreatyFeed.cs` / `Main.ShelterSocial.cs`) | Maps `RegionalTreatyEntry` definitions into shelter social news feed. | **PASS** — All 18 treaty records populate the social newspaper feed cleanly. |
+| **Cartography & Map Zones** (`Plan16CartographyTests.cs`) | Validates all regional accords load with demarcation and tariffs. | **PASS** — 18 accord records match the authority. |
 | **Faction War & Stance** (`FactionStanceEngine.cs`) | Applies standing deltas to signatory factions when treaty outcomes resolve. | **PASS** — All signatories resolve in faction catalog. |
 | **Save / Load Stores** (`SilentFoundrySaveStore.cs`, `CampaignEnvelopeBuilder.cs`) | Tracks compliance records by `treatyId` and `cycleMarker`. | **PASS** — Clean roundtrip; no legal prose serialized into saves. |
 

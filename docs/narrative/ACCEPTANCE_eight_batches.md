@@ -16,7 +16,7 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 |---|---|---|---|
 | environmental_atmosphere_expansion | environmental_texts_expansion_05 | DATA_ONLY (no Core loader for `environmental_texts`) | ambient world text |
 | radio_distress_signals_expansion | radio_distress_signals | DATA_ONLY (mirrors shipped schema) | ambient radio |
-| narrative/journals_expansion | journal_entries_expansion_05 | DATA_ONLY (mirrors shipped schema; diverges from runtime `JournalEntry` — see Finding 1) | ambient journal |
+| narrative/journals_expansion | journal_entries_expansion_05 | **LOADABLE** through the Plan 142 canonical adapter; ambient fields remain read-only metadata | producer-bound journal |
 | narrative/bureaucratic_documents_expansion | bunker_shift_schedules_and_notices | DATA_ONLY | ambient document |
 | narrative/letters_expansion | unsent_letters_batch_2 | DATA_ONLY | ambient letter |
 | narrative/medical_documents_expansion | dweller_medical_casebook | **LOADABLE** (superset; `DwellerMedicalCatalog`-compatible) | ambient medical |
@@ -29,22 +29,32 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 
 **No blocking reachability findings.** There are no dead ends, impossible conditions, duplicate choices, or effects-with-no-consumer because there are no choices or effects. All content is ambient.
 
-**CONTENT_DECISION (owner):** Wiring the DATA_ONLY batches into their respective runtime systems (JournalSystem, RadioTuner, environmental-text display, document viewer, letter discovery, maintenance-log viewer) is a separate `ashfall-implement` task and is **not required for the content to be valid data authority**. The two LOADABLE batches (medical, graffiti) could be wired to `DwellerMedicalCatalog` and `BunkerGraffitiCatalog` with no schema change (medical is a superset; graffiti is an exact match).
+**CONTENT_DECISION (owner):** Wiring the remaining DATA_ONLY batches into
+their respective runtime systems is still separate work. The journal slice
+was resolved by Plan 142: its two source shapes are loaded through one
+canonical adapter and activated only by matching real journal producers.
 
 ---
 
 ## Mechanical Text/Data Alignment Findings
 
-### Finding 1 — Journals schema diverges from runtime `JournalEntry` (CONTENT_DECISION, not blocking)
+### Finding 1 — Journals schema diverged from runtime `JournalEntry` (RESOLVED by Plan 142)
 
 **Evidence:**
 - My `narrative/journals_expansion.json` mirrors `journal_entries_expansion_05.json`: `id`/`title`/`bodyText`/`day`/`type`/`author`/`tags`.
 - The Core runtime `Assets/Ashfall.Core/Journal/JournalEntry.cs` expects: `Id`/`Text`/`Timestamp`/`AuthorName`/`AuthorId`/`KnowledgeKey`/`Day`/`Hour`.
 - The shipped `journal_entries_batch_1.json` uses the loader-matching schema (`text`/`timestamp`/`author_name`/`author_id`/`knowledge_key`/`day`/`hour`).
 
-**Assessment:** My file matches the *data-authority* schema of the shipped `expansion_05` file (which is itself DATA_ONLY — not loaded into the runtime `JournalSystem`), so it is no more nor less wired than the shipped file it mirrors. If the journals batch is ever wired to the runtime `JournalSystem`, it would need either a schema adapter or a reformat to the `JournalEntry`/`batch_1` schema. This is a known divergence between two parallel journal schemas in the existing project, not a new defect.
+**Assessment:** The files intentionally retain their authored source schemas,
+but they now normalize through `JournalCorpusCatalogLoader` into the existing
+`JournalSystem` insertion path. No second persisted DTO or state machine was
+introduced. Ambient title/type/tags remain adapter metadata, while body,
+knowledge key, safe author attribution, day, hour, and timestamp follow the
+Plan 142 map.
 
-**Resolution:** Owner decision. Either (a) leave as DATA_ONLY ambient text matching `expansion_05`, or (b) reformat to the `batch_1`/`JournalEntry` schema if runtime loading is desired. No action required for the content to be valid.
+**Resolution:** Plan 142 selected the adapter strategy. Catalog loading is
+read-only and producer-bound; it does not replay all 189 records into a new
+campaign or invent discovery effects. See `docs/implementation/PLAN142_*`.
 
 ### Finding 2 — All prose is free of mechanical game-ID references (PASS)
 
@@ -80,7 +90,7 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 
 | # | Finding | Severity | Status |
 |---|---|---|---|
-| 1 | Journals schema diverges from runtime `JournalEntry` | CONTENT_DECISION | Owner decision (leave as DATA_ONLY or reformat for runtime) |
+| 1 | Journals use two authored source shapes | PASS | Plan 142 adapter normalizes both into the canonical runtime contract |
 | 2 | All prose free of mechanical game-ID references | PASS | No action |
 | 3 | Medical/graffiti schemas are loader-compatible | PASS | No action (wiring is a separate task) |
 | 4 | Tone — restrained, varied, material | PASS | No action |
@@ -89,7 +99,8 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 | 7 | No magic/fantasy | PASS | No action |
 | 8 | No glorified violence / gore spectacle | PASS | No action |
 
-**No BLOCKING findings.** One CONTENT_DECISION (Finding 1) deferred to owner.
+**No BLOCKING findings.** The former journal-schema CONTENT_DECISION is
+resolved by the Plan 142 adapter and producer-bound activation policy.
 
 ---
 
@@ -99,4 +110,8 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 - ✅ Tone judgments identify the relevant rule and quoted context (above).
 - ✅ No continuity issue is relabeled as a style preference — the continuity contradictions were resolved in `CONTINUITY_REPORT.md` (Findings 1 & 2 fixed: Rima age, Dima→Kolya); the remaining schema divergence (Finding 1 here) is a mechanical-alignment issue, not a continuity issue.
 
-**Conclusion:** The eight batches pass the narrative acceptance check. They are valid data-authority ambient text, tonally and fictionally compliant, free of mechanical ID references, and two are directly loadable by existing Core catalogs. The one CONTENT_DECISION (journals schema) is a pre-existing project-level divergence between two parallel journal schemas, not a new defect, and is deferred to the owner.
+**Conclusion:** The eight batches pass the narrative acceptance check. They are
+valid data-authority text, tonally and fictionally compliant, free of
+mechanical ID references, and the journal files are now loadable through the
+canonical Plan 142 adapter without duplicate entries, fabricated timestamps,
+guessed authors, or invented effects.

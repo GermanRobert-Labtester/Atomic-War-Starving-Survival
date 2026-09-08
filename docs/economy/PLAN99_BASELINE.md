@@ -60,3 +60,30 @@ graph LR
 2. **Wildcard Matching Defect:** `HardcoreEconomyTuning.MatchesItem` previously evaluated `trimmed == "*"` or `string.Equals`, failing to expand prefix wildcards like `ammo_*` and `chart_*`.
 3. **Day Range Boundary Parsing:** `MatchesDay` failed on open-ended ranges like `"Days 341+"` when no trailing space preceded `+`.
 4. **Enum Restriction:** `ScarcityTier` and `PriceShockKind` were restricted to 4 enum members each, preventing full-campaign expansion without enum modernization.
+
+## 4. Runtime Reconciliation
+
+The baseline audit found three plan/source divergences that had to be closed
+before the catalog could be reinstated:
+
+1. The expansion tests were quarantined while the live enums still lacked the
+   six canonical tier names and four canonical shock names.
+2. The live item matcher supported only exact IDs and `*`, despite the contract
+   and authored data using trailing prefix wildcards such as `ammo_*`.
+3. `Main.OpenTradeScreen` applied an empty tuning bundle instead of loading the
+   JSON authority.
+
+The implementation closes only those seams. It does not create a second market
+system or add tuning state to saves.
+
+## 5. Final Catalog State
+
+The authoritative JSON now contains exactly:
+
+- 8 scarcity tiers covering Days 1–15 through Days 341+.
+- 8 unique faction preference profiles.
+- 6 transient price-shock rules.
+
+`central_garrison_remnants` remains the stored legacy tuning key for backward
+compatibility. `HardcoreEconomyTuning.TryGetFactionPreference` also resolves
+the systems ID `faction_central_garrison` to that same profile.

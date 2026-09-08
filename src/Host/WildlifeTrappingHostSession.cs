@@ -27,6 +27,9 @@ namespace AtomicWar.GodotApp
         /// <summary>Plan 36: delegate for applying contamination dose. Set by host to route to RadiationSystem.</summary>
         public Action<string, float>? ApplyContamination { get; set; }
 
+        /// <summary>Tasks 5-8: optional custom disease resolver hook (defaults to ResolveDiseaseId/PreyDefinition.ResolveDiseaseId).</summary>
+        public Func<PreyDefinition, string>? DiseaseResolver { get; set; }
+
         public WildlifeTrappingHostSession(WildlifeTrappingSystem system)
         {
             System = system ?? new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
@@ -110,10 +113,10 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Fallback contamination dose when prey has positive risk but no explicit dose.</summary>
-        private const float FallbackContaminationDose = 2f;
+        public const float FallbackContaminationDose = PreyDefinition.FallbackContaminationDose;
 
         /// <summary>Fallback disease ID for medium-risk prey without explicit mapping.</summary>
-        private const string FallbackDiseaseId = "disease_zoonotic_flu";
+        public const string FallbackDiseaseId = PreyDefinition.FallbackDiseaseId;
 
         public ActionResult Butcher(string siteId, string butcherId = "")
         {
@@ -128,9 +131,10 @@ namespace AtomicWar.GodotApp
                     int day = _currentDay > 0 ? _currentDay : site.setDay;
 
                     // Disease application (deterministic from site state, with catalog fallback if unauthored)
+                    var resolver = DiseaseResolver ?? ResolveDiseaseId;
                     string diseaseId = !string.IsNullOrEmpty(site.diseaseId)
                         ? site.diseaseId
-                        : (site.contaminationDose <= 0f && System.RollDiseaseRisk(preyDef.diseaseRisk) ? ResolveDiseaseId(preyDef) : string.Empty);
+                        : (System.RollDiseaseRisk(preyDef.diseaseRisk) ? resolver(preyDef) : string.Empty);
 
                     if (ApplyDisease != null && !string.IsNullOrEmpty(diseaseId))
                     {
@@ -140,7 +144,7 @@ namespace AtomicWar.GodotApp
                     // Contamination application (deterministic from site state, with catalog fallback if unauthored)
                     float dose = site.contaminationDose > 0f
                         ? site.contaminationDose
-                        : (string.IsNullOrEmpty(site.diseaseId) && System.RollContaminationRisk(preyDef.contaminationRisk)
+                        : (System.RollContaminationRisk(preyDef.contaminationRisk)
                             ? (preyDef.contaminationDose > 0f ? preyDef.contaminationDose : FallbackContaminationDose)
                             : 0f);
 
@@ -176,42 +180,87 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Plan 36 Closure II: Repair a broken trap with atomic material payment.
-        /// Repair cost = ceil(setup cost × 0.5) per item, aggregated by ID.
+        /// Workstream D: Shared repair bill calculation authority.
+        /// Resolves the site, checks broken/durability, and calculates repair bill from trap definition.
         /// </summary>
-        public ActionResult TryRepairTrap(string siteId)
+        public bool TryGetRepairBill(string siteId, out InventoryBill bill, out string reason)
         {
+            bill = new InventoryBill();
             if (Catalog == null)
-                return ActionResult.Blocked("no_catalog", "trapping.no_catalog");
-            if (Inventory == null)
-                return ActionResult.Blocked("no_inventory", "trapping.no_inventory");
+            {
+                reason = "trapping.no_catalog";
+                return false;
+            }
 
             var site = System.State.trapSites.Find(s => s.siteId == siteId);
             if (site == null)
-                return ActionResult.Blocked("no_trap", "trapping.no_trap");
+            {
+                reason = "trapping.no_trap";
+                return false;
+            }
             if (string.IsNullOrEmpty(site.trapId))
-                return ActionResult.Blocked("legacy_trap", "trapping.legacy_trap_unrepairable");
+            {
+                reason = "trapping.legacy_trap_unrepairable";
+                return false;
+            }
             if (!site.isBroken && site.remainingDurability > 0)
-                return ActionResult.Blocked("not_damaged", "trapping.not_damaged");
+            {
+                reason = "trapping.not_damaged";
+                return false;
+            }
 
             if (!Catalog.Traps.TryGetValue(site.trapId, out var trapDef))
-                return ActionResult.Blocked("unknown_trap", "trapping.unknown_trap");
+            {
+                reason = "trapping.unknown_trap";
+                return false;
+            }
 
-            // Build repair bill: ceil(setup cost × 0.5) per item
-            var bill = new InventoryBill();
-            var aggregated = new Dictionary<string, int>(StringComparer.Ordinal);
-            foreach (var cost in trapDef.setupCosts)
+            bill = trapDef.CalculateRepairBill();
+            reason = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// Workstream D: Preflight check for repair affordability.
+        /// </summary>
+        public bool CanAffordRepair(string siteId, out InventoryBill bill, out string failureReason)
+        {
+            if (!TryGetRepairBill(siteId, out bill, out failureReason))
+                return false;
+
+            if (Inventory == null)
             {
-                if (string.IsNullOrEmpty(cost.itemId) || cost.amount <= 0) continue;
-                aggregated.TryGetValue(cost.itemId, out int existing);
-                aggregated[cost.itemId] = existing + cost.amount;
+                failureReason = "trapping.no_inventory";
+                return false;
             }
-            foreach (var kv in aggregated)
+
+            var quote = Inventory.Inventory.QuoteTransaction(bill);
+            if (!quote.CanExecute)
             {
-                int repairQty = (int)Math.Ceiling(kv.Value * 0.5);
-                if (repairQty > 0)
-                    bill.AddCost(kv.Key, repairQty);
+                failureReason = !string.IsNullOrEmpty(quote.Validation.FailureReason)
+                    ? quote.Validation.FailureReason
+                    : "trapping.insufficient_materials";
+                return false;
             }
+
+            failureReason = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// Plan 36 Closure II / Workstream D: Repair a broken trap with atomic material payment.
+        /// Delegates to TryGetRepairBill for cost calculation and validation.
+        /// </summary>
+        public ActionResult TryRepairTrap(string siteId)
+        {
+            if (Inventory == null)
+                return ActionResult.Blocked("no_inventory", "trapping.no_inventory");
+
+            if (!TryGetRepairBill(siteId, out var bill, out var reason))
+                return ActionResult.Blocked("repair_unavailable", reason);
+
+            var site = System.State.trapSites.Find(s => s.siteId == siteId)!;
+            var trapDef = Catalog!.Traps[site.trapId];
 
             // Execute atomic transaction
             using var tx = Inventory.Inventory.BeginTransaction(bill);
