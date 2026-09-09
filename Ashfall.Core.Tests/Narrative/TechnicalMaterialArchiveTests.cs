@@ -199,7 +199,7 @@ namespace Ashfall.Core.Tests.Narrative
             Assert.Equal(new[]
             {
                 "ArchiveFireSensitiveRecords", "CaptureState", "DefaultCanonicalLinks",
-                "DefaultProducerMap", "DeferredRecordIds", "DiscoverAtProducer", "DiscoverRecord",
+                "DefaultProducerMap", "DeferredRecordIds", "DiscoverAtProducer", "DiscoverForItem", "DiscoverRecord",
                 "FailureReports", "FamilyOf", "GetCanonicalItem", "GetProducer", "GetRecord",
                 "HasProducer", "IsDiscovered", "MaritimeRopeRecords", "ProtectiveMaterialRecords",
                 "RecordsByFamily", "RecordsForItem", "RestoreState",
@@ -378,6 +378,42 @@ namespace Ashfall.Core.Tests.Narrative
             var failures = archive.FailureReports();
             Assert.Equal(3, failures.Count); // the three discovered film records carry failure summaries
             Assert.All(failures, r => Assert.False(string.IsNullOrEmpty(r.FailureSummary)));
+        }
+
+        // ── Item-inspection integration (Plan 158 follow-up) ─────────────
+
+        [Fact]
+        public void DiscoverForItem_FirstInspection_DiscoversLinkedRecords()
+        {
+            var archive = CreateArchive();
+
+            var first = archive.DiscoverForItem("gas_mask");
+            Assert.Single(first);                      // one gasket record links to gas_mask
+            Assert.Contains("gasket_degrade_ozone_corona_cracking", first);
+            Assert.True(archive.IsDiscovered("gasket_degrade_ozone_corona_cracking"));
+
+            // Repeat inspection is idempotent — no rediscovery spam.
+            Assert.Empty(archive.DiscoverForItem("gas_mask"));
+
+            // Unlinked/unknown items discover nothing.
+            Assert.Empty(archive.DiscoverForItem("item_canned_food"));
+            Assert.Empty(archive.DiscoverForItem(""));
+            Assert.Empty(archive.DiscoverForItem("PASGT_BALLISTIC_VEST_MK2"));
+        }
+
+        [Fact]
+        public void DiscoverForItem_RoundTrips_ThroughSave()
+        {
+            var archive = CreateArchive();
+            archive.DiscoverForItem("film_reel");
+
+            var captured = archive.CaptureState();
+            var reloaded = CreateArchive();
+            reloaded.RestoreState(captured);
+
+            Assert.Equal(2, reloaded.State.discoveredRecordIds.Count); // two film_reel links
+            Assert.Empty(reloaded.DiscoverForItem("film_reel"));
+            Assert.Equal(2, reloaded.RecordsForItem("film_reel").Count);
         }
 
         [Fact]

@@ -231,6 +231,26 @@ namespace Ashfall.Core.Narrative
 
         // ── Discovery (idempotent, deterministic) ───────────────────────
 
+        /// <summary>
+        /// Item-inspection producer (Plan 158 §10): viewing a canonical item
+        /// first-discovers its linked technical records. Idempotent — repeat
+        /// inspections return empty. Returns newly discovered ids in ordinal
+        /// order; mutates only the discovered-id ledger.
+        /// </summary>
+        public IReadOnlyList<string> DiscoverForItem(string itemId)
+        {
+            var newlyDiscovered = new List<string>();
+            if (string.IsNullOrWhiteSpace(itemId)) return newlyDiscovered;
+
+            foreach (var kv in _canonicalItemByRecordId
+                .Where(kv => kv.Value == itemId)
+                .OrderBy(kv => kv.Key, StringComparer.Ordinal))
+            {
+                if (DiscoverRecord(kv.Key)) newlyDiscovered.Add(kv.Key);
+            }
+            return newlyDiscovered;
+        }
+
         /// <summary>First-discovers all records assigned to a producer; returns newly discovered ids (ordinal order). Repeat calls return empty.</summary>
         public IReadOnlyList<string> DiscoverAtProducer(string producerId)
         {
@@ -248,7 +268,7 @@ namespace Ashfall.Core.Narrative
             return newlyDiscovered;
         }
 
-        /// <summary>First-discovers a single record (item-inspection producers). Returns true on first discovery only.</summary>
+        /// <summary>First-discovers a single record (quest/document producers). Returns true on first discovery only.</summary>
         public bool DiscoverRecord(string recordId)
         {
             if (string.IsNullOrWhiteSpace(recordId) || !RecordExists(recordId)) return false;

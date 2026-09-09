@@ -129,7 +129,14 @@ namespace AtomicWar.GodotApp
         {
             if (string.IsNullOrEmpty(itemId)) return;
             SetupInventory();
-            _inventoryDetailPanel?.Bind(_inventory, itemId);
+            // Plan 158: item inspection is a producer for technical-material
+            // records linked to canonical items (rope, masks, film goods).
+            // Display-only provenance — no condition state is read or changed.
+            System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? provenance = null;
+            var archive = EnsureTechnicalMaterialArchive();
+            if (archive.DiscoverForItem(itemId).Count > 0 || archive.RecordsForItem(itemId).Count > 0)
+                provenance = archive.RecordsForItem(itemId);
+            _inventoryDetailPanel?.Bind(_inventory, itemId, technicalProvenance: provenance);
             _inventoryDetailPanel?.Open();
         }
 

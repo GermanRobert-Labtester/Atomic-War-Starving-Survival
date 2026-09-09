@@ -36,17 +36,28 @@ public partial class InventoryDetailPanel : Control
     private ItemDescriptionCatalog? _descriptions;
     private ExpansionEnrichmentCatalog? _enrichment;
     private string _itemId = string.Empty;
+    private System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? _technicalProvenance;
 
     public bool IsBound => _inventory != null && !string.IsNullOrEmpty(_itemId);
     public int RenderedRowCount { get; private set; }
     public ItemInspectionModel? CurrentInspection { get; private set; }
 
     public void Bind(InventoryHostSession? inventory, string itemId, ItemDescriptionCatalog? descriptions = null, ExpansionEnrichmentCatalog? enrichment = null)
+        => Bind(inventory, itemId, descriptions, enrichment, technicalProvenance: null);
+
+    /// <summary>
+    /// Plan 158 — optional technical-material provenance for canonical items
+    /// (rope, masks, film goods). Display-only: archived records render as
+    /// dim provenance lines; no condition/durability state is read or
+    /// changed. Null (default) renders nothing — existing callers untouched.
+    /// </summary>
+    public void Bind(InventoryHostSession? inventory, string itemId, ItemDescriptionCatalog? descriptions, ExpansionEnrichmentCatalog? enrichment, System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? technicalProvenance)
     {
         _inventory = inventory;
         _itemId = itemId ?? string.Empty;
         _descriptions = descriptions ?? inventory?.DescriptionCatalog;
         _enrichment = enrichment ?? inventory?.EnrichmentCatalog;
+        _technicalProvenance = technicalProvenance;
         RefreshView();
     }
 
@@ -118,6 +129,19 @@ public partial class InventoryDetailPanel : Control
         {
             AddRow(_itemInfo, inspection.BaseDescription, Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount++;
+        }
+
+        // ── Technical provenance (Plan 158, display-only) ──
+        if (_technicalProvenance != null && _technicalProvenance.Count > 0)
+        {
+            foreach (var record in _technicalProvenance)
+            {
+                string summary = string.IsNullOrEmpty(record.FailureSummary)
+                    ? record.MeasurementSummary
+                    : $"{record.MeasurementSummary} — {record.FailureSummary.Replace('_', ' ').ToLowerInvariant()}";
+                AddRow(_itemInfo, $"Archive [{record.Family}]: {record.ObjectLabel.Replace('_', ' ')} — {summary} (ARCHIVAL — PRESENT STATUS UNKNOWN)", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
         }
 
         if (inspection.HasEnhancedDescription)
