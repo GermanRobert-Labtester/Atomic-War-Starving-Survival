@@ -18,6 +18,15 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnQuestDetailRequested;
         public event Action? OnCrossingPanelRequested;
 
+        /// <summary>Open the authored personal arc belonging to a survivor.</summary>
+        public event Action<string>? OnBeginSurvivorArcRequested;
+
+        /// <summary>Hand one objective item from stores to a survivor's arc.</summary>
+        public event Action<string, string>? OnDeliverArcObjectiveRequested;
+
+        /// <summary>Resolve a survivor arc's crisis fork with one of its two branches.</summary>
+        public event Action<string, string>? OnChooseArcBranchRequested;
+
         private VBoxContainer _overviewContainer = null!;
         private VBoxContainer _activeContainer = null!;
         private VBoxContainer _availableContainer = null!;
@@ -30,9 +39,12 @@ namespace AtomicWar.GodotApp.UI
         private Ashfall.Core.Factions.FactionBranchCoordinator? _branchCoordinator;
         private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralChoice;
         private IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? _moralDefs;
+        private NarrativeQuestlineHostSession? _survivorArcs;
+        private Func<string, string>? _survivorDisplayName;
+        private Func<string, string>? _itemLabel;
         private int _currentDay = 1;
 
-        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null || _moralDefs != null;
+        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null || _moralDefs != null || _survivorArcs != null;
 
         public void Bind(
             HoldfastQuestSystem? holdfastQuests,
@@ -41,7 +53,10 @@ namespace AtomicWar.GodotApp.UI
             int currentDay = 1,
             Ashfall.Core.Factions.FactionBranchCoordinator? branchCoordinator = null,
             Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null,
-            IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? moralDefs = null)
+            IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? moralDefs = null,
+            NarrativeQuestlineHostSession? survivorArcs = null,
+            Func<string, string>? survivorDisplayName = null,
+            Func<string, string>? itemLabel = null)
         {
             Unbind();
 
@@ -52,6 +67,9 @@ namespace AtomicWar.GodotApp.UI
             _branchCoordinator = branchCoordinator;
             _moralChoice = moralChoice;
             _moralDefs = moralDefs;
+            _survivorArcs = survivorArcs;
+            _survivorDisplayName = survivorDisplayName;
+            _itemLabel = itemLabel;
 
             if (_holdfastQuests != null)
                 _holdfastQuests.OnStateChanged += HandleHoldfastStateChanged;
@@ -59,6 +77,8 @@ namespace AtomicWar.GodotApp.UI
                 _crossingQuests.OnStateChanged += HandleCrossingStateChanged;
             if (_branchCoordinator != null)
                 _branchCoordinator.OnStateChanged += RefreshView;
+            if (_survivorArcs != null)
+                _survivorArcs.StateChanged += RefreshView;
 
             RefreshView();
         }
@@ -80,9 +100,16 @@ namespace AtomicWar.GodotApp.UI
                 _branchCoordinator.OnStateChanged -= RefreshView;
                 _branchCoordinator = null;
             }
+            if (_survivorArcs != null)
+            {
+                _survivorArcs.StateChanged -= RefreshView;
+                _survivorArcs = null;
+            }
             _dutyRoster = null;
             _moralChoice = null;
             _moralDefs = null;
+            _survivorDisplayName = null;
+            _itemLabel = null;
         }
 
 
@@ -425,6 +452,181 @@ namespace AtomicWar.GodotApp.UI
 
                 _availableContainer.AddChild(rosterCard);
             }
+
+            RenderSurvivorArcs();
+        }
+
+        /// <summary>
+        /// Renders the authored survivor personal arcs (narrative_questlines.json)
+        /// as a real command surface: open an arc, hand over the objective the
+        /// current stage owes, or resolve the crisis fork. The commands are raised
+        /// as events; Main owns inventory spend, morale and trait recording.
+        /// Survivor, item and trait identifiers are shown through labels, never raw.
+        /// </summary>
+        private void RenderSurvivorArcs()
+        {
+            if (_survivorArcs == null) return;
+            if (_activeContainer == null || _availableContainer == null || _completedContainer == null) return;
+
+            var defs = _survivorArcs.Definitions;
+            for (int i = 0; i < defs.Count; i++)
+            {
+                var def = defs[i];
+                if (def == null || string.IsNullOrEmpty(def.survivorId) || def.stages.Count == 0) continue;
+
+                string survivorId = def.survivorId;
+                string who = SurvivorLabel(survivorId);
+                var arc = _survivorArcs.GetArc(survivorId);
+
+                // ── Not yet opened: the arc is available ──
+                if (arc == null)
+                {
+                    var opening = def.stages[0];
+                    var card = AshfallUiHelpers.MakeCardFrame(def.title, $"Personal arc // {who}");
+                    var box = card.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                    var openLbl = AshfallUiHelpers.MakeSmall($"{opening.name}: {opening.description}");
+                    openLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
+                    box.AddChild(openLbl);
+
+                    var openBtn = AshfallUiHelpers.MakeButton($"OPEN PERSONAL ARC // [{who}]", () =>
+                    {
+                        OnBeginSurvivorArcRequested?.Invoke(survivorId);
+                        RefreshView();
+                    });
+                    box.AddChild(openBtn);
+
+                    _availableContainer.AddChild(card);
+                    continue;
+                }
+
+                // ── Resolved: show what was chosen and what it recorded ──
+                if (arc.status == Ashfall.Core.Quests.NarrativeArcStatus.Resolved)
+                {
+                    var chosen = def.FindBranchStage()?.FindBranch(arc.chosenBranchId);
+                    var doneCard = AshfallUiHelpers.MakeCardFrame(def.title, $"Personal arc // {who}");
+                    var doneBox = doneCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                    doneBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        chosen != null ? $"Resolved — {chosen.label}" : "Resolved",
+                        string.IsNullOrEmpty(arc.grantedTraitId)
+                            ? "no trait recorded"
+                            : $"recorded: {TraitLabel(arc.grantedTraitId)}",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+
+                    var epilogue = def.FindStage(def.FinalStageIndex);
+                    if (epilogue != null && !string.IsNullOrEmpty(epilogue.description))
+                        doneBox.AddChild(AshfallUiHelpers.MakeSmall(epilogue.description));
+
+                    _completedContainer.AddChild(doneCard);
+                    continue;
+                }
+
+                // ── In progress: either owes supplies or awaits the fork ──
+                var stage = def.FindStage(arc.currentStage);
+                var card2 = AshfallUiHelpers.MakeCardFrame(def.title, $"Personal arc // {who}");
+                var box2 = card2.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                box2.AddChild(AshfallUiHelpers.MakeSubsectionHeader(
+                    stage != null ? $"CURRENT STAGE // {stage.name.ToUpperInvariant()}" : "CURRENT STAGE"));
+
+                if (stage != null && !string.IsNullOrEmpty(stage.description))
+                {
+                    var stageLbl = AshfallUiHelpers.MakeBody($"► {stage.description}");
+                    stageLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                    box2.AddChild(stageLbl);
+                }
+
+                if (stage != null && stage.HasBranch &&
+                    arc.status == Ashfall.Core.Quests.NarrativeArcStatus.AwaitingBranch)
+                {
+                    box2.AddChild(AshfallUiHelpers.MakeSeparator());
+                    box2.AddChild(AshfallUiHelpers.MakeSmall(
+                        "Two ways through this, and only one can be taken. Choosing ends the arc."));
+                    AddArcBranchButton(box2, survivorId, stage.branchA!);
+                    AddArcBranchButton(box2, survivorId, stage.branchB!);
+                }
+                else
+                {
+                    var owed = _survivorArcs.GetOutstandingObjectives(survivorId);
+                    if (owed.Count > 0)
+                    {
+                        box2.AddChild(AshfallUiHelpers.MakeSeparator());
+                        box2.AddChild(AshfallUiHelpers.MakeSubsectionHeader("OWED FROM STORES"));
+                        for (int o = 0; o < owed.Count; o++)
+                        {
+                            string itemId = owed[o];
+                            var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+
+                            var itemLbl = AshfallUiHelpers.MakeBody(ItemNameLabel(itemId));
+                            itemLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                            row.AddChild(itemLbl);
+
+                            var handBtn = AshfallUiHelpers.MakeButton("HAND OVER", () =>
+                            {
+                                OnDeliverArcObjectiveRequested?.Invoke(survivorId, itemId);
+                                RefreshView();
+                            });
+                            row.AddChild(handBtn);
+
+                            box2.AddChild(row);
+                        }
+                    }
+                    else if (stage != null)
+                    {
+                        box2.AddChild(AshfallUiHelpers.MakeSmall(
+                            "Nothing is owed at this stage. The next move is not a delivery."));
+                    }
+                }
+
+                _activeContainer.AddChild(card2);
+            }
+        }
+
+        private void AddArcBranchButton(
+            VBoxContainer box, string survivorId, Ashfall.Core.Quests.NarrativeQuestlineBranchDef branch)
+        {
+            if (branch == null) return;
+            string branchId = branch.id;
+
+            var lbl = AshfallUiHelpers.MakeSmall(
+                $"{branch.label} — {branch.description} (morale {branch.moraleDelta:+0;-0;0})");
+            lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
+            box.AddChild(lbl);
+
+            var btn = AshfallUiHelpers.MakeButton($"CHOOSE // [{branch.label}]", () =>
+            {
+                OnChooseArcBranchRequested?.Invoke(survivorId, branchId);
+                RefreshView();
+            });
+            box.AddChild(btn);
+        }
+
+        private string SurvivorLabel(string survivorId)
+        {
+            var resolved = _survivorDisplayName?.Invoke(survivorId);
+            return string.IsNullOrWhiteSpace(resolved) ? HumanizeArcToken(survivorId) : resolved!;
+        }
+
+        private string ItemNameLabel(string itemId)
+        {
+            var resolved = _itemLabel?.Invoke(itemId);
+            return string.IsNullOrWhiteSpace(resolved) ? HumanizeArcToken(itemId) : resolved!;
+        }
+
+        private static string TraitLabel(string traitId) => HumanizeArcToken(traitId);
+
+        /// <summary>Last-resort label so a raw snake_case id is never shown to the player.</summary>
+        private static string HumanizeArcToken(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return string.Empty;
+            string[] parts = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length == 0) continue;
+                parts[i] = char.ToUpperInvariant(parts[i][0]) + (parts[i].Length > 1 ? parts[i][1..] : string.Empty);
+            }
+            return string.Join(" ", parts);
         }
 
         public override void _Ready()

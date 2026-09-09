@@ -557,6 +557,7 @@ namespace AtomicWar.GodotApp
             // Personal quests + chemical synthesis restore at boot so SaveAll /
             // day-tick never capture blank instances after a Continue/slot switch.
             SetupPersonalQuests();
+            SetupNarrativeQuestlines();
             SetupChemicalSynthesis();
 
             if (DisplayServer.GetName() == "headless")
@@ -628,6 +629,7 @@ namespace AtomicWar.GodotApp
             FlushEndgameIfDirty();
             FlushShelterFireIfDirty();
             FlushPersonalQuestsIfDirty();
+            FlushNarrativeQuestlinesIfDirty();
             FlushChemicalSynthesisIfDirty();
             FlushCollectiblesIfDirty();
             FlushCampaignDayIfDirty();

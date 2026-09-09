@@ -254,6 +254,7 @@ namespace AtomicWar.GodotApp
             SetupNuclearCore();
             SetupArmoredCrawlers();
             SetupPersonalQuests();
+            SetupNarrativeQuestlines();
             SetupChemicalSynthesis();
             SetupCollectibles();
             SetupShelterFireHazard();
@@ -438,6 +439,7 @@ namespace AtomicWar.GodotApp
                 SaveNuclearCore();
                 SaveArmoredCrawlers();
                 SavePersonalQuests();
+                SaveNarrativeQuestlines();
                 SaveChemicalSynthesis();
                 SaveCollectibles();
                 SaveShelterFire();

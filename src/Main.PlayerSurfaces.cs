@@ -307,7 +307,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseFactionDetailPanel());
 
             PanelRegistry.ConfigureActions("quests",
-                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); SetupFactionBranch(); SetupMoralChoice(); _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice, _moralChoiceDefs); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); SetupFactionBranch(); SetupMoralChoice(); BindQuestsPanel(); },
                 openAction: () => _questsPanel.Open(),
                 closeAction: () => CloseQuestsPanel());
 

@@ -60,7 +60,7 @@ namespace AtomicWar.GodotApp
             SetupDutyRoster();
             SetupFactionBranch();
             SetupMoralChoice();
-            _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay, _factionBranch?.Coordinator, _moralChoice, _moralChoiceDefs);
+            BindQuestsPanel();
             _questsPanel.Open();
         }
         public void OpenJournalPanel()

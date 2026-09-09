@@ -380,6 +380,9 @@ namespace AtomicWar.GodotApp
             _questsPanel.OnClose += CloseQuestsPanel;
             _questsPanel.OnQuestDetailRequested += OpenQuestDetailPanel;
             _questsPanel.OnCrossingPanelRequested += OpenCrossingQuestPanel;
+            _questsPanel.OnBeginSurvivorArcRequested += survivorId => BeginSurvivorArc(survivorId);
+            _questsPanel.OnDeliverArcObjectiveRequested += (survivorId, itemId) => DeliverSurvivorArcObjective(survivorId, itemId);
+            _questsPanel.OnChooseArcBranchRequested += (survivorId, branchId) => ChooseSurvivorArcBranch(survivorId, branchId);
             AddChild(_questsPanel);
 
             // ── Journal panel (overlay) ──
