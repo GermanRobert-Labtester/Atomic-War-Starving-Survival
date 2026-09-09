@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Economy;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Narrative;
@@ -98,35 +99,10 @@ namespace AtomicWar.GodotApp
             var inv = _inventory?.Inventory ?? new Inventory();
             var itemCatalog = _inventory?.Catalog;
 
-            var catalog = new BunkerContrabandCatalog();
-            string catalogPath = "res://Assets/StreamingAssets/Data/narrative/bunker_contraband_barter.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
-            {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
-                {
-                    string json = file.GetAsText();
-
-                    // Fail closed: an invalid catalog (unknown mechanics key,
-                    // bad tier/price, NaN, duplicate ids) leaves the contraband
-                    // layer inert rather than partially trusted.
-                    var report = ContrabandCatalogValidator.ValidateJson(json);
-                    if (!report.IsValid)
-                    {
-                        GD.PrintErr(
-                            "[Main.Contraband] catalog validation failed — contraband layer stays inert: "
-                            + string.Join("; ", report.Errors));
-                    }
-                    else
-                    {
-                        catalog = BunkerContrabandCatalog.LoadFromJson(json);
-                    }
-                }
-            }
-            else
-            {
-                GD.PrintErr("[Main.Contraband] catalog file missing — contraband layer stays inert.");
-            }
+            // Fail closed: an invalid catalog (unknown mechanics key, bad
+            // tier/price, NaN, duplicate ids) leaves the contraband layer
+            // inert rather than partially trusted.
+            var catalog = LoadContrabandCatalogForHost();
 
             _contrabandStash = new ContrabandStashSystem(catalog, inv, id => itemCatalog?.Get(id), new GodotLog());
 
@@ -215,6 +191,101 @@ namespace AtomicWar.GodotApp
                     "contraband_stash",
                     ContrabandSaveStore.TryCapturePersisted(_contrabandStash.CaptureState()));
             }
+        }
+
+        // ── Barter acquisition route: ShelterBarterSystem (Plan 54 core, Plan 147 host wire) ──
+
+        private ShelterBarterSystem? _shelterBarter;
+
+        /// <summary>
+        /// The shelter barter host: four legacy Plan-54 caravans plus the
+        /// contraband broker (built from the contraband activation map — the
+        /// same gate authority as the stash route). Caravan arrivals and
+        /// departures surface through the journal; stock is pinned per
+        /// arrival and persisted, so reopening any surface cannot reroll it.
+        /// </summary>
+        public ShelterBarterSystem EnsureShelterBarter()
+        {
+            if (_shelterBarter != null) return _shelterBarter;
+
+            var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_barter") : new SeededRng(147);
+            var inv = _inventory?.Inventory ?? new Inventory();
+            var itemCatalog = _inventory?.Catalog;
+
+            _shelterBarter = new ShelterBarterSystem(
+                rng, inv,
+                thermalSystem: null, // airlock-freeze gating is a Plan-54 refinement; the broker route does not depend on it
+                log: new GodotLog(),
+                itemLookup: id => itemCatalog?.Get(id));
+
+            // The contraband broker — registration precedes state restore.
+            _shelterBarter.RegisterCaravan(ContrabandBrokerCaravan.Build(
+                LoadContrabandCatalogForHost(), ContrabandStashSystem.DefaultActivations()));
+
+            var saved = ShelterBarterSaveStore.TryLoad();
+            if (saved != null)
+            {
+                _shelterBarter.RestoreState(saved);
+            }
+
+            _shelterBarter.OnCaravanArrived += caravan =>
+            {
+                _journal?.TryAddRawEntry(
+                    $"shelter_barter_arrival_{caravan.caravan_id}",
+                    $"{caravan.name} is at the airlock. {caravan.description}",
+                    null!, _simDay);
+            };
+            _shelterBarter.OnCaravanDeparted += caravan =>
+            {
+                _journal?.TryAddRawEntry(
+                    $"shelter_barter_departure_{caravan.caravan_id}",
+                    $"{caravan.name} moved on.",
+                    null!, _simDay);
+            };
+
+            return _shelterBarter;
+        }
+
+        private BunkerContrabandCatalog LoadContrabandCatalogForHost()
+        {
+            var catalog = new BunkerContrabandCatalog();
+            string catalogPath = "res://Assets/StreamingAssets/Data/narrative/bunker_contraband_barter.json";
+            if (Godot.FileAccess.FileExists(catalogPath))
+            {
+                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
+                if (file != null)
+                {
+                    string json = file.GetAsText();
+                    var report = ContrabandCatalogValidator.ValidateJson(json);
+                    if (report.IsValid)
+                        catalog = BunkerContrabandCatalog.LoadFromJson(json);
+                    else
+                        GD.PrintErr("[Main.Contraband] catalog validation failed — broker stocks nothing: "
+                            + string.Join("; ", report.Errors));
+                }
+            }
+            return catalog;
+        }
+
+        private void SetupShelterBarter()
+        {
+            EnsureShelterBarter();
+        }
+
+        private void SaveShelterBarter()
+        {
+            if (_shelterBarter != null)
+            {
+                CaptureSection(
+                    "shelter_barter",
+                    ShelterBarterSaveStore.TryCapturePersisted(_shelterBarter.CaptureState()));
+            }
+        }
+
+        /// <summary>Daily barter tick: caravan arrivals, departures, restocks (day gates evaluated here).</summary>
+        private void TickShelterBarterDay(int day)
+        {
+            _shelterBarter?.TickDay(day);
         }
     }
 }

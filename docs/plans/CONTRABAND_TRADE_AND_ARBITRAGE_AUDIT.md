@@ -51,11 +51,31 @@ economy mechanic requiring its own plan, not a contraband field.
   modifiers are caravan-side, not player-inventory-side; contraband possession
   adds no modifier.
 
-## 4. Remaining exposure (deferred, not silent)
+## 4. Barter acquisition route (IMPLEMENTED — Plan 147 follow-up session 4)
 
-If a future task adds the **barter-route acquisition** (caravans selling
-contraband records), the reroll/stock pinning rules of Plan Task B.14 apply:
-session stock/price pinned at caravan arrival (existing `CaravanRuntimeState`
-semantics), and scrip must by then be reconciled or the listing priced in
-canonical trade-value units. That work is explicitly out of this session's
-slice and tracked in the completion report.
+The deferred barter route is now implemented on **`ShelterBarterSystem`** (the
+Plan-54 Core barter authority, Plan-147 host wiring):
+
+- **The contraband broker** (`ContrabandBrokerCaravan.Build`,
+  `caravan_contraband_broker` / "The Quiet Counter") is built FROM the
+  reviewed activation map — the single gate authority. Each activation becomes
+  one stock line: canonical item, activation quantity, activation day gate.
+- **Canonical pricing, no second authority:** the broker is flagged
+  `use_canonical_item_values`; ShelterBarterSystem resolves its base values
+  from the canonical item `tradeValue` (via the injected item lookup) instead
+  of the legacy table. A visible **25% scarcity premium** (12500 bp) is added
+  on top: contraband costs strictly MORE than its trade value, so every
+  buy→sell round trip loses value — pinned by
+  `Broker_NoBuySellArbitrage_RoundTripLosesValue` (per-line and end-to-end)
+  and the selftest. Existing caravans' prices are byte-identical (table
+  first; the flag is broker-only) — pinned by
+  `LegacyCaravans_Pricing_UnchangedByBrokerPath`.
+- **High-tier availability from real campaign state:** stock lines carry
+  `available_from_day` (mirroring the activation day gates; parity pinned by
+  `Broker_BuildsFromActivations_Deterministically`). The gate is evaluated
+  once per restock (caravan arrival); stock is then pinned for the whole
+  stay — `Broker_StockPinnedDuringStay_NoRerollByReopen`,
+  `Broker_SaveRoundTrip_PreservesStockAndGates`,
+  `Broker_Deterministic_IdenticalSequencesProduceIdenticalStock`.
+- **scrip remains descriptive** — the broker trades goods for goods through
+  the atomic `InventoryBill` pipeline; no currency is minted or converted.

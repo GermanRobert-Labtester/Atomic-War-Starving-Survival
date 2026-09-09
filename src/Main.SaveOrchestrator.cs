@@ -230,6 +230,7 @@ namespace AtomicWar.GodotApp
             SetupRailway();
             SetupFungi();
             SetupContrabandStash();
+            SetupShelterBarter();
             SetupJustice();
             SetupRecreation();
             SetupChemWarfare();
@@ -408,6 +409,7 @@ namespace AtomicWar.GodotApp
                 SaveRailway();
                 SaveFungi();
                 SaveContrabandStash();
+                SaveShelterBarter();
                 SavePlasticPyrolysis();
                 SaveCargoAirdrop();
                 SaveJustice();

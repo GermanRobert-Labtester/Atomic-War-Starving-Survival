@@ -48,12 +48,37 @@ and untouched.
 | Save/reload stability (C.4, C.11) | `Stash_SaveRoundTrip_PreservesOnceOnlyClaims`, `Stash_OldSave_WithNoContrabandState_ChangesNothing`, `Stash_RestoreState_IsDeepClone_NotSharedReferences` |
 | Effects owned by live authorities (B acceptance) | `AuthorizedEffect_Morale_…`, `AuthorizedEffect_Agriculture_…`, `AuthorizedEffect_TradeValue_…` |
 
+## Task B/C follow-up: barter acquisition route (reroll resistance)
+
+Tests in `Ashfall.Core.Tests/Narrative/ContrabandBarterRouteTests.cs` (11):
+
+| Requirement (Task B.14, C.1–C.3) | Test |
+|---|---|
+| Broker built from the activation map (single gate authority), deterministic | `Broker_BuildsFromActivations_Deterministically` |
+| Canonical trade-value pricing + visible scarcity premium; no second pricing authority | `Broker_Prices_AreCanonicalTradeValueTimesPremium` |
+| High-tier stock hidden before its day gate (real campaign state, B.9) | `Broker_HighTierStock_HiddenBeforeGateDay`, `Broker_HighTierPurchase_BlockedBeforeGateDay` |
+| High-tier stock appears at the gate | `Broker_HighTierStock_AppearsAtGateDay` |
+| Atomic canonical purchase through `InventoryBill` (B.5, B.13) | `Broker_Purchase_GrantsCanonicalItemsAtomically` |
+| No buy→sell arbitrage (C.1–C.3) | `Broker_NoBuySellArbitrage_RoundTripLosesValue` |
+| Stock pinned during stay; no reroll by reopen (B.14) | `Broker_StockPinnedDuringStay_NoRerollByReopen` |
+| Save round-trip preserves pinned stock + gates (C.4, C.11) | `Broker_SaveRoundTrip_PreservesStockAndGates` |
+| Deterministic schedule/stock sequence | `Broker_Deterministic_IdenticalSequencesProduceIdenticalStock` |
+| Legacy caravans byte-identical pricing (no economy-wide drift) | `LegacyCaravans_Pricing_UnchangedByBrokerPath` |
+
+Full-gate runs (session 4 record): full xUnit suite 10337+ PASS except tests
+inside files the concurrent stream was actively editing during the run
+(`AbyssalAnomalies*`, `BureaucraticDocument*`, `NarrativeDiscovery*` — all
+verified passing in isolation / owned by that stream); host build clean;
+`--contraband-stash-selftest` PASS with 9 checks (incl. broker premium,
+day-gated stock, pinned-after-purchase, round-trip loss).
+
 ## Full-gate runs (session record)
 
 | Gate | Result |
 |---|---|
 | `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS (0 errors, 0 warnings) |
-| `dotnet test` — ContrabandPlan147 filter | PASS 28/28 |
+| `dotnet test` — ContrabandPlan147 filter | PASS 31/31 (after narcotics slice) |
+| `dotnet test` — ContrabandBarterRoute filter | PASS 11/11 (barter route) |
 | `dotnet build Ashfall.csproj` (Godot host) | PASS (0 errors, 0 warnings) |
 | `godot --headless -- --data-integrity-selftest` | PASS — 299 catalogs, 0 errors, 0 warnings (incl. contraband catalog) |
 | `godot --headless -- --bridge-selftest` | PASS exit 0 |

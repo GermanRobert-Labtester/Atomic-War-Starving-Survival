@@ -13,6 +13,15 @@ namespace Ashfall.Core.Economy
         public string item_id { get; set; } = string.Empty;
         public int quantity { get; set; } = 1;
         public int price_multiplier_bp { get; set; } = 10000; // 10000 = 1.0x
+
+        /// <summary>
+        /// Plan 147 — optional campaign-day gate: the item only enters
+        /// <c>remainingStock</c> when the restock (arrival) happens on/after
+        /// this day. 0 = always available. Real campaign state (day/phase),
+        /// evaluated once per restock; stock stays pinned for the stay —
+        /// no reroll by reopening a screen.
+        /// </summary>
+        public int available_from_day { get; set; } = 0;
     }
 
     [Serializable]
@@ -26,6 +35,16 @@ namespace Ashfall.Core.Economy
         public int stay_duration_days { get; set; } = 2;
         public int barter_tolerance_bp { get; set; } = 10000;
         public int counterfeit_risk_bp { get; set; } = 500;
+
+        /// <summary>
+        /// Plan 147 — when true, this caravan values goods it trades by the
+        /// canonical item <c>tradeValue</c> (via the injected item lookup)
+        /// instead of the legacy base-value table. Used by specialist
+        /// merchants (e.g. the contraband broker) so no second pricing
+        /// authority drifts away from the item definitions.
+        /// </summary>
+        public bool use_canonical_item_values { get; set; } = false;
+
         public List<CaravanStockItem> stock { get; set; } = new List<CaravanStockItem>();
         public List<string> demanded_item_tags { get; set; } = new List<string>();
         public int demanded_price_mult_bp { get; set; } = 12500;
@@ -66,6 +85,7 @@ namespace Ashfall.Core.Economy
         private readonly InventoryContainer _inventory;
         private readonly ShelterThermalSystem? _thermalSystem;
         private readonly ILog _log;
+        private readonly Func<string, ItemDefinition?>? _itemLookup;
 
         private readonly Dictionary<string, MerchantCaravanDef> _catalog = new Dictionary<string, MerchantCaravanDef>(StringComparer.Ordinal);
         private readonly Dictionary<string, float> _itemBaseValues = new Dictionary<string, float>(StringComparer.OrdinalIgnoreCase)
@@ -114,12 +134,14 @@ namespace Ashfall.Core.Economy
             ISeededRng rng,
             InventoryContainer inventory,
             ShelterThermalSystem? thermalSystem = null,
-            ILog? log = null)
+            ILog? log = null,
+            Func<string, ItemDefinition?>? itemLookup = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _thermalSystem = thermalSystem;
             _log = log ?? NullLog.Instance;
+            _itemLookup = itemLookup;
 
             RegisterDefaultCaravans();
         }
@@ -246,7 +268,13 @@ namespace Ashfall.Core.Economy
             cState.remainingStock.Clear();
             foreach (var item in def.stock)
             {
-                cState.remainingStock[item.item_id] = item.quantity;
+                // Plan 147: per-arrival day gate — high-tier stock only enters
+                // the manifest from its gate day (real campaign state). Stock is
+                // then pinned for the whole stay; no reroll by reopening.
+                int qty = item.quantity;
+                if (item.available_from_day > 0 && _state.currentDay < item.available_from_day)
+                    qty = 0;
+                cState.remainingStock[item.item_id] = qty;
             }
         }
 
@@ -259,10 +287,24 @@ namespace Ashfall.Core.Economy
         }
 
         public float GetBaseItemValue(string itemId)
+            => ResolveBaseValue(itemId, caravan: null);
+
+        /// <summary>
+        /// Base value resolution order: legacy base-value table, then — for
+        /// caravans flagged <c>use_canonical_item_values</c> (Plan 147) — the
+        /// canonical item <c>tradeValue</c>, then the neutral fallback. The
+        /// table first keeps every existing caravan price byte-identical.
+        /// </summary>
+        private float ResolveBaseValue(string itemId, MerchantCaravanDef? caravan)
         {
             string canon = ItemAliases.ToCanonical(itemId);
             if (_itemBaseValues.TryGetValue(itemId, out float val)) return val;
             if (_itemBaseValues.TryGetValue(canon, out val)) return val;
+            if (caravan != null && caravan.use_canonical_item_values && _itemLookup != null)
+            {
+                var def = _itemLookup(itemId);
+                if (def != null && def.tradeValue > 0f) return def.tradeValue;
+            }
             return 5f; // reasonable neutral fallback
         }
 
@@ -275,7 +317,7 @@ namespace Ashfall.Core.Economy
                 int count = kvp.Value;
                 if (count <= 0) continue;
 
-                float baseVal = GetBaseItemValue(itemId);
+                float baseVal = ResolveBaseValue(itemId, caravan);
                 float itemTotal = baseVal * count;
 
                 // Demand premium
@@ -313,7 +355,7 @@ namespace Ashfall.Core.Economy
                 int count = kvp.Value;
                 if (count <= 0) continue;
 
-                float baseVal = GetBaseItemValue(itemId);
+                float baseVal = ResolveBaseValue(itemId, caravan);
                 var stockItem = caravan.stock.Find(s => s.item_id == itemId);
                 int multBp = stockItem?.price_multiplier_bp ?? BasisPointsScale;
 

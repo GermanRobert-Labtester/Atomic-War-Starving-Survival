@@ -966,6 +966,9 @@ namespace AtomicWar.GodotApp
                 // ── Plan 147: contraband stash discovery rumors (pure reads + deduped journal) ──
                 _m.TickContrabandStashDay(day);
 
+                // ── Plan 147: shelter barter caravan schedule/arrivals (day-gated broker stock) ──
+                _m.TickShelterBarterDay(day);
+
                 // ── Plan 202: Plastic Pyrolysis (retort bay, grid-power projected) ──
                 _m.TickPlasticPyrolysis(day);
 

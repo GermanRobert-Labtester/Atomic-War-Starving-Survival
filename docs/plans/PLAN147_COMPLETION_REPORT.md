@@ -1,4 +1,4 @@
-# PLAN 147 COMPLETION REPORT — sessions of 2026-09-06 (×3)
+# PLAN 147 COMPLETION REPORT — sessions of 2026-09-06 (×4)
 
 ## Scope honesty statement
 
@@ -11,8 +11,13 @@ surface and a dedicated headless selftest. **Session 3 delivered the narcotics
 vertical slice**: a canonical `morphine` item in the data authority, the host
 consumption→dependency hook (exactly one dose per committed consumption), and
 `contraband_bootleg_morphine_ampoules` activated as the fourth stash entry.
-Plan 147 as a whole is **still NOT fully complete**: the barter acquisition
-route and activation of the remaining 16 records are explicitly pending
+**Session 4 delivered the barter acquisition route**: the contraband broker
+caravan ("The Quiet Counter") built from the activation map, priced in
+canonical trade-value units with a visible 25% scarcity premium (round trips
+strictly lose value), high-tier stock day-gated at restock with per-stay
+pinning, and the ShelterBarterSystem host triad (Setup/Save/Tick + checksummed
+save section). Plan 147 as a whole is **still NOT fully complete**: activation
+of the remaining 16 records and a trade UI panel are explicitly pending
 (see §Remaining work).
 
 ## Session 2 — host wiring delivered
@@ -54,6 +59,28 @@ resolved on their commit; final full-suite run is fully green.)
 3. `godot --headless -- --contraband-stash-selftest` — PASS (7 checks, exit 0)
 4. `--data-integrity-selftest` — 299 catalogs, 0 errors (with morphine)
 5. `--save-store-checksum-selftest` — PASS
+
+## Session 4 — barter acquisition route delivered
+
+| Change | Authority respected |
+|---|---|
+| `ContrabandBrokerCaravan.Build` (Core Narrative): broker def generated from the reviewed activation map — canonical item, activation quantity, activation day gate | Single gate authority: stash + barter routes share the same day gates (parity-pinned) |
+| `ShelterBarterSystem` additive schema: `CaravanStockItem.available_from_day` (per-arrival stock gate, default 0 = unchanged) and `MerchantCaravanDef.use_canonical_item_values` (default false = unchanged); optional item-lookup ctor param | Existing caravans' pricing byte-identical (`LegacyCaravans_Pricing_UnchangedByBrokerPath`) |
+| Canonical pricing: broker base values = canonical `tradeValue` via the injected item lookup; 25% scarcity premium (12500 bp) | No second pricing authority — the item table stays the value owner; the premium is a visible multiplier |
+| Host triad: `EnsureShelterBarter`/`SetupShelterBarter`/`SaveShelterBarter` + `TickShelterBarterDay`; `ShelterBarterSaveStore` (SaveStoreHub checksummed envelope); `shelter_barter` registry section; arrival/departure journal notices | `SaveStoreCoverageGateTests` passes by construction; contract matrices updated (166 sections / 160 envelopes) |
+| Reroll resistance: stock pinned per stay, evaluated once per restock, persisted; save round-trip preserves pinned stock; deterministic sequences | `Broker_StockPinnedDuringStay_NoRerollByReopen`, `Broker_SaveRoundTrip_PreservesStockAndGates`, `Broker_Deterministic_…` |
+| Tests: 11 new xUnit in `ContrabandBarterRouteTests` + 3 new selftest checks (broker premium, pinned stock, round-trip loss) | |
+
+### Session 4 verification gates
+
+1. `dotnet build Ashfall.csproj` — clean
+2. Contraband + Plan-54 test filters — **48/48 PASS** (42 contraband + 6 Plan-54)
+3. `godot --headless -- --contraband-stash-selftest` — PASS (9 checks, exit 0)
+4. Full `dotnet test` suite — all failures confined to files the concurrent
+   stream was actively editing during the run (`AbyssalAnomalies*`,
+   `BureaucraticDocument*`, `NarrativeDiscovery*` — each verified passing in
+   isolation; test totals shifted between runs due to their in-flight edits);
+   every Plan-147-owned test green.
 
 ## Delivered
 
@@ -120,9 +147,10 @@ per-record identity/owner review per the identity matrix.
    (see `CONTRABAND_SAVE_COMPATIBILITY.md` §3).
 2. ~~**Morphine vertical slice**~~ — **DONE (session 3)**: canonical `morphine`
    item, one-dose-per-consumption dependency routing, fourth stash activation.
-3. **Barter acquisition route:** caravan stock listings priced in canonical
-   trade-value units with existing stock-pinning semantics
-   (`CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md` §4).
+3. ~~**Barter acquisition route**~~ — **DONE (session 4)**: contraband broker
+   caravan on ShelterBarterSystem, canonical premium pricing, day-gated
+   high-tier stock, reroll-resistant (`…ARBITRAGE_AUDIT.md` §4).
+   Trade execution UI panel remains future work (journal notices are live).
 4. **Per-record review of the remaining 14 item-concept rows** against new
    canonical items as those are authored (candles, coffee, lard…), each
    requiring a mechanics-matrix row first (validator enforces the review).
