@@ -176,7 +176,7 @@ namespace Ashfall.Core.Tests.Narrative
             var catalog = LoadCatalog();
             var activations = ContrabandStashSystem.DefaultActivations();
 
-            Assert.Equal(3, activations.Count);
+            Assert.Equal(4, activations.Count);
             var tiers = new HashSet<int>();
             foreach (var activation in activations)
             {
@@ -238,8 +238,11 @@ namespace Ashfall.Core.Tests.Narrative
             Assert.True(system.TryClaimStash("contraband_century_seed_grain_vial", 25).IsSuccess);
             Assert.Equal(1, inventory.CountById("item_seed_wheat"));
 
-            // Nothing else leaked into inventory from the three claims.
-            Assert.Equal(3, inventory.Slots.Count(s => s.Amount > 0));
+            Assert.True(system.TryClaimStash("contraband_bootleg_morphine_ampoules", 30).IsSuccess);
+            Assert.Equal(4, inventory.CountById("morphine"));
+
+            // Nothing else leaked into inventory from the four claims.
+            Assert.Equal(4, inventory.Slots.Count(s => s.Amount > 0));
         }
 
         [Fact]
@@ -262,9 +265,11 @@ namespace Ashfall.Core.Tests.Narrative
         {
             var system = CreateSystem();
 
-            var unknown = system.TryClaimStash("contraband_bootleg_morphine_ampoules", 100);
+            // A still-deferred record (candle hoard has no canonical item) must
+            // stay undiscoverable and unclaimable — never silently executable.
+            var unknown = system.TryClaimStash("contraband_paraffin_candle_hoard", 100);
             Assert.False(unknown.IsSuccess);
-            Assert.False(system.IsDiscoverable("contraband_bootleg_morphine_ampoules", 100),
+            Assert.False(system.IsDiscoverable("contraband_paraffin_candle_hoard", 100),
                 "records without a reviewed activation stay deferred, never silently executable");
         }
 
@@ -306,8 +311,8 @@ namespace Ashfall.Core.Tests.Narrative
             // Save/reload must not reopen a claimed stash.
             Assert.Equal(ActionResult.StatusKind.Blocked, replay.Status);
             Assert.False(reloaded.IsDiscoverable("contraband_unrationed_sugar_brick", 12));
-            // Only the two unclaimed activated stashes remain discoverable.
-            Assert.Equal(2, reloaded.ListDiscoverable(100).Count);
+            // Only the three unclaimed activated stashes remain discoverable.
+            Assert.Equal(3, reloaded.ListDiscoverable(100).Count);
         }
 
         [Fact]
@@ -323,7 +328,7 @@ namespace Ashfall.Core.Tests.Narrative
             Assert.Equal(0, system.State.claimedDayByEntry.Count);
             // Loading old saves can neither grant nor remove wealth.
             Assert.Equal(slotsBefore, inventory.Slots.Count(s => s.Amount > 0));
-            Assert.Equal(3, system.ListDiscoverable(100).Count);
+            Assert.Equal(4, system.ListDiscoverable(100).Count);
         }
 
         [Fact]
@@ -421,6 +426,68 @@ namespace Ashfall.Core.Tests.Narrative
             var wheatSeeds = itemCatalog.Get("item_seed_wheat");
             Assert.NotNull(wheatSeeds);
             Assert.True(wheatSeeds!.tradeValue > 0f);
+        }
+
+        // ── Narcotics slice (Plan 147 follow-up): canonical morphine ─────
+
+        [Fact]
+        public void AuthorizedEffect_Morphine_PainRelief_IsOwnedByCanonicalItemDefinition()
+        {
+            var itemCatalog = LoadItemCatalog();
+
+            // The contraband row's instant_pain_relief_hp=40 is NOT executed.
+            // The canonical morphine item's own healthEffect, applied by the
+            // existing item-use pipeline, is the sole pain-relief authority.
+            var morphine = itemCatalog.Get("morphine");
+            Assert.NotNull(morphine);
+            Assert.Equal(ItemType.Medical, morphine!.type);
+            Assert.True(morphine.healthEffect > 0f,
+                "canonical morphine must carry pain relief through the item-use pipeline");
+            Assert.True(morphine.moraleEffect > 0f);
+            Assert.True(morphine.tradeValue > 0f);
+        }
+
+        [Fact]
+        public void Morphine_DependencyCatalog_LinksCanonicalItemId()
+        {
+            // The dependency authority keys on the SAME canonical id: one row in
+            // chemical_dependency_items.json (opioid) — no second identity.
+            string path = Path.Combine(DataDirectory, "chemical_dependency_items.json");
+            Assert.True(File.Exists(path));
+
+            using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(path));
+            var items = doc.RootElement.GetProperty("items");
+            int matches = 0;
+            string? kind = null;
+            foreach (var it in items.EnumerateArray())
+            {
+                if (it.TryGetProperty("item_id", out var idEl) &&
+                    string.Equals(idEl.GetString(), "morphine", StringComparison.Ordinal))
+                {
+                    matches++;
+                    kind = it.GetProperty("dependency_kind").GetString();
+                }
+            }
+            Assert.Equal(1, matches);
+            Assert.Equal("opioid", kind);
+        }
+
+        [Fact]
+        public void ChemicalDependency_Morphine_ExactlyOneDosePerAuthorizedConsumptionEvent()
+        {
+            var system = new Ashfall.Core.Medical.ChemicalDependencySystem();
+            const Ashfall.Core.Medical.ChemicalDependencyKind opioid = Ashfall.Core.Medical.ChemicalDependencyKind.Opioid;
+
+            // One authorized consumption event → exactly one dose.
+            system.OnSubstanceConsumed("survivor_test", "morphine", opioid);
+            var dep = system.Ledger["survivor_test"].Single(d => d.itemId == "morphine");
+            Assert.Equal(Ashfall.Core.Medical.ChemicalDependencySystem.DependencyIncreasePerDose, dep.dependencyLevel, 3);
+
+            // Per-event (not once-ever) semantics: the next committed consumption
+            // adds exactly one more dose — the host fires OnSubstanceConsumed from
+            // the inventory OnConsumed hook, which commits exactly once per use.
+            system.OnSubstanceConsumed("survivor_test", "morphine", opioid);
+            Assert.Equal(2f * Ashfall.Core.Medical.ChemicalDependencySystem.DependencyIncreasePerDose, dep.dependencyLevel, 3);
         }
 
         // ── Helpers ──────────────────────────────────────────────────────

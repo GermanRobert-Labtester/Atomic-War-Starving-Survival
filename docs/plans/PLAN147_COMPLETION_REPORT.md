@@ -1,4 +1,4 @@
-# PLAN 147 COMPLETION REPORT — sessions of 2026-09-06 (×2)
+# PLAN 147 COMPLETION REPORT — sessions of 2026-09-06 (×3)
 
 ## Scope honesty statement
 
@@ -7,9 +7,13 @@ of Task B (three representative entries proven end-to-end at the Core level),
 plus the Task A/C audit documents. **Session 2 completed the host/Godot
 wiring** (save-contract §3): Setup/Save triad, SaveStoreHub checksummed
 section, SaveSectionRegistry entry, contract-matrix gates, journal feedback
-surface and a dedicated headless selftest. Plan 147 as a whole is **still NOT
-fully complete**: the barter acquisition route and activation of the remaining
-17 records are explicitly pending (see §Remaining work).
+surface and a dedicated headless selftest. **Session 3 delivered the narcotics
+vertical slice**: a canonical `morphine` item in the data authority, the host
+consumption→dependency hook (exactly one dose per committed consumption), and
+`contraband_bootleg_morphine_ampoules` activated as the fourth stash entry.
+Plan 147 as a whole is **still NOT fully complete**: the barter acquisition
+route and activation of the remaining 16 records are explicitly pending
+(see §Remaining work).
 
 ## Session 2 — host wiring delivered
 
@@ -33,6 +37,23 @@ fully complete**: the barter acquisition route and activation of the remaining
 (The transient `SaveWireContractTests.NarrativeState` arcState failure
 observed mid-session belonged to the concurrent EncounterCatalog stream and
 resolved on their commit; final full-suite run is fully green.)
+
+## Session 3 — narcotics slice delivered
+
+| Change | Authority respected |
+|---|---|
+| Canonical `morphine` item authored in items.json (type Medical, healthEffect 35, moraleEffect 4, tradeValue 60, stackMax 4, weight 0.2) | items.json is the sole item authority; not a duplicate (dependency-catalog rows use `item_id` and are skipped by `ItemCatalogLoader`) |
+| 4th activation: `contraband_bootleg_morphine_ampoules` → `morphine` ×4, day ≥ 25 (`ContrabandStashSystem.DefaultActivations`) | The contraband JSON's `instant_pain_relief_hp=40` / `chemical_dependency_risk=0.35` remain non-executed |
+| Host hook (`Main.Plans147.WireDependencyConsumeHook`): `_inventory.OnConsumed` → `ChemicalDependencySystem.OnSubstanceConsumed` for dependency-catalog items, kind resolved from `chemical_dependency_items.json` | Exactly **one dose per committed consumption** (OnConsumed fires once post-commit); dose math/probability owned by the system + dependency catalog |
+| Tests: 3 new xUnit (canonical def, dependency-catalog linkage, one-dose-per-event) + selftest dependency-linkage check; 31 contraband tests total |
+
+### Session 3 verification gates (all PASS)
+
+1. `dotnet build Ashfall.csproj` — clean
+2. `dotnet test` full suite — **10298/10298 PASS**
+3. `godot --headless -- --contraband-stash-selftest` — PASS (7 checks, exit 0)
+4. `--data-integrity-selftest` — 299 catalogs, 0 errors (with morphine)
+5. `--save-store-checksum-selftest` — PASS
 
 ## Delivered
 
@@ -77,8 +98,9 @@ completes the nine required deliverables).
 | `contraband_card_deck_pinned_kings` | 1 | stash discovery (day ≥ 3) | `item_playing_cards` ×1 | once per campaign |
 | `contraband_unrationed_sugar_brick` | 2 | stash discovery (day ≥ 8) | `sugar` ×8 | once per campaign |
 | `contraband_century_seed_grain_vial` | 3 | stash discovery (day ≥ 20) | `item_seed_wheat` ×1 | once per campaign |
+| `contraband_bootleg_morphine_ampoules` | 3 | stash discovery (day ≥ 25) | `morphine` ×4 | once per campaign; dependency via consumption hook |
 
-All other 17 records: **explicitly deferred list** — not discoverable,
+All other 16 records: **explicitly deferred list** — not discoverable,
 tradable or usable through any route (fail-closed on claim attempts), pending
 per-record identity/owner review per the identity matrix.
 
@@ -96,11 +118,8 @@ per-record identity/owner review per the identity matrix.
    `SaveStoreHub` checksummed section, registry entry, contract gates,
    journal feedback surface, `--contraband-stash-selftest`
    (see `CONTRABAND_SAVE_COMPATIBILITY.md` §3).
-2. **Morphine vertical slice (highest-value follow-up):** author a canonical
-   `morphine` item (data authority) whose use routes through
-   `ChemicalDependencySystem.OnSubstanceConsumed` exactly once per authorized
-   consumption; then activate the record. Includes the
-   buy→use→dependency-once regression tests.
+2. ~~**Morphine vertical slice**~~ — **DONE (session 3)**: canonical `morphine`
+   item, one-dose-per-consumption dependency routing, fourth stash activation.
 3. **Barter acquisition route:** caravan stock listings priced in canonical
    trade-value units with existing stock-pinning semantics
    (`CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md` §4).

@@ -17,7 +17,7 @@ Duplicate item rows are never created just to make a record inventory-backed
 | `contraband_paraffin_candle_hoard` | Item-concept, **no canonical item** | No candle item in items.json. Creating one is allowed later via normal data-authority channels (not by this plan). | DEFERRED |
 | `contraband_smuggled_coffee_grounds` | Item-concept, **no canonical item** | No coffee item exists. A future `coffee` item would own morale/fatigue effects. | DEFERRED |
 | `contraband_uninspected_lard_tin` | Item-concept, **no canonical item** | No lard item. | DEFERRED |
-| `contraband_bootleg_morphine_ampoules` | Item-concept, **no canonical item** | `morphine` exists ONLY in `chemical_dependency_items.json` (dependency catalog), not as an items.json item. A canonical morphine item must be authored (data authority) before this can be item-backed; dependency then routes through `ChemicalDependencySystem`. | DEFERRED (highest-value next candidate) |
+| `contraband_bootleg_morphine_ampoules` | **ITEM-BACKED** | `morphine` ×4 (items.json, authored Plan 147 follow-up: type Medical, healthEffect 35, moraleEffect 4, tradeValue 60; box of 4 ampoules = 4 canonical units). Dependency routes through `ChemicalDependencySystem` via the `chemical_dependency_items.json` opioid row — one dose per committed consumption. | **ACTIVATED (tier-3 narcotics slice)** — stash grant 4×, day ≥ 25 |
 | `contraband_copper_condenser_coil` | **EQUIPMENT-CONCEPT** (not a consumable) | Not `spirits` — the coil is a still *part*, not the drink. No equipment slot accepts it. | DEFERRED |
 | `contraband_distillery_hydrometer_glass` | Equipment-concept | No lab-tool item/interaction. | DEFERRED |
 | `contraband_illicit_triode_tube` | Component-concept | No radio-component item contract (and no radio-range mechanic to serve). | DEFERRED |
@@ -34,9 +34,10 @@ Duplicate item rows are never created just to make a record inventory-backed
 
 ## Rules honored
 
-- **Zero duplicate item rows created.** The three activated rows link to
-  *existing* canonical ids only; 17 rows stay deferred rather than being forced
-  into invented item definitions.
+- **Zero duplicate item rows created.** The four activated rows link to
+  *existing* canonical ids only (`morphine` was authored once into the data
+  authority, replacing the dependency-catalog-only gap); 16 rows stay deferred
+  rather than being forced into invented item definitions.
 - No contraband id was duplicated as an item id, and no item id collides with a
   `contraband_*` id (cross-ref sweep in `CONTRABAND_ENTRY_MATRIX.md`).
 - Non-item services/documents must never be faked as zero-weight inventory

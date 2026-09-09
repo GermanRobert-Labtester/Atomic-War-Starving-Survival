@@ -592,6 +592,26 @@
       "empShielded": false
     },
     {
+      "id": "morphine",
+      "displayName": "Morphine Ampoule",
+      "description": "An amber glass ampoule of pharmaceutical morphine, batch seal intact. It restores thirty-five points of health where stronger medicine is wasted on a body that only needs the pain to stop. Two hundred grams to the padded case, worth sixty, four to a stack. Medics ration it in seconds and hours, not milliliters, because the dose that kills the pain is patient, and it keeps count.",
+      "type": "Medical",
+      "stackMax": 4,
+      "weight": 0.2,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "hungerRestore": 0,
+      "thirstRestore": 0,
+      "healthEffect": 35,
+      "radCleanse": 0,
+      "moraleEffect": 4,
+      "isEquipable": false,
+      "equipSlot": "",
+      "tradeValue": 60,
+      "empShielded": false
+    },
+    {
       "id": "medical_kit",
       "displayName": "Medical Kit",
       "description": "A canvas kit with rolled bandages, tape, scissors and a small bottle of antiseptic. It restores sixty points of health, a proper field kit that can close a cut, pack a wound and stabilize someone for the walk back. Half a kilo, worth ten, and the five kits in a stack are what a bunker calls a clinic. People who carry one tend to walk a little straighter, and everyone notices.",

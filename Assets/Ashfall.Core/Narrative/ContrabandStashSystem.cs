@@ -119,11 +119,12 @@ namespace Ashfall.Core.Narrative
         }
 
         /// <summary>
-        /// Plan 147 §13 vertical slices — the reviewed activation set proving one
-        /// low-, one mid- and one high-tier contraband record end-to-end:
+        /// Plan 147 §13 vertical slices — the reviewed activation set proving
+        /// one low-, one mid- and two high-tier contraband records end-to-end:
         ///   - contraband_card_deck_pinned_kings  -> item_playing_cards (tier 1, comfort/trade item)
         ///   - contraband_unrationed_sugar_brick  -> sugar             (tier 2, canonical moraleEffect through the item-use pipeline)
         ///   - contraband_century_seed_grain_vial -> item_seed_wheat   (tier 3, plantable through GreenhouseExpansionCatalog.CropCatalog)
+        ///   - contraband_bootleg_morphine_ampoules -> morphine        (tier 3, canonical medical item; dependency via ChemicalDependencySystem)
         /// Every further activation requires a recorded owner in the authority matrix.
         /// </summary>
         public static IReadOnlyList<ContrabandStashActivation> DefaultActivations() => new List<ContrabandStashActivation>
@@ -148,6 +149,20 @@ namespace Ashfall.Core.Narrative
                 canonicalItemId = "item_seed_wheat",
                 grantQuantity = 1,
                 minDay = 20
+            },
+            new ContrabandStashActivation
+            {
+                // Plan 147 follow-up: narcotics slice. Canonical `morphine` item
+                // (items.json, healthEffect/moraleEffect) is the sole effect
+                // authority; dependency risk routes exclusively through
+                // ChemicalDependencySystem.OnSubstanceConsumed, fired by the
+                // host once per committed consumption (OnConsumed). The JSON
+                // instant_pain_relief_hp=40 / chemical_dependency_risk=0.35
+                // remain non-executed.
+                entryId = "contraband_bootleg_morphine_ampoules",
+                canonicalItemId = "morphine",
+                grantQuantity = 4,
+                minDay = 25
             }
         };
 

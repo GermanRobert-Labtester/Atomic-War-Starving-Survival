@@ -103,9 +103,32 @@ namespace AtomicWar.GodotApp
                 var replay = reloaded.TryClaimStash("contraband_card_deck_pinned_kings", 12);
                 if (replay.Status != ActionResult.StatusKind.Blocked)
                     return "[FAIL] save/reload reopened a claimed stash";
-                if (reloaded.ListDiscoverable(100).Count != 2)
-                    return "[FAIL] expected exactly 2 remaining discoverable stashes after restore";
+                if (reloaded.ListDiscoverable(100).Count != 3)
+                    return "[FAIL] expected exactly 3 remaining discoverable stashes after restore";
                 GD.Print("[PASS] checksummed save round-trip preserves once-only claims");
+
+                // ── 7. Narcotics slice: dependency catalog links the canonical id ──
+                string depPath = Path.Combine(dataDir, "chemical_dependency_items.json");
+                if (!new FileSystemIO().FileExists(depPath))
+                    return "[FAIL] chemical dependency catalog missing";
+                using (var depDoc = System.Text.Json.JsonDocument.Parse(new FileSystemIO().ReadAllText(depPath)))
+                {
+                    bool morphineLinked = false;
+                    foreach (var it in depDoc.RootElement.GetProperty("items").EnumerateArray())
+                    {
+                        if (it.TryGetProperty("item_id", out var idEl) &&
+                            string.Equals(idEl.GetString(), "morphine", StringComparison.Ordinal) &&
+                            it.TryGetProperty("dependency_kind", out var kindEl) &&
+                            string.Equals(kindEl.GetString(), "opioid", StringComparison.Ordinal))
+                        {
+                            morphineLinked = true;
+                            break;
+                        }
+                    }
+                    if (!morphineLinked)
+                        return "[FAIL] canonical morphine not linked in the dependency catalog (opioid row required)";
+                }
+                GD.Print("[PASS] dependency catalog links canonical morphine (opioid) — host routes one dose per committed consumption");
 
                 return "CONTRABAND_STASH_SELFTEST PASS";
             }
