@@ -231,6 +231,7 @@ namespace AtomicWar.GodotApp
             SetupFungi();
             SetupContrabandStash();
             SetupShelterBarter();
+            SetupBlackProjectsArchive();
             SetupJustice();
             SetupRecreation();
             SetupChemWarfare();
@@ -410,6 +411,7 @@ namespace AtomicWar.GodotApp
                 SaveFungi();
                 SaveContrabandStash();
                 SaveShelterBarter();
+                SaveBlackProjectsArchive();
                 SavePlasticPyrolysis();
                 SaveCargoAirdrop();
                 SaveJustice();

@@ -221,6 +221,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 164 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
 | 165 | `contraband_stash` | Narrative & Illicit Economy | `ContrabandStashSystem` | `bunker_contraband_barter.json` | `Main` | `ContrabandSaveStore` | `Journal (feedback strip; no panel by design)` | `--contraband-stash-selftest`, `ContrabandPlan147Tests` | ✅ 6/6 |
 | 166 | `shelter_barter` | Illicit Economy / Barter | `ShelterBarterSystem`, `ContrabandBrokerCaravan` | `merchant_caravans.json` *(legacy defaults)* | `Main` | `ShelterBarterSaveStore` | `Journal (arrival notices; no panel by design)` | `--contraband-stash-selftest`, `ShelterBarterSystemPlan54Tests`, `ContrabandBarterRouteTests` | ✅ 6/6 |
+| 167 | `black_projects_archive` | Intelligence Archive | `BlackProjectsArchiveSystem` | `orbital_kinetic_telemetry.json`, `drone_carrier_blackboxes.json`, `cobalt_arming_directives.json`, `architect_vault_audits.json` | `Main` | `BlackProjectsArchiveSaveStore` | `Journal (first-discovery intel; no panel by design)` | `BlackProjectsArchiveTests`, `BlackProjectsCatalogTests` | ✅ 6/6 |
 
 ---
 
@@ -2068,6 +2069,18 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/ShelterBarterSaveStore.cs`](../../src/Host/ShelterBarterSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/ContrabandBarterRouteTests.cs`](../../Ashfall.Core.Tests/Narrative/ContrabandBarterRouteTests.cs)
 
+### 167. `black_projects_archive` — Plan 152 Black Projects intelligence archive (Intelligence Archive)
+- **Owner Domain:** `narrative`
+- **Setup Method:** `Main.SetupBlackProjectsArchive()` | **Cadence:** `⚡ Event-Driven (expedition location discovery)`
+- **UI Routes:** journal first-discovery intel — authority firewall: archival fields are never executable (no countdown, no drones, no launches, no clearance, no vault access)
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Narrative/BlackProjectsArchiveSystem.cs`](../../Assets/Ashfall.Core/Narrative/BlackProjectsArchiveSystem.cs)
+  - Core Catalog: [`Assets/Ashfall.Core/Narrative/BlackProjectsCatalog.cs`](../../Assets/Ashfall.Core/Narrative/BlackProjectsCatalog.cs)
+  - Host Session: [`src/Main.Plans152.cs`](../../src/Main.Plans152.cs)
+  - Save Store: [`src/Host/BlackProjectsArchiveSaveStore.cs`](../../src/Host/BlackProjectsArchiveSaveStore.cs)
+  - Intelligence Matrix: [`docs/content/BLACK_PROJECTS_INTELLIGENCE_MATRIX.md`](BLACK_PROJECTS_INTELLIGENCE_MATRIX.md)
+  - Test Fixture: [`Ashfall.Core.Tests/Narrative/BlackProjectsArchiveTests.cs`](../../Ashfall.Core.Tests/Narrative/BlackProjectsArchiveTests.cs)
+
 ---
 
 ## 4. Lifecycle Status & Reachability Proof Matrix
@@ -2099,6 +2112,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `chemical_synthesis` | ✅ | ✅ | ⚡ `On-Demand (Retort Synthesis)` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
 | `contraband_stash` | ✅ | ✅ | ⚡ `On-Demand (Day-Gated Stash Claim)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_barter` | ✅ | ✅ | ✅ `Daily Caravan Schedule Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `black_projects_archive` | ✅ | ✅ | ⚡ `Event-Driven (Location Discovery)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `child_development` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `chlor_alkali_synthesis` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `collectible_discovery` | ✅ | ✅ | ⚡ `On-Demand (One-Time Discovery Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
