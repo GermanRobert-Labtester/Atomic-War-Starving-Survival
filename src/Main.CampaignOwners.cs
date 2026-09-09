@@ -963,6 +963,9 @@ namespace AtomicWar.GodotApp
                 // ── Plans 190-193: Infection & Amputation, Railways, Subterranean Fungi, Wasteland Justice ──
                 _m.TickPlans190_193(day);
 
+                // ── Plan 147: contraband stash discovery rumors (pure reads + deduped journal) ──
+                _m.TickContrabandStashDay(day);
+
                 // ── Plan 202: Plastic Pyrolysis (retort bay, grid-power projected) ──
                 _m.TickPlasticPyrolysis(day);
 
