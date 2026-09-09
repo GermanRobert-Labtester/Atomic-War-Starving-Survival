@@ -19,7 +19,10 @@ namespace Ashfall.Core.Codex
             ResearchState? researchState,
             IReadOnlyDictionary<string, ResearchKnowledgeDef>? researchCatalog,
             JournalSystem? journalSystem,
-            int currentDay = 1)
+            int currentDay = 1,
+            IReadOnlyList<AuthoredCodexEntry>? authoredEntries = null,
+            Func<string, bool>? factionContactResolver = null,
+            int maxSpoilerTier = int.MaxValue)
         {
             var rawEntries = new List<CodexEntryProjection>();
 
@@ -183,7 +186,66 @@ namespace Ashfall.Core.Codex
                 }
             }
 
-            // 4. Deduplicate entries sharing the same EntryId and Union Provenance
+            // 4. Authored codex records (codex_entries.json): regional, location,
+            //    faction, deep-lore and wildlife prose recovered by travelling,
+            //    making contact, or hunting.
+            if (authoredEntries != null)
+            {
+                foreach (var authored in authoredEntries)
+                {
+                    if (authored == null || string.IsNullOrEmpty(authored.id)) continue;
+                    if (string.IsNullOrEmpty(authored.body)) continue;
+                    if (authored.spoilerTier > maxSpoilerTier) continue;
+
+                    bool unlocked = IsAuthoredEntryUnlocked(authored, journalSystem, factionContactResolver);
+
+                    // Spoiler discipline: an unrecovered record is only announced when
+                    // its tier is 0. Tier 1+ lore is withheld entirely until earned, so
+                    // the projection cannot leak the existence of a late revelation.
+                    if (!unlocked && authored.spoilerTier > 0) continue;
+
+                    var confidence = MapAuthoredConfidence(authored.provenance);
+                    var prov = new CampaignProvenanceRecord(
+                        MapAuthoredSourceKind(authored.provenance),
+                        authored.id,
+                        "codex_entries",
+                        currentDay,
+                        confidence,
+                        string.IsNullOrEmpty(authored.unlockRef) ? null : authored.unlockRef);
+
+                    var tags = new List<string>(authored.tags ?? new List<string>());
+                    if (!string.IsNullOrEmpty(authored.category) && !tags.Contains(authored.category))
+                        tags.Add(authored.category);
+                    if (!string.IsNullOrEmpty(authored.provenance) && !tags.Contains(authored.provenance))
+                        tags.Add(authored.provenance);
+
+                    rawEntries.Add(new CodexEntryProjection
+                    {
+                        EntryId = authored.id,
+                        Category = MapAuthoredCategory(authored.category),
+                        // Tier 0 records are safe to name even before recovery, so the
+                        // player can see that a place is worth walking to. Tier 1+ was
+                        // already withheld above, so no spoiler leaks through a title.
+                        Title = string.IsNullOrEmpty(authored.displayName) ? authored.id : authored.displayName,
+                        Subtitle = HumanizeKey(authored.category),
+                        Body = unlocked
+                            ? authored.body
+                            : "A record of this place is known to exist and has not been recovered. " +
+                              "Somebody has to walk there, or catch it, or meet whoever holds it.",
+                        State = unlocked ? CodexEntryState.Known : CodexEntryState.Locked,
+                        DayLearned = unlocked ? currentDay : 0,
+                        Confidence = confidence,
+                        Provenance = new[] { prov },
+                        RelatedLocationIds = authored.unlockCondition == CodexUnlockCondition.VisitLocation
+                            && !string.IsNullOrEmpty(authored.unlockRef)
+                                ? new[] { authored.unlockRef }
+                                : Array.Empty<string>(),
+                        Tags = tags
+                    });
+                }
+            }
+
+            // 5. Deduplicate entries sharing the same EntryId and Union Provenance
             var dedupMap = new Dictionary<string, CodexEntryProjection>(StringComparer.Ordinal);
             foreach (var entry in rawEntries)
             {
@@ -207,7 +269,7 @@ namespace Ashfall.Core.Codex
                 }
             }
 
-            // 5. Deterministic Sort: Category ordinal -> State descending -> Title (Ordinal) -> EntryId (Ordinal)
+            // 6. Deterministic Sort: Category ordinal -> State descending -> Title (Ordinal) -> EntryId (Ordinal)
             var sorted = dedupMap.Values
                 .OrderBy(e => (int)e.Category)
                 .ThenByDescending(e => (int)e.State)
@@ -216,6 +278,77 @@ namespace Ashfall.Core.Codex
                 .ToList();
 
             return sorted;
+        }
+
+        /// <summary>
+        /// Resolves an authored entry's unlock against the authorities already
+        /// supplied to the projection. Visit and catch unlocks come from journal
+        /// knowledge; faction contact has no journal predicate, so the host
+        /// supplies a resolver and, absent one, the entry stays locked rather
+        /// than unlocking by default. An unrecognized condition never unlocks.
+        /// </summary>
+        private static bool IsAuthoredEntryUnlocked(
+            AuthoredCodexEntry entry,
+            JournalSystem? journalSystem,
+            Func<string, bool>? factionContactResolver)
+        {
+            if (string.IsNullOrEmpty(entry.unlockRef)) return false;
+            switch (entry.unlockCondition)
+            {
+                case CodexUnlockCondition.VisitLocation:
+                    return journalSystem != null && journalSystem.IsLocationVisited(entry.unlockRef);
+                case CodexUnlockCondition.FirstCatch:
+                    return journalSystem != null && journalSystem.IsWildlifeCaught(entry.unlockRef);
+                case CodexUnlockCondition.MeetFaction:
+                    return factionContactResolver != null && factionContactResolver(entry.unlockRef);
+                default:
+                    return false;
+            }
+        }
+
+        private static CodexCategory MapAuthoredCategory(string? category)
+        {
+            if (string.IsNullOrEmpty(category)) return CodexCategory.WastelandLore;
+            if (string.Equals(category, CodexEntryCatalogLoader.CategoryFactions, StringComparison.Ordinal))
+                return CodexCategory.Factions;
+            if (string.Equals(category, CodexEntryCatalogLoader.CategoryWildlife, StringComparison.Ordinal))
+                return CodexCategory.Ecology;
+            // regions, locations and deep_lore are all wasteland lore.
+            return CodexCategory.WastelandLore;
+        }
+
+        /// <summary>
+        /// Authored provenance becomes the projection's confidence: a rumour is
+        /// low, an eyewitness account medium, physical material and restricted
+        /// official record high, and canonical text confirmed.
+        /// </summary>
+        private static InformationConfidence MapAuthoredConfidence(string? provenance)
+        {
+            if (string.IsNullOrEmpty(provenance)) return InformationConfidence.Medium;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceRumor, StringComparison.Ordinal))
+                return InformationConfidence.Low;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceEyewitness, StringComparison.Ordinal))
+                return InformationConfidence.Medium;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceMaterial, StringComparison.Ordinal)
+                || string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceRestricted, StringComparison.Ordinal))
+                return InformationConfidence.High;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceCanonical, StringComparison.Ordinal))
+                return InformationConfidence.Confirmed;
+            return InformationConfidence.Medium;
+        }
+
+        private static KnowledgeSourceKind MapAuthoredSourceKind(string? provenance)
+        {
+            if (string.IsNullOrEmpty(provenance)) return KnowledgeSourceKind.Manual;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceRumor, StringComparison.Ordinal))
+                return KnowledgeSourceKind.TraderRumor;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceEyewitness, StringComparison.Ordinal))
+                return KnowledgeSourceKind.JournalEvidence;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceMaterial, StringComparison.Ordinal))
+                return KnowledgeSourceKind.ExpeditionSurvey;
+            if (string.Equals(provenance, CodexEntryCatalogLoader.ProvenanceRestricted, StringComparison.Ordinal))
+                return KnowledgeSourceKind.Manual;
+            return KnowledgeSourceKind.NarrativeArticle;
         }
 
         private static string HumanizeKey(string key)

@@ -63,6 +63,7 @@ namespace Ashfall.Core.Tests
                 "WeatherSonde",
                 "WildlifeTrappingIfBound",
                 "Enrichment", // Read-only static catalog projection + journal knowledge persistence; no standalone save store
+                "Codex", // Read-only projection (CodexProjectionBuilder); zero persistent state — unlocks derive from journal/field-guide/research/faction-standing, which persist themselves
             };
 
         [Fact]
