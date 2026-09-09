@@ -221,7 +221,9 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 164 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
 | 165 | `contraband_stash` | Narrative & Illicit Economy | `ContrabandStashSystem` | `bunker_contraband_barter.json` | `Main` | `ContrabandSaveStore` | `Journal (feedback strip; no panel by design)` | `--contraband-stash-selftest`, `ContrabandPlan147Tests` | ✅ 6/6 |
 | 166 | `shelter_barter` | Illicit Economy / Barter | `ShelterBarterSystem`, `ContrabandBrokerCaravan` | `merchant_caravans.json` *(legacy defaults)* | `Main` | `ShelterBarterSaveStore` | `Journal (arrival notices; no panel by design)` | `--contraband-stash-selftest`, `ShelterBarterSystemPlan54Tests`, `ContrabandBarterRouteTests` | ✅ 6/6 |
-| 167 | `black_projects_archive` | Intelligence Archive | `BlackProjectsArchiveSystem` | `orbital_kinetic_telemetry.json`, `drone_carrier_blackboxes.json`, `cobalt_arming_directives.json`, `architect_vault_audits.json` | `Main` | `BlackProjectsArchiveSaveStore` | `Journal (first-discovery intel; no panel by design)` | `BlackProjectsArchiveTests`, `BlackProjectsCatalogTests` | ✅ 6/6 |
+| 167 | `black_projects_archive` | Intelligence Archive | `BlackProjectsArchiveSystem` | `orbital_kinetic_telemetry.json`, `drone_carrier_blackboxes.json`, `cobalt_arming_directives.json`, `architect_vault_audits.json` | `Main` | `BlackProjectsArchiveSaveStore` | `BlackProjectsArchivePanel` | `BlackProjectsArchiveTests`, `BlackProjectsCatalogTests`, `BlackProjectsArchivePanelRouteTests` | ✅ 6/6 |
+| 168 | `hydrogeology_archive` | Subterranean Science Archive | `HydroGeologyDiscoverySystem` | `artesian_well_contamination_logs.json`, `cave_aquatic_biota_logs.json`, `geothermal_steam_vent_diagnostics.json`, `stalactite_mineral_assay_reports.json` | `Main` | `HydroGeologyArchiveSaveStore` | `Journal (first-discovery science logs; no panel by design)` | `HydroGeologyDiscoveryTests`, `HydroGeologyCatalogTests` | ✅ 6/6 |
+| 169 | `oral_lore` | Narrative & Cultural Tradition | `OralLorePerformanceSystem` | `oral_lore_codex.json`, `oral_lore_batch_2.json` | `Main` | `OralLoreSaveStore` | `Journal (first-heard lore notices; no panel by design)` | `OralLorePlan155Tests`, `OralLoreCatalogTests` | ✅ 6/6 |
 
 ---
 
@@ -2072,14 +2074,43 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 167. `black_projects_archive` — Plan 152 Black Projects intelligence archive (Intelligence Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupBlackProjectsArchive()` | **Cadence:** `⚡ Event-Driven (expedition location discovery)`
-- **UI Routes:** journal first-discovery intel — authority firewall: archival fields are never executable (no countdown, no drones, no launches, no clearance, no vault access)
+- **UI Routes:** `black_projects_archive` ([`src/UI/BlackProjectsArchivePanel.cs`](../../src/UI/BlackProjectsArchivePanel.cs)), journal first-discovery intel — authority firewall: archival fields are never executable (no countdown, no drones, no launches, no clearance, no vault access)
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Narrative/BlackProjectsArchiveSystem.cs`](../../Assets/Ashfall.Core/Narrative/BlackProjectsArchiveSystem.cs)
   - Core Catalog: [`Assets/Ashfall.Core/Narrative/BlackProjectsCatalog.cs`](../../Assets/Ashfall.Core/Narrative/BlackProjectsCatalog.cs)
   - Host Session: [`src/Main.Plans152.cs`](../../src/Main.Plans152.cs)
   - Save Store: [`src/Host/BlackProjectsArchiveSaveStore.cs`](../../src/Host/BlackProjectsArchiveSaveStore.cs)
+  - UI Panel: [`src/UI/BlackProjectsArchivePanel.cs`](../../src/UI/BlackProjectsArchivePanel.cs)
   - Intelligence Matrix: [`docs/content/BLACK_PROJECTS_INTELLIGENCE_MATRIX.md`](BLACK_PROJECTS_INTELLIGENCE_MATRIX.md)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/BlackProjectsArchiveTests.cs`](../../Ashfall.Core.Tests/Narrative/BlackProjectsArchiveTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/UI/BlackProjectsArchivePanelRouteTests.cs`](../../Ashfall.Core.Tests/UI/BlackProjectsArchivePanelRouteTests.cs)
+
+### 168. `hydrogeology_archive` — Plan 154 Hydrogeology science archive (Subterranean Science Archive)
+- **Owner Domain:** `narrative`
+- **Setup Method:** `Main.SetupHydroGeologyDiscovery()` | **Cadence:** `⚡ Event-Driven (expedition location discovery)`
+- **UI Routes:** journal first-discovery science logs — authority firewall: historical measurements are archival observations recorded at sample time (no radiation dosing, no ore spawning, no water contamination mutation, no power grid changes)
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Narrative/HydroGeologyDiscoverySystem.cs`](../../Assets/Ashfall.Core/Narrative/HydroGeologyDiscoverySystem.cs)
+  - Core Projection: [`Assets/Ashfall.Core/Narrative/HydroGeologyProjection.cs`](../../Assets/Ashfall.Core/Narrative/HydroGeologyProjection.cs)
+  - Core Catalog: [`Assets/Ashfall.Core/Narrative/HydroGeologyCatalog.cs`](../../Assets/Ashfall.Core/Narrative/HydroGeologyCatalog.cs)
+  - Host Session: [`src/Main.Plans154.cs`](../../src/Main.Plans154.cs)
+  - Save Store: [`src/Host/HydroGeologyArchiveSaveStore.cs`](../../src/Host/HydroGeologyArchiveSaveStore.cs)
+  - Provenance Matrix: [`docs/content/HYDROGEOLOGY_RUNTIME_PROVENANCE_MATRIX.md`](../content/HYDROGEOLOGY_RUNTIME_PROVENANCE_MATRIX.md)
+  - Test Fixture: [`Ashfall.Core.Tests/Narrative/HydroGeologyDiscoveryTests.cs`](../../Ashfall.Core.Tests/Narrative/HydroGeologyDiscoveryTests.cs)
+
+### 169. `oral_lore` — Plan 155 Oral lore performance archive (Narrative & Cultural Tradition)
+- **Owner Domain:** `narrative`
+- **Setup Method:** `Main.SetupOralLore()` | **Cadence:** `⚡ Event-Driven (first-heard campfire performance)`
+- **UI Routes:** journal first-heard lore notices — authority firewall: historical performance records are cultural memories (no survivor stat mutation, no instant skill learning, no direct physical grants)
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Narrative/OralLorePerformanceSystem.cs`](../../Assets/Ashfall.Core/Narrative/OralLorePerformanceSystem.cs)
+  - Core Catalog: [`Assets/Ashfall.Core/Narrative/OralLoreCatalog.cs`](../../Assets/Ashfall.Core/Narrative/OralLoreCatalog.cs)
+  - Host Session: [`src/Host/OralLoreHostSession.cs`](../../src/Host/OralLoreHostSession.cs)
+  - Host Integration: [`src/Main.Plans155.cs`](../../src/Main.Plans155.cs)
+  - Save Store: [`src/Host/OralLoreSaveStore.cs`](../../src/Host/OralLoreSaveStore.cs)
+  - CLI Self-Test: [`src/Host/HostCli.PanelTests.cs`](../../src/Host/HostCli.PanelTests.cs) (host selftest: oral-lore-selftest)
+  - Test Fixture: [`Ashfall.Core.Tests/Narrative/OralLorePlan155Tests.cs`](../../Ashfall.Core.Tests/Narrative/OralLorePlan155Tests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/OralLoreCatalogTests.cs`](../../Ashfall.Core.Tests/OralLoreCatalogTests.cs)
 
 ---
 
@@ -2162,6 +2193,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `holdfast` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `holdfast_trade` | ✅ | ✅ | ⚡ `On-Demand (Barter)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `host_event` | ✅ | ✅ | ⚡ `On-Demand (Moral Dilemma)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `hydrogeology_archive` | ✅ | ✅ | ⚡ `Event-Driven (Location Discovery)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `hydroponic_biomes` | ✅ | ✅ | ✅ `Daily Biome Rack Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `inventory` | ✅ | ✅ | ⚡ `On-Demand (Item Use)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `journal` | ✅ | ✅ | ⚡ `On-Demand (Log/Event)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -2187,6 +2219,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `nuclear_core_lifecycle` | ✅ | ✅ | ✅ `Daily Core Thermal Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `nvis_communications` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `onboarding` | ✅ | ✅ | ⚡ `On-Demand (Player Sigil Recording)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `oral_lore` | ✅ | ✅ | ⚡ `Event-Driven (Performance / First Heard)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `pathogen_strains` | ✅ | ✅ | ✅ `Daily Strain Progression Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `perimeter_defense` | ✅ | ✅ | ✅ `Daily Emplacement Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `personal_quests` | ✅ | ✅ | ⚡ `On-Demand (Survivor Quest Progression)` | ✅ | ✅ | ✅ | **PASS (6/6)** |

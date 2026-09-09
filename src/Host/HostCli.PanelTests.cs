@@ -962,7 +962,16 @@ namespace AtomicWar.GodotApp
                 int count = session.AllSongs.Count;
                 GD.Print($"[OralLore] loaded {count} entries from narrative/oral_lore_codex.json + narrative/oral_lore_batch_2.json");
                 Check(count > 0, "oral lore catalog is not empty after load");
-                Check(count == 16, $"oral lore catalog has 16 entries (got {count})");
+                // Plan 155: both batches normalize — 16 canonical + 10 batch-2 = 26.
+                Check(count == 26, $"oral lore corpus has 26 entries (got {count})");
+
+                // Plan 155: batch-2 schema normalization (entries root, textual tempo).
+                var waltz = session.GetSong("oral_b2_the_geiger_counter_waltz");
+                Check(waltz != null && waltz.tempo_descriptor == "THREE_FOUR_TIME" && waltz.tempo_bpm == 0,
+                    "batch-2 textual tempo preserved verbatim, no fabricated BPM");
+                var march = session.GetSong("oral_b2_the_salt_freeholders_march");
+                Check(march != null && march.tempo_bpm == 120,
+                    "batch-2 explicit N_BPM label normalized to numeric BPM");
 
                 // Query by id: pick the first entry and look it up
                 if (count > 0)

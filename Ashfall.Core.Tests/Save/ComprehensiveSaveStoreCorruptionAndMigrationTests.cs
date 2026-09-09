@@ -277,9 +277,10 @@ namespace Ashfall.Core.Tests.Save
             // Plans B66-B69 added heavy metallurgy (foundry-internal state),
             // seismic_dynamics and cryo_vault; the muster/power streams added the rest.
             // Plans B86-B89 added precision_metrology and aquaponics (B88 nests under radio).
-            Assert.Equal(167, SaveSectionRegistry.All.Count);
+            // Plan 155 added oral_lore.
+            Assert.Equal(169, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(167, keys.Count);
+            Assert.Equal(169, keys.Count);
         }
     }
 }
