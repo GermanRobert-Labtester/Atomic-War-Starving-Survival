@@ -145,6 +145,7 @@ namespace AtomicWar.GodotApp
         StartingSuppliesSelfTest,
         MedicalWardSaveSelfTest,
         ChemicalDependencySaveSelfTest,
+        ContrabandStashSelfTest,
         WeatherSaveSelfTest,
         SaveLoadUiFailureSelfTest,
         PanelBindLifecycleSelfTest,
@@ -472,6 +473,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MedicalWardSaveSelfTest;
             if (Has(args, "--chemical-dependency-save-selftest"))
                 return HostCliAction.ChemicalDependencySaveSelfTest;
+            if (Has(args, "--contraband-stash-selftest") || Has(args, "--contraband-selftest"))
+                return HostCliAction.ContrabandStashSelfTest;
             if (Has(args, "--weather-save-selftest"))
                 return HostCliAction.WeatherSaveSelfTest;
             if (Has(args, "--save-load-ui-failure-selftest") || Has(args, "--save-load-failure-selftest") || Has(args, "--save-load-failure-uitest") || Has(args, "--save-load-selftest"))
@@ -590,6 +593,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --audio-selftest / --audio-test Audio cue catalog, AudioManager wiring, and sound event verification");
             GD.Print("  --caravan-selftest / --traveling-caravan-selftest Traveling caravan economy, inventory generation, and barter ticks");
             GD.Print("  --chemical-dependency-save-selftest Chemical dependency system save store round-trip, tolerance, and withdrawal states");
+            GD.Print("  --contraband-stash-selftest / --contraband-selftest Plan 147 contraband stash discovery: day gate, once-only claim, canonical grant, checksummed save round-trip");
             GD.Print("  --dose-ledger-selftest   Dose Ledger save write → reload → restore → checksum/tamper checks");
             GD.Print("  --duty-roster-save-selftest Duty Roster save write → reload → restore → checksum/tamper checks");
             GD.Print("  --economy-selftest       Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");

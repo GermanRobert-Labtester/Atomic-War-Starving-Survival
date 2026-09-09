@@ -26,26 +26,32 @@ ContrabandStashState {
 | Saves mid-trade (future barter route) | Not applicable to this slice; the stash route has no intermediate transactional state (the inventory bill is atomic). |
 | Saves after stash discovery (post-claim) | `claimedDayByEntry` round-trips; replay claims are blocked (`Stash_SaveRoundTrip_PreservesOnceOnlyClaims`). |
 
-## 3. Host integration contract (PENDING — not yet wired)
+## 3. Host integration contract (WIRED — Plan 147 follow-up session)
 
-The Godot host has **no** contraband wiring yet. When wired (follow-up task),
-the house rules are:
+The Godot host wiring is complete (`src/Main.Plans147.cs`, `src/Host/ContrabandSaveStore.cs`):
 
-1. `Setup`: construct `BunkerContrabandCatalog` from
-   `narrative/bunker_contraband_barter.json`, construct
-   `ContrabandStashSystem` with the inventory session + item-catalog lookup,
-   register `DefaultActivations()`.
-2. `Save`: capture `ContrabandStashSystem.CaptureState()` into a new campaign
-   section. The store MUST be a `SaveStoreHub` façade (checksummed
-   `SchemaVersionedEnvelope`, atomic write) per Initiative #41/#42 — a
-   hand-rolled envelope would fail `SaveStoreCoverageGateTests`.
-3. `Load`: `RestoreState` from the section; missing section (legacy campaign)
-   → `null` → fresh state. `allowLegacyBareState` may stay false (no
-   pre-envelope format ever existed).
-4. `SaveSectionRegistry`: new key + file name required for the envelope
-   whitelist.
-5. The checksummed-envelope + coverage-gate sweep tests must be extended to the
-   new store (pattern: `SaveStoreChecksumSweepTests`).
+1. `SetupContrabandStash()` (called from both `Main.SaveOrchestrator` and
+   `Main.CampaignServices` setup blocks): constructs the catalog from
+   `res://…/narrative/bunker_contraband_barter.json`, **fails closed** (layer
+   stays inert) when `ContrabandCatalogValidator` rejects the file, registers
+   `DefaultActivations()`, restores persisted state, and subscribes
+   `OnStashClaimed` → journal feedback (the game's single feedback strip).
+2. `SaveContrabandStash()` → `CaptureSection("contraband_stash", …)` into the
+   single campaign envelope; the store is a `SaveStoreHub.FromCodec` façade
+   (`SchemaVersionedEnvelope`, checksummed, atomic write) — the
+   `SaveStoreCoverageGateTests` sweep passes automatically.
+3. `SaveSectionRegistry`: `contraband_stash` → `contraband_stash_save.json`
+   (metadata + file-name map). Contract matrices updated
+   (`VersionReportContractTests`, `ComprehensiveSaveStoreCorruptionAndMigrationTests`,
+   `ARCHITECTURE_TEST_MAP.md`, `SELFTEST_MANIFEST.json`).
+4. Daily tick `TickContrabandStashDay(day)` emits once-per-entry discovery
+   rumors via the deduped journal; a stash becoming visible never mutates
+   simulation state.
+5. Player route: `Main.ClaimContrabandStash(entryId)` (UI/CLI callable; no
+   panel by design). Claim feedback = one journal entry per claim.
+6. Headless proof: `godot --headless -- --contraband-stash-selftest`
+   (validation → day gate → once-only claim → canonical grant → no-side-effect
+   reads → checksummed save round-trip → post-restore replay block).
 
 No `CaptureState`-compat risk exists for other systems: the contraband section
 is additive and self-contained.

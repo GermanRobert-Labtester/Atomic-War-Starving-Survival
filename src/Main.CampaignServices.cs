@@ -103,6 +103,7 @@ namespace AtomicWar.GodotApp
                 SetupAmputation();
                 SetupRailway();
                 SetupFungi();
+                SetupContrabandStash();
                 SetupPlasticPyrolysis();
                 SetupCargoAirdrop();
                 SetupJustice();

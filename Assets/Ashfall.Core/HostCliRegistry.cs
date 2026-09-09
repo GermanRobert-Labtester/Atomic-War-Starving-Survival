@@ -81,6 +81,7 @@ namespace Ashfall.Core
         AudioSelfTest,
         CaravanSelfTest,
         ChemicalDependencySaveSelfTest,
+        ContrabandStashSelfTest,
         DoseLedgerSelfTest,
         DutyRosterSaveSelfTest,
         EconomySelfTest,
@@ -554,6 +555,12 @@ namespace Ashfall.Core
                     "--chemical-dependency-save-selftest",
                     null,
                     "Chemical dependency system save store round-trip, tolerance, and withdrawal states"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ContrabandStashSelfTest,
+                    "Host Domains & Save Stores",
+                    "--contraband-stash-selftest",
+                    new[] { "--contraband-selftest" },
+                    "Plan 147 contraband stash discovery: day gate, once-only claim, canonical grant, checksummed save round-trip"),
                 new HostCliActionDescriptor(
                     HostCliAction.EvolvingWorldSelfTest,
                     "Host Domains & Save Stores",

@@ -219,6 +219,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 162 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
 | 163 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
 | 164 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
+| 165 | `contraband_stash` | Narrative & Illicit Economy | `ContrabandStashSystem` | `bunker_contraband_barter.json` | `Main` | `ContrabandSaveStore` | `Journal (feedback strip; no panel by design)` | `--contraband-stash-selftest`, `ContrabandPlan147Tests` | ✅ 6/6 |
 
 ---
 
@@ -2043,6 +2044,18 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WeatherPanel.cs`](../../src/UI/WeatherPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WorldSaveablesTests.cs`](../../Ashfall.Core.Tests/WorldSaveablesTests.cs)
 
+### 165. `contraband_stash` — Plan 147 bunker contraband stash claim ledger (Narrative & Illicit Economy)
+- **Owner Domain:** `narrative`
+- **Setup Method:** `Main.SetupContrabandStash()` | **Cadence:** `⚡ On-Demand (day-gated discovery; rumor journal on Daily Tick)`
+- **UI Routes:** journal feedback only — deliberately no panel (Plan 147 scope guard)
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Narrative/ContrabandStashSystem.cs`](../../Assets/Ashfall.Core/Narrative/ContrabandStashSystem.cs)
+  - Core Catalog: [`Assets/Ashfall.Core/Narrative/BunkerContrabandCatalog.cs`](../../Assets/Ashfall.Core/Narrative/BunkerContrabandCatalog.cs)
+  - Core Validator: [`Assets/Ashfall.Core/Narrative/ContrabandCatalogValidator.cs`](../../Assets/Ashfall.Core/Narrative/ContrabandCatalogValidator.cs)
+  - Host Session: [`src/Main.Plans147.cs`](../../src/Main.Plans147.cs)
+  - Save Store: [`src/Host/ContrabandSaveStore.cs`](../../src/Host/ContrabandSaveStore.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Narrative/ContrabandPlan147Tests.cs`](../../Ashfall.Core.Tests/Narrative/ContrabandPlan147Tests.cs)
+
 ---
 
 ## 4. Lifecycle Status & Reachability Proof Matrix
@@ -2072,6 +2085,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `chemical_dependency` | ✅ | ✅ | ✅ `Daily Tolerance & Withdrawal` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `chemical_recon` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `chemical_synthesis` | ✅ | ✅ | ⚡ `On-Demand (Retort Synthesis)` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
+| `contraband_stash` | ✅ | ✅ | ⚡ `On-Demand (Day-Gated Stash Claim)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `child_development` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `chlor_alkali_synthesis` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `collectible_discovery` | ✅ | ✅ | ⚡ `On-Demand (One-Time Discovery Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |

@@ -1,14 +1,38 @@
-# PLAN 147 COMPLETION REPORT — session of 2026-09-06
+# PLAN 147 COMPLETION REPORT — sessions of 2026-09-06 (×2)
 
 ## Scope honesty statement
 
-This session delivered **Task A in full** and the **§13 minimal vertical
-slice** of Task B (three representative entries proven end-to-end at the Core
-level), plus the Task A/C audit documents. Plan 147 as a whole is **NOT
-complete**: host/Godot wiring, the barter acquisition route, and activation of
-the remaining 17 records are explicitly pending (see §Remaining work). The
-Definition of Done (§11) is met for the catalog-authority half and the slice;
-the "player-facing" half awaits host wiring.
+Session 1 delivered **Task A in full** and the **§13 minimal vertical slice**
+of Task B (three representative entries proven end-to-end at the Core level),
+plus the Task A/C audit documents. **Session 2 completed the host/Godot
+wiring** (save-contract §3): Setup/Save triad, SaveStoreHub checksummed
+section, SaveSectionRegistry entry, contract-matrix gates, journal feedback
+surface and a dedicated headless selftest. Plan 147 as a whole is **still NOT
+fully complete**: the barter acquisition route and activation of the remaining
+17 records are explicitly pending (see §Remaining work).
+
+## Session 2 — host wiring delivered
+
+| File | Purpose |
+|---|---|
+| `src/Host/ContrabandSaveStore.cs` | Thin `SaveStoreHub.FromCodec` façade — checksummed `SchemaVersionedEnvelope`, atomic writes; passes `SaveStoreCoverageGateTests` by construction |
+| `src/Main.Plans147.cs` | `Ensure/Setup/Save` triad + `ClaimContrabandStash(entryId)` player command + `TickContrabandStashDay` (once-per-entry journal rumors); catalog load **fails closed** on validator rejection |
+| `src/Host/ContrabandStashSelfTest.cs` + CLI verb `--contraband-stash-selftest` (alias `--contraband-selftest`) | Headless proof: validation → day gate → once-only claim → canonical grant → no-side-effect reads → checksummed save round-trip → post-restore replay block |
+| `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` | `contraband_stash` section (metadata + `contraband_stash_save.json`) |
+| `Assets/Ashfall.Core/HostCliRegistry.cs` | Core enum + descriptor for the new verb |
+| Contract matrices updated | `ARCHITECTURE_TEST_MAP.md` (row 165 + deep-evidence + lifecycle matrix), `VersionReportContractTests` (165 sections / 159 envelopes), `ComprehensiveSaveStoreCorruptionAndMigrationTests` (165), `docs/ci/SELFTEST_MANIFEST.json` (110 tests) |
+
+### Session 2 verification gates (all PASS)
+
+1. `dotnet build Ashfall.csproj` — clean
+2. `dotnet test` full suite — **10285/10285 PASS**
+3. `godot --headless -- --contraband-stash-selftest` — PASS (exit 0)
+4. `--save-store-checksum-selftest` (Gate A sweep incl. new store) — PASS
+5. `--data-integrity-selftest` — 299 catalogs, 0 errors; `--bridge-selftest` — exit 0
+
+(The transient `SaveWireContractTests.NarrativeState` arcState failure
+observed mid-session belonged to the concurrent EncounterCatalog stream and
+resolved on their commit; final full-suite run is fully green.)
 
 ## Delivered
 
@@ -68,11 +92,10 @@ per-record identity/owner review per the identity matrix.
 
 ## Remaining work (next sessions)
 
-1. **Host wiring (Godot):** `Setup/Save/Load` triad + `SaveStoreHub` checksummed
-   section + `SaveSectionRegistry` entry + coverage-gate sweep tests
-   (contract in `CONTRABAND_SAVE_COMPATIBILITY.md` §3). No UI panel is required
-   to make the loop player-facing — a journal/notification surface may suffice
-   and avoids the UI-stub register entirely.
+1. ~~**Host wiring (Godot)**~~ — **DONE (session 2)**: Setup/Save triad,
+   `SaveStoreHub` checksummed section, registry entry, contract gates,
+   journal feedback surface, `--contraband-stash-selftest`
+   (see `CONTRABAND_SAVE_COMPATIBILITY.md` §3).
 2. **Morphine vertical slice (highest-value follow-up):** author a canonical
    `morphine` item (data authority) whose use routes through
    `ChemicalDependencySystem.OnSubstanceConsumed` exactly once per authorized

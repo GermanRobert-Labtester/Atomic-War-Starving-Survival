@@ -149,6 +149,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ChemicalDependencySaveSelfTest:
                     GetTree().Quit(HostCli.RunChemicalDependencySaveSelfTest());
                     return;
+                case HostCliAction.ContrabandStashSelfTest:
+                    GetTree().Quit(HostCli.RunContrabandStashSelfTest());
+                    return;
                 case HostCliAction.MedicalWardSaveSelfTest:
                     GetTree().Quit(HostCli.RunMedicalWardSaveSelfTest());
                     return;

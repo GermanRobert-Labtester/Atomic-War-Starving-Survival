@@ -928,6 +928,15 @@ namespace AtomicWar.GodotApp
             return EmitSummary("chemical_dependency_save_selftest", ok, ok ? 0 : 1);
         }
 
+        public static int RunContrabandStashSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = ContrabandStashSelfTest.Run(string.Empty);
+            GD.Print(report);
+            bool ok = !string.IsNullOrEmpty(report) && !report.Contains("[FAIL]");
+            return EmitSummary("contraband_stash_selftest", ok, ok ? 0 : 1);
+        }
+
         public static int RunMedicalWardSaveSelfTest()
         {
             CatalogLocator.UseInvariantCulture();

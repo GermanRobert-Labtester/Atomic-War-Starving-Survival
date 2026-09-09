@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 109,
-  "headless_test_count": 107,
+  "total_tests": 110,
+  "headless_test_count": 108,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -631,6 +631,19 @@
       "description": "Chemical dependency system save store round-trip, tolerance, and withdrawal states",
       "headless_compatible": true,
       "expected_summary_id": "chemical_dependency_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "contraband_stash_selftest",
+      "action": "ContrabandStashSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--contraband-stash-selftest",
+      "aliases": [
+        "--contraband-selftest"
+      ],
+      "description": "Plan 147 contraband stash discovery: day gate, once-only claim, canonical grant, checksummed save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "contraband_stash_selftest",
       "timeout_seconds": 30
     },
     {
