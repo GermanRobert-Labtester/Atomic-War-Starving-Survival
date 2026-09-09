@@ -1,9 +1,9 @@
 # ASHFALL — Evidence-Derived Architecture & Verification Graph
 
 **Last Verified:** 2026-09-09<br>
-**Total Subsystems Mapped:** 171/171 (100.0%)<br>
-**Verified End-to-End Coverage:** 115/171 (67.3% across all 6 vertical layers)<br>
-**Status Breakdown:** Implemented: 171/171 | Constructed: 171/171 | Ticked: 171/171 | Persisted: 171/171 | Routed: 124/171 | Tested: 120/171<br>
+**Total Subsystems Mapped:** 172/172 (100.0%)<br>
+**Verified End-to-End Coverage:** 116/172 (67.4% across all 6 vertical layers)<br>
+**Status Breakdown:** Implemented: 172/172 | Constructed: 172/172 | Ticked: 172/172 | Persisted: 172/172 | Routed: 125/172 | Tested: 121/172<br>
 **Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`
 
 > **GENERATED FILE — do not edit by hand.**
@@ -226,6 +226,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 169 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
 | 170 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
 | 171 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
+| 172 | `narrative_questlines` | Campaign & Quests | `NarrativeQuestlineSystem` | `narrative_questlines.json` | `NarrativeQuestlineHostSession` | `NarrativeQuestlineSaveStore` | `QuestsPanel` | `--save-store-checksum-selftest`, `NarrativeQuestlineSystemTests`, `NarrativeQuestlineCatalogTests` | ✅ 6/6 |
 
 ---
 
@@ -2129,6 +2130,19 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WeatherPanel.cs`](../../src/UI/WeatherPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WorldSaveablesTests.cs`](../../Ashfall.Core.Tests/WorldSaveablesTests.cs)
 
+### 172. `narrative_questlines` — Survivor personal arcs & binary crisis branches (Campaign & Quests)
+- **Owner Domain:** `quests`
+- **Setup Method:** `Main.SetupNarrativeQuestlines()` | **Cadence:** `On-Demand (Survivor Arc Progression)`
+- **UI Routes:** `quests` — survivor-arc cards inside `QuestsPanel` (open arc / hand over objective / choose branch)
+- **Verified Source Files:**
+  - Core Catalog: [`Assets/Ashfall.Core/Quests/NarrativeQuestlineCatalog.cs`](../../Assets/Ashfall.Core/Quests/NarrativeQuestlineCatalog.cs)
+  - Core System: [`Assets/Ashfall.Core/Quests/NarrativeQuestlineSystem.cs`](../../Assets/Ashfall.Core/Quests/NarrativeQuestlineSystem.cs)
+  - Host Session: [`src/Host/NarrativeQuestlineHostSession.cs`](../../src/Host/NarrativeQuestlineHostSession.cs)
+  - Save Store: [`src/Host/NarrativeQuestlineSaveStore.cs`](../../src/Host/NarrativeQuestlineSaveStore.cs)
+  - Host Triad: [`src/Main.NarrativeQuestlines.cs`](../../src/Main.NarrativeQuestlines.cs)
+  - UI Surface: [`src/UI/QuestsPanel.cs`](../../src/UI/QuestsPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/NarrativeQuestlineSystemTests.cs`](../../Ashfall.Core.Tests/NarrativeQuestlineSystemTests.cs)
+
 ---
 
 ## 4. Lifecycle Status & Reachability Proof Matrix
@@ -2233,6 +2247,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `mutation_tree` | ✅ | ✅ | ⚡ `Event-Driven (Dose Thresholds)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `narcotics` | ✅ | ✅ | ✅ `24h Medical Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `narrative` | ✅ | ✅ | ⚡ `On-Demand (Dialog Choice)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `narrative_questlines` | ✅ | ✅ | ⚡ `On-Demand (Survivor Arc Progression)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `nuclear_core_lifecycle` | ✅ | ✅ | ✅ `Daily Core Thermal Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `nvis_communications` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `onboarding` | ✅ | ✅ | ⚡ `On-Demand (Player Sigil Recording)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
