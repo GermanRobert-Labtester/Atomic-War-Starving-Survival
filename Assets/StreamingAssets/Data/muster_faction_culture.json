@@ -36,6 +36,120 @@
       "faction_id": "faction_deserter_coalition",
       "title": "One Pot, Four Banners",
       "body": "The camp's founding custom fits in a sentence: nobody eats while another banner watches, so either everyone eats or everyone takes turns. The pot is communal, the roster is public, and the serving order is wounded, children, elders, everyone — no banner's wounded count as more wounded than another's. It is a small custom. It has survived three attempts to found a flag ceremony around it, one attempt to charge admission, and one winter when the pot was snowmelt and patience. The camp believes, quietly and without doctrine, that if the pot rule can hold, the ceasefire can."
+    },
+    {
+      "id": "culture_two_witnesses_or_blank",
+      "faction_id": "faction_archivists",
+      "title": "Two Witnesses, or the Page Stays Blank",
+      "body": "Nothing enters the Schedule on one person's word, and the rule is not caution, it is a scar: a name went in on a single mourner's testimony and the man named walked into the reading room eleven months later to hear himself read out. So every entry needs two living witnesses who knew the dead, and every entry is read aloud before it is copied, because the reading is what turns a line into a name. Mirael Tesk has kept the listening outpost six years and still reads. Copyists are not corrected for slow work. They are corrected for quiet work."
+    },
+    {
+      "id": "culture_the_eleven_days",
+      "faction_id": "faction_lamplighters",
+      "title": "The Eleven Days",
+      "body": "The order keeps no roster of grievances, only a route ledger, and the ledger is the memory. When a region asks for an exception, one lamp for one road for one winter, the order neither argues nor refuses. It begins counting. Eleven nights, one lamp dark each night in sequence until the line is out; and the ledger records which lamps went out and never records why, because the why was requested twice and the requesting is the entry. Walkers still follow the old lit lines out of habit. The order is not active. The habit is."
+    },
+    {
+      "id": "culture_written_exactly_as_given",
+      "faction_id": "faction_quiet_house",
+      "title": "Written Exactly as Given",
+      "body": "A runner arrives on two knocks and asks for two things: the name, and one true thing. Runners are not medics and will say so plainly if you call them one, because the distinction is the whole of the practice. They do not treat, they accompany, and they write. The true thing goes on the tag exactly as it was given: not smoothed, not shortened, not improved into a better sentence by somebody with more time. That is why people tell them things. The back room is never shown and nobody asks twice. The House is not active now. The tags are, and families walk a long way to read one."
+    },
+    {
+      "id": "culture_nobody_guards_the_board",
+      "faction_id": "faction_grain_exchange",
+      "title": "Nobody Guards the Board",
+      "body": "There is no guard at New Ceres, no charter in a drawer, and no way for the board to make anybody do anything, and it has outlived three armed parties that assumed those were prerequisites. It works because everyone attending has eaten less than they wanted, and the board is the only place on the verge where that is useful. Chalk goes up at first light, the allotments carry Mara Veln's stamp, and the stamp has no authority behind it except that people keep bringing their grain to be stamped. Ask the board for a favour and you will be told, politely, to argue with the board."
+    },
+    {
+      "id": "culture_nine_days_then_nothing",
+      "faction_id": "faction_sun_seekers",
+      "title": "Nine Days, Then Nothing",
+      "body": "They will tell you the window is nine days before they will tell you their names, and the ordering is not rudeness: outside the window there is no market, so the window is the only fact worth leading with. Glass is hoarded in two forms and sold in both, welder's glass for eyes and salvaged panel glass for roofs, and the price in season is what the price in season is. Every prediction they have ever made is written down and kept, and the keeping has hardened into a manner. It came back. They said it would come back. They would like that noted in whatever record you keep."
+    },
+    {
+      "id": "culture_the_bell_not_the_door",
+      "faction_id": "faction_osteophages",
+      "title": "The Bell, Not the Door",
+      "body": "There is a chute in the drowned district, and a bell beside it, and nothing else to describe. Deliveries are made to the chute: contaminated technical waste, and, when a settlement has decided it cannot keep a person, the person. Nobody is received at a door and nobody is offered terms. After a time the bell rings and clean metal is waiting, ten metres of copper wire coiled and bright, and scrap that does not read hot. Visitors talk at the chute, because talking is what people do when they are frightened, and the practice is to let them finish."
+    },
+    {
+      "id": "culture_the_second_reading",
+      "faction_id": "faction_the_tally",
+      "title": "The Second Reading",
+      "body": "Every contract at Lock Seven is read aloud twice and the two readings are not redundant. The first comes before signing, so that the debt, the term, the rate and the forfeit are in your ears while your hand is still your own. The second comes before enforcement, so that nobody can claim the forfeit arrived as a surprise. Most people ask for the second reading. Some ask for it twice, and that is noted. What the Tally keeps in a file at the bastion is not the debt but the record of everyone who said they understood, in their own hearing, holding the page."
+    },
+    {
+      "id": "culture_rope_first_terms_after",
+      "faction_id": "faction_undertow",
+      "title": "Rope First, Terms After",
+      "body": "The practice is rope first, arithmetic after, and the order is deliberate. A hull goes into the water and a boat is alongside inside ten minutes: hands reaching, lines thrown, a voice saying lucky we were close. Nobody discusses price while anybody is still in the drown, and for that they are liked in exactly the measure they are resented for what comes next. Terms are settled on the deck, with the swimmer's hands full of somebody else's rope and their legs not yet their own. They do real salvage and have pulled out living people, and both facts are why they still get called."
+    },
+    {
+      "id": "culture_four_names_one_roster",
+      "faction_id": "faction_cold_count",
+      "title": "Four Names, One Roster",
+      "body": "Four names are on the roster and none has been added in three years, which is not secrecy so much as geography: the low-background lab sits under old quiet rock at the end of a scree walk, and whoever comes out to the quarry tends to be somebody intending to stay, and there are not many of them. Counting is a discipline of duration, so the enclave's customs are dull on purpose. Same hour, same shielding, same log, no rounding. They have been asked to soften a number more often than they have been thanked for one, and they have stopped being flattered by the asking."
+    },
+    {
+      "id": "culture_the_inventory_tour",
+      "faction_id": "faction_the_provisioned",
+      "title": "The Inventory Tour",
+      "body": "The argument is never had; the inventory is shown. A visitor is walked past shelving that goes back further than the wall should allow, and the walk is unhurried, courteous, and ends at a working pre-Exchange machine that somebody operates for the pleasure of the sound it makes. Nothing is said about the Schedule. Nothing needs saying. The tour is the position: nobody helped them build it, they did not need help, and nobody has yet asked whether they would like any now. Trading with them is pleasant and unnerving, because a party that wants almost nothing cannot be pressed."
+    },
+    {
+      "id": "culture_odds_posted_never_collected",
+      "faction_id": "faction_long_walk",
+      "title": "The Odds Are Posted, Never Collected",
+      "body": "Before every departure somebody posts the season's odds at the priory: the weather, the crossings, which roads will hold. Kaspar Drej has posted them for years and has never collected a debt on one. The board is not a wager but a courtesy, because it tells the settlements what the Walk expects, in public, so nobody has to be told twice. Then thirty-odd people walk out and keep walking eleven months, and the only custom strictly enforced is the second night. They will not stay one, for a price, a sick child, or a road closing behind them. A circuit that pauses is a settlement."
+    },
+    {
+      "id": "culture_somebody_reads_the_meter",
+      "faction_id": "faction_the_tempest",
+      "title": "Somebody Has to Read the Meter",
+      "body": "The machine keeps no customs, having no preferences, so the customs belong entirely to the people who read it. A technician arrives on schedule in insulated gauntlets, clears the conduit, takes the reading, stamps the card and leaves; and the reading is filed by a party that will not thank them, will not remember them, and will keep running long after the filing is lost. Along the spine this has grown a small human ritual around an indifferent one: readers compare logs, keep notes the ledger has no column for, and speak of the network as people speak of an elderly relative."
+    },
+    {
+      "id": "culture_counted_before_a_witness",
+      "faction_id": "faction_black_flotilla",
+      "title": "Counted in Front of a Third Party",
+      "body": "Trust is not declared at Cape Beacon; it is counted. A haul comes in and goes on the board, hull, lens, barrel, drum, and the count is read aloud and read back, and the moment that matters is when your figure and their figure agree in front of a third party. After that, and not before, the conversation may move to anything else. Bunker fuel is tallied nightly and optics are hoarded past all sense, because glass finds the next cargo. Board Officer Halloran Vesk signs at the foot of every page, and the signature is the point of the page: piracy is answered with procedure."
+    },
+    {
+      "id": "culture_the_queue_not_the_side",
+      "faction_id": "faction_silent_foundry",
+      "title": "The Queue, Not the Side",
+      "body": "The furnace takes either contract and takes them in the same week, and the queue is the only politics the foundry has. A delegation come for plough irons and a delegation come for chain stand in the same line, are quoted the same rate, and are served by the same crew; half the valley finds this admirable and the other half finds it obscene, and Joren Malk's answer to both halves has never varied. The name gets explained twice to everyone. The silence is about the work, not the people, and the work is extremely loud. A foundry that chose sides would be an army with worse books."
+    },
+    {
+      "id": "culture_the_same_drawer",
+      "faction_id": "faction_the_office",
+      "title": "The Same Drawer",
+      "body": "Killing is filed with the freight. A cull contract for a rad-stalker working a yard is written in the same hand, on the same paper, in the same tone as a weighing slip for nine tons of hardware, and both go into the same drawer at the end of the day. The drawer is not a horror so much as a system that has declined to make a distinction. Visitors expect a faction that kills to look like one and are unsettled by a counter with a bell on it. Clerk Edor Vale signs the receipts, and the receipts are what make a ton real. The bell is for service, and the service includes the cull."
+    },
+    {
+      "id": "culture_assay_before_the_sale",
+      "faction_id": "faction_the_cutters",
+      "title": "The Assay Before the Sale",
+      "body": "Nothing is sold at Brine-Pan Hollow before it is assayed, and the assay is offered whether or not the buyer asks, because salt that reads wrong kills slowly and the Cutters would sooner lose a sale than a customer. Yara Holm cuts the pans. Ivy Corrigan pilots the ice road and has never lost a load, which she mentions only when asked and then only as a correction to somebody else's version. Mira Vos keeps the assay book and will read a low figure aloud to a buyer already reaching for the sack. The cold is not romantic here. It is organised, and that is the whole of it."
+    },
+    {
+      "id": "culture_the_second_signature",
+      "faction_id": "faction_the_compact",
+      "title": "The Second Signature",
+      "body": "Two signatures are taken, and the second matters. The first says you will keep a road open; the second says you may later be asked what you agreed to, and it is read back before you make it, because the Compact's theory of order is that an agreement nobody can produce is not an agreement but a mood. Their convoys still run, the northern line, the outpost runs, the granary shuttle, thinner than the manifest admits and more regular than anyone expects of a party with nothing to enforce with. The peacefulness is arithmetic: keep signing until enforcement is unnecessary."
+    },
+    {
+      "id": "culture_one_book_both_entries",
+      "faction_id": "faction_the_fleet",
+      "title": "One Book, Both Entries",
+      "body": "A rescue off the roadstead and a purge after a bad boarding are written in the same hand, in the same page sequence, with the same watch-officer formality, and the Fleet does not pretend the second entry is anything other than what it is. Vessels run as hospital ships because that is what the crews are for now, and hospital ships run quarantine because that is what a boarded vessel becomes when somebody aboard is coughing. Jurisdiction is still issued over water no longer worth patrolling. You will be taken aboard and treated properly. Disembarking is a decision."
+    },
+    {
+      "id": "culture_noon_in_public_once",
+      "faction_id": "faction_the_scale",
+      "title": "Noon, In Public, Once",
+      "body": "The weighing happens at noon, in public, once. Both parties agree to the scale before they agree to anything else, and that prior agreement is the entire product the Consortium sells: two people who will not trust each other will trust an instrument neither of them owns. The figure is stated with its tolerance and its hour, and then the Scale stops talking, because it does not judge, does not interpret and does not enforce. Salt runs out along the artery and the grand circuit, and chemical exchange runs through the same yard on the same principle. Everybody wants the number."
     }
   ]
 }
