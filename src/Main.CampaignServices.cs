@@ -106,6 +106,7 @@ namespace AtomicWar.GodotApp
                 SetupContrabandStash();
                 SetupShelterBarter();
                 SetupBlackProjectsArchive();
+                SetupTechnicalMaterialArchive();
                 SetupOralLore();
                 SetupPlasticPyrolysis();
                 SetupCargoAirdrop();

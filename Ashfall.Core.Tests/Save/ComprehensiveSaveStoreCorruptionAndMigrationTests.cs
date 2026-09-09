@@ -278,6 +278,7 @@ namespace Ashfall.Core.Tests.Save
             // seismic_dynamics and cryo_vault; the muster/power streams added the rest.
             // Plans B86-B89 added precision_metrology and aquaponics (B88 nests under radio).
             // Plan 155 added oral_lore.
+            // Plan 157 added grain_milling_archive.
             Assert.Equal(169, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
             Assert.Equal(169, keys.Count);
