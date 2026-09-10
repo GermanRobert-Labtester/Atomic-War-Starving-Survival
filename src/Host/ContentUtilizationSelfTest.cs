@@ -96,6 +96,32 @@ namespace AtomicWar.GodotApp
                 }
                 GD.Print();
 
+                // Phase 11: Deep-chain gate (Plan 49)
+                GD.Print("[Phase 11] Deep-chain gate (flagship content chains)...");
+                var deepReport = ContentDeepChainGate.Evaluate(graph);
+                string deepJsonPath = Path.Combine(repoRoot, "artifacts", "content-utilization-deep-chain.json");
+                WriteDeepChainArtifact(deepJsonPath, deepReport);
+                GD.Print($"  Chains evaluated: {deepReport.ChainsEvaluated}");
+                GD.Print($"  Hard failures: {deepReport.HardFailures}");
+                GD.Print($"  Warnings: {deepReport.Warnings}");
+                foreach (var finding in deepReport.Findings)
+                {
+                    string line = $"    [{finding.Severity}] {finding.ChainId}/{finding.HopId}: {finding.MissingCategory} — {finding.Details}";
+                    if (finding.Severity == "HARD") GD.PrintErr(line);
+                    else GD.Print(line);
+                }
+                GD.Print($"  Deep-chain artifact: {deepJsonPath}");
+                if (!deepReport.HardGatePassed)
+                {
+                    GD.PrintErr("  Deep-chain gate: FAIL");
+                    exitCode = 1;
+                }
+                else
+                {
+                    GD.Print("  Deep-chain gate: PASS");
+                }
+                GD.Print();
+
                 // Phase 9: Exemptions check
                 GD.Print("[Phase 9] Exemption validation...");
                 var exemptions = DefaultExemptions.CreateDefault();
@@ -153,6 +179,31 @@ namespace AtomicWar.GodotApp
                 return 1;
             }
         }
+
+        /// <summary>Deterministic deep-chain artifact (ordinal ordering).</summary>
+        private static void WriteDeepChainArtifact(string path, DeepChainReport report)
+        {
+            var lines = new System.Text.StringBuilder();
+            lines.AppendLine("{");
+            lines.AppendLine($"  \"schemaVersion\": \"{report.SchemaVersion}\",");
+            lines.AppendLine($"  \"chainsEvaluated\": {report.ChainsEvaluated},");
+            lines.AppendLine($"  \"hardFailures\": {report.HardFailures},");
+            lines.AppendLine($"  \"warnings\": {report.Warnings},");
+            lines.AppendLine("  \"findings\": [");
+            var f = report.Findings;
+            for (int i = 0; i < f.Count; i++)
+            {
+                string comma = i < f.Count - 1 ? "," : string.Empty;
+                lines.AppendLine($"    {{ \"chain\": \"{Escape(f[i].ChainId)}\", \"hop\": \"{Escape(f[i].HopId)}\", \"category\": \"{Escape(f[i].MissingCategory)}\", \"severity\": \"{Escape(f[i].Severity)}\", \"details\": \"{Escape(f[i].Details)}\", \"fix\": \"{Escape(f[i].RecommendedFix)}\" }}{comma}");
+            }
+            lines.AppendLine("  ]");
+            lines.AppendLine("}");
+            File.WriteAllText(path, lines.ToString());
+        }
+
+        private static string Escape(string s) =>
+            (s ?? string.Empty).Replace("\\", "\\\\", StringComparison.Ordinal)
+                               .Replace("\"", "\\\"", StringComparison.Ordinal);
 
         /// <summary>
         /// Best-effort current commit hash for manifest provenance. Returns
