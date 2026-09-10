@@ -1,0 +1,73 @@
+{
+  "_comment": "Plan 47 snake_case wave-1 alias maps. Spelling-only: values and ID strings are never modified. '*' applies to every file; per-file entries override.",
+  "*": {},
+  "chemical_syntheses.json": {
+    "displayName": "display_name",
+    "requiredApparatusTier": "required_apparatus_tier",
+    "inputItems": "input_items",
+    "outputItems": "output_items",
+    "processingTicks": "processing_ticks",
+    "heatBand": "heat_band",
+    "volatilityRating": "volatility_rating",
+    "scrubberDemand": "scrubber_demand",
+    "equipmentWear": "equipment_wear",
+    "corrosionRating": "corrosion_rating",
+    "skillRequirement": "skill_requirement"
+  },
+  "mineral_acid_synthesis_catalog.json": {
+    "displayName": "display_name",
+    "requiredApparatusTier": "required_apparatus_tier",
+    "inputItems": "input_items",
+    "outputItems": "output_items",
+    "processingTicks": "processing_ticks",
+    "heatBand": "heat_band",
+    "volatilityRating": "volatility_rating",
+    "scrubberDemand": "scrubber_demand",
+    "equipmentWear": "equipment_wear",
+    "corrosionRating": "corrosion_rating",
+    "skillRequirement": "skill_requirement"
+  },
+  "hydroponic_crops.json": {
+    "displayName": "display_name",
+    "germinationTicks": "germination_ticks",
+    "growthTicks": "growth_ticks",
+    "waterLitresPerDay": "water_litres_per_day",
+    "nutrientUnitsPerDay": "nutrient_units_per_day",
+    "ledPowerWatts": "led_power_watts",
+    "preferredSpectrum": "preferred_spectrum",
+    "baseYieldItemId": "base_yield_item_id",
+    "baseYieldQuantity": "base_yield_quantity",
+    "coldTolerance": "cold_tolerance",
+    "contaminationTolerance": "contamination_tolerance",
+    "mutationAffinity": "mutation_affinity"
+  },
+  "nuclear_core_profiles.json": {
+    "displayName": "display_name",
+    "powerClass": "power_class",
+    "baseElectricalOutput": "base_electrical_output",
+    "thermalClass": "thermal_class",
+    "radiationClass": "radiation_class",
+    "coolingDemand": "cooling_demand",
+    "shieldingRequirement": "shielding_requirement",
+    "wearRate": "wear_rate",
+    "decayClass": "decay_class",
+    "emergencyShutdownItemId": "emergency_shutdown_item_id"
+  },
+  "duty_roster_seasons.json": {
+    "windowMinDays": "window_min_days",
+    "windowMaxDays": "window_max_days",
+    "encounterWeight": "encounter_weight",
+    "steamTripChanceBoost": "steam_trip_chance_boost"
+  },
+  "armored_crawler_modules.json": {
+    "displayName": "display_name",
+    "slotType": "slot_type",
+    "powerDraw": "power_draw",
+    "crewBerths": "crew_berths",
+    "armorModifier": "armor_modifier",
+    "fuelModifier": "fuel_modifier",
+    "cargoModifier": "cargo_modifier",
+    "workshopCapability": "workshop_capability",
+    "lifeSupportModifier": "life_support_modifier"
+  }
+}

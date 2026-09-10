@@ -1,0 +1,3042 @@
+{
+  "catalogs": [
+    {
+      "consumer_file_count": 2,
+      "file": "agriculture_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 55.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "stackMax": "stack_max",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 6,
+      "unique_violations": 3,
+      "violation_keys": [
+        "displayName",
+        "stackMax",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 1,
+      "file": "armored_crawler_modules.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Expeditions/ArmoredCrawlerModuleCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 522.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "armorModifier": "armor_modifier",
+        "cargoModifier": "cargo_modifier",
+        "crewBerths": "crew_berths",
+        "displayName": "display_name",
+        "fuelModifier": "fuel_modifier",
+        "lifeSupportModifier": "life_support_modifier",
+        "powerDraw": "power_draw",
+        "slotType": "slot_type",
+        "workshopCapability": "workshop_capability"
+      },
+      "total_occurrences": 90,
+      "unique_violations": 9,
+      "violation_keys": [
+        "armorModifier",
+        "cargoModifier",
+        "crewBerths",
+        "displayName",
+        "fuelModifier",
+        "lifeSupportModifier",
+        "powerDraw",
+        "slotType",
+        "workshopCapability"
+      ]
+    },
+    {
+      "consumer_file_count": 1,
+      "file": "audio_logs_expansion_05.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs"
+      ],
+      "raw_json_key_hits": {
+        "bodyText": 1
+      },
+      "risk_score": 126.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "bodyText": "body_text"
+      },
+      "total_occurrences": 30,
+      "unique_violations": 1,
+      "violation_keys": [
+        "bodyText"
+      ]
+    },
+    {
+      "consumer_file_count": 12,
+      "file": "black_flotilla_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "moraleEffect": 1
+      },
+      "risk_score": 7176.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "healthEffect": "health_effect",
+        "hungerRestore": "hunger_restore",
+        "moraleEffect": "morale_effect",
+        "stackMax": "stack_max",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 115,
+      "unique_violations": 6,
+      "violation_keys": [
+        "displayName",
+        "healthEffect",
+        "hungerRestore",
+        "moraleEffect",
+        "stackMax",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 5,
+      "file": "bunker_graffiti_postings.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Narrative/BunkerGraffitiCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "minDay": 3
+      },
+      "risk_score": 1320.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "minDay": "min_day",
+        "triggerWorldFlag": "trigger_world_flag"
+      },
+      "total_occurrences": 60,
+      "unique_violations": 2,
+      "violation_keys": [
+        "minDay",
+        "triggerWorldFlag"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "chemical_syntheses.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Crafting/ChemicalSynthesisCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 1200.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "equipmentWear": "equipment_wear",
+        "heatBand": "heat_band",
+        "inputItems": "input_items",
+        "outputItems": "output_items",
+        "processingTicks": "processing_ticks",
+        "requiredApparatusTier": "required_apparatus_tier",
+        "scrubberDemand": "scrubber_demand",
+        "skillRequirement": "skill_requirement",
+        "volatilityRating": "volatility_rating"
+      },
+      "total_occurrences": 100,
+      "unique_violations": 10,
+      "violation_keys": [
+        "displayName",
+        "equipmentWear",
+        "heatBand",
+        "inputItems",
+        "outputItems",
+        "processingTicks",
+        "requiredApparatusTier",
+        "scrubberDemand",
+        "skillRequirement",
+        "volatilityRating"
+      ]
+    },
+    {
+      "consumer_file_count": 11,
+      "file": "crossing_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/CrossingCatalog.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "moraleEffect": 1
+      },
+      "risk_score": 8969.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "healthEffect": "health_effect",
+        "hungerRestore": "hunger_restore",
+        "moraleEffect": "morale_effect",
+        "stackMax": "stack_max",
+        "thirstRestore": "thirst_restore",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 151,
+      "unique_violations": 7,
+      "violation_keys": [
+        "displayName",
+        "healthEffect",
+        "hungerRestore",
+        "moraleEffect",
+        "stackMax",
+        "thirstRestore",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 10,
+      "file": "crossing_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/CrossingCatalog.cs",
+        "Assets/Ashfall.Core/Radiation/ExposureEnvironment.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "baseRadsPerHour": 1,
+        "dangerLevel": 1,
+        "displayName": 1
+      },
+      "risk_score": 2496.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseRadsPerHour": "base_rads_per_hour",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 52,
+      "unique_violations": 4,
+      "violation_keys": [
+        "baseRadsPerHour",
+        "dangerLevel",
+        "displayName",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 4,
+      "file": "decontamination_protocol_catalog.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DeconProtocolCatalogLoader.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs"
+      ],
+      "raw_json_key_hits": {},
+      "risk_score": 16.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "interlock_threshold_mSv_per_h": "interlock_threshold_m_sv_per_h"
+      },
+      "total_occurrences": 4,
+      "unique_violations": 1,
+      "violation_keys": [
+        "interlock_threshold_mSv_per_h"
+      ]
+    },
+    {
+      "consumer_file_count": 14,
+      "file": "deep_lore_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Maritime/DeepLoreLocationCatalogLoader.cs",
+        "Assets/Ashfall.Core/Narrative/BlackProjectsArchiveSystem.cs",
+        "Assets/Ashfall.Core/Narrative/OralLorePerformanceSystem.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/HostCli.PanelTests.cs"
+      ],
+      "raw_json_key_hits": {
+        "dangerLevel": 1,
+        "displayName": 1,
+        "itemId": 3
+      },
+      "risk_score": 75776.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "dangerLevel": "danger_level",
+        "degradationChance": "degradation_chance",
+        "degradedItemId": "degraded_item_id",
+        "displayName": "display_name",
+        "itemId": "item_id",
+        "lootTable": "loot_table",
+        "maxQty": "max_qty",
+        "minQty": "min_qty",
+        "radiationUSv": "radiation_u_sv",
+        "spawnChance": "spawn_chance",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 873,
+      "unique_violations": 11,
+      "violation_keys": [
+        "dangerLevel",
+        "degradationChance",
+        "degradedItemId",
+        "displayName",
+        "itemId",
+        "lootTable",
+        "maxQty",
+        "minQty",
+        "radiationUSv",
+        "spawnChance",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 9,
+      "file": "dive_sites.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Maritime/DiveSiteCatalog.cs",
+        "src/Host/HostCli.Collectibles.cs",
+        "src/Host/HostCli.PanelTests.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "itemId": 3
+      },
+      "risk_score": 13708.8,
+      "schema_version": 2,
+      "suggested_canonical": {
+        "alarmThreshold": "alarm_threshold",
+        "degradationChance": "degradation_chance",
+        "degradedItemId": "degraded_item_id",
+        "displayName": "display_name",
+        "itemId": "item_id",
+        "maxAttempts": "max_attempts",
+        "maxQty": "max_qty",
+        "maxQuantity": "max_quantity",
+        "minQty": "min_qty",
+        "minQuantity": "min_quantity",
+        "noisePerAttempt": "noise_per_attempt",
+        "roomId": "room_id",
+        "spawnChance": "spawn_chance",
+        "weightKg": "weight_kg"
+      },
+      "total_occurrences": 224,
+      "unique_violations": 14,
+      "violation_keys": [
+        "alarmThreshold",
+        "degradationChance",
+        "degradedItemId",
+        "displayName",
+        "itemId",
+        "maxAttempts",
+        "maxQty",
+        "maxQuantity",
+        "minQty",
+        "minQuantity",
+        "noisePerAttempt",
+        "roomId",
+        "spawnChance",
+        "weightKg"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "door_encounters.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/DoorEncounterCatalogLoader.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "encounterId": 2,
+        "maxDay": 3,
+        "minDay": 3,
+        "requiredItemId": 2,
+        "requiredTrait": 2,
+        "targetFaction": 2,
+        "visitorFaction": 2
+      },
+      "risk_score": 30772.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseGuiltDelta": "base_guilt_delta",
+        "baseMoraleDelta": "base_morale_delta",
+        "choiceId": "choice_id",
+        "encounterId": "encounter_id",
+        "factionStandingDelta": "faction_standing_delta",
+        "maxDay": "max_day",
+        "minDay": "min_day",
+        "outcomeDescription": "outcome_description",
+        "requiredItemId": "required_item_id",
+        "requiredItemQuantity": "required_item_quantity",
+        "requiredTrait": "required_trait",
+        "seasonCap": "season_cap",
+        "targetFaction": "target_faction",
+        "threatLevel": "threat_level",
+        "visitorFaction": "visitor_faction",
+        "visitorName": "visitor_name"
+      },
+      "total_occurrences": 2137,
+      "unique_violations": 16,
+      "violation_keys": [
+        "baseGuiltDelta",
+        "baseMoraleDelta",
+        "choiceId",
+        "encounterId",
+        "factionStandingDelta",
+        "maxDay",
+        "minDay",
+        "outcomeDescription",
+        "requiredItemId",
+        "requiredItemQuantity",
+        "requiredTrait",
+        "seasonCap",
+        "targetFaction",
+        "threatLevel",
+        "visitorFaction",
+        "visitorName"
+      ]
+    },
+    {
+      "consumer_file_count": 13,
+      "file": "dose_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/DoseContentCatalog.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {},
+      "risk_score": 429.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "tradeValue": "trade_value",
+        "weightKg": "weight_kg"
+      },
+      "total_occurrences": 30,
+      "unique_violations": 2,
+      "violation_keys": [
+        "tradeValue",
+        "weightKg"
+      ]
+    },
+    {
+      "consumer_file_count": 9,
+      "file": "dose_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DoseContentCatalog.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 1738.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "radiationUsv": "radiation_usv",
+        "riskLevel": "risk_level"
+      },
+      "total_occurrences": 42,
+      "unique_violations": 3,
+      "violation_keys": [
+        "displayName",
+        "radiationUsv",
+        "riskLevel"
+      ]
+    },
+    {
+      "consumer_file_count": 6,
+      "file": "dose_quests.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DoseContentCatalog.cs",
+        "Assets/Ashfall.Core/DoseQuestMigration.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "maxDay": 3,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "nextStageId": 2,
+        "questlineId": 2,
+        "stageId": 2
+      },
+      "risk_score": 12892.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "choiceId": "choice_id",
+        "factionTag": "faction_tag",
+        "grantItemId": "grant_item_id",
+        "grantItemQuantity": "grant_item_quantity",
+        "guiltDelta": "guilt_delta",
+        "isTerminal": "is_terminal",
+        "maxDay": "max_day",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "narrativePrompt": "narrative_prompt",
+        "nextStageId": "next_stage_id",
+        "outcomeNarrative": "outcome_narrative",
+        "questlineId": "questline_id",
+        "stageId": "stage_id"
+      },
+      "total_occurrences": 316,
+      "unique_violations": 14,
+      "violation_keys": [
+        "choiceId",
+        "factionTag",
+        "grantItemId",
+        "grantItemQuantity",
+        "guiltDelta",
+        "isTerminal",
+        "maxDay",
+        "minDay",
+        "moraleDelta",
+        "narrativePrompt",
+        "nextStageId",
+        "outcomeNarrative",
+        "questlineId",
+        "stageId"
+      ]
+    },
+    {
+      "consumer_file_count": 10,
+      "file": "duty_roster_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DutyRoster/DutyRosterCatalog.cs",
+        "Assets/Ashfall.Core/Radiation/ExposureEnvironment.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "baseRadsPerHour": 1,
+        "dangerLevel": 1,
+        "displayName": 1
+      },
+      "risk_score": 2688.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseRadsPerHour": "base_rads_per_hour",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 56,
+      "unique_violations": 4,
+      "violation_keys": [
+        "baseRadsPerHour",
+        "dangerLevel",
+        "displayName",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "duty_roster_seasons.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DutyRoster/DutyRosterCatalog.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {},
+      "risk_score": 115.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "encounterWeight": "encounter_weight",
+        "steamTripChanceBoost": "steam_trip_chance_boost",
+        "windowMaxDays": "window_max_days",
+        "windowMinDays": "window_min_days"
+      },
+      "total_occurrences": 32,
+      "unique_violations": 4,
+      "violation_keys": [
+        "encounterWeight",
+        "steamTripChanceBoost",
+        "windowMaxDays",
+        "windowMinDays"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "echoes.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentExemption.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs"
+      ],
+      "raw_json_key_hits": {
+        "MinDay": 2,
+        "RequiredFlagId": 2,
+        "bodyText": 1,
+        "choiceId": 2,
+        "itemId": 3,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "setWorldFlag": 2
+      },
+      "risk_score": 8343.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "MinDay": "min_day",
+        "RequiredFlagId": "required_flag_id",
+        "bodyText": "body_text",
+        "choiceId": "choice_id",
+        "delayHours": "delay_hours",
+        "delayedConsequence": "delayed_consequence",
+        "itemAmount": "item_amount",
+        "itemId": "item_id",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "needDelta": "need_delta",
+        "setWorldFlag": "set_world_flag",
+        "targetNeed": "target_need",
+        "worldFlagValue": "world_flag_value"
+      },
+      "total_occurrences": 409,
+      "unique_violations": 14,
+      "violation_keys": [
+        "MinDay",
+        "RequiredFlagId",
+        "bodyText",
+        "choiceId",
+        "delayHours",
+        "delayedConsequence",
+        "itemAmount",
+        "itemId",
+        "minDay",
+        "moraleDelta",
+        "needDelta",
+        "setWorldFlag",
+        "targetNeed",
+        "worldFlagValue"
+      ]
+    },
+    {
+      "consumer_file_count": 10,
+      "file": "economy_goods.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Economy/GoodsCatalog.cs",
+        "Assets/Ashfall.Core/Foundry/SilentFoundryHeadlessDemo.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 13936.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "barterNote": "barter_note",
+        "basePrice": "base_price",
+        "displayName": "display_name",
+        "regionalSupply": "regional_supply",
+        "stackSize": "stack_size",
+        "weightKg": "weight_kg"
+      },
+      "total_occurrences": 268,
+      "unique_violations": 6,
+      "violation_keys": [
+        "barterNote",
+        "basePrice",
+        "displayName",
+        "regionalSupply",
+        "stackSize",
+        "weightKg"
+      ]
+    },
+    {
+      "consumer_file_count": 33,
+      "file": "events.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Muster/FactionEcologyHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Narrative/NarrativeArcEventSystem.cs",
+        "Assets/Ashfall.Core/Shelter/OrbitalHarrowCatalog.cs",
+        "Assets/Ashfall.Core/Survivors/DesperationSystem.cs",
+        "Assets/Ashfall.Core/Survivors/MoraleContagionCatalog.cs",
+        "Assets/Ashfall.Core/World/SeasonalEventCatalog.cs",
+        "Assets/Ashfall.Core/World/WorldEvolutionEngine.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarChainRunner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshSave.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/EventsHostSession.cs",
+        "src/Host/HostCli.DynamicWorld.cs",
+        "src/Host/HostEventAdapter.cs",
+        "src/Journal/JournalCatalogData.cs",
+        "src/Main.Plans186_189.cs",
+        "src/Main.Plans46_49.cs"
+      ],
+      "raw_json_key_hits": {
+        "MinDay": 2,
+        "RequiredEventFlags": 2,
+        "RequiredFlagId": 2,
+        "bodyText": 1,
+        "choiceId": 2,
+        "encounterId": 2,
+        "factionId": 2,
+        "itemId": 3,
+        "locationId": 2,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "requiredTrait": 2,
+        "requiredTrustFactionId": 2,
+        "scheduleEventId": 2,
+        "setWorldFlag": 2,
+        "survivorId": 3,
+        "targetIds": 2,
+        "threateningFactionId": 2,
+        "traitId": 2
+      },
+      "risk_score": 576298.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "MinDay": "min_day",
+        "RequireCasualtyOrphan": "require_casualty_orphan",
+        "RequireChildCohort": "require_child_cohort",
+        "RequireCohortAdoptionPending": "require_cohort_adoption_pending",
+        "RequireFalloutStorm": "require_fallout_storm",
+        "RequireMaturationEligible": "require_maturation_eligible",
+        "RequireRationTheft": "require_ration_theft",
+        "RequireRationUnevenAllocation": "require_ration_uneven_allocation",
+        "RequireResentmentBuffer": "require_resentment_buffer",
+        "RequireRoommateFriction": "require_roommate_friction",
+        "RequireWeather": "require_weather",
+        "RequireWorldFlag": "require_world_flag",
+        "RequiredEventFlags": "required_event_flags",
+        "RequiredFlagId": "required_flag_id",
+        "WorldFlagValue": "world_flag_value",
+        "bodyText": "body_text",
+        "choiceId": "choice_id",
+        "durationHours": "duration_hours",
+        "encounterId": "encounter_id",
+        "factionId": "faction_id",
+        "hideIfGatesFail": "hide_if_gates_fail",
+        "itemAmount": "item_amount",
+        "itemId": "item_id",
+        "locationId": "location_id",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "needDelta": "need_delta",
+        "requiredTrait": "required_trait",
+        "requiredTrustFactionId": "required_trust_faction_id",
+        "requiredTrustMaxExclusive": "required_trust_max_exclusive",
+        "requiredTrustMin": "required_trust_min",
+        "roomId": "room_id",
+        "scheduleDelayDays": "schedule_delay_days",
+        "scheduleEventId": "schedule_event_id",
+        "scheduleOnDay": "schedule_on_day",
+        "setEventFlags": "set_event_flags",
+        "setWorldFlag": "set_world_flag",
+        "survivorId": "survivor_id",
+        "targetIds": "target_ids",
+        "targetNeed": "target_need",
+        "threateningBodyText": "threatening_body_text",
+        "threateningFactionId": "threatening_faction_id",
+        "threateningTrustBelow": "threatening_trust_below",
+        "traitId": "trait_id",
+        "trustDelta": "trust_delta",
+        "worldFlagValue": "world_flag_value"
+      },
+      "total_occurrences": 1323,
+      "unique_violations": 46,
+      "violation_keys": [
+        "MinDay",
+        "RequireCasualtyOrphan",
+        "RequireChildCohort",
+        "RequireCohortAdoptionPending",
+        "RequireFalloutStorm",
+        "RequireMaturationEligible",
+        "RequireRationTheft",
+        "RequireRationUnevenAllocation",
+        "RequireResentmentBuffer",
+        "RequireRoommateFriction",
+        "RequireWeather",
+        "RequireWorldFlag",
+        "RequiredEventFlags",
+        "RequiredFlagId",
+        "WorldFlagValue",
+        "bodyText",
+        "choiceId",
+        "durationHours",
+        "encounterId",
+        "factionId",
+        "hideIfGatesFail",
+        "itemAmount",
+        "itemId",
+        "locationId",
+        "minDay",
+        "moraleDelta",
+        "needDelta",
+        "requiredTrait",
+        "requiredTrustFactionId",
+        "requiredTrustMaxExclusive",
+        "requiredTrustMin",
+        "roomId",
+        "scheduleDelayDays",
+        "scheduleEventId",
+        "scheduleOnDay",
+        "setEventFlags",
+        "setWorldFlag",
+        "survivorId",
+        "targetIds",
+        "targetNeed",
+        "threateningBodyText",
+        "threateningFactionId",
+        "threateningTrustBelow",
+        "traitId",
+        "trustDelta",
+        "worldFlagValue"
+      ]
+    },
+    {
+      "consumer_file_count": 21,
+      "file": "expeditions.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionLootValidator.cs",
+        "Assets/Ashfall.Core/Radio/DistressDestinationResolver.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "dangerLevel": 1,
+        "displayName": 1,
+        "lootCategories": 2
+      },
+      "risk_score": 51370.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseStaminaDrainPerHour": "base_stamina_drain_per_hour",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "distanceTicks": "distance_ticks",
+        "encounterChancePerTick": "encounter_chance_per_tick",
+        "lootCategories": "loot_categories",
+        "requiresDiscovery": "requires_discovery"
+      },
+      "total_occurrences": 453,
+      "unique_violations": 7,
+      "violation_keys": [
+        "baseStaminaDrainPerHour",
+        "dangerLevel",
+        "displayName",
+        "distanceTicks",
+        "encounterChancePerTick",
+        "lootCategories",
+        "requiresDiscovery"
+      ]
+    },
+    {
+      "consumer_file_count": 4,
+      "file": "faction_war_communiques.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "factionId": 2
+      },
+      "risk_score": 2042.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "authorNote": "author_note",
+        "eventChainId": "event_chain_id",
+        "factionId": "faction_id"
+      },
+      "total_occurrences": 111,
+      "unique_violations": 3,
+      "violation_keys": [
+        "authorNote",
+        "eventChainId",
+        "factionId"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "faction_war_dialogue.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "locationId": 2,
+        "minDay": 3
+      },
+      "risk_score": 1656.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "locationId": "location_id",
+        "minDay": "min_day",
+        "speakerTag": "speaker_tag"
+      },
+      "total_occurrences": 120,
+      "unique_violations": 3,
+      "violation_keys": [
+        "locationId",
+        "minDay",
+        "speakerTag"
+      ]
+    },
+    {
+      "consumer_file_count": 6,
+      "file": "faction_war_events.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Muster/FactionEcologyHeadlessDemo.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarChainRunner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshSave.cs"
+      ],
+      "raw_json_key_hits": {
+        "bodyText": 1,
+        "choiceId": 2,
+        "locationId": 2,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "stageId": 2
+      },
+      "risk_score": 32884.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "bodyText": "body_text",
+        "chainId": "chain_id",
+        "choiceId": "choice_id",
+        "factionsInvolved": "factions_involved",
+        "leadsToStageId": "leads_to_stage_id",
+        "locationId": "location_id",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "producesFlag": "produces_flag",
+        "requiresFlag": "requires_flag",
+        "stageId": "stage_id",
+        "standingDelta": "standing_delta",
+        "standingFactionId": "standing_faction_id",
+        "triggerCondition": "trigger_condition"
+      },
+      "total_occurrences": 806,
+      "unique_violations": 14,
+      "violation_keys": [
+        "bodyText",
+        "chainId",
+        "choiceId",
+        "factionsInvolved",
+        "leadsToStageId",
+        "locationId",
+        "minDay",
+        "moraleDelta",
+        "producesFlag",
+        "requiresFlag",
+        "stageId",
+        "standingDelta",
+        "standingFactionId",
+        "triggerCondition"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "faction_war_journal.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "locationId": 2
+      },
+      "risk_score": 686.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "authorName": "author_name",
+        "locationId": "location_id"
+      },
+      "total_occurrences": 52,
+      "unique_violations": 2,
+      "violation_keys": [
+        "authorName",
+        "locationId"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "faction_war_location_overrides.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "locationId": 2
+      },
+      "risk_score": 988.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "activeFromDay": "active_from_day",
+        "activeUntilDay": "active_until_day",
+        "displayName": "display_name",
+        "locationId": "location_id",
+        "locationOverrides": "location_overrides",
+        "overrideType": "override_type"
+      },
+      "total_occurrences": 95,
+      "unique_violations": 6,
+      "violation_keys": [
+        "activeFromDay",
+        "activeUntilDay",
+        "displayName",
+        "locationId",
+        "locationOverrides",
+        "overrideType"
+      ]
+    },
+    {
+      "consumer_file_count": 5,
+      "file": "faction_war_radio.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastModels.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "dayTrigger": 1,
+        "isEmergency": 1
+      },
+      "risk_score": 2277.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "dayTrigger": "day_trigger",
+        "isEmergency": "is_emergency",
+        "signalStrength": "signal_strength"
+      },
+      "total_occurrences": 99,
+      "unique_violations": 3,
+      "violation_keys": [
+        "dayTrigger",
+        "isEmergency",
+        "signalStrength"
+      ]
+    },
+    {
+      "consumer_file_count": 9,
+      "file": "foundry_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Foundry/SilentFoundryTypes.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "src/Foundry/SilentFoundryHostSession.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 3726.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "stackMax": "stack_max",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 90,
+      "unique_violations": 3,
+      "violation_keys": [
+        "displayName",
+        "stackMax",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 7,
+      "file": "greenhouse_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Narrative/ContrabandStashSystem.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "moraleEffect": 1
+      },
+      "risk_score": 3998.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "empShielded": "emp_shielded",
+        "healthEffect": "health_effect",
+        "hungerRestore": "hunger_restore",
+        "moraleEffect": "morale_effect",
+        "stackMax": "stack_max",
+        "thirstRestore": "thirst_restore",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 102,
+      "unique_violations": 8,
+      "violation_keys": [
+        "displayName",
+        "empShielded",
+        "healthEffect",
+        "hungerRestore",
+        "moraleEffect",
+        "stackMax",
+        "thirstRestore",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 12,
+      "file": "holdfast_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/HoldfastCatalog.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "moraleEffect": 1
+      },
+      "risk_score": 20592.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "hungerRestore": "hunger_restore",
+        "moraleEffect": "morale_effect",
+        "stackMax": "stack_max",
+        "thirstRestore": "thirst_restore",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 330,
+      "unique_violations": 6,
+      "violation_keys": [
+        "displayName",
+        "hungerRestore",
+        "moraleEffect",
+        "stackMax",
+        "thirstRestore",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 14,
+      "file": "holdfast_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs",
+        "Assets/Ashfall.Core/HoldfastCatalog.cs",
+        "Assets/Ashfall.Core/IceRoadHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Radiation/ExposureEnvironment.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "baseRadsPerHour": 1,
+        "dangerLevel": 1,
+        "displayName": 1
+      },
+      "risk_score": 10214.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseRadsPerHour": "base_rads_per_hour",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 152,
+      "unique_violations": 4,
+      "violation_keys": [
+        "baseRadsPerHour",
+        "dangerLevel",
+        "displayName",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 1,
+      "file": "hydroponic_crops.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Shelter/HydroponicCropCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 768.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseYieldItemId": "base_yield_item_id",
+        "baseYieldQuantity": "base_yield_quantity",
+        "coldTolerance": "cold_tolerance",
+        "contaminationTolerance": "contamination_tolerance",
+        "displayName": "display_name",
+        "germinationTicks": "germination_ticks",
+        "growthTicks": "growth_ticks",
+        "ledPowerWatts": "led_power_watts",
+        "mutationAffinity": "mutation_affinity",
+        "nutrientUnitsPerDay": "nutrient_units_per_day",
+        "preferredSpectrum": "preferred_spectrum",
+        "waterLitresPerDay": "water_litres_per_day"
+      },
+      "total_occurrences": 120,
+      "unique_violations": 12,
+      "violation_keys": [
+        "baseYieldItemId",
+        "baseYieldQuantity",
+        "coldTolerance",
+        "contaminationTolerance",
+        "displayName",
+        "germinationTicks",
+        "growthTicks",
+        "ledPowerWatts",
+        "mutationAffinity",
+        "nutrientUnitsPerDay",
+        "preferredSpectrum",
+        "waterLitresPerDay"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "incidents.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "src/Host/EventsHostSession.cs"
+      ],
+      "raw_json_key_hits": {
+        "bodyText": 1,
+        "minDay": 3
+      },
+      "risk_score": 660.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "bodyText": "body_text",
+        "minDay": "min_day"
+      },
+      "total_occurrences": 50,
+      "unique_violations": 2,
+      "violation_keys": [
+        "bodyText",
+        "minDay"
+      ]
+    },
+    {
+      "consumer_file_count": 99,
+      "file": "items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityRules.cs",
+        "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/CollectibleCatalog.cs",
+        "Assets/Ashfall.Core/Content/CollectibleCatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Crafting/TrapRecipeIntegrity.cs",
+        "Assets/Ashfall.Core/CrossingCatalog.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Disease/DiseaseHeadlessDemo.cs",
+        "Assets/Ashfall.Core/DoseContentCatalog.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionLootValidator.cs",
+        "Assets/Ashfall.Core/Foundry/SilentFoundryTypes.cs",
+        "Assets/Ashfall.Core/Greenhouse/GreenhouseExpansionCatalog.cs",
+        "Assets/Ashfall.Core/HoldfastCatalog.cs",
+        "Assets/Ashfall.Core/HostCliRegistry.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Inventory/ItemDefinitions.cs",
+        "Assets/Ashfall.Core/Narrative/ContrabandStashSystem.cs",
+        "Assets/Ashfall.Core/Shelter/MachineIdentity/ShelterMachineTellCatalog.cs",
+        "Assets/Ashfall.Core/Shelter/ShelterDecorSystem.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Foundry/SilentFoundryHostSession.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/ContrabandStashSelfTest.cs",
+        "src/Host/HostCli.Mods.cs",
+        "src/Host/HostCli.cs",
+        "src/Host/InventoryHostSession.cs",
+        "src/Host/ShelterDecorHostSession.cs",
+        "src/Host/ShelterDecorSaveStore.cs",
+        "src/Host/ShelterDecorSelfTest.cs",
+        "src/Journal/JournalCatalogData.cs",
+        "src/Main.Plans147.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "materialId": 2,
+        "moraleEffect": 1
+      },
+      "risk_score": 1591207.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "degradeRate": "degrade_rate",
+        "disassembleYieldFraction": "disassemble_yield_fraction",
+        "displayName": "display_name",
+        "empShielded": "emp_shielded",
+        "equipSlot": "equip_slot",
+        "healthEffect": "health_effect",
+        "hungerRestore": "hunger_restore",
+        "isEquipable": "is_equipable",
+        "materialId": "material_id",
+        "moraleEffect": "morale_effect",
+        "radCleanse": "rad_cleanse",
+        "radProtection": "rad_protection",
+        "repairCosts": "repair_costs",
+        "scrapValue": "scrap_value",
+        "stackMax": "stack_max",
+        "thirstRestore": "thirst_restore",
+        "tradeValue": "trade_value"
+      },
+      "total_occurrences": 2172,
+      "unique_violations": 17,
+      "violation_keys": [
+        "degradeRate",
+        "disassembleYieldFraction",
+        "displayName",
+        "empShielded",
+        "equipSlot",
+        "healthEffect",
+        "hungerRestore",
+        "isEquipable",
+        "materialId",
+        "moraleEffect",
+        "radCleanse",
+        "radProtection",
+        "repairCosts",
+        "scrapValue",
+        "stackMax",
+        "thirstRestore",
+        "tradeValue"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "journal_entries_expansion_05.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Journal/JournalCorpus.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "bodyText": 1
+      },
+      "risk_score": 352.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "bodyText": "body_text"
+      },
+      "total_occurrences": 28,
+      "unique_violations": 1,
+      "violation_keys": [
+        "bodyText"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "ledger_debt_templates.json",
+      "loaders": [
+        "Assets/Ashfall.Core/DebtTemplateCatalog.cs",
+        "Assets/Ashfall.Core/LedgerDebtSystem.cs",
+        "src/Host/ExpansionHostSession.cs"
+      ],
+      "raw_json_key_hits": {
+        "collateralItemId": 1,
+        "consequenceId": 1,
+        "creditorId": 1,
+        "displayName": 1,
+        "effectType": 1,
+        "escalationId": 1,
+        "principalItemId": 1,
+        "targetFactionId": 1
+      },
+      "risk_score": 4428.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "bountyLevel": "bounty_level",
+        "collateralItemId": "collateral_item_id",
+        "consequenceId": "consequence_id",
+        "creditorId": "creditor_id",
+        "displayName": "display_name",
+        "effectType": "effect_type",
+        "embargoDurationDays": "embargo_duration_days",
+        "embargoScope": "embargo_scope",
+        "escalationId": "escalation_id",
+        "forfeitDescription": "forfeit_description",
+        "laborDays": "labor_days",
+        "principalItemId": "principal_item_id",
+        "principalQuantity": "principal_quantity",
+        "standingDelta": "standing_delta",
+        "targetFactionId": "target_faction_id",
+        "termDays": "term_days"
+      },
+      "total_occurrences": 205,
+      "unique_violations": 16,
+      "violation_keys": [
+        "bountyLevel",
+        "collateralItemId",
+        "consequenceId",
+        "creditorId",
+        "displayName",
+        "effectType",
+        "embargoDurationDays",
+        "embargoScope",
+        "escalationId",
+        "forfeitDescription",
+        "laborDays",
+        "principalItemId",
+        "principalQuantity",
+        "standingDelta",
+        "targetFactionId",
+        "termDays"
+      ]
+    },
+    {
+      "consumer_file_count": 56,
+      "file": "locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityRules.cs",
+        "Assets/Ashfall.Core/Combat/EnemyCompositionSelector.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/CrossingCatalog.cs",
+        "Assets/Ashfall.Core/DeepCoastHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Diplomacy/DiplomaticSummitSystem.cs",
+        "Assets/Ashfall.Core/DoseContentCatalog.cs",
+        "Assets/Ashfall.Core/DutyRoster/DutyRosterCatalog.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionEncounterBridge.cs",
+        "Assets/Ashfall.Core/HoldfastCatalog.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/IceRoadHeadlessDemo.cs",
+        "Assets/Ashfall.Core/Maritime/DeepLoreLocationCatalogLoader.cs",
+        "Assets/Ashfall.Core/Narrative/BlackProjectsArchiveSystem.cs",
+        "Assets/Ashfall.Core/Narrative/MicroLocationEncounterLoader.cs",
+        "Assets/Ashfall.Core/Narrative/NarrativeEncounterSystem.cs",
+        "Assets/Ashfall.Core/Narrative/OralLorePerformanceSystem.cs",
+        "Assets/Ashfall.Core/Radiation/ExposureEnvironment.cs",
+        "Assets/Ashfall.Core/StartingLevel/StartingLevelSystem.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.PanelTests.cs",
+        "src/Journal/JournalCatalogData.cs"
+      ],
+      "raw_json_key_hits": {
+        "ambushFlag": 2,
+        "baseRadsPerHour": 1,
+        "cleanWaterRewardFlag": 2,
+        "dangerLevel": 1,
+        "displayName": 1,
+        "requiredFlagId": 2
+      },
+      "risk_score": 205329.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "ambushFlag": "ambush_flag",
+        "baseRadsPerHour": "base_rads_per_hour",
+        "cleanWaterRewardFlag": "clean_water_reward_flag",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "requiredFlagId": "required_flag_id",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 679,
+      "unique_violations": 7,
+      "violation_keys": [
+        "ambushFlag",
+        "baseRadsPerHour",
+        "cleanWaterRewardFlag",
+        "dangerLevel",
+        "displayName",
+        "requiredFlagId",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 8,
+      "file": "locations_expansion3.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs"
+      ],
+      "raw_json_key_hits": {
+        "baseRadsPerHour": 1,
+        "dangerLevel": 1,
+        "displayName": 1,
+        "lootCategories": 2,
+        "primaryFaction": 2,
+        "specialEvents": 2
+      },
+      "risk_score": 7526.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseRadsPerHour": "base_rads_per_hour",
+        "collapseRisk": "collapse_risk",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "lootCategories": "loot_categories",
+        "primaryFaction": "primary_faction",
+        "specialEvents": "special_events",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 168,
+      "unique_violations": 8,
+      "violation_keys": [
+        "baseRadsPerHour",
+        "collapseRisk",
+        "dangerLevel",
+        "displayName",
+        "lootCategories",
+        "primaryFaction",
+        "specialEvents",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 14,
+      "file": "micro_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Expeditions/ExpeditionEncounterBridge.cs",
+        "Assets/Ashfall.Core/Narrative/MicroLocationEncounterLoader.cs",
+        "Assets/Ashfall.Core/Narrative/NarrativeEncounterSystem.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "moraleDelta": 1,
+        "setWorldFlag": 2
+      },
+      "risk_score": 47980.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseWeight": "base_weight",
+        "choiceId": "choice_id",
+        "depletesOnResolve": "depletes_on_resolve",
+        "discoverLocationId": "discover_location_id",
+        "grantItemId": "grant_item_id",
+        "grantItemQuantity": "grant_item_quantity",
+        "guiltDelta": "guilt_delta",
+        "journalUnlockId": "journal_unlock_id",
+        "minDangerLevel": "min_danger_level",
+        "moraleDelta": "morale_delta",
+        "requiredLocationId": "required_location_id",
+        "setWorldFlag": "set_world_flag",
+        "speedWeightMultiplier": "speed_weight_multiplier",
+        "stealthWeightMultiplier": "stealth_weight_multiplier"
+      },
+      "total_occurrences": 504,
+      "unique_violations": 14,
+      "violation_keys": [
+        "baseWeight",
+        "choiceId",
+        "depletesOnResolve",
+        "discoverLocationId",
+        "grantItemId",
+        "grantItemQuantity",
+        "guiltDelta",
+        "journalUnlockId",
+        "minDangerLevel",
+        "moraleDelta",
+        "requiredLocationId",
+        "setWorldFlag",
+        "speedWeightMultiplier",
+        "stealthWeightMultiplier"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "mineral_acid_synthesis_catalog.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Crafting/ChemicalSynthesisCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 818.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "corrosionRating": "corrosion_rating",
+        "displayName": "display_name",
+        "equipmentWear": "equipment_wear",
+        "heatBand": "heat_band",
+        "inputItems": "input_items",
+        "outputItems": "output_items",
+        "processingTicks": "processing_ticks",
+        "requiredApparatusTier": "required_apparatus_tier",
+        "scrubberDemand": "scrubber_demand",
+        "skillRequirement": "skill_requirement",
+        "volatilityRating": "volatility_rating"
+      },
+      "total_occurrences": 66,
+      "unique_violations": 11,
+      "violation_keys": [
+        "corrosionRating",
+        "displayName",
+        "equipmentWear",
+        "heatBand",
+        "inputItems",
+        "outputItems",
+        "processingTicks",
+        "requiredApparatusTier",
+        "scrubberDemand",
+        "skillRequirement",
+        "volatilityRating"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "narrative_arc_events.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Narrative/NarrativeArcEventSystem.cs"
+      ],
+      "raw_json_key_hits": {
+        "bodyText": 1,
+        "branchId": 2,
+        "choiceId": 2,
+        "factionId": 2,
+        "locationId": 2,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "survivorId": 3
+      },
+      "risk_score": 1019.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "bodyText": "body_text",
+        "branchId": "branch_id",
+        "choiceId": "choice_id",
+        "factionId": "faction_id",
+        "locationId": "location_id",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "survivorId": "survivor_id"
+      },
+      "total_occurrences": 91,
+      "unique_violations": 8,
+      "violation_keys": [
+        "bodyText",
+        "branchId",
+        "choiceId",
+        "factionId",
+        "locationId",
+        "minDay",
+        "moraleDelta",
+        "survivorId"
+      ]
+    },
+    {
+      "consumer_file_count": 8,
+      "file": "narrative_encounters.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Narrative/NarrativeEncounterSystem.cs",
+        "Assets/Ashfall.Core/WildlifeTrappingEvents.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "moraleDelta": 1
+      },
+      "risk_score": 12945.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseWeight": "base_weight",
+        "choiceId": "choice_id",
+        "forceOnArrival": "force_on_arrival",
+        "guiltDelta": "guilt_delta",
+        "minDangerLevel": "min_danger_level",
+        "moraleDelta": "morale_delta",
+        "requiredLocationId": "required_location_id",
+        "speedWeightMultiplier": "speed_weight_multiplier",
+        "stealthWeightMultiplier": "stealth_weight_multiplier"
+      },
+      "total_occurrences": 279,
+      "unique_violations": 9,
+      "violation_keys": [
+        "baseWeight",
+        "choiceId",
+        "forceOnArrival",
+        "guiltDelta",
+        "minDangerLevel",
+        "moraleDelta",
+        "requiredLocationId",
+        "speedWeightMultiplier",
+        "stealthWeightMultiplier"
+      ]
+    },
+    {
+      "consumer_file_count": 1,
+      "file": "narrative_encounters_expansion.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "moraleDelta": 1
+      },
+      "risk_score": 3027.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseWeight": "base_weight",
+        "choiceId": "choice_id",
+        "forceOnArrival": "force_on_arrival",
+        "guiltDelta": "guilt_delta",
+        "minDangerLevel": "min_danger_level",
+        "moraleDelta": "morale_delta",
+        "requiredLocationId": "required_location_id",
+        "speedWeightMultiplier": "speed_weight_multiplier",
+        "stealthWeightMultiplier": "stealth_weight_multiplier"
+      },
+      "total_occurrences": 522,
+      "unique_violations": 9,
+      "violation_keys": [
+        "baseWeight",
+        "choiceId",
+        "forceOnArrival",
+        "guiltDelta",
+        "minDangerLevel",
+        "moraleDelta",
+        "requiredLocationId",
+        "speedWeightMultiplier",
+        "stealthWeightMultiplier"
+      ]
+    },
+    {
+      "consumer_file_count": 1,
+      "file": "narrative_encounters_npc_arcs.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Narrative/NarrativeEncounterSystem.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "moraleDelta": 1
+      },
+      "risk_score": 3436.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseWeight": "base_weight",
+        "choiceId": "choice_id",
+        "completesQuestChoiceId": "completes_quest_choice_id",
+        "completesQuestId": "completes_quest_id",
+        "forceOnArrival": "force_on_arrival",
+        "guiltDelta": "guilt_delta",
+        "minDangerLevel": "min_danger_level",
+        "moraleDelta": "morale_delta",
+        "npcId": "npc_id",
+        "requiredLocationId": "required_location_id",
+        "speedWeightMultiplier": "speed_weight_multiplier",
+        "stealthWeightMultiplier": "stealth_weight_multiplier"
+      },
+      "total_occurrences": 537,
+      "unique_violations": 12,
+      "violation_keys": [
+        "baseWeight",
+        "choiceId",
+        "completesQuestChoiceId",
+        "completesQuestId",
+        "forceOnArrival",
+        "guiltDelta",
+        "minDangerLevel",
+        "moraleDelta",
+        "npcId",
+        "requiredLocationId",
+        "speedWeightMultiplier",
+        "stealthWeightMultiplier"
+      ]
+    },
+    {
+      "consumer_file_count": 1,
+      "file": "nuclear_core_profiles.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Shelter/NuclearCoreCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 360.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseElectricalOutput": "base_electrical_output",
+        "coolingDemand": "cooling_demand",
+        "decayClass": "decay_class",
+        "displayName": "display_name",
+        "emergencyShutdownItemId": "emergency_shutdown_item_id",
+        "powerClass": "power_class",
+        "radiationClass": "radiation_class",
+        "shieldingRequirement": "shielding_requirement",
+        "thermalClass": "thermal_class",
+        "wearRate": "wear_rate"
+      },
+      "total_occurrences": 60,
+      "unique_violations": 10,
+      "violation_keys": [
+        "baseElectricalOutput",
+        "coolingDemand",
+        "decayClass",
+        "displayName",
+        "emergencyShutdownItemId",
+        "powerClass",
+        "radiationClass",
+        "shieldingRequirement",
+        "thermalClass",
+        "wearRate"
+      ]
+    },
+    {
+      "consumer_file_count": 12,
+      "file": "questline_master.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/QuestlineMasterCatalog.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.ExpansionDepth.cs"
+      ],
+      "raw_json_key_hits": {
+        "narrativeHook": 1
+      },
+      "risk_score": 422.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "factionTag": "faction_tag",
+        "narrativeHook": "narrative_hook"
+      },
+      "total_occurrences": 8,
+      "unique_violations": 2,
+      "violation_keys": [
+        "factionTag",
+        "narrativeHook"
+      ]
+    },
+    {
+      "consumer_file_count": 0,
+      "file": "quests_bureaucratic_morality.json",
+      "loaders": [],
+      "raw_json_key_hits": {
+        "maxDay": 3,
+        "minDay": 3
+      },
+      "risk_score": 17.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "maxDay": "max_day",
+        "minDay": "min_day"
+      },
+      "total_occurrences": 4,
+      "unique_violations": 2,
+      "violation_keys": [
+        "maxDay",
+        "minDay"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "quests_expansion_05.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/ExpansionQuestSystem.cs"
+      ],
+      "raw_json_key_hits": {
+        "maxDay": 3,
+        "minDay": 3
+      },
+      "risk_score": 1021.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "factionTag": "faction_tag",
+        "maxDay": "max_day",
+        "minDay": "min_day"
+      },
+      "total_occurrences": 111,
+      "unique_violations": 3,
+      "violation_keys": [
+        "factionTag",
+        "maxDay",
+        "minDay"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "quests_expansion_06.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/ExpansionQuestSystem.cs"
+      ],
+      "raw_json_key_hits": {
+        "maxDay": 3,
+        "minDay": 3
+      },
+      "risk_score": 524.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "factionTag": "faction_tag",
+        "maxDay": "max_day",
+        "minDay": "min_day"
+      },
+      "total_occurrences": 57,
+      "unique_violations": 3,
+      "violation_keys": [
+        "factionTag",
+        "maxDay",
+        "minDay"
+      ]
+    },
+    {
+      "consumer_file_count": 2,
+      "file": "quests_npc_arcs.json",
+      "loaders": [
+        "Assets/Ashfall.Core/ExpansionQuestSystem.cs"
+      ],
+      "raw_json_key_hits": {
+        "maxDay": 3,
+        "minDay": 3
+      },
+      "risk_score": 1104.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "factionTag": "faction_tag",
+        "maxDay": "max_day",
+        "minDay": "min_day"
+      },
+      "total_occurrences": 120,
+      "unique_violations": 3,
+      "violation_keys": [
+        "factionTag",
+        "maxDay",
+        "minDay"
+      ]
+    },
+    {
+      "consumer_file_count": 17,
+      "file": "radio.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastModels.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictCatalogLoader.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictRadioSystem.cs",
+        "Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.SelfTests.cs",
+        "src/VerdictPanel.cs"
+      ],
+      "raw_json_key_hits": {
+        "intelType": 1,
+        "maxDay": 3,
+        "minDay": 3
+      },
+      "risk_score": 19471.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "intelType": "intel_type",
+        "maxDay": "max_day",
+        "minDay": "min_day"
+      },
+      "total_occurrences": 249,
+      "unique_violations": 3,
+      "violation_keys": [
+        "intelType",
+        "maxDay",
+        "minDay"
+      ]
+    },
+    {
+      "consumer_file_count": 16,
+      "file": "radio_distress_signals.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/CollectibleCatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Radio/RadioDistressSystem.cs",
+        "src/Host/RadioHostSession.cs"
+      ],
+      "raw_json_key_hits": {
+        "deadlineDays": 1,
+        "ignoreConsequence": 3,
+        "senderSurvivalDays": 1
+      },
+      "risk_score": 1251.2,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "deadlineDays": "deadline_days",
+        "ignoreConsequence": "ignore_consequence",
+        "senderSurvivalDays": "sender_survival_days"
+      },
+      "total_occurrences": 17,
+      "unique_violations": 3,
+      "violation_keys": [
+        "deadlineDays",
+        "ignoreConsequence",
+        "senderSurvivalDays"
+      ]
+    },
+    {
+      "consumer_file_count": 31,
+      "file": "recipes.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Crafting/PharmaRecipeCatalogLoader.cs",
+        "Assets/Ashfall.Core/Crafting/RecipeCatalogLoader.cs",
+        "Assets/Ashfall.Core/Crafting/RelicCatalogLoader.cs",
+        "Assets/Ashfall.Core/Foundry/GlassworksCatalog.cs",
+        "Assets/Ashfall.Core/Foundry/MetallurgyHeavyCatalog.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.SelfTests.cs",
+        "src/Main.Plans46_49.cs"
+      ],
+      "raw_json_key_hits": {
+        "itemId": 3,
+        "resultItemId": 2
+      },
+      "risk_score": 145638.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "craftingTimeHours": "crafting_time_hours",
+        "itemId": "item_id",
+        "recipeName": "recipe_name",
+        "requiredBlueprintId": "required_blueprint_id",
+        "requiredStationId": "required_station_id",
+        "resultAmount": "result_amount",
+        "resultItemId": "result_item_id"
+      },
+      "total_occurrences": 870,
+      "unique_violations": 7,
+      "violation_keys": [
+        "craftingTimeHours",
+        "itemId",
+        "recipeName",
+        "requiredBlueprintId",
+        "requiredStationId",
+        "resultAmount",
+        "resultItemId"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "standing_record_layouts.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/StandingRecord/LocationLayoutSystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "inspectKey": 2,
+        "parentLocationId": 2
+      },
+      "risk_score": 3254.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "inspectKey": "inspect_key",
+        "parentLocationId": "parent_location_id",
+        "unlockRule": "unlock_rule"
+      },
+      "total_occurrences": 226,
+      "unique_violations": 4,
+      "violation_keys": [
+        "displayName",
+        "inspectKey",
+        "parentLocationId",
+        "unlockRule"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "standing_record_memory.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/StandingRecord/LocationMemorySystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "requiredFlag": 2
+      },
+      "risk_score": 2152.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "requiredFlag": "required_flag",
+        "siteId": "site_id",
+        "stratumId": "stratum_id"
+      },
+      "total_occurrences": 156,
+      "unique_violations": 3,
+      "violation_keys": [
+        "requiredFlag",
+        "siteId",
+        "stratumId"
+      ]
+    },
+    {
+      "consumer_file_count": 5,
+      "file": "starting_supplies.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Inventory/StartingSuppliesCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "itemId": 3
+      },
+      "risk_score": 1953.0,
+      "schema_version": 2,
+      "suggested_canonical": {
+        "itemId": "item_id"
+      },
+      "total_occurrences": 93,
+      "unique_violations": 1,
+      "violation_keys": [
+        "itemId"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "starting_survivor_cohorts.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Survivors/StartingCohortCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 1036.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "acuteRad": "acute_rad",
+        "displayName": "display_name",
+        "joinedDay": "joined_day",
+        "lifetimeDose": "lifetime_dose"
+      },
+      "total_occurrences": 72,
+      "unique_violations": 4,
+      "violation_keys": [
+        "acuteRad",
+        "displayName",
+        "joinedDay",
+        "lifetimeDose"
+      ]
+    },
+    {
+      "consumer_file_count": 6,
+      "file": "starting_survivors.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Survivors/StartingCohortCatalog.cs",
+        "Assets/Ashfall.Core/Survivors/SurvivorStartingStateLoader.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 345.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "acuteRad": "acute_rad",
+        "displayName": "display_name",
+        "joinedDay": "joined_day",
+        "lifetimeDose": "lifetime_dose"
+      },
+      "total_occurrences": 12,
+      "unique_violations": 4,
+      "violation_keys": [
+        "acuteRad",
+        "displayName",
+        "joinedDay",
+        "lifetimeDose"
+      ]
+    },
+    {
+      "consumer_file_count": 19,
+      "file": "survivors.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/ExpansionEnrichmentCatalog.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Survivors/StartingCohortCatalog.cs",
+        "Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs",
+        "Assets/Ashfall.Core/Survivors/SurvivorStartingStateLoader.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/SurvivorsHostSession.cs",
+        "src/Journal/JournalCatalogData.cs",
+        "src/YearOfAsh/YearOfAshHostSession.cs"
+      ],
+      "raw_json_key_hits": {
+        "activeQuestlineId": 2,
+        "baseTraits": 2,
+        "displayName": 1,
+        "latentExpertTrait": 2,
+        "traitIds": 2
+      },
+      "risk_score": 46170.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "activeQuestlineId": "active_questline_id",
+        "baseHealth": "base_health",
+        "baseTraits": "base_traits",
+        "displayName": "display_name",
+        "isChild": "is_child",
+        "latentExpertTrait": "latent_expert_trait",
+        "traitIds": "trait_ids"
+      },
+      "total_occurrences": 450,
+      "unique_violations": 7,
+      "violation_keys": [
+        "activeQuestlineId",
+        "baseHealth",
+        "baseTraits",
+        "displayName",
+        "isChild",
+        "latentExpertTrait",
+        "traitIds"
+      ]
+    },
+    {
+      "consumer_file_count": 4,
+      "file": "trade_screen_scenarios.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {},
+      "risk_score": 8.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "BoneMarrow": "bone_marrow",
+        "PintOfBlood": "pint_of_blood"
+      },
+      "total_occurrences": 2,
+      "unique_violations": 2,
+      "violation_keys": [
+        "BoneMarrow",
+        "PintOfBlood"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "trade_texts.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Economy/TradeTextCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "ConvoyAmbush": 1,
+        "Critical": 3,
+        "High": 5,
+        "Low": 6,
+        "Medium": 7,
+        "PlumePassing": 1
+      },
+      "risk_score": 285.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "ConvoyAmbush": "convoy_ambush",
+        "Critical": "critical",
+        "FactionConflict": "faction_conflict",
+        "High": "high",
+        "Low": "low",
+        "Medium": "medium",
+        "PlumePassing": "plume_passing",
+        "SeasonalScarcity": "seasonal_scarcity",
+        "don't_cheat": "don't_cheat",
+        "don't_insult": "don't_insult",
+        "don't_lie": "don't_lie",
+        "don't_steal": "don't_steal",
+        "what's_the_difference": "what's_the_difference",
+        "why_don't_traders": "why_don't_traders"
+      },
+      "total_occurrences": 14,
+      "unique_violations": 14,
+      "violation_keys": [
+        "ConvoyAmbush",
+        "Critical",
+        "FactionConflict",
+        "High",
+        "Low",
+        "Medium",
+        "PlumePassing",
+        "SeasonalScarcity",
+        "don't_cheat",
+        "don't_insult",
+        "don't_lie",
+        "don't_steal",
+        "what's_the_difference",
+        "why_don't_traders"
+      ]
+    },
+    {
+      "consumer_file_count": 4,
+      "file": "travel_encounters.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Narrative/TravelEncounterCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "Aggressive": 1,
+        "Balanced": 4,
+        "Cautious": 3,
+        "Scavenging": 2
+      },
+      "risk_score": 5700.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "Aggressive": "aggressive",
+        "Balanced": "balanced",
+        "Cautious": "cautious",
+        "Rapid": "rapid",
+        "Scavenging": "scavenging"
+      },
+      "total_occurrences": 285,
+      "unique_violations": 5,
+      "violation_keys": [
+        "Aggressive",
+        "Balanced",
+        "Cautious",
+        "Rapid",
+        "Scavenging"
+      ]
+    },
+    {
+      "consumer_file_count": 3,
+      "file": "utility_actions.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/UtilityAI/UtilityAiSystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 2268.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "basePriority": "base_priority",
+        "baseScore": "base_score",
+        "curvePoints": "curve_points",
+        "displayName": "display_name",
+        "fatigueGate": "fatigue_gate",
+        "isOverrideAction": "is_override_action",
+        "skillBonusFactor": "skill_bonus_factor"
+      },
+      "total_occurrences": 140,
+      "unique_violations": 7,
+      "violation_keys": [
+        "basePriority",
+        "baseScore",
+        "curvePoints",
+        "displayName",
+        "fatigueGate",
+        "isOverrideAction",
+        "skillBonusFactor"
+      ]
+    },
+    {
+      "consumer_file_count": 11,
+      "file": "verdict_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 2277.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "tradeValue": "trade_value",
+        "weightKg": "weight_kg"
+      },
+      "total_occurrences": 45,
+      "unique_violations": 3,
+      "violation_keys": [
+        "displayName",
+        "tradeValue",
+        "weightKg"
+      ]
+    },
+    {
+      "consumer_file_count": 8,
+      "file": "verdict_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Radiation/ExposureEnvironment.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "baseRadsPerHour": 1,
+        "dangerLevel": 1,
+        "displayName": 1
+      },
+      "risk_score": 2304.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "baseRadsPerHour": "base_rads_per_hour",
+        "dangerLevel": "danger_level",
+        "displayName": "display_name",
+        "travelHours": "travel_hours"
+      },
+      "total_occurrences": 60,
+      "unique_violations": 4,
+      "violation_keys": [
+        "baseRadsPerHour",
+        "dangerLevel",
+        "displayName",
+        "travelHours"
+      ]
+    },
+    {
+      "consumer_file_count": 7,
+      "file": "verdict_questlines.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictQuestCatalogLoader.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.ExpansionDepth.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "firstStageId": 2,
+        "maxDay": 3,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "nextStageId": 2,
+        "questlineId": 2,
+        "stageId": 2,
+        "targetFactionId": 1
+      },
+      "risk_score": 56019.6,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "choiceId": "choice_id",
+        "factionStandingDelta": "faction_standing_delta",
+        "factionTag": "faction_tag",
+        "firstStageId": "first_stage_id",
+        "grantItemId": "grant_item_id",
+        "grantItemQuantity": "grant_item_quantity",
+        "guiltDelta": "guilt_delta",
+        "isTerminal": "is_terminal",
+        "maxDay": "max_day",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "narrativePrompt": "narrative_prompt",
+        "nextStageId": "next_stage_id",
+        "outcomeNarrative": "outcome_narrative",
+        "questlineId": "questline_id",
+        "stageId": "stage_id",
+        "targetFactionId": "target_faction_id",
+        "unlockOnDay": "unlock_on_day"
+      },
+      "total_occurrences": 1053,
+      "unique_violations": 18,
+      "violation_keys": [
+        "choiceId",
+        "factionStandingDelta",
+        "factionTag",
+        "firstStageId",
+        "grantItemId",
+        "grantItemQuantity",
+        "guiltDelta",
+        "isTerminal",
+        "maxDay",
+        "minDay",
+        "moraleDelta",
+        "narrativePrompt",
+        "nextStageId",
+        "outcomeNarrative",
+        "questlineId",
+        "stageId",
+        "targetFactionId",
+        "unlockOnDay"
+      ]
+    },
+    {
+      "consumer_file_count": 12,
+      "file": "verdict_radio.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastModels.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictCatalogLoader.cs",
+        "Assets/Ashfall.Core/Verdict/VerdictRadioSystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.SelfTests.cs",
+        "src/VerdictPanel.cs"
+      ],
+      "raw_json_key_hits": {
+        "dayTrigger": 1
+      },
+      "risk_score": 3168.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "dayTrigger": "day_trigger",
+        "signalStrength": "signal_strength"
+      },
+      "total_occurrences": 60,
+      "unique_violations": 2,
+      "violation_keys": [
+        "dayTrigger",
+        "signalStrength"
+      ]
+    },
+    {
+      "consumer_file_count": 11,
+      "file": "wasteland_map_v1.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/CollectibleCatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/World/WastelandMapCatalogLoader.cs",
+        "Assets/Ashfall.Core/World/WastelandMapSystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1,
+        "distanceKm": 2
+      },
+      "risk_score": 29491.0,
+      "schema_version": 2,
+      "suggested_canonical": {
+        "anchorNodeId": "anchor_node_id",
+        "currentStrength": "current_strength",
+        "displayName": "display_name",
+        "distanceKm": "distance_km",
+        "lootTable": "loot_table",
+        "offsetX": "offset_x",
+        "offsetY": "offset_y",
+        "positionX": "position_x",
+        "positionY": "position_y",
+        "siteId": "site_id",
+        "startingUnlocked": "starting_unlocked",
+        "toxicContamination": "toxic_contamination",
+        "trapSites": "trap_sites",
+        "travelDomain": "travel_domain",
+        "weatherHazard": "weather_hazard"
+      },
+      "total_occurrences": 383,
+      "unique_violations": 15,
+      "violation_keys": [
+        "anchorNodeId",
+        "currentStrength",
+        "displayName",
+        "distanceKm",
+        "lootTable",
+        "offsetX",
+        "offsetY",
+        "positionX",
+        "positionY",
+        "siteId",
+        "startingUnlocked",
+        "toxicContamination",
+        "trapSites",
+        "travelDomain",
+        "weatherHazard"
+      ]
+    },
+    {
+      "consumer_file_count": 11,
+      "file": "weather_seasons.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+        "Assets/Ashfall.Core/WildlifeMigrationSystem.Live.cs",
+        "Assets/Ashfall.Core/WildlifeSeasonalCalendar.cs",
+        "Assets/Ashfall.Core/World/WeatherSystem.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostCli.DynamicWorld.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 6072.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "ashfallWeight": "ashfall_weight",
+        "blackRainWeight": "black_rain_weight",
+        "blizzardWeight": "blizzard_weight",
+        "clearWeight": "clear_weight",
+        "displayName": "display_name",
+        "falloutStormWeight": "fallout_storm_weight",
+        "overcastWeight": "overcast_weight",
+        "rainWeight": "rain_weight",
+        "startDay": "start_day",
+        "weatherCheckIntervalHours": "weather_check_interval_hours"
+      },
+      "total_occurrences": 92,
+      "unique_violations": 10,
+      "violation_keys": [
+        "ashfallWeight",
+        "blackRainWeight",
+        "blizzardWeight",
+        "clearWeight",
+        "displayName",
+        "falloutStormWeight",
+        "overcastWeight",
+        "rainWeight",
+        "startDay",
+        "weatherCheckIntervalHours"
+      ]
+    },
+    {
+      "consumer_file_count": 13,
+      "file": "wildlife_trapping_catalog.json",
+      "loaders": [
+        "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Crafting/TrapRecipeIntegrity.cs",
+        "Assets/Ashfall.Core/WildlifeTrappingCatalog.cs"
+      ],
+      "raw_json_key_hits": {
+        "attractedByBaitIds": 1,
+        "baitId": 1,
+        "bycatchChance": 1,
+        "bycatchSpecies": 1,
+        "catchBonusMultiplier": 1,
+        "compatiblePrey": 1,
+        "contaminationDose": 1,
+        "diseaseId": 2,
+        "displayName": 1,
+        "itemId": 3,
+        "migrationSpeciesId": 1,
+        "moraleEffect": 1,
+        "narrativeIncidentChance": 1,
+        "narrativeIncidentIds": 1,
+        "preferredTrapType": 1,
+        "requiresWater": 1,
+        "speciesId": 1,
+        "toxicReduction": 1,
+        "trapType": 1
+      },
+      "risk_score": 62280.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "activeSeasons": "active_seasons",
+        "attractedByBaitIds": "attracted_by_bait_ids",
+        "baitId": "bait_id",
+        "baseCatchModifier": "base_catch_modifier",
+        "baseYieldKg": "base_yield_kg",
+        "bycatchChance": "bycatch_chance",
+        "bycatchSpecies": "bycatch_species",
+        "catchBonusMultiplier": "catch_bonus_multiplier",
+        "checkIntervalDays": "check_interval_days",
+        "compatiblePrey": "compatible_prey",
+        "contaminationDose": "contamination_dose",
+        "contaminationRisk": "contamination_risk",
+        "craftCostChemicals": "craft_cost_chemicals",
+        "craftCostRoots": "craft_cost_roots",
+        "craftCostScrapMeat": "craft_cost_scrap_meat",
+        "diseaseId": "disease_id",
+        "diseaseRisk": "disease_risk",
+        "displayName": "display_name",
+        "durabilityChecks": "durability_checks",
+        "hideItemId": "hide_item_id",
+        "hideYield": "hide_yield",
+        "isRareSpecies": "is_rare_species",
+        "itemId": "item_id",
+        "migrationSpeciesId": "migration_species_id",
+        "minSkillLevel": "min_skill_level",
+        "moralWeight": "moral_weight",
+        "moraleEffect": "morale_effect",
+        "narrativeIncidentChance": "narrative_incident_chance",
+        "narrativeIncidentIds": "narrative_incident_ids",
+        "preferredSpecies": "preferred_species",
+        "preferredTrapType": "preferred_trap_type",
+        "requiresWater": "requires_water",
+        "setupCosts": "setup_costs",
+        "speciesId": "species_id",
+        "toxicChance": "toxic_chance",
+        "toxicReduction": "toxic_reduction",
+        "trapEncounterChance": "trap_encounter_chance",
+        "trapType": "trap_type",
+        "weatherSensitivity": "weather_sensitivity"
+      },
+      "total_occurrences": 406,
+      "unique_violations": 39,
+      "violation_keys": [
+        "activeSeasons",
+        "attractedByBaitIds",
+        "baitId",
+        "baseCatchModifier",
+        "baseYieldKg",
+        "bycatchChance",
+        "bycatchSpecies",
+        "catchBonusMultiplier",
+        "checkIntervalDays",
+        "compatiblePrey",
+        "contaminationDose",
+        "contaminationRisk",
+        "craftCostChemicals",
+        "craftCostRoots",
+        "craftCostScrapMeat",
+        "diseaseId",
+        "diseaseRisk",
+        "displayName",
+        "durabilityChecks",
+        "hideItemId",
+        "hideYield",
+        "isRareSpecies",
+        "itemId",
+        "migrationSpeciesId",
+        "minSkillLevel",
+        "moralWeight",
+        "moraleEffect",
+        "narrativeIncidentChance",
+        "narrativeIncidentIds",
+        "preferredSpecies",
+        "preferredTrapType",
+        "requiresWater",
+        "setupCosts",
+        "speciesId",
+        "toxicChance",
+        "toxicReduction",
+        "trapEncounterChance",
+        "trapType",
+        "weatherSensitivity"
+      ]
+    },
+    {
+      "consumer_file_count": 4,
+      "file": "year_of_ash_events.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/Host/HostEventAdapter.cs"
+      ],
+      "raw_json_key_hits": {
+        "hazardType": 2
+      },
+      "risk_score": 1830.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "hazardType": "hazard_type",
+        "temperatureDeltaC": "temperature_delta_c"
+      },
+      "total_occurrences": 104,
+      "unique_violations": 2,
+      "violation_keys": [
+        "hazardType",
+        "temperatureDeltaC"
+      ]
+    },
+    {
+      "consumer_file_count": 6,
+      "file": "year_of_ash_items.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {},
+      "risk_score": 818.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "tradeValue": "trade_value",
+        "weightKg": "weight_kg"
+      },
+      "total_occurrences": 124,
+      "unique_violations": 2,
+      "violation_keys": [
+        "tradeValue",
+        "weightKg"
+      ]
+    },
+    {
+      "consumer_file_count": 10,
+      "file": "year_of_ash_locations.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs",
+        "Assets/Ashfall.Core/Radiation/ExposureEnvironment.cs",
+        "Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "displayName": 1
+      },
+      "risk_score": 9108.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "displayName": "display_name",
+        "radiationUsv": "radiation_usv",
+        "riskLevel": "risk_level"
+      },
+      "total_occurrences": 198,
+      "unique_violations": 3,
+      "violation_keys": [
+        "displayName",
+        "radiationUsv",
+        "riskLevel"
+      ]
+    },
+    {
+      "consumer_file_count": 4,
+      "file": "year_of_ash_questlines.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/DynamicQuestlineCatalogLoader.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "choiceId": 2,
+        "firstStageId": 2,
+        "maxDay": 3,
+        "minDay": 3,
+        "moraleDelta": 1,
+        "nextStageId": 2,
+        "questlineId": 2,
+        "stageId": 2,
+        "targetFactionId": 1
+      },
+      "risk_score": 59520.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "choiceId": "choice_id",
+        "factionStandingDelta": "faction_standing_delta",
+        "factionTag": "faction_tag",
+        "firstStageId": "first_stage_id",
+        "grantItemId": "grant_item_id",
+        "grantItemQuantity": "grant_item_quantity",
+        "guiltDelta": "guilt_delta",
+        "isTerminal": "is_terminal",
+        "maxDay": "max_day",
+        "minDay": "min_day",
+        "moraleDelta": "morale_delta",
+        "narrativePrompt": "narrative_prompt",
+        "nextStageId": "next_stage_id",
+        "outcomeNarrative": "outcome_narrative",
+        "questlineId": "questline_id",
+        "stageId": "stage_id",
+        "targetFactionId": "target_faction_id",
+        "terminalOutcome": "terminal_outcome",
+        "unlockEncounterId": "unlock_encounter_id",
+        "unlockOnDay": "unlock_on_day"
+      },
+      "total_occurrences": 1860,
+      "unique_violations": 20,
+      "violation_keys": [
+        "choiceId",
+        "factionStandingDelta",
+        "factionTag",
+        "firstStageId",
+        "grantItemId",
+        "grantItemQuantity",
+        "guiltDelta",
+        "isTerminal",
+        "maxDay",
+        "minDay",
+        "moraleDelta",
+        "narrativePrompt",
+        "nextStageId",
+        "outcomeNarrative",
+        "questlineId",
+        "stageId",
+        "targetFactionId",
+        "terminalOutcome",
+        "unlockEncounterId",
+        "unlockOnDay"
+      ]
+    },
+    {
+      "consumer_file_count": 5,
+      "file": "year_of_ash_quests.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/YearOfAsh/QuestlineModal.cs"
+      ],
+      "raw_json_key_hits": {
+        "maxDay": 3,
+        "minDay": 3,
+        "requiredItemId": 2
+      },
+      "risk_score": 8200.0,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "isCompleted": "is_completed",
+        "maxDay": "max_day",
+        "minDay": "min_day",
+        "requiredItemId": "required_item_id",
+        "stageIndex": "stage_index"
+      },
+      "total_occurrences": 328,
+      "unique_violations": 5,
+      "violation_keys": [
+        "isCompleted",
+        "maxDay",
+        "minDay",
+        "requiredItemId",
+        "stageIndex"
+      ]
+    },
+    {
+      "consumer_file_count": 8,
+      "file": "year_of_ash_radio.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs",
+        "Assets/Ashfall.Core/Radio/RadioBroadcastModels.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs"
+      ],
+      "raw_json_key_hits": {
+        "dayTrigger": 1,
+        "isEmergency": 1
+      },
+      "risk_score": 5446.4,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "dayTrigger": "day_trigger",
+        "isEmergency": "is_emergency",
+        "signalStrength": "signal_strength"
+      },
+      "total_occurrences": 148,
+      "unique_violations": 3,
+      "violation_keys": [
+        "dayTrigger",
+        "isEmergency",
+        "signalStrength"
+      ]
+    },
+    {
+      "consumer_file_count": 6,
+      "file": "year_of_ash_survivors.json",
+      "loaders": [
+        "Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs",
+        "Assets/Ashfall.Core/YearOfAsh/YearOfAshCatalogLoader.cs",
+        "src/Host/AssetCoverageScanner.cs",
+        "src/Host/AssetRegistry.cs",
+        "src/Host/ContentUtilizationRuntimeCollector.cs",
+        "src/YearOfAsh/YearOfAshHostSession.cs"
+      ],
+      "raw_json_key_hits": {},
+      "risk_score": 1684.8,
+      "schema_version": 1,
+      "suggested_canonical": {
+        "factionAffinity": "faction_affinity",
+        "guiltScore": "guilt_score",
+        "healthPercent": "health_percent",
+        "moralAlignment": "moral_alignment",
+        "radiationDoseMsv": "radiation_dose_msv",
+        "rurScore": "rur_score"
+      },
+      "total_occurrences": 216,
+      "unique_violations": 6,
+      "violation_keys": [
+        "factionAffinity",
+        "guiltScore",
+        "healthPercent",
+        "moralAlignment",
+        "radiationDoseMsv",
+        "rurScore"
+      ]
+    }
+  ],
+  "narrative_aggregate_violations": {
+    "bodyText": 40,
+    "pH": 2,
+    "surface_dose_estimate_uSv_h": 31,
+    "surface_dose_uSv_h": 38
+  },
+  "ordering": "ordinal",
+  "schema_version": "1.0.0",
+  "summary": {
+    "narrative_files_scanned": 280,
+    "narrative_files_snake_clean": 273,
+    "root_catalogs_scanned": 299,
+    "root_catalogs_with_violations": 77
+  },
+  "tool": "scripts/tools/snake_case_survey.py"
+}
