@@ -753,7 +753,8 @@ namespace AtomicWar.GodotApp
                 _doseGeographyPanel,
                 _dailyBriefingModal, _narrativeArcModal,
                 _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
-                _ceremonyFestivalPanel, _roboticsWorkshopPanel
+                _ceremonyFestivalPanel, _roboticsWorkshopPanel,
+                _survivorDowntimePanel, _winterFreezePanel
             };
 
             foreach (Control panel in panels)

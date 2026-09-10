@@ -197,6 +197,11 @@ namespace Ashfall.Core.UI
             R("ceremony_ritual",           "Wasteland Festivals",         PanelGroup.Expanded, new[] { "inventory", "factions" });
             // Robotics workshop (Plan 201) — bound to RoboticsSystem.
             R("robotics_assembly",         "Robotics Workshop",           PanelGroup.Expanded, new[] { "crafting", "inventory", "power_grid" });
+            // ── Plans 196/197: downtime + deep-freeze consoles (Live) ──────
+            // Hobbies & downtime (Plan 196) — bound to SurvivorDowntimeSystem.
+            R("survivor_downtime",         "Hobbies & Downtime",          PanelGroup.Expanded, new[] { "survivors", "inventory" });
+            // Deep-freeze watch (Plan 197) — bound to YearOfAshDeepFreezeSystem.
+            R("winter_freeze",             "Deep Freeze Watch",           PanelGroup.Expanded, new[] { "world" });
         }
 
         private static void R(

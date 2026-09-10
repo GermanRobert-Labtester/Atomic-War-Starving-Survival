@@ -154,6 +154,9 @@ namespace Ashfall.Core.Recreation
                 _catalog[def.hobby_id] = def;
         }
 
+        /// <summary>Read-only hobby catalog for UI display.</summary>
+        public IReadOnlyDictionary<string, HobbyDef> GetHobbyCatalog() => _catalog;
+
         public void LoadCatalog(string jsonContent)
         {
             if (string.IsNullOrWhiteSpace(jsonContent)) return;

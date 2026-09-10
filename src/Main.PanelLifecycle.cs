@@ -54,7 +54,8 @@ namespace AtomicWar.GodotApp
                 _magneticDrumArchivePanel, _plans130To133Panel,
                 _blackProjectsArchivePanel,
                 _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
-                _ceremonyFestivalPanel, _roboticsWorkshopPanel
+                _ceremonyFestivalPanel, _roboticsWorkshopPanel,
+                _survivorDowntimePanel, _winterFreezePanel
             };
 
             foreach (Control panel in panels)

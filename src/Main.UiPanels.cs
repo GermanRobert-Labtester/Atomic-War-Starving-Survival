@@ -560,6 +560,19 @@ namespace AtomicWar.GodotApp
             _roboticsWorkshopPanel.OnActionRequested += HandleRoboticsAction;
             AddChild(_roboticsWorkshopPanel);
 
+            // ── Plans 196/197: downtime + deep-freeze consoles ──
+            _survivorDowntimePanel = new SurvivorDowntimePanel();
+            _survivorDowntimePanel.Visible = false;
+            _survivorDowntimePanel.OnClose += CloseSurvivorDowntimePanel;
+            _survivorDowntimePanel.OnActionRequested += HandleDowntimeAction;
+            AddChild(_survivorDowntimePanel);
+
+            _winterFreezePanel = new WinterFreezePanel();
+            _winterFreezePanel.Visible = false;
+            _winterFreezePanel.OnClose += CloseWinterFreezePanel;
+            _winterFreezePanel.OnActionRequested += HandleWinterFreezeAction;
+            AddChild(_winterFreezePanel);
+
 
 
             _defenseGridPanel = new AtomicWar.GodotApp.UI.DefenseGridPanel();

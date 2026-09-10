@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Recreation;
 
 namespace AtomicWar.GodotApp
@@ -105,6 +106,89 @@ namespace AtomicWar.GodotApp
         public void TickPlans194_197(int day, List<Ashfall.Core.Campaign.DayStateChangeEvent>? events = null)
         {
             _recreation?.TickDay(day);
+        }
+
+        // ── Plan 196: downtime console commands ───────────────────────────
+
+        private void HandleDowntimeAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseSurvivorDowntimePanel(); return; }
+            if (_survivorDowntimePanel == null || _recreation == null) return;
+
+            switch (action)
+            {
+                case "start":
+                {
+                    if (_recreation.GetHobby(param) == null) break;
+                    var hobby = _recreation.GetHobby(param)!;
+
+                    // Participants come from the canonical roster authority —
+                    // up to the hobby's social maximum, at least its minimum.
+                    var participants = new List<string>();
+                    if (_survivors != null)
+                    {
+                        foreach (var s in _survivors.RosterState)
+                        {
+                            if (!string.IsNullOrEmpty(s.Id)) participants.Add(s.Id);
+                            if (participants.Count >= Math.Max(1, hobby.social_max)) break;
+                        }
+                    }
+                    if (participants.Count < hobby.social_min)
+                    {
+                        _survivorDowntimePanel.ShowFeedback("Not enough free hands for that pastime.", true);
+                        break;
+                    }
+
+                    var res = _recreation.StartSession(param, roomId: "room_common_mess_hall", participants);
+                    _survivorDowntimePanel.ShowFeedback(
+                        res.IsSuccess ? "The session is underway. It completes at the end of the day."
+                                      : "That session could not start — check the company and the gear it needs.",
+                        !res.IsSuccess);
+                    break;
+                }
+            }
+            _survivorDowntimePanel.RefreshView();
+        }
+
+        // ── Plan 197: deep-freeze console commands ───────────────────────
+
+        private void HandleWinterFreezeAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseWinterFreezePanel(); return; }
+            if (_winterFreezePanel == null || _yearOfAsh == null) return;
+
+            var deepFreeze = _yearOfAsh.DeepFreeze;
+            if (deepFreeze == null) return;
+
+            switch (action)
+            {
+                case "clear_ice":
+                {
+                    deepFreeze.ClearIntakeIce();
+                    _winterFreezePanel.ShowFeedback("Cold-work party reports the intake cowling clear.", false);
+                    break;
+                }
+                case "insulate":
+                {
+                    // Materials transact atomically through the canonical
+                    // inventory authority; insulation boost goes through Core.
+                    var bill = new InventoryBill();
+                    bill.AddCost("scrap_wood", 4);
+                    bill.AddCost("cloth", 1);
+                    if (TryPayBill(bill))
+                    {
+                        deepFreeze.UpgradeThermalInsulation(0.10f);
+                        _winterFreezePanel.ShowFeedback(
+                            $"Insulation reinforced — quality now {deepFreeze.State.thermalInsulationQuality * 100f:0}%.", false);
+                    }
+                    else
+                    {
+                        _winterFreezePanel.ShowFeedback("Insulation work needs 4 scrap wood and 1 cloth.", true);
+                    }
+                    break;
+                }
+            }
+            _winterFreezePanel.RefreshView();
         }
     }
 }
