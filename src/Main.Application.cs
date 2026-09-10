@@ -224,6 +224,12 @@ namespace AtomicWar.GodotApp
 
                     return;
 
+                case HostCliAction.Plans198To201UiTest:
+
+                    RunPlans198To201UiTestAndQuit();
+
+                    return;
+
                 case HostCliAction.EbPvdCoatingUiTest:
 
                     RunEbPvdCoatingUiTestAndQuit();

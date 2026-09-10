@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — GOOSE Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-09-07
+# Last generated: 2026-09-10
 
 ---
 
@@ -656,9 +656,33 @@ test evidence in `Ashfall.Core.Tests/Farming/FungiCultivationPlan204Tests.cs`
 domain; `AmputationTriagePanel`, `RailwayTerminalPanel` and
 `JusticeTribunalPanel` remain empty-refresh stubs with operational backends.
 
+**Plans 198–201 closeout (commit 231595b8, verified):** the four late-game
+console stubs are now full domain bodies — `CeremonyFestivalPanel` (schedule,
+atomic contribute, faction invite, truce/prep/materials state),
+`ChemWarfareDefensePanel` (lane hazards, density tiers, abstract agent
+profiles, decon dispatch), `CommsArrayTransceiverPanel` (tier/power/tuning,
+lock progress, live orbital-window query, tune/upgrade/strategic-uplink),
+`RoboticsWorkshopPanel` (chassis/logic/core/EMP/rogue state, reactivate,
+program, repair). All mutations route through the Core systems plus the
+canonical inventory (atomic bills), faction-stance trust and journal
+feedback; the four panels are now constructed in `BuildUserInterface`
+(closing a would-be NPE on their previously null fields). Verification:
+`--plans198-201-uitest` (route → bind → visible → command → state delta →
+feedback, exception-free, exit 0), 10760/10760 dotnet tests,
+data-integrity 0 errors, content-utilization stage-4 for all four catalogs,
+scene-binding 25/25. UI-07 is CLOSED for these four; the remaining six
+(`AmputationTriagePanel`, `ArchaeologyExcavationPanel`, `JusticeTribunalPanel`,
+`RailwayTerminalPanel`, `SurvivorDowntimePanel`, `WinterFreezePanel`) are
+still empty-refresh stubs.
+
 Evidence: src/UI/RailwayTerminalPanel.cs:Bind/RefreshView/_Ready (13/19/21); same full-file structure in all eleven named files; src/Main.PlayerSurfaces.cs:45; src/Main.Plans190_193.cs (full orchestration for all four).
 
 Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven. **Plan 204 closed the fungi body (see update above); the other ten remain STUB/PARTIAL.**
+
+**Plans 198–201 update:** `CeremonyFestivalPanel`, `ChemWarfareDefensePanel`,
+`CommsArrayTransceiverPanel` and `RoboticsWorkshopPanel` now have real bodies
+and command flows (see closeout note above) — UI-07 is closed for these four;
+six panels remain STUB/PARTIAL.
 
 #### UI-08 — HIGH — Eleven expansion readouts lack their management workflows
 
@@ -685,6 +709,15 @@ Registration remains blocked on UI-07 completion (empty RefreshView).
 registration blocker; the route registration itself is still a separate
 pending host change (UI-09 contract work), and the other three panels
 remain blocked.
+
+**Plans 198–201 update (commit 231595b8):** `chem_warfare_defense`,
+`comms_array_transceiver`, `ceremony_ritual` and `robotics_assembly` are
+now registered as **Live** descriptors in `PanelRegistryBootstrap` and their
+UI-07 bodies are implemented (see UI-07 closeout note). Route → bind →
+visible → command → state delta → feedback is proven end-to-end by the
+`--plans198-201-uitest` headless gate (5/5 segments PASS, exit 0,
+exception-free). These four IDs are closed for UI-09; the remaining
+nineteen remain unregistered.
 
 Evidence: Assets/Ashfall.Core/UI/PanelRegistry.cs:ConfigureActions/Resolve (204/227); Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs; src/Main.PlayerSurfaces.cs:45–114/511–554; src/UI/GameDashboardPanel.cs:435–448; src/Main.GameFlow.cs:165; src/Main.Plans190_193.cs.
 

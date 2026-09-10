@@ -86,6 +86,7 @@ namespace AtomicWar.GodotApp
         KineticStorageUiTest,
 
         ChemicalReconUiTest,
+        Plans198To201UiTest,
         EbPvdCoatingUiTest,
         MicrofluidicDiagnosticUiTest,
         MineFlailUiTest,
@@ -307,6 +308,8 @@ namespace AtomicWar.GodotApp
 
             if (Has(args, "--chemical-recon-selftest") || Has(args, "--chemical-recon-uitest"))
                 return HostCliAction.ChemicalReconUiTest;
+            if (Has(args, "--plans198-201-uitest") || Has(args, "--plans198-201-selftest"))
+                return HostCliAction.Plans198To201UiTest;
             if (Has(args, "--ebpvd-coating-uitest") || Has(args, "--ebpvd-coating-selftest"))
                 return HostCliAction.EbPvdCoatingUiTest;
             if (Has(args, "--microfluidic-diagnostic-uitest") || Has(args, "--microfluidic-diagnostic-selftest"))
@@ -646,6 +649,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-decor-selftest / --shelter-interior-selftest / --memorial-wall-selftest Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification");
             GD.Print("  --shelter-operations-selftest / --shelter-ops-selftest / --operations-selftest Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification");
             GD.Print("  --silent-foundry-uitest   Silent Foundry trade panel UI construction, binding, and trade loop");
+            GD.Print("  --plans198-201-uitest / --plans198-201-selftest  CBRN/comms/ceremony/robotics panels: route, bind, command, state delta, feedback");
             GD.Print("  --decon-airlock-uitest     Decon Airlock UI data grid panel bindings");
             GD.Print("  --workshop-relic-uitest / --workshop-relic-selftest  Workshop dual-bind relic restoration smoke: render, select, repair, deltas, save/reload");
             GD.Print("  --decon-airlock-selftest   Decon Airlock UI data grid panel bindings");

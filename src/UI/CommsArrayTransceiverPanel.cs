@@ -28,6 +28,8 @@ namespace AtomicWar.GodotApp.UI
         private int _selectedTargetIndex = -1;
         private string _feedbackText = string.Empty;
         private bool _feedbackIsFailure;
+        private int _displayDay;
+        private int _displayHour = 12;
 
         public bool IsBound => _system != null;
 
@@ -78,10 +80,24 @@ namespace AtomicWar.GodotApp.UI
         public void Close() { Visible = false; OnClose?.Invoke(); }
 
         /// <summary>Host feedback strip — tied to the actual command result.</summary>
+        /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
+        public string LastFeedback { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Live campaign clock for deterministic orbital-window display.
+        /// Presentation query only — the Core authority owns the calculation.
+        /// </summary>
+        public void SetDisplayClock(int day, int hour)
+        {
+            _displayDay = day;
+            _displayHour = Math.Clamp(hour, 0, 23);
+        }
+
         public void ShowFeedback(string message, bool isFailure)
         {
             _feedbackText = message;
             _feedbackIsFailure = isFailure;
+            LastFeedback = message;
             RefreshView();
         }
 
@@ -154,7 +170,11 @@ namespace AtomicWar.GodotApp.UI
             _detail.AddChild(AshfallUiHelpers.MakeDataRow("Power draw", $"{selected.RequiredPowerWatts} W",
                 state.AvailablePowerWatts < selected.RequiredPowerWatts ? AshfallUiHelpers.ColorWarning : AshfallUiHelpers.ColorText));
             if (selected.HasSatelliteWindow)
-                _detail.AddChild(AshfallUiHelpers.MakeDataRow("Orbital pass", "Short daily window — lock decays outside it", AshfallUiHelpers.ColorInfo));
+            {
+                bool liveWindow = _system.IsInSatelliteWindow(selected, _displayDay, _displayHour);
+                _detail.AddChild(AshfallUiHelpers.MakeDataRow("Orbital pass", liveWindow ? "OVERHEAD — window open now" : "Short daily window — lock decays outside it",
+                    liveWindow ? AshfallUiHelpers.ColorSuccess : AshfallUiHelpers.ColorInfo));
+            }
 
             _detail.AddChild(AshfallUiHelpers.MakeSeparator());
             _detail.AddChild(AshfallUiHelpers.MakeSubsectionHeader("SIGNAL LOCK"));

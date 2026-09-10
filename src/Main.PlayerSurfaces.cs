@@ -17,7 +17,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseStatusPanel());
 
             PanelRegistry.ConfigureActions("help",
-                bindAction: () => _tutorialPanel.Bind(_simDay),
+                bindAction: () => { _tutorialPanel.Bind(_simDay); FlushContextualTutorialQueue(); },
                 openAction: () => _tutorialPanel.Open(),
                 closeAction: () => CloseTutorialPanel());
 
@@ -111,7 +111,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("comms_array_transceiver",
                 bindAction: () => _commsArrayTransceiverPanel.Bind(EnsureCommsArray()),
-                openAction: () => _commsArrayTransceiverPanel.Visible = true,
+                openAction: () => { _commsArrayTransceiverPanel.SetDisplayClock(_simDay, 12); _commsArrayTransceiverPanel.Visible = true; },
                 closeAction: () => _commsArrayTransceiverPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("ceremony_ritual",
@@ -173,6 +173,11 @@ namespace AtomicWar.GodotApp
                 bindAction: () => { SetupEventsHost(); _eventDetailPanel.Bind(_eventsHost); },
                 openAction: () => _eventDetailPanel.Open(),
                 closeAction: () => CloseEventDetailPanel());
+
+            PanelRegistry.ConfigureActions("narrative_arc",
+                bindAction: () => SetupNarrative(),
+                openAction: () => OpenNarrativeArcModal(),
+                closeAction: () => CloseNarrativeArcModal());
 
             PanelRegistry.ConfigureActions("events_log",
                 bindAction: () => { SetupEventsHost(); _eventsLogPanel.Bind(_eventsHost); },
@@ -260,7 +265,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => ClosePharmaLabPanel());
 
             PanelRegistry.ConfigureActions("medical",
-                bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); EnsureMedicalPipeline(); _medicalPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
+                bindAction: () => { SetupJournal(); DiscoverBureaucraticDocuments("medical_office"); SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); EnsureMedicalPipeline(); _medicalPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
                 openAction: () => _medicalPanel.Open(),
                 closeAction: () => CloseMedicalPanel());
 
@@ -284,7 +289,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseRadioPanel());
 
             PanelRegistry.ConfigureActions("map",
-                bindAction: () => { SetupHoldfastRuntime(); SetupExpeditions(); SetupExpansions(); SetupWorld(); SetupJournal(); SetupDeepCoast(); SetupYearOfAsh(); _mapPanel.Bind(_core, _expeditions, _expansions, _world, _journalCodex?.Catalogs, _deepCoast, _yearOfAsh); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupExpeditions(); SetupExpansions(); SetupWorld(); SetupJournal(); SetupDeepCoast(); SetupYearOfAsh(); SetupWildlifeTrapping(); _mapPanel.Bind(_core, _expeditions, _expansions, _world, _journalCodex?.Catalogs, _deepCoast, _yearOfAsh); },
                 openAction: () => _mapPanel.Open(),
                 closeAction: () => CloseMapPanel());
 
@@ -293,7 +298,16 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseMapDetailPanel());
 
             PanelRegistry.ConfigureActions("shelter",
-                bindAction: () => { SetupSurvivors(); SetupWorld(); SetupInventory(); _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog()); _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
+                bindAction: () => {
+                    SetupJournal();
+                    DiscoverBureaucraticDocuments("shelter_records");
+                    SetupSurvivors();
+                    SetupWorld();
+                    SetupInventory();
+                    int shelterDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog(), GetBunkerGraffitiCatalog(), shelterDay);
+                    _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog());
+                },
                 openAction: () => _shelterPanel.Open(),
                 closeAction: () => CloseShelterPanel());
 
@@ -341,7 +355,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseGreenhousePanel());
 
             PanelRegistry.ConfigureActions("silent_foundry",
-                bindAction: () => { SetupExpansions(); SetupSilentFoundry(); _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay); _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
+                bindAction: () => { SetupJournal(); DiscoverFringeCultRecords("loc_foundry_west_stacks"); SetupExpansions(); SetupSilentFoundry(); _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay); _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
                 openAction: () => _silentFoundryPanel.Open(),
                 closeAction: () => CloseSilentFoundryPanel());
 
@@ -401,7 +415,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => { if (_holdfastTerminal != null) _holdfastTerminal.Visible = false; });
 
             PanelRegistry.ConfigureActions("duty_roster",
-                bindAction: () => { SetupDutyRoster(); SetupSurvivors(); _dutyRosterPanel.Bind(_dutyRoster, _survivors); },
+                bindAction: () => { SetupJournal(); DiscoverBureaucraticDocuments("duty_roster"); SetupDutyRoster(); SetupSurvivors(); _dutyRosterPanel.Bind(_dutyRoster, _survivors); },
                 openAction: () => _dutyRosterPanel.Open(),
                 closeAction: () => CloseDutyRosterPanel());
 
@@ -518,6 +532,28 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("caravan_barter",
                 openAction: () => _caravanBarterLedgerPanel.Open(),
                 closeAction: () => _caravanBarterLedgerPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("shelter_barter",
+                bindAction: () =>
+                {
+                    EnsureShelterBarterPanel().Bind(
+                        EnsureShelterBarter(),
+                        _inventory?.Inventory ?? new Ashfall.Core.Inventory.Inventory(),
+                        _journal,
+                        id => _inventory?.Catalog?.Get(id));
+                },
+                openAction: () => OpenShelterBarterPanel(),
+                closeAction: () => { if (_shelterBarterPanel != null) _shelterBarterPanel.Close(); });
+
+            PanelRegistry.ConfigureActions("black_projects_archive",
+                bindAction: () =>
+                {
+                    EnsureBlackProjectsArchivePanel().Bind(
+                        EnsureBlackProjectsArchive(),
+                        _journal);
+                },
+                openAction: () => OpenBlackProjectsArchivePanel(),
+                closeAction: () => CloseBlackProjectsArchivePanel());
 
             PanelRegistry.ConfigureActions("faction_matrix",
                 bindAction: () => _factionMatrixPanel.Bind(EnsureSharedFactionStance()),
