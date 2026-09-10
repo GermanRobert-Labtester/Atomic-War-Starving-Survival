@@ -197,7 +197,7 @@ Unity assets in `Assets/` are legacy. Every Unity asset has a Godot equivalent �
 | `PhysicsMaterial2D`                 | Godot `PhysicsMaterial`                       | inside scene resource                  |
 | `TileMap`/palettes                  | Godot `TileSet` + `TileMapLayer`              | `assets/<zone>/`                       |
 
-**Remaining debt:** The Unity legacy asset tree (`Assets/art/` ~2080 files, `Assets/sprites/`, `Assets/ui/`, `Assets/audio/radio/`) still lives under the Unity-style `Assets/` tree instead of the Godot root `assets/` tree. Migration direction remains Unity → Godot, but the work is now asset porting (not scene/prefab porting).
+**Remaining debt:** ~~The Unity legacy asset tree (`Assets/art/` ~2080 files, `Assets/sprites/`, `Assets/ui/`, `Assets/audio/radio/`) still lives under the Unity-style `Assets/` tree instead of the Godot root `assets/` tree.~~ **RESOLVED (verified Plan 48):** the legacy art trees are fully migrated — `Assets/art|ui|sprites|audio` now contain only `.gdignore` markers, zero live `res://Assets/art|...` references remain, and the Godot `assets/` tree is LFS-tracked. Migration direction remains Unity → Godot; the remaining work is stray/hold hygiene tracked in [`docs/ASSET_MIGRATION_LEDGER.md`](docs/ASSET_MIGRATION_LEDGER.md) (batch manifest: `scripts/tools/asset-migration-batch-01.json`).
 
 **Rules for asset work:**
 - Never edit `.meta` files by hand for Unity — they will be deleted when the asset is migrated.
@@ -256,7 +256,7 @@ Known offenders (do not grow these; migrate logic into Core instead):
 Known data issues:
 - ~~121 ScriptableObject definitions — risk of dual authority~~ — RESOLVED (0 ScriptableObjects remain; see H12)
 - 56 narrative JSON files are **untracked in git** — missing on fresh clone (`Assets/StreamingAssets/Data/narrative/`)
-- Property naming mixes `camelCase` and `snake_case` — migrate to `snake_case` (migration notes filed per file; rename deferred to a follow-up task — see A11 parity audit)
+- Property naming mixes `camelCase` and `snake_case` — being migrated in bounded, dual-read waves. **Plan 47 wave 1 complete (6 catalogs)**; status/ranking: [`docs/data/SNAKE_CASE_MIGRATION.md`](docs/data/SNAKE_CASE_MIGRATION.md) (canonical engine: `Assets/Ashfall.Core/IO/CatalogKeyNormalizer.cs`)
 - ~~Only 35 of ~280 JSON files have `schema_version`~~ — RESOLVED: all 411 data JSON files (137 root catalogs + 272 narrative + whitelists/documents) carry a top-level `schema_version`; presence is now enforced by `CatalogIntegrityValidator` (a root-object catalog missing it fails `--data-integrity-selftest`), gated by `CatalogIntegrityValidatorTests` (missing→error, present→pass, bare-array root exempt).
 - ~~`world_history.json:15` references "China"~~ — RESOLVED: replaced with a fictional nation ("the Meridian Compact"); all real-country/alliance terms swept from the data authority and gated by `Ashfall.Core.Tests/DataRuleComplianceTests.cs` (no real countries/wars/people).
 
@@ -291,6 +291,35 @@ DTOs are `[Serializable]` plain C# classes. Use `IJsonSerializer`, not `JsonUtil
 - **Initiative #42 — single versioned atomic campaign envelope (complete):** `SaveAll` no longer writes ~61 section files. Every `SaveXxx` captures its section's persisted bytes in memory (`SaveStore<T>.CapturePersisted` — byte-identical to the old file format) into a payload map; `CampaignEnvelopeBuilder` (`Assets/Ashfall.Core/Save/`) packs it into ONE registry-keyed, checksummed, atomic `campaign.json` per slot (`manifestVersion` 2). A failed capture aborts the whole save — cross-system partial saves are structurally impossible. Loads validate the envelope, migrate V1 (filename-keyed) envelopes in memory via the registry filename→key map (reserved `legacy` import section preserved; strays dropped), and explode sections to their registry file names so the `SetupXxx` flows are unchanged. Continue with no slots auto-migrates pre-slot global section files verbatim into a fresh `migrated_N` slot. `SaveSectionRegistry.SectionFileNames` is the single authority for section file names (whitelist, migration, registry-derived reset lists). Envelope contract pinned by `Ashfall.Core.Tests/Save/CampaignEnvelopeBuilderTests.cs` and the 7-gate `--save-load-ui-failure-selftest`.
 - **Task #101 — expedition vehicle & weapon-condition logistics (complete):** `ExpeditionSystem` accepts an `ExpeditionVehicleProfile` at `Start` (speed multiplier, cargo capacity, per-travel-tick breakdown chance, fuel-per-tick); travel steps multiply while the vehicle runs and a seeded per-tick roll can break it down mid-route (reverts to foot speed/capacity, `OnVehicleBreakdown`). Pure `ExpeditionSystem.Estimate` mirrors the tick math for the UI (ticks, fuel, capacity, breakdown + readiness-adjusted encounter risk). `WeaponEquipmentBridge` (`Ashfall.Core.Combat`) projects the persisted `EquipmentConditionSystem` weapon instances into combat `WeaponInstanceState` tokens (0–100 ↔ 0–1) and writes engagement wear back at encounter end — one persisted condition per weapon, no new durability authority (canon rule respected). `ExpeditionHostSession` owns the garage (`ExpeditionVehicleSystem`, deterministic seed, starter quad, fuel gate + prep on dispatch, refuel/repair); the expedition save section is now the aggregate `ExpeditionAggregateState` (sorties + garage) with legacy envelope/bare-list migration; `vehicles.json` is the data authority. Pinned by `ExpeditionVehicleLogisticsTests` (13) + the 9 vehicle gates in `--expedition-selftest`.
 - ~~`LocationEvolutionSaveable`, `WildlifeSaveable`, `LandmarkSaveable` have empty `CaptureState/RestoreState`~~ — **CORRECTED (2026-08-27 audit):** no such classes exist; the real systems (`LocationEvolutionSystem`, `WildlifeMigrationSystem`, `LandmarkDegradationSystem`) have functional capture/restore and persist as sub-fields of `WorldHostSave` inside the world section.
+
+---
+
+## CONTENT AUTHORITY PIPELINE (PLANS 47–50)
+
+Four mechanical content-authority domains, one index:
+[`docs/CONTENT_AUTHORITY_AND_MIGRATION_STATUS.md`](docs/CONTENT_AUTHORITY_AND_MIGRATION_STATUS.md).
+
+1. **JSON naming** — canonical snake_case via typed loaders;
+   `CatalogKeyNormalizer` (`Assets/Ashfall.Core/IO/`) provides dual-read
+   (legacy camelCase accepted; conflicting dual spellings fail loudly).
+   Wave tracker: `docs/data/SNAKE_CASE_MIGRATION.md`; survey:
+   `artifacts/snake-case-survey.json`; converter:
+   `scripts/tools/convert_snake_case_keys.py`.
+2. **Godot assets** — `res://assets/...` is the live authority; batch
+   manifests `scripts/tools/asset-migration-batch-*.json` + tool
+   `scripts/tools/migrate-assets-batch.py` (copy-first, never deletes);
+   ledger `docs/ASSET_MIGRATION_LEDGER.md`.
+3. **Deep content chains** — `Assets/Ashfall.Core/Content/ContentDeepChainGate.cs`
+   hard-gates three flagship chains (research→recipe→craft,
+   expedition→loot→inventory→use, faction→treaty→consequence→briefing) plus
+   five warn-tier chains, inside `--content-utilization-selftest` (Phase 11).
+4. **Narrative continuity** — `Assets/Ashfall.Core/Narrative/Continuity/`
+   normalizes the corpus's distinct narrative schemas into one graph model;
+   `--narrative-continuity-selftest` lints dangling refs, reachability,
+   flag set↔read and case discipline (structural = HARD, flag audits = WARN,
+   allowlist: `NarrativeContinuityAllowlist`). Artifacts:
+   `artifacts/narrative-continuity.{json,md}`. This is the single narrative
+   lint authority — skills/tests delegate to the same engine.
 
 ---
 
@@ -376,12 +405,12 @@ Known issues:
 | #  | Issue                                                              | Location                                                         |
 |----|--------------------------------------------------------------------|------------------------------------------------------------------|
 | H1 | ~~`HoldfastRuntimeSession` duplicates core survival mechanics~~ — **RESOLVED** (thin projection onto `NeedsSystem`/`RadiationSystem` via `SurvivorsHostSession`; fallback `_fallback*` only for headless tests) | `src/Host/HoldfastRuntimeSession.cs:44` (`Health`/`Hunger`/`Thirst`/`Radiation` project via `Survivors?.Find()`; `TickDay:164` fallback decay only when `Survivors==null`) |
-| H2 | ~~Duplicate `WornGear` class~~ — **RESOLVED** (consolidated)         | Radiation uses `Inventory.WornGear` directly (`using InventoryWornGear = Ashfall.Core.Inventory.WornGear` in `RadiationSystem.cs`); `FromInventory` removed. Host path is `Inventory.FillWornGear` via `SurvivorsHostSession` (gas mask/hazmat cuts dose; `--survivors-selftest` + `InventoryGearBridgeTests`). |
+| H2 | ~~Duplicate `WornGear` class~~ — **RESOLVED** (consolidated)         | Radiation uses `Inventory.WornGear` directly (`using InventoryWornGear = Ashfall.Core.Inventory.WornGear` in `RadiationSystem.cs`); `FromInventory` removed. Host path is `Inventory.FillWornGear` via `SurvivorsHostSession` (gas mask/hazmat cuts dose; `NeedsRadiationSystemTests.GearProtectionBridgeTests` + `--survivors-selftest`). See `docs/architecture/WORN_GEAR_CONSOLIDATION.md`. |
 | H3 | ~~`SimClock` duplicate~~ — **RESOLVED & POLICY-ENFORCED** (Plan 45) | Non-merge directive in `docs/architecture/CLOCK_POLICY.md`: `IClock` (day-based) and `ISimClock` (tick-based) serve decoupled horizons. Verified by `ClockPolicyTests` (Verdict 7-day 03:00 cadence, Warlord daily idempotency, tick-day conversion, and replay). |
 | H4 | ~~13 bare `catch { }` blocks swallow exceptions~~ — **RESOLVED** | `YearOfAshCatalogLoader.cs` (7) + `VerdictCatalogLoader.cs` (3) — zero bare `catch { }`; every parse failure routes through `CatalogDiagnostics.Warn(path, shape, ex)` → an injectable `ILog` sink (default `ConsoleLog`, overridable via `RegisterLog`), carrying file path + attempted JSON shape. Missing optional files stay silent-empty by design (not a failure). Regression coverage in `Ashfall.Core.Tests/CatalogLoaderHardeningTests.cs` (6 tests: malformed→logged for both loaders, valid→baseline, missing→silent-empty). |
-| H5 | Utility AI forked — **Core vs Godot host** (not Unity)             | `Assets/Ashfall.Core/UtilityAI/` vs `src/UtilityAI/` (Godot host) |
+| H5 | ~~Utility AI forked — Core vs Godot host~~ — **RESOLVED**           | Core `Assets/Ashfall.Core/UtilityAI/` is the sole gameplay authority; `src/UtilityAI/UtilityAiPanel.cs` is presentation-only and `src/Host/UtilityAiHostSession.cs` is a thin adapter. Guarded by `ArchitectureAuthorityGateTests` and `docs/architecture/UTILITY_AI_UNIFICATION.md`. |
 | H6 | ~~Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters~~ — **RESOLVED** (Unity host removed) | Unity host deleted with `_Game/` |
-| H7 | `Main` host sprawl — ~19.8k lines across **74** `Main*.cs` partials | Triad pattern holds (`SetupXxx` / `SaveXxx` / optional `FlushXxxIfDirty`); SaveAll enrolls registered sections. Drift gated by `MainTriadDriftGateTests` (audit #28/#29). Full decomposition remains deferred (`ashfall-decompose-godot`). |
+| H7 | ~~`Main` host sprawl~~ — **WAVE-1 RESOLVED**                          | `src/Main.cs` is 82 lines across 104 `Main*.cs` partials. `MainTriadDriftGateTests` now validates `SaveSectionRegistry` method existence, Setup/Save coverage, transitive `SaveAll` reachability, and Flush dispositions. Wave-2 backlog and ownership matrix: `docs/architecture/MAIN_DECOMPOSITION_MAP.md`. |
 | H8 | ~~`SettingsManager` uses `PlayerPrefs` (Unity-only)~~ — **RESOLVED** | Unity `SettingsManager.cs` deleted with `_Game/` |
 | H9 | ~~124 compiler warnings in tests~~ — RESOLVED                       | test suite builds with 0 errors, 3 minor analyzer warnings (xUnit2013/xUnit2020) — not nullable refs |
 | H10 | ~~NeedsSystem & RadiationSystem save/load round-trip tests~~ — **RESOLVED** | `NeedsRadiationSystemTests.cs` covers tick behaviour (58 tests); `NeedsRadiationSaveRoundTripTests.cs` now adds save/load round-trip coverage (17 tests): all-fields round-trip + restored-state-drives-tick, capture→tick→differs no-op guard, default/empty restore with documented defaults, checksum stability, paired capture/restore determinism for both systems, and the Core no-projection half of the `HoldfastRuntimeSession` `Survivors==null` fallback (`HoldfastRuntimeSession.cs:177`). Fallback-decay math itself lives in the Godot host (Godot.NET.Sdk/net8.0), not referenceable from the net9.0 test project, and is covered by host integration tests. |

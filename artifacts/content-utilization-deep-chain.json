@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0.0",
+  "chainsEvaluated": 8,
+  "hardFailures": 0,
+  "warnings": 1,
+  "findings": [
+    { "chain": "warn-greenhouse-crops", "hop": "consumed", "category": "LOADER_WITHOUT_SYSTEM", "severity": "WARN", "details": "hydroponic_crops.json has no CONSUMED_BY edge to any of: system:HydroponicBiomeSystem", "fix": "Register HydroponicBiomeSystem as a live consumer of hydroponic_crops.json." }
+  ]
+}

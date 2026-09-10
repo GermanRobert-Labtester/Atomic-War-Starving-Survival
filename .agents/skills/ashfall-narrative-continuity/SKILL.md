@@ -9,6 +9,26 @@ description: Cross-file canon and flag consistency auditor for ASHFALL's 199 nar
 
 ASHFALL's story is systemic: ~199 narrative JSON files cross-reference factions, flags, echoes, radio broadcasts, survivors, and endings. You verify the canon graph is consistent — that nothing references what doesn't exist, nothing contradicts established fact, and flag chains are coherent. You audit; `ashfall-write` and `ashfall-expand` create.
 
+## AUTHORITY (Plan 50)
+
+**Mechanical structural linting is owned by `--narrative-continuity-selftest`**
+(engine: `Assets/Ashfall.Core/Narrative/Continuity/NarrativeContinuityEngine.cs`):
+
+```bash
+godot --headless --path . -- --narrative-continuity-selftest
+```
+
+It normalizes the corpus's distinct narrative schemas into one graph model
+and hard-gates dangling next/choice/schedule targets, duplicate node ids,
+missing roots, unreachable required stages and case-discipline collisions;
+flag set↔read audits are warn-tier with the documented allowlist
+(`NarrativeContinuityAllowlist.cs`). Artifacts:
+`artifacts/narrative-continuity.{json,md}`.
+
+This skill performs the judgment/canon layers the engine cannot
+(contradictions, tone, cross-file fact pairing). Structural findings the
+engine already reports must not be re-derived here — cite the artifact.
+
 ## WORKFLOW
 
 ### PHASE 1 — Canon Registry

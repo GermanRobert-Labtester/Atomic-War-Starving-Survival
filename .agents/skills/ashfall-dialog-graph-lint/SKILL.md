@@ -12,6 +12,7 @@ description: Graphs and lints quest/flag/echo/radio/dialog reachability — unre
 1. JSON is authority — graph nodes are `quest_*`, `encounter_*`, `flag_*`, `ending_*`, `echo_*`, `radio_*`, `event_*` snake_case IDs; never invent outside master prefix list (`AGENTS.md:DATA INTEGRITY`).
 2. Ranges `minDay`/`maxDay` must be ordered; `flag_` semantics respect `InMemoryFlagLedger` ordinal drift note.
 3. Read-only lint; emits DOT/SVG, never rewrites prose.
+4. **Plan 50 authority:** mechanical structural lint (dangling targets, duplicate nodes, reachability, flag set↔read, case discipline) is owned by `--narrative-continuity-selftest` (`Assets/Ashfall.Core/Narrative/Continuity/NarrativeContinuityEngine.cs`, artifacts `artifacts/narrative-continuity.{json,md}`). Run it first and cite its findings; do not re-implement structural rules here — this skill adds reachability visualization over the same graph model.
 
 ## WORKFLOW
 ### PHASE 1 — Graph Build

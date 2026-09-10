@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 110,
-  "headless_test_count": 108,
+  "total_tests": 111,
+  "headless_test_count": 109,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -655,6 +655,17 @@
       "description": "Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario",
       "headless_compatible": true,
       "expected_summary_id": "evolving_world_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "world_playtest_selftest",
+      "action": "WorldPlaytestSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--world-playtest-selftest",
+      "aliases": [],
+      "description": "Fixed-seed 30-day evolving-world campaign proof: stable snapshots, downstream consumers, bounds, determinism, and midpoint save/load parity",
+      "headless_compatible": true,
+      "expected_summary_id": "world_playtest_selftest",
       "timeout_seconds": 30
     },
     {

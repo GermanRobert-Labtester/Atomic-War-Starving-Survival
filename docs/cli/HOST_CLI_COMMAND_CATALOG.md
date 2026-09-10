@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-09<br>
-**Total Registered Actions:** 156 entries / 230 flag tokens (aliases included)
+**Last Verified:** 2026-09-10<br>
+**Total Registered Actions:** 158 entries / 232 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -64,6 +64,7 @@
 | `--ledger-debt-selftest` | — | LedgerDebtHeadlessDemo |
 | `--moral-choice-selftest` | — | Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks |
 | `--evolving-world-selftest` | — | Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario |
+| `--world-playtest-selftest` | — | Fixed-seed 30-day evolving-world campaign proof: snapshots, downstream reads, bounds, determinism, and midpoint save/load parity |
 | `--selftest-manifest` | — | Emit the machine-readable self-test manifest JSON (scripts/ci/generate-selftest-manifest.py) |
 | `--test-manifest` | — | Alias for --selftest-manifest |
 | `--list-selftests` | — | List every registered selftest and run its signature live (runtime/CLI parity audit) |
@@ -107,6 +108,7 @@
 | `--medical-selftest` | — | Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip |
 | `--medical-ward-save-selftest` | — | Medical ward save store round-trip, bed allocation, and affliction persistence |
 | `--narrative-selftest` | — | Narrative domain: dialog trees, echoes, flags, and story event resolution |
+| `--narrative-continuity-selftest` | — | Plan 50: normalize narrative graphs (questline stages, event chains, quest refs), lint dangling refs/reachability/flag set-vs-read/case discipline, write artifacts/narrative-continuity.{json,md} |
 | `--npc-arc-selftest` | — | Plan 52 recurring NPC arcs: resolution precedence, encounter→quest memory, save round-trip, distress suppression |
 | `--oral-lore-selftest` | — | Oral Lore Codex: load 16 songs/poems from narrative catalogs, verify query by id/tag/genre |
 | `--radio-selftest` | — | Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected |
