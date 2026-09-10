@@ -542,7 +542,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:BoneHornSourceAdapter";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "BoneHornSourceAdapter");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -552,7 +552,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:PaperPrintSourceAdapter";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "PaperPrintSourceAdapter");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -562,7 +562,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:FringeCultSourceAdapter";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "FringeCultSourceAdapter");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -572,7 +572,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:BureaucraticDocumentCatalogLoader";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "BureaucraticDocumentCatalogLoader");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -582,7 +582,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:BunkerGraffitiCatalog";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "BunkerGraffitiCatalog");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -592,7 +592,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:BunkerCourtCatalog";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "BunkerCourtCatalog");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -602,7 +602,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:BunkerMaintenanceCatalog";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "BunkerMaintenanceCatalog");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -612,7 +612,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:PersonalLetterCatalog";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "PersonalLetterCatalog");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -622,7 +622,7 @@ namespace Ashfall.Core.Content
                     cat.MaxStage = UtilizationStage.LOADED;
                     string loaderId = "loader:AbyssalAnomaliesCatalog";
                     EnsureNode(loaderId, ContentNodeKind.Loader, "AbyssalAnomaliesCatalog");
-                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     continue;
                 }
 
@@ -636,7 +636,7 @@ namespace Ashfall.Core.Content
                     {
                         string loaderId = $"loader:{loaders[0]}";
                         EnsureNode(loaderId, ContentNodeKind.Loader, loaders[0]);
-                        AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                        AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     }
                 }
             }
