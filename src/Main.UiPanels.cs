@@ -774,7 +774,21 @@ namespace AtomicWar.GodotApp
 
             _falloutPlumePanel = new FalloutPlumePanel();
             _falloutPlumePanel.OnClose += () => _falloutPlumePanel.Visible = false;
+            _falloutPlumePanel.OnActionRequested += HandleFalloutAction;
             AddChild(_falloutPlumePanel);
+
+            // ── Plans 186-189: desperation + mercenary bounty consoles ──
+            _desperationCrisisPanel = new DesperationCrisisPanel();
+            _desperationCrisisPanel.Visible = false;
+            _desperationCrisisPanel.OnClose += CloseDesperationCrisisPanel;
+            _desperationCrisisPanel.OnActionRequested += HandleDesperationAction;
+            AddChild(_desperationCrisisPanel);
+
+            _mercenaryBountyBoardPanel = new MercenaryBountyBoardPanel();
+            _mercenaryBountyBoardPanel.Visible = false;
+            _mercenaryBountyBoardPanel.OnClose += CloseMercenaryBountyBoardPanel;
+            _mercenaryBountyBoardPanel.OnActionRequested += HandleMercenaryAction;
+            AddChild(_mercenaryBountyBoardPanel);
 
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();

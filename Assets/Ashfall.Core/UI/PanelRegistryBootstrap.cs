@@ -207,6 +207,11 @@ namespace Ashfall.Core.UI
             R("justice_tribunal",          "Shelter Tribunal",            PanelGroup.Expanded, new[] { "survivors" });
             R("railway_logistics",         "Railway Terminal",            PanelGroup.Expanded, new[] { "expedition", "inventory" });
             R("archaeology_excavation",    "Pre-War Archaeology",         PanelGroup.Expanded, new[] { "expedition", "research" });
+            // ── Plans 186-189: fallout/desperation/mercenary consoles (Live) ──
+            R("mercenary_bounty_board",     "Mercenary Bounty Board",      PanelGroup.Expanded, new[] { "economy", "inventory", "factions" });
+            // Plans 186-187: fallout radar + desperation crisis (Live).
+            R("expansion_fallout_plume",    "Fallout Plume Radar",         PanelGroup.Expanded, new[] { "world" });
+            R("desperation_crisis",         "Desperation & Taboo Monitor", PanelGroup.Expanded, new[] { "survivors", "inventory" });
         }
 
         private static void R(

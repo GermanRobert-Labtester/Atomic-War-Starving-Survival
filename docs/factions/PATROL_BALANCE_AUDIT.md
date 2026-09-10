@@ -10,6 +10,6 @@ Deterministic 30-day simulations using production `SelectEncounter` code.
 | Mixed | Rapid | 30 | 9.8 | 5.6 | 24.4 | 1.4 | 0.0 | 0.0 | 8.4 | 30.0 |
 | Controlled | Cautious | 30 | 13.4 | 3.2 | 26.8 | 4.4 | 0.0 | 0.0 | 9.0 | 30.0 |
 
-Generated: 2026-09-10 08:23 UTC
+Generated: 2026-09-10 08:38 UTC
 Seeds per scenario: 5 (5000–5004)
 Catalog: 57 encounters

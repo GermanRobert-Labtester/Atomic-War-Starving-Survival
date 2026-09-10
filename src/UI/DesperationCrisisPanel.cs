@@ -8,6 +8,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class DesperationCrisisPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action<string, string>? OnActionRequested;
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -29,6 +30,17 @@ namespace AtomicWar.GodotApp.UI
         public void Unbind()
         {
             _system = null;
+        }
+
+        /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
+        public string LastFeedback { get; private set; } = string.Empty;
+
+        /// <summary>Host feedback strip — tied to the actual command result.</summary>
+        public void ShowFeedback(string message, bool isFailure)
+        {
+            _detailText.Text = isFailure ? $"⚠ {message}" : message;
+            LastFeedback = message;
+            RefreshView();
         }
 
         public override void _Ready()
@@ -61,7 +73,9 @@ namespace AtomicWar.GodotApp.UI
             _btnHarvest.Pressed += () => {
                 if (_system != null && _system.State.unburiedCorpseIds.Count > 0)
                 {
-                    /* _system.HarvestCorpse(actorId, corpseId, "desperation_consume_corpse", 1); */
+                    // Presentation-only: the host resolves the actor from the
+                    // canonical roster and performs the Core harvest command.
+                    OnActionRequested?.Invoke("harvest_corpse", _system.State.unburiedCorpseIds[0]);
                     RefreshView();
                 }
             };
@@ -72,7 +86,7 @@ namespace AtomicWar.GodotApp.UI
             _btnBurial.Pressed += () => {
                 if (_system != null && _system.State.unburiedCorpseIds.Count > 0)
                 {
-                    /* _system.State.unburiedCorpseIds.RemoveAt(0); // Mocked burial */
+                    OnActionRequested?.Invoke("bury_corpse", _system.State.unburiedCorpseIds[0]);
                     RefreshView();
                 }
             };

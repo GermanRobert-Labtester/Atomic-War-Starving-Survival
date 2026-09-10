@@ -66,7 +66,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("mercenary_bounty_board",
                 bindAction: () => _mercenaryBountyBoardPanel.Bind(EnsureMercenary()),
-                openAction: () => _mercenaryBountyBoardPanel.Visible = true,
+                openAction: () => { _mercenaryBountyBoardPanel.SetDisplayClock(_simDay); _mercenaryBountyBoardPanel.Visible = true; },
                 closeAction: () => _mercenaryBountyBoardPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("archaeology_excavation",

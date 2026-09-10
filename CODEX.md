@@ -747,12 +747,19 @@ closed for UI-09; the remaining seventeen remain unregistered.
 **UI-07-closeout update:** `amputation_surgery`, `justice_tribunal`,
 `railway_logistics` and `archaeology_excavation` are now registered **Live**
 with real bodies and handlers (headless gate 10/10 panel contracts PASS).
-Of the original 23 register IDs, 10 are closed. Concurrent streams added
-new configured-but-unregistered IDs (narrative_arc, radio_intelligence,
-shelter_social, subterranean_operations, electrostatic_scrubber,
-plastic_pyrolysis, cargo_airdrop, fungi_cultivation and others) — several
-have real bodies from closed panel work and need a body-vs-register audit
-before Live registration; do not register unverified bodies.
+
+**Plans 186-189 closeout:** `expansion_fallout_plume` (radar grid + emergency
+seal through Core `SealShelter`), `desperation_crisis` (crisis-gated
+harvest + sanctified burial through a new Core `PerformBurial` command —
+the panel's previously commented-out/mock buttons are now real Core
+command routing), and `mercenary_bounty_board` (real contract board:
+deterministic `GenerateBoard` now wired to the daily tick with the
+canonical `npc_` pool from characters.json, accept + proof + exactly-once
+claim flow) are registered **Live** with real bodies and handlers.
+Headless gate covers all: 14/14 segments PASS, exit 0, exception-free,
+including mercenary double-claim and fallout double-seal guards.
+Remaining configured-but-unregistered IDs need a body-vs-register audit
+before Live promotion; do not register unverified bodies.
 
 Evidence: Assets/Ashfall.Core/UI/PanelRegistry.cs:ConfigureActions/Resolve (204/227); Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs; src/Main.PlayerSurfaces.cs:45–114/511–554; src/UI/GameDashboardPanel.cs:435–448; src/Main.GameFlow.cs:165; src/Main.Plans190_193.cs.
 

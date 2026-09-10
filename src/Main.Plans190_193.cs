@@ -5,6 +5,7 @@
 //                Subterranean Fungi Cultivation, Wasteland Justice & Tribal Law
 // ============================================================================
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
@@ -521,5 +522,88 @@ namespace AtomicWar.GodotApp
         private void CloseJusticeTribunalPanel() { _justiceTribunalPanel?.Visible = false; }
         private void CloseRailwayTerminalPanel() { _railwayTerminalPanel?.Visible = false; }
         private void CloseArchaeologyExcavationPanel() { _archaeologyExcavationPanel?.Visible = false; }
+        private void CloseDesperationCrisisPanel() { _desperationCrisisPanel?.Visible = false; }
+        private void CloseMercenaryBountyBoardPanel() { _mercenaryBountyBoardPanel?.Visible = false; }
+
+        // ── Plans 186/187: desperation + fallout console commands ──────────
+
+        private void HandleDesperationAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseDesperationCrisisPanel(); return; }
+            if (_desperationCrisisPanel == null || _desperation == null) return;
+
+            switch (action)
+            {
+                case "harvest_corpse":
+                {
+                    // Actor resolves from the canonical roster authority.
+                    string actorId = _survivors?.RosterState.FirstOrDefault(s => !string.IsNullOrEmpty(s.Id))?.Id ?? string.Empty;
+                    var res = _desperation.HarvestCorpse(actorId, param, "desperation_consume_corpse", _simDay);
+                    _desperationCrisisPanel.ShowFeedback(
+                        res.IsSuccess ? "The unthinkable is done. The shelter eats; nothing is the same."
+                                      : "The crisis threshold has not been reached — the act is not yet on the table.",
+                        !res.IsSuccess);
+                    break;
+                }
+                case "bury_corpse":
+                {
+                    var res = _desperation.PerformBurial(param);
+                    _desperationCrisisPanel.ShowFeedback(
+                        res.IsSuccess ? "The dead are laid to rest with what dignity remains."
+                                      : "Nothing to bury.",
+                        !res.IsSuccess);
+                    break;
+                }
+            }
+            _desperationCrisisPanel.RefreshView();
+        }
+
+        private void HandleFalloutAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { _falloutPlumePanel.Visible = false; return; }
+            if (_falloutPlumePanel == null || _fallout == null) return;
+
+            switch (action)
+            {
+                case "seal_shelter":
+                {
+                    float hours = float.TryParse(param, out var h) ? h : 48f;
+                    bool sealedOk = _fallout.SealShelter(hours);
+                    _falloutPlumePanel.SetFeedback(
+                        sealedOk ? "Airlock seal engaged. Outside air stays outside for as long as the seal holds."
+                                 : "The seal could not be engaged.",
+                        !sealedOk);
+                    break;
+                }
+            }
+            _falloutPlumePanel.RefreshView();
+        }
+
+        // ── Plan 188: mercenary bounty board commands ──────────────────────
+
+        private void HandleMercenaryAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseMercenaryBountyBoardPanel(); return; }
+            if (_mercenaryBountyBoardPanel == null || _mercenary == null) return;
+
+            Ashfall.Core.ActionResult? res = action switch
+            {
+                // Claim requires the authored proof item — the canonical
+                // inventory authority holds it; Core verifies and pays once.
+                "claim" => (Ashfall.Core.ActionResult?)_mercenary.ClaimReward(param),
+                "accept" => (Ashfall.Core.ActionResult?)_mercenary.AcceptContract(param, _simDay),
+                _ => null
+            };
+
+            if (res != null)
+                _mercenaryBountyBoardPanel.ShowFeedback(
+                    res.Value.IsSuccess
+                        ? (action == "claim"
+                            ? "Payout collected at the board. The ledger closes."
+                            : "Contract accepted. Proof of the deed is what gets paid — nothing else.")
+                        : "The board refused it — check proof, expiry and standing.",
+                    !res.Value.IsSuccess);
+            _mercenaryBountyBoardPanel.RefreshView();
+        }
     }
 }

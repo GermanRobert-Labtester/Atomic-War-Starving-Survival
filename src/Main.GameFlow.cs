@@ -756,7 +756,9 @@ namespace AtomicWar.GodotApp
                 _ceremonyFestivalPanel, _roboticsWorkshopPanel,
                 _survivorDowntimePanel, _winterFreezePanel,
                 _amputationTriagePanel, _justiceTribunalPanel,
-                _railwayTerminalPanel, _archaeologyExcavationPanel
+                _railwayTerminalPanel, _archaeologyExcavationPanel,
+                _desperationCrisisPanel, _mercenaryBountyBoardPanel,
+                _falloutPlumePanel
             };
 
             foreach (Control panel in panels)

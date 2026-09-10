@@ -57,6 +57,7 @@ namespace Ashfall.Core.Survivors
         public List<string> cannibalSurvivorIds = new List<string>();
         public List<DesperationActRecord> actsHistory = new List<DesperationActRecord>();
         public List<string> unburiedCorpseIds = new List<string>();
+        public List<string> buriedCorpseIds = new List<string>();
         public List<string> oneShotShockIds = new List<string>();
     }
 
@@ -150,6 +151,21 @@ namespace Ashfall.Core.Survivors
             {
                 _state.unburiedCorpseIds.Add(corpseId);
             }
+        }
+
+        /// <summary>
+        /// Sanctified burial: lay one unburied dead to rest without taboo
+        /// consequences. Canonical domain command — the UI may request it,
+        /// never mutate state directly. Idempotent: an already-buried or
+        /// harvested corpse cannot be buried twice.
+        /// </summary>
+        public ActionResult PerformBurial(string corpseId)
+        {
+            if (string.IsNullOrEmpty(corpseId) || !_state.unburiedCorpseIds.Contains(corpseId))
+                return ActionResult.Blocked("no_unburied_corpse", "desperation.no_unburied_corpse");
+            _state.unburiedCorpseIds.Remove(corpseId);
+            _state.buriedCorpseIds.Add(corpseId);
+            return ActionResult.Success("desperation.buried");
         }
 
         public bool IsActionEligible(string survivorId, string eventId, string corpseId)

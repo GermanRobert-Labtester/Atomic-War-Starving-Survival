@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-09<br>
-**Total Registered Actions:** 155 entries / 228 flag tokens (aliases included)
+**Total Registered Actions:** 156 entries / 230 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -138,6 +138,7 @@
 | `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
+| `--plans198-201-uitest` | `--plans198-201-selftest` | CBRN/comms/ceremony/robotics panels: route, bind, command, state delta, feedback |
 | `--decon-airlock-uitest` | — | Decon Airlock UI data grid panel bindings |
 | `--workshop-relic-uitest` | `--workshop-relic-selftest` | Workshop dual-bind relic restoration smoke: render, select, repair, deltas, save/reload |
 | `--decon-airlock-selftest` | — | Decon Airlock UI data grid panel bindings |

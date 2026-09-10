@@ -8,6 +8,9 @@ namespace AtomicWar.GodotApp.UI
     public partial class FalloutPlumePanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action<string, string>? OnActionRequested;
+        private string _lastFeedback = string.Empty;
+        private Label _feedbackLabel = null!;
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -51,13 +54,19 @@ namespace AtomicWar.GodotApp.UI
             _detailText.Text = "No active radioactive clouds detected in the local sector.";
             _contentStack.AddChild(_detailText);
 
+            _feedbackLabel = new Label { Text = "" };
+            _feedbackLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _contentStack.AddChild(_feedbackLabel);
+
             _btnEmergencySeal = new Button { Text = "ENGAGE EMERGENCY 48H AIRLOCK SEAL" };
             _btnEmergencySeal.CustomMinimumSize = new Vector2(400, 40);
             _btnEmergencySeal.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
             _btnEmergencySeal.Pressed += () => {
                 if (_system != null && !_system.IsShelterSealed)
                 {
-                    _system.SealShelter(48);
+                    // Presentation-only: host routes the seal through Core and
+                    // reports the authoritative result back via SetFeedback.
+                    OnActionRequested?.Invoke("seal_shelter", "48");
                     RefreshView();
                 }
             };
@@ -67,6 +76,17 @@ namespace AtomicWar.GodotApp.UI
             _shell.AttachHeaderCloseButton("CLOSE (ESC)", () => OnClose?.Invoke());
 
             Visible = false;
+            RefreshView();
+        }
+
+        /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
+        public string LastFeedback { get; private set; } = string.Empty;
+
+        /// <summary>Host feedback strip — tied to the actual command result.</summary>
+        public void SetFeedback(string message, bool isFailure)
+        {
+            _lastFeedback = isFailure ? $"âš {message}" : message;
+            LastFeedback = message;
             RefreshView();
         }
 
@@ -115,6 +135,9 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
             _detailText.Text = sb.ToString();
+
+            if (_feedbackLabel != null)
+                _feedbackLabel.Text = _lastFeedback;
         }
     }
 }

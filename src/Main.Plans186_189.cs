@@ -198,7 +198,40 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry("mercenary_betrayal", $"Hired mercenaries betrayed contract {contract.contractId} on target {contract.targetId}!", null!, _simDay);
             };
 
+            // Canonical NPC identity catalog supplies the deterministic
+            // candidate target pool for board generation.
+            _mercenaryCandidateTargets = LoadNpcCandidateTargets();
+
             return _mercenary;
+        }
+
+        private System.Collections.Generic.List<string>? _mercenaryCandidateTargets;
+
+        private System.Collections.Generic.List<string> LoadNpcCandidateTargets()
+        {
+            var list = new System.Collections.Generic.List<string>();
+            try
+            {
+                string path = System.IO.Path.Combine(_dataDir, "characters.json");
+                if (System.IO.File.Exists(path))
+                {
+                    using var doc = System.Text.Json.JsonDocument.Parse(System.IO.File.ReadAllText(path));
+                    if (doc.RootElement.TryGetProperty("characters", out var arr) && arr.ValueKind == System.Text.Json.JsonValueKind.Array)
+                    {
+                        foreach (var el in arr.EnumerateArray())
+                        {
+                            if (el.TryGetProperty("id", out var idEl) && idEl.GetString() is { } id
+                                && id.StartsWith("npc_", StringComparison.Ordinal))
+                                list.Add(id);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[Main.Mercenary] Failed to load candidate targets: {ex.Message}");
+            }
+            return list;
         }
 
         private void SetupMercenary()
@@ -292,7 +325,13 @@ namespace AtomicWar.GodotApp
                 _fallout.Tick(deltaHours, 45.0f, 15.0f, zones);
             }
 
-            _mercenary?.TickDay(day);
+            if (_mercenary != null)
+            {
+                // Deterministic board refresh at the day boundary (no-op when
+                // already generated for this day; Core owns the seed).
+                _mercenary.GenerateBoard(day, _mercenaryCandidateTargets ?? (System.Collections.Generic.IReadOnlyList<string>)Array.Empty<string>());
+                _mercenary.TickDay(day);
+            }
         }
     }
 }
