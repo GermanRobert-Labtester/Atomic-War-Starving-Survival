@@ -3,59 +3,59 @@
   "items": [
     {
       "id": "season_first_ashfall",
-      "windowMinDays": 0,
-      "windowMaxDays": 7,
-      "encounterWeight": 1.45,
-      "steamTripChanceBoost": 0.01
+      "window_min_days": 0,
+      "window_max_days": 7,
+      "encounter_weight": 1.45,
+      "steam_trip_chance_boost": 0.01
     },
     {
       "id": "season_second_winter",
-      "windowMinDays": 8,
-      "windowMaxDays": 12,
-      "encounterWeight": 1.6,
-      "steamTripChanceBoost": 0.08
+      "window_min_days": 8,
+      "window_max_days": 12,
+      "encounter_weight": 1.6,
+      "steam_trip_chance_boost": 0.08
     },
     {
       "id": "season_settling",
-      "windowMinDays": 13,
-      "windowMaxDays": 30,
-      "encounterWeight": 1.0,
-      "steamTripChanceBoost": 0.06
+      "window_min_days": 13,
+      "window_max_days": 30,
+      "encounter_weight": 1.0,
+      "steam_trip_chance_boost": 0.06
     },
     {
       "id": "season_spring_thaw",
-      "windowMinDays": 31,
-      "windowMaxDays": 60,
-      "encounterWeight": 0.75,
-      "steamTripChanceBoost": 0.12
+      "window_min_days": 31,
+      "window_max_days": 60,
+      "encounter_weight": 0.75,
+      "steam_trip_chance_boost": 0.12
     },
     {
       "id": "season_faction_pressure",
-      "windowMinDays": 61,
-      "windowMaxDays": 120,
-      "encounterWeight": 1.3,
-      "steamTripChanceBoost": 0.05
+      "window_min_days": 61,
+      "window_max_days": 120,
+      "encounter_weight": 1.3,
+      "steam_trip_chance_boost": 0.05
     },
     {
       "id": "season_first_siege",
-      "windowMinDays": 121,
-      "windowMaxDays": 180,
-      "encounterWeight": 1.75,
-      "steamTripChanceBoost": 0.03
+      "window_min_days": 121,
+      "window_max_days": 180,
+      "encounter_weight": 1.75,
+      "steam_trip_chance_boost": 0.03
     },
     {
       "id": "season_consolidation",
-      "windowMinDays": 181,
-      "windowMaxDays": 240,
-      "encounterWeight": 1.0,
-      "steamTripChanceBoost": 0.09
+      "window_min_days": 181,
+      "window_max_days": 240,
+      "encounter_weight": 1.0,
+      "steam_trip_chance_boost": 0.09
     },
     {
       "id": "season_long_winter",
-      "windowMinDays": 241,
-      "windowMaxDays": 365,
-      "encounterWeight": 1.5,
-      "steamTripChanceBoost": 0.02
+      "window_min_days": 241,
+      "window_max_days": 365,
+      "encounter_weight": 1.5,
+      "steam_trip_chance_boost": 0.02
     }
   ]
 }
