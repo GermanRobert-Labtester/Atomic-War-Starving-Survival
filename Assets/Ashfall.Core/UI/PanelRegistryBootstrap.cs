@@ -102,6 +102,8 @@ namespace Ashfall.Core.UI
             R("mental_health_crisis","Mental Health Crisis",          PanelGroup.Expanded);
             R("phantom_memory",      "Phantom Memory",                PanelGroup.Expanded);
             R("traveling_caravan",   "Traveling Caravan",             PanelGroup.Expanded);
+            R("shelter_barter",      "Shelter Barter Terminal",       PanelGroup.Expanded,   new[] { "inventory" });
+            R("black_projects_archive", "Black Projects Intelligence Archive", PanelGroup.Expanded, new[] { "black_projects_archive" });
             R("medical_ward",        "Medical Ward",                  PanelGroup.Expanded);
 
             // ── Standalone & Subsystem Consoles ──────────────────────────────
@@ -186,6 +188,15 @@ namespace Ashfall.Core.UI
             // Plans 162-165 — knowledge-gated bestiary over the wildlife
             // ecology layer (Plan 165).
             R("bestiary",                  "Wasteland Bestiary",          PanelGroup.Expanded, new[] { "world" });
+            // ── Plans 198–201: late-game strategic consoles (Live) ─────────
+            // CBRN hazard monitor (Plan 198) — bound to ChemWarfareSystem.
+            R("chem_warfare_defense",      "Toxic Hazard Monitor",        PanelGroup.Expanded, new[] { "combat", "power_grid" });
+            // Communications array (Plan 199) — bound to CommsArraySystem.
+            R("comms_array_transceiver",   "Communications Array",        PanelGroup.Expanded, new[] { "power_grid", "radio", "world" });
+            // Ceremonies & festivals (Plan 200) — bound to CeremonySystem.
+            R("ceremony_ritual",           "Wasteland Festivals",         PanelGroup.Expanded, new[] { "inventory", "factions" });
+            // Robotics workshop (Plan 201) — bound to RoboticsSystem.
+            R("robotics_assembly",         "Robotics Workshop",           PanelGroup.Expanded, new[] { "crafting", "inventory", "power_grid" });
         }
 
         private static void R(

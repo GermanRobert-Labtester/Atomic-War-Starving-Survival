@@ -353,6 +353,8 @@ namespace AtomicWar.GodotApp
                     _craftingPanel.Open();
                     break;
                 case "medical":
+                    SetupJournal();
+                    DiscoverBureaucraticDocuments("medical_office");
                     SetupSurvivors();
                     SetupInventory();
                     SetupMedical();
@@ -396,10 +398,13 @@ namespace AtomicWar.GodotApp
                     _mapPanel.Open();
                     break;
                 case "shelter":
+                    SetupJournal();
+                    DiscoverBureaucraticDocuments("shelter_records");
                     SetupSurvivors();
                     SetupWorld();
                     SetupInventory();
-                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog());
+                    int shelterDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog(), GetBunkerGraffitiCatalog(), shelterDay);
                     _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                     _shelterPanel.Open();
                     break;
@@ -425,6 +430,9 @@ namespace AtomicWar.GodotApp
                 case "moral_choice":
                     SetupMoralChoice();
                     OpenMoralChoiceModal(null);
+                    break;
+                case "narrative_arc":
+                    OpenNarrativeArcModal();
                     break;
                 case "journal":
                     SetupJournal();
@@ -516,6 +524,8 @@ namespace AtomicWar.GodotApp
                     }
                     break;
                 case "duty_roster":
+                    SetupJournal();
+                    DiscoverBureaucraticDocuments("duty_roster");
                     SetupDutyRoster();
                     SetupSurvivors();
                     _dutyRosterPanel.Bind(_dutyRoster, _survivors);
@@ -555,6 +565,7 @@ namespace AtomicWar.GodotApp
                 case "mental_health_crisis":
                 case "phantom_memory":
                 case "traveling_caravan":
+                case "shelter_barter":
                 case "medical_ward":
                     OpenExpandedPanel(panelId);
                     break;
@@ -740,7 +751,9 @@ namespace AtomicWar.GodotApp
                 _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
                 _pneumaticDispatchPanel,
                 _doseGeographyPanel,
-                _dailyBriefingModal
+                _dailyBriefingModal, _narrativeArcModal,
+                _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
+                _ceremonyFestivalPanel, _roboticsWorkshopPanel
             };
 
             foreach (Control panel in panels)

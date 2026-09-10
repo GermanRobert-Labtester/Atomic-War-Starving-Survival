@@ -551,6 +551,10 @@ namespace AtomicWar.GodotApp
         private void CloseGeodeticSurveyPanel() { _geodeticSurveyPanel.Visible = false; }
         private void CloseKineticStoragePanel() { _kineticStoragePanel.Visible = false; }
         private void CloseChemicalReconPanel() { _chemicalReconPanel.Visible = false; }
+        private void CloseChemWarfareDefensePanel() { _chemWarfareDefensePanel?.Visible = false; }
+        private void CloseCommsArrayTransceiverPanel() { _commsArrayTransceiverPanel?.Visible = false; }
+        private void CloseCeremonyFestivalPanel() { _ceremonyFestivalPanel?.Visible = false; }
+        private void CloseRoboticsWorkshopPanel() { _roboticsWorkshopPanel?.Visible = false; }
         private void CloseFungiCultivationPanel() { _fungiCultivationBedPanel.Visible = false; }
         private void ClosePlasticPyrolysisPanel() { _plasticPyrolysisPanel.Visible = false; }
         private void CloseCargoAirdropPanel() { _cargoAirdropPanel.Visible = false; }

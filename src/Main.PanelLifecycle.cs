@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp
                 _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
                 _silentFoundryPanel,
                 _tradePanel,
-                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel, _moralChoiceModal,
+                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel, _moralChoiceModal, _narrativeArcModal,
                 _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
                 _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
                 _combatDetailPanel, _factionDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
@@ -51,7 +51,10 @@ namespace AtomicWar.GodotApp
                 _ultrasonicDecontamAirlockPanel,
                 _troposphericRadioRelayPanel, _inductionCupolaFurnacePanel,
                 _heavyMarineDieselGenPanel, _slurryDewateringSumpPanel,
-                _magneticDrumArchivePanel, _plans130To133Panel
+                _magneticDrumArchivePanel, _plans130To133Panel,
+                _blackProjectsArchivePanel,
+                _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
+                _ceremonyFestivalPanel, _roboticsWorkshopPanel
             };
 
             foreach (Control panel in panels)
@@ -97,6 +100,11 @@ namespace AtomicWar.GodotApp
         private void CloseMoralChoiceModal()
         {
             _moralChoiceModal.Visible = false;
+        }
+
+        private void CloseNarrativeArcModal()
+        {
+            if (_narrativeArcModal != null) _narrativeArcModal.Visible = false;
         }
 
         private void CloseFactionDetailPanel()

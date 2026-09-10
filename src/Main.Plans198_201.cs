@@ -10,6 +10,7 @@ using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.World;
 
@@ -265,6 +266,255 @@ namespace AtomicWar.GodotApp
                 _robotics.TickLabor(24, gridPowered, gridWatts);
                 _roboticsDirty = true;
             }
+        }
+
+        // ── Plan 198: chem warfare console commands ────────────────────────
+
+        private void HandleChemWarfareAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseChemWarfareDefensePanel(); return; }
+            if (_chemWarfareDefensePanel == null || _chemWarfare == null) return;
+
+            switch (action)
+            {
+                case "clear_hazard":
+                {
+                    // Decon dispatch: clears the tactical hazard through the
+                    // canonical owner. Residue incidents keep routing through
+                    // OnShelterResidueCreated → journal (wired in EnsureChemWarfare).
+                    bool cleared = _chemWarfare.ClearHazard(param);
+                    _chemWarfareDefensePanel.ShowFeedback(
+                        cleared ? "Decon team reports the hazard dispersed."
+                                : "That hazard is no longer on the board.",
+                        !cleared);
+                    break;
+                }
+            }
+            _chemWarfareDefensePanel.RefreshView();
+        }
+
+        // ── Plan 199: comms array console commands ──────────────────────────
+
+        private void HandleCommsArrayAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseCommsArrayTransceiverPanel(); return; }
+            if (_commsArrayTransceiverPanel == null || _commsArray == null) return;
+
+            switch (action)
+            {
+                case "tune":
+                {
+                    if (_commsArray.TargetCatalog.TryGetValue(param, out var target))
+                    {
+                        _commsArray.TuneFrequency(target.FrequencyKhz, target.Band);
+                        _commsArrayTransceiverPanel.ShowFeedback(
+                            $"Carrier moved to {target.FrequencyKhz} kHz ({target.Band}). Scanning.", false);
+                    }
+                    break;
+                }
+                case "upgrade_tier":
+                {
+                    // Strategic investment: each tier costs rare electronics,
+                    // paid atomically from the canonical inventory authority.
+                    var bill = new InventoryBill();
+                    bill.AddCost("scrap_electronic", 5);
+                    if (TryPayBill(bill))
+                    {
+                        _commsArray.SetArrayTier(_commsArray.State.ArrayTier + 1);
+                        _commsArrayTransceiverPanel.ShowFeedback(
+                            $"Array raised to tier {_commsArray.State.ArrayTier}. The antenna hears farther now.", false);
+                    }
+                    else
+                    {
+                        _commsArrayTransceiverPanel.ShowFeedback(
+                            "Upgrade needs 5 salvaged electronics.", true);
+                    }
+                    break;
+                }
+                case "request_strike":
+                {
+                    // Endgame fictional capability: the intercepted code is
+                    // authoritative and single-use; the Core request path owns
+                    // every gate (tier, power, strategic target, code).
+                    var lockState = _commsArray.GetOrCreateLock(param);
+                    if (_commsArray.RequestStrategicStrike(param, lockState.InterceptedData, out string error))
+                    {
+                        _commsArrayTransceiverPanel.ShowFeedback(
+                            "Uplink accepted. The request has left our hands.", false);
+                    }
+                    else
+                    {
+                        _commsArrayTransceiverPanel.ShowFeedback(error, true);
+                    }
+                    break;
+                }
+            }
+            _commsArrayTransceiverPanel.RefreshView();
+        }
+
+        // ── Plan 200: ceremony console commands ───────────────────────────
+
+        private void HandleCeremonyAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseCeremonyFestivalPanel(); return; }
+            if (_ceremonyFestivalPanel == null || _ceremonySystem == null) return;
+
+            switch (action)
+            {
+                case "schedule":
+                {
+                    int population = _survivors?.RosterState.Count ?? 0;
+                    if (_ceremonySystem.ScheduleCeremony(param, _simDay, population, out string error))
+                    {
+                        _ceremonyFestivalPanel.ShowFeedback("Preparation begins. The feast stores must be filled before the day comes.", false);
+                    }
+                    else
+                    {
+                        _ceremonyFestivalPanel.ShowFeedback(error, true);
+                    }
+                    break;
+                }
+                case "contribute":
+                {
+                    // param: itemId:quantity — atomic pay-then-commit.
+                    var parts = param.Split(':');
+                    if (parts.Length != 2 || !int.TryParse(parts[1], out int qty) || qty <= 0)
+                        break;
+                    var bill = new InventoryBill();
+                    bill.AddCost(parts[0], qty);
+                    if (TryPayBill(bill))
+                    {
+                        if (!_ceremonySystem.ContributeResource(parts[0], qty))
+                        {
+                            RefundBill(bill);
+                            _ceremonyFestivalPanel.ShowFeedback("The feast stores would not take that.", true);
+                        }
+                        else
+                        {
+                            _ceremonyFestivalPanel.ShowFeedback("Stores committed to the ceremony.", false);
+                        }
+                    }
+                    else
+                    {
+                        _ceremonyFestivalPanel.ShowFeedback("Not enough in storage for that commitment.", true);
+                    }
+                    break;
+                }
+                case "invite":
+                {
+                    float trust = EnsureSharedFactionStance().GetTrust(param);
+                    if (_ceremonySystem.InviteFaction(param, (int)trust))
+                    {
+                        bool accepted = trust >= -10f;
+                        _ceremonyFestivalPanel.ShowFeedback(
+                            accepted ? $"{UI.FactionDisplay.Name(param)} has accepted the invitation."
+                                     : $"An envoy was sent to {UI.FactionDisplay.Name(param)}.",
+                            !accepted);
+                    }
+                    else
+                    {
+                        _ceremonyFestivalPanel.ShowFeedback("That faction cannot be invited again.", true);
+                    }
+                    break;
+                }
+            }
+            _ceremonyFestivalPanel.RefreshView();
+        }
+
+        // ── Plan 201: robotics workshop commands ─────────────────────────
+
+        private void HandleRoboticsAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseRoboticsWorkshopPanel(); return; }
+            if (_roboticsWorkshopPanel == null || _robotics == null) return;
+
+            switch (action)
+            {
+                case "reactivate":
+                {
+                    // Atomic material payment before the core raises the unit.
+                    if (!_robotics.RobotCatalog.TryGetValue(param, out var def))
+                        break;
+                    var bill = new InventoryBill();
+                    foreach (var m in def.ReactivationMaterials)
+                        bill.AddCost(m.ItemId, m.Quantity);
+                    if (TryPayBill(bill))
+                    {
+                        var unit = _robotics.ReactivateRobot(param, 0.5f, out string error);
+                        if (unit != null)
+                        {
+                            _roboticsWorkshopPanel.ShowFeedback($"{def.DisplayName} powers on. Servos remember their work.", false);
+                        }
+                        else
+                        {
+                            RefundBill(bill);
+                            _roboticsWorkshopPanel.ShowFeedback(error, true);
+                        }
+                    }
+                    else
+                    {
+                        _roboticsWorkshopPanel.ShowFeedback("Reactivation parts missing from storage.", true);
+                    }
+                    break;
+                }
+                case "program":
+                {
+                    // param: unitId:directiveId
+                    var parts = param.Split(':');
+                    if (parts.Length != 2) break;
+                    if (_robotics.ProgramDirective(parts[0], parts[1], 0.5f, out string error))
+                    {
+                        _roboticsWorkshopPanel.ShowFeedback("Directive accepted.", false);
+                    }
+                    else
+                    {
+                        _roboticsWorkshopPanel.ShowFeedback(error, true);
+                    }
+                    break;
+                }
+                case "repair":
+                {
+                    var bill = new InventoryBill();
+                    bill.AddCost("scrap_metal", 2);
+                    if (TryPayBill(bill))
+                    {
+                        if (!_robotics.RepairRobot(param, 250))
+                        {
+                            RefundBill(bill);
+                            _roboticsWorkshopPanel.ShowFeedback("That unit cannot take repair now.", true);
+                        }
+                        else
+                        {
+                            _roboticsWorkshopPanel.ShowFeedback("Chassis patched — 250 integrity restored.", false);
+                        }
+                    }
+                    else
+                    {
+                        _roboticsWorkshopPanel.ShowFeedback("Repair needs 2 scrap metal.", true);
+                    }
+                    break;
+                }
+            }
+            _roboticsWorkshopPanel.RefreshView();
+        }
+
+        /// <summary>Atomically consumes one bill through the canonical
+        /// inventory authority. Returns false (nothing consumed) if unaffordable.</summary>
+        private bool TryPayBill(InventoryBill bill)
+        {
+            if (_inventory?.Inventory == null) return false;
+            using var tx = _inventory.Inventory.BeginTransaction(bill);
+            if (!tx.Validation.IsValid) return false;
+            return tx.TryCommit();
+        }
+
+        /// <summary>Refund path for a committed bill whose Core command was
+        /// rejected afterwards — restores the same items.</summary>
+        private void RefundBill(InventoryBill bill)
+        {
+            if (_inventory?.Inventory == null) return;
+            foreach (var cost in bill.Costs)
+                _inventory.Inventory.TryProduce(cost.ItemId, cost.Amount);
         }
     }
 }

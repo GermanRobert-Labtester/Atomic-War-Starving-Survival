@@ -113,6 +113,7 @@ namespace AtomicWar.GodotApp
         private InventoryDetailPanel _inventoryDetailPanel = null!;
         private QuestDetailPanel _questDetailPanel = null!;
         private MoralChoiceModal _moralChoiceModal = null!;
+        private NarrativeArcModal _narrativeArcModal = null!;
         private AchievementsPanel _achievementsPanel = null!;
         private WeatherDetailPanel _weatherDetailPanel = null!;
         private RadiationDetailPanel _radiationDetailPanel = null!;
@@ -534,6 +535,31 @@ namespace AtomicWar.GodotApp
             _cargoAirdropPanel.OnClose += CloseCargoAirdropPanel;
             AddChild(_cargoAirdropPanel);
 
+            // ── Plans 198–201: CBRN / comms / ceremony / robotics consoles ──
+            _chemWarfareDefensePanel = new ChemWarfareDefensePanel();
+            _chemWarfareDefensePanel.Visible = false;
+            _chemWarfareDefensePanel.OnClose += CloseChemWarfareDefensePanel;
+            _chemWarfareDefensePanel.OnActionRequested += HandleChemWarfareAction;
+            AddChild(_chemWarfareDefensePanel);
+
+            _commsArrayTransceiverPanel = new CommsArrayTransceiverPanel();
+            _commsArrayTransceiverPanel.Visible = false;
+            _commsArrayTransceiverPanel.OnClose += CloseCommsArrayTransceiverPanel;
+            _commsArrayTransceiverPanel.OnActionRequested += HandleCommsArrayAction;
+            AddChild(_commsArrayTransceiverPanel);
+
+            _ceremonyFestivalPanel = new CeremonyFestivalPanel();
+            _ceremonyFestivalPanel.Visible = false;
+            _ceremonyFestivalPanel.OnClose += CloseCeremonyFestivalPanel;
+            _ceremonyFestivalPanel.OnActionRequested += HandleCeremonyAction;
+            AddChild(_ceremonyFestivalPanel);
+
+            _roboticsWorkshopPanel = new RoboticsWorkshopPanel();
+            _roboticsWorkshopPanel.Visible = false;
+            _roboticsWorkshopPanel.OnClose += CloseRoboticsWorkshopPanel;
+            _roboticsWorkshopPanel.OnActionRequested += HandleRoboticsAction;
+            AddChild(_roboticsWorkshopPanel);
+
 
 
             _defenseGridPanel = new AtomicWar.GodotApp.UI.DefenseGridPanel();
@@ -623,6 +649,12 @@ namespace AtomicWar.GodotApp
             _moralChoiceModal = new MoralChoiceModal();
             _moralChoiceModal.OnClose += CloseMoralChoiceModal;
             AddChild(_moralChoiceModal);
+
+            // ── Plan 143 narrative arc modal ──
+            _narrativeArcModal = new NarrativeArcModal();
+            _narrativeArcModal.OnChoiceSelected += OnNarrativeArcChoiceSelected;
+            _narrativeArcModal.OnAcknowledged += OnNarrativeArcAcknowledged;
+            AddChild(_narrativeArcModal);
 
             // ── Achievements panel (overlay) ──
             _achievementsPanel = new AchievementsPanel();

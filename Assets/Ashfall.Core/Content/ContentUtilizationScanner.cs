@@ -136,6 +136,9 @@ namespace Ashfall.Core.Content
             "metrology_standards_catalog.json",
             "direction_finding_catalog.json",
             "aquaponics_system_catalog.json",
+            // Plans 198–201: late-game strategic catalogs.
+            "chemical_weapons.json", "comms_targets.json",
+            "ceremonies.json", "robotics.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -450,6 +453,11 @@ namespace Ashfall.Core.Content
                 ["ballistics_workbench_catalog.json"] = new[] { "BallisticsWorkbenchCatalogLoader", "BallisticsWorkbenchSystem" },
                 ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsCatalogLoader", "AeroponicsSystem" },
                 ["pneumatic_network_catalog.json"] = new[] { "PneumaticNetworkCatalogLoader", "PneumaticDispatchSystem" },
+                // Plans 198–201: inline LoadCatalog paths on each system.
+                ["chemical_weapons.json"] = new[] { "ChemWarfareSystem" },
+                ["comms_targets.json"] = new[] { "CommsArraySystem" },
+                ["ceremonies.json"] = new[] { "CeremonySystem" },
+                ["robotics.json"] = new[] { "RoboticsSystem" },
             };
 
             // Additional mappings for previously UNRESOLVED catalogs
@@ -647,6 +655,10 @@ namespace Ashfall.Core.Content
                 ["ballistics_workbench_catalog.json"] = "BallisticsWorkbenchSystem",
                 ["aeroponics_nutrient_catalog.json"] = "AeroponicsSystem",
                 ["pneumatic_network_catalog.json"] = "PneumaticDispatchSystem",
+                ["chemical_weapons.json"] = "ChemWarfareSystem",
+                ["comms_targets.json"] = "CommsArraySystem",
+                ["ceremonies.json"] = "CeremonySystem",
+                ["robotics.json"] = "RoboticsSystem",
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -908,6 +920,11 @@ namespace Ashfall.Core.Content
                 ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsSystem" },
                 ["pneumatic_network_catalog.json"] = new[] { "PneumaticDispatchSystem" },
                 ["glassworks_recipes.json"] = new[] { "GlassworksCatalogLoader", "SilentFoundrySystem" },
+                // Plans 198–201: late-game strategic catalogs.
+                ["chemical_weapons.json"] = new[] { "ChemWarfareSystem", "ChemWarfareSaveStore" },
+                ["comms_targets.json"] = new[] { "CommsArraySystem", "CommsArraySaveStore" },
+                ["ceremonies.json"] = new[] { "CeremonySystem", "CeremonySaveStore" },
+                ["robotics.json"] = new[] { "RoboticsSystem", "RoboticsSaveStore" },
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -950,6 +967,8 @@ namespace Ashfall.Core.Content
                 "rail_logistics_catalog.json",
                 "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
                 "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
+                "chemical_weapons.json", "comms_targets.json",
+                "ceremonies.json", "robotics.json",
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -1102,6 +1121,11 @@ namespace Ashfall.Core.Content
                 ["trade_texts.json"] = new[] { "TradePanel" },
                 ["research_knowledge.json"] = new[] { "ResearchPanel" },
                 ["skills.json"] = new[] { "SurvivorsPanel" },
+                // Plans 198–201: strategic consoles display these catalogs.
+                ["chemical_weapons.json"] = new[] { "ChemWarfareDefensePanel" },
+                ["comms_targets.json"] = new[] { "CommsArrayTransceiverPanel" },
+                ["ceremonies.json"] = new[] { "CeremonyFestivalPanel" },
+                ["robotics.json"] = new[] { "RoboticsWorkshopPanel" },
             };
 
             foreach (var cat in _graph.Catalogs)
@@ -1209,6 +1233,8 @@ namespace Ashfall.Core.Content
                 "rail_logistics_catalog.json",
                 "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
                 "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
+                "chemical_weapons.json", "comms_targets.json",
+                "ceremonies.json", "robotics.json",
             };
 
             foreach (var cat in _graph.Catalogs)
