@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json.Serialization;
 using Ashfall.Core.IO;
 
 namespace Ashfall.Core.Crafting
@@ -10,17 +11,31 @@ namespace Ashfall.Core.Crafting
     public sealed class ChemicalProcessDefinition
     {
         public string id = string.Empty;
+
+        // Plan 47 wave 1: canonical snake_case wire keys; legacy camelCase keys
+        // are accepted through CatalogKeyNormalizer (docs/data/SNAKE_CASE_MIGRATION.md).
+        [JsonPropertyName("display_name")]
         public string displayName = string.Empty;
         public string description = string.Empty;
+        [JsonPropertyName("required_apparatus_tier")]
         public int requiredApparatusTier = 1;
+        [JsonPropertyName("input_items")]
         public Dictionary<string, int> inputItems = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        [JsonPropertyName("output_items")]
         public Dictionary<string, int> outputItems = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        [JsonPropertyName("processing_ticks")]
         public int processingTicks = 2;
+        [JsonPropertyName("heat_band")]
         public string heatBand = "Nominal";
+        [JsonPropertyName("volatility_rating")]
         public float volatilityRating = 0.2f;
+        [JsonPropertyName("scrubber_demand")]
         public float scrubberDemand = 1.0f;
+        [JsonPropertyName("equipment_wear")]
         public float equipmentWear = 2.0f;
+        [JsonPropertyName("corrosion_rating")]
         public float corrosionRating; // Plans 90-93 mineral line: normalized apparatus/storage corrosion per tick
+        [JsonPropertyName("skill_requirement")]
         public float skillRequirement = 10.0f;
         public List<string> tags = new List<string>();
 
@@ -130,6 +145,25 @@ namespace Ashfall.Core.Crafting
         // chemical process authority — same engine, same schema, extra file.
         public const string MineralFileName = "mineral_acid_synthesis_catalog.json";
 
+        /// <summary>
+        /// Plan 47 wave 1: legacy camelCase wire keys → canonical snake_case.
+        /// Spelling-only; ID values untouched. See docs/data/SNAKE_CASE_MIGRATION.md.
+        /// </summary>
+        public static readonly IReadOnlyDictionary<string, string> KeyAliases = new Dictionary<string, string>
+        {
+            ["displayName"] = "display_name",
+            ["requiredApparatusTier"] = "required_apparatus_tier",
+            ["inputItems"] = "input_items",
+            ["outputItems"] = "output_items",
+            ["processingTicks"] = "processing_ticks",
+            ["heatBand"] = "heat_band",
+            ["volatilityRating"] = "volatility_rating",
+            ["scrubberDemand"] = "scrubber_demand",
+            ["equipmentWear"] = "equipment_wear",
+            ["corrosionRating"] = "corrosion_rating",
+            ["skillRequirement"] = "skill_requirement",
+        };
+
         public static ChemicalSynthesisCatalog? Load(string dataDir, IFileIO fileIO, IJsonSerializer jsonSerializer)
         {
             var processes = new List<ChemicalProcessDefinition>();
@@ -152,7 +186,10 @@ namespace Ashfall.Core.Crafting
             if (!fileIO.FileExists(path)) return;
 
             string json = fileIO.ReadAllText(path);
-            var dto = jsonSerializer.Deserialize<ChemicalSynthesisCatalogDto>(json);
+            // Dual-read: legacy camelCase keys normalize to canonical snake_case
+            // before typed binding; conflicting dual spellings fail loudly.
+            string normalized = CatalogKeyNormalizer.Normalize(json, KeyAliases, fileName);
+            var dto = jsonSerializer.Deserialize<ChemicalSynthesisCatalogDto>(normalized);
             if (dto?.processes == null) return;
 
             processes.AddRange(dto.processes);

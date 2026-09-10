@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -63,9 +64,16 @@ namespace Ashfall.Core
     public class DutyRosterSeasonEntry
     {
         public string id = DutyRosterIds.SeasonSecondWinter;
+
+        // Plan 47 wave 1: canonical snake_case wire keys; legacy camelCase keys
+        // are accepted through CatalogKeyNormalizer (docs/data/SNAKE_CASE_MIGRATION.md).
+        [JsonPropertyName("window_min_days")]
         public int windowMinDays = DutyRosterIds.SecondWinterWindowMinDays;
+        [JsonPropertyName("window_max_days")]
         public int windowMaxDays = DutyRosterIds.SecondWinterWindowMaxDays;
+        [JsonPropertyName("encounter_weight")]
         public float encounterWeight = DutyRosterIds.SecondWinterEncounterWeight;
+        [JsonPropertyName("steam_trip_chance_boost")]
         public float steamTripChanceBoost;
     }
 
@@ -172,11 +180,20 @@ namespace Ashfall.Core
             LoadList(_files.Combine(dataDirectory, LocationsFile), catalog.Locations, "locations");
             LoadList(_files.Combine(dataDirectory, QuestsFile), catalog.Quests, "quests");
             LoadList(_files.Combine(dataDirectory, MarksFile), catalog.Marks, "marks");
-            LoadList(_files.Combine(dataDirectory, SeasonsFile), catalog.Seasons, "seasons");
+            LoadList(_files.Combine(dataDirectory, SeasonsFile), catalog.Seasons, "seasons", SeasonKeyAliases);
             return catalog;
         }
 
-        private void LoadList<T>(string path, List<T> dest, string label) where T : class
+        /// <summary>Plan 47 wave 1: legacy camelCase → canonical snake_case (spelling-only).</summary>
+        public static readonly IReadOnlyDictionary<string, string> SeasonKeyAliases = new Dictionary<string, string>
+        {
+            ["windowMinDays"] = "window_min_days",
+            ["windowMaxDays"] = "window_max_days",
+            ["encounterWeight"] = "encounter_weight",
+            ["steamTripChanceBoost"] = "steam_trip_chance_boost",
+        };
+
+        private void LoadList<T>(string path, List<T> dest, string label, IReadOnlyDictionary<string, string>? keyAliases = null) where T : class
         {
             if (!_files.FileExists(path))
             {
@@ -187,6 +204,11 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
+                if (keyAliases != null && keyAliases.Count > 0)
+                {
+                    // Dual-read: legacy camelCase accepted, conflicts fail loudly.
+                    json = IO.CatalogKeyNormalizer.Normalize(json, keyAliases, System.IO.Path.GetFileName(path));
+                }
                 var items = CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < items.Count; i++)
                 {
