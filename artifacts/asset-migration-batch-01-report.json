@@ -1,0 +1,26 @@
+{
+  "dry_run": false,
+  "entries": [
+    {
+      "destination": "assets/ui/reference/ui_style_reference_01.jpg",
+      "issues": [],
+      "source": "UI_StyleReference_01.jpg",
+      "status": "COPIED"
+    },
+    {
+      "destination": null,
+      "issues": [],
+      "source": "codex_alt_01_rgb.png.import",
+      "status": "ORPHAN_HOLD"
+    },
+    {
+      "destination": null,
+      "issues": [],
+      "source": "codex_alt_02_rgb.png.import",
+      "status": "ORPHAN_HOLD"
+    }
+  ],
+  "failures": 0,
+  "manifest": "scripts/tools/asset-migration-batch-01.json",
+  "schema_version": 1
+}
