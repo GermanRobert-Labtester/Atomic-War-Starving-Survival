@@ -675,6 +675,17 @@ scene-binding 25/25. UI-07 is CLOSED for these four; the remaining six
 `RailwayTerminalPanel`, `SurvivorDowntimePanel`, `WinterFreezePanel`) are
 still empty-refresh stubs.
 
+**Plans 194–197 closeout (commit 8f3de7bc, verified):**
+`SurvivorDowntimePanel` (hobby catalog, active-session state, start-session
+with roster-resolved participants) and `WinterFreezePanel` (indoor temp /
+intake ice / insulation / pipeline readouts, clear-ice + material-gated
+insulation commands) now have real bodies — both constructed, registered
+Live (`survivor_downtime`, `winter_freeze`), lifecycle-listed, and covered by
+the `--plans198-201-uitest` headless gate (7/7 segments PASS, exception-free,
+exit 0). UI-07 is CLOSED for these two as well; the remaining four
+(`AmputationTriagePanel`, `ArchaeologyExcavationPanel`, `JusticeTribunalPanel`,
+`RailwayTerminalPanel`) are still empty-refresh stubs.
+
 Evidence: src/UI/RailwayTerminalPanel.cs:Bind/RefreshView/_Ready (13/19/21); same full-file structure in all eleven named files; src/Main.PlayerSurfaces.cs:45; src/Main.Plans190_193.cs (full orchestration for all four).
 
 Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven. **Plan 204 closed the fungi body (see update above); the other ten remain STUB/PARTIAL.**
@@ -718,6 +729,11 @@ visible → command → state delta → feedback is proven end-to-end by the
 `--plans198-201-uitest` headless gate (5/5 segments PASS, exit 0,
 exception-free). These four IDs are closed for UI-09; the remaining
 nineteen remain unregistered.
+
+**Plans 194–197 update (commit 8f3de7bc):** `survivor_downtime` and
+`winter_freeze` are now registered as **Live** descriptors with real panel
+bodies; the headless gate covers both (7/7 segments PASS). These two IDs are
+closed for UI-09; the remaining seventeen remain unregistered.
 
 Evidence: Assets/Ashfall.Core/UI/PanelRegistry.cs:ConfigureActions/Resolve (204/227); Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs; src/Main.PlayerSurfaces.cs:45–114/511–554; src/UI/GameDashboardPanel.cs:435–448; src/Main.GameFlow.cs:165; src/Main.Plans190_193.cs.
 
