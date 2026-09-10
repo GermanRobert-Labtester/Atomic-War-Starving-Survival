@@ -1429,6 +1429,19 @@ namespace Ashfall.Core
             }
         }
 
+        private static void ValidateProbability(
+            JsonElement value, string path, string propertyName, CatalogIntegrityReport report)
+        {
+            if (value.ValueKind != JsonValueKind.Number
+                || !value.TryGetDouble(out double probability)
+                || !double.IsFinite(probability)
+                || probability < 0d
+                || probability > 1d)
+            {
+                report.Error($"wildlife_trapping_catalog.json: {propertyName} must be a finite number in [0,1] at {path}");
+            }
+        }
+
         private sealed class RangeMemoEntry
         {
             public int? Min;
@@ -1575,6 +1588,32 @@ namespace Ashfall.Core
                 var trapPreyMap = new Dictionary<string, List<string>>(StringComparer.Ordinal);
                 var trapWaterMap = new Dictionary<string, bool>(StringComparer.Ordinal);
 
+                // Miss incidents are resolved by the canonical events catalog.
+                // This lookup is validation-only; trapping runtime stores IDs
+                // and never loads narrative content on its simulation path.
+                var authoredEventIds = new HashSet<string>(StringComparer.Ordinal);
+                string eventsPath = Path.Combine(dataDirectory, "events.json");
+                if (files.FileExists(eventsPath)
+                    && TryParse(eventsPath, files, out JsonDocument eventsDoc, report))
+                {
+                    using (eventsDoc)
+                    {
+                        if (eventsDoc.RootElement.TryGetProperty("events", out var eventsProp)
+                            && eventsProp.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var eventEl in eventsProp.EnumerateArray())
+                            {
+                                if (eventEl.TryGetProperty("id", out var eventIdProp)
+                                    && eventIdProp.ValueKind == JsonValueKind.String
+                                    && !string.IsNullOrWhiteSpace(eventIdProp.GetString()))
+                                {
+                                    authoredEventIds.Add(eventIdProp.GetString()!);
+                                }
+                            }
+                        }
+                    }
+                }
+
                 string itemsPath = Path.Combine(dataDirectory, "items.json");
                 bool hasItemsCatalog = files.FileExists(itemsPath);
 
@@ -1597,6 +1636,40 @@ namespace Ashfall.Core
                         }
                         ValidateWildlifeText(trapEl, "displayName", $"{trapPath} '{trapId}'", trapDisplayNames, report);
                         ValidateWildlifeText(trapEl, "description", $"{trapPath} '{trapId}'", null, report);
+
+                        if (trapEl.TryGetProperty("narrativeIncidentChance", out var incidentChanceProp))
+                        {
+                            ValidateProbability(incidentChanceProp,
+                                $"{trapPath} '{trapId}'/narrativeIncidentChance",
+                                "narrativeIncidentChance", report);
+                        }
+
+                        if (trapEl.TryGetProperty("narrativeIncidentIds", out var incidentIdsProp))
+                        {
+                            if (incidentIdsProp.ValueKind != JsonValueKind.Array)
+                            {
+                                report.Error($"{trapPath} '{trapId}': narrativeIncidentIds must be an array");
+                            }
+                            else
+                            {
+                                int incidentIndex = 0;
+                                foreach (var incidentIdProp in incidentIdsProp.EnumerateArray())
+                                {
+                                    string incidentPath = $"{trapPath} '{trapId}'/narrativeIncidentIds[{incidentIndex}]";
+                                    if (incidentIdProp.ValueKind != JsonValueKind.String
+                                        || string.IsNullOrWhiteSpace(incidentIdProp.GetString()))
+                                    {
+                                        report.Error($"{incidentPath}: event ID cannot be empty");
+                                    }
+                                    else if (authoredEventIds.Count > 0
+                                        && !authoredEventIds.Contains(incidentIdProp.GetString()!))
+                                    {
+                                        report.Error($"{incidentPath}: undefined event ID '{incidentIdProp.GetString()}'");
+                                    }
+                                    incidentIndex++;
+                                }
+                            }
+                        }
 
                         if (hasItemsCatalog && !ctx.Registry.ContainsKey(trapId))
                         {

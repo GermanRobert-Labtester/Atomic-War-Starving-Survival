@@ -573,6 +573,31 @@ namespace AtomicWar.GodotApp
             _winterFreezePanel.OnActionRequested += HandleWinterFreezeAction;
             AddChild(_winterFreezePanel);
 
+            // ── Plans 190-193: triage / tribunal / railway / archaeology consoles ──
+            _amputationTriagePanel = new AmputationTriagePanel();
+            _amputationTriagePanel.Visible = false;
+            _amputationTriagePanel.OnClose += CloseAmputationTriagePanel;
+            _amputationTriagePanel.OnActionRequested += HandleAmputationAction;
+            AddChild(_amputationTriagePanel);
+
+            _justiceTribunalPanel = new JusticeTribunalPanel();
+            _justiceTribunalPanel.Visible = false;
+            _justiceTribunalPanel.OnClose += CloseJusticeTribunalPanel;
+            _justiceTribunalPanel.OnActionRequested += HandleJusticeAction;
+            AddChild(_justiceTribunalPanel);
+
+            _railwayTerminalPanel = new RailwayTerminalPanel();
+            _railwayTerminalPanel.Visible = false;
+            _railwayTerminalPanel.OnClose += CloseRailwayTerminalPanel;
+            _railwayTerminalPanel.OnActionRequested += HandleRailwayAction;
+            AddChild(_railwayTerminalPanel);
+
+            _archaeologyExcavationPanel = new ArchaeologyExcavationPanel();
+            _archaeologyExcavationPanel.Visible = false;
+            _archaeologyExcavationPanel.OnClose += CloseArchaeologyExcavationPanel;
+            _archaeologyExcavationPanel.OnActionRequested += HandleArchaeologyAction;
+            AddChild(_archaeologyExcavationPanel);
+
 
 
             _defenseGridPanel = new AtomicWar.GodotApp.UI.DefenseGridPanel();

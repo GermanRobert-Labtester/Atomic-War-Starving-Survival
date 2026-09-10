@@ -10,6 +10,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Archaeology;
 using Ashfall.Core.Farming;
 using Ashfall.Core.Narrative;
 
@@ -391,5 +392,134 @@ namespace AtomicWar.GodotApp
             // TODO: Integrate with survivor portrait/avatar system when available.
             GD.Print($"[Main.Plans190_193] Visual refresh requested for survivor '{survivorId}' (avatar system not yet integrated).");
         }
+        // ── UI-07 closeout: amputation / tribunal / railway / archaeology consoles ──
+
+        private void HandleAmputationAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseAmputationTriagePanel(); return; }
+            if (_amputationTriagePanel == null || _amputation == null) return;
+
+            var parts = param.Split(':');
+            switch (action)
+            {
+                case "amputate":
+                {
+                    if (parts.Length != 2 || !System.Enum.TryParse<LimbId>(parts[1], out var limb)) break;
+                    string procedureId = (limb == LimbId.LeftArm || limb == LimbId.RightArm)
+                        ? "procedure_amputation_arm_field" : "procedure_amputation_leg_field";
+                    var result = _amputation.PerformAmputation(parts[0], limb, procedureId);
+                    _amputationTriagePanel.ShowFeedback(
+                        result.Success
+                            ? (result.SurvivorDied
+                                ? "The procedure was done, but the patient did not survive the shock."
+                                : "Amputation complete. Recovery will be long; phantom pain is possible.")
+                            : "The surgery could not proceed — check tools and supplies.",
+                        !result.Success || result.SurvivorDied);
+                    break;
+                }
+                case "treat":
+                {
+                    if (parts.Length != 2 || !System.Enum.TryParse<LimbId>(parts[1], out var limb2)) break;
+                    _amputation.TreatWound(parts[0], limb2, cleaningEfficacy: 0.5f);
+                    _amputationTriagePanel.ShowFeedback("Wound cleaned and dressed. Infection risk is reduced.", false);
+                    break;
+                }
+                case "prosthetic":
+                {
+                    if (parts.Length != 2 || !System.Enum.TryParse<LimbId>(parts[1], out var limb3)) break;
+                    string prostheticItem = (limb3 == LimbId.LeftArm || limb3 == LimbId.RightArm)
+                        ? "prosthetic_wooden_arm" : "prosthetic_wooden_leg";
+                    var res = _amputation.FitProsthetic(parts[0], limb3, prostheticItem);
+                    _survivorDowntimePanel?.RefreshView();
+                    _amputationTriagePanel.ShowFeedback(
+                        res.IsSuccess ? "Prosthetic fitted. Some function returns — never all of it."
+                                      : "Fitting failed — the limb or the workshop isn't ready.",
+                        !res.IsSuccess);
+                    break;
+                }
+            }
+            _amputationTriagePanel.RefreshView();
+        }
+
+        private void HandleJusticeAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseJusticeTribunalPanel(); return; }
+            if (_justiceTribunalPanel == null || _justice == null) return;
+
+            switch (action)
+            {
+                case "report":
+                {
+                    var parts = param.Split(':');
+                    if (parts.Length != 2 || string.IsNullOrEmpty(parts[0])) break;
+                    if (!System.Enum.TryParse<CrimeType>(parts[1], out var crime)) break;
+                    string incidentId = $"inc_{parts[0]}_{parts[1]}_{_simDay}";
+                    var inc = _justice.ReportCrime(incidentId, crime, parts[0], victimId: null, _simDay);
+                    _justiceTribunalPanel.ShowFeedback(
+                        inc != null ? $"Report filed. The case joins the docket for the tribunal's day."
+                                    : "The report could not be filed.",
+                        inc == null);
+                    break;
+                }
+            }
+            _justiceTribunalPanel.RefreshView();
+        }
+
+        private void HandleRailwayAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseRailwayTerminalPanel(); return; }
+            if (_railwayTerminalPanel == null || _railway == null) return;
+
+            Ashfall.Core.ActionResult? res = action switch
+            {
+                "repair_track" => _railway.RepairTrack(param, integrityRestored: 0.25f),
+                "repair_bridge" => _railway.RepairBridge(param),
+                "clear_obstacle" => _railway.ClearTrackObstacle(param),
+                "clear_derailment" => _railway.ClearDerailment(param),
+                "service" => _railway.ServiceTransmission(param),
+                _ => null
+            };
+
+            if (res != null)
+                _railwayTerminalPanel.ShowFeedback(
+                    res.Value.IsSuccess ? "Done. The line is one step closer to running."
+                                  : "The crew couldn't do it — check what the terminal says is missing.",
+                    !res.Value.IsSuccess);
+            _railwayTerminalPanel.RefreshView();
+        }
+
+        private void HandleArchaeologyAction(string action, string param = "")
+        {
+            if (action == "CLOSE") { CloseArchaeologyExcavationPanel(); return; }
+            if (_archaeologyExcavationPanel == null || _archaeology == null) return;
+
+            switch (action)
+            {
+                case "decrypt":
+                {
+                    var res = _archaeology.ProgressDecryption(param, hours: 8f, engineerSkill: 0.5f, hasPower: true);
+                    _archaeologyExcavationPanel.ShowFeedback(
+                        res.IsSuccess ? "The decryption shift worked through the cipher layer."
+                                      : "The shift made no headway — higher tiers need power or a keycard.",
+                        !res.IsSuccess);
+                    break;
+                }
+                case "sell":
+                {
+                    var res = _archaeology.SellArchiveToBroker(param);
+                    _archaeologyExcavationPanel.ShowFeedback(
+                        res.IsSuccess ? "The broker took the archive and paid in kind."
+                                      : "The broker refused the archive.",
+                        !res.IsSuccess);
+                    break;
+                }
+            }
+            _archaeologyExcavationPanel.RefreshView();
+        }
+
+        private void CloseAmputationTriagePanel() { _amputationTriagePanel?.Visible = false; }
+        private void CloseJusticeTribunalPanel() { _justiceTribunalPanel?.Visible = false; }
+        private void CloseRailwayTerminalPanel() { _railwayTerminalPanel?.Visible = false; }
+        private void CloseArchaeologyExcavationPanel() { _archaeologyExcavationPanel?.Visible = false; }
     }
 }

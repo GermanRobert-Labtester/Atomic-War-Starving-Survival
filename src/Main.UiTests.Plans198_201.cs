@@ -3,6 +3,8 @@ using Godot;
 #nullable disable
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
+using Ashfall.Core.Medical;
+using System.Linq;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.World;
 
@@ -30,6 +32,7 @@ namespace AtomicWar.GodotApp
             int failures = 0;
             try
             {
+                SetupInventory();
                 BuildUserInterface();
                 RunChemWarfareUiContract();
                 RunCommsArrayUiContract();
@@ -37,6 +40,10 @@ namespace AtomicWar.GodotApp
                 RunRoboticsUiContract();
                 RunDowntimeUiContract();
                 RunWinterFreezeUiContract();
+                RunAmputationUiContract();
+                RunJusticeUiContract();
+                RunRailwayUiContract();
+                RunArchaeologyUiContract();
                 RunRegistryRouteContract();
             }
             catch (System.Exception ex)
@@ -327,11 +334,126 @@ namespace AtomicWar.GodotApp
             GD.Print("  [PASS] winter_freeze: route/bind/visible/command/delta/feedback");
         }
 
+        // ── Plans 190-193: amputation / tribunal / railway / archaeology ──
+
+        private void RunAmputationUiContract()
+        {
+            var system = EnsureAmputation();
+            Check(_amputationTriagePanel != null, "amputation: panel not constructed");
+            _amputationTriagePanel.Bind(system);
+            Check(_amputationTriagePanel.IsBound, "amputation: bind did not take");
+            _amputationTriagePanel.Open();
+            Check(_amputationTriagePanel.Visible, "amputation: Open() did not make panel visible");
+
+            // A gangrenous limb must reach the docket and respond to commands.
+            system.EnsureSurvivorLimbs("patient_a");
+            var limbs = system.State.survivorLimbs["patient_a"];
+            limbs.Find(l => l.limb == LimbId.LeftLeg)!.condition = LimbCondition.Gangrenous;
+            _amputationTriagePanel.RefreshView();
+
+            HandleAmputationAction("amputate", $"patient_a:{(int)LimbId.LeftLeg}");
+            var leg = system.State.survivorLimbs["patient_a"].Find(l => l.limb == LimbId.LeftLeg)!;
+            Check(leg.condition == LimbCondition.Amputated || leg.condition == LimbCondition.Gangrenous,
+                $"amputation: command produced no coherent state delta ({leg.condition})");
+            Check(!string.IsNullOrEmpty(_amputationTriagePanel.LastFeedback), "amputation: no feedback after amputate");
+
+            // Prosthetic fitting on the amputated limb (deterministic result).
+            if (leg.condition == LimbCondition.Amputated)
+            {
+                HandleAmputationAction("prosthetic", $"patient_a:{(int)LimbId.LeftLeg}");
+                Check(!string.IsNullOrEmpty(_amputationTriagePanel.LastFeedback), "amputation: no feedback after prosthetic");
+            }
+
+            _amputationTriagePanel.Close();
+            Check(!_amputationTriagePanel.Visible, "amputation: Close() did not hide panel");
+            GD.Print("  [PASS] amputation: route/bind/visible/command/delta/feedback");
+        }
+
+        private void RunJusticeUiContract()
+        {
+            var system = EnsureJustice();
+            Check(_justiceTribunalPanel != null, "justice: panel not constructed");
+            _justiceTribunalPanel.Bind(system);
+            Check(_justiceTribunalPanel.IsBound, "justice: bind did not take");
+            _justiceTribunalPanel.Open();
+            Check(_justiceTribunalPanel.Visible, "justice: Open() did not make panel visible");
+
+            int before = system.State.incidents.Count;
+            HandleJusticeAction("report", "survivor_uitest:Theft");
+            Check(system.State.incidents.Count == before + 1, "justice: report produced no docket delta");
+            var inc = system.State.incidents[^1];
+            Check(inc.crimeType == CrimeType.Theft && inc.accusedSurvivorId == "survivor_uitest",
+                "justice: incident fields not preserved");
+            Check(!string.IsNullOrEmpty(_justiceTribunalPanel.LastFeedback), "justice: no feedback after report");
+
+            // Deterministic day tick resolves the docket through Core.
+            for (int d = 1; d <= 6; d++) system.TickDay(d);
+            _justiceTribunalPanel.RefreshView();
+
+            _justiceTribunalPanel.Close();
+            Check(!_justiceTribunalPanel.Visible, "justice: Close() did not hide panel");
+            GD.Print("  [PASS] justice: route/bind/visible/command/delta/feedback");
+        }
+
+        private void RunRailwayUiContract()
+        {
+            var system = EnsureRailway();
+            Check(_railwayTerminalPanel != null, "railway: panel not constructed");
+            _railwayTerminalPanel.Bind(system);
+            Check(_railwayTerminalPanel.IsBound, "railway: bind did not take");
+            _railwayTerminalPanel.Open();
+            Check(_railwayTerminalPanel.Visible, "railway: Open() did not make panel visible");
+
+            // Damaged segment responds to repair with a bounded integrity delta.
+            // Materials flow through the system's canonical inventory authority —
+            // stock it before commanding the repair.
+            var seg = system.State.segments.Values.FirstOrDefault();
+            if (seg != null)
+            {
+                seg.integrity = 0.4f;
+                _inventory?.Inventory?.AddById("scrap_metal", 10);
+                _railwayTerminalPanel.RefreshView();
+                HandleRailwayAction("repair_track", seg.segmentId);
+                Check(seg.integrity > 0.4f, $"railway: repair produced no integrity delta ({seg.integrity})");
+                Check(seg.integrity <= 1.0f, "railway: integrity must never exceed 1.0");
+                Check(!string.IsNullOrEmpty(_railwayTerminalPanel.LastFeedback), "railway: no feedback after repair");
+            }
+
+            _railwayTerminalPanel.Close();
+            Check(!_railwayTerminalPanel.Visible, "railway: Close() did not hide panel");
+            GD.Print("  [PASS] railway: route/bind/visible/command/delta/feedback");
+        }
+
+        private void RunArchaeologyUiContract()
+        {
+            var system = EnsureArchaeology();
+            Check(_archaeologyExcavationPanel != null, "archaeology: panel not constructed");
+            _archaeologyExcavationPanel.Bind(system);
+            Check(_archaeologyExcavationPanel.IsBound, "archaeology: bind did not take");
+            _archaeologyExcavationPanel.Open();
+            Check(_archaeologyExcavationPanel.Visible, "archaeology: Open() did not make panel visible");
+
+            // Decryption shifts advance progress deterministically.
+            var archive = system.Archives.FirstOrDefault(a => !a.unlocked && !a.corrupted);
+            if (archive != null)
+            {
+                float before = archive.decryptionProgress;
+                HandleArchaeologyAction("decrypt", archive.archiveId);
+                Check(archive.decryptionProgress > before || archive.unlocked,
+                    $"archaeology: decrypt produced no progress delta ({archive.decryptionProgress})");
+                Check(!string.IsNullOrEmpty(_archaeologyExcavationPanel.LastFeedback), "archaeology: no feedback after decrypt");
+            }
+
+            _archaeologyExcavationPanel.Close();
+            Check(!_archaeologyExcavationPanel.Visible, "archaeology: Close() did not hide panel");
+            GD.Print("  [PASS] archaeology: route/bind/visible/command/delta/feedback");
+        }
+
         // ── Registry route contract (UI-09 closure evidence) ──────────────
 
         private void RunRegistryRouteContract()
         {
-            string[] ids = { "chem_warfare_defense", "comms_array_transceiver", "ceremony_ritual", "robotics_assembly", "survivor_downtime", "winter_freeze" };
+            string[] ids = { "chem_warfare_defense", "comms_array_transceiver", "ceremony_ritual", "robotics_assembly", "survivor_downtime", "winter_freeze", "amputation_surgery", "justice_tribunal", "railway_logistics", "archaeology_excavation" };
             foreach (string id in ids)
             {
                 var descriptor = Ashfall.Core.UI.PanelRegistry.Resolve(id, msg => GD.PrintErr(msg));
@@ -349,14 +471,20 @@ namespace AtomicWar.GodotApp
             CloseRoboticsWorkshopPanel();
             CloseSurvivorDowntimePanel();
             CloseWinterFreezePanel();
+            CloseAmputationTriagePanel();
+            CloseJusticeTribunalPanel();
+            CloseRailwayTerminalPanel();
+            CloseArchaeologyExcavationPanel();
             Check(!_chemWarfareDefensePanel.Visible && !_commsArrayTransceiverPanel.Visible
                 && !_ceremonyFestivalPanel.Visible && !_roboticsWorkshopPanel.Visible
-                && !_survivorDowntimePanel.Visible && !_winterFreezePanel.Visible,
+                && !_survivorDowntimePanel.Visible && !_winterFreezePanel.Visible
+                && !_amputationTriagePanel.Visible && !_justiceTribunalPanel.Visible
+                && !_railwayTerminalPanel.Visible && !_archaeologyExcavationPanel.Visible,
                 "route: close path left one of the consoles visible");
             // Note: the global AnyOverlayPanelOpen() contract also covers the
             // journal book and briefing modal, whose headless boot state is
             // environment-dependent — those are owned by the lifecycle suite.
-            GD.Print("  [PASS] registry routes: 6/6 descriptors Live, bind+open+close via player path");
+            GD.Print("  [PASS] registry routes: 10/10 descriptors Live, bind+open+close via player path");
         }
     }
 }

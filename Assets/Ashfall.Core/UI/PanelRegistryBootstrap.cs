@@ -202,6 +202,11 @@ namespace Ashfall.Core.UI
             R("survivor_downtime",         "Hobbies & Downtime",          PanelGroup.Expanded, new[] { "survivors", "inventory" });
             // Deep-freeze watch (Plan 197) — bound to YearOfAshDeepFreezeSystem.
             R("winter_freeze",             "Deep Freeze Watch",           PanelGroup.Expanded, new[] { "world" });
+            // ── Plans 190-193: triage/tribunal/railway/archaeology (Live) ──
+            R("amputation_surgery",        "Amputation Triage",           PanelGroup.Expanded, new[] { "medical", "inventory", "survivors" });
+            R("justice_tribunal",          "Shelter Tribunal",            PanelGroup.Expanded, new[] { "survivors" });
+            R("railway_logistics",         "Railway Terminal",            PanelGroup.Expanded, new[] { "expedition", "inventory" });
+            R("archaeology_excavation",    "Pre-War Archaeology",         PanelGroup.Expanded, new[] { "expedition", "research" });
         }
 
         private static void R(

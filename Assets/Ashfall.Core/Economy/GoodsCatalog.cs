@@ -255,6 +255,15 @@ namespace Ashfall.Core.Economy
                     continue;
                 }
 
+                string regionalSupply = string.IsNullOrWhiteSpace(rawDef.regionalSupply)
+                    ? string.Empty
+                    : rawDef.regionalSupply.Trim();
+                if (!RegionalSupplyRouter.IsAcceptedSupplyTag(regionalSupply))
+                {
+                    result.Errors.Add($"'{id}' regionalSupply '{regionalSupply}' is not accepted by the live regional supply matcher");
+                    continue;
+                }
+
                 float volatility = rawDef.volatility ?? 0.1f;
                 if (volatility < 0f || volatility > 1f)
                 {
@@ -291,9 +300,7 @@ namespace Ashfall.Core.Economy
                     stackSize = stackSize,
                     weightKg = weightKg,
                     barterNote = rawDef.barterNote ?? string.Empty,
-                    regionalSupply = string.IsNullOrWhiteSpace(rawDef.regionalSupply)
-                        ? string.Empty
-                        : rawDef.regionalSupply.Trim()
+                    regionalSupply = regionalSupply
                 });
             }
             return result;

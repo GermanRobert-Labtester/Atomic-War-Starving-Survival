@@ -24,6 +24,28 @@ namespace Ashfall.Core.Economy
     /// </summary>
     public static class RegionalSupplyRouter
     {
+        private static readonly string[] AcceptedSupplyTags =
+        {
+            "general", "flotilla", "coastal", "foundry", "greenhouse", "traplines", "settlement"
+        };
+
+        /// <summary>
+        /// Returns whether a goods catalog regionalSupply value is understood
+        /// by the live origin matcher. Keep this vocabulary in one place so
+        /// authored trade entries cannot silently become unreachable stock.
+        /// </summary>
+        public static bool IsAcceptedSupplyTag(string regionalSupply)
+        {
+            if (string.IsNullOrEmpty(regionalSupply)) return true;
+            for (int i = 0; i < AcceptedSupplyTags.Length; i++)
+                if (string.Equals(AcceptedSupplyTags[i], regionalSupply, StringComparison.Ordinal))
+                    return true;
+            return false;
+        }
+
+        /// <summary>Stable copy of the live regionalSupply vocabulary for validators and tooling.</summary>
+        public static IReadOnlyList<string> AcceptedSupplyTagValues => AcceptedSupplyTags;
+
         /// <summary>
         /// Origin-region → production-tag normalization. Handles both
         /// vocabularies in the wild: the legacy regional-specialty regions

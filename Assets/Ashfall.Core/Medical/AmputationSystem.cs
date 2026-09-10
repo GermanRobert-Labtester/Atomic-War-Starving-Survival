@@ -130,6 +130,9 @@ namespace Ashfall.Core.Medical
             _procedures[def.procedure_id] = def;
         }
 
+        /// <summary>Read-only surgical procedure catalog for UI display.</summary>
+        public IReadOnlyDictionary<string, SurgicalProcedureDef> Procedures => _procedures;
+
         public List<LimbState> EnsureSurvivorLimbs(string survivorId)
         {
             if (!_state.survivorLimbs.TryGetValue(survivorId, out var limbs))

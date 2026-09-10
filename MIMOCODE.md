@@ -681,14 +681,23 @@ with roster-resolved participants) and `WinterFreezePanel` (indoor temp /
 intake ice / insulation / pipeline readouts, clear-ice + material-gated
 insulation commands) now have real bodies — both constructed, registered
 Live (`survivor_downtime`, `winter_freeze`), lifecycle-listed, and covered by
-the `--plans198-201-uitest` headless gate (7/7 segments PASS, exception-free,
-exit 0). UI-07 is CLOSED for these two as well; the remaining four
-(`AmputationTriagePanel`, `ArchaeologyExcavationPanel`, `JusticeTribunalPanel`,
-`RailwayTerminalPanel`) are still empty-refresh stubs.
+the `--plans198-201-uitest` headless gate.
+
+**UI-07 FULLY CLOSED (commit, this wave):** the last four stubs —
+`AmputationTriagePanel` (patient triage list, limb-condition readouts,
+amputate/treat/prosthetic commands), `JusticeTribunalPanel` (case docket,
+evidence/verdict readouts, crime-report command), `RailwayTerminalPanel`
+(segment integrity/bridges/sabotage/rolling stock, repair-track/rebuild-
+bridge/clear-sabotage/rerail/service commands), `ArchaeologyExcavationPanel`
+(dig sites, archive decryption state, decrypt-shift/sell-to-broker commands) —
+now have real bodies with handlers, construction, Live registration and
+closed-lifecycle wiring. All eleven original UI-07 panels are closed.
+Verification: `--plans198-201-uitest` headless gate, 11/11 segments PASS
+(ten panel contracts + 10-descriptor route contract), exit 0, exception-free.
 
 Evidence: src/UI/RailwayTerminalPanel.cs:Bind/RefreshView/_Ready (13/19/21); same full-file structure in all eleven named files; src/Main.PlayerSurfaces.cs:45; src/Main.Plans190_193.cs (full orchestration for all four).
 
-Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven. **Plan 204 closed the fungi body (see update above); the other ten remain STUB/PARTIAL.**
+Required follow-up acceptance: Treat all eleven as STUB/PARTIAL. For the four Plans 190–193 panels, implement against the existing Core APIs (see `Main.Plans190_193.cs` for the canonical `Ensure*()` constructors). Specify separate domain workflows and required Core projections before implementation for the remaining seven. **UI-07 is now FULLY CLOSED — all eleven panels have real bodies, handlers, routes and headless contract verification (see closeout notes above).**
 
 **Plans 198–201 update:** `CeremonyFestivalPanel`, `ChemWarfareDefensePanel`,
 `CommsArrayTransceiverPanel` and `RoboticsWorkshopPanel` now have real bodies
@@ -734,6 +743,16 @@ nineteen remain unregistered.
 `winter_freeze` are now registered as **Live** descriptors with real panel
 bodies; the headless gate covers both (7/7 segments PASS). These two IDs are
 closed for UI-09; the remaining seventeen remain unregistered.
+
+**UI-07-closeout update:** `amputation_surgery`, `justice_tribunal`,
+`railway_logistics` and `archaeology_excavation` are now registered **Live**
+with real bodies and handlers (headless gate 10/10 panel contracts PASS).
+Of the original 23 register IDs, 10 are closed. Concurrent streams added
+new configured-but-unregistered IDs (narrative_arc, radio_intelligence,
+shelter_social, subterranean_operations, electrostatic_scrubber,
+plastic_pyrolysis, cargo_airdrop, fungi_cultivation and others) — several
+have real bodies from closed panel work and need a body-vs-register audit
+before Live registration; do not register unverified bodies.
 
 Evidence: Assets/Ashfall.Core/UI/PanelRegistry.cs:ConfigureActions/Resolve (204/227); Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs; src/Main.PlayerSurfaces.cs:45–114/511–554; src/UI/GameDashboardPanel.cs:435–448; src/Main.GameFlow.cs:165; src/Main.Plans190_193.cs.
 

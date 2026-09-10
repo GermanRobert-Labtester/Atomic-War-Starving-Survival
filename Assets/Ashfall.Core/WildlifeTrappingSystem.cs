@@ -21,6 +21,16 @@ namespace Ashfall.Core
         /// <summary>Monotonic persisted sequence for stable event identity.</summary>
         public int eventSequence;
         public int nextDeploymentSequence;
+
+        // Deterministic replay positions. Zero means the injected RNG does
+        // not expose a seekable position (legacy/custom test ports); the
+        // seeded Core implementation captures all three streams.
+        public int rngSeed;
+        public ulong primaryRngState;
+        public int encounterRngSeed;
+        public ulong encounterRngState;
+        public int incidentRngSeed;
+        public ulong incidentRngState;
     }
 
     [Serializable]
@@ -1248,12 +1258,30 @@ namespace Ashfall.Core
             CheckTraps(densityMultiplier);
         }
 
-        public WildlifeTrappingState CaptureState() => CloneState(_state);
+        public WildlifeTrappingState CaptureState()
+        {
+            var captured = CloneState(_state);
+            captured.rngSeed = _rng.Seed;
+            captured.primaryRngState = _rng is SeededRng primary ? primary.PeekState() : 0UL;
+            captured.encounterRngSeed = _encounterRng.Seed;
+            captured.encounterRngState = _encounterRng is SeededRng encounter ? encounter.PeekState() : 0UL;
+            captured.incidentRngSeed = _incidentRng.Seed;
+            captured.incidentRngState = _incidentRng is SeededRng incident ? incident.PeekState() : 0UL;
+            return captured;
+        }
 
         public void RestoreState(WildlifeTrappingState saved)
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            if (_state.trapSites == null)
+                _state.trapSites = new List<TrapSite>();
+            if (_rng is SeededRng primary && _state.primaryRngState != 0UL)
+                primary.SeekState(_state.primaryRngState);
+            if (_encounterRng is SeededRng encounter && _state.encounterRngState != 0UL)
+                encounter.SeekState(_state.encounterRngState);
+            if (_incidentRng is SeededRng incident && _state.incidentRngState != 0UL)
+                incident.SeekState(_state.incidentRngState);
             if (_state.firstCatchLoggedSpeciesIds == null)
                 _state.firstCatchLoggedSpeciesIds = new List<string>();
 
@@ -1310,7 +1338,7 @@ namespace Ashfall.Core
                         site.bycatchYield = 0f;
                         site.bycatchToxic = false;
                         site.bycatchDiseaseId = string.Empty;
-                        site.bycatchContaminationDose = 0f;
+                        site!.bycatchContaminationDose = 0f;
                     }
 
                     if (site.deploymentSequence <= 0)
@@ -1338,7 +1366,7 @@ namespace Ashfall.Core
             // A legacy Plan VI save may contain the pending incident
             // projection but not the shared outbox entry. Rebuild that entry
             // without RNG or callbacks so restore cannot reroll or dispatch.
-            for (int i = 0; i < _state.trapSites.Count; i++)
+            for (int i = 0; i < _state.trapSites!.Count; i++)
             {
                 var site = _state.trapSites[i];
                 if (site == null || string.IsNullOrEmpty(site.pendingNarrativeEvent)) continue;
