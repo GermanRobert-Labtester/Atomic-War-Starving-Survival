@@ -15,14 +15,34 @@ namespace AtomicWar.GodotApp
         public void OpenSettingsPanel() => _settingsPanel?.Open();
         public void OpenCraftingPanel()
         {
+            SetupJournal();
+            DiscoverFringeCultRecords("room_foundry");
+            DiscoverPaperPrintingRecords("room_workshop");
+            DiscoverPaperPrintingRecords("room_workshop_heavy");
+            DiscoverPaperPrintingRecords("room_workshop_precision");
+            DiscoverPaperPrintingRecords("room_foundry");
+            DiscoverBoneHornRecords("room_workshop");
+            DiscoverBoneHornRecords("room_workshop_heavy");
+            DiscoverBoneHornRecords("room_workshop_precision");
+            DiscoverBoneHornRecords("room_foundry");
             SetupCrafting();
             SetupInventory();
             SyncCraftingStationsFromShelter();
             _craftingPanel.Bind(_crafting, _inventory);
             _craftingPanel.Open();
         }
-        public void OpenRadioPanel() => _radioPanel?.Open();
-        public void OpenMedicalPanel() => _medicalPanel?.Open();
+        public void OpenRadioPanel()
+        {
+            SetupJournal();
+            DiscoverFringeCultRecords("room_radio_tuner");
+            _radioPanel?.Open();
+        }
+        public void OpenMedicalPanel()
+        {
+            SetupJournal();
+            DiscoverBureaucraticDocuments("medical_office");
+            _medicalPanel?.Open();
+        }
 
         public void OpenPhase0Panel()
         {
@@ -34,7 +54,12 @@ namespace AtomicWar.GodotApp
             _phase0Panel.Bind(_phase0, _survivors, _medical.Pipeline);
             _phase0Panel.Open();
         }
-        public void OpenDutyRosterPanel() => _dutyRosterPanel?.Open();
+        public void OpenDutyRosterPanel()
+        {
+            SetupJournal();
+            DiscoverBureaucraticDocuments("duty_roster");
+            _dutyRosterPanel?.Open();
+        }
         public void OpenExpeditionPanel() => _expeditionPanel?.Open();
         public void OpenWeatherPanel()
         {
@@ -85,7 +110,13 @@ namespace AtomicWar.GodotApp
         }
 
 
-        public void OpenShelterPanel() => _shelterPanel?.Open();
+        public void OpenShelterPanel()
+        {
+            SetupJournal();
+            DiscoverBureaucraticDocuments("shelter_records");
+            DiscoverFringeCultRecords("room_memorial_wall");
+            _shelterPanel?.Open();
+        }
         public void OpenCombatPanel()
         {
             SetupCombat();
@@ -109,6 +140,9 @@ namespace AtomicWar.GodotApp
             SetupHoldfastRuntime();
             SetupExpeditions();
             SetupJournal();
+            DiscoverFringeCultRecords(locationId);
+            DiscoverPaperPrintingRecords(locationId);
+            DiscoverBoneHornRecords(locationId);
             var holdfastLoc = _core?.Catalog?.GetLocation(locationId);
             AtomicWar.Journal.LocationDefinitionData? journalLoc = null;
             if (_journalCodex?.Catalogs?.Locations != null)
@@ -122,7 +156,8 @@ namespace AtomicWar.GodotApp
                     }
                 }
             }
-            _mapDetailPanel.Bind(holdfastLoc, journalLoc);
+            int currentDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            _mapDetailPanel.Bind(holdfastLoc, journalLoc, GetBunkerGraffitiCatalog(), currentDay);
             _mapDetailPanel.Open();
         }
         public void OpenFactionDetailPanel(string factionId)

@@ -397,8 +397,67 @@ namespace AtomicWar.GodotApp
                 var atomicFail = session.TrySetTrap("site_a", wireTrap, "bait_scrap_meat", "hunter_1");
                 var siteAfter = new SystemTextJsonSerializer().Serialize(system.State.trapSites[0]);
                 Check("replace_atomic_on_missing_materials",
-                    !atomicFail.IsSuccess && siteBefore == siteAfter && inv.Inventory.Count(wireDef) == 0,
-                    $"res={atomicFail.IsSuccess} mutated={siteBefore != siteAfter}");
+                    !atomicFail.IsSuccess && atomicFail.FailureCode == "insufficient_materials" && siteBefore == siteAfter && inv.Inventory.Count(wireDef) == 0,
+                    $"res={atomicFail.IsSuccess} code={atomicFail.FailureCode} mutated={siteBefore != siteAfter}");
+
+                // ── Gate 5: deployment charges setup costs directly when trap item is not held ──
+                const string copperWireId = "copper_wire_10m_of_10m";
+                var copperDef = items.Get(copperWireId);
+                if (copperDef != null)
+                {
+                    inv.Inventory.Add(copperDef, 1);
+                    var directDeploy = session.TrySetTrap("site_direct", wireTrap, "bait_scrap_meat", "hunter_1");
+                    var directSite = system.State.trapSites.Find(s => s.siteId == "site_direct");
+                    Check("deploy_charges_setup_costs_directly",
+                        directDeploy.IsSuccess && inv.Inventory.Count(copperDef) == 0
+                        && directSite != null && directSite.trapId == wireTrap && directSite.remainingDurability == 3,
+                        $"res={directDeploy.IsSuccess} leftCopper={inv.Inventory.Count(copperDef)}");
+
+                    // ── Gate 6: repair charges materials atomically and restores operational durability ──
+                    if (directSite != null)
+                    {
+                        directSite.remainingDurability = 0;
+                        directSite.isBroken = true;
+                        inv.Inventory.Add(copperDef, 1);
+                        var repair = session.TryRepairTrap("site_direct");
+                        Check("repair_charges_materials_atomically",
+                            repair.IsSuccess && inv.Inventory.Count(copperDef) == 0
+                            && directSite.remainingDurability == 3 && !directSite.isBroken,
+                            $"res={repair.IsSuccess} durability={directSite?.remainingDurability} broken={directSite?.isBroken}");
+                    }
+                }
+
+                // ── Gate 7: butchery health delegates receive disease and contamination ──
+                string? appliedDiseaseSurvivor = null;
+                string? appliedDiseaseId = null;
+                float appliedDose = 0f;
+                session.ApplyDisease = (survivor, diseaseId, day) =>
+                {
+                    appliedDiseaseSurvivor = survivor;
+                    appliedDiseaseId = diseaseId;
+                };
+                session.ApplyContamination = (survivor, dose) =>
+                {
+                    appliedDose = dose;
+                };
+
+                var siteHealth = system.State.trapSites.Find(s => s.siteId == "site_direct");
+                if (siteHealth != null)
+                {
+                    siteHealth.hasCatch = true;
+                    siteHealth.catchSpecies = "rat";
+                    siteHealth.diseaseId = "disease_typhoid_waterborne";
+                    siteHealth.contaminationDose = 4.0f;
+                    siteHealth.isMeatProcessed = false;
+
+                    var butcherRes = session.Butcher("site_direct", "hunter_1");
+                    Check("butcher_routes_disease_and_contamination",
+                        butcherRes.IsSuccess
+                        && appliedDiseaseSurvivor == "hunter_1"
+                        && appliedDiseaseId == "disease_typhoid_waterborne"
+                        && appliedDose == 4.0f,
+                        $"butcher={butcherRes.IsSuccess} disease={appliedDiseaseId} dose={appliedDose}");
+                }
             }
 
             GD.Print($"trapping host selftest: {pass} passed, {fail} failed");

@@ -126,5 +126,11 @@ namespace Ashfall.Core.Onboarding
 
         /// <summary>One-shot "show me where" guidance already offered per stage.</summary>
         public List<int> stagesGuided = new List<int>();
+
+        /// <summary>Contextual tutorial IDs shown by domain milestones.</summary>
+        public List<string> contextualTutorialSeenIds = new List<string>();
+
+        /// <summary>Contextual tutorial IDs waiting for presentation.</summary>
+        public List<string> contextualTutorialQueue = new List<string>();
     }
 }

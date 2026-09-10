@@ -176,6 +176,12 @@ namespace AtomicWar.GodotApp
             _dailyBriefingDirty = true;
             if (_dailyBriefingDirty) SaveDailyBriefing();
             UpdateHud();
+
+            // A narrative arc selected during the day tick is presented after
+            // the briefing closes, keeping the choice modal on the normal
+            // player path while preserving selection/execution separation.
+            if (_narrative != null && _narrative.PendingArcEvent != null)
+                OpenNarrativeArcModal();
         }
 
         private void SetupMemorial()

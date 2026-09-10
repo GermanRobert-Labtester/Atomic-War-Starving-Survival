@@ -1,5 +1,13 @@
 {
   "schema_version": 2,
+  "trapSites": [
+    {
+      "siteId": "snare_perimeter_north",
+      "anchorNodeId": "loc_holdfast",
+      "offsetX": -70.0,
+      "offsetY": -50.0
+    }
+  ],
   "nodes": [
     {
       "id": "loc_holdfast",

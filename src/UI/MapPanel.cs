@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Localization;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.Journal;
 
@@ -57,7 +60,11 @@ namespace AtomicWar.GodotApp.UI
             if (_expeditions != null)
                 _expeditions.StateChanged += RefreshView;
             if (_world != null)
+            {
                 _world.StateChanged += RefreshView;
+                if (_world.WastelandMap != null)
+                    _world.WastelandMap.OnMarkersChanged += RefreshView;
+            }
             if (_deepCoast != null)
                 _deepCoast.StateChanged += RefreshView;
             if (_yearOfAsh != null)
@@ -127,6 +134,35 @@ namespace AtomicWar.GodotApp.UI
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Cataloged Waypoints", $"{Math.Max(totalLocations, 8)} Sector Coordinates", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Sorties", $"{activeSorties} Active Recon Team(s)", AshfallUiHelpers.ToColor(activeSorties > 0 ? Ashfall.Core.UI.Theme.Hot : Ashfall.Core.UI.Theme.Dim)));
             _overviewContainer.AddChild(overviewCard);
+
+            // Trap markers are a projection of known trap lifecycle state. The
+            // marker DTO intentionally has no catch/bycatch/medical fields.
+            if (_world?.WastelandMap != null)
+            {
+                var trapMarkers = _world.WastelandMap.Markers
+                    .Where(marker => marker != null && marker.Category == "trapping")
+                    .ToList();
+                if (trapMarkers.Count > 0)
+                {
+                    var trapCard = AshfallUiHelpers.MakeCardFrame("TRAPPING POSITIONS", "PLAYER-PLACED MARKERS");
+                    var trapBox = trapCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+                    foreach (var marker in trapMarkers)
+                    {
+                        string fallback = string.IsNullOrEmpty(marker.DefinitionId)
+                            ? "Known Trap"
+                            : marker.DefinitionId.Replace('_', ' ');
+                        string label = AshfallLocalization.Tr(marker.LabelKey, fallback);
+                        string condition = marker.Condition == "broken" ? "BROKEN" : "HEALTHY";
+                        string coordinate = $"({marker.PositionX:0}, {marker.PositionY:0})";
+                        trapBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                            label, $"{condition} · {coordinate}",
+                            AshfallUiHelpers.ToColor(marker.Condition == "broken"
+                                ? Ashfall.Core.UI.Theme.Critical
+                                : Ashfall.Core.UI.Theme.Ozone)));
+                    }
+                    ovBox.AddChild(trapCard);
+                }
+            }
 
             // ── 2. Marker Status Legend ──
             var legendCard = AshfallUiHelpers.MakeCardFrame("MAP MARKER CLASSIFICATION", "CARTOGRAPHY STATUS KEY");

@@ -33,7 +33,9 @@ namespace AtomicWar.GodotApp.UI
             string description,
             string inspectNotes = "",
             List<string>? subLayouts = null,
-            List<string>? lootCategories = null)
+            List<string>? lootCategories = null,
+            Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffitiCatalog = null,
+            int currentDay = int.MaxValue)
         {
             if (_titleLabel != null)
                 _titleLabel.Text = $"SECTOR INTELLIGENCE // {displayName.ToUpperInvariant()}";
@@ -69,6 +71,37 @@ namespace AtomicWar.GodotApp.UI
                 infoBox.AddChild(noteLbl);
             }
             _infoContainer.AddChild(infoCard);
+
+            // ── Field Markings & Environmental Text (Plan 145) ──
+            if (graffitiCatalog != null)
+            {
+                var postings = graffitiCatalog.GetPostingsForLocation(locationId, currentDay);
+                if (postings != null && postings.Count > 0)
+                {
+                    var graffitiCard = AshfallUiHelpers.MakeCardFrame("FIELD MARKINGS & ENVIRONMENTAL TEXT", "SCRATCHES");
+                    var graffitiBox = graffitiCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+                    for (int i = 0; i < postings.Count; i++)
+                    {
+                        if (i > 0)
+                            graffitiBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+                        var p = postings[i];
+                        string mediumTag = !string.IsNullOrWhiteSpace(p.medium) ? $"[{p.medium.ToUpperInvariant()}]" : "[SCRATCH]";
+                        string author = !string.IsNullOrWhiteSpace(p.author_signature) ? $" — {p.author_signature}" : " — Unsigned";
+                        var quoteLbl = AshfallUiHelpers.MakeBody($"{mediumTag} \"{p.content}\"{author}");
+                        quoteLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                        graffitiBox.AddChild(quoteLbl);
+
+                        if (p.recorded_day > 0)
+                        {
+                            var metaLbl = AshfallUiHelpers.MakeSmall($"Recorded Day {p.recorded_day} · Origin: {p.location}");
+                            metaLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
+                            graffitiBox.AddChild(metaLbl);
+                        }
+                    }
+                    _infoContainer.AddChild(graffitiCard);
+                }
+            }
 
             // ── 2. Hazard Profile ──
             var hazardCard = AshfallUiHelpers.MakeCardFrame("ENVIRONMENTAL HAZARDS & THREAT RATING", "DOSIMETRY");
@@ -119,7 +152,11 @@ namespace AtomicWar.GodotApp.UI
             _salvageContainer.AddChild(salvageCard);
         }
 
-        public void Bind(HoldfastLocationEntry? holdfastLoc, LocationDefinitionData? journalLoc = null)
+        public void Bind(
+            HoldfastLocationEntry? holdfastLoc,
+            LocationDefinitionData? journalLoc = null,
+            Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffitiCatalog = null,
+            int currentDay = int.MaxValue)
         {
             if (holdfastLoc != null)
             {
@@ -131,7 +168,11 @@ namespace AtomicWar.GodotApp.UI
                     holdfastLoc.baseRadsPerHour,
                     holdfastLoc.travelHours,
                     holdfastLoc.description ?? "",
-                    holdfastLoc.inspect ?? "");
+                    holdfastLoc.inspect ?? "",
+                    subLayouts: null,
+                    lootCategories: null,
+                    graffitiCatalog: graffitiCatalog,
+                    currentDay: currentDay);
             }
             else if (journalLoc != null)
             {
@@ -142,7 +183,12 @@ namespace AtomicWar.GodotApp.UI
                     journalLoc.dangerLevel,
                     journalLoc.baseRadsPerHour,
                     4.0f,
-                    journalLoc.description ?? "");
+                    journalLoc.description ?? "",
+                    inspectNotes: "",
+                    subLayouts: null,
+                    lootCategories: null,
+                    graffitiCatalog: graffitiCatalog,
+                    currentDay: currentDay);
             }
         }
 

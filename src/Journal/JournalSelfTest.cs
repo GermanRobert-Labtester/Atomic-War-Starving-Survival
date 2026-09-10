@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Godot;
 using Ashfall.Core.Journal;
+using Ashfall.Core.Narrative;
 
 namespace AtomicWar.Journal
 {
@@ -33,6 +35,40 @@ namespace AtomicWar.Journal
             }
 
             GD.Print("[JournalSelfTest] begin");
+
+            // Plan 153: the source catalog and its Plan 135 projections must
+            // both be available in the exported host. Discovery uses the
+            // Journal knowledge ledger only; no doctrine authority is bound.
+            Check(catalogs != null && catalogs.FringeCults != null
+                && catalogs.FringeCults.TotalCount == 30,
+                "fringe cult source catalog loads 30 records");
+            int fringeProjectionCount = catalogs?.NarrativeDiscoveries?.AllRecords
+                .Count(r => FringeCultRuntimeContract.IsSourceCatalog(r.SourceCatalog)) ?? 0;
+            Check(fringeProjectionCount == 30, "fringe cult discovery projections load");
+
+            // Plan 156: both source catalogs remain intact while the shared
+            // discovery seam exposes one read-only projection per authored
+            // record. Measurements are rendered as historical observations.
+            Check(catalogs != null && catalogs.PaperMaking != null
+                && catalogs.PaperMaking.TotalCount == 30,
+                "paper-making source catalog loads 30 records");
+            Check(catalogs != null && catalogs.PaperPrinting != null
+                && catalogs.PaperPrinting.TotalCount == 30,
+                "paper-printing source catalog loads 30 records");
+            int paperProjectionCount = catalogs?.NarrativeDiscoveries?.AllRecords
+                .Count(r => PaperPrintRuntimeContract.IsSourceCatalog(r.SourceCatalog)) ?? 0;
+            Check(paperProjectionCount == 60, "paper/printing discovery projections load 60 records");
+
+            // Plan 160: bone, horn and antler records use the same read-only
+            // discovery projection. Their source labels and measurements are
+            // historical observations; no wildlife, inventory or crafting
+            // authority is bound here.
+            Check(catalogs != null && catalogs.BoneHornCarving != null
+                && catalogs.BoneHornCarving.TotalCount == 30,
+                "bone/horn source catalog loads 30 records");
+            int boneHornProjectionCount = catalogs?.NarrativeDiscoveries?.AllRecords
+                .Count(r => BoneHornRuntimeContract.IsSourceCatalog(r.SourceCatalog)) ?? 0;
+            Check(boneHornProjectionCount == 30, "bone/horn discovery projections load 30 records");
 
             // --- KnowledgeBase dedupe ---
             var kb = new KnowledgeBase();

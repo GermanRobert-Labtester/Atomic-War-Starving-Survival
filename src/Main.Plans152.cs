@@ -121,5 +121,35 @@ namespace AtomicWar.GodotApp
                     BlackProjectsArchiveSaveStore.TryCapturePersisted(_blackProjectsArchive.CaptureState()));
             }
         }
+
+        // ── UI Panel (Plan 152 Follow-up) ─────────────────────────────────
+
+        private UI.BlackProjectsArchivePanel? _blackProjectsArchivePanel;
+
+        public UI.BlackProjectsArchivePanel EnsureBlackProjectsArchivePanel()
+        {
+            if (_blackProjectsArchivePanel != null) return _blackProjectsArchivePanel;
+
+            _blackProjectsArchivePanel = new UI.BlackProjectsArchivePanel();
+            _blackProjectsArchivePanel.Visible = false;
+            _blackProjectsArchivePanel.OnClose += () => _blackProjectsArchivePanel.Visible = false;
+            AddChild(_blackProjectsArchivePanel);
+            return _blackProjectsArchivePanel;
+        }
+
+        public void OpenBlackProjectsArchivePanel()
+        {
+            var panel = EnsureBlackProjectsArchivePanel();
+            var archive = EnsureBlackProjectsArchive();
+            SetupJournal();
+            panel.Bind(archive, _journal);
+            panel.Open();
+        }
+
+        public void CloseBlackProjectsArchivePanel()
+        {
+            if (_blackProjectsArchivePanel != null)
+                _blackProjectsArchivePanel.Close();
+        }
     }
 }

@@ -17,10 +17,11 @@ namespace Ashfall.Core.Tests
         public void LoadsAllSixtyQuestsAcrossFiveCategories()
         {
             var quests = Load();
-            Assert.Equal(65, quests.Count);
+            Assert.Equal(68, quests.Count);
 
             var byCategory = quests.GroupBy(q => q.Category).ToDictionary(g => g.Key, g => g.Count());
-            Assert.Equal(13, byCategory["share"]);
+            // Flagship Plan IV Task 5 added 3 share-category trapping dilemmas.
+            Assert.Equal(16, byCategory["share"]);
             Assert.Equal(13, byCategory["listen"]);
             Assert.Equal(13, byCategory["comfort"]);
             Assert.Equal(13, byCategory["dead"]);
@@ -90,14 +91,17 @@ namespace Ashfall.Core.Tests
             var sys = new MoralChoiceSystem(new SeededRng(42));
 
             int expectedEmpathy = 0;
+            int expectedMoralScore = 0;
             foreach (var quest in quests)
             {
                 sys.Resolve(quest, 0, quest.LocationId, 5);
+                expectedMoralScore = Math.Clamp(expectedMoralScore + quest.Choices[0].MoralDelta,
+                    MoralChoiceSystem.MinScore, MoralChoiceSystem.MaxScore);
                 expectedEmpathy += quest.Choices[0].EmpathyDelta;
             }
 
-            Assert.Equal(65, sys.QuestsResolved);
-            Assert.Equal(MoralChoiceSystem.MaxScore, sys.MoralScore); // 782 raw clamps at +200
+            Assert.Equal(68, sys.QuestsResolved);
+            Assert.Equal(expectedMoralScore, sys.MoralScore);
             Assert.Equal(expectedEmpathy, sys.EmpathyPoints);
         }
 

@@ -786,6 +786,47 @@ namespace AtomicWar.GodotApp
                     return 1;
                 }
 
+                // Deployment control follows the same Core replaceability
+                // predicate as TrySetTrap: healthy active is blocked, broken
+                // and pending-catch sites expose replacement.
+                wtSys.SetTrap("snare_perimeter_north", "bait_grain_lure", "hunter_ui", "snare", "trap_snare", 2, 8);
+                wtPanel.RefreshView();
+                if (!wtPanel.SetTrapButton!.Disabled || wtPanel.SetTrapButton.Text != "Set Snare at Perimeter")
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: healthy active perimeter trap should block deployment, got disabled={wtPanel.SetTrapButton.Disabled} text='{wtPanel.SetTrapButton.Text}'.");
+                    return 1;
+                }
+
+                var managedPerimeter = wtSys.State.trapSites.Find(s => s.siteId == "snare_perimeter_north")!;
+                managedPerimeter.isBroken = true;
+                managedPerimeter.remainingDurability = 0;
+                wtPanel.RefreshView();
+                if (wtPanel.SetTrapButton.Disabled || wtPanel.SetTrapButton.Text != "Replace Trap at Perimeter")
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: broken perimeter trap should expose replacement, got disabled={wtPanel.SetTrapButton.Disabled} text='{wtPanel.SetTrapButton.Text}'.");
+                    return 1;
+                }
+
+                invSession.Add("rope", 1);
+                wtPanel.SetTrapButton.EmitSignal(BaseButton.SignalName.Pressed);
+                int ropeAfterReplacement = invSession.Inventory.CountById("rope");
+                if (managedPerimeter.isBroken || managedPerimeter.remainingDurability != 8
+                    || ropeAfterReplacement != 0)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: pressing the broken-trap replacement control should deploy and charge once, got broken={managedPerimeter.isBroken} durability={managedPerimeter.remainingDurability} rope={ropeAfterReplacement}.");
+                    return 1;
+                }
+
+                managedPerimeter.hasCatch = true;
+                wtPanel.RefreshView();
+                if (wtPanel.SetTrapButton.Disabled || wtPanel.SetTrapButton.Text != "Replace Trap at Perimeter")
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: pending-catch perimeter trap should expose replacement, got disabled={wtPanel.SetTrapButton.Disabled} text='{wtPanel.SetTrapButton.Text}'.");
+                    return 1;
+                }
+                wtSys.State.trapSites.RemoveAll(s => s.siteId == "snare_perimeter_north");
+                wtPanel.RefreshView();
+
                 // 3. Low durability test: remainingDurability = 2 (<= 8/3)
                 var alphaState = wtSys.State.trapSites.Find(s => s.siteId == "site_alpha")!;
                 alphaState.remainingDurability = 2;
@@ -898,6 +939,61 @@ namespace AtomicWar.GodotApp
                 if (wtPanel.StatusRail.HasCard("site_site_alpha"))
                 {
                     GD.PrintErr("[FAIL] Gate 16: Removed site_alpha should no longer have a card in the status rail.");
+                    return 1;
+                }
+
+                // 9. Durability edge case: legacy/untracked sentinel (-1) -> "—" with Normal criticality
+                wtSys.SetTrap("site_legacy", "bait_grain_lure", "hunter_3", "snare", "trap_snare", 2, -1);
+                wtPanel.RefreshView();
+                var cardLegacy = wtPanel.StatusRail.GetCard("site_site_legacy");
+                if (cardLegacy == null || cardLegacy.Value != "—" || cardLegacy.CurrentCriticality != AshfallMetricCard.Criticality.Normal)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Legacy sentinel durability -1 should show '—' Normal, got '{cardLegacy?.Value}' {cardLegacy?.CurrentCriticality}.");
+                    return 1;
+                }
+
+                // 10. Durability edge case: zero durability with isBroken=false -> "0/8" with Critical criticality
+                var legacySite = wtSys.State.trapSites.Find(s => s.siteId == "site_legacy")!;
+                legacySite.remainingDurability = 0;
+                legacySite.isBroken = false;
+                wtPanel.RefreshView();
+                if (cardLegacy.Value != "0/8" || cardLegacy.CurrentCriticality != AshfallMetricCard.Criticality.Critical)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Zero durability with isBroken=false should show '0/8' Critical, got '{cardLegacy.Value}' {cardLegacy.CurrentCriticality}.");
+                    return 1;
+                }
+
+                // 11. Catch ready on healthy trap -> "8/8 • CATCH"
+                legacySite.remainingDurability = 8;
+                legacySite.hasCatch = true;
+                wtPanel.RefreshView();
+                if (cardLegacy.Value != "8/8 • CATCH" || cardLegacy.CurrentCriticality != AshfallMetricCard.Criticality.Normal)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Catch ready on healthy trap should show '8/8 • CATCH', got '{cardLegacy.Value}'.");
+                    return 1;
+                }
+
+                // 12. Catch ready on broken trap -> "BROKEN • CATCH"
+                legacySite.isBroken = true;
+                legacySite.remainingDurability = 0;
+                wtPanel.RefreshView();
+                if (cardLegacy.Value != "BROKEN • CATCH" || cardLegacy.CurrentCriticality != AshfallMetricCard.Criticality.Critical)
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: Catch ready on broken trap should show 'BROKEN • CATCH', got '{cardLegacy.Value}'.");
+                    return 1;
+                }
+
+                // 13. Box trap multi-ingredient repair bill display names
+                wtSys.SetTrap("site_gamma", "bait_scrap_meat", "hunter_4", "box", "trap_box", 2, 15);
+                var gammaSite = wtSys.State.trapSites.Find(s => s.siteId == "site_gamma")!;
+                gammaSite.isBroken = true;
+                gammaSite.remainingDurability = 0;
+                wtPanel.RefreshView();
+                wtPanel.SelectRepairSite("site_gamma");
+                string gammaTooltip = wtPanel.RepairButton.TooltipText;
+                if (!gammaTooltip.Contains("Scrap Wood") || !gammaTooltip.Contains("Scrap Metal") || (!gammaTooltip.Contains("Box of Nails") && !gammaTooltip.Contains("Nails")))
+                {
+                    GD.PrintErr($"[FAIL] Gate 16: site_gamma box trap repair tooltip should display Scrap Wood, Scrap Metal, and Box of Nails, got: {gammaTooltip}");
                     return 1;
                 }
 

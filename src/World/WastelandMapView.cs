@@ -3,6 +3,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.World;
+using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.World
 {
@@ -41,12 +42,14 @@ namespace AtomicWar.GodotApp.World
             {
                 _mapSystem.OnNodeDiscovered -= HandleMapNodeChanged;
                 _mapSystem.OnNodeKnowledgeChanged -= HandleNodeKnowledgeChanged;
+                _mapSystem.OnMarkersChanged -= HandleMarkersChanged;
             }
             _mapSystem = mapSystem;
             if (_mapSystem != null)
             {
                 _mapSystem.OnNodeDiscovered += HandleMapNodeChanged;
                 _mapSystem.OnNodeKnowledgeChanged += HandleNodeKnowledgeChanged;
+                _mapSystem.OnMarkersChanged += HandleMarkersChanged;
             }
             if (_mapNodesContainer != null)
             {
@@ -64,6 +67,8 @@ namespace AtomicWar.GodotApp.World
             Initialize();
         }
 
+        private void HandleMarkersChanged() => Initialize();
+
         public void Initialize()
         {
             GD.Print("[Ashfall Godot][World] Initializing map nodes...");
@@ -80,6 +85,7 @@ namespace AtomicWar.GodotApp.World
                     {
                         CreateLocationMarker(node);
                     }
+                    CreateTrapMarkers();
                 }
                 else
                 {
@@ -189,6 +195,40 @@ namespace AtomicWar.GodotApp.World
             }
         }
 
+        private void CreateTrapMarkers()
+        {
+            if (_mapSystem == null) return;
+            foreach (var markerState in _mapSystem.Markers)
+            {
+                if (markerState == null || markerState.Category != "trapping") continue;
+                try
+                {
+                    var marker = _markerScene.Instantiate<MapLocationMarkerView>();
+                    marker.NodeId = markerState.MarkerId;
+                    marker.DisplayName = AshfallLocalization.Tr(
+                        markerState.LabelKey,
+                        string.IsNullOrEmpty(markerState.DefinitionId)
+                            ? "Known Trap"
+                            : markerState.DefinitionId.Replace('_', ' '));
+                    marker.PositionOffset = new Vector2(0, -30);
+                    marker.SetPosition(new Vector2(markerState.PositionX, markerState.PositionY));
+                    marker.DangerLevel = markerState.Condition == "broken" ? "locked" : "none";
+                    marker.StatusBadge = markerState.Condition == "broken"
+                        ? "TRAP · BROKEN"
+                        : "TRAP · HEALTHY";
+                    marker.Status = markerState.Condition == "broken"
+                        ? MapLocationMarkerStatus.Locked
+                        : MapLocationMarkerStatus.Discovered;
+                    marker.NodeSelected += OnNodeSelected;
+                    _mapNodesContainer.AddChild(marker);
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Ashfall Godot][World] Failed to create trap marker {markerState.MarkerId}: {ex.Message}");
+                }
+            }
+        }
+
         private static string DangerToString(MapNodeDanger danger) => danger switch
         {
             MapNodeDanger.Low => "low",
@@ -228,6 +268,7 @@ namespace AtomicWar.GodotApp.World
             {
                 _mapSystem.OnNodeDiscovered -= HandleMapNodeChanged;
                 _mapSystem.OnNodeKnowledgeChanged -= HandleNodeKnowledgeChanged;
+                _mapSystem.OnMarkersChanged -= HandleMarkersChanged;
             }
             ClearMarkers();
             base._ExitTree();

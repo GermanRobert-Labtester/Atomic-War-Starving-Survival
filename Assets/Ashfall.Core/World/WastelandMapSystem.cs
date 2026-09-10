@@ -22,14 +22,18 @@ namespace Ashfall.Core.World
         private readonly WastelandMapState _state;
         private readonly List<MapNode> _nodes;
         private readonly List<MapRoute> _routes;
+        private readonly Dictionary<string, TrapSiteMapLocation> _trapSiteLocations =
+            new Dictionary<string, TrapSiteMapLocation>(StringComparer.Ordinal);
 
         public event Action<string>? OnNodeDiscovered;
         public event Action<string, MapFogState>? OnNodeKnowledgeChanged;
         public event Action<string>? OnNodeCompleted;
         public event Action<string, bool>? OnNodeLockChanged;
+        public event Action? OnMarkersChanged;
 
         public WastelandMapSystem(WastelandMapState state,
-            IEnumerable<MapNode> nodes, IEnumerable<MapRoute> routes)
+            IEnumerable<MapNode> nodes, IEnumerable<MapRoute> routes,
+            IEnumerable<TrapSiteMapLocation>? trapSiteLocations = null)
         {
             _state = state ?? throw new ArgumentNullException(nameof(state));
             if (nodes == null) throw new ArgumentNullException(nameof(nodes));
@@ -60,6 +64,14 @@ namespace Ashfall.Core.World
                 _routes.Add(r);
             }
             _state.NormalizeAndValidate(_nodes);
+            if (trapSiteLocations != null)
+            {
+                foreach (var location in trapSiteLocations)
+                {
+                    if (location == null || string.IsNullOrEmpty(location.SiteId)) continue;
+                    _trapSiteLocations[location.SiteId] = location;
+                }
+            }
         }
 
         public WastelandMapState State => _state;
@@ -69,6 +81,110 @@ namespace Ashfall.Core.World
         public IReadOnlyList<string> CompletedNodes => _state.Completed;
         public IReadOnlyList<string> LockedNodes => _state.Locked;
         public IReadOnlyList<MapNodeKnowledgeState> Knowledge => _state.Knowledge;
+        public IReadOnlyList<MapMarkerState> Markers => _state.Markers;
+
+        public void RegisterTrapSiteLocation(TrapSiteMapLocation location)
+        {
+            if (location == null || string.IsNullOrEmpty(location.SiteId)) return;
+            _trapSiteLocations[location.SiteId] = location;
+        }
+
+        public bool TryResolveTrapSitePosition(string siteId, out float positionX, out float positionY)
+        {
+            positionX = 0f;
+            positionY = 0f;
+            if (string.IsNullOrEmpty(siteId)) return false;
+
+            var directNode = FindNode(siteId);
+            if (directNode != null)
+            {
+                positionX = directNode.PositionX;
+                positionY = directNode.PositionY;
+                return true;
+            }
+
+            if (!_trapSiteLocations.TryGetValue(siteId, out var location)) return false;
+            var anchor = FindNode(location.AnchorNodeId);
+            if (anchor == null) return false;
+            positionX = anchor.PositionX + location.OffsetX;
+            positionY = anchor.PositionY + location.OffsetY;
+            return true;
+        }
+
+        /// <summary>Creates or updates one known-information trap marker. The
+        /// marker contains no catch, bycatch, disease, contamination, or yield.</summary>
+        public bool UpsertTrapMarker(string siteId, string trapId, string trapType,
+            float positionX, float positionY, bool broken)
+        {
+            if (string.IsNullOrEmpty(siteId)) return false;
+            string markerId = TrapMarkerId(siteId);
+            var marker = _state.Markers.FirstOrDefault(m => m != null && m.MarkerId == markerId);
+            if (marker == null)
+            {
+                marker = new MapMarkerState { MarkerId = markerId };
+                _state.Markers.Add(marker);
+            }
+
+            marker.Category = "trapping";
+            marker.SourceId = siteId;
+            marker.DefinitionId = trapId ?? string.Empty;
+            marker.TrapType = trapType ?? string.Empty;
+            marker.LabelKey = Ashfall.Core.Localization.WildlifeTrappingLocalization.TrapNameKey(trapId ?? string.Empty);
+            marker.IconKey = "map.trap";
+            marker.Condition = broken ? "broken" : "healthy";
+            marker.PositionX = positionX;
+            marker.PositionY = positionY;
+            OnMarkersChanged?.Invoke();
+            return true;
+        }
+
+        public bool EnsureTrapMarker(string siteId, string trapId, string trapType, bool broken)
+        {
+            if (!TryResolveTrapSitePosition(siteId, out float x, out float y)) return false;
+            return UpsertTrapMarker(siteId, trapId, trapType, x, y, broken);
+        }
+
+        public bool RemoveTrapMarker(string siteId)
+        {
+            string markerId = TrapMarkerId(siteId);
+            for (int i = _state.Markers.Count - 1; i >= 0; i--)
+            {
+                var marker = _state.Markers[i];
+                if (marker != null && marker.MarkerId == markerId)
+                {
+                    _state.Markers.RemoveAt(i);
+                    OnMarkersChanged?.Invoke();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void ReconcileTrapMarkers(IEnumerable<TrapMapMarkerSource> activeSources)
+        {
+            var expected = new HashSet<string>(StringComparer.Ordinal);
+            if (activeSources != null)
+            {
+                foreach (var source in activeSources)
+                {
+                    if (source == null || string.IsNullOrEmpty(source.SiteId)) continue;
+                    expected.Add(TrapMarkerId(source.SiteId));
+                    UpsertTrapMarker(source.SiteId, source.TrapId, source.TrapType,
+                        source.PositionX, source.PositionY, source.IsBroken);
+                }
+            }
+
+            for (int i = _state.Markers.Count - 1; i >= 0; i--)
+            {
+                var marker = _state.Markers[i];
+                if (marker == null) { _state.Markers.RemoveAt(i); continue; }
+                if (marker.Category == "trapping" && !expected.Contains(marker.MarkerId))
+                    _state.Markers.RemoveAt(i);
+            }
+            OnMarkersChanged?.Invoke();
+        }
+
+        public static string TrapMarkerId(string siteId) => $"trap:{siteId ?? string.Empty}";
 
         public bool IsDiscovered(string nodeId)
         {
@@ -577,6 +693,7 @@ namespace Ashfall.Core.World
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
             _state.RestoreInto(state, _nodes);
+            OnMarkersChanged?.Invoke();
         }
 
         private MapNode? FindNode(string id)
@@ -764,6 +881,9 @@ namespace Ashfall.Core.World
         /// <summary>Strategic knowledge and fog-of-war states per location.</summary>
         public List<MapNodeKnowledgeState> Knowledge = new List<MapNodeKnowledgeState>();
 
+        /// <summary>Player-known map markers, including active trapping sites.</summary>
+        public List<MapMarkerState> Markers = new List<MapMarkerState>();
+
         public void NormalizeAndValidate(IReadOnlyList<MapNode> nodes)
         {
             var validIds = new HashSet<string>(StringComparer.Ordinal);
@@ -796,6 +916,15 @@ namespace Ashfall.Core.World
             {
                 if (Knowledge[i] == null || string.IsNullOrEmpty(Knowledge[i].NodeId) || !validIds.Contains(Knowledge[i].NodeId))
                     Knowledge.RemoveAt(i);
+            }
+
+            if (Markers == null) Markers = new List<MapMarkerState>();
+            var markerIds = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = Markers.Count - 1; i >= 0; i--)
+            {
+                var marker = Markers[i];
+                if (marker == null || string.IsNullOrEmpty(marker.MarkerId) || !markerIds.Add(marker.MarkerId))
+                    Markers.RemoveAt(i);
             }
 
             var knowledgeMap = new Dictionary<string, MapNodeKnowledgeState>(StringComparer.Ordinal);
@@ -873,7 +1002,8 @@ namespace Ashfall.Core.World
             Locked = new List<string>(Locked),
             Unlocked = new List<string>(Unlocked),
             RegisteredMapFragments = new List<string>(RegisteredMapFragments),
-            Knowledge = Knowledge != null ? Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>()
+            Knowledge = Knowledge != null ? Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>(),
+            Markers = Markers != null ? Markers.Select(m => m.Clone()).ToList() : new List<MapMarkerState>()
         };
 
         public void RestoreInto(WastelandMapState state, IReadOnlyList<MapNode> nodes)
@@ -884,7 +1014,57 @@ namespace Ashfall.Core.World
             Unlocked = state.Unlocked != null ? new List<string>(state.Unlocked) : new List<string>();
             RegisteredMapFragments = state.RegisteredMapFragments != null ? new List<string>(state.RegisteredMapFragments) : new List<string>();
             Knowledge = state.Knowledge != null ? state.Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>();
+            Markers = state.Markers != null ? state.Markers.Select(m => m.Clone()).ToList() : new List<MapMarkerState>();
             NormalizeAndValidate(nodes);
         }
+    }
+
+    [Serializable]
+    public sealed class MapMarkerState
+    {
+        public string MarkerId = string.Empty;
+        public string Category = string.Empty;
+        public string SourceId = string.Empty;
+        public string DefinitionId = string.Empty;
+        public string TrapType = string.Empty;
+        public string LabelKey = string.Empty;
+        public string IconKey = string.Empty;
+        public string Condition = "healthy";
+        public float PositionX;
+        public float PositionY;
+
+        public MapMarkerState Clone() => new MapMarkerState
+        {
+            MarkerId = MarkerId,
+            Category = Category,
+            SourceId = SourceId,
+            DefinitionId = DefinitionId,
+            TrapType = TrapType,
+            LabelKey = LabelKey,
+            IconKey = IconKey,
+            Condition = Condition,
+            PositionX = PositionX,
+            PositionY = PositionY
+        };
+    }
+
+    [Serializable]
+    public sealed class TrapMapMarkerSource
+    {
+        public string SiteId = string.Empty;
+        public string TrapId = string.Empty;
+        public string TrapType = string.Empty;
+        public float PositionX;
+        public float PositionY;
+        public bool IsBroken;
+    }
+
+    [Serializable]
+    public sealed class TrapSiteMapLocation
+    {
+        public string SiteId = string.Empty;
+        public string AnchorNodeId = string.Empty;
+        public float OffsetX;
+        public float OffsetY;
     }
 }

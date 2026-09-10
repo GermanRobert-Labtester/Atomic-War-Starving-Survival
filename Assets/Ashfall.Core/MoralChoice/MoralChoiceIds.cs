@@ -6,7 +6,7 @@ namespace Ashfall.Core.MoralChoice
     /// <summary>
     /// Canonical quest ids and flags for the moral choice system
     /// ("The Weight of Survival"), pinned 1:1 against the data files.
-    /// Base catalog: moral_choice_quests.json (65 quests).
+    /// Base catalog: moral_choice_quests.json (68 quests).
     /// Chain quests: moral_choice_quests_branching.json (100 quests, 4 × 25).
     /// Expansion quests: moral_choice_quests_expansion.json (50 quests).
     /// Threshold event ids live on MoralChoiceSystem; this class owns quest
@@ -14,7 +14,7 @@ namespace Ashfall.Core.MoralChoice
     /// </summary>
     public static class MoralChoiceIds
     {
-        public const int BaseQuestCount = 65;
+        public const int BaseQuestCount = 68;
         public const int ChainQuestCount = 100;
         public const int ExpansionQuestCount = 50;
         public const int TotalQuestCount = BaseQuestCount + ChainQuestCount + ExpansionQuestCount;
@@ -169,7 +169,7 @@ namespace Ashfall.Core.MoralChoice
             "quest_moral_dead_ceremony",
         };
 
-        /// <summary>All 65 base quest ids in catalog order.</summary>
+        /// <summary>All 68 base quest ids in catalog order.</summary>
         public static readonly string[] All =
         {
             ShareChild, ShareFamily, ShareInjured, ShareWater, ShareElder, SharePregnant,
@@ -187,7 +187,15 @@ namespace Ashfall.Core.MoralChoice
             TrustFire, TrustWounded, TrustMerchant, TrustChild, TrustDeserter, TrustWoman,
             TrustSoldier, TrustRunaway, TrustSilent, TrustSignal, TrustBorrower, TrustMessenger,
             TrustShelterRefugee,
+
+            // ── Trapping (3) — Flagship Plan IV Task 5 ───────────────────
+            TrapPreyHigh, TrapPreyMedium, TrapPreyLow,
         };
+
+        // ── Trapping (3) — Flagship Plan IV Task 5 ──────────────────
+        public const string TrapPreyHigh = "quest_moral_trap_prey_high";
+        public const string TrapPreyMedium = "quest_moral_trap_prey_medium";
+        public const string TrapPreyLow = "quest_moral_trap_prey_low";
 
         // ── Branch flags ────────────────────────────────────────────────
         public const string FlagMercyRoadLocked = "flag_branch_mercy_road_locked";

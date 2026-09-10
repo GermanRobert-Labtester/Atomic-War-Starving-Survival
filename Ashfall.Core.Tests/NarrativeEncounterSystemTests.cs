@@ -222,8 +222,8 @@ namespace Ashfall.Core.Tests
 
             var defs = NarrativeEncounterCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            // 13 narrative_encounters.json set-pieces + 28 micro_locations.json + 31 npc arcs.
-            Assert.Equal(72, defs.Count);
+            // 16 narrative_encounters.json set-pieces (13 + 3 Plan IV trap interference) + 28 micro_locations.json + 31 npc arcs.
+            Assert.Equal(75, defs.Count);
             Assert.Contains(defs, d => d.id == "enc_dead_letter_office");
             Assert.Contains(defs, d => d.id == "enc_weather_station");
             Assert.Contains(defs, d => d.id == "enc_pianist");

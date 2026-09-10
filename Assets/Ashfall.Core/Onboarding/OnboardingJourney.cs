@@ -208,8 +208,17 @@ namespace Ashfall.Core.Onboarding
         public IReadOnlyList<string> DismissedHints =>
             _state.dismissedHints ?? new List<string>();
 
+        /// <summary>One-shot contextual tutorial IDs already shown.</summary>
+        public IReadOnlyList<string> ContextualTutorialSeenIds =>
+            _state.contextualTutorialSeenIds ?? new List<string>();
+
+        /// <summary>Stable FIFO queue for contextual tutorial requests.</summary>
+        public IReadOnlyList<string> ContextualTutorialQueue =>
+            _state.contextualTutorialQueue ?? new List<string>();
+
         public event Action<OnboardingStage>? OnStageAdvanced;
         public event Action<OnboardingJourney>? OnJourneyChanged;
+        public event Action<string>? OnContextualTutorialRequested;
 
         public OnboardingJourney()
         {
@@ -288,6 +297,8 @@ namespace Ashfall.Core.Onboarding
             _state.completedStages.Clear();
             _state.stagesGuided.Clear();
             _state.dismissedHints.Clear();
+            _state.contextualTutorialSeenIds.Clear();
+            _state.contextualTutorialQueue.Clear();
             _counts.Clear();
 
             if (Profile == OnboardingProfile.FirstHour)
@@ -351,6 +362,35 @@ namespace Ashfall.Core.Onboarding
             => !string.IsNullOrWhiteSpace(hintKey) &&
                _state.dismissedHints != null &&
                _state.dismissedHints.Contains(hintKey);
+
+        /// <summary>
+        /// Requests a contextual tutorial through the existing persisted
+        /// onboarding authority. The seen check happens before the event is
+        /// raised, so duplicate host subscriptions and duplicate domain event
+        /// delivery cannot show the same lesson twice.
+        /// </summary>
+        public bool RequestContextualTutorial(string tutorialId)
+        {
+            if (string.IsNullOrWhiteSpace(tutorialId)) return false;
+            _state.contextualTutorialSeenIds ??= new List<string>();
+            _state.contextualTutorialQueue ??= new List<string>();
+            if (_state.contextualTutorialSeenIds.Contains(tutorialId)) return false;
+
+            _state.contextualTutorialSeenIds.Add(tutorialId);
+            _state.contextualTutorialQueue.Add(tutorialId);
+            OnContextualTutorialRequested?.Invoke(tutorialId);
+            EmitJourneyChangedIf();
+            return true;
+        }
+
+        /// <summary>Removes one displayed contextual lesson from the persisted queue.</summary>
+        public bool AcknowledgeContextualTutorial(string tutorialId)
+        {
+            if (_state.contextualTutorialQueue == null || string.IsNullOrWhiteSpace(tutorialId)) return false;
+            bool removed = _state.contextualTutorialQueue.Remove(tutorialId);
+            if (removed) EmitJourneyChangedIf();
+            return removed;
+        }
 
         public void RecordShowMeWhere(OnboardingStage stage)
         {
@@ -457,6 +497,8 @@ namespace Ashfall.Core.Onboarding
                 assistance = _state.assistance,
                 dismissedHints = new List<string>(_state.dismissedHints ?? new List<string>()),
                 stagesGuided = new List<int>(_state.stagesGuided ?? new List<int>()),
+                contextualTutorialSeenIds = new List<string>(_state.contextualTutorialSeenIds ?? new List<string>()),
+                contextualTutorialQueue = new List<string>(_state.contextualTutorialQueue ?? new List<string>()),
             };
         }
 
@@ -500,6 +542,12 @@ namespace Ashfall.Core.Onboarding
                 stagesGuided = saved.stagesGuided != null
                     ? new List<int>(saved.stagesGuided)
                     : new List<int>(),
+                contextualTutorialSeenIds = saved.contextualTutorialSeenIds != null
+                    ? new List<string>(saved.contextualTutorialSeenIds)
+                    : new List<string>(),
+                contextualTutorialQueue = saved.contextualTutorialQueue != null
+                    ? new List<string>(saved.contextualTutorialQueue)
+                    : new List<string>(),
             };
 
             // Reconstruct runtime counter map from the persisted ordinal list.

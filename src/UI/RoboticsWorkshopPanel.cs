@@ -85,10 +85,14 @@ namespace AtomicWar.GodotApp.UI
         }
 
         /// <summary>Host feedback strip — tied to the actual command result.</summary>
+        /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
+        public string LastFeedback { get; private set; } = string.Empty;
+
         public void ShowFeedback(string message, bool isFailure)
         {
             _feedbackText = message;
             _feedbackIsFailure = isFailure;
+            LastFeedback = message;
             RefreshView();
         }
 

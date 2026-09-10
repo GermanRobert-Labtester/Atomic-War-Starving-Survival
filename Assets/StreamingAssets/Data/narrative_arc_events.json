@@ -4,7 +4,7 @@
     {
       "id": "narrative_aris_thorne_stage_1",
       "title": "The Cracked Floor",
-      "bodyText": "A hairline crack has appeared in the bunker's concrete sub-floor. Water is seeping through — dark, metallic-smelling. Aris Thorne runs his fingers along the crack with the precision of a man who designed shelters like this before the war. 'This is bad,' he says quietly. 'I know exactly how bad this can get.'",
+      "bodyText": "A hairline crack has appeared in the bunker's concrete sub-floor, and damp grit darkens the seam. Aris Thorne runs his fingers along it with the precision of a man who designed shelters like this before the war. 'This needs a proper inspection,' he says quietly. 'I know what a warning like this can mean.'",
       "weight": 3.0,
       "minDay": 15,
       "choices": [
@@ -65,7 +65,7 @@
     {
       "id": "narrative_maya_lin_stage_1",
       "title": "The Signal",
-      "bodyText": "Maya Lin freezes at the radio console. Her hand hovers over the frequency dial. 'That pattern,' she whispers. 'That's Emergency Action Message format. Standard military. But the voice — ' She presses the headphones tighter. 'The voice is my brother's. Jakob was stationed at Checkpoint Kilo.'",
+      "bodyText": "Maya Lin freezes at the radio console. Her hand hovers over the frequency dial. 'That pattern,' she whispers. 'It resembles an old emergency message format. But the voice — ' She presses the headphones tighter. 'It sounds like my brother's. Jakob was stationed at Checkpoint Kilo.'",
       "weight": 3.0,
       "minDay": 12,
       "choices": [
@@ -85,7 +85,7 @@
     {
       "id": "narrative_maya_lin_stage_2",
       "title": "The Death Loop",
-      "bodyText": "The signal source is found: an automated transmitter running on a failing battery. Jakob recorded this three years ago. He's been dead since Year 1. Maya removes the headphones. Her face is completely still. 'He was alone,' she says. 'He died alone, talking to a radio.'",
+      "bodyText": "The apparent signal source is an automated transmitter running on a failing battery. The recording may be three years old; Maya cannot prove when Jakob made it or what became of him. She removes the headphones. Her face is completely still. 'If he was alone,' she says, 'he died talking to a radio.'",
       "weight": 1.0,
       "minDay": 18,
       "choices": [
@@ -118,7 +118,7 @@
     {
       "id": "narrative_maya_lin_stage_3",
       "title": "The Broadcast",
-      "bodyText": "Maya sits at the radio console, her hand steady on the transmitter. 'This is Free Radio, broadcasting from somewhere the ash hasn't reached yet,' she says. Her voice carries across every frequency. 'If you can hear this, you're not alone.' Somewhere, in a dozen bunkers, a dozen survivors press their headphones tighter.",
+      "bodyText": "Maya sits at the radio console, her hand steady on the transmitter. 'This is Free Radio, broadcasting from a shelter still standing,' she says. The signal is short-range and the ash swallows parts of it, but her voice gets through. 'If you can hear this, you're not alone.' Somewhere nearby, a few survivors press their headphones tighter.",
       "weight": 1.0,
       "minDay": 30,
       "choices": []
@@ -146,7 +146,7 @@
     {
       "id": "narrative_victor_vance_stage_2",
       "title": "The Command Decision",
-      "bodyText": "Vance's tactical assessment is correct: accepting the refugees will strain food supplies by 15%. But the bunker has room. The youngest child — maybe four years old — is shivering so hard her teeth are chattering. Vance won't look at her. He's staring at the inventory ledger instead.",
+      "bodyText": "Vance's tactical assessment is grim: accepting the refugees will put additional strain on food stores, though the exact cost depends on how many can be sheltered and for how long. The bunker has room. The youngest child — maybe four years old — is shivering so hard her teeth are chattering. Vance won't look at her. He's staring at the inventory ledger instead.",
       "weight": 1.0,
       "minDay": 20,
       "choices": [
@@ -187,7 +187,7 @@
     {
       "id": "narrative_elena_rostov_stage_1",
       "title": "The ARS Diagnosis",
-      "bodyText": "Dr. Rostov reviews the bloodwork with clinical detachment. 'Terminal Acute Radiation Syndrome,' she announces. 'Twelve days. Maybe fourteen with aggressive treatment.' The patient is someone she's treated before — someone she knows by name. Her voice doesn't shake. Her hands do.",
+      "bodyText": "Dr. Rostov reviews the bloodwork with clinical detachment. 'The results are consistent with severe acute radiation injury,' she says. 'I cannot give a reliable timetable without more observation.' The patient is someone she's treated before — someone she knows by name. Her voice doesn't shake. Her hands do.",
       "weight": 3.0,
       "minDay": 16,
       "choices": [
@@ -207,7 +207,7 @@
     {
       "id": "narrative_elena_rostov_stage_2",
       "title": "The Triage",
-      "bodyText": "Elena lays out the cost in a monotone: 'Eighty percent of our remaining medical supplies. Antibiotics, morphine, iodine, surgical kits — almost everything we have left to save a single patient with low survival odds.' She pauses. 'The mathematics is clear.' The patient is watching her. Waiting.",
+      "bodyText": "Elena lays out the cost in a monotone: 'A large share of our remaining medical supplies. Antibiotics, analgesics, iodine, surgical kits — resources we may need elsewhere, for a patient with uncertain odds.' She pauses. 'The mathematics is clear.' The patient is watching her. Waiting.",
       "weight": 1.0,
       "minDay": 22,
       "choices": [
@@ -240,7 +240,7 @@
     {
       "id": "narrative_elena_rostov_stage_3",
       "title": "The Remedy",
-      "bodyText": "In the quiet of the medical bay, Elena holds a vial up to the lantern light. The liquid inside glows faintly green — a compound derived from the spores of the Overgrown Botanical Nursery. 'The Ash Rot Remedy,' she whispers. 'It took me three years to synthesize. It will cure chronic fallout lung rot. Permanently.' She labels the vial. One word: 'HOPE.'",
+      "bodyText": "In the quiet of the medical bay, Elena holds a vial up to the lantern light. The liquid inside catches a faint green reflection — an experimental compound derived from nursery spores. 'The Ash Rot preparation,' she whispers. 'It took me three years to make. It may help with chronic fallout lung damage, but we still need controlled trials.' She labels the vial. One word: 'HOPE.'",
       "weight": 1.0,
       "minDay": 35,
       "choices": []
@@ -279,7 +279,7 @@
     {
       "id": "narrative_cult_prophet_rumor",
       "title": "The Prophet Sighting",
-      "bodyText": "A traveler at the Grain Exchange describes something impossible: 'I saw The Vessel — the Cult's prophet. Walking through Reactor Site 4 like it was a garden. No suit. No protection. Just walking. The Geiger counter was off the scale and they were just... walking. Smiling.' The traveler's hands are shaking. 'They said to tell everyone: the Clear World is coming.'",
+      "bodyText": "A traveler at the Grain Exchange repeats a frightening claim: 'I saw The Vessel — the Cult's prophet. Walking through Reactor Site 4 as if it were a garden. I never saw a suit or checked the reading myself. The Geiger counter was screaming and they were just... walking. Smiling.' The traveler's hands are shaking. 'They said to tell everyone: the Clear World is coming.'",
       "weight": 1.0,
       "minDay": 20,
       "choices": [
@@ -305,7 +305,7 @@
     {
       "id": "narrative_militia_council_invitation",
       "title": "The Council Invitation",
-      "bodyText": "A Militia courier arrives with a handwritten letter. 'The Ash Militia Council requests the presence of a representative from your shelter at our monthly assembly. Topics: mutual defense pact, water purification technology exchange, and the establishment of a formal trade route. Food and lodging provided. Weapons checked at the door.' The letter is signed by twelve different hands.",
+      "bodyText": "A Militia courier arrives with a handwritten letter. 'The Ash Militia Council requests the presence of a representative from your shelter at our monthly assembly. Proposed topics include mutual defense, water purification methods, and whether a formal trade route is practical. Food and lodging are offered. Weapons checked at the door.' The letter is signed by twelve different hands.",
       "weight": 1.5,
       "minDay": 15,
       "choices": [

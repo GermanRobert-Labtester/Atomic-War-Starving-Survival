@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-08<br>
-**Total Registered Actions:** 152 entries / 223 flag tokens (aliases included)
+**Last Verified:** 2026-09-09<br>
+**Total Registered Actions:** 155 entries / 228 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -18,6 +18,7 @@
 | `--asset-coverage-report` | — | Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list |
 | `--asset-registry-selftest` | — | Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/ |
 | `--starting-cohort-lifecycle-selftest` | `--cohort-lifecycle-selftest` | Plan 138 fresh-vs-restore lifecycle: preserve old slots, apply an alternate cohort, honor an empty saved roster, and reject failed restores without reseeding |
+| `--starting-supplies-profile` | — | <id> Preselect an authored starting-store profile in the New Game selector; invalid IDs fall back to Standard Holdfast |
 | `--bridge-selftest` | — | Report UnityEngine shim removal (shim is gone; always exits 0) |
 | `--power-grid-catalog-selftest` | — | Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal |
 | `--core-selftest` | — | Ice road + census headless demos |
@@ -86,6 +87,7 @@
 | `--audio-selftest` | `--audio-test` | Audio cue catalog, AudioManager wiring, and sound event verification |
 | `--caravan-selftest` | `--traveling-caravan-selftest` | Traveling caravan economy, inventory generation, and barter ticks |
 | `--chemical-dependency-save-selftest` | — | Chemical dependency system save store round-trip, tolerance, and withdrawal states |
+| `--contraband-stash-selftest` | `--contraband-selftest` | Plan 147 contraband stash discovery: day gate, once-only claim, canonical grant, checksummed save round-trip |
 | `--dose-ledger-selftest` | — | Dose Ledger save write → reload → restore → checksum/tamper checks |
 | `--duty-roster-save-selftest` | — | Duty Roster save write → reload → restore → checksum/tamper checks |
 | `--economy-selftest` | — | Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip) |
@@ -98,6 +100,7 @@
 | `--holdfast-save-selftest` | — | S1 save write → reload → restore → checksum/tamper checks |
 | `--holdfast-trade-save-selftest` | — | Holdfast trade ledger and save store round-trip and tamper checks |
 | `--inventory-save-selftest` | — | Inventory system save store round-trip, item serialization, and checksum verification |
+| `--starting-supplies-selftest` | `--starting-profile-selftest` | Plan 134 six-profile fresh-inventory matrix, fallback, idempotence, and save bypass |
 | `--journal-save-selftest` | — | Journal system save store round-trip, entry ordering, and tamper checks |
 | `--journal-selftest` | — | Journal domain + save roundtrip |
 | `--journal-weather-panel-selftest` | — | Journal and Weather forecast panel integration and live data binding |

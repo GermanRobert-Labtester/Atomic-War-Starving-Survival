@@ -3,6 +3,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 using System.IO;
 using System.Text.Json;
+using Ashfall.Core.Narrative;
 using Ashfall.Core.Radiation;
 
 namespace Ashfall.Core
@@ -511,6 +512,7 @@ namespace Ashfall.Core
             // room_lighting_main) are data-registered and deliberately NOT listed.
             "room_bunker_corridor", "room_filtration_stack", "room_storage_bay",
             "room_bunks_living", "room_radio_tuner",
+            "room_memorial_wall", // ShelterDecorHostSession's authored memorial-wall room
             "room_bunks", "room_kitchen", "room_workshop", "room_filtration",
             "room_airlock",
             "room_main",  // "Main Vault" — ShelterScheduleHostSession's power room; the Plan 29B generator home (continuity §7.3)
@@ -526,6 +528,32 @@ namespace Ashfall.Core
             "trust_edor_above_zero", "trust_leva_above_zero", "trust_yara_above_zero", "trust_mire_above_zero",
             // Radio station owner / broadcast factions
             "faction_civil_defense", "faction_independent_survivors", "faction_unknown_intelligence", "faction_automated_infrastructure"
+        };
+
+        /// <summary>
+        /// Plan 144 — prefix-grammar keys. The string value at these keys is an
+        /// id PATTERN used to recognize whole families of ids (e.g.
+        /// moral_choice_chains.json merge_rules.merge_quest_prefix =
+        /// "quest_moral_merge_"), never a concrete id itself. Values are
+        /// shape-checked (trailing underscore + rooted in a known id
+        /// namespace) and are exempt from Tier-1 foreign-key resolution — the
+        /// pattern token must never need a placeholder definition to pass, and
+        /// must never be selectable as an entity.
+        /// </summary>
+        public static readonly string[] PrefixPatternKeys =
+        {
+            "merge_quest_prefix"
+        };
+
+        /// <summary>
+        /// Plan 144 — playable-quest grammar markers. A quest row carrying any
+        /// of these defines an EXECUTABLE quest. Identity-only registries (e.g.
+        /// questline_master.json) acknowledge ids without these markers and do
+        /// not count as second definitions.
+        /// </summary>
+        private static readonly string[] QuestExecutableMarkers =
+        {
+            "choices", "stages", "objectives", "steps"
         };
 
         private sealed class Ctx
@@ -613,6 +641,10 @@ namespace Ashfall.Core
                         + r.Value + "' at " + r.Path + contextSuffix);
                 }
             }
+
+            // Plan 144 (Workstream 144D): one executable quest definition per id
+            // across the whole corpus. Registry-only acknowledgement stays legal.
+            CheckDuplicateExecutableQuestDefinitions(jsonFiles, files, ctx, report);
 
             // Plan 45 / F15: Patrol encounter specific integrity validation
             string travelPath = Path.Combine(dataDirectory, "travel_encounters.json");
@@ -713,7 +745,26 @@ namespace Ashfall.Core
                     using var manifestDoc = JsonDocument.Parse(manifestJson);
                     if (manifestDoc.RootElement.TryGetProperty("entries", out var entriesProp) && entriesProp.ValueKind == JsonValueKind.Array)
                     {
+                        if (manifestDoc.RootElement.TryGetProperty("schema_version", out var schemaProp)
+                            && schemaProp.ValueKind == JsonValueKind.Number
+                            && schemaProp.TryGetInt32(out int schemaVersion)
+                            && schemaVersion != 1)
+                        {
+                            report.Error($"narrative_discovery_manifest.json: unsupported schema_version {schemaVersion}");
+                        }
+
                         var sourceCatalogCache = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+                        var manifestIds = new HashSet<string>(StringComparer.Ordinal);
+                        foreach (var manifestEntry in entriesProp.EnumerateArray())
+                        {
+                            if (manifestEntry.TryGetProperty("discovery_id", out var idProp)
+                                && idProp.ValueKind == JsonValueKind.String
+                                && !string.IsNullOrEmpty(idProp.GetString()))
+                            {
+                                manifestIds.Add(idProp.GetString()!);
+                            }
+                        }
+                        var seenManifestIds = new HashSet<string>(StringComparer.Ordinal);
                         int entryIndex = 0;
                         foreach (var entryElem in entriesProp.EnumerateArray())
                         {
@@ -722,10 +773,40 @@ namespace Ashfall.Core
                             string sourceCatalog = entryElem.TryGetProperty("source_catalog", out var scProp) ? scProp.GetString() ?? "" : "";
                             string sourceRecordId = entryElem.TryGetProperty("source_record_id", out var sriProp) ? sriProp.GetString() ?? "" : "";
                             string producerId = entryElem.TryGetProperty("producer_id", out var piProp) ? piProp.GetString() ?? "" : "";
+                            string truthClass = entryElem.TryGetProperty("truth_class", out var tcProp) ? tcProp.GetString() ?? "" : "";
 
                             if (string.IsNullOrEmpty(discId))
                             {
                                 report.Error($"{entryPath}: missing or empty discovery_id");
+                            }
+                            else if (!seenManifestIds.Add(discId))
+                            {
+                                report.Error($"{entryPath}: duplicate discovery_id '{discId}'");
+                            }
+
+                            if (entryElem.TryGetProperty("related_discovery_ids", out var relatedProp)
+                                && relatedProp.ValueKind != JsonValueKind.Array)
+                            {
+                                report.Error($"{entryPath}: related_discovery_ids must be an array");
+                            }
+                            else if (relatedProp.ValueKind == JsonValueKind.Array)
+                            {
+                                foreach (var related in relatedProp.EnumerateArray())
+                                {
+                                    string relatedId = related.ValueKind == JsonValueKind.String
+                                        ? related.GetString() ?? ""
+                                        : "";
+                                    if (string.IsNullOrEmpty(relatedId) || !manifestIds.Contains(relatedId))
+                                    {
+                                        report.Error($"{entryPath}: related_discovery_id '{relatedId}' is not present in the manifest");
+                                    }
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(truthClass)
+                                && !FringeCultRuntimeContract.IsValidTruthClass(truthClass))
+                            {
+                                report.Error($"{entryPath}: unsupported truth_class '{truthClass}'");
                             }
 
                             if (string.IsNullOrEmpty(sourceCatalog))
@@ -781,6 +862,10 @@ namespace Ashfall.Core
                     report.Error("narrative discovery manifest validator error: " + ex.Message);
                 }
             }
+
+            // Wildlife trapping catalog integrity validation:
+            // Trap identity, bait reachability, compatibility matrix completeness, domain specializations.
+            ValidateWildlifeTrappingCatalog(dataDirectory, files, ctx, report);
 
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
@@ -1012,6 +1097,16 @@ namespace Ashfall.Core
 
         private static void RegisterOrReference(string key, string value, string path, string? entityContext, Ctx ctx)
         {
+            // Plan 144 (Workstream 144B): prefix-grammar tokens are patterns,
+            // not ids and not references. They must never be registered (a
+            // pattern must not bless itself) and never enter the Tier-1
+            // foreign-key set. Shape-check instead.
+            if (IsPrefixPatternKey(key))
+            {
+                ValidatePrefixPattern(key, value, path, ctx);
+                return;
+            }
+
             if (IsDefinitionKey(key))
             {
                 Register(key, value, path, ctx);
@@ -1025,6 +1120,137 @@ namespace Ashfall.Core
                 // Any prefixed string in a non-id position is still a reference
                 // (Tier 1) — e.g. a narrative field naming an item id.
                 ctx.PendingRefs.Add(new Ref { Value = value, Path = path, Strict = false, EntityContext = entityContext });
+            }
+        }
+
+        private static bool IsPrefixPatternKey(string key)
+        {
+            for (int i = 0; i < PrefixPatternKeys.Length; i++)
+                if (string.Equals(PrefixPatternKeys[i], key, StringComparison.Ordinal)) return true;
+            return false;
+        }
+
+        /// <summary>Plan 144: a prefix-pattern value must be a non-empty
+        /// trailing-underscore token rooted in a known id namespace — a grammar
+        /// element, never a concrete id.</summary>
+        private static void ValidatePrefixPattern(string key, string value, string path, Ctx ctx)
+        {
+            if (!string.IsNullOrEmpty(value)
+                && value.EndsWith("_", StringComparison.Ordinal)
+                && StartsWithAny(value, IdPrefixes))
+                return;
+            ctx.Report.Error("prefix-pattern key '" + key + "' value '" + value + "' at " + path
+                + " must be a trailing-underscore id-namespace prefix (not a concrete id)");
+        }
+
+        /// <summary>
+        /// Plan 144 (Workstream 144D): a quest id carrying playable grammar
+        /// (choices/stages/objectives/steps) in TWO distinct files is a
+        /// duplicate executable definition — a blocking error regardless of
+        /// whether the two bodies agree. Identity-only acknowledgement
+        /// (questline_master.json-style rows with no playable grammar) remains
+        /// legal next to the single executable definition. Deterministic:
+        /// ordinal-sorted file list + ordinal-sorted per-id file sets.
+        /// </summary>
+        private static void CheckDuplicateExecutableQuestDefinitions(
+            string[] jsonFiles, IFileIO files, Ctx ctx, CatalogIntegrityReport report)
+        {
+            // leaf → full path; ambiguous leaves (same name in two directories)
+            // are skipped conservatively.
+            var fileByLeaf = new Dictionary<string, string>(StringComparer.Ordinal);
+            var ambiguousLeaves = new HashSet<string>(StringComparer.Ordinal);
+            foreach (string file in jsonFiles)
+            {
+                string leaf = file.StartsWith("res://", StringComparison.Ordinal)
+                    ? file.Substring(file.LastIndexOf('/') + 1)
+                    : Path.GetFileName(file);
+                if (fileByLeaf.TryGetValue(leaf, out string? seen) && !string.Equals(seen, file, StringComparison.Ordinal))
+                    ambiguousLeaves.Add(leaf);
+                else
+                    fileByLeaf[leaf] = file;
+            }
+
+            // quest id → leaf → first entity-row definition site (container, index)
+            var sites = new SortedDictionary<string, SortedDictionary<string, (string container, int index)>>(
+                StringComparer.Ordinal);
+            foreach (var kv in ctx.Registry)
+            {
+                if (!kv.Key.StartsWith("quest_", StringComparison.Ordinal)) continue;
+                foreach (string p in kv.Value)
+                {
+                    if (!p.EndsWith("/id", StringComparison.Ordinal)) continue;
+                    string leaf = FileLeaf(p);
+                    if (ambiguousLeaves.Contains(leaf)) continue;
+                    string rest = p.Substring(leaf.Length).TrimStart('/');
+                    if (!rest.EndsWith("/id", StringComparison.Ordinal)) continue;
+                    rest = rest.Substring(0, rest.Length - 3); // "quests[3]" or "[3]"
+                    int open = rest.LastIndexOf('[');
+                    if (open < 0) continue;
+                    string container = rest.Substring(0, open);
+                    string indexText = rest.Substring(open + 1).TrimEnd(']');
+                    if (!int.TryParse(indexText, out int index)) continue;
+                    if (!sites.TryGetValue(kv.Key, out var perFile))
+                        sites[kv.Key] = perFile = new SortedDictionary<string, (string, int)>(StringComparer.Ordinal);
+                    if (!perFile.ContainsKey(leaf))
+                        perFile[leaf] = (container, index);
+                }
+            }
+
+            foreach (var kv in sites)
+            {
+                if (kv.Value.Count < 2) continue;
+                var executable = new List<string>();
+                foreach (var site in kv.Value)
+                {
+                    if (!fileByLeaf.TryGetValue(site.Key, out string? fullPath)) continue;
+                    if (QuestRowIsExecutable(fullPath, site.Value.container, site.Value.index, files, report))
+                        executable.Add(site.Key);
+                }
+                if (executable.Count >= 2)
+                {
+                    report.Error("duplicate executable quest definition '" + kv.Key
+                        + "' defined in " + executable[0] + " and " + executable[1]
+                        + " — one quest id must have exactly one executable definition (Plan 144)");
+                }
+            }
+        }
+
+        /// <summary>True when the quest row at (container[index]) of the file
+        /// carries playable-quest grammar. Conservative on any read/shape
+        /// failure (no classification), with the failure reported.</summary>
+        private static bool QuestRowIsExecutable(string fullPath, string container, int index, IFileIO files, CatalogIntegrityReport report)
+        {
+            try
+            {
+                string raw = files.ReadAllText(fullPath);
+                if (string.IsNullOrWhiteSpace(raw)) return false;
+                using var doc = JsonDocument.Parse(raw);
+                JsonElement row;
+                if (string.IsNullOrEmpty(container))
+                {
+                    if (doc.RootElement.ValueKind != JsonValueKind.Array || doc.RootElement.GetArrayLength() <= index)
+                        return false;
+                    row = doc.RootElement[index];
+                }
+                else
+                {
+                    if (doc.RootElement.ValueKind != JsonValueKind.Object
+                        || !doc.RootElement.TryGetProperty(container, out var arr)
+                        || arr.ValueKind != JsonValueKind.Array
+                        || arr.GetArrayLength() <= index)
+                        return false;
+                    row = arr[index];
+                }
+                if (row.ValueKind != JsonValueKind.Object) return false;
+                foreach (string marker in QuestExecutableMarkers)
+                    if (row.TryGetProperty(marker, out _)) return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                report.Error("Plan 144 duplicate-quest gate could not read '" + fullPath
+                    + "' (classified as non-executable): " + ex.Message);
+                return false;
             }
         }
 
@@ -1259,7 +1485,7 @@ namespace Ashfall.Core
                                 if (prop.Name == "id" || prop.Name == "glitch_id" || prop.Name == "room_id" ||
                                     prop.Name == "case_id" || prop.Name == "confession_id" || prop.Name == "tx_id" ||
                                     prop.Name == "treaty_id" || prop.Name == "directive_id" || prop.Name == "dispatch_id" ||
-                                    prop.Name == "report_id" || prop.Name == "audit_id")
+                                    prop.Name == "report_id" || prop.Name == "audit_id" || prop.Name == "letter_id")
                                 {
                                     ids.Add(str);
                                 }
@@ -1277,6 +1503,462 @@ namespace Ashfall.Core
                         CollectCatalogIds(item, ids);
                     }
                     break;
+            }
+        }
+
+        private static void ValidateWildlifeText(
+            JsonElement element,
+            string propertyName,
+            string context,
+            HashSet<string>? uniqueness,
+            CatalogIntegrityReport report)
+        {
+            if (!element.TryGetProperty(propertyName, out var property)
+                || property.ValueKind != JsonValueKind.String
+                || string.IsNullOrWhiteSpace(property.GetString()))
+            {
+                report.Error($"{context}: missing or empty '{propertyName}'");
+                return;
+            }
+
+            string value = property.GetString()!.Trim();
+            string folded = value.ToUpperInvariant();
+            if (folded.Contains("TODO", StringComparison.Ordinal)
+                || folded.Contains("TBD", StringComparison.Ordinal)
+                || folded.Contains("LOREM IPSUM", StringComparison.Ordinal))
+            {
+                report.Error($"{context}: '{propertyName}' contains placeholder text");
+            }
+
+            bool looksLikeRawId = value.IndexOf('_') >= 0
+                && value.Equals(value.ToLowerInvariant(), StringComparison.Ordinal)
+                && value.IndexOf(' ') < 0;
+            if (looksLikeRawId)
+                report.Error($"{context}: '{propertyName}' must not be a raw content ID");
+
+            if (uniqueness != null && !uniqueness.Add(value))
+                report.Error($"{context}: duplicate player-facing '{propertyName}' '{value}'");
+        }
+
+        public static void ValidateWildlifeTrappingCatalog(string dataDirectory, IFileIO files, CatalogIntegrityReport report)
+        {
+            var ctx = new Ctx { Report = report, File = "wildlife_trapping_catalog.json" };
+            string itemsPath = Path.Combine(dataDirectory, "items.json");
+            if (files.FileExists(itemsPath))
+            {
+                if (TryParse(itemsPath, files, out JsonDocument doc, report))
+                {
+                    using (doc)
+                    {
+                        Walk(doc.RootElement, "items.json", ctx);
+                    }
+                }
+            }
+            ValidateWildlifeTrappingCatalog(dataDirectory, files, ctx, report);
+        }
+
+        private static void ValidateWildlifeTrappingCatalog(string dataDirectory, IFileIO files, Ctx ctx, CatalogIntegrityReport report)
+        {
+            string trappingPath = Path.Combine(dataDirectory, "wildlife_trapping_catalog.json");
+            if (!files.FileExists(trappingPath)) return;
+
+            try
+            {
+                string json = files.ReadAllText(trappingPath);
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                // 1. Traps validation
+                var trapIds = new HashSet<string>(StringComparer.Ordinal);
+                var trapDisplayNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var trapTypes = new Dictionary<string, string>(StringComparer.Ordinal);
+                var trapPreyMap = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+                var trapWaterMap = new Dictionary<string, bool>(StringComparer.Ordinal);
+
+                string itemsPath = Path.Combine(dataDirectory, "items.json");
+                bool hasItemsCatalog = files.FileExists(itemsPath);
+
+                if (root.TryGetProperty("traps", out var trapsProp) && trapsProp.ValueKind == JsonValueKind.Array)
+                {
+                    int trapIndex = 0;
+                    foreach (var trapEl in trapsProp.EnumerateArray())
+                    {
+                        string trapPath = $"wildlife_trapping_catalog.json:traps[{trapIndex}]";
+                        if (!trapEl.TryGetProperty("trap_id", out var idProp) || string.IsNullOrWhiteSpace(idProp.GetString()))
+                        {
+                            report.Error($"{trapPath}: missing or empty 'trap_id'");
+                            trapIndex++;
+                            continue;
+                        }
+                        string trapId = idProp.GetString()!;
+                        if (!trapIds.Add(trapId))
+                        {
+                            report.Error($"{trapPath}: duplicate trap_id '{trapId}'");
+                        }
+                        ValidateWildlifeText(trapEl, "displayName", $"{trapPath} '{trapId}'", trapDisplayNames, report);
+                        ValidateWildlifeText(trapEl, "description", $"{trapPath} '{trapId}'", null, report);
+
+                        if (hasItemsCatalog && !ctx.Registry.ContainsKey(trapId))
+                        {
+                            report.Error($"{trapPath}: trap '{trapId}' not found in items catalog");
+                        }
+
+                        string trapType = trapEl.TryGetProperty("trapType", out var typeProp) ? typeProp.GetString() ?? "" : "";
+                        trapTypes[trapId] = trapType;
+
+                        bool requiresWater = trapEl.TryGetProperty("requiresWater", out var waterProp) && waterProp.GetBoolean();
+                        trapWaterMap[trapId] = requiresWater;
+
+                        var preyList = new List<string>();
+                        if (trapEl.TryGetProperty("compatiblePrey", out var preyProp) && preyProp.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var p in preyProp.EnumerateArray())
+                            {
+                                string? preyName = p.GetString();
+                                if (!string.IsNullOrEmpty(preyName))
+                                {
+                                    preyList.Add(preyName);
+                                }
+                            }
+                        }
+
+                        if (preyList.Count == 0)
+                        {
+                            report.Error($"{trapPath}: trap '{trapId}' has no compatiblePrey");
+                        }
+
+                        trapPreyMap[trapId] = preyList;
+                        trapIndex++;
+                    }
+                }
+                else
+                {
+                    report.Error("wildlife_trapping_catalog.json: missing or invalid 'traps' array");
+                }
+
+                // 2. Baits validation
+                var baitIds = new HashSet<string>(StringComparer.Ordinal);
+                var baitDisplayNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (root.TryGetProperty("baits", out var baitsProp) && baitsProp.ValueKind == JsonValueKind.Array)
+                {
+                    int baitIndex = 0;
+                    foreach (var baitEl in baitsProp.EnumerateArray())
+                    {
+                        string baitPath = $"wildlife_trapping_catalog.json:baits[{baitIndex}]";
+                        if (!baitEl.TryGetProperty("baitId", out var idProp) || string.IsNullOrWhiteSpace(idProp.GetString()))
+                        {
+                            report.Error($"{baitPath}: missing or empty 'baitId'");
+                            baitIndex++;
+                            continue;
+                        }
+                        string baitId = idProp.GetString()!;
+                        if (!baitIds.Add(baitId))
+                        {
+                            report.Error($"{baitPath}: duplicate baitId '{baitId}'");
+                        }
+                        ValidateWildlifeText(baitEl, "displayName", $"{baitPath} '{baitId}'", baitDisplayNames, report);
+
+                        if (baitEl.TryGetProperty("catchBonusMultiplier", out var bonusProp))
+                        {
+                            if (!bonusProp.TryGetDouble(out double mult) || mult <= 0.0)
+                            {
+                                report.Error($"{baitPath}: bait '{baitId}' catchBonusMultiplier must be positive, got {mult}");
+                            }
+                        }
+
+                        if (baitEl.TryGetProperty("toxicReduction", out var toxProp))
+                        {
+                            if (!toxProp.TryGetDouble(out double tox) || tox < 0.0)
+                            {
+                                report.Error($"{baitPath}: bait '{baitId}' toxicReduction must be non-negative, got {tox}");
+                            }
+                        }
+
+                        baitIndex++;
+                    }
+                }
+                else
+                {
+                    report.Error("wildlife_trapping_catalog.json: missing or invalid 'baits' array");
+                }
+
+                // 3. Prey validation & Compatibility & Bait reachability
+                var preyIds = new HashSet<string>(StringComparer.Ordinal);
+                var preyDisplayNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var baitReferenced = new HashSet<string>(StringComparer.Ordinal);
+                var preyPreferredTrapType = new Dictionary<string, string>(StringComparer.Ordinal);
+
+                if (root.TryGetProperty("prey", out var preyArrayProp) && preyArrayProp.ValueKind == JsonValueKind.Array)
+                {
+                    int pIndex = 0;
+                    foreach (var preyEl in preyArrayProp.EnumerateArray())
+                    {
+                        string preyPath = $"wildlife_trapping_catalog.json:prey[{pIndex}]";
+                        if (!preyEl.TryGetProperty("speciesId", out var idProp) || string.IsNullOrWhiteSpace(idProp.GetString()))
+                        {
+                            report.Error($"{preyPath}: missing or empty 'speciesId'");
+                            pIndex++;
+                            continue;
+                        }
+                        string speciesId = idProp.GetString()!;
+                        if (!preyIds.Add(speciesId))
+                        {
+                            report.Error($"{preyPath}: duplicate speciesId '{speciesId}'");
+                        }
+                        ValidateWildlifeText(preyEl, "displayName", $"{preyPath} '{speciesId}'", preyDisplayNames, report);
+                        ValidateWildlifeText(preyEl, "description", $"{preyPath} '{speciesId}'", null, report);
+                        if (preyEl.TryGetProperty("moraleEffect", out var moraleProp)
+                            && moraleProp.ValueKind == JsonValueKind.Number
+                            && moraleProp.TryGetDouble(out double morale)
+                            && (double.IsNaN(morale) || double.IsInfinity(morale) || morale < -100d || morale > 100d))
+                        {
+                            report.Error($"{preyPath} '{speciesId}': moraleEffect must be finite and between -100 and 100");
+                        }
+
+                        string preferredTrap = preyEl.TryGetProperty("preferredTrapType", out var prefProp) ? prefProp.GetString() ?? "" : "";
+                        preyPreferredTrapType[speciesId] = preferredTrap;
+
+                        if (preyEl.TryGetProperty("attractedByBaitIds", out var attractedProp) && attractedProp.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var b in attractedProp.EnumerateArray())
+                            {
+                                string? bId = b.GetString();
+                                if (!string.IsNullOrEmpty(bId))
+                                {
+                                    if (!baitIds.Contains(bId))
+                                    {
+                                        report.Error($"{preyPath}: prey '{speciesId}' references undefined baitId '{bId}'");
+                                    }
+                                    else
+                                    {
+                                        baitReferenced.Add(bId);
+                                    }
+                                }
+                            }
+                        }
+
+                        pIndex++;
+                    }
+                }
+                else
+                {
+                    report.Error("wildlife_trapping_catalog.json: missing or invalid 'prey' array");
+                }
+
+                // Migration presence is a live sector gate, so every authored
+                // migrationSpeciesId must resolve to the ecology species
+                // authority rather than becoming an inert string at runtime.
+                string ecosystemPath = Path.Combine(dataDirectory, "wildlife_ecosystem.json");
+                if (files.FileExists(ecosystemPath))
+                {
+                    var migrationSpeciesIds = new HashSet<string>(StringComparer.Ordinal);
+                    using var ecosystemDoc = JsonDocument.Parse(files.ReadAllText(ecosystemPath));
+                    if (ecosystemDoc.RootElement.TryGetProperty("species", out var speciesArray)
+                        && speciesArray.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var speciesEl in speciesArray.EnumerateArray())
+                        {
+                            if (speciesEl.TryGetProperty("id", out var speciesIdProp)
+                                && speciesIdProp.ValueKind == JsonValueKind.String
+                                && !string.IsNullOrWhiteSpace(speciesIdProp.GetString()))
+                                migrationSpeciesIds.Add(speciesIdProp.GetString()!);
+                        }
+                    }
+
+                    if (root.TryGetProperty("prey", out var migrationPreyArray)
+                        && migrationPreyArray.ValueKind == JsonValueKind.Array)
+                    {
+                        int migrationPreyIndex = 0;
+                        foreach (var preyEl in migrationPreyArray.EnumerateArray())
+                        {
+                            string preyId = preyEl.TryGetProperty("speciesId", out var preyIdProp)
+                                ? preyIdProp.GetString() ?? $"index {migrationPreyIndex}"
+                                : $"index {migrationPreyIndex}";
+                            if (preyEl.TryGetProperty("migrationSpeciesId", out var migrationProp)
+                                && migrationProp.ValueKind == JsonValueKind.String
+                                && !string.IsNullOrWhiteSpace(migrationProp.GetString())
+                                && !migrationSpeciesIds.Contains(migrationProp.GetString()!))
+                            {
+                                report.Error($"wildlife_trapping_catalog.json: prey '{preyId}' references undefined migration species '{migrationProp.GetString()}'");
+                            }
+                            migrationPreyIndex++;
+                        }
+                    }
+                }
+
+                // Verify Bait Reachability: Every bait in baits must be reached by >= 1 prey
+                foreach (var baitId in baitIds)
+                {
+                    if (!baitReferenced.Contains(baitId))
+                    {
+                        report.Error($"wildlife_trapping_catalog.json: bait '{baitId}' is unreachable (not referenced in any prey's attractedByBaitIds)");
+                    }
+                }
+
+                // Verify Compatibility Matrix Completeness
+                var preyCompatibleTraps = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+                foreach (var pId in preyIds)
+                {
+                    preyCompatibleTraps[pId] = new List<string>();
+                }
+
+                foreach (var kvp in trapPreyMap)
+                {
+                    string trapId = kvp.Key;
+                    var preyList = kvp.Value;
+                    if (preyIds.Count > 1 && preyList.Count >= preyIds.Count)
+                    {
+                        report.Error($"wildlife_trapping_catalog.json: trap '{trapId}' violates specialization; compatible with all prey species");
+                    }
+
+                    foreach (var pId in preyList)
+                    {
+                        if (!preyIds.Contains(pId))
+                        {
+                            report.Error($"wildlife_trapping_catalog.json: trap '{trapId}' references undefined prey '{pId}'");
+                        }
+                        else
+                        {
+                            preyCompatibleTraps[pId].Add(trapId);
+                        }
+                    }
+                }
+
+                foreach (var kvp in preyCompatibleTraps)
+                {
+                    string pId = kvp.Key;
+                    var traps = kvp.Value;
+                    if (traps.Count == 0)
+                    {
+                        report.Error($"wildlife_trapping_catalog.json: prey '{pId}' has no compatible traps");
+                    }
+
+                    if (preyPreferredTrapType.TryGetValue(pId, out var prefType) && !string.IsNullOrEmpty(prefType))
+                    {
+                        bool satisfied = false;
+                        foreach (var tId in traps)
+                        {
+                            if (trapTypes.TryGetValue(tId, out var tType) && string.Equals(tType, prefType, StringComparison.Ordinal))
+                            {
+                                satisfied = true;
+                                break;
+                            }
+                        }
+                        if (!satisfied)
+                        {
+                            report.Error($"wildlife_trapping_catalog.json: prey '{pId}' preferredTrapType '{prefType}' is not satisfied by any compatible trap");
+                        }
+                    }
+                }
+
+                // Specialized domain constraints
+                string[] waterOnlyPrey = { "mirror_carp", "ash_pike" };
+                foreach (var wp in waterOnlyPrey)
+                {
+                    if (preyCompatibleTraps.TryGetValue(wp, out var traps))
+                    {
+                        foreach (var tId in traps)
+                        {
+                            if (!trapWaterMap.TryGetValue(tId, out bool reqWater) || !reqWater)
+                            {
+                                report.Error($"wildlife_trapping_catalog.json: aquatic prey '{wp}' is assigned to non-water trap '{tId}'");
+                            }
+                        }
+                    }
+                }
+
+                string[] heavyPrey = { "deer", "boar" };
+                foreach (var hp in heavyPrey)
+                {
+                    if (preyCompatibleTraps.TryGetValue(hp, out var traps))
+                    {
+                        foreach (var tId in traps)
+                        {
+                            if (!trapTypes.TryGetValue(tId, out var tType) || !string.Equals(tType, "pit", StringComparison.Ordinal))
+                            {
+                                report.Error($"wildlife_trapping_catalog.json: heavy prey '{hp}' is assigned to non-pit trap '{tId}'");
+                            }
+                        }
+                    }
+                }
+
+                string[] avianPrey = { "ash_crow", "contaminated_fowl", "pheasant" };
+                foreach (var ap in avianPrey)
+                {
+                    if (preyCompatibleTraps.TryGetValue(ap, out var traps))
+                    {
+                        foreach (var tId in traps)
+                        {
+                            if (!trapTypes.TryGetValue(tId, out var tType) || (!string.Equals(tType, "net", StringComparison.Ordinal) && !string.Equals(tType, "bird_snare", StringComparison.Ordinal)))
+                            {
+                                report.Error($"wildlife_trapping_catalog.json: avian prey '{ap}' is assigned to non-avian trap '{tId}' (type '{tType}')");
+                            }
+                        }
+                    }
+                }
+
+                // 4. Recipes validation for traps
+                string recipesPath = Path.Combine(dataDirectory, "recipes.json");
+                if (files.FileExists(recipesPath))
+                {
+                    string recipesJson = files.ReadAllText(recipesPath);
+                    using var recipesDoc = JsonDocument.Parse(recipesJson);
+                    if (recipesDoc.RootElement.TryGetProperty("recipes", out var recipesArr) && recipesArr.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var rEl in recipesArr.EnumerateArray())
+                        {
+                            if (rEl.TryGetProperty("id", out var rIdProp) && rIdProp.GetString() is string rId && rId.StartsWith("craft_trap_", StringComparison.Ordinal))
+                            {
+                                if (!rEl.TryGetProperty("resultItemId", out var resProp) || string.IsNullOrWhiteSpace(resProp.GetString()))
+                                {
+                                    report.Error($"recipes.json: trap recipe '{rId}' missing 'resultItemId'");
+                                }
+                                else
+                                {
+                                    string resId = resProp.GetString()!;
+                                    if (!ctx.Registry.ContainsKey(resId))
+                                    {
+                                        report.Error($"recipes.json: trap recipe '{rId}' result item '{resId}' not found in items catalog");
+                                    }
+                                    if (!trapIds.Contains(resId))
+                                    {
+                                        report.Error($"recipes.json: trap recipe '{rId}' outputs '{resId}' which is not a valid trap in wildlife_trapping_catalog.json");
+                                    }
+                                }
+
+                                if (rEl.TryGetProperty("ingredients", out var ingredientsProp)
+                                    && ingredientsProp.ValueKind == JsonValueKind.Array)
+                                {
+                                    int ingredientIndex = 0;
+                                    foreach (var ingredientEl in ingredientsProp.EnumerateArray())
+                                    {
+                                        if (!ingredientEl.TryGetProperty("itemId", out var ingredientIdProp)
+                                            || ingredientIdProp.ValueKind != JsonValueKind.String
+                                            || string.IsNullOrWhiteSpace(ingredientIdProp.GetString()))
+                                        {
+                                            report.Error($"recipes.json: trap recipe '{rId}' ingredient[{ingredientIndex}] missing 'itemId'");
+                                        }
+                                        else if (!ctx.Registry.ContainsKey(ingredientIdProp.GetString()!))
+                                        {
+                                            report.Error($"recipes.json: trap recipe '{rId}' ingredient '{ingredientIdProp.GetString()}' not found in items catalog");
+                                        }
+
+                                        if (ingredientEl.TryGetProperty("amount", out var amountProp)
+                                            && (!amountProp.TryGetInt32(out int amount) || amount <= 0))
+                                        {
+                                            report.Error($"recipes.json: trap recipe '{rId}' ingredient[{ingredientIndex}] amount must be positive");
+                                        }
+                                        ingredientIndex++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                report.Error("wildlife trapping catalog validator error: " + ex.Message);
             }
         }
     }

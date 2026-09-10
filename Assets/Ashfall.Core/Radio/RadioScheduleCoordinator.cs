@@ -65,6 +65,7 @@ namespace Ashfall.Core.Radio
         private string? _routeDisruptionAlert;
         private string? _foundryStrikeAlert;
         private string? _treatyAlert;
+        private string? _trappingAlert;
 
         public RadioScheduleCoordinator(RadioBroadcastCatalog catalog, RadioStationCatalog stations)
         {
@@ -164,6 +165,16 @@ namespace Ashfall.Core.Radio
         /// Compact Wire bulletin on the market/classroom civilian stations.</summary>
         public void InjectTreatyAlert(string? alertMessage) => _treatyAlert = alertMessage;
 
+        /// <summary>Flagship Plan IV Task 7 — canonical broadcast surfacing for
+        /// noteworthy trapping events (first catch, break transition, rare
+        /// bycatch). Rendered as wildlife-net chatter on the open/community
+        /// stations. The trapping outbox owns persistence; the slot here is
+        /// transient and cleared with the other dynamic alerts.</summary>
+        public void InjectTrappingAlert(string? alertMessage) => _trappingAlert = alertMessage;
+
+        /// <summary>Whether an unsurfaced trapping report currently occupies the dynamic slot.</summary>
+        public bool HasTrappingAlert => !string.IsNullOrEmpty(_trappingAlert);
+
         public void ClearDynamicAlerts()
         {
             _severeWeatherAlert = null;
@@ -172,6 +183,7 @@ namespace Ashfall.Core.Radio
             _routeDisruptionAlert = null;
             _foundryStrikeAlert = null;
             _treatyAlert = null;
+            _trappingAlert = null;
         }
 
         // ── Schedule Resolution ─────────────────────────────────────────────────
@@ -333,6 +345,28 @@ namespace Ashfall.Core.Radio
                     SignalStrength = 6,
                     VuStrength = 0.7f,
                     BroadcastId = "alert_dynamic_treaty_bulletin"
+                };
+            }
+
+            // Plan IV Task 7: trapping event broadcasts (wildlife net chatter).
+            if (!string.IsNullOrEmpty(_trappingAlert) &&
+                (station.StationId == RadioStationCatalog.StationOpenClassroom || station.StationId == RadioStationCatalog.StationAutomatedRelay))
+            {
+                return new ScheduledBroadcastResult
+                {
+                    HasTransmission = true,
+                    FrequencyMhz = frequencyMhz,
+                    StationId = station.StationId,
+                    StationName = station.DisplayName,
+                    SourceName = "Wildlife Net",
+                    Headline = "TRAP LINE REPORT",
+                    Message = _trappingAlert,
+                    Genre = BroadcastGenre.CivilianNews,
+                    Reliability = SourceReliability.Anonymous,
+                    Priority = BroadcastPriority.Routine,
+                    SignalStrength = 4,
+                    VuStrength = 0.5f,
+                    BroadcastId = "alert_dynamic_trapping_report"
                 };
             }
 

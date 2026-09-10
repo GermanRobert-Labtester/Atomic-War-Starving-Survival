@@ -158,6 +158,20 @@ namespace AtomicWar.GodotApp.World
             _machineTellCatalog = catalog;
         }
 
+        private Ashfall.Core.Narrative.BunkerGraffitiCatalog? _graffitiCatalog;
+        private int _currentDay = int.MaxValue;
+
+        /// <summary>
+        /// Plan 145: bind the bunker graffiti catalog so room tooltips / status
+        /// can surface ambient wall-text postings for the room up to currentDay.
+        /// </summary>
+        public void SetGraffitiCatalog(Ashfall.Core.Narrative.BunkerGraffitiCatalog? catalog, int currentDay = int.MaxValue)
+        {
+            _graffitiCatalog = catalog;
+            _currentDay = currentDay;
+            UpdateSurvivorPositions();
+        }
+
         public void ConfigureRooms(IEnumerable<InteriorRoomDefinition> rooms)
         {
             if (rooms == null) return;
@@ -362,23 +376,25 @@ namespace AtomicWar.GodotApp.World
         private string AppendRoomIdentity(string status, string roomId)
         {
             var identity = _roomIdentities?.GetRoomIdentity(roomId);
-            if (identity == null) return status;
             var sb = new System.Text.StringBuilder(status);
-            if (!string.IsNullOrEmpty(identity.former_use))
-                sb.Append("\nFormerly: ").Append(identity.former_use);
-            if (!string.IsNullOrEmpty(identity.one_line_history))
-                sb.Append('\n').Append(identity.one_line_history);
-
-            // Fixture details are ambient inspection texture (Plan 29 §29A.10-29A.12):
-            // a short visible pool, capped so lore never buries the status line, and
-            // never presented as clickable actions because there is no fixture action.
-            var fixtures = _roomIdentities!.GetFixturesForRoom(roomId);
-            int shown = 0;
-            for (int i = 0; i < fixtures.Count && shown < 3; i++)
+            if (identity != null)
             {
-                if (!fixtures[i].art_visible || string.IsNullOrWhiteSpace(fixtures[i].detail)) continue;
-                sb.Append(shown == 0 ? "\nNotable: " : "; ").Append(fixtures[i].detail);
-                shown++;
+                if (!string.IsNullOrEmpty(identity.former_use))
+                    sb.Append("\nFormerly: ").Append(identity.former_use);
+                if (!string.IsNullOrEmpty(identity.one_line_history))
+                    sb.Append('\n').Append(identity.one_line_history);
+
+                // Fixture details are ambient inspection texture (Plan 29 §29A.10-29A.12):
+                // a short visible pool, capped so lore never buries the status line, and
+                // never presented as clickable actions because there is no fixture action.
+                var fixtures = _roomIdentities!.GetFixturesForRoom(roomId);
+                int shown = 0;
+                for (int i = 0; i < fixtures.Count && shown < 3; i++)
+                {
+                    if (!fixtures[i].art_visible || string.IsNullOrWhiteSpace(fixtures[i].detail)) continue;
+                    sb.Append(shown == 0 ? "\nNotable: " : "; ").Append(fixtures[i].detail);
+                    shown++;
+                }
             }
 
             // Plan 29 Task 29B: machine identities for rooms that host machines.
@@ -396,6 +412,19 @@ namespace AtomicWar.GodotApp.World
                     sb.Append("\nMachines: ").Append(string.Join(", ", machines));
                 }
             }
+
+            // Plan 145: ambient wall text postings for this room up to currentDay.
+            if (_graffitiCatalog != null)
+            {
+                var postings = _graffitiCatalog.GetPostingsForRoom(roomId, _currentDay);
+                if (postings != null && postings.Count > 0)
+                {
+                    var p = postings[0];
+                    string snippet = p.content.Length > 60 ? p.content.Substring(0, 57) + "..." : p.content;
+                    sb.Append("\nWall Text: \"").Append(snippet).Append('"');
+                }
+            }
+
             return sb.ToString();
         }
 

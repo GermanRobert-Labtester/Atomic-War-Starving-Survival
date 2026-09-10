@@ -234,6 +234,9 @@ namespace AtomicWar.GodotApp
             SetupBlackProjectsArchive();
             SetupTechnicalMaterialArchive();
             SetupOralLore();
+            SetupHydroGeologyDiscovery();
+            SetupGrainMillingArchive();
+            SetupLeatherworkArchive();
             SetupJustice();
             SetupRecreation();
             SetupChemWarfare();
@@ -417,6 +420,9 @@ namespace AtomicWar.GodotApp
                 SaveBlackProjectsArchive();
                 SaveTechnicalMaterialArchive();
                 SaveOralLore();
+                SaveHydroGeologyDiscovery();
+                SaveGrainMillingArchive();
+                SaveLeatherworkArchive();
                 SavePlasticPyrolysis();
                 SaveCargoAirdrop();
                 SaveJustice();

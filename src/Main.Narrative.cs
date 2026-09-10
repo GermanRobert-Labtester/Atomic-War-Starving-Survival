@@ -13,8 +13,11 @@ using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
+using Ashfall.Core.Narrative;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
+using Ashfall.Core.Radiation;
+using Ashfall.Core.Factions;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -36,6 +39,7 @@ namespace AtomicWar.GodotApp
         private CraftingHostSession _crafting = null!;
         private bool _craftingDirty;
         private JournalSystem _journal = null!;
+        private BureaucraticDocumentDiscoverySystem _bureaucraticDocumentDiscovery = null!;
         private bool _hostEventAdapterDirty;
 
         private void SetupJournal()
@@ -44,6 +48,11 @@ namespace AtomicWar.GodotApp
 
             var catalogs = CatalogJsonLoader.Load(new FileSystemIO(), _dataDir);
             _journal = new JournalSystem();
+            if (catalogs.BureaucraticDocuments != null)
+            {
+                _bureaucraticDocumentDiscovery = new BureaucraticDocumentDiscoverySystem(
+                    catalogs.BureaucraticDocuments);
+            }
             // Diegetic journal prose — without this binding every entry renders
             // the generic "Something changed." placeholder. LoadDefault resolves
             // the data dir and degrades to an empty catalog if absent.
@@ -59,6 +68,7 @@ namespace AtomicWar.GodotApp
             // used to rewrite journal_save.json once for each of them.
             _journal.OnEntryAdded += _ => _journalDirty = true;
             _journal.OnTabChanged += _ => _journalDirty = true;
+            _journal.OnCodexUnlocked += _ => _journalDirty = true;
 
             _journalCodex = new JournalCodex(_journal, catalogs);
 
@@ -96,6 +106,128 @@ namespace AtomicWar.GodotApp
             }
 
             UpdateStatus();
+        }
+
+        /// <summary>
+        /// Discover authored shelter paperwork through an explicit physical or
+        /// administrative producer. The journal knowledge ledger is the only
+        /// persisted discovery state; reading a document has no simulation effect.
+        /// </summary>
+        private void DiscoverBureaucraticDocuments(string producerId)
+        {
+            if (_journal == null || _bureaucraticDocumentDiscovery == null) return;
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            var results = _bureaucraticDocumentDiscovery.DiscoverByProducer(
+                producerId,
+                day,
+                _journal);
+            int discovered = 0;
+            for (int i = 0; i < results.Count; i++)
+            {
+                if (results[i].Changed) discovered++;
+            }
+
+            if (discovered > 0)
+            {
+                _journalDirty = true;
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[DOCUMENTS] {discovered} institutional record(s) added to the journal.";
+            }
+        }
+
+        /// <summary>
+        /// Plan 153: reveal only fringe-cult records assigned to the explicit
+        /// physical/archive producer. This shares the Plan 135 narrative
+        /// discovery ledger; doctrine is never sent to a simulation authority.
+        /// </summary>
+        private void DiscoverFringeCultRecords(string producerId)
+        {
+            var catalog = _journalCodex?.Catalogs?.NarrativeDiscoveries;
+            if (_journal == null || catalog == null || string.IsNullOrEmpty(producerId)) return;
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            int discovered = 0;
+            var records = catalog.GetByProducer(producerId);
+            for (int i = 0; i < records.Count; i++)
+            {
+                var record = records[i];
+                if (!FringeCultRuntimeContract.IsSourceCatalog(record.SourceCatalog)
+                    || record.MinDay > day)
+                    continue;
+                if (catalog.TryDiscover(record.DiscoveryId, _journal, out _))
+                    discovered++;
+            }
+
+            if (discovered > 0)
+            {
+                _journalDirty = true;
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[ARCHIVE] {discovered} fringe-cult record(s) added to the journal.";
+            }
+        }
+
+        /// <summary>
+        /// Plan 156: reveal authored paper-making and printing records from an
+        /// explicit room, archive, or map-location producer. The source
+        /// measurements are projected into Journal only and never enter
+        /// inventory, crafting, faction, research, or document authority.
+        /// </summary>
+        private void DiscoverPaperPrintingRecords(string producerId)
+        {
+            var catalog = _journalCodex?.Catalogs?.NarrativeDiscoveries;
+            if (_journal == null || catalog == null || string.IsNullOrEmpty(producerId)) return;
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            int discovered = 0;
+            var records = catalog.GetByProducer(producerId);
+            for (int i = 0; i < records.Count; i++)
+            {
+                var record = records[i];
+                if (!PaperPrintRuntimeContract.IsSourceCatalog(record.SourceCatalog)
+                    || record.MinDay > day)
+                    continue;
+                if (catalog.TryDiscover(record.DiscoveryId, _journal, out _))
+                    discovered++;
+            }
+
+            if (discovered > 0)
+            {
+                _journalDirty = true;
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[ARCHIVE] {discovered} paper/print record(s) added to the journal.";
+            }
+        }
+
+        /// <summary>
+        /// Plan 160: reveal only bone, horn and antler records assigned to an
+        /// explicit workshop, archive or world producer. Source animal labels
+        /// remain historical provenance and never target living companions.
+        /// </summary>
+        private void DiscoverBoneHornRecords(string producerId)
+        {
+            var catalog = _journalCodex?.Catalogs?.NarrativeDiscoveries;
+            if (_journal == null || catalog == null || string.IsNullOrEmpty(producerId)) return;
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            int discovered = 0;
+            var records = catalog.GetByProducer(producerId);
+            for (int i = 0; i < records.Count; i++)
+            {
+                var record = records[i];
+                if (!BoneHornRuntimeContract.IsSourceCatalog(record.SourceCatalog)
+                    || record.MinDay > day)
+                    continue;
+                if (catalog.TryDiscover(record.DiscoveryId, _journal, out _))
+                    discovered++;
+            }
+
+            if (discovered > 0)
+            {
+                _journalDirty = true;
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[ARCHIVE] {discovered} bone/horn craft record(s) added to the journal.";
+            }
         }
 
         private void ToggleJournal()
@@ -164,6 +296,7 @@ namespace AtomicWar.GodotApp
         private void SetupNarrative(bool reloadEventAdapter = false)
         {
             EnsureNarrativeSession();
+            ConfigureNarrativeArcRuntime();
 
             // Narrative setup is part of both composition and restore. Initialize
             // the event adapter here so campaign state is loaded before its first
@@ -196,6 +329,152 @@ namespace AtomicWar.GodotApp
             _narrative = NarrativeHostSession.Create(_dataDir);
             _narrative.StateChanged += () => _narrativeDirty = true;
             GD.Print("[Ashfall Godot] Narrative host ready.");
+        }
+
+        private void ConfigureNarrativeArcRuntime()
+        {
+            if (_narrative == null) return;
+
+            var adapter = new NarrativeArcConsequenceAdapter
+            {
+                MoralePreflight = CanApplyNarrativeMorale,
+                MoraleCommit = ApplyNarrativeMorale,
+                IntelPreflight = CanGrantNarrativeIntel,
+                IntelCommit = GrantNarrativeIntel,
+                ExpeditionPreflight = CanOfferNarrativeExpedition,
+                ExpeditionCommit = OfferNarrativeExpedition,
+                StandingPreflight = CanApplyNarrativeStanding,
+                StandingCommit = ApplyNarrativeStanding
+            };
+            _narrative.ConfigureArcRuntime(IsNarrativeSurvivorPresent, adapter);
+        }
+
+        private bool IsNarrativeSurvivorPresent(string survivorId)
+        {
+            SetupSurvivors();
+            if (_survivors == null) return false;
+            var survivor = _survivors.Find(survivorId);
+            if (survivor == null || !survivor.IsAliveState) return false;
+            return _survivors.GetSurvivorLocation(survivorId).Kind == SurvivorExposureLocation.ShelterInterior;
+        }
+
+        private (bool ok, string reason) CanApplyNarrativeMorale(string survivorId, int delta, bool shelterWide)
+        {
+            SetupSurvivors();
+            if (shelterWide)
+            {
+                bool resident = _survivors.RosterState.Any(s => s != null && s.IsAliveState &&
+                    _survivors.GetSurvivorLocation(s.Id).Kind == SurvivorExposureLocation.ShelterInterior);
+                return resident ? (true, string.Empty) : (false, "no living resident can receive morale");
+            }
+            return IsNarrativeSurvivorPresent(survivorId)
+                ? (true, string.Empty)
+                : (false, "the addressed survivor is unavailable");
+        }
+
+        private void ApplyNarrativeMorale(string survivorId, int delta, bool shelterWide)
+        {
+            SetupSurvivors();
+            if (!shelterWide)
+            {
+                var survivor = _survivors.Find(survivorId);
+                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Morale, delta);
+                return;
+            }
+
+            foreach (var survivor in _survivors.RosterState
+                .Where(s => s != null && s.IsAliveState &&
+                    _survivors.GetSurvivorLocation(s.Id).Kind == SurvivorExposureLocation.ShelterInterior)
+                .OrderBy(s => s.Id, StringComparer.Ordinal))
+            {
+                _survivors.Needs.Modify(survivor, NeedKind.Morale, delta);
+            }
+        }
+
+        private (bool ok, string reason) CanGrantNarrativeIntel(string canonicalFactionId)
+        {
+            SetupJournal();
+            return FactionStandingIdResolver.IsKnownFaction(canonicalFactionId) && _journal != null
+                ? (true, string.Empty)
+                : (false, "canonical faction intel or journal authority is unavailable");
+        }
+
+        private void GrantNarrativeIntel(string canonicalFactionId)
+        {
+            SetupJournal();
+            if (_journal == null) return;
+            _journal.Knowledge.Discover(KnowledgeKeys.FactionIntel(canonicalFactionId));
+            _journalDirty = true;
+        }
+
+        private (bool ok, string reason) CanOfferNarrativeExpedition(string locationId)
+        {
+            SetupExpeditions();
+            bool found = _expeditions != null && _expeditions.Definitions.Any(d => d != null && d.id == locationId);
+            return found
+                ? (true, string.Empty)
+                : (false, "narrative expedition target is not in the expedition catalog");
+        }
+
+        private void OfferNarrativeExpedition(string locationId)
+        {
+            if (_statusLabel != null)
+                _statusLabel.Text = "Expedition opportunity recorded. Review it in Expeditions; normal dispatch requirements apply.";
+        }
+
+        private (bool ok, string reason) CanApplyNarrativeStanding(string canonicalFactionId, int delta)
+        {
+            SetupYearOfAsh();
+            return FactionStandingIdResolver.IsKnownFaction(canonicalFactionId) && _yearOfAsh != null
+                ? (true, string.Empty)
+                : (false, "canonical faction standing authority is unavailable");
+        }
+
+        private void ApplyNarrativeStanding(string canonicalFactionId, int delta)
+        {
+            SetupYearOfAsh();
+            _yearOfAsh?.FactionWar.ModifyStanding(canonicalFactionId, delta);
+            _yearOfAshDirty = true;
+        }
+
+        private void OpenNarrativeArcModal()
+        {
+            SetupNarrative();
+            var pending = _narrative.PendingArcEvent;
+            if (pending == null)
+            {
+                if (_statusLabel != null) _statusLabel.Text = "No narrative arc event is waiting for a decision.";
+                return;
+            }
+            _narrativeArcModal.Display(pending, _simDay);
+        }
+
+        private void OnNarrativeArcChoiceSelected(string eventId, string choiceId)
+        {
+            SetupNarrative();
+            var result = _narrative.ResolveArcChoice(eventId, choiceId, _simDay);
+            if (!result.Succeeded)
+            {
+                if (_statusLabel != null) _statusLabel.Text = "Narrative choice refused: " + result.Reason;
+                return;
+            }
+            SaveNarrative();
+            if (_statusLabel != null) _statusLabel.Text = _narrative.LastEvent;
+            _narrativeArcModal.DisplayOutcome(_narrative.LastEvent);
+        }
+
+        private void OnNarrativeArcAcknowledged(string eventId)
+        {
+            SetupNarrative();
+            var result = _narrative.AcknowledgeArcEvent(eventId, _simDay);
+            if (!result.Succeeded)
+            {
+                if (_statusLabel != null) _statusLabel.Text = "Narrative event refused: " + result.Reason;
+                return;
+            }
+            SaveNarrative();
+            if (_statusLabel != null) _statusLabel.Text = _narrative.LastEvent;
+            _narrativeArcModal.DisplayOutcome(_narrative.LastEvent);
         }
 
         private void SaveNarrative()

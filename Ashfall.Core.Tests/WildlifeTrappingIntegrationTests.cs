@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Ashfall.Core;
 using Ashfall.Core.Crafting;
@@ -1280,6 +1281,94 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0, run1.TerminalDurability);
             Assert.True(run1.TerminalBroken);
             Assert.Equal(0, run1.PostBreakCatchCount);
+        }
+
+        [Fact]
+        public void WildlifeTrapping_EndToEnd_CatalogIntegrity_Deploy_BaitReach_Durability_SaveRoundTrip()
+        {
+            var fileIO = new FileSystemIO();
+            var json = new SystemTextJsonSerializer();
+
+            // 1. Authoring & Catalog Integrity Pass
+            var report = CatalogIntegrityValidator.Validate(DataDir, fileIO);
+            Assert.True(report.Clean, "Data integrity must be 100% clean: " + string.Join("; ", report.Errors));
+
+            var catalog = WildlifeTrappingCatalogLoader.Load(DataDir, fileIO, json);
+            Assert.NotNull(catalog);
+            var items = ItemCatalogLoader.LoadCatalog(DataDir, fileIO, json);
+            Assert.NotNull(items);
+            var recipes = RecipeCatalogLoader.Load(DataDir, fileIO, json, items);
+            Assert.NotNull(recipes);
+
+            // 2. Craft trap_box via real CraftingSystem
+            var boxRecipe = recipes.Single(r => r.id == "craft_trap_box");
+            var inv = new Inventory.Inventory();
+            foreach (var ing in boxRecipe.ingredients)
+            {
+                inv.Add(ing.item, ing.amount);
+            }
+            var crafting = new CraftingSystem(inv);
+            crafting.AddStation(new CraftingStation { id = "workbench" });
+            Assert.True(crafting.StartCraft(boxRecipe));
+            crafting.Tick(boxRecipe.craftingTimeHours + 0.1f);
+
+            Assert.Equal(1, inv.CountById("trap_box"));
+
+            // 3. Deploy trap_box consuming the crafted item
+            var trapDef = catalog!.Traps["trap_box"];
+            var deployBill = new InventoryBill();
+            deployBill.AddCost(trapDef.trap_id, 1);
+
+            using (var tx = inv.BeginTransaction(deployBill))
+            {
+                Assert.True(tx.Validation.IsValid);
+                Assert.True(tx.TryCommit());
+            }
+            Assert.Equal(0, inv.CountById("trap_box"));
+
+            // 4. Initialize Trapping System and deploy to site
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            catalog.RegisterWith(sys);
+
+            // Bait reachability check: bait_grain_lure is reached by rabbit
+            Assert.Contains("bait_grain_lure", catalog.Prey["rabbit"].attractedByBaitIds);
+            // Trap compatibility check: rabbit is compatible with trap_box
+            Assert.Contains("rabbit", trapDef.compatiblePrey);
+
+            var setResult = sys.SetTrap("site_e2e", "bait_grain_lure", "hunter_test",
+                trapDef.trapType, trapDef.trap_id, trapDef.checkIntervalDays, trapDef.durabilityChecks);
+            Assert.True(setResult.IsSuccess);
+
+            var site = sys.State.trapSites.Single(s => s.siteId == "site_e2e");
+            Assert.Equal(trapDef.durabilityChecks, site.remainingDurability);
+            Assert.Equal(trapDef.checkIntervalDays, site.checkIntervalDays);
+            Assert.False(site.isBroken);
+
+            // 5. Day 2: Off-schedule (interval is 2 days, set on day 1 -> check on day 3) -> 0 durability loss
+            sys.TickDay(2);
+            Assert.Equal(trapDef.durabilityChecks, site.remainingDurability);
+            Assert.False(site.hasCatch);
+
+            // 6. Day 3: Scheduled check day -> exactly 1 durability loss
+            sys.TickDay(3);
+            Assert.Equal(trapDef.durabilityChecks - 1, site.remainingDurability);
+
+            // 7. Save / Load round-trip preserves state
+            var savedState = sys.CaptureState();
+            string stateJson = json.Serialize(savedState);
+            var loadedState = json.Deserialize<WildlifeTrappingState>(stateJson);
+            Assert.NotNull(loadedState);
+
+            var restoredSys = new WildlifeTrappingSystem(new SeededRng(42));
+            catalog.RegisterWith(restoredSys);
+            restoredSys.RestoreState(loadedState!);
+
+            var restoredSite = restoredSys.State.trapSites.Single(s => s.siteId == "site_e2e");
+            Assert.Equal(site.remainingDurability, restoredSite.remainingDurability);
+            Assert.Equal(site.trapId, restoredSite.trapId);
+            Assert.Equal(site.checkDay, restoredSite.checkDay);
+            Assert.Equal(site.hasCatch, restoredSite.hasCatch);
+            Assert.Equal(site.catchSpecies, restoredSite.catchSpecies);
         }
     }
 }

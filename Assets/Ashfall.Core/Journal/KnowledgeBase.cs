@@ -75,6 +75,15 @@ namespace Ashfall.Core.Journal
 
         /// <summary>"narrative_disc_" + discoveryId — a narrative codex record was discovered in the world (Plan 135).</summary>
         public static string NarrativeDiscovered(string discoveryId) => "narrative_disc_" + discoveryId;
+
+        /// <summary>"bureaucratic_document_" + docId — an authored shelter record was found (Plan 149).</summary>
+        public static string BureaucraticDocument(string docId) => "bureaucratic_document_" + docId;
+
+        /// <summary>
+        /// "faction_intel_" + canonical faction id. The caller must resolve
+        /// the id through FactionStandingIdResolver before creating this key.
+        /// </summary>
+        public static string FactionIntel(string canonicalFactionId) => "faction_intel_" + canonicalFactionId;
     }
 
     /// <summary>

@@ -110,6 +110,7 @@ namespace Ashfall.Core.Journal
         public bool UnlockGlitchNoted(string glitchId) => UnlockCodex(KnowledgeKeys.GlitchNoted(glitchId));
         public bool UnlockWildlifeCaught(string speciesId) => UnlockCodex(KnowledgeKeys.WildlifeSpeciesCaught(speciesId));
         public bool UnlockNarrativeDiscovered(string discoveryId) => UnlockCodex(KnowledgeKeys.NarrativeDiscovered(discoveryId));
+        public bool UnlockBureaucraticDocument(string docId) => UnlockCodex(KnowledgeKeys.BureaucraticDocument(docId));
         public bool AddKnowledgeEvidence(string survivorId, string knowledgeKey) => UnlockCodex(knowledgeKey);
 
         public bool IsItemSeen(string itemId) => _knowledge.Has(KnowledgeKeys.ItemSeen(itemId));
@@ -120,6 +121,7 @@ namespace Ashfall.Core.Journal
         public bool IsGlitchNoted(string glitchId) => _knowledge.Has(KnowledgeKeys.GlitchNoted(glitchId));
         public bool IsWildlifeCaught(string speciesId) => _knowledge.Has(KnowledgeKeys.WildlifeSpeciesCaught(speciesId));
         public bool IsNarrativeDiscovered(string discoveryId) => _knowledge.Has(KnowledgeKeys.NarrativeDiscovered(discoveryId));
+        public bool IsBureaucraticDocumentDiscovered(string docId) => _knowledge.Has(KnowledgeKeys.BureaucraticDocument(docId));
 
         private bool UnlockCodex(string key)
         {

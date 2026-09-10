@@ -176,6 +176,9 @@ namespace AtomicWar.GodotApp
         private void WireWildlifeDiseaseBridge()
         {
             if (_wildlifeTrapping == null || _disease == null) return;
+            // Guard: WildlifeTrappingHostSession.ApplyDisease handles authoritative disease routing.
+            // Only wire legacy fallback bridge if ApplyDisease delegate is not configured.
+            if (_wildlifeTrapping.ApplyDisease != null) return;
             _wildlifeTrapping.System.OnButcheryCompleted += (siteId, butcherId, species, isToxic) =>
             {
                 if (string.IsNullOrEmpty(butcherId)) return;
@@ -438,6 +441,11 @@ namespace AtomicWar.GodotApp
                     if (_libraryStudyPanel != null) { _libraryStudyPanel.Visible = true; _libraryStudyPanel.RefreshView(); }
                     break;
                 case "archive_desk":
+                    SetupJournal();
+                    DiscoverBureaucraticDocuments("archive_desk");
+                    DiscoverFringeCultRecords("government_bunker");
+                    DiscoverPaperPrintingRecords("government_bunker");
+                    DiscoverBoneHornRecords("government_bunker");
                     if (_archiveDeskPanel != null) { _archiveDeskPanel.Visible = true; _archiveDeskPanel.RefreshView(); }
                     break;
                 case "contractor_roster":
@@ -452,11 +460,19 @@ namespace AtomicWar.GodotApp
                 case "traveling_caravan":
                     if (_travelingCaravanPanel != null) { _travelingCaravanPanel.Visible = true; _travelingCaravanPanel.RefreshView(); }
                     break;
+                case "shelter_barter":
+                    OpenShelterBarterPanel();
+                    break;
+                case "black_projects_archive":
+                    OpenBlackProjectsArchivePanel();
+                    break;
                 case "shelter_decor":
                     SetupShelterDecor();
                     if (_shelterDecorPanel != null) { _shelterDecorPanel.Visible = true; _shelterDecorPanel.RefreshView(); }
                     break;
                 case "medical_ward":
+                    SetupJournal();
+                    DiscoverBureaucraticDocuments("medical_office");
                     SetupMedicalWard();
                     if (_medicalWardPanel != null) { _medicalWardPanel.Visible = true; _medicalWardPanel.RefreshView(); }
                     break;
@@ -519,6 +535,8 @@ namespace AtomicWar.GodotApp
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
             _plans94To97Panel?.Unbind();
             RemovePanel(_plans94To97Panel); _plans94To97Panel = null;
+            _shelterBarterPanel?.Unbind();
+            RemovePanel(_shelterBarterPanel); _shelterBarterPanel = null;
             ResetPlans130To133Panel();
 
             // Dispose / null host sessions

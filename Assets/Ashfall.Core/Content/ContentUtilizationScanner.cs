@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Ashfall.Core.Narrative;
 
 namespace Ashfall.Core.Content
 {
@@ -61,7 +62,7 @@ namespace Ashfall.Core.Content
             "feedback_messages.json", "final_wishes.json", "guilt_sources.json",
             "incidents.json", "moral_choice_chains.json", "moral_choice_flags.json",
             "moral_choice_quests.json", "moral_choice_quests_branching.json",
-            "moral_choice_quests_expansion.json", "moral_choice_quest_stubs.json",
+            "moral_choice_quests_expansion.json",
             "moral_choice_faction_reactions.json", "moral_choice_gossip.json",
             "hardcore_economy_tuning.json", "relic_recipes.json",
             "world_evolution_seeds.json", "shelter_schedules.json",
@@ -139,6 +140,7 @@ namespace Ashfall.Core.Content
             // Plans 198–201: late-game strategic catalogs.
             "chemical_weapons.json", "comms_targets.json",
             "ceremonies.json", "robotics.json",
+            "wildlife_trapping_catalog.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -155,6 +157,67 @@ namespace Ashfall.Core.Content
                 || normalized.Equals("narrative/journal_entries_batch_2.json", StringComparison.OrdinalIgnoreCase)
                 || normalized.Equals("narrative/journal_entries_batch_3.json", StringComparison.OrdinalIgnoreCase)
                 || normalized.Equals("journal_entries_expansion_05.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan145GraffitiFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/bunker_graffiti_postings.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/graffiti_expansion.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan146CourtFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/bunker_court_verdicts_codex.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan148MaintenanceFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/bunker_maintenance_glitches.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan149BureaucraticFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/bureaucratic_documents_expansion.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/bureaucratic_document_runtime_map.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan153FringeCultsFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/cobalt_liturgies.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/iron_synod_canons.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/geophone_hymnals.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/wasteland_grave_epitaphs.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan156PaperPrintingFile(string relativePath)
+        {
+            return PaperPrintRuntimeContract.IsSourceCatalog(relativePath);
+        }
+
+        private static bool IsPlan160BoneHornFile(string relativePath)
+        {
+            return BoneHornRuntimeContract.IsSourceCatalog(relativePath);
+        }
+
+        private static bool IsPlan150LetterFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/letters_expansion.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/unsent_letters_batch_2.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlan151AbyssalFile(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return normalized.Equals("narrative/hydrophone_acoustic_logs.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/geothermal_borehole_logs.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/cryopod_failure_logs.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.Equals("narrative/salt_mine_inscriptions.json", StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsAuthoritativeCatalog(string fileName)
@@ -415,7 +478,7 @@ namespace Ashfall.Core.Content
                 ["memorials_expansion_05.json"] = new[] { "MemorialSystem" },
                 ["quests_expansion_05.json"] = new[] { "ExpansionQuestSystem" },
                 ["quests_expansion_06.json"] = new[] { "ExpansionQuestSystem" },
-                ["narrative_arc_events.json"] = new[] { "NarrativeEncounterSystem" },
+                ["narrative_arc_events.json"] = new[] { "NarrativeArcEventSystem" },
                 ["narrative_encounters_expansion.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_progression.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_questlines.json"] = new[] { "NarrativeEncounterSystem" },
@@ -453,6 +516,7 @@ namespace Ashfall.Core.Content
                 ["ballistics_workbench_catalog.json"] = new[] { "BallisticsWorkbenchCatalogLoader", "BallisticsWorkbenchSystem" },
                 ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsCatalogLoader", "AeroponicsSystem" },
                 ["pneumatic_network_catalog.json"] = new[] { "PneumaticNetworkCatalogLoader", "PneumaticDispatchSystem" },
+                ["wildlife_trapping_catalog.json"] = new[] { "WildlifeTrappingCatalogLoader" },
                 // Plans 198–201: inline LoadCatalog paths on each system.
                 ["chemical_weapons.json"] = new[] { "ChemWarfareSystem" },
                 ["comms_targets.json"] = new[] { "CommsArraySystem" },
@@ -472,6 +536,96 @@ namespace Ashfall.Core.Content
             loaderPatterns["orphan_knocks.json"] = Array.Empty<string>(); // Whitelist infrastructure
             foreach (var cat in _graph.Catalogs)
             {
+                if (IsPlan160BoneHornFile(cat.Path))
+                {
+                    cat.Loader = "BoneHornSourceAdapter";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:BoneHornSourceAdapter";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "BoneHornSourceAdapter");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan156PaperPrintingFile(cat.Path))
+                {
+                    cat.Loader = "PaperPrintSourceAdapter";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:PaperPrintSourceAdapter";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "PaperPrintSourceAdapter");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan153FringeCultsFile(cat.Path))
+                {
+                    cat.Loader = "FringeCultSourceAdapter";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:FringeCultSourceAdapter";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "FringeCultSourceAdapter");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan149BureaucraticFile(cat.Path))
+                {
+                    cat.Loader = "BureaucraticDocumentCatalogLoader";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:BureaucraticDocumentCatalogLoader";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "BureaucraticDocumentCatalogLoader");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan145GraffitiFile(cat.Path))
+                {
+                    cat.Loader = "BunkerGraffitiCatalog";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:BunkerGraffitiCatalog";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "BunkerGraffitiCatalog");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan146CourtFile(cat.Path))
+                {
+                    cat.Loader = "BunkerCourtCatalog";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:BunkerCourtCatalog";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "BunkerCourtCatalog");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan148MaintenanceFile(cat.Path))
+                {
+                    cat.Loader = "BunkerMaintenanceCatalog";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:BunkerMaintenanceCatalog";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "BunkerMaintenanceCatalog");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan150LetterFile(cat.Path))
+                {
+                    cat.Loader = "PersonalLetterCatalog";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:PersonalLetterCatalog";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "PersonalLetterCatalog");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan151AbyssalFile(cat.Path))
+                {
+                    cat.Loader = "AbyssalAnomaliesCatalog";
+                    cat.MaxStage = UtilizationStage.LOADED;
+                    string loaderId = "loader:AbyssalAnomaliesCatalog";
+                    EnsureNode(loaderId, ContentNodeKind.Loader, "AbyssalAnomaliesCatalog");
+                    AddEdge(cat.Path, loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
                 string fileName = Path.GetFileName(cat.Path);
                 if (loaderPatterns.TryGetValue(fileName, out var loaders))
                 {
@@ -595,7 +749,6 @@ namespace Ashfall.Core.Content
                 ["moral_choice_faction_reactions.json"] = "MoralChoiceSystem",
                 ["moral_choice_flags.json"] = "MoralChoiceSystem",
                 ["moral_choice_gossip.json"] = "MoralChoiceSystem",
-                ["moral_choice_quest_stubs.json"] = "MoralChoiceSystem",
                 ["duty_roster_locations.json"] = "DutyRosterCatalog",
                 ["duty_roster_marks.json"] = "DutyRosterCatalog",
                 ["duty_roster_seasons.json"] = "DutyRosterCatalog",
@@ -640,7 +793,7 @@ namespace Ashfall.Core.Content
                 ["memorials_expansion_05.json"] = "MemorialSystem",
                 ["quests_expansion_05.json"] = "ExpansionQuestSystem",
                 ["quests_expansion_06.json"] = "ExpansionQuestSystem",
-                ["narrative_arc_events.json"] = "NarrativeEncounterSystem",
+                ["narrative_arc_events.json"] = "NarrativeArcEventSystem",
                 ["narrative_encounters_expansion.json"] = "NarrativeEncounterSystem",
                 ["narrative_progression.json"] = "NarrativeEncounterSystem",
                 ["narrative_questlines.json"] = "NarrativeEncounterSystem",
@@ -655,6 +808,7 @@ namespace Ashfall.Core.Content
                 ["ballistics_workbench_catalog.json"] = "BallisticsWorkbenchSystem",
                 ["aeroponics_nutrient_catalog.json"] = "AeroponicsSystem",
                 ["pneumatic_network_catalog.json"] = "PneumaticDispatchSystem",
+                ["wildlife_trapping_catalog.json"] = "WildlifeTrappingCatalog",
                 ["chemical_weapons.json"] = "ChemWarfareSystem",
                 ["comms_targets.json"] = "CommsArraySystem",
                 ["ceremonies.json"] = "CeremonySystem",
@@ -663,6 +817,89 @@ namespace Ashfall.Core.Content
 
             foreach (var cat in _graph.Catalogs)
             {
+                if (IsPlan160BoneHornFile(cat.Path))
+                {
+                    string registryId = "registry:BoneHornCarvingCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "BoneHornCarvingCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan156PaperPrintingFile(cat.Path))
+                {
+                    string registryName = PaperPrintRuntimeContract.IsPaperMakingCatalog(cat.Path)
+                        ? "PaperMakingCatalog" : "PaperPrintingCatalog";
+                    string registryId = $"registry:{registryName}";
+                    EnsureNode(registryId, ContentNodeKind.Registry, registryName);
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan153FringeCultsFile(cat.Path))
+                {
+                    string registryId = "registry:FringeCultsCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "FringeCultsCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan149BureaucraticFile(cat.Path))
+                {
+                    string registryId = "registry:BureaucraticDocumentCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "BureaucraticDocumentCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan145GraffitiFile(cat.Path))
+                {
+                    string registryId = "registry:BunkerGraffitiCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "BunkerGraffitiCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan146CourtFile(cat.Path))
+                {
+                    string registryId = "registry:BunkerCourtCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "BunkerCourtCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan148MaintenanceFile(cat.Path))
+                {
+                    string registryId = "registry:BunkerMaintenanceCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "BunkerMaintenanceCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan150LetterFile(cat.Path))
+                {
+                    string registryId = "registry:PersonalLetterCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "PersonalLetterCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
+                if (IsPlan151AbyssalFile(cat.Path))
+                {
+                    string registryId = "registry:AbyssalAnomaliesCatalog";
+                    EnsureNode(registryId, ContentNodeKind.Registry, "AbyssalAnomaliesCatalog");
+                    AddEdge($"file:{cat.Path}", registryId, ContentEdgeKind.REGISTERED_IN, EvidenceTier.STATIC);
+                    cat.MaxStage = UtilizationStage.REGISTERED;
+                    continue;
+                }
+
                 string fileName = Path.GetFileName(cat.Path);
                 if (registryMap.TryGetValue(fileName, out var registry))
                 {
@@ -737,7 +974,6 @@ namespace Ashfall.Core.Content
                 ["moral_choice_faction_reactions.json"] = new[] { "MoralChoiceSystem" },
                 ["moral_choice_flags.json"] = new[] { "MoralChoiceSystem" },
                 ["moral_choice_gossip.json"] = new[] { "MoralChoiceSystem" },
-                ["moral_choice_quest_stubs.json"] = new[] { "MoralChoiceSystem" },
                 ["hardcore_economy_tuning.json"] = new[] { "MarketSystem" },
                 ["relic_recipes.json"] = new[] { "WorkshopReverseEngineeringSystem" },
                 ["world_evolution_seeds.json"] = new[] { "EvolvingWorldCatalog" },
@@ -823,7 +1059,7 @@ namespace Ashfall.Core.Content
                 ["memorials_expansion_05.json"] = new[] { "MemorialSystem" },
                 ["quests_expansion_05.json"] = new[] { "ExpansionQuestSystem" },
                 ["quests_expansion_06.json"] = new[] { "ExpansionQuestSystem" },
-                ["narrative_arc_events.json"] = new[] { "NarrativeEncounterSystem" },
+                ["narrative_arc_events.json"] = new[] { "NarrativeArcEventSystem" },
                 ["narrative_encounters_expansion.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_progression.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_questlines.json"] = new[] { "NarrativeEncounterSystem" },
@@ -921,6 +1157,8 @@ namespace Ashfall.Core.Content
                 ["pneumatic_network_catalog.json"] = new[] { "PneumaticDispatchSystem" },
                 ["glassworks_recipes.json"] = new[] { "GlassworksCatalogLoader", "SilentFoundrySystem" },
                 // Plans 198–201: late-game strategic catalogs.
+                ["wildlife_trapping_catalog.json"] = new[] { "WildlifeTrappingSystem", "WildlifeTrappingHostSession" },
+                // Plans 198–201: late-game strategic catalogs (loaded inline by each system).
                 ["chemical_weapons.json"] = new[] { "ChemWarfareSystem", "ChemWarfareSaveStore" },
                 ["comms_targets.json"] = new[] { "CommsArraySystem", "CommsArraySaveStore" },
                 ["ceremonies.json"] = new[] { "CeremonySystem", "CeremonySaveStore" },
@@ -929,6 +1167,132 @@ namespace Ashfall.Core.Content
 
             foreach (var cat in _graph.Catalogs)
             {
+                if (IsPlan160BoneHornFile(cat.Path))
+                {
+                    var boneHornConsumers = new[] { "BoneHornCarvingCatalog", "BoneHornSourceAdapter", "NarrativeDiscoveryCatalog", "JournalSystem", "JournalCodex" };
+                    cat.ConsumerSystems.AddRange(boneHornConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in boneHornConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan156PaperPrintingFile(cat.Path))
+                {
+                    var paperConsumers = new[] { "PaperMakingCatalog", "PaperPrintingCatalog", "PaperPrintSourceAdapter", "NarrativeDiscoveryCatalog", "JournalSystem", "JournalCodex" };
+                    cat.ConsumerSystems.AddRange(paperConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in paperConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan153FringeCultsFile(cat.Path))
+                {
+                    var cultConsumers = new[] { "FringeCultsCatalog", "NarrativeDiscoveryCatalog", "JournalSystem", "JournalCodex" };
+                    cat.ConsumerSystems.AddRange(cultConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in cultConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan149BureaucraticFile(cat.Path))
+                {
+                    var documentConsumers = new[] { "BureaucraticDocumentDiscoverySystem", "JournalSystem", "JournalCodex" };
+                    cat.ConsumerSystems.AddRange(documentConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in documentConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan145GraffitiFile(cat.Path))
+                {
+                    var graffitiConsumers = new[] { "ShelterPanel", "HoldfastInteriorView", "MapDetailPanel" };
+                    cat.ConsumerSystems.AddRange(graffitiConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in graffitiConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan146CourtFile(cat.Path))
+                {
+                    var courtConsumers = new[] { "NarrativeDiscoveryCatalog", "JournalPanel" };
+                    cat.ConsumerSystems.AddRange(courtConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in courtConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan148MaintenanceFile(cat.Path))
+                {
+                    var maintConsumers = new[] { "NarrativeDiscoveryCatalog", "BunkerMaintenanceProjection", "JournalPanel" };
+                    cat.ConsumerSystems.AddRange(maintConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in maintConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan150LetterFile(cat.Path))
+                {
+                    var letterConsumers = new[] { "NarrativeDiscoveryCatalog", "PersonalLetterProjection", "JournalPanel" };
+                    cat.ConsumerSystems.AddRange(letterConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in letterConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan151AbyssalFile(cat.Path))
+                {
+                    var abyssalConsumers = new[] { "NarrativeDiscoveryCatalog", "AbyssalAnomaliesProjection", "JournalPanel" };
+                    cat.ConsumerSystems.AddRange(abyssalConsumers);
+                    cat.MaxStage = UtilizationStage.QUERIED;
+                    foreach (var consumer in abyssalConsumers)
+                    {
+                        string consumerId = $"system:{consumer}";
+                        EnsureNode(consumerId, ContentNodeKind.RuntimeSystem, consumer);
+                        AddEdge($"file:{cat.Path}", consumerId, ContentEdgeKind.CONSUMED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
                 string fileName = Path.GetFileName(cat.Path);
                 if (consumerMap.TryGetValue(fileName, out var consumers))
                 {
@@ -967,6 +1331,13 @@ namespace Ashfall.Core.Content
                 "rail_logistics_catalog.json",
                 "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
                 "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
+                "hollander_beater_pulping_logs.json", "deckle_mould_watermark_audits.json",
+                "screw_press_felt_reports.json", "tub_sizing_gelatin_assays.json",
+                "rag_pulp_beater_records.json", "iron_gall_ink_acidity_reports.json",
+                "typographic_lead_wear_logs.json", "stencil_propaganda_smear_logs.json",
+                "bone_degreasing_prep_logs.json", "antler_horn_sawing_records.json",
+                "scraping_polishing_reports.json", "needle_awl_hook_assays.json",
+                "wildlife_trapping_catalog.json",
                 "chemical_weapons.json", "comms_targets.json",
                 "ceremonies.json", "robotics.json",
             };
@@ -1062,7 +1433,7 @@ namespace Ashfall.Core.Content
                 ["memorials_expansion_05.json"] = new[] { "MemorialPanel" },
                 ["quests_expansion_05.json"] = new[] { "QuestPanel" },
                 ["quests_expansion_06.json"] = new[] { "QuestPanel" },
-                ["narrative_arc_events.json"] = new[] { "NarrativePanel" },
+                ["narrative_arc_events.json"] = new[] { "NarrativeArcModal" },
                 ["narrative_encounters_expansion.json"] = new[] { "NarrativePanel" },
                 ["narrative_progression.json"] = new[] { "NarrativePanel" },
                 ["narrative_questlines.json"] = new[] { "NarrativePanel" },
@@ -1110,7 +1481,6 @@ namespace Ashfall.Core.Content
                 ["moral_choice_faction_reactions.json"] = new[] { "MoralChoicePanel" },
                 ["moral_choice_flags.json"] = new[] { "MoralChoicePanel" },
                 ["moral_choice_gossip.json"] = new[] { "MoralChoicePanel" },
-                ["moral_choice_quest_stubs.json"] = new[] { "MoralChoicePanel" },
                 ["hardcore_economy_tuning.json"] = new[] { "TradePanel" },
                 ["world_evolution_seeds.json"] = new[] { "WorldPanel" },
                 ["radio_distress_signals_expansion.json"] = new[] { "RadioPanel" },
@@ -1121,6 +1491,7 @@ namespace Ashfall.Core.Content
                 ["trade_texts.json"] = new[] { "TradePanel" },
                 ["research_knowledge.json"] = new[] { "ResearchPanel" },
                 ["skills.json"] = new[] { "SurvivorsPanel" },
+                ["wildlife_trapping_catalog.json"] = new[] { "WildlifeTrappingPanel" },
                 // Plans 198–201: strategic consoles display these catalogs.
                 ["chemical_weapons.json"] = new[] { "ChemWarfareDefensePanel" },
                 ["comms_targets.json"] = new[] { "CommsArrayTransceiverPanel" },
@@ -1130,6 +1501,98 @@ namespace Ashfall.Core.Content
 
             foreach (var cat in _graph.Catalogs)
             {
+                if (IsPlan160BoneHornFile(cat.Path))
+                {
+                    string uiId = "ui:JournalPanel";
+                    EnsureNode(uiId, ContentNodeKind.UiSurface, "JournalPanel");
+                    AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan156PaperPrintingFile(cat.Path))
+                {
+                    string uiId = "ui:JournalPanel";
+                    EnsureNode(uiId, ContentNodeKind.UiSurface, "JournalPanel");
+                    AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan153FringeCultsFile(cat.Path))
+                {
+                    string uiId = "ui:JournalPanel";
+                    EnsureNode(uiId, ContentNodeKind.UiSurface, "JournalPanel");
+                    AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan149BureaucraticFile(cat.Path))
+                {
+                    string uiId = "ui:JournalPanel";
+                    EnsureNode(uiId, ContentNodeKind.UiSurface, "JournalPanel");
+                    AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    continue;
+                }
+
+                if (IsPlan145GraffitiFile(cat.Path))
+                {
+                    var surfaces = new[] { "ShelterPanel", "HoldfastInteriorView", "MapDetailPanel" };
+                    foreach (var ui in surfaces)
+                    {
+                        string uiId = $"ui:{ui}";
+                        EnsureNode(uiId, ContentNodeKind.UiSurface, ui);
+                        AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan146CourtFile(cat.Path))
+                {
+                    var surfaces = new[] { "JournalPanel" };
+                    foreach (var ui in surfaces)
+                    {
+                        string uiId = $"ui:{ui}";
+                        EnsureNode(uiId, ContentNodeKind.UiSurface, ui);
+                        AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan148MaintenanceFile(cat.Path))
+                {
+                    var surfaces = new[] { "JournalPanel" };
+                    foreach (var ui in surfaces)
+                    {
+                        string uiId = $"ui:{ui}";
+                        EnsureNode(uiId, ContentNodeKind.UiSurface, ui);
+                        AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan150LetterFile(cat.Path))
+                {
+                    var surfaces = new[] { "JournalPanel" };
+                    foreach (var ui in surfaces)
+                    {
+                        string uiId = $"ui:{ui}";
+                        EnsureNode(uiId, ContentNodeKind.UiSurface, ui);
+                        AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
+                if (IsPlan151AbyssalFile(cat.Path))
+                {
+                    var surfaces = new[] { "JournalPanel" };
+                    foreach (var ui in surfaces)
+                    {
+                        string uiId = $"ui:{ui}";
+                        EnsureNode(uiId, ContentNodeKind.UiSurface, ui);
+                        AddEdge($"file:{cat.Path}", uiId, ContentEdgeKind.DISPLAYED_BY, EvidenceTier.STATIC);
+                    }
+                    continue;
+                }
+
                 string fileName = Path.GetFileName(cat.Path);
                 if (uiConsumers.TryGetValue(fileName, out var panels))
                 {
@@ -1233,6 +1696,7 @@ namespace Ashfall.Core.Content
                 "rail_logistics_catalog.json",
                 "geothermal_strata_catalog.json", "ballistics_workbench_catalog.json",
                 "aeroponics_nutrient_catalog.json", "pneumatic_network_catalog.json",
+                "wildlife_trapping_catalog.json",
                 "chemical_weapons.json", "comms_targets.json",
                 "ceremonies.json", "robotics.json",
             };
@@ -1400,7 +1864,12 @@ namespace Ashfall.Core.Content
 
                 // Narrative subdirectory files are codex-only
                 if (IsNarrativeSubdirectoryFile(cat.Path)
-                    && !IsPlan142JournalFile(cat.Path))
+                    && !IsPlan142JournalFile(cat.Path)
+                    && !IsPlan145GraffitiFile(cat.Path)
+                    && !IsPlan153FringeCultsFile(cat.Path)
+                    && !IsPlan149BureaucraticFile(cat.Path)
+                    && !IsPlan156PaperPrintingFile(cat.Path)
+                    && !IsPlan160BoneHornFile(cat.Path))
                 {
                     cat.Classification = ContentClassification.CODEX_ONLY;
                     continue;

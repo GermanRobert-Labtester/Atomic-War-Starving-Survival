@@ -63,6 +63,13 @@ namespace AtomicWar.GodotApp
 
             _moralChoice.OnQuestResolved += WriteMoralChoiceJournalEntry;
             _moralChoice.OnQuestResolved += _ => _moralChoiceDirty = true;
+            // Plan IV Task 5: a resolved trapping dilemma acks its pending
+            // outbox fact so the outbox never re-surfaces it after restore.
+            _moralChoice.OnQuestResolved += resolution =>
+            {
+                if (resolution.questId != null && resolution.questId.StartsWith(TrappingMoralQuestIdPrefix, StringComparison.Ordinal))
+                    MarkTrappingMoralEventDelivered(resolution.questId);
+            };
             _moralChoice.OnThresholdEventFired += WriteThresholdEventJournalEntry;
             _moralChoice.OnThresholdEventFired += _ => _moralChoiceDirty = true;
             _moralChoice.OnBranchLocked += WriteBranchLockoutJournalEntry;
@@ -103,6 +110,11 @@ namespace AtomicWar.GodotApp
             var list = new List<MoralChoiceQuestDefinition>();
             foreach (var d in _moralChoiceDefs)
             {
+                // Plan IV Task 5: trapping-sourced dilemmas are excluded from
+                // the standing offer pass — they surface only while their
+                // moral-consequence fact is pending in the trapping outbox.
+                if (d.Id != null && d.Id.StartsWith(TrappingMoralQuestIdPrefix, StringComparison.Ordinal))
+                    continue;
                 if (!_moralChoice.IsResolved(d.Id) &&
                     MoralChoiceSystem.IsAvailableOnDay(d, _simDay) &&
                     _moralChoice.IsChainQuestAccessible(d.Id, _simDay))
@@ -110,7 +122,46 @@ namespace AtomicWar.GodotApp
                     list.Add(d);
                 }
             }
+
+            // Plan IV Task 5: surface pending trapping dilemmas in outbox
+            // sequence order. The pending fact is the persistence owner until
+            // the player resolves the dilemma in the moral ledger.
+            if (_wildlifeTrapping != null)
+            {
+                var pending = _wildlifeTrapping.System.GetPendingEvents();
+                foreach (var ev in pending)
+                {
+                    if (ev == null || !string.Equals(ev.kind, WildlifeTrappingEventKinds.MoralConsequence, StringComparison.Ordinal))
+                        continue;
+                    var def = GetMoralChoiceDef(ev.payloadId);
+                    if (def == null || _moralChoice.IsResolved(def.Id)) continue;
+                    if (!list.Any(l => string.Equals(l.Id, def.Id, StringComparison.Ordinal)))
+                        list.Add(def);
+                }
+            }
             return list;
+        }
+
+        /// <summary>Catalog id prefix shared by all trapping-sourced moral dilemmas.</summary>
+        public const string TrappingMoralQuestIdPrefix = "quest_moral_trap_prey_";
+
+        /// <summary>
+        /// Plan IV Task 5: ack every pending moral-consequence fact that maps
+        /// to the given quest id. Called from the resolution event so the
+        /// trapping outbox marks the fact delivered only after the moral
+        /// ledger committed the resolution.
+        /// </summary>
+        private void MarkTrappingMoralEventDelivered(string questId)
+        {
+            if (_wildlifeTrapping == null) return;
+            var pending = _wildlifeTrapping.System.GetPendingEvents();
+            foreach (var ev in pending)
+            {
+                if (ev == null || !string.Equals(ev.kind, WildlifeTrappingEventKinds.MoralConsequence, StringComparison.Ordinal))
+                    continue;
+                if (!string.Equals(ev.payloadId, questId, StringComparison.Ordinal)) continue;
+                _wildlifeTrapping.System.MarkEventDelivered(ev.eventId);
+            }
         }
 
         public List<MoralChoiceQuestDefinition> GetResolvedMoralChoices()

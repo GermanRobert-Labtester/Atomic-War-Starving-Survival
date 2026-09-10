@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using Ashfall.Core.Journal;
@@ -14,18 +15,33 @@ namespace Ashfall.Core.Narrative
         public string source_record_id = string.Empty;
         public string channel = string.Empty;
         public string producer_id = string.Empty;
+        // Optional additional, explicit producer contexts. The first entry is
+        // the primary producer and remains represented by producer_id for
+        // backwards compatibility with the existing manifest contract.
+        public string[] producer_ids = Array.Empty<string>();
         public int min_day = 1;
         public int weight = 1;
         public bool one_time = true;
+        public string truth_class = string.Empty;
+        public string provenance_label = string.Empty;
+        public string identity_status = string.Empty;
+        public string numeric_claim_label = string.Empty;
+        public string[] related_discovery_ids = Array.Empty<string>();
 
         public string DiscoveryId => discovery_id;
         public string SourceCatalog => source_catalog;
         public string SourceRecordId => source_record_id;
         public string Channel => channel;
         public string ProducerId => producer_id;
+        public IReadOnlyList<string> ProducerIds => producer_ids;
         public int MinDay => min_day;
         public int Weight => weight;
         public bool OneTime => one_time;
+        public string TruthClass => truth_class;
+        public string ProvenanceLabel => provenance_label;
+        public string IdentityStatus => identity_status;
+        public string NumericClaimLabel => numeric_claim_label;
+        public IReadOnlyList<string> RelatedDiscoveryIds => related_discovery_ids;
     }
 
     [Serializable]
@@ -48,6 +64,7 @@ namespace Ashfall.Core.Narrative
         public string SourceRecordId { get; set; } = string.Empty;
         public string Channel { get; set; } = string.Empty;
         public string ProducerId { get; set; } = string.Empty;
+        public string[] ProducerIds { get; set; } = Array.Empty<string>();
         public int MinDay { get; set; } = 1;
 
         public string Title { get; set; } = string.Empty;
@@ -55,6 +72,14 @@ namespace Ashfall.Core.Narrative
         public string BodyText { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
         public string[] Tags { get; set; } = Array.Empty<string>();
+        public string TruthClass { get; set; } = string.Empty;
+        public string ProvenanceLabel { get; set; } = string.Empty;
+        public string IdentityStatus { get; set; } = string.Empty;
+        public string NumericClaimLabel { get; set; } = string.Empty;
+        public string RecordFamily { get; set; } = string.Empty;
+        public string FacilityOrStationLabel { get; set; } = string.Empty;
+        public string TechnicalSummary { get; set; } = string.Empty;
+        public string[] RelatedDiscoveryIds { get; set; } = Array.Empty<string>();
     }
 
     /// <summary>
@@ -98,6 +123,28 @@ namespace Ashfall.Core.Narrative
                 return list.ToArray();
             }
             return Array.Empty<string>();
+        }
+
+        public static int GetIntProp(JsonElement elem, string propName, int fallback = 0)
+        {
+            if (elem.ValueKind == JsonValueKind.Object && elem.TryGetProperty(propName, out var p))
+            {
+                if (p.ValueKind == JsonValueKind.Number && p.TryGetInt32(out int val))
+                {
+                    return val;
+                }
+            }
+            return fallback;
+        }
+
+        public static float GetFloatProp(JsonElement elem, string propName, float fallback = 0f)
+        {
+            if (elem.ValueKind == JsonValueKind.Object && elem.TryGetProperty(propName, out var p))
+            {
+                if (p.ValueKind == JsonValueKind.Number && p.TryGetSingle(out float val))
+                    return val;
+            }
+            return fallback;
         }
     }
 
@@ -546,6 +593,615 @@ namespace Ashfall.Core.Narrative
         }
     }
 
+    public sealed class PersonalLetterSourceAdapter : INarrativeSourceAdapter
+    {
+        public bool CanAdapt(string sourceCatalog) =>
+            sourceCatalog.EndsWith("letters_expansion.json", StringComparison.OrdinalIgnoreCase)
+            || sourceCatalog.EndsWith("unsent_letters_batch_2.json", StringComparison.OrdinalIgnoreCase);
+
+        public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
+        {
+            string sender = NarrativeJsonHelpers.GetStringProp(sourceRecord, "sender");
+            string recipient = NarrativeJsonHelpers.GetStringProp(sourceRecord, "recipient");
+            string location = NarrativeJsonHelpers.GetStringProp(sourceRecord, "location");
+            string content = NarrativeJsonHelpers.GetStringProp(sourceRecord, "content");
+            int day = NarrativeJsonHelpers.GetIntProp(sourceRecord, "day");
+            string[] tags = NarrativeJsonHelpers.GetStringArrayProp(sourceRecord, "tags");
+
+            string title = $"Letter: To {recipient}";
+            string subtitle = $"From: {sender} | Day {day} | {location}";
+
+            return new NarrativeDiscoveredRecord
+            {
+                DiscoveryId = entry.discovery_id,
+                KnowledgeKey = KnowledgeKeys.NarrativeDiscovered(entry.discovery_id),
+                SourceCatalog = entry.source_catalog,
+                SourceRecordId = entry.source_record_id,
+                Channel = entry.channel,
+                ProducerId = entry.producer_id,
+                MinDay = entry.min_day,
+                Title = title,
+                Subtitle = subtitle,
+                BodyText = content,
+                Category = "Personal Letters & Unsent Correspondence",
+                Tags = tags
+            };
+        }
+    }
+
+    public sealed class AbyssalAnomaliesSourceAdapter : INarrativeSourceAdapter
+    {
+        public bool CanAdapt(string sourceCatalog) =>
+            sourceCatalog.EndsWith("hydrophone_acoustic_logs.json", StringComparison.OrdinalIgnoreCase)
+            || sourceCatalog.EndsWith("geothermal_borehole_logs.json", StringComparison.OrdinalIgnoreCase)
+            || sourceCatalog.EndsWith("cryopod_failure_logs.json", StringComparison.OrdinalIgnoreCase)
+            || sourceCatalog.EndsWith("salt_mine_inscriptions.json", StringComparison.OrdinalIgnoreCase);
+
+        public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
+        {
+            string prose = NarrativeJsonHelpers.GetStringProp(sourceRecord, "prose");
+            string timestamp = NarrativeJsonHelpers.GetStringProp(sourceRecord, "timestamp_relative");
+            string[] tags = NarrativeJsonHelpers.GetStringArrayProp(sourceRecord, "tags");
+
+            string title;
+            string subtitle;
+            string category;
+
+            if (entry.source_catalog.EndsWith("hydrophone_acoustic_logs.json", StringComparison.OrdinalIgnoreCase))
+            {
+                string callsign = NarrativeJsonHelpers.GetStringProp(sourceRecord, "buoy_callsign");
+                string classification = NarrativeJsonHelpers.GetStringProp(sourceRecord, "signal_classification");
+                string freq = NarrativeJsonHelpers.GetStringProp(sourceRecord, "acoustic_frequency_hz");
+                string depth = NarrativeJsonHelpers.GetStringProp(sourceRecord, "depth_meters");
+                string amp = NarrativeJsonHelpers.GetStringProp(sourceRecord, "signal_amplitude_db");
+
+                title = $"Hydrophone Log: {callsign} ({classification})";
+                subtitle = $"Depth: {depth}m | Freq: {freq} Hz | Amp: {amp} dB | Recorded: {timestamp}";
+                category = "Abyssal Anomalies — Hydrophone Acoustic Logs";
+            }
+            else if (entry.source_catalog.EndsWith("geothermal_borehole_logs.json", StringComparison.OrdinalIgnoreCase))
+            {
+                string boreholeId = NarrativeJsonHelpers.GetStringProp(sourceRecord, "borehole_id");
+                string formation = NarrativeJsonHelpers.GetStringProp(sourceRecord, "geological_formation");
+                string depth = NarrativeJsonHelpers.GetStringProp(sourceRecord, "depth_meters");
+                string temp = NarrativeJsonHelpers.GetStringProp(sourceRecord, "temperature_celsius");
+                string pressure = NarrativeJsonHelpers.GetStringProp(sourceRecord, "casing_pressure_bar");
+
+                title = $"Borehole Log: {boreholeId} ({formation})";
+                subtitle = $"Depth: {depth}m | Temp at recording: {temp}°C | Pressure: {pressure} bar | Recorded: {timestamp}";
+                category = "Abyssal Anomalies — Geothermal Borehole Logs";
+            }
+            else if (entry.source_catalog.EndsWith("cryopod_failure_logs.json", StringComparison.OrdinalIgnoreCase))
+            {
+                string podId = NarrativeJsonHelpers.GetStringProp(sourceRecord, "pod_id");
+                string subject = NarrativeJsonHelpers.GetStringProp(sourceRecord, "subject_designation");
+                string alert = NarrativeJsonHelpers.GetStringProp(sourceRecord, "system_alert");
+                string temp = NarrativeJsonHelpers.GetStringProp(sourceRecord, "core_temperature_kelvin");
+                string pressure = NarrativeJsonHelpers.GetStringProp(sourceRecord, "chamber_pressure_kpa");
+
+                title = $"Cryopod Incident: {podId} ({subject})";
+                subtitle = $"Alert: {alert} | Core Temp at incident: {temp} K | Chamber Pressure: {pressure} kPa | Recorded: {timestamp}";
+                category = "Abyssal Anomalies — Cryopod Failure Logs";
+            }
+            else // salt_mine_inscriptions.json
+            {
+                string gallery = NarrativeJsonHelpers.GetStringProp(sourceRecord, "mine_gallery");
+                string medium = NarrativeJsonHelpers.GetStringProp(sourceRecord, "rock_medium");
+                string tool = NarrativeJsonHelpers.GetStringProp(sourceRecord, "inscription_tool");
+                string recorder = NarrativeJsonHelpers.GetStringProp(sourceRecord, "recorder_identity");
+
+                title = $"Salt-Mine Inscription: {gallery} ({recorder})";
+                subtitle = $"Medium: {medium} | Tool: {tool} | Recorded: {timestamp}";
+                category = "Abyssal Anomalies — Salt-Mine Inscriptions";
+            }
+
+            return new NarrativeDiscoveredRecord
+            {
+                DiscoveryId = entry.discovery_id,
+                KnowledgeKey = KnowledgeKeys.NarrativeDiscovered(entry.discovery_id),
+                SourceCatalog = entry.source_catalog,
+                SourceRecordId = entry.source_record_id,
+                Channel = entry.channel,
+                ProducerId = entry.producer_id,
+                MinDay = entry.min_day,
+                Title = title,
+                Subtitle = subtitle,
+                BodyText = prose,
+                Category = category,
+                Tags = tags
+            };
+        }
+    }
+
+    /// <summary>
+    /// Stable source names and presentation rules for Plan 153. These records
+    /// are cultural artifacts. This class deliberately contains no adapters to
+    /// RadiationSystem, Foundry, audio, factions, or mortality systems.
+    /// </summary>
+    public static class FringeCultRuntimeContract
+    {
+        public const string CobaltCatalog = "narrative/cobalt_liturgies.json";
+        public const string IronCatalog = "narrative/iron_synod_canons.json";
+        public const string HymnalCatalog = "narrative/geophone_hymnals.json";
+        public const string EpitaphCatalog = "narrative/wasteland_grave_epitaphs.json";
+
+        public static readonly string[] SourceCatalogs =
+        {
+            CobaltCatalog, IronCatalog, HymnalCatalog, EpitaphCatalog
+        };
+
+        public static bool IsSourceCatalog(string sourceCatalog)
+        {
+            if (string.IsNullOrEmpty(sourceCatalog)) return false;
+            for (int i = 0; i < SourceCatalogs.Length; i++)
+            {
+                if (string.Equals(SourceCatalogs[i], sourceCatalog, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        public static string DefaultTruthClass(string sourceCatalog)
+        {
+            if (sourceCatalog.EndsWith("cobalt_liturgies.json", StringComparison.OrdinalIgnoreCase))
+                return "Doctrine / Belief";
+            if (sourceCatalog.EndsWith("iron_synod_canons.json", StringComparison.OrdinalIgnoreCase))
+                return "Institutional Rule";
+            if (sourceCatalog.EndsWith("geophone_hymnals.json", StringComparison.OrdinalIgnoreCase))
+                return "Historical Observation";
+            return "Memorial Testimony";
+        }
+
+        public static bool IsValidTruthClass(string truthClass)
+        {
+            return string.Equals(truthClass, "Doctrine / Belief", StringComparison.Ordinal)
+                || string.Equals(truthClass, "Ritual Procedure", StringComparison.Ordinal)
+                || string.Equals(truthClass, "Institutional Rule", StringComparison.Ordinal)
+                || string.Equals(truthClass, "Memorial Testimony", StringComparison.Ordinal)
+                || string.Equals(truthClass, "Historical Observation", StringComparison.Ordinal)
+                || string.Equals(truthClass, "Mixed / Requires Reconciliation", StringComparison.Ordinal);
+        }
+    }
+
+    /// <summary>Projects the four fringe-cult source schemas without executing
+    /// any doctrine as a simulation command.</summary>
+    public sealed class FringeCultSourceAdapter : INarrativeSourceAdapter
+    {
+        public bool CanAdapt(string sourceCatalog) => FringeCultRuntimeContract.IsSourceCatalog(sourceCatalog);
+
+        public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
+        {
+            string timestamp = NarrativeJsonHelpers.GetStringProp(sourceRecord, "timestamp_relative");
+            string[] tags = NarrativeJsonHelpers.GetStringArrayProp(sourceRecord, "tags");
+            string title;
+            string subtitle;
+            string category;
+            string claimLabel;
+            string defaultProvenance;
+            string defaultIdentity;
+
+            if (entry.SourceCatalog.EndsWith("cobalt_liturgies.json", StringComparison.OrdinalIgnoreCase))
+            {
+                string group = NarrativeJsonHelpers.GetStringProp(sourceRecord, "cult_faction");
+                string liturgy = NarrativeJsonHelpers.GetStringProp(sourceRecord, "liturgy_type");
+                string sacrament = NarrativeJsonHelpers.GetStringProp(sourceRecord, "ritual_sacrament");
+                int threshold = NarrativeJsonHelpers.GetIntProp(sourceRecord, "sacred_rad_threshold_cpm");
+                title = $"Cobalt Liturgy: {liturgy}";
+                subtitle = $"Group: {group} · Sacrament: {sacrament} · Recorded: {timestamp}";
+                claimLabel = $"Sacred count named in the liturgy: {threshold.ToString(CultureInfo.InvariantCulture)} cpm";
+                category = "Fringe Cults · Cobalt Liturgies";
+                defaultProvenance = "Authored liturgy record";
+                defaultIdentity = "Unresolved sect identity; display only";
+            }
+            else if (entry.SourceCatalog.EndsWith("iron_synod_canons.json", StringComparison.OrdinalIgnoreCase))
+            {
+                string chapter = NarrativeJsonHelpers.GetStringProp(sourceRecord, "synod_chapter");
+                string number = NarrativeJsonHelpers.GetStringProp(sourceRecord, "canon_number");
+                string rule = NarrativeJsonHelpers.GetStringProp(sourceRecord, "metallurgical_rule");
+                int temperature = NarrativeJsonHelpers.GetIntProp(sourceRecord, "sacred_temperature_celsius");
+                title = $"Iron Synod Canon {number}: {rule}";
+                subtitle = $"Chapter: {chapter} · Recorded: {timestamp}";
+                claimLabel = $"Canon-prescribed furnace temperature: {temperature.ToString(CultureInfo.InvariantCulture)} °C";
+                category = "Fringe Cults · Iron Synod Canons";
+                defaultProvenance = "Authored canon record";
+                defaultIdentity = "Unresolved institutional chapter; display only";
+            }
+            else if (entry.SourceCatalog.EndsWith("geophone_hymnals.json", StringComparison.OrdinalIgnoreCase))
+            {
+                string circle = NarrativeJsonHelpers.GetStringProp(sourceRecord, "monastery_circle");
+                string number = NarrativeJsonHelpers.GetStringProp(sourceRecord, "hymn_number");
+                string mode = NarrativeJsonHelpers.GetStringProp(sourceRecord, "liturgical_acoustic_mode");
+                float frequency = NarrativeJsonHelpers.GetFloatProp(sourceRecord, "resonant_frequency_hz");
+                title = $"Geophone Hymnal {number}: {mode}";
+                subtitle = $"Circle: {circle} · Recorded: {timestamp}";
+                claimLabel = $"Hymnal frequency notation: {frequency.ToString("0.###", CultureInfo.InvariantCulture)} Hz";
+                category = "Fringe Cults · Geophone Hymnals";
+                defaultProvenance = "Authored hymnal record";
+                defaultIdentity = "Unresolved monastery circle; display only";
+            }
+            else
+            {
+                string site = NarrativeJsonHelpers.GetStringProp(sourceRecord, "grave_site");
+                string material = NarrativeJsonHelpers.GetStringProp(sourceRecord, "marker_material");
+                string deceased = NarrativeJsonHelpers.GetStringProp(sourceRecord, "deceased_identity");
+                string cause = NarrativeJsonHelpers.GetStringProp(sourceRecord, "cause_of_death");
+                title = $"Wasteland Epitaph: {deceased}";
+                subtitle = $"Grave site: {site} · Marker: {material} · Recorded: {timestamp}";
+                claimLabel = $"Cause of death recorded on marker: {cause}";
+                category = "Fringe Cults · Wasteland Epitaphs";
+                defaultProvenance = "Recovered epitaph record";
+                defaultIdentity = deceased.IndexOf("UNKNOWN", StringComparison.OrdinalIgnoreCase) >= 0
+                    ? "Anonymous/local memorial"
+                    : "Unresolved memorial identity; display only";
+            }
+
+            return new NarrativeDiscoveredRecord
+            {
+                DiscoveryId = entry.DiscoveryId,
+                KnowledgeKey = KnowledgeKeys.NarrativeDiscovered(entry.DiscoveryId),
+                SourceCatalog = entry.SourceCatalog,
+                SourceRecordId = entry.SourceRecordId,
+                Channel = entry.Channel,
+                ProducerId = entry.ProducerId,
+                MinDay = entry.MinDay,
+                Title = title,
+                Subtitle = subtitle,
+                BodyText = NarrativeJsonHelpers.GetStringProp(sourceRecord, "prose"),
+                Category = category,
+                Tags = tags,
+                TruthClass = string.IsNullOrEmpty(entry.TruthClass)
+                    ? FringeCultRuntimeContract.DefaultTruthClass(entry.SourceCatalog)
+                    : entry.TruthClass,
+                ProvenanceLabel = string.IsNullOrEmpty(entry.ProvenanceLabel) ? defaultProvenance : entry.ProvenanceLabel,
+                IdentityStatus = string.IsNullOrEmpty(entry.IdentityStatus) ? defaultIdentity : entry.IdentityStatus,
+                NumericClaimLabel = string.IsNullOrEmpty(entry.NumericClaimLabel) ? claimLabel : entry.NumericClaimLabel,
+                RelatedDiscoveryIds = entry.related_discovery_ids ?? Array.Empty<string>()
+            };
+        }
+    }
+
+    /// <summary>
+    /// Exact source allowlist for Plan 156. These catalogs contain authored
+    /// industrial observations; their measurements never become production
+    /// parameters or item effects through this adapter.
+    /// </summary>
+    public static class PaperPrintRuntimeContract
+    {
+        public const string HollanderCatalog = "narrative/hollander_beater_pulping_logs.json";
+        public const string DeckleCatalog = "narrative/deckle_mould_watermark_audits.json";
+        public const string PressCatalog = "narrative/screw_press_felt_reports.json";
+        public const string SizingCatalog = "narrative/tub_sizing_gelatin_assays.json";
+        public const string RagPulpCatalog = "narrative/rag_pulp_beater_records.json";
+        public const string InkCatalog = "narrative/iron_gall_ink_acidity_reports.json";
+        public const string TypeCatalog = "narrative/typographic_lead_wear_logs.json";
+        public const string StencilCatalog = "narrative/stencil_propaganda_smear_logs.json";
+
+        public static readonly string[] SourceCatalogs =
+        {
+            HollanderCatalog, DeckleCatalog, PressCatalog, SizingCatalog,
+            RagPulpCatalog, InkCatalog, TypeCatalog, StencilCatalog
+        };
+
+        public static bool IsSourceCatalog(string sourceCatalog)
+        {
+            string normalized = (sourceCatalog ?? string.Empty).Replace('\\', '/');
+            for (int i = 0; i < SourceCatalogs.Length; i++)
+            {
+                if (string.Equals(normalized, SourceCatalogs[i], StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool IsPaperMakingCatalog(string sourceCatalog) =>
+            string.Equals((sourceCatalog ?? string.Empty).Replace('\\', '/'), HollanderCatalog, StringComparison.OrdinalIgnoreCase)
+            || string.Equals((sourceCatalog ?? string.Empty).Replace('\\', '/'), DeckleCatalog, StringComparison.OrdinalIgnoreCase)
+            || string.Equals((sourceCatalog ?? string.Empty).Replace('\\', '/'), PressCatalog, StringComparison.OrdinalIgnoreCase)
+            || string.Equals((sourceCatalog ?? string.Empty).Replace('\\', '/'), SizingCatalog, StringComparison.OrdinalIgnoreCase);
+
+        public static string GetFamily(string sourceCatalog)
+        {
+            string normalized = (sourceCatalog ?? string.Empty).Replace('\\', '/');
+            if (string.Equals(normalized, HollanderCatalog, StringComparison.OrdinalIgnoreCase)) return "Paper Making · Hollander Beater Pulping";
+            if (string.Equals(normalized, DeckleCatalog, StringComparison.OrdinalIgnoreCase)) return "Paper Making · Deckle Mould & Watermark";
+            if (string.Equals(normalized, PressCatalog, StringComparison.OrdinalIgnoreCase)) return "Paper Making · Screw Press & Felt";
+            if (string.Equals(normalized, SizingCatalog, StringComparison.OrdinalIgnoreCase)) return "Paper Making · Tub Sizing";
+            if (string.Equals(normalized, RagPulpCatalog, StringComparison.OrdinalIgnoreCase)) return "Printing · Rag Pulp Beater";
+            if (string.Equals(normalized, InkCatalog, StringComparison.OrdinalIgnoreCase)) return "Printing · Iron-Gall Ink Assay";
+            if (string.Equals(normalized, TypeCatalog, StringComparison.OrdinalIgnoreCase)) return "Printing · Typographic Lead Wear";
+            if (string.Equals(normalized, StencilCatalog, StringComparison.OrdinalIgnoreCase)) return "Printing · Stencil Propaganda Smear";
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Projects the eight Plan 156 source schemas into the shared codex model.
+    /// It deliberately reads numeric observations only to render provenance
+    /// labels; it contains no effect or production dispatch path.
+    /// </summary>
+    public sealed class PaperPrintSourceAdapter : INarrativeSourceAdapter
+    {
+        public bool CanAdapt(string sourceCatalog) => PaperPrintRuntimeContract.IsSourceCatalog(sourceCatalog);
+
+        public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
+        {
+            string source = entry.SourceCatalog.Replace('\\', '/');
+            string timestamp = NarrativeJsonHelpers.GetStringProp(sourceRecord, "timestamp_relative");
+            string[] tags = NarrativeJsonHelpers.GetStringArrayProp(sourceRecord, "tags");
+            string family = PaperPrintRuntimeContract.GetFamily(source);
+            string facility;
+            string title;
+            string technicalSummary;
+
+            if (string.Equals(source, PaperPrintRuntimeContract.HollanderCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string tub = NarrativeJsonHelpers.GetStringProp(sourceRecord, "beater_tub_id");
+                string feedstock = NarrativeJsonHelpers.GetStringProp(sourceRecord, "rag_feedstock_type");
+                facility = "Beater tub: " + tub;
+                title = "Hollander Beater Log: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored measurements — beating duration: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "beating_duration_hours"))} h; Schopper-Riegler freeness: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "schopper_riegler_freeness_sr"))} SR; feedstock: {feedstock}.";
+            }
+            else if (string.Equals(source, PaperPrintRuntimeContract.DeckleCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string mould = NarrativeJsonHelpers.GetStringProp(sourceRecord, "mould_frame_id");
+                float width = NarrativeJsonHelpers.GetFloatProp(sourceRecord, "sheet_width_mm");
+                float length = NarrativeJsonHelpers.GetFloatProp(sourceRecord, "sheet_length_mm");
+                facility = "Mould frame: " + mould;
+                title = "Deckle Mould Audit: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored measurements — wire mesh: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "wire_mesh_count_per_inch"))}/in; sheet format: {FormatNumber(width)} × {FormatNumber(length)} mm.";
+            }
+            else if (string.Equals(source, PaperPrintRuntimeContract.PressCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string station = NarrativeJsonHelpers.GetStringProp(sourceRecord, "press_station_id");
+                facility = "Press station: " + station;
+                title = "Screw Press Report: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored measurements — post: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "post_sheet_count"))} sheets; pressing force: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "pressing_force_kilonewtons"))} kN; moisture removed: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "moisture_removed_pct"))}%.";
+            }
+            else if (string.Equals(source, PaperPrintRuntimeContract.SizingCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string vat = NarrativeJsonHelpers.GetStringProp(sourceRecord, "sizing_vat_id");
+                facility = "Sizing vat: " + vat;
+                title = "Tub Sizing Assay: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored measurements — gelatin solution: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "gelatin_solution_temp_celsius"))} °C; alum addition: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "alum_additive_pct"))}%; Cobb absorption: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "cobb_water_absorption_g_per_m2"))} g/m².";
+            }
+            else if (string.Equals(source, PaperPrintRuntimeContract.RagPulpCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string station = NarrativeJsonHelpers.GetStringProp(sourceRecord, "beater_station_id");
+                string fiber = NarrativeJsonHelpers.GetStringProp(sourceRecord, "raw_fiber_source");
+                facility = "Beater station: " + station;
+                title = "Rag-Pulp Beater Record: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored measurements — Canadian freeness: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "freeness_canadian_ml"))} mL; hydration: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "pulp_hydration_hours"))} h; fiber source: {fiber}.";
+            }
+            else if (string.Equals(source, PaperPrintRuntimeContract.InkCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string formulation = NarrativeJsonHelpers.GetStringProp(sourceRecord, "ink_formulation_code");
+                string tannin = NarrativeJsonHelpers.GetStringProp(sourceRecord, "tannin_source");
+                string pigment = NarrativeJsonHelpers.GetStringProp(sourceRecord, "pigment_complex");
+                facility = "Ink formulation: " + formulation;
+                title = "Iron-Gall Ink Assay: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored assay — measured pH: {FormatNumber(NarrativeJsonHelpers.GetFloatProp(sourceRecord, "measured_ph_level"))}; tannin source: {tannin}; pigment complex: {pigment}.";
+            }
+            else if (string.Equals(source, PaperPrintRuntimeContract.TypeCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string fontCase = NarrativeJsonHelpers.GetStringProp(sourceRecord, "font_case_identifier");
+                string metal = NarrativeJsonHelpers.GetStringProp(sourceRecord, "type_metal_composition");
+                string wear = NarrativeJsonHelpers.GetStringProp(sourceRecord, "wear_phenomenon");
+                facility = "Font case: " + fontCase;
+                title = "Typographic Lead Wear Log: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored wear record — impressions: {NarrativeJsonHelpers.GetIntProp(sourceRecord, "impression_count_cycles")}; metal: {metal}; phenomenon: {wear}.";
+            }
+            else
+            {
+                string print = NarrativeJsonHelpers.GetStringProp(sourceRecord, "stencil_print_id");
+                string matrix = NarrativeJsonHelpers.GetStringProp(sourceRecord, "matrix_material_type");
+                string pigment = NarrativeJsonHelpers.GetStringProp(sourceRecord, "ink_pigment_base");
+                string smear = NarrativeJsonHelpers.GetStringProp(sourceRecord, "smear_artifact_description");
+                facility = "Print artifact: " + print;
+                title = "Stencil Print Artifact: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored print artifact — matrix: {matrix}; pigment: {pigment}; smear: {smear}.";
+            }
+
+            return new NarrativeDiscoveredRecord
+            {
+                DiscoveryId = entry.DiscoveryId,
+                KnowledgeKey = KnowledgeKeys.NarrativeDiscovered(entry.DiscoveryId),
+                SourceCatalog = source,
+                SourceRecordId = entry.SourceRecordId,
+                Channel = entry.Channel,
+                ProducerId = entry.ProducerId,
+                ProducerIds = entry.ProducerIds.Count > 0 ? ToArray(entry.ProducerIds) : new[] { entry.ProducerId },
+                MinDay = entry.MinDay,
+                Title = title,
+                Subtitle = $"{facility} · Recorded: {timestamp}",
+                BodyText = NarrativeJsonHelpers.GetStringProp(sourceRecord, "prose"),
+                Category = "Paper & Print Material Culture",
+                Tags = tags,
+                TruthClass = string.IsNullOrEmpty(entry.TruthClass) ? "Historical Observation" : entry.TruthClass,
+                ProvenanceLabel = string.IsNullOrEmpty(entry.ProvenanceLabel) ? "Authored industrial process record" : entry.ProvenanceLabel,
+                IdentityStatus = string.IsNullOrEmpty(entry.IdentityStatus) ? "Static facility/station label; display only" : entry.IdentityStatus,
+                NumericClaimLabel = string.IsNullOrEmpty(entry.NumericClaimLabel) ? "Authored measurement — not a live production value" : entry.NumericClaimLabel,
+                RecordFamily = family,
+                FacilityOrStationLabel = facility,
+                TechnicalSummary = technicalSummary,
+                RelatedDiscoveryIds = entry.related_discovery_ids ?? Array.Empty<string>()
+            };
+        }
+
+        private static string[] ToArray(IReadOnlyList<string> values)
+        {
+            var result = new string[values.Count];
+            for (int i = 0; i < values.Count; i++) result[i] = values[i];
+            return result;
+        }
+
+        private static string FormatNumber(float value) => value.ToString("0.###", CultureInfo.InvariantCulture);
+
+        private static string FormatTitle(string recordId)
+        {
+            var parts = recordId.Split('_');
+            var words = new List<string>();
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length > 0)
+                    words.Add(char.ToUpperInvariant(parts[i][0]) + parts[i].Substring(1));
+            }
+            return string.Join(" ", words);
+        }
+    }
+
+    /// <summary>
+    /// Exact source allowlist for Plan 160. Bone, horn and antler records are
+    /// authored process observations; their material, animal and geometry
+    /// labels never become inventory, wildlife, crafting, durability, combat
+    /// or trade authority through this contract.
+    /// </summary>
+    public static class BoneHornRuntimeContract
+    {
+        public const string DegreasingCatalog = "narrative/bone_degreasing_prep_logs.json";
+        public const string SawingCatalog = "narrative/antler_horn_sawing_records.json";
+        public const string PolishingCatalog = "narrative/scraping_polishing_reports.json";
+        public const string ToolAssayCatalog = "narrative/needle_awl_hook_assays.json";
+
+        public static readonly string[] SourceCatalogs =
+        {
+            DegreasingCatalog, SawingCatalog, PolishingCatalog, ToolAssayCatalog
+        };
+
+        public static bool IsSourceCatalog(string sourceCatalog)
+        {
+            string normalized = (sourceCatalog ?? string.Empty).Replace('\\', '/');
+            for (int i = 0; i < SourceCatalogs.Length; i++)
+            {
+                if (string.Equals(normalized, SourceCatalogs[i], StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        public static string GetFamily(string sourceCatalog)
+        {
+            string normalized = (sourceCatalog ?? string.Empty).Replace('\\', '/');
+            if (string.Equals(normalized, DegreasingCatalog, StringComparison.OrdinalIgnoreCase))
+                return "Bone & Horn · Bone Degreasing & Preparation";
+            if (string.Equals(normalized, SawingCatalog, StringComparison.OrdinalIgnoreCase))
+                return "Bone & Horn · Antler/Horn Sawing";
+            if (string.Equals(normalized, PolishingCatalog, StringComparison.OrdinalIgnoreCase))
+                return "Bone & Horn · Scraping & Polishing";
+            if (string.Equals(normalized, ToolAssayCatalog, StringComparison.OrdinalIgnoreCase))
+                return "Bone & Horn · Needle/Awl/Hook Assays";
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Projects the four Plan 160 source schemas into the shared codex model.
+    /// It exposes measurements as labelled authored observations and has no
+    /// path to wildlife, inventory, crafting, item condition, combat, fishing,
+    /// medical, trade or companion state.
+    /// </summary>
+    public sealed class BoneHornSourceAdapter : INarrativeSourceAdapter
+    {
+        public bool CanAdapt(string sourceCatalog) => BoneHornRuntimeContract.IsSourceCatalog(sourceCatalog);
+
+        public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
+        {
+            string source = entry.SourceCatalog.Replace('\\', '/');
+            string family = BoneHornRuntimeContract.GetFamily(source);
+            string facility;
+            string title;
+            string technicalSummary;
+
+            if (string.Equals(source, BoneHornRuntimeContract.DegreasingCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string animal = NarrativeJsonHelpers.GetStringProp(sourceRecord, "bone_source_animal");
+                string method = NarrativeJsonHelpers.GetStringProp(sourceRecord, "degreasing_method");
+                int days = NarrativeJsonHelpers.GetIntProp(sourceRecord, "prep_duration_days");
+                facility = "Historical animal label: " + animal;
+                title = "Bone Preparation Log: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored process observation — source label: {animal}; degreasing method: {method}; preparation duration: {days} day(s). This is not a current carcass, companion or crafting timer.";
+            }
+            else if (string.Equals(source, BoneHornRuntimeContract.SawingCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string material = NarrativeJsonHelpers.GetStringProp(sourceRecord, "material_type");
+                string saw = NarrativeJsonHelpers.GetStringProp(sourceRecord, "saw_tool_id");
+                string shape = NarrativeJsonHelpers.GetStringProp(sourceRecord, "blank_shape_cut");
+                facility = "Historical saw label: " + saw;
+                title = "Antler/Horn Sawing Record: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored material observation — material label: {material}; saw label: {saw}; blank shape: {shape}. Labels are provenance only and do not resolve to inventory.";
+            }
+            else if (string.Equals(source, BoneHornRuntimeContract.PolishingCatalog, StringComparison.OrdinalIgnoreCase))
+            {
+                string material = NarrativeJsonHelpers.GetStringProp(sourceRecord, "blank_material");
+                string abrasive = NarrativeJsonHelpers.GetStringProp(sourceRecord, "abrasive_used");
+                string finish = NarrativeJsonHelpers.GetStringProp(sourceRecord, "surface_finish");
+                facility = "Historical abrasive label: " + abrasive;
+                title = "Scraping & Polishing Report: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored finish observation — blank label: {material}; abrasive: {abrasive}; surface finish: {finish}. No abrasive or quality modifier is created.";
+            }
+            else
+            {
+                string tool = NarrativeJsonHelpers.GetStringProp(sourceRecord, "tool_type");
+                string blank = NarrativeJsonHelpers.GetStringProp(sourceRecord, "bone_blank_id");
+                float angle = NarrativeJsonHelpers.GetFloatProp(sourceRecord, "point_angle_degrees");
+                facility = "Historical blank label: " + blank;
+                title = "Needle/Awl/Hook Assay: " + FormatTitle(entry.SourceRecordId);
+                technicalSummary = $"Authored geometry observation — tool label: {tool}; blank label: {blank}; point angle: {FormatNumber(angle)}°. This is not a damage, quality, fishing or repair effectiveness stat.";
+            }
+
+            return new NarrativeDiscoveredRecord
+            {
+                DiscoveryId = entry.DiscoveryId,
+                KnowledgeKey = KnowledgeKeys.NarrativeDiscovered(entry.DiscoveryId),
+                SourceCatalog = source,
+                SourceRecordId = entry.SourceRecordId,
+                Channel = entry.Channel,
+                ProducerId = entry.ProducerId,
+                ProducerIds = entry.ProducerIds.Count > 0 ? ToArray(entry.ProducerIds) : new[] { entry.ProducerId },
+                MinDay = entry.MinDay,
+                Title = title,
+                Subtitle = $"{facility} · Authored chronology: source record has no timestamp field",
+                BodyText = NarrativeJsonHelpers.GetStringProp(sourceRecord, "log_text"),
+                Category = "Bone, Horn & Antler Material Culture",
+                Tags = Array.Empty<string>(),
+                TruthClass = string.IsNullOrEmpty(entry.TruthClass) ? "Historical Observation" : entry.TruthClass,
+                ProvenanceLabel = string.IsNullOrEmpty(entry.ProvenanceLabel)
+                    ? "Authored Vector-Block Tsadi craft record"
+                    : entry.ProvenanceLabel,
+                IdentityStatus = string.IsNullOrEmpty(entry.IdentityStatus)
+                    ? "Animal/material/tool labels are historical; no live entity inferred"
+                    : entry.IdentityStatus,
+                NumericClaimLabel = string.IsNullOrEmpty(entry.NumericClaimLabel)
+                    ? "Authored process observation — not a live item, recipe, quality, damage or wildlife value"
+                    : entry.NumericClaimLabel,
+                RecordFamily = family,
+                FacilityOrStationLabel = facility,
+                TechnicalSummary = technicalSummary,
+                RelatedDiscoveryIds = entry.related_discovery_ids ?? Array.Empty<string>()
+            };
+        }
+
+        private static string[] ToArray(IReadOnlyList<string> values)
+        {
+            var result = new string[values.Count];
+            for (int i = 0; i < values.Count; i++) result[i] = values[i];
+            return result;
+        }
+
+        private static string FormatNumber(float value) => value.ToString("0.###", CultureInfo.InvariantCulture);
+
+        private static string FormatTitle(string recordId)
+        {
+            var parts = recordId.Split('_');
+            var words = new List<string>();
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length > 0)
+                    words.Add(char.ToUpperInvariant(parts[i][0]) + parts[i].Substring(1));
+            }
+            return string.Join(" ", words);
+        }
+    }
+
     #endregion
 
     /// <summary>
@@ -591,6 +1247,11 @@ namespace Ashfall.Core.Narrative
             _adapters.Add(new SurgeonsCasebookSourceAdapter());
             _adapters.Add(new DeadHandDirectiveSourceAdapter());
             _adapters.Add(new CourierDispatchSourceAdapter());
+            _adapters.Add(new PersonalLetterSourceAdapter());
+            _adapters.Add(new AbyssalAnomaliesSourceAdapter());
+            _adapters.Add(new FringeCultSourceAdapter());
+            _adapters.Add(new PaperPrintSourceAdapter());
+            _adapters.Add(new BoneHornSourceAdapter());
         }
 
         public void Clear()
@@ -615,6 +1276,11 @@ namespace Ashfall.Core.Narrative
             if (string.IsNullOrWhiteSpace(manifestJson)) return;
 
             using var doc = JsonDocument.Parse(manifestJson);
+            if (doc.RootElement.TryGetProperty("schema_version", out var schemaProp)
+                && schemaProp.ValueKind == JsonValueKind.Number
+                && schemaProp.TryGetInt32(out int schemaVersion)
+                && schemaVersion != 1)
+                return;
             if (!doc.RootElement.TryGetProperty("entries", out var entriesProp) || entriesProp.ValueKind != JsonValueKind.Array)
                 return;
 
@@ -622,6 +1288,7 @@ namespace Ashfall.Core.Narrative
 
             try
             {
+                var seenDiscoveryIds = new HashSet<string>(StringComparer.Ordinal);
                 foreach (var entryElem in entriesProp.EnumerateArray())
                 {
                     string discId = NarrativeJsonHelpers.GetStringProp(entryElem, "discovery_id");
@@ -629,9 +1296,16 @@ namespace Ashfall.Core.Narrative
                     string sourceRecordId = NarrativeJsonHelpers.GetStringProp(entryElem, "source_record_id");
                     string channel = NarrativeJsonHelpers.GetStringProp(entryElem, "channel");
                     string producerId = NarrativeJsonHelpers.GetStringProp(entryElem, "producer_id");
+                    string truthClass = NarrativeJsonHelpers.GetStringProp(entryElem, "truth_class");
                     int minDay = 1;
                     if (entryElem.TryGetProperty("min_day", out var mdProp) && mdProp.TryGetInt32(out int mdVal))
                         minDay = mdVal;
+                    if (string.IsNullOrEmpty(discId) || !seenDiscoveryIds.Add(discId) || minDay < 1)
+                        continue;
+                    if (FringeCultRuntimeContract.IsSourceCatalog(sourceCatalog)
+                        && !string.IsNullOrEmpty(truthClass)
+                        && !FringeCultRuntimeContract.IsValidTruthClass(truthClass))
+                        continue;
 
                     var entry = new NarrativeDiscoveryManifestEntry
                     {
@@ -640,8 +1314,27 @@ namespace Ashfall.Core.Narrative
                         source_record_id = sourceRecordId,
                         channel = channel,
                         producer_id = producerId,
-                        min_day = minDay
+                        min_day = minDay,
+                        weight = NarrativeJsonHelpers.GetIntProp(entryElem, "weight", 1),
+                        one_time = !entryElem.TryGetProperty("one_time", out var otProp) || otProp.ValueKind != JsonValueKind.False,
+                        truth_class = truthClass,
+                        provenance_label = NarrativeJsonHelpers.GetStringProp(entryElem, "provenance_label"),
+                        identity_status = NarrativeJsonHelpers.GetStringProp(entryElem, "identity_status"),
+                        numeric_claim_label = NarrativeJsonHelpers.GetStringProp(entryElem, "numeric_claim_label"),
+                        related_discovery_ids = NarrativeJsonHelpers.GetStringArrayProp(entryElem, "related_discovery_ids")
                     };
+                    string[] configuredProducers = NarrativeJsonHelpers.GetStringArrayProp(entryElem, "producer_ids");
+                    var producers = new List<string>();
+                    if (!string.IsNullOrEmpty(entry.producer_id))
+                        producers.Add(entry.producer_id);
+                    for (int producerIndex = 0; producerIndex < configuredProducers.Length; producerIndex++)
+                    {
+                        string configuredProducer = configuredProducers[producerIndex];
+                        if (!string.IsNullOrEmpty(configuredProducer)
+                            && !producers.Exists(p => string.Equals(p, configuredProducer, StringComparison.Ordinal)))
+                            producers.Add(configuredProducer);
+                    }
+                    entry.producer_ids = producers.ToArray();
 
                     // Find adapter
                     INarrativeSourceAdapter? matchedAdapter = null;
@@ -674,21 +1367,6 @@ namespace Ashfall.Core.Narrative
                         if (projected != null && !string.IsNullOrEmpty(projected.DiscoveryId))
                         {
                             _records.Add(projected);
-                            _byDiscoveryId[projected.DiscoveryId] = projected;
-
-                            if (!_byProducerId.TryGetValue(projected.ProducerId, out var prodList))
-                            {
-                                prodList = new List<NarrativeDiscoveredRecord>();
-                                _byProducerId[projected.ProducerId] = prodList;
-                            }
-                            prodList.Add(projected);
-
-                            if (!_byChannel.TryGetValue(projected.Channel, out var chanList))
-                            {
-                                chanList = new List<NarrativeDiscoveredRecord>();
-                                _byChannel[projected.Channel] = chanList;
-                            }
-                            chanList.Add(projected);
                         }
                     }
                 }
@@ -700,6 +1378,53 @@ namespace Ashfall.Core.Narrative
                     kvp.Value.Dispose();
                 }
             }
+
+            ReindexDeterministically();
+        }
+
+        private void ReindexDeterministically()
+        {
+            _records.Sort((left, right) =>
+            {
+                int result = string.Compare(left.SourceCatalog, right.SourceCatalog, StringComparison.Ordinal);
+                if (result != 0) return result;
+                result = string.Compare(left.SourceRecordId, right.SourceRecordId, StringComparison.Ordinal);
+                if (result != 0) return result;
+                return string.Compare(left.DiscoveryId, right.DiscoveryId, StringComparison.Ordinal);
+            });
+
+            _byDiscoveryId.Clear();
+            _byProducerId.Clear();
+            _byChannel.Clear();
+            for (int i = 0; i < _records.Count; i++)
+            {
+                var record = _records[i];
+                if (_byDiscoveryId.ContainsKey(record.DiscoveryId)) continue;
+                _byDiscoveryId.Add(record.DiscoveryId, record);
+                if (record.ProducerIds != null && record.ProducerIds.Length > 0)
+                {
+                    for (int producerIndex = 0; producerIndex < record.ProducerIds.Length; producerIndex++)
+                        AddToIndex(_byProducerId, record.ProducerIds[producerIndex], record);
+                }
+                else
+                {
+                    AddToIndex(_byProducerId, record.ProducerId, record);
+                }
+                AddToIndex(_byChannel, record.Channel, record);
+            }
+        }
+
+        private static void AddToIndex(
+            Dictionary<string, List<NarrativeDiscoveredRecord>> index,
+            string key,
+            NarrativeDiscoveredRecord record)
+        {
+            if (!index.TryGetValue(key, out var list))
+            {
+                list = new List<NarrativeDiscoveredRecord>();
+                index.Add(key, list);
+            }
+            list.Add(record);
         }
 
         private static bool TryFindSourceRecord(JsonElement root, string recordId, out JsonElement found)

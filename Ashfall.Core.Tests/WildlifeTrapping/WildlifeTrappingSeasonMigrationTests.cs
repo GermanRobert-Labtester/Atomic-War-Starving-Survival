@@ -223,10 +223,11 @@ namespace Ashfall.Core.Tests
                     Assert.False(eligible.Contains(prey.speciesId),
                         $"migration-linked prey '{prey.speciesId}' must be absent when no migration pack is present");
             }
-            // Non-migration prey keep flowing with empty presence.
+            // Non-migration prey keep flowing with empty presence, subject to
+            // the same authored trap-compatibility gate as every other prey.
             Assert.Contains("rabbit", eligible);
             Assert.Contains("fox", eligible);
-            Assert.Contains("hedgehog", eligible);
+            Assert.Contains("hedgehog", Eligible(sys, "box"));
         }
 
         [Fact]
@@ -347,6 +348,22 @@ namespace Ashfall.Core.Tests
 
             sys.SetSelectionContext(Context(WildlifeSeasonalCalendar.SeasonHighCold));
             Assert.DoesNotContain("hedgehog", Eligible(sys, "deadfall"));
+        }
+
+        [Fact]
+        public void Eligibility_UsesAuthoredTrapCompatibility_InAdditionToSeasonAndMigration()
+        {
+            var catalog = Catalog();
+            var sys = MakeSystem(catalog);
+            sys.SetSelectionContext(Context(WildlifeSeasonalCalendar.SeasonThaw, "species_cotton_hare", "species_mirror_carp"));
+
+            var snare = sys.GetEligibleQuarryIds("", "snare", 100f, "trap_snare");
+            Assert.Contains("cotton_hare", snare);
+            Assert.DoesNotContain("mirror_carp", snare);
+
+            var fish = sys.GetEligibleQuarryIds("", "fish_trap", 100f, "trap_fish");
+            Assert.Contains("mirror_carp", fish);
+            Assert.DoesNotContain("rabbit", fish);
         }
 
         // ── B7: no-prey-gap invariant ────────────────────────────────────────

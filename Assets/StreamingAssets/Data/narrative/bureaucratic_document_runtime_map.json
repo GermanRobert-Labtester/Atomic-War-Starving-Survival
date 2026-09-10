@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "documents": [
+    { "doc_id": "bunker_doc_req_fuel_03", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "quartermaster_desk"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_req_medicine_07", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "medical_office", "quartermaster_desk"], "related_doc_ids": ["bunker_doc_transfer_ward_05"] },
+    { "doc_id": "bunker_doc_req_candles_12", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "maintenance_office", "quartermaster_desk"], "related_doc_ids": ["bunker_doc_incident_injury_05"] },
+    { "doc_id": "bunker_doc_denial_extra_04", "truth_class": "contemporaneous_authored_record", "producer_ids": ["quartermaster_desk", "ration_board", "shelter_records"], "related_doc_ids": ["bunker_doc_assign_loma_01", "bunker_doc_census_correction"] },
+    { "doc_id": "bunker_doc_denial_second_09", "truth_class": "contemporaneous_authored_record", "producer_ids": ["mess_hall_notice_board", "ration_board", "shelter_records"], "related_doc_ids": ["bunker_doc_meal_notice_flour"] },
+    { "doc_id": "bunker_doc_transfer_bram_02", "truth_class": "historical_canonical_record", "producer_ids": ["gate_house_notice_board"], "related_doc_ids": ["bunker_doc_roster_sentry_w7"] },
+    { "doc_id": "bunker_doc_transfer_ward_05", "truth_class": "historical_canonical_record", "producer_ids": ["medical_office"], "related_doc_ids": ["bunker_doc_req_medicine_07", "bunker_doc_incident_mortality_07", "bunker_doc_quarantine_ward_b"] },
+    { "doc_id": "bunker_doc_inspect_generator_06", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "maintenance_office"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_inspect_filters_08", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "maintenance_office"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_assign_loma_01", "truth_class": "historical_canonical_record", "producer_ids": ["admissions_desk", "shelter_records"], "related_doc_ids": ["bunker_doc_denial_extra_04", "bunker_doc_census_correction", "bunker_doc_roster_kitchen_w9"] },
+    { "doc_id": "bunker_doc_assign_single_03", "truth_class": "historical_canonical_record", "producer_ids": ["admissions_desk", "shelter_records"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_incident_theft_02", "truth_class": "historical_canonical_record", "producer_ids": ["archive_desk", "quartermaster_desk"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_incident_injury_05", "truth_class": "historical_canonical_record", "producer_ids": ["maintenance_office", "medical_office"], "related_doc_ids": ["bunker_doc_req_candles_12"] },
+    { "doc_id": "bunker_doc_incident_mortality_07", "truth_class": "historical_canonical_record", "producer_ids": ["medical_office"], "related_doc_ids": ["bunker_doc_transfer_ward_05", "bunker_doc_quarantine_ward_b"] },
+    { "doc_id": "bunker_doc_roster_sentry_w7", "truth_class": "template_compatible_record", "producer_ids": ["duty_roster", "gate_house_notice_board"], "related_doc_ids": ["bunker_doc_transfer_bram_02"] },
+    { "doc_id": "bunker_doc_meal_notice_flour", "truth_class": "contemporaneous_authored_record", "producer_ids": ["mess_hall_notice_board", "ration_board", "shelter_records"], "related_doc_ids": ["bunker_doc_denial_second_09"] },
+    { "doc_id": "bunker_doc_chit_repair_lamp", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "maintenance_office"], "related_doc_ids": ["bunker_doc_notice_school"] },
+    { "doc_id": "bunker_doc_chit_repair_pump", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "maintenance_office"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_evacuation_dam", "truth_class": "historical_canonical_record", "producer_ids": ["gate_house_notice_board"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_quarantine_ward_b", "truth_class": "historical_canonical_record", "producer_ids": ["medical_office", "ward_b_notice_board"], "related_doc_ids": ["bunker_doc_transfer_ward_05", "bunker_doc_incident_mortality_07"] },
+    { "doc_id": "bunker_doc_amnesty_weapons", "truth_class": "contemporaneous_authored_record", "producer_ids": ["gate_house_notice_board"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_census_correction", "truth_class": "historical_canonical_record", "producer_ids": ["admissions_desk", "quartermaster_desk"], "related_doc_ids": ["bunker_doc_assign_loma_01", "bunker_doc_denial_extra_04"] },
+    { "doc_id": "bunker_doc_roster_kitchen_w9", "truth_class": "template_compatible_record", "producer_ids": ["duty_roster", "mess_hall_notice_board"], "related_doc_ids": ["bunker_doc_assign_loma_01"] },
+    { "doc_id": "bunker_doc_notice_laundry", "truth_class": "contemporaneous_authored_record", "producer_ids": ["ward_b_notice_board"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_chit_door_hatch", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "gate_house_notice_board", "maintenance_office"], "related_doc_ids": [] },
+    { "doc_id": "bunker_doc_notice_school", "truth_class": "contemporaneous_authored_record", "producer_ids": ["school_corridor", "shelter_records"], "related_doc_ids": ["bunker_doc_assign_loma_01", "bunker_doc_chit_repair_lamp"] },
+    { "doc_id": "bunker_doc_req_seed_potato_01", "truth_class": "template_compatible_record", "producer_ids": ["archive_desk", "quartermaster_desk"], "related_doc_ids": [] }
+  ]
+}

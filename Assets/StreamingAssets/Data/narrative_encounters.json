@@ -494,6 +494,102 @@
           "guiltDelta": 5
         }
       ]
+    },
+    {
+      "id": "enc_trap_bait_stolen",
+      "title": "Bait Gone",
+      "description": "The trap is sprung and empty and the bait hook is clean — licked, not gnawed. Human teeth are the only kind that leave a hook that clean. Small footprints in the ash circle the site twice and walk away toward the drainage cut, unhurried. Whoever it was knew the check schedule.",
+      "category": "Social",
+      "baseWeight": 1.0,
+      "stealthWeightMultiplier": 0.5,
+      "speedWeightMultiplier": 1.5,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "choices": [
+        {
+          "choiceId": "follow_prints",
+          "text": "Follow the prints toward the drainage cut.",
+          "moraleDelta": -2,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "reset_only",
+          "text": "Re-bait the trap and say nothing.",
+          "moraleDelta": 0,
+          "guiltDelta": 1
+        },
+        {
+          "choiceId": "leave_remainder",
+          "text": "Leave a small piece of bait behind on a flat stone.",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        }
+      ]
+    },
+    {
+      "id": "enc_trap_tampered",
+      "title": "Cut Clean",
+      "description": "The snare wire has been cut, not sprung — one stroke of a good blade, close to the knot. Whoever did it wanted the trap dead, not disabled. They stood here in the dark, at the edge of your scent mark, and judged it. The knot is still good. They wanted you to know that too.",
+      "category": "Hazard",
+      "baseWeight": 1.0,
+      "stealthWeightMultiplier": 0.5,
+      "speedWeightMultiplier": 1.5,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "choices": [
+        {
+          "choiceId": "watch_night",
+          "text": "Sit the night cold at the treeline and watch the trap.",
+          "moraleDelta": -3,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "leave_warning",
+          "text": "Hang a strip of bright cloth where they will find it.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "rebuild_quiet",
+          "text": "Rebuild the line without a word to anyone.",
+          "moraleDelta": 0,
+          "guiltDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "enc_trap_stranger_discovery",
+      "title": "Someone at the Line",
+      "description": "A stranger is crouched at your trap when you come around the gully — thin, hooded, hands already raised. They were not stealing. They were looking, the way you once looked at other people's snares, back when the roads had other people on them. They wait for your decision without running.",
+      "category": "Social",
+      "baseWeight": 1.0,
+      "stealthWeightMultiplier": 0.5,
+      "speedWeightMultiplier": 1.5,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "choices": [
+        {
+          "choiceId": "share_method",
+          "text": "Show them how the snare sets, then send them off.",
+          "moraleDelta": 3,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "warn_off",
+          "text": "Order them off the line and watch them go.",
+          "moraleDelta": -1,
+          "guiltDelta": 2
+        },
+        {
+          "choiceId": "give_bait",
+          "text": "Give them the bait and keep the trap.",
+          "moraleDelta": 1,
+          "guiltDelta": 0
+        }
+      ]
     }
   ]
 }

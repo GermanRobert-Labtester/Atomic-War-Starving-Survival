@@ -1,6 +1,6 @@
 # ASHFALL Godot UI Panel Architecture & Node Binding Guide
 
-**Authoritative UI Contract Guide** | **Generated:** 2026-09-08 | **Scene-Backed Panels:** 22
+**Authoritative UI Contract Guide** | **Generated:** 2026-09-10 | **Scene-Backed Panels:** 22
 
 > [!IMPORTANT]
 > **UI ARCHITECTURE INVARIANTS:**

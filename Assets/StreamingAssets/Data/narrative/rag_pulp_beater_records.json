@@ -31,7 +31,7 @@
         "caustic_soda",
         "wood_pulp"
       ],
-      "prose": "Cooking softwood sawdust in saturated potassium hydroxide lye boiled from boiler grate ash dissolved brown lignin binders. The dark brown pulp required eight fresh-water rinses to lower pH from 13.0 down to a neutral 7.2."
+      "prose": "Cooking softwood sawdust in alkaline liquor boiled from boiler-grate ash dissolved brown lignin binders. The dark brown pulp required eight fresh-water rinses to lower pH from 13.0 down to a neutral 7.2."
     },
     {
       "id": "rag_pulp_gelatin_sizing_feathering_bleed",
@@ -111,7 +111,7 @@
         "acid_free",
         "archival"
       ],
-      "prose": "Adding 5% micro-pulverized limestone (calcium carbonate) into the beater chest provided an alkaline chemical reserve. The buffer neutralizes sulfurous atmospheric acids, guaranteeing archival paper lifespan exceeding three hundred years."
+      "prose": "Adding 5% micro-pulverized limestone (calcium carbonate) into the beater chest provided an alkaline chemical reserve. The log records the buffer as a defense against sulfurous atmospheric acids and projects an archival life beyond three hundred years, without establishing a guarantee."
     },
     {
       "id": "rag_pulp_drying_loft_mold_spoilage",

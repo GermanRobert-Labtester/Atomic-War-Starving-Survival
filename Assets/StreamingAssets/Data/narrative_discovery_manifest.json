@@ -152,6 +152,206 @@
       "one_time": true
     },
     {
+      "discovery_id": "disc_court_ladle_favoritism",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_05_canteen_soup_ladle_favoritism",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 4,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_periscope_radio_tinkering",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_06_unauthorized_periscope_radio_tinkering",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 5,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_potato_candle_heist",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_07_the_great_potato_tallow_candle_heist",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 6,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_tunnel_graffiti_manifesto",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_08_unauthorized_tunnel_wall_graffiti_manifesto",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 7,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_water_padlock_tampering",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_09_water_tap_padlock_tampering",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 8,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_morphine_ampoule_mystery",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_10_the_stolen_morphine_ampoule_mystery",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 10,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_seed_vault_curiosity",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_11_unauthorized_seed_vault_curiosity",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 12,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_playing_card_gambling_den",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_12_the_contraband_playing_card_gambling_den",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 14,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_secret_mushroom_farm",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_13_the_secret_corridor_mushroom_farm",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 16,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_bunk_bed_curfew_squabble",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_14_the_bunk_bed_curfew_squabble",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 18,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_tampered_geiger_counter",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_15_the_tampered_geiger_counter_incident",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 20,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_stolen_sugar_cube_stash",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_16_the_stolen_sugar_cube_stash",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 22,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_surface_flower_scout",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_17_the_forbidden_surface_flower_scout",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 25,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_loudspeaker_intercom_prank",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_18_the_loudspeaker_intercom_prank",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 28,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_black_market_antibiotics",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_19_the_black_market_antibiotic_trade",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 30,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_battery_acid_experiment",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_20_the_stolen_battery_acid_experiment",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 35,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_funeral_libation_consumption",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_21_unauthorized_funeral_libation_consumption",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 40,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_steam_radiator_tap",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_22_the_great_steam_radiator_tap_conspiracy",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 45,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_ham_radio_broadcast_manifesto",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_23_the_secret_ham_radio_broadcast_manifesto",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 50,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_court_century_constitution_ratification",
+      "source_catalog": "narrative/bunker_court_verdicts_codex.json",
+      "source_record_id": "case_24_the_ratification_of_the_century_constitution",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 60,
+      "weight": 1,
+      "one_time": true
+    },
+    {
       "discovery_id": "disc_wire_vel_iodine",
       "source_catalog": "narrative/wire_confessions.json",
       "source_record_id": "wire_01_dr_vel_day14",
@@ -600,6 +800,2206 @@
       "min_day": 1,
       "weight": 1,
       "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_01_to_mother",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_01_to_mother",
+      "channel": "location_inspection",
+      "producer_id": "room_bunks",
+      "min_day": 12,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_02_to_son",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_02_to_son",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 28,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_03_to_sister",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_03_to_sister",
+      "channel": "location_inspection",
+      "producer_id": "room_kitchen",
+      "min_day": 19,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_04_to_lover_returning",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_04_to_lover_returning",
+      "channel": "location_inspection",
+      "producer_id": "room_bunks",
+      "min_day": 8,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_05_to_lover_gone",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_05_to_lover_gone",
+      "channel": "location_inspection",
+      "producer_id": "room_bunks",
+      "min_day": 44,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_06_to_grown_daughter",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_06_to_grown_daughter",
+      "channel": "location_inspection",
+      "producer_id": "room_greenhouse",
+      "min_day": 33,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_07_last_letter",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_07_last_letter",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 5,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_08_confession_theft",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_08_confession_theft",
+      "channel": "location_inspection",
+      "producer_id": "room_storage_bay",
+      "min_day": 23,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_09_confession_cowardice",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_09_confession_cowardice",
+      "channel": "location_inspection",
+      "producer_id": "room_bunker_corridor",
+      "min_day": 14,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_10_confession_mercy",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_10_confession_mercy",
+      "channel": "location_inspection",
+      "producer_id": "room_clinic",
+      "min_day": 30,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_11_to_the_dead_husband",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_11_to_the_dead_husband",
+      "channel": "location_inspection",
+      "producer_id": "room_clinic",
+      "min_day": 40,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_12_to_the_dead_child",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_12_to_the_dead_child",
+      "channel": "location_inspection",
+      "producer_id": "room_bunker_corridor",
+      "min_day": 22,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_13_to_whoever_finds_this",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_13_to_whoever_finds_this",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 50,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_14_thank_you_to_scavenger",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_14_thank_you_to_scavenger",
+      "channel": "location_inspection",
+      "producer_id": "room_workshop",
+      "min_day": 28,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_15_child_to_father",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_15_child_to_father",
+      "channel": "location_inspection",
+      "producer_id": "room_bunks",
+      "min_day": 16,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_16_to_old_friend",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_16_to_old_friend",
+      "channel": "location_inspection",
+      "producer_id": "room_kitchen",
+      "min_day": 25,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_17_to_the_engineer",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_17_to_the_engineer",
+      "channel": "location_inspection",
+      "producer_id": "room_filtration",
+      "min_day": 24,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_18_the_list_of_names",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_18_the_list_of_names",
+      "channel": "location_inspection",
+      "producer_id": "room_main",
+      "min_day": 62,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_19_to_the_house",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_19_to_the_house",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 35,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_20_apology_to_stranger",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_20_apology_to_stranger",
+      "channel": "location_inspection",
+      "producer_id": "room_water_pump",
+      "min_day": 17,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_21_to_the_teacher",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_21_to_the_teacher",
+      "channel": "location_inspection",
+      "producer_id": "room_bunker_corridor",
+      "min_day": 36,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_22_to_younger_self",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_22_to_younger_self",
+      "channel": "location_inspection",
+      "producer_id": "room_greenhouse",
+      "min_day": 100,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_23_warning_to_the_next",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_23_warning_to_the_next",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 7,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_24_love_without_the_word",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_24_love_without_the_word",
+      "channel": "location_inspection",
+      "producer_id": "room_bunks",
+      "min_day": 48,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_25_one_sentence",
+      "source_catalog": "narrative/letters_expansion.json",
+      "source_record_id": "letter_25_one_sentence",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 3,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_letter_b2_38",
+      "source_catalog": "narrative/unsent_letters_batch_2.json",
+      "source_record_id": "b2_38",
+      "channel": "location_inspection",
+      "producer_id": "room_workshop",
+      "min_day": 390,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_hydrophone_shelf_ice_calving_echo",
+      "source_catalog": "narrative/hydrophone_acoustic_logs.json",
+      "source_record_id": "hydrophone_shelf_ice_calving_echo",
+      "channel": "location_inspection",
+      "producer_id": "loc_ice_core_store",
+      "min_day": 20,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_hydrophone_submarine_cavitation_ghost",
+      "source_catalog": "narrative/hydrophone_acoustic_logs.json",
+      "source_record_id": "hydrophone_submarine_cavitation_ghost",
+      "channel": "location_inspection",
+      "producer_id": "loc_bathymetric_boat",
+      "min_day": 30,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_hydrophone_deep_trench_thermal_vent",
+      "source_catalog": "narrative/hydrophone_acoustic_logs.json",
+      "source_record_id": "hydrophone_deep_trench_thermal_vent",
+      "channel": "location_inspection",
+      "producer_id": "location_geo_thermal_plant_ruins",
+      "min_day": 25,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_hydrophone_sunken_freighter_bulkhead_collapse",
+      "source_catalog": "narrative/hydrophone_acoustic_logs.json",
+      "source_record_id": "hydrophone_sunken_freighter_bulkhead_collapse",
+      "channel": "location_inspection",
+      "producer_id": "loc_cold_store_atlantic",
+      "min_day": 15,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_hydrophone_biological_benthos_clicks",
+      "source_catalog": "narrative/hydrophone_acoustic_logs.json",
+      "source_record_id": "hydrophone_biological_benthos_clicks",
+      "channel": "location_inspection",
+      "producer_id": "loc_bathymetric_boat",
+      "min_day": 45,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_borehole_magma_boundary_temperature_spike",
+      "source_catalog": "narrative/geothermal_borehole_logs.json",
+      "source_record_id": "borehole_magma_boundary_temperature_spike",
+      "channel": "location_inspection",
+      "producer_id": "location_geo_thermal_plant_ruins",
+      "min_day": 10,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_borehole_sulfur_steam_vent_corrosion",
+      "source_catalog": "narrative/geothermal_borehole_logs.json",
+      "source_record_id": "borehole_sulfur_steam_vent_corrosion",
+      "channel": "location_inspection",
+      "producer_id": "room_filtration",
+      "min_day": 18,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_borehole_seismic_fault_hydraulic_pulse",
+      "source_catalog": "narrative/geothermal_borehole_logs.json",
+      "source_record_id": "borehole_seismic_fault_hydraulic_pulse",
+      "channel": "location_inspection",
+      "producer_id": "room_water_pump",
+      "min_day": 22,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_borehole_heavy_metal_brine_precipitate",
+      "source_catalog": "narrative/geothermal_borehole_logs.json",
+      "source_record_id": "borehole_heavy_metal_brine_precipitate",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 28,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_cryopod_coolant_circuit_boiloff",
+      "source_catalog": "narrative/cryopod_failure_logs.json",
+      "source_record_id": "cryopod_coolant_circuit_boiloff",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 15,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_cryopod_vitrification_crystallization_error",
+      "source_catalog": "narrative/cryopod_failure_logs.json",
+      "source_record_id": "cryopod_vitrification_crystallization_error",
+      "channel": "library_terminal",
+      "producer_id": "government_bunker",
+      "min_day": 25,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_cryopod_neural_eeg_spike_nightmare",
+      "source_catalog": "narrative/cryopod_failure_logs.json",
+      "source_record_id": "cryopod_neural_eeg_spike_nightmare",
+      "channel": "location_inspection",
+      "producer_id": "loc_low_background_lab",
+      "min_day": 35,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_cryopod_perfusion_pump_rotor_jam",
+      "source_catalog": "narrative/cryopod_failure_logs.json",
+      "source_record_id": "cryopod_perfusion_pump_rotor_jam",
+      "channel": "location_inspection",
+      "producer_id": "abandoned_hospital",
+      "min_day": 20,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_salt_mine_shaft_tally_340_days",
+      "source_catalog": "narrative/salt_mine_inscriptions.json",
+      "source_record_id": "salt_mine_shaft_tally_340_days",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 8,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_salt_mine_brine_spring_warning",
+      "source_catalog": "narrative/salt_mine_inscriptions.json",
+      "source_record_id": "salt_mine_brine_spring_warning",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 16,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_salt_mine_blind_mule_memorial",
+      "source_catalog": "narrative/salt_mine_inscriptions.json",
+      "source_record_id": "salt_mine_blind_mule_memorial",
+      "channel": "location_inspection",
+      "producer_id": "location_the_sump_cathedral",
+      "min_day": 12,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_salt_mine_airlock_collapse_last_words",
+      "source_catalog": "narrative/salt_mine_inscriptions.json",
+      "source_record_id": "salt_mine_airlock_collapse_last_words",
+      "channel": "location_inspection",
+      "producer_id": "room_airlock",
+      "min_day": 24,
+      "weight": 1,
+      "one_time": true
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_psalm_of_blue_glow",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_psalm_of_blue_glow",
+      "channel": "location_inspection",
+      "producer_id": "loc_settlement_pilgrim_hearth",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Doctrine / Belief",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_rite_of_the_lead_shroud"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_rite_of_the_lead_shroud",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_rite_of_the_lead_shroud",
+      "channel": "location_inspection",
+      "producer_id": "loc_settlement_pilgrim_hearth",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_psalm_of_blue_glow", "disc_fringe_cobalt_scintillation_confessional"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_scintillation_confessional",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_scintillation_confessional",
+      "channel": "location_inspection",
+      "producer_id": "loc_ash_sign_shrine",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_rite_of_the_lead_shroud", "disc_fringe_cobalt_hymn_of_the_half_life"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_hymn_of_the_half_life",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_hymn_of_the_half_life",
+      "channel": "location_inspection",
+      "producer_id": "loc_ash_sign_shrine",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Doctrine / Belief",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_scintillation_confessional", "disc_fringe_cobalt_anointing_of_the_crater_ash"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_anointing_of_the_crater_ash",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_anointing_of_the_crater_ash",
+      "channel": "location_inspection",
+      "producer_id": "loc_pilgrim_switchbacks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_hymn_of_the_half_life", "disc_fringe_cobalt_vow_of_the_unborn_eye"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_vow_of_the_unborn_eye",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_vow_of_the_unborn_eye",
+      "channel": "location_inspection",
+      "producer_id": "loc_pilgrim_switchbacks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Doctrine / Belief",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_anointing_of_the_crater_ash", "disc_fringe_cobalt_canopy_of_strontium"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_canopy_of_strontium",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_canopy_of_strontium",
+      "channel": "location_inspection",
+      "producer_id": "loc_low_background_lab",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_vow_of_the_unborn_eye", "disc_fringe_cobalt_final_radiant_transcendence"]
+    },
+    {
+      "discovery_id": "disc_fringe_cobalt_final_radiant_transcendence",
+      "source_catalog": "narrative/cobalt_liturgies.json",
+      "source_record_id": "liturgy_cobalt_final_radiant_transcendence",
+      "channel": "shelter_room_archive",
+      "producer_id": "government_bunker",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored liturgy record",
+      "identity_status": "Unresolved sect identity; display only",
+      "related_discovery_ids": ["disc_fringe_cobalt_canopy_of_strontium"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_first_law_of_temper",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_first_law_of_temper",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_foundry",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Institutional Rule",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_rite_of_the_slag_baptism"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_rite_of_the_slag_baptism",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_rite_of_the_slag_baptism",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_foundry",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_first_law_of_temper", "disc_fringe_iron_crucible_oath_of_alloy"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_crucible_oath_of_alloy",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_crucible_oath_of_alloy",
+      "channel": "location_inspection",
+      "producer_id": "loc_iron_crest",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Institutional Rule",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_rite_of_the_slag_baptism", "disc_fringe_iron_heresy_of_the_plastic_mold"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_heresy_of_the_plastic_mold",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_heresy_of_the_plastic_mold",
+      "channel": "location_inspection",
+      "producer_id": "loc_iron_crest",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Institutional Rule",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_crucible_oath_of_alloy", "disc_fringe_iron_anointing_with_quench_oil"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_anointing_with_quench_oil",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_anointing_with_quench_oil",
+      "channel": "location_inspection",
+      "producer_id": "loc_foundry_west_stacks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_heresy_of_the_plastic_mold", "disc_fringe_iron_tithing_of_the_casing_brass"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_tithing_of_the_casing_brass",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_tithing_of_the_casing_brass",
+      "channel": "location_inspection",
+      "producer_id": "loc_foundry_west_stacks",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Institutional Rule",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_anointing_with_quench_oil", "disc_fringe_iron_sacrament_of_the_file_stroke"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_sacrament_of_the_file_stroke",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_sacrament_of_the_file_stroke",
+      "channel": "location_inspection",
+      "producer_id": "loc_settlement_iron_siding",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Institutional Rule",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_tithing_of_the_casing_brass", "disc_fringe_iron_funeral_of_the_iron_ingot"]
+    },
+    {
+      "discovery_id": "disc_fringe_iron_funeral_of_the_iron_ingot",
+      "source_catalog": "narrative/iron_synod_canons.json",
+      "source_record_id": "canon_synod_funeral_of_the_iron_ingot",
+      "channel": "location_inspection",
+      "producer_id": "loc_settlement_iron_siding",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Ritual Procedure",
+      "provenance_label": "Authored canon record",
+      "identity_status": "Unresolved institutional chapter; display only",
+      "related_discovery_ids": ["disc_fringe_iron_sacrament_of_the_file_stroke"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_tuning_of_the_pickup_coil",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_tuning_of_the_pickup_coil",
+      "channel": "radio_archive",
+      "producer_id": "room_radio_tuner",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_dirge_of_the_p_wave"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_dirge_of_the_p_wave",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_dirge_of_the_p_wave",
+      "channel": "radio_archive",
+      "producer_id": "room_radio_tuner",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_tuning_of_the_pickup_coil", "disc_fringe_hymnal_chant_of_the_shear_s_wave"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_chant_of_the_shear_s_wave",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_chant_of_the_shear_s_wave",
+      "channel": "location_inspection",
+      "producer_id": "location_acoustic_testing_facility",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_dirge_of_the_p_wave", "disc_fringe_hymnal_lament_of_the_roof_fall"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_lament_of_the_roof_fall",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_lament_of_the_roof_fall",
+      "channel": "location_inspection",
+      "producer_id": "location_acoustic_testing_facility",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_chant_of_the_shear_s_wave", "disc_fringe_hymnal_psalm_of_the_fault_silence"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_psalm_of_the_fault_silence",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_psalm_of_the_fault_silence",
+      "channel": "location_inspection",
+      "producer_id": "loc_signal_hill_tower",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Doctrine / Belief",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_lament_of_the_roof_fall", "disc_fringe_hymnal_echo_of_the_deep_bore"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_echo_of_the_deep_bore",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_echo_of_the_deep_bore",
+      "channel": "location_inspection",
+      "producer_id": "loc_signal_hill_tower",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_psalm_of_the_fault_silence", "disc_fringe_hymnal_final_rest_in_the_bedrock"]
+    },
+    {
+      "discovery_id": "disc_fringe_hymnal_final_rest_in_the_bedrock",
+      "source_catalog": "narrative/geophone_hymnals.json",
+      "source_record_id": "hymnal_geophone_final_rest_in_the_bedrock",
+      "channel": "radio_archive",
+      "producer_id": "loc_summit_relay",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Doctrine / Belief",
+      "provenance_label": "Authored hymnal record",
+      "identity_status": "Unresolved monastery circle; display only",
+      "related_discovery_ids": ["disc_fringe_hymnal_echo_of_the_deep_bore"]
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_rusted_license_plate",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_rusted_license_plate",
+      "channel": "location_inspection",
+      "producer_id": "highway_pileup",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Unresolved memorial identity; display only",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_spent_casing_cairn",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_spent_casing_cairn",
+      "channel": "location_inspection",
+      "producer_id": "loc_wind_gap_ridge",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Unresolved memorial identity; display only",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_respirator_filter_mound",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_respirator_filter_mound",
+      "channel": "location_inspection",
+      "producer_id": "loc_sulfur_knob",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Unresolved memorial identity; display only",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_dosimeter_zero_tomb",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_dosimeter_zero_tomb",
+      "channel": "location_inspection",
+      "producer_id": "loc_shelter_infirmary",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Unresolved memorial identity; display only",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_shattered_windshield_cross",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_shattered_windshield_cross",
+      "channel": "location_inspection",
+      "producer_id": "location_abandoned_convoy_yard",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Unresolved memorial identity; display only",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_dry_canteen_memorial",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_dry_canteen_memorial",
+      "channel": "location_inspection",
+      "producer_id": "loc_north_gate_water_tower",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Unresolved memorial identity; display only",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_fringe_epitaph_ash_sign_mass_burial_slate",
+      "source_catalog": "narrative/wasteland_grave_epitaphs.json",
+      "source_record_id": "epitaph_scav_ash_sign_mass_burial_slate",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_memorial_wall",
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Memorial Testimony",
+      "provenance_label": "Recovered epitaph record",
+      "identity_status": "Anonymous/local memorial",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_flax_linen_rag_maceration",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_flax_linen_rag_maceration",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop",
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_printing_rag_pulp_hollander_beater_linen_fibrillation"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_bedplate_gap_freeness_drain",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_bedplate_gap_freeness_drain",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive",
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_washing_drum_dirty_water_extract",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_washing_drum_dirty_water_extract",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy",
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_hemp_canvas_fiber_length_retention",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_hemp_canvas_fiber_length_retention",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy",
+        "loc_municipal_archive"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_cotton_rag_knot_clump_breakup",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_cotton_rag_knot_clump_breakup",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks",
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_reclaimed_blueprint_ammonia_leach",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_reclaimed_blueprint_ammonia_leach",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks",
+        "government_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_bronze_flybar_edge_burr_honing",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_bronze_flybar_edge_burr_honing",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": [
+        "room_workshop_precision",
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_hollander_beater_calcium_carbonate_buffer_loading",
+      "source_catalog": "narrative/hollander_beater_pulping_logs.json",
+      "source_record_id": "hollander_beater_calcium_carbonate_buffer_loading",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive",
+        "room_workshop_precision"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_printing_rag_pulp_calcium_carbonate_alkaline_buffering"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_laid_wire_chain_line_spacing",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_laid_wire_chain_line_spacing",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive",
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_watermark_wire_emboss_stitch",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_watermark_wire_emboss_stitch",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive",
+        "room_workshop_precision"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_mahogany_frame_rib_taper",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_mahogany_frame_rib_taper",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": [
+        "room_workshop_precision",
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_shake_stroke_cross_fiber_felting",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_shake_stroke_cross_fiber_felting",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": [
+        "room_workshop_precision",
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_wove_wire_mesh_uniform_calender",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_wove_wire_mesh_uniform_calender",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker",
+        "room_workshop_precision"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_removable_deckle_edge_feather",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_removable_deckle_edge_feather",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker",
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_wire_corrosion_verdigris_stain",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_wire_corrosion_verdigris_stain",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_deckle_mould_dual_wire_dandy_roll_continuous",
+      "source_catalog": "narrative/deckle_mould_watermark_audits.json",
+      "source_record_id": "deckle_mould_dual_wire_dandy_roll_continuous",
+      "channel": "location_inspection",
+      "producer_id": "government_bunker",
+      "producer_ids": [
+        "government_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_couching_wool_felt_interleaving",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_couching_wool_felt_interleaving",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_massive_oak_capstan_compression",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_massive_oak_capstan_compression",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_parting_post_delamination_tear",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_parting_post_delamination_tear",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_re_pressing_without_felts_glaze",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_re_pressing_without_felts_glaze",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_wool_felt_washing_fulling_soap",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_wool_felt_washing_fulling_soap",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_drying_loft_horsehair_rope_spur",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_drying_loft_horsehair_rope_spur",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_screw_press_hydraulic_jack_screw_retrofit",
+      "source_catalog": "narrative/screw_press_felt_reports.json",
+      "source_record_id": "screw_press_hydraulic_jack_screw_retrofit",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_printing_rag_pulp_screw_press_felt_water_extraction"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_hide_glue_gelatin_immersion",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_hide_glue_gelatin_immersion",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_potassium_alum_gelatin_hardening",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_potassium_alum_gelatin_hardening",
+      "channel": "location_inspection",
+      "producer_id": "government_bunker",
+      "producer_ids": [
+        "government_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_feathering_iron_gall_ink_assay",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_feathering_iron_gall_ink_assay",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_printing_rag_pulp_gelatin_sizing_feathering_bleed"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_calender_flint_stone_burnishing",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_calender_flint_stone_burnishing",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_bacterial_putrefaction_gelatin_foul",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_bacterial_putrefaction_gelatin_foul",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_cobbs_water_absorption_assay",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_cobbs_water_absorption_assay",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_making_tub_sizing_rosin_alum_engine_sizing_beater",
+      "source_catalog": "narrative/tub_sizing_gelatin_assays.json",
+      "source_record_id": "tub_sizing_rosin_alum_engine_sizing_beater",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": [
+        "room_workshop_precision"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored paper-making process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_hollander_beater_linen_fibrillation",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_hollander_beater_linen_fibrillation",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_making_hollander_beater_flax_linen_rag_maceration"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_wood_ash_caustic_delignification",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_wood_ash_caustic_delignification",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_gelatin_sizing_feathering_bleed",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_gelatin_sizing_feathering_bleed",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_making_tub_sizing_feathering_iron_gall_ink_assay"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_deckle_screen_wire_clogging_algae",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_deckle_screen_wire_clogging_algae",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": [
+        "room_workshop_heavy"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_cotton_uniform_shredder_dust_hazard",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_cotton_uniform_shredder_dust_hazard",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_screw_press_felt_water_extraction",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_screw_press_felt_water_extraction",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_making_screw_press_hydraulic_jack_screw_retrofit"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_calcium_carbonate_alkaline_buffering",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_calcium_carbonate_alkaline_buffering",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": [
+        "disc_paper_making_hollander_beater_calcium_carbonate_buffer_loading"
+      ]
+    },
+    {
+      "discovery_id": "disc_paper_printing_rag_pulp_drying_loft_mold_spoilage",
+      "source_catalog": "narrative/rag_pulp_beater_records.json",
+      "source_record_id": "rag_pulp_drying_loft_mold_spoilage",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_oak_gall_tannic_acid_maceration",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_oak_gall_tannic_acid_maceration",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_copperas_ferrous_sulfate_ratio",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_copperas_ferrous_sulfate_ratio",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_gum_arabic_suspension_viscosity",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_gum_arabic_suspension_viscosity",
+      "channel": "location_inspection",
+      "producer_id": "government_bunker",
+      "producer_ids": [
+        "government_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_vinegar_preservative_mold_inhibition",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_vinegar_preservative_mold_inhibition",
+      "channel": "location_inspection",
+      "producer_id": "government_bunker",
+      "producer_ids": [
+        "government_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_logwood_hematoxylin_shading",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_logwood_hematoxylin_shading",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_rust_scraping_ferrous_substitute",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_rust_scraping_ferrous_substitute",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_paper_acid_burnthrough_corrosion",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_paper_acid_burnthrough_corrosion",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_ink_assay_soot_lampblack_carbon_ink_dispersion",
+      "source_catalog": "narrative/iron_gall_ink_acidity_reports.json",
+      "source_record_id": "ink_assay_soot_lampblack_carbon_ink_dispersion",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_antimony_eutectic_matrix_fatigue",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_antimony_eutectic_matrix_fatigue",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_kerning_descender_breakage",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_kerning_descender_breakage",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_bed_tympan_leather_packing_uneven",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_bed_tympan_leather_packing_uneven",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": [
+        "room_workshop_precision"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_turpentine_roller_wash_gumming",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_turpentine_roller_wash_gumming",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": [
+        "room_workshop_precision"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_hand_mold_caster_tin_depletion",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_hand_mold_caster_tin_depletion",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_foundry",
+      "producer_ids": [
+        "room_foundry"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_linotype_spaceband_graphite_wear",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_linotype_spaceband_graphite_wear",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_foundry",
+      "producer_ids": [
+        "room_foundry"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_type_wear_chase_quoin_wood_furniture_warping",
+      "source_catalog": "narrative/typographic_lead_wear_logs.json",
+      "source_record_id": "type_wear_chase_quoin_wood_furniture_warping",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_linoleum_carving_gouge_slip",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_linoleum_carving_gouge_slip",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_mimeograph_wax_stencil_tear",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_mimeograph_wax_stencil_tear",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_screen_print_silk_mesh_blinding",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_screen_print_silk_mesh_blinding",
+      "channel": "location_inspection",
+      "producer_id": "loc_municipal_archive",
+      "producer_ids": [
+        "loc_municipal_archive"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_lampblack_tallow_offset_ghost",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_lampblack_tallow_offset_ghost",
+      "channel": "location_inspection",
+      "producer_id": "government_bunker",
+      "producer_ids": [
+        "government_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_gelatin_hectograph_tray_exhaustion",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_gelatin_hectograph_tray_exhaustion",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": [
+        "room_workshop"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_corrugated_cardboard_stencil_fuzz",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_corrugated_cardboard_stencil_fuzz",
+      "channel": "location_inspection",
+      "producer_id": "loc_printworks",
+      "producer_ids": [
+        "loc_printworks"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_paper_printing_stencil_smear_lithographic_limestone_grease_scum",
+      "source_catalog": "narrative/stencil_propaganda_smear_logs.json",
+      "source_record_id": "stencil_smear_lithographic_limestone_grease_scum",
+      "channel": "location_inspection",
+      "producer_id": "loc_excavation_archive_bunker",
+      "producer_ids": [
+        "loc_excavation_archive_bunker"
+      ],
+      "min_day": 1,
+      "weight": 1,
+      "one_time": true,
+      "truth_class": "Historical Observation",
+      "provenance_label": "Authored printing process record",
+      "identity_status": "Static facility/station label; display only",
+      "numeric_claim_label": "Authored measurement — not a live production value",
+      "related_discovery_ids": []
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_001",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_001",
+      "channel": "location_inspection",
+      "producer_id": "loc_automated_abattoir",
+      "producer_ids": ["loc_automated_abattoir", "room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_002",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_002",
+      "channel": "location_inspection",
+      "producer_id": "loc_automated_abattoir",
+      "producer_ids": ["loc_automated_abattoir", "room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_003",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_003",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_automated_abattoir"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_004",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_004",
+      "channel": "location_inspection",
+      "producer_id": "loc_automated_abattoir",
+      "producer_ids": ["loc_automated_abattoir", "room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_005",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_005",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_006",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_006",
+      "channel": "location_inspection",
+      "producer_id": "loc_automated_abattoir",
+      "producer_ids": ["loc_automated_abattoir", "room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_007",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_007",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_automated_abattoir"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_degreasing_008",
+      "source_catalog": "narrative/bone_degreasing_prep_logs.json",
+      "source_record_id": "bone_degreasing_008",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": ["room_workshop_heavy", "government_bunker"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_001",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_001",
+      "channel": "location_inspection",
+      "producer_id": "loc_forestry_compound",
+      "producer_ids": ["loc_forestry_compound", "room_workshop_heavy"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_002",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_002",
+      "channel": "location_inspection",
+      "producer_id": "loc_forestry_compound",
+      "producer_ids": ["loc_forestry_compound", "room_workshop_heavy"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_003",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_003",
+      "channel": "location_inspection",
+      "producer_id": "loc_forestry_compound",
+      "producer_ids": ["loc_forestry_compound", "room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_004",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_004",
+      "channel": "location_inspection",
+      "producer_id": "loc_forestry_compound",
+      "producer_ids": ["loc_forestry_compound", "room_workshop_heavy"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_005",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_005",
+      "channel": "location_inspection",
+      "producer_id": "loc_forestry_compound",
+      "producer_ids": ["loc_forestry_compound", "room_workshop_heavy"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_006",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_006",
+      "channel": "location_inspection",
+      "producer_id": "loc_automated_abattoir",
+      "producer_ids": ["loc_automated_abattoir", "room_workshop_heavy"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_007",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_007",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": ["room_workshop_heavy", "loc_forestry_compound"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_antler_horn_sawing_008",
+      "source_catalog": "narrative/antler_horn_sawing_records.json",
+      "source_record_id": "antler_horn_008",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_forestry_compound"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_001",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_001",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": ["room_workshop_precision", "loc_automated_abattoir"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_002",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_002",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": ["room_workshop_precision", "loc_forestry_compound"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_003",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_003",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": ["room_workshop_precision", "room_workshop"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_004",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_004",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": ["room_workshop_precision", "loc_automated_abattoir"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_005",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_005",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "room_workshop_precision"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_006",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_006",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": ["room_workshop_precision", "loc_automated_abattoir"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_scraping_007",
+      "source_catalog": "narrative/scraping_polishing_reports.json",
+      "source_record_id": "bone_scraping_007",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "room_workshop_precision"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_001",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_001",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_st_brigids_almshouse"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_002",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_002",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_st_brigids_almshouse"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_003",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_003",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_st_brigids_almshouse"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_004",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_004",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_st_brigids_almshouse"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_005",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_005",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_heavy",
+      "producer_ids": ["room_workshop_heavy", "loc_forestry_compound"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_006",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_006",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop",
+      "producer_ids": ["room_workshop", "loc_st_brigids_almshouse"]
+    },
+    {
+      "discovery_id": "disc_bone_horn_bone_tool_007",
+      "source_catalog": "narrative/needle_awl_hook_assays.json",
+      "source_record_id": "bone_tool_007",
+      "channel": "shelter_room_archive",
+      "producer_id": "room_workshop_precision",
+      "producer_ids": ["room_workshop_precision", "loc_st_brigids_almshouse", "government_bunker"]
     }
   ]
 }

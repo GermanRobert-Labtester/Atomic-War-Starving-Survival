@@ -140,6 +140,28 @@ namespace Ashfall.Core.Narrative
 
         public int TotalCount => _hydrophoneEntries.Count + _boreholeEntries.Count + _cryopodEntries.Count + _saltMineEntries.Count;
 
+        public IReadOnlyList<object> AllEntries
+        {
+            get
+            {
+                var list = new List<object>(TotalCount);
+                list.AddRange(_hydrophoneEntries);
+                list.AddRange(_boreholeEntries);
+                list.AddRange(_cryopodEntries);
+                list.AddRange(_saltMineEntries);
+                return list;
+            }
+        }
+
+        public void Clear()
+        {
+            _hydrophoneEntries.Clear();
+            _boreholeEntries.Clear();
+            _cryopodEntries.Clear();
+            _saltMineEntries.Clear();
+            _entriesById.Clear();
+        }
+
         public static AbyssalAnomaliesCatalog LoadFromDirectory(string directoryPath)
         {
             var catalog = new AbyssalAnomaliesCatalog();
@@ -217,6 +239,174 @@ namespace Ashfall.Core.Narrative
             }
 
             return catalog;
+        }
+
+        public static AbyssalAnomaliesCatalog LoadFromDirectory(string dataDir, IFileIO files, IJsonSerializer serializer)
+        {
+            var catalog = new AbyssalAnomaliesCatalog();
+            string narrativeDir = files.Combine(dataDir, "narrative");
+            if (!files.DirectoryExists(narrativeDir))
+            {
+                narrativeDir = dataDir;
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                AllowTrailingCommas = true
+            };
+
+            // 1. Hydrophone Logs
+            string hydroPath = files.Combine(narrativeDir, "hydrophone_acoustic_logs.json");
+            if (files.FileExists(hydroPath))
+            {
+                var list = CatalogLocator.LoadWrappedList<HydrophoneAcousticEntry>(files.ReadAllText(hydroPath), options);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item == null || string.IsNullOrWhiteSpace(item.Id) || catalog._entriesById.ContainsKey(item.Id)) continue;
+                        catalog._hydrophoneEntries.Add(item);
+                        catalog._entriesById[item.Id] = item;
+                    }
+                }
+            }
+
+            // 2. Geothermal Borehole Logs
+            string boreholePath = files.Combine(narrativeDir, "geothermal_borehole_logs.json");
+            if (files.FileExists(boreholePath))
+            {
+                var list = CatalogLocator.LoadWrappedList<GeothermalBoreholeEntry>(files.ReadAllText(boreholePath), options);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item == null || string.IsNullOrWhiteSpace(item.Id) || catalog._entriesById.ContainsKey(item.Id)) continue;
+                        catalog._boreholeEntries.Add(item);
+                        catalog._entriesById[item.Id] = item;
+                    }
+                }
+            }
+
+            // 3. Cryopod Failure Logs
+            string cryoPath = files.Combine(narrativeDir, "cryopod_failure_logs.json");
+            if (files.FileExists(cryoPath))
+            {
+                var list = CatalogLocator.LoadWrappedList<CryopodFailureEntry>(files.ReadAllText(cryoPath), options);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item == null || string.IsNullOrWhiteSpace(item.Id) || catalog._entriesById.ContainsKey(item.Id)) continue;
+                        catalog._cryopodEntries.Add(item);
+                        catalog._entriesById[item.Id] = item;
+                    }
+                }
+            }
+
+            // 4. Salt Mine Inscriptions
+            string saltPath = files.Combine(narrativeDir, "salt_mine_inscriptions.json");
+            if (files.FileExists(saltPath))
+            {
+                var list = CatalogLocator.LoadWrappedList<SaltMineInscriptionEntry>(files.ReadAllText(saltPath), options);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item == null || string.IsNullOrWhiteSpace(item.Id) || catalog._entriesById.ContainsKey(item.Id)) continue;
+                        catalog._saltMineEntries.Add(item);
+                        catalog._entriesById[item.Id] = item;
+                    }
+                }
+            }
+
+            return catalog;
+        }
+
+        public object? GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            _entriesById.TryGetValue(id, out var obj);
+            return obj;
+        }
+
+        public List<object> GetByTag(string tag)
+        {
+            var results = new List<object>();
+            if (string.IsNullOrEmpty(tag)) return results;
+
+            foreach (var h in _hydrophoneEntries)
+                if (h.Tags.Exists(t => string.Equals(t, tag, StringComparison.OrdinalIgnoreCase))) results.Add(h);
+
+            foreach (var b in _boreholeEntries)
+                if (b.Tags.Exists(t => string.Equals(t, tag, StringComparison.OrdinalIgnoreCase))) results.Add(b);
+
+            foreach (var c in _cryopodEntries)
+                if (c.Tags.Exists(t => string.Equals(t, tag, StringComparison.OrdinalIgnoreCase))) results.Add(c);
+
+            foreach (var s in _saltMineEntries)
+                if (s.Tags.Exists(t => string.Equals(t, tag, StringComparison.OrdinalIgnoreCase))) results.Add(s);
+
+            return results;
+        }
+
+        public List<object> GetBySearch(string term)
+        {
+            var results = new List<object>();
+            if (string.IsNullOrEmpty(term)) return results;
+
+            foreach (var h in _hydrophoneEntries)
+            {
+                if (h.Id.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    h.BuoyCallsign.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    h.SignalClassification.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    h.Prose.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    h.Tags.Exists(t => t.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    results.Add(h);
+                }
+            }
+
+            foreach (var b in _boreholeEntries)
+            {
+                if (b.Id.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    b.BoreholeId.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    b.GeologicalFormation.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    b.Prose.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    b.Tags.Exists(t => t.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    results.Add(b);
+                }
+            }
+
+            foreach (var c in _cryopodEntries)
+            {
+                if (c.Id.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    c.PodId.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    c.SubjectDesignation.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    c.SystemAlert.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    c.Prose.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    c.Tags.Exists(t => t.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    results.Add(c);
+                }
+            }
+
+            foreach (var s in _saltMineEntries)
+            {
+                if (s.Id.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    s.MineGallery.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    s.RockMedium.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    s.RecorderIdentity.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    s.Prose.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    s.Tags.Exists(t => t.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    results.Add(s);
+                }
+            }
+
+            return results;
         }
 
         public HydrophoneAcousticEntry? GetHydrophone(string id)

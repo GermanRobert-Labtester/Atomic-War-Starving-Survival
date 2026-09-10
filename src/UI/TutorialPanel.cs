@@ -1,8 +1,10 @@
 using System;
 #pragma warning disable CS8618
 using Godot;
+using Ashfall.Core.Localization;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -16,6 +18,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class TutorialPanel : Control
     {
         public event Action? OnClose;
+        public event Action<string>? OnContextualAcknowledged;
 
         private VBoxContainer _contentVBox = null!;
         private Label _lblControlsTitle;
@@ -24,6 +27,9 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _basicsList;
         private Label _lblTipsTitle;
         private VBoxContainer _tipsList;
+        private AcceptDialog _contextualDialog = null!;
+        private string _activeContextualId = string.Empty;
+        public bool IsContextualLessonVisible => _contextualDialog != null && _contextualDialog.Visible;
 
         private int _simDay = 1;
 
@@ -126,6 +132,32 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        /// <summary>Shows one event-driven contextual lesson. The lesson ID
+        /// comes from Core onboarding state; text is resolved at presentation
+        /// time so locale changes never touch campaign state.</summary>
+        public void ShowContextual(string tutorialId)
+        {
+            if (_contextualDialog == null || string.IsNullOrWhiteSpace(tutorialId)) return;
+            if (_contextualDialog.Visible) return;
+            string title = AshfallLocalization.Tr(
+                WildlifeTrappingLocalization.TutorialTitleKey(tutorialId), tutorialId);
+            string fallbackBody = tutorialId switch
+            {
+                WildlifeTrappingLocalization.FirstSnareTutorialId =>
+                    "Acquire or craft a trap, deploy it at a valid site, and bait it when supplies allow. Traps work over time: return to check them, then butcher a catch. Wild prey can carry disease or contamination.",
+                WildlifeTrappingLocalization.WearOutTutorialId =>
+                    "Tracked traps lose durability as they work. A broken trap stops catching, but remains findable on the map. Repair it with supplies or replace it.",
+                WildlifeTrappingLocalization.BycatchTutorialId =>
+                    "A trap can catch something unintended. Inspect catches before processing: bycatch may help, hurt, or carry disease or contamination.",
+                _ => "A new survival lesson is available. Review the relevant shelter system before continuing."
+            };
+            _contextualDialog.Title = title;
+            _contextualDialog.DialogText = AshfallLocalization.Tr(
+                WildlifeTrappingLocalization.TutorialBodyKey(tutorialId), fallbackBody);
+            _activeContextualId = tutorialId;
+            _contextualDialog.PopupCentered(new Vector2I(720, 300));
+        }
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -185,6 +217,21 @@ namespace AtomicWar.GodotApp.UI
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc/F1]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
+
+            _contextualDialog = new AcceptDialog
+            {
+                Title = "SURVIVAL LESSON",
+                DialogText = string.Empty
+            };
+            _contextualDialog.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _contextualDialog.Confirmed += () =>
+            {
+                string completedId = _activeContextualId;
+                _activeContextualId = string.Empty;
+                if (!string.IsNullOrEmpty(completedId))
+                    OnContextualAcknowledged?.Invoke(completedId);
+            };
+            AddChild(_contextualDialog);
         }
 
         public void Open()

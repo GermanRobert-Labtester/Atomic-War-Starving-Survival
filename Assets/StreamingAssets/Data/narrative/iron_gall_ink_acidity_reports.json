@@ -15,7 +15,7 @@
         "oak_gall",
         "acidity"
       ],
-      "prose": "Crushed oak gall nuts macerated in sour ale for fourteen days hydrolyzed gallotannins into pure gallic acid. Mixing with green vitriol produced an intense purple-black ink that bonds chemically to cellulose fibers upon atmospheric oxidation."
+      "prose": "Crushed oak gall nuts macerated in sour ale for fourteen days hydrolyzed gallotannins into gallic acid and related compounds. Mixing with green vitriol produced an intense purple-black ink that fixed into the paper as it oxidized."
     },
     {
       "id": "ink_assay_copperas_ferrous_sulfate_ratio",
@@ -31,7 +31,7 @@
         "ferrous_sulfate",
         "corrosion"
       ],
-      "prose": "Excess ferrous sulfate (copperas) added to accelerate blackening lowered batch pH to an acidic 1.9. Free sulfuric acid began attacking steel dip pens within three days, eating through nib tines and rusting brass inkwell lids."
+      "prose": "Excess ferrous sulfate (copperas) added to accelerate blackening lowered batch pH to an acidic 1.9. The acidic liquor began attacking steel dip pens within three days, eating through nib tines and rusting brass inkwell lids."
     },
     {
       "id": "ink_assay_gum_arabic_suspension_viscosity",
@@ -111,7 +111,7 @@
         "acid_burn",
         "archives"
       ],
-      "prose": "Historical logbooks written in Year 01 with unbuffered high-iron ink suffered severe acid burnthrough. The sulfuric acid byproduct of the ink reaction completely charred through the paper fibers along every pen stroke, creating stencils where text once stood."
+      "prose": "Historical logbooks written in Year 01 with unbuffered high-iron ink suffered severe acid burnthrough. Acidic byproducts from the ink reaction damaged the paper fibers along many pen strokes, creating stencil-like gaps where text once stood."
     },
     {
       "id": "ink_assay_soot_lampblack_carbon_ink_dispersion",
@@ -127,7 +127,7 @@
         "lampblack",
         "indelible"
       ],
-      "prose": "Scraped pine turpentine soot ground with dehydrated egg albumen yielded an inert, non-acidic India ink (pH 6.8). Completely immune to acid fade and chemical bleaching, this carbon ink is exclusively reserved for permanent bunker birth and death registries."
+      "prose": "Scraped pine turpentine soot ground with dehydrated egg albumen yielded a near-neutral carbon ink (pH 6.8). More resistant to acid fade and chemical bleaching than the iron-rich batches, it was reserved for bunker birth and death registries."
     }
   ]
 }

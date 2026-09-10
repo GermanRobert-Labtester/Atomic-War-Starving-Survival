@@ -191,6 +191,27 @@ namespace Ashfall.Core.Tests
             Assert.Equal(otherBefore, SiteJson(sys, "site_other"));
         }
 
+        [Fact]
+        public void CanSetTrapAtSite_IsTheSameReplacementContractUsedBySetTrap()
+        {
+            var sys = SystemWithSites(
+                MakeSite("site_active", "trap_snare", "snare", "hunter_1", setDay: 1, checkDay: 3,
+                    interval: 2, durability: 6),
+                MakeSite("site_broken", "trap_snare", "snare", "hunter_1", setDay: 1, checkDay: 3,
+                    interval: 2, durability: 0, isBroken: true),
+                MakeSite("site_catch", "trap_snare", "snare", "hunter_1", setDay: 1, checkDay: 3,
+                    interval: 2, durability: 6, hasCatch: true, catchSpecies: "rabbit"));
+
+            Assert.False(sys.CanSetTrapAtSite("site_active", out var activeReason));
+            Assert.Equal("trap_active", activeReason);
+            Assert.True(sys.CanSetTrapAtSite("site_broken", out var brokenReason));
+            Assert.Empty(brokenReason);
+            Assert.True(sys.CanSetTrapAtSite("site_catch", out var catchReason));
+            Assert.Empty(catchReason);
+            Assert.True(sys.CanSetTrapAtSite("site_new", out var newReason));
+            Assert.Empty(newReason);
+        }
+
         // ── Pending-catch replacement (intentional contract) ───────────────
 
         [Fact]

@@ -16,11 +16,16 @@ namespace AtomicWar.GodotApp
         public const int DemoSeed = 4242;
 
         public NarrativeEncounterSystem Engine { get; }
+        public NarrativeArcEventSystem Arc { get; }
+        public NarrativeArcEventDefinition? PendingArcEvent => Arc.PendingEvent;
 
         public string LastEvent { get; private set; } = string.Empty;
-        public NarrativeHostSession(NarrativeEncounterSystem engine = null!)
+        public NarrativeHostSession(
+            NarrativeEncounterSystem engine = null!,
+            NarrativeArcEventSystem? arc = null)
         {
             Engine = engine ?? new NarrativeEncounterSystem();
+            Arc = arc ?? new NarrativeArcEventSystem();
             Engine.OnEncounterSelected += def =>
             {
                 LastEvent = $"Encounter: {def.title}";
@@ -33,6 +38,20 @@ namespace AtomicWar.GodotApp
                 RaiseStateChanged();
             };
             Engine.OnStateChanged += _ => RaiseStateChanged();
+            Arc.OnEventSelected += def =>
+            {
+                LastEvent = $"Narrative arc offered: {def.Title}.";
+                RaiseStateChanged();
+            };
+            Arc.OnChoiceCommitted += result =>
+            {
+                LastEvent = result.ChoiceId.Length == 0
+                    ? $"Narrative arc acknowledged: {result.EventId}."
+                    : $"Narrative choice committed: {result.EventId} / {result.ChoiceId} " +
+                      $"(morale {result.MoraleDelta:+0;-0;0}).";
+                RaiseStateChanged();
+            };
+            Arc.OnStateChanged += _ => RaiseStateChanged();
         }
 
         public static NarrativeHostSession Create(string dataDir)
@@ -43,15 +62,47 @@ namespace AtomicWar.GodotApp
                 var fileIO = new FileSystemIO();
                 var serializer = new SystemTextJsonSerializer();
                 session.Engine.RegisterRange(NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, serializer));
+
+                var arcLoad = NarrativeArcEventCatalogLoader.LoadDetailed(dataDir, fileIO, serializer);
+                if (arcLoad.IsSuccess)
+                {
+                    session.Arc.RegisterRange(arcLoad.Events);
+                }
+                else if (arcLoad.Errors.Count > 0)
+                {
+                    session.LastEvent = "Narrative arc catalog disabled: " + arcLoad.Errors[0];
+                }
             }
             var save = NarrativeSaveStore.TryLoad();
             if (save != null)
             {
                 session.Engine.RestoreState(save);
+                session.Arc.RestoreState(save.arcState);
                 session.LastEvent = "Narrative history restored from save.";
             }
             return session;
         }
+
+        /// <summary>Bind live survivor and cross-system authorities.</summary>
+        public void ConfigureArcRuntime(
+            Func<string, bool> survivorIsPresent,
+            INarrativeArcConsequencePort consequences)
+        {
+            Arc.SurvivorIsPresent = survivorIsPresent ?? (_ => false);
+            Arc.Consequences = consequences ?? NullNarrativeArcConsequencePort.Instance;
+        }
+
+        public NarrativeArcEventDefinition? SelectArcForDay(int day, ISeededRng rng)
+            => Arc.SelectForDay(day, rng);
+
+        public NarrativeArcChoiceResult CanApplyArcChoice(string eventId, string choiceId, int day)
+            => Arc.CanApplyChoice(eventId, choiceId, day);
+
+        public NarrativeArcChoiceResult ResolveArcChoice(string eventId, string choiceId, int day)
+            => Arc.CommitChoice(eventId, choiceId, day);
+
+        public NarrativeArcChoiceResult AcknowledgeArcEvent(string eventId, int day)
+            => Arc.AcknowledgeEvent(eventId, day);
 
         // ── Demo actions ─────────────────────────────────────────────
 
@@ -73,12 +124,23 @@ namespace AtomicWar.GodotApp
         {
             return $"Narrative encounters: {Engine.Catalog.Count} in catalog, " +
                    $"{Engine.TotalResolved} resolved " +
-                   $"(morale {Engine.State.cumulativeMorale:+0;-0;0}, guilt {Engine.State.cumulativeGuilt:+0;-0;0}).";
+                   $"(morale {Engine.State.cumulativeMorale:+0;-0;0}, guilt {Engine.State.cumulativeGuilt:+0;-0;0}); " +
+                   $"arc events {Arc.Catalog.Count}, {Arc.State.completedEventIds.Count} completed.";
         }
 
         // ── Save / Load ──────────────────────────────────────────────
 
-        public NarrativeEncounterState CaptureSave() => Engine.CaptureState();
-        public void RestoreSave(NarrativeEncounterState state) => Engine.RestoreState(state);
+        public NarrativeEncounterState CaptureSave()
+        {
+            var save = Engine.CaptureState();
+            save.arcState = Arc.HasPersistedState ? Arc.CaptureState() : null;
+            return save;
+        }
+
+        public void RestoreSave(NarrativeEncounterState state)
+        {
+            Engine.RestoreState(state);
+            Arc.RestoreState(state?.arcState);
+        }
     }
 }

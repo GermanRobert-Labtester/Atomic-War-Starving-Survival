@@ -59,6 +59,11 @@ namespace AtomicWar.GodotApp
 
             EnsureOnboardingPanel();
             _onboardingHintPanel?.Bind(_onboardingJourney);
+            if (_tutorialPanel != null)
+            {
+                _tutorialPanel.OnContextualAcknowledged -= OnContextualTutorialAcknowledged;
+                _tutorialPanel.OnContextualAcknowledged += OnContextualTutorialAcknowledged;
+            }
 
             _onboardingJourney.OnJourneyChanged += journey =>
             {
@@ -66,6 +71,12 @@ namespace AtomicWar.GodotApp
                 _onboardingHintPanel?.Bind(journey);
                 RefreshOnboardingStatusBar();
             };
+            _onboardingJourney.OnContextualTutorialRequested += tutorialId =>
+            {
+                _onboardingDirty = true;
+                FlushContextualTutorialQueue();
+            };
+            FlushContextualTutorialQueue();
             // Day tick after a load: read live day and reconcile.
             _onboardingJourney.SetDay(Math.Max(1, _simDay));
             RefreshOnboardingStatusBar();
@@ -83,6 +94,23 @@ namespace AtomicWar.GodotApp
             panel.OnAssistanceChanged += SetOnboardingAssistance;
             AddChild(panel);
             _onboardingHintPanel = panel;
+        }
+
+        private void FlushContextualTutorialQueue()
+        {
+            if (_onboardingJourney == null || _tutorialPanel == null) return;
+            if (_onboardingJourney.ContextualTutorialQueue.Count == 0) return;
+            if (_tutorialPanel.IsContextualLessonVisible) return;
+            string tutorialId = _onboardingJourney.ContextualTutorialQueue[0];
+            _tutorialPanel.ShowContextual(tutorialId);
+        }
+
+        private void OnContextualTutorialAcknowledged(string tutorialId)
+        {
+            if (_onboardingJourney == null) return;
+            if (_onboardingJourney.AcknowledgeContextualTutorial(tutorialId))
+                _onboardingDirty = true;
+            FlushContextualTutorialQueue();
         }
 
         private void RestoreOnboardingFromDisk()

@@ -143,8 +143,17 @@ namespace Ashfall.Core.Narrative
                 AllowTrailingCommas = true
             };
 
+            string resolve(string fileName)
+            {
+                string p1 = Path.Combine(directoryPath, fileName);
+                if (File.Exists(p1)) return p1;
+                string p2 = Path.Combine(directoryPath, "narrative", fileName);
+                if (File.Exists(p2)) return p2;
+                return p1;
+            }
+
             // 1. French Burr Millstone Quartz Dressing & Chisel Furrow Logs
-            string millPath = Path.Combine(directoryPath, "burr_millstone_dressing_logs.json");
+            string millPath = resolve("burr_millstone_dressing_logs.json");
             if (File.Exists(millPath))
             {
                 var list = CatalogLocator.LoadWrappedList<BurrMillstoneDressingEntry>(File.ReadAllText(millPath), options);
@@ -160,7 +169,7 @@ namespace Ashfall.Core.Narrative
             }
 
             // 2. Dutch Bolting Silk Sifter Mesh Wear Reports
-            string silkPath = Path.Combine(directoryPath, "bolting_silk_mesh_reports.json");
+            string silkPath = resolve("bolting_silk_mesh_reports.json");
             if (File.Exists(silkPath))
             {
                 var list = CatalogLocator.LoadWrappedList<BoltingSilkMeshEntry>(File.ReadAllText(silkPath), options);
@@ -176,7 +185,7 @@ namespace Ashfall.Core.Narrative
             }
 
             // 3. Subterranean Grain Silo Moisture & Weevil Infestation Audits
-            string siloPath = Path.Combine(directoryPath, "grain_silo_weevil_audits.json");
+            string siloPath = resolve("grain_silo_weevil_audits.json");
             if (File.Exists(siloPath))
             {
                 var list = CatalogLocator.LoadWrappedList<GrainSiloWeevilEntry>(File.ReadAllText(siloPath), options);
@@ -192,7 +201,7 @@ namespace Ashfall.Core.Narrative
             }
 
             // 4. Mill Dampener Tempering Water Addition Assays
-            string temperPath = Path.Combine(directoryPath, "mill_dampener_tempering_assays.json");
+            string temperPath = resolve("mill_dampener_tempering_assays.json");
             if (File.Exists(temperPath))
             {
                 var list = CatalogLocator.LoadWrappedList<MillDampenerTemperingEntry>(File.ReadAllText(temperPath), options);
@@ -208,6 +217,14 @@ namespace Ashfall.Core.Narrative
             }
 
             return catalog;
+        }
+
+        public IReadOnlyCollection<string> AllRecordIds => _entriesById.Keys;
+
+        public object? GetAny(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            return _entriesById.TryGetValue(id, out var obj) ? obj : null;
         }
 
         public BurrMillstoneDressingEntry? GetMillstone(string id)

@@ -55,6 +55,8 @@ namespace Ashfall.Core.Narrative
         public IReadOnlyList<AntlerHornSawingRecord> SawingRecords   { get; }
         public IReadOnlyList<ScrapingPolishingReport> PolishingReports { get; }
         public IReadOnlyList<NeedleAwlHookAssay>     ToolAssays      { get; }
+        public int TotalCount => DegreasingLogs.Count + SawingRecords.Count
+            + PolishingReports.Count + ToolAssays.Count;
 
         private static readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
 

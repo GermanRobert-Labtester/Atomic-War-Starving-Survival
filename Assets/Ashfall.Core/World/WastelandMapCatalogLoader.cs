@@ -15,6 +15,9 @@ namespace Ashfall.Core.World
 
         /// <summary>Collection of wasteland travel route definitions connecting nodes.</summary>
         public List<MapRouteDef> routes { get; set; } = new List<MapRouteDef>();
+
+        /// <summary>Authored offsets for non-node campaign sites such as trap lines.</summary>
+        public List<TrapSiteMapLocationDef> trapSites { get; set; } = new List<TrapSiteMapLocationDef>();
     }
 
     /// <summary>Data Transfer Object representing a wasteland map location node in JSON.</summary>
@@ -73,6 +76,15 @@ namespace Ashfall.Core.World
 
         /// <summary>Toxic water contamination level (0.0 to 1.0).</summary>
         public float toxicContamination { get; set; } = 0f;
+    }
+
+    [Serializable]
+    public sealed class TrapSiteMapLocationDef
+    {
+        public string siteId { get; set; } = string.Empty;
+        public string anchorNodeId { get; set; } = string.Empty;
+        public float offsetX { get; set; }
+        public float offsetY { get; set; }
     }
 
     /// <summary>Categories of route validation failures in the map catalog.</summary>
@@ -300,7 +312,35 @@ namespace Ashfall.Core.World
                     StartingUnlocked = true
                 });
             }
-            return new WastelandMapSystem(state ?? new WastelandMapState(), nodes, routes);
+            var trapSites = LoadTrapSiteLocations(dataDir, fileIO, json);
+            return new WastelandMapSystem(state ?? new WastelandMapState(), nodes, routes, trapSites);
+        }
+
+        public static List<TrapSiteMapLocation> LoadTrapSiteLocations(
+            string dataDir, IFileIO? fileIO = null, IJsonSerializer? json = null)
+        {
+            fileIO ??= new FileSystemIO();
+            json ??= new SystemTextJsonSerializer();
+            var locations = new List<TrapSiteMapLocation>();
+            if (string.IsNullOrEmpty(dataDir)) return locations;
+            string path = fileIO.Combine(dataDir, DefaultFileName);
+            if (!fileIO.FileExists(path)) return locations;
+            string rawText = fileIO.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(rawText)) return locations;
+            var container = json.Deserialize<WastelandMapCatalogContainer>(rawText);
+            if (container?.trapSites == null) return locations;
+            foreach (var source in container.trapSites)
+            {
+                if (source == null || string.IsNullOrWhiteSpace(source.siteId)) continue;
+                locations.Add(new TrapSiteMapLocation
+                {
+                    SiteId = source.siteId,
+                    AnchorNodeId = source.anchorNodeId ?? string.Empty,
+                    OffsetX = source.offsetX,
+                    OffsetY = source.offsetY
+                });
+            }
+            return locations;
         }
 
         private static MapNodeDanger ParseDanger(string? danger)

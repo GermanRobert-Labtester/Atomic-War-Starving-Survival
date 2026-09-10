@@ -7,14 +7,25 @@
       "description": "A loop of cord or wire set across a game trail, tightened by a springy branch. Cheap enough to deploy more than one, unreliable enough that materials still matter. The wire remembers the shape of the animal it was meant to hold.",
       "trapType": "snare",
       "setupCosts": [
-        { "itemId": "rope", "amount": 1 }
+        {
+          "itemId": "rope",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 2,
       "durabilityChecks": 8,
       "baseCatchModifier": 1.0,
-      "compatiblePrey": ["rabbit", "cotton_hare", "fox"],
+      "compatiblePrey": [
+        "rabbit",
+        "cotton_hare",
+        "fox",
+        "rat"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.1
+      "weatherSensitivity": 0.1,
+      "trapEncounterChance": 0.05,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_deadfall",
@@ -22,14 +33,26 @@
       "description": "A flat stone or salvaged plate balanced on a trigger stick. Low-tech, material-light, and as old as hunger. The trigger is the hard part. The rest is weight and patience.",
       "trapType": "deadfall",
       "setupCosts": [
-        { "itemId": "scrap_wood", "amount": 2 }
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        }
       ],
       "checkIntervalDays": 2,
       "durabilityChecks": 5,
       "baseCatchModifier": 0.8,
-      "compatiblePrey": ["rat", "rabbit", "hedgehog", "irradiated_squirrel"],
+      "compatiblePrey": [
+        "rat",
+        "rabbit",
+        "hedgehog",
+        "irradiated_squirrel",
+        "fox"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.2
+      "weatherSensitivity": 0.2,
+      "trapEncounterChance": 0.04,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_pit",
@@ -37,14 +60,23 @@
       "description": "A concealed pit dug into a game trail, lined with sharpened stakes. Labor-heavy, location-dependent, and capable of stopping something large. The earth does the work. The survivor does the digging.",
       "trapType": "pit",
       "setupCosts": [
-        { "itemId": "scrap_wood", "amount": 3 }
+        {
+          "itemId": "scrap_wood",
+          "amount": 3
+        }
       ],
       "checkIntervalDays": 4,
       "durabilityChecks": 10,
       "baseCatchModifier": 0.6,
-      "compatiblePrey": ["boar", "deer"],
+      "compatiblePrey": [
+        "boar",
+        "deer"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.0
+      "weatherSensitivity": 0.0,
+      "trapEncounterChance": 0.03,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_net",
@@ -52,21 +84,44 @@
       "description": "A mesh of cord or salvaged netting strung between posts or branches. Broader coverage than a snare, higher upfront cost, and more things can go wrong. Birds and small mammals both tangle in it.",
       "trapType": "net",
       "setupCosts": [
-        { "itemId": "cloth", "amount": 2 },
-        { "itemId": "rope", "amount": 1 }
+        {
+          "itemId": "cloth",
+          "amount": 2
+        },
+        {
+          "itemId": "rope",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 1,
       "durabilityChecks": 8,
       "baseCatchModifier": 0.9,
-      "compatiblePrey": ["pheasant", "ash_crow", "contaminated_fowl", "rabbit"],
+      "compatiblePrey": [
+        "pheasant",
+        "ash_crow",
+        "contaminated_fowl",
+        "rabbit"
+      ],
       "requiresWater": false,
       "weatherSensitivity": 0.3,
       "bycatchChance": 0.25,
       "bycatchSpecies": [
-        { "speciesId": "rat", "weight": 3.0 },
-        { "speciesId": "hedgehog", "weight": 2.0 },
-        { "speciesId": "irradiated_squirrel", "weight": 1.0 }
-      ]
+        {
+          "speciesId": "rat",
+          "weight": 3.0
+        },
+        {
+          "speciesId": "hedgehog",
+          "weight": 2.0
+        },
+        {
+          "speciesId": "irradiated_squirrel",
+          "weight": 1.0
+        }
+      ],
+      "trapEncounterChance": 0.06,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_fish",
@@ -74,15 +129,28 @@
       "description": "A woven funnel of wood and cord set in moving water. Fish enter but cannot find the exit. Strong where geography supports it, worthless where it does not. The freeze kills it. The thaw brings it back.",
       "trapType": "fish_trap",
       "setupCosts": [
-        { "itemId": "scrap_wood", "amount": 2 },
-        { "itemId": "rope", "amount": 1 }
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "rope",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 3,
       "durabilityChecks": 12,
       "baseCatchModifier": 0.7,
-      "compatiblePrey": ["mirror_carp", "ash_pike", "muskrat"],
+      "compatiblePrey": [
+        "mirror_carp",
+        "ash_pike",
+        "muskrat"
+      ],
       "requiresWater": true,
-      "weatherSensitivity": 0.2
+      "weatherSensitivity": 0.2,
+      "trapEncounterChance": 0.02,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_cage",
@@ -90,15 +158,29 @@
       "description": "A sprung cage of salvaged metal and wire, triggered by weight on a plate. Expensive to build, durable once built. The animal lives inside it, which is either a mercy or a problem depending on what caught.",
       "trapType": "cage",
       "setupCosts": [
-        { "itemId": "scrap_metal", "amount": 3 },
-        { "itemId": "box_of_nails_10", "amount": 1 }
+        {
+          "itemId": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "itemId": "box_of_nails_10",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 2,
       "durabilityChecks": 15,
       "baseCatchModifier": 0.8,
-      "compatiblePrey": ["rabbit", "rat", "fox", "rad_dog"],
+      "compatiblePrey": [
+        "rabbit",
+        "rat",
+        "fox",
+        "rad_dog"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.0
+      "weatherSensitivity": 0.0,
+      "trapEncounterChance": 0.08,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_bird_snare",
@@ -106,19 +188,35 @@
       "description": "A fine noose of thread or thin wire set on a perch stick. Lightweight, fast to deploy, and fragile. Frequent small calories with a health-risk shadow. The birds that land on it are often the ones you should not eat.",
       "trapType": "bird_snare",
       "setupCosts": [
-        { "itemId": "rope", "amount": 1 }
+        {
+          "itemId": "rope",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 1,
       "durabilityChecks": 4,
       "baseCatchModifier": 0.7,
-      "compatiblePrey": ["pheasant", "ash_crow", "contaminated_fowl"],
+      "compatiblePrey": [
+        "pheasant",
+        "ash_crow",
+        "contaminated_fowl"
+      ],
       "requiresWater": false,
       "weatherSensitivity": 0.3,
       "bycatchChance": 0.15,
       "bycatchSpecies": [
-        { "speciesId": "irradiated_squirrel", "weight": 2.0 },
-        { "speciesId": "rat", "weight": 1.0 }
-      ]
+        {
+          "speciesId": "irradiated_squirrel",
+          "weight": 2.0
+        },
+        {
+          "speciesId": "rat",
+          "weight": 1.0
+        }
+      ],
+      "trapEncounterChance": 0.05,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_body_grip",
@@ -126,15 +224,28 @@
       "description": "A heavy spring-loaded mechanism that closes steel jaws on anything that passes through the frame. Efficient, durable, and severe. The misfire is as dangerous as the catch. Manufactured before the exchange, or found in trapper caches.",
       "trapType": "body_grip",
       "setupCosts": [
-        { "itemId": "scrap_metal", "amount": 4 },
-        { "itemId": "leather_strap", "amount": 1 }
+        {
+          "itemId": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 2,
       "durabilityChecks": 15,
       "baseCatchModifier": 1.0,
-      "compatiblePrey": ["muskrat", "fox", "cotton_hare"],
+      "compatiblePrey": [
+        "muskrat",
+        "fox",
+        "cotton_hare"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.0
+      "weatherSensitivity": 0.0,
+      "trapEncounterChance": 0.04,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_box",
@@ -142,16 +253,33 @@
       "description": "A wooden box with a gravity door, triggered by a treadle inside. Bulky, dependable, and shelter-craftable. The workhorse once the bunker can afford one. The animal is alive when you check it, which is the point.",
       "trapType": "box",
       "setupCosts": [
-        { "itemId": "scrap_wood", "amount": 2 },
-        { "itemId": "scrap_metal", "amount": 1 },
-        { "itemId": "box_of_nails_10", "amount": 1 }
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "itemId": "box_of_nails_10",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 2,
       "durabilityChecks": 15,
       "baseCatchModifier": 0.8,
-      "compatiblePrey": ["rabbit", "rat", "hedgehog", "irradiated_squirrel"],
+      "compatiblePrey": [
+        "rabbit",
+        "rat",
+        "hedgehog",
+        "irradiated_squirrel"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.0
+      "weatherSensitivity": 0.0,
+      "trapEncounterChance": 0.05,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     },
     {
       "trap_id": "trap_improvised_wire",
@@ -159,27 +287,40 @@
       "description": "A twist of copper wire shaped into a loose loop and pegged to the ground. The poorest survivor's option, better than doing nothing. It breaks often, catches little, and costs almost nothing to replace.",
       "trapType": "improvised_wire",
       "setupCosts": [
-        { "itemId": "copper_wire_10m_of_10m", "amount": 1 }
+        {
+          "itemId": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
       ],
       "checkIntervalDays": 1,
       "durabilityChecks": 3,
       "baseCatchModifier": 0.5,
-      "compatiblePrey": ["rat", "rabbit"],
+      "compatiblePrey": [
+        "rat",
+        "rabbit"
+      ],
       "requiresWater": false,
-      "weatherSensitivity": 0.2
+      "weatherSensitivity": 0.2,
+      "trapEncounterChance": 0.07,
+      "narrativeIncidentChance": 0.05,
+      "narrativeIncidentIds": ["trap_sprung_blood_trail", "trap_bait_stolen", "trap_human_bootprints"]
     }
   ],
   "prey": [
     {
       "speciesId": "rabbit",
       "displayName": "Ash Rabbit",
+      "moraleEffect": 1.0,
       "description": "A small grey-brown rabbit, lean from foraging in contaminated soil. Common enough to teach the trapping loop, modest enough to keep the survivor humble.",
       "baseYieldKg": 1.2,
       "toxicChance": 0.15,
       "hideYield": 0.3,
       "hideItemId": "leather_strap",
       "preferredTrapType": "snare",
-      "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
+      "attractedByBaitIds": [
+        "bait_grain_lure",
+        "bait_berry_mash"
+      ],
       "minSkillLevel": 0,
       "migrationSpeciesId": "",
       "activeSeasons": [],
@@ -195,10 +336,17 @@
       "hideYield": 0.4,
       "hideItemId": "leather_strap",
       "preferredTrapType": "snare",
-      "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
+      "attractedByBaitIds": [
+        "bait_grain_lure",
+        "bait_berry_mash"
+      ],
       "minSkillLevel": 5,
       "migrationSpeciesId": "species_cotton_hare",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash",
+        "window_false_spring"
+      ],
       "diseaseRisk": 0.1,
       "contaminationRisk": 0.05
     },
@@ -207,14 +355,21 @@
       "displayName": "Wasteland Mule Deer",
       "description": "A gaunt mule deer, ribs showing through a dusty coat. Rare jackpot, never baseline passive food. Strong migration gating, high yield, long opportunity window. Cannot be caught by ordinary wire.",
       "baseYieldKg": 15.0,
-      "toxicChance": 0.10,
+      "toxicChance": 0.1,
       "hideYield": 2.0,
       "hideItemId": "leather_strap",
       "preferredTrapType": "pit",
-      "attractedByBaitIds": ["bait_berry_mash", "bait_salt_lick"],
+      "attractedByBaitIds": [
+        "bait_berry_mash",
+        "bait_salt_lick"
+      ],
       "minSkillLevel": 40,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash",
+        "window_false_spring"
+      ],
       "diseaseRisk": 0.15,
       "contaminationRisk": 0.05
     },
@@ -227,10 +382,16 @@
       "hideYield": 1.8,
       "hideItemId": "leather_strap",
       "preferredTrapType": "pit",
-      "attractedByBaitIds": ["bait_salt_lick", "bait_fat_cake"],
+      "attractedByBaitIds": [
+        "bait_salt_lick",
+        "bait_fat_cake"
+      ],
       "minSkillLevel": 60,
       "migrationSpeciesId": "species_ash_boar",
-      "activeSeasons": ["window_dry_ash", "window_false_spring"],
+      "activeSeasons": [
+        "window_dry_ash",
+        "window_false_spring"
+      ],
       "diseaseRisk": 0.2,
       "contaminationRisk": 0.1
     },
@@ -239,11 +400,14 @@
       "displayName": "Barren Fox",
       "description": "A lean fox with patchy fur and alert eyes. Uncommon, lower food-efficiency than rabbit, with elevated disease risk. A pelt if you can get it, meat if you cannot.",
       "baseYieldKg": 2.0,
-      "toxicChance": 0.20,
+      "toxicChance": 0.2,
       "hideYield": 0.5,
       "hideItemId": "leather_strap",
       "preferredTrapType": "deadfall",
-      "attractedByBaitIds": ["bait_scrap_meat", "bait_fat_cake"],
+      "attractedByBaitIds": [
+        "bait_scrap_meat",
+        "bait_fat_cake"
+      ],
       "minSkillLevel": 10,
       "migrationSpeciesId": "",
       "activeSeasons": [],
@@ -253,13 +417,16 @@
     {
       "speciesId": "rat",
       "displayName": "Irradiated Rat",
+      "moraleEffect": -1.0,
       "description": "A bloated rat with thinning fur, common near ruins and shelter edges. Desperate food — low yield, among the highest disease risks. Useful in famine, dangerous in normal play.",
       "baseYieldKg": 0.6,
       "toxicChance": 0.35,
       "hideYield": 0.0,
       "hideItemId": "",
       "preferredTrapType": "snare",
-      "attractedByBaitIds": ["bait_scrap_meat"],
+      "attractedByBaitIds": [
+        "bait_scrap_meat"
+      ],
       "minSkillLevel": 0,
       "migrationSpeciesId": "species_blight_rat",
       "activeSeasons": [],
@@ -273,14 +440,21 @@
       "displayName": "Ash Pheasant",
       "description": "A ground-feeding bird with dull plumage, common in the thaw and bloom. Low yield, contamination higher than rabbit. Bird-specialist traps work best.",
       "baseYieldKg": 1.5,
-      "toxicChance": 0.10,
+      "toxicChance": 0.1,
       "hideYield": 0.2,
       "hideItemId": "",
-      "preferredTrapType": "cage",
-      "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
+      "preferredTrapType": "bird_snare",
+      "attractedByBaitIds": [
+        "bait_grain_lure",
+        "bait_berry_mash"
+      ],
       "minSkillLevel": 5,
       "migrationSpeciesId": "species_ash_gull",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash",
+        "window_false_spring"
+      ],
       "diseaseRisk": 0.15,
       "contaminationRisk": 0.1
     },
@@ -292,11 +466,18 @@
       "toxicChance": 0.15,
       "hideYield": 0.1,
       "hideItemId": "",
-      "preferredTrapType": "cage",
-      "attractedByBaitIds": ["bait_pheromone", "bait_grain_lure"],
+      "preferredTrapType": "bird_snare",
+      "attractedByBaitIds": [
+        "bait_pheromone",
+        "bait_grain_lure"
+      ],
       "minSkillLevel": 10,
       "migrationSpeciesId": "species_iron_crow",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash",
+        "window_false_spring"
+      ],
       "diseaseRisk": 0.25,
       "contaminationRisk": 0.15,
       "diseaseId": "disease_blood_fever",
@@ -311,10 +492,16 @@
       "hideYield": 0.0,
       "hideItemId": "",
       "preferredTrapType": "fish_trap",
-      "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
+      "attractedByBaitIds": [
+        "bait_grain_lure",
+        "bait_berry_mash"
+      ],
       "minSkillLevel": 0,
       "migrationSpeciesId": "species_mirror_carp",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash"
+      ],
       "diseaseRisk": 0.1,
       "contaminationRisk": 0.08
     },
@@ -327,10 +514,16 @@
       "hideYield": 0.0,
       "hideItemId": "",
       "preferredTrapType": "fish_trap",
-      "attractedByBaitIds": ["bait_scrap_meat", "bait_fat_cake"],
+      "attractedByBaitIds": [
+        "bait_scrap_meat",
+        "bait_fat_cake"
+      ],
       "minSkillLevel": 10,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash"
+      ],
       "diseaseRisk": 0.12,
       "contaminationRisk": 0.1
     },
@@ -343,64 +536,89 @@
       "hideYield": 0.0,
       "hideItemId": "",
       "preferredTrapType": "deadfall",
-      "attractedByBaitIds": ["bait_berry_mash", "bait_grain_lure"],
+      "attractedByBaitIds": [
+        "bait_berry_mash",
+        "bait_grain_lure"
+      ],
       "minSkillLevel": 0,
       "migrationSpeciesId": "",
       "activeSeasons": [],
       "diseaseRisk": 0.3,
       "contaminationRisk": 0.35,
       "diseaseId": "disease_spore_blight",
-      "contaminationDose": 20.0
+      "contaminationDose": 20.0,
+      "moralWeight": 0.2,
+      "isRareSpecies": true
     },
     {
       "speciesId": "contaminated_fowl",
       "displayName": "Contaminated Fowl",
+      "moraleEffect": -2.0,
       "description": "A bird with discolored plumage and labored breathing, visible ecological warning sign. Somewhat usable in desperation but medically risky. Very high contamination and disease risk.",
       "baseYieldKg": 1.0,
-      "toxicChance": 0.50,
+      "toxicChance": 0.5,
       "hideYield": 0.1,
       "hideItemId": "",
       "preferredTrapType": "bird_snare",
-      "attractedByBaitIds": ["bait_grain_lure", "bait_berry_mash"],
+      "attractedByBaitIds": [
+        "bait_grain_lure",
+        "bait_berry_mash"
+      ],
       "minSkillLevel": 5,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash"
+      ],
       "diseaseRisk": 0.4,
       "contaminationRisk": 0.4,
       "diseaseId": "disease_zoonotic_flu",
-      "contaminationDose": 12.0
+      "contaminationDose": 12.0,
+      "moralWeight": 0.5
     },
     {
       "speciesId": "rad_dog",
       "displayName": "Rad Dog",
+      "moraleEffect": -3.0,
       "description": "A feral canine with patchy fur and wary eyes, traveling in small packs. Rare, morally and medically fraught. High disease risk. A prime candidate for a moral hook rather than a normal food source.",
       "baseYieldKg": 4.0,
-      "toxicChance": 0.30,
+      "toxicChance": 0.3,
       "hideYield": 0.8,
       "hideItemId": "leather_strap",
       "preferredTrapType": "cage",
-      "attractedByBaitIds": ["bait_scrap_meat", "bait_fat_cake"],
+      "attractedByBaitIds": [
+        "bait_scrap_meat",
+        "bait_fat_cake"
+      ],
       "minSkillLevel": 30,
       "migrationSpeciesId": "species_rad_dog",
       "activeSeasons": [],
       "diseaseRisk": 0.3,
       "contaminationRisk": 0.2,
       "diseaseId": "disease_zoonotic_flu",
-      "contaminationDose": 8.0
+      "contaminationDose": 8.0,
+      "moralWeight": 0.9
     },
     {
       "speciesId": "muskrat",
       "displayName": "Marsh Muskrat",
       "description": "A semi-aquatic rodent found near waterways and wetlands. Medium yield, meaningful disease risk, seasonal activity. The fur is worth more than the meat.",
       "baseYieldKg": 1.5,
-      "toxicChance": 0.20,
+      "toxicChance": 0.2,
       "hideYield": 0.3,
       "hideItemId": "leather_strap",
       "preferredTrapType": "body_grip",
-      "attractedByBaitIds": ["bait_berry_mash", "bait_grain_lure"],
+      "attractedByBaitIds": [
+        "bait_berry_mash",
+        "bait_grain_lure"
+      ],
       "minSkillLevel": 10,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash", "window_false_spring"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash",
+        "window_false_spring"
+      ],
       "diseaseRisk": 0.2,
       "contaminationRisk": 0.15
     },
@@ -409,14 +627,20 @@
       "displayName": "Ash Hedgehog",
       "description": "A small spined mammal, seasonal and low-yield. Limited active window, modest disease risk. A deadfall or box trap target — too small for anything else.",
       "baseYieldKg": 0.5,
-      "toxicChance": 0.10,
+      "toxicChance": 0.1,
       "hideYield": 0.0,
       "hideItemId": "",
       "preferredTrapType": "deadfall",
-      "attractedByBaitIds": ["bait_berry_mash", "bait_grain_lure"],
+      "attractedByBaitIds": [
+        "bait_berry_mash",
+        "bait_grain_lure"
+      ],
       "minSkillLevel": 0,
       "migrationSpeciesId": "",
-      "activeSeasons": ["window_spring_storms", "window_dry_ash"],
+      "activeSeasons": [
+        "window_spring_storms",
+        "window_dry_ash"
+      ],
       "diseaseRisk": 0.15,
       "contaminationRisk": 0.05
     }
@@ -427,7 +651,11 @@
       "displayName": "Scrap-Meat Bait",
       "catchBonusMultiplier": 1.3,
       "toxicReduction": 0.0,
-      "preferredSpecies": ["rat", "fox", "rad_dog"],
+      "preferredSpecies": [
+        "rat",
+        "fox",
+        "rad_dog"
+      ],
       "craftCostScrapMeat": 1,
       "craftCostRoots": 0,
       "craftCostChemicals": 0
@@ -437,7 +665,11 @@
       "displayName": "Grain Lure",
       "catchBonusMultiplier": 1.5,
       "toxicReduction": 0.1,
-      "preferredSpecies": ["rabbit", "pheasant", "cotton_hare"],
+      "preferredSpecies": [
+        "rabbit",
+        "pheasant",
+        "cotton_hare"
+      ],
       "craftCostScrapMeat": 0,
       "craftCostRoots": 2,
       "craftCostChemicals": 0
@@ -447,7 +679,11 @@
       "displayName": "Mutated-Beast Pheromone Lure",
       "catchBonusMultiplier": 2.0,
       "toxicReduction": 0.0,
-      "preferredSpecies": ["molerat", "slag_beetle", "ash_crow"],
+      "preferredSpecies": [
+        "molerat",
+        "slag_beetle",
+        "ash_crow"
+      ],
       "craftCostScrapMeat": 2,
       "craftCostRoots": 0,
       "craftCostChemicals": 1
@@ -457,7 +693,12 @@
       "displayName": "Rendered Fat Cake",
       "catchBonusMultiplier": 1.8,
       "toxicReduction": 0.15,
-      "preferredSpecies": ["fox", "dust_lynx", "wolf", "rad_dog"],
+      "preferredSpecies": [
+        "fox",
+        "dust_lynx",
+        "wolf",
+        "rad_dog"
+      ],
       "craftCostScrapMeat": 2,
       "craftCostRoots": 0,
       "craftCostChemicals": 0
@@ -467,7 +708,12 @@
       "displayName": "Fermented Berry Mash",
       "catchBonusMultiplier": 1.2,
       "toxicReduction": 0.2,
-      "preferredSpecies": ["rabbit", "pheasant", "deer", "cotton_hare"],
+      "preferredSpecies": [
+        "rabbit",
+        "pheasant",
+        "deer",
+        "cotton_hare"
+      ],
       "craftCostScrapMeat": 0,
       "craftCostRoots": 3,
       "craftCostChemicals": 0
@@ -477,7 +723,11 @@
       "displayName": "Mineral Salt Lick",
       "catchBonusMultiplier": 1.6,
       "toxicReduction": 0.1,
-      "preferredSpecies": ["deer", "wolf", "boar"],
+      "preferredSpecies": [
+        "deer",
+        "wolf",
+        "boar"
+      ],
       "craftCostScrapMeat": 0,
       "craftCostRoots": 1,
       "craftCostChemicals": 1

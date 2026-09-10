@@ -153,6 +153,7 @@ namespace Ashfall.Core.Narrative
                     foreach (var item in list)
                     {
                         if (item == null || string.IsNullOrWhiteSpace(item.Id)) continue;
+                        if (catalog._entriesById.ContainsKey(item.Id)) continue;
                         catalog._cobaltLiturgies.Add(item);
                         catalog._entriesById[item.Id] = item;
                     }
@@ -169,6 +170,7 @@ namespace Ashfall.Core.Narrative
                     foreach (var item in list)
                     {
                         if (item == null || string.IsNullOrWhiteSpace(item.Id)) continue;
+                        if (catalog._entriesById.ContainsKey(item.Id)) continue;
                         catalog._ironSynodCanons.Add(item);
                         catalog._entriesById[item.Id] = item;
                     }
@@ -185,6 +187,7 @@ namespace Ashfall.Core.Narrative
                     foreach (var item in list)
                     {
                         if (item == null || string.IsNullOrWhiteSpace(item.Id)) continue;
+                        if (catalog._entriesById.ContainsKey(item.Id)) continue;
                         catalog._geophoneHymnals.Add(item);
                         catalog._entriesById[item.Id] = item;
                     }
@@ -201,6 +204,7 @@ namespace Ashfall.Core.Narrative
                     foreach (var item in list)
                     {
                         if (item == null || string.IsNullOrWhiteSpace(item.Id)) continue;
+                        if (catalog._entriesById.ContainsKey(item.Id)) continue;
                         catalog._wastelandEpitaphs.Add(item);
                         catalog._entriesById[item.Id] = item;
                     }

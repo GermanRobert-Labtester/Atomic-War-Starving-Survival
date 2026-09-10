@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ashfall.Core.Journal;
+using Ashfall.Core.Narrative;
 
 namespace AtomicWar.Journal
 {
@@ -22,6 +23,8 @@ namespace AtomicWar.Journal
         public string? Meta;
         public string? Body;
         public bool IsLocked;
+        public IReadOnlyList<JournalCodexLink>? Links;
+        public string? NavigationId;
 
         public static JournalCodexRow Locked(string? displayName)
         {
@@ -32,6 +35,21 @@ namespace AtomicWar.Journal
                 Body = "Not seen yet. The bunker has not logged this.",
                 IsLocked = true
             };
+        }
+    }
+
+    /// <summary>A bounded codex link. The target is an existing catalog ID.</summary>
+    public sealed class JournalCodexLink
+    {
+        public string Id { get; }
+        public string Label { get; }
+        public string RoutePrefix { get; }
+
+        public JournalCodexLink(string id, string label, string routePrefix = "bureaucratic_document")
+        {
+            Id = id ?? string.Empty;
+            Label = label ?? string.Empty;
+            RoutePrefix = routePrefix ?? string.Empty;
         }
     }
 
@@ -269,6 +287,7 @@ namespace AtomicWar.Journal
             }
 
             AppendNarrativeDiscoveryRows(rows);
+            AppendBureaucraticDocumentRows(rows);
 
             return rows;
         }
@@ -286,9 +305,11 @@ namespace AtomicWar.Journal
                     rows.Add(new JournalCodexRow
                     {
                         DisplayName = rec.Title,
-                        Meta = $"{rec.Category} · {rec.Subtitle}",
+                        Meta = BuildNarrativeMeta(rec),
                         Body = rec.BodyText,
-                        IsLocked = false
+                        IsLocked = false,
+                        Links = BuildNarrativeLinks(_catalogs.NarrativeDiscoveries, rec),
+                        NavigationId = rec.DiscoveryId
                     });
                 }
                 else
@@ -296,6 +317,87 @@ namespace AtomicWar.Journal
                     rows.Add(JournalCodexRow.Locked($"{rec.Category} — undiscovered"));
                 }
             }
+        }
+
+        private static string BuildNarrativeMeta(NarrativeDiscoveredRecord record)
+        {
+            var parts = new List<string>();
+            if (!string.IsNullOrEmpty(record.TruthClass)) parts.Add(record.TruthClass);
+            if (!string.IsNullOrEmpty(record.ProvenanceLabel)) parts.Add(record.ProvenanceLabel);
+            if (!string.IsNullOrEmpty(record.NumericClaimLabel)) parts.Add(record.NumericClaimLabel);
+            if (!string.IsNullOrEmpty(record.IdentityStatus)) parts.Add(record.IdentityStatus);
+            if (!string.IsNullOrEmpty(record.RecordFamily)) parts.Add(record.RecordFamily);
+            if (!string.IsNullOrEmpty(record.FacilityOrStationLabel)) parts.Add(record.FacilityOrStationLabel);
+            if (!string.IsNullOrEmpty(record.TechnicalSummary)) parts.Add(record.TechnicalSummary);
+            if (!string.IsNullOrEmpty(record.Subtitle)) parts.Add(record.Subtitle);
+            if (parts.Count == 0) parts.Add(record.Category);
+            return string.Join(" · ", parts);
+        }
+
+        private IReadOnlyList<JournalCodexLink> BuildNarrativeLinks(
+            NarrativeDiscoveryCatalog catalog,
+            NarrativeDiscoveredRecord record)
+        {
+            var links = new List<JournalCodexLink>();
+            if (record.RelatedDiscoveryIds == null) return links;
+            for (int i = 0; i < record.RelatedDiscoveryIds.Length; i++)
+            {
+                string relatedId = record.RelatedDiscoveryIds[i];
+                if (catalog.TryGetRecord(relatedId, out var related)
+                    && related != null
+                    && _journal.IsNarrativeDiscovered(related.DiscoveryId))
+                {
+                    links.Add(new JournalCodexLink(
+                        related.DiscoveryId,
+                        related.Title,
+                        "narrative_discovery"));
+                }
+            }
+            return links;
+        }
+
+        private void AppendBureaucraticDocumentRows(List<JournalCodexRow> rows)
+        {
+            var catalog = _catalogs?.BureaucraticDocuments;
+            if (catalog == null) return;
+
+            for (int i = 0; i < catalog.Documents.Count; i++)
+            {
+                var document = catalog.Documents[i];
+                if (document == null) continue;
+                bool discovered = _journal.IsBureaucraticDocumentDiscovered(document.DocId);
+                if (!discovered)
+                {
+                    rows.Add(JournalCodexRow.Locked($"{document.DocType.Replace('_', ' ')} — undiscovered"));
+                    continue;
+                }
+
+                string meta = $"{document.TruthLabel} · Day {document.PostedDay} · " +
+                    $"{document.PostedBy} · {document.Location} · {document.Material}";
+                rows.Add(new JournalCodexRow
+                {
+                    DisplayName = document.Title,
+                    Meta = meta,
+                    Body = document.Transcript,
+                    IsLocked = false,
+                    Links = BuildDocumentLinks(catalog, document),
+                    NavigationId = document.DocId
+                });
+            }
+        }
+
+        private static IReadOnlyList<JournalCodexLink> BuildDocumentLinks(
+            BureaucraticDocumentCatalog catalog,
+            BureaucraticDocumentDefinition document)
+        {
+            var links = new List<JournalCodexLink>();
+            for (int i = 0; i < document.RelatedDocumentIds.Count; i++)
+            {
+                string relatedId = document.RelatedDocumentIds[i];
+                if (catalog.TryGet(relatedId, out var related))
+                    links.Add(new JournalCodexLink(related.DocId, related.Title));
+            }
+            return links;
         }
     }
 }

@@ -108,6 +108,9 @@ namespace AtomicWar.GodotApp
                 SetupBlackProjectsArchive();
                 SetupTechnicalMaterialArchive();
                 SetupOralLore();
+                SetupHydroGeologyDiscovery();
+                SetupGrainMillingArchive();
+                SetupLeatherworkArchive();
                 SetupPlasticPyrolysis();
                 SetupCargoAirdrop();
                 SetupJustice();

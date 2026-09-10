@@ -1569,6 +1569,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--save-store-checksum-selftest"],
         "tests": ["PersonalQuestSystemTests"]
     },
+    "narrative_questlines": {
+        "domain": "Campaign & Quests",
+        "core": ["NarrativeQuestlineSystem"],
+        "catalog": ["narrative_questlines.json"],
+        "host": ["NarrativeQuestlineHostSession"],
+        "setup": "SetupNarrativeQuestlines",
+        "ticked": False,
+        "tick_type": "On-Demand (Survivor Narrative Arc Progression)",
+        "store": ["NarrativeQuestlineSaveStore"],
+        "ui": ["QuestsPanel"],
+        "routes": ["quests"],
+        "cli": [],
+        "tests": ["NarrativeQuestlineSystemTests"]
+    },
     "chemical_synthesis": {
         "domain": "Crafting & Chemistry",
         "core": ["ChemicalSynthesisSystem"],
@@ -1747,7 +1761,8 @@ ARCHITECTURE_GRAPH = {
     "oral_lore": { "domain": "Narrative & Cultural Tradition", "core": ["OralLorePerformanceSystem"], "catalog": ["oral_lore_codex.json", "oral_lore_batch_2.json"], "host": ["Main"], "setup": "SetupOralLore", "ticked": False, "tick_type": "Event-Driven (Performance)", "store": ["OralLoreSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["OralLorePlan155Tests", "OralLoreCatalogTests"] },
     "hydrogeology_archive": { "domain": "Subterranean Science Archive", "core": ["HydroGeologyDiscoverySystem"], "catalog": ["artesian_well_contamination_logs.json", "cave_aquatic_biota_logs.json", "geothermal_steam_vent_diagnostics.json", "stalactite_mineral_assay_reports.json"], "host": ["Main"], "setup": "SetupHydroGeologyDiscovery", "ticked": False, "tick_type": "Event-Driven (Location Discovery)", "store": ["HydroGeologyArchiveSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["HydroGeologyDiscoveryTests", "HydroGeologyCatalogTests"] },
     "technical_material_archive": { "domain": "Technical Material Archive", "core": ["TechnicalMaterialArchiveSystem"], "catalog": ["hemp_fiber_hackling_logs.json", "wire_rope_stranding_assays.json", "manila_hawser_breakage_reports.json", "rope_transmission_splicing_audits.json", "neoprene_gasket_degradation_logs.json", "aramid_fiber_rot_reports.json", "tire_retreading_compound_logs.json", "celluloid_film_decomposition_records.json"], "host": ["Main"], "setup": "SetupTechnicalMaterialArchive", "ticked": False, "tick_type": "Event-Driven (Location Discovery)", "store": ["TechnicalMaterialArchiveSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["TechnicalMaterialArchiveTests", "CordageCableCatalogTests", "PolymerTextileCatalogTests"] },
-    "grain_milling_archive": { "domain": "Industrial Food-Processing Archive", "core": ["GrainMillingDiscoverySystem"], "catalog": ["burr_millstone_dressing_logs.json", "bolting_silk_mesh_reports.json", "grain_silo_weevil_audits.json", "mill_dampener_tempering_assays.json"], "host": ["Main"], "setup": "SetupGrainMillingArchive", "ticked": False, "tick_type": "Event-Driven (Location Discovery & Shelter Room Inspection)", "store": ["GrainMillingArchiveSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["GrainMillingDiscoveryTests", "GrainMillingCatalogTests"] }
+    "grain_milling_archive": { "domain": "Industrial Food-Processing Archive", "core": ["GrainMillingDiscoverySystem"], "catalog": ["burr_millstone_dressing_logs.json", "bolting_silk_mesh_reports.json", "grain_silo_weevil_audits.json", "mill_dampener_tempering_assays.json"], "host": ["Main"], "setup": "SetupGrainMillingArchive", "ticked": False, "tick_type": "Event-Driven (Location Discovery & Shelter Room Inspection)", "store": ["GrainMillingArchiveSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["GrainMillingDiscoveryTests", "GrainMillingCatalogTests"] },
+    "leatherwork_archive": { "domain": "Material Provenance Archive", "core": ["LeatherworkArchiveSystem"], "catalog": ["oak_bark_tanning_pit_logs.json", "chrome_alum_tanning_assays.json", "rawhide_bating_failure_reports.json", "leather_harness_conditioning_audits.json"], "host": ["Main"], "setup": "SetupLeatherworkArchive", "ticked": False, "tick_type": "Event-Driven (Location Discovery & Item Inspection)", "store": ["LeatherworkArchiveSaveStore"], "ui": ["InventoryDetailPanel"], "routes": [], "cli": [], "tests": ["LeatherworkArchiveTests", "TanningLeatherCatalogTests"] }
 }
 
 def scan_codebase_symbols():

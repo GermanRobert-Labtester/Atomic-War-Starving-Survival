@@ -196,6 +196,32 @@ namespace AtomicWar.GodotApp
         // ── Barter acquisition route: ShelterBarterSystem (Plan 54 core, Plan 147 host wire) ──
 
         private ShelterBarterSystem? _shelterBarter;
+        private UI.ShelterBarterPanel? _shelterBarterPanel;
+
+        public UI.ShelterBarterPanel EnsureShelterBarterPanel()
+        {
+            if (_shelterBarterPanel != null) return _shelterBarterPanel;
+
+            _shelterBarterPanel = new UI.ShelterBarterPanel();
+            _shelterBarterPanel.Visible = false;
+            _shelterBarterPanel.OnClose += () => _shelterBarterPanel.Visible = false;
+            AddChild(_shelterBarterPanel);
+            return _shelterBarterPanel;
+        }
+
+        public void OpenShelterBarterPanel()
+        {
+            var panel = EnsureShelterBarterPanel();
+            var barter = EnsureShelterBarter();
+            SetupInventory();
+            SetupJournal();
+            panel.Bind(
+                barter,
+                _inventory?.Inventory ?? new Inventory(),
+                _journal,
+                id => _inventory?.Catalog?.Get(id));
+            panel.Open();
+        }
 
         /// <summary>
         /// The shelter barter host: four legacy Plan-54 caravans plus the

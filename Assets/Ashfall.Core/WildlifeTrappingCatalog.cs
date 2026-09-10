@@ -28,6 +28,26 @@ namespace Ashfall.Core
         public List<BycatchCandidate> bycatchSpecies = new List<BycatchCandidate>(); // Plan 36 III: weighted bycatch pool
 
         /// <summary>
+        /// Plan VI: probability (0..1) that an operational, catalog-linked
+        /// trap miss produces an authored atmospheric incident.
+        /// </summary>
+        public float narrativeIncidentChance = 0f;
+
+        /// <summary>
+        /// Plan VI: stable, ordered event IDs eligible for a miss incident.
+        /// An empty list preserves legacy/custom definitions and uses the
+        /// canonical trapping incident order at runtime.
+        /// </summary>
+        public List<string> narrativeIncidentIds = new List<string>();
+
+        /// <summary>
+        /// Plan IV Task 6: probability (0..1) that an eligible failed check at
+        /// this trap surfaces a human-interference encounter. 0 preserves the
+        /// legacy behavior of silent misses.
+        /// </summary>
+        public float trapEncounterChance = 0f;
+
+        /// <summary>
         /// Workstream D: Authoritative repair bill calculation:
         /// ceil(setup cost × 0.5) per item, aggregated by itemId.
         /// Preserves catalog setupCosts order when iterating.
@@ -54,6 +74,33 @@ namespace Ashfall.Core
             return bill;
         }
 
+        /// <summary>
+        /// Task 1: Authoritative setup bill calculation:
+        /// Aggregates setupCosts by itemId, preserving catalog setupCosts order.
+        /// </summary>
+        public InventoryBill CalculateSetupBill()
+        {
+            var bill = new InventoryBill();
+            var aggregated = new Dictionary<string, int>(StringComparer.Ordinal);
+            var itemOrder = new List<string>();
+            if (setupCosts != null)
+            {
+                foreach (var cost in setupCosts)
+                {
+                    if (cost == null || string.IsNullOrEmpty(cost.itemId) || cost.amount <= 0) continue;
+                    if (!aggregated.ContainsKey(cost.itemId))
+                        itemOrder.Add(cost.itemId);
+                    aggregated.TryGetValue(cost.itemId, out int existing);
+                    aggregated[cost.itemId] = existing + cost.amount;
+                }
+            }
+            foreach (var itemId in itemOrder)
+            {
+                bill.AddCost(itemId, aggregated[itemId]);
+            }
+            return bill;
+        }
+
         public bool Validate(out string error)
         {
             if (string.IsNullOrEmpty(trap_id))
@@ -65,6 +112,27 @@ namespace Ashfall.Core
             {
                 error = $"bycatchChance must be between 0 and 1, got {bycatchChance}";
                 return false;
+            }
+            if (!float.IsFinite(trapEncounterChance) || trapEncounterChance < 0f || trapEncounterChance > 1f)
+            {
+                error = $"trapEncounterChance must be between 0 and 1, got {trapEncounterChance}";
+                return false;
+            }
+            if (!float.IsFinite(narrativeIncidentChance) || narrativeIncidentChance < 0f || narrativeIncidentChance > 1f)
+            {
+                error = $"narrativeIncidentChance must be between 0 and 1, got {narrativeIncidentChance}";
+                return false;
+            }
+            if (narrativeIncidentIds != null)
+            {
+                for (int i = 0; i < narrativeIncidentIds.Count; i++)
+                {
+                    if (string.IsNullOrWhiteSpace(narrativeIncidentIds[i]))
+                    {
+                        error = $"narrative incident [{i}] has empty event ID";
+                        return false;
+                    }
+                }
             }
             if (bycatchSpecies != null)
             {
@@ -129,6 +197,22 @@ namespace Ashfall.Core
         public float contaminationRisk = 0.05f;
         public string diseaseId = string.Empty; // Plan 36 Closure II: per-species disease mapping
         public float contaminationDose = 0f; // Plan 36 Closure II: explicit contamination dose in rads
+        /// <summary>Fixed authored morale delta applied after successful primary-catch butchery.</summary>
+        public float moraleEffect = 0f;
+
+        /// <summary>
+        /// Plan IV Task 5: authored moral severity (0..1) of butchering this
+        /// species as a primary catch. 0 = no dilemma (legacy default).
+        /// Severity/context weight, not a probability — any positive weight
+        /// triggers the moral-consequence fact on committed butchery.
+        /// </summary>
+        public float moralWeight = 0f;
+
+        /// <summary>
+        /// Plan IV Task 7: rare-species classification. A bycatch entry whose
+        /// species is flagged rare feeds the rare-bycatch radio broadcast.
+        /// </summary>
+        public bool isRareSpecies = false;
 
         public const string FallbackDiseaseId = "disease_zoonotic_flu";
         public const float FallbackContaminationDose = 2.0f;
@@ -153,6 +237,16 @@ namespace Ashfall.Core
             if (!float.IsFinite(contaminationRisk) || contaminationRisk < 0f || contaminationRisk > 1f)
             {
                 error = $"contaminationRisk must be between 0 and 1, got {contaminationRisk}";
+                return false;
+            }
+            if (!float.IsFinite(moraleEffect) || moraleEffect < -100f || moraleEffect > 100f)
+            {
+                error = $"moraleEffect must be finite and between -100 and 100, got {moraleEffect}";
+                return false;
+            }
+            if (!float.IsFinite(moralWeight) || moralWeight < 0f || moralWeight > 1f)
+            {
+                error = $"moralWeight must be finite and between 0 and 1, got {moralWeight}";
                 return false;
             }
             error = string.Empty;

@@ -37,6 +37,7 @@ public partial class InventoryDetailPanel : Control
     private ExpansionEnrichmentCatalog? _enrichment;
     private string _itemId = string.Empty;
     private System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? _technicalProvenance;
+    private System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.LeatherworkRecord>? _leatherProvenance;
 
     public bool IsBound => _inventory != null && !string.IsNullOrEmpty(_itemId);
     public int RenderedRowCount { get; private set; }
@@ -52,12 +53,23 @@ public partial class InventoryDetailPanel : Control
     /// changed. Null (default) renders nothing — existing callers untouched.
     /// </summary>
     public void Bind(InventoryHostSession? inventory, string itemId, ItemDescriptionCatalog? descriptions, ExpansionEnrichmentCatalog? enrichment, System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? technicalProvenance)
+        => Bind(inventory, itemId, descriptions, enrichment, technicalProvenance, leatherProvenance: null);
+
+    /// <summary>
+    /// Plan 159 — optional leather provenance for canonical items (masks,
+    /// curing salt, strap leather). Display-only: archived tanning/currying
+    /// records render as dim provenance lines describing one historical
+    /// production batch; no condition/durability/trade state is read or
+    /// changed. Null (default) renders nothing — existing callers untouched.
+    /// </summary>
+    public void Bind(InventoryHostSession? inventory, string itemId, ItemDescriptionCatalog? descriptions, ExpansionEnrichmentCatalog? enrichment, System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? technicalProvenance, System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.LeatherworkRecord>? leatherProvenance)
     {
         _inventory = inventory;
         _itemId = itemId ?? string.Empty;
         _descriptions = descriptions ?? inventory?.DescriptionCatalog;
         _enrichment = enrichment ?? inventory?.EnrichmentCatalog;
         _technicalProvenance = technicalProvenance;
+        _leatherProvenance = leatherProvenance;
         RefreshView();
     }
 
@@ -140,6 +152,19 @@ public partial class InventoryDetailPanel : Control
                     ? record.MeasurementSummary
                     : $"{record.MeasurementSummary} — {record.FailureSummary.Replace('_', ' ').ToLowerInvariant()}";
                 AddRow(_itemInfo, $"Archive [{record.Family}]: {record.ObjectLabel.Replace('_', ' ')} — {summary} (ARCHIVAL — PRESENT STATUS UNKNOWN)", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+        }
+
+        // ── Leather provenance (Plan 159, display-only) ──
+        if (_leatherProvenance != null && _leatherProvenance.Count > 0)
+        {
+            foreach (var record in _leatherProvenance)
+            {
+                string summary = string.IsNullOrEmpty(record.FailureSummary)
+                    ? record.MeasurementSummary
+                    : $"{record.MeasurementSummary} — {record.FailureSummary.Replace('_', ' ').ToLowerInvariant()}";
+                AddRow(_itemInfo, $"Tanning record [{record.Family}]: {record.FacilityLabel.Replace('_', ' ')} — {summary} (ARCHIVAL BATCH — NOT THIS ITEM'S MEASURED QUALITY)", Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
         }

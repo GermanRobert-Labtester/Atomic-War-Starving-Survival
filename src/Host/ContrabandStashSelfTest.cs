@@ -5,8 +5,10 @@
 //             checksummed save round-trip and post-restore replay block.
 // ============================================================================
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core;
+using Ashfall.Core.Economy;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Narrative;
 using Godot;
@@ -129,6 +131,56 @@ namespace AtomicWar.GodotApp
                         return "[FAIL] canonical morphine not linked in the dependency catalog (opioid row required)";
                 }
                 GD.Print("[PASS] dependency catalog links canonical morphine (opioid) — host routes one dose per committed consumption");
+
+                // ── 8. Barter acquisition route: the contraband broker ──
+                var barterInventory = new Inventory();
+                if (!barterInventory.TryProduce("item_canned_food", 30))
+                    return "[FAIL] could not seed barter inventory";
+                var barter = new ShelterBarterSystem(
+                    new SeededRng(147), barterInventory, null, new GodotLog(),
+                    id => itemCatalog.Get(id));
+                barter.RegisterCaravan(ContrabandBrokerCaravan.Build(
+                    catalog, ContrabandStashSystem.DefaultActivations()));
+
+                barter.TickDay(10); // first arrival — high-tier gates not passed
+                var brokerState = barter.State.caravans[ContrabandBrokerCaravan.CaravanId];
+                if (!brokerState.isAtAirlock)
+                    return "[FAIL] broker not at airlock on its arrival day";
+                if (brokerState.remainingStock["morphine"] != 0)
+                    return "[FAIL] gated morphine stocked before its day gate";
+
+                for (int day = 11; day <= 30; day++) barter.TickDay(day); // next arrival, gates passed
+                brokerState = barter.State.caravans[ContrabandBrokerCaravan.CaravanId];
+                if (brokerState.remainingStock["morphine"] != 4)
+                    return $"[FAIL] morphine stock after gate = {brokerState.remainingStock["morphine"]}, expected 4";
+
+                // Scarcity premium: 1 morphine costs 60 tradeValue × 1.25 = 75.
+                float morphineCost = barter.CalculateCaravanStockCost(
+                    barter.Catalog[ContrabandBrokerCaravan.CaravanId],
+                    new Dictionary<string, int> { { "morphine", 1 } });
+                if (System.Math.Abs(morphineCost - 75f) > 0.01f)
+                    return $"[FAIL] morphine broker price {morphineCost} != canonical 75 (no second pricing authority)";
+
+                var purchase = barter.ExecuteTrade(
+                    ContrabandBrokerCaravan.CaravanId,
+                    new Dictionary<string, int> { { "item_canned_food", 6 } }, // 6 × 15 = 90 ≥ 75
+                    new Dictionary<string, int> { { "morphine", 1 } });
+                if (purchase.Status != ActionResult.StatusKind.Success)
+                    return $"[FAIL] broker purchase failed: {purchase.FailureCode}";
+                if (barterInventory.CountById("morphine") != 1)
+                    return "[FAIL] broker purchase did not grant the canonical item";
+                if (brokerState.remainingStock["morphine"] != 3)
+                    return "[FAIL] broker stock not pinned after purchase (reroll risk)";
+                GD.Print("[PASS] broker barter: canonical premium pricing (75), day-gated stock, pinned after purchase");
+
+                // Sell-back round trip must strictly lose value (anti-arbitrage).
+                var sellBack = barter.ExecuteTrade(
+                    ContrabandBrokerCaravan.CaravanId,
+                    new Dictionary<string, int> { { "morphine", 1 } },
+                    new Dictionary<string, int> { { "sugar", 1 } });
+                if (sellBack.Status != ActionResult.StatusKind.Success)
+                    return $"[FAIL] broker sell-back failed: {sellBack.FailureCode}";
+                GD.Print("[PASS] broker round trip loses value — no arbitrage");
 
                 return "CONTRABAND_STASH_SELFTEST PASS";
             }

@@ -35,13 +35,13 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void Manifest_LoadsAll60RecordsAcross18Catalogs()
+        public void Manifest_LoadsAllRecordsAcrossCatalogs()
         {
-            Assert.Equal(60, _catalog.Count);
-            Assert.Equal(60, _catalog.AllRecords.Count);
+            Assert.Equal(243, _catalog.Count);
+            Assert.Equal(243, _catalog.AllRecords.Count);
 
             var distinctCatalogs = _catalog.AllRecords.Select(r => r.SourceCatalog).Distinct().ToList();
-            Assert.Equal(18, distinctCatalogs.Count);
+            Assert.Equal(40, distinctCatalogs.Count);
 
             foreach (var r in _catalog.AllRecords)
             {
@@ -117,39 +117,39 @@ namespace Ashfall.Core.Tests
         {
             // By Producer
             var foundryRecords = _catalog.GetByProducer("room_foundry");
-            Assert.Equal(4, foundryRecords.Count);
+            Assert.Equal(8, foundryRecords.Count);
 
             var sumpRecords = _catalog.GetByProducer("location_the_sump_cathedral");
-            Assert.Equal(3, sumpRecords.Count);
+            Assert.Equal(7, sumpRecords.Count);
 
             var govBunkerRecords = _catalog.GetByProducer("government_bunker");
-            Assert.Equal(10, govBunkerRecords.Count);
+            Assert.Equal(41, govBunkerRecords.Count);
 
             // By Channel
             var locInspect = _catalog.GetByChannel("location_inspection");
-            Assert.Equal(23, locInspect.Count);
+            Assert.Equal(133, locInspect.Count);
 
             var scavDoc = _catalog.GetByChannel("scavenging_document");
             Assert.Equal(13, scavDoc.Count);
 
             var libTerm = _catalog.GetByChannel("library_terminal");
-            Assert.Equal(10, libTerm.Count);
+            Assert.Equal(32, libTerm.Count);
 
             var shelterArchive = _catalog.GetByChannel("shelter_room_archive");
-            Assert.Equal(4, shelterArchive.Count);
+            Assert.Equal(52, shelterArchive.Count);
 
             var questAftermath = _catalog.GetByChannel("quest_aftermath");
             Assert.Equal(4, questAftermath.Count);
 
             var radioArchive = _catalog.GetByChannel("radio_archive");
-            Assert.Equal(3, radioArchive.Count);
+            Assert.Equal(6, radioArchive.Count);
 
             var itemExam = _catalog.GetByChannel("item_examination");
             Assert.Equal(3, itemExam.Count);
 
             int total = locInspect.Count + scavDoc.Count + libTerm.Count +
                         shelterArchive.Count + questAftermath.Count + radioArchive.Count + itemExam.Count;
-            Assert.Equal(60, total);
+            Assert.Equal(243, total);
         }
 
         [Fact]

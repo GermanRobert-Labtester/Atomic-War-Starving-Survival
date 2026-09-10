@@ -136,6 +136,15 @@ namespace Ashfall.Core.Narrative
             var catalog = new HydroGeologyCatalog();
             if (!Directory.Exists(directoryPath)) return catalog;
 
+            if (!File.Exists(Path.Combine(directoryPath, "artesian_well_contamination_logs.json")))
+            {
+                var narrativeSubdir = Path.Combine(directoryPath, "narrative");
+                if (Directory.Exists(narrativeSubdir) && File.Exists(Path.Combine(narrativeSubdir, "artesian_well_contamination_logs.json")))
+                {
+                    directoryPath = narrativeSubdir;
+                }
+            }
+
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,

@@ -12,6 +12,15 @@ namespace Ashfall.Core
         public int totalCatch;
         public int totalToxicRemoved;
         public List<string> firstCatchLoggedSpeciesIds = new List<string>();
+
+        // Plan IV: shared event-delivery outbox. Unresolved external facts
+        // (moral consequences, trap encounters, radio broadcasts) persist here
+        // with stable identities until the destination authority accepts them.
+        public List<WildlifeTrappingPendingEvent> pendingEvents = new List<WildlifeTrappingPendingEvent>();
+
+        /// <summary>Monotonic persisted sequence for stable event identity.</summary>
+        public int eventSequence;
+        public int nextDeploymentSequence;
     }
 
     [Serializable]
@@ -30,6 +39,8 @@ namespace Ashfall.Core
         public bool hasCatch;
         public string catchSpecies = string.Empty;
         public string bycatchSpecies = string.Empty; // Plan 36 III: bycatch species if occurred
+        public float bycatchYield; // Plan VI: independently resolved secondary carcass yield
+        public bool bycatchToxic; // Plan VI: independently resolved secondary toxicity
         public float carcassYield;
         public bool isToxic;
         public bool toxinRemoved;
@@ -37,6 +48,12 @@ namespace Ashfall.Core
         public bool hidePreserved;
         public string diseaseId = string.Empty; // Tasks 5-8: resolved disease ID from catch
         public float contaminationDose; // Tasks 5-8: resolved contamination dose in rads
+        public string bycatchDiseaseId = string.Empty; // Plan VI: resolved secondary disease ID
+        public float bycatchContaminationDose; // Plan VI: resolved secondary contamination dose
+        /// <summary>Resolved miss-only authored event awaiting host delivery.</summary>
+        public string pendingNarrativeEvent = string.Empty;
+        /// <summary>Deterministic persisted identity for one deployment cycle.</summary>
+        public int deploymentSequence;
     }
 
     /// <summary>
@@ -103,6 +120,14 @@ namespace Ashfall.Core
         private WildlifeTrappingState _state = new WildlifeTrappingState();
         private readonly ISeededRng _rng;
         private readonly ILog _log;
+        // Plan IV Task 6: dedicated deterministic substream for the
+        // trap-interference encounter roll. Forked once at construction so the
+        // catch/disease/bycatch consumption order on the parent stream is
+        // never perturbed by the encounter mechanic.
+        private readonly ISeededRng _encounterRng;
+        // Plan VI: flavor incidents use their own deterministic stream so
+        // adding a miss-only narrative roll cannot reshuffle catch outcomes.
+        private readonly ISeededRng _incidentRng;
         private int _currentDay = 1;
         private float _hunterSkillLevel = 0.0f;
         private WildlifeSelectionContext _selectionContext = WildlifeSelectionContext.Default;
@@ -116,15 +141,58 @@ namespace Ashfall.Core
         public WildlifeTrappingState State => _state;
         public event Action OnTrappingChanged;
         public event Action<string, string, string, bool> OnButcheryCompleted; // siteId, butcherId, species, isToxic
+        public event Action<ButcheryCompletedEvent>? OnButcheryCompletedDetailed;
         public event Action<string, string> OnHidePreserved; // siteId, hideItemId
         /// <summary>WT-INT-01: Fired when a prey species is caught for the first time. Args: (speciesId, siteId, hunterId).</summary>
         public event Action<string, string, string>? OnNewSpeciesDiscovered;
+        /// <summary>Plan 36 III: Fired when secondary quarry (bycatch) is entangled alongside primary catch. Args: (siteId, trapId, primarySpecies, bycatchSpecies, day, hunterId).</summary>
+        public event Action<string, string, string, string, int, string>? OnBycatchOccurred;
+        /// <summary>Plan VI: complete bycatch state is committed before this event fires.</summary>
+        public event Action<BycatchOccurredEvent>? OnBycatchResolved;
+        public event Action<TrapLifecycleEvent>? OnTrapDeployed;
+        public event Action<TrapLifecycleEvent>? OnTrapBroken;
+        public event Action<TrapLifecycleEvent>? OnTrapRepaired;
+        public event Action<TrapLifecycleEvent>? OnTrapRemoved;
+
+        /// <summary>Plan IV: fired when a pending external fact is enqueued. Args: the pending event.</summary>
+        public event Action<WildlifeTrappingPendingEvent>? OnPendingEventCreated;
 
         public WildlifeTrappingSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
+            // Plan IV Task 6: dedicated deterministic substream for the
+            // trap-interference encounter roll, derived from the parent seed
+            // (the ISeededRng port has no fork primitive — a stable seed
+            // mix keeps the catch stream's consumption order unperturbed
+            // while remaining fully seed-reproducible).
+            _encounterRng = new SeededRng(DeriveEncounterStreamSeed(rng.Seed));
+            _incidentRng = new SeededRng(DeriveIncidentStreamSeed(rng.Seed));
             InitializeDefaultProfiles();
+        }
+
+        /// <summary>Stable seed-mix (SplitMix64 finalizer, 32-bit) for the encounter substream.</summary>
+        public static int DeriveEncounterStreamSeed(int parentSeed)
+        {
+            ulong z = unchecked((ulong)(uint)parentSeed + 0x9E3779B9UL);
+            z ^= z >> 16;
+            z *= unchecked(0xBF58476D1CE4E5B9UL);
+            z ^= z >> 13;
+            z *= unchecked(0x94D049BB133111EBUL);
+            z ^= z >> 16;
+            return unchecked((int)(uint)z);
+        }
+
+        /// <summary>Stable seed mix for miss-only narrative incidents.</summary>
+        public static int DeriveIncidentStreamSeed(int parentSeed)
+        {
+            ulong z = unchecked((ulong)(uint)parentSeed + 0xD1B54A32D192ED03UL);
+            z ^= z >> 17;
+            z *= unchecked(0x9E3779B97F4A7C15UL);
+            z ^= z >> 29;
+            z *= unchecked(0xBF58476D1CE4E5B9UL);
+            z ^= z >> 31;
+            return unchecked((int)(uint)z);
         }
 
         /// <summary>
@@ -264,8 +332,115 @@ namespace Ashfall.Core
             }
 
             _state.firstCatchLoggedSpeciesIds.Add(speciesId);
+            CreatePendingEvent(
+                WildlifeTrappingEventKinds.TrappingBroadcast,
+                siteId, hunterId, speciesId,
+                TrappingBroadcastIds.FirstCatch, 0f);
             OnNewSpeciesDiscovered?.Invoke(speciesId, siteId ?? string.Empty, hunterId ?? string.Empty);
             return true;
+        }
+
+        // ── Plan IV: shared event-delivery outbox ───────────────────────────
+
+        /// <summary>
+        /// Enqueue one unresolved external fact with a stable persisted
+        /// identity. Deterministic: consumes no RNG; identity derives from the
+        /// persisted monotonic sequence, never from Guid/hash/wall clock.
+        /// Ordering across multiple facts in one check follows the explicit
+        /// call order (bycatch → first catch → break; encounter on miss).
+        /// </summary>
+        private WildlifeTrappingPendingEvent CreatePendingEvent(
+            string kind, string siteId, string survivorId, string speciesId,
+            string payloadId, float weight, bool notify = true)
+        {
+            _state.eventSequence++;
+            var ev = new WildlifeTrappingPendingEvent
+            {
+                eventId = $"wt_ev_{_state.eventSequence:D6}",
+                sequence = _state.eventSequence,
+                kind = kind ?? string.Empty,
+                sourceTrapSiteId = siteId ?? string.Empty,
+                survivorId = survivorId ?? string.Empty,
+                speciesId = speciesId ?? string.Empty,
+                payloadId = payloadId ?? string.Empty,
+                weight = weight,
+                day = _currentDay,
+                status = WildlifeTrappingEventStatus.Pending
+            };
+            _state.pendingEvents.Add(ev);
+            if (notify)
+                OnPendingEventCreated?.Invoke(ev);
+            return ev;
+        }
+
+        /// <summary>
+        /// Pending events in persisted sequence order (delivery candidates).
+        /// Delivered events are excluded — the destination authority owns them
+        /// after acceptance.
+        /// </summary>
+        public List<WildlifeTrappingPendingEvent> GetPendingEvents()
+        {
+            var result = new List<WildlifeTrappingPendingEvent>();
+            if (_state.pendingEvents == null) return result;
+            for (int i = 0; i < _state.pendingEvents.Count; i++)
+            {
+                var ev = _state.pendingEvents[i];
+                if (ev == null || !string.Equals(ev.status, WildlifeTrappingEventStatus.Pending, StringComparison.Ordinal))
+                    continue;
+                result.Add(ev);
+            }
+            result.Sort((a, b) => a.sequence.CompareTo(b.sequence));
+            return result;
+        }
+
+        /// <summary>
+        /// Acknowledge destination acceptance of one pending event. Returns
+        /// false when the event is unknown or already delivered — exactly-once
+        /// discipline: callers ack only after the destination accepted.
+        /// </summary>
+        public bool MarkEventDelivered(string eventId)
+        {
+            if (string.IsNullOrEmpty(eventId) || _state.pendingEvents == null) return false;
+            for (int i = 0; i < _state.pendingEvents.Count; i++)
+            {
+                var ev = _state.pendingEvents[i];
+                if (ev == null || !string.Equals(ev.eventId, eventId, StringComparison.Ordinal)) continue;
+                if (!string.Equals(ev.status, WildlifeTrappingEventStatus.Pending, StringComparison.Ordinal))
+                    return false;
+                ev.status = WildlifeTrappingEventStatus.Delivered;
+                if (string.Equals(ev.kind, WildlifeTrappingEventKinds.NarrativeIncident, StringComparison.Ordinal))
+                {
+                    for (int s = 0; s < _state.trapSites.Count; s++)
+                    {
+                        var site = _state.trapSites[s];
+                        if (site != null
+                            && string.Equals(site.siteId, ev.sourceTrapSiteId, StringComparison.Ordinal)
+                            && string.Equals(site.pendingNarrativeEvent, ev.payloadId, StringComparison.Ordinal))
+                        {
+                            site.pendingNarrativeEvent = string.Empty;
+                            break;
+                        }
+                    }
+                }
+                OnTrappingChanged?.Invoke();
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>Count of pending (undelivered) external facts, by kind. Diagnostics.</summary>
+        public int CountPendingEvents(string kind)
+        {
+            int n = 0;
+            if (_state.pendingEvents == null) return 0;
+            for (int i = 0; i < _state.pendingEvents.Count; i++)
+            {
+                var ev = _state.pendingEvents[i];
+                if (ev != null && string.Equals(ev.kind, kind, StringComparison.Ordinal)
+                    && string.Equals(ev.status, WildlifeTrappingEventStatus.Pending, StringComparison.Ordinal))
+                    n++;
+            }
+            return n;
         }
 
         private void InitializeDefaultProfiles()
@@ -397,15 +572,34 @@ namespace Ashfall.Core
             };
         }
 
+        /// <summary>
+        /// Queries the single authoritative site-state rule used by deployment,
+        /// host preflight, and the UI. A pending catch is intentionally
+        /// replaceable; only a healthy, armed, catch-free trap is active.
+        /// </summary>
+        public bool CanSetTrapAtSite(string siteId, out string failureCode)
+        {
+            var existing = _state.trapSites.Find(s => s.siteId == siteId);
+            if (existing != null && !existing.hasCatch && existing.setDay > 0 && !existing.isBroken)
+            {
+                failureCode = "trap_active";
+                return false;
+            }
+
+            failureCode = string.Empty;
+            return true;
+        }
+
         public ActionResult SetTrap(string siteId, string baitType, string hunterId, string trapType = "snare",
             string trapId = "", int checkIntervalDays = -1, int durabilityChecks = -1)
         {
             var existing = _state.trapSites.Find(s => s.siteId == siteId);
+            if (existing != null && !CanSetTrapAtSite(siteId, out string existingFailureCode))
+                return ActionResult.Blocked(existingFailureCode, "trapping." + existingFailureCode);
             int interval = checkIntervalDays > 0 ? checkIntervalDays : 2;
+            int deploymentSequence = ++_state.nextDeploymentSequence;
             if (existing != null)
             {
-                if (!existing.hasCatch && existing.setDay > 0 && !existing.isBroken)
-                    return ActionResult.Blocked("trap_active", "trapping.trap_active");
                 existing.setDay = _currentDay;
                 existing.checkDay = _currentDay + interval;
                 existing.baitType = baitType;
@@ -415,6 +609,7 @@ namespace Ashfall.Core
                 existing.remainingDurability = durabilityChecks > 0 ? durabilityChecks : -1;
                 existing.isBroken = false;
                 existing.assignedHunterId = hunterId ?? string.Empty;
+                existing.deploymentSequence = deploymentSequence;
                 // Plan (flagship trapping tranche): a replacement begins clean —
                 // the entire catch payload of the old trap is cleared, not just
                 // the hasCatch flag. Stale catchSpecies/carcassYield/isToxic
@@ -422,6 +617,8 @@ namespace Ashfall.Core
                 existing.hasCatch = false;
                 existing.catchSpecies = string.Empty;
                 existing.bycatchSpecies = string.Empty;
+                existing.bycatchYield = 0f;
+                existing.bycatchToxic = false;
                 existing.carcassYield = 0f;
                 existing.isToxic = false;
                 existing.toxinRemoved = false;
@@ -429,6 +626,9 @@ namespace Ashfall.Core
                 existing.hidePreserved = false;
                 existing.diseaseId = string.Empty;
                 existing.contaminationDose = 0f;
+                existing.bycatchDiseaseId = string.Empty;
+                existing.bycatchContaminationDose = 0f;
+                existing.pendingNarrativeEvent = string.Empty;
             }
             else
             {
@@ -439,10 +639,19 @@ namespace Ashfall.Core
                     assignedHunterId = hunterId ?? string.Empty,
                     setDay = _currentDay, checkDay = _currentDay + interval,
                     checkIntervalDays = interval,
-                    remainingDurability = durabilityChecks > 0 ? durabilityChecks : -1
+                    remainingDurability = durabilityChecks > 0 ? durabilityChecks : -1,
+                    deploymentSequence = deploymentSequence
                 });
             }
             OnTrappingChanged?.Invoke();
+            OnTrapDeployed?.Invoke(new TrapLifecycleEvent
+            {
+                siteId = siteId ?? string.Empty,
+                trapId = trapId ?? string.Empty,
+                trapType = trapType ?? string.Empty,
+                isBroken = false,
+                day = _currentDay
+            });
             return ActionResult.Success("trapping.trap_set");
         }
 
@@ -458,14 +667,15 @@ namespace Ashfall.Core
         ///   season gate — prey with activeSeasons must include SeasonWindowId
         ///                 (empty activeSeasons = year-round);
         ///   migration   — prey with migrationSpeciesId require that species
-        ///                 in PresentMigrationSector. Empty presence excludes
+        ///                 in PresentMigrationSpecies. Empty presence excludes
         ///                 every migration-linked prey (migration-linked prey
         ///                 are simply absent when no pack stands in the
         ///                 sector); non-migration prey are unaffected.
         /// No weighting and no fallback here — callers get the exact filtered
         /// candidate set so tests can assert membership directly.
         /// </summary>
-        public List<string> GetEligibleQuarryIds(string baitType, string trapType, float hunterSkillLevel)
+        public List<string> GetEligibleQuarryIds(string baitType, string trapType, float hunterSkillLevel,
+            string trapId = "")
         {
             var eligible = new List<string>();
             string seasonId = _selectionContext.SeasonWindowId;
@@ -475,6 +685,7 @@ namespace Ashfall.Core
             {
                 var q = kvp.Value;
                 if (hunterSkillLevel < q.minSkillLevel) continue;
+                if (!IsCompatibleWithTrap(q.speciesId, trapType, trapId)) continue;
 
                 // Plan 36: season filter — prey with activeSeasons must include current season
                 if (hasSeason && _preyDefinitionCatalog.TryGetValue(q.speciesId, out var preyDef)
@@ -507,15 +718,55 @@ namespace Ashfall.Core
         }
 
         /// <summary>
+        /// Applies the authored trap compatibility matrix when the catalog is
+        /// available. A resolved trap ID is authoritative; legacy callers that
+        /// only have a trap type use the union of definitions of that type.
+        /// An unregistered/default system keeps its historical open candidate
+        /// behavior because it has no compatibility authority to consult.
+        /// </summary>
+        private bool IsCompatibleWithTrap(string preyId, string trapType, string trapId)
+        {
+            if (_trapDefinitionCatalog.Count == 0) return true;
+
+            if (!string.IsNullOrEmpty(trapId)
+                && _trapDefinitionCatalog.TryGetValue(trapId, out var exactTrap))
+            {
+                // Runtime-only/custom traps may omit the optional matrix. The
+                // catalog validator rejects that shape for authored traps, but
+                // omission here remains backward-compatible for callers that
+                // use trap definitions solely for durability/bycatch.
+                return exactTrap.compatiblePrey == null
+                    || exactTrap.compatiblePrey.Count == 0
+                    || exactTrap.compatiblePrey.Contains(preyId);
+            }
+
+            bool foundMatchingType = false;
+            bool foundDeclaredCompatibility = false;
+            foreach (var trap in _trapDefinitionCatalog.Values)
+            {
+                if (!string.Equals(trap.trapType, trapType, StringComparison.Ordinal)) continue;
+                foundMatchingType = true;
+                if (trap.compatiblePrey == null || trap.compatiblePrey.Count == 0) continue;
+                foundDeclaredCompatibility = true;
+                if (trap.compatiblePrey != null && trap.compatiblePrey.Contains(preyId))
+                    return true;
+            }
+
+            // Preserve legacy synthetic callers that use a trap type not yet
+            // represented in the loaded catalog; a real catalog type is gated.
+            return !foundMatchingType || !foundDeclaredCompatibility;
+        }
+
+        /// <summary>
         /// Select a quarry species based on bait affinity, trap type, per-site hunter skill level,
         /// season, migration presence, and abundance. Returns the species ID or
         /// string.Empty if no eligible quarry.
         /// </summary>
-        private string SelectQuarrySpecies(string baitType, string trapType, float hunterSkillLevel)
+        private string SelectQuarrySpecies(string baitType, string trapType, string trapId, float hunterSkillLevel)
         {
             var candidates = new List<(string id, float weight)>();
 
-            foreach (string speciesId in GetEligibleQuarryIds(baitType, trapType, hunterSkillLevel))
+            foreach (string speciesId in GetEligibleQuarryIds(baitType, trapType, hunterSkillLevel, trapId))
             {
                 var q = _quarryCatalog[speciesId];
                 float weight = 1.0f;
@@ -534,10 +785,12 @@ namespace Ashfall.Core
                 if (_selectionContext.AbundanceFactors.TryGetValue(q.speciesId, out float abundance))
                     weight *= abundance;
 
+                if (weight <= 0f) continue;
+
                 candidates.Add((q.speciesId, weight));
             }
             if (candidates.Count == 0)
-                return "rabbit"; // fallback
+                return string.Empty;
 
             // Weighted random selection
             float totalWeight = 0f;
@@ -600,10 +853,23 @@ namespace Ashfall.Core
                     weatherSens,
                     _selectionContext.CurrentWeather);
 
+                bool primaryCatchResolved = false;
                 if (_rng.NextDouble() < finalChance)
                 {
                     // Select species based on bait, trap type, and per-site hunter skill
-                    string speciesId = SelectQuarrySpecies(site.baitType, site.trapType, siteHunterSkill);
+                    string speciesId = SelectQuarrySpecies(site.baitType, site.trapType, site.trapId, siteHunterSkill);
+                    if (string.IsNullOrEmpty(speciesId))
+                    {
+                        // No eligible quarry species available in current environment context
+                        site.checkDay = _currentDay + site.checkIntervalDays;
+                        if (site.remainingDurability > 0)
+                        {
+                            site.remainingDurability--;
+                            if (site.remainingDurability <= 0)
+                                MarkBroken(site);
+                        }
+                        continue;
+                    }
                     site.catchSpecies = speciesId;
 
                     // Get species data
@@ -624,8 +890,16 @@ namespace Ashfall.Core
                     site.isMeatProcessed = false;
                     site.hidePreserved = false;
                     site.bycatchSpecies = string.Empty;
+                    site.bycatchYield = 0f;
+                    site.bycatchToxic = false;
+                    site.bycatchDiseaseId = string.Empty;
+                    site.bycatchContaminationDose = 0f;
+                    primaryCatchResolved = true;
 
-                    // Plan 36 III: bycatch roll — deterministic, fixed RNG budget (unaffected by weather/skill)
+                    // Plan VI: bycatch roll — deterministic and independent of
+                    // the primary carcass. A candidate must resolve through a
+                    // registered quarry/prey definition; unsupported legacy
+                    // candidates cannot create a secondary catch.
                     if (trapDef != null
                         && trapDef.bycatchChance > 0f
                         && trapDef.bycatchSpecies != null && trapDef.bycatchSpecies.Count > 0
@@ -637,6 +911,7 @@ namespace Ashfall.Core
                         {
                             var bc = trapDef.bycatchSpecies[i];
                             if (bc != null && !string.IsNullOrEmpty(bc.speciesId)
+                                && (_quarryCatalog.ContainsKey(bc.speciesId) || _preyDefinitionCatalog.ContainsKey(bc.speciesId))
                                 && !string.Equals(bc.speciesId, site.catchSpecies, StringComparison.Ordinal))
                                 totalWeight += bc.weight;
                         }
@@ -648,6 +923,7 @@ namespace Ashfall.Core
                             {
                                 var bc = trapDef.bycatchSpecies[i];
                                 if (bc == null || string.IsNullOrEmpty(bc.speciesId)
+                                    || (!_quarryCatalog.ContainsKey(bc.speciesId) && !_preyDefinitionCatalog.ContainsKey(bc.speciesId))
                                     || string.Equals(bc.speciesId, site.catchSpecies, StringComparison.Ordinal))
                                     continue;
                                 cumulative += bc.weight;
@@ -657,6 +933,68 @@ namespace Ashfall.Core
                                     break;
                                 }
                             }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(site.bycatchSpecies))
+                    {
+                        // Bycatch yield and toxicity use the secondary species
+                        // definition. Each is resolved once before any event
+                        // subscriber observes the state.
+                        if (_quarryCatalog.TryGetValue(site.bycatchSpecies, out var bycatchQuarry))
+                        {
+                            site.bycatchYield = bycatchQuarry.baseYieldKg
+                                * (0.7f + (float)_rng.NextDouble() * 0.6f);
+                            float bycatchToxicChance = Math.Max(0.01f,
+                                bycatchQuarry.toxicChance - baitToxicReduction);
+                            site.bycatchToxic = _rng.NextDouble() < bycatchToxicChance;
+                        }
+                        else if (_preyDefinitionCatalog.TryGetValue(site.bycatchSpecies, out var bycatchPreyFallback))
+                        {
+                            site.bycatchYield = bycatchPreyFallback.baseYieldKg
+                                * (0.7f + (float)_rng.NextDouble() * 0.6f);
+                            float bycatchToxicChance = Math.Max(0.01f,
+                                bycatchPreyFallback.toxicChance - baitToxicReduction);
+                            site.bycatchToxic = _rng.NextDouble() < bycatchToxicChance;
+                        }
+
+                        if (_preyDefinitionCatalog.TryGetValue(site.bycatchSpecies, out var bycatchDef))
+                        {
+                            if (RollDiseaseRisk(bycatchDef.diseaseRisk))
+                                site.bycatchDiseaseId = PreyDefinition.ResolveDiseaseId(bycatchDef);
+                            if (RollContaminationRisk(bycatchDef.contaminationRisk))
+                            {
+                                site.bycatchContaminationDose = bycatchDef.contaminationDose > 0f
+                                    ? bycatchDef.contaminationDose
+                                    : PreyDefinition.FallbackContaminationDose;
+                            }
+                        }
+
+                        // Preserve the existing compatibility event, then
+                        // publish the complete typed result exactly once.
+                        OnBycatchOccurred?.Invoke(site.siteId, site.trapId, site.catchSpecies,
+                            site.bycatchSpecies, _currentDay, site.assignedHunterId);
+                        OnBycatchResolved?.Invoke(new BycatchOccurredEvent
+                        {
+                            siteId = site.siteId,
+                            trapId = site.trapId,
+                            primarySpeciesId = site.catchSpecies,
+                            bycatchSpeciesId = site.bycatchSpecies,
+                            bycatchYield = site.bycatchYield,
+                            bycatchToxic = site.bycatchToxic,
+                            day = _currentDay,
+                            hunterId = site.assignedHunterId
+                        });
+
+                        // Plan IV Task 7: rare-species bycatch feeds the radio
+                        // layer. Common bycatch emits nothing. Reuses the
+                        // bycatchDef resolved above (same species, same catalog).
+                        if (bycatchDef != null && bycatchDef.isRareSpecies)
+                        {
+                            CreatePendingEvent(
+                                WildlifeTrappingEventKinds.TrappingBroadcast,
+                                site.siteId, site.assignedHunterId, site.bycatchSpecies,
+                                TrappingBroadcastIds.RareBycatch, 0f);
                         }
                     }
 
@@ -677,7 +1015,9 @@ namespace Ashfall.Core
                         }
                     }
 
-                    // WT-INT-01: First-catch discovery tracking (primary catch only)
+                    // WT-INT-01: First-catch discovery tracking (primary catch only).
+                    // Plan IV Task 7: the first-catch fact also feeds the radio layer
+                    // (created inside TryRecordFirstCatch, no RNG consumed).
                     TryRecordFirstCatch(speciesId, site.siteId, site.assignedHunterId);
 
                     caught++;
@@ -687,12 +1027,25 @@ namespace Ashfall.Core
                 // Update check day for next interval
                 site.checkDay = _currentDay + site.checkIntervalDays;
 
+                // Plan IV/VI: eligible miss — the primary catch roll failed
+                // on an intact, deployed trap. Deterministic encounter roll on
+                // dedicated streams; a successful catch never reaches this
+                // path, and broken/legacy traps never enter the loop.
+                if (!primaryCatchResolved)
+                {
+                    float encounterChance = trapDef?.trapEncounterChance ?? 0f;
+                    if (encounterChance > 0f && _encounterRng.NextDouble() < encounterChance)
+                        ResolveTrapInterference(site);
+
+                    ResolveNarrativeIncident(site, trapDef);
+                }
+
                 // Plan 36: decrement durability on every eligible check (catch or no-catch)
                 if (site.remainingDurability > 0)
                 {
                     site.remainingDurability--;
                     if (site.remainingDurability <= 0)
-                        site.isBroken = true;
+                        MarkBroken(site);
                 }
             }
             OnTrappingChanged?.Invoke();
@@ -711,9 +1064,47 @@ namespace Ashfall.Core
 
             site.isMeatProcessed = true;
             OnTrappingChanged?.Invoke();
+
+            // Plan IV Task 5 / Plan VI: moral consequence is authored by the
+            // PRIMARY prey only. Bycatch health is independent, but it never
+            // creates a second morale action. Consumes no RNG.
+            if (!string.IsNullOrEmpty(site.catchSpecies)
+                && _preyDefinitionCatalog.TryGetValue(site.catchSpecies, out var moralPrey)
+                && moralPrey.moralWeight > 0f)
+            {
+                CreatePendingEvent(
+                    WildlifeTrappingEventKinds.MoralConsequence,
+                    site.siteId,
+                    butcherId ?? string.Empty,
+                    site.catchSpecies,
+                    TrappingMoralTier.ResolveQuestId(moralPrey.moralWeight),
+                    moralPrey.moralWeight);
+            }
+
             OnButcheryCompleted?.Invoke(siteId, butcherId ?? string.Empty, site.catchSpecies ?? string.Empty, site.isToxic);
+            OnButcheryCompletedDetailed?.Invoke(new ButcheryCompletedEvent
+            {
+                actionId = $"butchery:{siteId}:{site.deploymentSequence}:{site.catchSpecies}:{butcherId ?? string.Empty}",
+                siteId = siteId ?? string.Empty,
+                butcherId = butcherId ?? string.Empty,
+                primarySpeciesId = site.catchSpecies ?? string.Empty,
+                bycatchSpeciesId = site.bycatchSpecies ?? string.Empty,
+                primaryYield = site.carcassYield,
+                bycatchYield = site.bycatchYield,
+                totalYield = site.carcassYield + site.bycatchYield,
+                isToxic = site.isToxic,
+                bycatchToxic = site.bycatchToxic,
+                setDay = site.setDay
+            });
             return ActionResult.Success("trapping.butchered",
-                new Dictionary<string, double> { { "yield", site.carcassYield }, { "toxic", site.isToxic ? 1 : 0 } });
+                new Dictionary<string, double>
+                {
+                    { "yield", site.carcassYield + site.bycatchYield },
+                    { "primaryYield", site.carcassYield },
+                    { "bycatchYield", site.bycatchYield },
+                    { "toxic", site.isToxic ? 1 : 0 },
+                    { "bycatchToxic", site.bycatchToxic ? 1 : 0 }
+                });
         }
 
         /// <summary>
@@ -795,7 +1186,39 @@ namespace Ashfall.Core
             site.remainingDurability = restoreDurability > 0 ? restoreDurability : 1;
             site.isBroken = false;
             OnTrappingChanged?.Invoke();
+            OnTrapRepaired?.Invoke(new TrapLifecycleEvent
+            {
+                siteId = site.siteId,
+                trapId = site.trapId,
+                trapType = site.trapType,
+                isBroken = false,
+                day = _currentDay
+            });
             return ActionResult.Success("trapping.trap_repaired");
+        }
+
+        /// <summary>Remove a trap site and its map presence. Catch outcomes are
+        /// not exposed or copied anywhere; removal is a domain deletion.</summary>
+        public ActionResult RemoveTrap(string siteId)
+        {
+            if (string.IsNullOrEmpty(siteId))
+                return ActionResult.Blocked("no_trap", "trapping.no_trap");
+            int index = _state.trapSites.FindIndex(s => s != null && s.siteId == siteId);
+            if (index < 0)
+                return ActionResult.Blocked("no_trap", "trapping.no_trap");
+
+            var site = _state.trapSites[index];
+            _state.trapSites.RemoveAt(index);
+            OnTrappingChanged?.Invoke();
+            OnTrapRemoved?.Invoke(new TrapLifecycleEvent
+            {
+                siteId = site.siteId,
+                trapId = site.trapId,
+                trapType = site.trapType,
+                isBroken = site.isBroken,
+                day = _currentDay
+            });
+            return ActionResult.Success("trapping.trap_removed");
         }
 
         public ActionResult RemoveToxin(string siteId)
@@ -833,6 +1256,121 @@ namespace Ashfall.Core
             _state = CloneState(saved);
             if (_state.firstCatchLoggedSpeciesIds == null)
                 _state.firstCatchLoggedSpeciesIds = new List<string>();
+
+            // Plan IV §11.3: restore validation for the outbox. Drop null
+            // entries, derive missing identities, normalize status, and keep
+            // the monotonic sequence strictly ahead of every persisted event.
+            if (_state.pendingEvents == null)
+                _state.pendingEvents = new List<WildlifeTrappingPendingEvent>();
+            int maxEventSequence = 0;
+            for (int i = _state.pendingEvents.Count - 1; i >= 0; i--)
+            {
+                var ev = _state.pendingEvents[i];
+                if (ev == null)
+                {
+                    _state.pendingEvents.RemoveAt(i);
+                    continue;
+                }
+                ev.kind ??= string.Empty;
+                ev.sourceTrapSiteId ??= string.Empty;
+                ev.survivorId ??= string.Empty;
+                ev.speciesId ??= string.Empty;
+                ev.payloadId ??= string.Empty;
+                ev.status = string.Equals(ev.status, WildlifeTrappingEventStatus.Delivered, StringComparison.Ordinal)
+                    ? WildlifeTrappingEventStatus.Delivered
+                    : WildlifeTrappingEventStatus.Pending;
+                if (ev.sequence > maxEventSequence) maxEventSequence = ev.sequence;
+                if (string.IsNullOrEmpty(ev.eventId))
+                    ev.eventId = $"wt_ev_{ev.sequence:D6}";
+            }
+            if (_state.eventSequence < maxEventSequence)
+                _state.eventSequence = maxEventSequence;
+
+            int maxDeploymentSequence = _state.nextDeploymentSequence;
+            if (_state.trapSites != null)
+            {
+                for (int i = 0; i < _state.trapSites.Count; i++)
+                {
+                    var site = _state.trapSites[i];
+                    if (site == null) continue;
+
+                    site.siteId ??= string.Empty;
+                    site.assignedHunterId ??= string.Empty;
+                    site.baitType ??= string.Empty;
+                    site.trapType ??= string.Empty;
+                    site.trapId ??= string.Empty;
+                    site.catchSpecies ??= string.Empty;
+                    site.bycatchSpecies ??= string.Empty;
+                    site.diseaseId ??= string.Empty;
+                    site.bycatchDiseaseId ??= string.Empty;
+                    site.pendingNarrativeEvent ??= string.Empty;
+
+                    if (string.IsNullOrEmpty(site.bycatchSpecies))
+                    {
+                        site.bycatchYield = 0f;
+                        site.bycatchToxic = false;
+                        site.bycatchDiseaseId = string.Empty;
+                        site.bycatchContaminationDose = 0f;
+                    }
+
+                    if (site.deploymentSequence <= 0)
+                        site.deploymentSequence = ++maxDeploymentSequence;
+                    else
+                        maxDeploymentSequence = Math.Max(maxDeploymentSequence, site.deploymentSequence);
+
+                    // Legacy untracked traps: if durability is 0 but not broken, and untracked (or missing), ensure -1
+                    if (!site.isBroken && site.remainingDurability == 0 && string.IsNullOrEmpty(site.trapId))
+                    {
+                        site.remainingDurability = -1;
+                    }
+                    else if (site.remainingDurability < 0)
+                    {
+                        site.remainingDurability = -1;
+                    }
+                    else if (site.isBroken && site.remainingDurability > 0)
+                    {
+                        site.remainingDurability = 0;
+                    }
+                }
+            }
+            _state.nextDeploymentSequence = maxDeploymentSequence;
+
+            // A legacy Plan VI save may contain the pending incident
+            // projection but not the shared outbox entry. Rebuild that entry
+            // without RNG or callbacks so restore cannot reroll or dispatch.
+            for (int i = 0; i < _state.trapSites.Count; i++)
+            {
+                var site = _state.trapSites[i];
+                if (site == null || string.IsNullOrEmpty(site.pendingNarrativeEvent)) continue;
+                bool hasPending = false;
+                bool hasDelivered = false;
+                for (int e = 0; e < _state.pendingEvents.Count; e++)
+                {
+                    var pending = _state.pendingEvents[e];
+                    if (pending == null
+                        || !string.Equals(pending.kind, WildlifeTrappingEventKinds.NarrativeIncident, StringComparison.Ordinal)
+                        || !string.Equals(pending.sourceTrapSiteId, site.siteId, StringComparison.Ordinal)
+                        || !string.Equals(pending.payloadId, site.pendingNarrativeEvent, StringComparison.Ordinal))
+                        continue;
+                    hasPending |= string.Equals(pending.status, WildlifeTrappingEventStatus.Pending, StringComparison.Ordinal);
+                    hasDelivered |= string.Equals(pending.status, WildlifeTrappingEventStatus.Delivered, StringComparison.Ordinal);
+                }
+                if (hasDelivered && !hasPending)
+                {
+                    site.pendingNarrativeEvent = string.Empty;
+                }
+                else if (!hasPending)
+                {
+                    CreatePendingEvent(
+                        WildlifeTrappingEventKinds.NarrativeIncident,
+                        site.siteId,
+                        site.assignedHunterId,
+                        string.Empty,
+                        site.pendingNarrativeEvent,
+                        0f,
+                        notify: false);
+                }
+            }
         }
 
         private static WildlifeTrappingState CloneState(WildlifeTrappingState src)
@@ -841,6 +1379,118 @@ namespace Ashfall.Core
             var s = new SystemTextJsonSerializer();
             var json = s.Serialize(src);
             return s.Deserialize<WildlifeTrappingState>(json) ?? new WildlifeTrappingState();
+        }
+
+        /// <summary>
+        /// Plan IV Task 6: select and apply the deterministic interference
+        /// outcome for one encounter hit. The trapping system owns the trap
+        /// side effects (bait loss, tamper damage) as canonical domain
+        /// mutations; the surfaced encounter definition owns the narrative
+        /// presentation and the player's response (morale/guilt/flags via the
+        /// encounter authority).
+        /// </summary>
+        private void ResolveTrapInterference(TrapSite site)
+        {
+            // Uniform deterministic selection across the three authored families.
+            int pick = _encounterRng.Next(0, 3);
+            string encounterId = pick switch
+            {
+                0 => TrapEncounterIds.BaitStolen,
+                1 => TrapEncounterIds.Tampered,
+                _ => TrapEncounterIds.StrangerDiscovery
+            };
+
+            switch (pick)
+            {
+                case 0:
+                    // Bait stolen: canonical in-domain command. The trap
+                    // continues operating unbaited (lower effective catch
+                    // chance on subsequent checks).
+                    site.baitType = string.Empty;
+                    break;
+                case 1:
+                    // Trap tampered: canonical durability damage through the
+                    // same break transition as wear exhaustion.
+                    site.remainingDurability = 0;
+                    MarkBroken(site);
+                    break;
+                default:
+                    // Stranger discovery: no trap mutation; narrative +
+                    // player response are owned by the encounter authority.
+                    break;
+            }
+
+            CreatePendingEvent(
+                WildlifeTrappingEventKinds.TrapEncounter,
+                site.siteId,
+                site.assignedHunterId,
+                string.Empty,
+                encounterId,
+                0f);
+        }
+
+        /// <summary>
+        /// Resolve one miss-only authored incident. The dedicated stream keeps
+        /// atmospheric content from perturbing catch, bycatch, or health
+        /// replay. Existing pending incidents are never rerolled or replaced.
+        /// </summary>
+        private void ResolveNarrativeIncident(TrapSite site, TrapDefinition? trapDef)
+        {
+            if (trapDef == null
+                || string.IsNullOrEmpty(site.trapId)
+                || trapDef.narrativeIncidentChance <= 0f
+                || !string.IsNullOrEmpty(site.pendingNarrativeEvent))
+                return;
+
+            if (_incidentRng.NextDouble() >= trapDef.narrativeIncidentChance)
+                return;
+
+            IReadOnlyList<string> candidates = trapDef.narrativeIncidentIds != null
+                && trapDef.narrativeIncidentIds.Count > 0
+                ? trapDef.narrativeIncidentIds
+                : TrapNarrativeIncidentIds.Ordered;
+            if (candidates.Count == 0) return;
+
+            int pick = _incidentRng.Next(0, candidates.Count);
+            string eventId = candidates[pick] ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(eventId)) return;
+
+            site.pendingNarrativeEvent = eventId;
+            CreatePendingEvent(
+                WildlifeTrappingEventKinds.NarrativeIncident,
+                site.siteId,
+                site.assignedHunterId,
+                string.Empty,
+                eventId,
+                0f);
+        }
+
+        /// <summary>Stable source identity for host-level narrative de-duplication.</summary>
+        public static string BuildNarrativeIncidentSourceId(string siteId, string eventId)
+            => $"wildlife-trap:{siteId ?? string.Empty}:incident:{eventId ?? string.Empty}";
+
+        private void MarkBroken(TrapSite site)
+        {
+            if (site.isBroken) return;
+            site.isBroken = true;
+            site.remainingDurability = 0;
+            // Plan IV Task 7: the break TRANSITION emits exactly one radio
+            // fact. Already-broken traps re-entering checks emit nothing.
+            CreatePendingEvent(
+                WildlifeTrappingEventKinds.TrappingBroadcast,
+                site.siteId,
+                site.assignedHunterId,
+                string.Empty,
+                TrappingBroadcastIds.TrapBroken,
+                0f);
+            OnTrapBroken?.Invoke(new TrapLifecycleEvent
+            {
+                siteId = site.siteId,
+                trapId = site.trapId,
+                trapType = site.trapType,
+                isBroken = true,
+                day = _currentDay
+            });
         }
     }
 }

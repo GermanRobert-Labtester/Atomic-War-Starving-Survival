@@ -17,7 +17,7 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 | environmental_atmosphere_expansion | environmental_texts_expansion_05 | DATA_ONLY (no Core loader for `environmental_texts`) | ambient world text |
 | radio_distress_signals_expansion | radio_distress_signals | DATA_ONLY (mirrors shipped schema) | ambient radio |
 | narrative/journals_expansion | journal_entries_expansion_05 | **LOADABLE** through the Plan 142 canonical adapter; ambient fields remain read-only metadata | producer-bound journal |
-| narrative/bureaucratic_documents_expansion | bunker_shift_schedules_and_notices | DATA_ONLY | ambient document |
+| narrative/bureaucratic_documents_expansion | bunker_shift_schedules_and_notices | **LOADABLE** through the Plan 149 typed document adapter; transcripts remain read-only authored records | producer-bound Journal Events codex |
 | narrative/letters_expansion | unsent_letters_batch_2 | DATA_ONLY | ambient letter |
 | narrative/medical_documents_expansion | dweller_medical_casebook | **LOADABLE** (superset; `DwellerMedicalCatalog`-compatible) | ambient medical |
 | narrative/engineering_logs_expansion | bunker_maintenance_logs_batch_2 | DATA_ONLY | ambient log |
@@ -29,10 +29,10 @@ All eight batches are **ambient/diegetic flavor text** — no entry conditions, 
 
 **No blocking reachability findings.** There are no dead ends, impossible conditions, duplicate choices, or effects-with-no-consumer because there are no choices or effects. All content is ambient.
 
-**CONTENT_DECISION (owner):** Wiring the remaining DATA_ONLY batches into
-their respective runtime systems is still separate work. The journal slice
-was resolved by Plan 142: its two source shapes are loaded through one
-canonical adapter and activated only by matching real journal producers.
+**CONTENT_DECISION (owner):** The journal slice was resolved by Plan 142, and
+the bureaucratic document slice by Plan 149. Both use typed adapters and
+matching producer contexts; their authored bodies remain read-only metadata.
+The other DATA_ONLY batches remain separate work.
 
 ---
 

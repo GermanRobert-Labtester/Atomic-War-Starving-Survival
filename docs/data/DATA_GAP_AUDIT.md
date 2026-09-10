@@ -53,7 +53,7 @@ dead content: written, possibly authored with care, but invisible to the game.
 | faction_war_radio.json | dict (broadcasts) | Radio broadcasts for faction war | Faction war radio, unused. |
 | faction_war_dialogue.json | dict (snippets) | Dialogue snippets | Faction war dialogue, unused. |
 | faction_war_communiques.json | dict (communiques) | Official communiques | Faction war flavor, unused. |
-| narrative_arc_events.json | 15 | Narrative events with choices/weight/minDay | Story events, unused. |
+| narrative_arc_events.json | 15 | Narrative events with choices/weight/minDay | Resolved by Plan 143's bounded typed `NarrativeArcEventSystem`; effects route through existing authorities. |
 
 ### Moderate orphans (small but complete content)
 
@@ -190,8 +190,9 @@ with zero new content authoring.
    needed.
 3. **Wire `expansion_survivor_fields.json` + `expansion_item_tags.json`** — 139 entries
    of character/item enrichment.
-4. **Wire `echoes.json` + `narrative_arc_events.json`** — 38 narrative events with
-   player choices.
+4. **Wire `echoes.json`** — 23 narrative events with player choices. The
+   `narrative_arc_events.json` portion of this historical recommendation is
+   resolved by Plan 143; it is no longer an orphan.
 5. **Add `schema_version` to the 12 most critical files** — items, locations,
    survivors, recipes, events, radio, faction_lore, characters, and the four largest
    expansion catalogs.

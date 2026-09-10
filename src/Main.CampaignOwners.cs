@@ -1081,6 +1081,23 @@ namespace AtomicWar.GodotApp
                 _m._expansionQuests.TickDay(day);
                 _m.SetupNpcArcs();
 
+                // Plan 143: one deterministic daily draw from the shared
+                // narrative stream. The selected event is persisted as a
+                // pending modal; selecting it never applies consequences.
+                _m.SetupNarrative();
+                var arc = _m._narrative.SelectArcForDay(
+                    day,
+                    _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Narrative, day, 0));
+                if (arc != null)
+                {
+                    events.Add(new DayStateChangeEvent(
+                        "narrative_arc_selected",
+                        "narrative_quests_verdict",
+                        arc.Id,
+                        null,
+                        day));
+                }
+
                 events.Add(new DayStateChangeEvent("narrative_ticked", "narrative_quests_verdict", null, null, day));
             }
         }

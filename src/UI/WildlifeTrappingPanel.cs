@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Localization;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -25,6 +27,7 @@ namespace AtomicWar.GodotApp.UI
         private Button _setTrapBtn = null!;
         private Button _checkTrapBtn = null!;
         private Button _repairBtn = null!;
+        private Button _removeBtn = null!;
         private OptionButton _repairSiteDropdown = null!;
 
         private readonly List<TrapSite> _brokenSites = new();
@@ -39,6 +42,7 @@ namespace AtomicWar.GodotApp.UI
         public string? SelectedRepairSiteId => _selectedRepairSiteId;
         public Button? RepairButton => _repairBtn;
         public OptionButton? RepairSiteDropdown => _repairSiteDropdown;
+        public Button? SetTrapButton => _setTrapBtn;
         public AshfallStatusRail? StatusRail => _statusRail;
 
         public void Bind(WildlifeTrappingHostSession session)
@@ -47,6 +51,7 @@ namespace AtomicWar.GodotApp.UI
             if (_host != null)
             {
                 _host.StateChanged += RefreshView;
+                LocalizationService.Instance.OnLocaleChanged += OnLocaleChanged;
             }
             RefreshView();
         }
@@ -56,9 +61,12 @@ namespace AtomicWar.GodotApp.UI
             if (_host != null)
             {
                 _host.StateChanged -= RefreshView;
+                LocalizationService.Instance.OnLocaleChanged -= OnLocaleChanged;
                 _host = null;
             }
         }
+
+        private void OnLocaleChanged(string _) => RefreshView();
 
         public override void _Ready()
         {
@@ -90,6 +98,7 @@ namespace AtomicWar.GodotApp.UI
                     _host.TrySetTrap(ManagedSiteId, DefaultTrapId, "bait_grain_lure", "Hunter");
                 else
                     _host?.SetTrap(ManagedSiteId, "bait_grain_lure", "Hunter");
+                RefreshView();
             };
             buttonRow.AddChild(_setTrapBtn);
 
@@ -119,6 +128,15 @@ namespace AtomicWar.GodotApp.UI
             };
             _repairBtn.Visible = false;
             buttonRow.AddChild(_repairBtn);
+
+            _removeBtn = new Button { Text = "Remove Trap", CustomMinimumSize = new Vector2(140, 36) };
+            _removeBtn.Pressed += () =>
+            {
+                if (_host != null && _host.System.State.trapSites.Find(t => t.siteId == ManagedSiteId) != null)
+                    _host.RemoveTrap(ManagedSiteId);
+                RefreshView();
+            };
+            buttonRow.AddChild(_removeBtn);
 
             _contentStack.AddChild(buttonRow);
             _shell.SetContent(_contentStack);
@@ -171,6 +189,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     _statusRail.AddCard("empty", "NO SITES", "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
                 }
+                _statusRail.ReorderCard("empty", 2);
             }
             else
             {
@@ -188,10 +207,11 @@ namespace AtomicWar.GodotApp.UI
 
                     string trapName = site.trapType;
                     int maxDurability = 0;
-                    if (_host.Catalog != null && !string.IsNullOrEmpty(site.trapId)
+                    if (_host?.Catalog != null && !string.IsNullOrEmpty(site.trapId)
                         && _host.Catalog.Traps.TryGetValue(site.trapId, out var trapDef))
                     {
-                        trapName = trapDef.displayName;
+                        trapName = AshfallLocalization.Tr(
+                            WildlifeTrappingLocalization.TrapNameKey(site.trapId), trapDef.displayName);
                         maxDurability = trapDef.durabilityChecks;
                     }
                     else if (site.remainingDurability > 0)
@@ -209,13 +229,22 @@ namespace AtomicWar.GodotApp.UI
                     }
                     else if (site.remainingDurability > 0)
                     {
-                        condition = $"{site.remainingDurability}/{maxDurability}";
-                        crit = (maxDurability > 0 && site.remainingDurability <= maxDurability / 3)
+                        condition = maxDurability > 0
+                            ? $"{site.remainingDurability}/{maxDurability}"
+                            : $"{site.remainingDurability}";
+                        crit = (maxDurability > 0 && (float)site.remainingDurability / maxDurability <= 0.334f)
                             ? AshfallMetricCard.Criticality.Warn
                             : AshfallMetricCard.Criticality.Normal;
                     }
+                    else if (site.remainingDurability == 0)
+                    {
+                        // Zero durability with isBroken=false: malformed or depleted trap
+                        condition = maxDurability > 0 ? $"0/{maxDurability}" : "0";
+                        crit = AshfallMetricCard.Criticality.Critical;
+                    }
                     else
                     {
+                        // Sentinel durability value (-1): legacy/untracked
                         condition = "—";
                         crit = AshfallMetricCard.Criticality.Normal;
                     }
@@ -288,10 +317,11 @@ namespace AtomicWar.GodotApp.UI
                     {
                         var bSite = _brokenSites[i];
                         string trapName = bSite.trapType;
-                        if (_host.Catalog != null && !string.IsNullOrEmpty(bSite.trapId)
+                        if (_host?.Catalog != null && !string.IsNullOrEmpty(bSite.trapId)
                             && _host.Catalog.Traps.TryGetValue(bSite.trapId, out var td))
                         {
-                            trapName = td.displayName;
+                            trapName = AshfallLocalization.Tr(
+                                WildlifeTrappingLocalization.TrapNameKey(bSite.trapId), td.displayName);
                         }
                         _repairSiteDropdown.AddItem($"{trapName} ({bSite.siteId})", i);
                         if (_selectedRepairSiteId == bSite.siteId)
@@ -320,17 +350,31 @@ namespace AtomicWar.GodotApp.UI
             var managedSite = s.trapSites.Find(t => t.siteId == ManagedSiteId);
             if (_setTrapBtn != null)
             {
-                bool replaceable = managedSite == null
-                    || managedSite.hasCatch
-                    || managedSite.setDay <= 0
-                    || managedSite.isBroken;
+                string failureCode = string.Empty;
+                bool replaceable = _host != null
+                    && _host.CanSetTrapAtSite(ManagedSiteId, out failureCode);
                 _setTrapBtn.Text = managedSite != null && replaceable
                     ? "Replace Trap at Perimeter"
                     : "Set Snare at Perimeter";
                 _setTrapBtn.Disabled = !replaceable;
-                _setTrapBtn.TooltipText = replaceable
-                    ? string.Empty
-                    : "Trap active — check the snare or wait for it to break.";
+                if (!replaceable)
+                {
+                    _setTrapBtn.TooltipText = failureCode == "trap_active"
+                        ? "Trap active — check the snare or wait for it to break."
+                        : "Trap deployment unavailable.";
+                }
+                else if (_host != null && _host.TryGetSetupBill(DefaultTrapId, out var setupBill, out _))
+                {
+                    string costStr = FormatBill(setupBill);
+                    bool canAfford = _host.CanAffordSetup(DefaultTrapId, out _, out _);
+                    _setTrapBtn.TooltipText = canAfford
+                        ? $"Cost: {costStr}"
+                        : $"Cost: {costStr} (Insufficient materials)";
+                }
+                else
+                {
+                    _setTrapBtn.TooltipText = string.Empty;
+                }
             }
 
             if (_detailText != null)
@@ -339,18 +383,44 @@ namespace AtomicWar.GodotApp.UI
                 foreach (var t in s.trapSites)
                 {
                     string name = t.trapType;
-                    if (_host.Catalog != null && !string.IsNullOrEmpty(t.trapId)
+                    string description = string.Empty;
+                    if (_host?.Catalog != null && !string.IsNullOrEmpty(t.trapId)
                         && _host.Catalog.Traps.TryGetValue(t.trapId, out var td))
-                        name = td.displayName;
+                    {
+                        name = AshfallLocalization.Tr(
+                            WildlifeTrappingLocalization.TrapNameKey(t.trapId), td.displayName);
+                        description = AshfallLocalization.Tr(
+                            WildlifeTrappingLocalization.TrapDescriptionKey(t.trapId), td.description);
+                    }
                     string condition = t.isBroken ? "BROKEN"
                         : t.remainingDurability > 0 ? $"{t.remainingDurability} checks left"
                         : "—";
-                    text += $"  • {name} at {t.siteId} — {condition}" +
-                        (t.hasCatch ? $" — CATCH READY ({t.catchSpecies})" : " — Armed") + "\n";
+                    string baitName = t.baitType;
+                    if (_host?.Catalog != null && !string.IsNullOrEmpty(t.baitType)
+                        && _host.Catalog.Baits.TryGetValue(t.baitType, out var bait))
+                        baitName = AshfallLocalization.Tr(
+                            WildlifeTrappingLocalization.BaitNameKey(t.baitType), bait.displayName);
+                    string catchName = "Uncatalogued catch";
+                    string catchDescription = string.Empty;
+                    if (_host?.Catalog != null && !string.IsNullOrEmpty(t.catchSpecies)
+                        && _host.Catalog.Prey.TryGetValue(t.catchSpecies, out var preyDef))
+                    {
+                        catchName = AshfallLocalization.Tr(
+                            WildlifeTrappingLocalization.PreyNameKey(t.catchSpecies), preyDef.displayName);
+                        catchDescription = AshfallLocalization.Tr(
+                            WildlifeTrappingLocalization.PreyDescriptionKey(t.catchSpecies), preyDef.description);
+                    }
+                    text += $"  • {name} at {t.siteId} — {condition} · Bait: {baitName}" +
+                        (t.hasCatch ? $" — CATCH READY ({catchName})" : " — Armed") + "\n";
+                    if (!string.IsNullOrEmpty(description)) text += $"    {description}\n";
+                    if (t.hasCatch && !string.IsNullOrEmpty(catchDescription)) text += $"    {catchDescription}\n";
                 }
-                text += $"\nTotal Toxins Neutralized: {s.totalToxicRemoved} | Last Event: {_host.LastEvent}";
+                text += $"\nTotal Toxins Neutralized: {s.totalToxicRemoved} | Last Event: {_host?.LastEvent ?? string.Empty}";
                 _detailText.Text = text;
             }
+
+            if (_removeBtn != null)
+                _removeBtn.Visible = managedSite != null;
         }
 
         private void UpdateRepairButtonState()

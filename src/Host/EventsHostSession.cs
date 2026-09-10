@@ -44,6 +44,28 @@ namespace AtomicWar.GodotApp.Host
                 _events = eventsData.Events;
         }
 
+        /// <summary>
+        /// Resolve one authored event for a host adapter. The lazy guard keeps
+        /// composition-order safe: a trapping event can be delivered before
+        /// Godot has run this node's _Ready callback.
+        /// </summary>
+        public bool TryGetEvent(string eventId, out EventData eventData)
+        {
+            if (_events.Count == 0)
+                LoadEvents();
+            for (int i = 0; i < _events.Count; i++)
+            {
+                var candidate = _events[i];
+                if (candidate != null && string.Equals(candidate.Id, eventId, System.StringComparison.Ordinal))
+                {
+                    eventData = candidate;
+                    return true;
+                }
+            }
+            eventData = null!;
+            return false;
+        }
+
         private void LoadIncidents()
         {
             string incidentsJsonPath = "res://Assets/StreamingAssets/Data/incidents.json";

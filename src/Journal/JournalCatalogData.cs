@@ -73,11 +73,27 @@ namespace AtomicWar.Journal
         public List<RoomHistoryCodexData> RoomHistories = new List<RoomHistoryCodexData>();
         /// <summary>Plan 135 activated world narrative discoveries.</summary>
         public NarrativeDiscoveryCatalog? NarrativeDiscoveries;
+        /// <summary>Plan 149 authored shelter paperwork, separate from live state.</summary>
+        public BureaucraticDocumentCatalog? BureaucraticDocuments;
+        /// <summary>Plan 153 authored cult, ritual and memorial records. The
+        /// source catalog is read-only; discovery is owned by NarrativeDiscoveries.</summary>
+        public FringeCultsCatalog? FringeCults;
+        /// <summary>Plan 156 authored paper-making process records.</summary>
+        public PaperMakingCatalog? PaperMaking;
+        /// <summary>Plan 156 authored printing process records.</summary>
+        public PaperPrintingCatalog? PaperPrinting;
+        /// <summary>Plan 160 authored bone, horn and antler process records.</summary>
+        public BoneHornCarvingCatalog? BoneHornCarving;
 
         public bool IsEmpty =>
             Items.Count == 0 && Locations.Count == 0 && Survivors.Count == 0 && Events.Count == 0
             && VerdictHistory.Count == 0 && RoomHistories.Count == 0
-            && (NarrativeDiscoveries == null || NarrativeDiscoveries.Count == 0);
+            && (NarrativeDiscoveries == null || NarrativeDiscoveries.Count == 0)
+            && (BureaucraticDocuments == null || BureaucraticDocuments.Count == 0)
+            && (FringeCults == null || FringeCults.TotalCount == 0)
+            && (PaperMaking == null || PaperMaking.TotalCount == 0)
+            && (PaperPrinting == null || PaperPrinting.TotalCount == 0)
+            && (BoneHornCarving == null || BoneHornCarving.TotalCount == 0);
     }
 
     public static class CatalogJsonLoader
@@ -101,6 +117,19 @@ namespace AtomicWar.Journal
 
             catalogs.NarrativeDiscoveries = new NarrativeDiscoveryCatalog();
             catalogs.NarrativeDiscoveries.LoadFromFiles(dataDir, fileIO);
+            catalogs.FringeCults = FringeCultsCatalog.LoadFromDirectory(
+                fileIO.Combine(dataDir, "narrative"));
+            catalogs.PaperMaking = PaperMakingCatalog.LoadFromDirectory(
+                fileIO.Combine(dataDir, "narrative"));
+            catalogs.PaperPrinting = PaperPrintingCatalog.LoadFromDirectory(
+                fileIO.Combine(dataDir, "narrative"));
+            catalogs.BoneHornCarving = BoneHornCarvingCatalog.LoadFromDirectory(
+                fileIO.Combine(dataDir, "narrative"));
+
+            var documentResult = new BureaucraticDocumentCatalogLoader(
+                fileIO,
+                new SystemTextJsonSerializer()).Load(dataDir);
+            catalogs.BureaucraticDocuments = documentResult.Catalog;
 
             return catalogs;
         }

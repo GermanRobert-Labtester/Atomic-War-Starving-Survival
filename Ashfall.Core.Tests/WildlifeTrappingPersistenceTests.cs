@@ -348,5 +348,205 @@ namespace Ashfall.Core.Tests
             Assert.Equal(string.Empty, broken.diseaseId);
             Assert.Equal(0f, broken.contaminationDose);
         }
+
+        private static string FindFixtureDir()
+        {
+            var dir = Directory.GetCurrentDirectory();
+            for (int i = 0; i < 10; i++)
+            {
+                string candidate = Path.Combine(dir, "Ashfall.Core.Tests", "Fixtures", "SaveCompatibility");
+                if (Directory.Exists(candidate)) return candidate;
+                candidate = Path.Combine(dir, "Fixtures", "SaveCompatibility");
+                if (Directory.Exists(candidate)) return candidate;
+                dir = Path.GetDirectoryName(dir) ?? dir;
+            }
+            return Path.Combine(AppContext.BaseDirectory, "Fixtures", "SaveCompatibility");
+        }
+
+        [Fact]
+        public void LegacySaveFixture_PrePlan36_LoadsWithFunctionalDefaultsAndPreservesState()
+        {
+            string fixturePath = Path.Combine(FindFixtureDir(), "wildlife_trapping_pre_plan36.json");
+            Assert.True(File.Exists(fixturePath), $"Fixture must exist at {fixturePath}");
+
+            string json = File.ReadAllText(fixturePath);
+            var serializer = new SystemTextJsonSerializer();
+
+            using var doc = JsonDocument.Parse(json);
+            var stateElement = doc.RootElement.GetProperty("State");
+            var state = serializer.Deserialize<WildlifeTrappingState>(stateElement.GetRawText());
+            Assert.NotNull(state);
+
+            // Legacy state counts preserved
+            Assert.Equal(7, state!.totalCatch);
+            Assert.Equal(2, state.totalToxicRemoved);
+            Assert.Equal(2, state.trapSites.Count);
+
+            // Verify Trap 1 (Perimeter North): untracked, pending check
+            var site1 = state.trapSites[0];
+            Assert.Equal("perimeter_north", site1.siteId);
+            Assert.Equal(string.Empty, site1.trapId);
+            Assert.Equal(-1, site1.remainingDurability);
+            Assert.False(site1.isBroken);
+            Assert.Equal(string.Empty, site1.bycatchSpecies);
+            Assert.Equal(string.Empty, site1.diseaseId);
+            Assert.Equal(0f, site1.contaminationDose);
+
+            // Verify Trap 2 (Perimeter South): untracked, has catch
+            var site2 = state.trapSites[1];
+            Assert.Equal("perimeter_south", site2.siteId);
+            Assert.Equal(string.Empty, site2.trapId);
+            Assert.Equal(-1, site2.remainingDurability);
+            Assert.False(site2.isBroken);
+            Assert.True(site2.hasCatch);
+            Assert.Equal("rat", site2.catchSpecies);
+            Assert.Equal(0.45f, site2.carcassYield, precision: 2);
+            Assert.True(site2.isToxic);
+
+            // Restore into system and execute actions
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            sys.RestoreState(state);
+
+            // Site 2 can be butchered without error
+            var butcherRes = sys.Butcher("perimeter_south");
+            Assert.True(butcherRes.IsSuccess);
+            Assert.True(sys.State.trapSites[1].isMeatProcessed);
+
+            // Re-saving emits all modern schema fields
+            var captured = sys.CaptureState();
+            string reSaved = serializer.Serialize(captured);
+            Assert.Contains("\"trapId\"", reSaved);
+            Assert.Contains("\"remainingDurability\"", reSaved);
+            Assert.Contains("\"isBroken\"", reSaved);
+            Assert.Contains("\"bycatchSpecies\"", reSaved);
+            Assert.Contains("\"diseaseId\"", reSaved);
+            Assert.Contains("\"contaminationDose\"", reSaved);
+        }
+
+        [Fact]
+        public void MixedSaveFixture_LoadsAndPreservesAllFourTrapCategories()
+        {
+            string fixturePath = Path.Combine(FindFixtureDir(), "wildlife_trapping_mixed_plan36.json");
+            Assert.True(File.Exists(fixturePath), $"Fixture must exist at {fixturePath}");
+
+            string json = File.ReadAllText(fixturePath);
+            var serializer = new SystemTextJsonSerializer();
+
+            using var doc = JsonDocument.Parse(json);
+            var stateElement = doc.RootElement.GetProperty("State");
+            var state = serializer.Deserialize<WildlifeTrappingState>(stateElement.GetRawText());
+            Assert.NotNull(state);
+
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            sys.RestoreState(state!);
+
+            Assert.Equal(12, sys.State.totalCatch);
+            Assert.Equal(3, sys.State.totalToxicRemoved);
+            Assert.Equal(4, sys.State.trapSites.Count);
+
+            // 1. Legacy Trap
+            var legacy = sys.State.trapSites.Find(s => s.siteId == "site_legacy");
+            Assert.NotNull(legacy);
+            Assert.Equal(string.Empty, legacy!.trapId);
+            Assert.Equal(-1, legacy.remainingDurability);
+            Assert.False(legacy.isBroken);
+
+            // 2. Healthy Trap
+            var healthy = sys.State.trapSites.Find(s => s.siteId == "site_healthy");
+            Assert.NotNull(healthy);
+            Assert.Equal("trap_snare", healthy!.trapId);
+            Assert.Equal(8, healthy.remainingDurability);
+            Assert.False(healthy.isBroken);
+
+            // 3. Broken Trap
+            var broken = sys.State.trapSites.Find(s => s.siteId == "site_broken");
+            Assert.NotNull(broken);
+            Assert.Equal("trap_snare", broken!.trapId);
+            Assert.Equal(0, broken.remainingDurability);
+            Assert.True(broken.isBroken);
+
+            // 4. Pending Catch Trap with Bycatch, Disease, Contamination
+            var pending = sys.State.trapSites.Find(s => s.siteId == "site_pending_catch");
+            Assert.NotNull(pending);
+            Assert.Equal("trap_snare", pending!.trapId);
+            Assert.Equal(4, pending.remainingDurability);
+            Assert.False(pending.isBroken);
+            Assert.True(pending.hasCatch);
+            Assert.Equal("ash_crow", pending.catchSpecies);
+            Assert.Equal("rat", pending.bycatchSpecies);
+            Assert.Equal("disease_blood_fever", pending.diseaseId);
+            Assert.Equal(6.0f, pending.contaminationDose);
+
+            var butcherRes = sys.Butcher("site_pending_catch");
+            Assert.True(butcherRes.IsSuccess);
+            Assert.True(pending.isMeatProcessed);
+            Assert.Equal("rat", pending.bycatchSpecies);
+        }
+
+        [Fact]
+        public void RestoreState_NullStringFields_NormalizedToEmptyString()
+        {
+            var rawState = new WildlifeTrappingState
+            {
+                trapSites = new List<TrapSite>
+                {
+                    new TrapSite
+                    {
+                        siteId = null!,
+                        assignedHunterId = null!,
+                        baitType = null!,
+                        trapType = null!,
+                        trapId = null!,
+                        catchSpecies = null!,
+                        bycatchSpecies = null!,
+                        diseaseId = null!,
+                        remainingDurability = 5,
+                        isBroken = false
+                    }
+                }
+            };
+
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            sys.RestoreState(rawState);
+
+            var site = sys.State.trapSites[0];
+            Assert.Equal(string.Empty, site.siteId);
+            Assert.Equal(string.Empty, site.assignedHunterId);
+            Assert.Equal(string.Empty, site.baitType);
+            Assert.Equal(string.Empty, site.trapType);
+            Assert.Equal(string.Empty, site.trapId);
+            Assert.Equal(string.Empty, site.catchSpecies);
+            Assert.Equal(string.Empty, site.bycatchSpecies);
+            Assert.Equal(string.Empty, site.diseaseId);
+        }
+
+        [Fact]
+        public void RestoreState_NegativeOrInconsistentDurability_NormalizedCorrectly()
+        {
+            var rawState = new WildlifeTrappingState
+            {
+                trapSites = new List<TrapSite>
+                {
+                    new TrapSite
+                    {
+                        siteId = "site_neg",
+                        remainingDurability = -99,
+                        isBroken = false
+                    },
+                    new TrapSite
+                    {
+                        siteId = "site_broken_positive_dur",
+                        remainingDurability = 10,
+                        isBroken = true
+                    }
+                }
+            };
+
+            var sys = new WildlifeTrappingSystem(new SeededRng(42));
+            sys.RestoreState(rawState);
+
+            Assert.Equal(-1, sys.State.trapSites[0].remainingDurability);
+            Assert.Equal(0, sys.State.trapSites[1].remainingDurability);
+        }
     }
 }

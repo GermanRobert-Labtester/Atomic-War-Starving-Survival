@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using Ashfall.Core;
 using Ashfall.Core.Disease;
 using Ashfall.Core.Radiation;
@@ -290,6 +292,215 @@ namespace Ashfall.Core.Tests
             Assert.Equal(recordA.HealthHash, hashB);
             Assert.Equal("disease_typhoid_waterborne", restoredSite.diseaseId);
             Assert.Equal(4.0f, restoredSite.contaminationDose);
+        }
+
+        [Fact]
+        public void DeterministicReplay_MultiDayCampaignTrace_UninterruptedVsSavedRestored_MatchesExactEventTraceAndHash()
+        {
+            const int seed = 42;
+            var catalog = LoadCatalog();
+
+            // Run A: Uninterrupted run across 10 days
+            var rngA = new SeededRng(seed);
+            var sysA = new WildlifeTrappingSystem(rngA);
+            catalog.RegisterWith(sysA);
+
+            var trapDefWire = catalog.Traps["trap_improvised_wire"];
+            var trapDefBox = catalog.Traps["trap_box"];
+
+            sysA.SetTrap("site_wire", "bait_scrap_meat", "hunter_dweller",
+                trapDefWire.trapType, trapDefWire.trap_id, trapDefWire.checkIntervalDays, trapDefWire.durabilityChecks);
+            sysA.SetTrap("site_box", "bait_grain_lure", "hunter_dweller",
+                trapDefBox.trapType, trapDefBox.trap_id, trapDefBox.checkIntervalDays, trapDefBox.durabilityChecks);
+
+            var traceLogA = new StringBuilder();
+
+            for (int day = 2; day <= 10; day++)
+            {
+                sysA.TickDay(day);
+                foreach (var site in sysA.State.trapSites)
+                {
+                    traceLogA.AppendLine($"D:{day}|S:{site.siteId}|Dur:{site.remainingDurability}|Brk:{site.isBroken}|Catch:{site.hasCatch}|Sp:{site.catchSpecies}|Bycatch:{site.bycatchSpecies}|Yield:{site.carcassYield:F3}|Tox:{site.isToxic}|Dis:{site.diseaseId}|Dose:{site.contaminationDose:F2}");
+                    if (site.hasCatch)
+                    {
+                        var (rec, _) = ExecuteButchery(sysA, site.siteId, "dweller_butcher", day);
+                        traceLogA.AppendLine($"Butchered|S:{site.siteId}|Rec:{rec.SpeciesId}|HHash:{rec.HealthHash}");
+                        site.hasCatch = false;
+                    }
+                }
+            }
+
+            string traceA = traceLogA.ToString();
+            byte[] hashBytesA = SHA256.HashData(Encoding.UTF8.GetBytes(traceA));
+            string hashA = Convert.ToHexString(hashBytesA);
+
+            // Run B: Interrupted at Day 5 boundary, saved, deserialized, and resumed with continuing RNG
+            var rngB = new SeededRng(seed);
+            var sysB = new WildlifeTrappingSystem(rngB);
+            catalog.RegisterWith(sysB);
+
+            sysB.SetTrap("site_wire", "bait_scrap_meat", "hunter_dweller",
+                trapDefWire.trapType, trapDefWire.trap_id, trapDefWire.checkIntervalDays, trapDefWire.durabilityChecks);
+            sysB.SetTrap("site_box", "bait_grain_lure", "hunter_dweller",
+                trapDefBox.trapType, trapDefBox.trap_id, trapDefBox.checkIntervalDays, trapDefBox.durabilityChecks);
+
+            var traceLogB = new StringBuilder();
+
+            // Run days 2..5
+            for (int day = 2; day <= 5; day++)
+            {
+                sysB.TickDay(day);
+                foreach (var site in sysB.State.trapSites)
+                {
+                    traceLogB.AppendLine($"D:{day}|S:{site.siteId}|Dur:{site.remainingDurability}|Brk:{site.isBroken}|Catch:{site.hasCatch}|Sp:{site.catchSpecies}|Bycatch:{site.bycatchSpecies}|Yield:{site.carcassYield:F3}|Tox:{site.isToxic}|Dis:{site.diseaseId}|Dose:{site.contaminationDose:F2}");
+                    if (site.hasCatch)
+                    {
+                        var (rec, _) = ExecuteButchery(sysB, site.siteId, "dweller_butcher", day);
+                        traceLogB.AppendLine($"Butchered|S:{site.siteId}|Rec:{rec.SpeciesId}|HHash:{rec.HealthHash}");
+                        site.hasCatch = false;
+                    }
+                }
+            }
+
+            // Save at Day 5 boundary
+            var serializer = new SystemTextJsonSerializer();
+            string savedJson = serializer.Serialize(sysB.CaptureState());
+            var restoredState = serializer.Deserialize<WildlifeTrappingState>(savedJson);
+            Assert.NotNull(restoredState);
+
+            // Resume in fresh system instance with continuing RNG
+            var sysC = new WildlifeTrappingSystem(rngB);
+            catalog.RegisterWith(sysC);
+            sysC.RestoreState(restoredState!);
+
+            // Run days 6..10
+            for (int day = 6; day <= 10; day++)
+            {
+                sysC.TickDay(day);
+                foreach (var site in sysC.State.trapSites)
+                {
+                    traceLogB.AppendLine($"D:{day}|S:{site.siteId}|Dur:{site.remainingDurability}|Brk:{site.isBroken}|Catch:{site.hasCatch}|Sp:{site.catchSpecies}|Bycatch:{site.bycatchSpecies}|Yield:{site.carcassYield:F3}|Tox:{site.isToxic}|Dis:{site.diseaseId}|Dose:{site.contaminationDose:F2}");
+                    if (site.hasCatch)
+                    {
+                        var (rec, _) = ExecuteButchery(sysC, site.siteId, "dweller_butcher", day);
+                        traceLogB.AppendLine($"Butchered|S:{site.siteId}|Rec:{rec.SpeciesId}|HHash:{rec.HealthHash}");
+                        site.hasCatch = false;
+                    }
+                }
+            }
+
+            string traceB = traceLogB.ToString();
+            byte[] hashBytesB = SHA256.HashData(Encoding.UTF8.GetBytes(traceB));
+            string hashB = Convert.ToHexString(hashBytesB);
+
+            Assert.Equal(traceA, traceB);
+            Assert.Equal(hashA, hashB);
+        }
+
+        [Fact]
+        public void DeterministicReplay_ThreeConsecutiveRuns_ProduceIdenticalStateAndEventHash()
+        {
+            const int seed = 42;
+            var catalog = LoadCatalog();
+
+            string GenerateRunHash()
+            {
+                var rng = new SeededRng(seed);
+                var sys = new WildlifeTrappingSystem(rng);
+                catalog.RegisterWith(sys);
+
+                var trapDefWire = catalog.Traps["trap_improvised_wire"];
+                var trapDefBox = catalog.Traps["trap_box"];
+
+                sys.SetTrap("site_wire", "bait_scrap_meat", "hunter_dweller",
+                    trapDefWire.trapType, trapDefWire.trap_id, trapDefWire.checkIntervalDays, trapDefWire.durabilityChecks);
+                sys.SetTrap("site_box", "bait_grain_lure", "hunter_dweller",
+                    trapDefBox.trapType, trapDefBox.trap_id, trapDefBox.checkIntervalDays, trapDefBox.durabilityChecks);
+
+                var log = new StringBuilder();
+                for (int day = 2; day <= 12; day++)
+                {
+                    sys.TickDay(day);
+                    foreach (var site in sys.State.trapSites)
+                    {
+                        log.AppendLine($"D:{day}|S:{site.siteId}|Dur:{site.remainingDurability}|Brk:{site.isBroken}|Catch:{site.hasCatch}|Sp:{site.catchSpecies}|Bycatch:{site.bycatchSpecies}|Yield:{site.carcassYield:F3}|Tox:{site.isToxic}|Dis:{site.diseaseId}|Dose:{site.contaminationDose:F2}");
+                        if (site.hasCatch)
+                        {
+                            var (rec, _) = ExecuteButchery(sys, site.siteId, "dweller_butcher", day);
+                            log.AppendLine($"Butchered|S:{site.siteId}|Rec:{rec.SpeciesId}|HHash:{rec.HealthHash}");
+                            site.hasCatch = false;
+                        }
+                    }
+                }
+
+                log.AppendLine($"TotalCatch:{sys.State.totalCatch}|TotalToxicRemoved:{sys.State.totalToxicRemoved}");
+                return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(log.ToString())));
+            }
+
+            string hash1 = GenerateRunHash();
+            string hash2 = GenerateRunHash();
+            string hash3 = GenerateRunHash();
+
+            Assert.Equal(hash1, hash2);
+            Assert.Equal(hash2, hash3);
+        }
+
+        [Fact]
+        public void DeterministicReplay_BreakageBoundary_MatchesBreakDayAndPreventsSubsequentCatches()
+        {
+            const int seed = 99;
+            var catalog = LoadCatalog();
+
+            var rng = new SeededRng(seed);
+            var sys = new WildlifeTrappingSystem(rng);
+            catalog.RegisterWith(sys);
+
+            var trapDef = catalog.Traps["trap_improvised_wire"]; // durability = 3, interval = 1
+            sys.SetTrap("site_test_break", "bait_grain_lure", "hunter_dweller",
+                trapDef.trapType, trapDef.trap_id, checkIntervalDays: 1, durabilityChecks: 3);
+
+            int breakDay = -1;
+            for (int day = 2; day <= 8; day++)
+            {
+                sys.TickDay(day);
+                var site = sys.State.trapSites[0];
+                if (site.hasCatch)
+                {
+                    ExecuteButchery(sys, "site_test_break", "butcher", day);
+                }
+
+                if (site.isBroken && breakDay < 0)
+                {
+                    breakDay = day;
+                }
+            }
+
+            Assert.True(breakDay > 0, "Trap with 3 durability checks must break within 8 days");
+
+            // Save at broken state
+            var serializer = new SystemTextJsonSerializer();
+            string json = serializer.Serialize(sys.CaptureState());
+            var restored = serializer.Deserialize<WildlifeTrappingState>(json);
+            Assert.NotNull(restored);
+
+            var sysRestored = new WildlifeTrappingSystem(rng);
+            catalog.RegisterWith(sysRestored);
+            sysRestored.RestoreState(restored!);
+
+            // Broken trap must produce 0 catches on subsequent days
+            int catchesAfterBreak = 0;
+            for (int day = 9; day <= 15; day++)
+            {
+                sysRestored.TickDay(day);
+                if (sysRestored.State.trapSites[0].hasCatch)
+                {
+                    catchesAfterBreak++;
+                }
+            }
+
+            Assert.Equal(0, catchesAfterBreak);
+            Assert.True(sysRestored.State.trapSites[0].isBroken);
+            Assert.Equal(0, sysRestored.State.trapSites[0].remainingDurability);
         }
     }
 }

@@ -74,6 +74,61 @@ namespace AtomicWar.GodotApp
             return _machineTellCatalog;
         }
 
+        // Plan 145 — bunker graffiti catalog (read-only ambient storytelling projection, loaded once).
+        private Ashfall.Core.Narrative.BunkerGraffitiCatalog? _bunkerGraffitiCatalog;
+
+        public Ashfall.Core.Narrative.BunkerGraffitiCatalog GetBunkerGraffitiCatalog()
+        {
+            if (_bunkerGraffitiCatalog != null) return _bunkerGraffitiCatalog;
+            _bunkerGraffitiCatalog = Ashfall.Core.Narrative.BunkerGraffitiCatalog.LoadFromDirectory(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            return _bunkerGraffitiCatalog;
+        }
+
+        // Plan 146 — bunker court catalog (read-only historical tribunal records, loaded once).
+        private Ashfall.Core.Narrative.BunkerCourtCatalog? _bunkerCourtCatalog;
+
+        public Ashfall.Core.Narrative.BunkerCourtCatalog GetBunkerCourtCatalog()
+        {
+            if (_bunkerCourtCatalog != null) return _bunkerCourtCatalog;
+            _bunkerCourtCatalog = Ashfall.Core.Narrative.BunkerCourtCatalog.LoadFromDirectory(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            return _bunkerCourtCatalog;
+        }
+
+        // Plan 148 — bunker maintenance catalog (read-only engineering emergency & glitch records, loaded once).
+        private Ashfall.Core.Narrative.BunkerMaintenanceCatalog? _bunkerMaintenanceCatalog;
+
+        public Ashfall.Core.Narrative.BunkerMaintenanceCatalog GetBunkerMaintenanceCatalog()
+        {
+            if (_bunkerMaintenanceCatalog != null) return _bunkerMaintenanceCatalog;
+            _bunkerMaintenanceCatalog = Ashfall.Core.Narrative.BunkerMaintenanceCatalog.LoadFromDirectory(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            return _bunkerMaintenanceCatalog;
+        }
+
+        // Plan 150 — personal letter catalog (read-only personal & unsent correspondence, loaded once).
+        private Ashfall.Core.Narrative.PersonalLetterCatalog? _personalLetterCatalog;
+
+        public Ashfall.Core.Narrative.PersonalLetterCatalog GetPersonalLetterCatalog()
+        {
+            if (_personalLetterCatalog != null) return _personalLetterCatalog;
+            _personalLetterCatalog = Ashfall.Core.Narrative.PersonalLetterCatalog.LoadFromDirectory(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            return _personalLetterCatalog;
+        }
+
+        // Plan 151 — abyssal anomalies science archive catalog (read-only science/anomaly logs, loaded once).
+        private Ashfall.Core.Narrative.AbyssalAnomaliesCatalog? _abyssalAnomaliesCatalog;
+
+        public Ashfall.Core.Narrative.AbyssalAnomaliesCatalog GetAbyssalAnomaliesCatalog()
+        {
+            if (_abyssalAnomaliesCatalog != null) return _abyssalAnomaliesCatalog;
+            _abyssalAnomaliesCatalog = Ashfall.Core.Narrative.AbyssalAnomaliesCatalog.LoadFromDirectory(
+                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            return _abyssalAnomaliesCatalog;
+        }
+
         /// <summary>
         /// Plan 29 29A: a shelter room hotspot was clicked — treat it as inspection.
         /// Marks the authoritative Day-1 roster inspection (legacy ids tolerated via

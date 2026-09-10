@@ -221,17 +221,166 @@ namespace AtomicWar.GodotApp
             _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
             _wildlifeTrapping.Catalog = trapCatalog;
             _wildlifeTrapping.Inventory = _inventory;
+            _wildlifeTrapping.DeliverButcheryFood = foodUnits =>
+                _inventory != null && _inventory.TryAdd("raw_meat", foodUnits);
+            _wildlifeTrapping.ApplyMorale = (survivorId, delta, source) =>
+            {
+                if (_survivors == null) SetupSurvivors();
+                var needs = _survivors?.Needs;
+                if (needs == null || needs.Get(survivorId) == null)
+                {
+                    GD.PushWarning($"[WildlifeTrapping] Cannot apply morale {delta:0.###} to missing survivor '{survivorId}' ({source}).");
+                    return;
+                }
+                needs.Modify(survivorId, NeedKind.Morale, delta);
+            };
+
+            // Plan VI: bycatch is a domain fact; the authored narrative
+            // authority owns its prose and presentation. The source key is
+            // stable across restore so a repeated host subscription cannot
+            // duplicate the notification.
+            _wildlifeTrapping.OnBycatchOccurred += occurrence =>
+            {
+                if (occurrence == null) return;
+                SetupEventsHost();
+                if (!_eventsHost.TryGetEvent("event_trapping_bycatch_entanglement", out var authored))
+                {
+                    GD.PushWarning("[WildlifeTrapping] Bycatch narrative event is not authored; domain fact remains in the journal.");
+                    return;
+                }
+                SetupEventAdapter();
+                string sourceId = $"wildlife-trap:{occurrence.siteId}:bycatch:{occurrence.day}:{occurrence.bycatchSpeciesId}";
+                _hostEventAdapter?.DispatchCatalogEvent(
+                    authored.Id,
+                    authored.BodyText,
+                    occurrence.day,
+                    sourceId);
+            };
+            SetupWorld();
+            _wildlifeTrapping.Map = _world?.WastelandMap;
+
+            // Contextual trapping lessons are routed through the persisted
+            // onboarding authority, never opened by the Core domain itself.
+            SetupOnboarding();
+            _wildlifeTrapping.OnTrapCrafted += _ =>
+                _onboardingJourney?.RequestContextualTutorial(
+                    Ashfall.Core.Localization.WildlifeTrappingLocalization.FirstSnareTutorialId);
+            wtrapSys.OnTrapDeployed += _ =>
+                _onboardingJourney?.RequestContextualTutorial(
+                    Ashfall.Core.Localization.WildlifeTrappingLocalization.FirstSnareTutorialId);
+            wtrapSys.OnTrapBroken += _ =>
+                _onboardingJourney?.RequestContextualTutorial(
+                    Ashfall.Core.Localization.WildlifeTrappingLocalization.WearOutTutorialId);
+            wtrapSys.OnBycatchOccurred += (_, _, _, _, _, _) =>
+                _onboardingJourney?.RequestContextualTutorial(
+                    Ashfall.Core.Localization.WildlifeTrappingLocalization.BycatchTutorialId);
             // Plan 36 Closure II: wire disease/contamination delegates to live authorities
             _wildlifeTrapping.ApplyDisease = (survivorId, diseaseId, day) =>
             {
+                if (string.IsNullOrEmpty(survivorId)) return;
+                var def = _survivors?.Roster?.FindDefinition(survivorId);
+                if (def != null && def.traitIds != null && def.traitIds.Contains("skill_sanitization_expert"))
+                    return;
                 if (_disease == null) SetupDisease();
-                _disease?.Engine?.Infect(survivorId, diseaseId, day);
+                if (_disease?.Engine != null)
+                {
+                    _disease.Engine.Infect(survivorId, diseaseId, day);
+                }
+                else
+                {
+                    GD.PrintErr($"[Ashfall Godot] Trapping: cannot apply disease '{diseaseId}' to '{survivorId}' - disease authority offline.");
+                }
             };
             _wildlifeTrapping.ApplyContamination = (survivorId, dose) =>
             {
-                if (_survivors != null && dose > 0f)
+                if (string.IsNullOrEmpty(survivorId) || dose <= 0f) return;
+                if (_survivors == null) SetupSurvivors();
+                if (_survivors != null)
+                {
                     _survivors.ExposeToZone(survivorId, dose);
+                }
+                else
+                {
+                    GD.PrintErr($"[Ashfall Godot] Trapping: cannot apply contamination dose {dose} to '{survivorId}' - survivors authority offline.");
+                }
             };
+
+            // ── Plan IV: destination-authority adapters ──
+            // Trapping emits pending domain facts; these adapters hand each
+            // one to the owning authority. A rejected/absent destination
+            // leaves the fact pending for retry — nothing is dropped.
+
+            // Task 5 — moral authority. The dilemma itself is an authored
+            // quest in the moral catalog; surfacing is derived from the
+            // pending outbox (GetAvailableMoralChoices), and the ack happens
+            // at RESOLUTION so a save before the player decides replays the
+            // exact same dilemma. Unknown quests stay pending with a warning.
+            _wildlifeTrapping.DeliverMoralConsequence = (questId, speciesId, survivorId) =>
+            {
+                SetupMoralChoice();
+                if (_moralChoice.GetQuest(questId) == null)
+                {
+                    GD.PushWarning($"[WildlifeTrapping] Moral quest '{questId}' not registered; consequence stays pending.");
+                    return false;
+                }
+                // The moral ledger owns persistence after acceptance; a
+                // resolved quest is acked immediately so restore never
+                // re-dispatches an already-resolved dilemma.
+                return _moralChoice.IsResolved(questId);
+            };
+
+            // Task 6 — encounter authority. Pending interference encounters
+            // persist in the narrative encounter state and surface through
+            // the existing pending-encounter projection.
+            _wildlifeTrapping.DeliverTrapEncounter = (encounterId, siteId, day) =>
+            {
+                if (_narrative == null) return false;
+                var engine = _narrative.Engine;
+                if (engine == null || engine.Find(encounterId) == null)
+                {
+                    GD.PushWarning($"[WildlifeTrapping] Encounter '{encounterId}' not registered; fact stays pending.");
+                    return false;
+                }
+                var pendingList = engine.State.pending;
+                for (int i = 0; i < pendingList.Count; i++)
+                {
+                    var p = pendingList[i];
+                    if (p != null && string.Equals(p.encounterId, encounterId, StringComparison.Ordinal)
+                        && string.Equals(p.locationId, siteId, StringComparison.Ordinal))
+                        return true; // already queued — idempotent re-ack
+                }
+                engine.EnqueuePending(encounterId, siteId, 0, day);
+                return true;
+            };
+
+            // Plan VI: miss-only atmospheric incidents are delivered through
+            // the same catalog/event adapter. A failed dispatch leaves the
+            // Core outbox pending for a later retry.
+            _wildlifeTrapping.DeliverNarrativeIncident = (eventId, siteId, day, sourceId) =>
+            {
+                SetupEventsHost();
+                if (!_eventsHost.TryGetEvent(eventId, out var authored))
+                {
+                    GD.PushWarning($"[WildlifeTrapping] Narrative incident '{eventId}' is not registered; fact stays pending.");
+                    return false;
+                }
+                SetupEventAdapter();
+                return _hostEventAdapter != null
+                    && _hostEventAdapter.DispatchCatalogEvent(eventId, authored.BodyText, day, sourceId);
+            };
+
+            // Task 7 — radio authority. One dynamic wildlife-net slot: while
+            // an unsurfaced report occupies it, later facts stay pending and
+            // deliver in sequence order as the slot frees.
+            _wildlifeTrapping.DeliverTrappingBroadcast = message =>
+            {
+                if (_radio == null) return false;
+                var coordinator = _radio.ScheduleCoordinator;
+                if (coordinator == null || coordinator.HasTrappingAlert) return false;
+                coordinator.InjectTrappingAlert(message);
+                return true;
+            };
+
             // Plan 28 Phase 3 (overhunt): snare catches thin the local packs
             // through the migration system's bounded harvest pressure.
             _wildlifeTrapping.OnCatchPressure += caught =>
@@ -273,6 +422,17 @@ namespace AtomicWar.GodotApp
 
                 string text = $"Captured first specimen of {speciesName} at trap site {siteId} (hunter: {author.DisplayName}).";
                 _journal.TryDiscoverRawKnowledge(knowledgeKey, text, author, _simDay);
+            };
+
+            // Plan 36 III: wire bycatch occurrences to Journal
+            wtrapSys.OnBycatchOccurred += (siteId, trapId, primarySpecies, bycatchSpecies, day, hunterId) =>
+            {
+                if (_journal == null) SetupJournal();
+                if (_journal == null) return;
+
+                string knowledgeKey = $"wildlife.bycatch.{bycatchSpecies}";
+                string text = $"Secondary quarry entangled at trap site {siteId}: {bycatchSpecies} (primary catch: {primarySpecies}, trap: {trapId}).";
+                _journal.TryDiscoverRawKnowledge(knowledgeKey, text, null, _simDay);
             };
 
             if (_wildlifeTrappingPanel != null && _wildlifeTrappingPanel.IsInsideTree())

@@ -427,7 +427,9 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "DUTY ROSTER", "duty_roster");
             AddNavButton(content, "QUESTS", "quests");
             AddNavButton(content, "EVENTS", "event_detail");
+            AddNavButton(content, "NARRATIVE ARCS", "narrative_arc");
             AddNavButton(content, "JOURNAL", "journal_detail");
+            AddNavButton(content, "BLACK PROJECTS", "black_projects_archive");
             AddNavButton(content, "RADIATION", "radiation_detail");
             AddNavButton(content, "RAD HISTORY", "radiation_history");
             AddNavButton(content, "DOSE ATLAS", "dose_geography");

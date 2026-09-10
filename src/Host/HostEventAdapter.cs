@@ -15,6 +15,8 @@ namespace AtomicWar.GodotApp.Host
     {
         public List<string> triggeredEventIds = new List<string>();
         public Dictionary<string, int> eventTriggerDays = new Dictionary<string, int>();
+        /// <summary>Stable source identities already accepted by the event authority.</summary>
+        public List<string> dispatchedSourceIds = new List<string>();
         public string lastDispatchedEvent = string.Empty;
     }
 
@@ -57,6 +59,8 @@ namespace AtomicWar.GodotApp.Host
         public IReadOnlyList<string> TriggeredEventIds => _state.triggeredEventIds;
         public string LastDispatchedEvent => _state.lastDispatchedEvent;
 
+        public IReadOnlyList<string> DispatchedSourceIds => _state.dispatchedSourceIds;
+
         private void SubscribeBus()
         {
             _eventBus.Subscribe(EventThinMarginDisclosure, HandleThinMarginDisclosure);
@@ -83,6 +87,26 @@ namespace AtomicWar.GodotApp.Host
             }
 
             _eventBus.Publish(eventId, currentDay);
+        }
+
+        /// <summary>
+        /// Accept one catalog-backed event with a stable source identity. The
+        /// source ledger is deliberately separate from event ID trigger state:
+        /// the same authored incident may occur at different trap sites while
+        /// one persisted source may never dispatch twice after restore.
+        /// </summary>
+        public bool DispatchCatalogEvent(string eventId, string bodyText, int currentDay, string sourceId)
+        {
+            if (_disposed || string.IsNullOrEmpty(eventId) || string.IsNullOrEmpty(sourceId)) return false;
+            if (_state.dispatchedSourceIds.Contains(sourceId)) return true;
+
+            _state.dispatchedSourceIds.Add(sourceId);
+            _state.lastDispatchedEvent = eventId;
+            _journal?.UnlockEventFired(eventId);
+            _journal?.TryAddRawEntry(sourceId, bodyText ?? string.Empty, null!, currentDay);
+            OnEventDispatched?.Invoke(eventId, bodyText ?? string.Empty);
+            StateChanged?.Invoke();
+            return true;
         }
 
         /// <summary>
@@ -199,7 +223,8 @@ namespace AtomicWar.GodotApp.Host
             {
                 lastDispatchedEvent = _state.lastDispatchedEvent,
                 triggeredEventIds = new List<string>(_state.triggeredEventIds),
-                eventTriggerDays = new Dictionary<string, int>(_state.eventTriggerDays)
+                eventTriggerDays = new Dictionary<string, int>(_state.eventTriggerDays),
+                dispatchedSourceIds = new List<string>(_state.dispatchedSourceIds)
             };
             return copy;
         }
@@ -223,6 +248,9 @@ namespace AtomicWar.GodotApp.Host
             }
 
             _state.lastDispatchedEvent = state.lastDispatchedEvent ?? string.Empty;
+            _state.dispatchedSourceIds.Clear();
+            if (state.dispatchedSourceIds != null)
+                _state.dispatchedSourceIds.AddRange(state.dispatchedSourceIds);
         }
     }
 }

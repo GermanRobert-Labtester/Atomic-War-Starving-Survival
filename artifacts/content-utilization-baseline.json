@@ -527,7 +527,7 @@
     "whitelists/companion_trust_flags.json": "OPTIONAL",
     "whitelists/orphan_knocks.json": "OPTIONAL",
     "whitelists/plan25_flags.json": "OPTIONAL",
-    "wildlife_trapping_catalog.json": "UNRESOLVED",
+    "wildlife_trapping_catalog.json": "GAMEPLAY_CONSUMED",
     "workshop_recipes.json": "GAMEPLAY_CONSUMED",
     "world_evolution_events.json": "UNRESOLVED",
     "world_evolution_seeds.json": "GAMEPLAY_CONSUMED",

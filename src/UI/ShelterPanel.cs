@@ -45,6 +45,9 @@ namespace AtomicWar.GodotApp.UI
         private SubViewportContainer? _interiorViewportContainer;
         private SubViewport? _interiorViewport;
         private HoldfastInteriorView? _interiorView;
+        private Ashfall.Core.Narrative.BunkerGraffitiCatalog? _graffitiCatalog;
+        private int _currentDay = int.MaxValue;
+        private string? _selectedRoomId;
 
         public bool IsBound => _survivorsHost != null && _worldHost != null;
         public int RenderedStructureCount => _structureList?.GetChildCount() ?? 0;
@@ -54,11 +57,21 @@ namespace AtomicWar.GodotApp.UI
             _interiorView?.SetMachineTellCatalog(catalog);
         }
 
+        public void SetGraffitiCatalog(Ashfall.Core.Narrative.BunkerGraffitiCatalog? catalog, int currentDay = int.MaxValue)
+        {
+            _graffitiCatalog = catalog;
+            _currentDay = currentDay;
+            _interiorView?.SetGraffitiCatalog(catalog, currentDay);
+            RefreshView();
+        }
+
         public void Bind(
             SurvivorsHostSession survivors,
             WorldHostSession world,
             InventoryHostSession? inventory = null,
-            ShelterRoomIdentityCatalog? roomIdentities = null)
+            ShelterRoomIdentityCatalog? roomIdentities = null,
+            Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffiti = null,
+            int currentDay = int.MaxValue)
         {
             if (_survivorsHost != null)
                 _survivorsHost.StateChanged -= RefreshView;
@@ -75,6 +88,12 @@ namespace AtomicWar.GodotApp.UI
                 _worldHost.StateChanged += RefreshView;
 
             _interiorView?.SetRoomIdentityCatalog(roomIdentities);
+            if (graffiti != null)
+            {
+                _graffitiCatalog = graffiti;
+                _currentDay = currentDay;
+                _interiorView?.SetGraffitiCatalog(graffiti, currentDay);
+            }
 
             RefreshView();
         }
@@ -103,6 +122,10 @@ namespace AtomicWar.GodotApp.UI
             if (_interiorView != null && _survivorsHost != null)
             {
                 _interiorView.Initialize(_survivorsHost);
+                if (_graffitiCatalog != null)
+                {
+                    _interiorView.SetGraffitiCatalog(_graffitiCatalog, _currentDay);
+                }
                 _interiorView.UpdateSurvivorPositions();
             }
 
@@ -117,6 +140,29 @@ namespace AtomicWar.GodotApp.UI
             _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Shielded Sectors", $"{materialSave.RoomIds?.Length ?? 0} Rooms", new Color(0.83f, 0.67f, 0.38f)));
             _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Sky Armor Grid", $"{skySave.cells?.Count ?? 0} Cells", new Color(0.43f, 0.64f, 0.66f)));
             _statusList.AddChild(AshfallUiHelpers.MakeDataRow("External Atmosphere", $"{_worldHost.Weather.Current}".ToUpperInvariant(), new Color(0.58f, 0.56f, 0.52f)));
+
+            // ── Wall Markings & Ambient Scratches (Plan 145) ──
+            if (_graffitiCatalog != null)
+            {
+                string targetRoom = !string.IsNullOrEmpty(_selectedRoomId) ? _selectedRoomId : "room_bunks";
+                var postings = _graffitiCatalog.GetPostingsForRoom(targetRoom, _currentDay);
+                if (postings != null && postings.Count > 0)
+                {
+                    string roomName = _interiorView != null ? _interiorView.GetRoomDisplayName(targetRoom) : targetRoom;
+                    _statusList.AddChild(AshfallUiHelpers.MakeSeparator());
+                    _statusList.AddChild(AshfallUiHelpers.MakeSubsectionHeader($"WALL MARKINGS // {roomName.ToUpperInvariant()}"));
+                    int count = Math.Min(2, postings.Count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        var p = postings[i];
+                        string mediumTag = !string.IsNullOrWhiteSpace(p.medium) ? $"[{p.medium.ToUpperInvariant()}] " : "";
+                        string author = !string.IsNullOrWhiteSpace(p.author_signature) ? $" — {p.author_signature}" : " — Unsigned";
+                        var textLbl = AshfallUiHelpers.MakeBody($"{mediumTag}\"{p.content}\"{author}");
+                        textLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                        _statusList.AddChild(textLbl);
+                    }
+                }
+            }
 
             _radiationData.AddChild(AshfallUiHelpers.MakeDataRow("Exterior Exposure Rate", $"+{exteriorRad:0} mSv/hr", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             _radiationData.AddChild(AshfallUiHelpers.MakeDataRow("Lead Shielding Attenuation", $"{weakestMaterial:P0} Weakest Ceiling", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
@@ -257,7 +303,16 @@ namespace AtomicWar.GodotApp.UI
             _interiorViewportContainer.AddChild(_interiorViewport);
 
             _interiorView = new HoldfastInteriorView();
-            _interiorView.RoomSelected += roomId => RoomSelected?.Invoke(roomId);
+            if (_graffitiCatalog != null)
+            {
+                _interiorView.SetGraffitiCatalog(_graffitiCatalog, _currentDay);
+            }
+            _interiorView.RoomSelected += roomId =>
+            {
+                _selectedRoomId = roomId;
+                RefreshView();
+                RoomSelected?.Invoke(roomId);
+            };
             _interiorViewport.AddChild(_interiorView);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());

@@ -4958,6 +4958,47 @@
           ]
         }
       ]
+    },
+    {
+      "id": "event_trapping_bycatch_entanglement",
+      "title": "Unexpected Quarry in the Snare",
+      "bodyText": "The morning patrol inspects the outer trap lines and finds an unexpected second quarry tangled alongside the primary catch. A hungry scavenger had attempted to raid the caught prey or trigger mechanism and became hopelessly snared in the heavy cordage. The carcass is intact, but untangling it without tearing the pelts or snapping the frame requires careful handling.",
+      "weight": 1.5,
+      "minDay": 3,
+      "maxDay": 365,
+      "choices": [
+        {
+          "choiceId": "choice_salvage_bycatch_meat",
+          "text": "Carefully salvage both carcasses for food and hides.",
+          "moraleDelta": 1.0
+        },
+        {
+          "choiceId": "choice_inspect_for_contamination",
+          "text": "Check both specimens thoroughly for ash-rot and parasites first.",
+          "moraleDelta": 0.5
+        }
+      ]
+    },
+    {
+      "id": "trap_sprung_blood_trail",
+      "title": "Sprung, Blood Trail",
+      "bodyText": "The trap is pulled crooked and the ground beneath it is dark with blood. Whatever touched the wire left under its own strength—or something else carried it away. The trail vanishes where the wind has swept dust across the concrete.",
+      "weight": 1.0,
+      "minDay": 1
+    },
+    {
+      "id": "trap_bait_stolen",
+      "title": "Bait Stolen",
+      "bodyText": "The bait is gone. The trap is still set, almost carefully, as if whatever took the food understood where not to put its weight. Nothing nearby moves, but the empty loop seems to be waiting for an answer.",
+      "weight": 1.0,
+      "minDay": 1
+    },
+    {
+      "id": "trap_human_bootprints",
+      "title": "Human Bootprints",
+      "bodyText": "A second trail crosses the approach to the trap: human bootprints, half-filled with ash. They stop beside the set, circle once, and head back toward the ruins. Nothing was taken. Someone only wanted to know where you were looking.",
+      "weight": 1.0,
+      "minDay": 1
     }
   ]
 }

@@ -148,6 +148,15 @@ namespace Ashfall.Core.Narrative
             var catalog = new BlackProjectsCatalog();
             if (!Directory.Exists(directoryPath)) return catalog;
 
+            if (!File.Exists(Path.Combine(directoryPath, "orbital_kinetic_telemetry.json")))
+            {
+                var narrativeSubdir = Path.Combine(directoryPath, "narrative");
+                if (Directory.Exists(narrativeSubdir) && File.Exists(Path.Combine(narrativeSubdir, "orbital_kinetic_telemetry.json")))
+                {
+                    directoryPath = narrativeSubdir;
+                }
+            }
+
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,

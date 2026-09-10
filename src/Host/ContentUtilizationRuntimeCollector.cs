@@ -11,7 +11,9 @@ using System.IO;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Content;
+using Ashfall.Core.Journal;
 using Ashfall.Core.Narrative;
+using Ashfall.Core.Random;
 using Ashfall.Core.Economy;
 using Ashfall.Core.World;
 using Ashfall.Core.Expeditions;
@@ -46,6 +48,7 @@ namespace AtomicWar.GodotApp
                 TryLoadSurvivorCatalog(dataDir, files, json, instr);
                 TryLoadStartingCohortCatalog(dataDir, files, json, instr);
                 TryLoadNarrativeEncounters(dataDir, files, json, instr);
+                TryLoadNarrativeArcEvents(dataDir, files, json, instr);
                 TryLoadQuestlineMaster(dataDir, files, json, instr);
                 TryLoadExpeditionCatalog(dataDir, files, json, instr);
                 TryLoadRadioCatalog(dataDir, files, json, instr);
@@ -72,6 +75,10 @@ namespace AtomicWar.GodotApp
                 TryLoadFluidInfrastructureCatalog(dataDir, files, json, instr);
                 TryLoadQuestTemplateCatalog(dataDir, files, json, instr);
                 TryLoadJournalCorpus(dataDir, files, json, instr);
+                TryLoadBureaucraticDocuments(dataDir, files, json, instr);
+                TryLoadFringeCultRecords(dataDir, files, json, instr);
+                TryLoadPaperPrintingRecords(dataDir, files, json, instr);
+                TryLoadBoneHornRecords(dataDir, files, json, instr);
 
                 // Simulate representative queries for N days
                 RunRepresentativeQueries(instr, 7);
@@ -134,6 +141,266 @@ namespace AtomicWar.GodotApp
             catch (Exception ex)
             {
                 Godot.GD.PrintErr($"[RuntimeEvidence] journal corpus: {ex.Message}");
+            }
+        }
+
+        private static void TryLoadBureaucraticDocuments(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string relativePath = BureaucraticDocumentCatalogLoader.DocumentsFileName;
+                string path = Path.Combine(dataDir, relativePath.Replace('/', Path.DirectorySeparatorChar));
+                if (!files.FileExists(path)) return;
+
+                var load = new BureaucraticDocumentCatalogLoader(files, json).Load(dataDir);
+                if (!load.IsSuccess)
+                {
+                    Godot.GD.PrintErr($"[RuntimeEvidence] {relativePath}: " + string.Join(" | ", load.Errors));
+                    return;
+                }
+
+                instr.RecordCatalogOpened(relativePath, nameof(BureaucraticDocumentCatalogLoader));
+                instr.RecordCatalogDeserialized(relativePath, load.Catalog.Count);
+                instr.RecordDefinitionsRegistered(relativePath, "BureaucraticDocumentCatalog", load.Catalog.Count);
+
+                // This diagnostic path exercises the same bounded producer and
+                // Journal knowledge authority used by the host. It records a
+                // codex discovery for each mapped document at its authored day;
+                // it does not apply any simulation consequence.
+                var journal = new JournalSystem();
+                var discovery = new BureaucraticDocumentDiscoverySystem(load.Catalog);
+                foreach (var document in load.Catalog.Documents)
+                {
+                    instr.RecordDefinitionQueried(
+                        relativePath,
+                        document.DocId,
+                        "BureaucraticDocumentCatalog.TryGet",
+                        "JournalCodex",
+                        document.PostedDay);
+
+                    if (document.ProducerIds.Count == 0) continue;
+                    var result = discovery.Discover(
+                        document.DocId,
+                        document.ProducerIds[0],
+                        document.PostedDay,
+                        journal);
+                    if (!result.Changed) continue;
+                    instr.RecordDefinitionSelected(
+                        relativePath,
+                        document.DocId,
+                        "BureaucraticDocumentDiscoverySystem",
+                        document.PostedDay);
+                    instr.RecordDefinitionConsumed(
+                        relativePath,
+                        document.DocId,
+                        "JournalCodex",
+                        "authored document discovered",
+                        document.PostedDay);
+                }
+
+                string mapRelativePath = BureaucraticDocumentCatalogLoader.RuntimeMapFileName;
+                string mapPath = Path.Combine(dataDir, mapRelativePath.Replace('/', Path.DirectorySeparatorChar));
+                if (files.FileExists(mapPath))
+                {
+                    instr.RecordCatalogOpened(mapRelativePath, nameof(BureaucraticDocumentCatalogLoader));
+                    instr.RecordCatalogDeserialized(mapRelativePath, load.Catalog.Count);
+                    instr.RecordDefinitionsRegistered(mapRelativePath, "BureaucraticDocumentCatalog.RuntimeMap", load.Catalog.Count);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] bureaucratic documents: {ex.Message}");
+            }
+        }
+
+        private static void TryLoadFringeCultRecords(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string narrativeDir = Path.Combine(dataDir, "narrative");
+                var sourceCatalog = FringeCultsCatalog.LoadFromDirectory(narrativeDir);
+                if (sourceCatalog.TotalCount == 0) return;
+
+                string[] relativePaths =
+                {
+                    FringeCultRuntimeContract.CobaltCatalog,
+                    FringeCultRuntimeContract.IronCatalog,
+                    FringeCultRuntimeContract.HymnalCatalog,
+                    FringeCultRuntimeContract.EpitaphCatalog
+                };
+                foreach (string relativePath in relativePaths)
+                {
+                    string path = Path.Combine(dataDir, relativePath.Replace('/', Path.DirectorySeparatorChar));
+                    if (!files.FileExists(path)) continue;
+                    int count = relativePath.EndsWith("cobalt_liturgies.json", StringComparison.Ordinal)
+                        ? sourceCatalog.CobaltLiturgies.Count
+                        : relativePath.EndsWith("iron_synod_canons.json", StringComparison.Ordinal)
+                            ? sourceCatalog.IronSynodCanons.Count
+                            : relativePath.EndsWith("geophone_hymnals.json", StringComparison.Ordinal)
+                                ? sourceCatalog.GeophoneHymnals.Count
+                                : sourceCatalog.WastelandEpitaphs.Count;
+                    instr.RecordCatalogOpened(relativePath, nameof(FringeCultsCatalog));
+                    instr.RecordCatalogDeserialized(relativePath, count);
+                    instr.RecordDefinitionsRegistered(relativePath, "FringeCultsCatalog", count);
+                }
+
+                // Exercise the same manifest projection and Journal knowledge
+                // seam used by the host. No doctrine field is handed to a
+                // faction, radiation, foundry, audio, or mortality authority.
+                var discoveryCatalog = new NarrativeDiscoveryCatalog();
+                discoveryCatalog.LoadFromFiles(dataDir, files);
+                var journal = new JournalSystem();
+                foreach (var record in discoveryCatalog.AllRecords)
+                {
+                    if (!FringeCultRuntimeContract.IsSourceCatalog(record.SourceCatalog)) continue;
+                    instr.RecordDefinitionQueried(
+                        record.SourceCatalog,
+                        record.SourceRecordId,
+                        "NarrativeDiscoveryCatalog.GetByProducer",
+                        "JournalCodex",
+                        record.MinDay);
+                    if (!discoveryCatalog.TryDiscover(record.DiscoveryId, journal, out _)) continue;
+                    instr.RecordDefinitionSelected(
+                        record.SourceCatalog,
+                        record.SourceRecordId,
+                        "NarrativeDiscoveryCatalog",
+                        record.MinDay);
+                    instr.RecordDefinitionConsumed(
+                        record.SourceCatalog,
+                        record.SourceRecordId,
+                        "JournalCodex",
+                        "authored fringe-cult record discovered",
+                        record.MinDay);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] fringe cults: {ex.Message}");
+            }
+        }
+
+        private static void TryLoadPaperPrintingRecords(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string narrativeDir = Path.Combine(dataDir, "narrative");
+                var making = PaperMakingCatalog.LoadFromDirectory(narrativeDir);
+                var printing = PaperPrintingCatalog.LoadFromDirectory(narrativeDir);
+                if (making.TotalCount == 0 && printing.TotalCount == 0) return;
+
+                foreach (string relativePath in PaperPrintRuntimeContract.SourceCatalogs)
+                {
+                    string path = Path.Combine(dataDir, relativePath.Replace('/', Path.DirectorySeparatorChar));
+                    if (!files.FileExists(path)) continue;
+                    int count = relativePath.Equals(PaperPrintRuntimeContract.HollanderCatalog, StringComparison.OrdinalIgnoreCase)
+                        ? making.BeaterEntries.Count
+                        : relativePath.Equals(PaperPrintRuntimeContract.DeckleCatalog, StringComparison.OrdinalIgnoreCase)
+                            ? making.MouldEntries.Count
+                            : relativePath.Equals(PaperPrintRuntimeContract.PressCatalog, StringComparison.OrdinalIgnoreCase)
+                                ? making.PressEntries.Count
+                                : relativePath.Equals(PaperPrintRuntimeContract.SizingCatalog, StringComparison.OrdinalIgnoreCase)
+                                    ? making.SizingEntries.Count
+                                    : relativePath.Equals(PaperPrintRuntimeContract.RagPulpCatalog, StringComparison.OrdinalIgnoreCase)
+                                        ? printing.PulpEntries.Count
+                                        : relativePath.Equals(PaperPrintRuntimeContract.InkCatalog, StringComparison.OrdinalIgnoreCase)
+                                            ? printing.InkEntries.Count
+                                            : relativePath.Equals(PaperPrintRuntimeContract.TypeCatalog, StringComparison.OrdinalIgnoreCase)
+                                                ? printing.TypeEntries.Count
+                                                : printing.StencilEntries.Count;
+                    instr.RecordCatalogOpened(relativePath, "PaperPrintCatalogLoader");
+                    instr.RecordCatalogDeserialized(relativePath, count);
+                    instr.RecordDefinitionsRegistered(relativePath, "PaperPrintCatalog", count);
+                }
+
+                // Exercise the combined read model through the same Journal
+                // authority used by the player. This records reachability only;
+                // no process measurement is forwarded to production systems.
+                var discoveryCatalog = new NarrativeDiscoveryCatalog();
+                discoveryCatalog.LoadFromFiles(dataDir, files);
+                var journal = new JournalSystem();
+                foreach (var record in discoveryCatalog.AllRecords)
+                {
+                    if (!PaperPrintRuntimeContract.IsSourceCatalog(record.SourceCatalog)) continue;
+                    instr.RecordDefinitionQueried(
+                        record.SourceCatalog,
+                        record.SourceRecordId,
+                        "NarrativeDiscoveryCatalog.GetByProducer",
+                        "JournalCodex",
+                        record.MinDay);
+                    if (!discoveryCatalog.TryDiscover(record.DiscoveryId, journal, out _)) continue;
+                    instr.RecordDefinitionSelected(record.SourceCatalog, record.SourceRecordId, "NarrativeDiscoveryCatalog", record.MinDay);
+                    instr.RecordDefinitionConsumed(record.SourceCatalog, record.SourceRecordId, "JournalCodex", "authored paper/print record discovered", record.MinDay);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] paper/printing corpus: {ex.Message}");
+            }
+        }
+
+        private static void TryLoadBoneHornRecords(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string narrativeDir = Path.Combine(dataDir, "narrative");
+                var catalog = BoneHornCarvingCatalog.LoadFromDirectory(narrativeDir);
+                if (catalog.TotalCount == 0) return;
+
+                foreach (string relativePath in BoneHornRuntimeContract.SourceCatalogs)
+                {
+                    string path = Path.Combine(dataDir, relativePath.Replace('/', Path.DirectorySeparatorChar));
+                    if (!files.FileExists(path)) continue;
+                    int count = relativePath.Equals(BoneHornRuntimeContract.DegreasingCatalog, StringComparison.OrdinalIgnoreCase)
+                        ? catalog.DegreasingLogs.Count
+                        : relativePath.Equals(BoneHornRuntimeContract.SawingCatalog, StringComparison.OrdinalIgnoreCase)
+                            ? catalog.SawingRecords.Count
+                            : relativePath.Equals(BoneHornRuntimeContract.PolishingCatalog, StringComparison.OrdinalIgnoreCase)
+                                ? catalog.PolishingReports.Count
+                                : catalog.ToolAssays.Count;
+                    instr.RecordCatalogOpened(relativePath, "BoneHornCarvingCatalog");
+                    instr.RecordCatalogDeserialized(relativePath, count);
+                    instr.RecordDefinitionsRegistered(relativePath, "BoneHornCarvingCatalog", count);
+                }
+
+                // Exercise the shared discovery projection. The numeric and
+                // biological labels remain authored observations; this path
+                // cannot create items, wildlife outcomes or crafted tools.
+                var discoveryCatalog = new NarrativeDiscoveryCatalog();
+                discoveryCatalog.LoadFromFiles(dataDir, files);
+                var journal = new JournalSystem();
+                foreach (var record in discoveryCatalog.AllRecords)
+                {
+                    if (!BoneHornRuntimeContract.IsSourceCatalog(record.SourceCatalog)) continue;
+                    instr.RecordDefinitionQueried(
+                        record.SourceCatalog,
+                        record.SourceRecordId,
+                        "NarrativeDiscoveryCatalog.GetByProducer",
+                        "JournalCodex",
+                        record.MinDay);
+                    if (!discoveryCatalog.TryDiscover(record.DiscoveryId, journal, out _)) continue;
+                    instr.RecordDefinitionSelected(record.SourceCatalog, record.SourceRecordId, "NarrativeDiscoveryCatalog", record.MinDay);
+                    instr.RecordDefinitionConsumed(record.SourceCatalog, record.SourceRecordId, "JournalCodex", "authored bone/horn record discovered", record.MinDay);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] bone/horn corpus: {ex.Message}");
             }
         }
 
@@ -257,6 +524,92 @@ namespace AtomicWar.GodotApp
                 }
             }
             catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] narrative_encounters.json: {ex.Message}"); }
+        }
+
+        private static void TryLoadNarrativeArcEvents(string dataDir, IFileIO files, IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, NarrativeArcEventCatalogLoader.FileName);
+                if (!files.FileExists(path)) return;
+
+                var load = NarrativeArcEventCatalogLoader.LoadDetailed(dataDir, files, json, instr);
+                if (!load.IsSuccess)
+                {
+                    Godot.GD.PrintErr($"[RuntimeEvidence] {NarrativeArcEventCatalogLoader.FileName}: " +
+                        string.Join(" | ", load.Errors));
+                    return;
+                }
+
+                // Query every definition through the real arc registry, then
+                // run the same daily select/commit surface with all four
+                // subjects present. The port is diagnostic-only; it records
+                // no production state and cannot bypass a real game gate.
+                var system = new NarrativeArcEventSystem(load.Events, instrumentation: instr)
+                {
+                    SurvivorIsPresent = _ => true,
+                    Consequences = new UtilizationArcConsequencePort()
+                };
+                foreach (var definition in load.Events)
+                    system.Find(definition.Id);
+
+                for (int day = 1; day <= 40; day++)
+                {
+                    var selected = system.SelectForDay(
+                        day,
+                        new SeededRng(CampaignRngStream.DeriveSeed(
+                            DefaultSeed,
+                            CampaignStreamIds.Narrative,
+                            CampaignRngManager.CurrentDerivationVersion,
+                            day,
+                            0)));
+                    if (selected == null) continue;
+                    if (selected.Choices.Count == 0)
+                        system.AcknowledgeEvent(selected.Id, day);
+                    else
+                        system.CommitChoice(selected.Id, selected.Choices[0].ChoiceId, day);
+                }
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] {NarrativeArcEventCatalogLoader.FileName}: {ex.Message}");
+            }
+        }
+
+        private sealed class UtilizationArcConsequencePort : INarrativeArcConsequencePort
+        {
+            public bool CanApplyMorale(string survivorId, int delta, bool shelterWide, out string reason)
+            {
+                reason = string.Empty;
+                return true;
+            }
+
+            public void ApplyMorale(string survivorId, int delta, bool shelterWide) { }
+
+            public bool CanGrantFactionIntel(string canonicalFactionId, out string reason)
+            {
+                reason = string.Empty;
+                return true;
+            }
+
+            public void GrantFactionIntel(string canonicalFactionId) { }
+
+            public bool CanOfferExpedition(string locationId, out string reason)
+            {
+                reason = string.Empty;
+                return true;
+            }
+
+            public void OfferExpedition(string locationId) { }
+
+            public bool CanApplyFactionStanding(string canonicalFactionId, int delta, out string reason)
+            {
+                reason = string.Empty;
+                return true;
+            }
+
+            public void ApplyFactionStanding(string canonicalFactionId, int delta) { }
         }
 
         private static void TryLoadQuestlineMaster(string dataDir, IFileIO files, IJsonSerializer json,

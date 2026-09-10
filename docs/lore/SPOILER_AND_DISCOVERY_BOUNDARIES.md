@@ -62,7 +62,7 @@ Define spoiler tiers for all player-discoverable lore content, map unlock condit
 | `confession_secrets.json` | 8 | Confession system unlock |
 | `journal_entries_batch_*.json` | 3 batches | Journal auto-entry on event |
 | `courier_mission_logs.json` (+ batch 2) | ~20 | Courier quest completion |
-| `cobalt_liturgies.json` (+ batch 2) | ~16 | Cult of the Cobalt Flame questline |
+| `cobalt_liturgies.json` | 8 | Explicit cult-site/map or bunker-archive discovery; doctrine is presented as belief |
 
 ### Tier 3 — Deep Lore
 
@@ -78,7 +78,9 @@ Define spoiler tiers for all player-discoverable lore content, map unlock condit
 | `relic_provenance_dossiers.json` | ~15 | Relic discovery + archive analysis |
 | `bunker_blueprints_codex.json` | ~10 | Bunker upgrade path + archive |
 | `bunker_court_verdicts_codex.json` | ~10 | Bunker governance questline |
-| `iron_synod_canons.json` | ~10 | Iron Garrison faction questline |
+| `iron_synod_canons.json` | 8 | Foundry, Iron Crest, settlement or archive context; institutional rule remains non-mechanical |
+| `geophone_hymnals.json` | 7 | Radio, acoustic-site or relay context; hymnal frequencies remain authored observation |
+| `narrative/wasteland_grave_epitaphs.json` | 7 | Grave-site map context or memorial-wall archive; marker testimony never controls mortality |
 | `dead_hand_directives.json` | ~5 | Military bunker deep-lore |
 | `cobalt_arming_directives.json` | ~5 | Cult militarization |
 | `library_manuals.json` | 3 | Library study system |

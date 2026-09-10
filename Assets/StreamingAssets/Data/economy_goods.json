@@ -362,7 +362,7 @@
       "id": "trap_improvised_wire",
       "displayName": "Improvised Wire Snare",
       "category": "tools",
-      "basePrice": 4.0,
+      "basePrice": 10.0,
       "volatility": 0.1,
       "elasticity": 0.6,
       "stackSize": 5,

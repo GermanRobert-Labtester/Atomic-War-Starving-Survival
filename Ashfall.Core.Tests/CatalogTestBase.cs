@@ -25,7 +25,8 @@ public abstract class CatalogTestBase
         get
         {
             var cwd = Directory.GetCurrentDirectory();
-            CatalogLocator.TryFindDataDirectory(cwd, out var dataDir);
+            if (!CatalogLocator.TryFindDataDirectory(cwd, out var dataDir))
+                CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out dataDir);
             return string.IsNullOrEmpty(dataDir) ? cwd : dataDir;
         }
     }

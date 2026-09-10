@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
 {
@@ -27,8 +28,50 @@ namespace AtomicWar.GodotApp
         /// <summary>Plan 36: delegate for applying contamination dose. Set by host to route to RadiationSystem.</summary>
         public Action<string, float>? ApplyContamination { get; set; }
 
+        // ── Plan IV: destination-authority adapters ──
+        // Trapping emits domain facts; these adapters hand each pending fact
+        // to its destination authority. An adapter returns true ONLY after
+        // the destination accepted the fact; then the outbox marks it
+        // delivered. Rejected/unknown destinations leave the fact pending.
+
+        /// <summary>(questId, speciesId, survivorId) → accepted. The moral authority acks at resolution.</summary>
+        public Func<string, string, string, bool>? DeliverMoralConsequence { get; set; }
+
+        /// <summary>(encounterId, siteId, day) → accepted by the encounter authority.</summary>
+        public Func<string, string, int, bool>? DeliverTrapEncounter { get; set; }
+
+        /// <summary>(message) → accepted by the radio authority.</summary>
+        public Func<string, bool>? DeliverTrappingBroadcast { get; set; }
+
+        /// <summary>(eventId, siteId, day, sourceId) → accepted by the canonical narrative authority.</summary>
+        public Func<string, string, int, string, bool>? DeliverNarrativeIncident { get; set; }
+
+        /// <summary>Optional host-facing bycatch projection for narrative/telemetry adapters.</summary>
+        public event Action<BycatchOccurredEvent>? OnBycatchOccurred;
+
+        /// <summary>Optional food sink. The default host path adds raw meat to Inventory.</summary>
+        public Func<int, bool>? DeliverButcheryFood { get; set; }
+
+        /// <summary>Cross-system morale adapter. The host resolves authored
+        /// prey data; the callback routes the mutation to the canonical survivor
+        /// authority.</summary>
+        public Action<string, float, string>? ApplyMorale { get; set; }
+        private readonly HashSet<string> _moraleAppliedButcheryIds = new(StringComparer.Ordinal);
+
         /// <summary>Tasks 5-8: optional custom disease resolver hook (defaults to ResolveDiseaseId/PreyDefinition.ResolveDiseaseId).</summary>
         public Func<PreyDefinition, string>? DiseaseResolver { get; set; }
+        public event Action<string>? OnTrapCrafted;
+
+        private WastelandMapSystem? _map;
+        public WastelandMapSystem? Map
+        {
+            get => _map;
+            set
+            {
+                _map = value;
+                ReconcileMapMarkers();
+            }
+        }
 
         public WildlifeTrappingHostSession(WildlifeTrappingSystem system)
         {
@@ -38,6 +81,19 @@ namespace AtomicWar.GodotApp
             {
                 RaiseStateChanged();
             };
+            System.OnTrapDeployed += SyncTrapMarker;
+            System.OnTrapBroken += SyncTrapMarker;
+            System.OnTrapRepaired += SyncTrapMarker;
+            System.OnTrapRemoved += e => _map?.RemoveTrapMarker(e.siteId);
+            System.OnBycatchResolved += HandleBycatchResolved;
+        }
+
+        private void HandleBycatchResolved(BycatchOccurredEvent occurrence)
+        {
+            if (occurrence == null) return;
+            LastEvent = $"Bycatch at {occurrence.siteId}: primary={occurrence.primarySpeciesId}, secondary={occurrence.bycatchSpeciesId}";
+            OnBycatchOccurred?.Invoke(occurrence);
+            RaiseStateChanged();
         }
 
         public ActionResult SetTrap(string siteId, string baitType, string hunterId)
@@ -51,10 +107,18 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Shared site replaceability query for host/UI preflight.</summary>
+        public bool CanSetTrapAtSite(string siteId, out string failureCode)
+            => System.CanSetTrapAtSite(siteId, out failureCode);
+
+        /// <summary>Forwards the live ecology snapshot into Core's selector.</summary>
+        public void SetSelectionContext(WildlifeSelectionContext context)
+            => System.SetSelectionContext(context);
+
         /// <summary>
-        /// Plan 36: Catalog-aware trap deployment with atomic material payment.
-        /// Consumes the trap item from inventory, then deploys with catalog parameters.
-        /// The trap item is crafted separately via recipes; deployment does not double-charge.
+        /// Plan 36 / Flagship Trapping Task 1: Catalog-aware trap deployment with atomic material payment.
+        /// Enforces TrapDefinition.setupCosts (or crafted trap item if held) atomically.
+        /// Preflight validates site active state to prevent accidental charges.
         /// </summary>
         public ActionResult TrySetTrap(string siteId, string trapId, string baitType, string hunterId)
         {
@@ -66,14 +130,26 @@ namespace AtomicWar.GodotApp
             if (!Catalog.Traps.TryGetValue(trapId, out var trapDef))
                 return ActionResult.Blocked("unknown_trap", "trapping.unknown_trap");
 
-            // Consume the trap item from inventory (crafted via recipes)
+            // Preflight check: active trap cannot be replaced while active and operational
+            if (!CanSetTrapAtSite(siteId, out string failureCode))
+                return ActionResult.Blocked(failureCode, "trapping." + failureCode);
+
+            // Determine billing: prefer finished trap item if held; otherwise consume setup materials
             var bill = new InventoryBill();
-            bill.AddCost(trapId, 1); // trap item ID matches trap definition ID
+            bool consumedFinishedTrap = Inventory.Inventory.CountById(trapId) >= 1;
+            if (consumedFinishedTrap)
+            {
+                bill.AddCost(trapId, 1);
+            }
+            else
+            {
+                bill = trapDef.CalculateSetupBill();
+            }
 
             using var tx = Inventory.Inventory.BeginTransaction(bill);
             if (!tx.Validation.IsValid)
             {
-                return ActionResult.Blocked("no_trap_item", "trapping.no_trap_item");
+                return ActionResult.Blocked("insufficient_materials", "trapping.insufficient_materials");
             }
 
             // Deploy trap with catalog parameters
@@ -87,9 +163,64 @@ namespace AtomicWar.GodotApp
             }
 
             tx.TryCommit();
+            if (!consumedFinishedTrap)
+                OnTrapCrafted?.Invoke(trapId);
             LastEvent = $"Set {trapDef.displayName} at {siteId} (Hunter: {hunterId})";
             RaiseStateChanged();
             return setResult;
+        }
+
+        /// <summary>
+        /// Task 1: Query setup bill for a trap definition. Prefers finished trap item if held,
+        /// else evaluates authored setupCosts.
+        /// </summary>
+        public bool TryGetSetupBill(string trapId, out InventoryBill bill, out string reason)
+        {
+            bill = new InventoryBill();
+            if (Catalog == null)
+            {
+                reason = "trapping.no_catalog";
+                return false;
+            }
+            if (!Catalog.Traps.TryGetValue(trapId, out var trapDef))
+            {
+                reason = "trapping.unknown_trap";
+                return false;
+            }
+            if (Inventory != null && Inventory.Inventory.CountById(trapId) >= 1)
+            {
+                bill.AddCost(trapId, 1);
+            }
+            else
+            {
+                bill = trapDef.CalculateSetupBill();
+            }
+            reason = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// Task 1: Preflight check for trap deployment affordability.
+        /// </summary>
+        public bool CanAffordSetup(string trapId, out InventoryBill bill, out string failureReason)
+        {
+            if (!TryGetSetupBill(trapId, out bill, out failureReason))
+                return false;
+            if (Inventory == null)
+            {
+                failureReason = "trapping.no_inventory";
+                return false;
+            }
+            var quote = Inventory.Inventory.QuoteTransaction(bill);
+            if (!quote.CanExecute)
+            {
+                failureReason = !string.IsNullOrEmpty(quote.Validation.FailureReason)
+                    ? quote.Validation.FailureReason
+                    : "trapping.insufficient_materials";
+                return false;
+            }
+            failureReason = string.Empty;
+            return true;
         }
 
         /// <summary>
@@ -109,7 +240,73 @@ namespace AtomicWar.GodotApp
                     : $"Inspected all perimeter snares (wildlife pressure x{densityMultiplier:0.00}).";
                 RaiseStateChanged();
             }
+            DeliverPendingEvents();
             return res;
+        }
+
+        // ── Plan IV: shared event-delivery discipline ──
+
+        /// <summary>
+        /// Deliver every pending external fact to its destination authority in
+        /// persisted sequence order. Delivery failure (destination missing,
+        /// unknown content, rejection) leaves the fact pending — nothing is
+        /// silently dropped. Safe to call repeatedly; delivered facts are
+        /// skipped. Called after each state-mutating entry point and after
+        /// composition completes so restored pending facts recover.
+        /// </summary>
+        public void DeliverPendingEvents()
+        {
+            var pending = System.GetPendingEvents();
+            for (int i = 0; i < pending.Count; i++)
+            {
+                var ev = pending[i];
+                bool accepted = ev.kind switch
+                {
+                    WildlifeTrappingEventKinds.MoralConsequence
+                        => DeliverMoralConsequence?.Invoke(ev.payloadId, ev.speciesId, ev.survivorId) ?? false,
+                    WildlifeTrappingEventKinds.TrapEncounter
+                        => DeliverTrapEncounter?.Invoke(ev.payloadId, ev.sourceTrapSiteId, ev.day) ?? false,
+                    WildlifeTrappingEventKinds.TrappingBroadcast
+                        => DeliverTrappingBroadcast?.Invoke(ComposeBroadcastMessage(ev)) ?? false,
+                    WildlifeTrappingEventKinds.NarrativeIncident
+                        => DeliverNarrativeIncident?.Invoke(
+                            ev.payloadId,
+                            ev.sourceTrapSiteId,
+                            ev.day,
+                            WildlifeTrappingSystem.BuildNarrativeIncidentSourceId(ev.sourceTrapSiteId, ev.payloadId)) ?? false,
+                    _ => false
+                };
+                if (accepted)
+                    System.MarkEventDelivered(ev.eventId);
+            }
+        }
+
+        /// <summary>
+        /// Player-readable radio text for one trapping broadcast fact.
+        /// Species render through their display names — never raw IDs.
+        /// </summary>
+        public string ComposeBroadcastMessage(WildlifeTrappingPendingEvent ev)
+        {
+            string speciesName = ResolveSpeciesDisplayName(ev.speciesId);
+            return ev.payloadId switch
+            {
+                TrappingBroadcastIds.FirstCatch
+                    => $"Wildlife net, day {ev.day}: first {speciesName} taken at the line.",
+                TrappingBroadcastIds.TrapBroken
+                    => $"Wildlife net, day {ev.day}: a trap came up wrecked at {ev.sourceTrapSiteId} — sprung and torn.",
+                TrappingBroadcastIds.RareBycatch
+                    => $"Wildlife net, day {ev.day}: odd bycatch at the line today — a {speciesName}, of all things.",
+                _ => $"Wildlife net, day {ev.day}: report from the trap line."
+            };
+        }
+
+        private string ResolveSpeciesDisplayName(string speciesId)
+        {
+            if (string.IsNullOrEmpty(speciesId)) return "animal";
+            var quarry = System.GetQuarryCatalog();
+            if (quarry.TryGetValue(speciesId, out var q) && !string.IsNullOrEmpty(q.displayName))
+                return q.displayName;
+            return speciesId.Replace('_', ' ');
         }
 
         /// <summary>Fallback contamination dose when prey has positive risk but no explicit dose.</summary>
@@ -125,10 +322,17 @@ namespace AtomicWar.GodotApp
             {
                 // Plan 36 Closure II / Tasks 5-8: apply disease/contamination from site state
                 var site = System.State.trapSites.Find(s => s.siteId == siteId);
-                if (site != null && Catalog != null && Catalog.Prey.TryGetValue(site.catchSpecies, out var preyDef))
+                if (site != null && !string.IsNullOrEmpty(butcherId) && Catalog != null && Catalog.Prey.TryGetValue(site.catchSpecies, out var preyDef))
                 {
-                    string survivor = string.IsNullOrEmpty(butcherId) ? "unknown" : butcherId;
                     int day = _currentDay > 0 ? _currentDay : site.setDay;
+                    string butcheryId = $"butchery:{site.siteId}:{site.deploymentSequence}:{site.catchSpecies}:{butcherId}";
+                    if (_moraleAppliedButcheryIds.Add(butcheryId)
+                        && float.IsFinite(preyDef.moraleEffect)
+                        && preyDef.moraleEffect != 0f)
+                    {
+                        ApplyMorale?.Invoke(butcherId, preyDef.moraleEffect,
+                            $"wildlife_butchery:{site.catchSpecies}");
+                    }
 
                     // Disease application (deterministic from site state, with catalog fallback if unauthored)
                     var resolver = DiseaseResolver ?? ResolveDiseaseId;
@@ -138,7 +342,7 @@ namespace AtomicWar.GodotApp
 
                     if (ApplyDisease != null && !string.IsNullOrEmpty(diseaseId))
                     {
-                        ApplyDisease(survivor, diseaseId, day);
+                        ApplyDisease(butcherId, diseaseId, day);
                     }
 
                     // Contamination application (deterministic from site state, with catalog fallback if unauthored)
@@ -150,7 +354,41 @@ namespace AtomicWar.GodotApp
 
                     if (ApplyContamination != null && dose > 0f)
                     {
-                        ApplyContamination(survivor, dose);
+                        ApplyContamination(butcherId, dose);
+                    }
+
+                    // Plan VI: the secondary carcass has its own persisted
+                    // disease and contamination results. It never reuses the
+                    // primary definition or contributes a second morale delta.
+                    if (!string.IsNullOrEmpty(site.bycatchSpecies)
+                        && Catalog.Prey.ContainsKey(site.bycatchSpecies))
+                    {
+                        string bycatchDiseaseId = site.bycatchDiseaseId;
+                        if (ApplyDisease != null && !string.IsNullOrEmpty(bycatchDiseaseId))
+                            ApplyDisease(butcherId, bycatchDiseaseId, day);
+
+                        if (ApplyContamination != null && site.bycatchContaminationDose > 0f)
+                            ApplyContamination(butcherId, site.bycatchContaminationDose);
+                    }
+
+                }
+
+                // The Core transaction is committed once. Food output is a
+                // separate inventory projection and therefore happens only
+                // on that successful transition, never on a repeated button
+                // press or restore.
+                var foodSite = System.State.trapSites.Find(s => s.siteId == siteId);
+                if (foodSite != null)
+                {
+                    int foodUnits = Math.Max(0, (int)Math.Round(
+                        foodSite.carcassYield + foodSite.bycatchYield,
+                        MidpointRounding.AwayFromZero));
+                    if (foodUnits > 0)
+                    {
+                        bool accepted = DeliverButcheryFood?.Invoke(foodUnits)
+                            ?? (Inventory != null && Inventory.TryAdd("raw_meat", foodUnits));
+                        if (!accepted)
+                            GD.PushWarning($"[WildlifeTrapping] Butchery food output of {foodUnits} units was not accepted by inventory.");
                     }
                 }
 
@@ -159,6 +397,7 @@ namespace AtomicWar.GodotApp
                     : $"Butchered game catch at site {siteId} (butcher: {butcherId})";
                 RaiseStateChanged();
             }
+            DeliverPendingEvents();
             return res;
         }
 
@@ -281,6 +520,53 @@ namespace AtomicWar.GodotApp
             return repairResult;
         }
 
+        public ActionResult RemoveTrap(string siteId)
+        {
+            var result = System.RemoveTrap(siteId);
+            if (result.IsSuccess)
+            {
+                LastEvent = $"Removed trap at {siteId}";
+                RaiseStateChanged();
+            }
+            return result;
+        }
+
+        /// <summary>Rebuilds the canonical map projection from restored trap
+        /// state. The map owns markers; trap state owns only lifecycle facts.</summary>
+        public void ReconcileMapMarkers()
+        {
+            if (_map == null) return;
+            var sources = new List<TrapMapMarkerSource>();
+            if (System.State.trapSites != null)
+            {
+                foreach (var site in System.State.trapSites)
+                {
+                    if (site == null || string.IsNullOrEmpty(site.siteId)) continue;
+                    if (!_map.TryResolveTrapSitePosition(site.siteId, out float x, out float y))
+                    {
+                        GD.PushWarning($"[WildlifeTrapping] No canonical map coordinate for trap site '{site.siteId}'.");
+                        continue;
+                    }
+                    sources.Add(new TrapMapMarkerSource
+                    {
+                        SiteId = site.siteId,
+                        TrapId = site.trapId,
+                        TrapType = site.trapType,
+                        PositionX = x,
+                        PositionY = y,
+                        IsBroken = site.isBroken
+                    });
+                }
+            }
+            _map.ReconcileTrapMarkers(sources);
+        }
+
+        private void SyncTrapMarker(TrapLifecycleEvent lifecycle)
+        {
+            if (_map == null || lifecycle == null) return;
+            _map.EnsureTrapMarker(lifecycle.siteId, lifecycle.trapId, lifecycle.trapType, lifecycle.isBroken);
+        }
+
         public void TickDay(int day)
         {
             _currentDay = day;
@@ -289,6 +575,7 @@ namespace AtomicWar.GodotApp
             _lastSeenCatchTotal = System.State.totalCatch;
             if (caughtDelta > 0) OnCatchPressure?.Invoke(caughtDelta);
             RaiseStateChanged();
+            DeliverPendingEvents();
         }
 
         /// <summary>

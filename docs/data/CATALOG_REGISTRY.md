@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-08
-**Total Catalogs:** 583 | **Total Definitions:** 10051 | **Domain Families:** 32
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-10
+**Total Catalogs:** 583 | **Total Definitions:** 10082 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -64,11 +64,11 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
-| `chemical_weapons.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `chemical_weapons.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ChemWarfareSystem` |
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 72 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (130 Catalogs, 1163 Definitions)
+### Core / Miscellaneous (130 Catalogs, 1180 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -90,12 +90,12 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `captive_interrogations.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CaptiveInterrogationCatalogLoader` |
 | `caravans.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `cargo_airdrop_catalog.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `ceremonies.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `ceremonies.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CeremonySystem` |
 | `chemical_syntheses.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `chlor_alkali_synthesis_catalog.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `climbing_winch_catalog.json` | 8 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `collectibles.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `comms_targets.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `comms_targets.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CommsArraySystem` |
 | `cryo_cultivars.json` | 18 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `cryogenic_air_separation.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `cultural_archive_tomes.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CulturalArchiveTomeCatalogLoader` |
@@ -142,7 +142,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `mutations.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `narcotics.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `narrative_discovery_manifest.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `narrative_encounters.json` | 13 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterCatalogLoader` |
+| `narrative_encounters.json` | 16 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterCatalogLoader` |
 | `narrative_encounters_expansion.json` | 29 | `1.0.0` | `OPTIONAL` | `NarrativeEncounterSystem` |
 | `narrative_encounters_npc_arcs.json` | 31 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `narrative_progression.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterSystem` |
@@ -173,7 +173,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `recreation.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `rerailing_equipment_catalog.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `research_knowledge.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ResearchKnowledgeCatalogLoader` |
-| `robotics.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `robotics.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RoboticsSystem` |
 | `scavenging_tables.json` | 54 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `seismic_fault_catalog.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SeismicDynamicsSystem` |
 | `settlements.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
@@ -182,7 +182,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `sky_layer_armor_catalog.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `solar_concentrator_catalog.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `spiritual_rituals.json` | 19 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `starting_supplies.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StartingLevelSystem` |
+| `starting_supplies.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StartingLevelSystem` |
 | `subterranean_zones.json` | 10 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `sump_drainage_catalog.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `surgical_procedures.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -197,9 +197,9 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `wasteland_grave_epitaphs.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MemorialSystem` |
 | `wasteland_laws.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `wasteland_settlement_npcs.json` | 18 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `waystations.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `waystations.json` | 14 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `wildlife_ecosystem.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `wildlife_trapping_catalog.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `wildlife_trapping_catalog.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WildlifeTrappingCatalogLoader` |
 | `world_evolution_seeds.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EvolvingWorldCatalog` |
 | `world_history.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EvolvingWorldCatalog` |
 
@@ -245,15 +245,15 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `trade_tell_lines.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeTellEngine` |
 | `trade_texts.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `TradeScreenPresenter` |
 
-### Events (10 Catalogs, 392 Definitions)
+### Events (10 Catalogs, 393 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `contagion_events.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `desperation_events.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `events.json` | 233 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EventsHostSession` |
+| `events.json` | 234 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EventsHostSession` |
 | `incidents.json` | 25 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterEncounterSystem` |
-| `narrative_arc_events.json` | 15 | `1.0.0` | `OPTIONAL` | `NarrativeEncounterSystem` |
+| `narrative_arc_events.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeArcEventSystem` |
 | `orbital_harrow_events.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `seasonal_events.json` | 18 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `shelter_social_events.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -269,7 +269,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `vehicle_modifications.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VehicleGarageCatalogLoader, VehicleGarageSystem` |
 | `vehicles.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionVehicleSystem` |
 
-### Factions (19 Catalogs, 298 Definitions)
+### Factions (19 Catalogs, 317 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -289,7 +289,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `military_faction_branch.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MilitaryBranchCatalog` |
 | `moral_choice_faction_reactions.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceFactionReactionsCatalogLoader` |
 | `muster_faction_actions.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `muster_faction_culture.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `muster_faction_culture.json` | 25 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `rebel_faction_branch.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RebelBranchCatalog` |
 | `standing_record_factions.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StandingRecordCatalog` |
 
@@ -316,7 +316,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `holdfast_flavor.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFlavorCatalog` |
 | `holdfast_npcs.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 
-### Items (14 Catalogs, 929 Definitions)
+### Items (14 Catalogs, 930 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -331,7 +331,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `holdfast_items.json` | 55 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
 | `item_degradation.json` | 0 | `1.0.0` | `OPTIONAL` | `Core default` |
 | `item_description_texts.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemDescriptionCatalogLoader, ItemCatalogLoader` |
-| `items.json` | 659 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
+| `items.json` | 660 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_items.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
@@ -396,7 +396,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `muster_epilogues.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EpilogueMatrix` |
 | `muster_witnesses.json` | 27 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WitnessCatalog` |
 
-### Narrative (Codex) (279 Catalogs, 1665 Definitions)
+### Narrative (Codex) (280 Catalogs, 1665 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -404,7 +404,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/ammo_hoist_jam_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/ammonia_chiller_leak_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/annealing_lehr_birefringence_records.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/antler_horn_sawing_records.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/antler_horn_sawing_records.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BoneHornSourceAdapter` |
 | `narrative/apiculture_red_light_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/aramid_fiber_rot_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/architect_vault_audits.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -421,7 +421,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/blind_cave_molerat_studies.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/boiler_feedwater_deaerator_audits.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bolting_silk_mesh_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/bone_degreasing_prep_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bone_degreasing_prep_logs.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BoneHornSourceAdapter` |
 | `narrative/borosilicate_sight_glass_thermal_shock.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/brain_tanning_hide_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/brewers_yeast_krausen_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -433,10 +433,10 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/bunker_children_folklore_batch_2.json` | 10 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_contraband_barter.json` | 20 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_court_verdicts_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/bunker_court_verdicts_codex.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/bunker_graffiti_postings.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bunker_court_verdicts_codex.json` | 0 | `1.0.0` | `CODEX_ONLY` | `BunkerCourtCatalog` |
+| `narrative/bunker_graffiti_postings.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BunkerGraffitiCatalog` |
 | `narrative/bunker_herbalism_pharmacology.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/bunker_maintenance_glitches.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bunker_maintenance_glitches.json` | 0 | `1.0.0` | `CODEX_ONLY` | `BunkerMaintenanceCatalog` |
 | `narrative/bunker_maintenance_logs_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_maintenance_logs_batch_3.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_rituals_and_cults.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -444,7 +444,8 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/bunker_trade_ledger_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_wiretap_transcripts.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/bunker_wiretap_transcripts_batch_2.json` | 10 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/bureaucratic_documents_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/bureaucratic_document_runtime_map.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BureaucraticDocumentCatalogLoader` |
+| `narrative/bureaucratic_documents_expansion.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BureaucraticDocumentCatalogLoader` |
 | `narrative/burr_millstone_dressing_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/calcium_hypochlorite_titration_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/candle_dip_mould_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -461,7 +462,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/chrome_alum_tanning_assays.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/clay_wedging_forming_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/cobalt_arming_directives.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/cobalt_liturgies.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/cobalt_liturgies.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FringeCultSourceAdapter` |
 | `narrative/cobalt_liturgies_batch_2.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/cold_process_soap_curing_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/conflict_mediation_records.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -475,7 +476,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/crucible_clay_pot_slag_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/cryo_germplasm_viability_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/cryo_seed_ampoule_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/cryopod_failure_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/cryopod_failure_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `AbyssalAnomaliesCatalog` |
 | `narrative/culinary_ration_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/culinary_ration_codex.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/cupola_melting_ratio_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -484,7 +485,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/currying_burnishing_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/dead_hand_directives.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/deadbeat_escapement_wear_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/deckle_mould_watermark_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/deckle_mould_watermark_audits.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/deep_lore_texts.json` | 10 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/diplomatic_contact_records_batch_1.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/documents_batch_1.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -519,27 +520,27 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/fulling_trough_nap_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/gear_quenching_fault_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/geological_strata_logs.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/geophone_hymnals.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/geothermal_borehole_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/geophone_hymnals.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FringeCultSourceAdapter` |
+| `narrative/geothermal_borehole_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `AbyssalAnomaliesCatalog` |
 | `narrative/geothermal_steam_vent_diagnostics.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/geothermal_steam_well_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/ghost_transmissions.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/graffiti_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/graffiti_expansion.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BunkerGraffitiCatalog` |
 | `narrative/grain_silo_weevil_audits.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/green_sand_bentonite_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/greenhouse_cultivation_logs.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/ground_glass_joint_greasing_audits.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/heirloom_seed_viability_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/hemp_fiber_hackling_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/hollander_beater_pulping_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/hollander_beater_pulping_logs.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/honey_extractor_balance_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/hydrophone_acoustic_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/hydrophone_acoustic_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `AbyssalAnomaliesCatalog` |
 | `narrative/improvised_repair_guides_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/inkle_loom_warp_tally_sheets.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/intake_filter_clogging_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/invar_pendulum_thermal_expansion.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/iron_gall_ink_acidity_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/iron_synod_canons.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/iron_gall_ink_acidity_reports.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
+| `narrative/iron_synod_canons.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FringeCultSourceAdapter` |
 | `narrative/journal_entries_batch_1.json` | 18 | `1.0.0` | `GAMEPLAY_CONSUMED` | `JournalCorpusCatalogLoader` |
 | `narrative/journal_entries_batch_2.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `JournalCorpusCatalogLoader` |
 | `narrative/journal_entries_batch_3.json` | 88 | `1.0.0` | `GAMEPLAY_CONSUMED` | `JournalCorpusCatalogLoader` |
@@ -551,7 +552,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/lead_crystal_scintillator_aging_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/lead_wall_degradation_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/leather_harness_conditioning_audits.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/letters_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/letters_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `PersonalLetterCatalog` |
 | `narrative/liebig_condenser_fracture_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/lime_kiln_calcination_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/liquid_nitrogen_compressor_failures.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -566,7 +567,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/mudbrick_weathering_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/munitions_leaching_records.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/mutated_botanical_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/needle_awl_hook_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/needle_awl_hook_assays.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BoneHornSourceAdapter` |
 | `narrative/neoprene_gasket_degradation_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/new_arrival_intake_interviews.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/night_watch_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -601,7 +602,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/radio_scripts_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radio_transcripts_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/radio_transcripts_batch_3.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/rag_pulp_beater_records.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/rag_pulp_beater_records.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/ragdoll_germination_assays.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/ration_fraud_records.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/ration_records_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -614,10 +615,10 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/rootes_blower_vacuum_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/rope_break_load_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/rope_transmission_splicing_audits.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/salt_mine_inscriptions.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/salt_mine_inscriptions.json` | 7 | `1.0.0` | `CODEX_ONLY` | `AbyssalAnomaliesCatalog` |
 | `narrative/scavenger_expedition_route_notes.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/scraping_polishing_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/screw_press_felt_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/scraping_polishing_reports.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BoneHornSourceAdapter` |
+| `narrative/screw_press_felt_reports.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/security_incident_reports_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/seismic_array_fault_alarms.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/shelter_notices_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -633,7 +634,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/square_set_shoring_audits.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/stalactite_mineral_assay_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/steam_trap_water_hammer_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/stencil_propaganda_smear_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/stencil_propaganda_smear_logs.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/strand_twisting_lay_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/substation_transformer_fires.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/sump_drainage_silt_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -656,16 +657,16 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/tire_retreading_compound_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/trade_ledgers_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/treadle_loom_heddle_reports.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/tub_sizing_gelatin_assays.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/tub_sizing_gelatin_assays.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/turbine_blade_erosion_reports.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/typographic_lead_wear_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/typographic_lead_wear_logs.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PaperPrintSourceAdapter` |
 | `narrative/underground_fungi_flora.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/undertaker_burial_records.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/unsent_letters_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
+| `narrative/unsent_letters_batch_2.json` | 0 | `1.0.0` | `CODEX_ONLY` | `PersonalLetterCatalog` |
 | `narrative/vault_seal_breach_logs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/vinyl_record_archive.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/wasteland_expeditions_master.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
-| `narrative/wasteland_grave_epitaphs.json` | 7 | `1.0.0` | `CODEX_ONLY` | `MemorialSystem` |
+| `narrative/wasteland_grave_epitaphs.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FringeCultSourceAdapter` |
 | `narrative/wasteland_grave_epitaphs_batch_2.json` | 12 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/wasteland_settlement_gazetteer.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/wasteland_trade_caravan_routes.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
@@ -680,7 +681,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative/wood_ash_lye_hydrometer_logs.json` | 8 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 | `narrative/world_history_expansion.json` | 0 | `1.0.0` | `CODEX_ONLY` | `Core default` |
 
-### Quests (27 Catalogs, 3291 Definitions)
+### Quests (26 Catalogs, 3284 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -689,8 +690,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `duty_roster_quests.json` | 160 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterQuestRuntime` |
 | `dynamic_questlines.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `QuestlineSystem` |
 | `holdfast_quests.json` | 91 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastQuestSystem` |
-| `moral_choice_quest_stubs.json` | 10 | `1.0.0` | `OPTIONAL` | `Core default` |
-| `moral_choice_quests.json` | 65 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceCatalogLoader` |
+| `moral_choice_quests.json` | 68 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceCatalogLoader` |
 | `moral_choice_quests_branching.json` | 100 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceBranchQuestCatalogLoader` |
 | `moral_choice_quests_distress.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `moral_choice_quests_expansion.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MoralChoiceExpansionQuestCatalogLoader` |

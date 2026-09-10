@@ -131,12 +131,18 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             // Plan 158: item inspection is a producer for technical-material
             // records linked to canonical items (rope, masks, film goods).
-            // Display-only provenance — no condition state is read or changed.
+            // Plan 159: same producer route for tanning/leather provenance
+            // records (masks, curing salt, strap leather). Display-only —
+            // no condition state is read or changed.
             System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.TechnicalMaterialRecord>? provenance = null;
             var archive = EnsureTechnicalMaterialArchive();
             if (archive.DiscoverForItem(itemId).Count > 0 || archive.RecordsForItem(itemId).Count > 0)
                 provenance = archive.RecordsForItem(itemId);
-            _inventoryDetailPanel?.Bind(_inventory, itemId, technicalProvenance: provenance);
+            System.Collections.Generic.IReadOnlyList<Ashfall.Core.Narrative.LeatherworkRecord>? leatherProvenance = null;
+            var leatherArchive = EnsureLeatherworkArchive();
+            if (leatherArchive.DiscoverForItem(itemId).Count > 0 || leatherArchive.RecordsForItem(itemId).Count > 0)
+                leatherProvenance = leatherArchive.RecordsForItem(itemId);
+            _inventoryDetailPanel?.Bind(_inventory, itemId, descriptions: null, enrichment: null, technicalProvenance: provenance, leatherProvenance: leatherProvenance);
             _inventoryDetailPanel?.Open();
         }
 

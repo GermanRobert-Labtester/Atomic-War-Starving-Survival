@@ -45,6 +45,7 @@ namespace AtomicWar.Journal
         private Func<JournalTab, IReadOnlyList<JournalCodexRow>>? _codexProvider;
         private Func<int, bool>? _unreadProvider;
         private Func<int>? _dayProvider;
+        private string? _codexFocusId;
 
         private readonly List<JournalEntry> _entries = new List<JournalEntry>();
 
@@ -105,6 +106,28 @@ namespace AtomicWar.Journal
 
         private void HandleEntryAdded(JournalEntry entry) => Push(entry);
         private void HandleCodexUnlocked(string key) => Refresh();
+
+        private void HandleMetaClicked(Variant meta)
+        {
+            string route = meta.AsString();
+            string? targetId = null;
+            string[] routePrefixes = { "bureaucratic_document:", "narrative_discovery:" };
+            for (int i = 0; i < routePrefixes.Length; i++)
+            {
+                if (route.StartsWith(routePrefixes[i], StringComparison.Ordinal))
+                {
+                    targetId = route.Substring(routePrefixes[i].Length);
+                    break;
+                }
+            }
+            if (string.IsNullOrEmpty(targetId)) return;
+            _codexFocusId = targetId;
+            if (_journal != null)
+                _journal.SwitchTab((int)JournalTab.Events);
+            else
+                SwitchTab((int)JournalTab.Events);
+            Refresh();
+        }
 
         private void HandleSystemTabChanged(int tab)
         {
@@ -180,6 +203,7 @@ namespace AtomicWar.Journal
                 ScrollActive = false,
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
+            _content.MetaClicked += HandleMetaClicked;
             _scroll.AddChild(_content);
 
             _footerLabel = new Label { Text = string.Empty };
@@ -388,8 +412,10 @@ namespace AtomicWar.Journal
                 StatusLine = $"JOURNAL [{tab}]  empty  [1]-[5]";
                 return;
             }
+            int start = CodexWindowStart(rows);
+            if (start > 0) sb.AppendLine($"  … {start} earlier");
             int shown = 0;
-            for (int i = 0; i < rows.Count; i++)
+            for (int i = start; i < rows.Count; i++)
             {
                 var row = rows[i];
                 if (row.IsLocked)
@@ -400,14 +426,18 @@ namespace AtomicWar.Journal
                 }
                 else
                 {
-                    sb.AppendLine($"  · {row.DisplayName}" + (string.IsNullOrEmpty(row.Meta) ? string.Empty : $"  ({row.Meta})"));
+                    string focus = string.Equals(row.NavigationId, _codexFocusId, StringComparison.Ordinal)
+                        ? ">> "
+                        : string.Empty;
+                    sb.AppendLine($"  · {focus}{row.DisplayName}" + (string.IsNullOrEmpty(row.Meta) ? string.Empty : $"  ({row.Meta})"));
                     sb.AppendLine($"    {row.Body}");
+                    AppendRelatedText(sb, row);
                 }
                 shown++;
                 if (shown >= MaxVisibleOpen) break;
             }
-            if (rows.Count > MaxVisibleOpen)
-                sb.AppendLine($"  … +{rows.Count - MaxVisibleOpen} more");
+            if (start + shown < rows.Count)
+                sb.AppendLine($"  … +{rows.Count - (start + shown)} more");
             DetailSummary = sb.ToString().TrimEnd();
             StatusLine = $"JOURNAL [{tab}]  {rows.Count} entries{unreadMark}  [1]-[5]";
         }
@@ -499,7 +529,11 @@ namespace AtomicWar.Journal
                 sb.Append(Colored("No pages here yet.", ColBody));
                 return;
             }
-            for (int i = 0; i < rows.Count && i < MaxVisibleOpen; i++)
+            int start = CodexWindowStart(rows);
+            if (start > 0)
+                sb.Append(Colored($"… {start} earlier\n", ColMeta));
+            int shown = 0;
+            for (int i = start; i < rows.Count && shown < MaxVisibleOpen; i++)
             {
                 var row = rows[i];
                 if (row.IsLocked)
@@ -510,13 +544,61 @@ namespace AtomicWar.Journal
                 else
                 {
                     string meta = string.IsNullOrEmpty(row.Meta) ? string.Empty : $"  ({row.Meta})";
-                    sb.Append(Colored($"· {Escape(row.DisplayName)}", ColAmber))
+                    string focus = string.Equals(row.NavigationId, _codexFocusId, StringComparison.Ordinal)
+                        ? ">> "
+                        : string.Empty;
+                    sb.Append(Colored($"· {focus}{Escape(row.DisplayName)}", ColAmber))
                         .Append(Colored(meta, ColMeta)).Append('\n');
                     sb.Append(Colored(Escape(row.Body), ColBody)).Append('\n');
+                    AppendRelatedLinks(sb, row);
                 }
+                shown++;
             }
-            if (rows.Count > MaxVisibleOpen)
-                sb.Append(Colored($"… +{rows.Count - MaxVisibleOpen} more", ColMeta));
+            if (start + shown < rows.Count)
+                sb.Append(Colored($"… +{rows.Count - (start + shown)} more", ColMeta));
+        }
+
+        private int CodexWindowStart(IReadOnlyList<JournalCodexRow> rows)
+        {
+            if (string.IsNullOrEmpty(_codexFocusId) || rows == null || rows.Count <= MaxVisibleOpen)
+                return 0;
+            for (int i = 0; i < rows.Count; i++)
+            {
+                if (!string.Equals(rows[i].NavigationId, _codexFocusId, StringComparison.Ordinal)) continue;
+                return Math.Min(i, rows.Count - MaxVisibleOpen);
+            }
+            return 0;
+        }
+
+        private static void AppendRelatedText(StringBuilder sb, JournalCodexRow row)
+        {
+            if (row.Links == null || row.Links.Count == 0) return;
+            sb.Append("    Related: ");
+            for (int i = 0; i < row.Links.Count; i++)
+            {
+                if (i > 0) sb.Append("; ");
+                sb.Append(row.Links[i].Label);
+            }
+            sb.AppendLine();
+        }
+
+        private static void AppendRelatedLinks(StringBuilder sb, JournalCodexRow row)
+        {
+            if (row.Links == null || row.Links.Count == 0) return;
+            sb.Append(Colored("  Related: ", ColMeta));
+            for (int i = 0; i < row.Links.Count; i++)
+            {
+                if (i > 0) sb.Append(Colored("; ", ColMeta));
+                var link = row.Links[i];
+                sb.Append("[url=")
+                    .Append(link.RoutePrefix)
+                    .Append(":")
+                    .Append(Escape(link.Id))
+                    .Append("]")
+                    .Append(Colored(Escape(link.Label), ColTeal))
+                    .Append("[/url]");
+            }
+            sb.Append('\n');
         }
 
         /// <summary>Auto tag derived from knowledge-key namespace conventions.</summary>

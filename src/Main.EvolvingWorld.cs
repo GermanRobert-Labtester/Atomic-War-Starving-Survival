@@ -129,7 +129,7 @@ namespace AtomicWar.GodotApp
                     }
                 }
 
-                _wildlifeTrapping.System.SetSelectionContext(ctx);
+                _wildlifeTrapping.SetSelectionContext(ctx);
             }
         }
 

@@ -279,9 +279,11 @@ namespace Ashfall.Core.Tests.Save
             // Plans B86-B89 added precision_metrology and aquaponics (B88 nests under radio).
             // Plan 155 added oral_lore.
             // Plan 157 added grain_milling_archive.
-            Assert.Equal(171, SaveSectionRegistry.All.Count);
+            // Plan 159 added leatherwork_archive.
+            // Plan 143 added narrative_questlines.
+            Assert.Equal(173, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(171, keys.Count);
+            Assert.Equal(173, keys.Count);
         }
     }
 }

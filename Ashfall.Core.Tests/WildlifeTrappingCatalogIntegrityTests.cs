@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core.Tests
 {
@@ -303,6 +305,101 @@ namespace Ashfall.Core.Tests
             trap.bycatchSpecies.Clear();
             trap.bycatchChance = float.NaN;
             Assert.False(trap.Validate(out _));
+        }
+
+        [Fact]
+        public void DiseaseId_OmittedFromPrey_PassesCleanly()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"rabbit\",\"displayName\":\"Ash Rabbit\"}]}");
+            });
+
+            Assert.True(report.Clean, "Omitted diseaseId must pass: " + string.Join("\n", report.Errors));
+        }
+
+        [Fact]
+        public void DiseaseId_NullValue_PassesCleanly()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"rabbit\",\"diseaseId\":null}]}");
+            });
+
+            Assert.True(report.Clean, "Null diseaseId must pass: " + string.Join("\n", report.Errors));
+        }
+
+        [Fact]
+        public void ContaminationDose_NegativeInfinity_NumericString_Rejected()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":\"-Infinity\"}]}");
+            });
+
+            Assert.Contains(report.Errors, e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
+        }
+
+        [Fact]
+        public void ContaminationDose_MultipleInvalidEntries_StableDeterministicDiagnostics()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                    "{\"schema_version\":1,\"prey\":[" +
+                    "{\"speciesId\":\"bad_prey_1\",\"contaminationDose\":-10.0}," +
+                    "{\"speciesId\":\"bad_prey_2\",\"contaminationDose\":\"NaN\"}]}");
+            });
+
+            Assert.Equal(2, report.Errors.Count(e => e.Contains("contaminationDose")));
+            Assert.Contains(report.Errors, e => e.Contains("negative contaminationDose") && e.Contains("prey 'bad_prey_1'"));
+            Assert.Contains(report.Errors, e => e.Contains("non-finite contaminationDose") && e.Contains("prey 'bad_prey_2'"));
+        }
+
+        [Fact]
+        public void TrapDefinition_CalculateRepairBill_ImprovisedWireSnare_CeilRounding()
+        {
+            var trap = new TrapDefinition
+            {
+                trap_id = "trap_improvised_wire",
+                setupCosts = new List<TrapSetupCost>
+                {
+                    new TrapSetupCost { itemId = "copper_wire_10m_of_10m", amount = 1 }
+                }
+            };
+
+            var bill = trap.CalculateRepairBill();
+            Assert.Single(bill.Costs);
+            var cost = bill.Costs[0];
+            Assert.Equal("copper_wire_10m_of_10m", cost.ItemId);
+            Assert.Equal(1, cost.Amount); // ceil(1 * 0.5) = 1
+        }
+
+        [Fact]
+        public void TrapDefinition_CalculateRepairBill_BoxTrap_PreservesOrderAndAggregates()
+        {
+            var trap = new TrapDefinition
+            {
+                trap_id = "trap_box",
+                setupCosts = new List<TrapSetupCost>
+                {
+                    new TrapSetupCost { itemId = "scrap_wood", amount = 2 },
+                    new TrapSetupCost { itemId = "scrap_metal", amount = 1 },
+                    new TrapSetupCost { itemId = "box_of_nails_10", amount = 1 }
+                }
+            };
+
+            var bill = trap.CalculateRepairBill();
+            Assert.Equal(3, bill.Costs.Count);
+            Assert.Equal("scrap_wood", bill.Costs[0].ItemId);
+            Assert.Equal(1, bill.Costs[0].Amount); // ceil(2 * 0.5) = 1
+            Assert.Equal("scrap_metal", bill.Costs[1].ItemId);
+            Assert.Equal(1, bill.Costs[1].Amount); // ceil(1 * 0.5) = 1
+            Assert.Equal("box_of_nails_10", bill.Costs[2].ItemId);
+            Assert.Equal(1, bill.Costs[2].Amount); // ceil(1 * 0.5) = 1
         }
     }
 }

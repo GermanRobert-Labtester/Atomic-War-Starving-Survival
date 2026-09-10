@@ -51,8 +51,11 @@ unlocked", "which location override is active for `locationId` X today").
 `narrative_arc_events.json`.** Flagging explicitly per the no-schema-changes-
 without-flagging rule. `events.json` is a flat weighted random-draw pool
 (`id/title/bodyText/weight/minDay`) with no branching and no chains, and
-`narrative_arc_events.json` is background-item trigger tables — neither fits
-"linked multi-day chains with trigger conditions and branching outcomes."
+`narrative_arc_events.json` is a separate, bounded survivor-arc choice catalog
+owned by `NarrativeArcEventSystem`; it is not part of the faction-war chain
+schema. The historical description below predates Plan 143. Neither catalog
+implements the faction-war requirement for "linked multi-day chains with
+trigger conditions and branching outcomes."
 The new file introduces:
 
 ```

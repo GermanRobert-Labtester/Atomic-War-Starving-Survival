@@ -135,6 +135,16 @@ namespace Ashfall.Core.Narrative
         /// Null on legacy saves that predate depletion (restore then reconstructs
         /// the set from history); a present list (even empty) means "known".</summary>
         public List<string>? depletedEncounterIds = new List<string>();
+
+        /// <summary>
+        /// Plan 143 — optional bounded survivor-arc state. Pre-Plan-143 saves
+        /// may omit this field and restore as an empty arc ledger. New saves
+        /// retain a null field when no arc state exists so the public-field
+        /// wire shape stays identical across the Core serializer and the
+        /// Unity-compatible reference serializer. Downstream morale, faction,
+        /// journal, and expedition state remains in its owning save section.
+        /// </summary>
+        public NarrativeArcEventState? arcState;
     }
 
     [System.Serializable]

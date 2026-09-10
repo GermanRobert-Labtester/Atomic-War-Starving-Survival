@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(repair *)",
+      "Bash(both *)",
+      "Bash(rather *)",
+      "Bash(them. *)",
+      "Bash(reasons)",
+      "Bash(with *)",
+      "Bash(commits *)",
+      "Bash(1. *)",
+      "Bash(grew *)",
+      "Bash(assert.equal)",
+      "Bash(. *)",
+      "Bash(wasteland_map_v1 *)",
+      "Bash(waystationcatalogloader's own hardcoded fallback defaults use\n   loc_shrine_switchback_waystation, loc_railway_span_44_alpha, loc_motel_verity,\n   loc_lock_gate_four and loc_grain_silo, none of which are among the 22 map\n   nodes, so the loader's *)",
+      "Bash(and)",
+      "Bash(waystationnetworksystem *)",
+      "Bash(region *)",
+      "Bash(not *)",
+      "Bash(union *)",
+      "Bash(fix, *)",
+      "Bash(2. *)",
+      "Bash(the *)",
+      "Bash(this *)",
+      "Bash(docs/architecture/architecture_test_map.md. *)",
+      "Bash(deep-evidence *)",
+      "Bash(lifecycle/reachability *)",
+      "Bash(through *)",
+      "Bash(171 *)",
+      "Bash(head *)",
+      "Bash(committed *)",
+      "Bash(verified *)",
+      "Bash(16 *)",
+      "Bash(questline *)",
+      "Bash(ashfall.csproj *)",
+      "Bash(ashfall.core *)",
+      "Bash(data-integrity *)",
+      "Bash(eof)"
+    ]
+  },
+  "$version": 4
+}
