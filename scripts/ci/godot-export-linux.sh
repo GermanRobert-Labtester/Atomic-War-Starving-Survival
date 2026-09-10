@@ -39,6 +39,10 @@ if [[ ! -d "$SRC" ]]; then
   echo "EXPORT FAIL: source $SRC missing" >&2
   exit 1
 fi
+# Mirror-deploy: remove the previous data copy first. Without this, catalogs
+# retired from the source authority survive as stale build copies and break
+# the isolated data-integrity gate with duplicate-id findings (Plan 47/48).
+rm -rf "$DST"
 mkdir -p "$DST"
 # Use cp -a to preserve case, then verify representative catalogs.
 cp -r "$SRC"/. "$DST"/
