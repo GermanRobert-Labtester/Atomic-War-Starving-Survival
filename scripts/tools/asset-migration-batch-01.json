@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "batch": "asset-migration-batch-01",
+  "plan": "Plan 48 / Task 14",
+  "ordering": "ordinal",
+  "destination_root": "assets/",
+  "policy": {
+    "never_delete_source": true,
+    "live_consumers_only": true,
+    "case_collision_abort": true
+  },
+  "entries": [
+    {
+      "source": "UI_StyleReference_01.jpg",
+      "destination": "assets/ui/reference/ui_style_reference_01.jpg",
+      "consumers": [],
+      "consumer_class": "INDIRECT_LIVE",
+      "import_notes": "Style-reference photograph; default Godot texture import (lossy compression, mipmaps off for UI reference). Existing root .import retires with the move.",
+      "visual_qa_target": "none (reference material, not runtime-loaded)",
+      "lfs_expected": true,
+      "status": "PENDING"
+    },
+    {
+      "source": "codex_alt_01_rgb.png.import",
+      "destination": null,
+      "consumers": [],
+      "consumer_class": "ORPHANED",
+      "import_notes": "Orphan .import stub — target PNG does not exist anywhere in the repo. Deletion deferred to the hygiene wave; recorded here so the gate sees a disposition.",
+      "visual_qa_target": "none",
+      "lfs_expected": false,
+      "status": "ORPHAN_HOLD"
+    },
+    {
+      "source": "codex_alt_02_rgb.png.import",
+      "destination": null,
+      "consumers": [],
+      "consumer_class": "ORPHANED",
+      "import_notes": "Orphan .import stub — target PNG does not exist anywhere in the repo. Deletion deferred to the hygiene wave; recorded here so the gate sees a disposition.",
+      "visual_qa_target": "none",
+      "lfs_expected": false,
+      "status": "ORPHAN_HOLD"
+    }
+  ],
+  "historical_note": "The Unity-era art trees Assets/art, Assets/ui, Assets/sprites and Assets/audio were fully migrated to the Godot assets/ tree in earlier waves (they now contain only .gdignore markers). Batch 01 therefore carries the remaining root-level strays; the legacy backlog for art binaries is zero."
+}
