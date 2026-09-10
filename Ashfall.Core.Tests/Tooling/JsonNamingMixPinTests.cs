@@ -24,8 +24,11 @@ namespace Ashfall.Core.Tests
             "year_of_ash_radio.json",
             "wasteland_map_v1.json",
             "expeditions.json",
-            "mineral_acid_synthesis_catalog.json",
-            "chemical_syntheses.json",
+            // Plan 47 wave 1: chemical_syntheses.json and
+            // mineral_acid_synthesis_catalog.json migrated to canonical
+            // snake_case (dual-read aliases retained) — removed from this pin
+            // list per the test's own migration clause.
+            // See docs/data/SNAKE_CASE_MIGRATION.md.
             "holdfast_locations.json",
             "duty_roster_locations.json",
             "crossing_locations.json",
