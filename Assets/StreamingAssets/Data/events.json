@@ -4022,7 +4022,7 @@
               "worldFlagValue": true
             },
             {
-              "scheduleEventId": "escalation_sabotage_investigated",
+              "scheduleEventId": "escalation_sabotage",
               "scheduleOnDay": 51
             }
           ]
