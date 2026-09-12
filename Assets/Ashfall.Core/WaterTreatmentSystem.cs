@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -617,6 +618,21 @@ namespace Ashfall.Core
         public bool IsIntakeSourceBlocked(string sourceId) =>
             HasContaminationAdvisory && AdvisoryBlockedSourceIds.Contains(sourceId);
 
+        /// <summary>
+        /// Plan 189 — source-gated intake. Names an abstract intake source id
+        /// (canonical <c>piezometer_network_catalog.json</c> <c>monitored_source_ids</c>,
+        /// or a documented synthetic id for non-aquifer producers). A source
+        /// blocked by the active hydrogeology advisory grants <b>zero</b> liters.
+        /// An empty/null source id is an untagged legacy producer and is always
+        /// admitted, preserving existing behaviour for tests and simulators.
+        /// </summary>
+        public ActionResult TryAddWaterFromSource(string sourceId, WaterType type, float amount)
+        {
+            if (!string.IsNullOrEmpty(sourceId) && IsIntakeSourceBlocked(sourceId))
+                return ActionResult.Blocked("intake_source_blocked", "water.intake_source_blocked");
+            return AddWater(type, amount);
+        }
+
         // ── Daily Tick ──────────────────────────────────────────────────────
 
         /// <summary>Daily tick. Advances active treatment and applies passive effects.</summary>
@@ -666,13 +682,17 @@ namespace Ashfall.Core
 
         public WaterTreatmentState CaptureState()
         {
-            return _state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<WaterTreatmentState>(json) ?? new WaterTreatmentState();
         }
 
         public void RestoreState(WaterTreatmentState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(saved);
+            _state = s.Deserialize<WaterTreatmentState>(json) ?? new WaterTreatmentState();
             OnWaterStateChanged?.Invoke();
         }
     }

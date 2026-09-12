@@ -65,6 +65,12 @@ namespace Ashfall.Core
     {
         public const string SystemId = "sump_flooding";
 
+        /// <summary>
+        /// Plan 189 documented synthetic intake source id (not a piezometer
+        /// strata id) used when routed greywater reaches water treatment.
+        /// </summary>
+        public const string SumpGreywaterSourceId = "source_sump_greywater";
+
         // ── Stratum/sludge model constants (sump_drainage_catalog) ──────
         /// <summary>Basin cross-section convention: 1 cm of node level = 10 L of water.</summary>
         public const float BasinLitersPerCmLevel = 10f;
@@ -268,7 +274,10 @@ ILog? log = null)
 
             if (_waterTreatment != null)
             {
-                var add = _waterTreatment.AddWater(WaterType.Raw, greywaterL);
+                // Plan 189: sump greywater is a named intake source, so a
+                // hydrogeology advisory can isolate it. A blocked grant routes
+                // to unrouted greywater rather than vanishing.
+                var add = _waterTreatment.TryAddWaterFromSource(SumpGreywaterSourceId, WaterType.Raw, greywaterL);
                 if (add.Status != ActionResult.StatusKind.Success)
                     _state.unroutedGreywaterLiters += greywaterL;
             }
