@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Save stores live in src/ and read user:// — Godot-tied. We mirror each store's
 // envelope + checksum behaviour here through SystemTextJsonSerializer so the
 // integrity contract is pinned without spinning up a Godot project.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : VerdictSaveStore
 // Core State : Ashfall.Core.Verdict.VerdictSave

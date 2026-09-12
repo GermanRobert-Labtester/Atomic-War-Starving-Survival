@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : SilentFoundrySaveStore
 // Core State : Ashfall.Core.Foundry.SilentFoundryState

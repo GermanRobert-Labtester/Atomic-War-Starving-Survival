@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : GeothermalAquiferSaveStore
 // Core State : Ashfall.Core.Shelter.GeothermalAquiferState

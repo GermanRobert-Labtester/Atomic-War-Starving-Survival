@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // NarrativeSaveStore lives in src/Host and reads user:// — Godot-tied. We mirror
 // its envelope + checksum behaviour here through SystemTextJsonSerializer so the
 // integrity contract is pinned without spinning up a Godot project.

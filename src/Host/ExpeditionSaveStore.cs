@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ExpeditionSaveStore
 // Core State : Ashfall.Core.Expeditions.ExpeditionAggregateState

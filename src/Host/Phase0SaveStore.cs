@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : Phase0SaveStore
 // Core State : Ashfall.Core.Phase0EffectsSaveState

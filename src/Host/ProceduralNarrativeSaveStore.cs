@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ProceduralNarrativeSaveStore
 // Core State : Ashfall.Core.Narrative.ProceduralNarrativeSaveState

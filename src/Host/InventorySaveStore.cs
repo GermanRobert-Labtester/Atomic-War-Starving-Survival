@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : InventorySaveStore
 // Core State : Ashfall.Core.Inventory.InventorySaveState

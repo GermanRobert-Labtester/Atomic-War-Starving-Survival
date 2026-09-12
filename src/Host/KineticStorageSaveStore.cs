@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : KineticStorageSaveStore
 // Core State : Ashfall.Core.Shelter.KineticStorageState

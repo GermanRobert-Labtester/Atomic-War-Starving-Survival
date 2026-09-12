@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : YearOfAshSaveStore
 // Core State : Ashfall.Core.YearOfAsh.YearOfAshSave

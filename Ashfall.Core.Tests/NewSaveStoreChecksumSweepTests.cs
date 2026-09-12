@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Phase 13 save-store checksum sweep for the 8 newly-wired Batch-3 systems.
 //
 // The host save stores live in src/ and read user:// — Godot-tied. We mirror

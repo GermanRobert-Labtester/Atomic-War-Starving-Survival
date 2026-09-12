@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : MedicalWardSaveStore
 // Core State : Ashfall.Core.Medical.MedicalWardSave

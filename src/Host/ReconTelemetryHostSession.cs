@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Host Session : ReconTelemetryHostSession
 // Core System : Ashfall.Core.Expeditions.ReconTelemetrySystem

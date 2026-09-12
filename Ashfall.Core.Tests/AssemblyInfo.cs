@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Xunit;
 
 // The suite shares process-level state across classes (catalog registries,

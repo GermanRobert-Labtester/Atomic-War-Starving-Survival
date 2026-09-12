@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : SurvivorFateSaveStore
 // Core State : Ashfall.Core.Survivors.SurvivorFateSave (wraps SurvivorFateSaveState)

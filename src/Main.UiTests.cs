@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // This file has been decomposed into domain-scoped partial files:
 //   Main.UiTests.Journal.cs, Main.UiTests.DutyRoster.cs, Main.UiTests.SilentFoundry.cs,
 //   Main.UiTests.UtilityAi.cs, Main.UiTests.Economy.cs, Main.UiTests.Holdfast.cs,

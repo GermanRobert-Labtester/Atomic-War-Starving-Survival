@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ShelterBarterSaveStore
 // Core State : Ashfall.Core.Economy.ShelterBarterSaveState

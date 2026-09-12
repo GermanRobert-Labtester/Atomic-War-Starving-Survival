@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : WeatherHardeningSaveStore
 // Core State : Ashfall.Core.World.WeatherHardeningState

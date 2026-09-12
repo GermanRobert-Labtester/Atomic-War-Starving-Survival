@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;

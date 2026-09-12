@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Self Test : ContrabandStashSelfTest (--contraband-stash-selftest)
 // Proves    : Plan 147 host loop — catalog load + validation, day gate,

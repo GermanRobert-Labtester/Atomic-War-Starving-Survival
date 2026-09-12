@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ChlorAlkaliSaveStore
 // Core State : Ashfall.Core.Shelter.ChlorAlkaliPlantState

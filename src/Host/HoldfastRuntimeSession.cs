@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 #pragma warning disable CS8618
 using System.Collections.Generic;

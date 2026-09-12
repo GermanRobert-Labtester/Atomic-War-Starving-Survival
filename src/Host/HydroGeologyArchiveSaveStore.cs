@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : HydroGeologyArchiveSaveStore
 // Core State : Ashfall.Core.Narrative.HydroGeologyArchiveState

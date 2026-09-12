@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ExcavationSaveStore
 // Core State : Ashfall.Core.ExcavationState

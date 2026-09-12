@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : SolarConcentratorSaveStore
 // Core State : Ashfall.Core.Shelter.SolarConcentratorState

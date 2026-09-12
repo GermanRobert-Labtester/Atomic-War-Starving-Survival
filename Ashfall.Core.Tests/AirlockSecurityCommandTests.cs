@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Xunit;
 using Ashfall.Core.Shelter;
 

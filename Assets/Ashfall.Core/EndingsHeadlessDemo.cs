@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System.Text;
 
 #pragma warning disable CS8618

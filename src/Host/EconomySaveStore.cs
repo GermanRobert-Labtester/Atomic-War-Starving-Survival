@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : EconomySaveStore
 // Core State : Ashfall.Core.Economy.MarketState

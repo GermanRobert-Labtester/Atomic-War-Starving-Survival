@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CraftingSaveStore
 // Core State : Ashfall.Core.CraftingSystemSave

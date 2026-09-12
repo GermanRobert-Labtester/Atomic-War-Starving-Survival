@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ShelterThermalSaveStore
 // Core State : Ashfall.Core.ShelterThermalState

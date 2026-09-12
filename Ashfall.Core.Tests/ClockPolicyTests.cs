@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core.Clock;
 using Ashfall.Core.Events;
 using Ashfall.Core.Flags;

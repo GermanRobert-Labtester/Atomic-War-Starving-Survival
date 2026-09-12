@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ApprenticeshipSaveStore
 // Core State : Ashfall.Core.ApprenticeshipState

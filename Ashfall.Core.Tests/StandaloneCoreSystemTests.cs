@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System.Collections.Generic;
 using Ashfall.Core.Endgame;
 using Ashfall.Core.Events;

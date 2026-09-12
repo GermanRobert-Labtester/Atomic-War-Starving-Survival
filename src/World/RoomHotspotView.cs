@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 
 #pragma warning disable CS8618

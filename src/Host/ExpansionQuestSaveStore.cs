@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ExpansionQuestSaveStore
 // Core State : Ashfall.Core.ExpansionQuestSaveEnvelope

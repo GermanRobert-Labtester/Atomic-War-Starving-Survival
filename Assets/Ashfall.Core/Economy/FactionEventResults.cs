@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #pragma warning disable CS8618
 namespace Ashfall.Core.Economy
 {

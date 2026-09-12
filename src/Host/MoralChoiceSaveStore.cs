@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : MoralChoiceSaveStore
 // Core State : Ashfall.Core.MoralChoice.MoralChoiceState

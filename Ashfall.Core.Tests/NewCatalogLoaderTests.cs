@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // BUG-02 regression tests: the 4 newly-authored catalog loaders
 // (ShelterSchedule, Autopsy, LibraryStudy, ArchiveDesk) must load real
 // JSON from StreamingAssets/Data and register into their Core systems.

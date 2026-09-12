@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Engine-agnostic design tokens for the Ashfall diegetic UI.
 // Mirrors the USS :root variables in DiegeticHud.uss and MainMenu.uss.
 // Both Unity and Godot hosts reference these constants for programmatic

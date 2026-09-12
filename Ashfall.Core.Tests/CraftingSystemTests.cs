@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Inventory;
 using Xunit;

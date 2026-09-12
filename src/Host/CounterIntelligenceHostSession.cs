@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Host Session : CounterIntelligenceHostSession
 // Core System : Ashfall.Core.Factions.CounterIntelligenceSystem

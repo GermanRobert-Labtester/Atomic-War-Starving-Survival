@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Wire-format compliance tests for the cross-host save contract.
 //
 // A save written by the Godot host (SystemTextJsonSerializer) must be

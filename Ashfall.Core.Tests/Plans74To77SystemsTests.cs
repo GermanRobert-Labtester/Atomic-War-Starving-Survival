@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core.Combat;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Shelter;

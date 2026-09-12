@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : WeightOfChoicesSaveStore
 // Core State : Ashfall.Core.Factions.WeightOfChoicesSave

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : WildlifeTrappingSaveStore
 // Core State : Ashfall.Core.WildlifeTrappingState

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CollectibleDiscoverySaveStore
 // Core State : Ashfall.Core.CollectibleDiscoverySave

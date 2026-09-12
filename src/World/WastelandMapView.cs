@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using AtomicWar.GodotApp.UI;
 using Godot;
 using System;

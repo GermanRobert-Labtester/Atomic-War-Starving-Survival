@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System.IO;
 using Ashfall.Core;
 using Ashfall.Core.Journal;

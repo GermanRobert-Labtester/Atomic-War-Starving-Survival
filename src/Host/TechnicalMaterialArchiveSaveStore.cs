@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : TechnicalMaterialArchiveSaveStore
 // Core State : Ashfall.Core.Narrative.TechnicalMaterialArchiveState

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : AirlockSecuritySaveStore
 // Core State : Ashfall.Core.AirlockSecurityState

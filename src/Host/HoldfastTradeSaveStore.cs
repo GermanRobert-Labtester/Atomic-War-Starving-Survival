@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : HoldfastTradeSaveStore
 // Core State : Ashfall.Core.HoldfastTradeSaveState

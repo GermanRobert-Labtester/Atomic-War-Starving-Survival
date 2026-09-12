@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : EspionageSaveStore
 // Core State : Ashfall.Core.Factions.EspionageState

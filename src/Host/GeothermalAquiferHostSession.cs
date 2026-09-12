@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Host Session : GeothermalAquiferHostSession
 // Core System : Ashfall.Core.Shelter.GeothermalAquiferSystem

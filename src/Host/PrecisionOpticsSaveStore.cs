@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : PrecisionOpticsSaveStore
 // Core State : Ashfall.Core.Shelter.PrecisionOpticsState

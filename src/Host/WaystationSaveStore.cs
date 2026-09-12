@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : WaystationSaveStore
 // Core State : Ashfall.Core.WaystationSystemState

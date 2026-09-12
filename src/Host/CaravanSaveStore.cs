@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CaravanSaveStore
 // Core State : Ashfall.Core.TravelingCaravanState

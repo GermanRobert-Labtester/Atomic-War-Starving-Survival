@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ShelterScheduleSaveStore
 // Core State : Ashfall.Core.ShelterScheduleState

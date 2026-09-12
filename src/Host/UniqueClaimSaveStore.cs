@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : UniqueClaimSaveStore
 // Core State : Ashfall.Core.UniqueClaimSave

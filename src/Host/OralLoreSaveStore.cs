@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : OralLoreSaveStore
 // Core State : Ashfall.Core.Narrative.OralLoreDiscoveryState

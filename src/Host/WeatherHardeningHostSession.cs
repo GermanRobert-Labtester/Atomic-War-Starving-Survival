@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Host Session : WeatherHardeningHostSession
 // Core System : Ashfall.Core.World.WeatherHardeningSystem

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CounterIntelligenceSaveStore
 // Core State : Ashfall.Core.Factions.CounterIntelligenceState

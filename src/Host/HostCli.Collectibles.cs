@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // SelfTest : --collectible-selftest
 // Purpose  : Collectibles flagship integration gate — effect dispatch routing,

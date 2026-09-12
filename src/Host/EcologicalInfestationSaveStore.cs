@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : EcologicalInfestationSaveStore
 // Core State : Ashfall.Core.Ecology.EcologicalInfestationState

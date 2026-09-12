@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : DutyRosterSaveStore
 // Core State : Ashfall.Core.DutyRosterSave

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core.Inventory;
 using Xunit;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;

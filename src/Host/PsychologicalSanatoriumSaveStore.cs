@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core.Save;
 using Ashfall.Core.Sanatorium;
 

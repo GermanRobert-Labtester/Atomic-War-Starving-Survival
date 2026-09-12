@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : WastelandMapSaveStore
 // Core State : Ashfall.Core.World.WastelandMapState

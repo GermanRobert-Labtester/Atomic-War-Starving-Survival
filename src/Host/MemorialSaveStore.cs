@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : MemorialSaveStore
 // Core State : Ashfall.Core.Memorial.MemorialSave

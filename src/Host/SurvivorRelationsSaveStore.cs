@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : SurvivorRelationsSaveStore
 // Core State : Ashfall.Core.SurvivorRelationsState

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Task 45-47: Canonical consumption service — authored effects, atomic rollback,
 // single inventory authority, and survivor target resolution.
 

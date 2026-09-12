@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : VinylMoraleSaveStore
 // Core State : Ashfall.Core.VinylMoraleState

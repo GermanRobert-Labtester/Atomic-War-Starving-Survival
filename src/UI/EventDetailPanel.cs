@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Linq;
 #pragma warning disable CS8618

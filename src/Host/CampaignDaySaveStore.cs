@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CampaignDaySaveStore
 // Core State : Ashfall.Core.Campaign.CampaignDaySave

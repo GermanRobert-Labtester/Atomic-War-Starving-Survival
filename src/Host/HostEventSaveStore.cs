@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : HostEventSaveStore
 // Core State : AtomicWar.GodotApp.Host.HostEventState

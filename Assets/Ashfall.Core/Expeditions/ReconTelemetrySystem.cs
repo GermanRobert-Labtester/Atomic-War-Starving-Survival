@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core.Radio;
 using System;
 using System.Collections.Generic;

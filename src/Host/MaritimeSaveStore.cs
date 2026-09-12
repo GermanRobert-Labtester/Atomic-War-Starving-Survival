@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : MaritimeSaveStore
 // Core State : Ashfall.Core.MaritimeHostSave

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : LeatherworkArchiveSaveStore
 // Core State : Ashfall.Core.Narrative.LeatherworkArchiveState

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 namespace Ashfall.Core.Foundry
 {
     public sealed partial class SilentFoundrySystem

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System.IO;
 using System.Text.RegularExpressions;
 using Xunit;

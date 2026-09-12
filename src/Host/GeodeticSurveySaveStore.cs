@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : GeodeticSurveySaveStore
 // Core State : Ashfall.Core.World.GeodeticSurveyState

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System.Text.Json;
 using Xunit;
 using Ashfall.Core;

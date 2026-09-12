@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // The fixtures below deliberately model save DTOs, which are plain nullable public fields
 // (Ashfall.Core builds with <Nullable>disable</Nullable>). Null is the value under test here.
 #nullable disable

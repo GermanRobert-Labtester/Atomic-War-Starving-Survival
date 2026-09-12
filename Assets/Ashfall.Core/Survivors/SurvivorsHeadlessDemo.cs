@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 namespace Ashfall.Core.Survivors
 {
     /// <summary>

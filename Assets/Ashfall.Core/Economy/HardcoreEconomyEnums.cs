@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 namespace Ashfall.Core.Economy
 {
     /// <summary>Scarcity tier affecting market multiplier.</summary>

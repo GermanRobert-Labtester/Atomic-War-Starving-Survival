@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : PhantomMemorySaveStore
 // Core State : Ashfall.Core.PhantomMemoryEngineState

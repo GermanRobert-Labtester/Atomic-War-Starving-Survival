@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #nullable disable
 using System;
 using System.Collections.Generic;

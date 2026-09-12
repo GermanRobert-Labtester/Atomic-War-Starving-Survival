@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : PrecisionMetrologySaveStore
 // Core State : Ashfall.Core.Shelter.PrecisionMetrologyState

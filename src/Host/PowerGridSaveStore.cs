@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : PowerGridSaveStore
 // Core State : Ashfall.Core.Shelter.PowerGridSave

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : MusterSaveStore
 // Core State : Ashfall.Core.Muster.MusterHostSave

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : GrainMillingArchiveSaveStore
 // Core State : Ashfall.Core.Narrative.GrainMillingArchiveState

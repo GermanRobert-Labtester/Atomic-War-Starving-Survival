@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CaregivingSaveStore
 // Core State : Ashfall.Core.CaregivingSaveState

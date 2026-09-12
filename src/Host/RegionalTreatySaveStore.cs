@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : RegionalTreatySaveStore
 // Core State : Ashfall.Core.RegionalTreatyState

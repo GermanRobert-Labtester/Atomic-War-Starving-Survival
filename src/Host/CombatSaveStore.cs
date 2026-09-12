@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : CombatSaveStore
 // Core State : Ashfall.Core.Combat.CombatState

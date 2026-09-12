@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ExpansionHubSaveStore
 // Core State : Ashfall.Core.ExpansionHubSave

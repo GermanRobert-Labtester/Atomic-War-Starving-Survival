@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : BlackProjectsArchiveSaveStore
 // Core State : Ashfall.Core.Narrative.BlackProjectsArchiveState

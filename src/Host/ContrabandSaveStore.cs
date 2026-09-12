@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ContrabandSaveStore
 // Core State : Ashfall.Core.Narrative.ContrabandStashState

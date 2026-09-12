@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : WorldSaveStore
 // Core State : Ashfall.Core.World.WorldHostSave

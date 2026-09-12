@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : DiseaseSaveStore
 // Core State : Ashfall.Core.Disease.DiseaseSystemState

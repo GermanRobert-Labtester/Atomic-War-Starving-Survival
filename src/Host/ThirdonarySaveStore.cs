@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ThirdonarySaveStore
 // Core State : Ashfall.Core.Thirdonary.ThirdonarySaveEnvelope

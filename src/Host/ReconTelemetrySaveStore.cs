@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // ============================================================================
 // Save Store : ReconTelemetrySaveStore
 // Core State : Ashfall.Core.Expeditions.ReconTelemetryState
