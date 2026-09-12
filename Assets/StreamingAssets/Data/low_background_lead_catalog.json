@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "material_profiles": [
+    {
+      "id": "lb_lead_pre_industrial_salvage",
+      "display_name": "Pre-Industrial Lead Stock",
+      "description": "Dense grey stock recovered from pre-industrial ruins. Old enough that most of its original decay-chain activity is long gone; the assay bench still reads a faint residual.",
+      "source_tag": "pre_industrial_salvage",
+      "background_activity_class": "very_low",
+      "residual_activity_bp": 8,
+      "shielding_factor_pct": 62,
+      "cross_contamination_sensitivity": 0.85,
+      "processing_loss_pct": 12,
+      "detector_compatibility_tags": ["scintillation_probe"],
+      "required_quality_control": "clean Handling",
+      "tags": ["low_background", "shield_feedstock"]
+    },
+    {
+      "id": "lb_lead_submerged_ballast",
+      "display_name": "Submerged Ballast Lead",
+      "description": "Keel ballast raised from a drowned hull. Decades underwater kept it away from airborne fallout; the surface carries marine etching but the bulk reads quiet.",
+      "source_tag": "submerged_ballast",
+      "background_activity_class": "low",
+      "residual_activity_bp": 14,
+      "shielding_factor_pct": 55,
+      "cross_contamination_sensitivity": 0.7,
+      "processing_loss_pct": 15,
+      "detector_compatibility_tags": ["scintillation_probe"],
+      "required_quality_control": "decontamination Wash",
+      "tags": ["low_background", "shield_feedstock"]
+    },
+    {
+      "id": "lb_lead_certified_shield_stock",
+      "display_name": "Certified Shield Stock",
+      "description": "Salvaged laboratory shielding carrying an intact certification plate. provenance is documented; the assay bench confirms the stamped background class.",
+      "source_tag": "certified_shield_stock",
+      "background_activity_class": "low",
+      "residual_activity_bp": 11,
+      "shielding_factor_pct": 58,
+      "cross_contamination_sensitivity": 0.5,
+      "processing_loss_pct": 5,
+      "detector_compatibility_tags": ["scintillation_probe"],
+      "required_quality_control": "documentation Check",
+      "tags": ["low_background", "shield_feedstock", "certified"]
+    },
+    {
+      "id": "lead_ordinary_modern_scrap",
+      "display_name": "Ordinary Modern Scrap Lead",
+      "description": "Post-collapse scrap: battery plates, roof flashing, pipe offcuts. Usable shielding mass, but it carries the full modern background signature.",
+      "source_tag": "ordinary_modern_scrap",
+      "background_activity_class": "ordinary",
+      "residual_activity_bp": 90,
+      "shielding_factor_pct": 40,
+      "cross_contamination_sensitivity": 0.2,
+      "processing_loss_pct": 8,
+      "detector_compatibility_tags": [],
+      "required_quality_control": "none",
+      "tags": ["shield_feedstock", "ordinary"]
+    }
+  ]
+}

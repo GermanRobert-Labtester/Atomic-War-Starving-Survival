@@ -25,6 +25,7 @@ namespace Ashfall.Core.Random
         public const string Psychology = "psychology";
         public const string Medical = "medical";
         public const string Events = "events";
+        public const string LowBackgroundMetrology = "low_background_metrology";
         public const string WorldEvolution = "world_evolution";
         // Plans 90-93 — deep industrial tier (distinct from the Silent Foundry's batch stream)
         public const string CupolaFoundry = "cupola_foundry";
