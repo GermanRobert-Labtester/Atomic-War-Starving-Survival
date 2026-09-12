@@ -309,7 +309,7 @@ public static class SceneBindingSelfTest
             {
                 root = PanelSceneLoader.Load<Node>(sc.ResPath);
                 if (!(root is Control c))
-                    throw new Exception("scene root is not Control");
+                    throw new InvalidCastException("scene root is not Control");
                 var binder = new SceneBinder(c, sc.RootType);
                 foreach (var (name, type) in sc.Contract)
                 {

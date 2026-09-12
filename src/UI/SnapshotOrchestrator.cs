@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -192,7 +193,7 @@ namespace AtomicWar.GodotApp.UI
 
             var asm = typeof(SnapshotOrchestrator).Assembly;
             var type = asm.GetType(_current.PanelCtor);
-            if (type == null) { throw new Exception($"type-not-found: {_current.PanelCtor}"); }
+            if (type == null) { throw new KeyNotFoundException($"type-not-found: {_current.PanelCtor}"); }
             var inst = (Node)Activator.CreateInstance(type);
             Node mounted;
             if (inst is Control ctl)
@@ -214,7 +215,7 @@ namespace AtomicWar.GodotApp.UI
             try { mounted!.Call("Open"); } catch (Exception ex) { GD.PrintErr($"[SnapshotOrchestrator] Open call failed: {ex.Message}"); }
 
             var hostRoot = (Engine.GetMainLoop() as SceneTree)?.Root;
-            if (hostRoot == null) { throw new Exception("no-SceneTree-root"); }
+            if (hostRoot == null) { throw new InvalidOperationException("no-SceneTree-root"); }
             hostRoot.AddChild(sub);
 
             HideOverlays(hostRoot, sub, _hidden);
