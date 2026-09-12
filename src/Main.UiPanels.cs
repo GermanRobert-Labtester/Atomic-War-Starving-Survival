@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using AtomicWar.GodotApp.UI;
@@ -99,6 +100,7 @@ namespace AtomicWar.GodotApp
         private AmputationTriagePanel _amputationTriagePanel = null!;
         private RailwayTerminalPanel _railwayTerminalPanel = null!;
         private FungiCultivationBedPanel _fungiCultivationBedPanel = null!;
+        private BioFermentationPanel _bioFermentationPanel = null!;
         private PlasticPyrolysisPanel _plasticPyrolysisPanel = null!;
         private CargoAirdropPanel _cargoAirdropPanel = null!;
         private JusticeTribunalPanel _justiceTribunalPanel = null!;
@@ -523,6 +525,13 @@ namespace AtomicWar.GodotApp
             _fungiCultivationBedPanel.OnClose += CloseFungiCultivationPanel;
             AddChild(_fungiCultivationBedPanel);
 
+            // ── Bio fermentation panel (Plan 126 — biologics workflow) ──
+            _bioFermentationPanel = new BioFermentationPanel();
+            _bioFermentationPanel.Visible = false;
+            _bioFermentationPanel.OnClose += CloseBioFermentationPanel;
+            _bioFermentationPanel.DayProvider = () => _simDay;
+            AddChild(_bioFermentationPanel);
+
             // ── Retort bay panel (Plan 202 — waste plastic reclamation) ──
             _plasticPyrolysisPanel = new PlasticPyrolysisPanel();
             _plasticPyrolysisPanel.Visible = false;
@@ -664,6 +673,7 @@ namespace AtomicWar.GodotApp
 
             // ── Survivor Detail panel (overlay) ──
             _survivorDetailPanel = PanelSceneLoader.Load<SurvivorDetailPanel>("res://assets/ui/panels/SurvivorDetailPanel.tscn");
+            _survivorDetailPanel.AppDayProvider = () => _simDay;
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 
@@ -758,6 +768,7 @@ namespace AtomicWar.GodotApp
 
             _prisonerPanel = new PrisonerPanel();
             _prisonerPanel.OnClose += () => _prisonerPanel.Visible = false;
+            _prisonerPanel.OnActionRequested += HandlePrisonerAction;
             AddChild(_prisonerPanel);
 
             _stealthReadoutPanel = new StealthReadoutPanel();
@@ -770,6 +781,7 @@ namespace AtomicWar.GodotApp
 
             _nurseryPanel = new NurseryPanel();
             _nurseryPanel.OnClose += () => _nurseryPanel.Visible = false;
+            _nurseryPanel.OnActionRequested += HandleNurseryAction;
             AddChild(_nurseryPanel);
 
             _falloutPlumePanel = new FalloutPlumePanel();
@@ -795,8 +807,15 @@ namespace AtomicWar.GodotApp
             _saveLoadPanel.OnClose += CloseSaveLoadPanel;
             _saveLoadPanel.OnSlotSelected += slotId =>
             {
-                _saveLoadHost?.SelectSlot(slotId);
-                UpdateContinueButton();
+                if (_saveLoadHost != null && _saveLoadHost.SelectSlot(slotId))
+                {
+                    UpdateContinueButton();
+                }
+                else
+                {
+                    _saveLoadPanel.ShowError($"Could not select slot {slotId.Value}.");
+                }
+                _saveLoadPanel.RefreshView();
             };
             _saveLoadPanel.OnLoadRequested += slotId =>
             {
@@ -978,6 +997,12 @@ namespace AtomicWar.GodotApp
 
             _expeditionCampPanel = new ExpeditionCampPanel { Visible = false };
             _expeditionCampPanel.OnClose += () => _expeditionCampPanel.Visible = false;
+            _expeditionCampPanel.OnCampResolved += () =>
+            {
+                UpdateHud();
+                if (_expeditionPanel != null && _expeditionPanel.Visible)
+                    _expeditionPanel.RefreshView();
+            };
             AddChild(_expeditionCampPanel);
 
             _fireIncidentPanel = new FireIncidentPanel { Visible = false };
@@ -1022,10 +1047,26 @@ namespace AtomicWar.GodotApp
 
             _expeditionRadarPanel = new ExpeditionRadarPanel { Visible = false };
             _expeditionRadarPanel.OnClose += () => _expeditionRadarPanel.Visible = false;
+            // Row select fires OnDispatchRequested with a definition/location id.
+            // Open the expeditions planner; do not auto-StartExpedition on select.
+            _expeditionRadarPanel.OnDispatchRequested += locationId =>
+            {
+                if (string.IsNullOrEmpty(locationId)) return;
+                if (_statusLabel != null)
+                    _statusLabel.Text = "Radar contact selected: " + locationId + ". Open expeditions to dispatch.";
+                OpenPlayerPanel("expeditions");
+            };
             AddChild(_expeditionRadarPanel);
 
             _doseLedgerPanel = new DoseLedgerPanel { Visible = false };
             _doseLedgerPanel.OnClose += () => _doseLedgerPanel.Visible = false;
+            _doseLedgerPanel.OnSurvivorSelected += survivorId =>
+            {
+                if (string.IsNullOrEmpty(survivorId)) return;
+                SetupSurvivors();
+                _survivorDetailPanel.Bind(_survivors, survivorId);
+                _survivorDetailPanel.Open();
+            };
             AddChild(_doseLedgerPanel);
 
             _doseGeographyPanel = new DoseGeographyPanel { Visible = false };
@@ -1038,10 +1079,12 @@ namespace AtomicWar.GodotApp
 
             _factionMatrixPanel = new FactionMatrixPanel { Visible = false };
             _factionMatrixPanel.OnClose += () => _factionMatrixPanel.Visible = false;
+            _factionMatrixPanel.OnFactionSelected += OpenFactionDetailPanel;
             AddChild(_factionMatrixPanel);
 
             _factionsNarrativePanel = new FactionsNarrativePanel { Visible = false };
             _factionsNarrativePanel.OnClose += () => _factionsNarrativePanel.Visible = false;
+            _factionsNarrativePanel.OnFactionSelected += OpenFactionDetailPanel;
             AddChild(_factionsNarrativePanel);
 
             _skillMatrixPanel = new SkillMatrixPanel { Visible = false };
@@ -1050,6 +1093,8 @@ namespace AtomicWar.GodotApp
 
             _survivalWorkstationPanel = new SurvivalWorkstationPanel { Visible = false };
             _survivalWorkstationPanel.OnClose += () => _survivalWorkstationPanel.Visible = false;
+            _survivalWorkstationPanel.OnOpenInventoryOverlay += () => OpenPlayerPanel("inventory");
+            _survivalWorkstationPanel.OnOpenCraftingOverlay += () => OpenPlayerPanel("crafting");
             AddChild(_survivalWorkstationPanel);
 
             _verdictDashboardPanel = new VerdictDashboardPanel { Visible = false };
@@ -1058,6 +1103,7 @@ namespace AtomicWar.GodotApp
 
             _mapAtlasPanel = new MapAtlasPanel { Visible = false };
             _mapAtlasPanel.OnClose += () => _mapAtlasPanel.Visible = false;
+            _mapAtlasPanel.OnLocationSelected += OpenMapDetailPanel;
             AddChild(_mapAtlasPanel);
 
             _maritimeAtlasPanel = new MaritimeAtlasPanel { Visible = false };
@@ -1066,22 +1112,40 @@ namespace AtomicWar.GodotApp
 
             _musterAtlasPanel = new MusterAtlasPanel { Visible = false };
             _musterAtlasPanel.OnClose += () => _musterAtlasPanel.Visible = false;
+            _musterAtlasPanel.OnFactionSelected += OpenFactionDetailPanel;
             AddChild(_musterAtlasPanel);
 
             _questsAtlasPanel = new QuestsAtlasPanel { Visible = false };
             _questsAtlasPanel.OnClose += () => _questsAtlasPanel.Visible = false;
+            _questsAtlasPanel.OnQuestSelected += OpenQuestDetailPanel;
             AddChild(_questsAtlasPanel);
 
             _researchAtlasPanel = new ResearchAtlasPanel { Visible = false };
             _researchAtlasPanel.OnClose += () => _researchAtlasPanel.Visible = false;
+            // Selection only — research atlas already starts nodes via its own detail button.
+            _researchAtlasPanel.OnNodeSelected += _ => OpenPlayerPanel("research");
             AddChild(_researchAtlasPanel);
 
             _standingRecordAtlasPanel = new StandingRecordAtlasPanel { Visible = false };
             _standingRecordAtlasPanel.OnClose += () => _standingRecordAtlasPanel.Visible = false;
+            // Current fixture rows emit faction_* ids (not layout/site ids).
+            _standingRecordAtlasPanel.OnSiteSelected += OpenFactionDetailPanel;
             AddChild(_standingRecordAtlasPanel);
 
             _combatHudOverlay = new CombatHudOverlay { Visible = false };
             _combatHudOverlay.OnClose += () => _combatHudOverlay.Visible = false;
+            _combatHudOverlay.OnFireRequested += () =>
+            {
+                if (_combat == null) return;
+                _combat.ActionFire(_combat.DefaultHostileTargetId());
+            };
+            _combatHudOverlay.OnSuppressRequested += () => _combat?.ActionSuppress();
+            _combatHudOverlay.OnClearJamRequested += () =>
+            {
+                if (_combat == null) return;
+                _combat.ActionClearJam(_combat.DefaultPlayerSubjectId());
+            };
+            _combatHudOverlay.OnEndTurnRequested += () => _combat?.ActionEndTurn();
             AddChild(_combatHudOverlay);
 
             _biogasDigesterPanel = new AnaerobicBiogasDigesterPanel { Visible = false };
@@ -1106,6 +1170,7 @@ namespace AtomicWar.GodotApp
 
             _geothermalAquiferPanel = new GeothermalAquiferPanel { Visible = false };
             _geothermalAquiferPanel.OnClose += () => _geothermalAquiferPanel.Visible = false;
+            _geothermalAquiferPanel.OnActionRequested += HandleGeothermalAction;
             AddChild(_geothermalAquiferPanel);
 
             _warDogKennelPanel = new WarDogKennelPanel { Visible = false };
@@ -1158,6 +1223,7 @@ namespace AtomicWar.GodotApp
 
             _reconTelemetryPanel = new ReconTelemetryPanel { Visible = false };
             _reconTelemetryPanel.OnClose += () => _reconTelemetryPanel.Visible = false;
+            _reconTelemetryPanel.OnActionRequested += HandleReconTelemetryAction;
             AddChild(_reconTelemetryPanel);
 
             _sonicRuptureDrillPanel = new SonicRuptureDrillPanel { Visible = false };

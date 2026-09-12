@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -384,6 +385,7 @@ namespace AtomicWar.GodotApp
                 case "radio":
                     SetupRadio();
                     _radioPanel.Bind(_radio);
+                    _radioPanel.BindProduction(EnsureRadioProgramProductionSession());
                     _radioPanel.Open();
                     break;
                 case "map":
@@ -557,6 +559,7 @@ namespace AtomicWar.GodotApp
                 case "chemical_dependency":
                 case "sump_flooding":
                 case "decontamination":
+                case "low_background_metrology":
                 case "kitchen_nutrition":
                 case "equipment_condition":
                 case "library_study":
@@ -668,6 +671,7 @@ namespace AtomicWar.GodotApp
 
             var stores = _inventory.Inventory;
             int filterSpares = stores.CountById("air_filter")
+                + stores.CountById("item_air_filter_hepa")
                 + stores.CountById("filter_item")
                 + stores.CountById("water_filter")
                 + stores.CountById("respirator_filter")
@@ -699,8 +703,12 @@ namespace AtomicWar.GodotApp
                 CleanWater = stores.CountById("clean_water"),
                 Food = stores.CountById("canned_food"),
                 MedicalStock = stores.CountByType(ItemType.Medical),
-                FilterSpares = _startingLevel?.System.State.filterSparesCount ?? filterSpares,
-                MechanicalScrap = _startingLevel?.System.State.mechanicalScrapCount ?? 6,
+                FilterSpares = _startingLevel?.HasMaintenanceDependencies == true
+                    ? filterSpares
+                    : _startingLevel?.System.State.filterSparesCount ?? filterSpares,
+                MechanicalScrap = _startingLevel?.HasMaintenanceDependencies == true
+                    ? stores.CountById("scrap_mechanical")
+                    : _startingLevel?.System.State.mechanicalScrapCount ?? 6,
                 AirFilterHealth = _startingLevel?.System.State.airFilterHealthPercent ?? 100.0f,
                 AirQuality = _startingLevel?.System.State.airQualityPercent ?? 100.0f,
                 RadonLevel = _startingLevel?.System.State.radonLevelBqm3 ?? 12.0f,

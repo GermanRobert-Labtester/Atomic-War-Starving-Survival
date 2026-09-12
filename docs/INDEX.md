@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2055 | **Last Verified:** 2026-09-12
+**Total Indexed Documents:** 2058 | **Last Verified:** 2026-09-12
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2010 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2013 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 43 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -553,7 +553,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (1713 documents)
+## 9. General Project Guides & Archive Reference (1716 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1405,6 +1405,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/foundry/PLAN102_REGRESSION_MATRIX.md`](foundry/PLAN102_REGRESSION_MATRIX.md) | **Plan 102 Regression Test Matrix** — - `Ashfall.Core.Tests/FoundryAccordExpansionTests.cs` (11 tests) |
 | 🟢 `CURRENT` | [`docs/foundry/PLAN103_BASELINE.md`](foundry/PLAN103_BASELINE.md) | **Plan 103 — Baseline Reconnaissance & Execution Contract** — **Data authority:** `Assets/StreamingAssets/Data/foundry_treaty_consequences.json` |
 | 🟢 `CURRENT` | [`docs/foundry/PLAN103_CLOSEOUT.md`](foundry/PLAN103_CLOSEOUT.md) | **Plan 103 — Foundry Treaty Consequences Closeout** — Expanded `foundry_treaty_consequences.json` from 6 to exactly 15 policy rows. |
+| 🟢 `CURRENT` | [`docs/gaps/PARTIAL_PLANS_VERIFIED_AUDIT.md`](gaps/PARTIAL_PLANS_VERIFIED_AUDIT.md) | **Partial Plans — Verified Audit (2026-09-12)** — **Type:** read-only forensic re-verification · **Method:** `ashfall-scan` chain |
 | 🟢 `CURRENT` | [`docs/gaps/logs/GAP-48-49_DESTINATION_SEAMS_IMPLEMENTATION_LOG.md`](gaps/logs/GAP-48-49_DESTINATION_SEAMS_IMPLEMENTATION_LOG.md) | **GAP-48/49 — Destination Weather Gates & Micro-Location Bindings — Implementation Log** — Plan: `docs/gaps/plans/GAP-48-49_DESTINATION_SEAMS_SEALING_PLAN.md` |
 | 🟢 `CURRENT` | [`docs/gaps/logs/PLANS_146_149_MED_SEAL_LOG.md`](gaps/logs/PLANS_146_149_MED_SEAL_LOG.md) | **Plans 146–149 MED Seal Log** — **Claim:** `PLANS-146-149-MED-SEAL` |
 | 🟢 `CURRENT` | [`docs/gaps/logs/PLANS_146_149_PLAYER_COMMAND_SEAL_LOG.md`](gaps/logs/PLANS_146_149_PLAYER_COMMAND_SEAL_LOG.md) | **Plans 146–149 Player-Command Seal Log** — **Date:** 2026-09-12 |
@@ -1624,6 +1625,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN147_REGRESSION_MATRIX.md`](plans/PLAN147_REGRESSION_MATRIX.md) | **PLAN 147 REGRESSION MATRIX — risk → test register** — All tests live in |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md`](plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md) | **Plans 02–09 Flagship Consolidated Remaining Work — Closeout Report** — **Document ID:** PLANS-02-09-FLAGSHIP-CLOSEOUT |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_130_133_IMPLEMENTATION_LOG.md`](plans/PLANS_130_133_IMPLEMENTATION_LOG.md) | **Plans 130–133 Implementation Log** — - Added abstract powder-metallurgy quality/reliability production. |
+| 🟢 `CURRENT` | [`docs/plans/PLANS_138_141_FLAGSHIP_FULL_INTEGRATION_PLAN.md`](plans/PLANS_138_141_FLAGSHIP_FULL_INTEGRATION_PLAN.md) | **ASHFALL Flagship Full Integration Plan** — **Project:** ASHFALL |
+| 🟢 `CURRENT` | [`docs/plans/PLANS_138_141_WAVE_A_RECONNAISSANCE.md`](plans/PLANS_138_141_WAVE_A_RECONNAISSANCE.md) | **Plans 138–141 — Wave A Shared Reconnaissance (Authority Map)** — **Status:** COMPLETE (read-only) · **Date:** 2026-09-12 · **Evidence rule:** AGENTS.md rule 7 — every named authority... |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_142_145_WAVE1_SHARED_CONTRACTS_PLAN.md`](plans/PLANS_142_145_WAVE1_SHARED_CONTRACTS_PLAN.md) | **Plans 142–145 — Wave 1 Shared-Contract Plan (PR 1)** — Status: PLAN (read-only planning; no production code modified) |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_146_149_MASTER_PLAN.md`](plans/PLANS_146_149_MASTER_PLAN.md) | **ASHFALL Flagship Advanced Industrial & Expedition Systems Master Plan** — **Plan ID:** AF-146-149-FLAGSHIP |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_158_161_MASTER_PLAN.md`](plans/PLANS_158_161_MASTER_PLAN.md) | **ASHFALL Flagship Integration Plan — Plans 158–161** — **Scope:** Plans 158–161 — `ModularVehicleSystem`, `MacroWeatherSystem`, `TradeRouteSystem`, and `SuccessionSystem`. |

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -333,6 +334,10 @@ namespace AtomicWar.GodotApp
 
         private void TickAllExpandedShelterSystems(int day)
         {
+            // Plan 189 intake bridge: piezometer advisory must land before the
+            // water plant ticks so a blocked source refuses intake same-day.
+            TickPiezometerAdvisoryBridge(day);
+
             // SHELTER_EMP_MEDICAL_POWER: water-plant power follows the canonical
             // room_water_pump breaker (same bus as the fluid network's feed).
             float waterPower = _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_water_pump") ? 1f : 0f;
@@ -344,11 +349,19 @@ namespace AtomicWar.GodotApp
             RefreshTrappingDensity();
             _wildlifeTrapping?.TickDay(day);
             _excavation?.TickDay();
+            // DEBT-185: dormancy decay for the shared skill progression must run
+            // on the campaign day owner; practice systems record against the
+            // same instance and reactivate dormant skills.
+            TickSharedSkillProgression(day);
             _apprenticeship?.TickDay(day);
             _caregiving?.TickDay(day);
             _shelterThermal?.TickDay(day);
             _weatherHardening?.TickDay(day);
             _geothermalAquifer?.TickDay(day);
+            // Plan 188: feed the campaign hour so the schedule derives Night from
+            // its authored windows (the schedule remains the only phase owner).
+            if (_campaignDay?.Calendar != null)
+                _shelterSchedule?.TickHour(_campaignDay.Calendar.AsSimClock().HourOfDay);
             _shelterSchedule?.TickDay(day);
             _autopsy?.TickDay(day);
             // Plan 72 §3 ordering: advance ventilation/air filtration — hosts
@@ -376,6 +389,7 @@ namespace AtomicWar.GodotApp
             _archiveDesk?.TickDay(day);
             _contractorRoster?.TickDay(day);
             _mentalHealthCrisis?.TickDay(day);
+            TickSleepNarrative(day);
             _crafting?.TickDay(day);
         }
 
@@ -397,6 +411,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "vinyl_morale":
                     if (_vinylMoralePanel != null) { _vinylMoralePanel.Visible = true; _vinylMoralePanel.RefreshView(); }
+                    break;
+                case "low_background_metrology":
+                    if (_lowBackgroundPanel != null) { _lowBackgroundPanel.Visible = true; _lowBackgroundPanel.RefreshView(); }
                     break;
                 case "wildlife_trapping":
                     if (_wildlifeTrappingPanel != null) { _wildlifeTrappingPanel.Visible = true; _wildlifeTrappingPanel.RefreshView(); }
@@ -443,9 +460,11 @@ namespace AtomicWar.GodotApp
                 case "archive_desk":
                     SetupJournal();
                     DiscoverBureaucraticDocuments("archive_desk");
+                    // Real archive-desk inspection of the bunker records drawer.
                     DiscoverFringeCultRecords("government_bunker");
                     DiscoverPaperPrintingRecords("government_bunker");
                     DiscoverBoneHornRecords("government_bunker");
+                    DiscoverAbyssalAnomalyRecords("government_bunker");
                     if (_archiveDeskPanel != null) { _archiveDeskPanel.Visible = true; _archiveDeskPanel.RefreshView(); }
                     break;
                 case "contractor_roster":

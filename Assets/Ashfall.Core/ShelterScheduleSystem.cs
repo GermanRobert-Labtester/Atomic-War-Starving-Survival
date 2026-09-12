@@ -84,6 +84,8 @@ namespace Ashfall.Core
     {
         public const string SystemId = "shelter_schedule";
         private ShelterScheduleState _state = new ShelterScheduleState();
+        /// <summary>-1 = hour unknown (legacy day-only behaviour).</summary>
+        private int _hourOfDay = -1;
         private readonly Dictionary<string, ScheduleDefinition> _catalog = new Dictionary<string, ScheduleDefinition>(StringComparer.Ordinal);
         private readonly ILog _log;
         private readonly PowerGridSystem _powerGrid;
@@ -266,6 +268,10 @@ namespace Ashfall.Core
             SchedulePhase newPhase;
             if (_state.emergencyOverride)
                 newPhase = SchedulePhase.Emergency;
+            else if (_hourOfDay >= 0)
+                // Plan 188 — the schedule owns phase; the hour comes from the
+                // campaign ISimClock. This is what makes Night reachable.
+                newPhase = PhaseForHour(_hourOfDay);
             else if (_state.curfewActive)
                 newPhase = SchedulePhase.Curfew;
             else
@@ -276,6 +282,74 @@ namespace Ashfall.Core
                 _state.currentPhase = newPhase;
                 OnPhaseChanged?.Invoke(newPhase);
             }
+        }
+
+        /// <summary>
+        /// Plan 188 — pure hour→phase mapping from the active schedule's authored
+        /// windows. Night is the fallback outside the day and curfew windows, so
+        /// the phase is reachable without a second survivor scheduler.
+        /// </summary>
+        public SchedulePhase PhaseForHour(int hourOfDay)
+        {
+            if (_state.emergencyOverride) return SchedulePhase.Emergency;
+
+            int hour = ((hourOfDay % 24) + 24) % 24;
+            if (!_catalog.TryGetValue(_activeScheduleId, out var def))
+                def = _catalog.TryGetValue("default", out var fallback) ? fallback : null;
+            if (def == null) return hour >= 6 && hour < 22 ? SchedulePhase.Day : SchedulePhase.Night;
+
+            int dayStart = (int)def.dayStartHour;
+            int dayEnd = (int)def.dayEndHour;
+            int curfewStart = (int)def.curfewStartHour;
+            int curfewEnd = (int)def.curfewEndHour;
+
+            if (InWindow(hour, curfewStart, curfewEnd)) return SchedulePhase.Curfew;
+            if (InWindow(hour, dayStart, dayEnd)) return SchedulePhase.Day;
+            return SchedulePhase.Night;
+        }
+
+        /// <summary>
+        /// Plan 188 — one schedule read of the campaign hour. Applies the derived
+        /// phase and its authored lighting demand (brownout still halves it).
+        /// It deliberately does not touch curfew compliance or assignments.
+        /// </summary>
+        public void TickHour(int hourOfDay)
+        {
+            _hourOfDay = ((hourOfDay % 24) + 24) % 24;
+            ApplyPhase(PhaseForHour(_hourOfDay));
+            ApplyLightingForPhase();
+        }
+
+        private void ApplyPhase(SchedulePhase phase)
+        {
+            if (phase == _state.currentPhase) return;
+            _state.currentPhase = phase;
+            OnPhaseChanged?.Invoke(phase);
+        }
+
+        private void ApplyLightingForPhase()
+        {
+            if (!_catalog.TryGetValue(_activeScheduleId, out var def)) return;
+            _state.lightingDemand = _state.emergencyOverride
+                ? def.lightingDemandCurfew * 0.5f
+                : _state.currentPhase switch
+                {
+                    SchedulePhase.Night => def.lightingDemandNight,
+                    SchedulePhase.Curfew => def.lightingDemandCurfew,
+                    SchedulePhase.Day => def.lightingDemandDay,
+                    _ => def.lightingDemandCurfew
+                };
+            if (_powerGrid.IsBrownout)
+                _state.lightingDemand *= 0.5f;
+        }
+
+        /// <summary>Half-open window match; wraps when end is at or before start.</summary>
+        private static bool InWindow(int hour, int start, int end)
+        {
+            if (start == end) return false;
+            return start < end
+                ? hour >= start && hour < end
+                : hour >= start || hour < end;
         }
 
         public ShelterScheduleState CaptureState()

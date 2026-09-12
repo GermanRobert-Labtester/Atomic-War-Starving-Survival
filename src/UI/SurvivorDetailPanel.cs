@@ -35,6 +35,9 @@ namespace AtomicWar.GodotApp.UI
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
+        /// <summary>Wired by Main; the panel does not read campaign state directly.</summary>
+        public Func<int>? AppDayProvider { get; set; }
+
         public void Bind(SurvivorsHostSession? survivors, string survivorId, Ashfall.Core.Survivors.SurvivorEnrichmentService? enrichmentService = null)
         {
             _survivors = survivors;
@@ -110,6 +113,16 @@ namespace AtomicWar.GodotApp.UI
             AddRow(_survivorInfo, $"Alive: {s.IsAlive}", s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);
             AddRow(_survivorInfo, $"Max Health Cap: {s.MaxHealthCap:0}", Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount += 2;
+
+            // Plan 176 — campaign tenure, days only (no months/years in UI).
+            var rosterEntry = _survivors?.Roster?.Find(_survivorId);
+            if (rosterEntry != null)
+            {
+                int currentDay = AppDayProvider?.Invoke() ?? rosterEntry.joinedDay;
+                int tenureDays = rosterEntry.CampaignAgeDays(currentDay);
+                AddRow(_survivorInfo, $"In shelter: {tenureDays} day{(tenureDays == 1 ? "" : "s")} (since day {rosterEntry.joinedDay})", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
+            }
 
             // ── Needs ──
             AddRow(_needsList, $"Health: {s.Health:0} / {s.MaxHealthCap:0}", s.Health < 30 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);

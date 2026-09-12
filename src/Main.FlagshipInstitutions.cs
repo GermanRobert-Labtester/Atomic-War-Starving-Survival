@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Catalogs;
+using Ashfall.Core.Memorial;
 using Ashfall.Core.Culture;
 using Ashfall.Core.Diplomacy;
 using Ashfall.Core.Lifecycle;
@@ -127,6 +129,48 @@ namespace AtomicWar.GodotApp
             return _culturalArchive;
         }
 
+        /// <summary>
+        /// Plans 178/190 — creation command into the culture vault (DEBT-178-CREATION-TO-VAULT).
+        /// The vault owns append + dedup; this only routes a real campaign
+        /// milestone into it and surfaces a journal line so the entry is
+        /// player-reachable. No second archive save, no art/lore ledger.
+        /// </summary>
+        public string RecordArchiveChronicle(
+            string eventType,
+            string summaryKey,
+            IReadOnlyList<string>? participants = null,
+            string authorId = "")
+        {
+            var vault = EnsureCulturalArchive();
+            if (vault == null) return "The culture vault is unavailable.";
+
+            var result = vault.TryRecordChronicleEntry(eventType, _simDay, summaryKey, participants, authorId);
+            if (result.Status == ActionResult.StatusKind.Success)
+            {
+                _journal?.TryAddRawEntry(
+                    $"archive_chronicle:{summaryKey}",
+                    $"Entered in the vault chronicle: {summaryKey}.",
+                    null!,
+                    _simDay);
+            }
+            return result.Status == ActionResult.StatusKind.Success
+                ? "Chronicle entry recorded."
+                : $"Chronicle entry not recorded ({result.FailureCode}).";
+        }
+
+        /// <summary>
+        /// Death is the campaign's most significant archival event: the name
+        /// enters the vault chronicle beside the memorial wall projection.
+        /// </summary>
+        private void OnMemorializedForArchiveChronicle(MemorialEntry entry)
+        {
+            if (entry == null || string.IsNullOrEmpty(entry.SurvivorId)) return;
+            RecordArchiveChronicle(
+                Ashfall.Core.Culture.ArchiveChronicleMilestones.Memorial,
+                Ashfall.Core.Culture.ArchiveChronicleMilestones.MemorialKey(entry.SurvivorId),
+                new[] { entry.SurvivorId });
+        }
+
         private DiplomaticSummitSystem EnsureDiplomaticSummit()
         {
             EnsureFlagshipLifecycleRegistration();
@@ -173,6 +217,7 @@ namespace AtomicWar.GodotApp
             _skyDefense.OnVolleyFired += (_, _, _) => MarkSkyDefenseDirty();
             _skyDefense.OnInterceptResolved += (_, _, _, _) => MarkSkyDefenseDirty();
             _skyDefense.OnServiced += _ => MarkSkyDefenseDirty();
+            _skyDefense.OnMaintenanceDue += _ => MarkSkyDefenseDirty();
 
             var saved = SkyDefenseBatterySaveStore.TryLoad();
             if (saved != null)

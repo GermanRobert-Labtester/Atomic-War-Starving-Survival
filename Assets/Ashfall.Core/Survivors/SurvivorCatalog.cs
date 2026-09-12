@@ -43,6 +43,14 @@ namespace Ashfall.Core.Survivors
         public int joinedDay = 0;
         public bool isAlive = true;
         public string deathReason = string.Empty;
+
+        /// <summary>
+        /// Plan 176 — derived campaign tenure in days (see
+        /// <see cref="SurvivorLifecycle.CampaignAgeDays"/>). Days only; never
+        /// persisted and never projected into months or years.
+        /// </summary>
+        public int CampaignAgeDays(int currentDay)
+            => SurvivorLifecycle.CampaignAgeDays(joinedDay, currentDay);
     }
 
     /// <summary>Serialized roster state (save/load safe).</summary>

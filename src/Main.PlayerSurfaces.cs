@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Linq;
@@ -41,13 +42,15 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("emergency_response",
                 bindAction: () =>
                 {
-                    _crisisCoordinator.Bind(_powerGrid?.System, _disease?.Engine, _world?.Weather, _startingLevel?.System);
+                    _crisisCoordinator.Bind(_powerGrid?.System, _disease?.Engine, _world?.Weather, _startingLevel?.System,
+                        _survivors?.Radiation, _survivorFate, _shelterFireSession?.System, _sumpFlooding?.System);
                     _crisisCoordinator.EvaluateCrisisState();
                     _crisisHud.Bind(_crisisPresentationSnapshot);
                 },
                 openAction: () =>
                 {
-                    _crisisCoordinator.Bind(_powerGrid?.System, _disease?.Engine, _world?.Weather, _startingLevel?.System);
+                    _crisisCoordinator.Bind(_powerGrid?.System, _disease?.Engine, _world?.Weather, _startingLevel?.System,
+                        _survivors?.Radiation, _survivorFate, _shelterFireSession?.System, _sumpFlooding?.System);
                     _crisisCoordinator.EvaluateCrisisState();
                     _crisisHud.Bind(_crisisPresentationSnapshot);
                     _crisisHud.Open();
@@ -109,6 +112,27 @@ namespace AtomicWar.GodotApp
                 openAction: () => _chemWarfareDefensePanel.Visible = true,
                 closeAction: () => _chemWarfareDefensePanel.Visible = false);
 
+            // Plans 146–149 industrial flagship consoles.
+            PanelRegistry.ConfigureActions("ebpvd_coating",
+                bindAction: () => { SetupEbPvdCoating(); if (_ebPvdCoating != null) _ebPvdCoatingPanel?.Bind(_ebPvdCoating); },
+                openAction: () => HandleEbPvdCoatingAction("OPEN"),
+                closeAction: () => HandleEbPvdCoatingAction("CLOSE"));
+
+            PanelRegistry.ConfigureActions("microfluidic_diagnostic",
+                bindAction: () => { SetupMicrofluidicDiagnostic(); if (_microfluidicDiagnostic != null) _microfluidicDiagnosticPanel?.Bind(_microfluidicDiagnostic); },
+                openAction: () => HandleMicrofluidicDiagnosticAction("OPEN"),
+                closeAction: () => HandleMicrofluidicDiagnosticAction("CLOSE"));
+
+            PanelRegistry.ConfigureActions("mine_clearing_flail",
+                bindAction: () => { SetupMineClearingFlail(); if (_mineClearingFlail != null) _mineFlailPanel?.Bind(_mineClearingFlail); },
+                openAction: () => HandleMineFlailAction("OPEN"),
+                closeAction: () => HandleMineFlailAction("CLOSE"));
+
+            PanelRegistry.ConfigureActions("rail_grinding",
+                bindAction: () => { SetupRailGrinding(); if (_railGrinding != null) _railGrindingPanel?.Bind(_railGrinding); },
+                openAction: () => HandleRailGrindingAction("OPEN"),
+                closeAction: () => HandleRailGrindingAction("CLOSE"));
+
             PanelRegistry.ConfigureActions("comms_array_transceiver",
                 bindAction: () => _commsArrayTransceiverPanel.Bind(EnsureCommsArray()),
                 openAction: () => { _commsArrayTransceiverPanel.SetDisplayClock(_simDay, 12); _commsArrayTransceiverPanel.Visible = true; },
@@ -123,6 +147,11 @@ namespace AtomicWar.GodotApp
                 bindAction: () => _roboticsWorkshopPanel.Bind(EnsureRobotics()),
                 openAction: () => _roboticsWorkshopPanel.Visible = true,
                 closeAction: () => _roboticsWorkshopPanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("bio_fermentation",
+                bindAction: () => _bioFermentationPanel.Bind(EnsureBioFermentation()),
+                openAction: () => _bioFermentationPanel.Visible = true,
+                closeAction: () => _bioFermentationPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("survivor_downtime",
                 bindAction: () => _survivorDowntimePanel.Bind(EnsureRecreation()),
@@ -284,7 +313,12 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseWeatherPanel());
 
             PanelRegistry.ConfigureActions("radio",
-                bindAction: () => { SetupRadio(); _radioPanel.Bind(_radio); },
+                bindAction: () =>
+                {
+                    SetupRadio();
+                    _radioPanel.Bind(_radio);
+                    _radioPanel.BindProduction(EnsureRadioProgramProductionSession());
+                },
                 openAction: () => _radioPanel.Open(),
                 closeAction: () => CloseRadioPanel());
 
@@ -355,7 +389,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseGreenhousePanel());
 
             PanelRegistry.ConfigureActions("silent_foundry",
-                bindAction: () => { SetupJournal(); DiscoverFringeCultRecords("loc_foundry_west_stacks"); SetupExpansions(); SetupSilentFoundry(); _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay); _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
+                bindAction: () => { SetupExpansions(); SetupSilentFoundry(); _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay); _silentFoundryPanel.SetMachineTellCatalog(GetMachineTellCatalog()); },
                 openAction: () => _silentFoundryPanel.Open(),
                 closeAction: () => CloseSilentFoundryPanel());
 

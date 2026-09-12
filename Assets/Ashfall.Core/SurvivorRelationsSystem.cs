@@ -25,6 +25,13 @@ namespace Ashfall.Core
         public float grief;         // 0 to 100
         public string bondType = string.Empty; // "friendship", "rivalry", "mentor", "caregiver", etc.
         public List<string> recentCauses = new List<string>();
+        /// <summary>
+        /// Plan 182 — campaign day of the last real interaction between this pair
+        /// (-1 = never). Stamped by the pair-affinity producers; it is the
+        /// precondition for any future neglect rule. No decay is applied yet, and
+        /// time passing alone never moves it.
+        /// </summary>
+        public int lastInteractionDay = -1;
     }
 
     [Serializable]
@@ -87,6 +94,10 @@ namespace Ashfall.Core
             rel.affinity = Math.Max(-100, Math.Min(100, rel.affinity + delta));
             if (delta < 0) rel.resentment = Math.Min(100, rel.resentment - delta);
             rel.recentCauses.Add($"affinity_{delta:F0} on day {_currentDay}");
+            // Plan 182: a real interaction happened — stamp it. This is the only
+            // place pair affinity is produced, so every existing producer stamps
+            // without touching its own call site.
+            rel.lastInteractionDay = _currentDay;
             OnRelationsChanged?.Invoke();
         }
 
@@ -94,6 +105,8 @@ namespace Ashfall.Core
         {
             var rel = GetOrCreateRelationship(a, b);
             rel.trust = Math.Max(0, Math.Min(100, rel.trust + delta));
+            // Plan 182: trust is also a real interaction between the pair.
+            rel.lastInteractionDay = _currentDay;
         }
 
         public void ApplyGrief(string survivorId, float amount)

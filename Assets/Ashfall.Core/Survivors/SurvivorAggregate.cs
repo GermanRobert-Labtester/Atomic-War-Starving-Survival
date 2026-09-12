@@ -127,6 +127,13 @@ namespace Ashfall.Core.Survivors
         /// <summary>Convenience mirror of <see cref="SurvivorLifecycle.IsAlive(SurvivorLifecycleState)"/>.</summary>
         public bool IsAlive => SurvivorLifecycle.IsAlive(Lifecycle);
 
+        /// <summary>
+        /// Plan 176 — derived campaign tenure in days (see
+        /// <see cref="SurvivorLifecycle.CampaignAgeDays"/>). Days only.
+        /// </summary>
+        public int CampaignAgeDays(int currentDay)
+            => SurvivorLifecycle.CampaignAgeDays(JoinedDay, currentDay);
+
         /// <summary>Convenience mirror of <see cref="SurvivorLifecycle.IsDeceased(SurvivorLifecycleState)"/>.</summary>
         public bool IsDeceased => SurvivorLifecycle.IsDeceased(Lifecycle);
 

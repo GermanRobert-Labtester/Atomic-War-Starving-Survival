@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -170,6 +171,9 @@ namespace AtomicWar.GodotApp
             SetupPathogenStrains();
             SetupSubterranean();
             SetupPsyOps();
+            SetupRadioProgramProduction();
+            SetupLowBackgroundMetrology();
+            SetupPiezometer();
             SetupCrafting();
             SetupCaravans();
             SetupExpeditions();
@@ -243,6 +247,7 @@ namespace AtomicWar.GodotApp
             SetupCommsArray();
             SetupCeremony();
             SetupRobotics();
+            SetupBioFermentation();
             // ── Previously incomplete SaveStores — Setup restores persisted state ──
             SetupEndgame();
             SetupCaravanTrade();
@@ -355,6 +360,9 @@ namespace AtomicWar.GodotApp
                 SavePathogenStrains();
                 SaveSubterranean();
                 SavePsyOps();
+                SaveRadioProgramProduction();
+                SaveLowBackgroundMetrology();
+                SavePiezometer();
                 SaveDailyBriefing();
                 SavePowerGrid();
                 SaveGeothermalAquifer();
@@ -431,6 +439,7 @@ namespace AtomicWar.GodotApp
                 SaveCommsArray();
                 SaveCeremony();
                 SaveRobotics();
+                SaveBioFermentation();
                 // ── Previously incomplete SaveStores now enrolled in registry ──
                 SaveEndgame();
                 SaveCaravanTrade();

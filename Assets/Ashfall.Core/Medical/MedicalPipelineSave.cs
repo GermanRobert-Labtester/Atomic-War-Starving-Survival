@@ -20,6 +20,12 @@ namespace Ashfall.Core.Medical
         public DiagnosisKnowledgeSaveState diagnosis = new DiagnosisKnowledgeSaveState();
         public MedicalReservationSaveState reservations = new MedicalReservationSaveState();
         public MedicalProcedureScheduleSaveState procedures = new MedicalProcedureScheduleSaveState();
+        /// <summary>
+        /// Plan 193/198 — bounded append-only medical record of pipeline events.
+        /// Additive field: saves written before it deserialize to an empty list,
+        /// so no version bump is required. Ids/day/kind only — never notes.
+        /// </summary>
+        public List<MedicalRecordEntry> record = new List<MedicalRecordEntry>();
         /// <summary>Monotonic command/state version for stale-preview rejection.</summary>
         public long stateVersion;
     }

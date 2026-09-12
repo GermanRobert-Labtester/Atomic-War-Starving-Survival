@@ -192,6 +192,9 @@ namespace AtomicWar.GodotApp
                 new Ashfall.Core.Memorial.MemorialState());
             _memorial.OnMemorialized += _ => _memorialDirty = true;
             _memorial.OnMemorialized += OnMemorializedForShelterDecor;
+            // Plan 178/190: the same committed death record enters the culture
+            // vault chronicle (one creation command; vault owns append/dedup).
+            _memorial.OnMemorialized += OnMemorializedForArchiveChronicle;
             LoadMemorial();
         }
 

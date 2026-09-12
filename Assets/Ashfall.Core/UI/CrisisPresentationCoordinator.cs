@@ -24,6 +24,9 @@ namespace Ashfall.Core.UI
         private StartingLevelSystem? _startingLevel;
         private RadiationSystem? _radiation;
         private SurvivorFateSystem? _fate;
+        // Plan 194 — producers previously unwired to the aggregator.
+        private ShelterFireHazardSystem? _fire;
+        private SumpFloodingSystem? _sump;
 
         private CrisisPresentationSnapshot? _customCrisis;
 
@@ -33,7 +36,9 @@ namespace Ashfall.Core.UI
             WeatherSystem? weather,
             StartingLevelSystem? startingLevel = null,
             RadiationSystem? radiation = null,
-            SurvivorFateSystem? fate = null)
+            SurvivorFateSystem? fate = null,
+            ShelterFireHazardSystem? fire = null,
+            SumpFloodingSystem? sump = null)
         {
             _power = power;
             _disease = disease;
@@ -41,6 +46,8 @@ namespace Ashfall.Core.UI
             _startingLevel = startingLevel;
             _radiation = radiation;
             _fate = fate;
+            _fire = fire;
+            _sump = sump;
         }
 
         public void TriggerCustomCrisis(CrisisPresentationSnapshot snapshot)
@@ -87,6 +94,13 @@ namespace Ashfall.Core.UI
             int activeOutbreaks = _disease != null ? _disease.State.diseases.Count(d => d.outbreak_active) : 0;
             bool diseaseCritical = activeOutbreaks > 0;
             bool isSevereStorm = _weather != null && (_weather.Current == WeatherKind.FalloutStorm || _weather.Current == WeatherKind.EMPStorm || _weather.Current == WeatherKind.Blizzard);
+
+            // Plan 194 — previously unwired producers. Priorities are appended
+            // after the existing four so current behaviour and tests are unchanged.
+            bool isBurning = _fire != null && _fire.Incidents.Values.Any(i => i != null && !i.isResolved && !i.isSuppressed);
+            bool isFlooding = _sump != null && _sump.State.nodes.Any(n => n != null && n.isFlooded);
+            int acuteRadiationCases = _radiation != null ? _radiation.Registered.Count(s => s != null && s.HasAcuteRadiationSickness) : 0;
+            bool recentDeathRecorded = _fate != null && _fate.PendingDayEventCount > 0;
 
             // Establish priority
             if (powerFailing)
@@ -279,6 +293,131 @@ namespace Ashfall.Core.UI
                 {
                     Label = "Exterior Storm",
                     ValueText = _weather?.Current.ToString() ?? "Unknown",
+                    Trend = "→",
+                    IsFailing = false
+                });
+
+                newSnapshot.Actions.Add(new CrisisActionView
+                {
+                    ActionId = "ack",
+                    Label = "Acknowledge",
+                    Shortcut = "Space",
+                    IsEnabled = true
+                });
+            }
+            else if (isBurning)
+            {
+                newSnapshot.IsActive = true;
+                newSnapshot.CrisisId = "crisis_shelter_fire";
+                newSnapshot.Kind = "Fire";
+                newSnapshot.Severity = CrisisSeverity.Critical;
+                newSnapshot.HeaderText = "SHELTER FIRE";
+                newSnapshot.CauseText = "An unresolved fire is burning in a shelter zone.";
+                newSnapshot.EffectText = "Smoke and heat spreading. Suppress the fire before it reaches adjacent zones.";
+                newSnapshot.AudioStateId = "crisis_critical_stinger";
+
+                newSnapshot.Metrics.Add(new CrisisMetricView
+                {
+                    Label = "Active Fires",
+                    ValueText = _fire != null
+                        ? _fire.Incidents.Values.Count(i => i != null && !i.isResolved && !i.isSuppressed).ToString()
+                        : "0",
+                    Trend = "↑",
+                    IsFailing = true
+                });
+
+                newSnapshot.Actions.Add(new CrisisActionView
+                {
+                    ActionId = "suppress_fire",
+                    Label = "Open Fire Response",
+                    ExpectedEffect = "Suppression controls",
+                    Shortcut = "1",
+                    IsEnabled = true
+                });
+                newSnapshot.Actions.Add(new CrisisActionView
+                {
+                    ActionId = "ack",
+                    Label = "Acknowledge",
+                    Shortcut = "Space",
+                    IsEnabled = true
+                });
+
+                newSnapshot.Log.Add(new CrisisLogEntryView
+                {
+                    Timestamp = "T-0",
+                    Message = "Fire hazard authority reports an unresolved incident.",
+                    IsError = true
+                });
+            }
+            else if (isFlooding)
+            {
+                newSnapshot.IsActive = true;
+                newSnapshot.CrisisId = "crisis_sump_flooding";
+                newSnapshot.Kind = "Flood";
+                newSnapshot.Severity = CrisisSeverity.Severe;
+                newSnapshot.HeaderText = "SUMP FLOODING";
+                newSnapshot.CauseText = "Groundwater has breached a sump node.";
+                newSnapshot.EffectText = "Equipment in the flooded node may disable until drained.";
+                newSnapshot.AudioStateId = "crisis_severe_stinger";
+
+                newSnapshot.Metrics.Add(new CrisisMetricView
+                {
+                    Label = "Flooded Nodes",
+                    ValueText = _sump != null ? _sump.State.nodes.Count(n => n != null && n.isFlooded).ToString() : "0",
+                    Trend = "↑",
+                    IsFailing = true
+                });
+
+                newSnapshot.Actions.Add(new CrisisActionView
+                {
+                    ActionId = "ack",
+                    Label = "Acknowledge",
+                    Shortcut = "Space",
+                    IsEnabled = true
+                });
+            }
+            else if (acuteRadiationCases > 0)
+            {
+                newSnapshot.IsActive = true;
+                newSnapshot.CrisisId = "crisis_acute_radiation";
+                newSnapshot.Kind = "Radiation";
+                newSnapshot.Severity = CrisisSeverity.Critical;
+                newSnapshot.HeaderText = "ACUTE RADIATION SICKNESS";
+                newSnapshot.CauseText = "One or more survivors are showing acute radiation sickness.";
+                newSnapshot.EffectText = "Medical treatment and dose reduction are required.";
+                newSnapshot.AudioStateId = "crisis_critical_stinger";
+
+                newSnapshot.Metrics.Add(new CrisisMetricView
+                {
+                    Label = "Acute Cases",
+                    ValueText = acuteRadiationCases.ToString(),
+                    Trend = "→",
+                    IsFailing = true
+                });
+
+                newSnapshot.Actions.Add(new CrisisActionView
+                {
+                    ActionId = "ack",
+                    Label = "Acknowledge",
+                    Shortcut = "Space",
+                    IsEnabled = true
+                });
+            }
+            else if (recentDeathRecorded)
+            {
+                newSnapshot.IsActive = true;
+                newSnapshot.CrisisId = "crisis_survivor_death";
+                newSnapshot.Kind = "Memorial";
+                newSnapshot.Severity = CrisisSeverity.Elevated;
+                newSnapshot.HeaderText = "A NAME IS ADDED TO THE WALL";
+                newSnapshot.CauseText = "A survivor's fate has been recorded.";
+                newSnapshot.EffectText = "The memorial and journal record the loss.";
+                newSnapshot.AudioStateId = "crisis_advisory_stinger";
+
+                newSnapshot.Metrics.Add(new CrisisMetricView
+                {
+                    Label = "Unacknowledged Records",
+                    ValueText = _fate != null ? _fate.PendingDayEventCount.ToString() : "0",
                     Trend = "→",
                     IsFailing = false
                 });

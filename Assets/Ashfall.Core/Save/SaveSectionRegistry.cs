@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,6 +132,9 @@ namespace Ashfall.Core.Save
             new("pathogen_strains", "SavePathogenStrains", "SetupPathogenStrains", "medical", "Flagship XI Plan 155 — fictional strain layer: cure projects and unlocked cures"),
             new("subterranean", "SaveSubterranean", "SetupSubterranean", "world", "Flagship XI Plan 156 — generated underground topology, oxygen/collapse/flood/shoring state, discovery"),
             new("psyops", "SavePsyOps", "SetupPsyOps", "radio", "Flagship XI Plan 157 — broadcast campaigns, jamming, counter-propaganda, ideological pressure"),
+            new("radio_program_production", "SaveRadioProgramProduction", "SetupRadioProgramProduction", "radio", "Plan 173 — player radio program prep/delivery jobs and follow-ups"),
+            new("low_background_metrology", "SaveLowBackgroundMetrology", "SetupLowBackgroundMetrology", "radiation", "Plan 138 — low-background shield install, detector calibration, smelting batches, bounded assay history"),
+            new("piezometer_network", "SavePiezometer", "SetupPiezometer", "infrastructure", "Plan 189 — aquifer monitoring network state driving the water-treatment intake advisory gate"),
             new("survivor_fate", "SaveSurvivorFate", "SetupSurvivorFate", "memorial", "Unified survivor-death ledger: one immutable fate record per deceased survivor"),
             new("weight_of_choices", "SaveFactionBranch", "SetupFactionBranch", "factions", "Weight of choices faction branch progression and PoNR commitments", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("onboarding", "SaveOnboarding", "SetupOnboarding", "onboarding", "First-hour onboarding journey progress, dismissed hints, assistance level, completion"),
@@ -153,6 +157,7 @@ namespace Ashfall.Core.Save
             new("amputation", "SaveAmputation", "SetupAmputation", "medical", "Infection progression, amputations, prosthetics and bionics"),
             new("railway", "SaveRailway", "SetupRailway", "expedition", "Rail network, track repair, and armored train operations"),
             new("fungi_cultivation", "SaveFungi", "SetupFungi", "farming", "Subterranean fungi beds, substrate, spores, and blooms", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("bio_fermentation", "SaveBioFermentation", "SetupBioFermentation", "farming", "Plan 126 — fermentation reactor, process health, contamination, outputs", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("contraband_stash", "SaveContrabandStash", "SetupContrabandStash", "narrative", "Plan 147 — bunker contraband stash claim ledger (once-only discovery)"),
             new("shelter_barter", "SaveShelterBarter", "SetupShelterBarter", "economy", "Plan 54/147 — shelter barter caravans, pinned stock, and the contraband broker counter"),
             new("black_projects_archive", "SaveBlackProjectsArchive", "SetupBlackProjectsArchive", "narrative", "Plan 152 — Black Projects intelligence archive: discovered-record ledger (IDs only)"),
@@ -328,6 +333,9 @@ namespace Ashfall.Core.Save
                 { "pathogen_strains", "pathogen_strains_save.json" },
                 { "subterranean", "subterranean_save.json" },
                 { "psyops", "psyops_save.json" },
+                { "radio_program_production", "radio_program_production_save.json" },
+                { "low_background_metrology", "low_background_metrology_save.json" },
+                { "piezometer_network", "piezometer_network_save.json" },
                 { "survivor_fate", "survivor_fate_save.json" },
                 { "weight_of_choices", "weight_of_choices_save.json" },
                 { "onboarding", "onboarding_save.json" },
@@ -350,6 +358,7 @@ namespace Ashfall.Core.Save
                 { "amputation", "amputation_save.json" },
                 { "railway", "railway_save.json" },
                 { "fungi_cultivation", "fungi_cultivation_save.json" },
+                { "bio_fermentation", "bio_fermentation_save.json" },
                 { "contraband_stash", "contraband_stash_save.json" },
                 { "shelter_barter", "shelter_barter_save.json" },
                 { "black_projects_archive", "black_projects_archive_save.json" },

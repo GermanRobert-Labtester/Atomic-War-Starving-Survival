@@ -91,6 +91,16 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
+        /// <summary>
+        /// Plan 188 — feed the campaign hour so the schedule derives Day / Night /
+        /// Curfew from its authored windows. Presentation refresh only.
+        /// </summary>
+        public void TickHour(int hourOfDay)
+        {
+            System.TickHour(hourOfDay);
+            RaiseStateChanged();
+        }
+
         public override void Save()
         {
             if (!IsDirty) return;

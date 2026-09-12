@@ -239,6 +239,18 @@ namespace Ashfall.Core.Survivors
         public static bool IsDeceased(SurvivorLifecycleState state)
             => state == SurvivorLifecycleState.Dead || state == SurvivorLifecycleState.Memorialized;
 
+        /// <summary>
+        /// Plan 176 — the single campaign age clock. Tenure in whole days since
+        /// the survivor joined (or their authored birth day), derived on demand
+        /// and never persisted. The roster may hold a survivor without any age;
+        /// a roster entry is not "elderly" until this clock says so.
+        ///
+        /// Days only: gameplay and UI must not project months or years from it.
+        /// Calendar-era lore prose is authored content, separate from this clock.
+        /// </summary>
+        public static int CampaignAgeDays(int joinedDay, int currentDay)
+            => System.Math.Max(0, currentDay - joinedDay);
+
         /// <summary>True when the survivor is physically in the shelter.</summary>
         public static bool IsInShelter(SurvivorLifecycleState state)
             => state == SurvivorLifecycleState.Resident;

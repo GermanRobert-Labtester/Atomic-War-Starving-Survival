@@ -1,9 +1,9 @@
 # ASHFALL — Evidence-Derived Architecture & Verification Graph
 
-**Last Verified:** 2026-09-10<br>
+**Last Verified:** 2026-09-12<br>
 **Total Subsystems Mapped:** 173/173 (100.0%)<br>
-**Verified End-to-End Coverage:** 115/173 (66.5% across all 6 vertical layers)<br>
-**Status Breakdown:** Implemented: 173/173 | Constructed: 173/173 | Ticked: 173/173 | Persisted: 173/173 | Routed: 126/173 | Tested: 120/173<br>
+**Verified End-to-End Coverage:** 116/173 (67.1% across all 6 vertical layers)<br>
+**Status Breakdown:** Implemented: 173/173 | Constructed: 173/173 | Ticked: 173/173 | Persisted: 173/173 | Routed: 127/173 | Tested: 121/173<br>
 **Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`
 
 > **GENERATED FILE — do not edit by hand.**
@@ -129,7 +129,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 72 | `microfluidic_diagnostic` | Medical | `MicrofluidicDiagnosticEngine` | `microfluidic_diagnostic_catalog.json` | `MicrofluidicDiagnosticHostSession` | `MicrofluidicDiagnosticSaveStore` | `MicrofluidicDiagnosticPanel` | `--microfluidic-diagnostic-uitest`, `MicrofluidicDiagnosticEngineTests` | ✅ 6/6 |
 | 73 | `pathogen_strains` | Medical | `PathogenStrainSystem` | `pathogens.json` | `Main` | `PathogenStrainSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `DiseaseSystemTests` | ✅ 6/6 |
 | 74 | `psychological_sanatorium` | Medical | `PsychologicalSanatoriumSystem` | — *(Procedural)* | `Main` | `PsychologicalSanatoriumSaveStore` | *None (GAP)* | , `PsychologicalSanatoriumTests` | ❌ GAP |
-| 75 | `surgical_ward` | Medical | `AdvancedSurgicalWardSystem` | — *(Procedural)* | `Main` | `SurgicalWardSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `AdvancedSurgicalWardTests` | ✅ 6/6 |
+| 75 | `surgical_ward` | Medical | `AdvancedSurgicalWardSystem` | — *(Procedural)* | `Main` | `SurgicalWardSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest` | ❌ GAP |
 | 76 | `oral_lore` | Narrative & Cultural Tradition | `OralLorePerformanceSystem` | `oral_lore_codex.json`, `oral_lore_batch_2.json` | `Main` | `OralLoreSaveStore` | *None (GAP)* | , `OralLorePlan155Tests`, `OralLoreCatalogTests` | ❌ GAP |
 | 77 | `moral_choice` | Narrative & Decisions | `MoralChoiceSystem`, `MoralChoiceState` | `moral_choice_quests.json` | `MoralChoiceSystem` | `MoralChoiceSaveStore` | `GameDashboardPanel` | `--moral-choice-selftest`, `MoralChoiceSystemTests` | ✅ 6/6 |
 | 78 | `contraband_stash` | Narrative & Illicit Economy | `ContrabandStashSystem` | `bunker_contraband_barter.json` | `Main` | `ContrabandSaveStore` | *None (GAP)* | `--contraband-stash-selftest`, `ContrabandPlan147Tests` | ❌ GAP |
@@ -146,6 +146,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 89 | `fallout` | Plans 178-201 Expansion Block | `FalloutSystem` | `fallout_patterns.json` | `Main` | `FalloutSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FalloutSystemTests` | ✅ 6/6 |
 | 90 | `forced_labor` | Plans 178-201 Expansion Block | `ForcedLaborSystem` | `labor_camps.json` | `Main` | `ForcedLaborSaveStore` | `LaborUI`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `ForcedLaborSystemTests` | ✅ 6/6 |
 | 91 | `fungi_cultivation` | Plans 178-201 Expansion Block | `FungiCultivationSystem` | `underground_flora.json` | `Main` | `FungiSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FungiCultivationSystemTests` | ✅ 6/6 |
+| 91b | `bio_fermentation` | Plans 126-129 Flagship (Plan 126) | `BioFermentationEngine` | `bio_fermentation_catalog.json` | `BioFermentationHostSession` | `BioFermentationSaveStore` | `BioFermentationPanel` | , `BioFermentationEngineTests` | ✅ 6/6 |
 | 92 | `mercenary_bounties` | Plans 178-201 Expansion Block | `MercenarySystem` | `bounty_board.json` | `Main` | `MercenarySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `MercenarySystemTests` | ✅ 6/6 |
 | 93 | `mutation_tree` | Plans 178-201 Expansion Block | `MutationSystem` | `mutations.json` | `Main` | `MutationSaveStore` | `MutationTreePanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `MutationSystemTests` | ✅ 6/6 |
 | 94 | `narcotics` | Plans 178-201 Expansion Block | `NarcoticsSystem` | `narcotics.json` | `Main` | `NarcoticsSaveStore` | `ChemUI`, `PharmaLabPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `NarcoticsSystemTests` | ✅ 6/6 |
@@ -166,6 +167,8 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 109 | `heliograph` | Radio | `HeliographSystem` | — *(Procedural)* | `HeliographSaveStore` | `HeliographSaveStore` | *None (GAP)* | ,  | ❌ GAP |
 | 110 | `nvis_communications` | Radio | `NvisCommunicationsSystem` | — *(Procedural)* | `NvisCommunicationsSaveStore` | `NvisCommunicationsSaveStore` | *None (GAP)* | ,  | ❌ GAP |
 | 111 | `psyops` | Radio | `PsyOpsSystem` | — *(Procedural)* | `PsyOpsHostSession` | `PsyOpsSaveStore` | *None (GAP)* | , `PsyOpsSystemTests` | ❌ GAP |
+| 111b | `radio_program_production` | Radio | `RadioProgramProductionSystem` | `radio_programs.json` | `RadioProgramProductionHostSession` | `RadioProgramProductionSaveStore` | `RadioPanel` | , `Plan173RadioProgramProductionTests` | ✅ 6/6 |
+| 138 | `low_background_metrology` | Radiation | `LowBackgroundLeadEngine` | `low_background_lead_catalog.json` | `LowBackgroundMetrologyHostSession` | `LowBackgroundMetrologySaveStore` | `LowBackgroundLeadPanel` | , `Plan138LowBackgroundLeadEngineTests`, `Plan138LowBackgroundHostWiringTests` | ✅ 19/19 |
 | 112 | `cryo_vault` | Shelter | `CryoVaultSystem` | `cryo_cultivars.json` | `Main` | `CryoVaultSaveStore` | *None (GAP)* | , `CryoVaultB69Tests` | ❌ GAP |
 | 113 | `ebpvd_coating` | Shelter | `EbPvdCoatingEngine` | `ebpvd_coating_catalog.json` | `EbPvdCoatingHostSession` | `EbPvdCoatingSaveStore` | `EbPvdCoatingPanel` | `--ebpvd-coating-uitest`, `EbPvdCoatingEngineTests` | ✅ 6/6 |
 | 114 | `excavation_hazards` | Shelter | `ExcavationHazardSystem` | — *(Procedural)* | `Main` | `ExcavationHazardSaveStore` | `GameDashboardPanel` | `--shelter-hazard-selftest`, `ExcavationSystemTests` | ✅ 6/6 |
@@ -184,7 +187,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 127 | `decontamination` | Shelter & Infrastructure | `DecontaminationSystem` | — *(Procedural)* | `DecontaminationHostSession` | `DecontaminationSaveStore` | `DecontaminationPanel` | `--shelter-operations-selftest`, `DecontaminationSystemTests` | ✅ 6/6 |
 | 128 | `excavation` | Shelter & Infrastructure | `ExcavationSystem` | — *(Procedural)* | `ExcavationHostSession` | `ExcavationSaveStore` | `ExcavationPanel` | `--shelter-operations-selftest`, `ExcavationSystemTests` | ✅ 6/6 |
 | 129 | `greenhouse` | Shelter & Infrastructure | `GreenhouseSystem` | `greenhouse_items.json` | `GreenhouseHostSession` | `GreenhouseSaveStore` | `GreenhousePanel` | `--greenhouse-selftest`, `GreenhouseSystemTests` | ✅ 6/6 |
-| 130 | `nuclear_core_lifecycle` | Shelter & Infrastructure | `NuclearCoreLifecycleSystem` | `nuclear_core_profiles.json` | `Main` | `NuclearCoreSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `NuclearCoreLifecycleTests` | ✅ 6/6 |
+| 130 | `nuclear_core_lifecycle` | Shelter & Infrastructure | `NuclearCoreLifecycleSystem` | `nuclear_core_profiles.json` | `Main` | `NuclearCoreSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `NuclearCorePowerGridPublishTests`, `FlagshipIntegrationIxSmokeTests` | ✅ 6/6 |
 | 131 | `power_grid` | Shelter & Infrastructure | `PowerGridSystem` | `power_grid.json` | `PowerGridHostSession` | `PowerGridSaveStore` | `PowerGridPanel` | `--player-panels-uitest`, `PowerGridSystemTests` | ✅ 6/6 |
 | 132 | `power_subgrids` | Shelter & Infrastructure | `PowerDistributionSubgridSystem` | — *(Procedural)* | `Main` | `PowerDistributionSaveStore` | `PowerGridPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
 | 133 | `shelter_assignment` | Shelter & Infrastructure | `ShelterAssignmentSystem` | — *(Procedural)* | `ShelterAssignmentHostSession` | `ShelterAssignmentSaveStore` | `ShelterPanel` | `--shelter-operations-selftest`, `ShelterAssignmentSystemTests` | ✅ 6/6 |
@@ -220,7 +223,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 163 | `geodetic_survey` | World | `GeodeticSurveyEngine` | — *(Procedural)* | `GeodeticSurveySaveStore` | `GeodeticSurveySaveStore` | *None (GAP)* | ,  | ❌ GAP |
 | 164 | `route_infrastructure` | World | `RouteInfrastructureSystem` | — *(Procedural)* | `RouteInfrastructureSaveStore` | `RouteInfrastructureSaveStore` | *None (GAP)* | , `RouteInfrastructureSystemTests` | ❌ GAP |
 | 165 | `subterranean` | World | `SubterraneanSystem` | `subterranean_zones.json` | `SubterraneanHostSession` | `SubterraneanSaveStore` | *None (GAP)* | , `SubterraneanSystemTests` | ❌ GAP |
-| 166 | `armored_crawlers` | World & Expeditions | `ArmoredCrawlerExpeditionSystem` | `armored_crawler_modules.json` | `Main` | `ArmoredCrawlerSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ArmoredCrawlerExpeditionTests` | ✅ 6/6 |
+| 166 | `armored_crawlers` | World & Expeditions | `ArmoredCrawlerExpeditionSystem` | `armored_crawler_modules.json` | `Main` | `ArmoredCrawlerSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FlagshipIntegrationIxSmokeTests` | ✅ 6/6 |
 | 167 | `encounter_choice` | World & Expeditions | `EncounterChoiceResolver` | `door_encounters.json` | `EncounterChoiceState` | `EncounterChoiceSaveStore` | `DoorEncounterModal` | `--moral-choice-selftest`, `EncounterChoiceResolverTests` | ✅ 6/6 |
 | 168 | `expedition` | World & Expeditions | `ExpeditionSystem`, `ExpeditionEncounterBridge` | `locations.json` | `ExpeditionHostSession` | `ExpeditionSaveStore` | `ExpeditionPanel` | `--expedition-selftest`, `--expedition-panel-uitest`, `ExpeditionCampSystemTests` | ✅ 6/6 |
 | 169 | `travel_encounters` | World & Expeditions | `TravelEncounterSystem`, `TravelEncounterCatalog` | `travel_encounters.json` | `TravelEncounterSystem` | `TravelEncounterSaveStore` | `ExpeditionPanel` | `--expedition-encounter-bridge-selftest`, `TravelEncounterCooldownGroupTests`, `PatrolEncounterFullRegressionTests` | ✅ 6/6 |
@@ -1062,7 +1065,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/SurgicalWardSaveStore.cs`](../../src/Host/SurgicalWardSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
-  - Test Fixture: [`Ashfall.Core.Tests/Medical/AdvancedSurgicalWardTests.cs`](../../Ashfall.Core.Tests/Medical/AdvancedSurgicalWardTests.cs)
+  - Test Fixture: *None (dedicated unit fixture retired; checksum selftest only)*
 
 ### 76. `oral_lore` — Plan 155 — oral lore first-heard ledger (lore IDs only) (Narrative & Cultural Tradition)
 - **Owner Domain:** `narrative`
@@ -1243,6 +1246,17 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/FungiSaveStore.cs`](../../src/Host/FungiSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs`](../../Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs)
+
+### 91b. `bio_fermentation` — Plan 126 — fermentation reactor, process health, contamination, outputs (Plans 126-129 Flagship)
+- **Owner Domain:** `farming`
+- **Setup Method:** `Main.SetupBioFermentation()` | **Cadence:** `Daily Sim Tick`
+- **UI Routes:** `bio_fermentation`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Shelter/BioFermentationEngine.cs`](../../Assets/Ashfall.Core/Shelter/BioFermentationEngine.cs)
+  - Host Session: [`src/Host/BioFermentationHostSession.cs`](../../src/Host/BioFermentationHostSession.cs)
+  - Save Store: [`src/Host/BioFermentationSaveStore.cs`](../../src/Host/BioFermentationSaveStore.cs)
+  - UI Panel: [`src/UI/BioFermentationPanel.cs`](../../src/UI/BioFermentationPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Shelter/BioFermentationEngineTests.cs`](../../Ashfall.Core.Tests/Shelter/BioFermentationEngineTests.cs)
 
 ### 92. `mercenary_bounties` — Mercenary bounty contracts, target intel, and rival tracking (Plans 178-201 Expansion Block)
 - **Owner Domain:** `economy`
@@ -1457,6 +1471,31 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PsyOpsSaveStore.cs`](../../src/Host/PsyOpsSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Flagship11/PsyOpsSystemTests.cs`](../../Ashfall.Core.Tests/Flagship11/PsyOpsSystemTests.cs)
 
+### 138. `low_background_metrology` — Plan 138 — low-background shielding, detector calibration, smelting batches, bounded assay history (Radiation)
+- **Owner Domain:** `radiation`
+- **Setup Method:** `Main.SetupLowBackgroundMetrology()` | **Cadence:** `On-Demand`
+- **UI Routes:** `low_background_metrology`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Radiation/LowBackgroundLeadEngine.cs`](../../Assets/Ashfall.Core/Radiation/LowBackgroundLeadEngine.cs)
+  - Data Catalog: [`Assets/StreamingAssets/Data/low_background_lead_catalog.json`](../../Assets/StreamingAssets/Data/low_background_lead_catalog.json)
+  - Host Session: [`src/Host/LowBackgroundMetrologyHostSession.cs`](../../src/Host/LowBackgroundMetrologyHostSession.cs)
+  - Save Store: [`src/Host/LowBackgroundMetrologySaveStore.cs`](../../src/Host/LowBackgroundMetrologySaveStore.cs)
+  - Main Partial: [`src/Main.LowBackgroundMetrology.cs`](../../src/Main.LowBackgroundMetrology.cs)
+  - UI Panel: [`src/UI/LowBackgroundLeadPanel.cs`](../../src/UI/LowBackgroundLeadPanel.cs)
+  - Test Fixtures: [`Ashfall.Core.Tests/Radiation/Plan138LowBackgroundLeadEngineTests.cs`](../../Ashfall.Core.Tests/Radiation/Plan138LowBackgroundLeadEngineTests.cs), [`Ashfall.Core.Tests/Radiation/Plan138LowBackgroundHostWiringTests.cs`](../../Ashfall.Core.Tests/Radiation/Plan138LowBackgroundHostWiringTests.cs)
+
+### 111b. `radio_program_production` — Plan 173 — player radio program prep/delivery jobs and follow-ups (Radio)
+- **Owner Domain:** `radio`
+- **Setup Method:** `Main.SetupRadioProgramProduction()` | **Cadence:** `Daily Sim Tick`
+- **UI Routes:** `radio`
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Radio/RadioProgramProductionSystem.cs`](../../Assets/Ashfall.Core/Radio/RadioProgramProductionSystem.cs)
+  - Data Catalog: [`Assets/StreamingAssets/Data/radio_programs.json`](../../Assets/StreamingAssets/Data/radio_programs.json)
+  - Host Session: [`src/Host/RadioProgramProductionHostSession.cs`](../../src/Host/RadioProgramProductionHostSession.cs)
+  - Save Store: [`src/Host/RadioProgramProductionSaveStore.cs`](../../src/Host/RadioProgramProductionSaveStore.cs)
+  - UI Panel: [`src/UI/RadioPanel.cs`](../../src/UI/RadioPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Radio/Plan173RadioProgramProductionTests.cs`](../../Ashfall.Core.Tests/Radio/Plan173RadioProgramProductionTests.cs)
+
 ### 112. `cryo_vault` — Plan B69 — cryo canisters, viability, coolant reserve, insulation, breach state (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupCryoVault()` | **Cadence:** `Daily Sim Tick`
@@ -1657,7 +1696,8 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/NuclearCoreSaveStore.cs`](../../src/Host/NuclearCoreSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
-  - Test Fixture: [`Ashfall.Core.Tests/Shelter/NuclearCoreLifecycleTests.cs`](../../Ashfall.Core.Tests/Shelter/NuclearCoreLifecycleTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Shelter/NuclearCorePowerGridPublishTests.cs`](../../Ashfall.Core.Tests/Shelter/NuclearCorePowerGridPublishTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs`](../../Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs)
 
 ### 131. `power_grid` — Shelter generator & power allocations (Shelter & Infrastructure)
 - **Owner Domain:** `power_grid`
@@ -2070,7 +2110,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/ArmoredCrawlerSaveStore.cs`](../../src/Host/ArmoredCrawlerSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
-  - Test Fixture: [`Ashfall.Core.Tests/Expeditions/ArmoredCrawlerExpeditionTests.cs`](../../Ashfall.Core.Tests/Expeditions/ArmoredCrawlerExpeditionTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs`](../../Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs)
 
 ### 167. `encounter_choice` — Encounter choice history & outcomes (World & Expeditions)
 - **Owner Domain:** `encounters`
@@ -2173,6 +2213,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `aviation` | ✅ | ✅ | ✅ `Daily Flight Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `ballistic_shield` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `ballistics_workbench` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
+| `bio_fermentation` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `black_projects_archive` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
 | `campaign_day` | ✅ | ✅ | ✅ `Master Sim Clock / Dawn Advance` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `caravan` | ✅ | ✅ | ✅ `Daily Route Travel` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -2283,6 +2324,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `psychological_sanatorium` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `psyops` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `radio` | ✅ | ✅ | ⚡ `On-Demand (Frequency Scan)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `radio_program_production` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `radio_station` | ✅ | ✅ | ⚡ `On-Demand (Tuning & Broadcasts)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `rail_grinding` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `railway` | ✅ | ✅ | ⚡ `On-Demand (Convoy Operations)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -2310,7 +2352,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `starting_level` | ✅ | ✅ | ⚡ `On-Demand (Opening Protocol)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `subterranean` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `sump_flooding` | ✅ | ✅ | ✅ `Daily Drainage Pump Work` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `surgical_ward` | ✅ | ✅ | ✅ `Daily Sterile Field Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `surgical_ward` | ✅ | ✅ | ✅ `Daily Sterile Field Tick` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
 | `survivor_fate` | ✅ | ✅ | ✅ `Daily Survivor-Death Cascade` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `survivor_mental_health` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `survivor_relations` | ✅ | ✅ | ✅ `Daily Affinity & Feud Drift` | ✅ | ✅ | ✅ | **PASS (6/6)** |

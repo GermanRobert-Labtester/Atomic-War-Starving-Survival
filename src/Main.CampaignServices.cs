@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 
@@ -119,6 +120,7 @@ namespace AtomicWar.GodotApp
                 SetupCommsArray();
                 SetupCeremony();
                 SetupRobotics();
+                SetupBioFermentation();
 
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
@@ -131,6 +133,31 @@ namespace AtomicWar.GodotApp
         }
 
         private Ashfall.Core.Survivors.SkillProgressionSystem? _sharedSkillProgression;
+
+        /// <summary>
+        /// Plan 180/185/195 — daily dormancy tick for the shared progression
+        /// authority (DEBT-185-SKILL-DORMANCY-TICK). Skills unused for the
+        /// catalog's dormant window leave the active set; practice reactivates
+        /// them. State already persists inside the `apprenticeship` section, so
+        /// this adds no save section. Host-shaped actors: one per living
+        /// survivor, matching what the practice systems record against.
+        /// </summary>
+        public void TickSharedSkillProgression(int day)
+        {
+            var skills = EnsureSharedSkillProgression();
+            var roster = _survivors?.RosterState;
+            if (roster == null || roster.Count == 0) return;
+
+            var actors = new System.Collections.Generic.List<Ashfall.Core.Survivors.SimpleSkillActor>(roster.Count);
+            for (int i = 0; i < roster.Count; i++)
+            {
+                var survivor = roster[i];
+                if (survivor == null || !survivor.IsAliveState) continue;
+                actors.Add(new Ashfall.Core.Survivors.SimpleSkillActor(survivor.Id));
+            }
+
+            skills.TickDaily(day, actors);
+        }
 
         public Ashfall.Core.Survivors.SkillProgressionSystem EnsureSharedSkillProgression()
         {

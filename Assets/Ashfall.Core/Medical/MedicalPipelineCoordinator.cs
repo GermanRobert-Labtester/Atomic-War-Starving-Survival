@@ -59,7 +59,11 @@ namespace Ashfall.Core.Medical
         /// hours, and new treatment starts are refused with clinic_no_power.
         /// Null = legacy behavior (always powered).</summary>
         private readonly Func<bool>? _clinicPowerCheck;
+        /// <summary>Optional shared research capability query. Null preserves legacy headless fixtures.</summary>
+        private readonly Func<string, bool>? _capabilityCheck;
         private readonly Func<int> _currentDay;
+
+        private readonly MedicalRecordLog _record = new MedicalRecordLog();
 
         /// <summary>Monotonic version for stale-preview rejection; persists with the pipeline.</summary>
         public long StateVersion { get; private set; }
@@ -67,6 +71,14 @@ namespace Ashfall.Core.Medical
         public DiagnosisKnowledgeStore Diagnosis => _diagnosis;
         public MedicalReservationLedger Reservations => _reservations;
         public MedicalProcedureSchedule Schedule => _schedule;
+
+        /// <summary>
+        /// Plan 193/198 — bounded append-only medical record of pipeline events
+        /// (DEBT-198-PIPELINE-EVENT-LOG). It records the events this coordinator
+        /// already emits; it is not a second diagnosis store, and it never holds
+        /// free-text notes.
+        /// </summary>
+        public MedicalRecordLog Record => _record;
 
         /// <summary>Raised after any committed pipeline mutation (save/UI refresh hook).</summary>
         public event Action? StateChanged;
@@ -90,7 +102,8 @@ namespace Ashfall.Core.Medical
             MedicalProcedureSchedule schedule,
             Func<Survivors.SurvivorId, PatientAvailability> availability,
             Func<int> currentDay,
-            Func<bool>? clinicPowerCheck = null)
+            Func<bool>? clinicPowerCheck = null,
+            Func<string, bool>? capabilityCheck = null)
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _diagnosis = diagnosis ?? throw new ArgumentNullException(nameof(diagnosis));
@@ -99,6 +112,19 @@ namespace Ashfall.Core.Medical
             _availability = availability ?? throw new ArgumentNullException(nameof(availability));
             _currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
             _clinicPowerCheck = clinicPowerCheck;
+            _capabilityCheck = capabilityCheck;
+
+            // Plan 193/198: the record mirrors the events this coordinator already
+            // emits — one subscription keeps it from drifting out of sync with the
+            // emit sites. No free-text notes are ever recorded.
+            OnDiagnosisSuspected += (detail, sv) => _record.Append(_currentDay(), MedicalRecordKinds.DiagnosisSuspected, sv.Value, detail);
+            OnDiagnosisConfirmed += (detail, sv) => _record.Append(_currentDay(), MedicalRecordKinds.DiagnosisConfirmed, sv.Value, detail);
+            OnPatientStabilized += (detail, sv) => _record.Append(_currentDay(), MedicalRecordKinds.PatientStabilized, sv.Value, detail);
+            OnPatientRecovered += (detail, sv) => _record.Append(_currentDay(), MedicalRecordKinds.PatientRecovered, sv.Value, detail);
+            OnTreatmentScheduled += (detail, sv) => _record.Append(_currentDay(), MedicalRecordKinds.TreatmentScheduled, sv.Value, detail);
+            OnTreatmentCompleted += (detail, sv) => _record.Append(_currentDay(), MedicalRecordKinds.TreatmentCompleted, sv.Value, detail);
+            OnTreatmentRefused += (detail, sv, reason) => _record.Append(_currentDay(), MedicalRecordKinds.TreatmentRefused, sv.Value, reason);
+            OnProtocolExecuted += protocolId => _record.Append(_currentDay(), MedicalRecordKinds.ProtocolExecuted, string.Empty, protocolId);
         }
 
         // ── Handler registry ─────────────────────────────────────────
@@ -300,6 +326,10 @@ namespace Ashfall.Core.Medical
             if (def == null)
                 return Unavailable("treatment.start", "unknown_treatment", expectedVersion);
 
+            if (!string.IsNullOrEmpty(def.RequiredCapability) &&
+                _capabilityCheck != null && !_capabilityCheck(def.RequiredCapability))
+                return Unavailable("treatment.start", "research_required", expectedVersion);
+
             var fail = ValidatePatient(survivor, "treatment.start");
             if (fail != null) return Unavailable("treatment.start", fail, expectedVersion);
 
@@ -382,6 +412,12 @@ namespace Ashfall.Core.Medical
             // 3. Apply through the domain handler (domain owns the clinical rule).
             if (!handler.ApplyTreatment(survivor, treatmentId, targetItem))
             {
+                // Refund consumed medicine — apply failed after the bill commit.
+                foreach (var kv in bill)
+                {
+                    if (kv.Value > 0)
+                        _inventory.TryProduce(kv.Key, kv.Value);
+                }
                 RollbackReservations(reservationIds);
                 OnTreatmentRefused?.Invoke(treatmentId, survivor, "treatment_rejected");
                 return new MedicalOperationResult { Success = false, ReasonCode = "treatment_rejected", StateVersion = StateVersion };
@@ -571,9 +607,19 @@ namespace Ashfall.Core.Medical
                 var bill = new Dictionary<string, int>(def.ItemCosts);
                 bool consumed = bill.Count == 0 || _inventory.TryConsumeBill(bill);
                 ReleaseProcedureReservations(completion.ProcedureId);
-                if (!consumed || !handler.ApplyTreatment(survivor, completion.TreatmentId))
+                if (!consumed)
                 {
-                    OnTreatmentRefused?.Invoke(completion.TreatmentId, survivor, consumed ? "treatment_rejected" : "missing_medicine");
+                    OnTreatmentRefused?.Invoke(completion.TreatmentId, survivor, "missing_medicine");
+                    continue;
+                }
+                if (!handler.ApplyTreatment(survivor, completion.TreatmentId))
+                {
+                    foreach (var kv in bill)
+                    {
+                        if (kv.Value > 0)
+                            _inventory.TryProduce(kv.Key, kv.Value);
+                    }
+                    OnTreatmentRefused?.Invoke(completion.TreatmentId, survivor, "treatment_rejected");
                     continue;
                 }
 
@@ -679,6 +725,7 @@ namespace Ashfall.Core.Medical
                 diagnosis = _diagnosis.CaptureState(),
                 reservations = _reservations.CaptureState(),
                 procedures = _schedule.CaptureState(),
+                record = _record.CaptureState(),
                 stateVersion = StateVersion
             };
         }
@@ -692,6 +739,7 @@ namespace Ashfall.Core.Medical
             _diagnosis.RestoreState(saved.diagnosis);
             _reservations.RestoreState(saved.reservations);
             _schedule.RestoreState(saved.procedures);
+            _record.RestoreState(saved.record);
             StateVersion = saved.stateVersion;
         }
     }

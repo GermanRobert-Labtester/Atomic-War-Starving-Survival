@@ -232,7 +232,46 @@ namespace AtomicWar.GodotApp.UI
 
             if (RenderedActiveCount == 0)
                 _activeList.AddChild(MakeDimLine("No active afflictions."));
+
+            // Plan 193/198 — bounded medical record projection (day + event id only;
+            // no free-text notes, no second diagnosis store).
+            if (_medical?.Pipeline != null)
+            {
+                var rosterIds = _survivors?.RosterState;
+                if (rosterIds != null)
+                {
+                    for (int ri = 0; ri < rosterIds.Count; ri++)
+                    {
+                        var rs = rosterIds[ri];
+                        if (rs == null) continue;
+                        var recent = _medical.Pipeline.Record.ForSurvivor(rs.Id, 2);
+                        if (recent.Count == 0) continue;
+
+                        _activeList.AddChild(MakeDimLine($"Recent medical record — {Name(rs.Id)}:"));
+                        for (int ei = 0; ei < recent.Count; ei++)
+                        {
+                            var entry = recent[ei];
+                            string detail = string.IsNullOrEmpty(entry.detail) ? string.Empty : $" · {entry.detail}";
+                            AddDimSubline(_activeList, $"   Day {entry.day} — {MedicalRecordLabel(entry.kind)}{detail}");
+                        }
+                    }
+                }
+            }
         }
+
+        /// <summary>Non-stigmatizing display label for a recorded medical event kind.</summary>
+        private static string MedicalRecordLabel(string kind) => kind switch
+        {
+            MedicalRecordKinds.DiagnosisSuspected => "condition suspected",
+            MedicalRecordKinds.DiagnosisConfirmed => "condition identified",
+            MedicalRecordKinds.PatientStabilized => "patient stabilized",
+            MedicalRecordKinds.PatientRecovered => "patient recovered",
+            MedicalRecordKinds.TreatmentScheduled => "treatment scheduled",
+            MedicalRecordKinds.TreatmentCompleted => "treatment completed",
+            MedicalRecordKinds.TreatmentRefused => "treatment not given",
+            MedicalRecordKinds.ProtocolExecuted => "camp protocol carried out",
+            _ => "medical event"
+        };
 
         private void RenderChronic()
         {
