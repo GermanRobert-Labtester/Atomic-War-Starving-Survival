@@ -32,6 +32,7 @@ namespace Ashfall.Core.Inventory
         public float tradeValue { get; set; }
         public int tradeTier { get; set; }
         public float disassembleYieldFraction { get; set; } = 0.5f;
+        public List<string>? tags { get; set; }
         public List<ScrapYieldDto>? scrapValue { get; set; }
         public RepairRecipeDto? repairRecipe { get; set; }
     }
@@ -49,6 +50,11 @@ namespace Ashfall.Core.Inventory
         public List<ScrapYieldDto>? costs { get; set; }
         public float hours { get; set; } = 0.5f;
         public bool requiresTools { get; set; } = true;
+
+        /// <summary>C2 / Plan 22 (§48) — authored ceiling: repairs can never
+        /// raise the item above durability × this fraction (worn gear never
+        /// quite becomes new). Default 1.0 = repairable to full.</summary>
+        public float max_repair_condition_fraction { get; set; } = 1.0f;
     }
 
     [Serializable]
@@ -651,6 +657,18 @@ namespace Ashfall.Core.Inventory
                 disassembleYieldFraction = dto.disassembleYieldFraction > 0f ? dto.disassembleYieldFraction : 0.5f
             };
 
+            // C2 / Plan 22 (§25.2) — authored item tags become live: shared
+            // item-tag consumption semantics classify consumables once, here.
+            if (dto.tags != null)
+            {
+                for (int t = 0; t < dto.tags.Count; t++)
+                {
+                    var tag = dto.tags[t];
+                    if (!string.IsNullOrWhiteSpace(tag))
+                        def.tags.Add(tag.Trim().ToLowerInvariant());
+                }
+            }
+
             if (dto.scrapValue != null)
             {
                 for (int j = 0; j < dto.scrapValue.Count; j++)
@@ -666,7 +684,8 @@ namespace Ashfall.Core.Inventory
                 def.repairRecipe = new RepairRecipe
                 {
                     hours = dto.repairRecipe.hours,
-                    requiresTools = dto.repairRecipe.requiresTools
+                    requiresTools = dto.repairRecipe.requiresTools,
+                    MaxRepairConditionFraction = dto.repairRecipe.max_repair_condition_fraction
                 };
                 if (dto.repairRecipe.costs != null)
                 {

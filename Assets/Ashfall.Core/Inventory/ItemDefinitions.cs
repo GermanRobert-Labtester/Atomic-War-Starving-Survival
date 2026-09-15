@@ -42,12 +42,18 @@ namespace Ashfall.Core.Inventory
         public float hours = 0.5f;
         public bool requiresTools = true;
 
+        /// <summary>C2 / Plan 22 (§48) — repairs can never raise condition above
+        /// durability × this authored fraction (worn gear never quite becomes
+        /// new). Clamped to [0,1] at use; default 1.0 = repairable to full.</summary>
+        public float MaxRepairConditionFraction = 1.0f;
+
         public RepairRecipe Clone()
         {
             var copy = new RepairRecipe
             {
                 hours = hours,
                 requiresTools = requiresTools,
+                MaxRepairConditionFraction = MaxRepairConditionFraction,
                 costs = new List<ScrapYield>()
             };
             if (costs != null)
@@ -107,6 +113,20 @@ namespace Ashfall.Core.Inventory
         public List<ScrapYield> scrapValue = new List<ScrapYield>();
         public RepairRecipe repairRecipe = new RepairRecipe();
         public float disassembleYieldFraction = 0.5f;
+
+        /// <summary>C2 / Plan 22 — authored item tags (lowercased, ordinal).
+        /// Empty when unauthored; the shared consumption semantics classify
+        /// consumables through these (see ItemTagCatalog).</summary>
+        public List<string> tags = new List<string>();
+
+        /// <summary>Alias-normalized tag test (case-insensitive, ordinal).</summary>
+        public bool HasTag(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag)) return false;
+            for (int i = 0; i < tags.Count; i++)
+                if (string.Equals(tags[i], tag, StringComparison.OrdinalIgnoreCase)) return true;
+            return false;
+        }
 
         public bool IsConsumableOrScrapMaterial()
         {
