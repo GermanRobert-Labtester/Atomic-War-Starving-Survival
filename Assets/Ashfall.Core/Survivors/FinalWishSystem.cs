@@ -10,6 +10,12 @@ namespace Ashfall.Core.Survivors
     {
         public string survivorId = string.Empty;
         public string wishType = string.Empty;
+        /// <summary>
+        /// The specific authored wish id drawn from the archetype's pool (e.g.
+        /// <c>wish_surgeon_final_surgery</c>), empty when no catalog is bound or for
+        /// legacy saves. Surfaced to the host for authored title/description text.
+        /// </summary>
+        public string wishId = string.Empty;
         public float daysRemaining;
         public int stepsCompleted;
         public bool isActive;
@@ -66,6 +72,14 @@ namespace Ashfall.Core.Survivors
         // wishId → localized text
         public ISeededRng Rng;
 
+        /// <summary>
+        /// Optional authored-wish catalog. When bound, a terminal prognosis draws a
+        /// specific <c>wishId</c> from the archetype's pool (seeded, deterministic) so
+        /// each elder death surfaces a distinct authored moment. Null → the system
+        /// behaves exactly as before (wishType only, no authored text).
+        /// </summary>
+        public IFinalWishCatalog? Catalog;
+
         // ── State ──────────────────────────────────────────────────────
         /// <summary>ArchetypeId → wish type.</summary>
         private readonly Dictionary<string, string> _archetypeWishes =
@@ -102,10 +116,12 @@ namespace Ashfall.Core.Survivors
                 (DefaultPrognosisDaysMax - DefaultPrognosisDaysMin));
 
             string wishType = GetWishForArchetype(archetypeId);
+            string wishId = ResolveWishIdForArchetype(archetypeId);
             var state = new FinalWishSurvivorState
             {
                 survivorId = survivorId,
                 wishType = wishType,
+                wishId = wishId,
                 daysRemaining = daysRemaining,
                 stepsCompleted = 0,
                 isActive = true,
@@ -130,17 +146,9 @@ namespace Ashfall.Core.Survivors
             state.stepsCompleted++;
             OnFinalWishStepCompleted?.Invoke(survivorId, stepId);
 
-            // Different wish types have different step counts
-            int requiredSteps = state.wishType switch
-            {
-                WishRetrieveHeirloom => 2,
-                WishDeliverLetter => 2,
-                WishBuildMemorial => 3,
-                WishTeachLesson => 2,
-                WishReconcile => 2,
-                WishSeeTheSky => 1,
-                _ => 2
-            };
+            // Prefer the authored step count when a catalog entry is bound; fall back
+            // to the wish-type switch otherwise (backward compatible, tested).
+            int requiredSteps = RequiredStepsFor(state);
 
             if (state.stepsCompleted >= requiredSteps)
             {
@@ -160,6 +168,32 @@ namespace Ashfall.Core.Survivors
             OnFinalWishCompleted?.Invoke(survivorId);
             OnPermanentMoraleBuffApplied?.Invoke(WishCompletedMoraleBuff);
             OnStateChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Resolve the number of steps required to complete a survivor's wish.
+        /// Uses the authored catalog entry's step count when available; otherwise
+        /// falls back to the wish-type switch (the historical behavior).
+        /// </summary>
+        private int RequiredStepsFor(FinalWishSurvivorState state)
+        {
+            if (Catalog != null && !string.IsNullOrEmpty(state.wishId))
+            {
+                var entry = Catalog.GetEntry(state.wishId);
+                if (entry != null && entry.steps != null && entry.steps.Count > 0)
+                    return entry.steps.Count;
+            }
+
+            return state.wishType switch
+            {
+                WishRetrieveHeirloom => 2,
+                WishDeliverLetter => 2,
+                WishBuildMemorial => 3,
+                WishTeachLesson => 2,
+                WishReconcile => 2,
+                WishSeeTheSky => 1,
+                _ => 2
+            };
         }
 
         /// <summary>
@@ -219,6 +253,22 @@ namespace Ashfall.Core.Survivors
         }
 
         /// <summary>
+        /// Draw a specific authored wish id from the archetype's pool using the seeded
+        /// RNG, so the same seed always selects the same wish for a given archetype.
+        /// Returns empty when no catalog is bound or the archetype has no pool — the
+        /// caller then runs on wishType only (legacy behavior).
+        /// </summary>
+        private string ResolveWishIdForArchetype(string archetypeId)
+        {
+            if (Catalog == null || string.IsNullOrEmpty(archetypeId)) return string.Empty;
+            var pool = Catalog.GetWishIdsForArchetype(archetypeId);
+            if (pool == null || pool.Count == 0) return string.Empty;
+            if (Rng == null) return pool[0];
+            int idx = Rng.Next(0, pool.Count);
+            return pool[idx];
+        }
+
+        /// <summary>
         /// Returns true if a final wish is currently active for this survivor.
         /// </summary>
         public bool HasActiveWish(string survivorId)
@@ -237,6 +287,17 @@ namespace Ashfall.Core.Survivors
         {
             return _wishStates.TryGetValue(survivorId, out var state)
                 ? state.wishType : string.Empty;
+        }
+
+        /// <summary>
+        /// Get the authored wish id drawn for a survivor (empty if no catalog was
+        /// bound or the survivor has no wish). Hosts use this to resolve authored
+        /// title/description/completion text from <see cref="IFinalWishCatalog"/>.
+        /// </summary>
+        public string GetWishId(string survivorId)
+        {
+            return _wishStates.TryGetValue(survivorId, out var state)
+                ? state.wishId : string.Empty;
         }
 
         /// <summary>
@@ -287,6 +348,7 @@ namespace Ashfall.Core.Survivors
                 {
                     survivorId = s.survivorId,
                     wishType = s.wishType,
+                    wishId = s.wishId,
                     daysRemaining = s.daysRemaining,
                     stepsCompleted = s.stepsCompleted,
                     isActive = s.isActive,
@@ -320,6 +382,7 @@ namespace Ashfall.Core.Survivors
                     {
                         survivorId = s.survivorId,
                         wishType = s.wishType,
+                        wishId = s.wishId,
                         daysRemaining = s.daysRemaining,
                         stepsCompleted = s.stepsCompleted,
                         isActive = s.isActive,
