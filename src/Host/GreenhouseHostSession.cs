@@ -261,6 +261,33 @@ namespace AtomicWar.GodotApp
             return false;
         }
 
+        /// <summary>
+        /// B5–B8 Phase 4 (Plan 64): apply one canonical nutrient dose.
+        /// Inventory is checked/consumed first (same atomic discipline as
+        /// watering); the greenhouse authority owns the plot's nutrient band.
+        /// Blocked with an explicit reason on fallow/failed plots or missing
+        /// items — never consumes on failure.
+        /// </summary>
+        public bool ApplyNutrients(int plotIndex)
+        {
+            if (InventoryHost != null && InventoryHost.Inventory.CountById(GreenhouseSystem.NutrientItemId) < 1)
+            {
+                LastEvent = $"Cannot dose: insufficient {GreenhouseSystem.NutrientItemId} in inventory.";
+                return false;
+            }
+
+            if (!System.ApplyNutrients(plotIndex, out var consumed))
+            {
+                LastEvent = $"Plot {plotIndex + 1}: Cannot dose nutrients on a fallow or failed plot.";
+                return false;
+            }
+
+            InventoryHost?.Remove(consumed, 1);
+            LastEvent = $"Plot {plotIndex + 1}: Nutrient dose applied ({GreenhouseSystem.NutrientItemId}).";
+            RaiseStateChanged();
+            return true;
+        }
+
         // ── Apiculture Actions ──────────────────────────────────────────
 
         public bool InstallHive(string hiveId, string bayId, int currentDay)

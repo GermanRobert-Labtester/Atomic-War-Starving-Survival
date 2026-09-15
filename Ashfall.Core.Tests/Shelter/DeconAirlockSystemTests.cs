@@ -128,8 +128,8 @@ namespace Ashfall.Core.Tests
         {
             var d1 = Create(out var inv1);
             var d2 = Create(out var inv2);
-            inv1.AddById("water_clean", 50); inv1.AddById("soap", 50);
-            inv2.AddById("water_clean", 50); inv2.AddById("soap", 50);
+            inv1.AddById("clean_water", 50); inv1.AddById("item_liquid_bleach_carboy", 50);
+            inv2.AddById("clean_water", 50); inv2.AddById("item_liquid_bleach_carboy", 50);
 
             d1.StartProtocolCycle("decon_test_stages", "s1", "gear_a", 0.8f);
             d2.StartProtocolCycle("decon_test_stages", "s1", "gear_a", 0.8f);
@@ -153,7 +153,7 @@ namespace Ashfall.Core.Tests
         public void StageOrdering_FollowsProtocolSequence_ExactlyOnce()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 50); inv.AddById("soap", 50);
+            inv.AddById("clean_water", 50); inv.AddById("item_liquid_bleach_carboy", 50);
             d.StartProtocolCycle("decon_test_stages", "s1", "gear_a", 0.8f);
 
             var seen = new List<string>();
@@ -174,7 +174,7 @@ namespace Ashfall.Core.Tests
             // Gate reading = surfaceContamination * 10; threshold 0.5.
             // Surface exactly 0.05 -> reading 0.5 -> NOT > threshold -> pass.
             var d = Create(out var inv);
-            inv.AddById("water_clean", 50); inv.AddById("soap", 50);
+            inv.AddById("clean_water", 50); inv.AddById("item_liquid_bleach_carboy", 50);
             d.StartProtocolCycle("decon_test_single", "s1", "gear_a", 0.05f);
             var outcome = RunStagedCycle(d);
             Assert.Equal("decontaminated", outcome);
@@ -185,7 +185,7 @@ namespace Ashfall.Core.Tests
         public void InterlockThreshold_JustAbove_RequiresRewash()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 50); inv.AddById("soap", 50);
+            inv.AddById("clean_water", 50); inv.AddById("item_liquid_bleach_carboy", 50);
             d.StartProtocolCycle("decon_test_single", "s1", "gear_a", 0.0501f);
             var outcome = RunStagedCycle(d);
             Assert.Equal("rewash_required", outcome);
@@ -197,15 +197,15 @@ namespace Ashfall.Core.Tests
         public void ZeroReagent_Blocks_WithoutConsumingWater()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 10); inv.AddById("soap", 10);
+            inv.AddById("clean_water", 10); inv.AddById("item_liquid_bleach_carboy", 10);
             // No chelator ampoules in inventory.
-            var waterBefore = inv.CountById("water_clean");
+            var waterBefore = inv.CountById("clean_water");
 
             var r = d.StartProtocolCycle("decon_test_chelated", "s1", "gear_a", 0.8f);
 
             Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
             Assert.Equal("no_chelator", r.FailureCode);
-            Assert.Equal(waterBefore, inv.CountById("water_clean"));
+            Assert.Equal(waterBefore, inv.CountById("clean_water"));
             Assert.Null(d.State.activeCase);
         }
 
@@ -213,7 +213,7 @@ namespace Ashfall.Core.Tests
         public void FullEffluentTank_NeverExceedsCapacity()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 50); inv.AddById("soap", 50);
+            inv.AddById("clean_water", 50); inv.AddById("item_liquid_bleach_carboy", 50);
             d.State.effluentTankVolume = d.State.effluentTankCapacity; // exactly full
 
             d.StartProtocolCycle("decon_test_stages", "s1", "gear_a", 0.8f);
@@ -237,7 +237,7 @@ namespace Ashfall.Core.Tests
         private static void RunTwoCycles(out float vol, out float cont)
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 100); inv.AddById("soap", 100);
+            inv.AddById("clean_water", 100); inv.AddById("item_liquid_bleach_carboy", 100);
             for (int i = 0; i < 2; i++)
             {
                 d.StartProtocolCycle("decon_test_stages", "s" + i, "gear_a", 0.8f);
@@ -259,7 +259,7 @@ namespace Ashfall.Core.Tests
         public void ManualOverride_Logged_AndForcesClearance()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 50); inv.AddById("soap", 50);
+            inv.AddById("clean_water", 50); inv.AddById("item_liquid_bleach_carboy", 50);
             d.StartProtocolCycle("decon_test_single", "s1", "gear_a", 0.9f); // will fail gate
 
             Assert.Equal(ActionResult.StatusKind.Success, d.EngageManualOverride().Status);
@@ -293,7 +293,7 @@ namespace Ashfall.Core.Tests
         public void EffluentTreatment_RecoversWater_PreservesSludge()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 100); inv.AddById("soap", 100);
+            inv.AddById("clean_water", 100); inv.AddById("item_liquid_bleach_carboy", 100);
             d.StartProtocolCycle("decon_test_stages", "s1", "gear_a", 0.8f);
             RunStagedCycle(d);
 
@@ -305,14 +305,14 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0f, d.State.effluentTankVolume);
             Assert.Equal(0f, d.State.effluentTankContamination);
             Assert.True(d.State.effluentSludgeVolume > sludgeBefore, "hazardous residue must be preserved as sludge");
-            Assert.True(inv.CountById("water_clean") > 0, "recovered process water returned to inventory");
+            Assert.True(inv.CountById("clean_water") > 0, "recovered process water returned to inventory");
         }
 
         [Fact]
         public void EffluentFilter_RequiredForTreatment()
         {
             var d = Create(out var inv);
-            inv.AddById("water_clean", 50); inv.AddById("soap", 50);
+            inv.AddById("clean_water", 50); inv.AddById("item_liquid_bleach_carboy", 50);
             d.StartProtocolCycle("decon_test_stages", "s1", "gear_a", 0.8f);
             RunStagedCycle(d);
 

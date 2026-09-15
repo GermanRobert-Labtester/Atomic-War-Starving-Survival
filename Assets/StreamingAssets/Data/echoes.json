@@ -319,7 +319,13 @@
                 {
                     "choiceId": "leave_them_be",
                     "text": "Leave them. Whoever painted these had a wall to paint on. That's enough.",
-                    "moraleDelta": 0.0
+                    "moraleDelta": 0.0,
+                    "effects": [
+                        {
+                            "setWorldFlag": "echo_crayon_drawing_left",
+                            "worldFlagValue": true
+                        }
+                    ]
                 },
                 {
                     "choiceId": "tape_a_note_for_the_next_one",
@@ -794,7 +800,13 @@
                 {
                     "choiceId": "leave_everything",
                     "text": "Put the wallet back. The gum too. Some things are not yours to inherit.",
-                    "moraleDelta": 0.0
+                    "moraleDelta": 0.0,
+                    "effects": [
+                        {
+                            "setWorldFlag": "echo_wallet_left",
+                            "worldFlagValue": true
+                        }
+                    ]
                 }
             ]
         },
@@ -884,7 +896,12 @@
                     "choiceId": "leave_the_tin",
                     "text": "Leave the tin where it is.",
                     "moraleDelta": 0.0,
-                    "effects": []
+                    "effects": [
+                        {
+                            "setWorldFlag": "echo_nameplates_left",
+                            "worldFlagValue": true
+                        }
+                    ]
                 },
                 {
                     "choiceId": "melt_them",
@@ -894,7 +911,7 @@
                         {
                             "setWorldFlag": "nameplates_melted",
                             "worldFlagValue": true,
-                            "itemId": "brass_fittings",
+                            "itemId": "mechanical_components",
                             "itemAmount": 14
                         }
                     ]
@@ -971,7 +988,7 @@
                     "moraleDelta": 0.0,
                     "effects": [
                         {
-                            "itemId": "item_brass_valve_fitting",
+                            "itemId": "item_foundry_press_fitting",
                             "itemAmount": 1
                         }
                     ]
@@ -995,7 +1012,12 @@
                     "choiceId": "leave_it_all",
                     "text": "Salvage the utensils for scrap metal.",
                     "moraleDelta": 0.0,
-                    "effects": []
+                    "effects": [
+                        {
+                            "setWorldFlag": "echo_frying_pan_left",
+                            "worldFlagValue": true
+                        }
+                    ]
                 }
             ]
         },
@@ -1098,7 +1120,7 @@
                     "moraleDelta": -1.0,
                     "effects": [
                         {
-                            "itemId": "item_thermal_lining",
+                            "itemId": "thermal_blanket",
                             "itemAmount": 1
                         },
                         {
@@ -1149,7 +1171,7 @@
                             "worldFlagValue": true
                         },
                         {
-                            "itemId": "item_allocation_tag",
+                            "itemId": "miners_tag",
                             "itemAmount": 1
                         }
                     ]
@@ -1215,7 +1237,12 @@
                     "choiceId": "switch_it_off",
                     "text": "Ignore the relay completely.",
                     "moraleDelta": 0.0,
-                    "effects": []
+                    "effects": [
+                        {
+                            "setWorldFlag": "echo_answering_service_ignored",
+                            "worldFlagValue": true
+                        }
+                    ]
                 }
             ]
         },

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Ashfall.Core.Save;
 using Xunit;
 
 namespace Ashfall.Core.Tests
@@ -112,6 +113,81 @@ namespace Ashfall.Core.Tests
             Assert.Contains("FlushCollectiblesIfDirty()", app);
         }
 
+        [Fact]
+        public void SaveSectionRegistry_MethodsExist_AndSaveAllReachesEverySave()
+        {
+            var methods = ScanMainMethods();
+            var missing = new List<string>();
+
+            foreach (var section in SaveSectionRegistry.All)
+            {
+                if (!methods.ContainsKey(section.SaveMethod))
+                    missing.Add($"{section.SectionKey}: missing {section.SaveMethod}");
+
+                if (section.RequiresSetup && string.IsNullOrWhiteSpace(section.SetupMethod))
+                    missing.Add($"{section.SectionKey}: registry requires setup but has no SetupMethod");
+                else if (!string.IsNullOrWhiteSpace(section.SetupMethod)
+                         && !methods.ContainsKey(section.SetupMethod!))
+                    missing.Add($"{section.SectionKey}: missing {section.SetupMethod}");
+            }
+
+            var reachable = ReachableMethods(methods, "SaveAll");
+            foreach (var section in SaveSectionRegistry.All)
+            {
+                if (methods.ContainsKey(section.SaveMethod) && !reachable.Contains(section.SaveMethod))
+                    missing.Add($"{section.SectionKey}: {section.SaveMethod} is not reachable from SaveAll");
+            }
+
+            Assert.True(missing.Count == 0,
+                "SaveSectionRegistry triad/orchestration drift:\n  "
+                + string.Join("\n  ", missing.OrderBy(x => x, StringComparer.Ordinal)));
+        }
+
+        [Fact]
+        public void FlushMethods_HaveDirtyGuard_OrDocumentedTransientDisposition()
+        {
+            var methods = ScanMainMethods();
+            var documentedTransient = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "FlushDirtyStoresForDayAdvance",
+                "FlushFactionBranch",
+                "FlushPlans50To53",
+                "FlushContextualTutorialQueue",
+            };
+
+            var findings = methods
+                .Where(pair => pair.Key.StartsWith("Flush", StringComparison.Ordinal))
+                .Where(pair => !documentedTransient.Contains(pair.Key))
+                .Where(pair => pair.Value.All(body =>
+                    body.IndexOf("dirty", StringComparison.OrdinalIgnoreCase) < 0
+                    && body.IndexOf("Save", StringComparison.Ordinal) < 0))
+                .Select(pair => pair.Key)
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToList();
+
+            Assert.True(findings.Count == 0,
+                "Flush method has no dirty guard/save call or documented disposition:\n  "
+                + string.Join("\n  ", findings));
+        }
+
+        [Fact]
+        public void ArchitectureCitedFiles_Exist()
+        {
+            string root = RepoRoot();
+            foreach (string relative in new[]
+            {
+                "docs/architecture/MAIN_DECOMPOSITION_MAP.md",
+                "docs/architecture/UTILITY_AI_UNIFICATION.md",
+                "docs/architecture/WORN_GEAR_CONSOLIDATION.md",
+                "src/Main.Application.cs",
+                "src/Main.Lifecycle.cs",
+            })
+            {
+                Assert.True(File.Exists(Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar))),
+                    $"architecture citation is missing: {relative}");
+            }
+        }
+
         private static (HashSet<string> Setup, HashSet<string> Save, HashSet<string> Flush) ScanTriad()
         {
             var setup = new HashSet<string>(StringComparer.Ordinal);
@@ -137,6 +213,118 @@ namespace Ashfall.Core.Tests
             Assert.True(setup.Count >= 80, $"triad scan rotted? Setup count={setup.Count}");
             Assert.True(save.Count >= 80, $"triad scan rotted? Save count={save.Count}");
             return (setup, save, flush);
+        }
+
+        private static Dictionary<string, List<string>> ScanMainMethods()
+        {
+            string sourceRoot = Path.Combine(RepoRoot(), "src");
+            string source = string.Join("\n", Directory.GetFiles(sourceRoot, "Main*.cs")
+                .OrderBy(path => path, StringComparer.Ordinal)
+                .Select(File.ReadAllText));
+            var methods = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+            var header = new Regex(
+                @"(?m)^\s*(?:private|public|internal|protected)\s+(?:(?:static|async|sealed|override|virtual|new)\s+)*[^\r\n\{;]+?\s+(?<name>(?:Setup|Save|Flush|Persist)[A-Za-z0-9_]+)\s*\([^;{}]*\)\s*\{",
+                RegexOptions.Compiled);
+
+            foreach (Match match in header.Matches(source))
+            {
+                int openBrace = match.Index + match.Length - 1;
+                string body = ExtractBalancedBody(source, openBrace);
+                if (!methods.TryGetValue(match.Groups["name"].Value, out var overloads))
+                {
+                    overloads = new List<string>();
+                    methods.Add(match.Groups["name"].Value, overloads);
+                }
+                overloads.Add(body);
+            }
+
+            var expression = new Regex(
+                @"(?m)^\s*(?:private|public|internal|protected)\s+(?:(?:static|async|sealed|override|virtual|new)\s+)*[^\r\n\{;]+?\s+(?<name>(?:Setup|Save|Flush|Persist)[A-Za-z0-9_]+)\s*\([^;{}]*\)\s*=>\s*(?<body>[^;]+);",
+                RegexOptions.Compiled);
+            foreach (Match match in expression.Matches(source))
+            {
+                if (!methods.TryGetValue(match.Groups["name"].Value, out var overloads))
+                {
+                    overloads = new List<string>();
+                    methods.Add(match.Groups["name"].Value, overloads);
+                }
+                overloads.Add(match.Groups["body"].Value);
+            }
+            return methods;
+        }
+
+        private static HashSet<string> ReachableMethods(Dictionary<string, List<string>> methods, string root)
+        {
+            var reachable = new HashSet<string>(StringComparer.Ordinal);
+            var pending = new Queue<string>();
+            pending.Enqueue(root);
+            var call = new Regex(@"\b(?<name>(?:Save|Persist)[A-Za-z0-9_]+)\s*\(", RegexOptions.Compiled);
+
+            while (pending.Count > 0)
+            {
+                string current = pending.Dequeue();
+                if (!reachable.Add(current) || !methods.TryGetValue(current, out var bodies)) continue;
+                foreach (string body in bodies)
+                {
+                    foreach (Match match in call.Matches(body))
+                    {
+                        string called = match.Groups["name"].Value;
+                        if (methods.ContainsKey(called) && !reachable.Contains(called))
+                            pending.Enqueue(called);
+                    }
+                }
+            }
+            return reachable;
+        }
+
+        private static string ExtractBalancedBody(string source, int openBrace)
+        {
+            int depth = 0;
+            bool lineComment = false;
+            bool blockComment = false;
+            bool stringLiteral = false;
+            bool charLiteral = false;
+            bool escaped = false;
+
+            for (int i = openBrace; i < source.Length; i++)
+            {
+                char c = source[i];
+                char next = i + 1 < source.Length ? source[i + 1] : '\0';
+
+                if (lineComment)
+                {
+                    if (c == '\n') lineComment = false;
+                    continue;
+                }
+                if (blockComment)
+                {
+                    if (c == '*' && next == '/') { blockComment = false; i++; }
+                    continue;
+                }
+                if (stringLiteral)
+                {
+                    if (escaped) { escaped = false; continue; }
+                    if (c == '\\') { escaped = true; continue; }
+                    if (c == '"') stringLiteral = false;
+                    continue;
+                }
+                if (charLiteral)
+                {
+                    if (escaped) { escaped = false; continue; }
+                    if (c == '\\') { escaped = true; continue; }
+                    if (c == '\'') charLiteral = false;
+                    continue;
+                }
+                if (c == '/' && next == '/') { lineComment = true; i++; continue; }
+                if (c == '/' && next == '*') { blockComment = true; i++; continue; }
+                if (c == '"') { stringLiteral = true; continue; }
+                if (c == '\'') { charLiteral = true; continue; }
+                if (c == '{') depth++;
+                else if (c == '}' && --depth == 0)
+                    return source.Substring(openBrace, i - openBrace + 1);
+            }
+
+            throw new InvalidOperationException("unbalanced Main partial method body");
         }
     }
 }

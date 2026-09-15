@@ -19,6 +19,7 @@ namespace AtomicWar.GodotApp.Economy
         private EconomyHostSession _session;
         private VBoxContainer _goodsList;
         private Label _lblSummary;
+        private Label? _commodityTrends;
         private bool _fallbackObserved;
 
         // Optional guild-stance binding: when present, the summary strip shows
@@ -56,6 +57,17 @@ namespace AtomicWar.GodotApp.Economy
 
             _lblSummary = new Label { Text = "..." };
             rootVbox.AddChild(_lblSummary);
+
+            // Plan 212 — daily commodity ticker. Shows the canonical category
+            // indices with arrow + word (never color-only). The economy
+            // updates daily; the ticker reflects that fixed canonical state.
+            _commodityTrends = new Label
+            {
+                Text = "COMMODITY TRENDS\n  —",
+                AutowrapMode = TextServer.AutowrapMode.WordSmart
+            };
+            _commodityTrends.AddThemeFontSizeOverride("font_size", 11);
+            rootVbox.AddChild(_commodityTrends);
 
             var scroll = new ScrollContainer
             {
@@ -129,6 +141,8 @@ namespace AtomicWar.GodotApp.Economy
                 _lblSummary.Text += $" · FOUNDRY GUILD stall {access} · trust {trust:F0}";
             }
 
+            RefreshCommodityTrends();
+
             foreach (var good in _session.Catalog.All())
             {
                 var row = new HBoxContainer();
@@ -176,6 +190,37 @@ namespace AtomicWar.GodotApp.Economy
 
                 _goodsList.AddChild(row);
             }
+        }
+
+        /// <summary>
+        /// Plan 212 — commodity trend strip: category index with an arrow and
+        /// a word (accessibility: never color-only). Categories with no
+        /// tracked index read as stable. Canonical values only — no
+        /// presentation-side re-computation.
+        /// </summary>
+        private void RefreshCommodityTrends()
+        {
+            if (_commodityTrends == null || _session == null) return;
+            var market = _session.Market;
+            var lines = new System.Collections.Generic.List<string>();
+            foreach (var category in Ashfall.Core.Economy.GoodCategories.Known)
+            {
+                var baseline = market.FindCommodityBaseline(category);
+                if (baseline == null) continue;
+                float current = market.GetCategoryMultiplier(category);
+                float target = baseline.base_multiplier_permille / 1000f;
+                string arrow = current > target * 1.03f ? "▲" : current < target * 0.97f ? "▼" : "—";
+                string word = arrow == "▲" ? "rising" : arrow == "▼" ? "falling" : "stable";
+                lines.Add($"  {arrow} {word}: {category} ×{current:0.00}");
+            }
+            var active = market.ActiveShocks;
+            if (active.Count > 0)
+            {
+                foreach (var shock in active)
+                    lines.Add($"  ! {shock.categoryId} {(shock.isShortage ? "SHORTAGE" : "CRASH")} "
+                        + $"(x{shock.severityBp / 10000f:0.00}) until day {shock.expiryDay}");
+            }
+            _commodityTrends.Text = "COMMODITY TRENDS\n" + (lines.Count == 0 ? "  — all stable" : string.Join("\n", lines));
         }
     }
 }

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -26,6 +27,8 @@ namespace AtomicWar.GodotApp.UI
         private Label _detailText = null!;
         private Button _setTrapBtn = null!;
         private Button _checkTrapBtn = null!;
+        private Button _butcherBtn = null!;
+        private Button _preserveHideBtn = null!;
         private Button _repairBtn = null!;
         private Button _removeBtn = null!;
         private OptionButton _repairSiteDropdown = null!;
@@ -105,6 +108,26 @@ namespace AtomicWar.GodotApp.UI
             _checkTrapBtn = new Button { Text = "Check & Harvest Snares", CustomMinimumSize = new Vector2(180, 36) };
             _checkTrapBtn.Pressed += () => _host?.CheckTraps();
             buttonRow.AddChild(_checkTrapBtn);
+
+            _butcherBtn = new Button { Text = "Butcher Catch", CustomMinimumSize = new Vector2(140, 36) };
+            _butcherBtn.Pressed += () =>
+            {
+                if (_host == null) return;
+                _host.Butcher(ManagedSiteId, "Hunter");
+                RefreshView();
+            };
+            _butcherBtn.Visible = false;
+            buttonRow.AddChild(_butcherBtn);
+
+            _preserveHideBtn = new Button { Text = "Preserve Hide", CustomMinimumSize = new Vector2(140, 36) };
+            _preserveHideBtn.Pressed += () =>
+            {
+                if (_host == null) return;
+                _host.PreserveHide(ManagedSiteId);
+                RefreshView();
+            };
+            _preserveHideBtn.Visible = false;
+            buttonRow.AddChild(_preserveHideBtn);
 
             _repairSiteDropdown = new OptionButton { CustomMinimumSize = new Vector2(200, 36), Visible = false };
             _repairSiteDropdown.ItemSelected += (index) =>
@@ -421,6 +444,14 @@ namespace AtomicWar.GodotApp.UI
 
             if (_removeBtn != null)
                 _removeBtn.Visible = managedSite != null;
+
+            bool catchReady = managedSite != null && managedSite.hasCatch && !managedSite.isMeatProcessed;
+            bool hideReady = managedSite != null && managedSite.hasCatch
+                && managedSite.isMeatProcessed && !managedSite.hidePreserved;
+            if (_butcherBtn != null)
+                _butcherBtn.Visible = catchReady;
+            if (_preserveHideBtn != null)
+                _preserveHideBtn.Visible = hideReady;
         }
 
         private void UpdateRepairButtonState()

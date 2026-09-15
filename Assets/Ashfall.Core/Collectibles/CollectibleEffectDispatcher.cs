@@ -200,11 +200,20 @@ namespace Ashfall.Core
             }
             if (!ValidateTarget(def, result)) return false;
 
-            // UnlockManual is deliberately free-form: the reveal is recorded in
-            // campaign research state even when the node is not (yet) in the
-            // research catalog, so authored knowledge is never silently swallowed.
+            // Task 5 (§6.4) — manuals REVEAL knowledge; they never complete it.
+            // UnlockManual records the reveal (unlockedIds/isUnlocked); research
+            // completion stays behind StartResearch + its prerequisite gate.
+            // Target validation (§4): when the research catalog lacks the target,
+            // the effect fails with a typed, retryable reason instead of silently
+            // swallowing an unknown node id.
+            if (!research.Catalog.TryGetValue(def.effect_target, out _))
+            {
+                result.FailureReason = $"effect_target_unknown:{def.effect_target}";
+                return false;
+            }
+
             research.UnlockManual(def.effect_target);
-            _log.Info($"[Collectibles] {def.item_id}: knowledge '{def.effect_target}' unlocked.");
+            _log.Info($"[Collectibles] {def.item_id}: knowledge '{def.effect_target}' revealed (not completed).");
             return true;
         }
 
@@ -238,15 +247,21 @@ namespace Ashfall.Core
             }
             if (!ValidateTarget(def, result)) return false;
 
+            // Task 6 (§7.4) — a map clue is CONFIRMED LOCATION KNOWLEDGE, not a
+            // visit: DiscoverSurvey records FogState.Surveyed (High confidence,
+            // collectible-clue provenance) and touches nothing else. The old
+            // Discover() path set FogState.Visited with a fabricated
+            // ExpeditionVisit provenance — a clue never travels there.
             // Strict node resolution: a target that is not a real map node is an
             // explicit deferred failure, not a silent swallow — the clue keeps
             // its value for when the authority gains the node.
-            if (!map.Discover(def.effect_target))
+            int day = _dayProvider?.Invoke() ?? 1;
+            if (!map.DiscoverSurvey(def.effect_target, "collectible_clue", day))
             {
                 result.FailureReason = $"map_node_not_found:{def.effect_target}";
                 return false;
             }
-            _log.Info($"[Collectibles] {def.item_id}: map location '{def.effect_target}' revealed.");
+            _log.Info($"[Collectibles] {def.item_id}: map location '{def.effect_target}' surveyed (location knowledge only).");
             return true;
         }
 
@@ -259,5 +274,78 @@ namespace Ashfall.Core
             }
             return true;
         }
+
+        // ── Tasks 5–8 §12 — legacy save reconciliation ─────────────────
+
+        /// <summary>
+        /// Idempotent one-pass reconciliation of DISCOVERED collectibles whose
+        /// subsystem effects may be missing in legacy saves (Cases A/B/C):
+        /// knowledge discovered but node not revealed → reveal once; location
+        /// clue discovered but location unknown → Surveyed-reveal once; vinyl
+        /// discovered but ownership missing → register via the acquisition map
+        /// (ownership only, never morale). Runs AFTER restore, NEVER during it;
+        /// every underlying call is already idempotent, so calling twice
+        /// reconciles nothing new (§12: versioned, idempotent, not every load —
+        /// the host invokes this once per campaign load from SetupCollectibles).
+        /// </summary>
+        public CollectibleMigrationReport ReconcileDiscoveredSubsystemState(
+            Func<VinylMoraleSystem?>? vinylProvider = null, ISeededRng? vinylRng = null)
+        {
+            var report = new CollectibleMigrationReport();
+            int day = _dayProvider?.Invoke() ?? 1;
+            foreach (var kv in _catalog.ByItemId)
+            {
+                var def = kv.Value;
+                if (def == null || !_discovery.IsDiscovered(kv.Key)) continue;
+                string effectType = string.IsNullOrEmpty(def.effect_type) ? "none" : def.effect_type;
+                switch (effectType)
+                {
+                    case "knowledge":
+                    {
+                        var research = _researchProvider?.Invoke();
+                        if (research == null || !research.Catalog.TryGetValue(def.effect_target, out _)) break;
+                        if (!research.IsManualUnlocked(def.effect_target))
+                        {
+                            research.UnlockManual(def.effect_target);
+                            report.KnowledgeReconciled++;
+                        }
+                        break;
+                    }
+                    case "location_clue":
+                    {
+                        var map = _mapProvider?.Invoke();
+                        if (map == null || map.GetNodeKnowledge(def.effect_target) == null && !map.IsDiscovered(def.effect_target))
+                        {
+                            // DiscoverSurvey fails (typed) when the node does not exist;
+                            // treat a failed strict resolution as "no reconciliation".
+                            if (map != null && map.DiscoverSurvey(def.effect_target, "collectible_clue", day))
+                                report.LocationReconciled++;
+                        }
+                        break;
+                    }
+                    case "none":
+                    {
+                        // Vinyl collectibles carry effect_type none; ownership lives
+                        // in VinylMoraleSystem via the acquisition map (Case C).
+                        var vinyl = vinylProvider?.Invoke();
+                        if (vinyl == null || !Ashfall.Core.Narrative.VinylRecordAcquisitionMap.IsVinylAcquisitionItem(kv.Key)) break;
+                        Ashfall.Core.Narrative.VinylRecordAcquisitionMap.TryAcquireFromItem(kv.Key, vinyl, vinylRng);
+                        report.VinylChecked++;
+                        break;
+                    }
+                }
+            }
+            if (report.KnowledgeReconciled + report.LocationReconciled + report.VinylChecked > 0)
+                _log.Info($"[Collectibles] legacy reconciliation: knowledge={report.KnowledgeReconciled}, locations={report.LocationReconciled}, vinyl={report.VinylChecked}");
+            return report;
+        }
+    }
+
+    /// <summary>Legacy reconciliation outcome (§12) — counters only, never morale.</summary>
+    public sealed class CollectibleMigrationReport
+    {
+        public int KnowledgeReconciled;
+        public int LocationReconciled;
+        public int VinylChecked;
     }
 }

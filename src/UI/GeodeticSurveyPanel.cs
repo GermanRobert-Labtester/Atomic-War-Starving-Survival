@@ -45,6 +45,7 @@ public partial class GeodeticSurveyPanel : Control
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("Geodetic Survey // Triangulation Network", minWidth: 1100, minHeight: 720);

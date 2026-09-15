@@ -13,6 +13,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class NurseryPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action<string, string>? OnActionRequested;
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -28,6 +29,21 @@ namespace AtomicWar.GodotApp.UI
             _system = system;
             RefreshView();
         }
+        /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
+        public string LastFeedback { get; private set; } = string.Empty;
+
+        /// <summary>Host feedback strip — tied to the actual command result.</summary>
+        public void ShowFeedback(string message, bool isFailure)
+        {
+            _feedbackText = message;
+            _feedbackIsFailure = isFailure;
+            LastFeedback = message;
+            RefreshView();
+        }
+
+        private string _feedbackText = string.Empty;
+        private bool _feedbackIsFailure;
+
 
         public void Unbind()
         {
@@ -56,6 +72,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_detailText);
 
             _shell.SetContent(_contentStack);
+            AppendActionButtons(_contentStack);
             _shell.AttachHeaderCloseButton("CLOSE", () => OnClose?.Invoke());
 
             // Overlay panels start hidden; PanelRegistry drives visibility.
@@ -110,6 +127,39 @@ namespace AtomicWar.GodotApp.UI
             float avgXp = state.children.Count > 0 ? totalXp / state.children.Count : 0f;
             _statusRail.Set("school_xp", $"{avgXp:F1}", AshfallMetricCard.Criticality.Normal);
             _detailText.Text = summary.ToString();
+        }
+        private void AppendActionButtons(VBoxContainer contentStack)
+        {
+            var row = new HBoxContainer { };
+            row.AddThemeConstantOverride("separation", 12);
+
+            var assignGuardian = new Button { Text = "ASSIGN GUARDIAN (FIRST ADULT)" };
+            assignGuardian.TooltipText = "Assigns the roster's first available adult as guardian for the first child under care.";
+            assignGuardian.Pressed += () => OnActionRequested?.Invoke("assign_guardian", FirstChildId());
+            row.AddChild(assignGuardian);
+
+            var assignTeacher = new Button { Text = "ASSIGN TEACHER (FIRST ADULT)" };
+            assignTeacher.TooltipText = "Assigns the roster's first available adult as teacher under the current education focus.";
+            assignTeacher.Pressed += () => OnActionRequested?.Invoke("assign_teacher", FirstChildId());
+            row.AddChild(assignTeacher);
+
+            if (!string.IsNullOrEmpty(_feedbackText))
+            {
+                var fb = new Label
+                {
+                    Text = _feedbackIsFailure ? $"⚠ {_feedbackText}" : _feedbackText,
+                    AutowrapMode = TextServer.AutowrapMode.WordSmart
+                };
+                row.AddChild(fb);
+            }
+
+            contentStack.AddChild(row);
+        }
+
+        private string FirstChildId()
+        {
+            if (_system == null || _system.State.children.Count == 0) return string.Empty;
+            return _system.State.children[0].survivorId;
         }
     }
 }

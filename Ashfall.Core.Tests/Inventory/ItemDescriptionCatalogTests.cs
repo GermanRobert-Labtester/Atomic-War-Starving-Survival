@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Ashfall.Core;
@@ -49,65 +50,82 @@ namespace Ashfall.Core.Tests
             Assert.Equal("First entry", catalog.Get("test_item_unique")?.BaseDescription);
         }
 
-        [Theory]
-        [InlineData("clean_water")]
-        [InlineData("canned_food")]
-        [InlineData("irradiated_water")]
-        [InlineData("iodine_pills")]
-        [InlineData("anti_rad")]
-        [InlineData("gas_mask")]
-        [InlineData("hazmat_suit")]
-        [InlineData("water_filter")]
-        [InlineData("air_filter")]
-        [InlineData("battery")]
-        [InlineData("bandage")]
-        [InlineData("medical_kit")]
-        [InlineData("fuel")]
-        [InlineData("cloth")]
-        [InlineData("scrap_metal")]
-        [InlineData("mechanical_parts")]
-        [InlineData("electronic_scrap")]
-        [InlineData("chemicals")]
-        [InlineData("handheld_radio")]
-        [InlineData("dosimeter")]
-        [InlineData("geiger_counter")]
-        public void ItemDescriptionCatalog_ResolvesCoreSurvivalItems(string itemId)
+        [Fact]
+        public void ItemDescriptionCatalog_ResolvesCoreSurvivalItems()
         {
+            string[] itemIds =
+            {
+                "clean_water", "canned_food", "irradiated_water", "iodine_pills", "anti_rad",
+                "gas_mask", "hazmat_suit", "water_filter", "air_filter", "battery", "bandage",
+                "medical_kit", "fuel", "cloth", "scrap_metal", "mechanical_parts",
+                "electronic_scrap", "chemicals", "handheld_radio", "dosimeter", "geiger_counter"
+            };
             var catalog = ItemDescriptionCatalogLoader.LoadCatalog(DataDirectory, s_fileIO, s_serializer);
-            var entry = catalog.Get(itemId);
+            var failures = new List<string>();
 
-            Assert.NotNull(entry);
-            Assert.False(string.IsNullOrWhiteSpace(entry.BaseDescription), $"BaseDescription missing for {itemId}");
-            Assert.False(string.IsNullOrWhiteSpace(entry.Category), $"Category missing for {itemId}");
-            Assert.False(string.IsNullOrWhiteSpace(entry.SensoryDetails), $"SensoryDetails missing for {itemId}");
-            Assert.False(string.IsNullOrWhiteSpace(entry.Hazards), $"Hazards missing for {itemId}");
+            foreach (var itemId in itemIds)
+            {
+                var entry = catalog.Get(itemId);
+                if (entry == null)
+                {
+                    failures.Add($"{itemId}: catalog entry is missing");
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(entry.BaseDescription))
+                    failures.Add($"{itemId}: BaseDescription is empty");
+                if (string.IsNullOrWhiteSpace(entry.Category))
+                    failures.Add($"{itemId}: Category is empty");
+                if (string.IsNullOrWhiteSpace(entry.SensoryDetails))
+                    failures.Add($"{itemId}: SensoryDetails is empty");
+                if (string.IsNullOrWhiteSpace(entry.Hazards))
+                    failures.Add($"{itemId}: Hazards is empty");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData("item_dosimeter_pen", "dosimeter")]
-        [InlineData("item_dosimeter", "dosimeter")]
-        [InlineData("item_geiger_m3", "geiger_counter")]
-        [InlineData("item_air_filter_hepa", "air_filter")]
-        [InlineData("item_desal_membrane", "water_filter")]
-        [InlineData("rad_away", "anti_rad")]
-        [InlineData("item_rad_away", "anti_rad")]
-        [InlineData("scrap_mechanical", "scrap_metal")]
-        [InlineData("item_scrap_mechanical", "scrap_metal")]
-        [InlineData("scrap_electronic", "electronic_scrap")]
-        [InlineData("item_scrap_electronic", "electronic_scrap")]
-        [InlineData("ammo_9x19", "ammo_9mm")]
-        [InlineData("water_purification_tablets", "survival_water_purification_tablets")]
-        [InlineData("jewelry", "luxury_jewelry")]
-        [InlineData("book", "luxury_book")]
-        [InlineData("rope", "material_rope")]
-        public void ItemDescriptionCatalog_ResolvesCanonicalAliases(string aliasId, string expectedTargetId)
+        [Fact]
+        public void ItemDescriptionCatalog_ResolvesCanonicalAliases()
         {
+            var cases = new[]
+            {
+                (AliasId: "item_dosimeter_pen", ExpectedTargetId: "dosimeter"),
+                (AliasId: "item_dosimeter", ExpectedTargetId: "dosimeter"),
+                (AliasId: "item_geiger_m3", ExpectedTargetId: "geiger_counter"),
+                (AliasId: "item_air_filter_hepa", ExpectedTargetId: "air_filter"),
+                (AliasId: "item_desal_membrane", ExpectedTargetId: "water_filter"),
+                (AliasId: "rad_away", ExpectedTargetId: "anti_rad"),
+                (AliasId: "item_rad_away", ExpectedTargetId: "anti_rad"),
+                (AliasId: "scrap_mechanical", ExpectedTargetId: "scrap_metal"),
+                (AliasId: "item_scrap_mechanical", ExpectedTargetId: "scrap_metal"),
+                (AliasId: "scrap_electronic", ExpectedTargetId: "electronic_scrap"),
+                (AliasId: "item_scrap_electronic", ExpectedTargetId: "electronic_scrap"),
+                (AliasId: "ammo_9x19", ExpectedTargetId: "ammo_9mm"),
+                (AliasId: "water_purification_tablets", ExpectedTargetId: "survival_water_purification_tablets"),
+                (AliasId: "jewelry", ExpectedTargetId: "luxury_jewelry"),
+                (AliasId: "book", ExpectedTargetId: "luxury_book"),
+                (AliasId: "rope", ExpectedTargetId: "material_rope")
+            };
             var catalog = ItemDescriptionCatalogLoader.LoadCatalog(DataDirectory, s_fileIO, s_serializer);
-            var entry = catalog.Get(aliasId);
+            var failures = new List<string>();
 
-            Assert.NotNull(entry);
-            Assert.Equal(expectedTargetId, entry.ItemId, ignoreCase: true);
-            Assert.False(string.IsNullOrWhiteSpace(entry.BaseDescription));
+            foreach (var test in cases)
+            {
+                var entry = catalog.Get(test.AliasId);
+                if (entry == null)
+                {
+                    failures.Add($"{test.AliasId}: catalog entry is missing");
+                    continue;
+                }
+
+                if (!string.Equals(test.ExpectedTargetId, entry.ItemId, StringComparison.OrdinalIgnoreCase))
+                    failures.Add($"{test.AliasId}: expected {test.ExpectedTargetId}, got {entry.ItemId}");
+                if (string.IsNullOrWhiteSpace(entry.BaseDescription))
+                    failures.Add($"{test.AliasId}: BaseDescription is empty");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "runflat_profiles": [
+    {
+      "id": "utility_runflat_insert",
+      "display_name": "Utility Run-Flat Insert",
+      "description": "A dense salvaged insert that keeps a light truck rolling after a puncture. Adds mass and drag.",
+      "compatible_vehicle_tags": ["road_truck", "expedition_rover", "armored_car"],
+      "puncture_resistance_bp": 4500,
+      "sidewall_damage_resistance_bp": 1500,
+      "rolling_resistance_modifier_bp": 500,
+      "unsprung_mass_modifier_bp": 400,
+      "heat_generation_rate_bp": 350,
+      "safe_speed_profile_kph": 70,
+      "terrain_modifier_bp": 800,
+      "repairability_bp": 6000,
+      "required_item_ids": ["item_runflat_insert_utility"],
+      "tags": ["utility"]
+    },
+    {
+      "id": "reinforced_runflat_system",
+      "display_name": "Reinforced Run-Flat System",
+      "description": "A heavy laminated wheel system built for long hauls. Strong puncture tolerance at a real fuel and heat cost.",
+      "compatible_vehicle_tags": ["expedition_rover", "armored_car"],
+      "puncture_resistance_bp": 7000,
+      "sidewall_damage_resistance_bp": 4000,
+      "rolling_resistance_modifier_bp": 1000,
+      "unsprung_mass_modifier_bp": 750,
+      "heat_generation_rate_bp": 550,
+      "safe_speed_profile_kph": 60,
+      "terrain_modifier_bp": 600,
+      "repairability_bp": 4500,
+      "required_item_ids": ["item_runflat_insert_reinforced", "item_rim_bead_kit"],
+      "tags": ["reinforced"]
+    },
+    {
+      "id": "armored_beadlock_system",
+      "display_name": "Armored Beadlock System",
+      "description": "Beadlock rims with armored sidewalls. Nearly shrugs off road debris, but runs hot and is hard to field-repair.",
+      "compatible_vehicle_tags": ["armored_car", "expedition_rover"],
+      "puncture_resistance_bp": 8800,
+      "sidewall_damage_resistance_bp": 6500,
+      "rolling_resistance_modifier_bp": 1400,
+      "unsprung_mass_modifier_bp": 1100,
+      "heat_generation_rate_bp": 750,
+      "safe_speed_profile_kph": 55,
+      "terrain_modifier_bp": 400,
+      "repairability_bp": 2500,
+      "required_item_ids": ["item_armored_beadlock_set", "item_rim_bead_kit", "item_runflat_balancing_kit"],
+      "tags": ["armored", "late_game"]
+    }
+  ]
+}

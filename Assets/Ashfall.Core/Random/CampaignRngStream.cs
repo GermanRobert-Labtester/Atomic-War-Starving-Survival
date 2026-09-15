@@ -13,6 +13,7 @@ namespace Ashfall.Core.Random
         public const string Greenhouse = "greenhouse";
         public const string Expedition = "expedition";
         public const string Narrative = "narrative";
+        public const string Echo = "echo";
         public const string Economy = "economy";
         public const string Radio = "radio";
         public const string Social = "social";
@@ -26,7 +27,16 @@ namespace Ashfall.Core.Random
         public const string Medical = "medical";
         public const string Events = "events";
         public const string LowBackgroundMetrology = "low_background_metrology";
+        public const string InSarDeformation = "insar_deformation";
+        public const string HydraulicExtrusion = "hydraulic_extrusion";
+        public const string RunFlatTire = "runflat_tire";
+        // Plans 122-125 — late-tech tranche streams (fork-per-day, cannot shift others)
+        public const string SofcPower = "sofc_power";
+        public const string SoundRanging = "sound_ranging";
+        public const string CvdDiamond = "cvd_diamond";
+        public const string AmphibiousDraisine = "amphibious_draisine";
         public const string WorldEvolution = "world_evolution";
+        public const string AnomalyHazard = "anomaly_hazard";
         // Plans 90-93 — deep industrial tier (distinct from the Silent Foundry's batch stream)
         public const string CupolaFoundry = "cupola_foundry";
         public const string VerticalAscent = "vertical_ascent";
@@ -45,6 +55,8 @@ namespace Ashfall.Core.Random
         public const string PsychologyArcBehavior = "psychology_arc_behavior";
         public const string PsychologyRecovery = "psychology_recovery";
         public const string WildlifePopulation = "wildlife_population";
+        public const string CompanionAnimal = "companion_animal";
+        public const string Bionics = "bionics";
         public const string WildlifeMigration = "wildlife_migration";
         public const string WildlifeApex = "wildlife_apex";
         public const string WildlifeTaming = "wildlife_taming";
@@ -66,6 +78,10 @@ namespace Ashfall.Core.Random
         // Plan B86 — breaching operator incidents + secondary obstacle effects
         public const string BreachOperatorIncident = "breach_operator_incident";
         public const string BreachObstacleSecondary = "breach_obstacle_secondary_effect";
+        // Plans 210–213 — flagship economy wave streams (snake_case; no dots).
+        public const string BlackMarketStock = "black_market_stock";
+        public const string BlackMarketBounty = "black_market_bounty";
+        public const string BlackMarketDebtEvent = "black_market_debt_event";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

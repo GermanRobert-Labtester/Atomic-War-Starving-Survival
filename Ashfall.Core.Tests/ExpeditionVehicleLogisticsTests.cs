@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -148,8 +149,8 @@ namespace Ashfall.Core.Tests
         {
             var foot = ExpeditionSystem.Estimate(Def(8), ExpeditionStance.Speed);
             Assert.False(foot.usingVehicle);
-            Assert.Equal(6, foot.outboundTicks);            // ceil(8/1.5)
-            Assert.Equal(6, foot.inboundTicks);
+            Assert.Equal(4, foot.outboundTicks);            // four 2-tick discrete steps
+            Assert.Equal(4, foot.inboundTicks);
             Assert.Equal(0f, foot.fuelRequired);
             Assert.Equal(40f, foot.cargoCapacityKg);
             Assert.Equal(0f, foot.breakdownRiskTotal);

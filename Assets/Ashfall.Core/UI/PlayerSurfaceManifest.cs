@@ -62,7 +62,8 @@ namespace Ashfall.Core.UI
             "caregiving", "shelter_thermal", "shelter_schedule", "shelter_decor", "autopsy_report", "waystation_network",
             "chemical_dependency", "sump_flooding", "decontamination", "kitchen_nutrition",
             "equipment_condition", "library_study", "archive_desk", "contractor_roster",
-            "mental_health_crisis", "phantom_memory", "traveling_caravan", "shelter_barter", "medical_ward"
+            "mental_health_crisis", "phantom_memory", "traveling_caravan", "shelter_barter", "medical_ward",
+            "low_background_metrology", "insar_mapping", "hydraulic_extrusion", "runflat_tire"
         };
 
         private static PlayerSurfaceContract BuildContractFor(PanelDescriptor desc)

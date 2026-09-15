@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Linq;
 using Godot;
@@ -84,7 +85,7 @@ public partial class JournalPanel : Control
         // ── Log tab: all entries newest-first ──
         if (_journal.Entries.Count == 0)
         {
-            AddEmptyHint(_logEntries, "No entries yet. Explore the wasteland.");
+            AddEmptyHint(_logEntries, "No entries yet.");
         }
         else
         {

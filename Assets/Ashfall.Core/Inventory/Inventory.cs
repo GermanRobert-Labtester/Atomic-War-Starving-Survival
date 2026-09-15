@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -58,32 +59,6 @@ namespace Ashfall.Core.Inventory
             OnDegraded?.Invoke(loss);
         }
 
-        public static WornGear FromInventory(EquippedGearData src)
-        {
-            return new WornGear
-            {
-                RadProtection = src.RadProtection,
-                MaxDurability = src.MaxDurability,
-                CurrentDurability = src.CurrentDurability,
-                DegradeRate = src.DegradeRate
-            };
-        }
-
-        public static WornGear? FromInventory(WornGear? src)
-        {
-            if (src == null) return null;
-            return new WornGear
-            {
-                SourceEquipped = src.SourceEquipped,
-                ConditionSink = src.ConditionSink,
-                SourceItem = src.SourceItem,
-                RadProtection = src.RadProtection,
-                MaxDurability = src.MaxDurability,
-                CurrentDurability = src.CurrentDurability,
-                DegradeRate = src.DegradeRate,
-                OnDegraded = src.OnDegraded
-            };
-        }
     }
 
     public class Inventory : IPlayerInventoryPort, IEquipmentConditionSink
@@ -957,9 +932,12 @@ namespace Ashfall.Core.Inventory
         }
 
         /// <summary>
-        /// Assembles a read projection of equipped protective gear for exposure and simulation calculations.
-        /// Wear and degradation are written back to canonical EquippedItem instances through the
-        /// IEquipmentConditionSink interface.
+        /// Assembles a read projection of equipped protective gear for exposure and
+        /// simulation calculations.
+        /// C2 / Plan 21 §3.3 projection contract: the returned buffer is READ-ONLY
+        /// state. Durability mutation occurs only through the authoritative
+        /// condition sink (RecordWear); direct writes to the projection are
+        /// non-persistent and forbidden (regression-tested).
         /// </summary>
         public void FillWornGear(List<WornGear> buffer)
         {
@@ -982,20 +960,40 @@ namespace Ashfall.Core.Inventory
             }
         }
 
+        /// <summary>
+        /// C2 / Plan 21A (P2) — exactly-once protective-gear failure transition:
+        /// fired when a protective item's durability crosses from positive to
+        /// zero through the wear authority. Never on steady-state zero wear,
+        /// never on capture/restore. Carries the item and the wear cause for
+        /// briefing/journal/audio attribution.
+        /// </summary>
+        public event Action<EquippedItem, string>? OnProtectiveGearFailed;
+
+        /// <summary>
+        /// The one wear-mutation API for equipped protective gear (Plan 21 §3.4/
+        /// §22.2): applies a bounded wear delta to the canonical
+        /// <see cref="EquippedItem.CurrentDurability"/> with cause attribution
+        /// and the exactly-once failure transition.
+        /// </summary>
         public void RecordWear(EquippedItem item, float wearDelta, string cause = "radiation")
         {
             if (item == null || wearDelta <= 0f) return;
+            bool wasAlive = item.CurrentDurability > 0f;
             item.CurrentDurability = Math.Max(0f, item.CurrentDurability - wearDelta);
+            if (wasAlive && item.CurrentDurability <= 0f)
+                OnProtectiveGearFailed?.Invoke(item, string.IsNullOrEmpty(cause) ? "unknown" : cause);
             OnInventoryChanged?.Invoke();
         }
 
         /// <summary>
-        /// Degrades all equipped protective items once by the specified hours and optional multiplier.
+        /// Degrades all equipped protective items once by the specified hours and
+        /// optional multiplier. C2 / Plan 21A: routed through <see cref="RecordWear"/>
+        /// so bulk degradation shares the single mutation API, cause attribution,
+        /// and failure-transition semantics — no parallel direct writes.
         /// </summary>
-        public void DegradeEquippedGear(float gameHours, float multiplier = 1f)
+        public void DegradeEquippedGear(float gameHours, float multiplier = 1f, string cause = "use")
         {
             if (gameHours <= 0f || multiplier <= 0f) return;
-            bool changed = false;
             for (int i = 0; i < _equipped.Count; i++)
             {
                 var equipped = _equipped[i];
@@ -1004,13 +1002,63 @@ namespace Ashfall.Core.Inventory
                 if (rate <= 0f) continue;
                 float loss = rate * gameHours * multiplier;
                 if (loss > 0f)
+                    RecordWear(equipped, loss, cause);
+            }
+        }
+
+        /// <summary>
+        /// C2 / Plan 21A (P3) — remaining-life estimate for the weakest equipped
+        /// protective item, using the same data-authored degrade rate the
+        /// simulation consumes (one arithmetic path, Plan §12.1). Multiplier
+        /// mirrors the exposure scaling (e.g. black-rain hazmat melt).
+        /// </summary>
+        public sealed class ProtectiveLifeEstimate
+        {
+            public string ItemId = string.Empty;
+            public string DisplayName = string.Empty;
+            public float CurrentDurability;
+            public float MaxDurability;
+            public float DegradeRate;
+            public float ExposureMultiplier = 1f;
+            public float HoursRemaining;
+        }
+
+        /// <summary>True + estimate when any equipped protective item wears; the
+        /// estimate names the item that fails first. False when nothing equipped
+        /// wears (no protective gear, zero rate, or zero multiplier).</summary>
+        public bool TryEstimateWeakestProtectiveLife(
+            float exposureMultiplier, out ProtectiveLifeEstimate? life)
+        {
+            life = null;
+            if (exposureMultiplier <= 0f) return false;
+            ProtectiveLifeEstimate? weakest = null;
+            float weakestHours = float.MaxValue;
+            for (int i = 0; i < _equipped.Count; i++)
+            {
+                var equipped = _equipped[i];
+                if (equipped?.Item == null) continue;
+                float rate = equipped.Item.GetEffectiveDegradeRate();
+                if (rate <= 0f) continue;
+                float effectiveRate = rate * exposureMultiplier;
+                float hours = equipped.CurrentDurability / effectiveRate;
+                if (hours < weakestHours)
                 {
-                    equipped.CurrentDurability = Math.Max(0f, equipped.CurrentDurability - loss);
-                    changed = true;
+                    weakestHours = hours;
+                    weakest = new ProtectiveLifeEstimate
+                    {
+                        ItemId = equipped.Item.id,
+                        DisplayName = equipped.Item.displayName,
+                        CurrentDurability = equipped.CurrentDurability,
+                        MaxDurability = equipped.Item.durability,
+                        DegradeRate = rate,
+                        ExposureMultiplier = exposureMultiplier,
+                        HoursRemaining = hours
+                    };
                 }
             }
-            if (changed)
-                OnInventoryChanged?.Invoke();
+            if (weakest == null) return false;
+            life = weakest;
+            return true;
         }
 
         /// <summary>Consume one unit, applying effects via optional needs/radiation callbacks.</summary>

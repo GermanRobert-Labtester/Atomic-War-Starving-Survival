@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "harvester_profiles": [
+    {
+      "profile_id": "fog_net_ridge_standard",
+      "display_name": "Ridge Fog Net",
+      "collection_area_units": 20,
+      "passive": true,
+      "wind_band": "moderate",
+      "humidity_band": "high",
+      "base_yield_units": 12,
+      "wear_rate_per_day": 2,
+      "contamination_profile": "surface_exposed",
+      "output_water_type": "raw",
+      "power_draw_kwh_per_day": 0,
+      "construction_required_items": {
+        "scrap_wood": 6,
+        "item_fog_mesh_roll": 2,
+        "item_reinforced_support_cable": 2
+      },
+      "siting_tags": ["ridge", "exposed_slope"]
+    },
+    {
+      "profile_id": "fog_array_powered_assist",
+      "display_name": "Powered Mist-Assist Array",
+      "collection_area_units": 30,
+      "passive": false,
+      "wind_band": "any",
+      "humidity_band": "moderate",
+      "base_yield_units": 20,
+      "wear_rate_per_day": 3,
+      "contamination_profile": "surface_exposed",
+      "output_water_type": "raw",
+      "power_draw_kwh_per_day": 5,
+      "construction_required_items": {
+        "item_fog_mesh_roll": 3,
+        "item_powered_mist_assist_module": 1,
+        "item_internal_spline_hub": 1
+      },
+      "siting_tags": ["ridge", "exposed_slope", "coastal_bluff"]
+    }
+  ],
+  "fog_bands": {
+    "presence_by_weather_kind": {
+      "overcast": 0.7,
+      "black_rain": 0.5,
+      "rain": 0.3,
+      "clear": 0.0,
+      "ashfall": 0.1,
+      "fallout_storm": 0.0,
+      "blizzard": 0.0
+    },
+    "wind_band_multipliers": {
+      "calm": 0.6,
+      "moderate": 1.0,
+      "strong": 0.7
+    },
+    "humidity_band_multipliers": {
+      "low": 0.4,
+      "moderate": 0.8,
+      "high": 1.0
+    },
+    "powered_assist_multiplier": 1.5
+  },
+  "storm_event": {
+    "damage_condition_permille": 250,
+    "disable_below_condition_permille": 200
+  },
+  "buffer": {
+    "max_units": 40
+  }
+}

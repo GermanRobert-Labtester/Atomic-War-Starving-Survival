@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Ashfall.Core;
 using Ashfall.Core.Muster;
 using Xunit;
@@ -107,6 +108,65 @@ namespace Ashfall.Core.Tests
             Assert.Empty(loaded.embargoes.embargoes);
             Assert.NotNull(loaded.debtBridge);
             Assert.Empty(loaded.debtBridge.laborObligations);
+            Assert.NotNull(loaded.saltMine);
+            Assert.Empty(loaded.saltMine.veins);
+        }
+
+        [Fact]
+        public void V5Save_MigratesForward_WithEmptySaltMine()
+        {
+            var jsonSer = new SystemTextJsonSerializer();
+            var v5 = new ExpansionHubSaveV5 { simDay = 44 };
+            v5.Checksum = SaveChecksum.Compute(v5);
+            var text = jsonSer.Serialize(v5);
+
+            var loaded = ExpansionHubSaveCodec.Decode(text, jsonSer);
+            Assert.Equal(ExpansionHubSave.CurrentSaveVersion, loaded.saveVersion);
+            Assert.Equal(44, loaded.simDay);
+            Assert.NotNull(loaded.saltMine);
+            Assert.Empty(loaded.saltMine.veins);
+            Assert.Equal(0f, loaded.saltMine.saltStorage);
+        }
+
+        [Fact]
+        public void SaltMine_RoundTripsThroughTheEnvelope()
+        {
+            var a = NewSystems();
+            var salt = new Ashfall.Core.Foundry.SaltMineExtractionSystem();
+            salt.RegisterVein(new Ashfall.Core.Foundry.SaltMineVeinState
+            {
+                veinId = "vein_test_halite",
+                displayName = "Test Halite",
+                isUnlocked = true,
+                remainingOre = 500f,
+                extractionRate = 10f,
+                maxWorkers = 2,
+                assignedWorkers = 2,
+                drillCondition = 0.8f,
+                pumpPressure = 0.9f
+            });
+            for (int d = 1; d <= 3; d++)
+                salt.TickDaily(d, new SeededRng(77));
+
+            var save = ExpansionHubSaveCodec.Capture(
+                50, a.Waystation, a.Layouts, a.Memory, a.SiteEncounters, a.Vouch, a.Greenhouse,
+                saltMine: salt);
+            Assert.Equal(ExpansionHubSave.CurrentSaveVersion, save.saveVersion);
+            Assert.True(save.saltMine.saltStorage > 0f || save.saltMine.brineStorage > 0f
+                || save.saltMine.veins.Count > 0);
+
+            var jsonSer = new SystemTextJsonSerializer();
+            var loaded = ExpansionHubSaveCodec.Decode(ExpansionHubSaveCodec.Encode(save, jsonSer), jsonSer);
+            var salt2 = new Ashfall.Core.Foundry.SaltMineExtractionSystem();
+            ExpansionHubSaveCodec.Restore(
+                loaded, a.Waystation, a.Layouts, a.Memory, a.SiteEncounters, a.Vouch, a.Greenhouse,
+                saltMine: salt2);
+
+            Assert.Equal(save.saltMine.saltStorage, salt2.State.saltStorage);
+            Assert.Equal(save.saltMine.brineStorage, salt2.State.brineStorage);
+            Assert.Single(salt2.State.veins);
+            Assert.Equal("vein_test_halite", salt2.State.veins[0].veinId);
+            Assert.Equal(2, salt2.State.veins[0].assignedWorkers);
         }
     }
 }

@@ -65,8 +65,8 @@ namespace Ashfall.Core.Tests
 
         private static void Seed(Inventory.Inventory inv)
         {
-            inv.AddById("water_clean", 100);
-            inv.AddById("soap", 100);
+            inv.AddById("clean_water", 100);
+            inv.AddById("item_liquid_bleach_carboy", 100);
         }
 
         private static string RunToCompletion(DecontaminationSystem d)

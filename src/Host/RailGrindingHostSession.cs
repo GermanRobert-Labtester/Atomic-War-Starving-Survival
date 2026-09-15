@@ -11,6 +11,8 @@ namespace AtomicWar.GodotApp
     public sealed class RailGrindingHostSession : HostSessionBase
     {
         public RailGrindingEngine System { get; }
+        /// <summary>Optional route authority for panel corridor lists (owned by Main).</summary>
+        public RouteInfrastructureSystem? Routes { get; set; }
         public string LastEvent { get; private set; } = string.Empty;
 
         public RailGrindingHostSession(RailGrindingEngine system)

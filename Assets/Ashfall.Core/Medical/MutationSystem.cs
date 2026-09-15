@@ -241,12 +241,19 @@ namespace Ashfall.Core.Medical
             return tags.OrderBy(t => t, StringComparer.Ordinal).ToList();
         }
 
-        public MutationState CaptureState() => _state;
+        public MutationState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<MutationState>(json) ?? new MutationState();
+        }
 
         public void RestoreState(MutationState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<MutationState>(json) ?? new MutationState();
         }
     }
 }

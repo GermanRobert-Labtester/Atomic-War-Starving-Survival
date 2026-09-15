@@ -21,7 +21,7 @@
     {
       "id": "graffiti_sleeping_bunks_cold",
       "title": "The Third Bunk, Upper, Cold",
-      "text": "Whoever moved the third-bunk blankets to the second-bunk has not heard the third-bunk when it cools. The third-bunk cools faster. The third-bunk is colder on the bones. The third-bunk remembers.",
+      "text": "Whoever moved the third-bunk blankets to the second-bunk has not heard the third-bunk when it cools. The third-bunk cools faster. The bones know it even if the roster does not.",
       "triggerWorldFlag": "friction_stolen_keepsake",
       "minDay": 25,
       "weight": 1.0
@@ -45,15 +45,15 @@
     {
       "id": "graffiti_list_for_the_morning",
       "title": "The Morning's Bare-Handed List",
-      "text": "Salt. Water. The pump wrench, the one that fits the elbow joint. A match. A needle. A piece of thread. The bunk's chalk. The pencil. Another piece of chalk. The morning does not need much except the people who believe in it.",
+      "text": "Salt. Water. The pump wrench, the one that fits the elbow joint. A match. A needle. A piece of thread. The bunk's chalk. The pencil. Another piece of chalk.",
       "triggerWorldFlag": "ration_scoop_rotated",
       "minDay": 1,
       "weight": 0.7
     },
     {
       "id": "graffiti_walkout_door_chalk",
-      "title": "If The Door Wants",
-      "text": "If the door wants to go outside in front of you, let it. The door's bruising is not ours. The door has not read the duty board. The door does not know it is shift change. If you push first, the door will remember that too.",
+      "title": "If the Hatch Goes",
+      "text": "If someone wants the hatch before you, let them. The bruises on the frame aren't ours. Night shift didn't read the duty board. Push first and the hatch will remember.",
       "triggerWorldFlag": "escalation_walkout",
       "minDay": 50,
       "weight": 1.0

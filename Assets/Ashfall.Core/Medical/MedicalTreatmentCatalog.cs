@@ -39,6 +39,12 @@ namespace Ashfall.Core.Medical
         /// <summary>True when a patient may hold at most one active procedure of this treatment.</summary>
         public bool ExclusivePerPatient;
 
+        /// <summary>
+        /// Shared research capability required by this treatment when the host
+        /// supplies a capability query. Empty means no research gate.
+        /// </summary>
+        public string RequiredCapability = string.Empty;
+
         /// <summary>True when the treatment needs an active ward admission (future ward procedures).</summary>
         public bool RequiresWardAdmission;
 
@@ -59,7 +65,8 @@ namespace Ashfall.Core.Medical
                 IsScheduled = IsScheduled,
                 DurationHours = DurationHours,
                 ExclusivePerPatient = ExclusivePerPatient,
-                RequiresWardAdmission = RequiresWardAdmission
+                RequiresWardAdmission = RequiresWardAdmission,
+                RequiredCapability = RequiredCapability
             };
             foreach (var kv in ItemCosts) clone.ItemCosts[kv.Key] = kv.Value;
             return clone;
@@ -154,6 +161,9 @@ namespace Ashfall.Core.Medical
             var oxygen = new MedicalTreatmentDef(
                 TreatmentOxygenSupport, "Oxygen Support", RespiratoryDegenerationId);
             oxygen.ItemCosts[ItemOxygenSupply] = 1;
+            oxygen.IsScheduled = true;
+            oxygen.DurationHours = 24f;
+            oxygen.ExclusivePerPatient = true;
             map[oxygen.TreatmentId] = oxygen;
 
             var bandage = new MedicalTreatmentDef(TreatmentBandage, "Bandage", HealthDeficitId);
@@ -166,6 +176,7 @@ namespace Ashfall.Core.Medical
 
             var antiRad = new MedicalTreatmentDef(TreatmentAntiRad, "Anti-Rad Chelation", RadiationSicknessId);
             antiRad.ItemCosts[ItemAntiRad] = 1;
+            antiRad.RequiredCapability = "knowledge_chelation_therapy";
             map[antiRad.TreatmentId] = antiRad;
 
             // Disease isolation (Task #133 P1): no item cost; the disease

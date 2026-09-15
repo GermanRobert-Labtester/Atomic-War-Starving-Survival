@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS0649
+using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Narrative;
 
@@ -155,7 +157,10 @@ namespace AtomicWar.Journal
                     });
                 }
             }
-            catch (Exception) { /* tolerate */ }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[JournalCatalog] Failed to load verdict ladder overlays: {ex.Message}");
+            }
             return result;
         }
 
@@ -225,7 +230,10 @@ namespace AtomicWar.Journal
                     });
                 }
             }
-            catch (Exception) { /* tolerate: identity is an overlay, never a domain dependency */ }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[JournalCatalog] Failed to load shelter room identities: {ex.Message}");
+            }
             return result;
         }
 
@@ -237,9 +245,9 @@ namespace AtomicWar.Journal
                 string json = fileIO.ReadAllText(path);
                 return CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options) ?? new List<T>();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                /* cleanup: fallback on missing or corrupt journal catalog */
+                GD.PrintErr($"[JournalCatalog] Failed to load catalog list from '{path}': {ex.Message}");
                 return new List<T>();
             }
         }

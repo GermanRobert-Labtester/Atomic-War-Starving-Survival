@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -43,6 +44,12 @@ namespace AtomicWar.GodotApp
         /// encounter start.
         /// </summary>
         public BallisticsWorkbenchSystem? Ballistics { get; set; }
+
+        /// <summary>
+        /// Optional CBRN authority. When set, <see cref="ActionEndTurn"/> evaluates
+        /// toxic exposure for living combatants in active hazard lanes.
+        /// </summary>
+        public ChemWarfareSystem? ChemWarfare { get; set; }
 
         /// <summary>Condition-at-start of bridge-bound weapons, for the post-combat write-back.</summary>
         private readonly Dictionary<string, float> _boundWeaponConditionAtStart = new();
@@ -485,7 +492,58 @@ namespace AtomicWar.GodotApp
         public string ActionEndTurn()
         {
             var r = Engine.EndTurn(new SeededRng(RollSeed()));
+            EvaluateToxicExposureAfterTurn();
             return r.Message;
+        }
+
+        /// <summary>
+        /// After a combat turn resolves, evaluate CBRN lane exposure for living
+        /// combatants. Raises <see cref="ChemWarfareSystem.OnToxicExposureResolved"/>
+        /// (host-subscribed for HP/journal) and applies gas-mask filter wear.
+        /// </summary>
+        private void EvaluateToxicExposureAfterTurn()
+        {
+            if (ChemWarfare == null) return;
+            var hazards = ChemWarfare.State?.ActiveHazards;
+            if (hazards == null || hazards.Count == 0) return;
+            var combatants = Engine?.State?.Combatants;
+            if (combatants == null || combatants.Count == 0) return;
+
+            EquippedItem? mask = null;
+            float mask01 = 0f;
+            var inv = Inventory?.Inventory;
+            if (inv != null)
+            {
+                mask = inv.GetEquipped(EquipSlot.Face);
+                if (mask?.Item != null
+                    && (string.Equals(mask.Item.id, "gas_mask", StringComparison.Ordinal)
+                        || string.Equals(mask.Item.id, "item_gas_mask", StringComparison.Ordinal)))
+                {
+                    float max = mask.Item.durability > 0f ? mask.Item.durability : 100f;
+                    float current = mask.CurrentDurability >= 0f ? mask.CurrentDurability : max;
+                    mask01 = Math.Clamp(current / max, 0f, 1f);
+                }
+                else
+                {
+                    mask = null;
+                }
+            }
+
+            for (int i = 0; i < combatants.Count; i++)
+            {
+                var c = combatants[i];
+                if (c == null || c.IsDowned || c.HasFled) continue;
+                string actorId = !string.IsNullOrEmpty(c.SurvivorId) ? c.SurvivorId : c.Id;
+                float actorMask = c.IsPlayer ? mask01 : 0f;
+                ChemWarfare.EvaluateActorExposure(actorId, c.Lane, actorMask, out float wear);
+                if (wear > 0f && c.IsPlayer && mask != null && inv != null)
+                {
+                    float max = mask.Item != null && mask.Item.durability > 0f
+                        ? mask.Item.durability
+                        : 100f;
+                    inv.RecordWear(mask, wear * max, "chem_filter");
+                }
+            }
         }
 
         public string ActionEnvironmental(float severity)
@@ -512,6 +570,34 @@ namespace AtomicWar.GodotApp
                 int turn = Engine.State.Turn;
                 return (DemoSeed * 31) + (day * 7) + (turn * 13);
             }
+        }
+
+        /// <summary>First living hostile id for HUD Fire when no target picker is wired.</summary>
+        public string DefaultHostileTargetId()
+        {
+            var combatants = Engine?.State?.Combatants;
+            if (combatants == null) return string.Empty;
+            for (int i = 0; i < combatants.Count; i++)
+            {
+                var c = combatants[i];
+                if (c == null || c.IsPlayer || c.IsDowned || c.HasFled) continue;
+                return c.Id ?? string.Empty;
+            }
+            return string.Empty;
+        }
+
+        /// <summary>First living player combatant id for HUD Clear Jam.</summary>
+        public string DefaultPlayerSubjectId()
+        {
+            var combatants = Engine?.State?.Combatants;
+            if (combatants == null) return string.Empty;
+            for (int i = 0; i < combatants.Count; i++)
+            {
+                var c = combatants[i];
+                if (c == null || !c.IsPlayer || c.IsDowned || c.HasFled) continue;
+                return c.Id ?? string.Empty;
+            }
+            return string.Empty;
         }
 
         // ── Snapshot / status ───────────────────────────────────────────

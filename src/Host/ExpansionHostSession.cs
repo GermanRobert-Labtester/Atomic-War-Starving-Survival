@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace AtomicWar.GodotApp
         public SiteEncounterSystem SiteEncounters { get; }
         public StandingRecordCatalog RecordQuests { get; }
         public VouchAccessSystem Vouch { get; }
-        public GreenhouseSystem Greenhouse { get; }
+        public GreenhouseSystem Greenhouse { get; private set; }
         public CrossingArbitrationSystem Arbitration { get; }
         public LedgerDebtSystem Ledger { get; }
         public CrossingQuestSystem CrossingQuests { get; }
@@ -104,6 +105,21 @@ namespace AtomicWar.GodotApp
         public void BindDutyRoster(DutyRosterSystem roster)
         {
             DutyRoster = roster ?? throw new ArgumentNullException(nameof(roster));
+        }
+
+        /// <summary>
+        /// Share the player greenhouse growth authority so hub capture/restore
+        /// and expansions UI cannot diverge from <c>GreenhouseHostSession</c>.
+        /// </summary>
+        public void BindGreenhouse(GreenhouseSystem shared)
+        {
+            Greenhouse = shared ?? throw new ArgumentNullException(nameof(shared));
+            Greenhouse.OnCropPlanted += (_, _, _) => RaiseStateChanged();
+            Greenhouse.OnCropMatured += (_, _) => RaiseStateChanged();
+            Greenhouse.OnCropHarvested += _ => RaiseStateChanged();
+            Greenhouse.OnBlightOutbreak += _ => RaiseStateChanged();
+            Greenhouse.OnPlotDriedOut += _ => RaiseStateChanged();
+            Greenhouse.OnCropFailed += _ => RaiseStateChanged();
         }
 
         public event Action<CrossingStageNarrativeEvent>? OnCrossingStageNarrative;

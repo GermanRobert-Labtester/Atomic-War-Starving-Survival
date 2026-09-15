@@ -156,7 +156,17 @@ namespace Ashfall.Core.Tests.Collectibles
                 var manualItem = catalog.ByItemId.Values.FirstOrDefault(c => c.effect_type == "knowledge");
                 Assert.NotNull(manualItem);
 
-                var res = dispatcher.DispatchOnAcquire(manualItem!.item_id, "loc_workshop");
+                // Tasks 5–8 Wave B contract: the research catalog must contain the
+                // manual's target node — the dispatcher validates it and fails a
+                // stale target with a typed reason instead of silently swallowing it.
+                research.Register(new Ashfall.Core.ResearchKnowledgeDef
+                {
+                    id = manualItem!.effect_target,
+                    displayName = manualItem.effect_target,
+                    daysToComplete = 4
+                });
+
+                var res = dispatcher.DispatchOnAcquire(manualItem.item_id, "loc_workshop");
                 Assert.True(res.EffectApplied);
                 Assert.True(res.DiscoveryRegistered);
                 Assert.True(research.IsManualUnlocked(manualItem.effect_target));

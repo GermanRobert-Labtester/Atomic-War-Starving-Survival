@@ -1,5 +1,8 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Inventory;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Survivors;
 
@@ -18,12 +21,110 @@ namespace Ashfall.Core.StartingLevel
 
         public StartingLevelSaveState State { get; private set; } = new StartingLevelSaveState();
 
+        public const string AirFilterServiceItemId = "scrap_mechanical";
+        public const string AirFilterReplacementItemId = "item_air_filter_hepa";
+        public const string AirFilterResearchId = "knowledge_air_filtration";
+
+        private IPlayerInventoryPort? _maintenanceInventory;
+        private Func<string, bool>? _maintenanceCapability;
+
         public event Action? OnStateChanged;
         public event Action<string>? OnDirectiveLogged;
 
         public StartingLevelSystem()
         {
             InitializeDefaultHoldfast();
+        }
+
+        /// <summary>
+        /// Bind the campaign-owned inventory and research capability query.
+        /// The starting-level system owns the air state, while the campaign
+        /// roots own item and research truth. This keeps maintenance actions
+        /// transactional without introducing shelter-local counters or flags.
+        /// </summary>
+        public void BindMaintenance(
+            IPlayerInventoryPort inventory,
+            Func<string, bool>? hasCapability = null)
+        {
+            _maintenanceInventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
+            _maintenanceCapability = hasCapability;
+        }
+
+        public bool HasMaintenanceDependencies => _maintenanceInventory != null;
+
+        public string AirFilterConditionBand
+        {
+            get
+            {
+                if (State.airFilterHealthPercent >= 75f) return "healthy";
+                if (State.airFilterHealthPercent >= 50f) return "degraded";
+                if (State.airFilterHealthPercent > 0f) return "critical";
+                return "failed";
+            }
+        }
+
+        /// <summary>Side-effect-free preview for the real inventory-backed path.</summary>
+        public CommandPreview PreviewMaintainAirFilter(bool replace = false)
+        {
+            const string command = "shelter.maintain_air_filter";
+            if (_maintenanceInventory == null)
+                return CommandPreview.Unavailable(command, "maintenance_dependencies_missing", "shelter.maintenance_dependencies_missing", 0);
+
+            string itemId = replace ? AirFilterReplacementItemId : AirFilterServiceItemId;
+            if (replace && (_maintenanceCapability == null || !_maintenanceCapability(AirFilterResearchId)))
+                return CommandPreview.Unavailable(command, "research_required", "shelter.research_required", 0);
+            if (State.airFilterHealthPercent >= 100f)
+                return CommandPreview.Unavailable(command, "maintenance_not_needed", "shelter.maintenance_not_needed", 0);
+            if (_maintenanceInventory.CountById(itemId) < 1)
+                return CommandPreview.Unavailable(command, "missing_maintenance_item", "shelter.missing_maintenance_item", 0);
+
+            return CommandPreview.Available(
+                command,
+                0,
+                new Dictionary<string, double> { [itemId] = -1, ["air_filter_health_percent"] = replace ? 100f - State.airFilterHealthPercent : Math.Min(25f, 100f - State.airFilterHealthPercent) },
+                messageKey: replace ? "shelter.air_filter_replacement_available" : "shelter.air_filter_service_available");
+        }
+
+        /// <summary>
+        /// Consume a real maintenance part and restore the owning air state.
+        /// Validation completes before the atomic inventory bill is consumed.
+        /// </summary>
+        public ActionResult MaintainAirFilter(bool replace = false)
+        {
+            var preview = PreviewMaintainAirFilter(replace);
+            if (!preview.IsAvailable)
+                return ActionResult.Blocked(preview.FailureCode, preview.MessageKey);
+
+            string itemId = replace ? AirFilterReplacementItemId : AirFilterServiceItemId;
+            if (!_maintenanceInventory!.TryConsumeBill(new Dictionary<string, int> { [itemId] = 1 }))
+                return ActionResult.Blocked("missing_maintenance_item", "shelter.missing_maintenance_item");
+
+            float before = State.airFilterHealthPercent;
+            if (replace)
+            {
+                State.airFilterHealthPercent = 100f;
+                State.airQualityPercent = 100f;
+                State.radonLevelBqm3 = 12f;
+                State.airHazardWarning = false;
+            }
+            else
+            {
+                State.airFilterHealthPercent = Math.Min(100f, before + 25f);
+                State.airQualityPercent = Math.Clamp(State.airFilterHealthPercent * 0.9f + 10f, 0f, 100f);
+                State.radonLevelBqm3 = Math.Max(12f, State.radonLevelBqm3 - 15f);
+                State.airHazardWarning = State.airFilterHealthPercent < 50f || State.radonLevelBqm3 > 30f;
+            }
+            LogDirective(replace
+                ? "[MAINTENANCE] Replaced HEPA air filter core from inventory (100% integrity restored)."
+                : $"[MAINTENANCE] Serviced HEPA air filtration stack (-1 {AirFilterServiceItemId}, integrity now {State.airFilterHealthPercent:0}%).");
+            OnStateChanged?.Invoke();
+            return ActionResult.Success(
+                replace ? "shelter.air_filter_replaced" : "shelter.air_filter_serviced",
+                new Dictionary<string, double>
+                {
+                    [itemId] = -1,
+                    ["air_filter_health_percent"] = State.airFilterHealthPercent - before
+                });
         }
 
         public void InitializeDefaultHoldfast()
@@ -240,6 +341,14 @@ namespace Ashfall.Core.StartingLevel
                 // roster (intake maintenance cannot run without power).
                 baseDegrade += 4.0f;
                 isFilterDutyAssigned = false;
+            }
+
+            if (_maintenanceCapability != null && _maintenanceCapability(AirFilterResearchId))
+            {
+                // The authored “+50% lifespan” claim is represented as a
+                // 2/3 degradation rate. It is applied once in the owner of
+                // air-filter degradation, not cached as shadow state.
+                baseDegrade *= 2f / 3f;
             }
 
             if (isFilterDutyAssigned)

@@ -36,6 +36,10 @@ namespace Ashfall.Core
         SaveStoreChecksumSelfTest,
         RuntimeScaleSelfTest,
         StandaloneSystemsSelfTest,
+        Plans139To141SelfTest,
+        Plans122to125SelfTest,
+        LateTechMobilitySelfTest,
+        Plans122to125BalanceSoak,
 
         // Expansions & Campaign Modules
         ArbitrationSelfTest,
@@ -67,6 +71,12 @@ namespace Ashfall.Core
         LedgerDebtSelfTest,
         MoralChoiceSelfTest,
         EvolvingWorldSelfTest,
+        WorldPlaytestSelfTest,
+        SyntheticLubricantSelfTest,
+        UvCoronaSelfTest,
+        CarbonCompositeSelfTest,
+        GprCartographySelfTest,
+        AdvancedIndustrialReconSelfTest,
         MusterSelfTest,
         FactionEcologySelfTest,
         Phase0SelfTest,
@@ -88,6 +98,7 @@ namespace Ashfall.Core
         ExpansionHubSaveSelfTest,
         ExpeditionEncounterBridgeSelfTest,
         ExpeditionSelfTest,
+        ExpeditionPlaytestSelfTest,
         PatrolEncounterSelfTest,
         HoldfastSaveSelfTest,
         HoldfastTradeSaveSelfTest,
@@ -125,6 +136,7 @@ namespace Ashfall.Core
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
         ShelterDecorSelfTest,
+        ShelterPhysicsSelfTest,
         SilentFoundryUiTest,
         SurvivorsUiTest,
         UiLayoutSelfTest,
@@ -307,6 +319,31 @@ namespace Ashfall.Core
                     "--standalone-selftest",
                     null,
                     "SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance")
+                ,
+                new HostCliActionDescriptor(
+                    HostCliAction.Plans139To141SelfTest,
+                    "Core & System Gates",
+                    "--plans-139-141-selftest",
+                    new[] { "--insar-selftest", "--hydraulic-extrusion-selftest", "--runflat-tire-selftest" },
+                    "Flagship Plans 139–141: InSAR repeat-pass classification, extrusion quality/defect/tool-wear, run-flat hazard/heat/rolling-resistance"),
+                new HostCliActionDescriptor(
+                    HostCliAction.Plans122to125SelfTest,
+                    "Core & System Gates",
+                    "--plans-122-125-selftest",
+                    new[] { "--sofc-power-selftest", "--sound-ranging-selftest", "--cvd-diamond-selftest", "--amphibious-draisine-selftest" },
+                    "Flagship Plans 122-125: SOFC grid/CHP wiring, CVD consumer wear registry, defensive threat projection, amphibious route capability"),
+                new HostCliActionDescriptor(
+                    HostCliAction.LateTechMobilitySelfTest,
+                    "Core & System Gates",
+                    "--late-tech-mobility-selftest",
+                    null,
+                    "Flagship Plans 122-125 Phase 10: deterministic 75-day combined scenario — SOFC commissioning/baseload, acoustic threat narrowing, diamond tool economy, amphibious retrofit/crossing, day-71 save + replay parity via state hashes"),
+                new HostCliActionDescriptor(
+                    HostCliAction.Plans122to125BalanceSoak,
+                    "Core & System Gates",
+                    "--plans-122-125-balance-soak",
+                    null,
+                    "Flagship Plans 122-125 Phase 11: long-horizon balance soaks — SOFC 180-day characterization, acoustic fixed-seed event matrix, diamond 120-day tool economy, amphibious 54-cell route matrix; prints [SOAK] data rows for the balance reports")
         };
 
         private static readonly HostCliActionDescriptor[] _expansionDescriptors = new[]
@@ -568,6 +605,42 @@ namespace Ashfall.Core
                     null,
                     "Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario"),
                 new HostCliActionDescriptor(
+                    HostCliAction.WorldPlaytestSelfTest,
+                    "Host Domains & Save Stores",
+                    "--world-playtest-selftest",
+                    null,
+                    "Fixed-seed 30-day evolving-world campaign proof: stable snapshots, downstream consumers, bounds, determinism, and midpoint save/load parity"),
+                new HostCliActionDescriptor(
+                    HostCliAction.SyntheticLubricantSelfTest,
+                    "Host Domains & Save Stores",
+                    "--synthetic-lubricant-selftest",
+                    null,
+                    "Plan 118: deterministic catalog-backed synthesis, catalyst, product routing, consumer registration, and save-state proof"),
+                new HostCliActionDescriptor(
+                    HostCliAction.UvCoronaSelfTest,
+                    "Host Domains & Save Stores",
+                    "--uv-corona-selftest",
+                    null,
+                    "Plan 119: bounded seeded electrical-fault observations, environmental limits, and detector state proof"),
+                new HostCliActionDescriptor(
+                    HostCliAction.CarbonCompositeSelfTest,
+                    "Host Domains & Save Stores",
+                    "--carbon-composite-selftest",
+                    null,
+                    "Plan 120: deterministic composite cure quality, explicit component projections, and active-job proof"),
+                new HostCliActionDescriptor(
+                    HostCliAction.GprCartographySelfTest,
+                    "Host Domains & Save Stores",
+                    "--gpr-cartography-selftest",
+                    null,
+                    "Plan 121: uncertain terrain-aware GPR observations, staged leads, and active-survey proof"),
+                new HostCliActionDescriptor(
+                    HostCliAction.AdvancedIndustrialReconSelfTest,
+                    "Host Domains & Save Stores",
+                    "--advanced-industrial-recon-selftest",
+                    null,
+                    "Plans 118-121: deterministic advanced industrial/reconnaissance catalog and 60-day Core proof"),
+                new HostCliActionDescriptor(
                     HostCliAction.DoseLedgerSelfTest,
                     "Host Domains & Save Stores",
                     "--dose-ledger-selftest",
@@ -603,6 +676,12 @@ namespace Ashfall.Core
                     "--expedition-selftest",
                     null,
                     "Expedition domain: sorties, encounter resolution, loot drops, and save round-trip"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ExpeditionPlaytestSelfTest,
+                    "Host Domains & Save Stores",
+                    "--expedition-playtest-selftest",
+                    null,
+                    "Plans 51: deterministic 30-day expedition campaign, vehicle balance ledger, breakdown, wear, and save/resume proof"),
                 new HostCliActionDescriptor(
                     HostCliAction.PatrolEncounterSelfTest,
                     "Host Domains & Save Stores",
@@ -817,6 +896,12 @@ namespace Ashfall.Core
                     "--shelter-decor-selftest",
                     new[] { "--shelter-interior-selftest", "--memorial-wall-selftest" },
                     "Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterPhysicsSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--shelter-physics-selftest",
+                    new[] { "--shelter-actor-physics-selftest" },
+                    "Physics base: CharacterBody2D gravity/floor collision, accelerated horizontal seek to room anchors, and blockout character sheet animation"),
                 new HostCliActionDescriptor(
                     HostCliAction.SilentFoundryUiTest,
                     "UI Tests, Layout & Gameplay Smoke",

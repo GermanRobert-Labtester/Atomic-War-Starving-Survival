@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Ashfall.Core;
 using Ashfall.Core.Factions;
@@ -8,7 +9,9 @@ namespace AtomicWar.GodotApp
     public sealed class EspionageHostSession : HostSessionBase
     {
         public EspionageSystem System { get; }
+        public EspionageConsequenceRouter ConsequenceRouter { get; }
         public string LastEvent { get; private set; } = string.Empty;
+        public string LastRouteResult => ConsequenceRouter.LastRouteResult;
 
         public static EspionageHostSession Create(string dataDir, EspionageSystem? system = null)
         {
@@ -25,6 +28,10 @@ namespace AtomicWar.GodotApp
         public EspionageHostSession(EspionageSystem system)
         {
             System = system ?? throw new ArgumentNullException(nameof(system));
+            ConsequenceRouter = new EspionageConsequenceRouter();
+            ConsequenceRouter.Attach(System);
+            ConsequenceRouter.RestoreFired(System.GetFiredConsequenceIncidentIds());
+
             System.OnIntelDiscovered += fact =>
             {
                 LastEvent = $"Intel confirmed: {fact.factId} ({fact.confidence})";
@@ -37,10 +44,22 @@ namespace AtomicWar.GodotApp
             };
             System.OnConsequenceIntent += intent =>
             {
-                LastEvent = $"Espionage consequence: {intent.consequenceType}";
+                LastEvent = $"Espionage consequence: {intent.consequenceType} ({ConsequenceRouter.LastRouteResult})";
+                SyncFiredIncidentIds();
                 RaiseStateChanged();
             };
             System.OnStateChanged += () => RaiseStateChanged();
+        }
+
+        /// <summary>
+        /// Plan 167: bind named canonical consumers. Call after host authorities exist.
+        /// </summary>
+        public void BindConsequenceConsumers(
+            Func<EspionageConsequenceIntent, bool>? applySupply,
+            Func<EspionageConsequenceIntent, bool>? applyComms,
+            Func<EspionageConsequenceIntent, bool>? applyDefense)
+        {
+            ConsequenceRouter.BindConsumers(applySupply, applyComms, applyDefense);
         }
 
         public ActionResult Deploy(string agentId, string factionId, string missionId, int day)
@@ -59,14 +78,44 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
+        /// <summary>
+        /// Executes the Core-owned abstract sabotage action. Downstream
+        /// consequence routing is owned by <see cref="EspionageConsequenceRouter"/>.
+        /// </summary>
+        public ActionResult ExecuteSabotage(string networkId, string missionId, int day)
+        {
+            var result = System.ExecuteAbstractSabotage(networkId, missionId, day);
+            SyncFiredIncidentIds();
+            LastEvent = result.IsSuccess
+                ? "Sabotage operation completed: " + ConsequenceRouter.LastRouteResult
+                : "Sabotage blocked: " + result.FailureCode;
+            RaiseStateChanged();
+            return result;
+        }
+
         public void AdvanceDay(int day)
         {
             System.Tick(day);
+            SyncFiredIncidentIds();
             LastEvent = "Espionage tick @ day " + day;
             RaiseStateChanged();
         }
 
-        public EspionageState CaptureState() => System.CaptureState();
-        public void RestoreState(EspionageState state) => System.RestoreState(state);
+        public EspionageState CaptureState()
+        {
+            SyncFiredIncidentIds();
+            return System.CaptureState();
+        }
+
+        public void RestoreState(EspionageState state)
+        {
+            System.RestoreState(state);
+            ConsequenceRouter.RestoreFired(System.GetFiredConsequenceIncidentIds());
+        }
+
+        private void SyncFiredIncidentIds()
+        {
+            System.SetFiredConsequenceIncidentIds(ConsequenceRouter.CaptureFired());
+        }
     }
 }

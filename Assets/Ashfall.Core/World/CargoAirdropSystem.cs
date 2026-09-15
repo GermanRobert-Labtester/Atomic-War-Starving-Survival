@@ -439,7 +439,9 @@ namespace Ashfall.Core.World
         public void RestoreState(CargoAirdropState? state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<CargoAirdropState>(json) ?? new CargoAirdropState();
             if (_state.drops == null) _state.drops = new List<AirdropEventState>();
             if (_state.schema_version < 1 || _state.schema_version > 1)
                 _state.schema_version = 1;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -56,10 +57,12 @@ namespace AtomicWar.GodotApp
 
         private void OnGreenhousePlantClicked()
         {
+            SetupGreenhouse();
             SetupExpansions();
             int day = _core != null ? _core.Clock.Day : _simDay;
-            _expansions.PlantGreenhouse(0, "item_seed_tuber", day);
-            _expansions.WaterGreenhouse(0, 60f);
+            // Single growth authority: player GreenhouseHostSession (shared into hub).
+            _greenhouse.Plant(0, GreenhouseExpansionCatalog.Items.SeedTuber, day);
+            _greenhouse.Water(0, 60f, tainted: false);
             _statusLabel.Text = "Plot 0 planted (seed_tuber) and watered on day " + day + ". The glass holds its heat.";
             RefreshExpansionsStatus();
         }
@@ -88,16 +91,25 @@ namespace AtomicWar.GodotApp
                     _greenhouse.Plant(plotIndex, param ?? GreenhouseExpansionCatalog.Items.SeedTuber, day);
                     break;
                 case "water":
-                    if (param == "tainted")
-                        _greenhouse.Water(plotIndex, 50f, tainted: true);
-                    else
+                {
+                    // Panel emits "water:25:clean", "water:50:clean", "water:50:tainted"
+                    // (and legacy "water:tainted" / "water:25").
+                    float units = 50f;
+                    bool tainted = false;
+                    if (param != null)
                     {
-                        float units = 50f;
-                        if (param != null && float.TryParse(param, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed))
+                        string[] parts = param.Split(':');
+                        if (parts.Length >= 1
+                            && float.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed))
+                        {
                             units = parsed;
-                        _greenhouse.Water(plotIndex, Math.Max(1f, units), tainted: false);
+                        }
+                        string quality = parts.Length >= 2 ? parts[parts.Length - 1] : parts[0];
+                        tainted = string.Equals(quality, "tainted", StringComparison.OrdinalIgnoreCase);
                     }
+                    _greenhouse.Water(plotIndex, Math.Max(1f, units), tainted);
                     break;
+                }
                 case "clear":
                     _greenhouse.Clear(plotIndex);
                     break;
@@ -106,6 +118,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "harvest":
                     _greenhouse.Harvest(plotIndex);
+                    break;
+                case "dose_nutrients":
+                    _greenhouse.ApplyNutrients(plotIndex);
                     break;
                 case "apiary_inspect":
                     _greenhouse.InspectHive("hive_01", day);
@@ -130,9 +145,11 @@ namespace AtomicWar.GodotApp
 
         private void OnGreenhouseTickClicked()
         {
+            SetupGreenhouse();
             SetupExpansions();
             int day = _core != null ? _core.Clock.Day : _simDay;
-            _expansions.TickGreenhouse(day);
+            // Single growth authority — do not also TickGreenhouse on a hub twin.
+            _greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
             _statusLabel.Text = "Greenhouse day ticked (day " + day + "). " + _expansions.GreenhouseLine();
             RefreshExpansionsStatus();
         }
@@ -404,6 +421,12 @@ namespace AtomicWar.GodotApp
                 _openingProtocolModal?.RefreshView();
                 if (_state == GameState.Playing) UpdateHud();
             };
+            if (_inventory != null)
+            {
+                _startingLevel.BindMaintenance(
+                    _inventory.Inventory,
+                    knowledgeId => EnsureSharedResearch().HasCapability(knowledgeId));
+            }
             if (_openingProtocolModal != null)
                 _openingProtocolModal.Bind(_startingLevel);
             GD.Print("[Ashfall Godot] Starting level host ready.");
@@ -430,6 +453,24 @@ namespace AtomicWar.GodotApp
             {
                 _powerGridDirty = true;
                 SyncCraftingStationsFromShelter();
+            };
+            // B5–B8 expansion (§27): source degradation/failure events ride the
+            // typed power events into the journal authority — presentation
+            // only; the grid owns the facts.
+            _powerGrid.System.OnPowerChanged += evt =>
+            {
+                string? entry = evt.Kind switch
+                {
+                    PowerGridEventKind.GeneratorWorn =>
+                        "MAINTENANCE: The generator is wearing out — output derated. A machine_oil service restores full rating.",
+                    PowerGridEventKind.FuelStarved =>
+                        "FUEL WARNING: The generator tank ran dry mid-day — running at partial output.",
+                    _ => null
+                };
+                if (entry != null)
+                    _journal?.TryAddRawEntry(
+                        evt.Kind == PowerGridEventKind.GeneratorWorn ? "generator_worn" : "generator_fuel_starved",
+                        entry, null!, _simDay);
             };
             WireSurgeAdapters();
         }
@@ -506,6 +547,62 @@ namespace AtomicWar.GodotApp
                 };
                 _powerGridPanel.OnPriorityChanged += (id, p) => _powerGrid.SetPriority(id, p);
                 _powerGridPanel.OnFuelAdded += u => _powerGrid.AddFuel(u);
+                // B5–B8 Phase 2: battery-bank install — preview check, canonical
+                // item consumed once, then authoritative commit; blocked installs
+                // mutate nothing and say why.
+                _powerGridPanel.OnBatteryBankInstallRequested += () =>
+                {
+                    var inv = _inventory.Inventory;
+                    if (inv.CountById(PowerGridSystem.BatteryBankItemId) < 1)
+                    {
+                        ObserveSigil("power.battery_bank_missing_item");
+                        return;
+                    }
+                    if (!_powerGrid.TryInstallBatteryBank(out var reason))
+                    {
+                        ObserveSigil("power.battery_bank_blocked_" + reason);
+                        return;
+                    }
+                    inv.TryConsumeById(PowerGridSystem.BatteryBankItemId, 1);
+                    ObserveSigil("power.battery_bank_installed");
+                };
+                // B5–B8 Phase 5: generator service — canonical machine_oil,
+                // same preview/consume/commit discipline as battery banks.
+                _powerGridPanel.OnGeneratorServiceRequested += () =>
+                {
+                    var inv = _inventory.Inventory;
+                    if (inv.CountById(PowerGridSystem.GeneratorMaintenanceItemId) < 1)
+                    {
+                        ObserveSigil("power.generator_missing_maintenance_item");
+                        return;
+                    }
+                    if (!_powerGrid.PerformGeneratorMaintenance(out var reason))
+                    {
+                        ObserveSigil("power.generator_service_blocked_" + reason);
+                        return;
+                    }
+                    inv.TryConsumeById(PowerGridSystem.GeneratorMaintenanceItemId, 1);
+                    ObserveSigil("power.generator_serviced");
+                };
+                // B5–B8 expansion (§27): emergency presets — Core owns the
+                // policy; the host journals the outcome.
+                _powerGridPanel.OnEmergencyPresetRequested += presetId =>
+                {
+                    if (presetId == "shed")
+                    {
+                        var changed = _powerGrid.System.ApplyBrownoutShedPreset();
+                        _journal?.TryAddRawEntry("power_preset_shed",
+                            $"EMERGENCY: Load-shed preset applied — {changed.Count} non-critical circuit(s) demoted to preserve life support.", null!, _simDay);
+                        ObserveSigil("power.preset_shed");
+                    }
+                    else if (presetId == "defaults")
+                    {
+                        int restored = _powerGrid.System.ApplyCatalogDefaultPriorities();
+                        _journal?.TryAddRawEntry("power_preset_defaults",
+                            $"Power priorities restored to catalog defaults ({restored} override(s) cleared).", null!, _simDay);
+                        ObserveSigil("power.preset_defaults");
+                    }
+                };
                 AddChild(_powerGridPanel);
             }
             _powerGridPanel.Bind(_powerGrid);
@@ -530,6 +627,13 @@ namespace AtomicWar.GodotApp
             };
             if (_greenhousePanel != null)
                 _greenhousePanel.Bind(_greenhouse);
+            // Share growth authority with the expansion hub when it already exists
+            // (SetupExpansions-first path). Hub capture/restore then mirrors player plots.
+            if (_expansions != null)
+            {
+                _expansions.BindGreenhouse(_greenhouse.System);
+                _expansions.EnsureGreenhousePlots(3);
+            }
             GD.Print("[Ashfall Godot] Greenhouse host ready.");
         }
 
@@ -558,6 +662,7 @@ namespace AtomicWar.GodotApp
         private void CloseSurvivorDowntimePanel() { _survivorDowntimePanel?.Visible = false; }
         private void CloseWinterFreezePanel() { _winterFreezePanel?.Visible = false; }
         private void CloseFungiCultivationPanel() { _fungiCultivationBedPanel.Visible = false; }
+        private void CloseBioFermentationPanel() { _bioFermentationPanel.Visible = false; }
         private void ClosePlasticPyrolysisPanel() { _plasticPyrolysisPanel.Visible = false; }
         private void CloseCargoAirdropPanel() { _cargoAirdropPanel.Visible = false; }
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -141,8 +142,9 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Single composer for the expedition engine's one encounter-chance
         /// slot: warlord travel danger × regional wildlife desperation ×
-        /// live location threats. Installed here and from
-        /// WireWarlordExpeditionDanger so both wirings converge on one truth.
+        /// live location threats × route-infrastructure hazard (Plans 146–149).
+        /// Installed here and from WireWarlordExpeditionDanger /
+        /// WirePlans146ExpeditionRouteModifiers so all wirings converge.
         /// </summary>
         private Func<string, float> ComposeExpeditionDangerMultiplier()
         {
@@ -177,6 +179,14 @@ namespace AtomicWar.GodotApp
                         mult *= 1f + Math.Min(0.45f, rec.activeThreats.Count * 0.15f);
                         if (rec.contaminationLevel > 0.6f) mult *= 1.1f;
                     }
+                }
+
+                // Route infrastructure (minefields / corrugated rail). Unknown
+                // routes return 1.0 from GetHazardModifier — no phantom risk.
+                if (_routeInfrastructure != null && !string.IsNullOrEmpty(locationId))
+                {
+                    float routeHazard = _routeInfrastructure.GetHazardModifier(locationId);
+                    if (routeHazard > 0f) mult *= routeHazard;
                 }
 
                 return mult;

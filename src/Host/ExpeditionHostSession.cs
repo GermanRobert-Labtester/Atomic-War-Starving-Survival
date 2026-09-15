@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -70,6 +71,22 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public Func<string, bool> ExtraBlocked { get; set; }
 
+        /// <summary>Plan 174 — optional pack-animal cargo provider: survivorId →
+        /// extra kg added to the active sortie's capacity after a successful
+        /// start. Zero/absent keeps legacy capacity (§5.11).</summary>
+        public Func<string, float>? PackCapacityProvider { get; set; }
+
+        /// <summary>Plan 174 — apply the pack companion's bounded cargo bonus to
+        /// the just-started active sortie (no-op without a provider or bonus).</summary>
+        private void ApplyPackCompanionCapacity(string survivorId)
+        {
+            float packKg = PackCapacityProvider?.Invoke(survivorId) ?? 0f;
+            if (packKg <= 0f) return;
+            if (!Engine.Active.TryGetValue(survivorId, out var active) || active == null) return;
+            active.maxLootCapacityKg += packKg;
+            LastEvent += $" A pack companion carries an extra {packKg:F0} kg.";
+        }
+
         /// <summary>
         /// Optional reason-carrying dispatch gate (GAP-48A): returns a
         /// player-facing block for a location, or null when passable.
@@ -105,6 +122,33 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Passthrough to the Core per-location encounter-chance multiplier (faction/territory danger).</summary>
         public void SetEncounterChanceMultiplier(Func<string, float> multiplier) => Engine.SetEncounterChanceMultiplier(multiplier);
+
+        /// <summary>
+        /// Optional route-infrastructure modifiers for estimate preview and live
+        /// Start/Dispatch travel stretch. Hazard multiplies estimate encounter
+        /// risk only; travel multiplies outbound/inbound tick counts (and fuel)
+        /// via <see cref="ProjectRouteTravelDef"/> on Estimate, Start, and
+        /// Dispatch. Live sortie encounter rolls still go through
+        /// <see cref="SetEncounterChanceMultiplier"/>.
+        /// </summary>
+        private Func<string, float>? _estimateHazardMultiplier;
+        private Func<string, float>? _estimateTravelMultiplier;
+
+        /// <summary>C2 / Plan 21C (P6) — optional party-protection inputs
+        /// provider for the dispatch estimate (location → protective inputs;
+        /// null keeps the legacy estimate shape).</summary>
+        private Func<string, ExpeditionProtectiveInputs?>? _estimateProtectiveInputs;
+
+        public void SetEstimateProtectiveInputs(Func<string, ExpeditionProtectiveInputs?>? provider)
+        {
+            _estimateProtectiveInputs = provider;
+        }
+
+        public void SetEstimateRouteModifiers(Func<string, float>? hazard, Func<string, float>? travel)
+        {
+            _estimateHazardMultiplier = hazard;
+            _estimateTravelMultiplier = travel;
+        }
 
         /// <summary>
         /// Plan 85 / UI-21 — binds the damaged-map layer to the host feedback
@@ -462,6 +506,10 @@ namespace AtomicWar.GodotApp
             if (navalDispatch != null)
                 def = navalDispatch.Value.def;
 
+            // Plans 146–149: live Start must match estimate travel stretch
+            // (mine/rail route modifiers). Never mutate the registry catalog.
+            def = ProjectRouteTravelDef(def, locationId);
+
             ExpeditionVehicleProfile? profile = null;
             if (navalDispatch != null)
             {
@@ -485,6 +533,7 @@ namespace AtomicWar.GodotApp
             {
                 if (forcedGateStaminaCost > 0f)
                     OnWeatherGateForced?.Invoke(survivorId, locationId, gateBlock!);
+                ApplyPackCompanionCapacity(survivorId);
                 RaiseStateChanged();
                 LastEvent = navalDispatch != null
                     ? $"Sent {survivorId} to {def.displayName} by river raft (piracy waters)."
@@ -514,10 +563,12 @@ namespace AtomicWar.GodotApp
             if (def == null) return null;
 
             // Preview parity with dispatch: water crossings project the naval
-            // profile and piracy-weighted encounter chance.
+            // profile and piracy-weighted encounter chance; route travel stretch
+            // uses the same ProjectRouteTravelDef as live Start/Dispatch.
             var navalDispatch = ResolveNavalDispatch(def, locationId);
             if (navalDispatch != null)
                 def = navalDispatch.Value.def;
+            def = ProjectRouteTravelDef(def, locationId);
 
             ExpeditionVehicleProfile? profile = null;
             bool fuelOk = true;
@@ -534,7 +585,15 @@ namespace AtomicWar.GodotApp
                     fuelOk = inst.fuel >= profile!.fuelPerTravelTick * 2f * def.distanceTicks;
                 }
             }
-            var estimate = ExpeditionSystem.Estimate(def, stance, false, profile, weaponReadiness, weaponJamRisk);
+            var estimate = ExpeditionSystem.Estimate(def, stance, false, profile, weaponReadiness, weaponJamRisk,
+                protective: _estimateProtectiveInputs?.Invoke(locationId));
+
+            // Plans 146–149: hazard still scales encounter risk on the estimate.
+            // Travel stretch is already baked into def via ProjectRouteTravelDef.
+            float hazardMult = _estimateHazardMultiplier?.Invoke(locationId) ?? 1f;
+            if (hazardMult != 1f)
+                estimate.encounterRiskPerTick = Math.Clamp(estimate.encounterRiskPerTick * hazardMult, 0f, 1f);
+
             return (estimate, fuelOk);
         }
 
@@ -707,6 +766,19 @@ namespace AtomicWar.GodotApp
             return (adjusted, profile);
         }
 
+        /// <summary>
+        /// Plans 146–149 MED: project a shallow expedition definition whose
+        /// <see cref="ExpeditionDefinition.distanceTicks"/> matches the estimate
+        /// travel stretch from <see cref="SetEstimateRouteModifiers"/>. Never
+        /// writes back into <see cref="ExpeditionDefinitionRegistry"/>.
+        /// </summary>
+        private ExpeditionDefinition ProjectRouteTravelDef(ExpeditionDefinition def, string locationId)
+        {
+            if (def == null) return def!;
+            float travelMult = _estimateTravelMultiplier?.Invoke(locationId) ?? 1f;
+            return ExpeditionTravelStretch.ProjectDefinition(def, travelMult);
+        }
+
         private ExpeditionVehicleProfile? BuildProfile(string vehicleId)
         {
             return Vehicles.CreateExpeditionProfile(vehicleId, KmPerTravelTick);
@@ -757,6 +829,9 @@ namespace AtomicWar.GodotApp
             if (navalDispatch != null)
                 def = navalDispatch.Value.def;
 
+            // Plans 146–149: DispatchSortie parity with EstimateExpedition travel stretch.
+            def = ProjectRouteTravelDef(def, locationId);
+
             ExpeditionVehicleProfile? profile = null;
             if (navalDispatch != null)
             {
@@ -777,6 +852,7 @@ namespace AtomicWar.GodotApp
             {
                 if (forcedGateStaminaCost > 0f)
                     OnWeatherGateForced?.Invoke(survivorId, locationId, gateBlock2!);
+                ApplyPackCompanionCapacity(survivorId);
                 RaiseStateChanged();
                 LastEvent = navalDispatch != null
                     ? $"{survivorId} takes the river route to {def.displayName} by raft (piracy waters)."

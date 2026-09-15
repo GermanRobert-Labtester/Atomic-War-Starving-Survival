@@ -45,6 +45,13 @@ namespace Ashfall.Core.Shelter
         public float alignmentQuality = 0.85f;
         public SolarTrackingMode trackingMode = SolarTrackingMode.Mechanical;
         public bool stirlingAttached = true;
+
+        /// <summary>B5–B8 Phase 2: grid-tie inverter wired (additive field —
+        /// legacy saves restore false, i.e. no grid feed). The engine computes
+        /// electrical output either way; only a connected inverter lets the
+        /// host publish it into the power grid.</summary>
+        public bool gridTieConnected;
+
         public float currentThermalKw;
         public float currentElectricalKw;
         public int daysCleaned;
@@ -81,9 +88,24 @@ namespace Ashfall.Core.Shelter
     public sealed class SolarConcentratorEngine
     {
         public const string SystemId = "solar_concentrator";
+
+        /// <summary>
+        /// B5–B8 Phase 2 (Plan 65): stable grid-contribution source id.
+        /// The host publishes <see cref="AvailableElectricalKw"/> × 1000 under
+        /// this id once a grid-tie inverter is wired — same contract as
+        /// <see cref="NuclearCoreLifecycleSystem.PowerSourceId"/>.
+        /// </summary>
+        public const string PowerSourceId = "solar_concentrator";
+
         public const string ItemStirlingGenerator = "item_focal_stirling_engine_generator";
         public const string ItemDishSegment = "item_parabolic_aluminum_dish_segment";
         public const string ItemTrackingGimbal = "item_dual_axis_tracking_gimbal";
+
+        /// <summary>B5–B8 Phase 2: canonical grid-tie inverter item (recipe
+        /// <c>assemble_pure_sine_solar_inverter</c>, gated by
+        /// <c>knowledge_solar_advanced</c>). The physical item is the gate —
+        /// research alone never enables a grid feed.</summary>
+        public const string ItemGridTieInverter = "item_solar_inverter";
 
         private readonly Inventory.Inventory _inventory;
         private readonly ISeededRng _rng;
@@ -239,6 +261,41 @@ namespace Ashfall.Core.Shelter
             return ActionResult.Success("stirling_attached");
         }
 
+        /// <summary>
+        /// B5–B8 Phase 2 (Plan 65): wire a Pure Sine Solar Inverter so the
+        /// concentrator's electrical output can feed the shelter grid. Requires
+        /// the canonical <see cref="ItemGridTieInverter"/> item (consumed once,
+        /// on committed success) and the mounted Stirling generator. Research
+        /// gates the item through the inverter recipe; the engine checks the
+        /// physical item only — the same discipline as AttachStirlingEngine.
+        /// </summary>
+        public ActionResult ConnectGridTie()
+        {
+            if (_state.gridTieConnected)
+                return ActionResult.Blocked("already_connected", "Grid-tie inverter is already wired.");
+            if (!_state.stirlingAttached)
+                return ActionResult.Blocked("no_stirling", "Mount the Focal Stirling Engine Generator before wiring a grid-tie inverter.");
+            if (_inventory.CountById(ItemGridTieInverter) < 1)
+                return ActionResult.Blocked("missing_inverter", "Requires 1x Pure Sine Solar Inverter.");
+
+            _inventory.TryConsumeById(ItemGridTieInverter, 1);
+            _state.gridTieConnected = true;
+            _log?.Info("[SolarConcentrator] Pure-sine inverter wired. Electrical output now feeds the shelter grid.");
+            OnSolarOutputChanged?.Invoke(_state.currentThermalKw, _state.currentElectricalKw);
+            OnStateChanged?.Invoke(_state);
+            return ActionResult.Success("grid_tie_connected");
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 2: grid-tie feed watts for the host to publish under
+        /// <see cref="PowerSourceId"/>. Deterministic from saved state: 0
+        /// unless an inverter is connected; the day's electrical output is
+        /// already weather-derived (never rolls RNG here).
+        /// </summary>
+        public float GridFeedWatts => _state.gridTieConnected
+            ? MathF.Max(0f, _state.currentElectricalKw) * 1000f
+            : 0f;
+
         public ActionResult PerformSolarDistillation(WaterTreatmentSystem waterSystem, float inputBrackishWater)
         {
             if (waterSystem == null)
@@ -270,6 +327,7 @@ namespace Ashfall.Core.Shelter
                 alignmentQuality = _state.alignmentQuality,
                 trackingMode = _state.trackingMode,
                 stirlingAttached = _state.stirlingAttached,
+                gridTieConnected = _state.gridTieConnected,
                 currentThermalKw = _state.currentThermalKw,
                 currentElectricalKw = _state.currentElectricalKw,
                 daysCleaned = _state.daysCleaned,
@@ -289,6 +347,7 @@ namespace Ashfall.Core.Shelter
                 alignmentQuality = state.alignmentQuality,
                 trackingMode = state.trackingMode,
                 stirlingAttached = state.stirlingAttached,
+                gridTieConnected = state.gridTieConnected,
                 currentThermalKw = state.currentThermalKw,
                 currentElectricalKw = state.currentElectricalKw,
                 daysCleaned = state.daysCleaned,

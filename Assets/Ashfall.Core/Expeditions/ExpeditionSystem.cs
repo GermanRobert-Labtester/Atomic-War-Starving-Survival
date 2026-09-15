@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.Radiation;
 using Ashfall.Core.World;
 
 namespace Ashfall.Core.Expeditions
@@ -116,6 +118,44 @@ namespace Ashfall.Core.Expeditions
         public float weaponReadiness = 1f;
         public float weaponJamRisk;
         public bool usingVehicle;
+
+        // ── C2 / Plan 21C (P6) — party protection / projected wear ──
+        // Populated only when protective inputs are supplied; all defaults
+        // preserve the legacy estimate shape byte-for-byte.
+        public float partyProtection;
+        public int unprotectedCount;
+        public float projectedDosePerHour;
+        public float projectedDoseTotal;
+        public float projectedTripHours;
+        public float projectedGearWear;
+        public float protectiveLifeHours;
+        public bool predictsMidRouteFailure;
+    }
+
+    /// <summary>
+    /// C2 / Plan 21C (P6/§33) — optional party-protection inputs for the
+    /// dispatch estimate. The host assembles these from the canonical
+    /// authorities (exposure resolver ambient, inventory gear projection,
+    /// data-authored wear rate); the estimate consumes them through the
+    /// canonical dose formula — never a parallel one (plan §3.8/§3.1).
+    /// </summary>
+    public sealed class ExpeditionProtectiveInputs
+    {
+        /// <summary>Effective outdoor ambient at the destination (resolver truth).</summary>
+        public float LocationRadRatePerHour;
+        /// <summary>Canonical working protection of the party's worn gear.</summary>
+        public float WorkingProtection;
+        /// <summary>Members without working protection (degenerate 0/1 in the
+        /// current single-survivor + shared-inventory model).</summary>
+        public int UnprotectedCount;
+        /// <summary>Data-authored wear rate of the item that fails first.</summary>
+        public float WeakestGearDegradeRate;
+        /// <summary>Its current durability.</summary>
+        public float WeakestGearDurability;
+        /// <summary>Exposure wear multiplier (e.g. black-rain melt).</summary>
+        public float WearMultiplier = 1f;
+        /// <summary>Real hours consumed per travel tick (host cadence).</summary>
+        public float HoursPerTick = 1f;
     }
 
     /// <summary>Serialized state of one expedition (save/load safe).</summary>
@@ -376,7 +416,7 @@ namespace Ashfall.Core.Expeditions
                 return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionDispatch, "already_active", "expedition.already_active", stateVersion);
 
             var projected = new Dictionary<string, double>();
-            var estimate = Estimate(def, stance, isNightScavenge, vehicle);
+            var estimate = Estimate(def, stance, isNightScavenge, vehicle, hasBicycle: hasBicycle);
             projected["travel_ticks"] = estimate.totalTicks;
             projected["stamina_cost"] = estimate.totalTicks * (def != null ? def.baseStaminaDrainPerHour : 2.0);
             if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
@@ -526,7 +566,9 @@ namespace Ashfall.Core.Expeditions
             bool isNightScavenge = false,
             ExpeditionVehicleProfile? vehicle = null,
             float weaponReadiness = 1f,
-            float weaponJamRisk = 0f)
+            float weaponJamRisk = 0f,
+            bool hasBicycle = false,
+            ExpeditionProtectiveInputs? protective = null)
         {
             var est = new ExpeditionEstimate
             {
@@ -553,13 +595,14 @@ namespace Ashfall.Core.Expeditions
             }
 
             est.breakdownRiskPerTick = breakdown;
-            est.outboundTicks = (float)Math.Ceiling(est.distanceTicks / speed);
-            // Inbound keeps the bicycle bonus estimate at foot pace for
-            // simplicity: 0.5 extra only when no vehicle is projected.
-            float inboundSpeed = speed;
-            if (!est.usingVehicle && stance != ExpeditionStance.Speed)
-                inboundSpeed += 0.5f; // bicycle-friendly foot estimate bookkeeping
-            est.inboundTicks = (float)Math.Ceiling(est.distanceTicks / Math.Max(0.5f, inboundSpeed));
+            // Execution advances the integer travel counter by a rounded
+            // whole-tick step. Keep the estimate on that same discrete math;
+            // raw ceil(distance / speed) drifts for fractional vehicle speeds.
+            int outboundStep = DiscreteTravelStep(speed);
+            est.outboundTicks = (float)Math.Ceiling(est.distanceTicks / (float)outboundStep);
+            float inboundSpeed = speed + (hasBicycle ? 0.5f : 0f);
+            int inboundStep = DiscreteTravelStep(inboundSpeed);
+            est.inboundTicks = (float)Math.Ceiling(est.distanceTicks / (float)inboundStep);
             est.lootingTicks = AutoRetreatAfterLootTicks;
             est.totalTicks = est.outboundTicks + est.lootingTicks + est.inboundTicks;
             est.fuelRequired = fuelPerTick * (est.outboundTicks + est.inboundTicks);
@@ -574,8 +617,46 @@ namespace Ashfall.Core.Expeditions
             // raises the effective encounter risk by up to half again.
             encounter *= 1f + (1f - est.weaponReadiness) * 0.5f;
             est.encounterRiskPerTick = Math.Clamp(encounter, 0f, 1f);
+
+            // C2 / Plan 21C (P6) — protective projection through the CANONICAL
+            // dose formula (RadiationSystem.ComputeExposurePerHour); the
+            // estimate never runs a parallel dose/wear arithmetic (plan §3.8).
+            if (protective != null)
+            {
+                est.partyProtection = MathF.Max(0f, protective.WorkingProtection);
+                est.unprotectedCount = Math.Max(0f, protective.UnprotectedCount) > 0
+                    ? protective.UnprotectedCount : 0;
+                float radRate = MathF.Max(0f, protective.LocationRadRatePerHour);
+                float hoursPerTick = MathF.Max(0f, protective.HoursPerTick);
+                float wearMultiplier = MathF.Max(0f, protective.WearMultiplier);
+
+                est.projectedDosePerHour = RadiationSystem.ComputeExposurePerHour(
+                    radRate, est.partyProtection, 0f);
+                est.projectedTripHours = est.totalTicks * hoursPerTick;
+                est.projectedDoseTotal = est.projectedDosePerHour * est.projectedTripHours;
+
+                est.projectedGearWear = MathF.Max(0f, protective.WeakestGearDegradeRate)
+                    * wearMultiplier * est.projectedTripHours;
+                if (protective.WeakestGearDurability > 0f
+                    && protective.WeakestGearDegradeRate > 0f
+                    && wearMultiplier > 0f)
+                {
+                    est.protectiveLifeHours = protective.WeakestGearDurability
+                        / (protective.WeakestGearDegradeRate * wearMultiplier);
+                    est.predictsMidRouteFailure = est.projectedTripHours > 0f
+                        && est.protectiveLifeHours < est.projectedTripHours;
+                }
+                else if (radRate > 0f && est.partyProtection <= 0f)
+                {
+                    est.unprotectedCount = Math.Max(est.unprotectedCount, 1);
+                }
+            }
+
             return est;
         }
+
+        private static int DiscreteTravelStep(float speed)
+            => Math.Max(1, (int)Math.Round(Math.Max(0.5f, speed), MidpointRounding.AwayFromZero));
 
         private readonly List<string> _tickKeyBuffer = new();
 

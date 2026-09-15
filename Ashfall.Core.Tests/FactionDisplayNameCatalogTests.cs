@@ -18,28 +18,39 @@ namespace Ashfall.Core.Tests
                 _dataDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Assets", "StreamingAssets", "Data"));
         }
 
-        [Theory]
-        [InlineData("iron_garrison", "The Iron Garrison")]
-        [InlineData("warlords_sector_4", "The Warlords of Sector 4")]
-        [InlineData("faction_central_garrison", "The Central Garrison")]
-        [InlineData("faction_railway_guild", "The Railway Guild")]
-        [InlineData("faction_hydro_barons", "The Hydro Barons")]
-        [InlineData("faction_ordnance_foundry", "The Ordnance Foundry")]
-        [InlineData("faction_supply_corps", "The Supply Corps")]
-        [InlineData("faction_ash_sign", "The Ash Sign")]
-        [InlineData("cult_of_ash_sign", "The Cult of the Ash Sign")]
-        [InlineData("faction_black_ops", "Black Ops (Ex-Military Rebels)")]
-        [InlineData("faction_scavengers", "The Scavengers")]
-        [InlineData("faction_penal_battalion", "The Penal Battalion")]
-        public void Resolve_KnownFaction_ReturnsLoreName(string factionId, string expected)
+        [Fact]
+        public void Resolve_KnownFactionMappingTable_ReturnsLoreNames()
         {
+            var mappings = new[]
+            {
+                (Id: "iron_garrison", Expected: "The Iron Garrison"),
+                (Id: "warlords_sector_4", Expected: "The Warlords of Sector 4"),
+                (Id: "faction_central_garrison", Expected: "The Central Garrison"),
+                (Id: "faction_railway_guild", Expected: "The Railway Guild"),
+                (Id: "faction_hydro_barons", Expected: "The Hydro Barons"),
+                (Id: "faction_ordnance_foundry", Expected: "The Ordnance Foundry"),
+                (Id: "faction_supply_corps", Expected: "The Supply Corps"),
+                (Id: "faction_ash_sign", Expected: "The Ash Sign"),
+                (Id: "cult_of_ash_sign", Expected: "The Cult of the Ash Sign"),
+                (Id: "faction_black_ops", Expected: "Black Ops (Ex-Military Rebels)"),
+                (Id: "faction_scavengers", Expected: "The Scavengers"),
+                (Id: "faction_penal_battalion", Expected: "The Penal Battalion")
+            };
+
             // Ensure catalog is loaded
             string path = Path.Combine(_dataDir, "faction_lore.json");
             if (File.Exists(path))
                 FactionDisplayNameCatalog.LoadFromJson(File.ReadAllText(path));
 
-            string result = FactionDisplayNameCatalog.Resolve(factionId);
-            Assert.Equal(expected, result);
+            var failures = new List<string>();
+            foreach (var mapping in mappings)
+            {
+                string result = FactionDisplayNameCatalog.Resolve(mapping.Id);
+                if (!string.Equals(mapping.Expected, result, StringComparison.Ordinal))
+                    failures.Add($"{mapping.Id}: expected '{mapping.Expected}', got '{result}'");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

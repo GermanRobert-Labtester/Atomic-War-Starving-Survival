@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.UI;
@@ -357,7 +358,7 @@ namespace AtomicWar.GodotApp.UI
             var title = AshfallUiHelpers.MakeTitle("ASHFALL", DesignTheme.FontSizeH2);
             title.HorizontalAlignment = HorizontalAlignment.Left;
             brand.AddChild(title);
-            brand.AddChild(AshfallUiHelpers.MakeMetadata("ATOMIC WAR // STARVING SURVIVAL"));
+            brand.AddChild(AshfallUiHelpers.MakeMetadata("HOLDFAST COMMAND"));
             content.AddChild(brand);
 
             _locationLabel = AshfallUiHelpers.MakeMono("THE HOLDFAST");

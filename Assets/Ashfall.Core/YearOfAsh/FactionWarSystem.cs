@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Factions;
@@ -15,6 +16,19 @@ namespace Ashfall.Core.YearOfAsh
         public bool isAllied = false;
     }
 
+    /// <summary>
+    /// Plan 167: timed defense-readiness pressure against a target faction.
+    /// </summary>
+    [Serializable]
+    public class FactionDefenseReadinessPressure
+    {
+        public string sourceId = string.Empty;
+        public string factionId = string.Empty;
+        public float magnitude;
+        public int startDay;
+        public int endDay;
+    }
+
     [Serializable]
     public class FactionWarSystemState
     {
@@ -24,6 +38,7 @@ namespace Ashfall.Core.YearOfAsh
         public List<string> enactedDecrees = new List<string>();
         public int totalArtilleryStrikesLogged = 0;
         public bool isWarActive = false;
+        public List<FactionDefenseReadinessPressure> defenseReadinessPressures = new List<FactionDefenseReadinessPressure>();
     }
 
     /// <summary>
@@ -105,6 +120,68 @@ namespace Ashfall.Core.YearOfAsh
             }
         }
 
+        /// <summary>
+        /// Plan 167: apply timed defense-readiness pressure. Idempotent on
+        /// <paramref name="sourceId"/>. Queried via
+        /// <see cref="GetDefenseReadiness01"/>.
+        /// </summary>
+        public bool TryApplyDefenseReadinessPressure(
+            string factionId,
+            float magnitude,
+            int startDay,
+            int endDay,
+            string sourceId)
+        {
+            if (string.IsNullOrWhiteSpace(factionId) || string.IsNullOrWhiteSpace(sourceId))
+                return false;
+            if (endDay <= startDay) return false;
+            magnitude = Math.Clamp(magnitude, 0.05f, 0.75f);
+            string canonical = FactionStandingIdResolver.ToSystemsId(factionId);
+
+            if (_state.defenseReadinessPressures == null)
+                _state.defenseReadinessPressures = new List<FactionDefenseReadinessPressure>();
+            for (int i = 0; i < _state.defenseReadinessPressures.Count; i++)
+            {
+                if (string.Equals(_state.defenseReadinessPressures[i].sourceId, sourceId, StringComparison.Ordinal))
+                    return false;
+            }
+
+            _state.defenseReadinessPressures.Add(new FactionDefenseReadinessPressure
+            {
+                sourceId = sourceId,
+                factionId = canonical,
+                magnitude = magnitude,
+                startDay = startDay,
+                endDay = endDay
+            });
+            return true;
+        }
+
+        /// <summary>
+        /// Effective defense readiness in [0.2, 1.0]. Active pressures reduce
+        /// readiness by their magnitude for the target faction.
+        /// </summary>
+        public float GetDefenseReadiness01(string factionId, int day)
+        {
+            if (string.IsNullOrWhiteSpace(factionId)) return 1f;
+            string canonical = FactionStandingIdResolver.ToSystemsId(factionId);
+            float pressure = 0f;
+            if (_state.defenseReadinessPressures != null)
+            {
+                for (int i = 0; i < _state.defenseReadinessPressures.Count; i++)
+                {
+                    var p = _state.defenseReadinessPressures[i];
+                    if (p == null) continue;
+                    if (day < p.startDay || day >= p.endDay) continue;
+                    if (!string.Equals(p.factionId, canonical, StringComparison.Ordinal)
+                        && !string.Equals(p.factionId, factionId, StringComparison.Ordinal))
+                        continue;
+                    if (p.magnitude > pressure) pressure = p.magnitude;
+                }
+            }
+            return Math.Clamp(1f - pressure, 0.2f, 1f);
+        }
+
         public void SimulateDailyFriction(int day)
         {
             if (day <= 240) return; // Full war kicks off in Phase 5 (day 241+)
@@ -166,7 +243,8 @@ namespace Ashfall.Core.YearOfAsh
                 enactedDecrees = _state.enactedDecrees != null
                     ? new List<string>(_state.enactedDecrees)
                     : new List<string>(),
-                factions = new List<FactionStandingRecord>()
+                factions = new List<FactionStandingRecord>(),
+                defenseReadinessPressures = new List<FactionDefenseReadinessPressure>()
             };
 
             if (_state.factions != null)
@@ -181,6 +259,22 @@ namespace Ashfall.Core.YearOfAsh
                         territorialControlPercent = f.territorialControlPercent,
                         isHostile = f.isHostile,
                         isAllied = f.isAllied
+                    });
+                }
+            }
+
+            if (_state.defenseReadinessPressures != null)
+            {
+                foreach (var p in _state.defenseReadinessPressures)
+                {
+                    if (p == null) continue;
+                    copy.defenseReadinessPressures.Add(new FactionDefenseReadinessPressure
+                    {
+                        sourceId = p.sourceId,
+                        factionId = p.factionId,
+                        magnitude = p.magnitude,
+                        startDay = p.startDay,
+                        endDay = p.endDay
                     });
                 }
             }
@@ -217,6 +311,23 @@ namespace Ashfall.Core.YearOfAsh
                         territorialControlPercent = f.territorialControlPercent,
                         isHostile = f.isHostile,
                         isAllied = f.isAllied
+                    });
+                }
+            }
+
+            _state.defenseReadinessPressures = new List<FactionDefenseReadinessPressure>();
+            if (state.defenseReadinessPressures != null)
+            {
+                foreach (var p in state.defenseReadinessPressures)
+                {
+                    if (p == null || string.IsNullOrWhiteSpace(p.sourceId)) continue;
+                    _state.defenseReadinessPressures.Add(new FactionDefenseReadinessPressure
+                    {
+                        sourceId = p.sourceId,
+                        factionId = p.factionId,
+                        magnitude = p.magnitude,
+                        startDay = p.startDay,
+                        endDay = p.endDay
                     });
                 }
             }

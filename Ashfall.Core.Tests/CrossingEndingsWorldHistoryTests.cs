@@ -90,7 +90,9 @@ namespace Ashfall.Core.Tests
             Assert.Contains("Everyone eats. Everyone owes.", byKey["ending_crossing_underwrite"].body);
             Assert.Contains("There is a document now", byKey["ending_crossing_compact"].body);
             Assert.Contains("now has no scale either", byKey["ending_crossing_none"].body);
-            Assert.Contains("Nobody there will remember the player's name", byKey["ending_crossing_walked"].body);
+            // Prose polish (house-voice pass) uses "a visitor's name" — the Crossing
+            // is diegetic and does not know the word "player". Pin follows the data.
+            Assert.Contains("Nobody there will remember a visitor's name in a year", byKey["ending_crossing_walked"].body);
         }
 
         private class WorldHistoryEntry

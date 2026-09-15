@@ -299,8 +299,8 @@ namespace Ashfall.Core
             // WastelandBestiaryCatalog stores them as opaque strings and never
             // resolves them against items.json.
             "harvestable_materials",
-            // Plans 62-65
-            "encryption_grade", "intel_category", "allowed_food_types",
+            // Plans 62-65 / Plan 196 food-type map values are type tokens, not item ids.
+            "encryption_grade", "intel_category", "allowed_food_types", "food_type_by_item_id",
             // Plans 50-53
             "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile"
         };

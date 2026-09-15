@@ -121,6 +121,15 @@ namespace AtomicWar.GodotApp
                 // Plan 28: the same Plan 19 authority paces wildlife abundance.
                 session.Wildlife.BindSeasonProfile(profile);
             }
+            // C2 / Plan 20A (G1) — bind the data-authored weather-effects
+            // authority so runtime dose and forecast projection share one
+            // table. Missing/invalid file keeps the legacy constants path.
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var effects = WeatherEffectsCatalog.LoadFromDirectory(dataDir, new FileSystemIO());
+                if (effects.LoadedCount > 0)
+                    session.Weather.BindWeatherEffects(effects);
+            }
             var env = WorldSaveStore.TryLoadEnvelope();
             if (env != null)
             {

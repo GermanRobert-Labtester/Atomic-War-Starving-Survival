@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -91,19 +92,33 @@ namespace Ashfall.Core.Tests
             Assert.True(presenter.ViewModel.CanConfirm);
         }
 
-        [Theory]
-        [InlineData(0f, "None")]
-        [InlineData(10f, "Sparse")]
-        [InlineData(19.9f, "Sparse")]
-        [InlineData(20f, "Modest")]
-        [InlineData(59.9f, "Modest")]
-        [InlineData(60f, "Substantial")]
-        [InlineData(149.9f, "Substantial")]
-        [InlineData(150f, "Generous")]
-        [InlineData(500f, "Generous")]
-        public void BarterTotals_QualitativeThresholds_Snapshot(float value, string expectedLabel)
+        [Fact]
+        public void BarterTotals_QualitativeThresholds_Snapshot()
         {
-            Assert.Equal(expectedLabel, TradeWorthLabels.Format(value));
+            var cases = new (float Value, string ExpectedLabel)[]
+            {
+                (0f, "None"),
+                (10f, "Sparse"),
+                (19.9f, "Sparse"),
+                (20f, "Modest"),
+                (59.9f, "Modest"),
+                (60f, "Substantial"),
+                (149.9f, "Substantial"),
+                (150f, "Generous"),
+                (500f, "Generous")
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var actual = TradeWorthLabels.Format(testCase.Value);
+                if (actual != testCase.ExpectedLabel)
+                {
+                    failures.Add($"value {testCase.Value}: expected {testCase.ExpectedLabel}, got {actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

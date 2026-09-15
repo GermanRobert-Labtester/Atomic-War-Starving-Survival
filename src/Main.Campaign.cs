@@ -183,6 +183,12 @@ namespace AtomicWar.GodotApp
             // player path while preserving selection/execution separation.
             if (_narrative != null && _narrative.PendingArcEvent != null)
                 OpenNarrativeArcModal();
+            else
+            {
+                SetupEchoes();
+                if (_echoes?.PendingEcho != null)
+                    OpenEchoModal();
+            }
         }
 
         private void SetupMemorial()
@@ -261,6 +267,29 @@ namespace AtomicWar.GodotApp
             if (args != null && args.AllEvents().Any())
             {
                 report = DailyBriefingReportBuilder.BuildFromDayEvents(day, day, args.AllEvents());
+
+                // C2 / Plan 17A-S §6.8 — owner failures must be visible in the
+                // briefing, never presented as a quiet "nothing happened" day.
+                if (args.HasFailures)
+                {
+                    var failed = args.FailedReports;
+                    var names = new List<string>();
+                    foreach (var f in failed)
+                    {
+                        if (f != null && !string.IsNullOrEmpty(f.OwnerId)) names.Add(f.OwnerId);
+                    }
+                    string ownerList = string.Join(", ", names);
+                    report.Sections.Add(new DailyBriefingSection(
+                        "Warnings",
+                        new[]
+                        {
+                            new DailyBriefingEntry(
+                                "Warnings",
+                                "day_advance_incomplete",
+                                $"Day {day} advance incomplete — {names.Count} system update(s) failed ({ownerList}). Some reported effects may be missing.",
+                                order: -1)
+                        }));
+                }
             }
             else
             {
@@ -330,6 +359,23 @@ namespace AtomicWar.GodotApp
                     resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", "power_grid", $"Generator fuel: {_powerGrid.System.FuelUnits:F0} units (Reserve: {_powerGrid.System.BatteryReserveWh:F0} Wh)", order: 3));
                     if (_powerGrid.System.FuelUnits <= 5f)
                         warnings.Add(new DailyBriefingEntry("Warnings", "power_grid", "Generator fuel almost exhausted!", order: 3));
+                }
+
+                // B5–B8 expansion (§27 machine feedback): the shelter's
+                // condition-bearing machines in one briefing section — degraded
+                // subsystems are visible without opening four panels.
+                foreach (var machine in Ashfall.Core.ShelterMachineryReport.Build(
+                    _powerGrid?.System, _deepWell?.System, _waterCondenser?.System,
+                    _waterTreatment?.System, _sumpFlooding?.System))
+                {
+                    resourceConsumption.Add(new DailyBriefingEntry(
+                        "Machinery Condition", machine.MachineId,
+                        $"{machine.Label}: {machine.Detail} ({Ashfall.Core.ShelterMachineryReport.LabelFor(machine.StatusBand)})",
+                        order: 4));
+                    if (machine.StatusBand == Ashfall.Core.ShelterMachineryReport.Band.Critical
+                        || machine.StatusBand == Ashfall.Core.ShelterMachineryReport.Band.Offline)
+                        warnings.Add(new DailyBriefingEntry("Warnings", machine.MachineId,
+                            $"{machine.Label} is {Ashfall.Core.ShelterMachineryReport.LabelFor(machine.StatusBand)}: {machine.Detail}", order: 4));
                 }
 
                 if (_world?.Weather != null)

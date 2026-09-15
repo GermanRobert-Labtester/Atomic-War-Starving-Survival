@@ -29,8 +29,21 @@ namespace AtomicWar.GodotApp.UI
 
         private string _currentTab = "overview";
         private EbPvdCoatingHostSession? _host;
+        private string _selectedId = string.Empty;
+        private VBoxContainer? _actionsBox;
+        private string _feedbackText = string.Empty;
+        private bool _feedbackIsFailure;
 
         public bool IsBound => _host != null;
+        public string LastFeedback { get; private set; } = string.Empty;
+
+        public void ShowFeedback(string message, bool isFailure)
+        {
+            _feedbackText = message ?? string.Empty;
+            _feedbackIsFailure = isFailure;
+            LastFeedback = _feedbackText;
+            RefreshView();
+        }
 
         public void Bind(EbPvdCoatingHostSession session)
         {
@@ -90,7 +103,12 @@ namespace AtomicWar.GodotApp.UI
             _grid = new AshfallDataGrid(cols, showHeader: true, minWidth: 620, minHeight: 380);
             _grid.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _grid.SizeFlagsVertical = SizeFlags.ExpandFill;
-            _grid.OnRowSelected += idx => RefreshDetailView();
+            _grid.OnRowSelected += idx =>
+            {
+                if (idx >= 0 && idx < _grid.Rows.Count && _grid.Rows[idx].Cells.Count > 0)
+                    _selectedId = _grid.Rows[idx].Cells[0].Text ?? string.Empty;
+                RefreshDetailView();
+            };
             contentSplit.AddChild(_grid);
 
             var detailPanel = new PanelContainer();
@@ -123,6 +141,10 @@ namespace AtomicWar.GodotApp.UI
             _detailTitle.AddThemeFontSizeOverride("font_size", 14);
             _detailTitle.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             _detailBox.AddChild(_detailTitle);
+
+            _actionsBox = new VBoxContainer();
+            _actionsBox.AddThemeConstantOverride("separation", 8);
+            _detailBox.AddChild(_actionsBox);
 
             contentSplit.AddChild(detailPanel);
             _shell.SetContent(contentSplit);
@@ -201,6 +223,23 @@ namespace AtomicWar.GodotApp.UI
                     r.Cells.Add(new AshfallDataGrid.Cell($"Ready (+{rec.MaxTempBonusC:F0}°C)", AshfallDataGrid.CellState.Positive));
                     rows.Add(r);
                 }
+
+                // Install targets are inventory item ids (minted on job complete).
+                // Panel lists the three installable families for explicit PowerGrid install.
+                foreach (var itemId in new[]
+                {
+                    "item_coated_turbine_blade",
+                    "item_coated_combustor_tile",
+                    "item_coated_diesel_injector"
+                })
+                {
+                    var r = new AshfallDataGrid.Row();
+                    r.Cells.Add(new AshfallDataGrid.Cell(itemId));
+                    r.Cells.Add(new AshfallDataGrid.Cell("Generator install candidate"));
+                    r.Cells.Add(new AshfallDataGrid.Cell($"{PowerGridSystem.ResolveCoatedPartWatts(itemId):F0} W"));
+                    r.Cells.Add(new AshfallDataGrid.Cell("Install required", AshfallDataGrid.CellState.Caution));
+                    rows.Add(r);
+                }
             }
             else if (_currentTab == "maintenance")
             {
@@ -227,6 +266,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_detailTitle == null || _host == null) return;
             var state = _host.System.StateDto;
+            ClearActions();
 
             if (_currentTab == "maintenance")
             {
@@ -235,6 +275,26 @@ namespace AtomicWar.GodotApp.UI
                                     $"Vacuum Pump Run: {state.VacuumPumpHours:F1} / 150 hrs\n" +
                                     $"Shielding: {state.ChamberShieldingCondition01:P0}\n" +
                                     $"Last Event: {_host.LastEvent}";
+                AddActionButton("REPLACE FILAMENT", "maintain", "replace_filament");
+                AddActionButton("SERVICE VACUUM PUMP", "maintain", "service_vacuum_pump");
+                AddActionButton("REALIGN SHIELDS", "maintain", "realign_chamber_shields");
+            }
+            else if (_currentTab == "completed")
+            {
+                string itemId = string.IsNullOrEmpty(_selectedId)
+                    || !_selectedId.StartsWith("item_coated_", StringComparison.Ordinal)
+                    ? "item_coated_turbine_blade"
+                    : _selectedId;
+                float watts = PowerGridSystem.ResolveCoatedPartWatts(itemId);
+                _detailTitle.Text = $"Coated inventory → PowerGrid install.\n" +
+                                    $"Selected part: {itemId}\n" +
+                                    $"Contribution if installed: +{watts:F0} W (source ebpvd_installed).\n" +
+                                    $"Minting a coating does not auto-buff the generator.\n" +
+                                    $"Last Event: {_host.LastEvent}";
+                AddActionButton("INSTALL INTO GENERATOR", "install_coated_part", itemId);
+                AddActionButton("INSTALL TURBINE BLADE", "install_coated_part", "item_coated_turbine_blade");
+                AddActionButton("INSTALL COMBUSTOR TILE", "install_coated_part", "item_coated_combustor_tile");
+                AddActionButton("INSTALL DIESEL INJECTOR", "install_coated_part", "item_coated_diesel_injector");
             }
             else if (state.ActiveJob != null)
             {
@@ -250,11 +310,42 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
+                string coatingId = string.IsNullOrEmpty(_selectedId)
+                    ? "ebpvd_tbc_yttria_stabilized_zirconia"
+                    : _selectedId;
                 _detailTitle.Text = $"Chamber Idle — Ready for deposition.\n" +
-                                    $"Select a recipe to commence high-vacuum electron-beam coating.\n" +
-                                    $"Substrates accepted: Superalloy Blade, Combustor Tile, Diesel Injector.\n" +
+                                    $"Selected recipe: {coatingId}\n" +
+                                    $"Substrate default: superalloy_blade (bond coat on).\n" +
                                     $"Last Event: {_host.LastEvent}";
+                AddActionButton("START COATING (BLADE + BOND)", "start_coating", $"{coatingId}|superalloy_blade|bond");
+                AddActionButton("START COATING (COMBUSTOR)", "start_coating", $"{coatingId}|combustor_liner|bond");
+                AddActionButton("START COATING (INJECTOR)", "start_coating", $"{coatingId}|diesel_injector|bond");
             }
+
+            if (!string.IsNullOrEmpty(_feedbackText) && _actionsBox != null)
+            {
+                _actionsBox.AddChild(_feedbackIsFailure
+                    ? AshfallUiHelpers.MakeWarning(_feedbackText)
+                    : AshfallUiHelpers.MakeSuccess(_feedbackText));
+            }
+        }
+
+        private void ClearActions()
+        {
+            if (_actionsBox == null) return;
+            while (_actionsBox.GetChildCount() > 0)
+            {
+                var child = _actionsBox.GetChild(0);
+                _actionsBox.RemoveChild(child);
+                child.QueueFree();
+            }
+        }
+
+        private void AddActionButton(string label, string action, string param)
+        {
+            if (_actionsBox == null) return;
+            var btn = AshfallUiHelpers.MakeButton(label, () => OnActionRequested?.Invoke(action, param));
+            _actionsBox.AddChild(btn);
         }
     }
 }

@@ -66,6 +66,16 @@ namespace Ashfall.Core
         public const string SystemId = "sump_flooding";
 
         /// <summary>
+        /// B5–B8 Phase 3 (Plan 66): nominal draw of one installed sump pump,
+        /// registered with the power grid as a dynamic load room on pump
+        /// install (and re-registered on restore). The grid owns
+        /// allocation/shedding; the sump owns flood consequences of the served
+        /// state. Critical class: water infrastructure (flagship
+        /// InfrastructureEssential) — tunable via player priority overrides.
+        /// </summary>
+        public const float SumpPumpDrawWatts = 90f;
+
+        /// <summary>
         /// Plan 189 documented synthetic intake source id (not a piezometer
         /// strata id) used when routed greywater reaches water treatment.
         /// </summary>
@@ -244,7 +254,7 @@ ILog? log = null)
                 return ActionResult.Blocked("no_sludge", "sump.centrifuge_no_sludge");
             if (_state.centrifugeCondition <= 0f)
                 return ActionResult.Failed("centrifuge_unavailable", "sump.centrifuge_broken");
-            if (!_powerGrid.IsRoomPowered(nodeId))
+            if (!_powerGrid.IsRoomServed(nodeId))
                 return ActionResult.Failed("power_unavailable", "sump.centrifuge_no_power");
             if (_state.centrifugeFilterMedia <= 0f)
                 return ActionResult.Blocked("media_worn", "sump.centrifuge_media_worn");
@@ -402,8 +412,21 @@ ILog? log = null)
 
             node.hasSumpPump = true;
             node.pumpCondition = 100f;
+            RegisterPumpLoad(node);
             OnFloodingChanged?.Invoke();
             return ActionResult.Success("sump.pump_installed");
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 3 (Plan 66): expose the node's pump as a named grid
+        /// load (§6.3 power-load subscription contract). Idempotent — the grid
+        /// ignores duplicate room ids, and catalog rooms take precedence.
+        /// </summary>
+        private void RegisterPumpLoad(SumpNode node)
+        {
+            _powerGrid.RegisterLoadRoom(new PowerGridRoom(
+                node.nodeId, node.displayName, SumpPumpDrawWatts,
+                PowerGridRoomPriority.Critical, "fx_sump_pump_off"));
         }
 
         public ActionResult SetNodePower(string nodeId, bool powered)
@@ -521,7 +544,12 @@ ILog? log = null)
                 float drainage = 0f;
                 if (node.hasSumpPump && node.pumpPowered && node.pumpCondition > 0)
                 {
-                    bool hasPower = _powerGrid.IsRoomPowered(node.nodeId);
+                    // B5–B8 Phase 3: allocation-aware served state (was the
+                    // global-outage IsRoomPowered read). The pump is a
+                    // registered critical load, so it stays served during a
+                    // brownout while generation covers it — priority shedding,
+                    // not a blackout.
+                    bool hasPower = _powerGrid.IsRoomServed(node.nodeId);
                     if (hasPower)
                     {
                         // Solids load: suspended silt throttles throughput (viscosity)
@@ -703,6 +731,14 @@ ILog? log = null)
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            // B5–B8 Phase 3: the grid's room list is not persisted — re-expose
+            // installed pumps as loads after restore so served-state reads work
+            // immediately (idempotent; deterministic; no RNG, no events replayed).
+            foreach (var node in _state.nodes)
+            {
+                if (node.hasSumpPump)
+                    RegisterPumpLoad(node);
+            }
         }
 
         private static SumpFloodingState CloneState(SumpFloodingState src)

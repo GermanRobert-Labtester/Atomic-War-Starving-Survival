@@ -486,7 +486,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _brineExtractionPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("expedition_camp",
-                bindAction: () => { SetupExpeditions(); SetupSurvivors(); string survId = _survivors?.RosterState?.FirstOrDefault()?.Id ?? "surv_01"; _expeditionCampPanel.Bind(_expeditions, survId); },
+                bindAction: () => { SetupExpeditions(); SetupSurvivors(); string survId = _survivors?.RosterState?.FirstOrDefault()?.Id ?? string.Empty; _expeditionCampPanel.Bind(_expeditions, survId); },
                 openAction: () => _expeditionCampPanel.Open(),
                 closeAction: () => _expeditionCampPanel.Visible = false);
 
@@ -505,12 +505,12 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _fireIncidentPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("geiger_calibration",
-                bindAction: () => { SetupPhase0(); _geigerCalibrationPanel.Bind(_doseLedger, "tag_1"); },
+                bindAction: () => { SetupPhase0(); _geigerCalibrationPanel.Bind(_doseLedger, ResolveLiveDosimeterTag()); },
                 openAction: () => _geigerCalibrationPanel.Open(),
                 closeAction: () => _geigerCalibrationPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("triangulation",
-                bindAction: () => { SetupRadio(); _triangulationPanel.Bind(_radio, "sig_distress"); },
+                bindAction: () => { SetupRadio(); _triangulationPanel.Bind(_radio, ResolveLiveTriangulationSignalId()); },
                 openAction: () => _triangulationPanel.Open(),
                 closeAction: () => _triangulationPanel.Visible = false);
 
@@ -570,11 +570,12 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("shelter_barter",
                 bindAction: () =>
                 {
+                    SetupInventory();
                     EnsureShelterBarterPanel().Bind(
                         EnsureShelterBarter(),
-                        _inventory?.Inventory ?? new Ashfall.Core.Inventory.Inventory(),
+                        _inventory!.Inventory,
                         _journal,
-                        id => _inventory?.Catalog?.Get(id));
+                        id => _inventory!.Catalog?.Get(id));
                 },
                 openAction: () => OpenShelterBarterPanel(),
                 closeAction: () => { if (_shelterBarterPanel != null) _shelterBarterPanel.Close(); });
@@ -775,7 +776,11 @@ namespace AtomicWar.GodotApp
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
                 "traveling_caravan", "medical_ward", "plans_94_97", "plans_130_133",
-                "farming", "defense_grid", "psychology_arcs", "bestiary"
+                "farming", "defense_grid", "psychology_arcs", "bestiary",
+                "low_background_metrology", "insar_mapping", "hydraulic_extrusion", "runflat_tire",
+                "sofc_power", "sound_ranging", "cvd_diamond", "amphibious_draisine",
+                "sanitation", "black_market",
+                "companion_kennel", "beliefs_panel", "anomaly_watch", "cybernetics"
             };
 
             foreach (var expId in expandedIds)
@@ -784,6 +789,47 @@ namespace AtomicWar.GodotApp
                 PanelRegistry.ConfigureActions(id,
                     openAction: () => OpenExpandedPanel(id));
             }
+        }
+
+        /// <summary>
+        /// Live dosimeter selection for the geiger calibration surface: the
+        /// ordinal-first device tag registered in the campaign dose ledger, or an
+        /// explicit empty selection when no device is registered. Never a demo
+        /// tag (INV-16.4); the panel renders its explicit no-device state when
+        /// the selection is empty (N16.6).
+        /// </summary>
+        private string ResolveLiveDosimeterTag()
+        {
+            var devices = _doseLedger?.Calibration?.Devices;
+            if (devices == null || devices.Count == 0) return string.Empty;
+            string selected = string.Empty;
+            foreach (var tag in devices.Keys)
+            {
+                if (string.IsNullOrEmpty(selected) || string.CompareOrdinal(tag, selected) < 0)
+                    selected = tag;
+            }
+            return selected;
+        }
+
+        /// <summary>
+        /// Live signal selection for the triangulation surface: the
+        /// ordinal-first active distress signal in the campaign radio, or an
+        /// explicit empty selection when no signal is active. Never a canned
+        /// signal id (INV-16.4); the panel renders its explicit no-signal state
+        /// when the selection is empty (N16.6).
+        /// </summary>
+        private string ResolveLiveTriangulationSignalId()
+        {
+            var signals = _radio?.DistressSystem?.ActiveSignals;
+            if (signals == null) return string.Empty;
+            string selected = string.Empty;
+            foreach (var signal in signals)
+            {
+                if (signal == null || string.IsNullOrEmpty(signal.SignalId)) continue;
+                if (string.IsNullOrEmpty(selected) || string.CompareOrdinal(signal.SignalId, selected) < 0)
+                    selected = signal.SignalId;
+            }
+            return selected;
         }
 
         private ResearchHostSession? _researchHostSession;

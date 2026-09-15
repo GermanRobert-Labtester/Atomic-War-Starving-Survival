@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -115,6 +116,23 @@ namespace Ashfall.Core.Settings
                     sanitizedMods.Add(normalized);
             }
             data.EnabledMods = sanitizedMods;
+
+            // Colorblind mode (Plan 184)
+            string cb = ColorblindColorMapper.NormalizeMode(data.ColorblindMode);
+            if (!string.Equals(data.ColorblindMode?.Trim(), cb, StringComparison.OrdinalIgnoreCase)
+                || string.IsNullOrWhiteSpace(data.ColorblindMode))
+            {
+                if (!string.IsNullOrWhiteSpace(data.ColorblindMode)
+                    && !ColorblindColorMapper.IsKnownMode(data.ColorblindMode))
+                {
+                    warnings.Add($"ColorblindMode '{data.ColorblindMode}' not recognized; defaulting to '{ColorblindColorMapper.None}'");
+                }
+                data.ColorblindMode = cb;
+            }
+            else
+            {
+                data.ColorblindMode = cb;
+            }
 
             // Tutorial Mode (0=All, 1=ContextualOnly, 2=Disabled)
             if (data.TutorialMode < 0 || data.TutorialMode > 2)

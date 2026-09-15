@@ -61,6 +61,7 @@ namespace AtomicWar.GodotApp
                 SetupDoseLedger();
                 SetupCombat();
                 SetupNarrative();
+                SetupEchoes();
                 SetupUtilityAi();
                 SetupCaravans();
                 SetupExpansions();
@@ -97,6 +98,10 @@ namespace AtomicWar.GodotApp
                 SetupForcedLabor();
                 SetupNarcotics();
                 SetupPolitics();
+                SetupAnomalyHazard();
+                SetupCompanionAnimals();
+                SetupBionics();
+                SetupZealotry();
                 SetupFallout();
                 SetupDesperation();
                 SetupMercenary();

@@ -161,21 +161,14 @@ namespace Ashfall.Core.Radio
 
             if (signal.MessageFragments != null && signal.MessageFragments.Count > 0)
             {
-                DistressMessageFragment? bestFrag = null;
-                for (int i = 0; i < signal.MessageFragments.Count; i++)
-                {
-                    var frag = signal.MessageFragments[i];
-                    if (frag.Day <= day)
-                    {
-                        if (bestFrag == null || frag.Day > bestFrag.Day)
-                        {
-                            bestFrag = frag;
-                        }
-                    }
-                }
-                bestFrag ??= signal.MessageFragments[0];
-                decoded = bestFrag.Text;
-                clarity = bestFrag.Clarity;
+                // Tasks 9–12 Wave 1: single shared stage resolver (was a
+                // duplicated inline loop; contract documented on the resolver).
+                // The ?? fallback is unreachable under the Count guard and only
+                // satisfies nullable analysis; it mirrors the legacy fallback.
+                var stage = DistressStageResolver.Resolve(signal, day)
+                            ?? new DistressStageView(0, signal.MessageFragments[0]);
+                decoded = stage.Fragment.Text;
+                clarity = stage.Fragment.Clarity;
             }
 
             bool isLocked = vu >= 0.25f;

@@ -253,6 +253,75 @@ namespace Ashfall.Core.Tests.Integration
         }
 
         /// <summary>
+        /// Plans 146–149 MED: coated part mint does not auto-buff PowerGrid;
+        /// explicit install publishes under ebpvd_installed with family slots.
+        /// </summary>
+        [Fact]
+        public void ScenarioG_CoatedPartInstall_RequiredForPowerGridContribution()
+        {
+            var grid = new PowerGridSystem(
+                new PowerGridState
+                {
+                    GenerationWatts = 800f,
+                    FuelUnits = 100f,
+                    BatteryCapacityWh = 4000f,
+                    BatteryReserveWh = 2000f
+                },
+                new List<PowerGridRoom>
+                {
+                    new PowerGridRoom("room_test", "Test", 100f, PowerGridRoomPriority.Standard)
+                },
+                new SeededRng(14649));
+
+            float before = grid.GenerationWatts;
+            // Simulate host: consume inventory then install (mint alone changes nothing).
+            Assert.True(grid.TryInstallCoatedPart("item_coated_turbine_blade", out string err), err);
+            Assert.Equal(before + 40f, grid.GenerationWatts, 2);
+            Assert.Equal(40f, grid.GenerationContributions[PowerGridSystem.EbPvdInstalledSourceId], 2);
+
+            var restored = new PowerGridSystem(
+                new PowerGridState
+                {
+                    GenerationWatts = 800f,
+                    FuelUnits = 100f,
+                    BatteryCapacityWh = 4000f,
+                    BatteryReserveWh = 2000f
+                },
+                new List<PowerGridRoom>
+                {
+                    new PowerGridRoom("room_test", "Test", 100f, PowerGridRoomPriority.Standard)
+                },
+                new SeededRng(14649));
+            restored.RestoreState(grid.CaptureState());
+            Assert.Equal(40f, restored.GenerationContributions[PowerGridSystem.EbPvdInstalledSourceId], 2);
+        }
+
+        /// <summary>
+        /// Plans 146–149 MED: route travel modifier stretch formula used by
+        /// estimate preview and live Start must agree (ceil, no catalog mutate).
+        /// </summary>
+        [Fact]
+        public void ScenarioH_RouteTravelStretch_EstimateParityFormula()
+        {
+            var routes = new RouteInfrastructureSystem();
+            routes.RegisterRailSegment("expedition_corridor_north", "seg_mine_gap", 0.9f, 25f, 1);
+            float mult = routes.GetTravelModifier("expedition_corridor_north");
+            Assert.True(mult > 1f);
+
+            var catalog = new ExpeditionDefinition
+            {
+                id = "expedition_corridor_north",
+                displayName = "North Corridor",
+                distanceTicks = 8
+            };
+            var forStart = ExpeditionTravelStretch.ProjectDefinition(catalog, mult);
+            var forEstimate = ExpeditionTravelStretch.ProjectDefinition(catalog, mult);
+            Assert.Equal(forEstimate.distanceTicks, forStart.distanceTicks);
+            Assert.Equal(8, catalog.distanceTicks);
+            Assert.True(forStart.distanceTicks > 8);
+        }
+
+        /// <summary>
         /// Pins the daily-cadence tick contract the host wires (Main.TickPlans146To149):
         /// one 8-hour machine shift per campaign day, with projected power, advances
         /// every system. This is the regression that caught the empty tick stub.

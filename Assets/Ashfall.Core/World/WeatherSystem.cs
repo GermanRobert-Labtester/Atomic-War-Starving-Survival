@@ -70,6 +70,7 @@ namespace Ashfall.Core.World
         private readonly WorldWeatherState _state;
         private SeasonProfileDef _profile;
         private int _seed;
+        private WeatherEffectsCatalog? _effectsCatalog;
 
         public event Action<WeatherKind> OnWeatherChanged;
         public event Action<WorldWeatherState> OnStateChanged;
@@ -81,6 +82,18 @@ namespace Ashfall.Core.World
 
         public WorldWeatherState State => _state;
         public WeatherKind Current => ParseKind(_state.currentKind);
+
+        /// <summary>
+        /// C2 / Plan 20A (G1) — binds the data-authored weather-effects
+        /// authority. When bound, OutdoorRadModifier and the forecast rad
+        /// projection read the one shared table (plan §57.3: forecast and
+        /// runtime can never drift). Unbound callers keep the legacy Core
+        /// constants byte-for-byte.
+        /// </summary>
+        public void BindWeatherEffects(WeatherEffectsCatalog? catalog)
+        {
+            _effectsCatalog = catalog;
+        }
 
         // ── Plan 205: surface wind projections (degrees; kph) ──
         public float WindDirectionDeg => _state.wind_direction_deg;
@@ -240,6 +253,11 @@ namespace Ashfall.Core.World
         {
             get
             {
+                // C2 / Plan 20A (G1) — data authority first; the catalog is
+                // validated to carry an explicit row for every WeatherKind.
+                if (_effectsCatalog != null && _effectsCatalog.TryGetModifier(Current, out float fromData))
+                    return fromData;
+
                 switch (Current)
                 {
                     case WeatherKind.BlackRain: return BlackRainOutdoorRadModifier;
@@ -247,6 +265,23 @@ namespace Ashfall.Core.World
                     default: return 0f;
                 }
             }
+        }
+
+        /// <summary>C2 / Plan 20A (G1) — forecast rad projection for a kind,
+        /// from the same weather-effects table the runtime dose consumes.
+        /// Legacy fallback preserves the pre-catalog projection constants.</summary>
+        public float ForecastRadModifier(WeatherKind kind)
+        {
+            if (_effectsCatalog != null && _effectsCatalog.TryGetModifier(kind, out float fromData))
+                return fromData;
+
+            return kind switch
+            {
+                WeatherKind.BlackRain => BlackRainOutdoorRadModifier,
+                WeatherKind.FalloutStorm => FalloutStormOutdoorRadModifier,
+                WeatherKind.Ashfall => 45.0f,
+                _ => 0f
+            };
         }
 
         public bool IsScavengingBlocked(bool hasFullSuit) =>
@@ -355,13 +390,7 @@ namespace Ashfall.Core.World
                     else predicted = WeatherKind.BlackRain;
                 }
 
-                float rad = predicted switch
-                {
-                    WeatherKind.BlackRain => BlackRainOutdoorRadModifier,
-                    WeatherKind.FalloutStorm => FalloutStormOutdoorRadModifier,
-                    WeatherKind.Ashfall => 45.0f,
-                    _ => 0f
-                };
+                float rad = ForecastRadModifier(predicted);
 
                 float vis = predicted switch
                 {

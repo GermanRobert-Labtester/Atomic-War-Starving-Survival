@@ -371,14 +371,18 @@ namespace AtomicWar.GodotApp.UI
             _explorationContainer.AddChild(expCard);
         }
 
+        /// <summary>Swap the surface backdrop to the phase variant (dawn/day/dusk/night).</summary>
+        public void SetLightingPhase(string phase)
+            => BackdropArt.SetTexture(this, BackdropArt.WastelandSkyFor(phase));
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.95f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            // Placeholder surface backdrop (days 1–7, intact world); dimmed so
+            // the cartography content stays readable.
+            BackdropArt.Apply(this, BackdropArt.WastelandSky, 0.82f);
 
             var scroll = new ScrollContainer();
             scroll.SetAnchorsPreset(LayoutPreset.FullRect);

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
@@ -76,6 +77,10 @@ namespace AtomicWar.GodotApp
         DirectionFindingSelfTest,
         AquaponicsSelfTest,
         CombatBreachingSelfTest,
+        Plans139To141SelfTest,
+        Plans122to125SelfTest,
+        LateTechMobilitySelfTest,
+        Plans122to125BalanceSoak,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -101,6 +106,7 @@ namespace AtomicWar.GodotApp
         ExpansionHubSaveSelfTest,
         DoseLedgerSelfTest,
         ExpeditionSelfTest,
+        ExpeditionPlaytestSelfTest,
         ExpeditionEncounterBridgeSelfTest,
         PatrolEncounterSelfTest,
         MedicalSelfTest,
@@ -129,6 +135,7 @@ namespace AtomicWar.GodotApp
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
         ShelterDecorSelfTest,
+        ShelterPhysicsSelfTest,
         AudioSelfTest,
         DeepCoastSelfTest,
         DeepCoastHostSelfTest,
@@ -142,6 +149,12 @@ namespace AtomicWar.GodotApp
         JournalWeatherPanelSelfTest,
         MoralChoiceSelfTest,
         EvolvingWorldSelfTest,
+        WorldPlaytestSelfTest,
+        SyntheticLubricantSelfTest,
+        UvCoronaSelfTest,
+        CarbonCompositeSelfTest,
+        GprCartographySelfTest,
+        AdvancedIndustrialReconSelfTest,
         InventorySaveSelfTest,
         StartingSuppliesSelfTest,
         MedicalWardSaveSelfTest,
@@ -159,6 +172,7 @@ namespace AtomicWar.GodotApp
         OnboardingJourneySelfTest,
         ModSelfTest,
         ContentUtilizationSelfTest,
+        NarrativeContinuitySelfTest,
         SelfTestManifest,
         ListSelfTests,
         RuntimeScaleSelfTest,
@@ -228,6 +242,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.Version;
             if (Has(args, "--shelter-decor-selftest") || Has(args, "--shelter-interior-selftest") || Has(args, "--memorial-wall-selftest"))
                 return HostCliAction.ShelterDecorSelfTest;
+            if (Has(args, "--shelter-physics-selftest") || Has(args, "--shelter-actor-physics-selftest"))
+                return HostCliAction.ShelterPhysicsSelfTest;
             if (Has(args, "--shelter-operations-selftest") || Has(args, "--operations-selftest") || Has(args, "--shelter-ops-selftest"))
                 return HostCliAction.ShelterOperationsSelfTest;
             if (Has(args, "--shelter-hazard-loop-selftest") || Has(args, "--shelter-hazard-selftest") || Has(args, "--duty-roster-loop-selftest"))
@@ -236,6 +252,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.UiLayoutSelfTest;
             if (Has(args, "--content-utilization-selftest") || Has(args, "--content-utilization"))
                 return HostCliAction.ContentUtilizationSelfTest;
+            if (Has(args, "--narrative-continuity-selftest"))
+                return HostCliAction.NarrativeContinuitySelfTest;
             if (Has(args, "--settings-selftest") || Has(args, "--settings-test"))
                 return HostCliAction.SettingsSelfTest;
             if (Has(args, "--playable-shell-selftest") || Has(args, "--shell-selftest") || Has(args, "--playable-loop-selftest"))
@@ -284,6 +302,17 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CombatBreachingSelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
+            if (Has(args, "--plans-122-125-balance-soak"))
+                return HostCliAction.Plans122to125BalanceSoak;
+            if (Has(args, "--late-tech-mobility-selftest"))
+                return HostCliAction.LateTechMobilitySelfTest;
+            if (Has(args, "--plans-122-125-selftest") || Has(args, "--sofc-power-selftest")
+                || Has(args, "--sound-ranging-selftest") || Has(args, "--cvd-diamond-selftest")
+                || Has(args, "--amphibious-draisine-selftest"))
+                return HostCliAction.Plans122to125SelfTest;
+            if (Has(args, "--plans-139-141-selftest") || Has(args, "--insar-selftest")
+                || Has(args, "--hydraulic-extrusion-selftest") || Has(args, "--runflat-tire-selftest"))
+                return HostCliAction.Plans139To141SelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
                 return HostCliAction.DiseaseSelfTest;
             if (Has(args, "--combat-selftest"))
@@ -386,6 +415,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DoseLedgerSelfTest;
             if (Has(args, "--expedition-selftest"))
                 return HostCliAction.ExpeditionSelfTest;
+            if (Has(args, "--expedition-playtest-selftest"))
+                return HostCliAction.ExpeditionPlaytestSelfTest;
             if (Has(args, "--expedition-encounter-bridge-selftest"))
                 return HostCliAction.ExpeditionEncounterBridgeSelfTest;
             if (Has(args, "--patrol-encounter-selftest") || Has(args, "--travel-encounter-selftest"))
@@ -468,6 +499,18 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MoralChoiceSelfTest;
             if (Has(args, "--evolving-world-selftest"))
                 return HostCliAction.EvolvingWorldSelfTest;
+            if (Has(args, "--world-playtest-selftest"))
+                return HostCliAction.WorldPlaytestSelfTest;
+            if (Has(args, "--synthetic-lubricant-selftest"))
+                return HostCliAction.SyntheticLubricantSelfTest;
+            if (Has(args, "--uv-corona-selftest"))
+                return HostCliAction.UvCoronaSelfTest;
+            if (Has(args, "--carbon-composite-selftest"))
+                return HostCliAction.CarbonCompositeSelfTest;
+            if (Has(args, "--gpr-cartography-selftest"))
+                return HostCliAction.GprCartographySelfTest;
+            if (Has(args, "--advanced-industrial-recon-selftest"))
+                return HostCliAction.AdvancedIndustrialReconSelfTest;
             if (Has(args, "--inventory-save-selftest"))
                 return HostCliAction.InventorySaveSelfTest;
             if (Has(args, "--starting-supplies-selftest") || Has(args, "--starting-profile-selftest"))
@@ -571,6 +614,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --ledger-debt-selftest   LedgerDebtHeadlessDemo");
             GD.Print("  --moral-choice-selftest  Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks");
             GD.Print("  --evolving-world-selftest  Evolving-world activation: seeds, live weather-fed ticks, migration, expedition consequences, scarcity, save envelope, 360-day scenario");
+            GD.Print("  --world-playtest-selftest  Fixed-seed 30-day evolving-world campaign proof: snapshots, downstream reads, bounds, determinism, and midpoint save/load parity");
             GD.Print("  --selftest-manifest      Emit the machine-readable self-test manifest JSON (scripts/ci/generate-selftest-manifest.py)");
             GD.Print("  --test-manifest          Alias for --selftest-manifest");
             GD.Print("  --list-selftests         List every registered selftest and run its signature live (runtime/CLI parity audit)");
@@ -603,6 +647,12 @@ namespace AtomicWar.GodotApp
             GD.Print("  --expansion-hub-save-selftest Expansion hub save write → reload → restore → checksum/tamper checks");
             GD.Print("  --expedition-encounter-bridge-selftest  ExpeditionEncounterBridge bare-notice + resolved surface smoke test");
             GD.Print("  --expedition-selftest    Expedition domain: sorties, encounter resolution, loot drops, and save round-trip");
+            GD.Print("  --expedition-playtest-selftest  Plans 51: deterministic 30-day expedition campaign, vehicle balance ledger, breakdown, wear, and save/resume proof");
+            GD.Print("  --synthetic-lubricant-selftest  Plan 118: catalog-backed synthetic lubricant production, catalyst state, atomic feed/output, and consumer registration");
+            GD.Print("  --uv-corona-selftest     Plan 119: bounded electrical-fault observations, seeded sensor noise, battery use, and capture/restore");
+            GD.Print("  --carbon-composite-selftest  Plan 120: material aging, deterministic cure quality, explicit component projection, and capture/restore");
+            GD.Print("  --gpr-cartography-selftest  Plan 121: terrain/mode survey trade-offs, uncertain buried observations, map-lead idempotence, and capture/restore");
+            GD.Print("  --advanced-industrial-recon-selftest  Plans 118-121: deterministic 60-day Core industrial/reconnaissance integration with midpoint save/replay proof");
             GD.Print("  --patrol-encounter-selftest / --travel-encounter-selftest  Patrol catalog, cooldown, recognition, resolution, and save/restore lifecycle");
             GD.Print("  --research-catalog-selftest  Research knowledge catalog: load count, DAG validity, and cross-catalog unlock references (Plan 34)");
             GD.Print("  --radio-catalog-selftest     Radio station catalog: JSON authority, schedules, and signal model (AF-B1 / Plan 60)");
@@ -616,6 +666,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --medical-selftest       Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip");
             GD.Print("  --medical-ward-save-selftest Medical ward save store round-trip, bed allocation, and affliction persistence");
             GD.Print("  --narrative-selftest     Narrative domain: dialog trees, echoes, flags, and story event resolution");
+            GD.Print("  --narrative-continuity-selftest  Plan 50: normalize narrative graphs (questline stages, event chains, quest refs), lint dangling refs/reachability/flag set-vs-read/case discipline, write artifacts/narrative-continuity.{json,md}");
             GD.Print("  --npc-arc-selftest       Plan 52 recurring NPC arcs: resolution precedence, encounter→quest memory, save round-trip, distress suppression");
             GD.Print("  --oral-lore-selftest     Oral Lore Codex: load 16 songs/poems from narrative catalogs, verify query by id/tag/genre");
             GD.Print("  --radio-selftest         Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected");
@@ -676,6 +727,20 @@ namespace AtomicWar.GodotApp
             GD.Print("  --ui-snapshot-uitest / --ui-snapshots Capture all snapshot targets, DIFF against snapshots/ goldens (needs real display, not --headless)");
             GD.Print("  --utility-ai-uitest      Utility AI debug view, consideration curves, and behavior trees");
             GD.Print("  --verdict-uitest         Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free");
+
+            GD.Print("\n--- Late-Tech, Survey & Mobility Gates ---");
+            GD.Print("  --sofc-power-selftest    Plan 122 solid-oxide fuel cell: catalog, electrochemistry engine, power/water gating, save round-trip");
+            GD.Print("  --sound-ranging-selftest Plan 123 sound ranging: catalog, threat engine, bearing/registration math, determinism");
+            GD.Print("  --cvd-diamond-selftest   Plan 124 CVD diamond synthesis: catalog, plasma-phase engine, batch lifecycle, save round-trip");
+            GD.Print("  --amphibious-draisine-selftest Plan 125 amphibious draisine: catalog, crossing engine, cargo/load gates, water crossings");
+            GD.Print("  --late-tech-mobility-selftest Combined Plans 122–125 harness: all four late-tech systems composed through one CLI world");
+            GD.Print("  --plans-122-125-selftest Plans 122–125 aggregate: catalog + engine + wiring + persistence checks for SOFC/sound ranging/CVD diamond/amphibious draisine");
+            GD.Print("  --plans-122-125-balance-soak  Plans 122–125 balance soaks: bounded multi-day soak over the four late-tech systems, writes the plan 122–125 balance reports");
+            GD.Print("  --insar-selftest         Plan 139 InSAR geodesy: repeat passes, decorrelation, deformation classes, travel/excavation projections");
+            GD.Print("  --hydraulic-extrusion-selftest  Plan 140 hydraulic extrusion: phases, defect rolls, tool wear, rejected/premium outcomes");
+            GD.Print("  --runflat-tire-selftest  Plan 141 run-flat tires: install gating, hazard reduction, heat/fuel penalty, severe-failure paths");
+            GD.Print("  --plans-139-141-selftest Plans 139–141 aggregate: InSAR + hydraulic extrusion + run-flat wiring, persistence, and panel reachability");
+            GD.Print("  --shelter-physics-selftest / --shelter-actor-physics-selftest  Shelter physics and actor movement selftests: interior traversal, hazard interaction");
 
             GD.Print("\n--- User Data & Log Configuration ---");
             GD.Print("  --user-data-dir <path>   Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR)");

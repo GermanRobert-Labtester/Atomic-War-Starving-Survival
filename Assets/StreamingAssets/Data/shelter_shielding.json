@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "interior_baseline_rad_rate": 2.0,
+  "filter_clog_max_ingress_penalty": 0.6,
+  "ventilation_duct_breach_max_penalty": 0.4,
+  "ventilation_saturation_max_penalty": 0.3,
+  "ventilation_recirculation_penalty": 0.25,
+  "airlock_breach_max_ingress_penalty": 0.8,
+  "airlock_incident_ingress_penalty": 0.4,
+  "weather_ingress_scale": 0.01,
+  "radon_rad_per_bqm3": 0.005,
+  "flooding_contamination_scale": 4.0,
+  "shelter_contamination_scale": 8.0,
+  "decon_internal_reduction_fraction": 0.5,
+  "max_ingress_multiplier": 5.0,
+  "max_interior_rad_rate": 25.0
+}

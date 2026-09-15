@@ -3,8 +3,9 @@
 sync-agent-rulebooks.py — Multi-Agent Instruction Synchronizer & Drift Checker
 
 Ensures all client-specific rule files (CLAUDE.md, CODEX.md, CRUSH.md, GOOSE.md,
-QWEN.md, VIBE.md, MIMOCODE.md, OPENSETUP.md, ANTIGRAVITY.md, .clinerules,
-.cursorrules, .windsurfrules) stay 100% in sync with canonical AGENTS.md.
+QWEN.md, VIBE.md, MIMOCODE.md, OPENSETUP.md, ANTIGRAVITY.md, GEMINI.md,
+.clinerules, .cursorrules, .windsurfrules) stay 100% in sync with canonical
+AGENTS.md.
 
 Usage:
   python3 scripts/ci/sync-agent-rulebooks.py          # Synchronizes all client files
@@ -29,6 +30,7 @@ TARGET_CLIENTS = {
     "MIMOCODE.md": "ASHFALL PROJECT — MIMOCODE Instructions",
     "OPENSETUP.md": "ASHFALL PROJECT — OPENSETUP Instructions",
     "ANTIGRAVITY.md": "ASHFALL PROJECT — ANTIGRAVITY Instructions",
+    "GEMINI.md": "ASHFALL PROJECT — GEMINI Instructions",
     ".clinerules": "ASHFALL PROJECT — Cline Rules",
     ".cursorrules": "ASHFALL PROJECT — Cursor Rules",
     ".windsurfrules": "ASHFALL PROJECT — Windsurf Rules",

@@ -803,10 +803,19 @@ namespace Ashfall.Core.Expeditions
             return path;
         }
 
+        public RailwayState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<RailwayState>(json) ?? new RailwayState();
+        }
+
         public void RestoreState(RailwayState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<RailwayState>(json) ?? new RailwayState();
         }
 
         /// <summary>Simple estimate DTO for rail expedition planning.</summary>

@@ -39,9 +39,9 @@ namespace Ashfall.Core.Tests.Collectibles
             string locReadingBody = loc.Get("tutorial.collectible.reading_and_discovering.body");
 
             Assert.Equal("Cultural Artifacts", locCulturalTitle);
-            Assert.Contains("surviving objects", locCulturalBody);
+            Assert.Contains("survived the exchange", locCulturalBody);
             Assert.Equal("Reading and Discovering", locReadingTitle);
-            Assert.Contains("useful information", locReadingBody);
+            Assert.Contains("carry information", locReadingBody);
         }
 
         [Fact]

@@ -143,9 +143,43 @@ namespace Ashfall.Core.Farming
         public const float WaterUnitsPerWatering = 50f;
         public static readonly int[] ToxicityPerUnitByBand = { 0, 2, 8, 15 };
 
+        // ---- B5–B8 Phase 4 (Plan 64): winter light pressure + microclimate ----
+
+        /// <summary>Season windows treated as deep winter for light pressure.</summary>
+        public static readonly string[] DeepWinterWindowIds =
+            { "window_deep_freeze", "window_long_winter" };
+
+        /// <summary>Effective light availability in deep winter without a
+        /// microclimate setup (short, dim days; grow lights sized for the
+        /// catalog baseline).</summary>
+        public const int DeepWinterLightPermille = 600;
+
+        /// <summary>
+        /// B5–B8 Phase 4 (Plan 64): winter light pressure with microclimate
+        /// compensation — pure, deterministic, no RNG (UI/test safe).
+        ///
+        /// Deep-winter windows yield reduced effective light unless the
+        /// researched microclimate capability compensates — and the
+        /// compensation itself requires a powered greenhouse room (thermal
+        /// siphons and LEDs are physical loads): research is permission,
+        /// power is the input, and the greenhouse never owns season state.
+        /// Non-winter seasons pass through unchanged (legacy parity).
+        /// </summary>
+        public static int WinterAdjustedLightPermille(int poweredLightPermille,
+            string seasonWindowId, bool hasMicroclimateCapability, bool greenhouseRoomPowered)
+        {
+            bool isDeepWinter = seasonWindowId == DeepWinterWindowIds[0]
+                                || seasonWindowId == DeepWinterWindowIds[1];
+            if (!isDeepWinter) return poweredLightPermille;
+            if (!greenhouseRoomPowered) return 0; // no power, no light at all
+            bool compensated = hasMicroclimateCapability;
+            return compensated ? poweredLightPermille : DeepWinterLightPermille;
+        }
+
         private readonly AgricultureState _state;
         private readonly GreenhouseSystem _greenhouse;
         private CropStrainCatalogContainer _catalog = new CropStrainCatalogContainer();
+        private AgricultureEnvironmentSnapshot _lastEnv = AgricultureEnvironmentSnapshot.Default();
 
         public AgricultureSystem(GreenhouseSystem greenhouse)
         {
@@ -552,7 +586,7 @@ namespace Ashfall.Core.Farming
             {
                 BaseYield = cropDef.BaseYield,
                 StrainModifier = strain?.yield_modifier ?? 1f,
-                LightFactor = 1f,
+                LightFactor = Clamp01(_lastEnv.LightingAvailabilityPermille / 1000f),
                 WaterBandFactor = 1f,
                 ToxicityPermille = p?.toxicity_permille ?? 0,
                 ToxicityTolerancePermille = strain?.toxicity_tolerance_permille ?? 300,
@@ -627,6 +661,7 @@ namespace Ashfall.Core.Farming
         {
             if (_state.last_tick_day == day) return;
             _state.last_tick_day = day;
+            _lastEnv = env;
 
             // 1. Medium quality / toxicity drift (stable plot order).
             for (int i = 0; i < _state.plots.Count; i++)

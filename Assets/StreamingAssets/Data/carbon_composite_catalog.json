@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "materials": [
+    { "material_profile_id": "prepreg_standard", "freshness_days": 20, "aging_penalty_per_day": 0.04 }
+  ],
+  "components": [
+    { "component_id": "composite_sensor_housing", "input_material_id": "prepreg_standard", "input_quantity": 2, "output_item_id": "item_faraday_mesh", "mass_factor": 0.80, "durability_factor": 1.10, "required_quality": "structural", "cure_profile_id": "precision_cure" },
+    { "component_id": "composite_gpr_cart_frame", "input_material_id": "prepreg_standard", "input_quantity": 3, "output_item_id": "item_geophone_probe", "mass_factor": 0.75, "durability_factor": 1.15, "required_quality": "field", "cure_profile_id": "precision_cure" }
+  ],
+  "cures": [
+    { "cure_profile_id": "precision_cure", "process_ticks": 3, "target_thermal": 0.70, "target_pressure": 0.65, "minimum_seal": 0.75, "defect_rate": 0.12 }
+  ]
+}

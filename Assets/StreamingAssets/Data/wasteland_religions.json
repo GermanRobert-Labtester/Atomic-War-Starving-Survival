@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "religions": [
+    {
+      "belief_id": "belief_ash_witnesses",
+      "display_name": "The Ash Witnesses",
+      "doctrine_tags": ["memory", "grief", "penance"],
+      "conversion_base_bp": 1400,
+      "fervor_daily_decay_bp": 450,
+      "fervor_ritual_gain_bp": 1800,
+      "cohesion_bonus_bp": 600,
+      "despair_resistance_bp": 1600,
+      "fanaticism_threshold": 78,
+      "dissent_tolerance": "low",
+      "ritual_resource_item_ids": ["canned_food", "clean_water"],
+      "shrine_room_tags": ["social", "morale"],
+      "broadcast_profile": "neutral",
+      "tags": ["fictional", "wasteland_movement", "penance"]
+    },
+    {
+      "belief_id": "belief_rebuilders",
+      "display_name": "The Rebuilders",
+      "doctrine_tags": ["labor", "craft", "agency"],
+      "conversion_base_bp": 1100,
+      "fervor_daily_decay_bp": 380,
+      "fervor_ritual_gain_bp": 1400,
+      "cohesion_bonus_bp": 1200,
+      "despair_resistance_bp": 900,
+      "fanaticism_threshold": 85,
+      "dissent_tolerance": "medium",
+      "ritual_resource_item_ids": ["scrap_metal", "scrap_wood"],
+      "shrine_room_tags": ["social", "study"],
+      "broadcast_profile": "receptive",
+      "tags": ["fictional", "wasteland_movement", "labor"]
+    },
+    {
+      "belief_id": "belief_listeners",
+      "display_name": "The Listeners",
+      "doctrine_tags": ["radio", "signals", "hope"],
+      "conversion_base_bp": 900,
+      "fervor_daily_decay_bp": 500,
+      "fervor_ritual_gain_bp": 1500,
+      "cohesion_bonus_bp": 700,
+      "despair_resistance_bp": 1300,
+      "fanaticism_threshold": 80,
+      "dissent_tolerance": "high",
+      "ritual_resource_item_ids": ["clean_water", "canned_food"],
+      "shrine_room_tags": ["social", "morale", "hope"],
+      "broadcast_profile": "receptive",
+      "tags": ["fictional", "wasteland_movement", "signals"]
+    }
+  ]
+}

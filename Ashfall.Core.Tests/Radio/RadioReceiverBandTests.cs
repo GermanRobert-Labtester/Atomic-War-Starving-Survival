@@ -70,37 +70,56 @@ namespace Ashfall.Core.Tests.Radio
             Assert.Equal("uhf_high", prev.BandId);
         }
 
-        [Theory]
-        [InlineData(88.3f, 88300f)]
-        [InlineData(156.8f, 156800f)]
-        [InlineData(445.2f, 445200f)]
-        [InlineData(901.2f, 901200f)]
-        public void UnitConversion_MhzAndKHzAreSymmetric(float mhz, float khz)
+        // TEST-AGGREGATION: source_rows=4 aggregate_cases=1 saved_cases=3
+        [Fact]
+        public void UnitConversion_MhzAndKHzAreSymmetric()
         {
-            float convertedKhz = RadioReceiverPlan.MhzToKHz(mhz);
-            Assert.Equal(khz, convertedKhz);
+            var failures = new List<string>();
+            var cases = new[]
+            {
+                (Mhz: 88.3f, Khz: 88300f),
+                (Mhz: 156.8f, Khz: 156800f),
+                (Mhz: 445.2f, Khz: 445200f),
+                (Mhz: 901.2f, Khz: 901200f),
+            };
 
-            float convertedMhz = RadioReceiverPlan.KHzToMhz(convertedKhz);
-            Assert.Equal(mhz, convertedMhz);
+            foreach (var testCase in cases)
+            {
+                float convertedKhz = RadioReceiverPlan.MhzToKHz(testCase.Mhz);
+                float convertedMhz = RadioReceiverPlan.KHzToMhz(convertedKhz);
+                if (convertedKhz != testCase.Khz || convertedMhz != testCase.Mhz)
+                {
+                    failures.Add($"{testCase.Mhz} MHz: expected {testCase.Khz} kHz / {testCase.Mhz} MHz, got {convertedKhz} kHz / {convertedMhz} MHz");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
+        // TEST-AGGREGATION: source_rows=5 aggregate_cases=1 saved_cases=4
         public void FiveRescueMissionFrequencies_DistributeAcrossAllBands()
         {
-            // Trapped Mechanic: 88.3 MHz -> VHF-Low
-            Assert.Equal("vhf_low", RadioReceiverPlan.GetBandForFrequencyMhz(88.3f).BandId);
+            var failures = new List<string>();
+            var cases = new[]
+            {
+                (FrequencyMhz: 88.3f, ExpectedBandId: "vhf_low"),
+                (FrequencyMhz: 156.8f, ExpectedBandId: "vhf_high"),
+                (FrequencyMhz: 192.4f, ExpectedBandId: "vhf_high"),
+                (FrequencyMhz: 445.2f, ExpectedBandId: "uhf_low"),
+                (FrequencyMhz: 901.2f, ExpectedBandId: "uhf_high"),
+            };
 
-            // Injured Trader: 156.8 MHz -> VHF-High
-            Assert.Equal("vhf_high", RadioReceiverPlan.GetBandForFrequencyMhz(156.8f).BandId);
+            foreach (var testCase in cases)
+            {
+                var actualBandId = RadioReceiverPlan.GetBandForFrequencyMhz(testCase.FrequencyMhz).BandId;
+                if (actualBandId != testCase.ExpectedBandId)
+                {
+                    failures.Add($"{testCase.FrequencyMhz} MHz: expected {testCase.ExpectedBandId}, got {actualBandId}");
+                }
+            }
 
-            // Raider Trap: 192.4 MHz -> VHF-High
-            Assert.Equal("vhf_high", RadioReceiverPlan.GetBandForFrequencyMhz(192.4f).BandId);
-
-            // Family Shelter: 445.2 MHz -> UHF-Low
-            Assert.Equal("uhf_low", RadioReceiverPlan.GetBandForFrequencyMhz(445.2f).BandId);
-
-            // Military Patrol: 901.2 MHz -> UHF-High
-            Assert.Equal("uhf_high", RadioReceiverPlan.GetBandForFrequencyMhz(901.2f).BandId);
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
     }
 }

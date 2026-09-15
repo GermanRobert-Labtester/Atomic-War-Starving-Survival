@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Economy;
@@ -29,45 +30,78 @@ namespace Ashfall.Core.Tests
         }
 
         // ── Stance characterization ───────────────────────────────────
-        [Theory]
-        [InlineData(-50, -50, -30, -20, 40, true, TradeStance.HostileRaid)]
-        [InlineData(-51, -50, -30, -20, 40, true, TradeStance.HostileRaid)]
-        [InlineData(-30, -50, -30, -20, 40, true, TradeStance.Rob)]
-        [InlineData(-25, -50, -30, -20, 40, true, TradeStance.Refuse)]
-        [InlineData(-20, -50, -30, -20, 40, true, TradeStance.Trade)]
-        [InlineData(39, -50, -30, -20, 40, true, TradeStance.Trade)]
-        [InlineData(40, -50, -30, -20, 40, true, TradeStance.ShareIntel)]
-        [InlineData(100, -50, -30, -20, 40, true, TradeStance.ShareIntel)]
-        [InlineData(-50, -50, -30, -20, 40, false, TradeStance.Refuse)]
-        [InlineData(0, -50, -30, -20, 40, false, TradeStance.Refuse)]
-        public void Stance_Thresholds_ReturnsExpectedStance(
-            float trust, float raidAt, float robAt, float tradeAt, float intelAt, bool isActive, TradeStance expected)
+        [Fact]
+        public void Stance_ThresholdTable_ReturnsExpectedStance()
         {
-            Assert.Equal(expected, ComputeStance(trust, raidAt, robAt, tradeAt, intelAt, isActive));
+            var cases = new[]
+            {
+                (Trust: -50f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.HostileRaid),
+                (Trust: -51f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.HostileRaid),
+                (Trust: -30f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.Rob),
+                (Trust: -25f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.Refuse),
+                (Trust: -20f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.Trade),
+                (Trust: 39f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.Trade),
+                (Trust: 40f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.ShareIntel),
+                (Trust: 100f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: true, Expected: TradeStance.ShareIntel),
+                (Trust: -50f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: false, Expected: TradeStance.Refuse),
+                (Trust: 0f, RaidAt: -50f, RobAt: -30f, TradeAt: -20f, IntelAt: 40f, IsActive: false, Expected: TradeStance.Refuse)
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var actual = ComputeStance(test.Trust, test.RaidAt, test.RobAt, test.TradeAt, test.IntelAt, test.IsActive);
+                if (actual != test.Expected)
+                    failures.Add($"trust={test.Trust}, active={test.IsActive}: expected {test.Expected}, got {actual}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(TradeStance.Trade, true)]
-        [InlineData(TradeStance.ShareIntel, true)]
-        [InlineData(TradeStance.Refuse, false)]
-        [InlineData(TradeStance.Rob, false)]
-        [InlineData(TradeStance.HostileRaid, false)]
-        public void WillTrade_MatchesStance(TradeStance stance, bool expected)
+        [Fact]
+        public void WillTrade_StanceTable_MatchesExpectedValues()
         {
-            bool WillTrade(TradeStance s) => s == TradeStance.Trade || s == TradeStance.ShareIntel;
-            Assert.Equal(expected, WillTrade(stance));
+            var cases = new[]
+            {
+                (Stance: TradeStance.Trade, Expected: true),
+                (Stance: TradeStance.ShareIntel, Expected: true),
+                (Stance: TradeStance.Refuse, Expected: false),
+                (Stance: TradeStance.Rob, Expected: false),
+                (Stance: TradeStance.HostileRaid, Expected: false)
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                bool actual = test.Stance == TradeStance.Trade || test.Stance == TradeStance.ShareIntel;
+                if (actual != test.Expected)
+                    failures.Add($"{test.Stance}: expected {test.Expected}, got {actual}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(TradeStance.ShareIntel, true)]
-        [InlineData(TradeStance.Trade, false)]
-        [InlineData(TradeStance.Refuse, false)]
-        [InlineData(TradeStance.Rob, false)]
-        [InlineData(TradeStance.HostileRaid, false)]
-        public void WillShareIntel_MatchesStance(TradeStance stance, bool expected)
+        [Fact]
+        public void WillShareIntel_StanceTable_MatchesExpectedValues()
         {
-            bool WillShareIntel(TradeStance s) => s == TradeStance.ShareIntel;
-            Assert.Equal(expected, WillShareIntel(stance));
+            var cases = new[]
+            {
+                (Stance: TradeStance.ShareIntel, Expected: true),
+                (Stance: TradeStance.Trade, Expected: false),
+                (Stance: TradeStance.Refuse, Expected: false),
+                (Stance: TradeStance.Rob, Expected: false),
+                (Stance: TradeStance.HostileRaid, Expected: false)
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                bool actual = test.Stance == TradeStance.ShareIntel;
+                if (actual != test.Expected)
+                    failures.Add($"{test.Stance}: expected {test.Expected}, got {actual}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ── Price / scarcity characterization ─────────────────────────

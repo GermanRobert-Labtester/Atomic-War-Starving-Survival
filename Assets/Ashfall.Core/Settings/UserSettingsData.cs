@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -16,7 +17,7 @@ namespace Ashfall.Core.Settings
 
         // ── Display ───────────────────────────────────────────────────────
         [JsonPropertyName("window_mode")]
-        public int WindowMode { get; set; } = 0; // 0: Windowed, 1: Borderless, 2: Fullscreen
+        public int WindowMode { get; set; } = 1; // 0: Windowed, 1: Borderless Fullscreen, 2: Exclusive Fullscreen
 
         [JsonPropertyName("resolution_width")]
         public int ResolutionWidth { get; set; } = 1920;
@@ -68,6 +69,13 @@ namespace Ashfall.Core.Settings
         [JsonPropertyName("large_fonts")]
         public bool LargeFonts { get; set; } = false;
 
+        /// <summary>
+        /// Plan 184 colorblind simulation mode:
+        /// <c>none</c>, <c>protanopia</c>, <c>deuteranopia</c>, <c>tritanopia</c>.
+        /// </summary>
+        [JsonPropertyName("colorblind_mode")]
+        public string ColorblindMode { get; set; } = ColorblindColorMapper.None;
+
         // ── Gameplay Preferences ──────────────────────────────────────────
         [JsonPropertyName("tutorial_mode")]
         public int TutorialMode { get; set; } = 0; // 0: All, 1: ContextualOnly, 2: Disabled
@@ -110,6 +118,7 @@ namespace Ashfall.Core.Settings
                 HazardTextLabels = HazardTextLabels,
                 ReducedMotion = ReducedMotion,
                 LargeFonts = LargeFonts,
+                ColorblindMode = ColorblindMode ?? ColorblindColorMapper.None,
                 TutorialMode = TutorialMode,
                 ConfirmEndDay = ConfirmEndDay,
                 VerboseRadioLog = VerboseRadioLog,

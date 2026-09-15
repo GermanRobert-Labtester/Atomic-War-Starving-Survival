@@ -80,6 +80,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            Visible = false;
             var binder = new SceneBinder(this, typeof(SubterraneanOperationsPanel));
             binder.Require<Button>("CloseButton");
             binder.Require<OptionButton>("SectorSelector");

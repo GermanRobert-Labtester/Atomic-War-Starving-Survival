@@ -36,6 +36,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            Visible = false;
             _backdrop = GetNodeOrNull<ColorRect>("%Backdrop");
             _severityHeader = GetNodeOrNull<Label>("%SeverityHeader");
             _countdown = GetNodeOrNull<Label>("%Countdown");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -139,6 +140,20 @@ namespace Ashfall.Core.Tests
             Assert.True(engine2.Memory.HasMutation(LocationMemorySystem.MutationKm19Plated));
             Assert.True(engine2.Layouts.HasFlag(
                 "loc_cut_kilometre_19", LocationMemorySystem.MutationKm19Plated));
+        }
+
+        [Fact]
+        public void CaptureState_ReturnsIndependentClone_NotLiveAlias()
+        {
+            var engine = BuildEngine();
+            engine.UnlockExpansion(currentDay: 3);
+            var captured = engine.CaptureState();
+            Assert.NotSame(engine.State, captured);
+
+            captured.currentDay = 999;
+            captured.expansionUnlocked = false;
+            Assert.Equal(3, engine.CurrentDay);
+            Assert.True(engine.IsUnlocked);
         }
 
         [Fact]

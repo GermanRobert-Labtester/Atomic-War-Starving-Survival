@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
@@ -348,8 +349,7 @@ namespace Ashfall.Core.Tests
             Assert.True(geared.RadiationDose > 30f, $"degraded gear protects less; dose={geared.RadiationDose}");
         }
 
-        // FromInventory method removed during consolidation - Radiation now uses
-        // Inventory.WornGear directly, so no conversion is needed
+        // Radiation now uses Inventory.WornGear directly, so no conversion is needed.
 
         [Fact]
         public void OldSave_Deserialization_Equivalence()

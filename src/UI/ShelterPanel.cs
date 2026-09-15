@@ -58,6 +58,12 @@ namespace AtomicWar.GodotApp.UI
             _interiorView?.SetMachineTellCatalog(catalog);
         }
 
+        /// <summary>Swap the interior cutaway to the dawn/day/dusk/night placeholder variant.</summary>
+        public void SetLightingPhase(string phase)
+        {
+            _interiorView?.SetLightingPhase(phase);
+        }
+
         public void SetGraffitiCatalog(Ashfall.Core.Narrative.BunkerGraffitiCatalog? catalog, int currentDay = int.MaxValue)
         {
             _graffitiCatalog = catalog;

@@ -30,81 +30,149 @@ namespace Ashfall.Core.Tests.Radio
             }
         }
 
-        [Theory]
-        [InlineData("checkpoint_kilo_armory", 6, 4)]
-        [InlineData("loc_recovery_yard", 6, 6)]
-        [InlineData("rural_gas_station", 3, 3)]
-        [InlineData("suburban_house", 2, 2)]
-        [InlineData("loc_denial_cut_substation", 8, 4)]
-        [InlineData("location_silent_observatory", 14, 8)]
-        public void DirectResolution_CanonicalId_ResolvesDirectly(string destId, int expectedDistance, int expectedDanger)
+        [Fact]
+        public void DirectResolution_CanonicalId_ResolvesDirectly()
         {
-            var res = _resolver.Resolve(destId);
-            Assert.True(res.IsValid);
-            Assert.Equal(destId, res.DestinationId);
-            Assert.Equal("Direct", res.ResolutionMode);
-            Assert.Equal(expectedDistance, res.DistanceTicks);
-            Assert.Equal(expectedDanger, res.DangerLevel);
-            Assert.Null(res.ErrorCode);
+            var cases = new[]
+            {
+                (DestinationId: "checkpoint_kilo_armory", Distance: 6, Danger: 4),
+                (DestinationId: "loc_recovery_yard", Distance: 6, Danger: 6),
+                (DestinationId: "rural_gas_station", Distance: 3, Danger: 3),
+                (DestinationId: "suburban_house", Distance: 2, Danger: 2),
+                (DestinationId: "loc_denial_cut_substation", Distance: 8, Danger: 4),
+                (DestinationId: "location_silent_observatory", Distance: 14, Danger: 8)
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var res = _resolver.Resolve(test.DestinationId);
+                if (!res.IsValid)
+                    failures.Add($"{test.DestinationId}: expected valid resolution");
+                if (res.DestinationId != test.DestinationId)
+                    failures.Add($"{test.DestinationId}: resolved to {res.DestinationId}");
+                if (res.ResolutionMode != "Direct")
+                    failures.Add($"{test.DestinationId}: expected Direct mode, got {res.ResolutionMode}");
+                if (res.DistanceTicks != test.Distance)
+                    failures.Add($"{test.DestinationId}: expected distance {test.Distance}, got {res.DistanceTicks}");
+                if (res.DangerLevel != test.Danger)
+                    failures.Add($"{test.DestinationId}: expected danger {test.Danger}, got {res.DangerLevel}");
+                if (res.ErrorCode != null)
+                    failures.Add($"{test.DestinationId}: unexpected error {res.ErrorCode}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData("raider_ambush_site", "collapsed_building")]
-        [InlineData("loc_bridge_seven", "loc_weighbridge")]
-        [InlineData("location_substation_omega", "electrical_substation")]
-        public void AliasedResolution_NonCanonicalLocations_ResolveToCanonical(string rawLoc, string expectedCanonical)
+        [Fact]
+        public void AliasedResolution_NonCanonicalLocations_ResolveToCanonical()
         {
-            var res = _resolver.Resolve(rawLoc);
-            Assert.True(res.IsValid);
-            Assert.Equal(expectedCanonical, res.DestinationId);
-            Assert.Equal("Aliased", res.ResolutionMode);
-            Assert.Null(res.ErrorCode);
+            var cases = new[]
+            {
+                (RawLocation: "raider_ambush_site", ExpectedCanonical: "collapsed_building"),
+                (RawLocation: "loc_bridge_seven", ExpectedCanonical: "loc_weighbridge"),
+                (RawLocation: "location_substation_omega", ExpectedCanonical: "electrical_substation")
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var res = _resolver.Resolve(test.RawLocation);
+                if (!res.IsValid)
+                    failures.Add($"{test.RawLocation}: expected valid resolution");
+                if (res.DestinationId != test.ExpectedCanonical)
+                    failures.Add($"{test.RawLocation}: expected {test.ExpectedCanonical}, got {res.DestinationId}");
+                if (res.ResolutionMode != "Aliased")
+                    failures.Add($"{test.RawLocation}: expected Aliased mode, got {res.ResolutionMode}");
+                if (res.ErrorCode != null)
+                    failures.Add($"{test.RawLocation}: unexpected error {res.ErrorCode}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData("loc_checkpoint_kilo", "checkpoint_kilo_armory")]
-        [InlineData("loc_bunker_4_east_trap", "collapsed_building")]
-        [InlineData("loc_sector_9_substation", "electrical_substation")]
-        [InlineData("loc_relay_44_bunker", "loc_weighbridge")]
-        [InlineData("loc_marsh_caravan_wreck", "loc_water_station")]
-        [InlineData("loc_meridian_cold_store", "loc_the_allotments")]
-        [InlineData("loc_river_barge_olenka", "loc_lock_gate_four")]
-        [InlineData("loc_field_medic_post", "prewar_medical_cache")]
-        public void BuiltinFallbackAliases_All8ResolveToCanonical(string rawLoc, string expectedCanonical)
+        [Fact]
+        public void BuiltinFallbackAliases_All8ResolveToCanonical()
         {
-            var res = _resolver.Resolve(rawLoc);
-            Assert.True(res.IsValid);
-            Assert.Equal(expectedCanonical, res.DestinationId);
-            Assert.Equal("Aliased", res.ResolutionMode);
-            Assert.Null(res.ErrorCode);
+            var cases = new[]
+            {
+                (RawLocation: "loc_checkpoint_kilo", ExpectedCanonical: "checkpoint_kilo_armory"),
+                (RawLocation: "loc_bunker_4_east_trap", ExpectedCanonical: "collapsed_building"),
+                (RawLocation: "loc_sector_9_substation", ExpectedCanonical: "electrical_substation"),
+                (RawLocation: "loc_relay_44_bunker", ExpectedCanonical: "loc_weighbridge"),
+                (RawLocation: "loc_marsh_caravan_wreck", ExpectedCanonical: "loc_water_station"),
+                (RawLocation: "loc_meridian_cold_store", ExpectedCanonical: "loc_the_allotments"),
+                (RawLocation: "loc_river_barge_olenka", ExpectedCanonical: "loc_lock_gate_four"),
+                (RawLocation: "loc_field_medic_post", ExpectedCanonical: "prewar_medical_cache")
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var res = _resolver.Resolve(test.RawLocation);
+                if (!res.IsValid)
+                    failures.Add($"{test.RawLocation}: expected valid resolution");
+                if (res.DestinationId != test.ExpectedCanonical)
+                    failures.Add($"{test.RawLocation}: expected {test.ExpectedCanonical}, got {res.DestinationId}");
+                if (res.ResolutionMode != "Aliased")
+                    failures.Add($"{test.RawLocation}: expected Aliased mode, got {res.ResolutionMode}");
+                if (res.ErrorCode != null)
+                    failures.Add($"{test.RawLocation}: unexpected error {res.ErrorCode}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData("table_loot_farm", "loc_the_allotments")]
-        [InlineData("table_loot_power_substation", "loc_denial_cut_substation")]
-        [InlineData("table_loot_apartment_block", "suburban_house")]
-        [InlineData("table_loot_industrial_district", "rural_gas_station")]
-        [InlineData("table_loot_hospital", "hospital_pharmacy")]
-        public void ScavengingTableId_ResolvesToCanonicalDestination(string tableId, string expectedDestId)
+        [Fact]
+        public void ScavengingTableId_ResolvesToCanonicalDestination()
         {
-            var res = _resolver.Resolve(tableId);
-            Assert.True(res.IsValid);
-            Assert.Equal(expectedDestId, res.DestinationId);
-            Assert.Equal("AliasedTable", res.ResolutionMode);
-            Assert.Null(res.ErrorCode);
+            var cases = new[]
+            {
+                (TableId: "table_loot_farm", ExpectedDestination: "loc_the_allotments"),
+                (TableId: "table_loot_power_substation", ExpectedDestination: "loc_denial_cut_substation"),
+                (TableId: "table_loot_apartment_block", ExpectedDestination: "suburban_house"),
+                (TableId: "table_loot_industrial_district", ExpectedDestination: "rural_gas_station"),
+                (TableId: "table_loot_hospital", ExpectedDestination: "hospital_pharmacy")
+            };
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var res = _resolver.Resolve(test.TableId);
+                if (!res.IsValid)
+                    failures.Add($"{test.TableId}: expected valid resolution");
+                if (res.DestinationId != test.ExpectedDestination)
+                    failures.Add($"{test.TableId}: expected {test.ExpectedDestination}, got {res.DestinationId}");
+                if (res.ResolutionMode != "AliasedTable")
+                    failures.Add($"{test.TableId}: expected AliasedTable mode, got {res.ResolutionMode}");
+                if (res.ErrorCode != null)
+                    failures.Add($"{test.TableId}: unexpected error {res.ErrorCode}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("   ")]
-        public void NullOrEmpty_ResolvesToFallbackWithErrorCode(string? emptyLocation)
+        [Fact]
+        public void NullOrEmpty_ResolvesToFallbackWithErrorCode()
         {
-            var res = _resolver.Resolve(emptyLocation);
-            Assert.False(res.IsValid);
-            Assert.Equal("collapsed_building", res.DestinationId);
-            Assert.Equal("Fallback", res.ResolutionMode);
-            Assert.Equal("EMPTY_LOCATION_ID", res.ErrorCode);
+            string?[] locations = { null, string.Empty, "   " };
+            var failures = new List<string>();
+
+            foreach (var location in locations)
+            {
+                var res = _resolver.Resolve(location);
+                string label = location == null ? "<null>" : $"'{location}'";
+                if (res.IsValid)
+                    failures.Add($"{label}: expected invalid resolution");
+                if (res.DestinationId != "collapsed_building")
+                    failures.Add($"{label}: expected fallback collapsed_building, got {res.DestinationId}");
+                if (res.ResolutionMode != "Fallback")
+                    failures.Add($"{label}: expected Fallback mode, got {res.ResolutionMode}");
+                if (res.ErrorCode != "EMPTY_LOCATION_ID")
+                    failures.Add($"{label}: expected EMPTY_LOCATION_ID, got {res.ErrorCode}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

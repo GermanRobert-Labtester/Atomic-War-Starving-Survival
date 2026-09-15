@@ -11,7 +11,15 @@ Usage:
   python3 scripts/ci/generate-selftest-manifest.py           # Regenerate docs/ci/SELFTEST_MANIFEST.json
   python3 scripts/ci/generate-selftest-manifest.py --check   # Verify manifest is in sync with host registry
   python3 scripts/ci/generate-selftest-manifest.py --run <id># Run a specific test with timing and validate summary
-  python3 scripts/ci/generate-selftest-manifest.py --smoke-all # Run all headless self-tests with timing & budgets
+  python3 scripts/ci/generate-selftest-manifest.py --smoke-all # Run headless self-tests with timing & budgets
+  Options for --smoke-all (all optional, `--opt=value` or `--opt value`):
+    --shard I/N     deterministic slice I of N (e.g. 1/4) for low-latency runs
+    --include SUB   substring filter over test id / flag / aliases
+    --fail-fast     stop at the first functional failure
+    --dry-run       list the selection + budget estimate, boot no per-test Godot
+    --max-seconds S global cap, clamped to (1, 180]
+  Exit codes for --smoke-all: 0 all selected PASS; 1 functional FAIL;
+  2 truncated (cap hit) or empty selection — SKIPPED_NOT_STARTED, never FAIL.
 """
 
 import json
@@ -24,6 +32,8 @@ import time
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 MANIFEST_PATH = REPO_ROOT / "docs" / "ci" / "SELFTEST_MANIFEST.json"
+MAX_GODOT_SECONDS = 180
+GODOT_RUNNER = REPO_ROOT / "scripts" / "ci" / "run-godot-bounded.sh"
 
 DEFAULT_PER_TEST_BUDGET_SEC = 5.0
 SPECIAL_BUDGETS_SEC = {
@@ -34,9 +44,72 @@ SPECIAL_BUDGETS_SEC = {
     "warlord_host_selftest": 8.0
 }
 
+
+def budget_for(test_id):
+    return SPECIAL_BUDGETS_SEC.get(test_id, DEFAULT_PER_TEST_BUDGET_SEC)
+
+
+def parse_smoke_options(args):
+    """Parse --smoke-all slice options without disturbing legacy invocations."""
+    opts = {"shard": None, "include": None, "fail_fast": "--fail-fast" in args,
+            "dry_run": "--dry-run" in args, "max_seconds": MAX_GODOT_SECONDS}
+
+    def take_value(flag):
+        for i, a in enumerate(args):
+            if a == flag and i + 1 < len(args) and not args[i + 1].startswith("--"):
+                return args[i + 1]
+            if a.startswith(flag + "="):
+                return a[len(flag) + 1:]
+        return None
+
+    shard_raw = take_value("--shard")
+    if shard_raw is not None:
+        try:
+            num, den = shard_raw.split("/")
+            idx, total = int(num), int(den)
+            if idx < 1 or total < 1 or idx > total:
+                raise ValueError
+            opts["shard"] = (idx, total)
+        except ValueError:
+            print(f"ERROR: --shard must be I/N with 1 <= I <= N (got '{shard_raw}')", file=sys.stderr)
+            sys.exit(2)
+    inc = take_value("--include")
+    if inc is not None and inc.strip():
+        opts["include"] = inc.strip().lower()
+    max_raw = take_value("--max-seconds")
+    if max_raw is not None:
+        try:
+            opts["max_seconds"] = min(max(int(max_raw), 1), MAX_GODOT_SECONDS)
+        except ValueError:
+            print(f"ERROR: --max-seconds must be an integer (got '{max_raw}')", file=sys.stderr)
+            sys.exit(2)
+    return opts
+
+
+def select_smoke_tests(tests, opts):
+    selected = list(tests)
+    if opts.get("include"):
+        needle = opts["include"]
+        selected = [t for t in selected
+                    if needle in t.get("test_id", "").lower()
+                    or needle in t.get("primary_flag", "").lower()
+                    or any(needle in a.lower() for a in (t.get("aliases") or []))]
+    shard = opts.get("shard")
+    if shard is not None:
+        idx, total = shard
+        selected = [t for i, t in enumerate(selected) if (i % total) == (idx - 1)]
+    return selected
+
 def fetch_live_manifest():
-    cmd = ["godot", "--headless", "--path", str(REPO_ROOT), "--", "--selftest-manifest"]
-    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=str(REPO_ROOT))
+    cmd = ["bash", str(GODOT_RUNNER), "--path", str(REPO_ROOT), "--", "--selftest-manifest"]
+    res = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        cwd=str(REPO_ROOT),
+        timeout=MAX_GODOT_SECONDS,
+    )
     if res.returncode != 0:
         print(f"ERROR: failed to query --selftest-manifest (exit code {res.returncode}):", file=sys.stderr)
         print(res.stderr, file=sys.stderr)
@@ -59,13 +132,17 @@ def fetch_live_manifest():
         print(output[start_idx:start_idx+400], file=sys.stderr)
         sys.exit(1)
 
-def run_and_validate_test(entry):
+def run_and_validate_test(entry, timeout_override=None):
     primary_flag = entry["primary_flag"]
     test_id = entry["test_id"]
     budget_sec = SPECIAL_BUDGETS_SEC.get(test_id, DEFAULT_PER_TEST_BUDGET_SEC)
 
     print(f"── Running {test_id} ({primary_flag}, budget: {budget_sec:.1f}s) ──")
-    cmd = ["godot", "--headless", "--path", str(REPO_ROOT), "--", primary_flag]
+    cmd = ["bash", str(GODOT_RUNNER), "--path", str(REPO_ROOT), "--", primary_flag]
+    configured_timeout = int(entry.get("timeout_seconds", 30))
+    timeout_sec = min(configured_timeout, MAX_GODOT_SECONDS)
+    if timeout_override is not None:
+        timeout_sec = min(timeout_sec, max(int(timeout_override), 1))
 
     start_time = time.perf_counter()
     try:
@@ -75,11 +152,11 @@ def run_and_validate_test(entry):
             stderr=subprocess.PIPE,
             text=True,
             cwd=str(REPO_ROOT),
-            timeout=entry.get("timeout_seconds", 30)
+            timeout=timeout_sec
         )
     except subprocess.TimeoutExpired:
         elapsed = time.perf_counter() - start_time
-        print(f"FAIL: {test_id} timed out after {elapsed:.2f}s (timeout: {entry.get('timeout_seconds', 30)}s)", file=sys.stderr)
+        print(f"FAIL: {test_id} timed out after {elapsed:.2f}s (timeout: {timeout_sec}s)", file=sys.stderr)
         return False, elapsed, budget_sec, False
 
     elapsed = time.perf_counter() - start_time
@@ -172,18 +249,60 @@ def main():
         sys.exit(0 if ok else 1)
 
     elif "--smoke-all" in args:
-        data = fetch_live_manifest()
-        tests = [t for t in data["tests"] if t.get("headless_compatible", True)]
-        print(f"Running smoke test over {len(tests)} headless self-tests with timing & budgets...\n")
+        opts = parse_smoke_options(args)
+        cap = opts["max_seconds"]
+        if opts["dry_run"]:
+            try:
+                data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+            except Exception as ex:
+                print(f"ERROR: --dry-run reads {MANIFEST_PATH}: {ex}", file=sys.stderr)
+                sys.exit(1)
+        else:
+            data = fetch_live_manifest()
+        headless = [t for t in data["tests"] if t.get("headless_compatible", True)]
+        tests = select_smoke_tests(headless, opts)
+        if not tests:
+            print("Smoke selection is empty after --include/--shard filters; nothing to run.")
+            sys.exit(2 if opts["include"] or opts["shard"] else 0)
+        estimate = sum(budget_for(t["test_id"]) for t in tests)
+        scope = f"{len(tests)}/{len(headless)} headless"
+        if opts["shard"] is not None:
+            idx, total = opts["shard"]
+            scope += f" (shard {idx}/{total})"
+        if opts["include"]:
+            scope += f" (include '{opts['include']}')"
+        print(f"Running smoke test over {scope} with timing & budgets...\n")
+        print(f"Estimate: budgets alone sum to ~{estimate:.0f}s (excludes per-boot engine "
+              f"startup); global cap {cap}s. Prefer --shard I/N or --include SUB for "
+              f"focused low-latency agent runs.\n")
+        if opts["dry_run"]:
+            for t in tests:
+                print(f"  - {t['test_id']} ({t['primary_flag']}, budget {budget_for(t['test_id']):.1f}s)")
+            print(f"\nDRY-RUN: {len(tests)} selected, ~{estimate:.0f}s budget estimate, cap {cap}s.")
+            sys.exit(0)
 
         passed = 0
         failed = 0
         failures = []
+        skipped = []
         regressions = []
         total_time = 0.0
 
-        for t in tests:
-            ok, elapsed, budget, is_over = run_and_validate_test(t)
+        smoke_deadline = time.monotonic() + cap
+        for index, t in enumerate(tests):
+            remaining = int(smoke_deadline - time.monotonic())
+            if remaining <= 0:
+                skipped.extend(test["test_id"] for test in tests[index:])
+                print(
+                    f"\n⏭ Smoke cap reached at {cap}s; "
+                    f"{len(tests) - index} selected self-test(s) NOT STARTED "
+                    f"(reported as SKIPPED, not FAIL). Re-run the remainder with "
+                    f"--shard I/N or a narrower --include.",
+                    file=sys.stderr,
+                )
+                break
+
+            ok, elapsed, budget, is_over = run_and_validate_test(t, remaining)
             total_time += elapsed
             if ok:
                 passed += 1
@@ -192,22 +311,34 @@ def main():
             else:
                 failed += 1
                 failures.append(t["test_id"])
+                if opts["fail_fast"]:
+                    skipped.extend(test["test_id"] for test in tests[index + 1:])
+                    print(f"\n⏹ Fail-fast: stopping after '{t['test_id']}'. "
+                          f"{len(skipped)} remaining marked SKIPPED.", file=sys.stderr)
+                    break
 
         print(f"\n=================================================================================")
         print(f"  SELF-TEST SMOKE SUMMARY ({total_time:.2f}s total)")
         print(f"=================================================================================")
-        print(f"Functional Status: {passed}/{len(tests)} PASS, {failed} FAIL")
+        print(f"Functional Status: {passed}/{len(tests)} PASS, {failed} FAIL, {len(skipped)} SKIPPED_NOT_STARTED")
 
         if len(regressions) > 0:
             print(f"\n⚠️  PERF REGRESSION ADVISORIES ({len(regressions)} tests exceeded budget — non-blocking):")
             for r_id, r_el, r_bud, r_diff in regressions:
                 print(f"  - {r_id}: {r_el:.2f}s vs budget {r_bud:.2f}s (+{r_diff:.2f}s)")
 
+        if skipped:
+            print(f"\n⏭ Skipped (not started): {', '.join(skipped)}", file=sys.stderr)
         if failed > 0:
             print(f"\n❌ Functional Failures: {', '.join(failures)}", file=sys.stderr)
             sys.exit(1)
+        if skipped:
+            print(f"\n⚠️ TRUNCATED: all executed gates passed but {len(skipped)} selected "
+                  f"test(s) did not start within {cap}s. Narrow with --shard/--include.",
+                  file=sys.stderr)
+            sys.exit(2)
 
-        print("\n✅ All headless self-tests functional gates passed.")
+        print("\n✅ All selected headless self-tests functional gates passed.")
         sys.exit(0)
 
     else:

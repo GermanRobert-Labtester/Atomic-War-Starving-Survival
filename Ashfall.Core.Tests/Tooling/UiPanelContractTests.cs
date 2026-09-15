@@ -75,160 +75,174 @@ namespace Ashfall.Core.Tests.Tooling
             return nodes;
         }
 
-        [Theory]
-        // InventoryDetailPanel
-        [InlineData("assets/ui/panels/InventoryDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/InventoryDetailPanel.tscn", "Info", "VBoxContainer")]
-        [InlineData("assets/ui/panels/InventoryDetailPanel.tscn", "Stats", "VBoxContainer")]
-        [InlineData("assets/ui/panels/InventoryDetailPanel.tscn", "Actions", "VBoxContainer")]
-        [InlineData("assets/ui/panels/InventoryDetailPanel.tscn", "CloseButton", "Button")]
-        // AfflictionsPanel
-        [InlineData("assets/ui/panels/AfflictionsPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/AfflictionsPanel.tscn", "ActiveList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/AfflictionsPanel.tscn", "ChronicList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/AfflictionsPanel.tscn", "TreatmentList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/AfflictionsPanel.tscn", "CloseButton", "Button")]
-        // SurvivorDetailPanel
-        [InlineData("assets/ui/panels/SurvivorDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/SurvivorDetailPanel.tscn", "SurvivorInfo", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivorDetailPanel.tscn", "NeedsList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivorDetailPanel.tscn", "TraitsList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivorDetailPanel.tscn", "StatusList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivorDetailPanel.tscn", "CloseButton", "Button")]
-        // WeatherDetailPanel
-        [InlineData("assets/ui/panels/WeatherDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/WeatherDetailPanel.tscn", "CurrentList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WeatherDetailPanel.tscn", "ForecastList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WeatherDetailPanel.tscn", "WindList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WeatherDetailPanel.tscn", "TrendList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WeatherDetailPanel.tscn", "CloseButton", "Button")]
-        // QuestDetailPanel
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "InfoContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "StagesContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "ChoicesContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "RewardsContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "Title", "Label")]
-        [InlineData("assets/ui/panels/QuestDetailPanel.tscn", "CloseButton", "Button")]
-        // MapDetailPanel
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "InfoContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "HazardsContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "LayoutsContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "SalvageContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "Title", "Label")]
-        [InlineData("assets/ui/panels/MapDetailPanel.tscn", "CloseButton", "Button")]
-        // RadiationDetailPanel
-        [InlineData("assets/ui/panels/RadiationDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/RadiationDetailPanel.tscn", "CurrentData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/RadiationDetailPanel.tscn", "DosimeterData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/RadiationDetailPanel.tscn", "ProtectionData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/RadiationDetailPanel.tscn", "EventsList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/RadiationDetailPanel.tscn", "CloseButton", "Button")]
-        // EconomyDetailPanel
-        [InlineData("assets/ui/panels/EconomyDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/EconomyDetailPanel.tscn", "ResourcesList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EconomyDetailPanel.tscn", "TradeList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EconomyDetailPanel.tscn", "MarketList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EconomyDetailPanel.tscn", "DebtList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EconomyDetailPanel.tscn", "CloseButton", "Button")]
-        // CombatDetailPanel
-        [InlineData("assets/ui/panels/CombatDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/CombatDetailPanel.tscn", "BattleInfo", "VBoxContainer")]
-        [InlineData("assets/ui/panels/CombatDetailPanel.tscn", "TacticsData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/CombatDetailPanel.tscn", "CasualtyData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/CombatDetailPanel.tscn", "OutcomesData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/CombatDetailPanel.tscn", "CloseButton", "Button")]
-        // FactionDetailPanel
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "InfoContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "DiplomacyContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "TradeContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "EventsContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "Title", "Label")]
-        [InlineData("assets/ui/panels/FactionDetailPanel.tscn", "CloseButton", "Button")]
-        // JournalDetailPanel
-        [InlineData("assets/ui/panels/JournalDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/JournalDetailPanel.tscn", "EntriesList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/JournalDetailPanel.tscn", "CodexList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/JournalDetailPanel.tscn", "TabsList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/JournalDetailPanel.tscn", "CloseButton", "Button")]
-        // EventDetailPanel
-        [InlineData("assets/ui/panels/EventDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/EventDetailPanel.tscn", "EventInfoList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EventDetailPanel.tscn", "HistoryList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EventDetailPanel.tscn", "NarrativeList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/EventDetailPanel.tscn", "CloseButton", "Button")]
-        // DutyRosterDetailPanel
-        [InlineData("assets/ui/panels/DutyRosterDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/DutyRosterDetailPanel.tscn", "AssignmentsList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/DutyRosterDetailPanel.tscn", "ShiftsList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/DutyRosterDetailPanel.tscn", "PerformanceList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/DutyRosterDetailPanel.tscn", "CloseButton", "Button")]
-        // SurvivalDetailPanel
-        [InlineData("assets/ui/panels/SurvivalDetailPanel.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/panels/SurvivalDetailPanel.tscn", "HealthData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivalDetailPanel.tscn", "NeedsData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivalDetailPanel.tscn", "RadiationData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivalDetailPanel.tscn", "StatusData", "VBoxContainer")]
-        [InlineData("assets/ui/panels/SurvivalDetailPanel.tscn", "CloseButton", "Button")]
-        // WorkshopPanel
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "RelicListContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "DetailContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "JobHeader", "Label")]
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "JobProgressBar", "ProgressBar")]
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "JobDetails", "Label")]
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "CancelJobButton", "Button")]
-        [InlineData("assets/ui/panels/WorkshopPanel.tscn", "CloseButton", "Button")]
-        // CraftingPanel
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "RecipeList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "QueueList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "QueueHeader", "Label")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "FilterStatus", "Label")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "CloseButton", "Button")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "FilterAllButton", "Button")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "FilterCraftableButton", "Button")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "RelicWorkshopButton", "Button")]
-        [InlineData("assets/ui/panels/CraftingPanel.tscn", "PharmaLabButton", "Button")]
-        // KitchenNutritionPanel
-        [InlineData("assets/ui/panels/KitchenNutritionPanel.tscn", "RecipeList", "VBoxContainer")]
-        [InlineData("assets/ui/panels/KitchenNutritionPanel.tscn", "PrepStation", "VBoxContainer")]
-        [InlineData("assets/ui/panels/KitchenNutritionPanel.tscn", "ServiceLogContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/KitchenNutritionPanel.tscn", "EventLogLabel", "Label")]
-        // WaterTreatmentPanel
-        [InlineData("assets/ui/panels/WaterTreatmentPanel.tscn", "ContentStack", "VBoxContainer")]
-        [InlineData("assets/ui/panels/WaterTreatmentPanel.tscn", "DetailText", "Label")]
-        [InlineData("assets/ui/panels/WaterTreatmentPanel.tscn", "CharcoalButton", "Button")]
-        [InlineData("assets/ui/panels/WaterTreatmentPanel.tscn", "DistillButton", "Button")]
-        [InlineData("assets/ui/panels/WaterTreatmentPanel.tscn", "OsmosisButton", "Button")]
-        [InlineData("assets/ui/panels/WaterTreatmentPanel.tscn", "ReplaceFilterButton", "Button")]
-        // PharmaLabPanel
-        [InlineData("assets/ui/panels/PharmaLabPanel.tscn", "RecipeListContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/PharmaLabPanel.tscn", "DetailContainer", "VBoxContainer")]
-        [InlineData("assets/ui/panels/PharmaLabPanel.tscn", "LabStatusHeader", "Label")]
-        // OpeningProtocolModal
-        [InlineData("assets/ui/modals/OpeningProtocolModal.tscn", "Backdrop", "ColorRect")]
-        [InlineData("assets/ui/modals/OpeningProtocolModal.tscn", "Title", "Label")]
-        [InlineData("assets/ui/modals/OpeningProtocolModal.tscn", "CloseButton", "Button")]
-        // SafeCrackModal
-        [InlineData("assets/ui/modals/SafeCrackModal.tscn", "Margin", "MarginContainer")]
-        [InlineData("assets/ui/modals/SafeCrackModal.tscn", "Root", "VBoxContainer")]
-        [InlineData("assets/ui/modals/SafeCrackModal.tscn", "HeaderLabel", "Label")]
-        // DailyBriefingModal
-        [InlineData("assets/ui/modals/DailyBriefingModal.tscn", "TitleLabel", "Label")]
-        [InlineData("assets/ui/modals/DailyBriefingModal.tscn", "BodyLabel", "RichTextLabel")]
-        [InlineData("assets/ui/modals/DailyBriefingModal.tscn", "AckButton", "Button")]
-        public void SceneBackedPanel_ContainsDeclaredUniqueNodeContract(string relativeTscnPath, string nodeName, string expectedType)
+        private static readonly (string RelativeTscnPath, string NodeName, string ExpectedType)[] DeclaredContracts =
+        {
+            ("assets/ui/panels/InventoryDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/InventoryDetailPanel.tscn", "Info", "VBoxContainer"),
+            ("assets/ui/panels/InventoryDetailPanel.tscn", "Stats", "VBoxContainer"),
+            ("assets/ui/panels/InventoryDetailPanel.tscn", "Actions", "VBoxContainer"),
+            ("assets/ui/panels/InventoryDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/AfflictionsPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/AfflictionsPanel.tscn", "ActiveList", "VBoxContainer"),
+            ("assets/ui/panels/AfflictionsPanel.tscn", "ChronicList", "VBoxContainer"),
+            ("assets/ui/panels/AfflictionsPanel.tscn", "TreatmentList", "VBoxContainer"),
+            ("assets/ui/panels/AfflictionsPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/SurvivorDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/SurvivorDetailPanel.tscn", "SurvivorInfo", "VBoxContainer"),
+            ("assets/ui/panels/SurvivorDetailPanel.tscn", "NeedsList", "VBoxContainer"),
+            ("assets/ui/panels/SurvivorDetailPanel.tscn", "TraitsList", "VBoxContainer"),
+            ("assets/ui/panels/SurvivorDetailPanel.tscn", "StatusList", "VBoxContainer"),
+            ("assets/ui/panels/SurvivorDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/WeatherDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/WeatherDetailPanel.tscn", "CurrentList", "VBoxContainer"),
+            ("assets/ui/panels/WeatherDetailPanel.tscn", "ForecastList", "VBoxContainer"),
+            ("assets/ui/panels/WeatherDetailPanel.tscn", "WindList", "VBoxContainer"),
+            ("assets/ui/panels/WeatherDetailPanel.tscn", "TrendList", "VBoxContainer"),
+            ("assets/ui/panels/WeatherDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "InfoContainer", "VBoxContainer"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "StagesContainer", "VBoxContainer"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "ChoicesContainer", "VBoxContainer"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "RewardsContainer", "VBoxContainer"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "Title", "Label"),
+            ("assets/ui/panels/QuestDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "InfoContainer", "VBoxContainer"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "HazardsContainer", "VBoxContainer"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "LayoutsContainer", "VBoxContainer"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "SalvageContainer", "VBoxContainer"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "Title", "Label"),
+            ("assets/ui/panels/MapDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "CurrentData", "VBoxContainer"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "DosimeterData", "VBoxContainer"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "ProtectionData", "VBoxContainer"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "EventsList", "VBoxContainer"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/EconomyDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/EconomyDetailPanel.tscn", "ResourcesList", "VBoxContainer"),
+            ("assets/ui/panels/EconomyDetailPanel.tscn", "TradeList", "VBoxContainer"),
+            ("assets/ui/panels/EconomyDetailPanel.tscn", "MarketList", "VBoxContainer"),
+            ("assets/ui/panels/EconomyDetailPanel.tscn", "DebtList", "VBoxContainer"),
+            ("assets/ui/panels/EconomyDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/CombatDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/CombatDetailPanel.tscn", "BattleInfo", "VBoxContainer"),
+            ("assets/ui/panels/CombatDetailPanel.tscn", "TacticsData", "VBoxContainer"),
+            ("assets/ui/panels/CombatDetailPanel.tscn", "CasualtyData", "VBoxContainer"),
+            ("assets/ui/panels/CombatDetailPanel.tscn", "OutcomesData", "VBoxContainer"),
+            ("assets/ui/panels/CombatDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "InfoContainer", "VBoxContainer"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "DiplomacyContainer", "VBoxContainer"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "TradeContainer", "VBoxContainer"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "EventsContainer", "VBoxContainer"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "Title", "Label"),
+            ("assets/ui/panels/FactionDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/JournalDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/JournalDetailPanel.tscn", "EntriesList", "VBoxContainer"),
+            ("assets/ui/panels/JournalDetailPanel.tscn", "CodexList", "VBoxContainer"),
+            ("assets/ui/panels/JournalDetailPanel.tscn", "TabsList", "VBoxContainer"),
+            ("assets/ui/panels/JournalDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/EventDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/EventDetailPanel.tscn", "EventInfoList", "VBoxContainer"),
+            ("assets/ui/panels/EventDetailPanel.tscn", "HistoryList", "VBoxContainer"),
+            ("assets/ui/panels/EventDetailPanel.tscn", "NarrativeList", "VBoxContainer"),
+            ("assets/ui/panels/EventDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/DutyRosterDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/DutyRosterDetailPanel.tscn", "AssignmentsList", "VBoxContainer"),
+            ("assets/ui/panels/DutyRosterDetailPanel.tscn", "ShiftsList", "VBoxContainer"),
+            ("assets/ui/panels/DutyRosterDetailPanel.tscn", "PerformanceList", "VBoxContainer"),
+            ("assets/ui/panels/DutyRosterDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/SurvivalDetailPanel.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/panels/SurvivalDetailPanel.tscn", "HealthData", "VBoxContainer"),
+            ("assets/ui/panels/SurvivalDetailPanel.tscn", "NeedsData", "VBoxContainer"),
+            ("assets/ui/panels/SurvivalDetailPanel.tscn", "RadiationData", "VBoxContainer"),
+            ("assets/ui/panels/SurvivalDetailPanel.tscn", "StatusData", "VBoxContainer"),
+            ("assets/ui/panels/SurvivalDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "RelicListContainer", "VBoxContainer"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "DetailContainer", "VBoxContainer"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "JobHeader", "Label"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "JobProgressBar", "ProgressBar"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "JobDetails", "Label"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "CancelJobButton", "Button"),
+            ("assets/ui/panels/WorkshopPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/CraftingPanel.tscn", "RecipeList", "VBoxContainer"),
+            ("assets/ui/panels/CraftingPanel.tscn", "QueueList", "VBoxContainer"),
+            ("assets/ui/panels/CraftingPanel.tscn", "QueueHeader", "Label"),
+            ("assets/ui/panels/CraftingPanel.tscn", "FilterStatus", "Label"),
+            ("assets/ui/panels/CraftingPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/CraftingPanel.tscn", "FilterAllButton", "Button"),
+            ("assets/ui/panels/CraftingPanel.tscn", "FilterCraftableButton", "Button"),
+            ("assets/ui/panels/CraftingPanel.tscn", "RelicWorkshopButton", "Button"),
+            ("assets/ui/panels/CraftingPanel.tscn", "PharmaLabButton", "Button"),
+            ("assets/ui/panels/KitchenNutritionPanel.tscn", "RecipeList", "VBoxContainer"),
+            ("assets/ui/panels/KitchenNutritionPanel.tscn", "PrepStation", "VBoxContainer"),
+            ("assets/ui/panels/KitchenNutritionPanel.tscn", "ServiceLogContainer", "VBoxContainer"),
+            ("assets/ui/panels/KitchenNutritionPanel.tscn", "EventLogLabel", "Label"),
+            ("assets/ui/panels/WaterTreatmentPanel.tscn", "ContentStack", "VBoxContainer"),
+            ("assets/ui/panels/WaterTreatmentPanel.tscn", "DetailText", "Label"),
+            ("assets/ui/panels/WaterTreatmentPanel.tscn", "CharcoalButton", "Button"),
+            ("assets/ui/panels/WaterTreatmentPanel.tscn", "DistillButton", "Button"),
+            ("assets/ui/panels/WaterTreatmentPanel.tscn", "OsmosisButton", "Button"),
+            ("assets/ui/panels/WaterTreatmentPanel.tscn", "ReplaceFilterButton", "Button"),
+            ("assets/ui/panels/PharmaLabPanel.tscn", "RecipeListContainer", "VBoxContainer"),
+            ("assets/ui/panels/PharmaLabPanel.tscn", "DetailContainer", "VBoxContainer"),
+            ("assets/ui/panels/PharmaLabPanel.tscn", "LabStatusHeader", "Label"),
+            ("assets/ui/modals/OpeningProtocolModal.tscn", "Backdrop", "ColorRect"),
+            ("assets/ui/modals/OpeningProtocolModal.tscn", "Title", "Label"),
+            ("assets/ui/modals/OpeningProtocolModal.tscn", "CloseButton", "Button"),
+            ("assets/ui/modals/SafeCrackModal.tscn", "Margin", "MarginContainer"),
+            ("assets/ui/modals/SafeCrackModal.tscn", "Root", "VBoxContainer"),
+            ("assets/ui/modals/SafeCrackModal.tscn", "HeaderLabel", "Label"),
+            ("assets/ui/modals/DailyBriefingModal.tscn", "TitleLabel", "Label"),
+            ("assets/ui/modals/DailyBriefingModal.tscn", "BodyLabel", "RichTextLabel"),
+            ("assets/ui/modals/DailyBriefingModal.tscn", "AckButton", "Button"),
+        };
+
+        [Fact]
+        public void SceneBackedPanel_ContainsDeclaredUniqueNodeContracts()
         {
             string root = GetRepositoryRoot();
-            string fullPath = Path.Combine(root, relativeTscnPath);
-            Assert.True(File.Exists(fullPath), $"Scene file {relativeTscnPath} does not exist on disk.");
+            var failures = new List<string>();
+            var parsedScenes = new Dictionary<string, Dictionary<string, NodeInfo>>(StringComparer.Ordinal);
+            var missingScenes = new HashSet<string>(StringComparer.Ordinal);
 
-            var uniqueNodes = ParseTscnUniqueNodes(fullPath);
-            Assert.True(uniqueNodes.ContainsKey(nodeName),
-                $"Scene {relativeTscnPath} is missing required unique node '%{nodeName}' (unique_name_in_owner = true).");
+            foreach (var (relativeTscnPath, nodeName, expectedType) in DeclaredContracts)
+            {
+                string fullPath = Path.Combine(root, relativeTscnPath);
+                if (missingScenes.Contains(relativeTscnPath))
+                    continue;
 
-            Assert.Equal(expectedType, uniqueNodes[nodeName].Type);
+                if (!File.Exists(fullPath))
+                {
+                    failures.Add($"Scene file {relativeTscnPath} does not exist on disk.");
+                    missingScenes.Add(relativeTscnPath);
+                    continue;
+                }
+
+                if (!parsedScenes.TryGetValue(relativeTscnPath, out var uniqueNodes))
+                {
+                    uniqueNodes = ParseTscnUniqueNodes(fullPath);
+                    parsedScenes[relativeTscnPath] = uniqueNodes;
+                }
+
+                if (!uniqueNodes.TryGetValue(nodeName, out var node))
+                {
+                    failures.Add(
+                        $"Scene {relativeTscnPath} is missing required unique node '%{nodeName}' " +
+                        "(unique_name_in_owner = true).");
+                    continue;
+                }
+
+                if (!string.Equals(expectedType, node.Type, StringComparison.Ordinal))
+                {
+                    failures.Add(
+                        $"Scene {relativeTscnPath} node %{nodeName}: expected type {expectedType}, " +
+                        $"got {node.Type}.");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
     }
 }

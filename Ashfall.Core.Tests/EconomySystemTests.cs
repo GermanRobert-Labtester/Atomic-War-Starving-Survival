@@ -264,7 +264,9 @@ namespace Ashfall.Core.Tests
             var sys = NewMarket(Catalog(("w", 8f, 0.1f, 1f)));
             var old = new MarketState { version = 0, day = 5, tickCount = 5 }; // no demand rows
             sys.RestoreState(old);
-            Assert.Equal(1, sys.State.version);
+            // Plan 212: the restore stamps the CURRENT version (v2); the v0
+            // input still migrates predictably (missing rows read 1.0).
+            Assert.Equal(2, sys.State.version);
             Assert.Equal(5, sys.Day);
             Assert.Equal(1f, sys.GetDemandMultiplier("w")); // missing rows read 1.0
         }

@@ -101,7 +101,7 @@ namespace AtomicWar.GodotApp
         {
             if (_amputation != null)
             {
-                CaptureSection("amputation", AmputationSaveStore.TryCapturePersisted(_amputation.State));
+                CaptureSection("amputation", AmputationSaveStore.TryCapturePersisted(_amputation.CaptureState()));
             }
         }
 
@@ -193,7 +193,7 @@ namespace AtomicWar.GodotApp
         {
             if (_railway != null)
             {
-                CaptureSection("railway", RailwaySaveStore.TryCapturePersisted(_railway.State));
+                CaptureSection("railway", RailwaySaveStore.TryCapturePersisted(_railway.CaptureState()));
             }
         }
 
@@ -273,7 +273,7 @@ namespace AtomicWar.GodotApp
         {
             if (_fungi != null)
             {
-                CaptureSection("fungi_cultivation", FungiSaveStore.TryCapturePersisted(_fungi.State));
+                CaptureSection("fungi_cultivation", FungiSaveStore.TryCapturePersisted(_fungi.CaptureState()));
             }
         }
 
@@ -350,7 +350,7 @@ namespace AtomicWar.GodotApp
         {
             if (_justice != null)
             {
-                CaptureSection("wasteland_justice", JusticeSaveStore.TryCapturePersisted(_justice.State));
+                CaptureSection("wasteland_justice", JusticeSaveStore.TryCapturePersisted(_justice.CaptureState()));
             }
         }
 

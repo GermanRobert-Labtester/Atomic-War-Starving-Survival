@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -177,11 +178,23 @@ namespace Ashfall.Core.Waystation
             return true;
         }
 
-        public WaystationNetworkState CaptureState() => _state;
+        public WaystationNetworkState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<WaystationNetworkState>(json) ?? new WaystationNetworkState();
+        }
 
         public void RestoreState(WaystationNetworkState state)
         {
-            _state = state ?? new WaystationNetworkState();
+            if (state == null)
+            {
+                _state = new WaystationNetworkState();
+                return;
+            }
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<WaystationNetworkState>(json) ?? new WaystationNetworkState();
         }
     }
 }

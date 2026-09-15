@@ -38,14 +38,18 @@ namespace Ashfall.Core.Shelter
         public int schema_version { get; set; } = 1;
         public List<PreservationTierDef> preservation_tiers { get; set; } = new List<PreservationTierDef>();
         public List<CuringRecipeDef> curing_recipes { get; set; } = new List<CuringRecipeDef>();
+        /// <summary>Item id → food type string matching tier <c>allowed_food_types</c>.</summary>
+        public Dictionary<string, string> food_type_by_item_id { get; set; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
         private readonly Dictionary<string, PreservationTierDef> _tiersById = new Dictionary<string, PreservationTierDef>(StringComparer.Ordinal);
         private readonly Dictionary<string, CuringRecipeDef> _recipesById = new Dictionary<string, CuringRecipeDef>(StringComparer.Ordinal);
+        private readonly Dictionary<string, string> _foodTypeByItemId = new Dictionary<string, string>(StringComparer.Ordinal);
 
         public void Index()
         {
             _tiersById.Clear();
             _recipesById.Clear();
+            _foodTypeByItemId.Clear();
 
             foreach (var tier in preservation_tiers)
             {
@@ -57,6 +61,15 @@ namespace Ashfall.Core.Shelter
             {
                 if (!string.IsNullOrEmpty(recipe.id))
                     _recipesById[recipe.id] = recipe;
+            }
+
+            if (food_type_by_item_id != null)
+            {
+                foreach (var pair in food_type_by_item_id)
+                {
+                    if (!string.IsNullOrEmpty(pair.Key) && !string.IsNullOrEmpty(pair.Value))
+                        _foodTypeByItemId[pair.Key] = pair.Value;
+                }
             }
         }
 
@@ -72,6 +85,34 @@ namespace Ashfall.Core.Shelter
             if (string.IsNullOrEmpty(recipeId)) return null;
             _recipesById.TryGetValue(recipeId, out var recipe);
             return recipe;
+        }
+
+        /// <summary>
+        /// Resolves a catalog item id to the food-type token used by tier allow-lists.
+        /// Missing map entries fall back to the item id itself (identity).
+        /// </summary>
+        public string ResolveFoodType(string foodItemId)
+        {
+            if (string.IsNullOrEmpty(foodItemId)) return string.Empty;
+            if (_foodTypeByItemId.TryGetValue(foodItemId, out var mapped) && !string.IsNullOrEmpty(mapped))
+                return mapped;
+            return foodItemId;
+        }
+
+        /// <summary>
+        /// Empty or null <c>allowed_food_types</c> means unrestricted (backward compatible).
+        /// </summary>
+        public bool IsFoodTypeAllowed(PreservationTierDef? tier, string foodType)
+        {
+            if (tier?.allowed_food_types == null || tier.allowed_food_types.Count == 0)
+                return true;
+            if (string.IsNullOrEmpty(foodType)) return false;
+            for (int i = 0; i < tier.allowed_food_types.Count; i++)
+            {
+                if (string.Equals(tier.allowed_food_types[i], foodType, StringComparison.Ordinal))
+                    return true;
+            }
+            return false;
         }
     }
 

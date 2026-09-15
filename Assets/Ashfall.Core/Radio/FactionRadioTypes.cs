@@ -14,7 +14,10 @@ namespace Ashfall.Core.Radio
         RaidWarning = 2,
         TradeReaction = 3,
         Silence = 4,
-        CulturalBroadcast = 5
+        CulturalBroadcast = 5,
+        /// <summary>Plan 212 follow-up — market shock rumor relayed on the band.
+        /// Appended last: kind ints in existing saves remain valid.</summary>
+        MarketRumor = 6
     }
 
     /// <summary>

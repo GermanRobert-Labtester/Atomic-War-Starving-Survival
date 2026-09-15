@@ -1,5 +1,7 @@
 # Partial Plans — Verified Audit (2026-09-12)
 
+> **SUPERSEDED (2026-09-12, later):** The P1–P8 findings below were re-verified and sealed after this audit; the authoritative current status is `KNOWN_DEBT.md`. Section 3 decisions D1/D2 remain recorded here. Do not treat this document as a live queue.
+
 **Type:** read-only forensic re-verification · **Method:** `ashfall-scan` chain
 (`DECLARED → COMPILED → CONSTRUCTED → REGISTERED → CALLED → OBSERVED → PERSISTED`)
 · **Evidence rule:** AGENTS.md rule 7 — every claim rechecked in current source,

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core;
@@ -74,12 +75,21 @@ namespace AtomicWar.GodotApp
                 tx.Cancel();
                 return "Not enough materials: 2 antibiotics, 1 medical kit, 3 chemicals.";
             }
-            if (!_pathogenStrains.StartCureProject(strainId, day))
+            try
             {
-                tx.Cancel();
+                if (!tx.TryCommit(() =>
+                    {
+                        if (!_pathogenStrains.StartCureProject(strainId, day))
+                            throw new InvalidOperationException("pathogen_cure_start_rejected");
+                    }))
+                {
+                    return "Could not reserve materials for the cure project.";
+                }
+            }
+            catch (InvalidOperationException)
+            {
                 return "That strain is already under study, or unknown to the bench.";
             }
-            tx.TryCommit();
             return $"Research underway on {strainId}. It wants steady work and time.";
         }
 

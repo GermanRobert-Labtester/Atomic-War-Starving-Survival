@@ -114,58 +114,88 @@ namespace Ashfall.Core.Tests
         // WORKSTREAM C: Specialized domain rules & Generalist breadth
         // ====================================================================
 
-        [Theory]
-        [InlineData("mirror_carp")]
-        [InlineData("ash_pike")]
-        public void AquaticPrey_OnlyCompatibleWithWaterTraps(string speciesId)
+        [Fact]
+        public void AquaticPrey_CompatibilityTable_UsesWaterTraps()
         {
             var catalog = LoadCatalog();
-            Assert.True(catalog.Prey.ContainsKey(speciesId));
+            var failures = new List<string>();
 
-            foreach (var trap in catalog.Traps.Values)
+            foreach (string speciesId in new[] { "mirror_carp", "ash_pike" })
             {
-                if (trap.compatiblePrey.Contains(speciesId))
+                if (!catalog.Prey.ContainsKey(speciesId))
                 {
-                    Assert.True(trap.requiresWater,
-                        $"Aquatic prey '{speciesId}' cannot be caught by non-water trap '{trap.trap_id}'");
+                    failures.Add($"Aquatic prey '{speciesId}' is missing from the catalog");
+                    continue;
+                }
+
+                foreach (var trap in catalog.Traps.Values)
+                {
+                    if (trap.compatiblePrey.Contains(speciesId) && !trap.requiresWater)
+                    {
+                        failures.Add(
+                            $"Aquatic prey '{speciesId}' cannot be caught by non-water trap '{trap.trap_id}'");
+                    }
                 }
             }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData("deer")]
-        [InlineData("boar")]
-        public void HeavyGamePrey_OnlyCompatibleWithPitTraps(string speciesId)
+        [Fact]
+        public void HeavyGamePrey_CompatibilityTable_UsesPitTraps()
         {
             var catalog = LoadCatalog();
-            Assert.True(catalog.Prey.ContainsKey(speciesId));
+            var failures = new List<string>();
 
-            foreach (var trap in catalog.Traps.Values)
+            foreach (string speciesId in new[] { "deer", "boar" })
             {
-                if (trap.compatiblePrey.Contains(speciesId))
+                if (!catalog.Prey.ContainsKey(speciesId))
                 {
-                    Assert.Equal("pit", trap.trapType);
+                    failures.Add($"Heavy game prey '{speciesId}' is missing from the catalog");
+                    continue;
+                }
+
+                foreach (var trap in catalog.Traps.Values)
+                {
+                    if (trap.compatiblePrey.Contains(speciesId)
+                        && !string.Equals(trap.trapType, "pit", StringComparison.Ordinal))
+                    {
+                        failures.Add(
+                            $"Heavy game prey '{speciesId}' cannot be caught by non-pit trap '{trap.trap_id}'");
+                    }
                 }
             }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData("pheasant")]
-        [InlineData("ash_crow")]
-        [InlineData("contaminated_fowl")]
-        public void AvianPrey_OnlyCompatibleWithAvianTraps(string speciesId)
+        [Fact]
+        public void AvianPrey_CompatibilityTable_UsesAvianTraps()
         {
             var catalog = LoadCatalog();
-            Assert.True(catalog.Prey.ContainsKey(speciesId));
+            var failures = new List<string>();
 
-            foreach (var trap in catalog.Traps.Values)
+            foreach (string speciesId in new[] { "pheasant", "ash_crow", "contaminated_fowl" })
             {
-                if (trap.compatiblePrey.Contains(speciesId))
+                if (!catalog.Prey.ContainsKey(speciesId))
                 {
-                    Assert.True(trap.trapType == "net" || trap.trapType == "bird_snare",
-                        $"Avian prey '{speciesId}' cannot be caught by non-avian trap '{trap.trap_id}' (type '{trap.trapType}')");
+                    failures.Add($"Avian prey '{speciesId}' is missing from the catalog");
+                    continue;
+                }
+
+                foreach (var trap in catalog.Traps.Values)
+                {
+                    if (trap.compatiblePrey.Contains(speciesId)
+                        && trap.trapType != "net"
+                        && trap.trapType != "bird_snare")
+                    {
+                        failures.Add(
+                            $"Avian prey '{speciesId}' cannot be caught by non-avian trap '{trap.trap_id}' (type '{trap.trapType}')");
+                    }
                 }
             }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -181,15 +211,27 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData("rabbit", 4)]
-        [InlineData("rat", 4)]
-        public void GeneralistPrey_HasMinimumTrapBreadth(string speciesId, int minTraps)
+        [Fact]
+        public void GeneralistPrey_BreadthTable_MeetsMinimums()
         {
             var catalog = LoadCatalog();
-            int compatibleCount = catalog.Traps.Values.Count(t => t.compatiblePrey.Contains(speciesId));
-            Assert.True(compatibleCount >= minTraps,
-                $"Generalist prey '{speciesId}' must be compatible with at least {minTraps} traps, got {compatibleCount}");
+            var failures = new List<string>();
+
+            foreach (var expectation in new[]
+            {
+                (speciesId: "rabbit", minTraps: 4),
+                (speciesId: "rat", minTraps: 4),
+            })
+            {
+                int compatibleCount = catalog.Traps.Values.Count(t => t.compatiblePrey.Contains(expectation.speciesId));
+                if (compatibleCount < expectation.minTraps)
+                {
+                    failures.Add(
+                        $"Generalist prey '{expectation.speciesId}' must be compatible with at least {expectation.minTraps} traps, got {compatibleCount}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ====================================================================

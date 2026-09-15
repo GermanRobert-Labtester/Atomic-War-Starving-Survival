@@ -5,6 +5,12 @@
 **Target Frameworks:** `netstandard2.1` (Core), `net8.0` (Godot host `Ashfall.csproj` & `Ashfall.Core.csproj`), `net9.0` (Tests `Ashfall.Core.Tests.csproj`)
 **Workspace SDK Config:** `global.json` (`version: 8.0.100`, `rollForward: latestMajor`)
 
+All local headless Godot verification must use
+`bash scripts/ci/run-godot-bounded.sh ...`. It injects fixed/max 15 FPS and
+hard-stops each Godot process at 180 seconds. Local xUnit work is targeted via
+`./scripts/run_test.sh <path_to_test_file>`; the complete xUnit gate is an
+explicit CI/full-tier operation.
+
 ---
 
 ## Canonical CI Pipeline (Active)
@@ -14,21 +20,21 @@ Per `AGENTS.md`, all verification uses **`dotnet` + `godot --headless`**. The ca
 1. **Trailing Whitespace Gate:** `bash scripts/ci/no-whitespace-churn.sh` (fast-fails on trailing whitespace or whitespace errors).
 2. **JSON Syntax & Schema Policy Gate:** `bash scripts/ci/json-schema-policy-gate.sh` (fast-fails on invalid JSON, bare array roots, or missing/invalid `schema_version` declarations).
 3. **Build Core & Tests:** `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo`
-4. **Run Test Suite:** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (all tests passing / 0 failed)
+4. **Run Core xUnit Regression Gate (CI/full tier):** `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo` (all tests passing / 0 failed)
 5. **Build Godot Host:** `dotnet build Ashfall.csproj --nologo` (0 errors)
-6. **Data Integrity Gate:** `godot --headless --path . -- --data-integrity-selftest` (0 errors across 129 catalogs, 4,794 authored IDs)
-7. **Bridge Removal Gate:** `godot --headless --path . -- --bridge-selftest` (verifies shim removal notice & exit 0)
-8. **Asset Registry Gate:** `godot --headless --path . -- --asset-registry-selftest` (verifies catalog IDs resolve to real textures under `assets/`)
-9. **Player Panels UI Test:** `godot --headless --path . -- --player-panels-uitest` (binds and renders Survivors, Medical, Weather, Radio, Shelter, Status, Tutorial, Afflictions, Radiation panels)
+6. **Data Integrity Gate:** `bash scripts/ci/run-godot-bounded.sh --path . -- --data-integrity-selftest` (0 errors across 129 catalogs, 4,794 authored IDs)
+7. **Bridge Removal Gate:** `bash scripts/ci/run-godot-bounded.sh --path . -- --bridge-selftest` (verifies shim removal notice & exit 0)
+8. **Asset Registry Gate:** `bash scripts/ci/run-godot-bounded.sh --path . -- --asset-registry-selftest` (verifies catalog IDs resolve to real textures under `assets/`)
+9. **Player Panels UI Test:** `bash scripts/ci/run-godot-bounded.sh --path . -- --player-panels-uitest` (binds and renders Survivors, Medical, Weather, Radio, Shelter, Status, Tutorial, Afflictions, Radiation panels)
 10. **Save Store & Failure-Path Suite:**
-    - `godot --headless --path . -- --save-load-ui-failure-selftest` (verifies missing, corrupt, tampered saves show recoverable error messages and preserve live session)
-    - `godot --headless --path . -- --holdfast-save-selftest` (Holdfast S1 round-trip and tamper rejection)
-    - `godot --headless --path . -- --inventory-save-selftest` (Inventory serialization and checksum verification)
-    - `godot --headless --path . -- --journal-save-selftest` (Journal entry ordering, serialization, and persistence)
+    - `bash scripts/ci/run-godot-bounded.sh --path . -- --save-load-ui-failure-selftest` (verifies missing, corrupt, tampered saves show recoverable error messages and preserve live session)
+    - `bash scripts/ci/run-godot-bounded.sh --path . -- --holdfast-save-selftest` (Holdfast S1 round-trip and tamper rejection)
+    - `bash scripts/ci/run-godot-bounded.sh --path . -- --inventory-save-selftest` (Inventory serialization and checksum verification)
+    - `bash scripts/ci/run-godot-bounded.sh --path . -- --journal-save-selftest` (Journal entry ordering, serialization, and persistence)
 11. **Deterministic Campaign Smoke:**
-    - `godot --headless --path . -- --playable-shell-selftest` (Playable shell, multi-day loop, bunker upgrades, greenhouse planting, save/continue flow)
-    - `godot --headless --path . -- --day1-selftest` (Day 1 onboarding, needs decay, triage, bunker fortification, radio protocols)
-12. **Expansions Completeness:** `godot --headless --path . -- --expansions-selftest` (all expansions 01–10 + Verdict chain)
+    - `bash scripts/ci/run-godot-bounded.sh --path . -- --playable-shell-selftest` (Playable shell, multi-day loop, bunker upgrades, greenhouse planting, save/continue flow)
+    - `bash scripts/ci/run-godot-bounded.sh --path . -- --day1-selftest` (Day 1 onboarding, needs decay, triage, bunker fortification, radio protocols)
+12. **Expansions Completeness:** `bash scripts/ci/run-godot-bounded.sh --path . -- --expansions-selftest` (all expansions 01–10 + Verdict chain)
 13. **Triad Drift Gate:** `bash scripts/ci/triad-drift-gate.sh` (enforces Setup/Save/AllSaveSections parity against declarative `SaveSectionRegistry.cs`)
 14. **CLI Catalog Drift Gate:** `bash scripts/ci/generate-cli-catalog.sh --check` (verifies `docs/cli/HOST_CLI_COMMAND_CATALOG.md` matches live `--host-help` output)
 15. **Save-Store Contract Matrix Gate:** `bash scripts/ci/generate-save-store-matrix.sh --check` (verifies all 62 save store classes maintain checksum envelopes and slot-root isolation)
@@ -41,7 +47,8 @@ For a detailed distinction between blocking CI gates, domain quality gates, and 
 
 ## Local Verification Runner
 
-To run the exact ordered sequence of all 17 CI gates locally and stop immediately on the first failure:
+To run the ordered fast-tier gates locally and stop immediately on the first failure
+(without the full xUnit suite):
 
 ```bash
 bash scripts/ci/verify-fast.sh
@@ -57,22 +64,22 @@ Run these granular steps manually if debugging a specific stage:
 # 1. Clean cold build
 rm -rf .godot/mono/temp Ashfall.Core/bin Ashfall.Core/obj Ashfall.Core.Tests/bin Ashfall.Core.Tests/obj
 
-# 2. Build and run unit tests
+# 2. Build and run one targeted test file (local policy)
 dotnet build Ashfall.csproj                               # expect: 0 errors
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj  # expect: all tests passed / 0 failed
+./scripts/run_test.sh Ashfall.Core.Tests/<TestFile>.cs    # targeted; hard cap: 180s
 
 # 3. Headless Godot fast-tier self-tests (~15-20s total)
-godot --headless --path . -- --data-integrity-selftest    # expect: PASS (129 catalogs, 0 errors)
-godot --headless --path . -- --bridge-selftest            # expect: PASS
-godot --headless --path . -- --asset-registry-selftest    # expect: PASS (50/50 critical assets)
-godot --headless --path . -- --player-panels-uitest       # expect: PASS (player panels rendered)
-godot --headless --path . -- --save-load-ui-failure-selftest # expect: PASS (4/4 failure paths verified)
-godot --headless --path . -- --holdfast-save-selftest     # expect: PASS (holdfast save round-trip)
-godot --headless --path . -- --inventory-save-selftest    # expect: PASS (inventory save round-trip)
-godot --headless --path . -- --journal-save-selftest      # expect: PASS (journal save round-trip)
-godot --headless --path . -- --playable-shell-selftest    # expect: PASS (playable loop smoke)
-godot --headless --path . -- --day1-selftest              # expect: PASS (day 1 onboarding smoke)
-godot --headless --path . -- --expansions-selftest        # expect: PASS (all expansions 01-10)
+bash scripts/ci/run-godot-bounded.sh --path . -- --data-integrity-selftest    # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --bridge-selftest            # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --asset-registry-selftest    # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --player-panels-uitest       # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --save-load-ui-failure-selftest # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --holdfast-save-selftest     # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --inventory-save-selftest    # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --journal-save-selftest      # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --playable-shell-selftest   # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --day1-selftest              # expect: PASS
+bash scripts/ci/run-godot-bounded.sh --path . -- --expansions-selftest        # expect: PASS
 
 # 4. Triad drift gate
 bash scripts/ci/triad-drift-gate.sh

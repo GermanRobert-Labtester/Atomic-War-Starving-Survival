@@ -7,11 +7,12 @@
       "source_name": "Checkpoint Kilo Automated Beacon",
       "outcome_type": "survivor_community",
       "days_to_trace": 4,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.25, "text": "...emergency... checkpoint kilo... requesting immediate... *static*..." },
-        { "day": 2, "clarity": 0.45, "text": "...twelve survivors... air filtration failing... running on battery... coordinates: sector..." },
-        { "day": 3, "clarity": 0.7, "text": "...water running low... Corporal Maren is keeping order... if anyone can hear this... sector 7, grid 14..." },
-        { "day": 4, "clarity": 0.95, "text": "...this is the final broadcast of Checkpoint Kilo; for forty-seven days, we held. There are supplies in the armory—use them well. Kilo out." }
+        { "day": 1, "clarity": 0.25, "text": "...emergency... checkpoint kilo... requesting immediate... *static*..." , "outcome_hint": "The sender follows emergency procedure to the letter." },
+        { "day": 2, "clarity": 0.45, "text": "...twelve survivors... air filtration failing... running on battery... coordinates: sector..." , "outcome_hint": "The survivor count is exact — twelve, not 'about a dozen.'" },
+        { "day": 3, "clarity": 0.7, "text": "...water running low... Corporal Maren is keeping order... if anyone can hear this... sector 7, grid 14...", "outcome_hint": "A voice keeps order between the requests." },
+        { "day": 4, "clarity": 0.95, "text": "...this is the final broadcast of Checkpoint Kilo; for forty-seven days, we held. There are supplies in the armory—use them well. Kilo out.", "outcome_hint": "The survivor count has not changed in three days.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "checkpoint_kilo_armory",
       "revealed_items": ["military_rations", "ammo_556", "field_dressing_kit"],
@@ -25,10 +26,11 @@
       "authenticity": "trap",
       "deceptive_faction_id": "raiders",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.2, "text": "...anyone... please... we have children... bunker 4-east... food and water... *static*..." },
-        { "day": 2, "clarity": 0.5, "text": "...coordinates sent... bring medicine if you have it... we can trade... we have fuel, clean water..." },
-        { "day": 3, "clarity": 0.9, "text": "*The signal pattern shifts; what sounded like desperation now sounds rehearsed. The 'children' in the background are the same looped recording. This is a raider trap.*" }
+        { "day": 1, "clarity": 0.2, "text": "...anyone... please... we have children... bunker 4-east... food and water... *static*..." , "outcome_hint": "The children in the background are quieter than the plea." },
+        { "day": 2, "clarity": 0.5, "text": "...coordinates sent... bring medicine if you have it... we can trade... we have fuel, clean water...", "outcome_hint": "Two voices argue off-mic between the pleas." },
+        { "day": 3, "clarity": 0.9, "text": "*The signal pattern shifts; what sounded like desperation now sounds rehearsed. The 'children' in the background are the same looped recording. This is a raider trap.*", "outcome_hint": "The plea repeats with identical pauses — like a recording.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "raider_ambush_site",
       "warning_text": "The distress signal was bait. A raider gang has been luring scavengers to this location for weeks. The bodies of the previous 'rescuers' are still there.",
@@ -40,12 +42,13 @@
       "source_name": "Automated Weather Station Gamma",
       "outcome_type": "knowledge",
       "days_to_trace": 5,
+      "audio_cue": "radio_morse",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...automated transmission... weather station gamma... radiation plume tracking... update..." },
-        { "day": 2, "clarity": 0.4, "text": "...plume drift: east-northeast at 12 knots... fallout density decreasing in sectors 3 through 7..." },
-        { "day": 3, "clarity": 0.55, "text": "...warning: secondary plume detected from damaged reactor site... estimated arrival in 72 hours..." },
-        { "day": 4, "clarity": 0.75, "text": "...updated fallout map available at the following coordinates... shelter in place if within the projected path..." },
-        { "day": 5, "clarity": 0.95, "text": "...this station's battery is failing; sectors 4, 5, and 8 will be uninhabitable for 90 days minimum. Sectors 2, 6, and 9 show decreasing contamination with recommended evacuation corridor through sector 6. End of transmission." }
+        { "day": 1, "clarity": 0.3, "text": "...automated transmission... weather station gamma... radiation plume tracking... update..." , "outcome_hint": "The station reports whether or not anyone is listening." },
+        { "day": 2, "clarity": 0.4, "text": "...plume drift: east-northeast at 12 knots... fallout density decreasing in sectors 3 through 7..." , "outcome_hint": "Wind speeds and drift bearings — a maintained, calibrated transmitter." },
+        { "day": 3, "clarity": 0.55, "text": "...warning: secondary plume detected from damaged reactor site... estimated arrival in 72 hours..." , "outcome_hint": "It warns of a plume before any human voice has." },
+        { "day": 4, "clarity": 0.75, "text": "...updated fallout map available at the following coordinates... shelter in place if within the projected path...", "outcome_hint": "The voice is synthetic — a text-to-speech loop." },
+        { "day": 5, "clarity": 0.95, "text": "...this station's battery is failing; sectors 4, 5, and 8 will be uninhabitable for 90 days minimum. Sectors 2, 6, and 9 show decreasing contamination with recommended evacuation corridor through sector 6. End of transmission.", "outcome_hint": "The station reports its own battery failing." }
       ],
       "revealed_knowledge": "fallout_map_update",
       "knowledge_points": 1,
@@ -57,10 +60,11 @@
       "source_name": "The Pianist's Last Broadcast",
       "outcome_type": "narrative",
       "days_to_trace": 3,
+      "audio_cue": "radio_vinyl_broadcast",
       "message_fragments": [
-        { "day": 1, "clarity": 0.35, "text": "*A piano plays through the static—Chopin's Nocturne in E-flat major. The playing is skilled, almost professional.*" },
-        { "day": 2, "clarity": 0.6, "text": "*The music continues for hours; between pieces, a voice speaks: 'I don't know if anyone can hear this—I've been playing for three days. The radiation is here now, but the piano still works.'*" },
-        { "day": 3, "clarity": 0.85, "text": "*The piano falls silent mid-phrase after a long pause. Then, very quietly: 'Thank you for listening.' The signal dies.*" }
+        { "day": 1, "clarity": 0.35, "text": "*A piano plays through the static—Chopin's Nocturne in E-flat major. The playing is skilled, almost professional.*" , "outcome_hint": "The piano is in tune — someone kept it tuned." },
+        { "day": 2, "clarity": 0.6, "text": "*The music continues for hours; between pieces, a voice speaks: 'I don't know if anyone can hear this—I've been playing for three days. The radiation is here now, but the piano still works.'*", "outcome_hint": "The performances are skilled — trained hands." },
+        { "day": 3, "clarity": 0.85, "text": "*The piano falls silent mid-phrase after a long pause. Then, very quietly: 'Thank you for listening.' The signal dies.*", "outcome_hint": "The signal weakens between pieces." }
       ],
       "narrative_id": "narrative_radio_the_pianist",
       "location_reference": "concert_hall_ruins"
@@ -71,10 +75,11 @@
       "source_name": "Military Convoy Echo-7",
       "outcome_type": "supply_cache",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...convoy Echo-7, en route to rally point... hit by second wave... vehicle disabled... *static*..." },
-        { "day": 2, "clarity": 0.55, "text": "...secured cargo at grid reference... medical supplies, water purification tablets, MREs... abandoned vehicle, take what you need..." },
-        { "day": 3, "clarity": 0.8, "text": "...this is Lieutenant Prak's final entry; convoy Echo-7's supplies are cached at sector coordinates 41 by 12, marked with a hazard panel. The crew didn't make it—make the supplies count. Echo-7 out." }
+        { "day": 1, "clarity": 0.3, "text": "...convoy Echo-7, en route to rally point... hit by second wave... vehicle disabled... *static*..." , "outcome_hint": "A convoy designation and a rally point — regular army traffic." },
+        { "day": 2, "clarity": 0.55, "text": "...secured cargo at grid reference... medical supplies, water purification tablets, MREs... abandoned vehicle, take what you need...", "outcome_hint": "The speaker lists cargo by manifest number." },
+        { "day": 3, "clarity": 0.8, "text": "...this is Lieutenant Prak's final entry; convoy Echo-7's supplies are cached at sector coordinates 41 by 12, marked with a hazard panel. The crew didn't make it—make the supplies count. Echo-7 out.", "outcome_hint": "The final entry names the cache coordinates twice.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "convoy_echo7_cache",
       "revealed_items": ["military_mre", "water_purification_tablets", "field_surgical_kit", "ammo_762"],
@@ -90,16 +95,21 @@
       "reputation_delta": 15,
       "moral_choice_id": "quest_moral_distress_trapped_mechanic",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "deadlineDays": 5,
       "senderSurvivalDays": 4,
       "ignoreConsequence": "sender_death",
       "message_fragments": [
-        { "day": 1, "clarity": 0.2, "text": "...anyone on this frequency... this is Daria... I'm at the old rail depot... my leg is pinned under a beam... *static*..." },
-        { "day": 2, "clarity": 0.5, "text": "...I can hear rats... lots of rats... I have water for maybe two more days... the beam is too heavy to lift alone... please..." },
-        { "day": 3, "clarity": 0.85, "text": "...Daria again—I've been marking the wall for four days now. If you come, bring a jack or lever to the depot east of the viaduct, past the signal tower. I'll keep the radio on." }
+        { "day": 1, "clarity": 0.2, "text": "...anyone on this frequency... this is Daria... I'm at the old rail depot... my leg is pinned under a beam... *static*..." , "outcome_hint": "She gives her name first and her location second." },
+        { "day": 2, "clarity": 0.5, "text": "...I can hear rats... lots of rats... I have water for maybe two more days... the beam is too heavy to lift alone... please...", "outcome_hint": "Something moves in the dark behind the voice." },
+        { "day": 3, "clarity": 0.85, "text": "...Daria again—I've been marking the wall for four days now. If you come, bring a jack or lever to the depot east of the viaduct, past the signal tower. I'll keep the radio on.", "outcome_hint": "She marks the days aloud — the count is consistent.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_recovery_yard",
-      "narrative_id": "narrative_radio_trapped_mechanic"
+      "narrative_id": "narrative_radio_trapped_mechanic",
+      "follow_up_signals": [
+        { "id": "fu_88_3_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.9, "text": "A second voice on the depot band: someone is moving near the entrance. If that is you, Daria — hold on." },
+        { "id": "fu_88_3_rescue_success", "trigger_condition": "rescue_success", "delay_days": 5, "clarity": 0.95, "text": "Daria sends word from the shelter: the leg is set, she is walking on a crutch, and she has already claimed a workbench." }
+      ]
     },
     {
       "frequency_id": "freq_distress_156_8",
@@ -111,16 +121,21 @@
       "reputation_delta": 10,
       "moral_choice_id": "quest_moral_distress_injured_trader",
       "days_to_trace": 2,
+      "audio_cue": "radio_static",
       "deadlineDays": 3,
       "senderSurvivalDays": 3,
       "ignoreConsequence": "sender_death",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...mayday... trader down... route 6, near the burned gas station... leg broken... can't walk... *static*..." },
-        { "day": 2, "clarity": 0.75, "text": "...this is Olen; I have medical supplies and batteries to share if you get me out. The gas station is on the south fork, past the dead oak. Hurry—I think something is watching me." }
+        { "day": 1, "clarity": 0.3, "text": "...mayday... trader down... route 6, near the burned gas station... leg broken... can't walk... *static*..." , "outcome_hint": "The call is clipped — a man used to talking while he works." },
+        { "day": 2, "clarity": 0.75, "text": "...this is Olen; I have medical supplies and batteries to share if you get me out. The gas station is on the south fork, past the dead oak. Hurry—I think something is watching me.", "outcome_hint": "He quotes trade prices from memory — a working merchant.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "rural_gas_station",
       "revealed_items": ["bandage", "battery", "iodine_pills"],
-      "narrative_id": "narrative_radio_injured_trader"
+      "narrative_id": "narrative_radio_injured_trader",
+      "follow_up_signals": [
+        { "id": "fu_156_8_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.9, "text": "A passing caravan confirms it: there is a man sleeping in the shadow of the burned gas station on route 6." },
+        { "id": "fu_156_8_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Olen reached the shelter. His medical supplies are already entered in the trade ledger under his own name." }
+      ]
     },
     {
       "frequency_id": "freq_distress_203_1",
@@ -128,11 +143,12 @@
       "source_name": "Isolated Water Treatment Worker",
       "outcome_type": "survivor_community",
       "days_to_trace": 4,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.15, "text": "...water station... pump failure... alone... *static*..." },
-        { "day": 2, "clarity": 0.35, "text": "...this is the water treatment station on sector 4... the pump seized three days ago... I've been hand-filtering but the membrane is shot..." },
-        { "day": 3, "clarity": 0.6, "text": "...I have the technical manual here... if someone can bring a replacement membrane or help me rig a bypass... the station can serve six settlements..." },
-        { "day": 4, "clarity": 0.9, "text": "...final transmission; I'm leaving the manual and tools at the intake valve. If you find this, the station can be saved with the membrane specification in the manual. Don't let this place die." }
+        { "day": 1, "clarity": 0.15, "text": "...water station... pump failure... alone... *static*..." , "outcome_hint": "Three words at a time — he is saving his breath." },
+        { "day": 2, "clarity": 0.35, "text": "...this is the water treatment station on sector 4... the pump seized three days ago... I've been hand-filtering but the membrane is shot..." , "outcome_hint": "He knows the pump's model number without looking." },
+        { "day": 3, "clarity": 0.6, "text": "...I have the technical manual here... if someone can bring a replacement membrane or help me rig a bypass... the station can serve six settlements...", "outcome_hint": "He reads pump pressures off a gauge as he speaks." },
+        { "day": 4, "clarity": 0.9, "text": "...final transmission; I'm leaving the manual and tools at the intake valve. If you find this, the station can be saved with the membrane specification in the manual. Don't let this place die.", "outcome_hint": "The final entry leaves tools for whoever comes.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_water_station",
       "revealed_items": ["item_collectible_water_treatment_handbook"],
@@ -144,10 +160,11 @@
       "source_name": "Stranded Expedition Group",
       "outcome_type": "survivor_community",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.25, "text": "...expedition party... three survivors... vehicle dead... sector 8... *static*..." },
-        { "day": 2, "clarity": 0.5, "text": "...we ran out of fuel two days ago... we have one injured, feverish... we're near a forestry compound... can anyone hear us..." },
-        { "day": 3, "clarity": 0.8, "text": "...this is Marta, expedition leader at the sector 8 forestry compound. We have salvage to trade for fuel and medicine, but only one of us can walk while the other two cannot. Please help." }
+        { "day": 1, "clarity": 0.25, "text": "...expedition party... three survivors... vehicle dead... sector 8... *static*..." , "outcome_hint": "The leader counts her people before her problems." },
+        { "day": 2, "clarity": 0.5, "text": "...we ran out of fuel two days ago... we have one injured, feverish... we're near a forestry compound... can anyone hear us...", "outcome_hint": "A feverish voice mutters behind the leader." },
+        { "day": 3, "clarity": 0.8, "text": "...this is Marta, expedition leader at the sector 8 forestry compound. We have salvage to trade for fuel and medicine, but only one of us can walk while the other two cannot. Please help.", "outcome_hint": "The leader inventories her salvage aloud.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_forestry_compound",
       "narrative_id": "narrative_radio_stranded_expedition"
@@ -160,15 +177,20 @@
       "authenticity": "genuine",
       "moral_choice_id": "quest_moral_distress_family_shelter",
       "days_to_trace": 2,
+      "audio_cue": "radio_static",
       "deadlineDays": 3,
       "senderSurvivalDays": 2,
       "ignoreConsequence": "sender_death",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...please... anyone... my mother is sick... we have no medicine... bunker 7, the one with the blue door..." },
-        { "day": 2, "clarity": 0.7, "text": "...this is twelve-year-old Lena; my mother hasn't woken up since yesterday. The blue door lock is broken, so please come if you can hear this. I don't know what to do." }
+        { "day": 1, "clarity": 0.3, "text": "...please... anyone... my mother is sick... we have no medicine... bunker 7, the one with the blue door..." , "outcome_hint": "A child's voice holding itself very steady." },
+        { "day": 2, "clarity": 0.7, "text": "...this is twelve-year-old Lena; my mother hasn't woken up since yesterday. The blue door lock is broken, so please come if you can hear this. I don't know what to do.", "outcome_hint": "A child reads the message from paper — someone coached her.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "family_bunker_backyard_shed",
-      "narrative_id": "narrative_radio_family_shelter"
+      "narrative_id": "narrative_radio_family_shelter",
+      "follow_up_signals": [
+        { "id": "fu_445_2_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "A neighbour band reports a light moving behind the blue door at night. Someone is still keeping the bunker." },
+        { "id": "fu_445_2_rescue_success", "trigger_condition": "rescue_success", "delay_days": 5, "clarity": 0.95, "text": "Lena sends word: her mother woke at dawn. The medicine arrived with a day to spare." }
+      ]
     },
     {
       "frequency_id": "freq_distress_129_6",
@@ -177,12 +199,13 @@
       "outcome_type": "narrative",
       "authenticity": "stale",
       "days_to_trace": 5,
+      "audio_cue": "radio_morse",
       "message_fragments": [
-        { "day": 1, "clarity": 0.2, "text": "*A mechanical tone repeats every thirty seconds. No voice. Just the tone.*" },
-        { "day": 2, "clarity": 0.3, "text": "*The tone continues. Behind it, barely audible, the sound of wind through an open door.*" },
-        { "day": 3, "clarity": 0.4, "text": "*The tone has not changed. The wind sound is gone. Something metallic scrapes against the floor at irregular intervals.*" },
-        { "day": 4, "clarity": 0.5, "text": "*The tone is weaker now. The battery is dying. The scraping has stopped.*" },
-        { "day": 5, "clarity": 0.6, "text": "*Silence. Then one final tone. Then nothing.*" }
+        { "day": 1, "clarity": 0.2, "text": "*A mechanical tone repeats every thirty seconds. No voice. Just the tone.*" , "outcome_hint": "Thirty seconds to the tone — a machine keeping a schedule no one set." },
+        { "day": 2, "clarity": 0.3, "text": "*The tone continues. Behind it, barely audible, the sound of wind through an open door.*", "outcome_hint": "No voice — only a machine counting." },
+        { "day": 3, "clarity": 0.4, "text": "*The tone has not changed. The wind sound is gone. Something metallic scrapes against the floor at irregular intervals.*" , "outcome_hint": "The wind behind the tone has stopped." },
+        { "day": 4, "clarity": 0.5, "text": "*The tone is weaker now. The battery is dying. The scraping has stopped.*", "outcome_hint": "The battery tone drops pitch each day." },
+        { "day": 5, "clarity": 0.6, "text": "*Silence. Then one final tone. Then nothing.*", "outcome_hint": "The interval between tones is stretching.", "audio_cue": "radio_static" }
       ],
       "location_reference": "suburban_house",
       "narrative_id": "narrative_radio_repeating_beacon"
@@ -194,11 +217,12 @@
       "outcome_type": "narrative",
       "authenticity": "stale",
       "days_to_trace": 4,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...if anyone can hear this... I'm still here... the garden is still growing..." },
-        { "day": 2, "clarity": 0.5, "text": "...I planted beans this morning... the soil is better than last year... the ash is settling..." },
-        { "day": 3, "clarity": 0.65, "text": "...my husband used to say the radio was useless... but I've been talking to it for six months... it keeps me company..." },
-        { "day": 4, "clarity": 0.8, "text": "...the beans are coming up in the unlocked greenhouse behind the school. If anyone finds this frequency, take what you need. I'm going inside now." }
+        { "day": 1, "clarity": 0.3, "text": "...if anyone can hear this... I'm still here... the garden is still growing..." , "outcome_hint": "She talks to the frequency the way one talks over a fence." },
+        { "day": 2, "clarity": 0.5, "text": "...I planted beans this morning... the soil is better than last year... the ash is settling..." , "outcome_hint": "She has last year's soil to compare." },
+        { "day": 3, "clarity": 0.65, "text": "...my husband used to say the radio was useless... but I've been talking to it for six months... it keeps me company...", "outcome_hint": "She talks about the soil the way other survivors talk about ammo." },
+        { "day": 4, "clarity": 0.8, "text": "...the beans are coming up in the unlocked greenhouse behind the school. If anyone finds this frequency, take what you need. I'm going inside now.", "outcome_hint": "She leaves the greenhouse unlocked on purpose.", "audio_cue": "radio_distress_beacon" }
       ],
       "location_reference": "loc_school_gymnasium",
       "narrative_id": "narrative_radio_garden_broadcast"
@@ -210,10 +234,11 @@
       "outcome_type": "narrative",
       "authenticity": "stale",
       "days_to_trace": 3,
+      "audio_cue": "radio_morse",
       "message_fragments": [
-        { "day": 1, "clarity": 0.4, "text": "...this is an automated distress signal... the operator is unable to respond... please send help to..." },
-        { "day": 2, "clarity": 0.6, "text": "...this is an automated distress signal... the operator is unable to respond... please send help to..." },
-        { "day": 3, "clarity": 0.8, "text": "*The same message repeats word for word with zero breathing or background. The operator set this up and walked away or was carried. The coordinates point to a clinic that burned down weeks ago.*" }
+        { "day": 1, "clarity": 0.4, "text": "...this is an automated distress signal... the operator is unable to respond... please send help to..." , "outcome_hint": "The recording announces itself as a recording." },
+        { "day": 2, "clarity": 0.6, "text": "...this is an automated distress signal... the operator is unable to respond... please send help to..." , "outcome_hint": "Identical down to the hiss between the words." },
+        { "day": 3, "clarity": 0.8, "text": "*The same message repeats word for word with zero breathing or background. The operator set this up and walked away or was carried. The coordinates point to a clinic that burned down weeks ago.*", "outcome_hint": "Word-for-word repetition — no breath, no background." }
       ],
       "revealed_location": "abandoned_hospital",
       "narrative_id": "narrative_radio_dead_mans_loop"
@@ -226,13 +251,17 @@
       "authenticity": "trap",
       "deceptive_faction_id": "raiders",
       "days_to_trace": 2,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...fuel cache... twenty litres... unguarded... sector 5, near the overpass... come alone..." },
-        { "day": 2, "clarity": 0.8, "text": "*The signal repeats exactly word for word with no variation or desperation. A synthetic recording designed to sound like an opportunity. The overpass is a known ambush point.*" }
+        { "day": 1, "clarity": 0.3, "text": "...fuel cache... twenty litres... unguarded... sector 5, near the overpass... come alone..." , "outcome_hint": "An offer of free fuel that asks you to come alone." },
+        { "day": 2, "clarity": 0.8, "text": "*The signal repeats exactly word for word with no variation or desperation. A synthetic recording designed to sound like an opportunity. The overpass is a known ambush point.*", "outcome_hint": "The recording repeats without variation — no living voice.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_denial_cut_substation",
       "warning_text": "The fuel cache signal is a raider lure. The overpass is a known kill zone. Three scavenger packs have gone missing here in the last month.",
-      "narrative_id": "narrative_radio_raider_lure_fuel"
+      "narrative_id": "narrative_radio_raider_lure_fuel",
+      "follow_up_signals": [
+        { "id": "fu_192_4_trap_fallen_for", "trigger_condition": "ambush_encountered", "delay_days": 1, "clarity": 0.85, "text": "Word spreads along the overpass: the fuel cache was bait, and the ambushers are already counting new salvage." }
+      ]
     },
     {
       "frequency_id": "freq_distress_410_7",
@@ -242,10 +271,11 @@
       "authenticity": "trap",
       "deceptive_faction_id": "raiders",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.2, "text": "...help... they took my sister... she's in the warehouse... please..." },
-        { "day": 2, "clarity": 0.5, "text": "...I left supplies at the door... medicine, food... just bring weapons... we can get her out..." },
-        { "day": 3, "clarity": 0.85, "text": "*The voice changes register; what sounded like a boy is an adult doing a poor impression. The promised supplies are bait. The warehouse is a holding pen.*" }
+        { "day": 1, "clarity": 0.2, "text": "...help... they took my sister... she's in the warehouse... please..." , "outcome_hint": "The caller asks for help before saying where." },
+        { "day": 2, "clarity": 0.5, "text": "...I left supplies at the door... medicine, food... just bring weapons... we can get her out...", "outcome_hint": "The caller never answers a direct question." },
+        { "day": 3, "clarity": 0.85, "text": "*The voice changes register; what sounded like a boy is an adult doing a poor impression. The promised supplies are bait. The warehouse is a holding pen.*", "outcome_hint": "The voice slips into an adult register mid-sentence.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_warehouse_district",
       "warning_text": "The kidnapping signal is a setup. The warehouse is a holding pen operated by a scavenger-extortion ring. The 'supplies' are poisoned.",
@@ -259,9 +289,10 @@
       "authenticity": "trap",
       "deceptive_faction_id": "warlords_sector_4",
       "days_to_trace": 2,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.35, "text": "...military frequency... patrol down... need extraction... sector 3, grid 9..." },
-        { "day": 2, "clarity": 0.75, "text": "*The military cadence is wrong. The grid reference points to open ground with no cover. A faction is using a stolen military frequency to lure responders into a kill zone.*" }
+        { "day": 1, "clarity": 0.35, "text": "...military frequency... patrol down... need extraction... sector 3, grid 9..." , "outcome_hint": "The report is all procedure and no blood." },
+        { "day": 2, "clarity": 0.75, "text": "*The military cadence is wrong. The grid reference points to open ground with no cover. A faction is using a stolen military frequency to lure responders into a kill zone.*", "outcome_hint": "The military cadence is off — wrong pauses between words.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "checkpoint_kilo_armory",
       "warning_text": "The military distress signal is a faction tactical bait. The grid reference points to open ground. Responders will be exposed.",
@@ -275,10 +306,11 @@
       "authenticity": "false_flag",
       "deceptive_faction_id": "ash_militia",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...this is Grange Hall settlement... we are under attack... please send help..." },
-        { "day": 2, "clarity": 0.55, "text": "...the raiders are at the walls... we need weapons and medicine... coordinates attached..." },
-        { "day": 3, "clarity": 0.8, "text": "*The signal is not from Grange Hall, nor does the voice match any known settlement member. The coordinates point two sectors east of the actual settlement. Someone is impersonating a community to lure responders into hostile territory.*" }
+        { "day": 1, "clarity": 0.3, "text": "...this is Grange Hall settlement... we are under attack... please send help..." , "outcome_hint": "No gunfire reaches the microphone behind the report." },
+        { "day": 2, "clarity": 0.55, "text": "...the raiders are at the walls... we need weapons and medicine... coordinates attached...", "outcome_hint": "No wind or crowd noise behind a settlement under attack." },
+        { "day": 3, "clarity": 0.8, "text": "*The signal is not from Grange Hall, nor does the voice match any known settlement member. The coordinates point two sectors east of the actual settlement. Someone is impersonating a community to lure responders into hostile territory.*", "outcome_hint": "The voice matches no known Grange Hall caller.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_grange_hall",
       "warning_text": "The settlement distress call is a false flag. The signal does not originate from Grange Hall. The coordinates lead to hostile territory.",
@@ -292,9 +324,10 @@
       "authenticity": "false_flag",
       "deceptive_faction_id": "raiders",
       "days_to_trace": 2,
+      "audio_cue": "radio_static",
       "message_fragments": [
-        { "day": 1, "clarity": 0.4, "text": "...medical evacuation request... three casualties... need transport... sector 6, the old clinic..." },
-        { "day": 2, "clarity": 0.85, "text": "*The medical terminology is wrong: 'casualties' instead of 'patients,' 'transport' instead of 'evacuation.' The old clinic in sector 6 was stripped months ago. This is a faction using medical language to exploit compassion.*" }
+        { "day": 1, "clarity": 0.4, "text": "...medical evacuation request... three casualties... need transport... sector 6, the old clinic..." , "outcome_hint": "Three casualties, no names, no conditions — a manifest, not a plea." },
+        { "day": 2, "clarity": 0.85, "text": "*The medical terminology is wrong: 'casualties' instead of 'patients,' 'transport' instead of 'evacuation.' The old clinic in sector 6 was stripped months ago. This is a faction using medical language to exploit compassion.*", "outcome_hint": "The terminology is wrong for trained medical staff.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "hospital_pharmacy",
       "warning_text": "The medical evacuation signal is a false flag. The clinic was stripped months ago. The signal uses incorrect medical terminology.",
@@ -306,12 +339,13 @@
       "source_name": "Civil-Defense Emergency Transmitter",
       "outcome_type": "knowledge",
       "days_to_trace": 5,
+      "audio_cue": "radio_morse",
       "message_fragments": [
-        { "day": 1, "clarity": 0.2, "text": "...civil defense... automated emergency transmitter... sector 2..." },
-        { "day": 2, "clarity": 0.35, "text": "...shelter capacity: 200... current occupancy: unknown... air filtration: operational... water supply: critical..." },
-        { "day": 3, "clarity": 0.5, "text": "...medical supplies: depleted... food stores: unknown... last human contact: day 47..." },
-        { "day": 4, "clarity": 0.7, "text": "...generator fuel: 12%... battery backup: 8 hours... automatic lockdown will engage at 5% fuel..." },
-        { "day": 5, "clarity": 0.95, "text": "...this is the final automated status report from Civil-Defense Shelter 2-Alpha entering total lockdown as external communications cease. The entrance is marked with a green triangle on the north wall where supplies may still be viable. End of transmission." }
+        { "day": 1, "clarity": 0.2, "text": "...civil defense... automated emergency transmitter... sector 2..." , "outcome_hint": "A stamped header and a sector number — institutional voice, no person." },
+        { "day": 2, "clarity": 0.35, "text": "...shelter capacity: 200... current occupancy: unknown... air filtration: operational... water supply: critical..." , "outcome_hint": "It reports an occupancy it cannot verify." },
+        { "day": 3, "clarity": 0.5, "text": "...medical supplies: depleted... food stores: unknown... last human contact: day 47...", "outcome_hint": "The status report is read by a machine." },
+        { "day": 4, "clarity": 0.7, "text": "...generator fuel: 12%... battery backup: 8 hours... automatic lockdown will engage at 5% fuel..." , "outcome_hint": "The fuel figure drops on schedule, hour by hour." },
+        { "day": 5, "clarity": 0.95, "text": "...this is the final automated status report from Civil-Defense Shelter 2-Alpha entering total lockdown as external communications cease. The entrance is marked with a green triangle on the north wall where supplies may still be viable. End of transmission.", "outcome_hint": "The lockdown countdown is automated — no human hand." }
       ],
       "revealed_location": "loc_conscription_office",
       "revealed_knowledge": "civil_defense_shelter_map",
@@ -324,11 +358,12 @@
       "source_name": "Scientific Emergency Beacon",
       "outcome_type": "knowledge",
       "days_to_trace": 4,
+      "audio_cue": "radio_morse",
       "message_fragments": [
-        { "day": 1, "clarity": 0.15, "text": "...automated... observatory... emergency beacon... data integrity compromised..." },
-        { "day": 2, "clarity": 0.3, "text": "...telescope alignment lost... atmospheric readings corrupted... backup generator failing..." },
-        { "day": 3, "clarity": 0.55, "text": "...pre-war astronomical data still intact on magnetic storage... if anyone can retrieve it before the generator dies..." },
-        { "day": 4, "clarity": 0.85, "text": "...final automated transmission from Observatory Station 7 whose data archive contains pre-war atmospheric and geological surveys. The magnetic storage will degrade within 90 days of power loss near the summit entrance. End of transmission." }
+        { "day": 1, "clarity": 0.15, "text": "...automated... observatory... emergency beacon... data integrity compromised..." , "outcome_hint": "The beacon mourns its data before its crew." },
+        { "day": 2, "clarity": 0.3, "text": "...telescope alignment lost... atmospheric readings corrupted... backup generator failing...", "outcome_hint": "The beacon asks for data retrieval, not rescue." },
+        { "day": 3, "clarity": 0.55, "text": "...pre-war astronomical data still intact on magnetic storage... if anyone can retrieve it before the generator dies..." , "outcome_hint": "The archive outranks the road out." },
+        { "day": 4, "clarity": 0.85, "text": "...final automated transmission from Observatory Station 7 whose data archive contains pre-war atmospheric and geological surveys. The magnetic storage will degrade within 90 days of power loss near the summit entrance. End of transmission.", "outcome_hint": "The archive is on magnetic storage — heavy to carry." }
       ],
       "revealed_location": "location_silent_observatory",
       "revealed_knowledge": "pre_war_atmospheric_data",
@@ -341,12 +376,13 @@
       "source_name": "Encrypted Military Burst",
       "outcome_type": "encrypted",
       "days_to_trace": 5,
+      "audio_cue": "radio_dead_hand_pulse",
       "message_fragments": [
-        { "day": 1, "clarity": 0.1, "text": "*A burst of static, then a sequence of tones. Military encryption. The pattern repeats every 60 seconds.*" },
-        { "day": 2, "clarity": 0.2, "text": "*The burst is stronger today. The tones are consistent — this is a coded message, not noise.*" },
-        { "day": 3, "clarity": 0.4, "text": "*Between bursts, a voice fragment: '...coordinates follow... authentication delta-seven...' Then the encryption resumes.*" },
-        { "day": 4, "clarity": 0.6, "text": "*The burst pattern has changed. New tones, new sequence. The message is updating.*" },
-        { "day": 5, "clarity": 0.85, "text": "*The final burst decodes to a set of coordinates and a single word: 'RECOVERY.' The location points to a military depot. The encryption key is embedded in the burst header.*" }
+        { "day": 1, "clarity": 0.1, "text": "*A burst of static, then a sequence of tones. Military encryption. The pattern repeats every 60 seconds.*" , "outcome_hint": "Sixty seconds to the burst — military punctuality." },
+        { "day": 2, "clarity": 0.2, "text": "*The burst is stronger today. The tones are consistent — this is a coded message, not noise.*", "outcome_hint": "The tone pattern is a code, not noise." },
+        { "day": 3, "clarity": 0.4, "text": "*Between bursts, a voice fragment: '...coordinates follow... authentication delta-seven...' Then the encryption resumes.*", "outcome_hint": "A voice fragment slips between the bursts." },
+        { "day": 4, "clarity": 0.6, "text": "*The burst pattern has changed. New tones, new sequence. The message is updating.*" , "outcome_hint": "The sequence updated — someone is still on the other end." },
+        { "day": 5, "clarity": 0.85, "text": "*The final burst decodes to a set of coordinates and a single word: 'RECOVERY.' The location points to a military depot. The encryption key is embedded in the burst header.*", "outcome_hint": "The final burst decodes to a single word: RECOVERY.", "audio_cue": "radio_ebs_alert" }
       ],
       "revealed_location": "checkpoint_kilo_armory",
       "revealed_items": ["military_mre", "ammo_556"],
@@ -358,11 +394,12 @@
       "source_name": "Encrypted Civilian Cipher",
       "outcome_type": "encrypted",
       "days_to_trace": 4,
+      "audio_cue": "radio_numbers_station",
       "message_fragments": [
-        { "day": 1, "clarity": 0.15, "text": "*A series of numbers, read slowly: '7... 14... 3... 22... 9...' Then silence.*" },
-        { "day": 2, "clarity": 0.3, "text": "*The same numbers, in the same order. A cipher. The numbers correspond to something — a code, a map grid, a combination.*" },
-        { "day": 3, "clarity": 0.55, "text": "*A voice breaks through the numbers: 'If you can decode this, the cache is yours. The key is the name of the river.' Then the numbers resume.*" },
-        { "day": 4, "clarity": 0.8, "text": "*The numbers resolve to a set of coordinates. The river key points to a location near the old bridge. The cache is real.*" }
+        { "day": 1, "clarity": 0.15, "text": "*A series of numbers, read slowly: '7... 14... 3... 22... 9...' Then silence.*" , "outcome_hint": "The numbers are read, not counted — a rehearsed hand." },
+        { "day": 2, "clarity": 0.3, "text": "*The same numbers, in the same order. A cipher. The numbers correspond to something — a code, a map grid, a combination.*", "outcome_hint": "The same numbers, the same order — a cipher." },
+        { "day": 3, "clarity": 0.55, "text": "*A voice breaks through the numbers: 'If you can decode this, the cache is yours. The key is the name of the river.' Then the numbers resume.*", "outcome_hint": "A voice hides between the number loops." },
+        { "day": 4, "clarity": 0.8, "text": "*The numbers resolve to a set of coordinates. The river key points to a location near the old bridge. The cache is real.*", "outcome_hint": "The numbers finally resolve — near the old bridge.", "audio_cue": "radio_ebs_alert" }
       ],
       "revealed_location": "loc_bridge_seven",
       "revealed_items": ["clean_water", "canned_food", "bandage"],
@@ -376,12 +413,13 @@
       "authenticity": "genuine",
       "moral_choice_id": "quest_moral_distress_child_school",
       "days_to_trace": 2,
+      "audio_cue": "radio_static",
       "deadlineDays": 4,
       "senderSurvivalDays": 3,
       "ignoreConsequence": "sender_death",
       "message_fragments": [
-        { "day": 1, "clarity": 0.25, "text": "...hello?... is anyone there?... I don't know how to use this radio..." },
-        { "day": 2, "clarity": 0.7, "text": "...my name is Petar in the school, and my teacher told me to use the radio if something happened. The ceiling fell in and I can't get out alone. Please help—I'm scared." }
+        { "day": 1, "clarity": 0.25, "text": "...hello?... is anyone there?... I don't know how to use this radio..." , "outcome_hint": "He keys the set, then waits too long to speak." },
+        { "day": 2, "clarity": 0.7, "text": "...my name is Petar in the school, and my teacher told me to use the radio if something happened. The ceiling fell in and I can't get out alone. Please help—I'm scared.", "outcome_hint": "The child was taught the radio procedure — someone trained him.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_school_gymnasium",
       "narrative_id": "narrative_radio_child_school"
@@ -394,13 +432,14 @@
       "authenticity": "genuine",
       "moral_choice_id": "quest_moral_distress_siblings_clinic",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "deadlineDays": 4,
       "senderSurvivalDays": 3,
       "ignoreConsequence": "sender_death",
       "message_fragments": [
-        { "day": 1, "clarity": 0.2, "text": "...please... we're hiding... they're outside..." },
-        { "day": 2, "clarity": 0.45, "text": "...my sister says we should stay quiet... but the radio is the only way... we're in the basement of the clinic..." },
-        { "day": 3, "clarity": 0.8, "text": "...this is Ana; my brother Miko and I are in the clinic basement with water but no food after the armed men left. The exterior door is blocked from the outside. If you come, knock three times so we know it's you." }
+        { "day": 1, "clarity": 0.2, "text": "...please... we're hiding... they're outside..." , "outcome_hint": "Whispers, and a hand cupped over the microphone." },
+        { "day": 2, "clarity": 0.45, "text": "...my sister says we should stay quiet... but the radio is the only way... we're in the basement of the clinic...", "outcome_hint": "Two children whisper — one wants the radio off." },
+        { "day": 3, "clarity": 0.8, "text": "...this is Ana; my brother Miko and I are in the clinic basement with water but no food after the armed men left. The exterior door is blocked from the outside. If you come, knock three times so we know it's you.", "outcome_hint": "The older sister keeps the younger quiet between sentences.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "prewar_medical_cache",
       "narrative_id": "narrative_radio_siblings_clinic"
@@ -415,16 +454,21 @@
       "reputation_delta": 15,
       "moral_choice_id": "quest_moral_distress_military_patrol",
       "days_to_trace": 3,
+      "audio_cue": "radio_static",
       "deadlineDays": 4,
       "ignoreConsequence": "faction_standing_loss",
       "message_fragments": [
-        { "day": 1, "clarity": 0.3, "text": "...patrol six... radio check... anyone on this frequency... we are pinned..." },
-        { "day": 2, "clarity": 0.55, "text": "...this is Sergeant Voss of patrol six following an ambush on the eastern road. We have two wounded and are holding in a drainage culvert. Ammunition is critically low." },
-        { "day": 3, "clarity": 0.85, "text": "...Sergeant Voss again as we can hear them moving outside. If you have weapons or medical supplies, the culvert is marked with a white flag on a rebar pole. We have military intelligence to trade—don't let patrol six disappear." }
+        { "day": 1, "clarity": 0.3, "text": "...patrol six... radio check... anyone on this frequency... we are pinned..." , "outcome_hint": "A radio check first — discipline ahead of fear." },
+        { "day": 2, "clarity": 0.55, "text": "...this is Sergeant Voss of patrol six following an ambush on the eastern road. We have two wounded and are holding in a drainage culvert. Ammunition is critically low.", "outcome_hint": "Muffled weapons fire behind the report." },
+        { "day": 3, "clarity": 0.85, "text": "...Sergeant Voss again as we can hear them moving outside. If you have weapons or medical supplies, the culvert is marked with a white flag on a rebar pole. We have military intelligence to trade—don't let patrol six disappear.", "outcome_hint": "The sergeant whispers — movement outside.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "checkpoint_kilo_armory",
       "revealed_items": ["ammo_556", "field_dressing_kit"],
-      "narrative_id": "narrative_radio_military_patrol"
+      "narrative_id": "narrative_radio_military_patrol",
+      "follow_up_signals": [
+        { "id": "fu_901_2_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.9, "text": "Patrol six reports movement at the culvert mouth. Voss says they are holding — quietly." },
+        { "id": "fu_901_2_rescue_success", "trigger_condition": "rescue_success", "delay_days": 5, "clarity": 0.95, "text": "Sergeant Voss signs off from the shelter: patrol six is out. Two wounded, both walking." }
+      ]
     }
   ]
 }

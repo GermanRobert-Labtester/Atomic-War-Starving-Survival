@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -296,10 +297,19 @@ namespace Ashfall.Core.Archaeology
             return ActionResult.Success("archaeology.sold");
         }
 
+        public ArchaeologyState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<ArchaeologyState>(json) ?? new ArchaeologyState();
+        }
+
         public void RestoreState(ArchaeologyState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<ArchaeologyState>(json) ?? new ArchaeologyState();
             _siteCounter = _state.sites.Count;
         }
     }

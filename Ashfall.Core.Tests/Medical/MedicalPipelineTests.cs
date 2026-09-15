@@ -21,19 +21,39 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(a.GetHashCode(), b.GetHashCode());
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("Affliction_Upper")]
-        [InlineData("has-dash")]
-        [InlineData("_leading")]
-        [InlineData("trailing_")]
-        [InlineData("double__underscore")]
-        [InlineData("way-too-long-because-it-exceeds-the-sixty-four-character-limit-for-ids-x")]
-        public void InvalidValues_AreRejected(string? value)
+        [Fact]
+        public void InvalidValues_Table_AreRejected()
         {
-            Assert.False(AfflictionId.IsValid(value, out _));
-            Assert.Throws<ArgumentException>(() => AfflictionId.Parse(value!));
+            string?[] values =
+            {
+                null,
+                "",
+                "Affliction_Upper",
+                "has-dash",
+                "_leading",
+                "trailing_",
+                "double__underscore",
+                "way-too-long-because-it-exceeds-the-sixty-four-character-limit-for-ids-x"
+            };
+            var failures = new List<string>();
+
+            foreach (var value in values)
+            {
+                if (AfflictionId.IsValid(value, out _))
+                    failures.Add($"'{value ?? "<null>"}' was accepted by IsValid");
+
+                try
+                {
+                    AfflictionId.Parse(value!);
+                    failures.Add($"'{value ?? "<null>"}' was accepted by Parse");
+                }
+                catch (ArgumentException)
+                {
+                    // Expected validation failure.
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -85,16 +105,27 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(2, id.Ordinal);
         }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("no-separators")]
-        [InlineData("survivor_x:affliction_y")]
-        [InlineData("survivor_x:affliction_y:notanumber")]
-        [InlineData("survivor_x:affliction_y:-1")]
-        [InlineData(":affliction_y:0")]
-        public void InvalidComposites_AreRejected(string value)
+        [Fact]
+        public void InvalidComposites_Table_AreRejected()
         {
-            Assert.False(AfflictionEpisodeId.IsValid(value, out _));
+            string[] values =
+            {
+                "",
+                "no-separators",
+                "survivor_x:affliction_y",
+                "survivor_x:affliction_y:notanumber",
+                "survivor_x:affliction_y:-1",
+                ":affliction_y:0"
+            };
+            var failures = new List<string>();
+
+            foreach (var value in values)
+            {
+                if (AfflictionEpisodeId.IsValid(value, out _))
+                    failures.Add($"'{value}' was accepted");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
     }
 

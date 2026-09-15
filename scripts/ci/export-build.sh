@@ -9,6 +9,8 @@
 set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$DIR"
+GODOT_RUNNER=(bash "$DIR/scripts/ci/run-godot-bounded.sh")
+MAX_SECONDS=180
 SKIP_SMOKE=0
 [[ "${1:-}" == "--skip-smoke" ]] && SKIP_SMOKE=1
 
@@ -28,7 +30,7 @@ dotnet build Ashfall.csproj
 
 # 3. Godot headless import (deterministic resource import before export) ----
 step "godot headless import"
-godot --headless --path . --import >/dev/null 2>&1 || \
+"${GODOT_RUNNER[@]}" --path . --import >/dev/null 2>&1 || \
   echo "WARN: --import returned nonzero (already-imported tree is fine)"
 
 # 4. Export release (reuses the canonical exporter: PCK staging + loose Data) --
@@ -52,25 +54,29 @@ cat builds/linux/RELEASE_STAMP.txt
 
 # 6. Packaged parity gate (repo-side, full byte/hash compare) ---------------
 step "packaged parity gate"
-godot --headless --path . -- --export-parity-selftest --parity-target "$DIR/builds/linux"
+"${GODOT_RUNNER[@]}" --path . -- --export-parity-selftest --parity-target "$DIR/builds/linux"
 
 # 7. Exported runtime smoke + selftests from the packaged artifact ----------
 if [[ "$SKIP_SMOKE" -eq 0 ]]; then
   step "exported runtime smoke + selftests (packaged data, not the repository)"
   EXE="builds/linux/ashfall.x86_64"
   chmod +x "$EXE" 2>/dev/null || true
-  ASHFALL_DATA= "$EXE" --headless --quit-after 60 >/dev/null 2>&1 \
+  run_exported() {
+    timeout --foreground --signal=TERM --kill-after=5s "${MAX_SECONDS}s" \
+      env ASHFALL_DATA= "$EXE" --headless --fixed-fps 15 --max-fps 15 "$@"
+  }
+  run_exported --quit-after 60 >/dev/null 2>&1 \
     || { echo "EXPORT FAIL: exported build did not boot headlessly" >&2; exit 1; }
   echo "boot smoke: OK (60 frames)"
-  ASHFALL_DATA= "$EXE" --headless --bridge-selftest >/dev/null
+  run_exported --bridge-selftest >/dev/null
   echo "bridge-selftest: OK"
-  ASHFALL_DATA= "$EXE" --headless --data-integrity-selftest >/dev/null \
+  run_exported --data-integrity-selftest >/dev/null \
     || { echo "EXPORT FAIL: packaged data-integrity-selftest failed" >&2; exit 1; }
   echo "data-integrity-selftest: OK"
-  ASHFALL_DATA= "$EXE" --headless --research-catalog-selftest >/dev/null \
+  run_exported --research-catalog-selftest >/dev/null \
     || { echo "EXPORT FAIL: packaged research-catalog-selftest failed" >&2; exit 1; }
   echo "research-catalog-selftest: OK"
-  ASHFALL_DATA= "$EXE" --headless --export-parity-selftest >/dev/null
+  run_exported --export-parity-selftest >/dev/null
   echo "export-parity-selftest (from package): OK"
 fi
 

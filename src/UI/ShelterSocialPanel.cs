@@ -87,6 +87,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            Visible = false;
             var binder = new SceneBinder(this, typeof(ShelterSocialPanel));
             binder.Require<Button>("CloseButton");
             binder.Require<VBoxContainer>("RoomListContainer");

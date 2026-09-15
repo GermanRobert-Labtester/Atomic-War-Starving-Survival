@@ -55,24 +55,34 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData("trap_improvised_wire")]
-        [InlineData("trap_box")]
-        [InlineData("trap_fish")]
-        [InlineData("trap_body_grip")]
-        [InlineData("trap_snare")]
-        [InlineData("trap_deadfall")]
-        [InlineData("trap_pit")]
-        [InlineData("trap_net")]
-        [InlineData("trap_cage")]
-        [InlineData("trap_bird_snare")]
-        public void CanonicalTrap_ExistsInBothCatalogsWithExactIdMatch(string trapId)
+        [Fact]
+        public void CanonicalTrap_ExistsInBothCatalogsWithExactIdMatch()
         {
+            string[] trapIds =
+            {
+                "trap_improvised_wire", "trap_box", "trap_fish", "trap_body_grip",
+                "trap_snare", "trap_deadfall", "trap_pit", "trap_net", "trap_cage",
+                "trap_bird_snare"
+            };
             var (items, _, traps) = LoadAuthority();
-            Assert.True(traps.Traps.ContainsKey(trapId), $"Trap '{trapId}' missing in wildlife_trapping_catalog.json");
-            var item = items.Get(trapId);
-            Assert.NotNull(item);
-            Assert.Equal(trapId, item!.id);
+            var failures = new List<string>();
+
+            foreach (var trapId in trapIds)
+            {
+                if (!traps.Traps.ContainsKey(trapId))
+                {
+                    failures.Add($"{trapId}: missing in wildlife_trapping_catalog.json");
+                    continue;
+                }
+
+                var item = items.Get(trapId);
+                if (item == null)
+                    failures.Add($"{trapId}: missing in items catalog");
+                else if (!string.Equals(trapId, item.id, StringComparison.Ordinal))
+                    failures.Add($"{trapId}: item catalog returned id '{item.id}'");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -169,18 +179,40 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData("craft_trap_improvised_wire", "trap_improvised_wire")]
-        [InlineData("craft_trap_box", "trap_box")]
-        [InlineData("craft_trap_fish", "trap_fish")]
-        public void KnownCraftableTraps_ProduceExactMatchingResultItem(string recipeId, string expectedResultItemId)
+        [Fact]
+        public void KnownCraftableTraps_ProduceExactMatchingResultItem()
         {
+            var cases = new[]
+            {
+                (RecipeId: "craft_trap_improvised_wire", ExpectedResultItemId: "trap_improvised_wire"),
+                (RecipeId: "craft_trap_box", ExpectedResultItemId: "trap_box"),
+                (RecipeId: "craft_trap_fish", ExpectedResultItemId: "trap_fish")
+            };
             var (_, recipes, traps) = LoadAuthority();
-            var recipe = recipes.FirstOrDefault(r => r.id == recipeId);
-            Assert.NotNull(recipe);
-            Assert.NotNull(recipe!.result);
-            Assert.Equal(expectedResultItemId, recipe.result.id);
-            Assert.True(traps.Traps.ContainsKey(expectedResultItemId));
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var recipe = recipes.FirstOrDefault(r => r.id == test.RecipeId);
+                if (recipe == null)
+                {
+                    failures.Add($"{test.RecipeId}: recipe is missing");
+                    continue;
+                }
+
+                if (recipe.result == null)
+                {
+                    failures.Add($"{test.RecipeId}: result item is missing");
+                    continue;
+                }
+
+                if (!string.Equals(test.ExpectedResultItemId, recipe.result.id, StringComparison.Ordinal))
+                    failures.Add($"{test.RecipeId}: expected {test.ExpectedResultItemId}, got {recipe.result.id}");
+                if (!traps.Traps.ContainsKey(test.ExpectedResultItemId))
+                    failures.Add($"{test.RecipeId}: expected trap {test.ExpectedResultItemId} is missing");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -178,6 +179,58 @@ namespace Ashfall.Core.Tests.Shelter
             var save = new PowerGridSave { simDay = 1, Checksum = string.Empty };
             string text = json.Serialize(save);
             Assert.Throws<InvalidOperationException>(() => PowerGridSaveCodec.Decode(text, json));
+        }
+
+        [Fact]
+        public void CoatedPart_InstallRequired_PublishesEbPvdContribution()
+        {
+            var grid = MakeGrid();
+            float baseGen = grid.GenerationWatts;
+
+            // Minting is inventory-side; install is explicit and required.
+            Assert.True(grid.TryInstallCoatedPart("item_coated_turbine_blade", out string reason), reason);
+            Assert.Equal(baseGen + 40f, grid.GenerationWatts, 2);
+            Assert.True(grid.GenerationContributions.ContainsKey(PowerGridSystem.EbPvdInstalledSourceId));
+            Assert.Equal(40f, grid.GenerationContributions[PowerGridSystem.EbPvdInstalledSourceId], 2);
+            Assert.Contains("item_coated_turbine_blade", grid.InstalledCoatedPartItemIds);
+
+            // Same family slot cannot be double-installed.
+            Assert.False(grid.TryInstallCoatedPart("item_coated_turbine_blade", out reason));
+            Assert.Equal("already_installed", reason);
+
+            Assert.True(grid.TryInstallCoatedPart("item_coated_combustor_tile", out reason), reason);
+            Assert.True(grid.TryInstallCoatedPart("item_coated_diesel_injector", out reason), reason);
+            Assert.Equal(baseGen + 80f, grid.GenerationWatts, 2); // 40+35+25 capped at 80
+            Assert.Equal(80f, grid.GenerationContributions[PowerGridSystem.EbPvdInstalledSourceId], 2);
+        }
+
+        [Fact]
+        public void CoatedPart_CaptureRestore_RepublishesWatts()
+        {
+            var grid = MakeGrid();
+            Assert.True(grid.TryInstallCoatedPart("item_coated_diesel_injector", out _));
+            var save = grid.CaptureState();
+            Assert.Contains("item_coated_diesel_injector", save.InstalledCoatedPartItemIds);
+
+            var restored = MakeGrid();
+            restored.RestoreState(save);
+            Assert.Contains("item_coated_diesel_injector", restored.InstalledCoatedPartItemIds);
+            Assert.Equal(25f, restored.GenerationContributions[PowerGridSystem.EbPvdInstalledSourceId], 2);
+            Assert.Equal(825f, restored.GenerationWatts, 2);
+        }
+
+        [Fact]
+        public void CoatedPart_UnsupportedOrUninstall_BehavesExplicitly()
+        {
+            var grid = MakeGrid();
+            Assert.False(grid.TryInstallCoatedPart("item_scrap_metal", out string reason));
+            Assert.Equal("unsupported_coated_part", reason);
+
+            Assert.True(grid.TryInstallCoatedPart("item_coated_turbine_blade", out _));
+            Assert.True(grid.TryUninstallCoatedPart("item_coated_turbine_blade", out reason), reason);
+            Assert.False(grid.GenerationContributions.ContainsKey(PowerGridSystem.EbPvdInstalledSourceId));
+            Assert.Empty(grid.InstalledCoatedPartItemIds);
+            Assert.Equal(800f, grid.GenerationWatts, 2);
         }
 
         [Fact]

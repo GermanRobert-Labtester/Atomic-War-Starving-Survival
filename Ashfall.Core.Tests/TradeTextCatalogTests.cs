@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,26 +78,42 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData(-40f, "hostile")]
-        [InlineData(-39f, "wary")]
-        [InlineData(0f, "wary")]
-        [InlineData(1f, "neutral")]
-        [InlineData(40f, "neutral")]
-        [InlineData(41f, "warm")]
-        public void Resolver_UsesCanonicalTrustBoundaries(float trust, string expectedBand)
+        [Fact]
+        public void Resolver_TrustBoundaryTable_UsesCanonicalBands()
         {
             var resolver = new TradeVoiceResolver(Load().Catalog);
-            var result = resolver.ResolveGreeting(new TradeVoiceContext
-            {
-                TraderProfileId = "trader_foundry_broker",
-                Trust = trust
-            });
+            var failures = new List<string>();
 
-            Assert.Equal("trader_foundry_broker", result.ProfileId);
-            Assert.Equal(expectedBand, result.Band);
-            Assert.False(string.IsNullOrWhiteSpace(result.Text));
-            Assert.False(result.UsedFallback);
+            foreach (var testCase in new[]
+            {
+                (Trust: -40f, ExpectedBand: "hostile"),
+                (Trust: -39f, ExpectedBand: "wary"),
+                (Trust: 0f, ExpectedBand: "wary"),
+                (Trust: 1f, ExpectedBand: "neutral"),
+                (Trust: 40f, ExpectedBand: "neutral"),
+                (Trust: 41f, ExpectedBand: "warm"),
+            })
+            {
+                var result = resolver.ResolveGreeting(new TradeVoiceContext
+                {
+                    TraderProfileId = "trader_foundry_broker",
+                    Trust = testCase.Trust
+                });
+
+                var exception = Record.Exception(() =>
+                {
+                    Assert.Equal("trader_foundry_broker", result.ProfileId);
+                    Assert.Equal(testCase.ExpectedBand, result.Band);
+                    Assert.False(string.IsNullOrWhiteSpace(result.Text));
+                    Assert.False(result.UsedFallback);
+                });
+                if (exception != null)
+                {
+                    failures.Add($"trust={testCase.Trust}: {exception.Message}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

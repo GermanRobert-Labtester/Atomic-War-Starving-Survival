@@ -66,6 +66,29 @@ namespace AtomicWar.GodotApp
             system.LoadCatalog(catalog);
             system.RestoreState(saved);
             _solarConcentrator = new SolarConcentratorHostSession(system);
+
+            // B5–B8 Phase 2 (Plan 65): publish the concentrator's electrical
+            // output into the grid under the stable solar_concentrator source
+            // id — but only once a grid-tie inverter is physically wired.
+            // Republish after restore (same discipline as the nuclear core
+            // contribution) and on every output change; weather already drives
+            // the output itself through the engine's availability query.
+            system.OnSolarOutputChanged += (_, _) => PublishSolarConcentratorGeneration();
+            PublishSolarConcentratorGeneration();
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 2: publish (or clear) the solar grid feed. Idempotent —
+        /// SetGenerationContribution replaces by source id, so daily
+        /// republishing never accumulates duplicate output.
+        /// </summary>
+        private void PublishSolarConcentratorGeneration()
+        {
+            var solar = _solarConcentrator?.System;
+            if (solar == null) return;
+            SetupPowerGrid();
+            _powerGrid?.System.SetGenerationContribution(
+                SolarConcentratorEngine.PowerSourceId, solar.GridFeedWatts);
         }
 
         private void SetupPrecisionOptics()
@@ -158,6 +181,10 @@ namespace AtomicWar.GodotApp
         {
             _chlorAlkali?.System.TickDay(day);
             _solarConcentrator?.System.TickDay(day);
+            // B5–B8 Phase 2: the tick raises OnSolarOutputChanged, but republish
+            // explicitly so a restored session (no event yet) still feeds the
+            // grid before the next day's power tick.
+            PublishSolarConcentratorGeneration();
         }
     }
 }

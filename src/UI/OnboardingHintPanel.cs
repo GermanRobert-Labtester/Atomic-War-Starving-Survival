@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -101,7 +102,7 @@ namespace AtomicWar.GodotApp.UI
                 Ashfall.Core.UI.Theme.FontSizeH2);
             _titleLabel.HorizontalAlignment = HorizontalAlignment.Left;
             _titleLabel.TooltipText = T("onboarding.tooltip.tracker",
-                "The first-hour onboarding tracker. Survives save/load.");
+                "First-hour checklist. Progress is kept with the save.");
             header.AddChild(_titleLabel);
             _closeBtn = AshfallUiHelpers.MakeButton(T("ui.common.close_short", "CLOSE [Esc]"),
                 () => { Visible = false; });
@@ -115,11 +116,11 @@ namespace AtomicWar.GodotApp.UI
             _assistanceLabel = AshfallUiHelpers.MakeMono(T("onboarding.assistance.standard",
                 "ASSISTANCE: STANDARD"));
             _assistanceLabel.TooltipText = T("onboarding.tooltip.assistance",
-                "How much the journey guides each beat. Toggle via the assistance button below.");
+                "How much guidance each step shows. Toggle with the button below.");
             vbox.AddChild(_assistanceLabel);
 
             _objectiveLabel = AshfallUiHelpers.MakeBody(T("onboarding.status.booting",
-                "Booting renderer — a real save/load resume is wired in Core."));
+                "Reading the day's objective."));
             _objectiveLabel.TooltipText = T("onboarding.tooltip.objective",
                 "Exactly what is required to complete this onboarding step.");
             _objectiveLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
@@ -127,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
 
             _hintLabel = AshfallUiHelpers.MakeMono(T("onboarding.hint.empty", "HINT: —"));
             _hintLabel.TooltipText = T("onboarding.tooltip.hint",
-                "A contextual nudge that appears when you pause or hit a wall.");
+                "A short hint if you stall on this step.");
             _hintLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             vbox.AddChild(_hintLabel);
 
@@ -141,7 +142,7 @@ namespace AtomicWar.GodotApp.UI
             _showBtn = AshfallUiHelpers.MakeButton(T("onboarding.action.show_where", "SHOW ME WHERE"),
                 OnShowClicked, false);
             _showBtn.TooltipText = T("onboarding.tooltip.show_where",
-                "Open the real system for this step so you can act.");
+                "Open the panel this step needs.");
             _showBtn.CustomMinimumSize = new Vector2(160, 36);
             actionRow.AddChild(_showBtn);
 
@@ -376,11 +377,11 @@ namespace AtomicWar.GodotApp.UI
                 OnboardingStage.Weather => "Read the forecast before you end the day — fallout storms change outdoor rad.",
                 OnboardingStage.InventoryUse => "Equip something real. The geiger or gas mask only protects the hands that wear them.",
                 OnboardingStage.DayAdvance => "Confirm the advance. The morning briefing returns once Day 2 lands.",
-                OnboardingStage.Water => "Start a treatment batch from the water plant. A real batch changes the shelter ledger.",
-                OnboardingStage.Power => "Open the grid and operate one breaker. Watch the room state, not a tutorial promise.",
-                OnboardingStage.Food => "Consume one food ration. The stores must actually lose it.",
-                OnboardingStage.Research => "Start an available research node. The queue is the proof.",
-                OnboardingStage.Expedition => "Dispatch a sortie with the real expedition command. The surface decides the cost.",
+                OnboardingStage.Water => "Start a treatment batch at the water plant. The stores only change if a batch actually runs.",
+                OnboardingStage.Power => "Open the grid and throw one breaker. Watch the rooms change.",
+                OnboardingStage.Food => "Eat one ration from stores. The count should drop.",
+                OnboardingStage.Research => "Start an available research node. It appears in the queue.",
+                OnboardingStage.Expedition => "Send a team with the expedition command. They leave the shelter.",
                 _ => "HINT: —",
             };
 

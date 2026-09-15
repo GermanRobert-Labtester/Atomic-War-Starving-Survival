@@ -11,6 +11,7 @@ using Ashfall.Core.Shelter;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
+using Ashfall.Core.Narrative;
 
 namespace AtomicWar.GodotApp.Audio
 {
@@ -31,6 +32,7 @@ namespace AtomicWar.GodotApp.Audio
         StartingLevelSystem? AudioStartingLevel { get; }
         Ashfall.Core.AudioConditionSystem? AudioConditions { get; }
         SomaticFlashbackSystem? AudioFlashbacks { get; }
+        EchoSystem? AudioEchoes { get; }
     }
 
     /// <summary>
@@ -50,7 +52,11 @@ namespace AtomicWar.GodotApp.Audio
         private DiseaseSystem? _disease;
         private SurvivorFateSystem? _survivorFate;
         private SomaticFlashbackSystem? _flashbacks;
+        private EchoSystem? _echoes;
         private readonly Dictionary<string, float> _radiationDoseBySurvivor = new(StringComparer.Ordinal);
+        // C2 / Plan 17C Phase G — geiger loop lifecycle from real exposure state.
+        private readonly HashSet<string> _exposedSurvivors = new(StringComparer.Ordinal);
+        private string? _activeGeigerLoopCue;
         private bool _disposed;
 
         public AudioEventBridge(AudioManager audio)
@@ -78,7 +84,8 @@ namespace AtomicWar.GodotApp.Audio
             ExpeditionSystem? expeditions = null,
             DiseaseSystem? disease = null,
             SurvivorFateSystem? survivorFate = null,
-            SomaticFlashbackSystem? flashbacks = null)
+            SomaticFlashbackSystem? flashbacks = null,
+            EchoSystem? echoes = null)
         {
             ThrowIfDisposed();
             BindRadiation(radiation);
@@ -89,6 +96,7 @@ namespace AtomicWar.GodotApp.Audio
             BindDisease(disease);
             BindSurvivorFate(survivorFate);
             BindFlashbacks(flashbacks);
+            BindEchoes(echoes);
         }
 
         public void BindRadiation(RadiationSystem? radiation)
@@ -101,8 +109,14 @@ namespace AtomicWar.GodotApp.Audio
             {
                 _radiation.OnStatusGained -= OnRadiationStatusGained;
                 _radiation.OnDoseChanged -= OnRadiationDoseChanged;
+                // C2 / Plan 17C Phase G — session replacement stops the loop
+                // defensively before rebinding (no orphan loop across loads).
+                _radiation.OnExposureStarted -= OnExposureStarted;
+                _radiation.OnExposureEnded -= OnExposureEnded;
             }
 
+            StopGeigerLoop();
+            _exposedSurvivors.Clear();
             _radiation = radiation;
             _radiationDoseBySurvivor.Clear();
             if (_radiation != null)
@@ -114,6 +128,12 @@ namespace AtomicWar.GodotApp.Audio
                 }
                 _radiation.OnStatusGained += OnRadiationStatusGained;
                 _radiation.OnDoseChanged += OnRadiationDoseChanged;
+                // C2 / Plan 17C Phase G — exposure lifecycle → geiger loop.
+                // The tracking set is transient in Core, so a fresh bind starts
+                // empty; the loop begins on the first real transition tick. A
+                // restore therefore never replays historical begin/end cues.
+                _radiation.OnExposureStarted += OnExposureStarted;
+                _radiation.OnExposureEnded += OnExposureEnded;
             }
         }
 
@@ -418,6 +438,25 @@ namespace AtomicWar.GodotApp.Audio
             _playCue(AudioCueCatalog.FlashbackGrounded);
         }
 
+        public void BindEchoes(EchoSystem? echoes)
+        {
+            ThrowIfDisposed();
+            if (ReferenceEquals(_echoes, echoes))
+                return;
+
+            if (_echoes != null)
+                _echoes.OnEchoSurfaced -= OnEchoSurfaced;
+
+            _echoes = echoes;
+            if (_echoes != null)
+                _echoes.OnEchoSurfaced += OnEchoSurfaced;
+        }
+
+        private void OnEchoSurfaced(EchoDefinition echo)
+        {
+            _playCue(AudioCueCatalog.RadioStatic);
+        }
+
         private void OnRadiationStatusGained(SurvivorRadState state, SurvivorStatus status)
         {
             string? cueId = status switch
@@ -429,6 +468,36 @@ namespace AtomicWar.GodotApp.Audio
 
             if (cueId != null)
                 _playCue(cueId);
+        }
+
+        /// <summary>C2 / Plan 17C Phase G — geiger loop start on the first
+        /// active exposure; idempotent while exposure remains active (no
+        /// restart spam). Loop cue selection is deterministic.</summary>
+        private void OnExposureStarted(SurvivorRadState state)
+        {
+            if (state == null || string.IsNullOrEmpty(state.Id)) return;
+            _exposedSurvivors.Add(state.Id);
+            if (_activeGeigerLoopCue == null)
+            {
+                _activeGeigerLoopCue = AudioCueCatalog.RadGeigerLoop;
+                _playCue(_activeGeigerLoopCue);
+            }
+        }
+
+        private void OnExposureEnded(SurvivorRadState state)
+        {
+            if (state == null || string.IsNullOrEmpty(state.Id)) return;
+            _exposedSurvivors.Remove(state.Id);
+            if (_exposedSurvivors.Count == 0)
+                StopGeigerLoop();
+        }
+
+        private void StopGeigerLoop()
+        {
+            if (_activeGeigerLoopCue == null) return; // repeated end is harmless
+            _stopCue(_activeGeigerLoopCue);
+            _stopCue(AudioCueCatalog.RadGeigerIntense);
+            _activeGeigerLoopCue = null;
         }
 
         private void OnRadiationDoseChanged(SurvivorRadState state, float dose)
@@ -488,7 +557,12 @@ namespace AtomicWar.GodotApp.Audio
             {
                 _radiation.OnStatusGained -= OnRadiationStatusGained;
                 _radiation.OnDoseChanged -= OnRadiationDoseChanged;
+                // C2 / Plan 17C Phase G — teardown stops the loop defensively.
+                _radiation.OnExposureStarted -= OnExposureStarted;
+                _radiation.OnExposureEnded -= OnExposureEnded;
             }
+            StopGeigerLoop();
+            _exposedSurvivors.Clear();
             if (_weather != null)
                 _weather.OnWeatherChanged -= OnWeatherChanged;
             if (_combat != null)
@@ -523,6 +597,8 @@ namespace AtomicWar.GodotApp.Audio
                 _flashbacks.OnFlashbackTriggered -= OnFlashbackTriggered;
                 _flashbacks.OnFlashbackGrounded -= OnFlashbackGrounded;
             }
+            if (_echoes != null)
+                _echoes.OnEchoSurfaced -= OnEchoSurfaced;
 
             _radiation = null;
             _radiationDoseBySurvivor.Clear();
@@ -533,6 +609,7 @@ namespace AtomicWar.GodotApp.Audio
             _disease = null;
             _survivorFate = null;
             _flashbacks = null;
+            _echoes = null;
             _disposed = true;
         }
 
@@ -550,5 +627,6 @@ namespace AtomicWar.GodotApp.Audio
         internal bool HasDiseaseBinding => _disease != null;
         internal bool HasSurvivorFateBinding => _survivorFate != null;
         internal bool HasFlashbacksBinding => _flashbacks != null;
+        internal bool HasEchoesBinding => _echoes != null;
     }
 }

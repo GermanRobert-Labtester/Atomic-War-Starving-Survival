@@ -96,7 +96,8 @@ namespace Ashfall.Core.Tests.Radio
 
             string encoded = RadioSaveCodec.Encode(state, json);
             Assert.NotNull(encoded);
-            Assert.Contains("\"saveVersion\":3", encoded);
+            // Encode stamps CurrentSaveVersion (V6 = follow-up scheduler state).
+            Assert.Contains("\"saveVersion\":6", encoded);
 
             bool ok = RadioSaveCodec.TryDecode(encoded, json, out var restored);
             Assert.True(ok);
@@ -197,7 +198,8 @@ namespace Ashfall.Core.Tests.Radio
             bool ok = RadioSaveCodec.TryDecode(v2Json, json, out var migrated);
             Assert.True(ok);
             Assert.NotNull(migrated);
-            Assert.Equal(3, migrated!.saveVersion);
+            // Migration target follows CurrentSaveVersion (V5 = signal-trust ledger).
+            Assert.Equal(RadioSaveCodec.CurrentSaveVersion, migrated!.saveVersion);
             Assert.Equal(33, migrated.day);
             Assert.Equal(104.2f, migrated.currentFrequency);
             Assert.Single(migrated.history);

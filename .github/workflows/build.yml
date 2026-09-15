@@ -37,12 +37,12 @@ jobs:
         run: dotnet build Ashfall.csproj --nologo
 
       - name: godot --import
-        run: godot --headless --path . --import 2>&1 | tail -n 20
+        run: bash scripts/ci/run-godot-bounded.sh --path . --import 2>&1 | tail -n 20
 
       - name: Export Linux/X11
         run: |
           mkdir -p builds/linux
-          godot --headless --path . --export-release "Linux/X11" builds/linux/ashfall.x86_64
+          bash scripts/ci/run-godot-bounded.sh --path . --export-release "Linux/X11" builds/linux/ashfall.x86_64
           ls -lh builds/linux/
           test -f builds/linux/ashfall.x86_64
           # PCK should embed Data; also verify executable-adjacent Data for isolated CI gate
@@ -91,12 +91,12 @@ jobs:
         run: dotnet build Ashfall.csproj --nologo
 
       - name: godot --import
-        run: godot --headless --path . --import 2>&1 | tail -n 20
+        run: bash scripts/ci/run-godot-bounded.sh --path . --import 2>&1 | tail -n 20
 
       - name: Export Windows Desktop
         run: |
           mkdir -p builds/windows
-          godot --headless --path . --export-release "Windows Desktop" builds/windows/ashfall.exe
+          bash scripts/ci/run-godot-bounded.sh --path . --export-release "Windows Desktop" builds/windows/ashfall.exe
           ls -lh builds/windows/
           test -f builds/windows/ashfall.exe
 

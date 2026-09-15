@@ -487,6 +487,9 @@ namespace Ashfall.Core.Foundry
                 completedDay = day,
                 workers = _state.assignedWorkers
             };
+            // Plan 213 — provenance stamp (purity from quality + contamination
+            // + slag; material profile from the bound catalog).
+            ApplyPlan213Provenance(product, record, quality);
             _state.completed.Add(record);
 
             // Quota fulfilment.

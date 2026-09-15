@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.IO;
 using Godot;
@@ -125,10 +126,13 @@ namespace AtomicWar.GodotApp.Settings
                 if (DisplayServer.GetName() != "headless")
                 {
                     // Window Mode
+                    // 0 = Windowed, 1 = Borderless Fullscreen (fills the display
+                    // without a mode switch), 2 = Exclusive Fullscreen. This
+                    // matches the SettingsPanel labels and UserSettingsData.
                     DisplayServer.WindowMode mode = data.WindowMode switch
                     {
-                        1 => DisplayServer.WindowMode.ExclusiveFullscreen,
-                        2 => DisplayServer.WindowMode.Fullscreen,
+                        1 => DisplayServer.WindowMode.Fullscreen,
+                        2 => DisplayServer.WindowMode.ExclusiveFullscreen,
                         _ => DisplayServer.WindowMode.Windowed
                     };
 
@@ -137,10 +141,26 @@ namespace AtomicWar.GodotApp.Settings
                         DisplayServer.WindowSetMode(mode);
                     }
 
-                    // Resolution (in windowed mode)
+                    // Resolution (windowed only). Clamp to the usable screen area
+                    // so the window never opens larger than the display — a
+                    // 1920x1080 client window cannot fit a 1920x1080 desktop once
+                    // decorations/taskbars are counted — then centre it.
                     if (mode == DisplayServer.WindowMode.Windowed && data.ResolutionWidth > 0 && data.ResolutionHeight > 0)
                     {
-                        DisplayServer.WindowSetSize(new Vector2I(data.ResolutionWidth, data.ResolutionHeight));
+                        Rect2I usable = DisplayServer.ScreenGetUsableRect(DisplayServer.WindowGetCurrentScreen());
+                        int targetW = data.ResolutionWidth;
+                        int targetH = data.ResolutionHeight;
+                        if (usable.Size.X > 0 && usable.Size.Y > 0)
+                        {
+                            targetW = Math.Min(targetW, usable.Size.X);
+                            targetH = Math.Min(targetH, usable.Size.Y);
+                        }
+                        DisplayServer.WindowSetSize(new Vector2I(targetW, targetH));
+                        if (usable.Size.X > 0 && usable.Size.Y > 0)
+                        {
+                            Vector2I winSize = DisplayServer.WindowGetSize();
+                            DisplayServer.WindowSetPosition(usable.Position + (usable.Size - winSize) / 2);
+                        }
                     }
 
                     // VSync
@@ -166,6 +186,39 @@ namespace AtomicWar.GodotApp.Settings
             catch (Exception ex)
             {
                 GD.Print($"[UserSettingsStore] Localization apply notice: {ex.Message}");
+            }
+
+            // 5. Accessibility / presentation (UiScale, large fonts, high contrast).
+            // ReducedMotion / HazardTextLabels remain on Current for live consumers
+            // (AudioManager / FormatDoseSource); refresh owner re-reads after Apply.
+            try
+            {
+                float scale = AccessibilityPresentation.ResolveContentScaleFactor(data);
+
+                var tree = Engine.GetMainLoop() as SceneTree;
+                var root = tree?.Root;
+                if (root != null)
+                    root.ContentScaleFactor = scale;
+
+                // Brighten the first CanvasItem under the root when high-contrast
+                // is on (Window itself is not a CanvasItem).
+                if (root != null)
+                {
+                    for (int i = 0; i < root.GetChildCount(); i++)
+                    {
+                        if (root.GetChild(i) is CanvasItem canvas)
+                        {
+                            canvas.Modulate = data.HighContrast
+                                ? new Color(1.15f, 1.15f, 1.15f, 1f)
+                                : Colors.White;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.Print($"[UserSettingsStore] Accessibility apply notice: {ex.Message}");
             }
         }
 

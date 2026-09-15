@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.IO;
 using Ashfall.Core.Settings;
@@ -7,6 +8,16 @@ namespace Ashfall.Core.Tests.Settings
 {
     public class UserSettingsRecoveryTests
     {
+        [Fact]
+        public void Defaults_OpenFullscreen_NotAWindowedResolutionThatCannotFitTheDisplay()
+        {
+            // Regression guard: a windowed 1920x1080 default cannot fit a
+            // 1920x1080 desktop once decorations/taskbars are counted, which
+            // clipped and mis-adapted the UI. Default is borderless fullscreen.
+            var data = new UserSettingsData();
+            Assert.Equal(1, data.WindowMode); // 1 = Borderless Fullscreen
+        }
+
         [Fact]
         public void Deserialize_ValidJson_ReturnsExactValues()
         {
@@ -28,6 +39,7 @@ namespace Ashfall.Core.Tests.Settings
                 ""hazard_text_labels"": true,
                 ""reduced_motion"": true,
                 ""large_fonts"": true,
+                ""colorblind_mode"": ""deuteranopia"",
                 ""confirm_end_day"": false,
                 ""verbose_radio_log"": true,
                 ""auto_save_on_day"": false
@@ -46,7 +58,38 @@ namespace Ashfall.Core.Tests.Settings
             Assert.Equal(0.75f, data.MasterVolume);
             Assert.True(data.HighContrast);
             Assert.True(data.ReducedMotion);
+            Assert.Equal(ColorblindColorMapper.Deuteranopia, data.ColorblindMode);
             Assert.False(data.ConfirmEndDay);
+        }
+
+        [Fact]
+        public void Deserialize_UnknownColorblindMode_SanitizesToNoneWithDiagnostic()
+        {
+            string json = @"{ ""colorblind_mode"": ""monochrome"" }";
+
+            var (data, diag) = UserSettingsCodec.DeserializeWithRecovery(json);
+
+            Assert.NotNull(data);
+            Assert.NotNull(diag);
+            Assert.Contains("Sanitized settings", diag);
+            Assert.Equal(ColorblindColorMapper.None, data.ColorblindMode);
+            Assert.Contains("ColorblindMode", diag);
+        }
+
+        [Fact]
+        public void Serialize_RoundTripsColorblindMode()
+        {
+            var data = new UserSettingsData
+            {
+                ColorblindMode = ColorblindColorMapper.Protanopia
+            };
+
+            string json = UserSettingsCodec.Serialize(data);
+            Assert.Contains("\"colorblind_mode\": \"protanopia\"", json);
+
+            var (reloaded, diag) = UserSettingsCodec.DeserializeWithRecovery(json);
+            Assert.Null(diag);
+            Assert.Equal(ColorblindColorMapper.Protanopia, reloaded.ColorblindMode);
         }
 
         [Fact]

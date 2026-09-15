@@ -33,6 +33,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 DEFAULT_MANIFEST = REPO_ROOT / "docs" / "ci" / "CI_GATE_MANIFEST.json"
 DEFAULT_QUARANTINE = REPO_ROOT / "scripts" / "ci" / "quarantine.json"
 QUARANTINE_MAX_DAYS = 14
+MAX_GATE_TIMEOUT_SECONDS = 180
 
 
 def load_quarantine(path=DEFAULT_QUARANTINE):
@@ -353,11 +354,14 @@ def main():
         gid = gate.get("gate_id", "unknown")
         name = gate.get("name", gid)
         cmd = gate.get("command", "")
-        timeout = gate.get("timeout_seconds", 30)
+        configured_timeout = int(gate.get("timeout_seconds", 30))
+        timeout = min(max(configured_timeout, 1), MAX_GATE_TIMEOUT_SECONDS)
         expected_summary = gate.get("expected_summary", "")
         category = gate.get("category", "General")
 
         print(f"\n[{idx}/{len(gates_to_run)}] Running [{category}] {name} ({gid})...")
+        if configured_timeout != timeout:
+            print(f"  -> timeout policy: configured {configured_timeout}s, capped at {timeout}s")
         sys.stdout.flush()
 
         # A gate whose prerequisite did not pass must not execute. Running it

@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Linq;
 #pragma warning disable CS8618
 using Godot;
+using Ashfall.Core.Economy;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 
@@ -84,7 +86,13 @@ namespace AtomicWar.GodotApp.UI
                 int demandShown = 0;
                 foreach (var d in state.demand.Take(10))
                 {
-                    AddRow(_marketList, $"{d.itemId} — demand ×{d.multiplier:0.00}", Ashfall.Core.UI.Theme.Pale);
+                    var good = _economy.Catalog?.Find(d.itemId);
+                    var quote = _economy.ExplainPrice(d.itemId);
+                    string name = good?.displayName ?? d.itemId;
+                    string why = FormatTopFactors(quote);
+                    AddRow(_marketList,
+                        $"{name} — {quote.finalPrice:0.0} · demand ×{d.multiplier:0.00}{why}",
+                        Ashfall.Core.UI.Theme.Pale);
                     demandShown++;
                     RenderedRowCount++;
                 }
@@ -98,6 +106,35 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Debt: not modeled in Core MarketSystem ──
             _debtList.AddChild(MakeDimLine("Debt tracking not modeled in the market system."));
+        }
+
+        private static string FormatTopFactors(PriceExplanation explanation)
+        {
+            if (explanation.factors == null || explanation.factors.Count == 0)
+                return " · price unavailable";
+
+            var factors = explanation.factors
+                .OrderByDescending(f => Math.Abs(f.delta))
+                .ThenBy(f => (int)f.kind)
+                .ThenBy(f => f.sourceId, StringComparer.Ordinal)
+                .Take(2)
+                .Select(FormatFactor)
+                .ToArray();
+            return factors.Length == 0 ? string.Empty : " · why: " + string.Join(", ", factors);
+        }
+
+        private static string FormatFactor(PriceFactorRecord factor)
+        {
+            string label = factor.kind switch
+            {
+                PriceFactorKind.Demand => "market demand",
+                PriceFactorKind.FloorClamp => "price floor",
+                PriceFactorKind.CeilingClamp => "price ceiling",
+                PriceFactorKind.RegionalSupply => "regional supply",
+                _ => "market pressure"
+            };
+            string direction = factor.delta >= 0f ? "+" : string.Empty;
+            return $"{label} {direction}{factor.delta:0.0}";
         }
 
         private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)

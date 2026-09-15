@@ -391,6 +391,47 @@ public partial class DefenseGridPanel : Control
         drillBtn.CustomMinimumSize = new Vector2(150, 28);
         drillRow.AddChild(drillBtn);
         _detailBox.AddChild(drillRow);
+
+        // ── B5–B8 Phase 7 (Plan 67 §10.5): emplacement construction ──
+        if (_host.Perimeter != null)
+        {
+            var perimeter = _host.Perimeter;
+            _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("CONSTRUCT EMPLACEMENT"));
+
+            var buildPicker = new OptionButton();
+            buildPicker.CustomMinimumSize = new Vector2(260, 30);
+            for (int i = 0; i < perimeter.Definitions.Count; i++)
+            {
+                var def = perimeter.Definitions[i];
+                buildPicker.AddItem(def.display_name);
+                buildPicker.SetItemMetadata(i, def.defense_id);
+            }
+            if (buildPicker.ItemCount > 0) buildPicker.Selected = 0;
+            _detailBox.AddChild(buildPicker);
+
+            string selectedDefenseId = string.Empty;
+            if (buildPicker.Selected >= 0)
+                selectedDefenseId = buildPicker.GetItemMetadata(buildPicker.Selected).AsString();
+            var buildDef = string.IsNullOrEmpty(selectedDefenseId) ? null : perimeter.FindDefinition(selectedDefenseId);
+            if (buildDef != null)
+            {
+                var buildCosts = new List<string>();
+                foreach (var c in buildDef.build_costs) buildCosts.Add($"{c.Value}× {c.Key}");
+                if (!string.IsNullOrEmpty(buildDef.required_knowledge))
+                    buildCosts.Add($"requires {buildDef.required_knowledge}");
+                _detailBox.AddChild(AshfallUiHelpers.MakeSmall($"Cost: {string.Join(", ", buildCosts)} · {buildDef.max_hp} HP"));
+            }
+
+            var buildRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var buildBtn = AshfallUiHelpers.MakeButton("BUILD (pay costs)", () =>
+            {
+                string defenseId = selectedDefenseId;
+                OnActionRequested?.Invoke("BUILD", defenseId);
+            }, disabled: buildDef == null);
+            buildBtn.CustomMinimumSize = new Vector2(170, 28);
+            buildRow.AddChild(buildBtn);
+            _detailBox.AddChild(buildRow);
+        }
     }
 
     public void Open()

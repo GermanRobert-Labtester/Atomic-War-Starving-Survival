@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "weather_effects": [
+    { "weather": "Clear", "outdoor_rad_modifier": 0 },
+    { "weather": "Rain", "outdoor_rad_modifier": 0 },
+    { "weather": "Overcast", "outdoor_rad_modifier": 0 },
+    { "weather": "Ashfall", "outdoor_rad_modifier": 45 },
+    { "weather": "FalloutStorm", "outdoor_rad_modifier": 150 },
+    { "weather": "Blizzard", "outdoor_rad_modifier": 0 },
+    { "weather": "BlackRain", "outdoor_rad_modifier": 250 },
+    { "weather": "AcidSnow", "outdoor_rad_modifier": 0 },
+    { "weather": "BioFog", "outdoor_rad_modifier": 0 },
+    { "weather": "BlackSnow", "outdoor_rad_modifier": 0 },
+    { "weather": "BloodRain", "outdoor_rad_modifier": 0 },
+    { "weather": "EMPStorm", "outdoor_rad_modifier": 0 },
+    { "weather": "GlassStorm", "outdoor_rad_modifier": 0 },
+    { "weather": "RadHail", "outdoor_rad_modifier": 0 },
+    { "weather": "AlgaeBloom", "outdoor_rad_modifier": 0 },
+    { "weather": "AshLightning", "outdoor_rad_modifier": 0 },
+    { "weather": "ParticulateFog", "outdoor_rad_modifier": 0 },
+    { "weather": "ThermalInversion", "outdoor_rad_modifier": 0 },
+    { "weather": "IceStorm", "outdoor_rad_modifier": 0 },
+    { "weather": "Silence", "outdoor_rad_modifier": 0 },
+    { "weather": "FalseSpring", "outdoor_rad_modifier": 0 },
+    { "weather": "SilentSpring", "outdoor_rad_modifier": 0 }
+  ]
+}

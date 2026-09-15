@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "collection": "ashfall_procedural_visual_starter_pack",
+  "status": "PROCEDURAL STARTER ART",
+  "generated_by": "Pillow, deterministic Python line art and textures",
+  "generator": "scripts/tools/generate-visual-pack.py",
+  "seed": 20260913,
+  "license": "MIT",
+  "godot_import": "Run ./launch.sh --generate-visuals to refresh PNGs and import sidecars",
+  "files": [
+    {
+      "file": "ashfall_icon_radiation.png",
+      "kind": "icon",
+      "dimensions": [
+        96,
+        96
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_icon_radiation.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "HUD/resource or status indicators"
+    },
+    {
+      "file": "ashfall_icon_water.png",
+      "kind": "icon",
+      "dimensions": [
+        96,
+        96
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_icon_water.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "HUD/resource or status indicators"
+    },
+    {
+      "file": "ashfall_icon_power.png",
+      "kind": "icon",
+      "dimensions": [
+        96,
+        96
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_icon_power.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "HUD/resource or status indicators"
+    },
+    {
+      "file": "ashfall_icon_route.png",
+      "kind": "icon",
+      "dimensions": [
+        96,
+        96
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_icon_route.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "HUD/resource or status indicators"
+    },
+    {
+      "file": "ashfall_icon_medical.png",
+      "kind": "icon",
+      "dimensions": [
+        96,
+        96
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_icon_medical.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "HUD/resource or status indicators"
+    },
+    {
+      "file": "ashfall_decal_warning_trefoil.png",
+      "kind": "decal",
+      "dimensions": [
+        192,
+        192
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_decal_warning_trefoil.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "world props, warning signage, repair overlays"
+    },
+    {
+      "file": "ashfall_decal_repair_patch.png",
+      "kind": "decal",
+      "dimensions": [
+        192,
+        192
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_decal_repair_patch.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "world props, warning signage, repair overlays"
+    },
+    {
+      "file": "ashfall_texture_concrete_tile.png",
+      "kind": "seamless_material",
+      "dimensions": [
+        256,
+        256
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_texture_concrete_tile.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "tileable shelter/surface material layers"
+    },
+    {
+      "file": "ashfall_texture_rust_sheet.png",
+      "kind": "seamless_material",
+      "dimensions": [
+        256,
+        256
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_texture_rust_sheet.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "tileable shelter/surface material layers"
+    },
+    {
+      "file": "ashfall_fx_ash_drift.png",
+      "kind": "fx_sprite",
+      "dimensions": [
+        128,
+        128
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_fx_ash_drift.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "ash, condensation, and electrical FX"
+    },
+    {
+      "file": "ashfall_fx_steam_puff.png",
+      "kind": "fx_sprite",
+      "dimensions": [
+        128,
+        128
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_fx_steam_puff.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "ash, condensation, and electrical FX"
+    },
+    {
+      "file": "ashfall_fx_spark.png",
+      "kind": "fx_sprite",
+      "dimensions": [
+        128,
+        128
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_fx_spark.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "ash, condensation, and electrical FX"
+    },
+    {
+      "file": "ashfall_visual_pack_preview.png",
+      "kind": "preview_sheet",
+      "dimensions": [
+        960,
+        600
+      ],
+      "runtime_path": "res://assets/sprites/Generated/ashfall_visual_pack_preview.png",
+      "source": "scripts/tools/generate-visual-pack.py",
+      "consumer": "art review only"
+    }
+  ]
+}

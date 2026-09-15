@@ -213,6 +213,11 @@ namespace Ashfall.Core.Factions
         public List<EspionageIntelFactState> knownIntel = new List<EspionageIntelFactState>();
         public List<EspionageMissionState> missionHistory = new List<EspionageMissionState>();
         public List<EspionageFactionSecurityState> factionSecurity = new List<EspionageFactionSecurityState>();
+        /// <summary>
+        /// Plan 167: incident ids already routed by <see cref="EspionageConsequenceRouter"/>.
+        /// Optional — old saves restore empty.
+        /// </summary>
+        public List<string> firedConsequenceIncidentIds = new List<string>();
     }
 
     [Serializable]
@@ -456,7 +461,7 @@ namespace Ashfall.Core.Factions
 
             string consequence = definition.PossibleConsequenceIds.Count > 0
                 ? definition.PossibleConsequenceIds[_rng.Next(0, definition.PossibleConsequenceIds.Count)]
-                : "supply_disruption";
+                : EspionageConsequenceRouter.SupplyDisruption;
             var intent = new EspionageConsequenceIntent
             {
                 incidentId = "espionage_incident_" + (++_sequence).ToString("D4"),
@@ -508,8 +513,26 @@ namespace Ashfall.Core.Factions
             int threshold = network.intelLevel >= 4 ? (definition.IntelFactIds.Count > 0 ? 1 : int.MaxValue)
                 : network.intelLevel >= 2 ? 1 : int.MaxValue;
             if (threshold == int.MaxValue) return;
+
+            // Upgrade previously estimated facts once the network reaches confirmed intel.
+            if (network.intelLevel >= 4)
+            {
+                for (int i = 0; i < _state.knownIntel.Count; i++)
+                {
+                    var existing = _state.knownIntel[i];
+                    if (existing == null) continue;
+                    if (!string.Equals(existing.factionId, network.targetFactionId, StringComparison.Ordinal)) continue;
+                    if (!network.knownCapabilityFacts.Contains(existing.factId, StringComparer.Ordinal)) continue;
+                    if (existing.confidence == IntelConfidence.Confirmed) continue;
+                    existing.confidence = IntelConfidence.Confirmed;
+                    existing.lastConfirmedDay = day;
+                }
+            }
+
+            int added = 0;
             for (int i = 0; i < definition.IntelFactIds.Count; i++)
             {
+                if (added >= threshold) break;
                 string factId = definition.IntelFactIds[i] ?? string.Empty;
                 if (string.IsNullOrWhiteSpace(factId) || network.knownCapabilityFacts.Contains(factId, StringComparer.Ordinal)) continue;
                 network.knownCapabilityFacts.Add(factId);
@@ -523,6 +546,7 @@ namespace Ashfall.Core.Factions
                 };
                 _state.knownIntel.Add(fact);
                 OnIntelDiscovered?.Invoke(fact);
+                added++;
             }
         }
 
@@ -601,7 +625,10 @@ namespace Ashfall.Core.Factions
                 capturedAgents = _state.capturedAgents.Where(c => c != null).Select(CloneCaptured).ToList(),
                 knownIntel = _state.knownIntel.Where(i => i != null).Select(CloneIntel).ToList(),
                 missionHistory = _state.missionHistory.Where(m => m != null).Select(CloneMission).ToList(),
-                factionSecurity = _state.factionSecurity.Where(s => s != null).Select(CloneSecurity).ToList()
+                factionSecurity = _state.factionSecurity.Where(s => s != null).Select(CloneSecurity).ToList(),
+                firedConsequenceIncidentIds = _state.firedConsequenceIncidentIds != null
+                    ? new List<string>(_state.firedConsequenceIncidentIds)
+                    : new List<string>()
             };
         }
 
@@ -616,11 +643,25 @@ namespace Ashfall.Core.Factions
                 capturedAgents = saved.capturedAgents?.Where(c => c != null).Select(CloneCaptured).ToList() ?? new List<CapturedAgentState>(),
                 knownIntel = saved.knownIntel?.Where(i => i != null).Select(CloneIntel).ToList() ?? new List<EspionageIntelFactState>(),
                 missionHistory = saved.missionHistory?.Where(m => m != null).Select(CloneMission).ToList() ?? new List<EspionageMissionState>(),
-                factionSecurity = saved.factionSecurity?.Where(s => s != null).Select(CloneSecurity).ToList() ?? new List<EspionageFactionSecurityState>()
+                factionSecurity = saved.factionSecurity?.Where(s => s != null).Select(CloneSecurity).ToList() ?? new List<EspionageFactionSecurityState>(),
+                firedConsequenceIncidentIds = saved.firedConsequenceIncidentIds != null
+                    ? new List<string>(saved.firedConsequenceIncidentIds)
+                    : new List<string>()
             };
             _sequence = Math.Max(_sequence, InferSequence());
             OnStateChanged?.Invoke();
         }
+
+        /// <summary>Plan 167: sync router fired-set into capture/restore.</summary>
+        public void SetFiredConsequenceIncidentIds(IEnumerable<string> ids)
+        {
+            _state.firedConsequenceIncidentIds = ids != null
+                ? new List<string>(ids)
+                : new List<string>();
+        }
+
+        public IReadOnlyList<string> GetFiredConsequenceIncidentIds()
+            => _state.firedConsequenceIncidentIds ?? (IReadOnlyList<string>)Array.Empty<string>();
 
         private int InferSequence()
         {

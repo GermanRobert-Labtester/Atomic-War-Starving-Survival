@@ -44,6 +44,49 @@ namespace AtomicWar.GodotApp
             if (_routeInfrastructure != null) return;
             var state = RouteInfrastructureSaveStore.TryLoad() ?? new RouteInfrastructureState();
             _routeInfrastructure = new RouteInfrastructureSystem(state);
+            // Fresh saves have no authored corridor state — seed the flagship
+            // minefield and corrugated rail so flail/grinder commands and
+            // expedition modifiers have a real segment to act on.
+            BootstrapDefaultRouteInfrastructure(_routeInfrastructure, _simDay > 0 ? _simDay : 1);
+            WirePlans146ExpeditionRouteModifiers();
+        }
+
+        /// <summary>
+        /// Registers the canonical demining and rail corridors when the route
+        /// section is empty. Never overwrites a restored save that already has
+        /// segments.
+        /// </summary>
+        private static void BootstrapDefaultRouteInfrastructure(RouteInfrastructureSystem routes, int day)
+        {
+            if (routes == null || routes.GetAllSegments().Count > 0) return;
+            routes.RegisterMinefield("expedition_corridor_north", "seg_mine_gap", density01: 0.85f, day: day);
+            routes.RegisterMinefield("route_ashfall_pass", "seg_pass_alpha", density01: 0.65f, day: day);
+            routes.RegisterRailSegment("rail_trunk_iron_vein", "sector_deep_quarry", initialRoughness: 0.90f, safeSpeedKph: 25.0f, day: day, designSpeedKph: 55f);
+            routes.RegisterRailSegment("rail_trunk_iron_reach", "sector_main_line", initialRoughness: 0.82f, safeSpeedKph: 30.0f, day: day, designSpeedKph: 60f);
+        }
+
+        /// <summary>
+        /// Binds route hazard/travel modifiers into the expedition estimate
+        /// preview and refreshes the live encounter composer so minefields
+        /// and ground rails affect player-facing travel numbers.
+        /// </summary>
+        private void WirePlans146ExpeditionRouteModifiers()
+        {
+            if (_routeInfrastructure == null) return;
+            if (_expeditions != null)
+            {
+                var routes = _routeInfrastructure;
+                _expeditions.SetEstimateRouteModifiers(
+                    locationId => routes.GetHazardModifier(locationId),
+                    locationId => routes.GetTravelModifier(locationId));
+            }
+            // Reinstall the encounter composer so GetHazardModifier is included
+            // even when evolving-world wiring ran before route setup.
+            if (_expeditions != null)
+            {
+                _expeditionDangerComposer = ComposeExpeditionDangerMultiplier();
+                _expeditions.SetEncounterChanceMultiplier(_expeditionDangerComposer);
+            }
         }
 
         private void SetupEbPvdCoating()
@@ -86,6 +129,44 @@ namespace AtomicWar.GodotApp
                     _inventory.Inventory.AddById(cartridgeItemId, 1);
                 }
             };
+            // Assay results write into the medical diagnosis ledger (disease ids
+            // are affliction definition ids). Presentation stays in LastEvent.
+            _microfluidicDiagnostic.System.OnRunCompleted += ApplyMicrofluidicResultToDiagnosis;
+        }
+
+        private void ApplyMicrofluidicResultToDiagnosis(MicrofluidicDiagnosticResult res)
+        {
+            if (res == null || string.IsNullOrEmpty(res.PatientId) || string.IsNullOrEmpty(res.TargetDiseaseId))
+                return;
+            if (res.ResultKind == DiagnosticResultKind.Invalid
+                || res.ResultKind == DiagnosticResultKind.Indeterminate
+                || res.ResultKind == DiagnosticResultKind.Pending)
+                return;
+
+            EnsureMedicalPipeline();
+            var pipeline = _medical?.Pipeline;
+            if (pipeline == null) return;
+            if (!Ashfall.Core.Survivors.SurvivorId.TryParse(res.PatientId, out var survivor))
+                return;
+            if (!Ashfall.Core.Medical.AfflictionId.IsValid(res.TargetDiseaseId, out _))
+                return;
+
+            var definition = new Ashfall.Core.Medical.AfflictionId(res.TargetDiseaseId);
+            var episode = Ashfall.Core.Medical.AfflictionEpisodeId.Create(survivor, definition);
+            int day = _simDay > 0 ? _simDay : 1;
+            string detail = $"microfluidic:{res.AssayId}:{res.ResultKind}:{res.Confidence01:F2}";
+
+            if (res.ResultKind == DiagnosticResultKind.Positive)
+            {
+                if (res.Confidence01 >= 0.85f)
+                    pipeline.Diagnosis.Confirm(episode, day, detail);
+                else
+                    pipeline.SuspectFromEvidence(survivor, definition, day, detail);
+            }
+            else if (res.ResultKind == DiagnosticResultKind.Negative)
+            {
+                pipeline.Diagnosis.RuleOut(episode, day, detail);
+            }
         }
 
         private void SetupMineClearingFlail()
@@ -97,6 +178,7 @@ namespace AtomicWar.GodotApp
             var engine = new MineClearingFlailEngine(state);
             LoadMineFlailCatalogInto(engine);
             _mineClearingFlail = new MineClearingFlailHostSession(engine);
+            _mineClearingFlail.Routes = _routeInfrastructure;
             _mineFlailRng = _campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.MineClearingFlail);
         }
 
@@ -109,6 +191,7 @@ namespace AtomicWar.GodotApp
             var engine = new RailGrindingEngine(state);
             LoadRailGrindingCatalogInto(engine);
             _railGrinding = new RailGrindingHostSession(engine);
+            _railGrinding.Routes = _routeInfrastructure;
             _railGrindingRng = _campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.RailGrinding);
         }
 
@@ -218,6 +301,70 @@ namespace AtomicWar.GodotApp
             SetupMicrofluidicDiagnostic();
             SetupMineClearingFlail();
             SetupRailGrinding();
+            WirePlans146ExpeditionRouteModifiers();
+        }
+
+        private string ResolvePlans146OperatorId()
+        {
+            if (_survivors != null)
+            {
+                foreach (var s in _survivors.RosterState)
+                {
+                    if (s != null && s.IsAliveState && !string.IsNullOrEmpty(s.Id))
+                        return s.Id;
+                }
+            }
+            return "shelter_operator";
+        }
+
+        /// <summary>
+        /// Plans 146–149 MED: push living roster ids into the assay panel so
+        /// START ASSAY RUN emits assayId|patientId (defaults to first living).
+        /// </summary>
+        private void SyncMicrofluidicPatientCandidates()
+        {
+            if (_microfluidicDiagnosticPanel == null) return;
+            var patients = new System.Collections.Generic.List<string>();
+            if (_survivors != null)
+            {
+                foreach (var s in _survivors.RosterState)
+                {
+                    if (s != null && s.IsAliveState && !string.IsNullOrEmpty(s.Id))
+                        patients.Add(s.Id);
+                }
+            }
+            if (patients.Count == 0)
+                patients.Add(ResolvePlans146OperatorId());
+            _microfluidicDiagnosticPanel.SetPatientCandidates(patients);
+        }
+
+        private bool TryConsumePlans146Demands(System.Collections.Generic.IReadOnlyList<InventoryDemand> demands)
+        {
+            if (_inventory == null || demands == null || demands.Count == 0) return false;
+            var bill = new System.Collections.Generic.Dictionary<string, int>(StringComparer.Ordinal);
+            for (int i = 0; i < demands.Count; i++)
+            {
+                var d = demands[i];
+                if (d == null || string.IsNullOrEmpty(d.ItemId) || d.Quantity <= 0) continue;
+                if (bill.TryGetValue(d.ItemId, out int existing))
+                    bill[d.ItemId] = existing + d.Quantity;
+                else
+                    bill[d.ItemId] = d.Quantity;
+            }
+            if (bill.Count == 0) return false;
+            return _inventory.Inventory.TryConsumeBill(bill);
+        }
+
+        private static bool TrySplitPlans146Param(string param, out string left, out string right)
+        {
+            left = string.Empty;
+            right = string.Empty;
+            if (string.IsNullOrEmpty(param)) return false;
+            int sep = param.IndexOf('|');
+            if (sep <= 0 || sep >= param.Length - 1) return false;
+            left = param.Substring(0, sep);
+            right = param.Substring(sep + 1);
+            return !string.IsNullOrEmpty(left) && !string.IsNullOrEmpty(right);
         }
 
         // ─── Save (triad) ───
@@ -329,6 +476,12 @@ namespace AtomicWar.GodotApp
 
         // ─── UI Panel Construction & Binding ───
 
+        private void EnsurePlans146To149Panels()
+        {
+            if (_ebPvdCoatingPanel != null) return;
+            BuildPlans146To149Panels();
+        }
+
         private void BuildPlans146To149Panels()
         {
             SetupPlans146To149();
@@ -365,6 +518,15 @@ namespace AtomicWar.GodotApp
         private void HandleEbPvdCoatingAction(string action, string param = "")
         {
             SetupEbPvdCoating();
+            EnsurePlans146To149Panels();
+            if (_ebPvdCoating == null) return;
+
+            if (string.Equals(action, "CLOSE", StringComparison.OrdinalIgnoreCase))
+            {
+                if (_ebPvdCoatingPanel != null) _ebPvdCoatingPanel.Visible = false;
+                return;
+            }
+
             if (string.Equals(action, "OPEN", StringComparison.OrdinalIgnoreCase))
             {
                 if (_ebPvdCoatingPanel != null)
@@ -372,25 +534,180 @@ namespace AtomicWar.GodotApp
                     _ebPvdCoatingPanel.Visible = true;
                     _ebPvdCoatingPanel.RefreshView();
                 }
+                return;
             }
+
+            if (string.Equals(action, "start_coating", StringComparison.OrdinalIgnoreCase))
+            {
+                // param: coatingId|substrateTag[|bond]
+                string coatingId = param ?? string.Empty;
+                string substrateTag = "superalloy_blade";
+                bool applyBond = true;
+                if (!string.IsNullOrEmpty(param))
+                {
+                    var parts = param.Split('|');
+                    if (parts.Length >= 1 && !string.IsNullOrEmpty(parts[0])) coatingId = parts[0];
+                    if (parts.Length >= 2 && !string.IsNullOrEmpty(parts[1])) substrateTag = parts[1];
+                    if (parts.Length >= 3)
+                        applyBond = !string.Equals(parts[2], "nobond", StringComparison.OrdinalIgnoreCase);
+                }
+                if (string.IsNullOrEmpty(coatingId))
+                    coatingId = "ebpvd_tbc_yttria_stabilized_zirconia";
+
+                SetupInventory();
+                string jobId = $"ebpvd_{_simDay}_{coatingId}";
+                bool ok = _ebPvdCoating.StartCoatingJob(
+                    jobId, coatingId, substrateTag, ResolvePlans146OperatorId(),
+                    _simDay > 0 ? _simDay : 1, applyBond, TryConsumePlans146Demands, out string reason);
+                _ebPvdCoatingPanel?.ShowFeedback(
+                    ok ? $"Coating started: {coatingId} on {substrateTag}."
+                       : $"Cannot start coating: {reason}",
+                    !ok);
+            }
+            else if (string.Equals(action, "install_coated_part", StringComparison.OrdinalIgnoreCase))
+            {
+                // Plans 146–149 MED: mint ≠ install. Consume inventory then
+                // publish watts into PowerGrid under ebpvd_installed.
+                string itemId = string.IsNullOrEmpty(param) ? string.Empty : param.Trim();
+                if (string.IsNullOrEmpty(itemId))
+                {
+                    _ebPvdCoatingPanel?.ShowFeedback("Cannot install: missing_item.", true);
+                }
+                else if (string.IsNullOrEmpty(Ashfall.Core.Shelter.PowerGridSystem.ResolveCoatedPartFamily(itemId)))
+                {
+                    _ebPvdCoatingPanel?.ShowFeedback($"Cannot install: unsupported_coated_part ({itemId}).", true);
+                }
+                else
+                {
+                    SetupInventory();
+                    SetupPowerGrid();
+                    if (_inventory == null || !_inventory.Inventory.TryConsumeById(itemId, 1))
+                    {
+                        _ebPvdCoatingPanel?.ShowFeedback($"Cannot install: missing inventory for {itemId}.", true);
+                    }
+                    else
+                    {
+                        string installReason = "power_grid_unavailable";
+                        bool installed = _powerGrid != null
+                            && _powerGrid.TryInstallCoatedPart(itemId, out installReason);
+                        if (!installed)
+                        {
+                            // Refund the consumed part if the grid rejected install.
+                            _inventory.Inventory.AddById(itemId, 1);
+                            _ebPvdCoatingPanel?.ShowFeedback(
+                                $"Cannot install: {installReason}.", true);
+                        }
+                        else
+                        {
+                            float watts = Ashfall.Core.Shelter.PowerGridSystem.ResolveCoatedPartWatts(itemId);
+                            _ebPvdCoatingPanel?.ShowFeedback(
+                                $"Installed {itemId} into generator (+{watts:F0} W).", false);
+                        }
+                    }
+                }
+            }
+            else if (string.Equals(action, "maintain", StringComparison.OrdinalIgnoreCase))
+            {
+                string maint = string.IsNullOrEmpty(param) ? "replace_filament" : param;
+                _ebPvdCoating.PerformMaintenance(maint);
+                _ebPvdCoatingPanel?.ShowFeedback($"Maintenance complete: {maint}.", false);
+            }
+
+            _ebPvdCoatingPanel?.RefreshView();
         }
 
         private void HandleMicrofluidicDiagnosticAction(string action, string param = "")
         {
             SetupMicrofluidicDiagnostic();
+            EnsurePlans146To149Panels();
+            if (_microfluidicDiagnostic == null) return;
+
+            if (string.Equals(action, "CLOSE", StringComparison.OrdinalIgnoreCase))
+            {
+                if (_microfluidicDiagnosticPanel != null) _microfluidicDiagnosticPanel.Visible = false;
+                return;
+            }
+
             if (string.Equals(action, "OPEN", StringComparison.OrdinalIgnoreCase))
             {
                 if (_microfluidicDiagnosticPanel != null)
                 {
+                    SyncMicrofluidicPatientCandidates();
                     _microfluidicDiagnosticPanel.Visible = true;
                     _microfluidicDiagnosticPanel.RefreshView();
                 }
+                return;
             }
+
+            if (string.Equals(action, "start_manufacture", StringComparison.OrdinalIgnoreCase))
+            {
+                string assayId = string.IsNullOrEmpty(param) ? "microfluidic_assay_cholera" : param;
+                SetupInventory();
+                string jobId = $"mfg_{_simDay}_{assayId}";
+                bool ok = _microfluidicDiagnostic.StartManufacturing(
+                    jobId, assayId, ResolvePlans146OperatorId(), TryConsumePlans146Demands, out string reason);
+                _microfluidicDiagnosticPanel?.ShowFeedback(
+                    ok ? $"Cartridge casting started for {assayId}."
+                       : $"Cannot manufacture cartridge: {reason}",
+                    !ok);
+            }
+            else if (string.Equals(action, "select_patient", StringComparison.OrdinalIgnoreCase))
+            {
+                SyncMicrofluidicPatientCandidates();
+                if (_microfluidicDiagnosticPanel != null && !string.IsNullOrEmpty(param))
+                {
+                    _microfluidicDiagnosticPanel.SelectPatient(param);
+                    _microfluidicDiagnosticPanel.ShowFeedback($"Patient selected: {param}.", false);
+                }
+            }
+            else if (string.Equals(action, "start_run", StringComparison.OrdinalIgnoreCase))
+            {
+                // param: assayId|patientId  (patient defaults to first living survivor)
+                SyncMicrofluidicPatientCandidates();
+                string assayId = "microfluidic_assay_cholera";
+                string patientId = ResolvePlans146OperatorId();
+                if (!string.IsNullOrEmpty(param))
+                {
+                    var parts = param.Split('|');
+                    if (parts.Length >= 1 && !string.IsNullOrEmpty(parts[0])) assayId = parts[0];
+                    if (parts.Length >= 2 && !string.IsNullOrEmpty(parts[1])) patientId = parts[1];
+                }
+                SetupInventory();
+                string runId = $"run_{_simDay}_{assayId}_{patientId}";
+                bool ok = _microfluidicDiagnostic.StartRun(
+                    runId, patientId, assayId, ResolvePlans146OperatorId(),
+                    _simDay > 0 ? _simDay : 1, 0f,
+                    (itemId, qty) => _inventory != null && _inventory.Inventory.TryConsumeById(itemId, qty),
+                    out string reason);
+                _microfluidicDiagnosticPanel?.ShowFeedback(
+                    ok ? $"Assay run started: {assayId} for {patientId}."
+                       : $"Cannot start assay: {reason}",
+                    !ok);
+            }
+            else if (string.Equals(action, "maintain", StringComparison.OrdinalIgnoreCase))
+            {
+                string maint = string.IsNullOrEmpty(param) ? "recalibrate_optics" : param;
+                _microfluidicDiagnostic.PerformMaintenance(maint);
+                _microfluidicDiagnosticPanel?.ShowFeedback($"Analyzer serviced: {maint}.", false);
+            }
+
+            _microfluidicDiagnosticPanel?.RefreshView();
         }
 
         private void HandleMineFlailAction(string action, string param = "")
         {
             SetupMineClearingFlail();
+            EnsurePlans146To149Panels();
+            if (_mineClearingFlail == null) return;
+            if (_mineClearingFlail.Routes == null)
+                _mineClearingFlail.Routes = _routeInfrastructure;
+
+            if (string.Equals(action, "CLOSE", StringComparison.OrdinalIgnoreCase))
+            {
+                if (_mineFlailPanel != null) _mineFlailPanel.Visible = false;
+                return;
+            }
+
             if (string.Equals(action, "OPEN", StringComparison.OrdinalIgnoreCase))
             {
                 if (_mineFlailPanel != null)
@@ -398,12 +715,52 @@ namespace AtomicWar.GodotApp
                     _mineFlailPanel.Visible = true;
                     _mineFlailPanel.RefreshView();
                 }
+                return;
             }
+
+            if (string.Equals(action, "start_breach", StringComparison.OrdinalIgnoreCase))
+            {
+                SetupRouteInfrastructure();
+                string routeId = "expedition_corridor_north";
+                string segmentId = "seg_mine_gap";
+                if (TrySplitPlans146Param(param, out string left, out string right))
+                {
+                    routeId = left;
+                    segmentId = right;
+                }
+                const float defaultLengthMeters = 1200f;
+                bool ok = _mineClearingFlail.StartBreach(
+                    routeId, segmentId, ResolvePlans146OperatorId(),
+                    _simDay > 0 ? _simDay : 1, defaultLengthMeters, _routeInfrastructure!, out string reason);
+                _mineFlailPanel?.ShowFeedback(
+                    ok ? $"Breach started on {routeId}:{segmentId}."
+                       : $"Cannot start breach: {reason}",
+                    !ok);
+            }
+            else if (string.Equals(action, "maintain", StringComparison.OrdinalIgnoreCase))
+            {
+                string maint = string.IsNullOrEmpty(param) ? "replace_chains" : param;
+                _mineClearingFlail.PerformMaintenance(maint);
+                _mineFlailPanel?.ShowFeedback($"Flail serviced: {maint}.", false);
+            }
+
+            _mineFlailPanel?.RefreshView();
         }
 
         private void HandleRailGrindingAction(string action, string param = "")
         {
             SetupRailGrinding();
+            EnsurePlans146To149Panels();
+            if (_railGrinding == null) return;
+            if (_railGrinding.Routes == null)
+                _railGrinding.Routes = _routeInfrastructure;
+
+            if (string.Equals(action, "CLOSE", StringComparison.OrdinalIgnoreCase))
+            {
+                if (_railGrindingPanel != null) _railGrindingPanel.Visible = false;
+                return;
+            }
+
             if (string.Equals(action, "OPEN", StringComparison.OrdinalIgnoreCase))
             {
                 if (_railGrindingPanel != null)
@@ -411,7 +768,36 @@ namespace AtomicWar.GodotApp
                     _railGrindingPanel.Visible = true;
                     _railGrindingPanel.RefreshView();
                 }
+                return;
             }
+
+            if (string.Equals(action, "start_grind", StringComparison.OrdinalIgnoreCase))
+            {
+                SetupRouteInfrastructure();
+                string routeId = "rail_trunk_iron_vein";
+                string segmentId = "sector_deep_quarry";
+                if (TrySplitPlans146Param(param, out string left, out string right))
+                {
+                    routeId = left;
+                    segmentId = right;
+                }
+                const float defaultLengthKm = 8f;
+                bool ok = _railGrinding.StartGrindingJob(
+                    routeId, segmentId, ResolvePlans146OperatorId(),
+                    defaultLengthKm, _routeInfrastructure!, out string reason);
+                _railGrindingPanel?.ShowFeedback(
+                    ok ? $"Grinding started on {routeId}:{segmentId}."
+                       : $"Cannot start grinding: {reason}",
+                    !ok);
+            }
+            else if (string.Equals(action, "maintain", StringComparison.OrdinalIgnoreCase))
+            {
+                string maint = string.IsNullOrEmpty(param) ? "replace_stones" : param;
+                _railGrinding.PerformMaintenance(maint);
+                _railGrindingPanel?.ShowFeedback($"Grinder serviced: {maint}.", false);
+            }
+
+            _railGrindingPanel?.RefreshView();
         }
 
         // ─── UI Tests ───

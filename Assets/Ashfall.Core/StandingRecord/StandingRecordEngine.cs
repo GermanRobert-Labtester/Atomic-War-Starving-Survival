@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 
@@ -136,11 +137,17 @@ StandingRecordState? state = null)
         /// </summary>
         public StandingRecordState CaptureState()
         {
-            State.layout = Layouts.CaptureState();
-            State.memory = Memory.CaptureState();
-            State.encounters = Encounters.CaptureState();
-            State.overlayAccess = Encounters.OverlayAccess;
-            return State;
+            // Return a fresh envelope so save holders never alias live State.
+            return new StandingRecordState
+            {
+                systemId = State.systemId,
+                expansionUnlocked = State.expansionUnlocked,
+                currentDay = State.currentDay,
+                overlayAccess = Encounters.OverlayAccess,
+                layout = Layouts.CaptureState(),
+                memory = Memory.CaptureState(),
+                encounters = Encounters.CaptureState(),
+            };
         }
 
         /// <summary>
@@ -150,7 +157,16 @@ StandingRecordState? state = null)
         public void RestoreState(StandingRecordState saved)
         {
             if (saved == null) return;
-            State = saved;
+            State = new StandingRecordState
+            {
+                systemId = saved.systemId,
+                expansionUnlocked = saved.expansionUnlocked,
+                currentDay = saved.currentDay,
+                overlayAccess = saved.overlayAccess,
+                layout = saved.layout ?? new LocationLayoutState(),
+                memory = saved.memory ?? new LocationMemoryState(),
+                encounters = saved.encounters ?? new SiteEncounterState(),
+            };
             Layouts.RestoreState(State.layout);
             Memory.RestoreState(State.memory);
             Encounters.RestoreState(State.encounters);

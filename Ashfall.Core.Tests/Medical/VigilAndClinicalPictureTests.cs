@@ -21,17 +21,32 @@ namespace Ashfall.Core.Tests.Medical
     {
         // ── D6: what a kept vigil means ────────────────────────────────
 
-        [Theory]
-        [InlineData(false, false, false, DeathQuality.Unattended)]
-        [InlineData(true, false, false, DeathQuality.Rushed)]     // medic present, nothing resolved
-        [InlineData(true, true, false, DeathQuality.Peaceful)]    // medic present, wish resolved
-        [InlineData(false, false, true, DeathQuality.Peaceful)]   // only a vigil — still care
-        [InlineData(false, true, false, DeathQuality.Unattended)] // a wish alone is not presence
-        [InlineData(true, false, true, DeathQuality.Peaceful)]
-        public void ResolveQuality_MatchesTheCareMatrix(
-            bool attended, bool wishResolved, bool vigilKept, DeathQuality expected)
+        [Fact]
+        public void ResolveQuality_CareMatrix_MatchesExpectedValues()
         {
-            Assert.Equal(expected, VigilCare.ResolveQuality(attended, wishResolved, vigilKept));
+            var cases = new[]
+            {
+                (Attended: false, WishResolved: false, VigilKept: false, Expected: DeathQuality.Unattended),
+                (Attended: true, WishResolved: false, VigilKept: false, Expected: DeathQuality.Rushed),
+                (Attended: true, WishResolved: true, VigilKept: false, Expected: DeathQuality.Peaceful),
+                (Attended: false, WishResolved: false, VigilKept: true, Expected: DeathQuality.Peaceful),
+                (Attended: false, WishResolved: true, VigilKept: false, Expected: DeathQuality.Unattended),
+                (Attended: true, WishResolved: false, VigilKept: true, Expected: DeathQuality.Peaceful),
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var actual = VigilCare.ResolveQuality(
+                    testCase.Attended, testCase.WishResolved, testCase.VigilKept);
+                if (actual != testCase.Expected)
+                {
+                    failures.Add(
+                        $"attended={testCase.Attended}, wishResolved={testCase.WishResolved}, vigilKept={testCase.VigilKept}, expected={testCase.Expected}, got={actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -138,16 +153,34 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(1, picture.DaysUntilOutcome);
         }
 
-        [Theory]
-        [InlineData(true, "Fixture illness")]
-        [InlineData(false, "")]
-        public void PictureOf_HidesTheNameBeforeItIsEarned(bool diagnosed, string expectedName)
+        [Fact]
+        public void PictureOf_DiagnosisNameTable_HidesTheNameBeforeItIsEarned()
         {
             // Signs are what a person at the bedside sees; the identification is the
             // diagnosis mechanic's business and must not leak from a projection helper.
-            var picture = DiseaseTriage.PictureOf(Def(), 5, diagnosed: diagnosed);
-            Assert.Equal(expectedName, picture.DisplayName);
-            Assert.NotEmpty(picture.Tell);
+            var cases = new[]
+            {
+                (Diagnosed: true, ExpectedName: "Fixture illness"),
+                (Diagnosed: false, ExpectedName: ""),
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var picture = DiseaseTriage.PictureOf(Def(), 5, diagnosed: testCase.Diagnosed);
+                if (picture.DisplayName != testCase.ExpectedName)
+                {
+                    failures.Add(
+                        $"diagnosed={testCase.Diagnosed}, expected display name '{testCase.ExpectedName}', got '{picture.DisplayName}'");
+                }
+
+                if (string.IsNullOrEmpty(picture.Tell))
+                {
+                    failures.Add($"diagnosed={testCase.Diagnosed}, expected a non-empty clinical tell");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

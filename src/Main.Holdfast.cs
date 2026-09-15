@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -136,6 +137,16 @@ namespace AtomicWar.GodotApp
                 _campaignDayDirty = true;
                 UpdateHud();
             }
+        }
+
+        /// <summary>
+        /// Validation-only seam for headless probes. Keep the coordinator's
+        /// single direct Advance call in this lifecycle owner so the source
+        /// gate continues to enforce one daily-advance authority.
+        /// </summary>
+        internal DayAdvancedEventArgs? AdvanceCampaignDayForValidation(int day)
+        {
+            return _campaignDay.Advance(day);
         }
 
         private void SaveHoldfast()
@@ -374,6 +385,32 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text =
                 $"Holdfast state saved (day {_core.Clock.Day}) → {HoldfastSaveStore.FileName} + {HoldfastTradeSaveStore.FileName}\n" +
                 _core.StatusLine();
+        }
+
+        /// <summary>
+        /// B5–B8 expansion (§27 brine economy): collect rendered salt as
+        /// canonical item_trade_salt_sack sacks into the shelter inventory —
+        /// the verified consumer (Holdfast settlement export + trade
+        /// scenarios). The plant's stock is consumed exactly once.
+        /// </summary>
+        private void OnCollectTradeSaltClicked()
+        {
+            SetupIceRoad();
+            SetupInventory();
+            int sacks = _core.Brine.CollectTradeSalt(10);
+            if (sacks > 0)
+            {
+                _inventory.Inventory.TryProduce("item_trade_salt_sack", sacks);
+                _journal?.TryAddRawEntry("holdfast_salt_collected",
+                    $"{sacks} trade salt sack(s) rendered at the Holdfast brine pans and hauled home.",
+                    null!, _simDay);
+                _statusLabel.Text = $"Collected {sacks} trade salt sack(s). {_core.BrineLine()}";
+            }
+            else
+            {
+                _statusLabel.Text = "No salt to collect yet — the pans need an open trade and live steam.";
+            }
+            SaveHoldfast();
         }
 
         private void OnUnlockPlantClicked()

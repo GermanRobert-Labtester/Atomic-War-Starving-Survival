@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Inventory;
@@ -153,36 +154,44 @@ namespace Ashfall.Core.Tests
             Assert.True(dosimeter.LifetimeDose > 0f);
         }
 
-        [Theory]
-        [InlineData(WeatherKind.Clear, 0f)]
-        [InlineData(WeatherKind.FalloutStorm, 150f)]
-        [InlineData(WeatherKind.BlackRain, 250f)]
-        [InlineData(WeatherKind.Ashfall, 0f)]
-        [InlineData(WeatherKind.Blizzard, 0f)]
-        public void SeededLocationWeatherExposureMatrix_ScalesOutdoors_WithoutBreachingIntactShelter(
-            WeatherKind weatherKind, float expectedWeatherRadMod)
+        // TEST-AGGREGATION: source_rows=5 aggregate_cases=1 saved_cases=4
+        [Fact]
+        public void SeededLocationWeatherExposureMatrix_ScalesOutdoors_WithoutBreachingIntactShelter()
         {
-            var weather = new WeatherSystem();
-            weather.ForceWeather(weatherKind);
+            var failures = new List<string>();
+            var cases = new[]
+            {
+                (WeatherKind: WeatherKind.Clear, ExpectedWeatherRadMod: 0f),
+                (WeatherKind: WeatherKind.FalloutStorm, ExpectedWeatherRadMod: 150f),
+                (WeatherKind: WeatherKind.BlackRain, ExpectedWeatherRadMod: 250f),
+                (WeatherKind: WeatherKind.Ashfall, ExpectedWeatherRadMod: 0f),
+                (WeatherKind: WeatherKind.Blizzard, ExpectedWeatherRadMod: 0f),
+            };
 
-            var resolver = new ExposureEnvironmentResolver();
-            resolver.ShelterAttenuationProvider = () => 0.75f;
-            resolver.WeatherRadModifierProvider = () => weather.OutdoorRadModifier;
+            foreach (var testCase in cases)
+            {
+                var weather = new WeatherSystem();
+                weather.ForceWeather(testCase.WeatherKind);
 
-            // Assert weather outdoor rad modifier matches expectation
-            Assert.Equal(expectedWeatherRadMod, weather.OutdoorRadModifier);
+                var resolver = new ExposureEnvironmentResolver();
+                resolver.ShelterAttenuationProvider = () => 0.75f;
+                resolver.WeatherRadModifierProvider = () => weather.OutdoorRadModifier;
 
-            // Inside shelter: weather does not breach intact shielding
-            var indoorEnv = resolver.ResolveForEnvironment(SurvivorExposureLocation.ShelterInterior);
-            Assert.Equal(2.0f, indoorEnv.BaseRadRate);
-            Assert.Equal(0f, indoorEnv.WeatherRadModifier);
-            Assert.Equal(1.5f, indoorEnv.ShelterShielding); // 2.0 * 0.75
+                var indoorEnv = resolver.ResolveForEnvironment(SurvivorExposureLocation.ShelterInterior);
+                var outdoorEnv = resolver.ResolveForEnvironment(SurvivorExposureLocation.WastelandOutdoors);
+                if (weather.OutdoorRadModifier != testCase.ExpectedWeatherRadMod ||
+                    indoorEnv.BaseRadRate != 2.0f ||
+                    indoorEnv.WeatherRadModifier != 0f ||
+                    indoorEnv.ShelterShielding != 1.5f ||
+                    outdoorEnv.BaseRadRate != 40.0f ||
+                    outdoorEnv.WeatherRadModifier != testCase.ExpectedWeatherRadMod ||
+                    outdoorEnv.EffectiveZoneRadLevel != 40.0f + testCase.ExpectedWeatherRadMod)
+                {
+                    failures.Add($"{testCase.WeatherKind}: weather={weather.OutdoorRadModifier}, indoor=({indoorEnv.BaseRadRate}, {indoorEnv.WeatherRadModifier}, {indoorEnv.ShelterShielding}), outdoor=({outdoorEnv.BaseRadRate}, {outdoorEnv.WeatherRadModifier}, {outdoorEnv.EffectiveZoneRadLevel})");
+                }
+            }
 
-            // Outside surface: base + weather modifier
-            var outdoorEnv = resolver.ResolveForEnvironment(SurvivorExposureLocation.WastelandOutdoors);
-            Assert.Equal(40.0f, outdoorEnv.BaseRadRate);
-            Assert.Equal(expectedWeatherRadMod, outdoorEnv.WeatherRadModifier);
-            Assert.Equal(40.0f + expectedWeatherRadMod, outdoorEnv.EffectiveZoneRadLevel);
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

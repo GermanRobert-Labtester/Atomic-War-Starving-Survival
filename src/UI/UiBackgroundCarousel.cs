@@ -91,10 +91,15 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Process(double delta)
         {
-            // Update parallax based on viewport position
-            UpdateParallax(delta);
+            // Idle-cost guard: a hidden (or off-tree) carousel must not pay the
+            // per-frame mouse query + layout churn. Parallax is visible-only;
+            // the crossfade below already requires a visible multi-layer run.
+            if (!IsInsideTree() || !Visible)
+                return;
+            if (_parallaxStrength > 0f)
+                UpdateParallax(delta);
 
-            if (!Visible || !_transitioning || _backgroundPaths.Length < 2)
+            if (!_transitioning || _backgroundPaths.Length < 2)
                 return;
 
             _transitionProgress += (float)delta / _transitionDuration;

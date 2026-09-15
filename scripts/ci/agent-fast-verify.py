@@ -28,84 +28,109 @@ import subprocess
 import argparse
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
+MAX_TIMEOUT_SECONDS = 180
+GODOT_RUNNER = REPO_ROOT / "scripts" / "ci" / "run-godot-bounded.sh"
+
+# Gate-entry constructors. Every entry used to spell its argv literally (14x
+# ["godot", "--headless", "--path", ".", "--", ...]), so a future gate could
+# drift off the bounded-runner path with a typo and only fail at runtime.
+# One constructor per runtime keeps the table declarative and the policy
+# central: run_gate() still routes every "godot" entry through
+# run-godot-bounded.sh (15 FPS / 180s cap). Names, flags, and domain order
+# below are identical to the literal table they replace.
+def _godot(name, *game_flags):
+    return {"name": name, "cmd": ["godot", "--headless", "--path", ".", "--", *game_flags]}
+
+
+def _dotnet(name, *args):
+    return {"name": name, "cmd": ["dotnet", *args]}
+
+
+def _py(name, *args):
+    return {"name": name, "cmd": ["python3", *args]}
+
 
 # High-level domain targets mapped to concrete verification steps
 DOMAIN_GATES = {
     "persistence": [
-        {"name": "SaveStoreChecksumSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--save-store-checksum-selftest"]},
-        {"name": "SaveLoadUiFailureSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--save-load-ui-failure-selftest"]},
-        {"name": "SaveStoreCoverageTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "FullyQualifiedName~SaveStore"]},
-        {"name": "CampaignEnvelopeFuzzTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "CampaignEnvelopeFuzzTests"]},
+        _godot("SaveStoreChecksumSelfTest", "--save-store-checksum-selftest"),
+        _godot("SaveLoadUiFailureSelfTest", "--save-load-ui-failure-selftest"),
+        _dotnet("SaveStoreCoverageTests", "test", "Ashfall.Core.Tests", "--filter", "FullyQualifiedName~SaveStore"),
+        _dotnet("CampaignEnvelopeFuzzTests", "test", "Ashfall.Core.Tests", "--filter", "CampaignEnvelopeFuzzTests"),
     ],
     "data": [
-        {"name": "DataIntegritySelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--data-integrity-selftest"]},
-        {"name": "ContentUtilizationSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--content-utilization-selftest"]},
-        {"name": "CatalogRegistryDrift", "cmd": ["python3", "scripts/ci/generate-catalog-registry.py", "--check"]},
+        _godot("DataIntegritySelfTest", "--data-integrity-selftest"),
+        _godot("ContentUtilizationSelfTest", "--content-utilization-selftest"),
+        _py("CatalogRegistryDrift", "scripts/ci/generate-catalog-registry.py", "--check"),
     ],
     "ui": [
-        {"name": "SceneBindingSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--scene-binding-selftest"]},
-        {"name": "SceneLint", "cmd": ["python3", "scripts/ci/scene-lint.py"]},
-        {"name": "UiAccessibilitySelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--ui-accessibility-selftest"]},
-        {"name": "UiPanelCatalogDrift", "cmd": ["python3", "scripts/ci/generate-ui-panel-catalog.py", "--check"]},
-        {"name": "UiPanelContractTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "UiPanelContractTests"]},
+        _godot("SceneBindingSelfTest", "--scene-binding-selftest"),
+        _py("SceneLint", "scripts/ci/scene-lint.py"),
+        _godot("UiAccessibilitySelfTest", "--ui-accessibility-selftest"),
+        _py("UiPanelCatalogDrift", "scripts/ci/generate-ui-panel-catalog.py", "--check"),
+        _dotnet("UiPanelContractTests", "test", "Ashfall.Core.Tests", "--filter", "UiPanelContractTests"),
     ],
     "expansion": [
-        {"name": "ExpansionsCompletenessSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--expansions-selftest"]},
-        {"name": "DutyRosterSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--duty-roster-selftest"]},
-        {"name": "VerdictSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--verdict-selftest"]},
-        {"name": "BlackFlotillaSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--black-flotilla-selftest"]},
-        {"name": "SilentFoundrySelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--silent-foundry-selftest"]},
-        {"name": "ExpansionsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-expansions-catalog.py", "--check"]},
+        _godot("ExpansionsCompletenessSelfTest", "--expansions-selftest"),
+        _godot("DutyRosterSelfTest", "--duty-roster-selftest"),
+        _godot("VerdictSelfTest", "--verdict-selftest"),
+        _godot("BlackFlotillaSelfTest", "--black-flotilla-selftest"),
+        _godot("SilentFoundrySelfTest", "--silent-foundry-selftest"),
+        _py("ExpansionsCatalogDrift", "scripts/ci/generate-expansions-catalog.py", "--check"),
     ],
     "audio": [
-        {"name": "AudioCueIntegrity", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "AudioCueIntegrityTests"]},
-        {"name": "AudioCatalogDrift", "cmd": ["python3", "scripts/ci/generate-audio-catalog.py", "--check"]},
-        {"name": "AudioEventTests", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "AudioEventIntegrationTests"]},
+        _dotnet("AudioCueIntegrity", "test", "Ashfall.Core.Tests", "--filter", "AudioCueIntegrityTests"),
+        _py("AudioCatalogDrift", "scripts/ci/generate-audio-catalog.py", "--check"),
+        _dotnet("AudioEventTests", "test", "Ashfall.Core.Tests", "--filter", "AudioEventIntegrationTests"),
     ],
     "schema": [
-        {"name": "JsonSchemaPolicyGate", "cmd": ["python3", "scripts/ci/json-schema-policy-gate.py"]},
-        {"name": "PersistentFilenameGate", "cmd": ["python3", "scripts/ci/persistent-filename-gate.py"]},
-        {"name": "CatalogRegistryDrift", "cmd": ["python3", "scripts/ci/generate-catalog-registry.py", "--check"]},
-        {"name": "AgentSkillsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-agent-skills-catalog.py", "--check"]},
+        _py("JsonSchemaPolicyGate", "scripts/ci/json-schema-policy-gate.py"),
+        _py("PersistentFilenameGate", "scripts/ci/persistent-filename-gate.py"),
+        _py("CatalogRegistryDrift", "scripts/ci/generate-catalog-registry.py", "--check"),
+        _py("AgentSkillsCatalogDrift", "scripts/ci/generate-agent-skills-catalog.py", "--check"),
     ],
     "smoke": [
-        {"name": "SevenDaySmokeSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--7-day-smoke-selftest"]},
-        {"name": "PlayableShellSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--playable-shell-selftest"]},
-        {"name": "Day1OnboardingSelfTest", "cmd": ["godot", "--headless", "--path", ".", "--", "--day1-selftest"]},
+        _godot("SevenDaySmokeSelfTest", "--7-day-smoke-selftest"),
+        _godot("PlayableShellSelfTest", "--playable-shell-selftest"),
+        _godot("Day1OnboardingSelfTest", "--day1-selftest"),
     ],
     "core": [
-        {"name": "DotnetBuild", "cmd": ["dotnet", "build", "Ashfall.csproj"]},
-        {"name": "CoreTestsSuite", "cmd": ["dotnet", "test", "Ashfall.Core.Tests"]},
-        {"name": "CoreSystemsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-core-systems-catalog.py", "--check"]},
+        _dotnet("DotnetBuild", "build", "Ashfall.csproj"),
+        _dotnet("CoreTargetedContracts", "test", "Ashfall.Core.Tests", "--filter", "FullyQualifiedName~ActionResultTests|FullyQualifiedName~CatalogIntegrityValidatorTests"),
+        _py("CoreSystemsCatalogDrift", "scripts/ci/generate-core-systems-catalog.py", "--check"),
     ],
     "docs": [
-        {"name": "DocsIndexDrift", "cmd": ["python3", "scripts/ci/generate-docs-index.py", "--check"]},
-        {"name": "DocLinkPortability", "cmd": ["python3", "scripts/ci/normalize-doc-links.py", "--check"]},
-        {"name": "AgentRuleIntegrity", "cmd": ["dotnet", "test", "Ashfall.Core.Tests", "--filter", "AgentRuleIntegrityTests"]},
-        {"name": "AgentRulebooksSync", "cmd": ["python3", "scripts/ci/sync-agent-rulebooks.py", "--check"]},
-        {"name": "AgentSkillsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-agent-skills-catalog.py", "--check"]},
-        {"name": "AudioCatalogDrift", "cmd": ["python3", "scripts/ci/generate-audio-catalog.py", "--check"]},
+        _py("DocsIndexDrift", "scripts/ci/generate-docs-index.py", "--check"),
+        _py("DocLinkPortability", "scripts/ci/normalize-doc-links.py", "--check"),
+        _dotnet("AgentRuleIntegrity", "test", "Ashfall.Core.Tests", "--filter", "AgentRuleIntegrityTests"),
+        _py("AgentRulebooksSync", "scripts/ci/sync-agent-rulebooks.py", "--check"),
+        _py("AgentSkillsCatalogDrift", "scripts/ci/generate-agent-skills-catalog.py", "--check"),
+        _py("AudioCatalogDrift", "scripts/ci/generate-audio-catalog.py", "--check"),
     ],
     "fast": [
-        {"name": "SceneLint", "cmd": ["python3", "scripts/ci/scene-lint.py"]},
-        {"name": "DocsIndexDrift", "cmd": ["python3", "scripts/ci/generate-docs-index.py", "--check"]},
-        {"name": "DocLinkPortability", "cmd": ["python3", "scripts/ci/normalize-doc-links.py", "--check"]},
-        {"name": "AgentRulebooksSync", "cmd": ["python3", "scripts/ci/sync-agent-rulebooks.py", "--check"]},
-        {"name": "CoreSystemsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-core-systems-catalog.py", "--check"]},
-        {"name": "CatalogRegistryDrift", "cmd": ["python3", "scripts/ci/generate-catalog-registry.py", "--check"]},
-        {"name": "UiPanelCatalogDrift", "cmd": ["python3", "scripts/ci/generate-ui-panel-catalog.py", "--check"]},
-        {"name": "ExpansionsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-expansions-catalog.py", "--check"]},
-        {"name": "AudioCatalogDrift", "cmd": ["python3", "scripts/ci/generate-audio-catalog.py", "--check"]},
-        {"name": "AgentSkillsCatalogDrift", "cmd": ["python3", "scripts/ci/generate-agent-skills-catalog.py", "--check"]},
+        _py("SceneLint", "scripts/ci/scene-lint.py"),
+        _py("DocsIndexDrift", "scripts/ci/generate-docs-index.py", "--check"),
+        _py("DocLinkPortability", "scripts/ci/normalize-doc-links.py", "--check"),
+        _py("AgentRulebooksSync", "scripts/ci/sync-agent-rulebooks.py", "--check"),
+        _py("CoreSystemsCatalogDrift", "scripts/ci/generate-core-systems-catalog.py", "--check"),
+        _py("CatalogRegistryDrift", "scripts/ci/generate-catalog-registry.py", "--check"),
+        _py("UiPanelCatalogDrift", "scripts/ci/generate-ui-panel-catalog.py", "--check"),
+        _py("ExpansionsCatalogDrift", "scripts/ci/generate-expansions-catalog.py", "--check"),
+        _py("AudioCatalogDrift", "scripts/ci/generate-audio-catalog.py", "--check"),
+        _py("AgentSkillsCatalogDrift", "scripts/ci/generate-agent-skills-catalog.py", "--check"),
     ]
 }
 
 def run_gate(gate_info, timeout_sec=180):
     name = gate_info["name"]
-    cmd = gate_info["cmd"]
+    cmd = list(gate_info["cmd"])
+    if cmd and cmd[0] == "godot":
+        # Keep every headless Godot call on the shared 15 FPS/180s policy.
+        cmd = ["bash", str(GODOT_RUNNER), *cmd[1:]]
+    effective_timeout = min(max(int(timeout_sec), 1), MAX_TIMEOUT_SECONDS)
     start = time.time()
     try:
-        res = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True, timeout=timeout_sec)
+        res = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True, timeout=effective_timeout)
         elapsed = time.time() - start
         return {
             "name": name,
@@ -125,7 +150,7 @@ def run_gate(gate_info, timeout_sec=180):
             "status": "TIMEOUT",
             "duration_sec": round(elapsed, 2),
             "stdout": "",
-            "stderr": f"Gate timed out after {timeout_sec}s"
+            "stderr": f"Gate timed out after {effective_timeout}s"
         }
     except Exception as ex:
         elapsed = time.time() - start
@@ -153,7 +178,7 @@ def list_domains():
         "audio": "Audio cue catalog integrity & audio event tests",
         "schema": "JSON schema policy, catalog & skill registry drift",
         "smoke": "7-Day deterministic replay & playable shell smoke",
-        "core": "Host compilation & xUnit Core test suite",
+        "core": "Host compilation & targeted Core contract tests",
         "docs": "Documentation index, links & agent rulebooks",
         "fast": "Lightweight drift & linter pre-flight suite",
         "all": "Full union of all domain verification gates",
@@ -173,7 +198,8 @@ def main():
     parser.add_argument("--json", action="store_true", help="Output results in JSON format")
     parser.add_argument("--fail-artifact", help="Write failure details to a markdown artifact on failure")
     parser.add_argument("--list-domains", action="store_true", help="List all available verification domains")
-    parser.add_argument("--timeout", type=int, default=180, help="Per-gate timeout in seconds (Rule 7: 180s default)")
+    parser.add_argument("--timeout", type=int, default=180,
+                        help="Per-gate timeout in seconds; values above 180s are capped")
 
     args = parser.parse_args()
 
@@ -195,7 +221,8 @@ def main():
 
     if not args.json:
         print(f"=== ASHFALL Agent Fast-Verify [{args.domain.upper()}] ===")
-        print(f"Running {len(gates_to_run)} verification gates (timeout: {args.timeout}s)...\n")
+        effective_timeout = min(max(args.timeout, 1), MAX_TIMEOUT_SECONDS)
+        print(f"Running {len(gates_to_run)} verification gates (timeout: {effective_timeout}s)...\n")
 
     results = []
     failed_count = 0

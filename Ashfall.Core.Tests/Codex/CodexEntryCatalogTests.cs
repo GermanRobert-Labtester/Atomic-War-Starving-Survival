@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -370,41 +371,102 @@ namespace Ashfall.Core.Tests.Codex
 
         // ── mapping ───────────────────────────────────────────────────────────
 
-        [Theory]
-        [InlineData(CodexEntryCatalogLoader.CategoryRegions, CodexCategory.WastelandLore)]
-        [InlineData(CodexEntryCatalogLoader.CategoryLocations, CodexCategory.WastelandLore)]
-        [InlineData(CodexEntryCatalogLoader.CategoryDeepLore, CodexCategory.WastelandLore)]
-        [InlineData(CodexEntryCatalogLoader.CategoryFactions, CodexCategory.Factions)]
-        [InlineData(CodexEntryCatalogLoader.CategoryWildlife, CodexCategory.Ecology)]
-        public void Projection_MapsAuthoredCategoryToCodexCategory(string authored, CodexCategory expected)
+        [Fact]
+        public void Projection_MapsAuthoredCategoryToCodexCategory()
         {
-            var entry = Entry("codex_map_" + authored, category: authored);
-            var journal = new JournalSystem();
-            journal.UnlockLocationVisited("loc_test_site");
-            var projected = Project(new[] { entry }, journal).Single(e => e.EntryId == entry.id);
-            Assert.Equal(expected, projected.Category);
+            var cases = new (string Authored, CodexCategory Expected)[]
+            {
+                (CodexEntryCatalogLoader.CategoryRegions, CodexCategory.WastelandLore),
+                (CodexEntryCatalogLoader.CategoryLocations, CodexCategory.WastelandLore),
+                (CodexEntryCatalogLoader.CategoryDeepLore, CodexCategory.WastelandLore),
+                (CodexEntryCatalogLoader.CategoryFactions, CodexCategory.Factions),
+                (CodexEntryCatalogLoader.CategoryWildlife, CodexCategory.Ecology)
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var entry = Entry("codex_map_" + testCase.Authored, category: testCase.Authored);
+                var journal = new JournalSystem();
+                journal.UnlockLocationVisited("loc_test_site");
+                var projected = Project(new[] { entry }, journal)
+                    .Where(e => e.EntryId == entry.id)
+                    .ToList();
+
+                if (projected.Count != 1)
+                {
+                    failures.Add($"category {testCase.Authored}: expected one projected entry, got {projected.Count}");
+                    continue;
+                }
+
+                var actual = projected[0].Category;
+                if (actual != testCase.Expected)
+                {
+                    failures.Add($"category {testCase.Authored}: expected {testCase.Expected}, got {actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(CodexEntryCatalogLoader.ProvenanceRumor, InformationConfidence.Low, KnowledgeSourceKind.TraderRumor)]
-        [InlineData(CodexEntryCatalogLoader.ProvenanceEyewitness, InformationConfidence.Medium, KnowledgeSourceKind.JournalEvidence)]
-        [InlineData(CodexEntryCatalogLoader.ProvenanceMaterial, InformationConfidence.High, KnowledgeSourceKind.ExpeditionSurvey)]
-        [InlineData(CodexEntryCatalogLoader.ProvenanceRestricted, InformationConfidence.High, KnowledgeSourceKind.Manual)]
-        [InlineData(CodexEntryCatalogLoader.ProvenanceCanonical, InformationConfidence.Confirmed, KnowledgeSourceKind.NarrativeArticle)]
-        public void Projection_MapsProvenanceToConfidenceAndSourceKind(
-            string provenance, InformationConfidence expectedConfidence, KnowledgeSourceKind expectedKind)
+        [Fact]
+        public void Projection_MapsProvenanceToConfidenceAndSourceKind()
         {
-            var entry = Entry("codex_prov_" + provenance, provenance: provenance);
-            var journal = new JournalSystem();
-            journal.UnlockLocationVisited("loc_test_site");
+            var cases = new (string Provenance, InformationConfidence ExpectedConfidence, KnowledgeSourceKind ExpectedKind)[]
+            {
+                (CodexEntryCatalogLoader.ProvenanceRumor, InformationConfidence.Low, KnowledgeSourceKind.TraderRumor),
+                (CodexEntryCatalogLoader.ProvenanceEyewitness, InformationConfidence.Medium, KnowledgeSourceKind.JournalEvidence),
+                (CodexEntryCatalogLoader.ProvenanceMaterial, InformationConfidence.High, KnowledgeSourceKind.ExpeditionSurvey),
+                (CodexEntryCatalogLoader.ProvenanceRestricted, InformationConfidence.High, KnowledgeSourceKind.Manual),
+                (CodexEntryCatalogLoader.ProvenanceCanonical, InformationConfidence.Confirmed, KnowledgeSourceKind.NarrativeArticle)
+            };
+            var failures = new List<string>();
 
-            var projected = Project(new[] { entry }, journal).Single(e => e.EntryId == entry.id);
-            Assert.Equal(expectedConfidence, projected.Confidence);
-            var prov = Assert.Single(projected.Provenance);
-            Assert.Equal(expectedKind, prov.SourceKind);
-            Assert.Equal("codex_entries", prov.ProducerSystemId);
-            Assert.Equal(entry.id, prov.SourceId);
-            Assert.Equal("loc_test_site", prov.RelatedEntityId);
+            foreach (var testCase in cases)
+            {
+                var entry = Entry("codex_prov_" + testCase.Provenance, provenance: testCase.Provenance);
+                var journal = new JournalSystem();
+                journal.UnlockLocationVisited("loc_test_site");
+                var projected = Project(new[] { entry }, journal)
+                    .Where(e => e.EntryId == entry.id)
+                    .ToList();
+
+                if (projected.Count != 1)
+                {
+                    failures.Add($"provenance {testCase.Provenance}: expected one projected entry, got {projected.Count}");
+                    continue;
+                }
+
+                var rowFailures = new List<string>();
+                var result = projected[0];
+                if (result.Confidence != testCase.ExpectedConfidence)
+                    rowFailures.Add($"confidence expected {testCase.ExpectedConfidence}, got {result.Confidence}");
+
+                var provenance = result.Provenance.ToList();
+                if (provenance.Count != 1)
+                {
+                    rowFailures.Add($"provenance count expected 1, got {provenance.Count}");
+                }
+                else
+                {
+                    var actual = provenance[0];
+                    if (actual.SourceKind != testCase.ExpectedKind)
+                        rowFailures.Add($"source kind expected {testCase.ExpectedKind}, got {actual.SourceKind}");
+                    if (actual.ProducerSystemId != "codex_entries")
+                        rowFailures.Add($"producer expected codex_entries, got {actual.ProducerSystemId}");
+                    if (actual.SourceId != entry.id)
+                        rowFailures.Add($"source id expected {entry.id}, got {actual.SourceId}");
+                    if (actual.RelatedEntityId != "loc_test_site")
+                        rowFailures.Add($"related entity expected loc_test_site, got {actual.RelatedEntityId}");
+                }
+
+                if (rowFailures.Count > 0)
+                {
+                    failures.Add($"provenance {testCase.Provenance}: {string.Join(", ", rowFailures)}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

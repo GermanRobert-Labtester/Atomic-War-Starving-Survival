@@ -465,6 +465,11 @@ namespace AtomicWar.GodotApp.Audio
                 AudioCueCatalog.RadioVoVerdictMeter, AudioCueCatalog.RadioVoVerdictEden,
                 AudioCueCatalog.RadioVoVerdictCount, AudioCueCatalog.RadioVoVerdictGeophone,
                 AudioCueCatalog.RadioVoVerdictReckoning,
+                // Tasks 9–12: distress-authored cue vocabulary (semantic gate —
+                // every audio_cue referenced by the distress catalogs must resolve).
+                AudioCueCatalog.RadioDistressBeacon, AudioCueCatalog.RadioNumbersStation,
+                AudioCueCatalog.RadioEbsAlert, AudioCueCatalog.RadioDeadHandPulse,
+                AudioCueCatalog.RadioVinylBroadcast,
             };
             foreach (string cueId in radioCues)
                 Check($"Radio cue '{cueId}' exists", AudioCueCatalog.Contains(cueId), ref pass, ref fail);

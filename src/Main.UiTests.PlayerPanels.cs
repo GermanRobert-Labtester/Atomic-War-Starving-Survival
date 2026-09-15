@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -81,9 +82,11 @@ namespace AtomicWar.GodotApp
             UiNodeDiagnostics.Report(this, "weather");
 
             _radioPanel.Bind(_radio);
+            _radioPanel.BindProduction(EnsureRadioProgramProductionSession());
             UiNodeDiagnostics.Mark(this, "radio");
             _radioPanel.Open();
             bool radio = _radioPanel.IsBound
+                && _radioPanel.IsProductionBound
                 && _radio.Engine.FactionCount > 0
                 && _radioPanel.RenderedSignalCount > 0
                 && _radioPanel.Visible;

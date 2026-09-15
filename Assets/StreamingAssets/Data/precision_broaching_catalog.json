@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "bench": {
+    "bench_id": "bench_broaching_station",
+    "display_name": "Internal Broaching Station",
+    "construction_required_items": {
+      "scrap_metal": 12,
+      "scrap_mechanical": 4,
+      "item_hydraulic_ram_assembly": 1
+    },
+    "construction_labor_days": 3,
+    "max_condition": 100,
+    "maintenance_interval_days": 6,
+    "maintenance_required_items": {
+      "scrap_mechanical": 2,
+      "item_cutting_fluid_canister": 1
+    },
+    "room_id": "room_workshop",
+    "machine_load_class": "high"
+  },
+  "operations": [
+    {
+      "operation_id": "broach_internal_spline_medium",
+      "display_name": "Internal Spline, Medium",
+      "input_item_id": "item_machined_blank_medium",
+      "tool_class": "spline_broach",
+      "labor_ticks": 240,
+      "tolerance_target": "precision",
+      "output_item_id": "item_internal_spline_hub",
+      "tool_wear_per_job": 12,
+      "machine_load_permille": 700
+    },
+    {
+      "operation_id": "broach_keyed_collar_small",
+      "display_name": "Keyed Actuator Collar, Small",
+      "input_item_id": "item_machined_blank_small",
+      "tool_class": "keyway_broach",
+      "labor_ticks": 150,
+      "tolerance_target": "standard",
+      "output_item_id": "item_keyed_actuator_collar",
+      "tool_wear_per_job": 8,
+      "machine_load_permille": 450
+    }
+  ],
+  "failure_states": [
+    "tool_dull",
+    "alignment_fault",
+    "machine_overload",
+    "tool_break",
+    "cancelled"
+  ],
+  "quality_tiers": [
+    {
+      "tier_id": "tolerance_standard",
+      "quality_value": 0.6
+    },
+    {
+      "tier_id": "tolerance_precision",
+      "quality_value": 0.85
+    },
+    {
+      "tier_id": "tolerance_masterwork",
+      "quality_value": 1.0
+    }
+  ]
+}

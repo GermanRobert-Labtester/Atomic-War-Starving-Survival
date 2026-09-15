@@ -26,6 +26,7 @@ namespace AtomicWar.GodotApp.Muster
 
         public override void _Ready()
         {
+            Visible = false;
             SetAnchorsPreset(LayoutPreset.Center);
             CustomMinimumSize = new Vector2(520, 0);
 
@@ -51,6 +52,7 @@ namespace AtomicWar.GodotApp.Muster
 
         public void ShowQuestline(string questlineId, IReadOnlyList<ApproachOption> approaches)
         {
+            Visible = true;
             _questlineId = questlineId;
             if (_lblTitle != null)
                 _lblTitle.Text = questlineId.ToUpperInvariant() + " — CHOOSE AN APPROACH";

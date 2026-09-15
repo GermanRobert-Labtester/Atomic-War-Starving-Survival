@@ -221,8 +221,18 @@ namespace AtomicWar.GodotApp.UI
                     waterRow.AddChild(waterLbl);
                     cardVbox.AddChild(waterRow);
 
-                    var pumpStatusLbl = AshfallUiHelpers.MakeSmall(node.hasSumpPump ? (node.pumpPowered ? "PUMP: RUNNING" : "PUMP: POWER OFF") : "NO PUMP INSTALLED");
-                    pumpStatusLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(node.hasSumpPump && node.pumpPowered ? DesignTheme.Lethe : DesignTheme.Dim));
+                    // B5–B8 Phase 9: allocation-aware truth — RUNNING only when
+                    // the player toggle is on AND the grid serves the load.
+                    bool pumpServed = _host.IsPumpEffectivelyPowered(node.nodeId);
+                    string pumpText = !node.hasSumpPump ? "NO PUMP INSTALLED"
+                        : pumpServed ? "PUMP: RUNNING"
+                        : node.pumpPowered ? "PUMP: ENGAGED — LOAD SHED (no grid power)"
+                        : "PUMP: POWER OFF";
+                    var pumpStatusLbl = AshfallUiHelpers.MakeSmall(pumpText);
+                    pumpStatusLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                        pumpServed ? DesignTheme.Lethe
+                        : node.pumpPowered ? DesignTheme.Warning
+                        : DesignTheme.Dim));
                     cardVbox.AddChild(pumpStatusLbl);
 
                     var selectBtn = AshfallUiHelpers.MakeButton($"SELECT // {node.nodeId}", () =>

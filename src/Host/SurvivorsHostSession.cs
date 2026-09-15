@@ -24,6 +24,8 @@ namespace AtomicWar.GodotApp
         public float morale = 50f;
         public float health = 100f;
         public float hygiene = 100f;
+        public float numbness;
+        public float radiationAnxiety;
         public float radiationDose;
         public float lifetimeRadiationExposure;
         public bool hasRadResistance;
@@ -105,7 +107,11 @@ namespace AtomicWar.GodotApp
                     var survivor = Find(s.Id);
                     if (survivor == null || needId != "health") return;
                     Needs.Modify(survivor, NeedKind.Health, delta);
-                });
+                },
+                // C2 / Plan 21A (P7) — exposure-scaled protective wear (e.g.
+                // black-rain hazmat melt). Default 1 keeps unbound hosts on the
+                // canonical per-hour rate.
+                hazmatDegradeMultiplier: _ => _hazmatWearMultiplier?.Invoke() ?? 1f);
             _radStates = new System.Collections.Generic.Dictionary<string, RadSurvivorWrapper>();
             ExposureResolver.ShelterAttenuationProvider = () => Shelter.GetWeakestCeilingAttenuation();
 
@@ -301,6 +307,32 @@ namespace AtomicWar.GodotApp
             return _lastExposureEnvironments.TryGetValue(survivorId, out var env) ? env : null;
         }
 
+        /// <summary>
+        /// C2 / Plan 20A (§16) — read-model breakdown of one survivor's exposure
+        /// inputs for the radiation detail surface. Values come from the exact
+        /// environment the tick consumed plus the canonical effective-rate
+        /// resolver; the UI never recomputes dose math.
+        /// </summary>
+        public ExposureBreakdown? GetExposureBreakdown(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return null;
+            var env = GetLastExposureEnvironment(survivorId)
+                ?? ExposureResolver.Resolve(survivorId);
+            var rad = RadStateFor(survivorId);
+            float gear = RadiationSystem.ComputeGearProtection(CollectWornGear());
+            // Use the same interior query the tick consumes when the 20B
+            // shielding model is bound (plan §16.1: no UI/runtime drift).
+            float? interiorRads = env.InteriorRadQuery != null
+                ? env.InteriorRadQuery(env.EffectiveZoneRadLevel)
+                : null;
+            return ExposureBreakdown.Build(
+                env,
+                gear,
+                rad?.RadiationDose ?? 0f,
+                rad?.LifetimeRadiationExposure ?? 0f,
+                interiorRads: interiorRads);
+        }
+
         /// <summary>Set survivor location explicitly (e.g. ShelterInterior, ShelterPerimeter, WastelandOutdoors).</summary>
         public void SetSurvivorLocation(string survivorId, SurvivorExposureLocation kind, string locationId = "")
         {
@@ -311,6 +343,23 @@ namespace AtomicWar.GodotApp
         public (SurvivorExposureLocation Kind, string LocationId) GetSurvivorLocation(string survivorId)
         {
             return ExposureResolver.GetSurvivorLocation(survivorId);
+        }
+
+        /// <summary>C2 / Plan 20A (G3) — apply a discrete acute radiation dose
+        /// (e.g. weather-gate forced entry) through the radiation owner.
+        /// Semantically distinct from continuous ambient exposure (plan §49):
+        /// this never touches the environmental source providers, so it cannot
+        /// double-count the ambient path. Returns the applied dose (0 when the
+        /// survivor is unknown, dead, or the authored dose is non-positive).</summary>
+        public float ApplyAcuteRadDose(string survivorId, float acuteDose, string reason)
+        {
+            if (string.IsNullOrEmpty(survivorId) || acuteDose <= 0f) return 0f;
+            var state = RadStateFor(survivorId);
+            if (state == null || !state.IsAlive) return 0f;
+            Radiation.AdjustDose(state, acuteDose);
+            if (!string.IsNullOrEmpty(reason))
+                state.LastExposureReason = reason;
+            return acuteDose;
         }
 
         /// <summary>Bind weather provider supplying outdoor rad modifier (from WeatherSystem).</summary>
@@ -331,6 +380,35 @@ namespace AtomicWar.GodotApp
             ExposureResolver.FalloutContaminationProvider = falloutContaminationProvider;
         }
 
+        /// <summary>
+        /// C2 / Plan 20B — bind the single shelter shielding/interior-radiation
+        /// model. When bound, indoor contexts carry the model's interior query
+        /// (RadiationSystem consumes it in preference to the fallback; UI reads
+        /// the same result). Null restores the legacy path byte-identically.
+        /// </summary>
+        public void BindShelterShieldingModel(ShelterShieldingModel? model)
+        {
+            ShieldingModel = model;
+            ExposureResolver.ShelterInteriorRadQuery = model == null
+                ? null
+                : zone => model.ComputeInteriorRad(zone);
+        }
+
+        /// <summary>The bound shelter shielding model, or null when unbound.</summary>
+        public ShelterShieldingModel? ShieldingModel { get; private set; }
+
+        /// <summary>
+        /// C2 / Plan 20B (§28) — contributor breakdown of the current interior
+        /// radiation (weakest contributor + each source). Null when no model is
+        /// bound; UI surfaces read this instead of recomputing shielding math.
+        /// </summary>
+        public ShelterShieldingBreakdown? GetShieldingBreakdown()
+        {
+            var model = ShieldingModel;
+            if (model == null) return null;
+            return model.GetBreakdown(ExposureResolver.ShelterInteriorBaseRadRate);
+        }
+
         /// <summary>Bind expedition session so deployed survivors automatically resolve to expedition location.</summary>
         public void BindExpeditionSession(ExpeditionHostSession expeditionSession)
         {
@@ -347,16 +425,78 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Assemble the shared inventory's equipped protective gear into a list
-        /// of Inventory.WornGear records. RadiationSystem subtracts this from the zone rate.
+        /// Assemble the shared inventory's equipped protective gear into the
+        /// reused worn-gear projection buffer (C2 / Plan 21A §14: no per-tick
+        /// list allocation). The buffer is READ-ONLY projection state consumed
+        /// synchronously by RadiationSystem/computation within the same call —
+        /// callers must not store it (the sink owns all mutation).
         /// </summary>
+        private readonly System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear> _wornGearBuffer =
+            new System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear>();
+
         private System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear> CollectWornGear()
         {
-            var result = new System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear>();
+            _wornGearBuffer.Clear();
             var inventory = Inventory?.Inventory;
-            if (inventory == null) return result;
-            inventory.FillWornGear(result);
-            return result;
+            inventory?.FillWornGear(_wornGearBuffer);
+            return _wornGearBuffer;
+        }
+
+        /// <summary>C2 / Plan 21A (P7) — bind the exposure wear multiplier
+        /// provider (e.g. WeatherSystem.HazmatDegradeMultiplier). Unbound ⇒ 1.</summary>
+        private Func<float>? _hazmatWearMultiplier;
+
+        public void BindHazmatWearMultiplier(Func<float>? multiplierProvider)
+        {
+            _hazmatWearMultiplier = multiplierProvider;
+        }
+
+        /// <summary>
+        /// C2 / Plan 21A (P3) — remaining-life estimate for the weakest equipped
+        /// protective item at the currently bound exposure multiplier. The
+        /// estimate is produced by the same Core function the simulation
+        /// consumes; UI surfaces never re-derive wear arithmetic.
+        /// </summary>
+        public Ashfall.Core.Inventory.Inventory.ProtectiveLifeEstimate? GetWeakestProtectiveLife()
+        {
+            var inventory = Inventory?.Inventory;
+            if (inventory == null) return null;
+            float multiplier = _hazmatWearMultiplier?.Invoke() ?? 1f;
+            return inventory.TryEstimateWeakestProtectiveLife(multiplier, out var life)
+                ? life
+                : null;
+        }
+
+        /// <summary>
+        /// C2 / Plan 21C (P6) — party-protection inputs for the expedition
+        /// dispatch estimate, assembled from the canonical authorities: the
+        /// exposure resolver's ambient at the destination, this session's worn
+        /// gear projection, and the bound wear multiplier. Null when the
+        /// inventory is unbound (legacy estimate shape).
+        /// </summary>
+        public Ashfall.Core.Expeditions.ExpeditionProtectiveInputs? BuildProtectiveEstimateInputs(string locationId)
+        {
+            var inventory = Inventory?.Inventory;
+            if (inventory == null || string.IsNullOrEmpty(locationId)) return null;
+
+            var env = ExposureResolver.ResolveForEnvironment(
+                SurvivorExposureLocation.Expedition, locationId);
+            float multiplier = _hazmatWearMultiplier?.Invoke() ?? 1f;
+            float protection = Ashfall.Core.Radiation.RadiationSystem
+                .ComputeGearProtection(CollectWornGear());
+
+            var life = inventory.TryEstimateWeakestProtectiveLife(multiplier, out var est)
+                ? est : null;
+            return new Ashfall.Core.Expeditions.ExpeditionProtectiveInputs
+            {
+                LocationRadRatePerHour = env.EffectiveZoneRadLevel,
+                WorkingProtection = protection,
+                UnprotectedCount = protection <= 0f && env.EffectiveZoneRadLevel > 0f ? 1 : 0,
+                WeakestGearDegradeRate = life?.DegradeRate ?? 0f,
+                WeakestGearDurability = life?.CurrentDurability ?? 0f,
+                WearMultiplier = multiplier,
+                HoursPerTick = 1f
+            };
         }
 
         // ── Hourly tick ────────────────────────────────────────────────
@@ -473,6 +613,8 @@ namespace AtomicWar.GodotApp
                     morale = s.Morale,
                     health = s.Health,
                     hygiene = s.Hygiene,
+                    numbness = s.Numbness,
+                    radiationAnxiety = s.RadiationAnxiety,
                     wasHungerCritical = s.WasHungerCritical,
                     wasThirstCritical = s.WasThirstCritical,
                     wasWarmthCritical = s.WasWarmthCritical,
@@ -535,6 +677,8 @@ namespace AtomicWar.GodotApp
                     Morale = slice.morale,
                     Health = slice.health,
                     Hygiene = slice.hygiene,
+                    Numbness = slice.numbness,
+                    RadiationAnxiety = slice.radiationAnxiety,
                     WasHungerCritical = slice.wasHungerCritical,
                     WasThirstCritical = slice.wasThirstCritical,
                     WasWarmthCritical = slice.wasWarmthCritical,

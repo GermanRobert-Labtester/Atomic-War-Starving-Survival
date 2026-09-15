@@ -1,126 +1,157 @@
-# Antigravity Agent Rules — ASHFALL Project
-
-These rules are **always active** for every Antigravity session in this workspace.
-They exist to prevent token waste, runaway context consumption, and hallucinated
-"all green" reports. Read them before taking any action.
+# ASHFALL PROJECT — GEMINI Instructions
+# AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
+# Last generated: 2026-09-15
 
 ---
 
-## RULE 1 — NEVER POLL BACKGROUND TASKS
+## READ THIS FIRST — NON-NEGOTIABLE RULES
 
-**The single most expensive mistake possible.** Each `manage_task status` call
-re-sends the full context window (~35–50k tokens). Polling 20 times = ~1M tokens
-burned with zero productive work.
+1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a
+   Unity dependency unless the user explicitly requests historical Unity work
+   in this message. Do not restore Unity architecture to satisfy a test.
+2. **Core stays engine-free.** `Assets/Ashfall.Core/` may not reference
+   `Godot`, `UnityEngine`, or engine serialization APIs. Engine-neutral logic
+   belongs in Core; Godot presentation and adapters belong in `src/`.
+3. **JSON data is authoritative.** Use `Assets/StreamingAssets/Data/` for
+   authored game data. Do not duplicate mutable gameplay authority in panels,
+   hosts, caches, or parallel systems.
+4. **Preserve deterministic and persistent behavior.** Stateful Core changes
+   require the existing save ownership, deterministic RNG, and restore path.
+   Never use `System.Random` in deterministic Core behavior.
+5. **One authority per concern.** Extend the current owner and route through
+   its existing host/event/save seam. Do not create a parallel resource,
+   ledger, save store, registry, simulation, or modality manager.
+6. **Do not race agents.** Read `INTEGRATION_PLANS.md` and
+   `WORKTREE_OWNERSHIP.md` before editing. Claimed paths are read-only to
+   everyone except their owner; shared paths belong to the integrator.
+7. **Use current evidence.** A plan, audit, or test name is not proof that an
+   API, catalog, route, or bug still exists. Verify the premise in source and
+   data before changing code.
+8. **Use focused verification.** Follow `TEST_POLICY.md`; do not run the full
+   test suite or broad commands by default. `scripts/run_test.sh` caps focused
+   xUnit runs at 180 seconds and rejects excluded targets.
+9. **Never leak secrets.** Do not request, print, store, commit, or place API
+   keys, tokens, credentials, or private configuration in prompts, source,
+   logs, JSON, or instructions.
+10. **Stop when authority is missing.** If a task needs a new architecture
+    decision, overlaps a claim, restores retired behavior, or contradicts
+    current evidence, report the blocker to the foreman/user instead of
+    improvising a workaround.
 
-### Forbidden pattern
-```
-launch task → manage_task status → RUNNING → manage_task status → RUNNING → ...
-```
+## AI FOREMAN AND COORDINATION — REQUIRED
 
-### Required pattern
-```
-launch task → do parallel useful work OR stop calling tools
-             ↳ system will automatically notify you when the task finishes
-```
+Read in this order before implementation:
 
-**Rules:**
-- Call `manage_task status` at most **ONCE** after launch to confirm the task started.
-- After that single check, **stop** and wait. Do not loop. Do not poll again.
-- If you need to do other work while waiting, do it — but never in a polling loop.
-- The system sends a wakeup message automatically on completion. Trust it.
+1. `INTEGRATION_PLANS.md` — current batch, order, and acceptance.
+2. `WORKTREE_OWNERSHIP.md` — exact file claims.
+3. `TEST_POLICY.md` — test selection and quarantine rules.
+4. `KNOWN_DEBT.md` — accepted, blocked, quarantined, and retired work.
+5. `AI_AGENT_WORKFLOW.md` — role, evidence, handoff, and sweep protocol.
 
----
+One foreman assigns packages; builders implement disjoint paths; cheap sweep
+agents remain read-only; one integrator owns shared seams and acceptance. Do
+not create speculative tests, revive deprecated APIs, or start a competing
+fix. A compile-green result is not proof of runtime integration.
 
-## RULE 2 — NEVER CLAIM "ALL GREEN" WITHOUT EVIDENCE
+## TARGETED TESTING ONLY
 
-Do not report a pass, fix, or "all risks closed" without verified evidence:
-- A test result you actually read (not assumed).
-- A command you actually ran and whose output you actually checked.
-- A file you actually read (not recalled from context that may be stale).
+- Run the smallest test file or directly affected region for the change; a
+  builder normally stays below 100 cases.
+- Prefer static inspection for sweeps. A larger diagnostic run requires a new
+  hypothesis and explicit foreman/user reason; it must remain bounded and not
+  compete with active builders.
+- Run `bash scripts/run_test.sh <test-file-or-focused-directory>` for xUnit
+  targets. New test files run alone first.
+- Aggregate only homogeneous static mappings, labels, thresholds, and catalog
+  tables with useful per-row failure output. Preserve independent save/load,
+  determinism, lifecycle, mutation, fuzzing, state-transition, and
+  cross-system tests.
+- Quarantine/re-enable decisions require current API/content evidence, a
+  written reason, and a passing focused target. Never silently re-enable.
+- If a Godot runtime session is needed, use 15 FPS unless the user explicitly
+  requests another target. Do not invoke Unity to test Godot behavior.
 
-If the evidence is still pending (e.g., a test is still running), say so explicitly.
-Never synthesize a confident "PASS" from a prior partial run or assumption.
+## ACTIVE HANDOFF — AGY (Antigravity): C1 UI PANEL WAVE
 
----
+**AGY starts here.** Read `C1_COMPLETION.md` (repository root) before any other
+file: the C1 economy core (Plans 14A + 14B + market/caravan wiring) is complete
+and verified, and the tagged task is to generate/extend the `economy_detail`
+and `traveling_caravan` panels on top of the existing Core read models
+(embargo summary, typed price-factor records, caravan blocked state).
+Presentation only — panels never recompute Core outcomes (rule D of the plan's
+integration doctrine). Style authority: `DESIGN.md`. Full contract:
+`docs/plans/C1_planintegration.md` §9, §14A.8–14A.9, §14B.7–14B.8.
 
-## RULE 3 — PARALLEL WORK, NOT SEQUENTIAL POLLING
+## ARCHITECTURE AND DATA
 
-When waiting for a long-running task (dotnet test, godot --headless), use that
-time productively:
-- Run independent verification steps in parallel (e.g., scene-lint while tests run).
-- Audit related files while the build completes.
-- Do NOT sit idle polling a status endpoint.
+- Core target: `Assets/Ashfall.Core/` (`netstandard2.1`); pure domain logic.
+- Godot host target: `src/` (`net8.0`); thin nodes, panels, routing, adapters,
+  and host CLI.
+- Test target: `Ashfall.Core.Tests/` (`net9.0`); test Core contracts through
+  current public APIs.
+- Data target: `Assets/StreamingAssets/Data/`; schema-valid snake_case JSON.
+- Assets: use Godot-native `assets/` imports and the existing asset registry;
+  never extend deprecated `Assets/_Game/` structures.
+- Core events expose facts. Host adapters apply presentation and persistence
+  effects. Do not put gameplay decisions in panels or generic UI callbacks.
+- Inventory, needs, health, power, water, radiation, relationships, and
+  campaign state already have owners. Find and extend them rather than adding
+  a local counter or cache.
 
-If there is genuinely nothing to do in parallel, stop calling tools. The system
-will wake you when there is new information.
+## SAVE, DETERMINISM, AND CONTENT
 
----
+- Register state through the current save-section owner. Implement the
+  matching capture/restore path before claiming persistence.
+- Use the existing seeded RNG contract for replayable behavior; never seed
+  from wall-clock time or hash iteration order.
+- Validate catalog IDs, references, ranges, and consumers through the current
+  integrity pipeline. Presence in JSON is not gameplay reachability.
+- A system is integrated only when its Core authority, host owner, route or
+  event path, persistence where needed, and observable outcome agree.
 
-## RULE 4 — READ BEFORE WRITING
+## UI, TONE, AND ACCESSIBILITY
 
-Before editing any file in `Assets/Ashfall.Core/`, `src/`, or
-`Ashfall.Core.Tests/`:
-1. Read the current file state (it may have changed since context was built).
-2. Confirm the exact line range you intend to edit.
-3. Make the smallest possible diff — never rewrite whole files unless required.
+- A panel exposes an existing command and truthful current state; it does not
+  become a new gameplay authority or a fake operational route.
+- Preserve keyboard/controller close/back behavior, focus, visible feedback,
+  readable contrast, and refresh/disposal lifecycle when touching UI.
+- Keep tone restrained, human, and fictional. Do not use real countries,
+  wars, people, copied art, copied text, or copied UI layouts.
 
----
+## WORKFLOW
 
-## RULE 5 — VERIFICATION MATRIX FOR THIS PROJECT
+1. Restate the bounded outcome, non-goals, and current evidence.
+2. Confirm package ownership and list exact files.
+3. Inspect the existing owner, public API, data schema, save path, and host
+   adapter before editing.
+4. Make the smallest coherent change. Preserve unrelated dirty worktree
+   changes and never mass-format a shared area.
+5. Run the package's focused verification; include a Godot headless check only
+   when the change affects that runtime path.
+6. Hand off outcome, files, contract, commands/results, limitations, and
+   shared paths intentionally untouched using `AI_AGENT_WORKFLOW.md`.
+7. Update the live ledger/debt only if you are the foreman or named integrator.
 
-After any code change, run this matrix. Launch Godot self-tests in parallel while
-dotnet test runs. Do NOT poll dotnet test — wait for its completion notification.
+## SOURCE OF TRUTH
 
-| Command | Must exit | Must show |
-|---|---|---|
-| `dotnet test Ashfall.Core.Tests` | 0 | 0 failed |
-| `godot --headless --path . -- --content-utilization-selftest` | 0 | CI gate PASS |
-| `godot --headless --path . -- --data-integrity-selftest` | 0 | 0 errors |
-| `godot --headless --path . -- --scene-binding-selftest` | 0 | 22/22 passed |
-| `python3 scripts/ci/scene-lint.py` | 0 | 0 errors |
+| Need | Authority |
+|---|---|
+| Current package and acceptance | `INTEGRATION_PLANS.md` |
+| Path ownership | `WORKTREE_OWNERSHIP.md` |
+| Test selection and test debt | `TEST_POLICY.md` |
+| Deferred or retired work | `KNOWN_DEBT.md` |
+| Agent roles and handoffs | `AI_AGENT_WORKFLOW.md` |
+| Domain documentation map | `docs/CURRENT_AUTHORITY.md` |
+| Historical rules | `docs/archive/agent-rules/2026-09-12-pre-foreman/` |
+| Quarantined test manifest | `Twin_ASHFall/quarantine/manifests/2026-09-12-quarantined-tests.md` |
 
----
+## TOOLS AND CHANGE HYGIENE
 
-## RULE 6 — QUOTA HYGIENE
-
-Context is expensive. Minimize re-invocations of large-context tool calls:
-- Never call `manage_task status` more than once per wait cycle.
-- Prefer `grep_search` + `view_file` (targeted) over reading entire large files.
-- Batch independent file reads into the same tool step when possible.
-- Do not re-summarize artifact contents back to the user — point to the artifact instead.
-
----
-
-## RULE 7 — COMMAND TIMEOUT DISCIPLINE
-
-**Default timeout for every task/command is 180 seconds.** This applies to:
-- `godot --headless` self-tests
-- `dotnet test` / `dotnet build`
-- `python3` scripts
-- Any shell command run as a background task
-
-### Escalation ladder
-
-```
-First run   → 180s timeout
-Failed? (timeout, not error) → wait, retry once more at 180s
-Still timing out after 2x? → increment by 20s → 200s
-Still timing out after 2x at 200s? → increment again → 220s
-... and so on, +20s per pair of failures
-```
-
-**Rules:**
-- **Never** jump straight to a high timeout because you expect the command to be slow.
-- **Never** increase the timeout after a single timeout failure — retry at the same limit first.
-- A command must fail the **same timeout threshold twice** before you earn the right to add 20s.
-- Document the escalation in your response when you increase a timeout so the user knows why.
-- If a command exceeds 300s even after escalation, stop and report it as a potential hang — do not keep increasing blindly.
-
-### Example escalation trace (correct)
-```
-Attempt 1 @ 180s → timed out
-Attempt 2 @ 180s → timed out again  ← now allowed to escalate
-Attempt 3 @ 200s → timed out
-Attempt 4 @ 200s → timed out again  ← now allowed to escalate
-Attempt 5 @ 220s → completed ✓
-```
+- Prefer repository scripts and current APIs over ad-hoc replacement tooling.
+- Do not modify generated outputs by hand; run the owning generator and its
+  `--check` mode when one exists.
+- Do not alter unrelated user changes, delete data, rewrite history, or reset
+  the worktree.
+- Do not invent MCP connections, external accounts, capabilities, or tool
+  results. Use only configured tools and their documented scope.
+- Keep changes reviewable: one owned system or governance package at a time.

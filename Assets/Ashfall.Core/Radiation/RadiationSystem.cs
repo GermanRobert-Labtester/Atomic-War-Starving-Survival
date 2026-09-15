@@ -117,6 +117,20 @@ namespace Ashfall.Core.Radiation
         public event Action<SurvivorRadState, SurvivorStatus> OnStatusGained;
         public event Action<SurvivorRadState, SurvivorStatus> OnStatusLost;
 
+        // C2 / Plan 17C Phase G — explicit exposure-lifecycle signals so the
+        // geiger loop can start and stop from real simulation state. Fired
+        // exactly on the active↔inactive transition per survivor; never on
+        // capture/restore (the tracking set is transient and rebuilt by
+        // observation — restores re-derive state without replaying events).
+        public event Action<SurvivorRadState> OnExposureStarted;
+        public event Action<SurvivorRadState> OnExposureEnded;
+
+        /// <summary>Transient exposure-active tracking. Not persisted: on
+        /// restore the first tick re-derives the correct state, so a load can
+        /// spuriously fire a start (correct — exposure genuinely resumes) but
+        /// never a spurious end.</summary>
+        private readonly HashSet<string> _exposureActiveBySurvivor = new(StringComparer.Ordinal);
+
         public RadiationSystem(
 Func<SurvivorRadState, ExposureContext>? exposureContext = null,
 Action<SurvivorRadState, string, float>? applyNeed = null,
@@ -159,6 +173,8 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
 
         public void Unregister(SurvivorRadState survivor)
         {
+            if (survivor != null && !string.IsNullOrEmpty(survivor.Id))
+                EndExposureIfActive(survivor);
             _survivors.Remove(survivor);
         }
 
@@ -169,7 +185,13 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
             for (int i = 0; i < _survivors.Count; i++)
             {
                 var survivor = _survivors[i];
-                if (survivor == null || !survivor.IsAlive) continue;
+                if (survivor == null || !survivor.IsAlive)
+                {
+                    // A dead (or removed) survivor can no longer be exposed;
+                    // close the active-exposure transition if one is open.
+                    if (survivor != null) EndExposureIfActive(survivor);
+                    continue;
+                }
 
                 var context = _exposureContext != null ? _exposureContext(survivor) : null;
                 float zone = context != null ? context.ZoneRadLevel : 0f;
@@ -181,12 +203,13 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
                 if (context != null && context.ShelterRadQuery != null)
                 {
                     interiorRads = context.ShelterRadQuery(zone);
-                    exposurePerHour = MathfCompat.Max(0f, interiorRads - gearProtection);
+                    exposurePerHour = ComputeEffectiveRate(
+                        zone, gearProtection, context.ShelterShielding, interiorRads);
                 }
                 else
                 {
                     float shielding = context != null ? context.ShelterShielding : 0f;
-                    exposurePerHour = ComputeExposurePerHour(zone, gearProtection, shielding);
+                    exposurePerHour = ComputeEffectiveRate(zone, gearProtection, shielding, null);
                 }
 
                 if (survivor.HasRadResistance)
@@ -194,6 +217,10 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
 
                 if (context != null && !string.IsNullOrEmpty(context.ExposureReason))
                     survivor.LastExposureReason = context.ExposureReason;
+
+                // C2 / Plan 17C Phase G — exposure-active transition tracking.
+                // Active = the ambient exposure rate for this tick is positive.
+                UpdateExposureTransition(survivor, exposurePerHour > 0f);
 
                 float ambientExposure = context != null && context.ShelterRadQuery != null ? interiorRads : zone;
                 if (ambientExposure > 0f)
@@ -231,6 +258,21 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
                 - MathfCompat.Max(0f, shelterShielding));
         }
 
+        /// <summary>
+        /// C2 / Plan 20A — the one effective-rate resolver used by the tick and
+        /// by UI/read-model breakdowns (plan §3.1/§16.1: no duplicated math).
+        /// When an interior query value is supplied the query path owns the
+        /// rate (gear still subtracts); otherwise the shielding fallback path
+        /// applies. Behaviorally identical to the original inline tick branch.
+        /// </summary>
+        public static float ComputeEffectiveRate(
+            float zoneRadLevel, float gearProtection, float shelterShielding, float? interiorRads)
+        {
+            if (interiorRads.HasValue)
+                return MathfCompat.Max(0f, interiorRads.Value - MathfCompat.Max(0f, gearProtection));
+            return ComputeExposurePerHour(zoneRadLevel, gearProtection, shelterShielding);
+        }
+
         public static float ComputeContaminationAmbient(System.Collections.Generic.IEnumerable<Contamination> contaminations)
         {
             if (contaminations == null) return 0f;
@@ -238,6 +280,32 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
             foreach (var c in contaminations)
                 if (c != null) total += c.AmbientContribution();
             return MathfCompat.Max(0f, total);
+        }
+
+        /// <summary>C2 / Plan 17C Phase G — true while the named survivor is
+        /// receiving positive ambient exposure this tick sequence. Transient
+        /// observation state; fresh after restore until the next tick.</summary>
+        public bool IsExposureActive(string survivorId)
+        {
+            return !string.IsNullOrEmpty(survivorId) && _exposureActiveBySurvivor.Contains(survivorId);
+        }
+
+        private void UpdateExposureTransition(SurvivorRadState survivor, bool active)
+        {
+            if (survivor == null || string.IsNullOrEmpty(survivor.Id)) return;
+            bool wasActive = _exposureActiveBySurvivor.Contains(survivor.Id);
+            if (wasActive == active) return; // no transition — no event, no restart spam
+            if (active) _exposureActiveBySurvivor.Add(survivor.Id);
+            else _exposureActiveBySurvivor.Remove(survivor.Id);
+            if (active) OnExposureStarted?.Invoke(survivor);
+            else OnExposureEnded?.Invoke(survivor);
+        }
+
+        private void EndExposureIfActive(SurvivorRadState survivor)
+        {
+            if (survivor == null || string.IsNullOrEmpty(survivor.Id)) return;
+            if (_exposureActiveBySurvivor.Remove(survivor.Id))
+                OnExposureEnded?.Invoke(survivor);
         }
 
         public Dosimeter GetDosimeter(string survivorId)

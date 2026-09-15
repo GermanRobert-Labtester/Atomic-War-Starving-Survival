@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.IO;
 using System.Text.Json;
@@ -74,15 +75,15 @@ namespace Ashfall.Core.Tests.UI
             string successMsg = c.FormatCategory("success", "relationship_improved", "Elena");
             string relMsg = c.FormatCategory("relationship", "relationship_improved", "Elena", 75);
 
-            Assert.Equal("Your relationship with Elena has improved.", successMsg);
-            Assert.Equal("Your relationship with Elena has improved to 75/100.", relMsg);
+            Assert.Equal("Standing with Elena improved.", successMsg);
+            Assert.Equal("Standing with Elena is 75/100.", relMsg);
 
             // storm_approaching in warning vs world_state
             string warnMsg = c.FormatCategory("warning", "storm_approaching", 4);
             string worldMsg = c.FormatCategory("world_state", "storm_approaching", 4);
 
-            Assert.Equal("A storm is approaching in 4 hours. Prepare the bunker.", warnMsg);
-            Assert.Equal("The weather forecast predicts a radiation storm in 4 hours.", worldMsg);
+            Assert.Equal("Storm in 4 hours. Seal the intake.", warnMsg);
+            Assert.Equal("Fallout storm due in 4 hours.", worldMsg);
         }
 
         [Fact]
@@ -91,12 +92,12 @@ namespace Ashfall.Core.Tests.UI
             var catalog = new FeedbackMessageCatalog();
 
             // Category defaults
-            Assert.Equal("Success! Operation completed.", catalog.FormatCategory("success", "unknown_key"));
-            Assert.Equal("Operation failed. Check your inputs.", catalog.FormatCategory("failure", "unknown_key"));
-            Assert.Equal("Warning: Proceed with caution.", catalog.FormatCategory("warning", "unknown_key"));
-            Assert.Equal("Error: Something went wrong.", catalog.FormatCategory("error", "unknown_key"));
-            Assert.Equal("Are you sure you want to proceed?", catalog.FormatCategory("confirmation", "unknown_key"));
-            Assert.Equal("ALERT: Important update available!", catalog.FormatCategory("alert", "unknown_key"));
+            Assert.Equal("Done.", catalog.FormatCategory("success", "unknown_key"));
+            Assert.Equal("That didn't take. Check the inputs.", catalog.FormatCategory("failure", "unknown_key"));
+            Assert.Equal("Caution.", catalog.FormatCategory("warning", "unknown_key"));
+            Assert.Equal("Something went wrong.", catalog.FormatCategory("error", "unknown_key"));
+            Assert.Equal("Continue?", catalog.FormatCategory("confirmation", "unknown_key"));
+            Assert.Equal("ALERT: Something needs attention.", catalog.FormatCategory("alert", "unknown_key"));
 
             // Generic Format with missing key
             string formatted = catalog.Format("totally_unknown_key", "arg1", 42);
@@ -113,12 +114,12 @@ namespace Ashfall.Core.Tests.UI
                 key = "quest_completed",
                 category = "success",
                 severity = "success",
-                template = "Quest completed! You've earned {0} reputation and {1} resources.",
+                template = "Task closed. Standing {0}. Stores {1}.",
                 parameter_count = 2
             });
 
             string formatted = catalog.Format("quest_completed", 50, 100);
-            Assert.Equal("Quest completed! You've earned 50 reputation and 100 resources.", formatted);
+            Assert.Equal("Task closed. Standing 50. Stores 100.", formatted);
         }
 
         [Fact]
@@ -130,14 +131,14 @@ namespace Ashfall.Core.Tests.UI
                 key = "expedition_progress",
                 category = "progress",
                 severity = "info",
-                template = "Expedition progress: {0} days elapsed. {1} days remaining. Distance: {2} km.",
+                template = "Expedition: {0} days out. {1} days left. Distance: {2} km.",
                 parameter_count = 3
             });
 
             // Passing only 1 argument to a 3-argument template (would throw FormatException in string.Format)
             string partial1 = catalog.Format("expedition_progress", 5);
             Assert.NotNull(partial1);
-            Assert.Contains("5 days elapsed", partial1);
+            Assert.Contains("5 days out", partial1);
 
             // Passing 0 arguments to a 3-argument template
             string partial0 = catalog.Format("expedition_progress");
@@ -160,7 +161,7 @@ namespace Ashfall.Core.Tests.UI
                 key = "storm_alert",
                 category = "alert",
                 severity = "critical",
-                template = "ALERT: Radiation storm approaching in {0} hours!",
+                template = "ALERT: Fallout storm in {0} hours.",
                 display_duration_seconds = 5.0f
             });
 
@@ -210,7 +211,7 @@ namespace Ashfall.Core.Tests.UI
             Assert.Equal("trade_success", received.Key);
             Assert.Equal("success", received.Category);
             Assert.Equal(FeedbackSeverity.Success, received.Severity);
-            Assert.Equal("Trade completed! Received 100 Scrap in exchange for 20 Fuel.", received.FormattedText);
+            Assert.Equal("Trade settled. Received 100 Scrap for 20 Fuel.", received.FormattedText);
         }
 
         [Fact]

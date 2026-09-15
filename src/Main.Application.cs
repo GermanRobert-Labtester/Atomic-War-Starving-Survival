@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -139,6 +140,24 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.EvolvingWorldSelfTest:
                     GetTree().Quit(HostCli.RunEvolvingWorldSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WorldPlaytestSelfTest:
+                    GetTree().Quit(HostCli.RunWorldPlaytestSelfTest(_dataDir, this));
+                    return;
+                case HostCliAction.SyntheticLubricantSelfTest:
+                    GetTree().Quit(HostCli.RunSyntheticLubricantSelfTest(_dataDir));
+                    return;
+                case HostCliAction.UvCoronaSelfTest:
+                    GetTree().Quit(HostCli.RunUvCoronaSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CarbonCompositeSelfTest:
+                    GetTree().Quit(HostCli.RunCarbonCompositeSelfTest(_dataDir));
+                    return;
+                case HostCliAction.GprCartographySelfTest:
+                    GetTree().Quit(HostCli.RunGprCartographySelfTest(_dataDir));
+                    return;
+                case HostCliAction.AdvancedIndustrialReconSelfTest:
+                    GetTree().Quit(HostCli.RunAdvancedIndustrialReconSelfTest(_dataDir));
                     return;
                 case HostCliAction.SelfTestManifest:
                     GetTree().Quit(HostCli.RunSelfTestManifest(_dataDir));
@@ -374,6 +393,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ExpeditionSelfTest:
                     GetTree().Quit(HostCli.RunExpeditionSelfTest());
                     return;
+                case HostCliAction.ExpeditionPlaytestSelfTest:
+                    GetTree().Quit(HostCli.RunExpeditionPlaytestSelfTest(_dataDir));
+                    return;
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(HostCli.RunBridgeSelfTest());
                     return;
@@ -440,6 +462,18 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.StandaloneSystemsSelfTest:
                     GetTree().Quit(HostCli.RunStandaloneSystemsSelfTest());
                     return;
+                case HostCliAction.Plans139To141SelfTest:
+                    GetTree().Quit(HostCli.RunPlans139To141SelfTest(_dataDir));
+                    return;
+                case HostCliAction.Plans122to125SelfTest:
+                    GetTree().Quit(HostCli.RunPlans122to125SelfTest(_dataDir));
+                    return;
+                case HostCliAction.LateTechMobilitySelfTest:
+                    GetTree().Quit(HostCli.RunLateTechMobilitySelfTest(_dataDir));
+                    return;
+                case HostCliAction.Plans122to125BalanceSoak:
+                    GetTree().Quit(HostCli.RunPlans122to125BalanceSoak(_dataDir));
+                    return;
                 case HostCliAction.DeepCoastSelfTest:
                     GetTree().Quit(HostCli.RunDeepCoastSelfTest(_dataDir));
                     return;
@@ -485,6 +519,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterDecorSelfTest:
                     GetTree().Quit(ShelterDecorSelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.ShelterPhysicsSelfTest:
+                    RunShelterPhysicsSelfTestAndQuit();
+                    return;
                 case HostCliAction.AudioSelfTest:
                     GetTree().Quit(AtomicWar.GodotApp.Audio.AudioSelfTest.Run());
                     return;
@@ -517,6 +554,10 @@ namespace AtomicWar.GodotApp
                         ProjectSettings.GlobalizePath("res://"), _dataDir,
                         ProjectSettings.GlobalizePath("res://Assets/Ashfall.Core"),
                         ProjectSettings.GlobalizePath("res://src")));
+                    return;
+                case HostCliAction.NarrativeContinuitySelfTest:
+                    GetTree().Quit(NarrativeContinuitySelfTest.Run(
+                        ProjectSettings.GlobalizePath("res://"), _dataDir));
                     return;
             }
             }
@@ -684,6 +725,17 @@ namespace AtomicWar.GodotApp
                 OpenPlayerPanel("help");
                 GetViewport().SetInputAsHandled();
             }
+            else if (AshfallInputActions.IsGuidance(@event) && _state == GameState.Playing)
+            {
+                // C2 / Plan 17B Phase D — F2 toggles guidance: open when closed,
+                // close when open, never permanently disabled. Veteran mode is
+                // handled by the route's open action (status notice, no panel).
+                if (_onboardingHintPanel != null && _onboardingHintPanel.IsOpen)
+                    Ashfall.Core.UI.PanelRegistry.TryClose("guidance");
+                else
+                    OpenPlayerPanel("guidance");
+                GetViewport().SetInputAsHandled();
+            }
             else if (AshfallInputActions.IsHoldfast(@event) && _state == GameState.Playing)
             {
                 OpenPlayerPanel("holdfast");
@@ -697,6 +749,16 @@ namespace AtomicWar.GodotApp
             else if (AshfallInputActions.IsEvents(@event) && _state == GameState.Playing)
             {
                 OpenEventsLogPanel();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (AshfallInputActions.IsCloseOrCancel(@event) && _state == GameState.Playing)
+            {
+                // Global dismiss for keyboard-driven UI: Esc closes any open
+                // overlay panel or modal (panels also handle Esc locally).
+                // Matches the journal-book branch outcome (sleep cancelled,
+                // book closed via CloseAllOverlayPanels).
+                CancelAdvanceConfirmation();
+                CloseAllOverlayPanels();
                 GetViewport().SetInputAsHandled();
             }
             else if (_journalBook != null && _journalBook.IsOpen)

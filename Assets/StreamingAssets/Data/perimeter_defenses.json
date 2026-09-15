@@ -68,7 +68,8 @@
       "counter_tags": ["stealth"],
       "weather_wear_per_storm": 25.0,
       "false_alarm_rate_bp": 300,
-      "alert_device": true
+      "alert_device": true,
+      "required_knowledge": "knowledge_defensive_tripwire_arrays"
     },
     {
       "defense_id": "def_sentry_turret_9mm",
@@ -86,12 +87,14 @@
       "prevents_stealth_breach": false,
       "build_costs": {
         "scrap_metal": 6,
-        "electrical_wire": 2
+        "electrical_wire": 2,
+        "item_sentry_targeting_chip": 1
       },
       "counter_tags": ["emp"],
       "weather_wear_per_storm": 4.0,
       "false_alarm_rate_bp": 0,
-      "alert_device": false
+      "alert_device": false,
+      "required_knowledge": "knowledge_automated_sentry_doctrine"
     },
     {
       "defense_id": "def_sentry_turret_556",
@@ -109,12 +112,14 @@
       "prevents_stealth_breach": false,
       "build_costs": {
         "scrap_metal": 10,
-        "electrical_wire": 4
+        "electrical_wire": 4,
+        "item_sentry_targeting_chip": 1
       },
       "counter_tags": ["emp", "explosives"],
       "weather_wear_per_storm": 4.0,
       "false_alarm_rate_bp": 0,
-      "alert_device": false
+      "alert_device": false,
+      "required_knowledge": "knowledge_turret_controller_blueprint"
     },
     {
       "defense_id": "def_reinforced_outer_gate",
@@ -137,7 +142,8 @@
       "counter_tags": ["explosives", "vehicle_breach"],
       "weather_wear_per_storm": 2.0,
       "false_alarm_rate_bp": 0,
-      "alert_device": false
+      "alert_device": false,
+      "required_knowledge": "knowledge_fortified_chokepoints"
     },
     {
       "defense_id": "def_heavy_barricade",
@@ -160,7 +166,8 @@
       "counter_tags": ["explosives"],
       "weather_wear_per_storm": 6.0,
       "false_alarm_rate_bp": 0,
-      "alert_device": false
+      "alert_device": false,
+      "required_knowledge": "knowledge_fortified_chokepoints"
     },
     {
       "defense_id": "def_searchlight_tower",

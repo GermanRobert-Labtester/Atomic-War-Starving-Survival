@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Xunit;
 using Ashfall.Core;
@@ -26,21 +27,35 @@ namespace Ashfall.Core.Tests
             _catalog = TravelEncounterCatalog.LoadFromDirectory(_dataDir, _fileIO);
         }
 
-        [Theory]
-        [InlineData(-5, FactionBountySeverity.None)]
-        [InlineData(-9, FactionBountySeverity.None)]
-        [InlineData(-10, FactionBountySeverity.Moderate)]
-        [InlineData(-12, FactionBountySeverity.Moderate)]
-        [InlineData(-14, FactionBountySeverity.Moderate)]
-        [InlineData(-15, FactionBountySeverity.Severe)]
-        [InlineData(-17, FactionBountySeverity.Severe)]
-        [InlineData(-19, FactionBountySeverity.Severe)]
-        [InlineData(-20, FactionBountySeverity.Extreme)]
-        [InlineData(-25, FactionBountySeverity.Extreme)]
-        public void SeverityCalculation_MapsToThresholds(int standingDelta, FactionBountySeverity expected)
+        [Fact]
+        public void SeverityCalculation_ThresholdTable_MapsToExpectedSeverity()
         {
-            var severity = FactionBountySystem.CalculateSeverity(standingDelta);
-            Assert.Equal(expected, severity);
+            var cases = new[]
+            {
+                (StandingDelta: -5, Expected: FactionBountySeverity.None),
+                (StandingDelta: -9, Expected: FactionBountySeverity.None),
+                (StandingDelta: -10, Expected: FactionBountySeverity.Moderate),
+                (StandingDelta: -12, Expected: FactionBountySeverity.Moderate),
+                (StandingDelta: -14, Expected: FactionBountySeverity.Moderate),
+                (StandingDelta: -15, Expected: FactionBountySeverity.Severe),
+                (StandingDelta: -17, Expected: FactionBountySeverity.Severe),
+                (StandingDelta: -19, Expected: FactionBountySeverity.Severe),
+                (StandingDelta: -20, Expected: FactionBountySeverity.Extreme),
+                (StandingDelta: -25, Expected: FactionBountySeverity.Extreme),
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var actual = FactionBountySystem.CalculateSeverity(testCase.StandingDelta);
+                if (actual != testCase.Expected)
+                {
+                    failures.Add(
+                        $"standingDelta={testCase.StandingDelta}, expected={testCase.Expected}, got={actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

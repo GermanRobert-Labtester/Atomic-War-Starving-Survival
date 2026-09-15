@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-10<br>
-**Total Registered Actions:** 158 entries / 232 flag tokens (aliases included)
+**Total Registered Actions:** 164 entries / 238 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -95,6 +95,12 @@
 | `--expansion-hub-save-selftest` | — | Expansion hub save write → reload → restore → checksum/tamper checks |
 | `--expedition-encounter-bridge-selftest` | — | ExpeditionEncounterBridge bare-notice + resolved surface smoke test |
 | `--expedition-selftest` | — | Expedition domain: sorties, encounter resolution, loot drops, and save round-trip |
+| `--expedition-playtest-selftest` | — | Plans 51: deterministic 30-day expedition campaign, vehicle balance ledger, breakdown, wear, and save/resume proof |
+| `--synthetic-lubricant-selftest` | — | Plan 118: catalog-backed synthetic lubricant production, catalyst state, atomic feed/output, and consumer registration |
+| `--uv-corona-selftest` | — | Plan 119: bounded electrical-fault observations, seeded sensor noise, battery use, and capture/restore |
+| `--carbon-composite-selftest` | — | Plan 120: material aging, deterministic cure quality, explicit component projection, and capture/restore |
+| `--gpr-cartography-selftest` | — | Plan 121: terrain/mode survey trade-offs, uncertain buried observations, map-lead idempotence, and capture/restore |
+| `--advanced-industrial-recon-selftest` | — | Plans 118-121: deterministic 60-day Core industrial/reconnaissance integration with midpoint save/replay proof |
 | `--patrol-encounter-selftest` | `--travel-encounter-selftest` | Patrol catalog, cooldown, recognition, resolution, and save/restore lifecycle |
 | `--research-catalog-selftest` | — | Research knowledge catalog: load count, DAG validity, and cross-catalog unlock references (Plan 34) |
 | `--radio-catalog-selftest` | — | Radio station catalog: JSON authority, schedules, and signal model (AF-B1 / Plan 60) |

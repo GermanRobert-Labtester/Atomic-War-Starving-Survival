@@ -197,7 +197,9 @@ namespace Ashfall.Core.Tests
             // Plan 157 added grain_milling_archive.
             // Plan 159 added leatherwork_archive.
             // Plan 143 added narrative_questlines.
-            Assert.Equal(167, envelopes.Count);
+            // B5–B8 Phase 6 added deep_well (pins were already stale at 186/180
+            // before this package — live registry was 190; bumped to the true count).
+            Assert.Equal(186, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -210,7 +212,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (173 sections: 6 versioned codecs, 167 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (192 sections: 6 versioned codecs, 186 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

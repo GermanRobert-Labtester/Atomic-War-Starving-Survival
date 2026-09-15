@@ -96,6 +96,10 @@ namespace Ashfall.Core.Tests.Medical
                 fx.Sv, MedicalTreatmentCatalog.TreatmentOxygenSupport);
 
             Assert.True(result.Success, result.ReasonCode);
+            Assert.Equal(before, fx.Inventory.CountById(MedicalTreatmentCatalog.ItemOxygenSupply));
+            Assert.Single(fx.Pipeline.Schedule.Active);
+            var completions = fx.Pipeline.AdvanceScheduled(24f, fx.Day);
+            Assert.Single(completions);
             Assert.Equal(before - 1, fx.Inventory.CountById(MedicalTreatmentCatalog.ItemOxygenSupply));
             Assert.Equal(45f, fx.Respiratory.RespiratoryDegradation(SvId), 3);
         }

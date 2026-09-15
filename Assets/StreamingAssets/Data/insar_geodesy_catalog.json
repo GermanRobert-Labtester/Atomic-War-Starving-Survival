@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "sensor_profiles": [
+    {
+      "id": "airborne_insar_pod",
+      "display_name": "Airborne InSAR Pod",
+      "description": "Salvaged side-looking radar pod flown on a survey sortie. Wide swath, moderate resolution, needs a clear pass.",
+      "coverage_width_km": 45,
+      "nominal_resolution_m": 18,
+      "repeat_pass_interval_days": 6,
+      "coherence_decay_rate_bp": 10,
+      "weather_decorrelation_modifier_bp": 32,
+      "minimum_detectable_deformation_mm": 8,
+      "processing_skill_modifier_bp": 15,
+      "terrain_decorrelation_tags": ["forest", "urban_rubble", "loose_scree"],
+      "tags": ["airborne", "wide_swath"]
+    },
+    {
+      "id": "uav_radar_pod",
+      "display_name": "UAV Radar Pod",
+      "description": "Small short-range pod carried by a salvaged drone. Narrow swath, tight repeat geometry, fragile in ash.",
+      "coverage_width_km": 14,
+      "nominal_resolution_m": 9,
+      "repeat_pass_interval_days": 3,
+      "coherence_decay_rate_bp": 16,
+      "weather_decorrelation_modifier_bp": 40,
+      "minimum_detectable_deformation_mm": 5,
+      "processing_skill_modifier_bp": 10,
+      "terrain_decorrelation_tags": ["forest", "canopy"],
+      "tags": ["airborne", "narrow_swath"]
+    },
+    {
+      "id": "ground_repeat_radar",
+      "display_name": "Ground Repeat-Pass Radar",
+      "description": "Truck-mounted radar shelter run from a fixed survey line. Slow and local, but the cleanest repeat geometry.",
+      "coverage_width_km": 8,
+      "nominal_resolution_m": 6,
+      "repeat_pass_interval_days": 2,
+      "coherence_decay_rate_bp": 7,
+      "weather_decorrelation_modifier_bp": 22,
+      "minimum_detectable_deformation_mm": 4,
+      "processing_skill_modifier_bp": 22,
+      "terrain_decorrelation_tags": ["urban_rubble"],
+      "tags": ["ground", "high_coherence"]
+    },
+    {
+      "id": "balloon_tethered_radar",
+      "display_name": "Tethered-Balloon Radar",
+      "description": "Captive balloon lifted radar watching one sector continuously. Excellent coherence, very small footprint.",
+      "coverage_width_km": 4,
+      "nominal_resolution_m": 4,
+      "repeat_pass_interval_days": 1,
+      "coherence_decay_rate_bp": 4,
+      "weather_decorrelation_modifier_bp": 18,
+      "minimum_detectable_deformation_mm": 3,
+      "processing_skill_modifier_bp": 26,
+      "terrain_decorrelation_tags": ["canopy"],
+      "tags": ["tethered", "continuous"]
+    }
+  ]
+}

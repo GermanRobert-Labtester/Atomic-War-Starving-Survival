@@ -27,6 +27,11 @@ namespace AtomicWar.GodotApp
         // Global shortcuts
         public const string Journal = "ashfall_journal";
         public const string Help = "ashfall_help";
+        /// <summary>C2 / Plan 17B Phase D — onboarding guidance (F2 default).
+        /// The plan's requested F1 binding collides with <see cref="Help"/>
+        /// (tutorial panel, pre-existing binding); F2 is the nearest free
+        /// function key. Rebindable via the standard input conventions.</summary>
+        public const string Guidance = "ashfall_guidance";
         public const string Forecast = "ashfall_forecast";
         public const string WeatherHistory = "ashfall_weather_history";
         public const string Events = "ashfall_events";
@@ -55,6 +60,7 @@ namespace AtomicWar.GodotApp
             NavRight,
             Journal,
             Help,
+            Guidance,
             Forecast,
             WeatherHistory,
             Events,
@@ -80,6 +86,7 @@ namespace AtomicWar.GodotApp
             { NavRight, Key.D },
             { Journal, Key.J },
             { Help, Key.F1 },
+            { Guidance, Key.F2 },
             { Forecast, Key.F },
             { WeatherHistory, Key.H },
             { Events, Key.E },
@@ -109,6 +116,7 @@ namespace AtomicWar.GodotApp
             RegisterAction(NavRight, Key.D, JoyButton.DpadRight, Key.Right);
             RegisterAction(Journal, Key.J, JoyButton.Y);
             RegisterAction(Help, Key.F1, JoyButton.Back);
+            RegisterAction(Guidance, Key.F2);
             RegisterAction(Forecast, Key.F);
             RegisterAction(WeatherHistory, Key.H);
             RegisterAction(Events, Key.E);
@@ -246,6 +254,11 @@ namespace AtomicWar.GodotApp
         public static bool IsHelp(InputEvent @event)
         {
             return @event.IsActionPressed(Help);
+        }
+
+        public static bool IsGuidance(InputEvent @event)
+        {
+            return @event.IsActionPressed(Guidance);
         }
 
         public static bool IsEvents(InputEvent @event)

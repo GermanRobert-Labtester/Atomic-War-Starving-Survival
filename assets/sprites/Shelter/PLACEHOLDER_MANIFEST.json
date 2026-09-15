@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "collection": "holdfast_shelter_placeholders",
+  "status": "PLACEHOLDER \u2014 NOT FINAL ART",
+  "scope": "Intact Holdfast shelter, days 1-7 (never bombed/damaged)",
+  "generator": "scripts/tools/generate-shelter-placeholders.py",
+  "generated_by": "Pillow, programmatic line art",
+  "license": "MIT",
+  "replace_with_final_art": true,
+  "files": [
+    {
+      "file": "shelter_interior_day1_7.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "shelter_interior_dawn.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "shelter_interior_dusk.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "shelter_interior_night.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_bunker_corridor.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_bunks_crowded.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_bunks.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_quarters_private.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_workshop.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_workshop_heavy.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_workshop_precision.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_clinic.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_ward_clinical.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_ward_quarantine.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_kitchen.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_storage_bay.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_storage_secure.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_greenhouse_shelter.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_radio_tuner.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_armory_munitions.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_laboratory_research.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_common_mess_hall.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_reading_quiet_room.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_airlock.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_generator.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_filtration.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "room_hope_beacon.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "prop_supply_crate.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "prop_water_barrel.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "prop_ceiling_lamp.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "prop_pipe_bundle.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "prop_hatch_door.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "tile_wall_concrete.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "tile_floor_concrete.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "tile_floor_grate.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    }
+  ]
+}

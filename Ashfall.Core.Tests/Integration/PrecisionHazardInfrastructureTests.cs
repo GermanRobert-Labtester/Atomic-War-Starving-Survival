@@ -118,8 +118,8 @@ namespace Ashfall.Core.Tests
         private static (DecontaminationSystem decon, Inventory.Inventory inv) MakeDecon(int seed, float interlockThreshold = 10f)
         {
             var inv = new Inventory.Inventory();
-            inv.AddById("water_clean", 200);
-            inv.AddById("soap", 200);
+            inv.AddById("clean_water", 200);
+            inv.AddById("item_liquid_bleach_carboy", 200);
             var decon = new DecontaminationSystem(
                 new SeededRng(seed),
                 new RadiationSystem(seed: seed),
@@ -302,7 +302,7 @@ namespace Ashfall.Core.Tests
             // Expedition return: threshold 5 splits the two cases —
             // heavy 0.99 → 0.69 residual → gate 6.9 > 5 → rewash; light 0.1 → 0 → pass.
             var (decon, inv) = MakeDecon(51, interlockThreshold: 5f);
-            inv.AddById("water_clean", 200); inv.AddById("soap", 200);
+            inv.AddById("clean_water", 200); inv.AddById("item_liquid_bleach_carboy", 200);
 
             // Heavily contaminated return: the single chemical stage cannot bring
             // the gate reading under threshold → rewash required, door locked.

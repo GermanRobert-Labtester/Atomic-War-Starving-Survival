@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -133,6 +134,68 @@ namespace AtomicWar.GodotApp
                 _journalDirty = true;
                 if (_statusLabel != null)
                     _statusLabel.Text = $"[DOCUMENTS] {discovered} institutional record(s) added to the journal.";
+            }
+        }
+
+        /// <summary>
+        /// Plan 150: reveal personal/unsent letters assigned to an explicit
+        /// shelter-room producer. Journal knowledge only — never inventory or
+        /// quest authority.
+        /// </summary>
+        private void DiscoverPersonalLetterRecords(string producerId)
+        {
+            var catalog = _journalCodex?.Catalogs?.NarrativeDiscoveries;
+            if (_journal == null || catalog == null || string.IsNullOrEmpty(producerId)) return;
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            int discovered = 0;
+            var records = catalog.GetByProducer(producerId);
+            for (int i = 0; i < records.Count; i++)
+            {
+                var record = records[i];
+                if (!PersonalLetterRuntimeContract.IsSourceCatalog(record.SourceCatalog)
+                    || record.MinDay > day)
+                    continue;
+                if (catalog.TryDiscover(record.DiscoveryId, _journal, out _))
+                    discovered++;
+            }
+
+            if (discovered > 0)
+            {
+                _journalDirty = true;
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[CORRESPONDENCE] {discovered} personal letter(s) added to the journal.";
+            }
+        }
+
+        /// <summary>
+        /// Plan 151: reveal activated abyssal anomaly records for a map or
+        /// room producer. Deferred Phase-2 rows stay locked.
+        /// </summary>
+        private void DiscoverAbyssalAnomalyRecords(string producerId)
+        {
+            var catalog = _journalCodex?.Catalogs?.NarrativeDiscoveries;
+            if (_journal == null || catalog == null || string.IsNullOrEmpty(producerId)) return;
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            int discovered = 0;
+            var records = catalog.GetByProducer(producerId);
+            for (int i = 0; i < records.Count; i++)
+            {
+                var record = records[i];
+                if (!AbyssalAnomaliesRuntimeContract.IsSourceCatalog(record.SourceCatalog)
+                    || !AbyssalAnomaliesRuntimeContract.IsActivatedSourceRecord(record.SourceRecordId)
+                    || record.MinDay > day)
+                    continue;
+                if (catalog.TryDiscover(record.DiscoveryId, _journal, out _))
+                    discovered++;
+            }
+
+            if (discovered > 0)
+            {
+                _journalDirty = true;
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[ARCHIVE] {discovered} abyssal anomaly record(s) added to the journal.";
             }
         }
 
@@ -439,6 +502,13 @@ namespace AtomicWar.GodotApp
 
         private void OpenNarrativeArcModal()
         {
+            SetupEchoes();
+            if (_echoes?.PendingEcho != null)
+            {
+                OpenEchoModal();
+                return;
+            }
+
             SetupNarrative();
             var pending = _narrative.PendingArcEvent;
             if (pending == null)
@@ -451,6 +521,12 @@ namespace AtomicWar.GodotApp
 
         private void OnNarrativeArcChoiceSelected(string eventId, string choiceId)
         {
+            if (!string.IsNullOrEmpty(eventId) && eventId.StartsWith("echo_", StringComparison.Ordinal))
+            {
+                ResolveEchoChoice(eventId, choiceId);
+                return;
+            }
+
             SetupNarrative();
             var result = _narrative.ResolveArcChoice(eventId, choiceId, _simDay);
             if (!result.Succeeded)
@@ -514,6 +590,68 @@ namespace AtomicWar.GodotApp
             SetupJournal();
             _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay);
             _radio.StateChanged += () => _radioPanel?.RefreshView();
+            _radio.RescueMissions.OnIgnoreConsequence += (mission, tokens, standingFactionId, day) =>
+            {
+                // Core raised the fact once; the host applies standing + journal.
+                if (!string.IsNullOrEmpty(standingFactionId))
+                {
+                    try
+                    {
+                        EnsureSharedFactionStance().ModifyTrust(standingFactionId, -10);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Faction stance authority may be offline during sparse boot.
+                    }
+                }
+                _journal?.TryAddRawEntry(
+                    $"distress_ignored_{mission.QuestId}_{day}",
+                    $"The {mission.SignalId} call went unanswered past its deadline. It will not be answered again.",
+                    null!,
+                    day);
+            };
+            _radio.RescueMissions.OnRewardsGranted += (mission, items, rep) =>
+            {
+                SetupInventory();
+                int stowed = 0;
+                int failed = 0;
+                if (_inventory?.Inventory != null && items != null)
+                {
+                    for (int i = 0; i < items.Count; i++)
+                    {
+                        string itemId = items[i];
+                        if (string.IsNullOrEmpty(itemId)) continue;
+                        if (_inventory.Inventory.TryProduce(itemId, 1))
+                            stowed++;
+                        else
+                            failed++;
+                    }
+                }
+                else if (items != null)
+                {
+                    failed = items.Count;
+                }
+                if (rep != 0 && !string.IsNullOrEmpty(mission.FactionTag))
+                {
+                    try
+                    {
+                        EnsureSharedFactionStance().ModifyTrust(mission.FactionTag, rep);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Faction stance authority may be offline during sparse boot;
+                        // item grants above still apply.
+                    }
+                }
+                string stowNote = failed > 0
+                    ? $"Rewards partially stowed ({stowed} ok, {failed} failed, rep {rep})."
+                    : $"Rewards stowed ({stowed} lines, rep {rep}).";
+                _journal?.TryAddRawEntry(
+                    $"distress_reward_{mission.QuestId}_{_radio.Day}",
+                    $"Distress rescue settled: {mission.OutcomeSummary} {stowNote}",
+                    null!,
+                    _radio.Day);
+            };
             _radio.Triangulation.OnLocationRevealed += locId =>
             {
                 _journal?.TryAddRawEntry(

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "ecm_profiles": [
+    {
+      "profile_id": "ecm_vehicle_deception_mk1",
+      "display_name": "Vehicle Deception Suite Mk I",
+      "modes": ["passive_signature", "noise_jam", "deception", "burst_defense"],
+      "power_draw_class": "high",
+      "heat_rate_per_active_tick": 4,
+      "max_heat_permille": 1000,
+      "lock_break_bonus_permille": 220,
+      "detection_reduction_permille": 120,
+      "counter_detection_risk_permille": 120,
+      "condition_wear_per_active_tick": 4,
+      "cooldown_ticks": 240,
+      "install_item_id": "item_ecm_jammer_module"
+    }
+  ],
+  "mode_rules": {
+    "passive_signature": {
+      "power_draw": "low",
+      "lock_break_bonus_permille": 0,
+      "counter_detection_risk_permille": 0
+    },
+    "noise_jam": {
+      "power_draw": "high",
+      "lock_break_bonus_permille": 120,
+      "counter_detection_risk_permille": 150
+    },
+    "deception": {
+      "power_draw": "moderate",
+      "false_track_pressure": 2,
+      "counter_detection_risk_permille": 60
+    },
+    "burst_defense": {
+      "power_draw": "peak",
+      "lock_break_bonus_permille": 320,
+      "counter_detection_risk_permille": 200,
+      "duration_ticks": 12
+    }
+  },
+  "threat_profiles": [
+    {
+      "threat_profile_id": "threat_aerial_scanner",
+      "display_name": "Aerial Scanner",
+      "base_detection_permille": 400,
+      "lock_rate_permille": 120
+    }
+  ],
+  "invariants": {
+    "single_mode_lock_break_cap_permille": 400,
+    "no_immunity": true
+  }
+}

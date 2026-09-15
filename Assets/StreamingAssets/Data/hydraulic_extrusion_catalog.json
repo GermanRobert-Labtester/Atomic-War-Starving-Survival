@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "product_profiles": [
+    {
+      "id": "utility_seamless_tubing",
+      "display_name": "Utility Seamless Tubing",
+      "description": "General low-pressure tubing for shelter plumbing and irrigation runs. Tolerant of ordinary billets.",
+      "billet_material_tag": "high_grade_steel",
+      "machine_class": "standard_press",
+      "die_profile_id": "die_utility",
+      "energy_cost": 12,
+      "cooling_requirement": 4,
+      "tool_wear": 6,
+      "base_quality": 55,
+      "defect_risk_bp": 1400,
+      "operator_skill_tags": ["mechanical"],
+      "result_item_id": "seamless_tubing_utility",
+      "tags": ["utility"]
+    },
+    {
+      "id": "high_pressure_service_tubing",
+      "display_name": "High-Pressure Service Tubing",
+      "description": "Pressure-service tubing for geothermal and process lines. Needs a clean billet and dressed tooling.",
+      "billet_material_tag": "stainless_steel",
+      "machine_class": "heavy_press",
+      "die_profile_id": "die_high_pressure",
+      "energy_cost": 24,
+      "cooling_requirement": 9,
+      "tool_wear": 11,
+      "base_quality": 70,
+      "defect_risk_bp": 2200,
+      "operator_skill_tags": ["mechanical", "metallurgy"],
+      "result_item_id": "seamless_tubing_high_pressure",
+      "tags": ["pressure_service"]
+    },
+    {
+      "id": "premium_cryo_tubing",
+      "display_name": "Premium Cryogenic Tubing",
+      "description": "Cold-service tubing for air separation and cryogenic loops. Titanium-bearing, rare, and unforgiving.",
+      "billet_material_tag": "titanium_alloy",
+      "machine_class": "precision_press",
+      "die_profile_id": "die_cryo",
+      "energy_cost": 38,
+      "cooling_requirement": 15,
+      "tool_wear": 16,
+      "base_quality": 82,
+      "defect_risk_bp": 3200,
+      "operator_skill_tags": ["metallurgy", "precision"],
+      "result_item_id": "seamless_tubing_cryo",
+      "tags": ["cryogenic", "late_game"]
+    }
+  ],
+  "machine_profiles": [
+    {
+      "id": "standard_press",
+      "display_name": "Standard Hydraulic Press",
+      "description": "A refurbished press for utility work. Forgiving, but limited on tight tolerances.",
+      "alignment_quality": 70,
+      "power_stability_required_bp": 40,
+      "max_defect_reduction_bp": 400
+    },
+    {
+      "id": "heavy_press",
+      "display_name": "Heavy Hydraulic Press",
+      "description": "Reinforced press with better ram control. Handles high-pressure service tubing.",
+      "alignment_quality": 82,
+      "power_stability_required_bp": 65,
+      "max_defect_reduction_bp": 800
+    },
+    {
+      "id": "precision_press",
+      "display_name": "Precision Extrusion Press",
+      "description": "Salvaged precision press with guided tooling. The only frame that can hold cryogenic tolerance.",
+      "alignment_quality": 92,
+      "power_stability_required_bp": 85,
+      "max_defect_reduction_bp": 1200
+    }
+  ],
+  "billet_materials": [
+    { "id": "high_grade_steel", "display_name": "High-Grade Steel", "quality_bp": 60, "rarity": "common" },
+    { "id": "stainless_steel", "display_name": "Stainless Steel", "quality_bp": 75, "rarity": "uncommon" },
+    { "id": "titanium_alloy", "display_name": "Titanium Alloy", "quality_bp": 90, "rarity": "rare" }
+  ]
+}

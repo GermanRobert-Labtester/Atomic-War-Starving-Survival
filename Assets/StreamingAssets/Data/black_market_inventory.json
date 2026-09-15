@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "collection_id": "black_market_inventory_211",
+  "description": "Plan 211 — underworld syndicates and their illicit stock rosters. Authored gameplay values only; no real criminal or drug-trade instructions. Syndicates are real faction ids resolved through FactionStandingIdResolver (approved decision D4). Prices always derive from the canonical MarketSystem value (no second price authority); risk_premium_bp is a visible multiplier in the ContrabandBrokerCaravan precedent. Stock snapshots are deterministic per day and never reroll on panel reopen.",
+  "syndicates": [
+    {
+      "syndicate_id": "faction_wasteland_outlaws",
+      "display_name": "The Quiet Counter",
+      "description": "The folding-table people. Prices are what they are because you cannot go elsewhere.",
+      "base_premium_bp": 1400,
+      "sell_discount_bp": 2500,
+      "heat_decay_per_day": 4,
+      "credit_limit_units": 400,
+      "loan_interest_bp": 1500,
+      "required_access_tier": 1
+    },
+    {
+      "syndicate_id": "faction_ash_market_brokers",
+      "display_name": "The Ash Market",
+      "description": "Brokers who trade in scarcity itself. Everything has a waiting list, including the waiting list.",
+      "base_premium_bp": 1800,
+      "sell_discount_bp": 3000,
+      "heat_decay_per_day": 3,
+      "credit_limit_units": 800,
+      "required_access_tier": 2
+    },
+    {
+      "syndicate_id": "faction_cold_ledger",
+      "display_name": "The Cold Ledger",
+      "description": "They lend first and ask questions when the ink is due.",
+      "base_premium_bp": 1600,
+      "sell_discount_bp": 2800,
+      "heat_decay_per_day": 2,
+      "credit_limit_units": 1200,
+      "required_access_tier": 2
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "black_market_stim_kit",
+      "item_id": "item_taper_kit_opioid",
+      "syndicate_ids": ["faction_wasteland_outlaws", "faction_ash_market_brokers"],
+      "access_tier": 1,
+      "stock_weight": 60,
+      "min_stock": 1,
+      "max_stock": 3,
+      "scarcity_sensitivity": 60,
+      "risk_premium_bp": 1600,
+      "cooldown_days": 2,
+      "tags": ["contraband", "medical"]
+    },
+    {
+      "entry_id": "black_market_stolen_documents",
+      "item_id": "sealed_government_document",
+      "syndicate_ids": ["faction_ash_market_brokers"],
+      "access_tier": 2,
+      "stock_weight": 45,
+      "min_stock": 1,
+      "max_stock": 2,
+      "scarcity_sensitivity": 80,
+      "risk_premium_bp": 2200,
+      "cooldown_days": 3,
+      "tags": ["documents", "restricted"]
+    },
+    {
+      "entry_id": "black_market_pre_war_armament",
+      "item_id": "weapon_sidearm",
+      "syndicate_ids": ["faction_wasteland_outlaws", "faction_ash_market_brokers"],
+      "access_tier": 2,
+      "stock_weight": 35,
+      "min_stock": 1,
+      "max_stock": 2,
+      "scarcity_sensitivity": 70,
+      "risk_premium_bp": 1900,
+      "cooldown_days": 4,
+      "tags": ["weapons"]
+    },
+    {
+      "entry_id": "black_market_field_medicine",
+      "item_id": "medical_kit",
+      "syndicate_ids": ["faction_wasteland_outlaws"],
+      "access_tier": 1,
+      "stock_weight": 70,
+      "min_stock": 2,
+      "max_stock": 6,
+      "scarcity_sensitivity": 40,
+      "risk_premium_bp": 1250,
+      "cooldown_days": 1,
+      "tags": ["medical"]
+    },
+    {
+      "entry_id": "black_market_radiation_countermeasures",
+      "item_id": "item_prussian_blue_chelating_pellets",
+      "syndicate_ids": ["faction_ash_market_brokers", "faction_cold_ledger"],
+      "access_tier": 2,
+      "stock_weight": 40,
+      "min_stock": 1,
+      "max_stock": 4,
+      "scarcity_sensitivity": 70,
+      "risk_premium_bp": 1700,
+      "cooldown_days": 3,
+      "tags": ["medical", "radiation"]
+    },
+    {
+      "entry_id": "black_market_rare_electronics",
+      "item_id": "solar_cell",
+      "syndicate_ids": ["faction_ash_market_brokers"],
+      "access_tier": 3,
+      "stock_weight": 30,
+      "min_stock": 1,
+      "max_stock": 2,
+      "scarcity_sensitivity": 90,
+      "risk_premium_bp": 2400,
+      "cooldown_days": 4,
+      "tags": ["electronics", "restricted"]
+    },
+    {
+      "entry_id": "black_market_pre_war_relic",
+      "item_id": "diamond",
+      "syndicate_ids": ["faction_cold_ledger"],
+      "access_tier": 3,
+      "stock_weight": 25,
+      "min_stock": 1,
+      "max_stock": 1,
+      "scarcity_sensitivity": 50,
+      "risk_premium_bp": 2600,
+      "cooldown_days": 5,
+      "tags": ["luxury"]
+    }
+  ]
+}

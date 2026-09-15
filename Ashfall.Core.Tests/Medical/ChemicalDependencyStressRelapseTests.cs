@@ -26,26 +26,38 @@ namespace Ashfall.Core.Tests.Medical
 
         // ── StressRelapseRules (pure function, no system state) ────────
 
-        [Theory]
-        [InlineData(0.0f, ChemicalDependencyKind.Opioid, 0f)]           // below threshold
-        [InlineData(0.04f, ChemicalDependencyKind.Opioid, 0f)]          // still below
-        [InlineData(0.05f, ChemicalDependencyKind.Opioid, 0.0068f)]    // 0.05×0.9×0.15 rounded
-        [InlineData(0.5f, ChemicalDependencyKind.Opioid, 0.0675f)]      // 0.5×0.9×0.15
-        [InlineData(0.5f, ChemicalDependencyKind.Alcohol, 0.0525f)]
-        [InlineData(0.5f, ChemicalDependencyKind.Stimulant, 0.045f)]
-        [InlineData(0.5f, ChemicalDependencyKind.Sedative, 0.0375f)]
-        [InlineData(1.0f, ChemicalDependencyKind.Opioid, 0.135f)]      // 1.0×0.9×0.15
-        [InlineData(1.5f, ChemicalDependencyKind.Opioid, 0.135f)]      // clamp to 1.0
-        [InlineData(-1.0f, ChemicalDependencyKind.Opioid, 0f)]
-        [InlineData(float.NaN, ChemicalDependencyKind.Opioid, 0f)]     // NaN guard
-        public void ComputeDelta_ReturnsExpectedClampedSeverityScaled(float magnitude,
-            ChemicalDependencyKind kind, float expected)
+        [Fact]
+        public void ComputeDelta_ThresholdAndKindTable_ReturnsExpectedClampedSeverityScaled()
         {
-            float got = StressRelapseRules.ComputeDelta(magnitude, kind);
-            // Float math + culture-invariant rounding tolerance.
             const float tol = 0.0005f;
-            Assert.True(Math.Abs(got - expected) <= tol,
-                $"magnitude={magnitude}, kind={kind}, expected={expected}, got={got}");
+            var cases = new[]
+            {
+                (Magnitude: 0.0f, Kind: ChemicalDependencyKind.Opioid, Expected: 0f),
+                (Magnitude: 0.04f, Kind: ChemicalDependencyKind.Opioid, Expected: 0f),
+                (Magnitude: 0.05f, Kind: ChemicalDependencyKind.Opioid, Expected: 0.0068f),
+                (Magnitude: 0.5f, Kind: ChemicalDependencyKind.Opioid, Expected: 0.0675f),
+                (Magnitude: 0.5f, Kind: ChemicalDependencyKind.Alcohol, Expected: 0.0525f),
+                (Magnitude: 0.5f, Kind: ChemicalDependencyKind.Stimulant, Expected: 0.045f),
+                (Magnitude: 0.5f, Kind: ChemicalDependencyKind.Sedative, Expected: 0.0375f),
+                (Magnitude: 1.0f, Kind: ChemicalDependencyKind.Opioid, Expected: 0.135f),
+                (Magnitude: 1.5f, Kind: ChemicalDependencyKind.Opioid, Expected: 0.135f),
+                (Magnitude: -1.0f, Kind: ChemicalDependencyKind.Opioid, Expected: 0f),
+                (Magnitude: float.NaN, Kind: ChemicalDependencyKind.Opioid, Expected: 0f),
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                float got = StressRelapseRules.ComputeDelta(testCase.Magnitude, testCase.Kind);
+                // Float math + culture-invariant rounding tolerance.
+                if (!(Math.Abs(got - testCase.Expected) <= tol))
+                {
+                    failures.Add(
+                        $"magnitude={testCase.Magnitude}, kind={testCase.Kind}, expected={testCase.Expected}, got={got}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

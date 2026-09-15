@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -27,6 +28,18 @@ namespace Ashfall.Core.Shelter
         // restores first, then the host republishes the contribution.
         private readonly Dictionary<string, float> _generationContributions =
             new Dictionary<string, float>(StringComparer.Ordinal);
+
+        // Phase 2 (B5–B8): runtime-only brownout edge bookkeeping. Never saved;
+        // RestoreState re-seeds it from the restored state so a reload never
+        // replays a brownout-began/ended transition (flagship §14.3).
+        private bool _prevTickBrownout;
+
+        // B5–B8 expansion: runtime-only source-degradation edge latches
+        // (flagship §27 — source maintenance/failure events). Each fires once
+        // per degradation cycle; RestoreState re-seeds them from the restored
+        // state so a reload never replays a warning.
+        private bool _generatorWornWarned;
+        private bool _fuelStarvedWarned;
 
         /// <summary>Raised whenever a room's powered state changes.</summary>
         public event Action<PowerGridEvent>? OnPowerChanged;
@@ -62,7 +75,11 @@ namespace Ashfall.Core.Shelter
         {
             get
             {
-                float total = _state.GenerationWatts;
+                // B5–B8 Phase 5: the base generator's rated output degrades
+                // with condition (factor is 1 at/above the threshold — legacy
+                // parity for a healthy generator). External contributions are
+                // NOT scaled here; their owning systems own their condition.
+                float total = _state.GenerationWatts * GeneratorOutputFactor;
                 foreach (var contribution in _generationContributions.Values)
                     total += Math.Max(0f, contribution);
                 return total;
@@ -108,6 +125,240 @@ namespace Ashfall.Core.Shelter
             return SetGenerationContribution(sourceId, 0f);
         }
 
+        /// <summary>
+        /// Plans 146–149 MED: stable runtime contribution id for installed
+        /// EB-PVD coated generator parts. Host republishes after restore.
+        /// </summary>
+        public const string EbPvdInstalledSourceId = "ebpvd_installed";
+
+        /// <summary>Hard cap on concurrent installed coated parts (blade / combustor / injector).</summary>
+        public const int MaxInstalledCoatedParts = 3;
+
+        /// <summary>Hard cap on total coated contribution watts.</summary>
+        public const float MaxEbPvdInstalledWatts = 80f;
+
+        // ---- B5–B8 Phase 2 (Plan 65): battery bank build chain -----------------
+
+        /// <summary>Canonical install item for one battery bank. Research gates
+        /// the item through the reconditioning recipe chain; research alone
+        /// never grants capacity.</summary>
+        public const string BatteryBankItemId = "item_battery_reconditioned";
+
+        /// <summary>Capacity added per installed bank (Wh). Old saves with zero
+        /// banks keep their stored capacity unchanged.</summary>
+        public const float BatteryBankCapacityWh = 1000f;
+
+        /// <summary>Hard cap on installed banks (bounded build chain).</summary>
+        public const int MaxInstalledBatteryBanks = 4;
+
+        // ---- B5–B8 Phase 5 (Plan 65): generator condition/maintenance --------
+
+        /// <summary>Canonical maintenance consumable for the base generator
+        /// (same item the subgrid repair and battery service use; produced by
+        /// the Fischer-Tropsch lubricant chain). The host consumes it — the
+        /// grid never touches inventory.</summary>
+        public const string GeneratorMaintenanceItemId = "machine_oil";
+
+        /// <summary>Condition wear per day while the generator actually burns
+        /// fuel. 100 → 0 over 400 burning days; an idle generator does not
+        /// wear.</summary>
+        public const float GeneratorWearPerDay = 0.25f;
+
+        /// <summary>Below this condition the generator's rated output begins
+        /// to degrade (worn bearings, fouled injectors).</summary>
+        public const float GeneratorDegradationThreshold = 50f;
+
+        /// <summary>Output factor at zero condition (a half-dead engine still
+        /// runs at half rating — bounded, never zero while fueled).</summary>
+        public const float GeneratorMinOutputFactor = 0.5f;
+
+        /// <summary>
+        /// Current generator condition 0..100. Bounded component state
+        /// (flagship §8.8): wear producer (fuel-burning days), maintenance
+        /// action with a real item cost, bounded effect, save persistence.
+        /// </summary>
+        public float GeneratorCondition => _state.GeneratorCondition;
+
+        /// <summary>Output multiplier the condition applies to the base
+        /// generator's rated watts (external contributions are unaffected —
+        /// their owning systems own their own condition).</summary>
+        public float GeneratorOutputFactor => _state.GeneratorCondition >= GeneratorDegradationThreshold
+            ? 1f
+            : GeneratorMinOutputFactor
+              + (1f - GeneratorMinOutputFactor) * (_state.GeneratorCondition / GeneratorDegradationThreshold);
+
+        /// <summary>
+        /// B5–B8 Phase 5: service the generator back to full condition.
+        /// Caller consumes the canonical
+        /// <see cref="GeneratorMaintenanceItemId"/> first (coated-part
+        /// discipline). A service on an already-healthy generator is blocked —
+        /// wasted effort is a blocked action, not a silent success.
+        /// </summary>
+        public bool PerformGeneratorMaintenance(out string reason)
+        {
+            reason = string.Empty;
+            if (_state.GeneratorCondition >= 100f)
+            {
+                reason = "condition_full";
+                return false;
+            }
+
+            _state.GeneratorCondition = 100f;
+            _generatorWornWarned = false;
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.GeneratorMaintained,
+                GeneratorMaintenanceItemId,
+                _state.SimDay,
+                "generator_serviced",
+                GeneratorCondition));
+            return true;
+        }
+
+        /// <summary>
+        /// Install one battery bank (caller consumes the canonical
+        /// <see cref="BatteryBankItemId"/> item first — same discipline as
+        /// coated parts). Adds bounded capacity; never touches the current
+        /// reserve, so an old save's stored energy is unchanged.
+        /// </summary>
+        public bool TryInstallBatteryBank(out string reason)
+        {
+            reason = string.Empty;
+            if (_state.InstalledBatteryBankCount >= MaxInstalledBatteryBanks)
+            {
+                reason = "battery_bank_slots_full";
+                return false;
+            }
+
+            _state.InstalledBatteryBankCount++;
+            _state.BatteryCapacityWh += BatteryBankCapacityWh;
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.BatteryBankInstalled,
+                BatteryBankItemId,
+                _state.SimDay,
+                "battery_bank_installed",
+                BatteryBankCapacityWh));
+            return true;
+        }
+
+        public int InstalledBatteryBankCount => _state.InstalledBatteryBankCount;
+
+        public IReadOnlyList<string> InstalledCoatedPartItemIds => _state.InstalledCoatedPartItemIds;
+
+        /// <summary>
+        /// Install one coated generator part by inventory item id. Requires an
+        /// explicit install action — minting a coating never auto-buffs the grid.
+        /// One slot per family (blade / combustor / injector).
+        /// </summary>
+        public bool TryInstallCoatedPart(string itemId, out string reason)
+        {
+            reason = string.Empty;
+            if (string.IsNullOrWhiteSpace(itemId))
+            {
+                reason = "missing_item";
+                return false;
+            }
+
+            string family = ResolveCoatedPartFamily(itemId);
+            if (string.IsNullOrEmpty(family))
+            {
+                reason = "unsupported_coated_part";
+                return false;
+            }
+
+            var installed = _state.InstalledCoatedPartItemIds;
+            for (int i = 0; i < installed.Count; i++)
+            {
+                if (string.Equals(installed[i], itemId, StringComparison.Ordinal))
+                {
+                    reason = "already_installed";
+                    return false;
+                }
+                if (string.Equals(ResolveCoatedPartFamily(installed[i]), family, StringComparison.Ordinal))
+                {
+                    reason = "family_slot_occupied";
+                    return false;
+                }
+            }
+
+            if (installed.Count >= MaxInstalledCoatedParts)
+            {
+                reason = "install_slots_full";
+                return false;
+            }
+
+            installed.Add(itemId);
+            RepublishEbPvdInstalledContribution();
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.GenerationChanged,
+                itemId,
+                _state.SimDay,
+                "coated_part_installed",
+                ResolveCoatedPartWatts(itemId)));
+            return true;
+        }
+
+        public bool TryUninstallCoatedPart(string itemId, out string reason)
+        {
+            reason = string.Empty;
+            if (string.IsNullOrWhiteSpace(itemId))
+            {
+                reason = "missing_item";
+                return false;
+            }
+
+            if (!_state.InstalledCoatedPartItemIds.Remove(itemId))
+            {
+                reason = "not_installed";
+                return false;
+            }
+
+            RepublishEbPvdInstalledContribution();
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.GenerationChanged,
+                itemId,
+                _state.SimDay,
+                "coated_part_uninstalled",
+                0f));
+            return true;
+        }
+
+        /// <summary>
+        /// Idempotent republish of installed coated-part watts into the runtime
+        /// contribution map. Call after restore and after install/uninstall.
+        /// </summary>
+        public void RepublishEbPvdInstalledContribution()
+        {
+            float watts = 0f;
+            var installed = _state.InstalledCoatedPartItemIds;
+            for (int i = 0; i < installed.Count; i++)
+                watts += ResolveCoatedPartWatts(installed[i]);
+            watts = Math.Clamp(watts, 0f, MaxEbPvdInstalledWatts);
+            SetGenerationContribution(EbPvdInstalledSourceId, watts);
+        }
+
+        public static string ResolveCoatedPartFamily(string itemId)
+        {
+            if (string.Equals(itemId, "item_coated_turbine_blade", StringComparison.Ordinal))
+                return "blade";
+            if (string.Equals(itemId, "item_coated_combustor_tile", StringComparison.Ordinal))
+                return "combustor";
+            if (string.Equals(itemId, "item_coated_diesel_injector", StringComparison.Ordinal))
+                return "injector";
+            return string.Empty;
+        }
+
+        public static float ResolveCoatedPartWatts(string itemId)
+        {
+            // Bounded historical-engineering bonuses; never overwrite base GenerationWatts.
+            if (string.Equals(itemId, "item_coated_turbine_blade", StringComparison.Ordinal))
+                return 40f;
+            if (string.Equals(itemId, "item_coated_combustor_tile", StringComparison.Ordinal))
+                return 35f;
+            if (string.Equals(itemId, "item_coated_diesel_injector", StringComparison.Ordinal))
+                return 25f;
+            return 0f;
+        }
+
         public PowerGridSnapshot Snapshot()
         {
             var snapshot = new PowerGridSnapshot
@@ -140,7 +391,15 @@ namespace Ashfall.Core.Shelter
         {
             var r = FindRoom(roomId);
             if (r == null) return PowerGridRoomPriority.Disabled;
-            return _state.GetRoomPriority(roomId);
+            // Phase 2 (B5–B8): player override wins; catalog DefaultPriority
+            // otherwise. Previously an override-less room always read Standard,
+            // silently discarding the catalog's critical/low classification.
+            for (int i = 0; i < _state.Priorities.Count; i++)
+            {
+                if (_state.Priorities[i].RoomId == roomId)
+                    return _state.Priorities[i].Priority;
+            }
+            return r.DefaultPriority;
         }
 
         /// <summary>
@@ -189,6 +448,83 @@ namespace Ashfall.Core.Shelter
             OnPowerChanged?.Invoke(new PowerGridEvent(PowerGridEventKind.PriorityChanged,
                 roomId, _state.SimDay, priority.ToString()));
             return true;
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 3 (Plan 66): register a dynamic load room — the
+        /// power-load subscription contract (§6.3). Consumer systems (sump
+        /// pump nodes now, perimeter emplacements later) expose a stable load
+        /// id and nominal draw; the grid owns allocation/shedding from that
+        /// point on. The consumer reads its served state via
+        /// <see cref="IsRoomServed"/> and never mutates generation or
+        /// brownout state.
+        ///
+        /// Idempotent: a RoomId already present (e.g. from the
+        /// power_grid.json catalog) is left untouched — catalog rooms take
+        /// precedence. Registered loads participate in draw and priority
+        /// allocation immediately.
+        ///
+        /// Dynamic loads are re-registered by their owning system after that
+        /// system's save restores (the grid's room list itself is not saved).
+        /// </summary>
+        public bool RegisterLoadRoom(PowerGridRoom room)
+        {
+            if (room == null || string.IsNullOrEmpty(room.RoomId)) return false;
+            if (FindRoom(room.RoomId) != null) return false;
+            _rooms.Add(room);
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.LoadRoomRegistered,
+                room.RoomId, _state.SimDay, "load_room_registered", room.DrawWatts));
+            return true;
+        }
+
+        /// <summary>
+        /// B5–B8 expansion (§27): emergency load-shed preset — the
+        /// brownout-management shortcut. Demotes every non-Critical load one
+        /// tier (Standard → Low, Low stays Low); Critical life-support loads
+        /// are never touched. Deterministic, typed (one PriorityChanged event
+        /// per changed room), fully reversible by re-applying catalog defaults
+        /// via <see cref="ApplyCatalogDefaultPriorities"/> or manual overrides.
+        /// Returns the changed room ids (journal/briefing surface).
+        /// </summary>
+        public IReadOnlyList<string> ApplyBrownoutShedPreset()
+        {
+            var changed = new List<string>();
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                var r = _rooms[i];
+                var current = EffectivePriority(r.RoomId);
+                var target = current switch
+                {
+                    PowerGridRoomPriority.Standard => PowerGridRoomPriority.Low,
+                    _ => current
+                };
+                if (target != current)
+                {
+                    SetPriority(r.RoomId, target);
+                    changed.Add(r.RoomId);
+                }
+            }
+            OnPowerChanged?.Invoke(new PowerGridEvent(
+                PowerGridEventKind.PriorityChanged, "__preset__", _state.SimDay,
+                "brownout_shed_preset", changed.Count));
+            return changed;
+        }
+
+        /// <summary>B5–B8 expansion: restore the catalog defaults — clears all
+        /// player priority overrides so every room returns to its
+        /// power_grid.json classification. Returns the affected room count.</summary>
+        public int ApplyCatalogDefaultPriorities()
+        {
+            int count = _state.Priorities.Count;
+            _state.Priorities.Clear();
+            if (count > 0)
+            {
+                OnPowerChanged?.Invoke(new PowerGridEvent(
+                    PowerGridEventKind.PriorityChanged, "__preset__", _state.SimDay,
+                    "catalog_defaults_restored", count));
+            }
+            return count;
         }
 
         public void AddFuel(float units)
@@ -308,6 +644,49 @@ namespace Ashfall.Core.Shelter
                 gen *= 0.5f; // partial generation when fuel-starved.
             }
 
+            // B5–B8 expansion: fuel-starvation is a failure edge — the first
+            // dry day warns once (runtime latch; service/refuel resets it).
+            if (fuelConsumed < fuelNeed && !_fuelStarvedWarned)
+            {
+                _fuelStarvedWarned = true;
+                OnPowerChanged?.Invoke(new PowerGridEvent(
+                    PowerGridEventKind.FuelStarved, null!, _state.SimDay,
+                    "generator_fuel_starved", fuelConsumed));
+            }
+            else if (fuelConsumed >= fuelNeed)
+            {
+                _fuelStarvedWarned = false;
+            }
+
+            // B5–B8 expansion: the generator wears only on burning days. An
+            // idle engine does not degrade.
+            if (fuelConsumed > 0f)
+            {
+                _state.GeneratorCondition = Math.Max(0f,
+                    _state.GeneratorCondition - GeneratorWearPerDay);
+
+                // Crossing below the degradation threshold is the warn edge —
+                // output is now derated; fires once per wear cycle.
+                if (!_generatorWornWarned &&
+                    _state.GeneratorCondition < GeneratorDegradationThreshold)
+                {
+                    _generatorWornWarned = true;
+                    OnPowerChanged?.Invoke(new PowerGridEvent(
+                        PowerGridEventKind.GeneratorWorn, GeneratorMaintenanceItemId,
+                        _state.SimDay, "generator_worn", _state.GeneratorCondition));
+                }
+            }
+
+            // Phase 2 (B5–B8): deterministic priority allocation projection.
+            // Computed after the fuel-starvation adjustment (that is the real
+            // generation this tick) and before the battery exchange (so the
+            // discharge capacity reflects the start-of-tick reserve). This is
+            // a projection only — the aggregate battery/fuel/brownout-hours
+            // math below is untouched and stays byte-parity with legacy ticks.
+            float generationUsed = gen;
+            float reserveBeforeExchange = _state.BatteryReserveWh;
+            var allocation = ComputeAllocation(generationUsed, draw, reserveBeforeExchange);
+
             if (net >= 0)
             {
                 float spareWh = net * 24f;
@@ -360,10 +739,133 @@ namespace Ashfall.Core.Shelter
                 FuelConsumed = fuelConsumed,
                 BatteryEndWh = _state.BatteryReserveWh,
                 BrownoutHours = brownoutHours,
-                IsBrownout = IsBrownout
+                IsBrownout = IsBrownout,
+                // Phase 2 (B5–B8) allocation projection + edge transitions.
+                GenerationWatts = generationUsed,
+                RequestedDrawWatts = draw,
+                ServedWatts = allocation.ServedWatts,
+                UnservedWatts = Math.Max(0f, draw - allocation.ServedWatts),
+                HasCriticalDeficit = allocation.HasCriticalDeficit,
+                ServedRoomIds = allocation.ServedRoomIds,
+                ShedRoomIds = allocation.ShedRoomIds
             };
+            bool brownoutNow = summary.IsBrownout;
+            summary.BrownoutBegan = brownoutNow && !_prevTickBrownout;
+            summary.BrownoutEnded = !brownoutNow && _prevTickBrownout;
+            _prevTickBrownout = brownoutNow;
             OnTickSummary?.Invoke(summary);
             return summary;
+        }
+
+        /// <summary>Tolerance for serving a room within available capacity.</summary>
+        internal const float AllocationEpsilon = 0.01f;
+
+        /// <summary>
+        /// Phase 2 (B5–B8): deterministic priority allocation projection.
+        ///
+        /// Eligible rooms (closed breaker, not tripped, not Disabled) are
+        /// ordered by effective priority tier descending, then RoomId ordinal
+        /// ascending. Available power is generation (post fuel adjustment)
+        /// plus the battery discharge this tick can sustain
+        /// (<c>reserve / 24h</c>, only while demand exceeds generation — the
+        /// same condition under which the legacy aggregate math drains the
+        /// battery). Rooms are served in order while cumulative draw fits;
+        /// every remaining room is shed. Consequences:
+        ///
+        /// - a higher-priority room is never shed while a lower-priority room
+        ///   is served (single ordered pass, shed set is always a suffix);
+        /// - unserved Critical-tier rooms raise <see cref="HasCriticalDeficit"/>
+        ///   — the explicit life-support emergency flag (flagship §8.6);
+        /// - no RNG participates in load order.
+        ///
+        /// The projection does not mutate state; served/shed classification is
+        /// derived from exactly the same generation/reserve numbers the legacy
+        /// battery math consumes, so both stay consistent by construction.
+        ///
+        /// Serving is a strict priority prefix: the first room whose load does
+        /// not fit is shed together with every room after it, even if a later
+        /// smaller room would fit. Real grids shed whole feeders in order — a
+        /// predictable suffix beats best-fit scavenging, and it keeps the
+        /// flagship invariant exact: no lower-priority load is ever served
+        /// while a higher-priority load is unserved. Spare capacity below the
+        /// next whole room stays unused (the legacy aggregate battery drain is
+        /// untouched parity behavior).
+        /// </summary>
+        private PowerGridAllocation ComputeAllocation(float generationWatts, float requestedDrawWatts,
+            float batteryReserveWh)
+        {
+            var ordered = new List<(PowerGridRoom Room, int Tier)>(_rooms.Count);
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                var r = _rooms[i];
+                if (!_state.IsBreakerClosed(r.RoomId)) continue;
+                if (_state.IsRoomTripped(r.RoomId)) continue;
+                int tier = (int)EffectivePriority(r.RoomId);
+                if (tier == (int)PowerGridRoomPriority.Disabled) continue;
+                ordered.Add((r, tier));
+            }
+            ordered.Sort(static (a, b) =>
+            {
+                int byTier = b.Tier.CompareTo(a.Tier); // higher tier first
+                return byTier != 0 ? byTier : string.CompareOrdinal(a.Room.RoomId, b.Room.RoomId);
+            });
+
+            float deficit = Math.Max(0f, requestedDrawWatts - generationWatts);
+            float batteryDischargeWatts = deficit > 0f
+                ? Math.Min(batteryReserveWh / 24f, deficit)
+                : 0f;
+            float availablePower = generationWatts + batteryDischargeWatts;
+
+            var result = new PowerGridAllocation();
+            float cumulative = 0f;
+            bool shedding = false;
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                var room = ordered[i].Room;
+                if (!shedding &&
+                    cumulative + room.DrawWatts <= availablePower + AllocationEpsilon)
+                {
+                    result.ServedRoomIds.Add(room.RoomId);
+                    cumulative += room.DrawWatts;
+                }
+                else
+                {
+                    // Strict suffix: once one room doesn't fit, everything
+                    // after it sheds regardless of size (deterministic, and
+                    // never serves a lower-priority room first).
+                    shedding = true;
+                    result.ShedRoomIds.Add(room.RoomId);
+                    if (ordered[i].Tier == (int)PowerGridRoomPriority.Critical)
+                        result.HasCriticalDeficit = true;
+                }
+            }
+            result.ServedWatts = cumulative;
+            return result;
+        }
+
+        /// <summary>
+        /// Phase 2 (B5–B8): allocation-aware typed powered query for consumer
+        /// systems (greenhouse controlled-environment, sump pump, perimeter
+        /// sentries). Unlike <see cref="IsRoomPowered"/> — which treats a
+        /// brownout as a global outage — this reports whether the room's load
+        /// is actually served under deterministic priority allocation, so
+        /// critical loads can remain powered while optional loads shed.
+        /// Consumers subscribe to <see cref="OnTickSummary"/> for the tick
+        /// projection; this query is for point-in-time reads.
+        /// </summary>
+        public bool IsRoomServed(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return false;
+            var allocation = ComputeAllocation(GenerationWatts, TotalDrawWatts, _state.BatteryReserveWh);
+            return allocation.ServedRoomIds.Contains(roomId);
+        }
+
+        private sealed class PowerGridAllocation
+        {
+            public float ServedWatts;
+            public bool HasCriticalDeficit;
+            public List<string> ServedRoomIds = new List<string>();
+            public List<string> ShedRoomIds = new List<string>();
         }
 
         public PowerGridState CaptureState() => _state.Capture();
@@ -372,6 +874,17 @@ namespace Ashfall.Core.Shelter
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
             _state.RestoreInto(state, _rooms);
+            // Runtime contribution map is not serialized; republish installed
+            // coated-part watts so GenerationWatts matches InstalledCoatedPartItemIds.
+            RepublishEbPvdInstalledContribution();
+            // Phase 2 (B5–B8): re-seed brownout edge bookkeeping from the
+            // restored state so a reload never replays a begin/end transition.
+            _prevTickBrownout = IsBrownout;
+            // B5–B8 expansion: re-seed source-degradation latches from the
+            // restored state (an already-worn restored generator must not
+            // replay its warning).
+            _generatorWornWarned = _state.GeneratorCondition < GeneratorDegradationThreshold;
+            _fuelStarvedWarned = _state.FuelUnits <= 0f;
         }
 
         private PowerGridRoom? FindRoom(string roomId)
@@ -490,6 +1003,27 @@ string? failureEffectId = null)
         /// </summary>
         public int LastSurgeDay;
 
+        /// <summary>
+        /// Plans 146–149 MED: inventory item ids of coated parts installed into
+        /// the generator. Optional — old saves restore empty (no install).
+        /// Runtime watts are republished via <see cref="PowerGridSystem.RepublishEbPvdInstalledContribution"/>.
+        /// </summary>
+        public List<string> InstalledCoatedPartItemIds = new List<string>();
+
+        /// <summary>
+        /// B5–B8 Phase 2: installed battery-bank count (additive — old saves
+        /// restore 0 and keep their stored capacity exactly).
+        /// </summary>
+        public int InstalledBatteryBankCount;
+
+        /// <summary>
+        /// B5–B8 Phase 5: base generator condition 0..100. Field initializer
+        /// 100 is the migration contract: legacy saves lacking the field
+        /// restore a healthy generator (no retroactive degradation); new saves
+        /// persist the value explicitly.
+        /// </summary>
+        public float GeneratorCondition = 100f;
+
         public bool IsBreakerClosed(string roomId) => !ClosedBreakers.Contains(roomId);
         public bool IsRoomTripped(string roomId) => TrippedRooms.Contains(roomId);
 
@@ -533,6 +1067,11 @@ string? failureEffectId = null)
             if (BatteryReserveWh > BatteryCapacityWh) BatteryReserveWh = BatteryCapacityWh;
             if (FuelUnits < 0) FuelUnits = 0;
             if (GenerationWatts < 0) GenerationWatts = 0;
+            if (InstalledBatteryBankCount < 0) InstalledBatteryBankCount = 0;
+            if (InstalledBatteryBankCount > PowerGridSystem.MaxInstalledBatteryBanks)
+                InstalledBatteryBankCount = PowerGridSystem.MaxInstalledBatteryBanks;
+            if (GeneratorCondition < 0f) GeneratorCondition = 0f;
+            if (GeneratorCondition > 100f) GeneratorCondition = 100f;
             var validIds = new HashSet<string>(StringComparer.Ordinal);
             for (int i = 0; i < rooms.Count; i++) validIds.Add(rooms[i].RoomId);
 
@@ -565,7 +1104,10 @@ string? failureEffectId = null)
             ClosedBreakers = new List<string>(ClosedBreakers),
             TrippedRooms = new List<string>(TrippedRooms),
             Priorities = new List<RoomPriorityRecord>(Priorities),
-            LastSurgeDay = LastSurgeDay
+            LastSurgeDay = LastSurgeDay,
+            InstalledBatteryBankCount = InstalledBatteryBankCount,
+            GeneratorCondition = GeneratorCondition,
+            InstalledCoatedPartItemIds = new List<string>(InstalledCoatedPartItemIds ?? new List<string>())
         };
 
         public void RestoreInto(PowerGridState state, IReadOnlyList<PowerGridRoom> rooms)
@@ -576,9 +1118,14 @@ string? failureEffectId = null)
             BatteryReserveWh = state.BatteryReserveWh;
             BatteryCapacityWh = state.BatteryCapacityWh;
             LastSurgeDay = state.LastSurgeDay;
+            InstalledBatteryBankCount = Math.Clamp(state.InstalledBatteryBankCount, 0, PowerGridSystem.MaxInstalledBatteryBanks);
+            GeneratorCondition = Math.Clamp(state.GeneratorCondition, 0f, 100f);
             ClosedBreakers = state.ClosedBreakers ?? new List<string>();
             TrippedRooms = state.TrippedRooms ?? new List<string>();
             Priorities = state.Priorities ?? new List<RoomPriorityRecord>();
+            InstalledCoatedPartItemIds = state.InstalledCoatedPartItemIds != null
+                ? new List<string>(state.InstalledCoatedPartItemIds)
+                : new List<string>();
             NormalizeAndValidate(rooms);
         }
     }
@@ -633,6 +1180,11 @@ string? detail = null, float numeric = 0f)
         Tripped,
         SurgeApplied,
         GenerationChanged,
+        BatteryBankInstalled,
+        LoadRoomRegistered,
+        GeneratorMaintained,
+        GeneratorWorn,
+        FuelStarved,
         TickSummary
     }
 
@@ -644,6 +1196,43 @@ string? detail = null, float numeric = 0f)
         public float BatteryEndWh;
         public float BrownoutHours;
         public bool IsBrownout;
+
+        // ---- Phase 2 (B5–B8) additive fields: allocation projection + edges.
+        // Not persisted; consumers read them via OnTickSummary only.
+
+        /// <summary>Generation actually available this tick (after any fuel
+        /// starvation adjustment), including external contributions.</summary>
+        public float GenerationWatts;
+
+        /// <summary>Intent draw of all eligible rooms (same number the legacy
+        /// aggregate math uses).</summary>
+        public float RequestedDrawWatts;
+
+        /// <summary>Watts of room load served under deterministic priority
+        /// allocation (generation + sustainable battery discharge).</summary>
+        public float ServedWatts;
+
+        /// <summary>RequestedDrawWatts − ServedWatts; the shed load.</summary>
+        public float UnservedWatts;
+
+        /// <summary>True when at least one Critical-tier room is unserved —
+        /// the explicit life-support emergency state, distinct from an ordinary
+        /// brownout where only lower-priority loads shed.</summary>
+        public bool HasCriticalDeficit;
+
+        /// <summary>Edge: brownout began this tick (false on a restored
+        /// campaign that was already in brownout — transitions never replay).</summary>
+        public bool BrownoutBegan;
+
+        /// <summary>Edge: brownout ended this tick.</summary>
+        public bool BrownoutEnded;
+
+        /// <summary>Room IDs served this tick, in deterministic allocation order
+        /// (priority tier descending, RoomId ordinal ascending).</summary>
+        public List<string> ServedRoomIds = new List<string>();
+
+        /// <summary>Room IDs shed this tick, in the same deterministic order.</summary>
+        public List<string> ShedRoomIds = new List<string>();
     }
 
     [Serializable]

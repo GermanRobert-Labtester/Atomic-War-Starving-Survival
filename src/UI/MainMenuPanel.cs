@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.UI;
@@ -111,7 +112,7 @@ namespace AtomicWar.GodotApp
 
             _lblSubtitle = new Label
             {
-                Text = "ATOMIC WAR // STARVING SURVIVAL",
+                Text = "HOLDFAST COMMAND",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             _lblSubtitle.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH3);
@@ -123,7 +124,7 @@ namespace AtomicWar.GodotApp
             // ── Tagline ──
             var tagline = new Label
             {
-                Text = "The nuclear exchange is concluded. Atmospheric fallout is descending.\nManage radiation, rations, air filtration, and human survival.",
+                Text = "Fallout is still coming down.\nKeep the filters running, the water clean, and the people alive.",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
@@ -150,29 +151,29 @@ namespace AtomicWar.GodotApp
             _btnContinue.Disabled = true;
             vbox.AddChild(_btnContinue);
 
-            _btnNewGame = AshfallUiHelpers.MakeButton("COMMENCE NEW GAME", () => OnNewGame?.Invoke());
+            _btnNewGame = AshfallUiHelpers.MakeButton("NEW EXPEDITION", () => OnNewGame?.Invoke());
             _btnNewGame.CustomMinimumSize = new Vector2(320, 46);
             _btnNewGame.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH3);
             vbox.AddChild(_btnNewGame);
 
             var btnCohortSetup = AshfallUiHelpers.MakeButton(
-                "OPTIONAL: CHOOSE STARTING COHORT",
+                "STARTING COHORT",
                 () => OnCohortSetup?.Invoke());
             btnCohortSetup.CustomMinimumSize = new Vector2(320, 36);
             btnCohortSetup.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
             vbox.AddChild(btnCohortSetup);
 
-            _btnSettings = AshfallUiHelpers.MakeButton("SETTINGS & CONFIGURATION", () => OnSettings?.Invoke());
+            _btnSettings = AshfallUiHelpers.MakeButton("SETTINGS", () => OnSettings?.Invoke());
             _btnSettings.CustomMinimumSize = new Vector2(320, 40);
             _btnSettings.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
             vbox.AddChild(_btnSettings);
 
-            _btnCodex = AshfallUiHelpers.MakeButton("ARCHIVE & CODEX RECORDS", () => OnCodex?.Invoke());
+            _btnCodex = AshfallUiHelpers.MakeButton("ARCHIVE", () => OnCodex?.Invoke());
             _btnCodex.CustomMinimumSize = new Vector2(320, 40);
             _btnCodex.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
             vbox.AddChild(_btnCodex);
 
-            _btnQuit = AshfallUiHelpers.MakeButton("QUIT TO SYSTEM", () => OnQuit?.Invoke());
+            _btnQuit = AshfallUiHelpers.MakeButton("QUIT", () => OnQuit?.Invoke());
             _btnQuit.CustomMinimumSize = new Vector2(320, 40);
             _btnQuit.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
             vbox.AddChild(_btnQuit);
@@ -182,7 +183,7 @@ namespace AtomicWar.GodotApp
 
             _lblVersion = new Label
             {
-                Text = "ASHFALL v1.0.0 // GODOT 4.7+ .NET ENGINE // HOST REVISION ACTIVE",
+                Text = "ASHFALL",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             _lblVersion.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);

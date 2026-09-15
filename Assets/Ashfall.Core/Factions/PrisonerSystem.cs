@@ -153,6 +153,21 @@ namespace Ashfall.Core.Factions
             _tactics[tactic.tactic_id] = tactic;
         }
 
+        /// <summary>Stable first registered tactic id for UI default actions.</summary>
+        public string? FirstTacticId
+        {
+            get
+            {
+                string? first = null;
+                foreach (var id in _tactics.Keys)
+                {
+                    if (first == null || string.CompareOrdinal(id, first) < 0)
+                        first = id;
+                }
+                return first;
+            }
+        }
+
         public bool TakePrisoner(string captiveId, string sourceFactionId, int currentDay)
         {
             int activeCaptives = _state.captives.Count(c => c.status == CaptiveStatus.Detained || c.status == CaptiveStatus.Injured);
@@ -369,12 +384,19 @@ namespace Ashfall.Core.Factions
             return true;
         }
 
-        public PrisonerState CaptureState() => _state;
+        public PrisonerState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<PrisonerState>(json) ?? new PrisonerState();
+        }
 
         public void RestoreState(PrisonerState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<PrisonerState>(json) ?? new PrisonerState();
         }
     }
 }

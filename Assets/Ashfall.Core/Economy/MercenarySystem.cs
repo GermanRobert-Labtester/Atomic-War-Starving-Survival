@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -337,10 +338,19 @@ namespace Ashfall.Core.Economy
             return ActionResult.Success("mercenary.bounty_claimed");
         }
 
+        public MercenaryState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<MercenaryState>(json) ?? new MercenaryState();
+        }
+
         public void RestoreState(MercenaryState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<MercenaryState>(json) ?? new MercenaryState();
             _contractCounter = _state.contracts.Count;
         }
     }

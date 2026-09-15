@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -348,10 +349,19 @@ namespace Ashfall.Core.World
             return true;
         }
 
+        public FalloutSystemState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<FalloutSystemState>(json) ?? new FalloutSystemState();
+        }
+
         public void RestoreState(FalloutSystemState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<FalloutSystemState>(json) ?? new FalloutSystemState();
             _cloudCounter = _state.clouds.Count;
         }
     }

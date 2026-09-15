@@ -42,6 +42,19 @@ namespace Ashfall.Core.Economy
         public int stay_duration_days { get; set; } = 3;
     }
 
+    /// <summary>
+    /// Plan 167: timed supply disruption against a faction's in-transit caravans.
+    /// </summary>
+    [Serializable]
+    public sealed class CaravanSupplyDisruptionState
+    {
+        public string source_id { get; set; } = string.Empty;
+        public string faction_id { get; set; } = string.Empty;
+        public float magnitude { get; set; }
+        public int start_day { get; set; }
+        public int end_day { get; set; }
+    }
+
     [Serializable]
     public sealed class CaravanTradeNetworkSave
     {
@@ -51,6 +64,7 @@ namespace Ashfall.Core.Economy
         public List<CaravanManifestState> caravans { get; set; } = new List<CaravanManifestState>();
         public Dictionary<string, int> faction_profitable_trades { get; set; } = new Dictionary<string, int>(StringComparer.Ordinal);
         public List<string> favored_factions { get; set; } = new List<string>();
+        public List<CaravanSupplyDisruptionState> supply_disruptions { get; set; } = new List<CaravanSupplyDisruptionState>();
     }
 
     public sealed class BarterTransactionResult
@@ -116,6 +130,58 @@ namespace Ashfall.Core.Economy
 
         public bool HasFavoredStatus(string factionId) =>
             !string.IsNullOrEmpty(factionId) && _state.favored_factions.Contains(factionId);
+
+        /// <summary>
+        /// Plan 167: apply a timed supply disruption for a faction. Idempotent
+        /// on <paramref name="sourceId"/>. Elevates hazard risk for that
+        /// faction's in-transit manifests while active.
+        /// </summary>
+        public bool TryApplySupplyDisruption(
+            string factionId,
+            float magnitude,
+            int startDay,
+            int endDay,
+            string sourceId)
+        {
+            if (string.IsNullOrWhiteSpace(factionId) || string.IsNullOrWhiteSpace(sourceId))
+                return false;
+            if (endDay <= startDay) return false;
+            magnitude = Math.Clamp(magnitude, 0.05f, 0.75f);
+
+            if (_state.supply_disruptions == null)
+                _state.supply_disruptions = new List<CaravanSupplyDisruptionState>();
+            for (int i = 0; i < _state.supply_disruptions.Count; i++)
+            {
+                if (string.Equals(_state.supply_disruptions[i].source_id, sourceId, StringComparison.Ordinal))
+                    return false;
+            }
+
+            _state.supply_disruptions.Add(new CaravanSupplyDisruptionState
+            {
+                source_id = sourceId,
+                faction_id = factionId,
+                magnitude = magnitude,
+                start_day = startDay,
+                end_day = endDay
+            });
+            return true;
+        }
+
+        public float GetActiveSupplyDisruptionMagnitude(string factionId, int day)
+        {
+            if (string.IsNullOrWhiteSpace(factionId) || _state.supply_disruptions == null)
+                return 0f;
+            float max = 0f;
+            for (int i = 0; i < _state.supply_disruptions.Count; i++)
+            {
+                var d = _state.supply_disruptions[i];
+                if (d == null) continue;
+                if (day < d.start_day || day >= d.end_day) continue;
+                if (!string.Equals(d.faction_id, factionId, StringComparison.Ordinal)) continue;
+                if (d.magnitude > max) max = d.magnitude;
+            }
+            return max;
+        }
 
         public int GetProfitableTradeCount(string factionId) =>
             _state.faction_profitable_trades.TryGetValue(factionId, out int count) ? count : 0;
@@ -390,6 +456,9 @@ namespace Ashfall.Core.Economy
             }
 
             float rawRisk = route.base_risk_permille * route.weather_risk_multiplier * route.bandit_risk_multiplier;
+            float disruption = GetActiveSupplyDisruptionMagnitude(c.faction_id, _state.last_tick_day);
+            if (disruption > 0f)
+                rawRisk *= 1f + disruption;
             float netRisk = Math.Max(10f, rawRisk - (c.escort_guard_strength * 15f));
             double roll = _rng.NextDouble() * 1000.0;
 
@@ -477,8 +546,24 @@ namespace Ashfall.Core.Economy
                 schema_version = 1,
                 last_tick_day = _state.last_tick_day,
                 faction_profitable_trades = new Dictionary<string, int>(_state.faction_profitable_trades, StringComparer.Ordinal),
-                favored_factions = new List<string>(_state.favored_factions)
+                favored_factions = new List<string>(_state.favored_factions),
+                supply_disruptions = new List<CaravanSupplyDisruptionState>()
             };
+            if (_state.supply_disruptions != null)
+            {
+                foreach (var d in _state.supply_disruptions)
+                {
+                    if (d == null) continue;
+                    save.supply_disruptions.Add(new CaravanSupplyDisruptionState
+                    {
+                        source_id = d.source_id,
+                        faction_id = d.faction_id,
+                        magnitude = d.magnitude,
+                        start_day = d.start_day,
+                        end_day = d.end_day
+                    });
+                }
+            }
 
             foreach (var c in _state.caravans)
             {
@@ -511,6 +596,7 @@ namespace Ashfall.Core.Economy
             _state.faction_profitable_trades = new Dictionary<string, int>(save.faction_profitable_trades ?? new(), StringComparer.Ordinal);
             _state.favored_factions = new List<string>(save.favored_factions ?? new());
             _state.caravans.Clear();
+            _state.supply_disruptions = new List<CaravanSupplyDisruptionState>();
 
             if (save.caravans != null)
             {
@@ -532,6 +618,22 @@ namespace Ashfall.Core.Economy
                         hazard_outcome = c.hazard_outcome,
                         stay_duration_days = c.stay_duration_days,
                         stocks = new Dictionary<string, int>(c.stocks ?? new(), StringComparer.Ordinal)
+                    });
+                }
+            }
+
+            if (save.supply_disruptions != null)
+            {
+                foreach (var d in save.supply_disruptions)
+                {
+                    if (d == null || string.IsNullOrWhiteSpace(d.source_id)) continue;
+                    _state.supply_disruptions.Add(new CaravanSupplyDisruptionState
+                    {
+                        source_id = d.source_id,
+                        faction_id = d.faction_id,
+                        magnitude = d.magnitude,
+                        start_day = d.start_day,
+                        end_day = d.end_day
                     });
                 }
             }

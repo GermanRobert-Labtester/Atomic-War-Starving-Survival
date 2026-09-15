@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -155,6 +156,15 @@ namespace AtomicWar.GodotApp
             UnlockRoomHistories(catalog,
                 catalog?.GetUnlockableVignettes(canonical,
                     ShelterRoomIdentityCatalog.RoomHistoryTrigger.RoomInspected));
+
+            // Plans 150/151/153 — real room inspection unlocks producer-bound
+            // narrative records (not panel-open dumps).
+            SetupJournal();
+            DiscoverPersonalLetterRecords(canonical);
+            DiscoverAbyssalAnomalyRecords(canonical);
+            DiscoverFringeCultRecords(canonical);
+            DiscoverPaperPrintingRecords(canonical);
+            DiscoverBoneHornRecords(canonical);
         }
 
         /// <summary>
@@ -345,6 +355,33 @@ namespace AtomicWar.GodotApp
             wtSys.RestoreState(wtState);
             _waterTreatment = new WaterTreatmentHostSession(wtSys, _inventory);
             _waterTreatment.OnTreatmentStarted += () => ObserveSigil("water.treatment_started");
+            // B5–B8 expansion (§9.12): unsafe-water exposure → the canonical
+            // disease sweep. WaterborneExposureRules owns the dose→disease
+            // mapping (Core-pure); DiseaseSystem owns the outcome roll; the
+            // roster only supplies the exposed population.
+            _waterTreatment.PathogenExposureSink = dose =>
+            {
+                if (_disease?.Engine == null
+                    || !Ashfall.Core.WaterborneExposureRules.ShouldRunExposureSweep(dose))
+                    return;
+                var modifier = Ashfall.Core.WaterborneExposureRules.ProbabilityModifierFor(dose);
+                foreach (var diseaseId in Ashfall.Core.WaterborneExposureRules.DiseasesFor(dose))
+                {
+                    foreach (var entry in _survivors?.Roster.Roster
+                             ?? new List<Ashfall.Core.Survivors.SurvivorRosterEntry>())
+                    {
+                        if (entry == null || !entry.isAlive) continue;
+                        _disease.Engine.TryExpose(new Ashfall.Core.Disease.DiseaseExposureContext
+                        {
+                            SurvivorId = entry.survivorId,
+                            DiseaseId = diseaseId,
+                            SourceId = Ashfall.Core.WaterborneExposureRules.SourceId,
+                            Day = _core?.Clock.Day ?? _simDay,
+                            ProbabilityModifier = modifier
+                        });
+                    }
+                }
+            };
             if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
                 RemoveChild(_waterTreatmentPanel);
             _waterTreatmentPanel = new WaterTreatmentPanel();
@@ -523,6 +560,8 @@ namespace AtomicWar.GodotApp
             // the economy session may not be set up yet when it is bound.
             SetupEconomy();
             var network = new WaystationNetworkSystem();
+            if (wsState.network != null)
+                network.RestoreState(wsState.network);
             _waystation.AttachNetwork(
                 network,
                 _economy.Catalog,
@@ -537,8 +576,11 @@ namespace AtomicWar.GodotApp
 
         private void SaveWaystation()
         {
-            if (_waystation != null)
-                CaptureSection("waystation", WaystationSaveStore.TryCapturePersisted(_waystation.System.CaptureState()));
+            if (_waystation == null) return;
+            var state = _waystation.System.CaptureState();
+            if (_waystation.Network != null)
+                state.network = _waystation.Network.CaptureState();
+            CaptureSection("waystation", WaystationSaveStore.TryCapturePersisted(state));
         }
 
         private bool _shelterFireDirty;

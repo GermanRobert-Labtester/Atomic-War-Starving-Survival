@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -52,6 +53,15 @@ namespace AtomicWar.GodotApp
             // and their crews), not the legacy template.
             _muster.IronRaiders.OnRaidExecuted += OnIronRaidersRaidExecuted;
 
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            _muster.Escalate(day);
+
+            // Core campaign composition is also used by headless validation.
+            // Keep the gameplay session and day state available there without
+            // requiring the presentation right column to exist.
+            if (_rightColumn == null)
+                return;
+
             if (_currentsRoster == null)
             {
                 _currentsRoster = new CurrentsRosterWidget();
@@ -98,8 +108,6 @@ namespace AtomicWar.GodotApp
                 AddChild(_approachModal);
             }
 
-            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
-            _muster.Escalate(day);
             GD.Print("[Ashfall Godot] Muster ready. Day " + day +
                      (_muster.Engine.MusterTriggered ? " — THE MUSTER IS OPEN." : "."));
         }

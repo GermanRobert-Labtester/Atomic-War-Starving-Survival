@@ -106,11 +106,20 @@ namespace AtomicWar.GodotApp
             var weather = _world?.Weather;
             bool lightsPowered = _powerGrid?.System != null && _powerGrid.System.IsRoomPowered("room_greenhouse");
             string season = weather?.GetSeasonForDay(day)?.id ?? "any";
+
+            // B5–B8 Phase 4 (Plan 64): winter light pressure via the Core
+            // pure helper (deterministic, testable). Microclimate compensation
+            // queries the Phase 1 capability contract live — never cached.
+            int lightingPermille = AgricultureSystem.WinterAdjustedLightPermille(
+                lightsPowered ? 1000 : 0, season,
+                _sharedResearch?.HasCapability("knowledge_greenhouse_microclimate") ?? false,
+                lightsPowered);
+
             return new AgricultureEnvironmentSnapshot
             {
                 TemperaturePenaltyC = weather?.GetTemperaturePenaltyCelsius() ?? 0f,
                 OutdoorRadModifier = weather?.OutdoorRadModifier ?? 100f,
-                LightingAvailabilityPermille = lightsPowered ? 1000f : 0f,
+                LightingAvailabilityPermille = lightingPermille,
                 AshContaminationRate = weather != null && weather.Current == WeatherKind.FalloutStorm ? 0.08f : 0.04f,
                 SeasonWindowId = season
             };
@@ -367,12 +376,18 @@ namespace AtomicWar.GodotApp
             // Plan 71: automated emplacements additionally draw through the
             // room_armory_munitions circuit — while it is shed or tripped the
             // turrets freeze even if the grid as a whole is healthy.
+            // B5–B8 Phase 7: allocation-aware served state (was the global-
+            // outage IsRoomPowered read) — during a brownout the armory
+            // circuit stays live while generation covers it, and sheds by
+            // priority otherwise. Same migration the sump pump received.
             return _defense.System.ResolvePreCombatRaid(
                 day, raiderStrength, isNight,
                 _perimeterDefense,
-                id => (_powerGrid?.System == null || !_powerGrid.System.IsBrownout)
-                    && (_powerGrid?.System?.IsRoomPowered("room_armory_munitions") ?? true),
-                targetingRng, captureRng);
+                id => (_powerGrid?.System?.IsRoomServed("room_armory_munitions") ?? false),
+                targetingRng, captureRng,
+                // Plan 174 — guard animals improve night detection (§5.10):
+                // the authored guard rating normalized to a 0..1 fraction.
+                _companions != null ? Math.Clamp(_companions.GetGuardModifierTotal() / 100f, 0f, 1f) : 0f);
         }
 
         private void HandleDefenseAction(string action, string param)
@@ -457,6 +472,19 @@ namespace AtomicWar.GodotApp
                         null!, _simDay);
                     break;
                 }
+                case "BUILD": // B5–B8 Phase 7 (Plan 67 §10.5): emplacement construction
+                {
+                    var def = _perimeterDefense!.FindDefinition(arg);
+                    if (def == null) { feedback = "Unknown emplacement."; break; }
+                    // Live capability query — research is permission, never a
+                    // built emplacement (§15.3). Basic fieldworks pass freely.
+                    bool capability = string.IsNullOrEmpty(def.required_knowledge)
+                        || (_sharedResearch?.HasCapability(def.required_knowledge) ?? false);
+                    var construct = _perimeterDefense!.ConstructEmplacement(def.defense_id, capability);
+                    ok = construct.IsSuccess;
+                    if (!ok) feedback = construct.MessageKey;
+                    break;
+                }
             }
 
             if (!ok && feedback != null)
@@ -500,9 +528,19 @@ namespace AtomicWar.GodotApp
             };
 
             system.OnBreakdownArcStarted += (survivorId, arcId) =>
+            {
+                // A first canonical breakdown is the existing trauma authority's
+                // producer for the scarred-state narrative gate. The flag is
+                // monotonic and provenance-backed; EchoSystem only reads it.
+                _consequenceLedger.Set(
+                    "scarred_state",
+                    Ashfall.Core.Survivors.PsychologicalArcSystem.SystemId,
+                    $"breakdown:{survivorId}:{arcId}",
+                    _simDay);
                 _journal?.TryAddRawEntry($"arc_started_{survivorId}",
                     $"{survivorId} is not holding together — {arcId.Replace("arc_", "").Replace('_', ' ')} taking hold.",
                     null!, _simDay);
+            };
             system.OnBreakdownEscalated += (survivorId, arcId, from, to) =>
                 _journal?.TryAddRawEntry($"arc_stage_{survivorId}_{to}",
                     $"{survivorId}'s crisis deepened ({from} → {to}).",
@@ -683,6 +721,12 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry($"tamed_{a.animal_id}",
                     $"A {a.species_id.Replace("species_", "").Replace('_', ' ')} was tamed and moved into the pens.",
                     null!, _simDay);
+            // Plan 176 — anomaly-driven avoidance migrations journal through the
+            // ecology system's own typed event.
+            system.OnHazardAvoidanceMigration += (species, fromSector, toSector) =>
+                _journal?.TryAddRawEntry($"wildlife_avoid_{species}_{fromSector}",
+                    $"{species.Replace("species_", "").Replace('_', ' ')} packs are leaving {fromSector} — something in that sector is wrong.",
+                    null!, _simDay);
         }
 
         private void SaveWildlifeEcosystem()
@@ -712,7 +756,10 @@ namespace AtomicWar.GodotApp
                 ? _campaignDay.Rng.Fork(CampaignStreamIds.WildlifeMigration, day, 0) : new SeededRng(1651 + day);
             var apexRng = _campaignDay != null
                 ? _campaignDay.Rng.Fork(CampaignStreamIds.WildlifeApex, day, 0) : new SeededRng(1652 + day);
-            _wildlifeEcosystem.System.TickDay(day, world.Wildlife, rad, season, popRng, migRng, apexRng);
+            // Plan 176 — anomaly hazard modifiers feed wildlife avoidance through
+            // the migration authority; null keeps legacy behavior unchanged.
+            var hazardModifiers = BuildSectorHazardModifiers();
+            _wildlifeEcosystem.System.TickDay(day, world.Wildlife, rad, season, popRng, migRng, apexRng, hazardModifiers);
             _bestiaryPanel?.RefreshView();
         }
 
@@ -753,6 +800,14 @@ namespace AtomicWar.GodotApp
                         parts[0], parts[1], _simDay, parts[2], world.Wildlife, tamingRng);
                     if (animal == null)
                         _wildlifeEcosystem.MarkDirty($"Could not tame a {parts[0]} here.");
+                    else
+                    {
+                        // Plan 174 — the taming record becomes a persistent
+                        // companion under the companion authority (identity =
+                        // the wildlife animal_id, never duplicated).
+                        SetupCompanionAnimals();
+                        _companions?.RegisterCompanion(animal.animal_id, animal.species_id, animal.tamed_day, null);
+                    }
                     break;
                 }
                 case "OBSERVE": // param speciesId — records a sighting from the field

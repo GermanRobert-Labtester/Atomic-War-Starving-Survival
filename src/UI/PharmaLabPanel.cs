@@ -69,6 +69,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            Visible = false;
             SetAnchorsPreset(LayoutPreset.FullRect);
 
             var root = new PanelContainer();

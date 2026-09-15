@@ -33,6 +33,13 @@ namespace Ashfall.Core.Defense
         public int false_alarm_rate_bp { get; set; }
         /// <summary>True for triggered-alert devices: spends on trigger and needs reset.</summary>
         public bool alert_device { get; set; }
+
+        // ── B5–B8 Phase 7 (Plan 67 §10.5) additions ──
+        /// <summary>Research knowledge id gating construction (empty = basic
+        /// fieldworks, no gate). Research is permission: the host queries the
+        /// live capability and passes it to <c>ConstructEmplacement</c> — an
+        /// unlock never grants the built emplacement (§15.3).</summary>
+        public string required_knowledge { get; set; } = string.Empty;
     }
 
     /// <summary>Canonical perimeter sector ids (Plan 203 §6.4 — no second world map).</summary>
@@ -87,6 +94,20 @@ namespace Ashfall.Core.Defense
         public float detection_initiative_bonus { get; set; }
         public List<string> protected_sectors { get; set; } = new List<string>();
         public List<string> countered_emplacement_ids { get; set; } = new List<string>();
+
+        // ── B5–B8 expansion (§10.11 formal snapshot) — typed readiness counts ──
+        /// <summary>Emplacements intact and answering (the raid loop's subject count).</summary>
+        public int emplacements_ready { get; set; }
+        /// <summary>Turrets currently armed with ammo (auto-reloading ammo semantics live in LoadAmmo).</summary>
+        public int turrets_ready { get; set; }
+        /// <summary>Emplacements destroyed or disabled in the field — the repair authority owns recovery.</summary>
+        public int emplacements_disabled { get; set; }
+        /// <summary>Turrets frozen by a jam (barrel-wear consequence; field-strip resets).</summary>
+        public int turrets_jammed { get; set; }
+        /// <summary>Sector alarm states by id (armed / spent / disarmed) — the early-warning readiness surface.</summary>
+        public List<string> alarms_spent { get; set; } = new List<string>();
+        /// <summary>Sectors with no intact emplacement — the honest breach-surface read.</summary>
+        public List<string> unguarded_sectors { get; set; } = new List<string>();
     }
 
     [Serializable]

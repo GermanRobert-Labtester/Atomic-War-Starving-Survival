@@ -29,8 +29,56 @@ namespace AtomicWar.GodotApp.UI
 
         private string _currentTab = "active";
         private MicrofluidicDiagnosticHostSession? _host;
+        private string _selectedId = string.Empty;
+        private VBoxContainer? _actionsBox;
+        private string _feedbackText = string.Empty;
+        private bool _feedbackIsFailure;
+        private readonly List<string> _patientCandidates = new List<string>();
+        private string _selectedPatientId = string.Empty;
 
         public bool IsBound => _host != null;
+        public string LastFeedback { get; private set; } = string.Empty;
+        public string SelectedPatientId => _selectedPatientId;
+
+        /// <summary>
+        /// Plans 146–149 MED: living survivor ids for the assay patient picker.
+        /// Defaults selection to the first living candidate when empty/stale.
+        /// </summary>
+        public void SetPatientCandidates(IReadOnlyList<string>? patients)
+        {
+            _patientCandidates.Clear();
+            if (patients != null)
+            {
+                for (int i = 0; i < patients.Count; i++)
+                {
+                    string id = patients[i];
+                    if (!string.IsNullOrWhiteSpace(id) && !_patientCandidates.Contains(id))
+                        _patientCandidates.Add(id);
+                }
+            }
+            if (_patientCandidates.Count == 0)
+                _patientCandidates.Add("shelter_operator");
+
+            if (string.IsNullOrEmpty(_selectedPatientId) || !_patientCandidates.Contains(_selectedPatientId))
+                _selectedPatientId = _patientCandidates[0];
+        }
+
+        public void SelectPatient(string patientId)
+        {
+            if (string.IsNullOrWhiteSpace(patientId)) return;
+            if (!_patientCandidates.Contains(patientId))
+                _patientCandidates.Add(patientId);
+            _selectedPatientId = patientId;
+            RefreshDetailView();
+        }
+
+        public void ShowFeedback(string message, bool isFailure)
+        {
+            _feedbackText = message ?? string.Empty;
+            _feedbackIsFailure = isFailure;
+            LastFeedback = _feedbackText;
+            RefreshView();
+        }
 
         public void Bind(MicrofluidicDiagnosticHostSession session)
         {
@@ -90,7 +138,12 @@ namespace AtomicWar.GodotApp.UI
             _grid = new AshfallDataGrid(cols, showHeader: true, minWidth: 620, minHeight: 380);
             _grid.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _grid.SizeFlagsVertical = SizeFlags.ExpandFill;
-            _grid.OnRowSelected += idx => RefreshDetailView();
+            _grid.OnRowSelected += idx =>
+            {
+                if (idx >= 0 && idx < _grid.Rows.Count && _grid.Rows[idx].Cells.Count > 0)
+                    _selectedId = _grid.Rows[idx].Cells[0].Text ?? string.Empty;
+                RefreshDetailView();
+            };
             contentSplit.AddChild(_grid);
 
             var detailPanel = new PanelContainer();
@@ -123,6 +176,10 @@ namespace AtomicWar.GodotApp.UI
             _detailTitle.AddThemeFontSizeOverride("font_size", 14);
             _detailTitle.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             _detailBox.AddChild(_detailTitle);
+
+            _actionsBox = new VBoxContainer();
+            _actionsBox.AddThemeConstantOverride("separation", 8);
+            _detailBox.AddChild(_actionsBox);
 
             contentSplit.AddChild(detailPanel);
             _shell.SetContent(contentSplit);
@@ -221,6 +278,18 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_detailTitle == null || _host == null) return;
             var state = _host.System.StateDto;
+            ClearActions();
+
+            if (_patientCandidates.Count == 0)
+                SetPatientCandidates(null);
+            if (string.IsNullOrEmpty(_selectedPatientId))
+                _selectedPatientId = _patientCandidates[0];
+
+            string assayId = string.IsNullOrEmpty(_selectedId) || !_selectedId.StartsWith("microfluidic_assay_", StringComparison.Ordinal)
+                ? "microfluidic_assay_cholera"
+                : _selectedId;
+            // Host contract: start_run param is assayId|patientId.
+            string startRunParam = $"{assayId}|{_selectedPatientId}";
 
             if (_currentTab == "active" && state.ActiveRuns.Count > 0)
             {
@@ -233,14 +302,36 @@ namespace AtomicWar.GodotApp.UI
                                     $"Status: {run.Status}\n" +
                                     $"Last Event: {_host.LastEvent}";
             }
-            else if (_currentTab == "fab" && state.ActiveManufacturingJob != null)
+            else if (_currentTab == "catalog")
             {
-                var job = state.ActiveManufacturingJob;
-                _detailTitle.Text = $"Casting Job: {job.JobId}\n" +
-                                    $"Target Assay: {job.AssayId}\n" +
-                                    $"Fab Progress: {job.ProgressMinutes:F0} / {job.RequiredMinutes:F0} min\n" +
-                                    $"Mold Integrity: {state.MasterMoldCondition01:P0}\n" +
+                _detailTitle.Text = $"Assay panel: {assayId}\n" +
+                                    $"Patient: {_selectedPatientId}\n" +
+                                    $"Start a clinical run (consumes one cartridge) or cast a new chip.\n" +
                                     $"Last Event: {_host.LastEvent}";
+                AddPatientPickerButtons();
+                AddActionButton("START ASSAY RUN", "start_run", startRunParam);
+                AddActionButton("CAST CARTRIDGE", "start_manufacture", assayId);
+            }
+            else if (_currentTab == "fab")
+            {
+                if (state.ActiveManufacturingJob != null)
+                {
+                    var job = state.ActiveManufacturingJob;
+                    _detailTitle.Text = $"Casting Job: {job.JobId}\n" +
+                                        $"Target Assay: {job.AssayId}\n" +
+                                        $"Fab Progress: {job.ProgressMinutes:F0} / {job.RequiredMinutes:F0} min\n" +
+                                        $"Mold Integrity: {state.MasterMoldCondition01:P0}\n" +
+                                        $"Last Event: {_host.LastEvent}";
+                }
+                else
+                {
+                    _detailTitle.Text = $"Cartridge fab idle.\n" +
+                                        $"Mold Integrity: {state.MasterMoldCondition01:P0}\n" +
+                                        $"Last Event: {_host.LastEvent}";
+                    AddActionButton("CAST CARTRIDGE", "start_manufacture", assayId);
+                }
+                AddActionButton("RECAST MASTER MOLD", "maintain", "recast_master_mold");
+                AddActionButton("RECALIBRATE OPTICS", "maintain", "recalibrate_optics");
             }
             else
             {
@@ -249,7 +340,60 @@ namespace AtomicWar.GodotApp.UI
                                     $"Machine Condition: {state.MachineCondition01:P0}\n" +
                                     $"Total Fabricated: {state.CartridgesManufactured}\n" +
                                     $"Total Clinical Records: {state.CompletedResults.Count}\n" +
+                                    $"Selected Patient: {_selectedPatientId}\n" +
                                     $"Last Event: {_host.LastEvent}";
+                if (_currentTab == "active")
+                {
+                    AddPatientPickerButtons();
+                    AddActionButton("START ASSAY RUN", "start_run", startRunParam);
+                }
+                AddActionButton("RECALIBRATE OPTICS", "maintain", "recalibrate_optics");
+            }
+
+            if (!string.IsNullOrEmpty(_feedbackText) && _actionsBox != null)
+            {
+                _actionsBox.AddChild(_feedbackIsFailure
+                    ? AshfallUiHelpers.MakeWarning(_feedbackText)
+                    : AshfallUiHelpers.MakeSuccess(_feedbackText));
+            }
+        }
+
+        private void ClearActions()
+        {
+            if (_actionsBox == null) return;
+            while (_actionsBox.GetChildCount() > 0)
+            {
+                var child = _actionsBox.GetChild(0);
+                _actionsBox.RemoveChild(child);
+                child.QueueFree();
+            }
+        }
+
+        private void AddActionButton(string label, string action, string param)
+        {
+            if (_actionsBox == null) return;
+            var btn = AshfallUiHelpers.MakeButton(label, () => OnActionRequested?.Invoke(action, param));
+            _actionsBox.AddChild(btn);
+        }
+
+        private void AddPatientPickerButtons()
+        {
+            if (_actionsBox == null) return;
+            int shown = 0;
+            for (int i = 0; i < _patientCandidates.Count && shown < 6; i++)
+            {
+                string patientId = _patientCandidates[i];
+                bool selected = string.Equals(patientId, _selectedPatientId, StringComparison.Ordinal);
+                string label = selected ? $"PATIENT ✓ {patientId}" : $"PATIENT {patientId}";
+                // Local select keeps UI responsive; host also accepts select_patient.
+                var captured = patientId;
+                var btn = AshfallUiHelpers.MakeButton(label, () =>
+                {
+                    SelectPatient(captured);
+                    OnActionRequested?.Invoke("select_patient", captured);
+                });
+                _actionsBox.AddChild(btn);
+                shown++;
             }
         }
     }

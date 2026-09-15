@@ -46,6 +46,7 @@ public partial class ChemicalReconPanel : Control
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("Chemical Reconnaissance // CBRN Survey", minWidth: 1100, minHeight: 720);

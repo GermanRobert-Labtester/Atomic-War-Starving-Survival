@@ -426,10 +426,19 @@ namespace Ashfall.Core.Narrative
             }
         }
 
+        public JusticeState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<JusticeState>(json) ?? new JusticeState();
+        }
+
         public void RestoreState(JusticeState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<JusticeState>(json) ?? new JusticeState();
         }
     }
 }

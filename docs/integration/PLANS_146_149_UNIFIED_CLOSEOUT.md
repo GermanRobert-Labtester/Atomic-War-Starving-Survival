@@ -72,9 +72,15 @@ RNG streams: `advanced_mfg_ebpvd_coating`, `medical_microfluidic_diagnostics`,
 `route_engineering_mine_flail`, `route_engineering_rail_grinding` (distinct
 StableHash-derived strings, snake_case per `CampaignRngSourceGateTests`).
 
-**Still open (out of scope here, tracked by the UI audit register):** the four
-panels declare `OnActionRequested` but emit nothing beyond OPEN — no normal
-player route to start jobs (UI-14 acceptance criteria apply).
+**Still open after A1–A13:** UI command reachability and route→travel consumers
+were deferred. **Sealed 2026-09-12** in the player-command pass
+(`docs/gaps/logs/PLANS_146_149_PLAYER_COMMAND_SEAL_LOG.md`): panels emit
+`start_*`/`maintain_*`, handlers call host Start*/PerformMaintenance,
+PanelRegistry OPEN ids registered, microfluidic results write
+DiagnosisKnowledgeStore, empty route sections bootstrap minefield/rail
+corridors, and expedition estimates/composer consume
+`GetHazardModifier`/`GetTravelModifier`. Remaining: live Start distanceTicks
+travel stretch, coated-part→PowerGrid, patient picker.
 
 ---
 

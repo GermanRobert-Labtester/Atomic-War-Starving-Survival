@@ -31,46 +31,70 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        public static IEnumerable<object[]> NamedFallbackCases()
-        {
-            yield return new object[] { "rabbit", 0.10f, "" };
-            yield return new object[] { "cotton_hare", 0.10f, "" };
-            yield return new object[] { "deer", 0.15f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-            yield return new object[] { "fox", 0.20f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-            yield return new object[] { "pheasant", 0.15f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-            yield return new object[] { "mirror_carp", 0.10f, "" };
-            yield return new object[] { "ash_pike", 0.12f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-            yield return new object[] { "muskrat", 0.20f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-            yield return new object[] { "hedgehog", 0.15f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-            yield return new object[] { "boar", 0.20f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId };
-        }
-
-        [Theory]
-        [MemberData(nameof(NamedFallbackCases))]
-        public void Task5_02_NamedFallbackPrey_FollowExactTier(string speciesId, float expectedRisk, string expectedDiseaseId)
+        // TEST-AGGREGATION: source_rows=10 aggregate_cases=1 saved_cases=9
+        [Fact]
+        public void Task5_02_NamedFallbackPrey_FollowExactTier()
         {
             var catalog = WildlifeTrappingCatalogTestFixture.LoadCatalog();
-            Assert.True(catalog.Prey.TryGetValue(speciesId, out var prey), $"Catalog must contain prey '{speciesId}'");
+            var failures = new List<string>();
+            foreach (var testCase in new[]
+            {
+                (SpeciesId: "rabbit", ExpectedRisk: 0.10f, ExpectedDiseaseId: ""),
+                (SpeciesId: "cotton_hare", ExpectedRisk: 0.10f, ExpectedDiseaseId: ""),
+                (SpeciesId: "deer", ExpectedRisk: 0.15f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (SpeciesId: "fox", ExpectedRisk: 0.20f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (SpeciesId: "pheasant", ExpectedRisk: 0.15f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (SpeciesId: "mirror_carp", ExpectedRisk: 0.10f, ExpectedDiseaseId: ""),
+                (SpeciesId: "ash_pike", ExpectedRisk: 0.12f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (SpeciesId: "muskrat", ExpectedRisk: 0.20f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (SpeciesId: "hedgehog", ExpectedRisk: 0.15f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (SpeciesId: "boar", ExpectedRisk: 0.20f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId)
+            })
+            {
+                if (!catalog.Prey.TryGetValue(testCase.SpeciesId, out var prey))
+                {
+                    failures.Add($"Catalog must contain prey '{testCase.SpeciesId}'");
+                    continue;
+                }
 
-            Assert.Equal(expectedRisk, prey.diseaseRisk, precision: 3);
-            Assert.True(string.IsNullOrEmpty(prey.diseaseId), $"Prey '{speciesId}' unexpectedly has explicit diseaseId: '{prey.diseaseId}'");
+                if (Math.Abs(prey.diseaseRisk - testCase.ExpectedRisk) > 0.0005f)
+                    failures.Add($"{testCase.SpeciesId}: expected risk {testCase.ExpectedRisk}, got {prey.diseaseRisk}");
+                if (!string.IsNullOrEmpty(prey.diseaseId))
+                    failures.Add($"{testCase.SpeciesId}: unexpected explicit diseaseId '{prey.diseaseId}'");
 
-            string resolved = PreyDefinition.ResolveDiseaseId(prey);
-            Assert.Equal(expectedDiseaseId, resolved);
+                string resolved = PreyDefinition.ResolveDiseaseId(prey);
+                if (resolved != testCase.ExpectedDiseaseId)
+                    failures.Add($"{testCase.SpeciesId}: expected '{testCase.ExpectedDiseaseId}', got '{resolved}'");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(0.00f, "")]
-        [InlineData(0.05f, "")]
-        [InlineData(0.10f, "")]
-        [InlineData(0.1001f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId)]
-        [InlineData(0.12f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId)]
-        [InlineData(0.15f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId)]
-        [InlineData(0.50f, WildlifeTrappingCatalogTestFixture.FallbackDiseaseId)]
-        public void Task5_03_ExactBoundary_InclusiveAtPointOne(float risk, string expectedDiseaseId)
+        [Fact]
+        public void Task5_03_ExactBoundary_RiskTable_IsInclusiveAtPointOne()
         {
-            string resolved = PreyDefinition.ResolveDiseaseId(risk, null);
-            Assert.Equal(expectedDiseaseId, resolved);
+            var failures = new List<string>();
+
+            foreach (var testCase in new[]
+            {
+                (Risk: 0.00f, ExpectedDiseaseId: ""),
+                (Risk: 0.05f, ExpectedDiseaseId: ""),
+                (Risk: 0.10f, ExpectedDiseaseId: ""),
+                (Risk: 0.1001f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (Risk: 0.12f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (Risk: 0.15f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+                (Risk: 0.50f, ExpectedDiseaseId: WildlifeTrappingCatalogTestFixture.FallbackDiseaseId),
+            })
+            {
+                string resolved = PreyDefinition.ResolveDiseaseId(testCase.Risk, null);
+                if (resolved != testCase.ExpectedDiseaseId)
+                {
+                    failures.Add(
+                        $"risk={testCase.Risk}, expected '{testCase.ExpectedDiseaseId}', got '{resolved}'");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

@@ -261,3 +261,8 @@ codex_alt_*.png
 # Local audio/tooling working cache — never commit
 .cache/
 _verify_*.csproj
+
+# Third-party agent/editor tooling dropped into the project dir (e.g.
+# addons/ziva_agent ships ~470MB of CEF/binaries incl. >100MB files that
+# GitHub rejects) — never commit; each machine installs its own tools.
+/addons/

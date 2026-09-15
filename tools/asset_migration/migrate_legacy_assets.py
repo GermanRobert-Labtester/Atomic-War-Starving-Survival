@@ -3,7 +3,7 @@
 Execute legacy asset migration for Ticket #124.
 Reads tools/asset_migration/legacy_asset_inventory.json and performs:
   - remove_legacy_copy: delete legacy asset + orphaned .import sidecar
-  - quarantine_legacy_copy: move legacy asset + .import sidecar to assets/quarantine/legacy_assets/
+  - quarantine_legacy_copy: move legacy asset + .import sidecar to the external Twin_ASHFall archive
   - copy_to_canonical: copy missing asset to canonical tree (none expected)
 """
 import json, shutil, os, sys
@@ -11,7 +11,12 @@ from pathlib import Path
 
 REPO = Path(".").resolve()
 INVENTORY = REPO / "tools" / "asset_migration" / "legacy_asset_inventory.json"
-QUARANTINE_ROOT = REPO / "assets" / "quarantine" / "legacy_assets"
+QUARANTINE_ROOT = Path(
+    os.environ.get(
+        "ASHFALL_QUARANTINE_ROOT",
+        str(Path.home() / "Twin_ASHFall" / "quarantine" / "assets" / "quarantine" / "legacy_assets"),
+    )
+)
 
 def migrate():
     with open(INVENTORY, encoding="utf-8") as f:

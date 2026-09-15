@@ -53,145 +53,48 @@ namespace AtomicWar.GodotApp.UI
 
         private void BuildInterface()
         {
-            var bg = new ColorRect { Color = AshfallUiHelpers.ToColor(DesignTheme.Ink) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var rootMargin = new MarginContainer();
-            rootMargin.SetAnchorsPreset(LayoutPreset.FullRect);
-            rootMargin.AddThemeConstantOverride("margin_left", 24);
-            rootMargin.AddThemeConstantOverride("margin_top", 24);
-            rootMargin.AddThemeConstantOverride("margin_right", 24);
-            rootMargin.AddThemeConstantOverride("margin_bottom", 24);
-            AddChild(rootMargin);
-
-            var mainVBox = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
-            mainVBox.AddThemeConstantOverride("separation", 16);
-            rootMargin.AddChild(mainVBox);
-
-            // Top Header Bar
-            var headerHBox = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            _headerTitleLabel = new Label
-            {
-                Text = "RADIO TELEMETRY // TROPOSPHERIC SCATTER RELAY [COMM-03]",
-                SizeFlagsHorizontal = SizeFlags.ExpandFill
-            };
-            _headerTitleLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-            headerHBox.AddChild(_headerTitleLabel);
-
-            _statusBadgeLabel = new Label
-            {
-                Text = "STATUS: TROPOSCATTER LOCKED - SECTOR 7 DISTANT BEACON (88.4%)"
-            };
-            _statusBadgeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-            headerHBox.AddChild(_statusBadgeLabel);
-
-            _closeButton = new Button { Text = "[X] CLOSE CONSOLE" };
-            _closeButton.Pressed += () =>
-            {
-                Visible = false;
-                OnClose?.Invoke();
-            };
-            headerHBox.AddChild(_closeButton);
-            mainVBox.AddChild(headerHBox);
-
-            // Three-Column High-Density Grid
-            var bodyHBox = new HBoxContainer
-            {
-                SizeFlagsHorizontal = SizeFlags.ExpandFill,
-                SizeFlagsVertical = SizeFlags.ExpandFill
-            };
-            bodyHBox.AddThemeConstantOverride("separation", 16);
-            mainVBox.AddChild(bodyHBox);
+            var chrome = ThreePanePanelScaffold.BuildChrome(
+                this,
+                "RADIO TELEMETRY // TROPOSPHERIC SCATTER RELAY [COMM-03]",
+                "STATUS: TROPOSCATTER LOCKED - SECTOR 7 DISTANT BEACON (88.4%)",
+                AshfallUiHelpers.ToColor(DesignTheme.Warm),
+                "[X] CLOSE CONSOLE",
+                "[COMM-03] 10kW Klystron tube energized. High-power troposcatter active.\n[COMM-03] Decrypted Morse teletype stream from Meridian Relay.",
+                () => OnClose?.Invoke());
+            _headerTitleLabel = chrome.Title;
+            _statusBadgeLabel = chrome.Status;
+            _closeButton = chrome.Close;
+            _logOutputLabel = chrome.Log;
+            var bodyHBox = chrome.Body;
 
             // Left Column (Telemetry)
-            var leftPanel = CreatePanelFrame("ATMOSPHERIC IONIZATION & FREQUENCIES");
+            var leftPanel = ThreePanePanelScaffold.CreatePanelFrame("ATMOSPHERIC IONIZATION & FREQUENCIES");
             bodyHBox.AddChild(leftPanel);
-            _telemetryContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _telemetryContainer.AddThemeConstantOverride("separation", 8);
-            leftPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_telemetryContainer);
-            _telemetryContainer.AddChild(CreateTelemetryRow("TROPOSPHERIC DUCTING INDEX", "1.42 [OPTIMAL PROPAGATION]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("IONOSPHERIC ALTITUDE", "85 KM REFLECTION LAYER", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("BAND 1 (MERIDIAN SIPHON)", "42.500 MHz [CARRIER LOCKED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("BAND 2 (RUST GUILD BEACON)", "104.200 MHz [STRONG CARRIER]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(CreateTelemetryRow("SIGNAL-TO-NOISE RATIO", "18.5 dB [CLEAR DECODE]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _telemetryContainer = ThreePanePanelScaffold.CreateColumn(leftPanel, 8);
+            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("TROPOSPHERIC DUCTING INDEX", "1.42 [OPTIMAL PROPAGATION]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("IONOSPHERIC ALTITUDE", "85 KM REFLECTION LAYER", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("BAND 1 (MERIDIAN SIPHON)", "42.500 MHz [CARRIER LOCKED]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("BAND 2 (RUST GUILD BEACON)", "104.200 MHz [STRONG CARRIER]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("SIGNAL-TO-NOISE RATIO", "18.5 dB [CLEAR DECODE]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
 
             // Center Column (Interactive Controls)
-            var centerPanel = CreatePanelFrame("PARABOLIC DISH & KLYSTRON AMP");
+            var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("PARABOLIC DISH & KLYSTRON AMP");
             bodyHBox.AddChild(centerPanel);
-            _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _buttonContainer.AddThemeConstantOverride("separation", 12);
-            centerPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_buttonContainer);
+            _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
             _buttonContainer.AddChild(new Button { Text = "[ALIGN PARABOLIC DISH AZIMUTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[ENGAGE 10KW KLYSTRON TRANSMITTER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[FILTER ATMOSPHERIC NOISE SPIKE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[RECORD ENCRYPTED DIEGETIC BROADCAST]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
-            var rightPanel = CreatePanelFrame("DECRYPTED TELETYPE & ACTIVE NODES");
+            var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("DECRYPTED TELETYPE & ACTIVE NODES");
             bodyHBox.AddChild(rightPanel);
-            _dataContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _dataContainer.AddThemeConstantOverride("separation", 8);
-            rightPanel.GetChild<VBoxContainer>(0).GetNode<MarginContainer>("Margin").AddChild(_dataContainer);
-            _dataContainer.AddChild(CreateTelemetryRow("TRANSMITTER ECHO-01", "OLD RADIO MAST (ONLINE)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _dataContainer.AddChild(CreateTelemetryRow("STATION K-9", "FOUNDRY LOOP (INTERMITTENT)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-            _dataContainer.AddChild(CreateTelemetryRow("LOADED CIPHER KEY", "KEY #04 IRON-7 [AUTHENTIC]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _dataContainer.AddChild(CreateTelemetryRow("DECRYPTED BUFFER", "WATER RATION REVISED -20%", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
+            _dataContainer = ThreePanePanelScaffold.CreateColumn(rightPanel, 8);
+            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("TRANSMITTER ECHO-01", "OLD RADIO MAST (ONLINE)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("STATION K-9", "FOUNDRY LOOP (INTERMITTENT)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("LOADED CIPHER KEY", "KEY #04 IRON-7 [AUTHENTIC]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("DECRYPTED BUFFER", "WATER RATION REVISED -20%", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
 
-            // Bottom Diagnostics Log
-            var logPanel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 100) };
-            var logMargin = new MarginContainer();
-            logMargin.AddThemeConstantOverride("margin_left", 12);
-            logMargin.AddThemeConstantOverride("margin_top", 8);
-            logMargin.AddThemeConstantOverride("margin_right", 12);
-            logMargin.AddThemeConstantOverride("margin_bottom", 8);
-            logPanel.AddChild(logMargin);
-
-            _logOutputLabel = new Label
-            {
-                Text = "[COMM-03] 10kW Klystron tube energized. High-power troposcatter active.\n[COMM-03] Decrypted Morse teletype stream from Meridian Relay.",
-                AutowrapMode = TextServer.AutowrapMode.WordSmart,
-                SizeFlagsHorizontal = SizeFlags.ExpandFill,
-                SizeFlagsVertical = SizeFlags.ExpandFill
-            };
-            _logOutputLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
-            logMargin.AddChild(_logOutputLabel);
-            mainVBox.AddChild(logPanel);
-        }
-
-        private static PanelContainer CreatePanelFrame(string headerText)
-        {
-            var panel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
-            var vbox = new VBoxContainer();
-            panel.AddChild(vbox);
-
-            var title = new Label
-            {
-                Text = headerText
-            };
-            title.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
-            vbox.AddChild(title);
-
-            var margin = new MarginContainer { Name = "Margin", SizeFlagsVertical = SizeFlags.ExpandFill };
-            margin.AddThemeConstantOverride("margin_left", 8);
-            margin.AddThemeConstantOverride("margin_top", 8);
-            margin.AddThemeConstantOverride("margin_right", 8);
-            margin.AddThemeConstantOverride("margin_bottom", 8);
-            vbox.AddChild(margin);
-
-            return panel;
-        }
-
-        private static HBoxContainer CreateTelemetryRow(string label, string value, Color valueColor)
-        {
-            var hbox = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            var lbl = new Label { Text = label, SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
-            var val = new Label { Text = value };
-            val.AddThemeColorOverride("font_color", valueColor);
-            hbox.AddChild(lbl);
-            hbox.AddChild(val);
-            return hbox;
         }
     }
 }

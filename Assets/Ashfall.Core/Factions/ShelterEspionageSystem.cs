@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Inventory;
@@ -317,11 +318,23 @@ namespace Ashfall.Core.Factions
             return true;
         }
 
-        public ShelterEspionageState CaptureState() => _state;
+        public ShelterEspionageState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<ShelterEspionageState>(json) ?? new ShelterEspionageState();
+        }
 
         public void RestoreState(ShelterEspionageState? state)
         {
-            _state = state ?? new ShelterEspionageState();
+            if (state == null)
+            {
+                _state = new ShelterEspionageState();
+                return;
+            }
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<ShelterEspionageState>(json) ?? new ShelterEspionageState();
         }
     }
 }

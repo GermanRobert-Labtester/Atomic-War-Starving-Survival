@@ -214,6 +214,14 @@ namespace AtomicWar.GodotApp.UI
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
 
             Visible = false;
+
+            // Placeholder hatch-approach backdrop (days 1–7, intact surface access).
+            // Scene-backed panel: insert behind the existing Backdrop ColorRect and
+            // soften that overlay so the art shows through.
+            var sceneBackdrop = GetNodeOrNull<ColorRect>("Backdrop");
+            if (sceneBackdrop != null)
+                sceneBackdrop.Color = new Color(0.03f, 0.04f, 0.05f, 0.74f);
+            BackdropArt.Apply(this, BackdropArt.SurfaceHatchApproach, 0f, insertBehind: true);
         }
 
         public void Open()

@@ -1,2290 +1,2385 @@
 {
-  "schema_version": 1,
-  "entries": [
-    {
-      "id": "quest_a_good_death"
-    },
-    {
-      "id": "quest_a_real_leader"
-    },
-    {
-      "id": "quest_a_voice_in_the_dark"
-    },
-    {
-      "id": "quest_acoustic_bait"
-    },
-    {
-      "id": "quest_ashen_communion"
-    },
-    {
-      "id": "quest_assassination_deserter"
-    },
-    {
-      "id": "quest_black_vein"
-    },
-    {
-      "id": "quest_breaking_chains"
-    },
-    {
-      "id": "quest_broken_chronometer"
-    },
-    {
-      "id": "quest_burnt_harvest"
-    },
-    {
-      "id": "quest_checkpoint_kilo_truth"
-    },
-    {
-      "id": "quest_child_soldier_rifle"
-    },
-    {
-      "id": "quest_cold_turkey"
-    },
-    {
-      "id": "quest_court_martial"
-    },
-    {
-      "id": "quest_crisis_of_faith"
-    },
-    {
-      "id": "quest_crossing_companion_mattis"
-    },
-    {
-      "id": "quest_crossing_first_weigh"
-    },
-    {
-      "id": "quest_crossing_scale_integrity"
-    },
-    {
-      "id": "quest_crossing_the_forfeit"
-    },
-    {
-      "id": "quest_crossing_the_marker"
-    },
-    {
-      "id": "quest_crossing_the_petition"
-    },
-    {
-      "id": "quest_crossing_the_standing"
-    },
-    {
-      "id": "quest_crossing_the_terms"
-    },
-    {
-      "id": "quest_crossing_the_vote_that_isnt"
-    },
-    {
-      "id": "quest_crossing_the_vouch"
-    },
-    {
-      "id": "quest_crossing_three_dry_pages"
-    },
-    {
-      "id": "quest_crossing_who_holds_the_ledger"
-    },
-    {
-      "id": "quest_cult_glow_communion"
-    },
-    {
-      "id": "quest_cult_purity"
-    },
-    {
-      "id": "quest_dead_air"
-    },
-    {
-      "id": "quest_deep_well"
-    },
-    {
-      "id": "quest_dropping_the_rifle",
-      "title": "Dropping the Rifle",
-      "synopsis": "The Child Soldier keeps the rifle the way soldiers keep things they shouldn't. A hand-me-down maxim: the rifle kept them alive, the rifle is the only thing that did. The bunker's quiet question is who, in those quiet hours, is going to carry that misread weight away.",
-      "factionTag": "",
-      "status": "active",
-      "narrativeHook": "apprenticeship_medic_or_smith"
-    },
-    {
-      "id": "quest_earning_keep"
-    },
-    {
-      "id": "quest_elena_triage"
-    },
-    {
-      "id": "quest_embracing_the_glow"
-    },
-    {
-      "id": "quest_first_blood",
-      "title": "First Blood at the Hatch",
-      "synopsis": "The Hardened Daughter eats with a piece of broken glass wrapped in cloth and watches the door. Someone will eventually have to sit beside her, in silence, until a sound outside is no longer terrifying. Then there is the day she does not flinch at it.",
-      "factionTag": "",
-      "status": "active",
-      "narrativeHook": "mentorship_veteran_pair"
-    },
-    {
-      "id": "quest_garrison_census"
-    },
-    {
-      "id": "quest_garrison_last_order"
-    },
-    {
-      "id": "quest_ghosts_of_day_1"
-    },
-    {
-      "id": "quest_glow_communion"
-    },
-    {
-      "id": "quest_grain_war"
-    },
-    {
-      "id": "quest_ground_zero"
-    },
-    {
-      "id": "quest_growing_up_fast",
-      "title": "Growing Up, Fast",
-      "synopsis": "The Naive Son draws animals on the wall and asks questions about birds. The adults answer in halves. The bunker has a list of skills and a calendar that says it is time to start teaching.",
-      "factionTag": "",
-      "status": "active",
-      "narrativeHook": "schooling_curriculum_choice"
-    },
-    {
-      "id": "quest_hell_is_other_people"
-    },
-    {
-      "id": "quest_holdfast_authentication"
-    },
-    {
-      "id": "quest_holdfast_the_clerk"
-    },
-    {
-      "id": "quest_holdfast_the_clerk_started"
-    },
-    {
-      "id": "quest_holdfast_the_drawer"
-    },
-    {
-      "id": "quest_holdfast_the_hatch"
-    },
-    {
-      "id": "quest_holdfast_the_levy"
-    },
-    {
-      "id": "quest_holdfast_the_membrane"
-    },
-    {
-      "id": "quest_holdfast_the_plant"
-    },
-    {
-      "id": "quest_holdfast_the_second_list"
-    },
-    {
-      "id": "quest_holdfast_the_sheet"
-    },
-    {
-      "id": "quest_holdfast_the_window"
-    },
-    {
-      "id": "quest_holding_the_line"
-    },
-    {
-      "id": "quest_in_the_black"
-    },
-    {
-      "id": "quest_inventory_audit"
-    },
-    {
-      "id": "quest_iron_ledger"
-    },
-    {
-      "id": "quest_loss_of_faith"
-    },
-    {
-      "id": "quest_mans_best_friend"
-    },
-    {
-      "id": "quest_mechanic_highway_heart"
-    },
-    {
-      "id": "quest_militia_grain_war"
-    },
-    {
-      "id": "quest_militia_smugglers_route"
-    },
-    {
-      "id": "quest_museum_archive"
-    },
-    {
-      "id": "quest_player_one"
-    },
-    {
-      "id": "quest_putting_down_roots"
-    },
-    {
-      "id": "quest_rebuilders_thirst"
-    },
-    {
-      "id": "quest_record_fallback"
-    },
-    {
-      "id": "quest_record_friendly_obstacle"
-    },
-    {
-      "id": "quest_record_grease_pencil"
-    },
-    {
-      "id": "quest_record_hands"
-    },
-    {
-      "id": "quest_record_mass_or_lot"
-    },
-    {
-      "id": "quest_record_the_book"
-    },
-    {
-      "id": "quest_record_the_failure"
-    },
-    {
-      "id": "quest_record_the_plate"
-    },
-    {
-      "id": "quest_record_which_gazetteer"
-    },
-    {
-      "id": "quest_record_wrong_stacks"
-    },
-    {
-      "id": "quest_redemption_arc"
-    },
-    {
-      "id": "quest_registry"
-    },
-    {
-      "id": "quest_rep_meal_row"
-    },
-    {
-      "id": "quest_rep_night_slate"
-    },
-    {
-      "id": "quest_roster_12b_kit"
-    },
-    {
-      "id": "quest_roster_ansel_truth"
-    },
-    {
-      "id": "quest_roster_blank_access"
-    },
-    {
-      "id": "quest_roster_boot_crate"
-    },
-    {
-      "id": "quest_roster_brigid"
-    },
-    {
-      "id": "quest_roster_caretaker"
-    },
-    {
-      "id": "quest_roster_chair"
-    },
-    {
-      "id": "quest_roster_fourteenth"
-    },
-    {
-      "id": "quest_roster_frayne_minutes"
-    },
-    {
-      "id": "quest_roster_grange_vote"
-    },
-    {
-      "id": "quest_roster_hadi_shift"
-    },
-    {
-      "id": "quest_roster_ink"
-    },
-    {
-      "id": "quest_roster_ivy_oil"
-    },
-    {
-      "id": "quest_roster_kess_pencil"
-    },
-    {
-      "id": "quest_roster_len_tag"
-    },
-    {
-      "id": "quest_roster_missing_strip"
-    },
-    {
-      "id": "quest_roster_nila_eleven"
-    },
-    {
-      "id": "quest_roster_pell_numbers"
-    },
-    {
-      "id": "quest_roster_quiet"
-    },
-    {
-      "id": "quest_roster_sole"
-    },
-    {
-      "id": "quest_roster_tamsin_watch"
-    },
-    {
-      "id": "quest_roster_the_chart"
-    },
-    {
-      "id": "quest_roster_the_column"
-    },
-    {
-      "id": "quest_roster_the_tin"
-    },
-    {
-      "id": "quest_roster_who_eats"
-    },
-    {
-      "id": "quest_roster_window"
-    },
-    {
-      "id": "quest_separation_anxiety"
-    },
-    {
-      "id": "quest_shattered_glass"
-    },
-    {
-      "id": "quest_st_maren_last_shift"
-    },
-    {
-      "id": "quest_target"
-    },
-    {
-      "id": "quest_tears_in_rain"
-    },
-    {
-      "id": "quest_the_abandoned_school"
-    },
-    {
-      "id": "quest_the_anesthetic"
-    },
-    {
-      "id": "quest_the_archive"
-    },
-    {
-      "id": "quest_the_awakening"
-    },
-    {
-      "id": "quest_the_backdraft"
-    },
-    {
-      "id": "quest_the_bank_heist"
-    },
-    {
-      "id": "quest_the_big_score"
-    },
-    {
-      "id": "quest_the_blueprints"
-    },
-    {
-      "id": "quest_the_botched_job"
-    },
-    {
-      "id": "quest_the_boy_who_cried_wolf"
-    },
-    {
-      "id": "quest_the_broken_mind"
-    },
-    {
-      "id": "quest_the_broken_promise"
-    },
-    {
-      "id": "quest_the_bunker_breached"
-    },
-    {
-      "id": "quest_the_canary"
-    },
-    {
-      "id": "quest_the_city_mains"
-    },
-    {
-      "id": "quest_the_cleansing"
-    },
-    {
-      "id": "quest_the_clearcut"
-    },
-    {
-      "id": "quest_the_dead_stars"
-    },
-    {
-      "id": "quest_the_empty_bottles"
-    },
-    {
-      "id": "quest_the_empty_crib"
-    },
-    {
-      "id": "quest_the_escape"
-    },
-    {
-      "id": "quest_the_final_broadcast"
-    },
-    {
-      "id": "quest_the_final_harvest"
-    },
-    {
-      "id": "quest_the_final_payload"
-    },
-    {
-      "id": "quest_the_first_save"
-    },
-    {
-      "id": "quest_the_gladiator"
-    },
-    {
-      "id": "quest_the_golden_parachute"
-    },
-    {
-      "id": "quest_the_hard_reboot"
-    },
-    {
-      "id": "quest_the_holdout"
-    },
-    {
-      "id": "quest_the_independent"
-    },
-    {
-      "id": "quest_the_inferno"
-    },
-    {
-      "id": "quest_the_iron_gate"
-    },
-    {
-      "id": "quest_the_iron_worm"
-    },
-    {
-      "id": "quest_the_kevlar_loom"
-    },
-    {
-      "id": "quest_the_lab_ruin"
-    },
-    {
-      "id": "quest_the_last_contract"
-    },
-    {
-      "id": "quest_the_last_ride"
-    },
-    {
-      "id": "quest_the_last_seed"
-    },
-    {
-      "id": "quest_the_last_stash"
-    },
-    {
-      "id": "quest_the_locket"
-    },
-    {
-      "id": "quest_the_long_haul"
-    },
-    {
-      "id": "quest_the_long_night"
-    },
-    {
-      "id": "quest_the_lost_route"
-    },
-    {
-      "id": "quest_the_marathon"
-    },
-    {
-      "id": "quest_the_mask_slips"
-    },
-    {
-      "id": "quest_the_mass_grave"
-    },
-    {
-      "id": "quest_the_masterpiece"
-    },
-    {
-      "id": "quest_the_masters_fate"
-    },
-    {
-      "id": "quest_the_mess"
-    },
-    {
-      "id": "quest_the_motorpool"
-    },
-    {
-      "id": "quest_the_old_woods"
-    },
-    {
-      "id": "quest_the_pack",
-      "title": "The Pack",
-      "synopsis": "The Feral Orphan will not eat food that has been cooked or touched. A blanket folded and left on warm concrete stays a blanket folded on warm concrete. There is a list inside the council sheet that says: thirty days, the Vet and the Fierce Mother take turns.",
-      "factionTag": "",
-      "status": "active",
-      "narrativeHook": "orphan_adoption_pair_choice"
-    },
-    {
-      "id": "quest_the_perfect_equation"
-    },
-    {
-      "id": "quest_the_perfect_fake"
-    },
-    {
-      "id": "quest_the_precinct"
-    },
-    {
-      "id": "quest_the_prosthetic"
-    },
-    {
-      "id": "quest_the_rabid_pack"
-    },
-    {
-      "id": "quest_the_radar_station"
-    },
-    {
-      "id": "quest_the_rally"
-    },
-    {
-      "id": "quest_the_real_illness"
-    },
-    {
-      "id": "quest_the_real_world"
-    },
-    {
-      "id": "quest_the_seed_vault"
-    },
-    {
-      "id": "quest_the_shaking_hand"
-    },
-    {
-      "id": "quest_the_sponge"
-    },
-    {
-      "id": "quest_the_stash"
-    },
-    {
-      "id": "quest_the_strain"
-    },
-    {
-      "id": "quest_the_substation_ghost"
-    },
-    {
-      "id": "quest_the_transit_pass"
-    },
-    {
-      "id": "quest_the_turing_test"
-    },
-    {
-      "id": "quest_the_ultimate_price"
-    },
-    {
-      "id": "quest_the_ultimate_test"
-    },
-    {
-      "id": "quest_the_value_of_breath"
-    },
-    {
-      "id": "quest_the_wardens_key"
-    },
-    {
-      "id": "quest_the_weight_of_gold"
-    },
-    {
-      "id": "quest_the_white_elk"
-    },
-    {
-      "id": "quest_third_abandoned_vehicle"
-    },
-    {
-      "id": "quest_third_collapsed_structure"
-    },
-    {
-      "id": "quest_third_dead_drop"
-    },
-    {
-      "id": "quest_third_graffiti_message"
-    },
-    {
-      "id": "quest_third_hidden_bunker"
-    },
-    {
-      "id": "quest_third_hidden_stash"
-    },
-    {
-      "id": "quest_third_landmark"
-    },
-    {
-      "id": "quest_third_memorial"
-    },
-    {
-      "id": "quest_third_overgrown_garden"
-    },
-    {
-      "id": "quest_third_radio_signal"
-    },
-    {
-      "id": "quest_third_resource_spot"
-    },
-    {
-      "id": "quest_third_safe_route"
-    },
-    {
-      "id": "quest_third_scorched_earth"
-    },
-    {
-      "id": "quest_third_supply_cache"
-    },
-    {
-      "id": "quest_third_water_source"
-    },
-    {
-      "id": "quest_third_craft_battery_swap"
-    },
-    {
-      "id": "quest_third_craft_boot_sole"
-    },
-    {
-      "id": "quest_third_craft_can_opener"
-    },
-    {
-      "id": "quest_third_craft_clothing_mend"
-    },
-    {
-      "id": "quest_third_craft_door_hinge"
-    },
-    {
-      "id": "quest_third_craft_improvise_lockpick"
-    },
-    {
-      "id": "quest_third_craft_repair_tool"
-    },
-    {
-      "id": "quest_third_craft_salvage_wiring"
-    },
-    {
-      "id": "quest_third_craft_sharpen_blade"
-    },
-    {
-      "id": "quest_third_craft_shelter_patch"
-    },
-    {
-      "id": "quest_third_craft_stove_fix"
-    },
-    {
-      "id": "quest_third_craft_trap_repair"
-    },
-    {
-      "id": "quest_third_craft_upgrade_flashlight"
-    },
-    {
-      "id": "quest_third_craft_water_filter"
-    },
-    {
-      "id": "quest_third_craft_window_board"
-    },
-    {
-      "id": "quest_third_med_bandage_wound"
-    },
-    {
-      "id": "quest_third_med_boil_water"
-    },
-    {
-      "id": "quest_third_med_breathe_exercise"
-    },
-    {
-      "id": "quest_third_med_clean_infection"
-    },
-    {
-      "id": "quest_third_med_find_antibiotics"
-    },
-    {
-      "id": "quest_third_med_find_painkillers"
-    },
-    {
-      "id": "quest_third_med_food_safety"
-    },
-    {
-      "id": "quest_third_med_iodine_pill"
-    },
-    {
-      "id": "quest_third_med_rest_exhaustion"
-    },
-    {
-      "id": "quest_third_med_sleep_hygiene"
-    },
-    {
-      "id": "quest_third_med_splint_break"
-    },
-    {
-      "id": "quest_third_med_sunburn_treat"
-    },
-    {
-      "id": "quest_third_med_treat_blister"
-    },
-    {
-      "id": "quest_third_med_treat_burn"
-    },
-    {
-      "id": "quest_third_med_water_ration"
-    },
-    {
-      "id": "quest_third_combat_ambush_avoid"
-    },
-    {
-      "id": "quest_third_combat_darkness_move"
-    },
-    {
-      "id": "quest_third_combat_defend_camp"
-    },
-    {
-      "id": "quest_third_combat_dog_encounter"
-    },
-    {
-      "id": "quest_third_combat_escape_pursuit"
-    },
-    {
-      "id": "quest_third_combat_group_encounter"
-    },
-    {
-      "id": "quest_third_combat_mutant_scare"
-    },
-    {
-      "id": "quest_third_combat_negotiate_passage"
-    },
-    {
-      "id": "quest_third_combat_noise_discipline"
-    },
-    {
-      "id": "quest_third_combat_raider_patrol"
-    },
-    {
-      "id": "quest_third_combat_scavenge_threat"
-    },
-    {
-      "id": "quest_third_combat_shelter_fortify"
-    },
-    {
-      "id": "quest_third_combat_sniper_awareness"
-    },
-    {
-      "id": "quest_third_combat_trap_detect"
-    },
-    {
-      "id": "quest_third_combat_weapon_find"
-    },
-    {
-      "id": "quest_third_lore_children_drawing"
-    },
-    {
-      "id": "quest_third_lore_clock_tower"
-    },
-    {
-      "id": "quest_third_lore_coded_message"
-    },
-    {
-      "id": "quest_third_lore_folk_song"
-    },
-    {
-      "id": "quest_third_lore_graffiti_story"
-    },
-    {
-      "id": "quest_third_lore_inscription"
-    },
-    {
-      "id": "quest_third_lore_letter_fragment"
-    },
-    {
-      "id": "quest_third_lore_map_fragment"
-    },
-    {
-      "id": "quest_third_lore_medical_record"
-    },
-    {
-      "id": "quest_third_lore_memorial_wall"
-    },
-    {
-      "id": "quest_third_lore_newspaper"
-    },
-    {
-      "id": "quest_third_lore_photograph"
-    },
-    {
-      "id": "quest_third_lore_radio_archive"
-    },
-    {
-      "id": "quest_third_lore_recording"
-    },
-    {
-      "id": "quest_third_lore_school_exercise"
-    },
-    {
-      "id": "quest_tower_seven_broadcast"
-    },
-    {
-      "id": "quest_trial_by_fire"
-    },
-    {
-      "id": "quest_tribute_break"
-    },
-    {
-      "id": "quest_truth_of_day_30"
-    },
-    {
-      "id": "quest_vindicated"
-    },
-    {
-      "id": "quest_worthless_paper"
-    },
-    {
-      "id": "quest_continental_convoy_gate",
-      "title": "Continental Convoy Gate",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_granite_foundry_brass_smuggling",
-      "title": "Granite Foundry Brass Smuggling",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_day_360_final_reckoning",
-      "title": "Day 360 Final Reckoning",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_dose_the_first_reading",
-      "title": "The Dose The First Reading",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_warlord_tribute_first_payment",
-      "title": "Warlord Tribute First Payment",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_standing_record_faction_intro",
-      "title": "Standing Record Faction Intro",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_crossing_arbitration_first_case",
-      "title": "Crossing Arbitration First Case",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_holdfast_duty_roster_intro",
-      "title": "Holdfast Duty Roster Intro",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_greenhouse_first_planting",
-      "title": "Greenhouse First Planting",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_black_flotilla_first_contact",
-      "title": "Black Flotilla First Contact",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_faction_war_sector_4_opening",
-      "title": "Faction War Sector 4 Opening",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_night_watch_sentry_01",
-      "title": "Night Watch Sentry 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_ghost_transmission_01",
-      "title": "Ghost Transmission 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_relic_provenance_01",
-      "title": "Relic Provenance 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_bunker_graffiti_01",
-      "title": "Bunker Graffiti 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_dweller_medical_01",
-      "title": "Dweller Medical 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_courier_dispatch_01",
-      "title": "Courier Dispatch 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_oral_lore_01",
-      "title": "Oral Lore 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_trade_caravan_01",
-      "title": "Trade Caravan 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_underground_fungi_01",
-      "title": "Underground Fungi 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_vinyl_record_01",
-      "title": "Vinyl Record 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_geological_strata_01",
-      "title": "Geological Strata 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_lost_tech_manual_01",
-      "title": "Lost Tech Manual 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_currents_pamphlet_01",
-      "title": "Currents Pamphlet 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_dead_hand_directive_01",
-      "title": "Dead Hand Directive 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_radio_scriptbook_01",
-      "title": "Radio Scriptbook 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_survivor_letter_01",
-      "title": "Survivor Letter 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_wasteland_gazetteer_01",
-      "title": "Wasteland Gazetteer 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_wasteland_expedition_01",
-      "title": "Wasteland Expedition 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_wasteland_bestiary_01",
-      "title": "Wasteland Bestiary 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_regional_treaty_01",
-      "title": "Regional Treaty 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_daily_survival_01",
-      "title": "Daily Survival 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_narrative_batch_01",
-      "title": "Narrative Batch 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_found_documents_01",
-      "title": "Found Documents 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_eulogy_corpus_01",
-      "title": "Eulogy Corpus 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_vel_triage_log_01",
-      "title": "Vel Triage Log 01",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_garrison_blood_debt",
-      "title": "Garrison Blood Debt",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_rebuilder_seed_vault",
-      "title": "Rebuilder Seed Vault",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_ash_sign_pyre_apostasy",
-      "title": "Ash Sign Pyre Apostasy",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_hydro_baron_aqueduct_sabotage",
-      "title": "Hydro Baron Aqueduct Sabotage",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_d9_null_stand_down",
-      "title": "D9 Null Stand Down",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_deep_freeze_heating_crisis",
-      "title": "Deep Freeze Heating Crisis",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_low_background_provenance",
-      "title": "Low Background Provenance",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_allotment_brass_treaty",
-      "title": "Allotment Brass Treaty",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_black_thaw_drainage_rescue",
-      "title": "Black Thaw Drainage Rescue",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_radio_142_carrier_lock",
-      "title": "Radio 142 Carrier Lock",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_final_manifest_muster",
-      "title": "Final Manifest Muster",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_railway_guild_telegraph_loop",
-      "title": "Railway Guild Telegraph Loop",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_penal_battalion_sanctuary_corridor",
-      "title": "Penal Battalion Sanctuary Corridor",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_deep_salt_hospital_quarantine",
-      "title": "Deep Salt Hospital Quarantine",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_supply_corps_armored_relief",
-      "title": "Supply Corps Armored Relief",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_ash_militia_switchback_redoubt",
-      "title": "Ash Militia Switchback Redoubt",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_ammonium_nitrate_bomb_disarmament",
-      "title": "Ammonium Nitrate Bomb Disarmament",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_mustard_gas_culvert_neutralization",
-      "title": "Mustard Gas Culvert Neutralization",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_vitrified_crater_spectrometry_core",
-      "title": "Vitrified Crater Spectrometry Core",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_salt_cavern_dynamite_treaty",
-      "title": "Salt Cavern Dynamite Treaty",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_periscope_optics_restoration",
-      "title": "Periscope Optics Restoration",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_muster_uprising",
-      "title": "The Muster Uprising",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_rate_card_war",
-      "title": "The Rate Card War",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_unsigned_order",
-      "title": "The Unsigned Order",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_four_names_on_the_roster",
-      "title": "Four Names On The Roster",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_second_winter",
-      "title": "The Second Winter",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_eleven_month_circuit",
-      "title": "The Eleven Month Circuit",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_second_color_ledger",
-      "title": "The Second Color Ledger",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_nothing_to_offer",
-      "title": "Nothing To Offer",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_sick_of_room_seven",
-      "title": "The Sick Of Room Seven",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_childs_number",
-      "title": "The Childs Number",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_signed_hour",
-      "title": "The Signed Hour",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_falsified_reading",
-      "title": "The Falsified Reading",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_stolen_dosimeter",
-      "title": "The Stolen Dosimeter",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_child_over_the_limit",
-      "title": "Child Over the Limit",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_register_audit",
-      "title": "The Register Audit",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_black_market_clean_bill",
-      "title": "Black-Market Clean Bill",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_broken_calibration_chain",
-      "title": "The Broken Calibration Chain",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_exposure_for_the_essential_worker",
-      "title": "Exposure for Essential Worker",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_the_missing_page",
-      "title": "The Missing Page",
-      "synopsis": "",
-      "factionTag": "",
-      "status": "active"
-    },
-    {
-      "id": "quest_scavenger_alliance",
-      "title": "The Scavenger Alliance",
-      "synopsis": "The scavengers who came to the door are not the ones who came last season, and their offer of alliance is written in the grammar of the desperate. The shelter must decide whether loyalty survives its first hard winter, and whether that can be decided in advance.",
-      "factionTag": "scavengers",
-      "status": "active"
-    },
-    {
-      "id": "quest_farmers_bargain",
-      "title": "The Farmer's Bargain",
-      "synopsis": "The growers offer fresh food for protection, and the offer is careful, because both sides know what protection becomes when it fails. The food is real. The arithmetic of what the shelter would owe is also real.",
-      "factionTag": "farmers",
-      "status": "active"
-    },
-    {
-      "id": "quest_radio_signal",
-      "title": "Mysterious Radio Signal",
-      "synopsis": "Something is transmitting from the ruin on the ridge, on a schedule, too clean for a survivor and too weak for a station. The radio log has it twice a day. Nobody has written down what they think it is.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_medical_supply_run",
-      "title": "Medical Supply Run",
-      "synopsis": "The settlement down-valley is out of medicine and asked correctly, without exaggeration, which is what makes it land. The expedition is dangerous; the asking is why it is dangerous.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_black_flotilla_trade",
-      "title": "Black Flotilla Trade Negotiation",
-      "synopsis": "The Black Flotilla offers terms generous enough to be suspicious, and the suspicion is the terms. Their reputation arrives before their boats, and the boats arrive anyway.",
-      "factionTag": "black_flotilla",
-      "status": "active"
-    },
-    {
-      "id": "quest_exp09_sunken_submarine",
-      "title": "The Half-Submerged Barrik",
-      "synopsis": "Coordinates and a Flotilla challenge ribbon have led you to the Half-Submerged Barrik. Inside, the remains of a pre-war crew wait in the dark. This is not a salvage run — it is a burial.",
-      "factionTag": "black_flotilla",
-      "status": "active"
-    },
-    {
-      "id": "quest_bunker_upgrade",
-      "title": "Bunker Expansion Project",
-      "synopsis": "The survivors have drafted an expansion: more beds, better facilities. The drafting is the point, because people plan for futures they intend to see. The walls will want labor, and the labor will want convincing.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_radiation_study",
-      "title": "Radiation Study Expedition",
-      "synopsis": "Scientists from a distant settlement want to measure the radiation here, and they ask the way people with instruments ask. What they find will be written down, and what is written down eventually travels.",
-      "factionTag": "scientists",
-      "status": "active"
-    },
-    {
-      "id": "quest_survivor_rescue",
-      "title": "Survivor Rescue Mission",
-      "synopsis": "A lone figure lies injured near the perimeter fence, in camera range, in the open, for hours. Rescue means opening a door; leaving means everyone keeps watching the camera, which is its own kind of answer.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_raider_peace_offer",
-      "title": "Raider Peace Offer",
-      "synopsis": "The raiders offer a truce for tribute, and the offer is polite, and the politeness is arithmetic. Tribute paid once is tribute expected forever, and everyone at the table knows the real question is which.",
-      "factionTag": "raiders",
-      "status": "active"
-    },
-    {
-      "id": "quest_expedition_equipment",
-      "title": "Expedition Equipment Upgrade",
-      "synopsis": "The expedition gear is failing in stages — straps, seals, soles — and the stages are logged in the injury reports. Upgrades cost; not upgrading also costs, and that bill is already arriving.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_medical_triage",
-      "title": "Medical Triage Decision",
-      "synopsis": "Two patients, one course of treatment, one night. The medic has laid the arithmetic on the table and refuses to do it alone, which is both the right thing and the hard thing.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_scout_training",
-      "title": "Scout Training Program",
-      "synopsis": "The scouts keep coming back hurt, and the word keep is the finding. A training program: drills, routes, and the unglamorous habits that keep people alive in the unglamorous places.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_food_storage_theft",
-      "title": "Food Storage Theft",
-      "synopsis": "The stores are lighter than the ledger, three nights running. The theft is small and it is inside, and the investigation will end at a name everyone suspects and nobody wants to say.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_medical_experiment",
-      "title": "Medical Experiment",
-      "synopsis": "A desperate medic proposes an untested procedure for radiation sickness, and the word untested is doing a great deal of work in that sentence. The patient has volunteered; the volunteering is informed, which is the only shield anyone can offer.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_survivor_leadership",
-      "title": "Survivor Leadership Challenge",
-      "synopsis": "A charismatic survivor is asking, politely and in public, who decided what. The question is legitimate, and the legitimacy is exactly what makes it dangerous. A vote or a refusal; both are answers.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_raider_ambush",
-      "title": "Raider Ambush",
-      "synopsis": "The expedition walked into an ambush on a route that was supposed to be quiet. Fight, run, or talk — the choice is being made in the open, and the raiders are watching to see which kind of shelter this is.",
-      "factionTag": "raiders",
-      "status": "active"
-    },
-    {
-      "id": "quest_bunker_defense",
-      "title": "Bunker Defense Drill",
-      "synopsis": "A raid is a rumor with a direction, and the drill is how the shelter argues with it. Stations, doors, signals — practiced until the practice is boring, because boring survives.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_survivor_memorial",
-      "title": "Survivor Memorial",
-      "synopsis": "The names have accumulated faster than the ceremony. The shelter owes its dead one, and the living owe it to themselves to be present while it is paid.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_food_rationing",
-      "title": "Food Rationing Crisis",
-      "synopsis": "Stores have dropped past the line where arithmetic becomes policy. Rationing keeps people; not rationing keeps kindness, for a while. The council must choose which word to keep.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_technology_scavenging",
-      "title": "Technology Scavenging Expedition",
-      "synopsis": "Pre-war technology sits in a ruin the survey flagged twice, both flags about the dose. The expedition is a cost-benefit argument where the cost is measured in rem.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_medical_training",
-      "title": "Medical Training Program",
-      "synopsis": "The infirmary runs on one person's knowledge, and that person sleeps. Train hands: dressings, doses, and the arithmetic of fever. The shelter's medicine should outlive its best medic.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_survivor_skills_assessment",
-      "title": "Survivor Skills Assessment",
-      "synopsis": "Who can do what has never been written down, and the not-writing is starting to cost. Assess the survivors, put labor where labor fits, and find out what the shelter has been carrying all along.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_bunker_medical_bay",
-      "title": "Medical Bay Expansion",
-      "synopsis": "The medical bay is two beds and a curtain pretending to be a ward. Expansion means a second table, better light, and a door that closes. The patients deserve a room that deserves them.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_survivor_romance",
-      "title": "Survivor Romance",
-      "synopsis": "Two survivors have stopped being careful around each other, and the bunker — which notices everything — has started placing bets. Acknowledging or ignoring it are both governance of something that was never yours.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_fuel_crisis",
-      "title": "Fuel Crisis",
-      "synopsis": "Fuel has dropped below the number where the generator starts making decisions. Scavenge and send people into the cold, or conserve and let the bunker get colder by degrees. Both choices are a schedule; only one has names on it.",
-      "factionTag": "neutral",
-      "status": "active"
-    },
-    {
-      "id": "quest_apprentice_pipefitting",
-      "title": "Eli's Pipe-Fitting Pupil",
-      "synopsis": "Eli was the only one who knew which elbow joint took packing and which one took thread tape. Now there is a second pair of hands that knows, and the second pair is eleven.",
-      "factionTag": "apprentice_arc",
-      "status": "active",
-      "narrativeHook": "apprenticeship_completion:skill_rough_repairs"
-    },
-    {
-      "id": "quest_apprentice_dressing",
-      "title": "Sasha's Suture Line",
-      "synopsis": "Sasha had the steady hands the bunker trusted with the children and the wounded. She has been teaching an apprentice how to clean and close a wound without flinching. The first closure the apprentice did alone was a small one, and it held, and the apprentice did not throw up.",
-      "factionTag": "apprentice_arc",
-      "status": "active",
-      "narrativeHook": "apprenticeship_completion:skill_field_dressing"
-    },
-    {
-      "id": "quest_apprentice_radio",
-      "title": "The Quiet Dial",
-      "synopsis": "The radio operator taught an apprentice the listening hour. The numbers station came in and the apprentice wrote it down without being told, on the second try, while the rest of the bunker slept. The dial is not a skill. The dial is a habit.",
-      "factionTag": "apprentice_arc",
-      "status": "active",
-      "narrativeHook": "apprenticeship_completion:skill_signal_ear"
-    },
-    {
-      "id": "quest_apprentice_recycling",
-      "title": "The Furnace Daughter",
-      "synopsis": "She was always the one who fed the forge. The apprentice learned the rhythm last winter: when the coke is right, when the slag breaks, when the billet is ready and when it is not. The first time she pulled an ingot alone with the master watching, no one clapped. They said nothing, which was the right thing to say.",
-      "factionTag": "apprentice_arc",
-      "status": "active",
-      "narrativeHook": "apprenticeship_completion:skill_workshop_sense"
-    },
-    {
-      "id": "quest_apprentice_hatch",
-      "title": "The Hatch Watcher",
-      "synopsis": "A child took the hatch watch alone for ninety minutes for the first time and the click of the counter was the only sound in the whole bunker for those ninety minutes. The master watched from inside. The watcher's hands were not shaking by minute forty-five.",
-      "factionTag": "apprentice_arc",
-      "status": "active",
-      "narrativeHook": "apprenticeship_completion:skill_watchful"
-    },
-    {
-      "id": "quest_apprentice_triage",
-      "title": "Adaeze's Triage Understudy",
-      "synopsis": "The triage line at 03:00 is the one the bunker runs once a week so the new ones can practice. The first solo triaged patient was not a real patient but the apprentice had to walk through the steps as if she were. The steps held up.",
-      "factionTag": "apprentice_arc",
-      "status": "active",
-      "narrativeHook": "apprenticeship_completion:skill_steady_hands"
-    },
-    {
-      "id": "quest_schooling_curriculum_letters",
-      "title": "The Reading Hour",
-      "synopsis": "The bunker's only alphabet chart lives on a wall in the cold room. The children have to learn to read because the only books left are the ones the adults are willing to speak aloud. The Reading Hour is one hour a day and the children are willing. The Mechanical Hour is a different hour, and they are willing for that one too.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "schooling_letters_unlock"
-    },
-    {
-      "id": "quest_schooling_curriculum_mechanics",
-      "title": "The Mechanical Hour",
-      "synopsis": "The Mechanical Hour starts after the Reading Hour, in the same room, at the same lamp. The children learn which valve does what, and why the pumps sound the way they do when the outflow constipates. The teacher is the same person who taught the last cohort.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "schooling_mechanics_unlock"
-    },
-    {
-      "id": "quest_schooling_curriculum_medicine",
-      "title": "First Stitches",
-      "synopsis": "A child hands the needle, a child hands the thread, and eventually a child closes the first wound she was not the one to make. The teacher is the bunker's only field medic and the class is small and the classroom is the infirmary floor.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "schooling_medicine_unlock"
-    },
-    {
-      "id": "quest_schooling_curriculum_marksmanship",
-      "title": "The Burned-Out Rifle",
-      "synopsis": "There is a rifle with no ammunition, in the storeroom, on a shelf, that the children are taught to disassemble and reassemble in the dark. The first time the disassembled rifle fell back together in the dark, the child did not flinch. Some of the adults were not sure that was a good thing.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "schooling_marksmanship_unlock"
-    },
-    {
-      "id": "quest_adoption_warmarms",
-      "title": "The Quiet Adoption",
-      "synopsis": "A casualty orphan from the winter convoy was folded into the bunker's census without ceremony. The adults who raised the child were not the biological parents of any child. They learned to share a cot and a ration, and they did, because the calendar said the convoy was not coming back.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "adoption_warmarms"
-    },
-    {
-      "id": "quest_adoption_fierce_mother",
-      "title": "The Fierce Mother's House",
-      "synopsis": "The Feral Orphan was assigned a rotation with the Fierce Mother and the Vet, on the council sheet, in plain ink. The Fierce Mother sleeps with one hand on the dog. The Vet sleeps with one hand on the knife. The Orphan slept, finally, with one hand on nothing. That was the small victory.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "adoption_rotational_vigil"
-    },
-    {
-      "id": "quest_adoption_grange",
-      "title": "A Hundred and Fourteen",
-      "synopsis": "A casualty orphan was assigned, by plot number, to a farmer couple who still held the allotment waiting list from before. The plot was 114. It was a plum number on the list. The adults said the plum number killed the convoy that carried the child's old family and were immediately sorry for saying so.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "adoption_grange_plot"
-    },
-    {
-      "id": "quest_adoption_archive",
-      "title": "The Children of the Archive",
-      "synopsis": "The municipal archive adopted four orphans when the bunker census crossed the binder threshold for the first time. The newest intake was logged under the next four open plot numbers. The older children carried the binders to the new shelf before the new children learned which shelf it was.",
-      "factionTag": "childhood_path",
-      "status": "active",
-      "narrativeHook": "adoption_archive_intake"
-    },
-    {
-      "id": "quest_coming_of_age_first_surface",
-      "title": "The First Surface Trip",
-      "synopsis": "The bunker's hatch opened the morning of day ninety-four with a child on the perimeter walk, in clean clothes, with the hatch lead close enough to catch the child's silhouette if the silhouette needed catching. The child walked one hundred metres into the scrub and did not turn around. By minute four, the child had stopped looking up.",
-      "factionTag": "coming_of_age",
-      "status": "active",
-      "narrativeHook": "trigger_maturation"
-    },
-    {
-      "id": "quest_coming_of_age_first_watch",
-      "title": "The First Solo Watch",
-      "synopsis": "Solo watch starts at minute zero and ends when the clock says it ends. The first time a child took the post alone, the Geiger counter was quiet, nothing came in over the radio, and the hatch did not move. The watch was not heroic. The watch was the watch.",
-      "factionTag": "coming_of_age",
-      "status": "active",
-      "narrativeHook": "trigger_maturation"
-    },
-    {
-      "id": "quest_cipher_relay_count",
-      "title": "The Relay Count Cipher",
-      "synopsis": "An eerie five-figure shortwave broadcast loops on 104.5 MHz. Decrypting the coordinates requires Communications Codebook Alpha excavated from the Collapsed Command Vault to unlock Hidden Relay Bunker 09.",
-      "factionTag": "sigint_exploration",
-      "status": "active",
-      "narrativeHook": "cipher_relay_decode"
-    },
-    {
-      "id": "quest_cipher_winter_ledger",
-      "title": "Winter Ledger Decryption",
-      "synopsis": "Automated logistics transmissions report cold-storage inventory offsets. A laminated cipher sheet reveals the Sub-Basement Logistics Reserve.",
-      "factionTag": "sigint_exploration",
-      "status": "active",
-      "narrativeHook": "cipher_winter_decode"
-    },
-    {
-      "id": "quest_cipher_last_rotation",
-      "title": "Last Rotation Dead-Hand",
-      "synopsis": "A military dead-hand standby broadcast prompts for authentication at Waypoint November. Microfilm index cylinder decodes the Dead-Drop Command Shelter coordinates.",
-      "factionTag": "sigint_exploration",
-      "status": "active",
-      "narrativeHook": "cipher_rotation_decode"
-    },
-    {
-      "id": "quest_waystation_alpha_filter_rebuild",
-      "title": "Waystation A: Soot Filter Flush",
-      "synopsis": "Warden Kessel reports severe coal dust clogging the primary ventilation intake at Waystation A in the Cut. Deliver clean water and filter membrane to restore air cycling.",
-      "factionTag": "infrastructure",
-      "status": "active"
-    },
-    {
-      "id": "quest_waystation_switchback_scree_shoring",
-      "title": "Switchback Waystation: Scree Shoring",
-      "synopsis": "Recent rockslides threaten to sweep the lower bunkhouse off the cliff ledge at the Switchback Waystation. Transport structural timbers and scrap metal to reinforce the cribbing.",
-      "factionTag": "infrastructure",
-      "status": "active"
-    },
-    {
-      "id": "quest_waystation_span44_abutment_weld",
-      "title": "Span 44: Railway Abutment Repair",
-      "synopsis": "Foreman Taggart requires mechanical fasteners and welding electrodes to secure the settling western bridge pier on Railway Span 44 before heavy iron convoys can cross.",
-      "factionTag": "infrastructure",
-      "status": "active"
-    },
-    {
-      "id": "quest_waystation_verity_pump_clear",
-      "title": "Verity Motel: Deep Well Desilt",
-      "synopsis": "Fine sand and silt have jammed the deep-aquifer impeller at the Verity Motel staging post. Clean the manifold and replace the drive belt to restore potable water dispensing.",
-      "factionTag": "infrastructure",
-      "status": "active"
-    },
-    {
-      "id": "quest_waystation_coast_lock_sluice_reclaim",
-      "title": "Lock Gate Four: Sluice Valve Reclaim",
-      "synopsis": "Heavy brine scale has frozen the tidal sluice bypass at Lock Gate Four. Apply anti-corrosive solvent and grease to re-open the maritime staging basin.",
-      "factionTag": "infrastructure",
-      "status": "active"
-    },
-    {
-      "id": "quest_waystation_grain_verge_sentry_accord",
-      "title": "Verge Silo: Sentry Ration Accord",
-      "synopsis": "Central Garrison sentries are demanding excess grain tithes at the Verge Silo Waystation. Negotiate a standardized tariff or provide emergency rations to prevent an embargo.",
-      "factionTag": "infrastructure",
-      "status": "active"
-    },
-    {
-      "id": "quest_crossing_asylum_in_the_truss"
-    },
-    {
-      "id": "quest_crossing_contraband_medical_vial"
-    },
-    {
-      "id": "quest_crossing_displaced_kin_roll"
-    },
-    {
-      "id": "quest_crossing_embargo_transit_escort"
-    },
-    {
-      "id": "quest_crossing_flotilla_docking_rights"
-    },
-    {
-      "id": "quest_crossing_quarantine_breach_trial"
-    },
-    {
-      "id": "quest_crossing_the_null_charter_vote"
-    },
-    {
-      "id": "quest_crossing_vehicle_lien_arbitration"
-    },
-    {
-      "id": "quest_holdfast_boiler_crack_panic"
-    },
-    {
-      "id": "quest_holdfast_brine_boiler_scum"
-    },
-    {
-      "id": "quest_holdfast_brine_intake_poisoning"
-    },
-    {
-      "id": "quest_holdfast_broken_runner_rescue"
-    },
-    {
-      "id": "quest_holdfast_census_absentee_defense"
-    },
-    {
-      "id": "quest_holdfast_census_claimant_audit"
-    },
-    {
-      "id": "quest_holdfast_census_estate_division"
-    },
-    {
-      "id": "quest_holdfast_census_forged_voucher"
-    },
-    {
-      "id": "quest_holdfast_estuary_water_compact"
-    },
-    {
-      "id": "quest_holdfast_ration_lockup_breach"
-    },
-    {
-      "id": "quest_holdfast_rival_sled_overtake"
-    },
-    {
-      "id": "quest_holdfast_salt_convoy_haul"
-    },
-    {
-      "id": "quest_holdfast_salter_work_stoppage"
-    },
-    {
-      "id": "quest_holdfast_scree_blockage_clear"
-    },
-    {
-      "id": "quest_record_archive_burn_layer"
-    },
-    {
-      "id": "quest_record_cold_store_sublevel"
-    },
-    {
-      "id": "quest_record_metro_derailment_triage"
-    },
-    {
-      "id": "quest_record_mine_shaft_adit_collapse"
-    },
-    {
-      "id": "quest_record_seed_bank_purge_trace"
-    },
-    {
-      "id": "quest_record_sluice_failure_verdict"
-    },
-    {
-      "id": "quest_record_sub_basement_blueprint"
-    },
-    {
-      "id": "quest_record_the_boundary_dispute"
-    },
-    {
-      "id": "quest_record_the_cold_survey"
-    },
-    {
-      "id": "quest_record_the_lamp_keepers_oath"
-    },
-    {
-      "id": "quest_record_the_lamp_oil_ledger"
-    },
-    {
-      "id": "quest_record_the_last_sector"
-    },
-    {
-      "id": "quest_record_the_last_watch_beacon"
-    },
-    {
-      "id": "quest_record_the_missing_plate"
-    },
-    {
-      "id": "quest_record_the_overlay_pigment"
-    },
-    {
-      "id": "quest_record_the_rejected_survey"
-    },
-    {
-      "id": "quest_record_the_second_count"
-    },
-    {
-      "id": "quest_record_the_survey_nail"
-    },
-    {
-      "id": "quest_record_the_unmarked_plaque"
-    },
-    {
-      "id": "quest_record_transit_vent_shaft_route"
-    },
-    {
-      "id": "quest_record_utility_junction_crossover"
-    },
-    {
-      "id": "quest_record_vault_breach_forensics"
-    },
-    {
-      "id": "quest_verdict_alibi_verification"
-    },
-    {
-      "id": "quest_verdict_chain_of_custody"
-    },
-    {
-      "id": "quest_verdict_charter_authentication"
-    },
-    {
-      "id": "quest_verdict_eden_grabs"
-    },
-    {
-      "id": "quest_verdict_forged_evidence_inquest"
-    },
-    {
-      "id": "quest_verdict_machine_interpretation_contest"
-    },
-    {
-      "id": "quest_verdict_prior_verdict_appeal"
-    },
-    {
-      "id": "quest_verdict_reconciled_testimony"
-    },
-    {
-      "id": "quest_verdict_the_hold"
-    },
-    {
-      "id": "quest_verdict_the_mortars_timetable"
-    },
-    {
-      "id": "quest_verdict_the_reckoning_call"
-    },
-    {
-      "id": "quest_verdict_the_shift_charter"
-    },
-    {
-      "id": "quest_verdict_the_summons"
-    },
-    {
-      "id": "quest_verdict_the_tape_silo"
-    },
-    {
-      "id": "quest_verdict_the_warm_range"
-    },
-    {
-      "id": "quest_verdict_witness_subpoena"
-    },
-    {
-      "id": "quest_distress_trapped_mechanic",
-      "title": "Rescue: Trapped Mechanic",
-      "synopsis": "A distress signal on 88.3 MHz reports a mechanic trapped at the rail depot. Her leg is pinned under a beam. She has water for two more days.",
-      "factionTag": "neutral",
-      "status": "active",
-      "signalId": "freq_distress_88_3",
-      "deadlineDays": 3,
-      "rewardItems": [
-        "scrap_metal",
-        "mechanical_parts"
-      ],
-      "rewardReputation": 5
-    },
-    {
-      "id": "quest_distress_injured_trader",
-      "title": "Rescue: Injured Trader",
-      "synopsis": "A distress signal on 156.8 MHz: a trader down on Route 6, injured, offering to share his goods with whoever reaches him. The frequency is honest. The offer is the part that needs eyes on it.",
-      "factionTag": "neutral",
-      "status": "active",
-      "signalId": "freq_distress_156_8",
-      "deadlineDays": 2,
-      "rewardItems": [
-        "bandage",
-        "battery",
-        "iodine_pills"
-      ],
-      "rewardReputation": 3
-    },
-    {
-      "id": "quest_distress_family_shelter",
-      "title": "Rescue: Family Shelter",
-      "synopsis": "A child's voice on 445.2 MHz reports her mother is sick and unresponsive. The bunker has a blue door and a broken lock.",
-      "factionTag": "neutral",
-      "status": "active",
-      "signalId": "freq_distress_445_2",
-      "deadlineDays": 2,
-      "rewardItems": [
-        "clean_water",
-        "canned_food"
-      ],
-      "rewardReputation": 8
-    },
-    {
-      "id": "quest_distress_raider_trap",
-      "title": "Investigation: Raider Lure",
-      "synopsis": "A suspicious signal on 192.4 MHz mentions an unguarded fuel cache. The signal pattern is too consistent to be genuine.",
-      "factionTag": "raiders",
-      "status": "active",
-      "signalId": "freq_distress_192_4",
-      "deadlineDays": 3,
-      "rewardItems": [],
-      "rewardReputation": 0,
-      "warningText": "This is a raider trap. Responding will trigger an ambush."
-    },
-    {
-      "id": "quest_distress_military_patrol",
-      "title": "Rescue: Stranded Military Patrol",
-      "synopsis": "A military distress signal on 901.2 MHz reports Sergeant Voss's patrol six pinned down with two wounded. Ammunition low.",
-      "factionTag": "military",
-      "status": "active",
-      "signalId": "freq_distress_901_2",
-      "deadlineDays": 3,
-      "rewardItems": [
-        "ammo_556",
-        "field_dressing_kit"
-      ],
-      "rewardReputation": 10
-    },
-    {
-      "id": "quest_arc_mara_01_waystation",
-      "title": "The Water Station Route",
-      "synopsis": "A caravan factor working the water stations is short after a bad crossing. What you do about it is the first entry in her ledger.",
-      "factionTag": "faction_grain_exchange",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_mara_02_route",
-      "title": "Wreckage on the Cut Road",
-      "synopsis": "The caravan factor's second wagon is through the road crust, and she is camped on the wreck guarding the cargo.",
-      "factionTag": "faction_grain_exchange",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_mara_03_office",
-      "title": "The Coordinator's Stamp",
-      "synopsis": "The grain exchange has given Mara Veln the southern routes. The rate sheet has a line for friends of the coordinator.",
-      "factionTag": "faction_grain_exchange",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_ilze_01_clinic",
-      "title": "Eight Beds",
-      "synopsis": "An almshouse clinic is down to its last shelves; its physician shows the inventory before asking for anything.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_ilze_02_outbreak",
-      "title": "The Fever Finds the Almshouse",
-      "synopsis": "The clinic is full of a fever she can name but not stop, and the camp is one rumor from a cordon.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_ilze_03_clinic",
-      "title": "The Door That Stays Open",
-      "synopsis": "The clinic trains more hands than it loses now; the verge sends its sick to a door never shut at the appointed hour.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_marek_01_patrol",
-      "title": "Checkpoint Gamma",
-      "synopsis": "A garrison checkpoint runs by the book, and the corporal keeps the book where petitioners can read it.",
-      "factionTag": "faction_central_garrison",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_marek_02_deserter",
-      "title": "The Margin Notes",
-      "synopsis": "The corporal who wrote dated objections to his own orders is now the subject of them.",
-      "factionTag": "faction_central_garrison",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_marek_03_watch",
-      "title": "Word Before the Sweeps",
-      "synopsis": "An outside ally sends warning before every sweep: routes, timing, the mood of the command.",
-      "factionTag": "faction_central_garrison",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_lina_01_found",
-      "title": "The Girl Who Counts",
-      "synopsis": "A child keeps order in a queue at the baths, and her count is better than yours.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_lina_02_lessons",
-      "title": "Lessons Twice Given",
-      "synopsis": "The shelter's foundling sits the lessons it gives and invents the ones it will not.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_lina_03_apprentice",
-      "title": "Small Hands, Steady Ones",
-      "synopsis": "The counting becomes a trade instead of a defense: medic's apprentice, roster, and all.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_anete_01_substation",
-      "title": "Live Grounds, No Copper",
-      "synopsis": "A grid engineer holds a live substation with working grounds and no copper to speak of.",
-      "factionTag": "faction_rebuilders",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_anete_02_project",
-      "title": "One Feeder at a Time",
-      "synopsis": "A regional recovery project wants her name on it and her switching orders behind it.",
-      "factionTag": "faction_rebuilders",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_anete_03_grid",
-      "title": "The Region On Schedule",
-      "synopsis": "The grid is small, documented, and true: two feeders, a schedule, and switching orders done safely.",
-      "factionTag": "faction_rebuilders",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_sava_01_camp",
-      "title": "The Hours of the Camp",
-      "synopsis": "A refugee camp keeps its hours, and raiders have begun keeping watch on it.",
-      "factionTag": "cult_of_the_glow",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_sava_02_schism",
-      "title": "The Rota and the Schism",
-      "synopsis": "The camps quarrel over the right way to keep the hours, and both sides quote her.",
-      "factionTag": "cult_of_the_glow",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_sava_03_hours",
-      "title": "The Verdict-Free Hour",
-      "synopsis": "When the camps quarrel, they send for her before they send for anyone with a rifle.",
-      "factionTag": "cult_of_the_glow",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_rika_01_cache",
-      "title": "The Real Floors",
-      "synopsis": "A scavenger knows which cellar floors are real, and offers to split a find rather than race.",
-      "factionTag": "faction_scavenger_guild",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_rika_02_trap",
-      "title": "A Rumor With a Drop Shaft",
-      "synopsis": "A cellar floor that was a rumor took her ankle, and she is camp-bound with a registry full of addresses.",
-      "factionTag": "faction_scavenger_guild",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_rika_03_guild",
-      "title": "First Refusal",
-      "synopsis": "The guild gave her the cellar registry, and the registry has your name in the margin.",
-      "factionTag": "faction_scavenger_guild",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_liva_01_tower",
-      "title": "The Station That Answers",
-      "synopsis": "A relay mast lives on scavenged cells and inherited discipline, and its operator answers on schedule.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_liva_02_seizure",
-      "title": "Somebody Maps the Towers",
-      "synopsis": "The faction that maps towers has mapped hers, and their survey team is two valleys out.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_liva_03_signal",
-      "title": "Fixed Hours",
-      "synopsis": "A station that answers on schedule, under a flag that leaves it alone, with a band of its own.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_oskar_01_debt",
-      "title": "The Settled Figure",
-      "synopsis": "Half a wagon and a whole debt, both priced daily. The buyout figure exists and is written down. The only question is whose hand moves first: yours to help him r",
-      "factionTag": "faction_the_underwrite",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_tomas_01_rounding",
-      "title": "Rounding for the Living",
-      "synopsis": "The overflow clinic's stock does not reconcile with the garrison's ledgers, and the difference keeps matching a list of people who are alive anyway. The audit i",
-      "factionTag": "faction_central_garrison",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_joren_01_plant",
-      "title": "Staffing the Schedule",
-      "synopsis": "The batching plant restart is real, the schedule is honest, and the schedule does not care what happened to the night shift. He needs crews who pass the checkli",
-      "factionTag": "faction_silent_foundry",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_pavel_01_map",
-      "title": "What I Have Walked",
-      "synopsis": "The route scavenger sells only what he has walked, and the best route in the roll is the one he learned the impolite way. The copy costs less than the question ",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_sena_01_log",
-      "title": "Two Versions",
-      "synopsis": "The bridge corridor's crossing log is kept in full view, and the incident reports come back in two versions: what she filed and what command acknowledges. She w",
-      "factionTag": "faction_ash_militia",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_dalia_01_annex",
-      "title": "A Year That Has Not Happened",
-      "synopsis": "The seed annex holds tested lots and one roof of uncertain honesty. She will not leave it and she will not hurry it, and the private tin is not for discussion. ",
-      "factionTag": "faction_salt_freeholders",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_anton_01_herd",
-      "title": "The Fine Herd",
-      "synopsis": "The herd ledger and the herd disagree by exactly the animals a hard winter eats, and the well has been dosed since before anyone asked. What the herd needs is a",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_emil_01_numbers",
-      "title": "The Honest Notebooks",
-      "synopsis": "Four notebooks of repeats, every published solution refuted in writing including his own, and a standing rule that patrons get warned before they get taken. Fun",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_nadia_01_pot",
-      "title": "What the Manifest Says",
-      "synopsis": "The field kitchen's pot is honest and the manifest is not, and she is the difference. The portion ledger disagrees with the pot by exactly the amount the childr",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_arvo_01_crate",
-      "title": "Which Kind of Cook",
-      "synopsis": "The store mess runs institutional-exact under a cook with one private crate of good oil and an argument with himself that has been going since autumn. The crate",
-      "factionTag": "faction_the_provisioned",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_kaspar_01_bearing",
-      "title": "Posted Odds",
-      "synopsis": "The wagon mechanic keeps one vehicle alive past decency and tells you the odds on every road like a man reading weather. The bearing in his toolbox has a story ",
-      "factionTag": "faction_long_walk",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_mira_01_intervals",
-      "title": "The Private Log",
-      "synopsis": "The generator runs to stated hours and the private log runs to stated truth: a missed maintenance interval in her own handwriting, kept so somebody remembers wh",
-      "factionTag": "faction_the_cutters",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_janek_01_dawn",
-      "title": "Walk With Me at Dawn",
-      "synopsis": "The old hunting lines fed the settlement for two winters and have stopped feeding it, and the hunter will hear no word against them before dawn. At dawn, the ro",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_veda_01_circuit",
-      "title": "Marked Paths",
-      "synopsis": "The trap circuit is marked, posted, and paid for, once, in the way that taught her. The standing fee for the maimed still stands. The fog month is a closed subj",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_mirael_01_page",
-      "title": "The Page on the Desk",
-      "synopsis": "The archive's copy lessons are exact and one page of the community record is in a different hand than the rest. It sits face-up on the desk through every lesson",
-      "factionTag": "faction_archivists",
-      "status": "active"
-    },
-    {
-      "id": "quest_arc_niko_01_corridors",
-      "title": "The Rest of the Map",
-      "synopsis": "The runner knows the corridors grown-ups cannot stand up in, and has decided your column watches. The routes have never been written down, because paper can be ",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_crossing_the_salvaged_accord",
-      "title": "The Salvaged Accord",
-      "synopsis": "A disputed covenant over river transit rights resurfaces when a salvage crew claims prior agreement over the same crossing lane. Resolve who holds the charter.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_crossing_the_registry_dispute",
-      "title": "The Registry Dispute",
-      "synopsis": "Two factions claim the same entry in the passage ledger. The crossing administrator needs an outside arbitration before trade can resume through the checkpoint.",
-      "factionTag": "none",
-      "status": "active"
-    },
-    {
-      "id": "quest_crossing_the_long_toll",
-      "title": "The Long Toll",
-      "synopsis": "The toll keeper is collecting more than the standard crossing fee. Survivors must decide whether to challenge the practice or find a route that avoids the station.",
-      "factionTag": "none",
-      "status": "active"
-    }
-  ]
+ "schema_version": 1,
+ "entries": [
+  {
+   "id": "quest_a_good_death"
+  },
+  {
+   "id": "quest_a_real_leader"
+  },
+  {
+   "id": "quest_a_voice_in_the_dark"
+  },
+  {
+   "id": "quest_acoustic_bait"
+  },
+  {
+   "id": "quest_ashen_communion"
+  },
+  {
+   "id": "quest_assassination_deserter"
+  },
+  {
+   "id": "quest_black_vein"
+  },
+  {
+   "id": "quest_breaking_chains"
+  },
+  {
+   "id": "quest_broken_chronometer"
+  },
+  {
+   "id": "quest_burnt_harvest"
+  },
+  {
+   "id": "quest_checkpoint_kilo_truth"
+  },
+  {
+   "id": "quest_child_soldier_rifle"
+  },
+  {
+   "id": "quest_cold_turkey"
+  },
+  {
+   "id": "quest_court_martial"
+  },
+  {
+   "id": "quest_crisis_of_faith"
+  },
+  {
+   "id": "quest_crossing_companion_mattis"
+  },
+  {
+   "id": "quest_crossing_first_weigh"
+  },
+  {
+   "id": "quest_crossing_scale_integrity"
+  },
+  {
+   "id": "quest_crossing_the_forfeit"
+  },
+  {
+   "id": "quest_crossing_the_marker"
+  },
+  {
+   "id": "quest_crossing_the_petition"
+  },
+  {
+   "id": "quest_crossing_the_standing"
+  },
+  {
+   "id": "quest_crossing_the_terms"
+  },
+  {
+   "id": "quest_crossing_the_vote_that_isnt"
+  },
+  {
+   "id": "quest_crossing_the_vouch"
+  },
+  {
+   "id": "quest_crossing_three_dry_pages"
+  },
+  {
+   "id": "quest_crossing_who_holds_the_ledger"
+  },
+  {
+   "id": "quest_cult_glow_communion"
+  },
+  {
+   "id": "quest_cult_purity"
+  },
+  {
+   "id": "quest_dead_air"
+  },
+  {
+   "id": "quest_deep_well"
+  },
+  {
+   "id": "quest_dropping_the_rifle",
+   "title": "Dropping the Rifle",
+   "synopsis": "The Child Soldier keeps the rifle the way soldiers keep things they shouldn't. A hand-me-down maxim: the rifle kept them alive, the rifle is the only thing that did. The bunker's quiet question is who, in those quiet hours, is going to carry that misread weight away.",
+   "factionTag": "",
+   "status": "active",
+   "narrativeHook": "apprenticeship_medic_or_smith"
+  },
+  {
+   "id": "quest_earning_keep"
+  },
+  {
+   "id": "quest_elena_triage"
+  },
+  {
+   "id": "quest_embracing_the_glow"
+  },
+  {
+   "id": "quest_first_blood",
+   "title": "First Blood at the Hatch",
+   "synopsis": "The Hardened Daughter eats with a piece of broken glass wrapped in cloth and watches the door. Someone will eventually have to sit beside her, in silence, until a sound outside is no longer terrifying. Then there is the day she does not flinch at it.",
+   "factionTag": "",
+   "status": "active",
+   "narrativeHook": "mentorship_veteran_pair"
+  },
+  {
+   "id": "quest_garrison_census"
+  },
+  {
+   "id": "quest_garrison_last_order"
+  },
+  {
+   "id": "quest_ghosts_of_day_1"
+  },
+  {
+   "id": "quest_glow_communion"
+  },
+  {
+   "id": "quest_grain_war"
+  },
+  {
+   "id": "quest_ground_zero"
+  },
+  {
+   "id": "quest_growing_up_fast",
+   "title": "Growing Up, Fast",
+   "synopsis": "The Naive Son draws animals on the wall and asks questions about birds. The adults answer in halves. The bunker has a list of skills and a calendar that says it is time to start teaching.",
+   "factionTag": "",
+   "status": "active",
+   "narrativeHook": "schooling_curriculum_choice"
+  },
+  {
+   "id": "quest_hell_is_other_people"
+  },
+  {
+   "id": "quest_holdfast_authentication"
+  },
+  {
+   "id": "quest_holdfast_the_clerk"
+  },
+  {
+   "id": "quest_holdfast_the_clerk_started"
+  },
+  {
+   "id": "quest_holdfast_the_drawer"
+  },
+  {
+   "id": "quest_holdfast_the_hatch"
+  },
+  {
+   "id": "quest_holdfast_the_levy"
+  },
+  {
+   "id": "quest_holdfast_the_membrane"
+  },
+  {
+   "id": "quest_holdfast_the_plant"
+  },
+  {
+   "id": "quest_holdfast_the_second_list"
+  },
+  {
+   "id": "quest_holdfast_the_sheet"
+  },
+  {
+   "id": "quest_holdfast_the_window"
+  },
+  {
+   "id": "quest_holding_the_line"
+  },
+  {
+   "id": "quest_in_the_black"
+  },
+  {
+   "id": "quest_inventory_audit"
+  },
+  {
+   "id": "quest_iron_ledger"
+  },
+  {
+   "id": "quest_loss_of_faith"
+  },
+  {
+   "id": "quest_mans_best_friend"
+  },
+  {
+   "id": "quest_mechanic_highway_heart"
+  },
+  {
+   "id": "quest_militia_grain_war"
+  },
+  {
+   "id": "quest_militia_smugglers_route"
+  },
+  {
+   "id": "quest_museum_archive"
+  },
+  {
+   "id": "quest_player_one"
+  },
+  {
+   "id": "quest_putting_down_roots"
+  },
+  {
+   "id": "quest_rebuilders_thirst"
+  },
+  {
+   "id": "quest_record_fallback"
+  },
+  {
+   "id": "quest_record_friendly_obstacle"
+  },
+  {
+   "id": "quest_record_grease_pencil"
+  },
+  {
+   "id": "quest_record_hands"
+  },
+  {
+   "id": "quest_record_mass_or_lot"
+  },
+  {
+   "id": "quest_record_the_book"
+  },
+  {
+   "id": "quest_record_the_failure"
+  },
+  {
+   "id": "quest_record_the_plate"
+  },
+  {
+   "id": "quest_record_which_gazetteer"
+  },
+  {
+   "id": "quest_record_wrong_stacks"
+  },
+  {
+   "id": "quest_redemption_arc"
+  },
+  {
+   "id": "quest_registry"
+  },
+  {
+   "id": "quest_rep_meal_row"
+  },
+  {
+   "id": "quest_rep_night_slate"
+  },
+  {
+   "id": "quest_roster_12b_kit"
+  },
+  {
+   "id": "quest_roster_ansel_truth"
+  },
+  {
+   "id": "quest_roster_blank_access"
+  },
+  {
+   "id": "quest_roster_boot_crate"
+  },
+  {
+   "id": "quest_roster_brigid"
+  },
+  {
+   "id": "quest_roster_caretaker"
+  },
+  {
+   "id": "quest_roster_chair"
+  },
+  {
+   "id": "quest_roster_fourteenth"
+  },
+  {
+   "id": "quest_roster_frayne_minutes"
+  },
+  {
+   "id": "quest_roster_grange_vote"
+  },
+  {
+   "id": "quest_roster_hadi_shift"
+  },
+  {
+   "id": "quest_roster_ink"
+  },
+  {
+   "id": "quest_roster_ivy_oil"
+  },
+  {
+   "id": "quest_roster_kess_pencil"
+  },
+  {
+   "id": "quest_roster_len_tag"
+  },
+  {
+   "id": "quest_roster_missing_strip"
+  },
+  {
+   "id": "quest_roster_nila_eleven"
+  },
+  {
+   "id": "quest_roster_pell_numbers"
+  },
+  {
+   "id": "quest_roster_quiet"
+  },
+  {
+   "id": "quest_roster_sole"
+  },
+  {
+   "id": "quest_roster_tamsin_watch"
+  },
+  {
+   "id": "quest_roster_the_chart"
+  },
+  {
+   "id": "quest_roster_the_column"
+  },
+  {
+   "id": "quest_roster_the_tin"
+  },
+  {
+   "id": "quest_roster_who_eats"
+  },
+  {
+   "id": "quest_roster_window"
+  },
+  {
+   "id": "quest_separation_anxiety"
+  },
+  {
+   "id": "quest_shattered_glass"
+  },
+  {
+   "id": "quest_st_maren_last_shift"
+  },
+  {
+   "id": "quest_target"
+  },
+  {
+   "id": "quest_tears_in_rain"
+  },
+  {
+   "id": "quest_the_abandoned_school"
+  },
+  {
+   "id": "quest_the_anesthetic"
+  },
+  {
+   "id": "quest_the_archive"
+  },
+  {
+   "id": "quest_the_awakening"
+  },
+  {
+   "id": "quest_the_backdraft"
+  },
+  {
+   "id": "quest_the_bank_heist"
+  },
+  {
+   "id": "quest_the_big_score"
+  },
+  {
+   "id": "quest_the_blueprints"
+  },
+  {
+   "id": "quest_the_botched_job"
+  },
+  {
+   "id": "quest_the_boy_who_cried_wolf"
+  },
+  {
+   "id": "quest_the_broken_mind"
+  },
+  {
+   "id": "quest_the_broken_promise"
+  },
+  {
+   "id": "quest_the_bunker_breached"
+  },
+  {
+   "id": "quest_the_canary"
+  },
+  {
+   "id": "quest_the_city_mains"
+  },
+  {
+   "id": "quest_the_cleansing"
+  },
+  {
+   "id": "quest_the_clearcut"
+  },
+  {
+   "id": "quest_the_dead_stars"
+  },
+  {
+   "id": "quest_the_empty_bottles"
+  },
+  {
+   "id": "quest_the_empty_crib"
+  },
+  {
+   "id": "quest_the_escape"
+  },
+  {
+   "id": "quest_the_final_broadcast"
+  },
+  {
+   "id": "quest_the_final_harvest"
+  },
+  {
+   "id": "quest_the_final_payload"
+  },
+  {
+   "id": "quest_the_first_save"
+  },
+  {
+   "id": "quest_the_gladiator"
+  },
+  {
+   "id": "quest_the_golden_parachute"
+  },
+  {
+   "id": "quest_the_hard_reboot"
+  },
+  {
+   "id": "quest_the_holdout"
+  },
+  {
+   "id": "quest_the_independent"
+  },
+  {
+   "id": "quest_the_inferno"
+  },
+  {
+   "id": "quest_the_iron_gate"
+  },
+  {
+   "id": "quest_the_iron_worm"
+  },
+  {
+   "id": "quest_the_kevlar_loom"
+  },
+  {
+   "id": "quest_the_lab_ruin"
+  },
+  {
+   "id": "quest_the_last_contract"
+  },
+  {
+   "id": "quest_the_last_ride"
+  },
+  {
+   "id": "quest_the_last_seed"
+  },
+  {
+   "id": "quest_the_last_stash"
+  },
+  {
+   "id": "quest_the_locket"
+  },
+  {
+   "id": "quest_the_long_haul"
+  },
+  {
+   "id": "quest_the_long_night"
+  },
+  {
+   "id": "quest_the_lost_route"
+  },
+  {
+   "id": "quest_the_marathon"
+  },
+  {
+   "id": "quest_the_mask_slips"
+  },
+  {
+   "id": "quest_the_mass_grave"
+  },
+  {
+   "id": "quest_the_masterpiece"
+  },
+  {
+   "id": "quest_the_masters_fate"
+  },
+  {
+   "id": "quest_the_mess"
+  },
+  {
+   "id": "quest_the_motorpool"
+  },
+  {
+   "id": "quest_the_old_woods"
+  },
+  {
+   "id": "quest_the_pack",
+   "title": "The Pack",
+   "synopsis": "The Feral Orphan will not eat food that has been cooked or touched. A blanket folded and left on warm concrete stays a blanket folded on warm concrete. There is a list inside the council sheet that says: thirty days, the Vet and the Fierce Mother take turns.",
+   "factionTag": "",
+   "status": "active",
+   "narrativeHook": "orphan_adoption_pair_choice"
+  },
+  {
+   "id": "quest_the_perfect_equation"
+  },
+  {
+   "id": "quest_the_perfect_fake"
+  },
+  {
+   "id": "quest_the_precinct"
+  },
+  {
+   "id": "quest_the_prosthetic"
+  },
+  {
+   "id": "quest_the_rabid_pack"
+  },
+  {
+   "id": "quest_the_radar_station"
+  },
+  {
+   "id": "quest_the_rally"
+  },
+  {
+   "id": "quest_the_real_illness"
+  },
+  {
+   "id": "quest_the_real_world"
+  },
+  {
+   "id": "quest_the_seed_vault"
+  },
+  {
+   "id": "quest_the_shaking_hand"
+  },
+  {
+   "id": "quest_the_sponge"
+  },
+  {
+   "id": "quest_the_stash"
+  },
+  {
+   "id": "quest_the_strain"
+  },
+  {
+   "id": "quest_the_substation_ghost"
+  },
+  {
+   "id": "quest_the_transit_pass"
+  },
+  {
+   "id": "quest_the_turing_test"
+  },
+  {
+   "id": "quest_the_ultimate_price"
+  },
+  {
+   "id": "quest_the_ultimate_test"
+  },
+  {
+   "id": "quest_the_value_of_breath"
+  },
+  {
+   "id": "quest_the_wardens_key"
+  },
+  {
+   "id": "quest_the_weight_of_gold"
+  },
+  {
+   "id": "quest_the_white_elk"
+  },
+  {
+   "id": "quest_third_abandoned_vehicle"
+  },
+  {
+   "id": "quest_third_collapsed_structure"
+  },
+  {
+   "id": "quest_third_dead_drop"
+  },
+  {
+   "id": "quest_third_graffiti_message"
+  },
+  {
+   "id": "quest_third_hidden_bunker"
+  },
+  {
+   "id": "quest_third_hidden_stash"
+  },
+  {
+   "id": "quest_third_landmark"
+  },
+  {
+   "id": "quest_third_memorial"
+  },
+  {
+   "id": "quest_third_overgrown_garden"
+  },
+  {
+   "id": "quest_third_radio_signal"
+  },
+  {
+   "id": "quest_third_resource_spot"
+  },
+  {
+   "id": "quest_third_safe_route"
+  },
+  {
+   "id": "quest_third_scorched_earth"
+  },
+  {
+   "id": "quest_third_supply_cache"
+  },
+  {
+   "id": "quest_third_water_source"
+  },
+  {
+   "id": "quest_third_craft_battery_swap"
+  },
+  {
+   "id": "quest_third_craft_boot_sole"
+  },
+  {
+   "id": "quest_third_craft_can_opener"
+  },
+  {
+   "id": "quest_third_craft_clothing_mend"
+  },
+  {
+   "id": "quest_third_craft_door_hinge"
+  },
+  {
+   "id": "quest_third_craft_improvise_lockpick"
+  },
+  {
+   "id": "quest_third_craft_repair_tool"
+  },
+  {
+   "id": "quest_third_craft_salvage_wiring"
+  },
+  {
+   "id": "quest_third_craft_sharpen_blade"
+  },
+  {
+   "id": "quest_third_craft_shelter_patch"
+  },
+  {
+   "id": "quest_third_craft_stove_fix"
+  },
+  {
+   "id": "quest_third_craft_trap_repair"
+  },
+  {
+   "id": "quest_third_craft_upgrade_flashlight"
+  },
+  {
+   "id": "quest_third_craft_water_filter"
+  },
+  {
+   "id": "quest_third_craft_window_board"
+  },
+  {
+   "id": "quest_third_med_bandage_wound"
+  },
+  {
+   "id": "quest_third_med_boil_water"
+  },
+  {
+   "id": "quest_third_med_breathe_exercise"
+  },
+  {
+   "id": "quest_third_med_clean_infection"
+  },
+  {
+   "id": "quest_third_med_find_antibiotics"
+  },
+  {
+   "id": "quest_third_med_find_painkillers"
+  },
+  {
+   "id": "quest_third_med_food_safety"
+  },
+  {
+   "id": "quest_third_med_iodine_pill"
+  },
+  {
+   "id": "quest_third_med_rest_exhaustion"
+  },
+  {
+   "id": "quest_third_med_sleep_hygiene"
+  },
+  {
+   "id": "quest_third_med_splint_break"
+  },
+  {
+   "id": "quest_third_med_sunburn_treat"
+  },
+  {
+   "id": "quest_third_med_treat_blister"
+  },
+  {
+   "id": "quest_third_med_treat_burn"
+  },
+  {
+   "id": "quest_third_med_water_ration"
+  },
+  {
+   "id": "quest_third_combat_ambush_avoid"
+  },
+  {
+   "id": "quest_third_combat_darkness_move"
+  },
+  {
+   "id": "quest_third_combat_defend_camp"
+  },
+  {
+   "id": "quest_third_combat_dog_encounter"
+  },
+  {
+   "id": "quest_third_combat_escape_pursuit"
+  },
+  {
+   "id": "quest_third_combat_group_encounter"
+  },
+  {
+   "id": "quest_third_combat_mutant_scare"
+  },
+  {
+   "id": "quest_third_combat_negotiate_passage"
+  },
+  {
+   "id": "quest_third_combat_noise_discipline"
+  },
+  {
+   "id": "quest_third_combat_raider_patrol"
+  },
+  {
+   "id": "quest_third_combat_scavenge_threat"
+  },
+  {
+   "id": "quest_third_combat_shelter_fortify"
+  },
+  {
+   "id": "quest_third_combat_sniper_awareness"
+  },
+  {
+   "id": "quest_third_combat_trap_detect"
+  },
+  {
+   "id": "quest_third_combat_weapon_find"
+  },
+  {
+   "id": "quest_third_lore_children_drawing"
+  },
+  {
+   "id": "quest_third_lore_clock_tower"
+  },
+  {
+   "id": "quest_third_lore_coded_message"
+  },
+  {
+   "id": "quest_third_lore_folk_song"
+  },
+  {
+   "id": "quest_third_lore_graffiti_story"
+  },
+  {
+   "id": "quest_third_lore_inscription"
+  },
+  {
+   "id": "quest_third_lore_letter_fragment"
+  },
+  {
+   "id": "quest_third_lore_map_fragment"
+  },
+  {
+   "id": "quest_third_lore_medical_record"
+  },
+  {
+   "id": "quest_third_lore_memorial_wall"
+  },
+  {
+   "id": "quest_third_lore_newspaper"
+  },
+  {
+   "id": "quest_third_lore_photograph"
+  },
+  {
+   "id": "quest_third_lore_radio_archive"
+  },
+  {
+   "id": "quest_third_lore_recording"
+  },
+  {
+   "id": "quest_third_lore_school_exercise"
+  },
+  {
+   "id": "quest_tower_seven_broadcast"
+  },
+  {
+   "id": "quest_trial_by_fire"
+  },
+  {
+   "id": "quest_tribute_break"
+  },
+  {
+   "id": "quest_truth_of_day_30"
+  },
+  {
+   "id": "quest_vindicated"
+  },
+  {
+   "id": "quest_worthless_paper"
+  },
+  {
+   "id": "quest_continental_convoy_gate",
+   "title": "Continental Convoy Gate",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_granite_foundry_brass_smuggling",
+   "title": "Granite Foundry Brass Smuggling",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_day_360_final_reckoning",
+   "title": "Day 360 Final Reckoning",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_dose_the_first_reading",
+   "title": "The Dose The First Reading",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_warlord_tribute_first_payment",
+   "title": "Warlord Tribute First Payment",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_standing_record_faction_intro",
+   "title": "Standing Record Faction Intro",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_crossing_arbitration_first_case",
+   "title": "Crossing Arbitration First Case",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_holdfast_duty_roster_intro",
+   "title": "Holdfast Duty Roster Intro",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_greenhouse_first_planting",
+   "title": "Greenhouse First Planting",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_black_flotilla_first_contact",
+   "title": "Black Flotilla First Contact",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_faction_war_sector_4_opening",
+   "title": "Faction War Sector 4 Opening",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_night_watch_sentry_01",
+   "title": "Night Watch Sentry 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_ghost_transmission_01",
+   "title": "Ghost Transmission 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_relic_provenance_01",
+   "title": "Relic Provenance 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_bunker_graffiti_01",
+   "title": "Bunker Graffiti 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_dweller_medical_01",
+   "title": "Dweller Medical 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_courier_dispatch_01",
+   "title": "Courier Dispatch 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_oral_lore_01",
+   "title": "Oral Lore 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_trade_caravan_01",
+   "title": "Trade Caravan 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_underground_fungi_01",
+   "title": "Underground Fungi 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_vinyl_record_01",
+   "title": "Vinyl Record 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_geological_strata_01",
+   "title": "Geological Strata 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_lost_tech_manual_01",
+   "title": "Lost Tech Manual 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_currents_pamphlet_01",
+   "title": "Currents Pamphlet 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_dead_hand_directive_01",
+   "title": "Dead Hand Directive 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_radio_scriptbook_01",
+   "title": "Radio Scriptbook 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_survivor_letter_01",
+   "title": "Survivor Letter 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_wasteland_gazetteer_01",
+   "title": "Wasteland Gazetteer 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_wasteland_expedition_01",
+   "title": "Wasteland Expedition 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_wasteland_bestiary_01",
+   "title": "Wasteland Bestiary 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_regional_treaty_01",
+   "title": "Regional Treaty 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_daily_survival_01",
+   "title": "Daily Survival 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_narrative_batch_01",
+   "title": "Narrative Batch 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_found_documents_01",
+   "title": "Found Documents 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_eulogy_corpus_01",
+   "title": "Eulogy Corpus 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_vel_triage_log_01",
+   "title": "Vel Triage Log 01",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_garrison_blood_debt",
+   "title": "Garrison Blood Debt",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_rebuilder_seed_vault",
+   "title": "Rebuilder Seed Vault",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_ash_sign_pyre_apostasy",
+   "title": "Ash Sign Pyre Apostasy",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_hydro_baron_aqueduct_sabotage",
+   "title": "Hydro Baron Aqueduct Sabotage",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_d9_null_stand_down",
+   "title": "D9 Null Stand Down",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_deep_freeze_heating_crisis",
+   "title": "Deep Freeze Heating Crisis",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_low_background_provenance",
+   "title": "Low Background Provenance",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_allotment_brass_treaty",
+   "title": "Allotment Brass Treaty",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_black_thaw_drainage_rescue",
+   "title": "Black Thaw Drainage Rescue",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_radio_142_carrier_lock",
+   "title": "Radio 142 Carrier Lock",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_final_manifest_muster",
+   "title": "Final Manifest Muster",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_railway_guild_telegraph_loop",
+   "title": "Railway Guild Telegraph Loop",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_penal_battalion_sanctuary_corridor",
+   "title": "Penal Battalion Sanctuary Corridor",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_deep_salt_hospital_quarantine",
+   "title": "Deep Salt Hospital Quarantine",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_supply_corps_armored_relief",
+   "title": "Supply Corps Armored Relief",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_ash_militia_switchback_redoubt",
+   "title": "Ash Militia Switchback Redoubt",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_ammonium_nitrate_bomb_disarmament",
+   "title": "Ammonium Nitrate Bomb Disarmament",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_mustard_gas_culvert_neutralization",
+   "title": "Mustard Gas Culvert Neutralization",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_vitrified_crater_spectrometry_core",
+   "title": "Vitrified Crater Spectrometry Core",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_salt_cavern_dynamite_treaty",
+   "title": "Salt Cavern Dynamite Treaty",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_periscope_optics_restoration",
+   "title": "Periscope Optics Restoration",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_muster_uprising",
+   "title": "The Muster Uprising",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_rate_card_war",
+   "title": "The Rate Card War",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_unsigned_order",
+   "title": "The Unsigned Order",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_four_names_on_the_roster",
+   "title": "Four Names On The Roster",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_second_winter",
+   "title": "The Second Winter",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_eleven_month_circuit",
+   "title": "The Eleven Month Circuit",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_second_color_ledger",
+   "title": "The Second Color Ledger",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_nothing_to_offer",
+   "title": "Nothing To Offer",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_sick_of_room_seven",
+   "title": "The Sick Of Room Seven",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_childs_number",
+   "title": "The Childs Number",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_signed_hour",
+   "title": "The Signed Hour",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_falsified_reading",
+   "title": "The Falsified Reading",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_stolen_dosimeter",
+   "title": "The Stolen Dosimeter",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_child_over_the_limit",
+   "title": "Child Over the Limit",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_register_audit",
+   "title": "The Register Audit",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_black_market_clean_bill",
+   "title": "Black-Market Clean Bill",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_broken_calibration_chain",
+   "title": "The Broken Calibration Chain",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_exposure_for_the_essential_worker",
+   "title": "Exposure for Essential Worker",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_the_missing_page",
+   "title": "The Missing Page",
+   "synopsis": "",
+   "factionTag": "",
+   "status": "active"
+  },
+  {
+   "id": "quest_scavenger_alliance",
+   "title": "The Scavenger Alliance",
+   "synopsis": "The scavengers who came to the door are not the ones who came last season, and their offer of alliance is written in the grammar of the desperate. The shelter must decide whether loyalty survives its first hard winter, and whether that can be decided in advance.",
+   "factionTag": "scavengers",
+   "status": "active"
+  },
+  {
+   "id": "quest_farmers_bargain",
+   "title": "The Farmer's Bargain",
+   "synopsis": "The growers offer fresh food for protection, and the offer is careful, because both sides know what protection becomes when it fails. The food is real. The arithmetic of what the shelter would owe is also real.",
+   "factionTag": "farmers",
+   "status": "active"
+  },
+  {
+   "id": "quest_radio_signal",
+   "title": "Mysterious Radio Signal",
+   "synopsis": "Something is transmitting from the ruin on the ridge, on a schedule, too clean for a survivor and too weak for a station. The radio log has it twice a day. Nobody has written down what they think it is.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_medical_supply_run",
+   "title": "Medical Supply Run",
+   "synopsis": "The settlement down-valley is out of medicine and asked correctly, without exaggeration, which is what makes it land. The expedition is dangerous; the asking is why it is dangerous.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_black_flotilla_trade",
+   "title": "Black Flotilla Trade Negotiation",
+   "synopsis": "The Black Flotilla offers terms generous enough to be suspicious, and the suspicion is the terms. Their reputation arrives before their boats, and the boats arrive anyway.",
+   "factionTag": "black_flotilla",
+   "status": "active"
+  },
+  {
+   "id": "quest_exp09_sunken_submarine",
+   "title": "The Half-Submerged Barrik",
+   "synopsis": "Coordinates and a Flotilla challenge ribbon have led you to the Half-Submerged Barrik. Inside, the remains of a pre-war crew wait in the dark. This is not a salvage run — it is a burial.",
+   "factionTag": "black_flotilla",
+   "status": "active"
+  },
+  {
+   "id": "quest_bunker_upgrade",
+   "title": "Bunker Expansion Project",
+   "synopsis": "The survivors have drafted an expansion: more beds, better facilities. The drafting is the point, because people plan for futures they intend to see. The walls will want labor, and the labor will want convincing.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_radiation_study",
+   "title": "Radiation Study Expedition",
+   "synopsis": "Scientists from a distant settlement want to measure the radiation here, and they ask the way people with instruments ask. What they find will be written down, and what is written down eventually travels.",
+   "factionTag": "scientists",
+   "status": "active"
+  },
+  {
+   "id": "quest_survivor_rescue",
+   "title": "Survivor Rescue Mission",
+   "synopsis": "A lone figure lies injured near the perimeter fence, in camera range, in the open, for hours. Rescue means opening a door; leaving means everyone keeps watching the camera, which is its own kind of answer.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_raider_peace_offer",
+   "title": "Raider Peace Offer",
+   "synopsis": "The raiders offer a truce for tribute, and the offer is polite, and the politeness is arithmetic. Tribute paid once is tribute expected forever, and everyone at the table knows the real question is which.",
+   "factionTag": "raiders",
+   "status": "active"
+  },
+  {
+   "id": "quest_expedition_equipment",
+   "title": "Expedition Equipment Upgrade",
+   "synopsis": "The expedition gear is failing in stages — straps, seals, soles — and the stages are logged in the injury reports. Upgrades cost; not upgrading also costs, and that bill is already arriving.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_medical_triage",
+   "title": "Medical Triage Decision",
+   "synopsis": "Two patients, one course of treatment, one night. The medic has laid the arithmetic on the table and refuses to do it alone, which is both the right thing and the hard thing.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_scout_training",
+   "title": "Scout Training Program",
+   "synopsis": "The scouts keep coming back hurt, and the word keep is the finding. A training program: drills, routes, and the unglamorous habits that keep people alive in the unglamorous places.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_food_storage_theft",
+   "title": "Food Storage Theft",
+   "synopsis": "The stores are lighter than the ledger, three nights running. The theft is small and it is inside, and the investigation will end at a name everyone suspects and nobody wants to say.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_medical_experiment",
+   "title": "Medical Experiment",
+   "synopsis": "A desperate medic proposes an untested procedure for radiation sickness, and the word untested is doing a great deal of work in that sentence. The patient has volunteered; the volunteering is informed, which is the only shield anyone can offer.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_survivor_leadership",
+   "title": "Survivor Leadership Challenge",
+   "synopsis": "A charismatic survivor is asking, politely and in public, who decided what. The question is legitimate, and the legitimacy is exactly what makes it dangerous. A vote or a refusal; both are answers.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_raider_ambush",
+   "title": "Raider Ambush",
+   "synopsis": "The expedition walked into an ambush on a route that was supposed to be quiet. Fight, run, or talk — the choice is being made in the open, and the raiders are watching to see which kind of shelter this is.",
+   "factionTag": "raiders",
+   "status": "active"
+  },
+  {
+   "id": "quest_bunker_defense",
+   "title": "Bunker Defense Drill",
+   "synopsis": "A raid is a rumor with a direction, and the drill is how the shelter argues with it. Stations, doors, signals — practiced until the practice is boring, because boring survives.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_survivor_memorial",
+   "title": "Survivor Memorial",
+   "synopsis": "The names have accumulated faster than the ceremony. The shelter owes its dead one, and the living owe it to themselves to be present while it is paid.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_food_rationing",
+   "title": "Food Rationing Crisis",
+   "synopsis": "Stores have dropped past the line where arithmetic becomes policy. Rationing keeps people; not rationing keeps kindness, for a while. The council must choose which word to keep.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_technology_scavenging",
+   "title": "Technology Scavenging Expedition",
+   "synopsis": "Pre-war technology sits in a ruin the survey flagged twice, both flags about the dose. The expedition is a cost-benefit argument where the cost is measured in rem.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_medical_training",
+   "title": "Medical Training Program",
+   "synopsis": "The infirmary runs on one person's knowledge, and that person sleeps. Train hands: dressings, doses, and the arithmetic of fever. The shelter's medicine should outlive its best medic.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_survivor_skills_assessment",
+   "title": "Survivor Skills Assessment",
+   "synopsis": "Who can do what has never been written down, and the not-writing is starting to cost. Assess the survivors, put labor where labor fits, and find out what the shelter has been carrying all along.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_bunker_medical_bay",
+   "title": "Medical Bay Expansion",
+   "synopsis": "The medical bay is two beds and a curtain pretending to be a ward. Expansion means a second table, better light, and a door that closes. The patients deserve a room that deserves them.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_survivor_romance",
+   "title": "Survivor Romance",
+   "synopsis": "Two survivors have stopped being careful around each other, and the bunker — which notices everything — has started placing bets. Acknowledging or ignoring it are both governance of something that was never yours.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_fuel_crisis",
+   "title": "Fuel Crisis",
+   "synopsis": "Fuel has dropped below the number where the generator starts making decisions. Scavenge and send people into the cold, or conserve and let the bunker get colder by degrees. Both choices are a schedule; only one has names on it.",
+   "factionTag": "neutral",
+   "status": "active"
+  },
+  {
+   "id": "quest_apprentice_pipefitting",
+   "title": "Eli's Pipe-Fitting Pupil",
+   "synopsis": "Eli was the only one who knew which elbow joint took packing and which one took thread tape. Now there is a second pair of hands that knows, and the second pair is eleven.",
+   "factionTag": "apprentice_arc",
+   "status": "active",
+   "narrativeHook": "apprenticeship_completion:skill_rough_repairs"
+  },
+  {
+   "id": "quest_apprentice_dressing",
+   "title": "Sasha's Suture Line",
+   "synopsis": "Sasha had the steady hands the bunker trusted with the children and the wounded. She has been teaching an apprentice how to clean and close a wound without flinching. The first closure the apprentice did alone was a small one, and it held, and the apprentice did not throw up.",
+   "factionTag": "apprentice_arc",
+   "status": "active",
+   "narrativeHook": "apprenticeship_completion:skill_field_dressing"
+  },
+  {
+   "id": "quest_apprentice_radio",
+   "title": "The Quiet Dial",
+   "synopsis": "The radio operator taught an apprentice the listening hour. The numbers station came in and the apprentice wrote it down without being told, on the second try, while the rest of the bunker slept. The dial is not a skill. The dial is a habit.",
+   "factionTag": "apprentice_arc",
+   "status": "active",
+   "narrativeHook": "apprenticeship_completion:skill_signal_ear"
+  },
+  {
+   "id": "quest_apprentice_recycling",
+   "title": "The Furnace Daughter",
+   "synopsis": "She was always the one who fed the forge. The apprentice learned the rhythm last winter: when the coke is right, when the slag breaks, when the billet is ready and when it is not. The first time she pulled an ingot alone with the master watching, no one clapped. They said nothing, which was the right thing to say.",
+   "factionTag": "apprentice_arc",
+   "status": "active",
+   "narrativeHook": "apprenticeship_completion:skill_workshop_sense"
+  },
+  {
+   "id": "quest_apprentice_hatch",
+   "title": "The Hatch Watcher",
+   "synopsis": "A child took the hatch watch alone for ninety minutes for the first time and the click of the counter was the only sound in the whole bunker for those ninety minutes. The master watched from inside. The watcher's hands were not shaking by minute forty-five.",
+   "factionTag": "apprentice_arc",
+   "status": "active",
+   "narrativeHook": "apprenticeship_completion:skill_watchful"
+  },
+  {
+   "id": "quest_apprentice_triage",
+   "title": "Adaeze's Triage Understudy",
+   "synopsis": "The triage line at 03:00 is the one the bunker runs once a week so the new ones can practice. The first solo triaged patient was not a real patient but the apprentice had to walk through the steps as if she were. The steps held up.",
+   "factionTag": "apprentice_arc",
+   "status": "active",
+   "narrativeHook": "apprenticeship_completion:skill_steady_hands"
+  },
+  {
+   "id": "quest_schooling_curriculum_letters",
+   "title": "The Reading Hour",
+   "synopsis": "The bunker's only alphabet chart lives on a wall in the cold room. The children have to learn to read because the only books left are the ones the adults are willing to speak aloud. The Reading Hour is one hour a day and the children are willing. The Mechanical Hour is a different hour, and they are willing for that one too.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "schooling_letters_unlock"
+  },
+  {
+   "id": "quest_schooling_curriculum_mechanics",
+   "title": "The Mechanical Hour",
+   "synopsis": "The Mechanical Hour starts after the Reading Hour, in the same room, at the same lamp. The children learn which valve does what, and why the pumps sound the way they do when the outflow constipates. The teacher is the same person who taught the last cohort.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "schooling_mechanics_unlock"
+  },
+  {
+   "id": "quest_schooling_curriculum_medicine",
+   "title": "First Stitches",
+   "synopsis": "A child hands the needle, a child hands the thread, and eventually a child closes the first wound she was not the one to make. The teacher is the bunker's only field medic and the class is small and the classroom is the infirmary floor.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "schooling_medicine_unlock"
+  },
+  {
+   "id": "quest_schooling_curriculum_marksmanship",
+   "title": "The Burned-Out Rifle",
+   "synopsis": "There is a rifle with no ammunition, in the storeroom, on a shelf, that the children are taught to disassemble and reassemble in the dark. The first time the disassembled rifle fell back together in the dark, the child did not flinch. Some of the adults were not sure that was a good thing.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "schooling_marksmanship_unlock"
+  },
+  {
+   "id": "quest_adoption_warmarms",
+   "title": "The Quiet Adoption",
+   "synopsis": "A casualty orphan from the winter convoy was folded into the bunker's census without ceremony. The adults who raised the child were not the biological parents of any child. They learned to share a cot and a ration, and they did, because the calendar said the convoy was not coming back.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "adoption_warmarms"
+  },
+  {
+   "id": "quest_adoption_fierce_mother",
+   "title": "The Fierce Mother's House",
+   "synopsis": "The Feral Orphan was assigned a rotation with the Fierce Mother and the Vet, on the council sheet, in plain ink. The Fierce Mother sleeps with one hand on the dog. The Vet sleeps with one hand on the knife. The Orphan slept, finally, with one hand on nothing. That was the small victory.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "adoption_rotational_vigil"
+  },
+  {
+   "id": "quest_adoption_grange",
+   "title": "A Hundred and Fourteen",
+   "synopsis": "A casualty orphan was assigned, by plot number, to a farmer couple who still held the allotment waiting list from before. The plot was 114. It was a plum number on the list. The adults said the plum number killed the convoy that carried the child's old family and were immediately sorry for saying so.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "adoption_grange_plot"
+  },
+  {
+   "id": "quest_adoption_archive",
+   "title": "The Children of the Archive",
+   "synopsis": "The municipal archive adopted four orphans when the bunker census crossed the binder threshold for the first time. The newest intake was logged under the next four open plot numbers. The older children carried the binders to the new shelf before the new children learned which shelf it was.",
+   "factionTag": "childhood_path",
+   "status": "active",
+   "narrativeHook": "adoption_archive_intake"
+  },
+  {
+   "id": "quest_coming_of_age_first_surface",
+   "title": "The First Surface Trip",
+   "synopsis": "The bunker's hatch opened the morning of day ninety-four with a child on the perimeter walk, in clean clothes, with the hatch lead close enough to catch the child's silhouette if the silhouette needed catching. The child walked one hundred metres into the scrub and did not turn around. By minute four, the child had stopped looking up.",
+   "factionTag": "coming_of_age",
+   "status": "active",
+   "narrativeHook": "trigger_maturation"
+  },
+  {
+   "id": "quest_coming_of_age_first_watch",
+   "title": "The First Solo Watch",
+   "synopsis": "Solo watch starts at minute zero and ends when the clock says it ends. The first time a child took the post alone, the Geiger counter was quiet, nothing came in over the radio, and the hatch did not move. The watch was not heroic. The watch was the watch.",
+   "factionTag": "coming_of_age",
+   "status": "active",
+   "narrativeHook": "trigger_maturation"
+  },
+  {
+   "id": "quest_cipher_relay_count",
+   "title": "The Relay Count Cipher",
+   "synopsis": "An eerie five-figure shortwave broadcast loops on 104.5 MHz. Decrypting the coordinates requires Communications Codebook Alpha excavated from the Collapsed Command Vault to unlock Hidden Relay Bunker 09.",
+   "factionTag": "sigint_exploration",
+   "status": "active",
+   "narrativeHook": "cipher_relay_decode"
+  },
+  {
+   "id": "quest_cipher_winter_ledger",
+   "title": "Winter Ledger Decryption",
+   "synopsis": "Automated logistics transmissions report cold-storage inventory offsets. A laminated cipher sheet reveals the Sub-Basement Logistics Reserve.",
+   "factionTag": "sigint_exploration",
+   "status": "active",
+   "narrativeHook": "cipher_winter_decode"
+  },
+  {
+   "id": "quest_cipher_last_rotation",
+   "title": "Last Rotation Dead-Hand",
+   "synopsis": "A military dead-hand standby broadcast prompts for authentication at Waypoint November. Microfilm index cylinder decodes the Dead-Drop Command Shelter coordinates.",
+   "factionTag": "sigint_exploration",
+   "status": "active",
+   "narrativeHook": "cipher_rotation_decode"
+  },
+  {
+   "id": "quest_waystation_alpha_filter_rebuild",
+   "title": "Waystation A: Soot Filter Flush",
+   "synopsis": "Warden Kessel reports severe coal dust clogging the primary ventilation intake at Waystation A in the Cut. Deliver clean water and filter membrane to restore air cycling.",
+   "factionTag": "infrastructure",
+   "status": "active"
+  },
+  {
+   "id": "quest_waystation_switchback_scree_shoring",
+   "title": "Switchback Waystation: Scree Shoring",
+   "synopsis": "Recent rockslides threaten to sweep the lower bunkhouse off the cliff ledge at the Switchback Waystation. Transport structural timbers and scrap metal to reinforce the cribbing.",
+   "factionTag": "infrastructure",
+   "status": "active"
+  },
+  {
+   "id": "quest_waystation_span44_abutment_weld",
+   "title": "Span 44: Railway Abutment Repair",
+   "synopsis": "Foreman Taggart requires mechanical fasteners and welding electrodes to secure the settling western bridge pier on Railway Span 44 before heavy iron convoys can cross.",
+   "factionTag": "infrastructure",
+   "status": "active"
+  },
+  {
+   "id": "quest_waystation_verity_pump_clear",
+   "title": "Verity Motel: Deep Well Desilt",
+   "synopsis": "Fine sand and silt have jammed the deep-aquifer impeller at the Verity Motel staging post. Clean the manifold and replace the drive belt to restore potable water dispensing.",
+   "factionTag": "infrastructure",
+   "status": "active"
+  },
+  {
+   "id": "quest_waystation_coast_lock_sluice_reclaim",
+   "title": "Lock Gate Four: Sluice Valve Reclaim",
+   "synopsis": "Heavy brine scale has frozen the tidal sluice bypass at Lock Gate Four. Apply anti-corrosive solvent and grease to re-open the maritime staging basin.",
+   "factionTag": "infrastructure",
+   "status": "active"
+  },
+  {
+   "id": "quest_waystation_grain_verge_sentry_accord",
+   "title": "Verge Silo: Sentry Ration Accord",
+   "synopsis": "Central Garrison sentries are demanding excess grain tithes at the Verge Silo Waystation. Negotiate a standardized tariff or provide emergency rations to prevent an embargo.",
+   "factionTag": "infrastructure",
+   "status": "active"
+  },
+  {
+   "id": "quest_crossing_asylum_in_the_truss"
+  },
+  {
+   "id": "quest_crossing_contraband_medical_vial"
+  },
+  {
+   "id": "quest_crossing_displaced_kin_roll"
+  },
+  {
+   "id": "quest_crossing_embargo_transit_escort"
+  },
+  {
+   "id": "quest_crossing_flotilla_docking_rights"
+  },
+  {
+   "id": "quest_crossing_quarantine_breach_trial"
+  },
+  {
+   "id": "quest_crossing_the_null_charter_vote"
+  },
+  {
+   "id": "quest_crossing_vehicle_lien_arbitration"
+  },
+  {
+   "id": "quest_holdfast_boiler_crack_panic"
+  },
+  {
+   "id": "quest_holdfast_brine_boiler_scum"
+  },
+  {
+   "id": "quest_holdfast_brine_intake_poisoning"
+  },
+  {
+   "id": "quest_holdfast_broken_runner_rescue"
+  },
+  {
+   "id": "quest_holdfast_census_absentee_defense"
+  },
+  {
+   "id": "quest_holdfast_census_claimant_audit"
+  },
+  {
+   "id": "quest_holdfast_census_estate_division"
+  },
+  {
+   "id": "quest_holdfast_census_forged_voucher"
+  },
+  {
+   "id": "quest_holdfast_estuary_water_compact"
+  },
+  {
+   "id": "quest_holdfast_ration_lockup_breach"
+  },
+  {
+   "id": "quest_holdfast_rival_sled_overtake"
+  },
+  {
+   "id": "quest_holdfast_salt_convoy_haul"
+  },
+  {
+   "id": "quest_holdfast_salter_work_stoppage"
+  },
+  {
+   "id": "quest_holdfast_scree_blockage_clear"
+  },
+  {
+   "id": "quest_record_archive_burn_layer"
+  },
+  {
+   "id": "quest_record_cold_store_sublevel"
+  },
+  {
+   "id": "quest_record_metro_derailment_triage"
+  },
+  {
+   "id": "quest_record_mine_shaft_adit_collapse"
+  },
+  {
+   "id": "quest_record_seed_bank_purge_trace"
+  },
+  {
+   "id": "quest_record_sluice_failure_verdict"
+  },
+  {
+   "id": "quest_record_sub_basement_blueprint"
+  },
+  {
+   "id": "quest_record_the_boundary_dispute"
+  },
+  {
+   "id": "quest_record_the_cold_survey"
+  },
+  {
+   "id": "quest_record_the_lamp_keepers_oath"
+  },
+  {
+   "id": "quest_record_the_lamp_oil_ledger"
+  },
+  {
+   "id": "quest_record_the_last_sector"
+  },
+  {
+   "id": "quest_record_the_last_watch_beacon"
+  },
+  {
+   "id": "quest_record_the_missing_plate"
+  },
+  {
+   "id": "quest_record_the_overlay_pigment"
+  },
+  {
+   "id": "quest_record_the_rejected_survey"
+  },
+  {
+   "id": "quest_record_the_second_count"
+  },
+  {
+   "id": "quest_record_the_survey_nail"
+  },
+  {
+   "id": "quest_record_the_unmarked_plaque"
+  },
+  {
+   "id": "quest_record_transit_vent_shaft_route"
+  },
+  {
+   "id": "quest_record_utility_junction_crossover"
+  },
+  {
+   "id": "quest_record_vault_breach_forensics"
+  },
+  {
+   "id": "quest_verdict_alibi_verification"
+  },
+  {
+   "id": "quest_verdict_chain_of_custody"
+  },
+  {
+   "id": "quest_verdict_charter_authentication"
+  },
+  {
+   "id": "quest_verdict_eden_grabs"
+  },
+  {
+   "id": "quest_verdict_forged_evidence_inquest"
+  },
+  {
+   "id": "quest_verdict_machine_interpretation_contest"
+  },
+  {
+   "id": "quest_verdict_prior_verdict_appeal"
+  },
+  {
+   "id": "quest_verdict_reconciled_testimony"
+  },
+  {
+   "id": "quest_verdict_the_hold"
+  },
+  {
+   "id": "quest_verdict_the_mortars_timetable"
+  },
+  {
+   "id": "quest_verdict_the_reckoning_call"
+  },
+  {
+   "id": "quest_verdict_the_shift_charter"
+  },
+  {
+   "id": "quest_verdict_the_summons"
+  },
+  {
+   "id": "quest_verdict_the_tape_silo"
+  },
+  {
+   "id": "quest_verdict_the_warm_range"
+  },
+  {
+   "id": "quest_verdict_witness_subpoena"
+  },
+  {
+   "id": "quest_distress_trapped_mechanic",
+   "title": "Rescue: Trapped Mechanic",
+   "synopsis": "A distress signal on 88.3 MHz reports a mechanic trapped at the rail depot. Her leg is pinned under a beam. She has water for two more days.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_88_3",
+   "deadlineDays": 3,
+   "rewardItems": [
+    "scrap_metal",
+    "mechanical_parts"
+   ],
+   "rewardReputation": 5
+  },
+  {
+   "id": "quest_distress_injured_trader",
+   "title": "Rescue: Injured Trader",
+   "synopsis": "A distress signal on 156.8 MHz: a trader down on Route 6, injured, offering to share his goods with whoever reaches him. The frequency is honest. The offer is the part that needs eyes on it.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_156_8",
+   "deadlineDays": 2,
+   "rewardItems": [
+    "bandage",
+    "battery",
+    "iodine_pills"
+   ],
+   "rewardReputation": 3
+  },
+  {
+   "id": "quest_distress_family_shelter",
+   "title": "Rescue: Family Shelter",
+   "synopsis": "A child's voice on 445.2 MHz reports her mother is sick and unresponsive. The bunker has a blue door and a broken lock.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_445_2",
+   "deadlineDays": 2,
+   "rewardItems": [
+    "clean_water",
+    "canned_food"
+   ],
+   "rewardReputation": 8
+  },
+  {
+   "id": "quest_distress_raider_trap",
+   "title": "Investigation: Raider Lure",
+   "synopsis": "A suspicious signal on 192.4 MHz mentions an unguarded fuel cache. The signal pattern is too consistent to be genuine.",
+   "factionTag": "raiders",
+   "status": "active",
+   "signalId": "freq_distress_192_4",
+   "deadlineDays": 3,
+   "rewardItems": [],
+   "rewardReputation": 0,
+   "warningText": "This is a raider trap. Responding will trigger an ambush."
+  },
+  {
+   "id": "quest_distress_military_patrol",
+   "title": "Rescue: Stranded Military Patrol",
+   "synopsis": "A military distress signal on 901.2 MHz reports Sergeant Voss's patrol six pinned down with two wounded. Ammunition low.",
+   "factionTag": "military",
+   "status": "active",
+   "signalId": "freq_distress_901_2",
+   "deadlineDays": 3,
+   "rewardItems": [
+    "ammo_556",
+    "field_dressing_kit"
+   ],
+   "rewardReputation": 10
+  },
+  {
+   "id": "quest_arc_mara_01_waystation",
+   "title": "The Water Station Route",
+   "synopsis": "A caravan factor working the water stations is short after a bad crossing. What you do about it is the first entry in her ledger.",
+   "factionTag": "faction_grain_exchange",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_mara_02_route",
+   "title": "Wreckage on the Cut Road",
+   "synopsis": "The caravan factor's second wagon is through the road crust, and she is camped on the wreck guarding the cargo.",
+   "factionTag": "faction_grain_exchange",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_mara_03_office",
+   "title": "The Coordinator's Stamp",
+   "synopsis": "The grain exchange has given Mara Veln the southern routes. The rate sheet has a line for friends of the coordinator.",
+   "factionTag": "faction_grain_exchange",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_ilze_01_clinic",
+   "title": "Eight Beds",
+   "synopsis": "An almshouse clinic is down to its last shelves; its physician shows the inventory before asking for anything.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_ilze_02_outbreak",
+   "title": "The Fever Finds the Almshouse",
+   "synopsis": "The clinic is full of a fever she can name but not stop, and the camp is one rumor from a cordon.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_ilze_03_clinic",
+   "title": "The Door That Stays Open",
+   "synopsis": "The clinic trains more hands than it loses now; the verge sends its sick to a door never shut at the appointed hour.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_marek_01_patrol",
+   "title": "Checkpoint Gamma",
+   "synopsis": "A garrison checkpoint runs by the book, and the corporal keeps the book where petitioners can read it.",
+   "factionTag": "faction_central_garrison",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_marek_02_deserter",
+   "title": "The Margin Notes",
+   "synopsis": "The corporal who wrote dated objections to his own orders is now the subject of them.",
+   "factionTag": "faction_central_garrison",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_marek_03_watch",
+   "title": "Word Before the Sweeps",
+   "synopsis": "An outside ally sends warning before every sweep: routes, timing, the mood of the command.",
+   "factionTag": "faction_central_garrison",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_lina_01_found",
+   "title": "The Girl Who Counts",
+   "synopsis": "A child keeps order in a queue at the baths, and her count is better than yours.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_lina_02_lessons",
+   "title": "Lessons Twice Given",
+   "synopsis": "The shelter's foundling sits the lessons it gives and invents the ones it will not.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_lina_03_apprentice",
+   "title": "Small Hands, Steady Ones",
+   "synopsis": "The counting becomes a trade instead of a defense: medic's apprentice, roster, and all.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_anete_01_substation",
+   "title": "Live Grounds, No Copper",
+   "synopsis": "A grid engineer holds a live substation with working grounds and no copper to speak of.",
+   "factionTag": "faction_rebuilders",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_anete_02_project",
+   "title": "One Feeder at a Time",
+   "synopsis": "A regional recovery project wants her name on it and her switching orders behind it.",
+   "factionTag": "faction_rebuilders",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_anete_03_grid",
+   "title": "The Region On Schedule",
+   "synopsis": "The grid is small, documented, and true: two feeders, a schedule, and switching orders done safely.",
+   "factionTag": "faction_rebuilders",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_sava_01_camp",
+   "title": "The Hours of the Camp",
+   "synopsis": "A refugee camp keeps its hours, and raiders have begun keeping watch on it.",
+   "factionTag": "cult_of_the_glow",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_sava_02_schism",
+   "title": "The Rota and the Schism",
+   "synopsis": "The camps quarrel over the right way to keep the hours, and both sides quote her.",
+   "factionTag": "cult_of_the_glow",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_sava_03_hours",
+   "title": "The Verdict-Free Hour",
+   "synopsis": "When the camps quarrel, they send for her before they send for anyone with a rifle.",
+   "factionTag": "cult_of_the_glow",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_rika_01_cache",
+   "title": "The Real Floors",
+   "synopsis": "A scavenger knows which cellar floors are real, and offers to split a find rather than race.",
+   "factionTag": "faction_scavenger_guild",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_rika_02_trap",
+   "title": "A Rumor With a Drop Shaft",
+   "synopsis": "A cellar floor that was a rumor took her ankle, and she is camp-bound with a registry full of addresses.",
+   "factionTag": "faction_scavenger_guild",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_rika_03_guild",
+   "title": "First Refusal",
+   "synopsis": "The guild gave her the cellar registry, and the registry has your name in the margin.",
+   "factionTag": "faction_scavenger_guild",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_liva_01_tower",
+   "title": "The Station That Answers",
+   "synopsis": "A relay mast lives on scavenged cells and inherited discipline, and its operator answers on schedule.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_liva_02_seizure",
+   "title": "Somebody Maps the Towers",
+   "synopsis": "The faction that maps towers has mapped hers, and their survey team is two valleys out.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_liva_03_signal",
+   "title": "Fixed Hours",
+   "synopsis": "A station that answers on schedule, under a flag that leaves it alone, with a band of its own.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_oskar_01_debt",
+   "title": "The Settled Figure",
+   "synopsis": "Half a wagon and a whole debt, both priced daily. The buyout figure exists and is written down. The only question is whose hand moves first: yours to help him r",
+   "factionTag": "faction_the_underwrite",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_tomas_01_rounding",
+   "title": "Rounding for the Living",
+   "synopsis": "The overflow clinic's stock does not reconcile with the garrison's ledgers, and the difference keeps matching a list of people who are alive anyway. The audit i",
+   "factionTag": "faction_central_garrison",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_joren_01_plant",
+   "title": "Staffing the Schedule",
+   "synopsis": "The batching plant restart is real, the schedule is honest, and the schedule does not care what happened to the night shift. He needs crews who pass the checkli",
+   "factionTag": "faction_silent_foundry",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_pavel_01_map",
+   "title": "What I Have Walked",
+   "synopsis": "The route scavenger sells only what he has walked, and the best route in the roll is the one he learned the impolite way. The copy costs less than the question ",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_sena_01_log",
+   "title": "Two Versions",
+   "synopsis": "The bridge corridor's crossing log is kept in full view, and the incident reports come back in two versions: what she filed and what command acknowledges. She w",
+   "factionTag": "faction_ash_militia",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_dalia_01_annex",
+   "title": "A Year That Has Not Happened",
+   "synopsis": "The seed annex holds tested lots and one roof of uncertain honesty. She will not leave it and she will not hurry it, and the private tin is not for discussion. ",
+   "factionTag": "faction_salt_freeholders",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_anton_01_herd",
+   "title": "The Fine Herd",
+   "synopsis": "The herd ledger and the herd disagree by exactly the animals a hard winter eats, and the well has been dosed since before anyone asked. What the herd needs is a",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_emil_01_numbers",
+   "title": "The Honest Notebooks",
+   "synopsis": "Four notebooks of repeats, every published solution refuted in writing including his own, and a standing rule that patrons get warned before they get taken. Fun",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_nadia_01_pot",
+   "title": "What the Manifest Says",
+   "synopsis": "The field kitchen's pot is honest and the manifest is not, and she is the difference. The portion ledger disagrees with the pot by exactly the amount the childr",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_arvo_01_crate",
+   "title": "Which Kind of Cook",
+   "synopsis": "The store mess runs institutional-exact under a cook with one private crate of good oil and an argument with himself that has been going since autumn. The crate",
+   "factionTag": "faction_the_provisioned",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_kaspar_01_bearing",
+   "title": "Posted Odds",
+   "synopsis": "The wagon mechanic keeps one vehicle alive past decency and tells you the odds on every road like a man reading weather. The bearing in his toolbox has a story ",
+   "factionTag": "faction_long_walk",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_mira_01_intervals",
+   "title": "The Private Log",
+   "synopsis": "The generator runs to stated hours and the private log runs to stated truth: a missed maintenance interval in her own handwriting, kept so somebody remembers wh",
+   "factionTag": "faction_the_cutters",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_janek_01_dawn",
+   "title": "Walk With Me at Dawn",
+   "synopsis": "The old hunting lines fed the settlement for two winters and have stopped feeding it, and the hunter will hear no word against them before dawn. At dawn, the ro",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_veda_01_circuit",
+   "title": "Marked Paths",
+   "synopsis": "The trap circuit is marked, posted, and paid for, once, in the way that taught her. The standing fee for the maimed still stands. The fog month is a closed subj",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_mirael_01_page",
+   "title": "The Page on the Desk",
+   "synopsis": "The archive's copy lessons are exact and one page of the community record is in a different hand than the rest. It sits face-up on the desk through every lesson",
+   "factionTag": "faction_archivists",
+   "status": "active"
+  },
+  {
+   "id": "quest_arc_niko_01_corridors",
+   "title": "The Rest of the Map",
+   "synopsis": "The runner knows the corridors grown-ups cannot stand up in, and has decided your column watches. The routes have never been written down, because paper can be ",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_crossing_the_salvaged_accord",
+   "title": "The Salvaged Accord",
+   "synopsis": "A disputed covenant over river transit rights resurfaces when a salvage crew claims prior agreement over the same crossing lane. Resolve who holds the charter.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_crossing_the_registry_dispute",
+   "title": "The Registry Dispute",
+   "synopsis": "Two factions claim the same entry in the passage ledger. The crossing administrator needs an outside arbitration before trade can resume through the checkpoint.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_crossing_the_long_toll",
+   "title": "The Long Toll",
+   "synopsis": "The toll keeper is collecting more than the standard crossing fee. Survivors must decide whether to challenge the practice or find a route that avoids the station.",
+   "factionTag": "none",
+   "status": "active"
+  },
+  {
+   "id": "quest_distress_hostage_call",
+   "title": "Rescue: Verity Motel Hostage",
+   "synopsis": "A hostage on 726.5 MHz keys the set at noon each day to prove she is alive. Her captor wants the fuel in the ice-machine room. The offer expires on the fourth day.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_726_5",
+   "deadlineDays": 4,
+   "rewardItems": [
+    "canned_food",
+    "clean_water"
+   ],
+   "rewardReputation": 8
+  },
+  {
+   "id": "quest_distress_infected_survivor",
+   "title": "Rescue: Fever Ward Warden",
+   "synopsis": "A warden on 609.4 MHz has sealed the almshouse fever ward from her own side — to keep the sickness in, not the help out. She asks for boiled water, gloves, and antibiotics before the ledger runs out of names.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_609_4",
+   "deadlineDays": 5,
+   "rewardItems": [
+    "antibiotics",
+    "clean_water"
+   ],
+   "rewardReputation": 10
+  },
+  {
+   "id": "quest_distress_convoy_sos",
+   "title": "Rescue: Salvage Crew Collapse",
+   "synopsis": "A three-person salvage crew on 455.7 MHz is pinned under a collapsed mezzanine in the warehouse district. Their own jacks and slings are intact; what they lack is someone at the other end.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_455_7",
+   "deadlineDays": 4,
+   "rewardItems": [
+    "mechanical_parts",
+    "battery"
+   ],
+   "rewardReputation": 6
+  },
+  {
+   "id": "quest_distress_ransom_demand",
+   "title": "Rescue: Ransom Demand",
+   "synopsis": "Holders on 555.0 MHz demand a toll for a nomad courier taken off the salt route. The deadline is the fourth day, and the river nomads are listening to who answers.",
+   "factionTag": "river_nomads",
+   "status": "active",
+   "signalId": "freq_distress_555_0",
+   "deadlineDays": 4,
+   "rewardItems": [
+    "clean_water",
+    "bandage"
+   ],
+   "rewardReputation": 8
+  },
+  {
+   "id": "quest_distress_false_evacuation",
+   "title": "Warning: Hijacked Evacuation Band",
+   "synopsis": "A civil-defense directive on 380.2 MHz orders survivors to bring everything they carry to a collapsed structure east of the tram depot. Civil defense stopped broadcasting years ago. The cadence is right. The years are wrong.",
+   "factionTag": "raiders",
+   "status": "active",
+   "signalId": "freq_distress_380_2",
+   "deadlineDays": 3,
+   "rewardItems": [],
+   "rewardReputation": 0
+  },
+  {
+   "id": "quest_distress_military_beacon",
+   "title": "Rescue: Command Post Echo",
+   "synopsis": "An automated beacon on 318.0 MHz is being overridden by a living voice. Sergeant Brenner's party held the Ordnance Shoulder; two can still walk out. The beacon's schedule is twelve hours. The legs are less stable.",
+   "factionTag": "military",
+   "status": "active",
+   "signalId": "freq_distress_318_0",
+   "deadlineDays": 5,
+   "rewardItems": [
+    "iodine_pills",
+    "battery"
+   ],
+   "rewardReputation": 12
+  },
+  {
+   "id": "quest_distress_winter_crossing",
+   "title": "Rescue: Winter Crossing",
+   "synopsis": "A salt-route courier on 269.3 MHz is pinned by the weather in the Shallows market. The ice road holds perhaps four days. The courier asks for rescuers who would cross in the same weather they bring.",
+   "factionTag": "neutral",
+   "status": "active",
+   "signalId": "freq_distress_269_3",
+   "deadlineDays": 4,
+   "rewardItems": [
+    "clean_water",
+    "bandage"
+   ],
+   "rewardReputation": 7
+  }
+ ]
 }

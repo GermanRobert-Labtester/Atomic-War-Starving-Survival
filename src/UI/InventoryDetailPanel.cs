@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.UI;
@@ -133,7 +134,7 @@ public partial class InventoryDetailPanel : Control
 
         if (inspection.IsKeepsakeCandidate)
         {
-            AddRow(_itemInfo, "Keepsake: Suitable as a personal keepsake", Ashfall.Core.UI.Theme.Warm);
+            AddRow(_itemInfo, "Keepsake: can be kept", Ashfall.Core.UI.Theme.Warm);
             RenderedRowCount++;
         }
 

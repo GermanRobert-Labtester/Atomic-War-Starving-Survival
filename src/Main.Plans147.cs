@@ -234,9 +234,12 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterBarter != null) return _shelterBarter;
 
+            // Barter trades through the campaign inventory authority; compose it
+            // instead of binding a fabricated empty inventory (INV-16.3).
+            SetupInventory();
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_barter") : new SeededRng(147);
-            var inv = _inventory?.Inventory ?? new Inventory();
-            var itemCatalog = _inventory?.Catalog;
+            var inv = _inventory!.Inventory;
+            var itemCatalog = _inventory!.Catalog;
 
             _shelterBarter = new ShelterBarterSystem(
                 rng, inv,

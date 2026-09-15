@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Ashfall.Core;
+using Ashfall.Core.Expeditions;
 using Ashfall.Core.Maritime;
 using Ashfall.Core.Narrative;
 using Xunit;
@@ -191,6 +193,42 @@ namespace Ashfall.Core.Tests.Narrative
 
             var empty = archive.DiscoverAtProducer("");
             Assert.Empty(empty);
+        }
+
+        [Fact]
+        public void ProducerSites_RegisteredAsExpeditionDestinations_DiscoverLocationRecoversArchive()
+        {
+            // Plan 150–153 seal: deep-lore producer IDs must be registerable in
+            // ExpeditionDefinitionRegistry so DiscoverLocation can fire the
+            // archive producer hook (arrival / map-detail paths).
+            ExpeditionDefinitionRegistry.Clear();
+            var archive = CreateArchive();
+            int recovered = 0;
+            archive.OnRecordFirstDiscovered += (_, _) => recovered++;
+
+            var engine = new ExpeditionSystem();
+            engine.OnLocationDiscovered += locationId => archive.DiscoverAtProducer(locationId);
+
+            Assert.False(engine.DiscoverLocation("location_radar_site"),
+                "unknown registry IDs must fail closed");
+
+            ExpeditionDefinitionRegistry.Register(new ExpeditionDefinition
+            {
+                id = "location_radar_site",
+                displayName = "Hill Radar Annex",
+                distanceTicks = 10,
+                dangerLevel = 6
+            });
+
+            Assert.True(engine.DiscoverLocation("location_radar_site"));
+            Assert.Equal(3, recovered);
+            Assert.True(archive.IsDiscovered("telemetry_olympus_perigee_decay"));
+
+            // Idempotent revisit.
+            Assert.True(engine.DiscoverLocation("location_radar_site"));
+            Assert.Equal(3, recovered);
+
+            ExpeditionDefinitionRegistry.Clear();
         }
 
         [Fact]

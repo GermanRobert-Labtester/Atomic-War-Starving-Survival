@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -17,6 +18,7 @@ using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
 using Ashfall.Core.IO;
 using Ashfall.Core.Radiation;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -59,12 +61,49 @@ namespace AtomicWar.GodotApp
                 _survivors.ExposureResolver.LocationRadRateProvider = locId =>
                     locRads.TryGetValue(locId, out float r) ? r : ExposureEnvironmentResolver.DefaultWastelandOutdoorRadRate;
                 _survivors.ExposureResolver.WeatherRadModifierProvider = () => _world?.Weather?.OutdoorRadModifier ?? 0f;
+                // C2 / Plan 21A (P7) — weather-scaled protective wear: the
+                // canonical WeatherSystem melt multiplier (black rain ×5).
+                _survivors.BindHazmatWearMultiplier(() => _world?.Weather?.HazmatDegradeMultiplier ?? 1f);
                 // Fallout plume contamination overlays expedition/outdoor exposure when clouds overlap a location.
                 _survivors.ExposureResolver.FalloutContaminationProvider = locId =>
                 {
                     if (_fallout == null || string.IsNullOrEmpty(locId)) return 0f;
                     return _fallout.GetLocationContamination(locId);
                 };
+                // Plan 176 — anomaly/storm-front radiation overlays expedition exposure
+                // the same way (typed handoff; RadiationSystem still owns the dose).
+                _survivors.ExposureResolver.AnomalyRadRateProvider = locId =>
+                {
+                    if (_anomalyHazard == null || string.IsNullOrEmpty(locId)) return 0f;
+                    return GetAnomalyLocationRate(locId);
+                };
+                // C2 / Plan 20B — one shelter shielding/interior-radiation model.
+                // Every provider reads a canonical owner lazily so setup order
+                // cannot drop a seam; unbound systems degrade to nominal values
+                // (healthy filter/duct/airlock, no internal sources) which keeps
+                // the legacy interior math byte-identical.
+                var shieldCatalog = ShelterShieldingCatalog.LoadFromDirectory(_dataDir, new FileSystemIO());
+                if (shieldCatalog.IsValid)
+                {
+                    _survivors.ExposureResolver.ShelterInteriorBaseRadRate =
+                        shieldCatalog.interior_baseline_rad_rate;
+                    var shielding = new ShelterShieldingModel(shieldCatalog)
+                    {
+                        StructuralAttenuationProvider = () => _survivors.Shelter.GetWeakestCeilingAttenuation(),
+                        FilterHealthPercentProvider = () => _startingLevel?.System.State.airFilterHealthPercent ?? 100f,
+                        VentilationDuctIntegrityProvider = () => _ventilation?.State.ductIntegrity ?? 100f,
+                        VentilationFilterSaturationProvider = () => _ventilation?.State.exhaustFilterSaturation ?? 0f,
+                        VentilationRecirculationProvider = () => _ventilation?.State.emergencyRecirculationMode ?? false,
+                        AirlockSealProvider = () => AirlockSealFactor(_airlockSecurity?.System.State.doorState),
+                        AirlockIncidentProvider = () => _airlockSecurity?.System.HasPendingIncident ?? false,
+                        WeatherRadModifierProvider = () => _world?.Weather?.OutdoorRadModifier ?? 0f,
+                        IndoorRadonProvider = () => _startingLevel?.System.State.radonLevelBqm3 ?? 0f,
+                        FloodingContaminationProvider = () => MaxSumpContamination(),
+                        ShelterContaminationProvider = () => _decontamination?.System.State.shelterContaminationLevel ?? 0f,
+                        DeconActiveProvider = () => _decontamination?.System.HasActiveCase ?? false
+                    };
+                    _survivors.BindShelterShieldingModel(shielding);
+                }
                 _survivors.ExposureResolver.SurvivorLocationQuery = id =>
                 {
                     if (_expeditions?.Engine != null &&
@@ -126,6 +165,35 @@ namespace AtomicWar.GodotApp
                 // fall through to a fresh cohort on a later SetupSurvivors.
                 _survivorInitializationApplied = true;
             }
+        }
+
+        /// <summary>C2 / Plan 20B — canonical airlock seal factor from the
+        /// authored door state (Secure 1 … Breached 0); unbound = secure.</summary>
+        private static float AirlockSealFactor(AirlockDoorState? doorState)
+        {
+            return doorState switch
+            {
+                AirlockDoorState.Secure => 1f,
+                AirlockDoorState.Cycling => 0.5f,
+                AirlockDoorState.Open => 0f,
+                AirlockDoorState.Breached => 0f,
+                _ => 1f
+            };
+        }
+
+        /// <summary>C2 / Plan 20B — worst-room sump contamination (0..1) from the
+        /// canonical flooding authority; unbound/empty = dry.</summary>
+        private float MaxSumpContamination()
+        {
+            var nodes = _sumpFlooding?.System.State.nodes;
+            if (nodes == null) return 0f;
+            float max = 0f;
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i] == null) continue;
+                if (nodes[i].contaminationLevel > max) max = nodes[i].contaminationLevel;
+            }
+            return max;
         }
 
         private StartingCohortCatalog EnsureStartingCohortCatalog()
@@ -190,7 +258,7 @@ namespace AtomicWar.GodotApp
         private void OnSurvivorsOpenClicked()
         {
             SetupSurvivors();
-            _statusLabel.Text = "Survivors panel open. Needs and radiation are simulated.";
+            _statusLabel.Text = "Survivors panel open.";
             _codexViewer.Text = _survivors.StatusLine();
         }
 

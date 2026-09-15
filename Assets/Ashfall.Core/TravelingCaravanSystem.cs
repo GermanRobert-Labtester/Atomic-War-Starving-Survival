@@ -28,6 +28,10 @@ namespace Ashfall.Core
         public int stayDurationDays = 2;
         public int guardCount = 4;
         public bool isRobbed = false;
+        // Plan 14A — durable embargo transition flag (set when the route is
+        // blocked, cleared when movement resumes). Saved so the blocked state
+        // survives reloads; route blocking itself stays derived from weather.
+        public bool embargoBlocked = false;
         public List<CaravanInventoryItem> inventory = new List<CaravanInventoryItem>();
     }
 
@@ -57,10 +61,19 @@ namespace Ashfall.Core
         /// </summary>
         public GoodsCatalog? Catalog { get; set; }
         public Narrative.TravelEncounterSystem? TravelEncounters { get; set; }
+        /// <summary>
+        /// Plan 14A — embargo authority. Bound by the host; unbound, caravan
+        /// movement behaves exactly as before (no blocking, no slowdown).
+        /// </summary>
+        public TradeEmbargoSystem? Embargoes { get; set; }
 
         public event Action<CaravanEntry, string>? OnCaravanArrivedAtNode;
         public event Action<CaravanEntry, string, int>? OnTradeCompleted;
         public event Action<CaravanEntry, Narrative.TravelEncounterDefinition>? OnCaravanPatrolEncountered;
+        /// <summary>Plan 14A — raised once per blocked TRANSITION (not per tick): caravan, weather name.</summary>
+        public event Action<CaravanEntry, string>? OnCaravanEmbargoed;
+        /// <summary>Plan 14A — raised once when a blocked caravan resumes movement.</summary>
+        public event Action<CaravanEntry>? OnCaravanResumed;
 
         public TravelingCaravanState State => _state;
         public int CaravanCount => _state.activeCaravans?.Count ?? 0;
@@ -168,6 +181,12 @@ namespace Ashfall.Core
 
         /// <summary>
         /// Daily tick: increments stay duration and advances caravans to the next route waypoint.
+        /// Plan 14A — with an embargo system bound and the day's weather
+        /// supplied, a caravan whose origin region is blocked does not advance
+        /// (one transition event, then daily silence) and a slowed region pays
+        /// an additional travel-day cost (progress &lt; 1 extends the stay
+        /// requirement by the missing fraction, ceil). Default weather Clear
+        /// is embargo-neutral, so legacy callers are unchanged.
         /// </summary>
         public void DailyTick() => DailyTick(0, null);
 
@@ -176,7 +195,8 @@ namespace Ashfall.Core
             ISeededRng? rng = null,
             string defaultRegion = "the_toll",
             int dangerLevel = 2,
-            string season = "all")
+            string season = "all",
+            WeatherKind weather = WeatherKind.Clear)
         {
             if (_state.activeCaravans == null || _state.activeCaravans.Count == 0) return;
 
@@ -184,8 +204,42 @@ namespace Ashfall.Core
             {
                 if (caravan.isRobbed) continue;
 
+                // Plan 14A — embargo evaluation against the authoritative
+                // weather, per caravan origin region.
+                bool blocked = false;
+                float progress = 1f;
+                if (Embargoes != null)
+                {
+                    blocked = Embargoes.IsRouteBlocked(caravan.originRegion, weather);
+                    if (!blocked)
+                        progress = Embargoes.GetRouteProgressMultiplier(caravan.originRegion, weather);
+                }
+
+                if (blocked)
+                {
+                    if (!caravan.embargoBlocked)
+                    {
+                        caravan.embargoBlocked = true;
+                        OnCaravanEmbargoed?.Invoke(caravan, weather.ToString());
+                    }
+                    continue; // blocked caravans lose the movement day
+                }
+
+                if (caravan.embargoBlocked)
+                {
+                    caravan.embargoBlocked = false;
+                    OnCaravanResumed?.Invoke(caravan);
+                }
+
+                // Slowdown as an additional travel-day cost: a progress of 0.5
+                // doubles the days required per node; neutral adds none.
+                int effectiveStay = caravan.stayDurationDays;
+                if (progress < 1f && progress > 0f)
+                    effectiveStay = caravan.stayDurationDays
+                        + (int)Math.Ceiling(caravan.stayDurationDays * (1f / progress - 1f));
+
                 caravan.daysAtCurrentNode++;
-                if (caravan.daysAtCurrentNode >= caravan.stayDurationDays)
+                if (caravan.daysAtCurrentNode >= effectiveStay)
                 {
                     caravan.daysAtCurrentNode = 0;
                     caravan.routeIndex = (caravan.routeIndex + 1) % caravan.routeNodeIds.Count;
@@ -288,6 +342,7 @@ namespace Ashfall.Core
                         stayDurationDays = c.stayDurationDays,
                         guardCount = c.guardCount,
                         isRobbed = c.isRobbed,
+                        embargoBlocked = c.embargoBlocked,
                         routeNodeIds = c.routeNodeIds != null ? new List<string>(c.routeNodeIds) : new List<string>(),
                         inventory = new List<CaravanInventoryItem>()
                     };
@@ -334,6 +389,7 @@ namespace Ashfall.Core
                         stayDurationDays = c.stayDurationDays,
                         guardCount = c.guardCount,
                         isRobbed = c.isRobbed,
+                        embargoBlocked = c.embargoBlocked,
                         routeNodeIds = c.routeNodeIds != null ? new List<string>(c.routeNodeIds) : new List<string>(),
                         inventory = new List<CaravanInventoryItem>()
                     };

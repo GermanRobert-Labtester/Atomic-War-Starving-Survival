@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,11 +132,11 @@ namespace AtomicWar.GodotApp.UI
 
                     var btnSelect = AshfallUiHelpers.MakeButton("SELECT", () =>
                     {
-                        _selectedSlotId = slotId;
+                        // Selection is confirmed by the host via ActiveSlotChanged /
+                        // SelectSlot success — do not mark selected before acceptance.
                         _pendingDeleteSlot = null;
                         _pendingReset = false;
                         OnSlotSelected?.Invoke(slotId);
-                        RefreshView();
                     });
                     btnSelect.CustomMinimumSize = new Vector2(90, 32);
                     hbox.AddChild(btnSelect);

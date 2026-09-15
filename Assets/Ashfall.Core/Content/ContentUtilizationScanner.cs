@@ -99,12 +99,14 @@ namespace Ashfall.Core.Content
             "shelter_social_events.json", "excavation_hazard_mitigation.json",
             "chemical_weapons.json", "comms_targets.json",
             "ceremonies.json", "robotics.json",
+            "collectibles.json",
             "item_degradation.json", "thermal_gear.json",
             "naval_vessels.json", "recreation.json",
             "fallout_patterns.json", "desperation_events.json",
             "bounty_board.json", "lore_archives.json",
             "surgical_procedures.json", "rail_network.json",
             "underground_flora.json", "wasteland_laws.json",
+            "bio_fermentation_catalog.json",
             "development_traits.json", "interrogation_tactics.json",
             "mutations.json", "camouflage_gear.json",
             "aircraft_parts.json", "labor_camps.json",
@@ -116,9 +118,10 @@ namespace Ashfall.Core.Content
             "atmospheric_sounding_catalog.json",
             "caravan_trade_routes.json", "power_subgrid_nodes.json", "perimeter_defenses.json",
             "ebpvd_coating_catalog.json", "mine_flail_catalog.json", "microfluidic_diagnostic_catalog.json", "rail_grinding_catalog.json",
-            // Flagship XI (Plans 154-157)
+            // Flagship XI (Plans 154-157) + Plan 173 program templates
             "contagion_events.json", "pathogens.json",
             "subterranean_zones.json", "propaganda_campaigns.json",
+            "radio_programs.json",
             // Plans 50-53
             "vehicle_modifications.json", "faction_intelligence.json",
             "psychological_trauma.json", "shelter_audio_cues.json",
@@ -141,6 +144,9 @@ namespace Ashfall.Core.Content
             "chemical_weapons.json", "comms_targets.json",
             "ceremonies.json", "robotics.json",
             "wildlife_trapping_catalog.json",
+            // Plans 118-121 — advanced industrial reconnaissance tranche.
+            "fischer_tropsch_catalog.json", "uv_corona_detector_catalog.json",
+            "carbon_composite_catalog.json", "gpr_exploration_catalog.json",
         };
 
         // Narrative JSON files in the narrative/ subdirectory — these are codex/lore, not gameplay catalogs
@@ -479,6 +485,7 @@ namespace Ashfall.Core.Content
                 ["quests_expansion_05.json"] = new[] { "ExpansionQuestSystem" },
                 ["quests_expansion_06.json"] = new[] { "ExpansionQuestSystem" },
                 ["narrative_arc_events.json"] = new[] { "NarrativeArcEventSystem" },
+                ["echoes.json"] = new[] { "EchoCatalogLoader" },
                 ["narrative_encounters_expansion.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_progression.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_questlines.json"] = new[] { "NarrativeEncounterSystem" },
@@ -517,11 +524,17 @@ namespace Ashfall.Core.Content
                 ["aeroponics_nutrient_catalog.json"] = new[] { "AeroponicsCatalogLoader", "AeroponicsSystem" },
                 ["pneumatic_network_catalog.json"] = new[] { "PneumaticNetworkCatalogLoader", "PneumaticDispatchSystem" },
                 ["wildlife_trapping_catalog.json"] = new[] { "WildlifeTrappingCatalogLoader" },
+                // Plans 118-121: advanced industrial reconnaissance catalogs.
+                ["fischer_tropsch_catalog.json"] = new[] { "FischerTropschCatalogLoader", "FischerTropschSynthesisEngine" },
+                ["uv_corona_detector_catalog.json"] = new[] { "UvCoronaDetectionCatalogLoader", "UvCoronaDetectionEngine" },
+                ["carbon_composite_catalog.json"] = new[] { "CarbonCompositeCatalogLoader", "CarbonCompositeEngine" },
+                ["gpr_exploration_catalog.json"] = new[] { "GroundPenetratingRadarCatalogLoader", "GroundPenetratingRadarEngine" },
                 // Plans 198–201: inline LoadCatalog paths on each system.
                 ["chemical_weapons.json"] = new[] { "ChemWarfareSystem" },
                 ["comms_targets.json"] = new[] { "CommsArraySystem" },
                 ["ceremonies.json"] = new[] { "CeremonySystem" },
                 ["robotics.json"] = new[] { "RoboticsSystem" },
+                ["collectibles.json"] = new[] { "CollectibleEffectDispatcher", "CollectibleCatalogLoader" },
             };
 
             // Additional mappings for previously UNRESOLVED catalogs
@@ -532,7 +545,7 @@ namespace Ashfall.Core.Content
             loaderPatterns["diplomatic_treaties.json"] = new[] { "DiplomaticTreatyCatalogLoader" };
             loaderPatterns["sky_defense_ordnance.json"] = new[] { "SkyDefenseOrdnanceCatalogLoader" };
             loaderPatterns["psychological_therapies.json"] = new[] { "PsychologicalTherapyCatalogLoader" };
-            loaderPatterns["echoes.json"] = Array.Empty<string>(); // Future content, no loader
+            loaderPatterns["echoes.json"] = new[] { "EchoCatalogLoader" };
             loaderPatterns["orphan_knocks.json"] = Array.Empty<string>(); // Whitelist infrastructure
             foreach (var cat in _graph.Catalogs)
             {
@@ -665,6 +678,7 @@ namespace Ashfall.Core.Content
                 ["pathogens.json"] = "PathogenStrainSystem",
                 ["subterranean_zones.json"] = "SubterraneanZoneCatalog",
                 ["propaganda_campaigns.json"] = "PsyOpsCatalog",
+                ["radio_programs.json"] = "RadioProgramCatalog",
                 ["expeditions.json"] = "ExpeditionCatalogLoader",
                 ["vehicles.json"] = "ExpeditionVehicleSystem",
                 ["greenhouse_items.json"] = "GreenhouseExpansionCatalog",
@@ -794,6 +808,7 @@ namespace Ashfall.Core.Content
                 ["quests_expansion_05.json"] = "ExpansionQuestSystem",
                 ["quests_expansion_06.json"] = "ExpansionQuestSystem",
                 ["narrative_arc_events.json"] = "NarrativeArcEventSystem",
+                ["echoes.json"] = "EchoSystem",
                 ["narrative_encounters_expansion.json"] = "NarrativeEncounterSystem",
                 ["narrative_progression.json"] = "NarrativeEncounterSystem",
                 ["narrative_questlines.json"] = "NarrativeEncounterSystem",
@@ -919,6 +934,7 @@ namespace Ashfall.Core.Content
             var consumerMap = new Dictionary<string, string[]>
             {
                 ["items.json"] = new[] { "InventorySystem", "CraftingSystem", "ProceduralItemInstance", "EquipmentConditionSystem" },
+                ["collectibles.json"] = new[] { "CollectibleEffectDispatcher", "CollectibleDiscoveryState" },
                 ["recipes.json"] = new[] { "CraftingSystem" },
                 ["locations.json"] = new[] { "LocationEvolutionSystem", "WastelandMapSystem", "ExpeditionSystem" },
                 ["survivors.json"] = new[] { "SurvivorsHostSession", "NeedsSystem", "RadiationSystem", "CaregivingSystem" },
@@ -946,6 +962,10 @@ namespace Ashfall.Core.Content
                 ["disease_catalog.json"] = new[] { "DiseaseSystem" },
                 ["expeditions.json"] = new[] { "ExpeditionSystem", "ExpeditionEncounterBridge" },
                 ["vehicles.json"] = new[] { "ExpeditionVehicleSystem", "ExpeditionSystem" },
+                ["fischer_tropsch_catalog.json"] = new[] { "FischerTropschSynthesisEngine" },
+                ["uv_corona_detector_catalog.json"] = new[] { "UvCoronaDetectionEngine" },
+                ["carbon_composite_catalog.json"] = new[] { "CarbonCompositeEngine" },
+                ["gpr_exploration_catalog.json"] = new[] { "GroundPenetratingRadarEngine" },
                 ["greenhouse_items.json"] = new[] { "GreenhouseSystem", "ApicultureSystem" },
                 ["agriculture_items.json"] = new[] { "ItemCatalogLoader", "AgricultureSystem" },
                 ["crop_strains.json"] = new[] { "CropStrainCatalogLoader", "AgricultureSystem" },
@@ -1060,6 +1080,7 @@ namespace Ashfall.Core.Content
                 ["quests_expansion_05.json"] = new[] { "ExpansionQuestSystem" },
                 ["quests_expansion_06.json"] = new[] { "ExpansionQuestSystem" },
                 ["narrative_arc_events.json"] = new[] { "NarrativeArcEventSystem" },
+                ["echoes.json"] = new[] { "EchoSystem" },
                 ["narrative_encounters_expansion.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_progression.json"] = new[] { "NarrativeEncounterSystem" },
                 ["narrative_questlines.json"] = new[] { "NarrativeEncounterSystem" },
@@ -1115,6 +1136,8 @@ namespace Ashfall.Core.Content
                 // Plans 202-205 flagship
                 ["plastic_pyrolysis_catalog.json"] = new[] { "PlasticPyrolysisSystem" },
                 ["cargo_airdrop_catalog.json"] = new[] { "CargoAirdropSystem" },
+                // Plans 126-129 flagship (wave 2: biological fermentation)
+                ["bio_fermentation_catalog.json"] = new[] { "BioFermentationEngine" },
                 // Plans 114-117 flagship
                 ["piezometer_network_catalog.json"] = new[] { "AquiferPiezometerEngine" },
                 ["railway_interlock_catalog.json"] = new[] { "RailwayInterlockEngine" },
@@ -1126,6 +1149,7 @@ namespace Ashfall.Core.Content
                 ["pathogens.json"] = new[] { "PathogenStrainCatalogLoader", "PathogenStrainSystem" },
                 ["subterranean_zones.json"] = new[] { "SubterraneanZoneCatalogLoader", "SubterraneanSystem" },
                 ["propaganda_campaigns.json"] = new[] { "PsyOpsCatalogLoader", "PsyOpsSystem" },
+                ["radio_programs.json"] = new[] { "RadioProgramCatalogLoader", "RadioProgramProductionSystem", "RadioPanel" },
                 ["kinetic_flywheel_catalog.json"] = new[] { "KineticFlywheelCatalogLoader", "KineticStorageSystem" },
                 ["breaching_equipment_catalog.json"] = new[] { "BreachingCatalogLoader", "CombatBreachingEngine", "TacticalCombatSystem" },
                 ["metrology_standards_catalog.json"] = new[] { "PrecisionMetrologyCatalogLoader", "PrecisionMetrologySystem" },
@@ -1434,6 +1458,7 @@ namespace Ashfall.Core.Content
                 ["quests_expansion_05.json"] = new[] { "QuestPanel" },
                 ["quests_expansion_06.json"] = new[] { "QuestPanel" },
                 ["narrative_arc_events.json"] = new[] { "NarrativeArcModal" },
+                ["echoes.json"] = new[] { "NarrativeArcModal", "EchoHostSession" },
                 ["narrative_encounters_expansion.json"] = new[] { "NarrativePanel" },
                 ["narrative_progression.json"] = new[] { "NarrativePanel" },
                 ["narrative_questlines.json"] = new[] { "NarrativePanel" },
@@ -1722,10 +1747,6 @@ namespace Ashfall.Core.Content
         // subdirectories. Total counts always reported through DefinitionEntry.
 
         private const int MaxSampleIdsPerCatalog = 200;
-        private static readonly System.Text.RegularExpressions.Regex IdPairRegex =
-            new System.Text.RegularExpressions.Regex(
-                "\"id\"\\s*:\\s*\"([a-z][a-z0-9_]{1,63})\"",
-                System.Text.RegularExpressions.RegexOptions.Compiled);
 
         private void CountDefinitions()
         {
@@ -1744,17 +1765,22 @@ namespace Ashfall.Core.Content
                     continue;
                 }
 
-                var matches = IdPairRegex.Matches(text);
                 int total = 0;
                 var seen = new HashSet<string>(StringComparer.Ordinal);
-                var sampleStore = new List<DefinitionEntry>(Math.Min(MaxSampleIdsPerCatalog, matches.Count));
-
-                foreach (System.Text.RegularExpressions.Match m in matches)
+                var ids = new List<string>();
+                try
                 {
-                    string id = m.Groups[1].Value;
-                    if (string.IsNullOrEmpty(id)) continue;
-                    if (!seen.Add(id)) continue; // dedupe per catalog
-                    total++;
+                    total = CatalogDefinitionCounter.Count(text, ids);
+                }
+                catch (Exception ex)
+                {
+                    _log?.Warn($"[CountDefinitions] Invalid root shape in {cat.Path}: {ex.Message}");
+                }
+
+                var sampleStore = new List<DefinitionEntry>(Math.Min(MaxSampleIdsPerCatalog, ids.Count));
+                foreach (string id in ids)
+                {
+                    if (string.IsNullOrEmpty(id) || !seen.Add(id)) continue;
                     if (sampleStore.Count < MaxSampleIdsPerCatalog)
                     {
                         sampleStore.Add(new DefinitionEntry
@@ -1885,15 +1911,6 @@ namespace Ashfall.Core.Content
                     continue;
                 }
 
-                // echoes.json is future narrative content
-                if (fileName.Equals("echoes.json", StringComparison.OrdinalIgnoreCase))
-                {
-                    cat.Classification = ContentClassification.OPTIONAL;
-                    cat.ExemptionId = "exempt_echoes_future";
-                    cat.Findings.Add("Future narrative content — no loader or consumer yet");
-                    continue;
-                }
-
                 // Has consumer systems → GAMEPLAY_CONSUMED
                 if (cat.ConsumerSystems.Count > 0 && cat.MaxStage >= UtilizationStage.QUERIED)
                 {
@@ -1976,12 +1993,13 @@ namespace Ashfall.Core.Content
 
                 if (!foundInSource && !baseNameInSource)
                 {
-                    // This catalog has zero source code evidence.
-                    // The consumer claims are from name-inference heuristics only.
-                    cat.Classification = ContentClassification.OPTIONAL;
+                    // This catalog has zero source code evidence. Keep that
+                    // state honest and actionable instead of converting it
+                    // into a generic exemption that the gate cannot retire.
+                    cat.Classification = ContentClassification.ORPHANED;
                     cat.ConsumerSystems.Clear();
-                    cat.Findings.Add("VERIFIED: No source code references found. Consumer claims were scanner name-inference only. Downgraded from GAMEPLAY_CONSUMED to OPTIONAL.");
-                    cat.ExemptionId = "exempt_no_source_evidence";
+                    cat.Findings.Add("VERIFIED: No source code references found. Consumer claims were scanner name-inference only.");
+                    cat.ExemptionId = string.Empty;
                 }
             }
         }

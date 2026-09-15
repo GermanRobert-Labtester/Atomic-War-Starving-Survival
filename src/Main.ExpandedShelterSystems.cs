@@ -332,6 +332,19 @@ namespace AtomicWar.GodotApp
 
 
 
+        /// <summary>
+        /// Presentation lighting phase from the campaign hour. Drives the placeholder
+        /// dawn/day/dusk/night backdrop variants on shelter, map, and expedition views.
+        /// </summary>
+        private static string LightingPhaseForHour(int hour)
+        {
+            int h = ((hour % 24) + 24) % 24;
+            if (h >= 5 && h < 9) return "dawn";
+            if (h >= 9 && h < 17) return "day";
+            if (h >= 17 && h < 21) return "dusk";
+            return "night";
+        }
+
         private void TickAllExpandedShelterSystems(int day)
         {
             // Plan 189 intake bridge: piezometer advisory must land before the
@@ -360,8 +373,16 @@ namespace AtomicWar.GodotApp
             _geothermalAquifer?.TickDay(day);
             // Plan 188: feed the campaign hour so the schedule derives Night from
             // its authored windows (the schedule remains the only phase owner).
+            // The same hour drives the placeholder lighting backdrop variants.
             if (_campaignDay?.Calendar != null)
-                _shelterSchedule?.TickHour(_campaignDay.Calendar.AsSimClock().HourOfDay);
+            {
+                int hour = _campaignDay.Calendar.AsSimClock().HourOfDay;
+                _shelterSchedule?.TickHour(hour);
+                string lightingPhase = LightingPhaseForHour(hour);
+                _shelterPanel?.SetLightingPhase(lightingPhase);
+                _mapPanel?.SetLightingPhase(lightingPhase);
+                _expeditionPanel?.SetLightingPhase(lightingPhase);
+            }
             _shelterSchedule?.TickDay(day);
             _autopsy?.TickDay(day);
             // Plan 72 §3 ordering: advance ventilation/air filtration — hosts
@@ -377,6 +398,8 @@ namespace AtomicWar.GodotApp
             }
             _waystation?.TickDaily(iceRoadOpen: true);
             _sumpFlooding?.TickDay(day);
+            TickDeepWell(day); // B5–B8 Phase 6: deep-well raw-water intake (before consumers read the pools)
+            TickWaterCondenser(day); // B5–B8 expansion: weather-indexed condensate intake
             _decontamination?.TickDay(day);
             TickPlans78To81(day);
             TickPlans110To113(day);
@@ -414,6 +437,45 @@ namespace AtomicWar.GodotApp
                     break;
                 case "low_background_metrology":
                     if (_lowBackgroundPanel != null) { _lowBackgroundPanel.Visible = true; _lowBackgroundPanel.RefreshView(); }
+                    break;
+                case "insar_mapping":
+                    if (_inSarPanel != null) { _inSarPanel.Visible = true; _inSarPanel.RefreshView(); }
+                    break;
+                case "hydraulic_extrusion":
+                    if (_hydraulicExtrusionPanel != null) { _hydraulicExtrusionPanel.Visible = true; _hydraulicExtrusionPanel.RefreshView(); }
+                    break;
+                case "runflat_tire":
+                    if (_runFlatTirePanel != null) { _runFlatTirePanel.Visible = true; _runFlatTirePanel.RefreshView(); }
+                    break;
+                case "sofc_power":
+                    OpenSofcPowerPanel();
+                    break;
+                case "sound_ranging":
+                    OpenSoundRangingPanel();
+                    break;
+                case "cvd_diamond":
+                    OpenCvdDiamondPanel();
+                    break;
+                case "amphibious_draisine":
+                    OpenAmphibiousDraisinePanel();
+                    break;
+                case "sanitation":
+                    OpenSanitationPanel();
+                    break;
+                case "black_market":
+                    OpenBlackMarketPanel();
+                    break;
+                case "companion_kennel":
+                    OpenKennelPanel();
+                    break;
+                case "beliefs_panel":
+                    OpenBeliefsPanel();
+                    break;
+                case "anomaly_watch":
+                    OpenAnomalyWatchPanel();
+                    break;
+                case "cybernetics":
+                    OpenCyberneticsPanel();
                     break;
                 case "wildlife_trapping":
                     if (_wildlifeTrappingPanel != null) { _wildlifeTrappingPanel.Visible = true; _wildlifeTrappingPanel.RefreshView(); }

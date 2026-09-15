@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -161,6 +162,11 @@ namespace AtomicWar.GodotApp.Audio
             if (_headless || _surfaceOcclusionEffect == null) return;
 
             float targetCutoff = occluded ? 450f : 20000f;
+            if (!AtomicWar.GodotApp.Settings.AccessibilityPresentation.MotionAllowed)
+            {
+                _surfaceOcclusionEffect.CutoffHz = targetCutoff;
+                return;
+            }
             var tween = CreateTween();
             tween.TweenProperty(_surfaceOcclusionEffect, "cutoff_hz", targetCutoff, 0.4);
         }
@@ -175,6 +181,11 @@ namespace AtomicWar.GodotApp.Audio
             {
                 float currentVol = AudioServer.GetBusVolumeDb(masterIdx);
                 AudioServer.SetBusVolumeDb(masterIdx, currentVol - 12f);
+                if (!AtomicWar.GodotApp.Settings.AccessibilityPresentation.MotionAllowed)
+                {
+                    AudioServer.SetBusVolumeDb(masterIdx, currentVol);
+                    return;
+                }
                 var tween = CreateTween();
                 tween.TweenMethod(Callable.From<float>(vol => AudioServer.SetBusVolumeDb(masterIdx, vol)), currentVol - 12f, currentVol, durationSeconds);
             }
@@ -311,7 +322,8 @@ namespace AtomicWar.GodotApp.Audio
                 _domainProvider.AudioExpeditions,
                 _domainProvider.AudioDisease,
                 _domainProvider.AudioSurvivorFate,
-                _domainProvider.AudioFlashbacks);
+                _domainProvider.AudioFlashbacks,
+                _domainProvider.AudioEchoes);
 
             if (_domainProvider is IExpansionAudioProvider expansionProvider && _expansionEventBridge != null)
             {
@@ -795,7 +807,7 @@ namespace AtomicWar.GodotApp.Audio
             player.PitchScale = pitchScale;
                         if (streamChanged || !player.Playing)
             {
-                if (fadeIn > 0f)
+                if (fadeIn > 0f && AtomicWar.GodotApp.Settings.AccessibilityPresentation.MotionAllowed)
                 {
                     player.VolumeDb = -80f;
                     player.Play();
@@ -804,6 +816,7 @@ namespace AtomicWar.GodotApp.Audio
                 }
                 else
                 {
+                    player.VolumeDb = volumeDb;
                     player.Play();
                 }
             }
@@ -815,7 +828,7 @@ namespace AtomicWar.GodotApp.Audio
                 return;
 
 
-            if (fadeOut > 0f)
+            if (fadeOut > 0f && AtomicWar.GodotApp.Settings.AccessibilityPresentation.MotionAllowed)
             {
                 var tween = CreateTween();
                 tween.TweenProperty(player, "volume_db", -80f, fadeOut);

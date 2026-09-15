@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -174,7 +175,9 @@ namespace Ashfall.Core
             // Plans 50-53 — Vehicle Garage, Faction Espionage, Survivor Mental Health, Subterranean Acoustics
             "vmod_", "fop_", "fdrop_", "acue_",
             // Plan 135 — Narrative Codex Discovery
-            "disc_"
+            "disc_",
+            // Plans 126-129 — Industrial Resilience & Remote Sensing Tranche
+            "bio_ferm_"
         };
 
         /// <summary>
@@ -224,7 +227,7 @@ namespace Ashfall.Core
             "tome_id", "treaty_id", "ordnance_id", "therapy_id", "condition_id",
             // Plans 110-113
             "process_id", "concentrator_id", "optic_recipe_id", "shield_id",
-            "upgrade_id", "strata_id", "channel_id", "platform_id", "equipment_id",
+            "upgrade_id", "strata_id", "channel_id", "platform_id", "equipment_id", "reactor_id",
             // Plans 54-57 — Thermodynamics, Seismic, Barter, Apprenticeship
             "insulation_id", "fault_id", "caravan_id", "mentorship_id", "legacy_trait_id",
             // Plan 73 — Rail Logistics
@@ -277,7 +280,11 @@ namespace Ashfall.Core
             // Plans 62-65
             "cleaning_solvent_id", "reward_research_ids", "preservative_item_id", "reward_item_id", "potential_topics", "input_item_id",
             // Wildlife trapping prey definition: non-empty value = explicit disease-catalog reference; empty value = valid runtime tier fallback.
-            "diseaseId"
+            "diseaseId",
+            // Plans 126-129 — biological fermentation catalog references
+            "feedstock_item_ids", "byproduct_item_ids", "starter_item_id",
+            "filter_item_id", "build_cost_item_ids", "sanitize_cost_item_ids",
+            "service_cost_item_ids"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -300,6 +307,7 @@ namespace Ashfall.Core
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings", "narrativeHook", "patrol_archetype",
             "gauge_tag", "clearance_requirement", "obstacle_profile", "repair_requirement", "track_condition",
+            "trigger_condition", // Tasks 9–12: closed distress follow-up trigger grammar (validated by ValidateDistressSignalStages), never an id reference
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile", "target_type",
             "forged_credentials", "behavior_flags", "platform_type", "sensor_suite",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
@@ -434,7 +442,7 @@ namespace Ashfall.Core
             // resolves them against items.json.
             "harvestable_materials",
             // Plans 62-65
-            "encryption_grade", "intel_category", "allowed_food_types",
+            "encryption_grade", "intel_category", "allowed_food_types", "food_type_by_item_id",
             // Plans 50-53
             "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile",
             // Plan 135 — Narrative Discovery Manifest vocabulary & foreign keys
@@ -735,6 +743,45 @@ namespace Ashfall.Core
                 }
             }
 
+            // C2 / Plan 20B: shelter shielding coefficients — ranges and
+            // finiteness validated; every contributor coefficient must be
+            // authored (no silent scaling defaults).
+            string shelterShieldingPath = Path.Combine(dataDirectory, "shelter_shielding.json");
+            if (files.FileExists(shelterShieldingPath))
+            {
+                try
+                {
+                    var shieldCatalog = Ashfall.Core.Shelter.ShelterShieldingCatalog
+                        .LoadFromDirectory(dataDirectory, files);
+                    foreach (var err in shieldCatalog.Errors)
+                        report.Error(err);
+                }
+                catch (Exception ex)
+                {
+                    report.Error("shelter shielding validator error: " + ex.Message);
+                }
+            }
+
+            // C2 / Plan 20A (G1): weather-effects authority validation — every
+            // WeatherKind needs an explicit row; unknown kinds, duplicates,
+            // and negative/non-finite modifiers are load errors.
+            string weatherEffectsPath = Path.Combine(dataDirectory, "weather_effects.json");
+            if (files.FileExists(weatherEffectsPath))
+            {
+                try
+                {
+                    var effectsCatalog = Ashfall.Core.World.WeatherEffectsCatalog.LoadFromDirectory(dataDirectory, files);
+                    foreach (var err in effectsCatalog.Errors)
+                        report.Error("weather_effects.json: " + err);
+                    foreach (var missing in effectsCatalog.MissingKinds())
+                        report.Error($"weather_effects.json: no explicit effects row for weather kind '{missing}' (no silent defaults)");
+                }
+                catch (Exception ex)
+                {
+                    report.Error("weather effects validator error: " + ex.Message);
+                }
+            }
+
             // Plan 135: Narrative discovery manifest integrity validation
             string narrativeManifestPath = Path.Combine(dataDirectory, "narrative_discovery_manifest.json");
             if (files.FileExists(narrativeManifestPath))
@@ -866,6 +913,18 @@ namespace Ashfall.Core
             // Wildlife trapping catalog integrity validation:
             // Trap identity, bait reachability, compatibility matrix completeness, domain specializations.
             ValidateWildlifeTrappingCatalog(dataDirectory, files, ctx, report);
+
+            // Tasks 9–12 Wave 1: distress-signal stage contract validation
+            // (message_fragments ordering, clarity monotonicity, text/hint presence).
+            ValidateDistressSignalStages(dataDirectory, files, report);
+
+            // Plan 14A (C1): trade embargo rule integrity — loader contract,
+            // real WeatherKind/region/category vocabularies, goods-id resolution.
+            ValidateTradeEmbargoRules(dataDirectory, files, report);
+
+            // Plan 14B (C1): regional price atlas integrity — loader contract,
+            // goods-id resolution, region/category vocabularies, duplicate rows.
+            ValidateRegionalPriceAtlas(dataDirectory, files, report);
 
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
@@ -1517,6 +1576,355 @@ namespace Ashfall.Core
                     }
                     break;
             }
+        }
+
+        // ── Tasks 9–12 Wave 1: distress-signal stage contract ──────────────────
+
+        /// <summary>
+        /// Stage-contract validation for the distress-signal catalogs
+        /// (Tasks 9–12 Wave 1). Enforces the documented <c>message_fragments</c>
+        /// stage contract: strictly ascending stage days, non-decreasing clarity
+        /// in [0,1], non-empty stage text, present-or-empty outcome hints, and
+        /// signal-identity rules. Cross-file duplicate IDs are the documented
+        /// primary-wins override pattern (expansion loads first, primary Plan 50
+        /// authority loads last — see RadioHostSession) and are reported as
+        /// warnings, never gate failures.
+        /// </summary>
+        public static void ValidateDistressSignalStages(string dataDirectory, IFileIO files, CatalogIntegrityReport report)
+        {
+            var seenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var primaryIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var seenFollowUpIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            // Pass 1: primary authority first so cross-file duplicates in the
+            // expansion layer are attributed as overridden secondary rows.
+            ValidateDistressSignalStagesFile(dataDirectory, files, "radio_distress_signals.json", seenIds, primaryIds, seenFollowUpIds, report);
+            ValidateDistressSignalStagesFile(dataDirectory, files, "radio_distress_signals_expansion.json", seenIds, primaryIds, seenFollowUpIds, report);
+        }
+
+        private static void ValidateDistressSignalStagesFile(
+            string dataDirectory,
+            IFileIO files,
+            string fileName,
+            HashSet<string> seenIds,
+            HashSet<string> primaryIds,
+            HashSet<string> seenFollowUpIds,
+            CatalogIntegrityReport report)
+        {
+            string path = Path.Combine(dataDirectory, fileName);
+            if (!files.FileExists(path)) return;
+
+            try
+            {
+                string json = files.ReadAllText(path);
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+                if (!root.TryGetProperty("radio_broadcasts", out var broadcasts)
+                    || broadcasts.ValueKind != JsonValueKind.Array)
+                {
+                    return;
+                }
+
+                bool isPrimary = string.Equals(fileName, "radio_distress_signals.json", StringComparison.Ordinal);
+                int broadcastIndex = 0;
+                foreach (var broadcast in broadcasts.EnumerateArray())
+                {
+                    string signalId = broadcast.TryGetProperty("frequency_id", out var idProp)
+                                      && idProp.ValueKind == JsonValueKind.String
+                        ? idProp.GetString() ?? string.Empty
+                        : string.Empty;
+                    string label = $"{fileName}:radio_broadcasts[{broadcastIndex}]";
+                    broadcastIndex++;
+
+                    if (string.IsNullOrWhiteSpace(signalId))
+                    {
+                        report.Error($"{label}: missing or empty 'frequency_id'");
+                        continue;
+                    }
+
+                    if (!seenIds.Add(signalId))
+                    {
+                        if (isPrimary)
+                        {
+                            report.Error($"{fileName}:{signalId}: duplicate frequency_id within the primary authority");
+                        }
+                        else if (!primaryIds.Contains(signalId))
+                        {
+                            report.Error($"{fileName}:{signalId}: duplicate frequency_id within the expansion layer");
+                        }
+                        else
+                        {
+                            // Documented primary-wins override: the expansion row is
+                            // dead content shadowed by the primary Plan 50 definition.
+                            report.Warn($"{fileName}:{signalId}: expansion row overridden by primary authority (documented primary-wins load order)");
+                        }
+                    }
+                    if (isPrimary) primaryIds.Add(signalId);
+
+                    if (!broadcast.TryGetProperty("message_fragments", out var fragments)
+                        || fragments.ValueKind != JsonValueKind.Array
+                        || !HasAnyElement(fragments))
+                    {
+                        report.Error($"{fileName}:{signalId}: 'message_fragments' missing or empty — every authored distress signal requires at least one message stage");
+                        continue;
+                    }
+
+                    int previousDay = int.MinValue;
+                    float previousClarity = -1f;
+                    int stageIndex = 0;
+                    foreach (var fragment in fragments.EnumerateArray())
+                    {
+                        string stagePath = $"{fileName}:{signalId}.message_fragments[{stageIndex}]";
+
+                        if (!fragment.TryGetProperty("day", out var dayProp)
+                            || dayProp.ValueKind != JsonValueKind.Number
+                            || !dayProp.TryGetInt32(out int day))
+                        {
+                            report.Error($"{stagePath}.day: missing or non-integer stage day");
+                        }
+                        else if (day == previousDay)
+                        {
+                            report.Error($"{stagePath}.day={day}: duplicate stage day — stage days must be strictly ascending");
+                        }
+                        else if (day < previousDay)
+                        {
+                            report.Error($"{stagePath}.day={day}: must be greater than previous stage day={previousDay}");
+                        }
+                        else
+                        {
+                            previousDay = day;
+                        }
+
+                        if (!fragment.TryGetProperty("clarity", out var clarityProp)
+                            || clarityProp.ValueKind != JsonValueKind.Number)
+                        {
+                            report.Error($"{stagePath}.clarity: missing or non-numeric stage clarity");
+                        }
+                        else
+                        {
+                            float clarity = (float)clarityProp.GetDouble();
+                            if (clarity < 0f || clarity > 1f)
+                            {
+                                report.Error($"{stagePath}.clarity={clarityFormat(clarity)}: outside the valid range [0,1]");
+                            }
+                            else if (clarity < previousClarity)
+                            {
+                                report.Error($"{stagePath}.clarity={clarityFormat(clarity)}: must be greater than or equal to previous stage clarity={clarityFormat(previousClarity)}");
+                            }
+                            else
+                            {
+                                previousClarity = clarity;
+                            }
+                        }
+
+                        if (!fragment.TryGetProperty("text", out var textProp)
+                            || textProp.ValueKind != JsonValueKind.String
+                            || string.IsNullOrWhiteSpace(textProp.GetString()))
+                        {
+                            report.Error($"{stagePath}.text: missing or empty stage text");
+                        }
+
+                        if (fragment.TryGetProperty("outcome_hint", out var hintProp)
+                            && hintProp.ValueKind == JsonValueKind.String
+                            && string.IsNullOrWhiteSpace(hintProp.GetString()))
+                        {
+                            report.Error($"{stagePath}.outcome_hint: present but empty — omit the field when no hint is authored at this stage");
+                        }
+
+                        // Tasks 9–12 Wave 4: structural audio-cue validation.
+                        // Empty = inherit signal default / text-only (legal).
+                        // Non-empty must be a clean snake_case cue id.
+                        if (fragment.TryGetProperty("audio_cue", out var fragCueProp)
+                            && fragCueProp.ValueKind == JsonValueKind.String)
+                        {
+                            string fragCue = fragCueProp.GetString() ?? string.Empty;
+                            if (!IsValidAudioCueId(fragCue))
+                            {
+                                report.Error($"{stagePath}.audio_cue '{fragCue}': must be empty (inherit/text-only) or a lowercase snake_case cue id without whitespace");
+                            }
+                        }
+
+                        stageIndex++;
+                    }
+
+                    // Tasks 9–12 Wave 3: follow-up transmission validation.
+                    if (broadcast.TryGetProperty("follow_up_signals", out var followUps)
+                        && followUps.ValueKind == JsonValueKind.Array)
+                    {
+                        int followUpIndex = 0;
+                        foreach (var followUp in followUps.EnumerateArray())
+                        {
+                            string followUpPath = $"{fileName}:{signalId}.follow_up_signals[{followUpIndex}]";
+                            followUpIndex++;
+
+                            string followUpId = followUp.TryGetProperty("id", out var fuIdProp)
+                                                && fuIdProp.ValueKind == JsonValueKind.String
+                                ? fuIdProp.GetString() ?? string.Empty
+                                : string.Empty;
+                            if (string.IsNullOrWhiteSpace(followUpId))
+                            {
+                                report.Error($"{followUpPath}: missing or empty 'id' — every follow-up requires a stable dedupe identity");
+                            }
+                            else if (!seenFollowUpIds.Add(followUpId))
+                            {
+                                report.Error($"{followUpPath}: duplicate follow-up id '{followUpId}' — dedupe identities must be unique across the corpus");
+                            }
+
+                            string trigger = followUp.TryGetProperty("trigger_condition", out var trigProp)
+                                             && trigProp.ValueKind == JsonValueKind.String
+                                ? trigProp.GetString() ?? string.Empty
+                                : string.Empty;
+                            if (!Ashfall.Core.Radio.SignalFollowUpTriggers.IsValid(trigger))
+                            {
+                                report.Error($"{followUpPath} '{followUpId}': unsupported trigger_condition '{trigger}' — accepted: {string.Join(", ", Ashfall.Core.Radio.SignalFollowUpTriggers.All)}");
+                            }
+
+                            if (!followUp.TryGetProperty("delay_days", out var delayProp)
+                                || delayProp.ValueKind != JsonValueKind.Number
+                                || !delayProp.TryGetInt32(out int delayDays))
+                            {
+                                report.Error($"{followUpPath} '{followUpId}'.delay_days: missing or non-integer delay");
+                            }
+                            else if (delayDays < 0)
+                            {
+                                report.Error($"{followUpPath} '{followUpId}'.delay_days={delayDays}: must be greater than or equal to 0");
+                            }
+
+                            if (!followUp.TryGetProperty("text", out var fuTextProp)
+                                || fuTextProp.ValueKind != JsonValueKind.String
+                                || string.IsNullOrWhiteSpace(fuTextProp.GetString()))
+                            {
+                                report.Error($"{followUpPath} '{followUpId}'.text: missing or empty follow-up text");
+                            }
+
+                            if (followUp.TryGetProperty("clarity", out var fuClarityProp)
+                                && fuClarityProp.ValueKind == JsonValueKind.Number)
+                            {
+                                float fuClarity = (float)fuClarityProp.GetDouble();
+                                if (fuClarity < 0f || fuClarity > 1f)
+                                {
+                                    report.Error($"{followUpPath} '{followUpId}'.clarity={fuClarity.ToString(System.Globalization.CultureInfo.InvariantCulture)}: outside the valid range [0,1]");
+                                }
+                            }
+
+                            if (followUp.TryGetProperty("outcome_hint", out var fuHintProp)
+                                && fuHintProp.ValueKind == JsonValueKind.String
+                                && string.IsNullOrWhiteSpace(fuHintProp.GetString()))
+                            {
+                                report.Error($"{followUpPath} '{followUpId}'.outcome_hint: present but empty — omit the field when no hint is authored");
+                            }
+
+                            // Tasks 9–12 Wave 4: structural audio-cue validation
+                            // (same rule as stage cues).
+                            if (followUp.TryGetProperty("audio_cue", out var fuCueProp)
+                                && fuCueProp.ValueKind == JsonValueKind.String)
+                            {
+                                string fuCue = fuCueProp.GetString() ?? string.Empty;
+                                if (!IsValidAudioCueId(fuCue))
+                                {
+                                    report.Error($"{followUpPath} '{followUpId}'.audio_cue '{fuCue}': must be empty (text-only) or a lowercase snake_case cue id without whitespace");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                report.Error($"{fileName}: distress stage validator error: {ex.Message}");
+            }
+        }
+
+        // ── Plan 14A/14B (C1): economy geography integrity ────────────────
+
+        /// <summary>
+        /// Plan 14A — trade_embargoes.json must load clean through its strict
+        /// loader (schema, WeatherKind/region/category vocabularies, bounds,
+        /// duplicates) and every affected item id must resolve in
+        /// economy_goods.json. A broken embargo rule must fail CI, never
+        /// silently no-op in the live economy.
+        /// </summary>
+        public static void ValidateTradeEmbargoRules(string dataDirectory, IFileIO files, CatalogIntegrityReport report)
+        {
+            var load = Ashfall.Core.Economy.TradeEmbargoCatalogLoader.Load(
+                dataDirectory, files, new SystemTextJsonSerializer());
+            foreach (var err in load.Errors)
+                report.Error("trade_embargoes.json: " + err);
+
+            var goodIds = CollectGoodsIds(dataDirectory, files, report);
+            foreach (var rule in load.Rules)
+                foreach (var item in rule.AffectedItemIds)
+                    if (!goodIds.Contains(item))
+                        report.Error($"trade_embargoes.json: rule '{rule.RuleId}' affected item '{item}' does not resolve in economy_goods.json");
+        }
+
+        /// <summary>
+        /// Plan 14B — regional_prices.json must load clean through its strict
+        /// loader (region/category vocabularies, permille bounds, scarcity
+        /// vocabulary, duplicate rows) and every item-level entry must resolve
+        /// in economy_goods.json.
+        /// </summary>
+        public static void ValidateRegionalPriceAtlas(string dataDirectory, IFileIO files, CatalogIntegrityReport report)
+        {
+            var load = Ashfall.Core.Economy.RegionalPriceCatalogLoader.Load(
+                dataDirectory, files, new SystemTextJsonSerializer());
+            foreach (var err in load.Errors)
+                report.Error("regional_prices.json: " + err);
+
+            var goodIds = CollectGoodsIds(dataDirectory, files, report);
+            foreach (var entry in load.Entries)
+                if (!string.IsNullOrEmpty(entry.ItemId) && !goodIds.Contains(entry.ItemId))
+                    report.Error($"regional_prices.json: entry item '{entry.ItemId}' (region '{entry.Region}') does not resolve in economy_goods.json");
+        }
+
+        /// <summary>Goods-catalog id set (economy_goods.json), for cross-file resolution in the economy geography validators.</summary>
+        private static HashSet<string> CollectGoodsIds(string dataDirectory, IFileIO files, CatalogIntegrityReport report)
+        {
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            try
+            {
+                string path = Path.Combine(dataDirectory, "economy_goods.json");
+                if (!files.FileExists(path)) return ids;
+                string raw = files.ReadAllText(path);
+                using var doc = JsonDocument.Parse(raw);
+                if (doc.RootElement.TryGetProperty("goods", out var goods) && goods.ValueKind == JsonValueKind.Array)
+                    CollectCatalogIds(goods, ids);
+            }
+            catch (Exception ex)
+            {
+                report.Error("economy geography validator could not enumerate economy_goods.json ids: " + ex.Message);
+            }
+            return ids;
+        }
+
+        private static bool HasAnyElement(JsonElement array)
+        {
+            foreach (var _ in array.EnumerateArray()) return true;
+            return false;
+        }
+
+        /// <summary>Tasks 9–12 Wave 4 — structural audio-cue id rule: empty
+        /// (inherit/text-only) or lowercase snake_case without whitespace.
+        /// Semantic resolution against the host cue registry is verified by
+        /// the audio selftest once authored content lands (documented
+        /// fallback policy: a missing cue logs once and the text path
+        /// continues — playback failure never blocks the signal).</summary>
+        private static bool IsValidAudioCueId(string cue)
+        {
+            if (string.IsNullOrEmpty(cue)) return true; // inherit / text-only
+            if (cue.IndexOf(' ') >= 0) return false;
+            if (cue != cue.ToLowerInvariant()) return false;
+            foreach (var ch in cue)
+            {
+                bool ok = (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9') || ch == '_';
+                if (!ok) return false;
+            }
+            return true;
+        }
+
+        private static string clarityFormat(float value)
+        {
+            return value.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
         }
 
         private static void ValidateWildlifeText(

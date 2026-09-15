@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -48,6 +49,26 @@ namespace AtomicWar.GodotApp
             if (_economy != null) return;
             _economy = EconomyHostSession.Create(_dataDir);
             _economy.StateChanged += () => _economyDirty = true;
+
+            // Plan 212 follow-up — trade rumors from real market state: a shock
+            // the canonical market applies (or expires) becomes one band item.
+            // The text is Core-projected; this adapter only relays it once per
+            // event. Restore never re-fires the events, so no replay.
+            _economy.Market.OnShockStarted += shock =>
+            {
+                if (shock == null) return;
+                SetupRadio();
+                _radio?.RecordMarketRumor(
+                    Ashfall.Core.Economy.EconomyMarketRumorRules.ShockStartedLine(shock), shock.startDay);
+            };
+            _economy.Market.OnShockExpired += shock =>
+            {
+                if (shock == null) return;
+                SetupRadio();
+                _radio?.RecordMarketRumor(
+                    Ashfall.Core.Economy.EconomyMarketRumorRules.ShockExpiredLine(shock), shock.startDay);
+            };
+
             var save = EconomySaveStore.TryLoad();
             if (save != null)
             {
@@ -96,10 +117,39 @@ namespace AtomicWar.GodotApp
             if (_economyDirty) SaveEconomy();
         }
 
+        /// <summary>
+        /// Plan 212 — weather→market shock bridge. The weather authority owns
+        /// weather; the market owns its indices; the band mapping is Core
+        /// policy (<see cref="EconomyWeatherShockRules"/>). This adapter only
+        /// reads the canonical weather state and applies the bounded,
+        /// idempotent shock. Deterministic: pure function of current weather.
+        /// Plan 14A — the embargo authority FIRST advances its decay state with
+        /// the same authoritative weather (activation + decay are Core state);
+        /// the market then applies the decay-aware multiplier as one embargo
+        /// factor. No embargo shock ever enters ApplyShock — the two shock
+        /// paths stay separate factors in the canonical price equation.
+        /// </summary>
+        private void TickEconomyWeatherBridge(int day)
+        {
+            if (_economy == null) return;
+            if (_world?.Weather == null) return;
+            _economy.EmbargoSystem?.NotifyWeather(day, _world.Weather.Current);
+            var band = EconomyWeatherShockRules.TryGetWeatherShock(_world.Weather.Current);
+            if (band == null) return;
+            _economy.Market.ApplyShock(
+                band.CategoryId, band.IsShortage, band.SeverityBp,
+                startDay: day, durationDays: band.DurationDays, sourceId: band.SourceId);
+        }
+
         private void SetupCaravans()
         {
             if (_caravans != null) return;
+            SetupEconomy();
             _caravans = TravelingCaravanHostSession.Create(_dataDir);
+            // Plan 14A — caravans share the campaign's ONE embargo authority
+            // (rules from trade_embargoes.json); route blocking evaluates the
+            // same rules the market prices from.
+            _caravans.Engine.Embargoes = _economy.EmbargoSystem;
             _caravans.StateChanged += () => _caravansDirty = true;
             GD.Print("[Ashfall Godot] Caravan host ready.");
         }
@@ -151,8 +201,14 @@ namespace AtomicWar.GodotApp
                 campaignDayProvider: () => _simDay,
                 partyRadiationProvider: () => _holdfastRuntime?.Radiation ?? 0f,
                 survivorsProvider: () => _survivors);
-            // Foundry state rides the expansion-hub save (already restored above);
-            // state-change events mark the hub save dirty so nothing is lost.
+            // v6 SaltMine: hub envelope already restored into expansions/foundry
+            // Core systems; SaltMine lives on this host session — restore it
+            // from the same hub payload when present.
+            var hubSave = ExpansionHubSaveStore.TryLoad();
+            if (hubSave?.saltMine != null)
+                _silentFoundry.SaltMine.RestoreState(hubSave.saltMine);
+            // Foundry + SaltMine ride the expansion-hub save; state-change
+            // events mark the hub save dirty so nothing is lost.
             _silentFoundry.StateChanged += () =>
             {
                 _foundryDirty = true;

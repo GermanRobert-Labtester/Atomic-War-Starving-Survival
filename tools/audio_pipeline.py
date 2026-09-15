@@ -26,6 +26,7 @@ import wave
 from typing import Callable, Dict, List, Optional, Tuple
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
+GODOT_RUNNER = REPO_ROOT / "scripts" / "ci" / "run-godot-bounded.sh"
 DEFAULT_SAMPLE_RATE = 44100
 
 @dataclasses.dataclass(frozen=True)
@@ -370,6 +371,13 @@ class DeliveryLedger:
 
 def trigger_godot_import() -> int:
     """Executes headless Godot asset import. Returns process returncode."""
-    cmd = ["godot", "--headless", "--path", str(REPO_ROOT), "--import"]
-    res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    cmd = ["bash", str(GODOT_RUNNER), "--path", str(REPO_ROOT), "--import"]
+    res = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=180,
+        cwd=str(REPO_ROOT),
+    )
     return res.returncode

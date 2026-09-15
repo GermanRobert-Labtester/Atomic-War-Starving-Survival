@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -110,7 +111,8 @@ namespace AtomicWar.GodotApp
                 () => _simDay,
                 // SHELTER_EMP_MEDICAL_POWER: clinic/ward power read from the grid.
                 // Null-safe: an absent grid leaves the clinic powered (legacy behavior).
-                () => _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_clinic"));
+                () => _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_clinic"),
+                capabilityCheck: knowledgeId => EnsureSharedResearch().HasCapability(knowledgeId));
 
             var respiratoryDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RespiratoryDegenerationId);
             var radiationDef = new Ashfall.Core.Medical.AfflictionId(Ashfall.Core.Medical.MedicalTreatmentCatalog.RadiationSicknessId);
@@ -120,12 +122,12 @@ namespace AtomicWar.GodotApp
                 getDose: id => _survivors.RadStateFor(id)?.RadiationDose ?? 0f,
                 getPhaseName: GetRadiationPhaseName,
                 hasAcuteSickness: id => _survivors.RadStateFor(id)?.HasAcuteRadiationSickness ?? false,
-                applyIodine: id => { _survivors.AdministerIodine(id); return true; },
-                applyAntiRad: (id, rads) => { _survivors.AdministerAntiRad(id, rads); return true; }));
+                applyIodine: id => !_survivors.AdministerIodine(id).StartsWith("Unknown survivor", StringComparison.Ordinal),
+                applyAntiRad: (id, rads) => !_survivors.AdministerAntiRad(id, rads).StartsWith("Unknown survivor", StringComparison.Ordinal)));
             pipeline.RegisterHandler(new Ashfall.Core.Medical.HealthDeficitAfflictionHandler(
                 getHealth: id => _survivors.Find(id)?.Health ?? 100f,
                 getMaxHealth: id => _survivors.Find(id)?.MaxHealthCap ?? 100f,
-                applyHeal: (id, amount) => { _survivors.HealSurvivor(id, amount); return true; }));
+                applyHeal: (id, amount) => !_survivors.HealSurvivor(id, amount).StartsWith("Unknown survivor", StringComparison.Ordinal)));
 
             // Task #133 P1b — chemical-dependency detox starts flow through
             // the pipeline; the shared engine keeps every withdrawal clock.

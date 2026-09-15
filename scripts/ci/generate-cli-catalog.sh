@@ -24,10 +24,11 @@ RAW="$(mktemp)"
 trap 'rm -f "$RAW" "$RAW.godot.log"' EXIT
 
 cd "$ROOT"
+GODOT_RUNNER=(bash "$ROOT/scripts/ci/run-godot-bounded.sh")
 # Godot 4.7's project logger can crash while opening its user:// log when the
 # host-help stream is redirected by CI. Use a disposable native log alongside
 # the captured help output so this generator is robust in non-PTY runners.
-if ! godot --headless --log-file "$RAW.godot.log" --path . -- --host-help >"$RAW" 2>&1; then
+if ! "${GODOT_RUNNER[@]}" --log-file "$RAW.godot.log" --path . -- --host-help >"$RAW" 2>&1; then
   echo "ERROR: --host-help failed to run:" >&2
   cat "$RAW" >&2
   exit 1

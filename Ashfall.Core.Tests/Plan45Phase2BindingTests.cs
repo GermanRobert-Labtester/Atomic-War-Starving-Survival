@@ -9,6 +9,7 @@
 //   5. the data binding (travel_encounters.json combatant_tag round-trip);
 //   6. the TravelEncounterCombatBinder (hostile choice → catalog spawn).
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -68,20 +69,41 @@ public class Plan45Phase2BindingTests : CatalogTestBase
 
     // ── Wildlife packs (§47) ───────────────────────────────────────────
 
-    [Theory]
-    [InlineData("pack_canine", "combatant_feral_mutt")]
-    [InlineData("swarm", "combatant_burrower_mite")]
-    [InlineData("lurker", "combatant_pale_crawler")]
-    [InlineData("spore_predator", "combatant_spore_hound")]
-    [InlineData("charger", "combatant_armored_boar")]
-    [InlineData("apex", "combatant_armored_boar")]
-    public void WildlifeComposition_TagMapsToSingleSpeciesPack(string tag, string expectedId)
+    [Fact]
+    public void WildlifeComposition_TagMappingTable_MapsToSingleSpeciesPacks()
     {
         ReloadCatalog();
-        var pack = EnemyCompositionSelector.SelectWildlifeComposition(tag, 3);
-        Assert.Equal(3, pack.Count);
-        Assert.All(pack, id => Assert.Equal(expectedId, id));
-        Assert.True(CombatCatalog.HasCombatant(expectedId), $"{expectedId} must be registered");
+        var failures = new List<string>();
+
+        foreach (var testCase in new[]
+        {
+            (Tag: "pack_canine", ExpectedId: "combatant_feral_mutt"),
+            (Tag: "swarm", ExpectedId: "combatant_burrower_mite"),
+            (Tag: "lurker", ExpectedId: "combatant_pale_crawler"),
+            (Tag: "spore_predator", ExpectedId: "combatant_spore_hound"),
+            (Tag: "charger", ExpectedId: "combatant_armored_boar"),
+            (Tag: "apex", ExpectedId: "combatant_armored_boar"),
+        })
+        {
+            var pack = EnemyCompositionSelector.SelectWildlifeComposition(testCase.Tag, 3);
+            if (pack.Count != 3)
+            {
+                failures.Add($"tag '{testCase.Tag}' expected pack size 3, got {pack.Count}");
+            }
+
+            if (pack.Any(id => id != testCase.ExpectedId))
+            {
+                failures.Add(
+                    $"tag '{testCase.Tag}' expected only '{testCase.ExpectedId}', got [{string.Join(", ", pack)}]");
+            }
+
+            if (!CombatCatalog.HasCombatant(testCase.ExpectedId))
+            {
+                failures.Add($"{testCase.ExpectedId} must be registered");
+            }
+        }
+
+        Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
     }
 
     [Fact]
@@ -126,17 +148,22 @@ public class Plan45Phase2BindingTests : CatalogTestBase
         Assert.Equal("combatant_desperate_scavenger", ambush[0]);
     }
 
-    [Theory]
-    [InlineData("Environmental")]
-    [InlineData("Chained")]
-    [InlineData("Discovery")]
-    [InlineData("Social")]
-    [InlineData("Trade")]
-    public void Router_NonCombatCategories_YieldNothing(string category)
+    [Fact]
+    public void Router_NonCombatCategoryTable_YieldsNothing()
     {
-        EnemyCompositionSelector.SelectForHostileEncounter(category, "pack_canine", 7, 3);
-        var ids = EnemyCompositionSelector.SelectForHostileEncounter(category, "", 7, 3);
-        Assert.Empty(ids);
+        var failures = new List<string>();
+
+        foreach (string category in new[] { "Environmental", "Chained", "Discovery", "Social", "Trade" })
+        {
+            EnemyCompositionSelector.SelectForHostileEncounter(category, "pack_canine", 7, 3);
+            var ids = EnemyCompositionSelector.SelectForHostileEncounter(category, "", 7, 3);
+            if (ids.Count != 0)
+            {
+                failures.Add($"category '{category}' unexpectedly produced [{string.Join(", ", ids)}]");
+            }
+        }
+
+        Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
     }
 
     // ── Data binding: combatant_tag round-trip ─────────────────────────

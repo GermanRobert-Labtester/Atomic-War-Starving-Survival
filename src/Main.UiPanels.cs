@@ -1374,6 +1374,7 @@ namespace AtomicWar.GodotApp
                 OnShowBriefingClicked,
                 OnCensusLevyClicked,
                 OnOrder12CClicked,
+                OnCollectTradeSaltClicked,
                 OnUnlockPlantClicked,
                 OnRepairMembraneClicked,
                 OnToggleOutfallClicked,

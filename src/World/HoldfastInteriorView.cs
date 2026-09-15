@@ -72,6 +72,10 @@ namespace AtomicWar.GodotApp.World
 
         public HoldfastInteriorView()
         {
+            // Background layer first so it draws behind actors and hotspots.
+            _backgroundLayer = new Node2D { Name = "Background" };
+            AddChild(_backgroundLayer);
+
             if (!HasNode("SurvivorActors"))
                 AddChild(new Node2D { Name = "SurvivorActors" });
             if (!HasNode("RoomHotspots"))
@@ -84,7 +88,98 @@ namespace AtomicWar.GodotApp.World
             };
             AddChild(_lightingModulate);
 
+            BuildBackground();
+            BuildPhysicsBounds();
             InitializeDefaultRooms();
+        }
+
+        private Node2D? _backgroundLayer;
+        private Node2D? _physicsBounds;
+        private Sprite2D? _interiorBackground;
+
+        /// <summary>Feet line: top of the static interior floor collider.</summary>
+        public const float FloorStandY = 332f;
+
+        /// <summary>
+        /// Static physics bounds for the interior stage: floor, ceiling, and side
+        /// walls. The physics base actors walk and collide against. Presentation
+        /// only — it never gates room assignment.
+        /// </summary>
+        private void BuildPhysicsBounds()
+        {
+            _physicsBounds = new Node2D { Name = "PhysicsBounds" };
+            AddChild(_physicsBounds);
+            AddStaticRect(new Vector2(380, 344), new Vector2(760, 24)); // floor
+            AddStaticRect(new Vector2(380, -8), new Vector2(760, 16));  // ceiling
+            AddStaticRect(new Vector2(-8, 210), new Vector2(16, 420)); // left wall
+            AddStaticRect(new Vector2(768, 210), new Vector2(16, 420)); // right wall
+        }
+
+        private void AddStaticRect(Vector2 center, Vector2 size)
+        {
+            if (_physicsBounds == null) return;
+            var body = new StaticBody2D { Position = center };
+            body.AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = size } });
+            _physicsBounds.AddChild(body);
+        }
+
+        /// <summary>
+        /// Loads the placeholder shelter interior cutaway and a few fixed props.
+        /// Missing art is non-fatal: the view falls back to the flat dark
+        /// background so headless runs without an import cache stay clean.
+        /// </summary>
+        private void BuildBackground()
+        {
+            if (_backgroundLayer == null) return;
+
+            var background = TryLoadShelterTexture(BackgroundArtPath);
+            _interiorBackground = new Sprite2D
+            {
+                Name = "InteriorCutaway",
+                Texture = background,
+                Centered = false,
+                Position = Vector2.Zero
+            };
+            _backgroundLayer.AddChild(_interiorBackground);
+
+            AddBackgroundProp(PropSupplyCratePath, new Vector2(64, 344), 0.55f);
+            AddBackgroundProp(PropWaterBarrelPath, new Vector2(694, 346), 0.55f);
+            AddBackgroundProp(PropHatchDoorPath, new Vector2(714, 226), 0.50f);
+        }
+
+        private void AddBackgroundProp(string path, Vector2 position, float scale)
+        {
+            var texture = TryLoadShelterTexture(path);
+            if (texture == null || _backgroundLayer == null) return;
+            _backgroundLayer.AddChild(new Sprite2D
+            {
+                Texture = texture,
+                Position = position,
+                Scale = new Vector2(scale, scale)
+            });
+        }
+
+        /// <summary>Placeholder shelter art root (Plan 139 placeholder pack).</summary>
+        public const string ShelterArtDir = "res://assets/sprites/Shelter/";
+        public const string BackgroundArtPath = ShelterArtDir + "shelter_interior_day1_7.png";
+        public const string PropSupplyCratePath = ShelterArtDir + "prop_supply_crate.png";
+        public const string PropWaterBarrelPath = ShelterArtDir + "prop_water_barrel.png";
+        public const string PropHatchDoorPath = ShelterArtDir + "prop_hatch_door.png";
+
+        /// <summary>Resolves a shelter placeholder texture, null when absent (never throws).</summary>
+        public static Texture2D? TryLoadShelterTexture(string resPath)
+        {
+            if (string.IsNullOrEmpty(resPath) || !ResourceLoader.Exists(resPath))
+                return null;
+            try
+            {
+                return ResourceLoader.Load<Texture2D>(resPath);
+            }
+            catch (Exception ex)
+            {
+                GD.PushWarning($"[HoldfastInteriorView] shelter art load failed: {resPath}: {ex.Message}");
+                return null;
+            }
         }
 
         private void InitializeDefaultRooms()
@@ -232,6 +327,14 @@ namespace AtomicWar.GodotApp.World
                 "emergency" => new Color(0.95f, 0.40f, 0.35f, 1.0f),
                 _ => new Color(0.95f, 0.95f, 0.95f, 1.0f)
             };
+
+            // Swap the generated cutaway to the matching day/dawn/dusk/night placeholder.
+            if (_interiorBackground != null)
+            {
+                var texture = BackdropArt.TryLoad(BackdropArt.ShelterInteriorFor(phase));
+                if (texture != null)
+                    _interiorBackground.Texture = texture;
+            }
         }
 
         private void SyncRoomsFromLiveState()
@@ -285,7 +388,9 @@ namespace AtomicWar.GodotApp.World
                 int occupantIndex = roomCounts[assignedRoom]++;
                 int xOffset = occupantIndex * 35;
                 Vector2 basePos = GetRoomBasePosition(assignedRoom);
-                actor.Position = basePos + new Vector2(xOffset, 25);
+                // Physics base: hand the actor a presentation target; the body
+                // walks there under gravity and collides with the stage bounds.
+                actor.SetMoveTarget(new Vector2(basePos.X + xOffset, FloorStandY));
             }
 
             // Update hotspot occupant counters and live status

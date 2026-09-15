@@ -13,41 +13,91 @@ namespace Ashfall.Core.Tests.Survivors
     {
         // ── Construction and validation ────────────────────────────────
 
-        [Theory]
-        [InlineData("elena_vasquez")]
-        [InlineData("survivor_dr_sarah_chen")]
-        [InlineData("the_surgeon")]
-        [InlineData("a")]
-        [InlineData("survivor_2")]
-        [InlineData("a_b_c_d_e")]
-        public void Accepts_CanonicalSnakeCase(string raw)
+        [Fact]
+        public void Accepts_CanonicalSnakeCase()
         {
-            var id = new SurvivorId(raw);
-            Assert.Equal(raw, id.Value);
-            Assert.False(id.IsEmpty);
+            string[] values =
+            {
+                "elena_vasquez", "survivor_dr_sarah_chen", "the_surgeon",
+                "a", "survivor_2", "a_b_c_d_e"
+            };
+            var failures = new List<string>();
+
+            foreach (var raw in values)
+            {
+                try
+                {
+                    var id = new SurvivorId(raw);
+                    if (id.Value != raw)
+                        failures.Add($"{raw}: expected value {raw}, got {id.Value}");
+                    if (id.IsEmpty)
+                        failures.Add($"{raw}: valid id was empty");
+                }
+                catch (Exception exception)
+                {
+                    failures.Add($"{raw}: {exception.GetType().Name}: {exception.Message}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(null, "null")]
-        [InlineData("", "empty")]
-        [InlineData(" ", "invalid character")]
-        [InlineData("Elena_Vasquez", "uppercase")]
-        [InlineData("ELENA", "uppercase")]
-        [InlineData("elena-vasquez", "invalid character")]
-        [InlineData("elena vasquez", "invalid character")]
-        [InlineData("elena.vasquez", "invalid character")]
-        [InlineData("elena/vasquez", "invalid character")]
-        [InlineData("_elena", "underscore")]
-        [InlineData("elena_", "underscore")]
-        [InlineData("elena__vasquez", "empty segment")]
-        [InlineData("élena", "invalid character")]
-        public void Rejects_NonCanonical(string? raw, string expectedReasonFragment)
+        [Fact]
+        public void Rejects_NonCanonical()
         {
-            Assert.False(SurvivorId.IsValid(raw, out string error));
-            Assert.Contains(expectedReasonFragment, error, StringComparison.OrdinalIgnoreCase);
+            var cases = new (string? Raw, string Reason)[]
+            {
+                (null, "null"),
+                (string.Empty, "empty"),
+                (" ", "invalid character"),
+                ("Elena_Vasquez", "uppercase"),
+                ("ELENA", "uppercase"),
+                ("elena-vasquez", "invalid character"),
+                ("elena vasquez", "invalid character"),
+                ("elena.vasquez", "invalid character"),
+                ("elena/vasquez", "invalid character"),
+                ("_elena", "underscore"),
+                ("elena_", "underscore"),
+                ("elena__vasquez", "empty segment"),
+                ("élena", "invalid character")
+            };
+            var failures = new List<string>();
 
-            var ex = Assert.Throws<ArgumentException>(() => new SurvivorId(raw!));
-            Assert.Contains(expectedReasonFragment, ex.Message, StringComparison.OrdinalIgnoreCase);
+            foreach (var test in cases)
+            {
+                string label = test.Raw ?? "<null>";
+                try
+                {
+                    if (SurvivorId.IsValid(test.Raw, out string error))
+                        failures.Add($"{label}: IsValid unexpectedly accepted the id");
+                    else if (!error.Contains(test.Reason, StringComparison.OrdinalIgnoreCase))
+                        failures.Add($"{label}: validation error lacked '{test.Reason}': {error}");
+                }
+                catch (Exception exception)
+                {
+                    failures.Add($"{label}: IsValid threw {exception.GetType().Name}: {exception.Message}");
+                }
+
+                try
+                {
+                    _ = new SurvivorId(test.Raw!);
+                    failures.Add($"{label}: constructor unexpectedly accepted the id");
+                }
+                catch (ArgumentException exception)
+                {
+                    if (!exception.Message.Contains(test.Reason, StringComparison.OrdinalIgnoreCase))
+                    {
+                        failures.Add(
+                            $"{label}: constructor error lacked '{test.Reason}': {exception.Message}");
+                    }
+                }
+                catch (Exception exception)
+                {
+                    failures.Add($"{label}: constructor threw {exception.GetType().Name}: {exception.Message}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -345,13 +395,19 @@ namespace Ashfall.Core.Tests.Survivors
         /// survivors use <c>survivor_</c>. Pinned so nobody "tightens" the grammar
         /// and locks 101 survivors out of the campaign.
         /// </summary>
-        [Theory]
-        [InlineData("the_surgeon")]
-        [InlineData("elena_vasquez")]
-        [InlineData("survivor_dr_sarah_chen")]
-        public void Grammar_DoesNotRequireAPrefix(string raw)
+        [Fact]
+        public void Grammar_DoesNotRequireAPrefix()
         {
-            Assert.True(SurvivorId.IsValid(raw));
+            string[] values = { "the_surgeon", "elena_vasquez", "survivor_dr_sarah_chen" };
+            var failures = new List<string>();
+
+            foreach (var raw in values)
+            {
+                if (!SurvivorId.IsValid(raw, out string error))
+                    failures.Add($"{raw}: {error}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
     }
 }

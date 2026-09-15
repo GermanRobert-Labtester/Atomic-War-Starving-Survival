@@ -206,7 +206,7 @@
       "display_name": "The Dying Stranger",
       "category": "comfort",
       "trigger": "A stranger, dying by the road, asks for company.",
-      "discovery": "By the road, a person lying still, breathing shallow, eyes open. They see you. They do not ask for food or water. They ask you to sit. They say they do not want to die alone. The road is long. The dark is coming. You have miles to go.",
+      "discovery": "By the road, a person lying still, breathing shallow, eyes open. They see you. They do not ask for food or water. They ask you to sit. They say they do not want to die alone. The road is long and the dark is coming. You have miles to go.",
       "location_id": "",
       "min_day": 5,
       "max_day": 200,
@@ -215,28 +215,28 @@
           "label": "Sit with them until the end",
           "moral_delta": 10,
           "empathy_delta": 3,
-          "outcome_text": "You sit. You hold their hand. They do not speak much. They die at dusk. You bury them with stones. You walk in the dark. The dark is the cost. The sitting was the gift.",
-          "epitaph": "Sat with a dying stranger. Held their hand. Walked in the dark after. The dark was the cost."
+          "outcome_text": "You sit. You hold their hand. They do not speak much. They die at dusk. You bury them under stones and dig with a flat rock and your hands. The dark finds you before you reach shelter.",
+          "epitaph": "Sat with a dying stranger until dusk. I walked the last miles in the dark."
         },
         {
           "label": "Sit a while, then leave",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You sit for an hour. They thank you. You explain you must go. They understand, they say. They do not. You go. You wonder, later, when they died.",
-          "epitaph": "Sat an hour with the dying. Then I left. I wonder when they died."
+          "outcome_text": "You sit for an hour. They thank you. You explain you must go. They understand, they say. They do not. You walk. You wonder, later, when they died.",
+          "epitaph": "Sat an hour with the dying. Then I left. I never learned when they died."
         },
         {
           "label": "Leave food and water and go",
           "moral_delta": 1,
           "empathy_delta": 0,
-          "outcome_text": "You leave food and water beside them. They cannot eat. You go. The food and water are for whoever finds them next. The dying is for the dying.",
-          "epitaph": "Left food and water for the dying. The food was not for them. The dying was for them."
+          "outcome_text": "You leave food and water beside them. They cannot eat. You go. It is the next traveler who will eat, if anyone does.",
+          "epitaph": "Left food and water for someone who could not eat. The next traveler will find both."
         },
         {
           "label": "Walk on",
           "moral_delta": -8,
           "empathy_delta": -1,
-          "outcome_text": "You walk on. You do not sit. The road is long. The dark is coming. You make your miles. You hear nothing behind you. You hear nothing because you did not stay.",
+          "outcome_text": "You walk on. The road is long. You make your miles before the dark. Behind you, nothing makes a sound you can name.",
           "epitaph": "Walked past the dying. I made my miles. I heard nothing behind me."
         }
       ]
@@ -255,29 +255,29 @@
           "label": "Sit and listen",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You sit. She tells you about the boy. She tells you for an hour. You listen. She thanks you. She is still weeping when you leave, but she is less alone in the weeping.",
-          "epitaph": "Sat with the grieving mother. Listened to the boy. The weeping was less alone."
+          "outcome_text": "You sit. She tells you about the boy for an hour: the grades he would have made, the dog they could not find. You let the hour go. She is still weeping when you leave.",
+          "epitaph": "Sat with the grieving mother an hour. She told me the boy's name."
         },
         {
           "label": "Sit, then help her up",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You sit, then gently help her stand. She leans on you. You walk her to the nearest shelter. She is alive. The grave is behind her. The boy is behind her.",
-          "epitaph": "Helped the grieving mother up. Walked her to shelter. The grave is behind."
+          "outcome_text": "You sit, then gently help her stand. She leans on you. You walk her to the nearest shelter. Staying alive is the only thing on offer, and she takes it.",
+          "epitaph": "Helped the grieving mother up. Walked her to shelter. The grave stays where it is."
         },
         {
           "label": "Leave a token and go",
           "moral_delta": 2,
           "empathy_delta": 1,
-          "outcome_text": "You leave a small thing on the grave — a coin, a button, a stone. You say nothing. You go. The token is the sitting you could not do.",
-          "epitaph": "Left a token on the grave. The token was the sitting I could not do."
+          "outcome_text": "You leave a small thing on the grave, a button from your sleeve. You say nothing. You go. It is not sitting with her. It is what you had.",
+          "epitaph": "Left a button on the boy's grave. I did not sit."
         },
         {
           "label": "Walk on",
           "moral_delta": -3,
           "empathy_delta": 0,
-          "outcome_text": "You walk on. The weeping is behind you. You make your miles. The weeping is still behind you. It will be behind you for a long time.",
-          "epitaph": "Walked past the weeping mother. The weeping is behind me. It is still behind me."
+          "outcome_text": "You walk on. The weeping carries. You hear it past the first bend, then past the second.",
+          "epitaph": "Walked past the weeping mother. It carried further than I wanted."
         }
       ]
     },
@@ -286,7 +286,7 @@
       "display_name": "The Unburied",
       "category": "dead",
       "trigger": "A body by the road, unburied, no one to bury them.",
-      "discovery": "By the road, a body, fresh, not yet cold. No one around. The body is alone. The road is busy, or was. You have a shovel. You have time. You have miles to go. The body will be found by animals by nightfall.",
+      "discovery": "A body at the road's edge, fresh enough that the ground under it is still dark. No one else is around. Crows have found it already and are waiting in the tree line. You have a shovel on your pack. You also have miles to make before dark.",
       "location_id": "",
       "min_day": 5,
       "max_day": 200,
@@ -295,29 +295,29 @@
           "label": "Bury the body",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You dig a shallow grave and bury them. You take nothing from the body. You mark the grave with a stone. You walk on. The burying cost you an hour. The hour was the gift.",
-          "epitaph": "Buried a stranger by the road. Took nothing. The hour was the gift."
+          "outcome_text": "The ground gives easier than you expected, topsoil and then clay. An hour of digging, a stone rolled over the mound. You take nothing. Your hands are blistered when you start walking again.",
+          "epitaph": "Buried a stranger by the road. An hour and two blisters. Took nothing."
         },
         {
           "label": "Bury and take their effects",
           "moral_delta": 2,
           "empathy_delta": 0,
-          "outcome_text": "You bury the body and take their effects — a knife, a tin, a letter. The effects are useful. The burying was the duty. The taking was the question.",
-          "epitaph": "Buried a stranger and took their things. The duty was done. The taking was the question."
+          "outcome_text": "You dig the grave first, then go through the pockets: a knife, a tin of something, a folded letter you do not read. You set the stone over them with their pockets empty. The knife is good steel.",
+          "epitaph": "Buried a stranger, kept the knife and the tin. Left the letter unread in their pocket."
         },
         {
           "label": "Take their effects, leave the body",
           "moral_delta": -5,
           "empathy_delta": -1,
-          "outcome_text": "You take the useful things and leave the body. The body will be found by animals. The things are yours. The body is not your problem. The body is the question you will carry.",
-          "epitaph": "Took the things, left the body. The things are mine. The body is the question."
+          "outcome_text": "The knife, the tin, the letter, all in your pack in under a minute. You walk on without digging. Behind you the crows stop waiting.",
+          "epitaph": "Took the knife and the tin, left the body. The crows were already there."
         },
         {
           "label": "Walk on",
           "moral_delta": -3,
           "empathy_delta": 0,
-          "outcome_text": "You walk on. The body is behind you. You do not look back. You tell yourself you could not bury everyone. You tell yourself this often.",
-          "epitaph": "Walked past the body. I could not bury everyone. I tell myself this often."
+          "outcome_text": "You walk on. You count the paces until the body is out of sight, forty of them. You tell yourself you cannot bury everyone. You have had practice telling yourself this.",
+          "epitaph": "Walked past the body. Forty paces to get it out of sight. I cannot bury everyone."
         }
       ]
     },
@@ -326,7 +326,7 @@
       "display_name": "The Name on the Body",
       "category": "dead",
       "trigger": "A body with a name tag, a family to find.",
-      "discovery": "A body by the road, a name tag on the wrist: a name, a district, a shelter number. The body is not yours. The district is two days away. The family, if they are there, would want to know. The road is long. The body is heavy. The name is the question.",
+      "discovery": "A body by the road with a tag wired to the wrist: a name, a district, a shelter number. The district is two days out of your way. The tag is the only part of this person that can still travel. Someone there is probably still counting the days since they left.",
       "location_id": "",
       "min_day": 20,
       "max_day": 200,
@@ -335,29 +335,29 @@
           "label": "Carry the news to the family",
           "moral_delta": 10,
           "empathy_delta": 3,
-          "outcome_text": "You go to the district, find the family, tell them. The mother weeps. The father thanks you. You do not bring the body — you could not. You bring the name. The name is the thing.",
-          "epitaph": "Carried the name to the family. The mother wept. The name was the thing I carried."
+          "outcome_text": "Two days to the district. You find the family in a converted schoolhouse, and you say the name. The mother sits down on the floor. The father writes the date on the wall next to other dates. You could not bring the body. You brought the name.",
+          "epitaph": "Carried the name two days to the family. The mother sat down on the floor. The father wrote the date on the wall."
         },
         {
           "label": "Bury the body, carry the name tag",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You bury the body and carry the tag. You find the family. You give them the tag. The tag is the proof. The proof is the grave they will never visit.",
-          "epitaph": "Buried the body, carried the tag. The tag is the proof. The grave is far."
+          "outcome_text": "An hour with the shovel, a stone on the mound, the tag in your pocket. Two days later you hand it to the family and tell them where the stone is, roughly. They will never make the trip. The tag hangs on their wall now.",
+          "epitaph": "Buried the body, carried the tag two days. It hangs on their wall. The grave is too far to visit."
         },
         {
           "label": "Bury the body, leave the tag",
           "moral_delta": 2,
           "empathy_delta": 1,
-          "outcome_text": "You bury the body with the tag. The family will not know. The body will not be a body to the animals. The name is with the body. The family is without the name.",
-          "epitaph": "Buried the body with the tag. The family will not know. The name is with the body."
+          "outcome_text": "You dig, and you wire the tag back to the wrist before you fill. The name stays with the body, under a stone nobody will read. Somewhere a family keeps counting days.",
+          "epitaph": "Buried the body with the tag on. The family will keep counting. The name is under a stone."
         },
         {
           "label": "Walk on",
           "moral_delta": -5,
           "empathy_delta": -1,
-          "outcome_text": "You walk on. The body is behind you. The name is behind you. The family will not know. You tell yourself you could not find them. You tell yourself this.",
-          "epitaph": "Walked past the body and the name. The family will not know. I tell myself I could not find them."
+          "outcome_text": "You walk on. The tag stays wired to the wrist, readable by whoever stops next. You tell yourself someone else is closer to the district than you are. You do not check if that is true.",
+          "epitaph": "Walked past the body and the tag. Told myself someone else was closer. Did not check."
         }
       ]
     },
@@ -526,7 +526,7 @@
       "display_name": "The Broken Survivor",
       "category": "comfort",
       "trigger": "A survivor sits staring, not speaking, not eating.",
-      "discovery": "A survivor in your shelter, sitting against the wall, not speaking, not eating, eyes open, seeing nothing. Three days now. The doctor says the body is fine. The doctor says the mind is not. The doctor does not know what to do. No one does. The survivor is one of yours.",
+      "discovery": "A survivor in your shelter sits against the wall, not speaking, not eating, eyes open, seeing nothing. Three days now. The doctor says the body is fine and the mind is not, and has nothing else to offer. The survivor is one of yours.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -535,29 +535,29 @@
           "label": "Sit with them, daily",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You sit with them an hour each day. You do not speak. You sit. On the fourth day, they look at you. On the fifth, they take water. The sitting was the medicine. The medicine was the sitting.",
-          "epitaph": "Sat with the broken one daily. On the fifth day, they took water. The sitting was the medicine."
+          "outcome_text": "You sit with them an hour each day. You do not speak. On the fourth day, they look at you. On the fifth, they take water from your hand. You note the hour, and you come back at the same time the next day.",
+          "epitaph": "Sat with the broken one daily. On the fifth day they took water. I keep the hour."
         },
         {
           "label": "Bring them food and water, leave it",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You bring food and water, set it beside them, leave. The food is untouched. The water is sometimes drunk. You are keeping the body alive. The mind is not yours to fix.",
-          "epitaph": "Brought food and water. The body lived. The mind was not mine to fix."
+          "outcome_text": "You bring food and water, set it beside them, leave. The food is untouched. The water is sometimes drunk. The body stays alive on your schedule. The rest of it is not yours to fix.",
+          "epitaph": "Brought food and water. The body lived. The rest was not mine to fix."
         },
         {
           "label": "Assign someone to watch them",
           "moral_delta": 1,
           "empathy_delta": 0,
-          "outcome_text": "You assign a watch. The watcher sits. The broken one does not respond. The watcher is tired. The broken one is still broken. The watching is the duty. The duty is not the medicine.",
-          "epitaph": "Assigned a watcher. The duty was done. The duty was not the medicine."
+          "outcome_text": "You assign a watch. The watcher sits, and is tired. The broken one does not respond. In the log you write 'no change' three days running.",
+          "epitaph": "Assigned a watcher. Three days of 'no change' in the log."
         },
         {
           "label": "Leave them be",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You leave them be. They are against the wall. The days pass. You hope they come back. You do not sit. You do not bring food. You leave them be. The leaving is the thing.",
-          "epitaph": "Left the broken one be. I hope they come back. I did not sit."
+          "outcome_text": "You leave them be. Days pass. You hope they come back. You do not sit, and you do not bring food. The wall keeps them.",
+          "epitaph": "Left the broken one be. I hoped they would come back. I did not sit."
         }
       ]
     },
@@ -566,7 +566,7 @@
       "display_name": "The Mass Grave",
       "category": "dead",
       "trigger": "A mass grave, freshly dug, no one to fill it.",
-      "discovery": "A mass grave, dug by the military before they left, six bodies in it, no one to fill it. The bodies are strangers. The grave is open. The animals will come. You have a shovel. You have miles to go. The grave is not yours to fill. The dead are not yours to bury. The dead are dead.",
+      "discovery": "A mass grave at the edge of a field, dug by the military before they pulled out. Six bodies in a row at the bottom of it, and the spoil heap beside it is already crusted with frost. The shovels went with the trucks. You have your own. The crows found this yesterday.",
       "location_id": "",
       "min_day": 5,
       "max_day": 200,
@@ -575,29 +575,29 @@
           "label": "Fill the grave",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You fill the grave. It takes an hour. You say nothing. You mark it with a stone. You walk on. The dead are buried. The burying was not yours. You did it anyway.",
-          "epitaph": "Filled the mass grave. It was not mine. I did it anyway. The dead are buried."
+          "outcome_text": "Two hours of throwing frost-crusted earth back into the hole it came from. Six bodies under it, and you do not know one name. You roll a fieldstone to the head of it and walk on with your back burning.",
+          "epitaph": "Filled the mass grave, two hours, six strangers. None of it was mine to do. Did it anyway."
         },
         {
           "label": "Fill it and take the dog tags",
           "moral_delta": 2,
           "empathy_delta": 0,
-          "outcome_text": "You fill the grave and take the dog tags. The tags are names. The names are for someone. The burying was the duty. The tags are the question.",
-          "epitaph": "Filled the grave, took the tags. The duty was done. The tags are the question."
+          "outcome_text": "You climb down first and unwire six tags, six names in your pocket. Then you fill the grave. The names are for someone, somewhere, if you ever find the office that takes them. There may not be such an office anymore.",
+          "epitaph": "Filled the grave, kept six tags in my pocket. The names are for an office that may not exist."
         },
         {
           "label": "Cover the bodies lightly, go",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You cover the bodies with branches, lightly, so the animals cannot see them easily. You do not fill the grave. The branches are the compromise. The compromise is the thing you carry.",
-          "epitaph": "Covered the bodies with branches. The compromise is what I carry."
+          "outcome_text": "You drag branches over the trench, enough to hide it from the road and slow the birds. It will not stop anything with a nose. You leave the spoil heap standing. It is less than a grave and more than nothing.",
+          "epitaph": "Covered the grave with branches. Stops the birds, not the dogs. Less than a grave, more than nothing."
         },
         {
           "label": "Walk on",
           "moral_delta": -2,
           "empathy_delta": 0,
-          "outcome_text": "You walk on. The grave is open. The animals will come. The dead will be the animals' dead. You did not fill it. You could not fill every grave. You tell yourself this.",
-          "epitaph": "Walked past the open grave. The animals will come. I tell myself I could not fill every grave."
+          "outcome_text": "You walk on past the open trench. Six in a row down there, and the frost on the spoil heap sparkling. You cannot fill every grave between here and where you are going. That is true. It does not help.",
+          "epitaph": "Walked past the open grave. I cannot fill every grave. That is true, and it does not help."
         }
       ]
     },
@@ -726,7 +726,7 @@
       "display_name": "The Last Letter",
       "category": "comfort",
       "trigger": "A dying person asks you to write a letter for them.",
-      "discovery": "A dying person, too weak to write, asks you to write a letter to their daughter. They dictate. The letter is short. The letter is full of love and regret. The daughter is far away. The letter may never arrive. The dying person wants it written. The writing is the thing.",
+      "discovery": "A dying person, too weak to write, asks you to write a letter to their daughter. They dictate. The letter is short: a birthday remembered, a door not closed, the year she left. The daughter is far away, or gone, which nobody can verify. They want it written anyway.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -735,29 +735,29 @@
           "label": "Write the letter and promise to deliver",
           "moral_delta": 10,
           "empathy_delta": 3,
-          "outcome_text": "You write the letter. You read it back. The dying person cries. You promise to deliver it. The promise is the cost. The delivery may be impossible. The promise is the thing.",
-          "epitaph": "Wrote the letter, promised to deliver. The promise is the cost. The delivery may be impossible."
+          "outcome_text": "You write the letter and read it back. They cry at the sound of their own words in order. You promise to deliver it. The daughter's address is a town you have never seen. The letter goes in your pack, flat, where the map used to be.",
+          "epitaph": "Wrote the letter and promised to deliver it. It rides in my pack. I may never see the town."
         },
         {
           "label": "Write the letter, leave it with the body",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You write the letter and leave it with the body, in the pocket, for whoever finds them. The letter may be found. The letter may not. The writing was the gift. The leaving was the compromise.",
-          "epitaph": "Wrote the letter, left it with the body. The writing was the gift. The finding is chance."
+          "outcome_text": "You write the letter, fold it, and put it in the dead one's pocket for whoever finds them. Pockets get searched by whoever needs them. Maybe it gets read.",
+          "epitaph": "Wrote the letter and left it in the pocket. Whoever finds them finds it, or takes it."
         },
         {
           "label": "Write the letter, keep it, deliver if you can",
           "moral_delta": 6,
           "empathy_delta": 2,
-          "outcome_text": "You write the letter and keep it. You will deliver it if you can. The letter is in your pack. The letter is a weight. The weight is the promise. The promise is the thing you carry.",
-          "epitaph": "Wrote the letter, kept it. The letter is a weight in my pack. The promise is what I carry."
+          "outcome_text": "You write the letter and keep it. You will deliver it if you can. It goes flat in your pack. Some nights you feel its corner against your shoulder where the strap runs.",
+          "epitaph": "Wrote the letter and kept it. I know the weight of it against the strap."
         },
         {
           "label": "Refuse, you cannot write",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You tell them you cannot write, which is a lie. You can write. You do not want the weight. The dying person understands, or does not. They die without the letter. The letter is the thing you did not do.",
-          "epitaph": "Refused to write the letter. It was a lie. I can write. The letter is the thing I did not do."
+          "outcome_text": "You tell them you cannot write, which is a lie. You can write. You do not want the weight. They die without the letter. The page in your notebook stays blank.",
+          "epitaph": "Refused to write the letter. It was a lie. The page in my notebook is blank."
         }
       ]
     },
@@ -766,7 +766,7 @@
       "display_name": "The Dead Dog",
       "category": "dead",
       "trigger": "A dog, loyal, stays by its dead master.",
-      "discovery": "A dog by a body, the dog's master. The dog has been there for days. The dog is thin. The dog will not leave the body. The dog is loyal. The dog will die there. You have food. The dog is not yours. The dog is a dog. The dog is loyal.",
+      "discovery": "A dog lies against a body at the roadside, close enough to keep it warm, which is no longer a service the body needs. It has been there long enough to go thin and to wear a shallow trench in the gravel where it turns around. It watches you come. It does not get up, and it does not stop watching. You are carrying food.",
       "location_id": "",
       "min_day": 5,
       "max_day": 200,
@@ -775,29 +775,29 @@
           "label": "Feed the dog, try to coax it away",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You feed the dog. The dog eats, wary. You coax. The dog follows you, eventually, looking back at the body. The dog is yours now. The loyalty is the thing. The dog will be loyal to you now.",
-          "epitaph": "Fed the dog, coaxed it away. The dog is mine now. The loyalty is the thing."
+          "outcome_text": "It eats out of your hand with its shoulders low, ready to be hit for it. You walk twenty paces and wait, then twenty more. Somewhere in the third or fourth of those it stops looking back. It will probably do this for you too, one day, if you are the one on the ground.",
+          "epitaph": "Fed the dog and walked it off the body. It follows me now. It stopped looking back sooner than I wanted it to."
         },
         {
           "label": "Feed the dog, leave it",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You feed the dog and leave. The dog eats. The dog stays by the body. The dog will die there. The feeding was the mercy. The leaving was the truth.",
-          "epitaph": "Fed the dog, left it. The dog will die by the body. The feeding was the mercy."
+          "outcome_text": "You put the food down an arm's length from the body and it eats without standing. When you leave it is already back against the dead man's side. The food will last it a day. The body is not going anywhere.",
+          "epitaph": "Fed the dog and left it on the body. Bought it a day. It was already back in place before I turned around."
         },
         {
           "label": "Bury the master, the dog may follow",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You bury the master. The dog watches. When the grave is filled, the dog lies on it. The dog is on the grave now. The dog will die on the grave. The burying was for the dog. The dog is the loyal thing.",
-          "epitaph": "Buried the master. The dog lies on the grave. The burying was for the dog."
+          "outcome_text": "The dog gets up for the shovel work, circles, watches the body go under. When the last of the dirt is down it climbs the mound and lies flat on top of it. You leave it there, thinner than when you arrived.",
+          "epitaph": "Buried the man. The dog lay down on the fresh mound. I dug the grave for the dog's sake, and it changed nothing."
         },
         {
           "label": "Walk on",
           "moral_delta": -2,
           "empathy_delta": 0,
-          "outcome_text": "You walk on. The dog is by the body. The dog will die there. You tell yourself it is a dog. You tell yourself this. The dog is a dog. The dog is loyal. The telling is the thing.",
-          "epitaph": "Walked past the dog and the body. The dog will die there. I tell myself it is a dog."
+          "outcome_text": "You walk on, and the dog watches you go the way it watched you come. It is an animal, you tell yourself, and there are animals everywhere, and most of them are dying. All of that is true. You check over your shoulder twice anyway.",
+          "epitaph": "Walked past the dog on the body. It is an animal, I said. Looked back twice."
         }
       ]
     },
@@ -926,7 +926,7 @@
       "display_name": "The Despairing Survivor",
       "category": "comfort",
       "trigger": "A survivor says they want to give up.",
-      "discovery": "A survivor in your shelter says, quietly, to you: 'I want to stop. I want to give up. I do not want to do another day.' The survivor is serious. The survivor is not injured. The survivor is tired in the way that is not the body. You are responsible. You are not sure what to say. The survivor is waiting for you to say something.",
+      "discovery": "A survivor in your shelter says, quietly, to you: 'I want to stop. I do not want to do another day.' They are not injured. They are tired in a way that is not the body. You are responsible. You are not sure what to say. They are waiting for you to say something.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -935,29 +935,29 @@
           "label": "Sit with them, do not argue",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You sit. You do not argue. You do not tell them to be strong. You sit. After a long time, they say: 'thank you for not telling me to be strong.' The next day, they are still there. The sitting was the thing.",
-          "epitaph": "Sat with the despairing one. Did not argue. The next day, they were still there."
+          "outcome_text": "You sit. You do not argue, and you do not tell them to be strong. After a long time, they say: 'Thank you for not telling me to be strong.' The next morning they are at the count, standing where they stood before.",
+          "epitaph": "Sat with the despairing one. Did not argue. They were at the morning count."
         },
         {
           "label": "Give them a task, a reason",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You give them a task — the water count, the lamp filling, something small. They do it. The task is the reason. The reason is the task. The task is not the cure. The task is the thing to do today.",
-          "epitaph": "Gave them a task. The task is the reason. The task is not the cure. It is the thing to do today."
+          "outcome_text": "You give them a task: the water count, the lamp filling, something small with a number at the end. They do it. They write the number down. It is not a cure. It is a thing done today.",
+          "epitaph": "Gave them the water count. They wrote the number down. It was not a cure."
         },
         {
           "label": "Tell them to be strong",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You tell them to be strong. They nod. They do not eat that night. They are still there the next day, or they are not. The strong was the thing they could not be. The strong was the thing you said.",
-          "epitaph": "Told them to be strong. They could not be. The strong was the thing I said. They did not eat."
+          "outcome_text": "You tell them to be strong. They nod. They do not eat that night. They are at the morning count, or they are not.",
+          "epitaph": "Told them to be strong. They nodded. They did not eat that night."
         },
         {
           "label": "Tell the doctor, walk away",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You tell the doctor and walk away. The doctor will handle it. The doctor does not know how. You know the doctor does not know. The walking was the giving. The giving was the walking away.",
-          "epitaph": "Told the doctor, walked away. The doctor does not know how. The walking was the giving."
+          "outcome_text": "You tell the doctor and walk away. The doctor says they will handle it. You have both heard the doctor say this before, about people who are no longer here.",
+          "epitaph": "Told the doctor and walked away. The doctor does not know either."
         }
       ]
     },
@@ -966,7 +966,7 @@
       "display_name": "The Last Request",
       "category": "dead",
       "trigger": "A dying person asks you to do something after they die.",
-      "discovery": "A dying person asks you, with their last strength, to do one thing after they die: burn their notebook. The notebook is full of writing. The notebook is their life. The dying person does not want it read. The dying person wants it gone. You promise. The dying person dies. The notebook is in your hand.",
+      "discovery": "A dying person in a waystation bunk grips your wrist and asks for one thing: burn their notebook when they go. It is thick, swollen with damp, every page full. They do not want it read, by you or anyone. You say yes. An hour later you are holding the notebook and they are dead.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -975,29 +975,29 @@
           "label": "Burn the notebook as promised",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You burn the notebook. The pages go. The writing goes. The life goes. The promise was kept. The keeping was the cost. The cost was the thing you do not know now.",
-          "epitaph": "Burned the notebook as promised. The life went. The keeping was the cost."
+          "outcome_text": "You feed it to the stove page by page, because swollen paper burns badly. It takes twenty minutes. Whatever was in it is smoke now, and you never knew it, and that was the arrangement.",
+          "epitaph": "Burned the notebook as promised, page by page. Twenty minutes of smoke. I never knew what it said."
         },
         {
           "label": "Read it first, then burn it",
           "moral_delta": -2,
           "empathy_delta": 0,
-          "outcome_text": "You read it first. The life is in it. The secrets are in it. You learn things the dying person did not want you to know. Then you burn it. The promise is kept, partly. The reading was the breaking. The breaking was the reading.",
-          "epitaph": "Read the notebook, then burned it. The promise is kept, partly. The reading was the breaking."
+          "outcome_text": "You read it through in one sitting, then burn it as asked. It held debts, a betrayal, a name written too many times. The fire keeps the promise. Your memory does not.",
+          "epitaph": "Read the notebook, then burned it. Kept the letter of the promise. The name written too many times stays with me."
         },
         {
           "label": "Keep the notebook, do not burn it",
           "moral_delta": -5,
           "empathy_delta": -1,
-          "outcome_text": "You keep the notebook. You do not burn it. The promise is broken. The notebook is in your pack. The life is in your pack. The dying person trusted you. The trust is the thing you broke. The notebook is the proof.",
-          "epitaph": "Kept the notebook. The promise is broken. The trust is what I broke. The notebook is the proof."
+          "outcome_text": "The notebook goes into your pack instead of the stove. You tell yourself information is survival, that a dead person's shame can keep a living person alive. It sits at the bottom of your pack like a stone.",
+          "epitaph": "Kept the notebook. Information is survival, I said. It sits in my pack like a stone."
         },
         {
           "label": "Bury it with the body",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You bury the notebook with the body. You did not burn it. You did not read it. You put it with the person. The person is with the writing. The writing is with the person. The promise is bent, not broken. The bend is the thing.",
-          "epitaph": "Buried the notebook with the body. The promise is bent. The bend is the thing."
+          "outcome_text": "You tuck the notebook under their folded hands and dig the grave. No fire, no reading. Whoever finds this grave in ten years will find a lump of pulp. It is not what they asked. It is close.",
+          "epitaph": "Buried the notebook with its owner. Not what they asked. Close. Ten years from now it is pulp."
         }
       ]
     },
@@ -1126,7 +1126,7 @@
       "display_name": "The One Who Wants to Die Alone",
       "category": "comfort",
       "trigger": "A dying person asks you to leave them, to die alone.",
-      "discovery": "A dying person, injured beyond your help, asks you to leave. They want to die alone. They say they do not want company. They say they want the quiet. You could sit. You could leave. The dying is theirs. The company is the question. The leaving is the request. The sitting is the mercy, or the cruelty.",
+      "discovery": "A dying person, injured beyond your help, asks you to leave. They want to die alone. They say they do not want company. They say they want the quiet. You could sit. You could leave.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -1135,29 +1135,29 @@
           "label": "Respect the wish, leave",
           "moral_delta": 5,
           "empathy_delta": 1,
-          "outcome_text": "You leave. The dying person nods. You walk away. The dying is theirs, alone. The alone is what they wanted. The leaving was the respect. The respect is the thing. The thing is the not-sitting.",
-          "epitaph": "Left the dying one alone, as they asked. The alone was theirs. The leaving was the respect."
+          "outcome_text": "You leave. They nod once, and it is the last thing they ask of anyone. You walk far enough that the quiet belongs to them again.",
+          "epitaph": "Left the dying one alone, as they asked. It was the last thing they asked anyone."
         },
         {
           "label": "Sit far enough away, in sight",
           "moral_delta": 6,
           "empathy_delta": 2,
-          "outcome_text": "You sit far enough away that they have their quiet, but in sight, in case they change their mind. They do not call. They die in the quiet. You are there, but not there. The compromise is the thing. The compromise is the mercy.",
-          "epitaph": "Sat far away, in sight. They died in the quiet. I was there, but not there. The compromise was the mercy."
+          "outcome_text": "You sit far enough away that the quiet is theirs, but in sight, in case they change their mind. They do not call. They die with their back to you. You wait until you are sure, then close the distance to cover them.",
+          "epitaph": "Sat far away, in sight. They did not call. I covered them after."
         },
         {
           "label": "Refuse to leave, sit with them",
           "moral_delta": 2,
           "empathy_delta": 1,
-          "outcome_text": "You refuse to leave. You sit. The dying person is angry, then quiet, then dead. The dying was not alone. The dying was with you. The wish was not respected. The company was the mercy, or the cruelty. You do not know which.",
-          "epitaph": "Refused to leave. Sat with them. The wish was not respected. The company was the mercy or the cruelty."
+          "outcome_text": "You refuse to leave. You sit. They are angry, then quiet, then dead. You took the last thing they asked for. You did it with your eyes open.",
+          "epitaph": "Refused to leave. Sat with them anyway. I took the last thing they asked for."
         },
         {
           "label": "Leave food and water, then go",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You leave food and water, then go. The dying person cannot eat. The food is for the principle. The going is the request. The food is the compromise. The compromise is the thing you leave.",
-          "epitaph": "Left food and water, then went. The food was the principle. The going was the request."
+          "outcome_text": "You leave food and water, then go. They cannot eat. You knew they could not eat. The rations are a receipt that you were here.",
+          "epitaph": "Left food and water, then went. They could not eat. I knew they could not."
         }
       ]
     },
@@ -1166,7 +1166,7 @@
       "display_name": "The Unknown Grave",
       "category": "dead",
       "trigger": "An unmarked grave, a name you cannot find.",
-      "discovery": "An unmarked grave, old, the marker gone. You are mapping the area. You do not know who is there. You could dig to find a name. You could mark it 'unknown.' You could leave it. The grave is someone's. The someone is unknown. The unknown is the question.",
+      "discovery": "An old grave by the treeline, sunken, whatever marker it had long gone. You are mapping this area for the shelter. Someone is under there, someone who was buried by people who knew their name. Your map has a symbol for this. The symbol does not care who it is.",
       "location_id": "",
       "min_day": 20,
       "max_day": 200,
@@ -1175,29 +1175,29 @@
           "label": "Mark it 'unknown' and move on",
           "moral_delta": 5,
           "empathy_delta": 1,
-          "outcome_text": "You mark it 'unknown' on your map and move on. The grave is someone's. The someone is unknown. The unknown is the honest thing. The honest thing is the marker. The marker is the word 'unknown.'",
-          "epitaph": "Marked the grave 'unknown.' The honest thing. The unknown is the marker."
+          "outcome_text": "You mark the coordinates and write 'unknown' in the margin. It is accurate. Whoever is under there stays under there, and the map at least says someone is. You move on.",
+          "epitaph": "Marked the grave 'unknown' on the map. Accurate. The map says someone is there, at least."
         },
         {
           "label": "Dig to find a name",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You dig. You find a name, or you do not. If you find one, you mark it. If you do not, you have disturbed a grave for nothing. The digging is the question. The question is the name. The name may not be there.",
-          "epitaph": "Dug for a name. The name may not be there. The digging is the question."
+          "outcome_text": "Forty minutes down to the coffin line, and there is nothing to find, no tag, no tin, no papers, just a person in rotted cloth. You fill it back in. The map still says 'unknown,' and now you know the ground was opened for nothing.",
+          "epitaph": "Dug the old grave looking for a name. Nothing to find. Filled it back in. Opened it for nothing."
         },
         {
           "label": "Leave it unmarked",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You leave it unmarked. The grave is someone's. The someone is unknown. The unmarked is the policy. The policy is not yours to change. The leaving is the thing. The thing is the unmarked.",
-          "epitaph": "Left the grave unmarked. The policy is the unmarked. The leaving is the thing."
+          "outcome_text": "You leave it off the map. The grave does not know whether it is marked, and the person in it does not know either. You save the ink. You walk on with your map one symbol lighter.",
+          "epitaph": "Left the grave off the map. Saved the ink. The person in it does not know the difference."
         },
         {
           "label": "Mark it with a stone, no name",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You mark it with a stone, no name. The stone is the marker. The marker is the stone. The someone is unknown. The stone is the knowing that someone is there. The stone is the thing.",
-          "epitaph": "Marked the grave with a stone, no name. The stone is the knowing. The knowing is the thing."
+          "outcome_text": "You carry a head-sized stone up from the creek and set it at the head of the sunken ground. No name, no dates. Just a statement that this is a grave and not a dip in the field. It will outlast your map.",
+          "epitaph": "Set a creek stone at the head of the unknown grave. No name. It will outlast my map."
         }
       ]
     },
@@ -1326,7 +1326,7 @@
       "display_name": "The Reminder of Before",
       "category": "comfort",
       "trigger": "A survivor finds a photograph of their family, all gone.",
-      "discovery": "A survivor finds a photograph in the ruins — their family, before, all gone now. The survivor is holding the photograph. The survivor is crying. The survivor is not moving. You are there. The photograph is the before. The before is the thing. The thing is the photograph.",
+      "discovery": "A survivor finds a photograph in the ruins: their family, before, all gone now. They hold it with both hands, careful of the crease. They are crying. They are not moving.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -1335,29 +1335,29 @@
           "label": "Sit with them, look at the photo",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You sit. You look at the photo with them. They name the people. You learn the names. The names are the before. The before is the thing you share now. The sharing was the gift. The gift is the names.",
-          "epitaph": "Sat with the survivor, looked at the photo. Learned the names. The names are the before we share."
+          "outcome_text": "You sit and look at the photo with them. They name the people, one by one, and tell you one thing about each. You say the names back once, so the names are kept in two places now.",
+          "epitaph": "Sat with the survivor and the photograph. I can still name them all."
         },
         {
           "label": "Take the photo, put it away for them",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You gently take the photo and put it in their pack, for later. They let you. The photo is put away. The crying is not. The putting was the mercy. The mercy was the not-looking. The not-looking is the thing.",
-          "epitaph": "Put the photo away for them. The crying is not. The putting was the mercy."
+          "outcome_text": "You gently take the photo and put it in their pack for later. They let you. The photo goes away. The crying does not. It keeps pace with you the whole day's walk.",
+          "epitaph": "Put the photo away for them. The crying did not stop. It came with us."
         },
         {
           "label": "Tell them to keep moving",
           "moral_delta": -2,
           "empathy_delta": -1,
-          "outcome_text": "You tell them to keep moving. The road is long. The photo is the before. The before is behind. They nod. They put the photo away. They move. The moving was the thing. The thing was the not-sitting.",
-          "epitaph": "Told them to keep moving. They moved. The photo is away. The moving was the not-sitting."
+          "outcome_text": "You tell them to keep moving. The road is long. They nod, put the photo in a pocket, and walk. Nobody looks at it for the rest of the day.",
+          "epitaph": "Told them to keep moving. They moved. The photo stayed in the pocket."
         },
         {
           "label": "Leave them be",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You leave them be. The photo is in their hands. The crying is theirs. The before is theirs. You are not part of the before. The leaving is the respect. The respect is the not-sitting. The not-sitting is the thing.",
-          "epitaph": "Left them be with the photo. The before is theirs. The leaving was the respect."
+          "outcome_text": "You leave them be. The photo is in their hands and the crying is theirs. You were not in the picture. That is all you can know about it.",
+          "epitaph": "Left them with the photograph. I was not in the picture."
         }
       ]
     },
@@ -1366,7 +1366,7 @@
       "display_name": "The Dead Pet",
       "category": "dead",
       "trigger": "A child's pet, dead, the child asking you to bury it.",
-      "discovery": "A child's pet — a bird, a cat, a small thing — is dead. The child is holding it, crying. The child asks you to bury it. The child is serious. The pet is a pet. The pet is the child's family. The burial is the request. The request is the child's grief. The grief is the thing.",
+      "discovery": "A kid from the shelter is holding a dead cat, stiff now, wrapped in a scarf that used to be someone's. The crying has already stopped, replaced by a brave face done badly. You are asked, very formally, to bury it. Every other adult is suddenly busy with something.",
       "location_id": "",
       "min_day": 5,
       "max_day": 150,
@@ -1375,29 +1375,29 @@
           "label": "Bury the pet with ceremony",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You bury the pet. You let the child say words. You mark the grave with a stone. The child is sad and less sad. The ceremony was the thing. The thing was the respect. The respect is the burial.",
-          "epitaph": "Buried the child's pet with ceremony. The respect was the burial. The child was sad and less sad."
+          "outcome_text": "You dig behind the shelter, deep enough that the dogs will not get at it. A few halting words are said, and you stand with your hat off like it is a person. A stone on top. There are tears, then none, then a small hand asking to help carry the dirt back. It is easier after that.",
+          "epitaph": "Buried the cat with ceremony, hat off, stone on top. Small hands helped carry the dirt back. It was easier after that."
         },
         {
           "label": "Bury the pet simply",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You bury the pet simply. The child watches. You mark it with a stone. The child says thank you. The simple was the thing. The thing was the burying. The burying was the mercy.",
-          "epitaph": "Buried the pet simply. The child said thank you. The simple was the mercy."
+          "outcome_text": "You dig, you lower the scarf-wrapped bundle, you fill and set a stone. Ten minutes. A thank-you in the formal voice again, then the kid goes back inside holding the end of the scarf, which you left with them.",
+          "epitaph": "Buried the cat in ten minutes. Left the scarf with the kid. Got a thank-you said like an adult."
         },
         {
           "label": "Tell the child to bury it themselves",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You tell the child to bury it themselves. The child is small. The child tries. The child cries. The child buries it, shallow. The doing was the thing. The thing was the child's grief, alone.",
-          "epitaph": "Told the child to bury it themselves. The child did, shallow, crying. The doing was the grief, alone."
+          "outcome_text": "You hand over the small shovel. The hole comes out too shallow and the digging takes an hour, but it gets finished alone, dirt to the elbows. You watch from the door. Done badly, and done.",
+          "epitaph": "Made the kid bury the cat. Too shallow, took an hour, dirt to the elbows. Finished alone."
         },
         {
           "label": "Say it is just a pet",
           "moral_delta": -8,
           "empathy_delta": -2,
-          "outcome_text": "You say it is just a pet. The child looks at you. The child does not cry anymore. The child is harder now. The just-a-pet was the thing. The thing was the cruelty. The cruelty is the hardness you gave the child.",
-          "epitaph": "Said it was just a pet. The child is harder now. The cruelty is the hardness I gave."
+          "outcome_text": "You say it is just a cat, there is no time, the ground is hard. That brave face does not change, which is worse than crying. The bundle gets carried away without you, and nothing is ever asked of you again.",
+          "epitaph": "Said it was just a cat. The face did not change. Nothing was ever asked of me again."
         }
       ]
     },
@@ -1526,7 +1526,7 @@
       "display_name": "The Old Person's Fear",
       "category": "comfort",
       "trigger": "An old person is afraid of the dark, and the dark is coming.",
-      "discovery": "An old person in your shelter, trembling, says they are afraid of the dark. The dark is coming. The dark has come every night. The old person has been brave every night. Tonight, the old person is not brave. Tonight, the old person is afraid. You are there. The dark is coming.",
+      "discovery": "An old person in your shelter, trembling, says they are afraid of the dark. It has come every night, and they have been brave every night. Tonight they are not. You are there.",
       "location_id": "",
       "min_day": 5,
       "max_day": 200,
@@ -1535,29 +1535,29 @@
           "label": "Sit with them through the dark",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You sit with them through the dark. You talk, or you do not. The dark comes. The dark goes. The old person is brave again, partly. The sitting was the thing. The thing was the through. The through is the dark you shared.",
-          "epitaph": "Sat with the old one through the dark. The dark went. The through is the dark we shared."
+          "outcome_text": "You sit with them through the dark. You talk, or you do not. Somewhere in the small hours their breathing evens out against your shoulder. In the morning you pay for it in sleep, and it was a fair price.",
+          "epitaph": "Sat with the old one through the dark. Paid for it in sleep the next day. A fair price."
         },
         {
           "label": "Give them a candle, stay nearby",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You give them a candle and stay nearby. The candle is the light. The light is the not-dark. The nearby is the not-alone. The candle and the nearby were the things. The things were the mercy.",
-          "epitaph": "Gave a candle, stayed nearby. The light and the not-alone were the mercy."
+          "outcome_text": "You give them a candle and stay nearby. The candle is a stub of an inch and you count the fuel in your head. The light holds until they sleep.",
+          "epitaph": "Gave a candle and stayed nearby. An inch of wax. They slept."
         },
         {
           "label": "Tell them the dark is just dark",
           "moral_delta": -2,
           "empathy_delta": -1,
-          "outcome_text": "You tell them the dark is just dark. The old person nods. The old person is still afraid. The just-dark was the thing. The thing was the not-understanding. The not-understanding is the fear you dismissed.",
-          "epitaph": "Told the old one the dark is just dark. The fear was dismissed. The not-understanding is the thing."
+          "outcome_text": "You tell them the dark is just dark. They nod, because nodding is cheaper than arguing. They are still afraid. You hear them shift in the bunk until the small hours.",
+          "epitaph": "Told the old one the dark is just dark. They nodded. I heard them not sleeping."
         },
         {
           "label": "Leave them to be brave alone",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You leave them. The old person has been brave every night. The old person will be brave tonight. The leaving was the thing. The thing was the expectation. The expectation is the brave you assumed.",
-          "epitaph": "Left the old one to be brave alone. The expectation is the brave I assumed."
+          "outcome_text": "You leave them to be brave alone, as they have been every other night. In the morning they are up before you, having been awake all night. They say they are fine.",
+          "epitaph": "Left the old one to be brave. In the morning they said they were fine. They had not slept."
         }
       ]
     },
@@ -1566,7 +1566,7 @@
       "display_name": "The Unsent Letter",
       "category": "dead",
       "trigger": "A dead person, an unsent letter in the pocket, addressed.",
-      "discovery": "A dead person, an unsent letter in the pocket, addressed to someone in a camp you can reach in two days. The letter is sealed. The letter is the dead person's. The letter may be love, confession, warning. The letter is sealed. The seal is the question. The question is the reading.",
+      "discovery": "A dead person under a fallen awning, and in the coat pocket a letter, sealed, addressed to a name at a camp two days from here. The ink on the envelope has run a little from damp. It could be love, confession, warning, or money owed. The seal is unbroken. It is not addressed to you.",
       "location_id": "",
       "min_day": 20,
       "max_day": 200,
@@ -1575,29 +1575,29 @@
           "label": "Deliver the letter unopened",
           "moral_delta": 10,
           "empathy_delta": 3,
-          "outcome_text": "You deliver the letter unopened. The recipient reads it, weeps, thanks you. The letter was the dead person's. The delivering was the thing. The thing was the not-reading. The not-reading is the respect.",
-          "epitaph": "Delivered the letter unopened. The recipient wept. The not-reading was the respect."
+          "outcome_text": "Two days of walking with the letter flat in your pack so it does not crease further. At the camp, the recipient reads it standing up, folds it very small, and thanks you in a voice that has gone flat. You never learn what it said.",
+          "epitaph": "Carried the letter two days, seal unbroken. They folded it very small. I never learned what it said."
         },
         {
           "label": "Read it first, then decide",
           "moral_delta": -2,
           "empathy_delta": 0,
-          "outcome_text": "You read it first. The letter is a confession of a wrong. You decide whether to deliver it. The reading was the breaking. The breaking is the knowing. The knowing is the thing you were not meant to have.",
-          "epitaph": "Read the letter first. The knowing is the thing I was not meant to have. The breaking is the reading."
+          "outcome_text": "You steam the seal open by the fire. It is a confession, a wrong done to the very person it is addressed to. Now the decision is yours instead of the dead person's, and it is heavier that way. You deliver it, resealed badly.",
+          "epitaph": "Steamed the letter open. A confession of a wrong. Delivered it resealed badly. The decision became mine."
         },
         {
           "label": "Deliver it, but read it to the recipient",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You deliver it and read it aloud to the recipient, who cannot read. The letter is the dead person's voice in your mouth. The reading is the thing. The thing is the voice. The voice is the dead in the living.",
-          "epitaph": "Delivered and read it aloud. The dead person's voice in my mouth. The voice is the thing."
+          "outcome_text": "At the camp you learn the recipient cannot read. You open the letter and read it aloud, a dead person's words coming out of your mouth, plain things, mostly, and one thing that makes them turn away. You fold it and leave it with them.",
+          "epitaph": "Read the letter aloud to the recipient, who could not read. A dead person's words in my mouth. One of them made them turn away."
         },
         {
           "label": "Keep it, never deliver",
           "moral_delta": -5,
           "empathy_delta": -1,
-          "outcome_text": "You keep the letter. You do not deliver it. The letter is in your pack. The recipient will not know. The dead person's last word is with you. The keeping is the thing. The thing is the not-delivering. The not-delivering is the weight.",
-          "epitaph": "Kept the letter. The recipient will not know. The not-delivering is the weight."
+          "outcome_text": "The letter goes into your pack and stays there. Two days saved. Somewhere in that camp a person checks with every arrival for word, and you are an arrival, and you say nothing.",
+          "epitaph": "Kept the letter. Saved two days. They checked with every arrival. I was an arrival, and I said nothing."
         }
       ]
     },
@@ -1726,7 +1726,7 @@
       "display_name": "The Burned Survivor",
       "category": "comfort",
       "trigger": "A survivor with severe burns, in agony, asks for water.",
-      "discovery": "A survivor with severe burns, found in the ruins, in agony, asks for water. You have water. The water will not save them. The water will ease them. The burns are beyond your help. The survivor is dying, slowly, in pain. The water is the mercy. The mercy is the question. The question is the easing of the dying.",
+      "discovery": "A survivor in the ruins, burned past the elbows and the collar, asks for water. You have water. The water will not save them. There is no dressing left in the shelter bag and no doctor within a day's walk. They are dying at the pace of a day or two. The water buys hours.",
       "location_id": "",
       "min_day": 5,
       "max_day": 200,
@@ -1735,29 +1735,29 @@
           "label": "Give water, sit with them",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You give water and sit. The survivor drinks, painfully. The pain is less, a little. You sit until the end, which is not soon. The sitting was the thing. The thing was the mercy. The mercy is the water and the time.",
-          "epitaph": "Gave water, sat with the burned one. The mercy is the water and the time."
+          "outcome_text": "You give water and sit. They drink in small pulls, each one costing a breath. Their hands cannot hold the tin, so you hold it. You stay until the end, which is not soon.",
+          "epitaph": "Gave water and sat until the end. Held the tin. Their hands could not."
         },
         {
           "label": "Give water, go for the doctor",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You give water and go for the doctor. The doctor may come. The doctor may not. The going is the thing. The thing is the hope. The hope is the doctor. The doctor is the question.",
-          "epitaph": "Gave water, went for the doctor. The hope is the doctor. The doctor is the question."
+          "outcome_text": "You give water and go for the doctor. The doctor is a day away if the road holds, and the survivor has perhaps two. You go anyway. You never learn whether anyone made it back in time.",
+          "epitaph": "Gave water and went for the doctor. I never learned if he arrived."
         },
         {
           "label": "Give water, leave them",
           "moral_delta": 2,
           "empathy_delta": 1,
-          "outcome_text": "You give water and leave. The survivor is alone with the water. The water is the mercy. The leaving is the not-sitting. The not-sitting is the thing. The thing is the mercy without the time.",
-          "epitaph": "Gave water, left. The mercy without the time. The not-sitting is the thing."
+          "outcome_text": "You give water and leave. The tin sits where they can reach it, if the hands allow. You take back the hours you did not stay for.",
+          "epitaph": "Gave water and left. The tin was in reach. There was nothing else to leave."
         },
         {
           "label": "Refuse, the water is yours",
           "moral_delta": -8,
           "empathy_delta": -2,
-          "outcome_text": "You refuse. The water is yours. The survivor is in agony. The survivor dies, slowly, without the water. The refusing was the thing. The thing was the water. The water is the cost of the dying you did not ease.",
-          "epitaph": "Refused the water. The survivor died without it. The water is the cost of the dying I did not ease."
+          "outcome_text": "You refuse. The water is yours. You walk, and for the first few steps you can still hear them breathing.",
+          "epitaph": "Refused the water. It was mine. I drank some of it a mile on."
         }
       ]
     },
@@ -1766,7 +1766,7 @@
       "display_name": "The Mass Burial Help",
       "category": "dead",
       "trigger": "A settlement is burying their dead, and asks for help.",
-      "discovery": "A settlement, hit hard, is burying their dead — many, in a long trench. They ask for help. The digging is hard. The dead are many. The dead are theirs. You are passing. You have a shovel. The help is the thing. The thing is the digging of someone else's dead.",
+      "discovery": "A settlement hit hard, working a trench at the field's edge since dawn. A line of wrapped shapes on the ground waiting, more than twenty. The diggers are grey-faced and slow. The foreman asks you, plainly, for your back and your shovel. You are passing through. Your own people expect you in three days.",
       "location_id": "",
       "min_day": 20,
       "max_day": 200,
@@ -1775,29 +1775,29 @@
           "label": "Help dig the trench",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You help dig. The trench is long. The dead are many. The settlement thanks you with a meal and a bed. The digging was the thing. The thing was the someone else's dead. The someone else's dead are the dead.",
-          "epitaph": "Helped dig the trench. The someone else's dead are the dead. The digging was the thing."
+          "outcome_text": "You dig from midmorning to dark, four shovels wide, clay that fights every spadeful. They feed you soup and give you a bunk without asking your name. In the morning the trench is filled and you walk on with your shoulders ruined for a week.",
+          "epitaph": "Dug their trench until dark. Soup, a bunk, no names asked. My shoulders were ruined for a week."
         },
         {
           "label": "Help carry the dead, not dig",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You help carry the dead to the trench, but not dig. The carrying is the thing. The thing is the bearing. The bearing is the weight. The weight is the dead. The dead are the weight you carried.",
-          "epitaph": "Helped carry the dead. The weight is the dead. The bearing was the thing."
+          "outcome_text": "You take the carrying end instead, two at a time with a pole and canvas, down the line to the trench. It is the weight that gets you, not the sight of it. By evening you know exactly what a person weighs. They thank you and you go.",
+          "epitaph": "Carried their dead to the trench, pole and canvas. I know what a person weighs now. They thanked me and I went."
         },
         {
           "label": "Watch, then leave",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You watch, then leave. The digging is theirs. The dead are theirs. The watching was the thing. The thing was the not-helping. The not-helping is the passing.",
-          "epitaph": "Watched, then left. The not-helping is the passing. The dead are theirs."
+          "outcome_text": "You stand at the field's edge for an hour and watch the shovels rise and fall. No one asks you again. Then you pick up your pack and go, rested, with your three days intact.",
+          "epitaph": "Watched them dig for an hour, then left. Rested. My three days intact."
         },
         {
           "label": "Refuse, the dead are not yours",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You refuse. The dead are not yours. The settlement nods. They understand. You are passing. The refusing was the thing. The thing was the not-yours. The not-yours is the dead you did not bury.",
-          "epitaph": "Refused. The dead are not mine. The not-yours is the dead I did not bury."
+          "outcome_text": "You say the dead are not yours and your own people are waiting. The foreman nods once, no argument, and turns back to the line. You walk on. It is a true thing you said, and it cost them four shovels' worth of daylight.",
+          "epitaph": "Refused. The dead were not mine, and it was true, and it cost them the daylight."
         }
       ]
     },
@@ -1926,7 +1926,7 @@
       "display_name": "The Remorseful Raider",
       "category": "comfort",
       "trigger": "A raider, wounded and dying, expresses remorse.",
-      "discovery": "A raider, wounded, dying, found by the road, expresses remorse. The raider says they did bad things. The raider says they are sorry. The raider is the enemy. The raider is dying. The remorse may be real. The remorse may be the fear of death. You are there. The raider is dying. The remorse is the question.",
+      "discovery": "A raider by the road, gut-shot and dying, tells you he did bad things and is sorry. His knife is still on his belt. You know the armband on his sleeve from two burned farms. The remorse may be real, or it may be the fear of the dark. He is waiting to see what you do with it.",
       "location_id": "",
       "min_day": 20,
       "max_day": 200,
@@ -1935,29 +1935,29 @@
           "label": "Listen to the remorse, offer comfort",
           "moral_delta": 5,
           "empathy_delta": 3,
-          "outcome_text": "You listen to the remorse and offer comfort — water, a word. The raider weeps. The raider dies. The comfort was the thing. The thing was the mercy to an enemy. The mercy is the question you answered yes.",
-          "epitaph": "Listened to the raider's remorse. Offered comfort. The mercy to an enemy. The mercy is the yes."
+          "outcome_text": "You listen and offer comfort: water, a word. He weeps into the dirt. When he dies you take the knife off his belt and leave the armband where it is.",
+          "epitaph": "Listened to the raider's remorse. Gave water and a word. I took the knife and left the armband."
         },
         {
           "label": "Listen, offer no comfort",
           "moral_delta": 2,
           "empathy_delta": 1,
-          "outcome_text": "You listen but offer no comfort. The raider dies unheard. The listening was the thing. The thing was the not-comfort. The not-comfort is the enemy. The enemy is the not-comfort.",
-          "epitaph": "Listened, offered no comfort. The not-comfort is the enemy. The enemy is the not-comfort."
+          "outcome_text": "You listen and offer nothing. He talks until his voice gives out. He dies mid-sentence, asking whether it counts for something.",
+          "epitaph": "Listened and offered nothing. He asked if it counted. I did not answer."
         },
         {
           "label": "Refuse to listen, walk on",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You refuse to listen and walk on. The raider is the enemy. The raider dies alone. The refusing was the thing. The thing was the enemy. The enemy is the dying you left.",
-          "epitaph": "Refused to listen, walked on. The raider is the enemy. The dying is what I left."
+          "outcome_text": "You refuse to listen and walk on. Behind you he keeps talking for a while. Then the road is only the road.",
+          "epitaph": "Walked on. He kept talking for a while after."
         },
         {
           "label": "Listen, then judge them",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You listen, then tell the raider what they did was wrong. The raider nods. The raider dies judged. The judging was the thing. The thing was the verdict. The verdict is the last word.",
-          "epitaph": "Listened, then judged. The verdict is the last word. The judging was the thing."
+          "outcome_text": "You listen, then tell him what he did was wrong. He nods. He knew. You are the last thing that speaks to him, and you spend it on a verdict.",
+          "epitaph": "Listened, then judged. He nodded. The verdict was the last thing he heard."
         }
       ]
     },
@@ -1965,8 +1965,8 @@
       "id": "quest_moral_dead_ceremony",
       "display_name": "The Ceremony for a Stranger",
       "category": "dead",
-      "trigger": "You find a body and a note requesting a specific funeral rite.",
-      "discovery": "A body, and a note in the pocket: 'If found, please bury me facing east, with a stone on my chest. This is my faith.' The faith is not yours. The rite is specific. The body is a stranger. The rite is the request. The request is the faith. The faith is not yours. The body is the question.",
+      "trigger": "A body with a note requesting a specific funeral rite.",
+      "discovery": "A body in a ditch, and in the pocket a note in careful handwriting: 'If found, please bury me facing east, with a stone on my chest. This is my faith.' The faith is not yours and you do not know it. The instructions are exact. The ground here is frozen half a spade down.",
       "location_id": "",
       "min_day": 10,
       "max_day": 200,
@@ -1975,29 +1975,29 @@
           "label": "Perform the rite as requested",
           "moral_delta": 8,
           "empathy_delta": 3,
-          "outcome_text": "You perform the rite — east-facing, stone on chest. The rite is not yours. The rite is the stranger's. The performing was the thing. The thing was the respect. The respect is the faith that is not yours.",
-          "epitaph": "Performed the stranger's rite. The respect is the faith that is not mine. The performing was the thing."
+          "outcome_text": "The frozen ground costs you two hours. You set the body facing east, find a flat stone, and lay it on the chest as written. You do not know the words, so you say none. It is done exactly, for a faith that is not yours, by a stranger.",
+          "epitaph": "Buried them facing east, stone on the chest, no words. Two hours in frozen ground. Done exactly, for a faith not mine."
         },
         {
           "label": "Bury them simply, no rite",
           "moral_delta": 3,
           "empathy_delta": 1,
-          "outcome_text": "You bury them simply, no rite. The body is buried. The rite is not performed. The simple was the thing. The thing was the not-rite. The not-rite is the faith you did not honor.",
-          "epitaph": "Buried them simply, no rite. The not-rite is the faith I did not honor."
+          "outcome_text": "You dig and fill and set a marker, facing whichever way the ditch allowed. The note goes back in the pocket. They are buried, which is the main thing, you tell yourself. The stone they asked for stays in the field where it was.",
+          "epitaph": "Buried them plain, no east, no stone. Their note went back in the pocket. Buried is the main thing, I said."
         },
         {
           "label": "Bury them your way",
           "moral_delta": 2,
           "empathy_delta": 0,
-          "outcome_text": "You bury them your way — your own rite, your own faith. The body is buried. The rite is yours, not theirs. The your-way was the thing. The thing was the not-theirs. The not-theirs is the faith you put on a stranger.",
-          "epitaph": "Buried them my way. The not-theirs is the faith I put on a stranger."
+          "outcome_text": "You bury them the way your own people do it, facing the shelter line, a handful of ash over the fill. It is a proper burial by your lights. Their paper asked for something else. You decide one faith is as good as another, which is easy to decide when it is not your body.",
+          "epitaph": "Buried them my way, ash and all. The paper asked otherwise. Easy to decide when it is not my body."
         },
         {
           "label": "Leave them, the rite is not yours",
           "moral_delta": -3,
           "empathy_delta": -1,
-          "outcome_text": "You leave them. The rite is not yours. The body is unburied. The leaving was the thing. The thing was the not-yours. The not-yours is the body you left to the animals.",
-          "epitaph": "Left them. The not-yours is the body I left. The rite was not mine."
+          "outcome_text": "You leave the body and its instructions where they lie. The rite is not yours to perform, you tell yourself, and a wrong burial might be worse than none. The frozen ditch keeps its careful handwriting.",
+          "epitaph": "Left the body and its instructions. A wrong burial might be worse than none, I said. The ditch keeps the handwriting."
         }
       ]
     }

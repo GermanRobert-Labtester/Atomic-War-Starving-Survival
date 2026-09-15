@@ -25,7 +25,14 @@ public partial class WeatherHistoryPanel : Control
     private VBoxContainer _weatherPatterns = null!;
     private VBoxContainer _weatherAnomalies = null!;
 
-    private void OnWeatherStateChanged(WorldWeatherState _) => RefreshView();
+    /// <summary>Test/selftest observable: event-driven refresh count — exactly one per publisher event while bound.</summary>
+    public int RefreshCount { get; private set; }
+
+    private void OnWeatherStateChanged(WorldWeatherState _)
+    {
+        RefreshCount++;
+        RefreshView();
+    }
 
     public void Bind(WeatherSystem weather)
     {
@@ -40,13 +47,19 @@ public partial class WeatherHistoryPanel : Control
         RefreshView();
     }
 
-    public override void _ExitTree()
+    /// <summary>Detach the panel before its session authority is replaced (INV-16.5).</summary>
+    public void Unbind()
     {
         if (_weather != null)
         {
             _weather.OnStateChanged -= OnWeatherStateChanged;
             _weather = null;
         }
+    }
+
+    public override void _ExitTree()
+    {
+        Unbind();
         base._ExitTree();
     }
 

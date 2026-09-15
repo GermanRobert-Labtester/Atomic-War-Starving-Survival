@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -1466,6 +1467,7 @@ namespace Ashfall.Core
         {
             if (trapDef == null
                 || string.IsNullOrEmpty(site.trapId)
+                || site.isBroken
                 || trapDef.narrativeIncidentChance <= 0f
                 || !string.IsNullOrEmpty(site.pendingNarrativeEvent))
                 return;

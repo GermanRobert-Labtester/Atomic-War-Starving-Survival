@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -268,10 +269,19 @@ namespace Ashfall.Core.Survivors
             return ActionResult.Success("desperation.corpse_harvested");
         }
 
+        public DesperationState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<DesperationState>(json) ?? new DesperationState();
+        }
+
         public void RestoreState(DesperationState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<DesperationState>(json) ?? new DesperationState();
             _actCounter = _state.actsHistory.Count;
         }
     }

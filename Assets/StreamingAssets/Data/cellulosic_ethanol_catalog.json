@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "machine": {
+    "machine_id": "machine_cellulosic_biofuel_plant",
+    "display_name": "Stills and Substrate Bay",
+    "construction_required_items": {
+      "scrap_metal": 10,
+      "scrap_wood": 6,
+      "item_internal_spline_hub": 1
+    },
+    "construction_labor_days": 3,
+    "max_condition": 100,
+    "maintenance_interval_days": 5,
+    "maintenance_required_items": {
+      "scrap_metal": 2,
+      "item_separation_media_cartridge": 1
+    },
+    "room_id": "room_generator",
+    "power_class": "high",
+    "ventilation_class": "industrial",
+    "ventilation_load_per_active_day": 0.06
+  },
+  "processes": [
+    {
+      "process_id": "biofuel_cellulose_standard",
+      "display_name": "Standard Cellulose Run",
+      "accepted_item_ids": ["item_crop_waste", "scrap_wood", "paper_stock"],
+      "feedstock_tag": "cellulose",
+      "batch_input_units": 10,
+      "conversion_tier": "standard",
+      "conversion_efficiency_permille": 480,
+      "fermentation_ticks": 2880,
+      "refining_ticks": 1440,
+      "energy_cost_kwh_per_day": 7,
+      "process_water_units": 4,
+      "fuel_output_id": "item_biofuel_generator_grade",
+      "yield_permille": 520,
+      "fouling_risk_permille": 90,
+      "vapor_hazard_tier": "elevated"
+    }
+  ],
+  "fuel_grades": [
+    {
+      "grade_id": "fuel_grade_low",
+      "output_item_id": "item_biofuel_low_grade",
+      "grid_worth_units": 0.5,
+      "vehicle_wear_multiplier": 1.5
+    },
+    {
+      "grade_id": "fuel_grade_generator",
+      "output_item_id": "item_biofuel_generator_grade",
+      "grid_worth_units": 1.0,
+      "vehicle_wear_multiplier": 1.2
+    },
+    {
+      "grade_id": "fuel_grade_high",
+      "output_item_id": "item_biofuel_high_grade",
+      "grid_worth_units": 1.3,
+      "vehicle_wear_multiplier": 1.0
+    }
+  ],
+  "hazard_outcomes": {
+    "faults": [
+      "power_interrupted",
+      "ventilation_unsafe",
+      "culture_failed",
+      "column_fouled",
+      "tank_full",
+      "emergency_stop"
+    ],
+    "fire_hazard_event": "IndustrialFireHazardRequested"
+  },
+  "storage": {
+    "tank_max_units": 60
+  }
+}

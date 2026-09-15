@@ -143,18 +143,6 @@ namespace Ashfall.Core.Content
                 TrackingTicket = "TICKET-127"
             });
 
-            // echoes.json is future narrative content, no loader or consumer yet
-            registry.Exemptions.Add(new ContentExemption
-            {
-                ExemptionId = "exempt_echoes_future",
-                ContentPath = "echoes.json",
-                Owner = "narrative",
-                Classification = "OPTIONAL",
-                Rationale = "echoes.json contains future narrative echo content. No loader or consumer exists yet. Intentionally deferred.",
-                TrackingTicket = "TICKET-127",
-                ExpiryCondition = "When EchoSystem is implemented and wired"
-            });
-
             return registry;
         }
     }

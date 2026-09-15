@@ -281,9 +281,15 @@ namespace Ashfall.Core.Tests.Save
             // Plan 157 added grain_milling_archive.
             // Plan 159 added leatherwork_archive.
             // Plan 143 added narrative_questlines.
-            Assert.Equal(173, SaveSectionRegistry.All.Count);
+            // Plan 173 added radio_program_production; Plan 138 low_background_metrology;
+            // Plan 189 piezometer_network; Plan 126 bio_fermentation.
+            // Plans 139-141 added insar_deformation, hydraulic_extrusion, runflat_tire.
+            // Plan 210 added sanitation; Plan 211 added black_market.
+            // B5–B8 expansion added deep_well + water_condenser (Plans 64–67 flagship, §9.8).
+            // Plan 18A added the dedicated echoes section.
+            Assert.Equal(193, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(173, keys.Count);
+            Assert.Equal(193, keys.Count);
         }
     }
 }

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 #pragma warning disable CS8618
 using Godot;
@@ -60,26 +61,26 @@ namespace AtomicWar.GodotApp.UI
         // Honest survival basics — aligned with the systems that actually exist.
         private static readonly string[] RealBasics =
         {
-            "Needs — Hunger, Thirst, Fatigue, Warmth, and Morale decay continuously; when any need hits critical (90+), Health suffers irreversible decay.",
-            "Radiation & Acute Sickness — Dose accumulates from outdoor fallout and storms; above 50 mSv survivors suffer Acute Sickness (-5 HP/hr decay). Administer Rad-Away or Iodine in Medical immediately.",
-            "Water & Rationing — 3 survivors consume ~3.6 clean water units daily. Review inventory runway before advancing days.",
-            "Power & Grid — Air and water filtration consume watts; a power brownout stops filtration and raises indoor radiation.",
-            "Duty Roster — Assign survivors to shifts (Kitchen, Water, Maintenance, Guard) so needs decay is managed while you scavenge.",
-            "Expeditions — Send survivors to scavenge rare resources; verify loadout, gas masks, fuel, and radiation readiness before departure.",
-            "Weather — Fallout storms and black rain add severe outdoor radiation modifiers; keep survivors indoors during hazard alerts."
+            "Needs — Hunger, Thirst, Fatigue, Warmth, and Morale keep rising. At 90+, Health starts to fail and does not recover on its own.",
+            "Radiation — Outdoor fallout and storms add dose. Above 50 mSv, Acute Sickness takes −5 HP/hr. Give Rad-Away or iodine in Medical.",
+            "Water — Three people drink ~3.6 clean units a day. Check stores before you end the day.",
+            "Power — Air and water filters need watts. A brownout stops filtration and indoor radiation climbs.",
+            "Duty Roster — Assign people to Kitchen, Water, Maintenance, or Guard. Unassigned hands do not keep the shelter running.",
+            "Expeditions — Send a team for salvage. Check masks, fuel, and dose before they leave.",
+            "Weather — Fallout storms and black rain spike outdoor dose. Keep people inside during hazard alerts."
         };
 
         // Honest tips — no fabricated item behaviour.
         private static readonly string[] RealTips =
         {
-            "Mikhail starts with Acute Radiation on Day 1 — administer Rad-Away in the Medical panel to prevent death within 16 hours.",
-            "Keep iodine pills in stock — they grant hours of radiation resistance when a storm hits.",
-            "Clean water is scarcer than food — prioritize the water filter and desalination membranes.",
-            "A gas mask cuts outdoor dose; a hazmat suit cuts it further, but both degrade with use.",
-            "Watch the Dose Ledger — cumulative exposure causes chronic illness, not just acute sickness.",
-            "Low morale reduces work efficiency; the Vinyl morale system and caregiving can recover it.",
-            "End the day deliberately via the day-advance flow — it ticks every subsystem exactly once.",
-            "Save before risky expeditions; Continue resumes from the last day-advance save."
+            "Mikhail starts Day 1 with Acute Radiation. Give Rad-Away in Medical or he may be dead within 16 hours.",
+            "Keep iodine on the shelf. It buys hours of resistance when a storm hits.",
+            "Clean water runs out before food. Keep the filter and desalination membranes working.",
+            "A gas mask cuts outdoor dose. A hazmat suit cuts it further. Both wear out.",
+            "Watch the Dose Ledger. Cumulative exposure becomes chronic illness, not just a spike.",
+            "Low morale slows work. Rest, records, and caregiving can bring it back.",
+            "End the day on purpose. Advance Day ticks every system once.",
+            "Save before a risky expedition. Continue loads the last day-advance save."
         };
 
         public void Bind(int simDay = 1)
@@ -144,12 +145,12 @@ namespace AtomicWar.GodotApp.UI
             string fallbackBody = tutorialId switch
             {
                 WildlifeTrappingLocalization.FirstSnareTutorialId =>
-                    "Acquire or craft a trap, deploy it at a valid site, and bait it when supplies allow. Traps work over time: return to check them, then butcher a catch. Wild prey can carry disease or contamination.",
+                    "Make or find a trap, set it on a valid site, and bait it if you can spare the food. Check it later, then butcher a catch. Wild prey can carry sickness or contamination.",
                 WildlifeTrappingLocalization.WearOutTutorialId =>
-                    "Tracked traps lose durability as they work. A broken trap stops catching, but remains findable on the map. Repair it with supplies or replace it.",
+                    "Traps wear as they work. A broken trap stops catching but stays on the map. Repair it or replace it.",
                 WildlifeTrappingLocalization.BycatchTutorialId =>
                     "A trap can catch something unintended. Inspect catches before processing: bycatch may help, hurt, or carry disease or contamination.",
-                _ => "A new survival lesson is available. Review the relevant shelter system before continuing."
+                _ => "A new lesson is ready. Check the related shelter panel before you continue."
             };
             _contextualDialog.Title = title;
             _contextualDialog.DialogText = AshfallLocalization.Tr(

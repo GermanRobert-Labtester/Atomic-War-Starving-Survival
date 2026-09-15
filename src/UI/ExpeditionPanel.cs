@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -140,6 +141,10 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        /// <summary>Swap the departure backdrop to the phase variant (dawn/day/dusk/night).</summary>
+        public void SetLightingPhase(string phase)
+            => BackdropArt.SetTexture(this, BackdropArt.ExpeditionDepartureFor(phase));
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -152,11 +157,13 @@ namespace AtomicWar.GodotApp.UI
                 if (File.Exists(lorePath))
                     FactionDisplayNameCatalog.LoadFromJson(File.ReadAllText(lorePath));
             }
-            catch { /* non-fatal: humanization fallback will be used */ }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[ExpeditionPanel] Failed to load faction lore display names: {ex.Message}");
+            }
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.95f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            // Placeholder expedition-departure backdrop (days 1–7, intact shelter mouth).
+            BackdropArt.Apply(this, BackdropArt.ExpeditionDeparture, 0.82f);
 
             var scroll = new ScrollContainer();
             scroll.SetAnchorsPreset(LayoutPreset.FullRect);
@@ -629,6 +636,23 @@ namespace AtomicWar.GodotApp.UI
                 $"cargo {est.cargoCapacityKg:F0} kg · fuel need {est.fuelRequired:F1}{(fuelOk ? "" : " — TANK LOW")} · " +
                 $"breakdown {est.breakdownRiskTotal:P0} · encounter {est.encounterRiskPerTick:P0}/hr · " +
                 $"weapon readiness {est.weaponReadiness:P0}{(jam > 0f ? $" (jam {jam:P0})" : "")}";
+
+            // C2 / Plan 21C (P6/§34) — warn, do not silently block: projected
+            // dose and mid-route gear failure are displayed from the canonical
+            // estimate; the player keeps full dispatch agency.
+            if (est.projectedDoseTotal > 0f || est.unprotectedCount > 0)
+            {
+                string protection = est.partyProtection > 0f
+                    ? $"protection {est.partyProtection:0.#}"
+                    : "NO WORKING PROTECTION";
+                _estimateLabel.Text += $" · dose ~{est.projectedDoseTotal:F0} mSv ({protection}" +
+                    (est.unprotectedCount > 0 ? $", {est.unprotectedCount} unprotected" : "") + ")";
+            }
+            if (est.predictsMidRouteFailure)
+            {
+                _estimateLabel.Text +=
+                    $" · GEAR FAILS MID-ROUTE (~{est.protectiveLifeHours:F0} h < {est.projectedTripHours:F0} h trip)";
+            }
         }
 
         // ── Pending surfaced encounters ────────────────────────────────

@@ -78,13 +78,13 @@ namespace Ashfall.Core.Defense
     /// <summary>Perimeter strength with a breakdown — never one opaque number.</summary>
     public sealed class PerimeterStrengthBreakdown
     {
-        public int Walls;
+        public float Walls;
         public int Traps;
         public int Turrets;
         public int Power;             // powered emplacements count (0 if grid query absent)
         public int Manning;           // armed traps with an assigned survivor
-        public int DamagePenalties;   // negative: hp lost across installations
-        public int Total => Math.Max(0, Walls + Traps + Turrets + Power + Manning - DamagePenalties);
+        public float DamagePenalties; // HP-integrity penalties across installations
+        public int Total => Math.Max(0, (int)Math.Round(Walls + Traps + Turrets + Power + Manning - DamagePenalties));
     }
 
     public sealed class DefenseEngagementResult
@@ -269,9 +269,9 @@ namespace Ashfall.Core.Defense
                     }
                     else
                     {
-                        b.Walls += 1 + emp.current_hp / Math.Max(1, emp.max_hp);
+                        b.Walls += 1 + emp.current_hp / (float)Math.Max(1, emp.max_hp);
                     }
-                    b.DamagePenalties += (emp.max_hp - emp.current_hp) / Math.Max(1, emp.max_hp);
+                    b.DamagePenalties += (emp.max_hp - emp.current_hp) / (float)Math.Max(1, emp.max_hp);
                 }
             }
             return b;
@@ -294,7 +294,8 @@ namespace Ashfall.Core.Defense
             PerimeterDefenseSystem? perimeter,
             Func<string, bool>? isEmplacementPowered,
             ISeededRng targetingRng,
-            ISeededRng captureRng)
+            ISeededRng captureRng,
+            float guardNightDetection = 0f)
         {
             var result = new DefenseEngagementResult
             {
@@ -317,9 +318,13 @@ namespace Ashfall.Core.Defense
                 if (def == null) continue;
 
                 // Concealed traps keep their full activation chance at night;
-                // exposed traps are less reliable in the dark.
-                float activation = def.activation_chance
-                                   * (isNight && !def.concealed ? 0.75f : 1f);
+                // exposed traps are less reliable in the dark. Plan 174: a
+                // guard animal's night senses offset that penalty (0 = legacy
+                // behavior, 1 = a fully effective guard erases it).
+                float nightFactor = isNight && !def.concealed
+                    ? Math.Clamp(0.75f + 0.25f * Math.Clamp(guardNightDetection, 0f, 1f), 0.75f, 1f)
+                    : 1f;
+                float activation = def.activation_chance * nightFactor;
                 bool sprung = targetingRng == null || targetingRng.NextDouble() < activation;
 
                 var record = new DefenseActivationRecord
@@ -374,7 +379,7 @@ namespace Ashfall.Core.Defense
             if (result.RemainingRaiders > 0 && perimeter != null)
             {
                 var assault = perimeter.SimulateRaiderAssault(
-                    result.RemainingRaiders, isNight, isEmplacementPowered);
+                    result.RemainingRaiders, isNight, isEmplacementPowered, currentDay: day);
                 result.PerimeterResult = assault;
                 result.RemainingRaiders = assault.RemainingRaiderStrength;
                 result.Breached = assault.Breached;

@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.Waystation;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -20,6 +22,11 @@ namespace Ashfall.Core
         public string[] watchSurvivorIds = Array.Empty<string>();
         public bool winteringClosedWindow;
         public int daysSinceResupply;
+        /// <summary>
+        /// Optional Plan 56 multi-node network companion. Absent on legacy saves.
+        /// Owned by host attach; WaystationSystem itself ignores this field.
+        /// </summary>
+        public WaystationNetworkState? network;
     }
 
     public class WaystationSystem

@@ -203,20 +203,41 @@ namespace Ashfall.Core.Tests.Endgame
             Assert.Equal("Final Word", chronicle.Slides[19].Title);
         }
 
-        [Theory]
-        [InlineData(EpilogueMatrix.TheOpenMuster, "The Muster", "epilogue_coalition_placeholder")]
-        [InlineData(EpilogueMatrix.WaterPlantHeld, "Water and Heat", "epilogue_resources_placeholder")]
-        [InlineData(EpilogueMatrix.GarrisonAbsorbsCoalition, "The Factions", "epilogue_factions_placeholder")]
-        [InlineData(EpilogueMatrix.VerdictSectorRecounts, "The Verdict", "epilogue_investigations_placeholder")]
-        [InlineData(EpilogueMatrix.MercyRoad, "What We Chose", "epilogue_key_decisions_placeholder")]
-        public void Plan89Bindings_KeyOutcomesMapToRelevantSlides(string endingKey, string expectedTitle, string expectedArtId)
+        [Fact]
+        public void Plan89Bindings_OutcomeMappingTable_MapsToRelevantSlides()
         {
-            Assert.Contains(endingKey, EpilogueMatrix.AllKeys);
             var catalog = LoadCatalog();
-            var matchingSlide = catalog.default_slides.FirstOrDefault(s => s.title == expectedTitle);
+            var failures = new List<string>();
 
-            Assert.NotNull(matchingSlide);
-            Assert.Equal(expectedArtId, matchingSlide.art_asset_id);
+            foreach (var testCase in new[]
+            {
+                (EndingKey: EpilogueMatrix.TheOpenMuster, ExpectedTitle: "The Muster", ExpectedArtId: "epilogue_coalition_placeholder"),
+                (EndingKey: EpilogueMatrix.WaterPlantHeld, ExpectedTitle: "Water and Heat", ExpectedArtId: "epilogue_resources_placeholder"),
+                (EndingKey: EpilogueMatrix.GarrisonAbsorbsCoalition, ExpectedTitle: "The Factions", ExpectedArtId: "epilogue_factions_placeholder"),
+                (EndingKey: EpilogueMatrix.VerdictSectorRecounts, ExpectedTitle: "The Verdict", ExpectedArtId: "epilogue_investigations_placeholder"),
+                (EndingKey: EpilogueMatrix.MercyRoad, ExpectedTitle: "What We Chose", ExpectedArtId: "epilogue_key_decisions_placeholder"),
+            })
+            {
+                if (!EpilogueMatrix.AllKeys.Contains(testCase.EndingKey))
+                {
+                    failures.Add($"ending key '{testCase.EndingKey}' is missing from EpilogueMatrix.AllKeys");
+                }
+
+                var matchingSlide = catalog.default_slides.FirstOrDefault(s => s.title == testCase.ExpectedTitle);
+                if (matchingSlide == null)
+                {
+                    failures.Add($"slide '{testCase.ExpectedTitle}' is missing from the catalog");
+                    continue;
+                }
+
+                if (matchingSlide.art_asset_id != testCase.ExpectedArtId)
+                {
+                    failures.Add(
+                        $"slide '{testCase.ExpectedTitle}' expected art '{testCase.ExpectedArtId}', got '{matchingSlide.art_asset_id}'");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
     }
 }

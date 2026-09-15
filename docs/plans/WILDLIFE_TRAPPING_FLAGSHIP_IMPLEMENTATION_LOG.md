@@ -152,3 +152,67 @@ Final repository-native results:
 
 The earlier Phase 2 failures are retained as historical baseline notes; the
 current closure run supersedes them.
+
+## Phase 5 — Flagship VI: Bycatch, narrative incidents, and trade verification
+
+Status: IMPLEMENTED
+
+Architecture:
+
+- Bycatch remains Core-owned. `WildlifeTrappingSystem` keeps the six-argument
+  compatibility callback and emits the typed `OnBycatchResolved` payload only
+  after secondary species, yield, toxicity, disease, and contamination state
+  is committed. `WildlifeTrappingHostSession` forwards the typed fact to the
+  existing event authority.
+- Bycatch yield and toxicity use the bycatch species definition; butchery
+  outputs primary plus secondary food and routes primary/bycatch health
+  consequences through the existing disease and contamination authorities.
+  Morale remains primary-catch-only.
+- Miss-only atmospheric incidents use the authored IDs
+  `trap_sprung_blood_trail`, `trap_bait_stolen`, and
+  `trap_human_bootprints`. Their pending IDs are persisted and delivered via
+  the existing `HostEventAdapter` using stable source identities.
+- `regionalSupply` validation now shares the live
+  `RegionalSupplyRouter` vocabulary, so authored trade entries cannot silently
+  become unreachable vendor stock.
+
+Persistence and determinism:
+
+- `bycatchYield`, `bycatchToxic`, bycatch health results, and
+  `pendingNarrativeEvent` have safe legacy defaults. Restore does not reroll
+  resolved bycatch or pending incidents.
+- Primary/bycatch rolls use the injected seeded stream; encounter and
+  miss-incident rolls use deterministic derived streams. The current
+  successful-check order is primary success/species/yield/toxicity, bycatch
+  chance/species/yield/toxicity, bycatch health, then primary health. Pending
+  narrative delivery clears only after event-authority acceptance, with a
+  second stable source ledger preventing duplicate dispatch.
+
+Trade evidence:
+
+| Trap | regionalSupply | Vendor price | Craft input value | Policy |
+|---|---|---:|---:|---|
+| improvised wire | general | 10.0 | 8.0 | convenience premium |
+| box | settlement | 22.0 | 7.2 | convenience premium |
+| fish | coastal | 16.0 | 12.0 | convenience premium |
+| body grip | none | unavailable | — | craft/loot-only |
+
+The invalid `4.0 > 8.0` assertion is not used; the verified policy is a
+minimum 1.1× purchase-price floor over craft input value.
+
+Plan VI verification:
+
+- `WildlifeTrappingPlanVITests`: 10/10 passed.
+- `dotnet build Ashfall.csproj --no-restore --verbosity:minimal`: PASS,
+  0 warnings, 0 errors.
+- `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --no-restore`:
+  PASS, 10,776 passed, 0 failed, 0 skipped.
+- `godot --headless --path . -- --trapping-selftest`: PASS, 10/10 host
+  checks.
+- `godot --headless --path . -- --data-integrity-selftest`: PASS, 299
+  catalogs, 0 findings.
+- `godot --headless --path . -- --content-utilization-selftest`: PASS,
+  583 catalogs, 0 orphaned catalogs.
+- `bash scripts/ci/generate-cli-catalog.sh --check`: PASS.
+- `python3 scripts/ci/run-gates.py --tier fast`: PASS, all 47/47 gates.
+- `git diff --check`: PASS.

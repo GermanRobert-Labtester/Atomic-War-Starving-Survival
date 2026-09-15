@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "reactor_profiles": [
+    {
+      "reactor_profile_id": "ft_reactor_mk1",
+      "display_name": "Synthesis Reactor Mk I",
+      "feedstock_item_id": "synthetic_fuel_canister",
+      "feedstock_units": 2,
+      "base_conversion_units": 3.0,
+      "process_ticks": 2,
+      "thermal_min": 0.40,
+      "thermal_max": 0.75,
+      "pressure_min": 0.45,
+      "pressure_max": 0.70,
+      "catalyst_decay_per_tick": 1.5,
+      "off_band_yield_floor": 0.35,
+      "maintenance_interval_ticks": 8,
+      "catalyst_profile_id": "ft_catalyst_standard",
+      "catalyst_item_id": "item_bearing_grease",
+      "catalyst_units": 1
+    }
+  ],
+  "products": [
+    { "product_id": "ft_lubricant_standard", "item_id": "machine_oil", "grade": "synthetic", "output_kind": "lubricant", "split": 0.50, "units_per_conversion": 1.0 },
+    { "product_id": "ft_wax_standard", "item_id": "carbon_black_powder", "grade": "standard", "output_kind": "wax", "split": 0.25, "units_per_conversion": 1.0 },
+    { "product_id": "ft_light_fraction", "item_id": "fuel_1l", "grade": "standard", "output_kind": "light_fraction", "split": 0.25, "units_per_conversion": 1.0 }
+  ],
+  "catalyst_profiles": [
+    { "catalyst_profile_id": "ft_catalyst_standard", "starting_condition": 100.0, "spent_threshold": 10.0, "replacement_condition": 100.0 }
+  ]
+}

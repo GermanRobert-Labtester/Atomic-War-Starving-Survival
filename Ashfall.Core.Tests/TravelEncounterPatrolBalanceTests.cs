@@ -407,21 +407,40 @@ namespace Ashfall.Core.Tests
         // Archetype cooldown matrix verification
         // ──────────────────────────────────────────────
 
-        [Theory]
-        [InlineData("checkpoint", 3)]
-        [InlineData("caravan_escort", 5)]
-        [InlineData("supply_run", 5)]
-        [InlineData("reconnaissance", 5)]
-        [InlineData("border_patrol", 5)]
-        [InlineData("raid_party", 7)]
-        [InlineData("press_gang", 10)]
-        [InlineData("refugee_eviction", 10)]
-        public void ArchetypeCooldown_MatchesAuthoredValue(string archetype, int expectedCooldown)
+        [Fact]
+        public void ArchetypeCooldown_AuthoredValueTable_MatchesCatalog()
         {
-            var enc = _catalog.Encounters.FirstOrDefault(e =>
-                string.Equals(e.PatrolArchetype, archetype, StringComparison.OrdinalIgnoreCase));
-            Assert.NotNull(enc);
-            Assert.Equal(expectedCooldown, enc.GetCooldownDays());
+            var failures = new List<string>();
+
+            foreach (var testCase in new[]
+            {
+                (Archetype: "checkpoint", ExpectedCooldown: 3),
+                (Archetype: "caravan_escort", ExpectedCooldown: 5),
+                (Archetype: "supply_run", ExpectedCooldown: 5),
+                (Archetype: "reconnaissance", ExpectedCooldown: 5),
+                (Archetype: "border_patrol", ExpectedCooldown: 5),
+                (Archetype: "raid_party", ExpectedCooldown: 7),
+                (Archetype: "press_gang", ExpectedCooldown: 10),
+                (Archetype: "refugee_eviction", ExpectedCooldown: 10),
+            })
+            {
+                var enc = _catalog.Encounters.FirstOrDefault(e =>
+                    string.Equals(e.PatrolArchetype, testCase.Archetype, StringComparison.OrdinalIgnoreCase));
+                if (enc == null)
+                {
+                    failures.Add($"archetype '{testCase.Archetype}' is missing from the catalog");
+                    continue;
+                }
+
+                int actualCooldown = enc.GetCooldownDays();
+                if (actualCooldown != testCase.ExpectedCooldown)
+                {
+                    failures.Add(
+                        $"archetype '{testCase.Archetype}' expected cooldown {testCase.ExpectedCooldown}, got {actualCooldown}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ──────────────────────────────────────────────

@@ -47,6 +47,7 @@ public partial class KineticStoragePanel : Control
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("Kinetic Storage // Flywheel Control", minWidth: 1100, minHeight: 720);

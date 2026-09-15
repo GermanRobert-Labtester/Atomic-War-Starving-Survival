@@ -5,6 +5,7 @@
 set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$DIR"
+GODOT_RUNNER=(bash "$DIR/scripts/ci/run-godot-bounded.sh")
 echo "── staging Data for PCK (Assets/.gdignore prevents packing Assets/StreamingAssets/Data) ──"
 # Copy Data to lowercase assets/ for PCK inclusion (assets/ is not ignored, so it gets packed as res://assets/StreamingAssets/Data)
 # This is the PCK-native path (CatalogPath precedence #3). Keep Assets/ as loose deploy for hybrid fallback.
@@ -15,7 +16,7 @@ echo "Staged PCK Data: $(ls -1 assets/StreamingAssets/Data/*.json 2>/dev/null | 
 
 echo "── godot-export-linux: building Linux/X11 release ──"
 mkdir -p builds/linux
-if ! godot --headless --path . --export-release "Linux/X11" builds/linux/ashfall.x86_64; then
+if ! "${GODOT_RUNNER[@]}" --path . --export-release "Linux/X11" builds/linux/ashfall.x86_64; then
   echo "EXPORT FAIL: godot export-release Linux/X11 failed" >&2
   rm -rf assets/StreamingAssets/Data
   exit 1

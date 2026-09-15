@@ -83,11 +83,16 @@ namespace AtomicWar.GodotApp
             _chemWarfareDefensePanel.RefreshView();
 
             // Exposure evaluation contract (deterministic, no RNG) — hazard is live.
+            // EnsureChemWarfare must have subscribed OnToxicExposureResolved so the
+            // production consumer path is reachable (journal + health authority).
+            int exposureEvents = 0;
+            system.OnToxicExposureResolved += (_, _, _) => exposureEvents++;
             int severity = system.EvaluateActorExposure("actor_test", 1, maskCondition01: 1.0f, out float wear);
             Check(severity == 0, $"chem: intact respirator must fully absorb, got severity {severity}");
             Check(wear > 0f, "chem: intact respirator must still accumulate filter wear");
             int unprot = system.EvaluateActorExposure("actor_test", 1, maskCondition01: 0.0f, out _);
             Check(unprot > 0, "chem: unprotected exposure in hazard lane must produce severity");
+            Check(exposureEvents > 0, "chem: OnToxicExposureResolved must fire for unprotected exposure");
 
             // Command → state delta: decon clears the hazard.
             HandleChemWarfareAction("clear_hazard", hazard!.HazardId);

@@ -53,6 +53,7 @@ public partial class DeconAirlockPanel : Control
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("Decontamination Airlock // Baseline Interlock", minWidth: 1100, minHeight: 720);

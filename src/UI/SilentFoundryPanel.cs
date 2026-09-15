@@ -44,6 +44,9 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
 
     public bool IsBound => _host != null;
 
+    private LineEdit? _forgeOutputEdit;
+    private Label? _forgeFeedback;
+
     public void Bind(SilentFoundryHostSession session, int currentDay)
     {
         _host = session;
@@ -61,6 +64,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("The Silent Foundry // Cupola & Casting Bay", minWidth: 1100, minHeight: 720);
@@ -86,6 +90,9 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         _statusRail.AddCard("casts", "Casts", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
         _statusRail.AddCard("labor", "Labor", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
         _statusRail.AddCard("treaty", "Treaties", "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
+        // Plan 213 — purity + forging status (text labels, never color-only).
+        _statusRail.AddCard("purity", "Latest Purity", "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
+        _statusRail.AddCard("forging", "Forging", "idle", AshfallMetricCard.Criticality.Normal, minWidth: 130);
 
         // DataGrid: product, sink, charge (count + ids), fuel, water, quality target.
         var cols = new[]
@@ -139,6 +146,66 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         _detailBox.AddChild(_detailContent);
         _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
             "Select a heat row to view charge costs, treaty obligations, and quality target."));
+
+        // Plan 213 follow-up — FORGING PASS strip: interactive commands over the
+        // Core-owned deterministic pass. Feedback is textual (LastEvent), never color-only.
+        _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("FORGING PASS"));
+        var forgeRow = new HBoxContainer();
+        forgeRow.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+        forgeRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        var forgeBeginBtn = AshfallUiHelpers.MakeButton("BEGIN", () =>
+        {
+            if (_host == null) return;
+            _forgeFeedback.Text = _host.BeginForging(_forgeOutputEdit.Text.Trim(), _currentDay);
+            RefreshView();
+        });
+        forgeBeginBtn.TooltipText = "Begin a forging pass on the latest provenance-bearing batch of the output item.";
+        forgeRow.AddChild(forgeBeginBtn);
+        var idEdit = new LineEdit { PlaceholderText = "output item id", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        forgeRow.AddChild(idEdit);
+        _detailBox.AddChild(forgeRow);
+        _forgeOutputEdit = idEdit;
+
+        var cmdRow = new HBoxContainer();
+        cmdRow.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+        cmdRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        foreach (var cmd in new[]
+                 {
+                     Ashfall.Core.Foundry.FoundryForgingCommand.Heat,
+                     Ashfall.Core.Foundry.FoundryForgingCommand.Shape,
+                     Ashfall.Core.Foundry.FoundryForgingCommand.Finish,
+                     Ashfall.Core.Foundry.FoundryForgingCommand.Inspect
+                 })
+        {
+            var c = cmd;
+            var btn = AshfallUiHelpers.MakeButton(c.ToString().ToUpperInvariant(), () =>
+            {
+                if (_host == null) return;
+                _forgeFeedback.Text = _host.SubmitForgingCommand(c, _currentDay);
+                RefreshView();
+            });
+            btn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            cmdRow.AddChild(btn);
+        }
+        _detailBox.AddChild(cmdRow);
+
+        var completeRow = new HBoxContainer();
+        completeRow.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+        var completeBtn = AshfallUiHelpers.MakeButton("COMPLETE PASS", () =>
+        {
+            if (_host == null) return;
+            _forgeFeedback.Text = _host.CompleteForging(_currentDay);
+            RefreshView();
+        });
+        completeBtn.TooltipText = "Score the recorded sequence against the profile's authored order; deterministic, no RNG.";
+        completeRow.AddChild(completeBtn);
+        _detailBox.AddChild(completeRow);
+
+        _forgeFeedback = AshfallUiHelpers.MakeMono("Forging idle.");
+        _forgeFeedback.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        _detailBox.AddChild(_forgeFeedback);
+
 
         _shell.SetContent(body);
         RefreshView();
@@ -209,6 +276,21 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
                                                                     AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("treaty", TreatySummary(s),
             s.treatyCompliance != null && AnyTreatyViolated(s.treatyCompliance) ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+
+        // Plan 213 — provenance + forging state.
+        string purityText = "—"; var purityCrit = AshfallMetricCard.Criticality.Normal;
+        if (_host != null && _host.Engine.TryGetLatestMaterialQualityAny(out var mq))
+        {
+            purityText = $"{mq.Purity}";
+            purityCrit = mq.Purity == FoundryPurityTier.Poor ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal;
+        }
+        _statusRail.Set("purity", purityText, purityCrit);
+        var forging = s.activeForging;
+        string forgeText = forging == null ? "idle"
+            : forging.completed ? $"done {forging.finalQualityPermille}/1000"
+            : $"{forging.submitted.Count} cmds";
+        _statusRail.Set("forging", forgeText,
+            forging != null && !forging.completed ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
     }
 
     private void RefreshMachineTell()

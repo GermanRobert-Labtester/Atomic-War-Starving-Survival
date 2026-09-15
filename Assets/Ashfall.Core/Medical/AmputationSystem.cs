@@ -392,23 +392,45 @@ namespace Ashfall.Core.Medical
             return ActionResult.Success("amputation.prosthetic_fitted");
         }
 
-        public ActionResult UpgradeToBionic(string survivorId, LimbId limb, string bionicItemId)
+        public ActionResult UpgradeToBionic(string survivorId, LimbId limb, string bionicItemId, bool chargeInventoryItem = true)
         {
             var l = GetLimb(survivorId, limb);
             if (l == null) return ActionResult.Blocked("invalid_survivor", "amputation.invalid_survivor");
             if (l.condition != LimbCondition.Amputated && l.condition != LimbCondition.Prosthetic)
                 return ActionResult.Blocked("ineligible_socket", "amputation.ineligible_socket");
 
-            if (_inventory.CountById(bionicItemId) <= 0)
-                return ActionResult.Blocked("missing_bionic_item", "amputation.missing_bionic_item");
-
-            _inventory.RemoveById(bionicItemId, 1);
+            if (chargeInventoryItem)
+            {
+                if (_inventory.CountById(bionicItemId) <= 0)
+                    return ActionResult.Blocked("missing_bionic_item", "amputation.missing_bionic_item");
+                _inventory.RemoveById(bionicItemId, 1);
+            }
+            // chargeInventoryItem=false (Plan 177): the bionics authority already
+            // consumed the full authored surgery bill through its own bound port.
 
             l.condition = LimbCondition.Bionic;
             l.prostheticId = bionicItemId;
             l.hasPhantomPain = false;
 
             return ActionResult.Success("amputation.bionic_integrated");
+        }
+
+        /// <summary>
+        /// Plan 177 — limb-authority revert used when a bionic implant is removed
+        /// or destroyed (condition failure / combat loss). The socket returns to
+        /// <see cref="LimbCondition.Amputated"/>; the bionics layer never mutates
+        /// limb state directly. Replaces any previous prostheticId.
+        /// </summary>
+        public ActionResult RevertBionicToAmputated(string survivorId, LimbId limb)
+        {
+            var l = GetLimb(survivorId, limb);
+            if (l == null) return ActionResult.Blocked("invalid_survivor", "amputation.invalid_survivor");
+            if (l.condition != LimbCondition.Bionic)
+                return ActionResult.Blocked("not_bionic", "amputation.not_bionic");
+
+            l.condition = LimbCondition.Amputated;
+            l.prostheticId = null;
+            return ActionResult.Success("amputation.bionic_removed");
         }
 
         public float GetWorkSpeedMultiplier(string survivorId)
@@ -487,10 +509,19 @@ namespace Ashfall.Core.Medical
             return Math.Max(0.10f, mult);
         }
 
+        public AmputationSystemState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<AmputationSystemState>(json) ?? new AmputationSystemState();
+        }
+
         public void RestoreState(AmputationSystemState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<AmputationSystemState>(json) ?? new AmputationSystemState();
         }
     }
 }

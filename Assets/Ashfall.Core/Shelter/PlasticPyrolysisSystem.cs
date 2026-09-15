@@ -525,10 +525,18 @@ namespace Ashfall.Core.Shelter
         public void RestoreState(PlasticPyrolysisState? state)
         {
             if (state == null) return;
-            _state = state;
+            // Restore from a clone so the live system never aliases the save DTO.
+            _state = CaptureClone(state);
             if (_state.output_buffer == null) _state.output_buffer = new List<PyrolysisOutputBatch>();
             if (_state.schema_version < 1 || _state.schema_version > 1)
                 _state.schema_version = 1;
+        }
+
+        private static PlasticPyrolysisState CaptureClone(PlasticPyrolysisState src)
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<PlasticPyrolysisState>(json) ?? new PlasticPyrolysisState();
         }
 
         private void Raise(string eventId) => OnEventRaised?.Invoke(eventId);

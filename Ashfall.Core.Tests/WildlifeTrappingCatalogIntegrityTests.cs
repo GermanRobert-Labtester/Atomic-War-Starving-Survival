@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,29 +48,33 @@ namespace Ashfall.Core.Tests
                 "shipped catalogs must be valid:\n" + string.Join("\n", report.Errors));
         }
 
-        [Theory]
-        [InlineData(-0.1, false)]
-        [InlineData(1.5, false)]
-        [InlineData(0.0, true)]
-        [InlineData(1.0, true)]
-        [InlineData(0.25, true)]
-        public void BycatchChance_NumericRangeValidation(double chance, bool shouldPass)
+        [Fact]
+        public void BycatchChance_NumericRangeTable_Validation()
         {
-            var report = ValidateScratch(scratch =>
+            var cases = new[]
             {
-                File.WriteAllText(Path.Combine(scratch, "traps.json"),
-                    "{\"schema_version\":1,\"traps\":[{\"trap_id\":\"trap_test\",\"bycatchChance\":" +
-                    chance.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}]}");
-            });
+                (Chance: -0.1, ShouldPass: false),
+                (Chance: 1.5, ShouldPass: false),
+                (Chance: 0.0, ShouldPass: true),
+                (Chance: 1.0, ShouldPass: true),
+                (Chance: 0.25, ShouldPass: true)
+            };
+            var failures = new List<string>();
 
-            if (shouldPass)
+            foreach (var test in cases)
             {
-                Assert.DoesNotContain(report.Errors, e => e.Contains("bycatchChance"));
+                var report = ValidateScratch(scratch =>
+                {
+                    File.WriteAllText(Path.Combine(scratch, "traps.json"),
+                        "{\"schema_version\":1,\"traps\":[{\"trap_id\":\"trap_test\",\"bycatchChance\":" +
+                        test.Chance.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}]}");
+                });
+                bool hasError = report.Errors.Any(e => e.Contains("bycatchChance") && e.Contains("trap 'trap_test'"));
+                if (hasError == test.ShouldPass)
+                    failures.Add($"{test.Chance}: expected shouldPass={test.ShouldPass}, error={hasError}");
             }
-            else
-            {
-                Assert.Contains(report.Errors, e => e.Contains("bycatchChance") && e.Contains("trap 'trap_test'"));
-            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -84,28 +89,32 @@ namespace Ashfall.Core.Tests
             Assert.Contains(report.Errors, e => e.Contains("bycatchChance") && e.Contains("trap 'trap_test'"));
         }
 
-        [Theory]
-        [InlineData(-5.0, false)]
-        [InlineData(0.0, true)]
-        [InlineData(4.0, true)]
-        [InlineData(20.0, true)]
-        public void ContaminationDose_NonNegativeValidation(double dose, bool shouldPass)
+        [Fact]
+        public void ContaminationDose_NonNegativeRangeTable_Validation()
         {
-            var report = ValidateScratch(scratch =>
+            var cases = new[]
             {
-                File.WriteAllText(Path.Combine(scratch, "prey.json"),
-                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":" +
-                    dose.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}]}");
-            });
+                (Dose: -5.0, ShouldPass: false),
+                (Dose: 0.0, ShouldPass: true),
+                (Dose: 4.0, ShouldPass: true),
+                (Dose: 20.0, ShouldPass: true)
+            };
+            var failures = new List<string>();
 
-            if (shouldPass)
+            foreach (var test in cases)
             {
-                Assert.DoesNotContain(report.Errors, e => e.Contains("contaminationDose"));
+                var report = ValidateScratch(scratch =>
+                {
+                    File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                        "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":" +
+                        test.Dose.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}]}");
+                });
+                bool hasError = report.Errors.Any(e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
+                if (hasError == test.ShouldPass)
+                    failures.Add($"{test.Dose}: expected shouldPass={test.ShouldPass}, error={hasError}");
             }
-            else
-            {
-                Assert.Contains(report.Errors, e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
-            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -120,20 +129,26 @@ namespace Ashfall.Core.Tests
             Assert.Contains(report.Errors, e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
         }
 
-        [Theory]
-        [InlineData("PositiveInfinity")]
-        [InlineData("NegativeInfinity")]
-        [InlineData("Infinity")]
-        public void ContaminationDose_Infinity_Rejected(string doseStr)
+        [Fact]
+        public void ContaminationDose_InfinityTable_Rejected()
         {
-            var report = ValidateScratch(scratch =>
-            {
-                File.WriteAllText(Path.Combine(scratch, "prey.json"),
-                    "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":\"" +
-                    doseStr + "\"}]}");
-            });
+            string[] values = { "PositiveInfinity", "NegativeInfinity", "Infinity" };
+            var failures = new List<string>();
 
-            Assert.Contains(report.Errors, e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'"));
+            foreach (var value in values)
+            {
+                var report = ValidateScratch(scratch =>
+                {
+                    File.WriteAllText(Path.Combine(scratch, "prey.json"),
+                        "{\"schema_version\":1,\"prey\":[{\"speciesId\":\"prey_test\",\"contaminationDose\":\"" +
+                        value + "\"}]}");
+                });
+
+                if (!report.Errors.Any(e => e.Contains("contaminationDose") && e.Contains("prey 'prey_test'")))
+                    failures.Add($"{value}: no contaminationDose error was reported");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

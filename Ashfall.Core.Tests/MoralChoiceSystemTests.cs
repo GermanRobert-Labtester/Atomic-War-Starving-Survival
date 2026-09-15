@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,25 +49,39 @@ namespace Ashfall.Core.Tests
             Assert.Equal(MoralEndingKind.BalancedSurvivor, sys.SelectEnding());
         }
 
-        [Theory]
-        [InlineData(-500, MoralPathBand.VeryEvil)]
-        [InlineData(-200, MoralPathBand.VeryEvil)]
-        [InlineData(-100, MoralPathBand.VeryEvil)]
-        [InlineData(-99, MoralPathBand.Evil)]
-        [InlineData(-50, MoralPathBand.Evil)]
-        [InlineData(-49, MoralPathBand.SlightlyEvil)]
-        [InlineData(-1, MoralPathBand.SlightlyEvil)]
-        [InlineData(0, MoralPathBand.Neutral)]
-        [InlineData(1, MoralPathBand.SlightlyPositive)]
-        [InlineData(49, MoralPathBand.SlightlyPositive)]
-        [InlineData(50, MoralPathBand.Positive)]
-        [InlineData(99, MoralPathBand.Positive)]
-        [InlineData(100, MoralPathBand.VeryPositive)]
-        [InlineData(200, MoralPathBand.VeryPositive)]
-        [InlineData(500, MoralPathBand.VeryPositive)]
-        public void BandEdgesPinned(int score, MoralPathBand expected)
+        [Fact]
+        public void BandEdgesPinned()
         {
-            Assert.Equal(expected, MoralChoiceSystem.BandForScore(score));
+            var cases = new (int Score, MoralPathBand Expected)[]
+            {
+                (-500, MoralPathBand.VeryEvil),
+                (-200, MoralPathBand.VeryEvil),
+                (-100, MoralPathBand.VeryEvil),
+                (-99, MoralPathBand.Evil),
+                (-50, MoralPathBand.Evil),
+                (-49, MoralPathBand.SlightlyEvil),
+                (-1, MoralPathBand.SlightlyEvil),
+                (0, MoralPathBand.Neutral),
+                (1, MoralPathBand.SlightlyPositive),
+                (49, MoralPathBand.SlightlyPositive),
+                (50, MoralPathBand.Positive),
+                (99, MoralPathBand.Positive),
+                (100, MoralPathBand.VeryPositive),
+                (200, MoralPathBand.VeryPositive),
+                (500, MoralPathBand.VeryPositive)
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var actual = MoralChoiceSystem.BandForScore(testCase.Score);
+                if (actual != testCase.Expected)
+                {
+                    failures.Add($"score {testCase.Score}: expected {testCase.Expected}, got {actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -254,21 +269,35 @@ namespace Ashfall.Core.Tests
             Assert.Equal(MoralEndingKind.Storykeeper, sys.SelectEnding());
         }
 
-        [Theory]
-        [InlineData(150, 19, MoralEndingKind.CommunityBuilder)]
-        [InlineData(-150, 19, MoralEndingKind.NeutralSurvivor)]
-        [InlineData(0, 19, MoralEndingKind.BalancedSurvivor)]
-        [InlineData(150, 20, MoralEndingKind.SaintOfWasteland)]
-        [InlineData(-150, 25, MoralEndingKind.Warlord)]
-        [InlineData(-60, 25, MoralEndingKind.SurvivorKing)]
-        [InlineData(-10, 20, MoralEndingKind.NeutralSurvivor)]
-        [InlineData(0, 20, MoralEndingKind.BalancedSurvivor)]
-        [InlineData(30, 20, MoralEndingKind.CommunityBuilder)]
-        [InlineData(55, 22, MoralEndingKind.Savior)]
-        [InlineData(150, 30, MoralEndingKind.SaintOfWasteland)]
-        public void EndingSelectionRules(int score, int quests, MoralEndingKind expected)
+        [Fact]
+        public void EndingSelectionRules()
         {
-            Assert.Equal(expected, MoralChoiceSystem.SelectEnding(score, 0, quests));
+            var cases = new (int Score, int Quests, MoralEndingKind Expected)[]
+            {
+                (150, 19, MoralEndingKind.CommunityBuilder),
+                (-150, 19, MoralEndingKind.NeutralSurvivor),
+                (0, 19, MoralEndingKind.BalancedSurvivor),
+                (150, 20, MoralEndingKind.SaintOfWasteland),
+                (-150, 25, MoralEndingKind.Warlord),
+                (-60, 25, MoralEndingKind.SurvivorKing),
+                (-10, 20, MoralEndingKind.NeutralSurvivor),
+                (0, 20, MoralEndingKind.BalancedSurvivor),
+                (30, 20, MoralEndingKind.CommunityBuilder),
+                (55, 22, MoralEndingKind.Savior),
+                (150, 30, MoralEndingKind.SaintOfWasteland)
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var actual = MoralChoiceSystem.SelectEnding(testCase.Score, 0, testCase.Quests);
+                if (actual != testCase.Expected)
+                {
+                    failures.Add($"score {testCase.Score}, quests {testCase.Quests}: expected {testCase.Expected}, got {actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

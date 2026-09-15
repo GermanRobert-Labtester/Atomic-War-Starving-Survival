@@ -1,76 +1,112 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Ashfall.Core.Narrative;
 using Xunit;
 
 namespace Ashfall.Core.Tests
 {
-    public class CandleMakingWaxCatalogTests
-    : CatalogTestBase{
-        private static string DataDir => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Assets", "StreamingAssets", "Data", "narrative");
-        private static CandleMakingWaxCatalog Load() => CandleMakingWaxCatalog.LoadFromDirectory(DataDir);
+    public class CandleMakingWaxCatalogTests : CatalogTestBase
+    {
+        private static string DataDir => Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..",
+            "Assets", "StreamingAssets", "Data", "narrative");
 
-        [Fact] public void TallowLogs_LoadsEightEntries() => Assert.Equal(8, Load().TallowLogs.Count);
-        [Fact] public void WaxRecords_LoadsEightEntries() => Assert.Equal(8, Load().WaxRecords.Count);
-        [Fact] public void WickReports_LoadsSevenEntries() => Assert.Equal(7, Load().WickReports.Count);
-        [Fact] public void CandleAssays_LoadsSevenEntries() => Assert.Equal(7, Load().CandleAssays.Count);
+        private static CandleMakingWaxCatalog Load() =>
+            CandleMakingWaxCatalog.LoadFromDirectory(DataDir);
 
-        [Fact] public void TallowLogs_AllIdsPopulated() { foreach (var e in Load().TallowLogs) Assert.False(string.IsNullOrWhiteSpace(e.Id)); }
-        [Fact] public void TallowLogs_AllAnimalsPopulated() { foreach (var e in Load().TallowLogs) Assert.False(string.IsNullOrWhiteSpace(e.FatSourceAnimal)); }
-        [Fact] public void TallowLogs_YieldGramsPositive() { foreach (var e in Load().TallowLogs) Assert.True(e.YieldGrams > 0f, $"{e.Id}: yield_grams must be > 0"); }
-        [Fact] public void TallowLogs_AllVatIdsPopulated() { foreach (var e in Load().TallowLogs) Assert.False(string.IsNullOrWhiteSpace(e.RenderingVatId)); }
-        [Fact] public void TallowLogs_AllLogTextsPopulated() { foreach (var e in Load().TallowLogs) Assert.False(string.IsNullOrWhiteSpace(e.LogText)); }
+        [Fact]
+        public void Catalog_StructuralContract_IsComplete()
+        {
+            var catalog = Load();
 
-        [Fact] public void WaxRecords_AllIdsPopulated() { foreach (var e in Load().WaxRecords) Assert.False(string.IsNullOrWhiteSpace(e.Id)); }
-        [Fact] public void WaxRecords_AllMethodsPopulated() { foreach (var e in Load().WaxRecords) Assert.False(string.IsNullOrWhiteSpace(e.ClarificationMethod)); }
-        [Fact] public void WaxRecords_AllClarityGradesPopulated() { foreach (var e in Load().WaxRecords) Assert.False(string.IsNullOrWhiteSpace(e.ClarityGrade)); }
-        [Fact] public void WaxRecords_AllLogTextsPopulated() { foreach (var e in Load().WaxRecords) Assert.False(string.IsNullOrWhiteSpace(e.LogText)); }
+            AssertCounts(
+                ("TallowLogs", catalog.TallowLogs.Count, 8),
+                ("WaxRecords", catalog.WaxRecords.Count, 8),
+                ("WickReports", catalog.WickReports.Count, 7),
+                ("CandleAssays", catalog.CandleAssays.Count, 7));
 
-        [Fact] public void WickReports_AllIdsPopulated() { foreach (var e in Load().WickReports) Assert.False(string.IsNullOrWhiteSpace(e.Id)); }
-        [Fact] public void WickReports_AllFibreTypesPopulated() { foreach (var e in Load().WickReports) Assert.False(string.IsNullOrWhiteSpace(e.WickFibreType)); }
-        [Fact] public void WickReports_BraidPlyCountPositive() { foreach (var e in Load().WickReports) Assert.True(e.BraidPlyCount > 0, $"{e.Id}: braid_ply_count must be > 0"); }
-        [Fact] public void WickReports_AllLogTextsPopulated() { foreach (var e in Load().WickReports) Assert.False(string.IsNullOrWhiteSpace(e.LogText)); }
+            AssertStringPropertiesPopulated(
+                "TallowLogs", catalog.TallowLogs, e => e.Id,
+                ("id", e => e.Id),
+                ("fat_source_animal", e => e.FatSourceAnimal),
+                ("rendering_vat_id", e => e.RenderingVatId),
+                ("log_text", e => e.LogText));
+            AssertPositiveProperties(
+                "TallowLogs", catalog.TallowLogs, e => e.Id,
+                ("yield_grams", e => (double)e.YieldGrams));
 
-        [Fact] public void CandleAssays_AllIdsPopulated() { foreach (var e in Load().CandleAssays) Assert.False(string.IsNullOrWhiteSpace(e.Id)); }
-        [Fact] public void CandleAssays_AllMethodsPopulated() { foreach (var e in Load().CandleAssays) Assert.False(string.IsNullOrWhiteSpace(e.CandleMethod)); }
-        [Fact] public void CandleAssays_BurnDurationPositive() { foreach (var e in Load().CandleAssays) Assert.True(e.BurnDurationHours > 0f, $"{e.Id}: burn_duration_hours must be > 0"); }
-        [Fact] public void CandleAssays_AllWaxBlendsPopulated() { foreach (var e in Load().CandleAssays) Assert.False(string.IsNullOrWhiteSpace(e.WaxBlendType)); }
-        [Fact] public void CandleAssays_AllLogTextsPopulated() { foreach (var e in Load().CandleAssays) Assert.False(string.IsNullOrWhiteSpace(e.LogText)); }
+            AssertStringPropertiesPopulated(
+                "WaxRecords", catalog.WaxRecords, e => e.Id,
+                ("id", e => e.Id),
+                ("clarification_method", e => e.ClarificationMethod),
+                ("clarity_grade", e => e.ClarityGrade),
+                ("log_text", e => e.LogText));
 
-        [Fact] public void GetTallowByAnimal_Dog_NotEmpty() => Assert.NotEmpty(Load().GetTallowLogsByAnimal("dog"));
-        [Fact] public void GetClarificationByMethod_Float_NotEmpty() => Assert.NotEmpty(Load().GetClarificationRecordsByMethod("hot_water_float"));
-        [Fact] public void GetWickByFibre_Cotton_NotEmpty() => Assert.NotEmpty(Load().GetWickReportsByFibre("cotton_rag_strip"));
-        [Fact] public void GetCandleByMethod_Dipping_NotEmpty() => Assert.NotEmpty(Load().GetCandleAssaysByMethod("dipping"));
-        [Fact] public void GetLongBurningCandles_3h_NotEmpty() => Assert.NotEmpty(Load().GetLongBurningCandles(3f));
+            AssertStringPropertiesPopulated(
+                "WickReports", catalog.WickReports, e => e.Id,
+                ("id", e => e.Id),
+                ("wick_fibre_type", e => e.WickFibreType),
+                ("log_text", e => e.LogText));
+            AssertPositiveProperties(
+                "WickReports", catalog.WickReports, e => e.Id,
+                ("braid_ply_count", e => e.BraidPlyCount));
+
+            AssertStringPropertiesPopulated(
+                "CandleAssays", catalog.CandleAssays, e => e.Id,
+                ("id", e => e.Id),
+                ("candle_method", e => e.CandleMethod),
+                ("wax_blend_type", e => e.WaxBlendType),
+                ("log_text", e => e.LogText));
+            AssertPositiveProperties(
+                "CandleAssays", catalog.CandleAssays, e => e.Id,
+                ("burn_duration_hours", e => (double)e.BurnDurationHours));
+        }
+
+        [Fact] public void GetTallowByAnimal_Dog_NotEmpty() =>
+            Assert.NotEmpty(Load().GetTallowLogsByAnimal("dog"));
+
+        [Fact] public void GetClarificationByMethod_Float_NotEmpty() =>
+            Assert.NotEmpty(Load().GetClarificationRecordsByMethod("hot_water_float"));
+
+        [Fact] public void GetWickByFibre_Cotton_NotEmpty() =>
+            Assert.NotEmpty(Load().GetWickReportsByFibre("cotton_rag_strip"));
+
+        [Fact] public void GetCandleByMethod_Dipping_NotEmpty() =>
+            Assert.NotEmpty(Load().GetCandleAssaysByMethod("dipping"));
+
+        [Fact] public void GetLongBurningCandles_3h_NotEmpty() =>
+            Assert.NotEmpty(Load().GetLongBurningCandles(3f));
 
         [Fact]
         public void AllEntries_TotalIsThirty()
         {
-            var c = Load();
-            Assert.Equal(30, c.TallowLogs.Count + c.WaxRecords.Count + c.WickReports.Count + c.CandleAssays.Count);
+            var catalog = Load();
+            Assert.Equal(30,
+                catalog.TallowLogs.Count + catalog.WaxRecords.Count +
+                catalog.WickReports.Count + catalog.CandleAssays.Count);
         }
 
         [Fact]
         public void AllEntries_IdsAreUnique()
         {
             var seen = new HashSet<string>();
-            var c = Load();
-            foreach (var e in c.TallowLogs) Assert.True(seen.Add(e.Id), $"Duplicate: {e.Id}");
-            foreach (var e in c.WaxRecords) Assert.True(seen.Add(e.Id), $"Duplicate: {e.Id}");
-            foreach (var e in c.WickReports) Assert.True(seen.Add(e.Id), $"Duplicate: {e.Id}");
-            foreach (var e in c.CandleAssays) Assert.True(seen.Add(e.Id), $"Duplicate: {e.Id}");
+            var catalog = Load();
+            foreach (var entry in catalog.TallowLogs) Assert.True(seen.Add(entry.Id), $"Duplicate: {entry.Id}");
+            foreach (var entry in catalog.WaxRecords) Assert.True(seen.Add(entry.Id), $"Duplicate: {entry.Id}");
+            foreach (var entry in catalog.WickReports) Assert.True(seen.Add(entry.Id), $"Duplicate: {entry.Id}");
+            foreach (var entry in catalog.CandleAssays) Assert.True(seen.Add(entry.Id), $"Duplicate: {entry.Id}");
         }
 
         [Fact]
         public void AllLogTexts_AtLeastTwentyChars()
         {
-            var c = Load();
-            foreach (var e in c.TallowLogs) Assert.True(e.LogText.Length >= 20, $"{e.Id}: too short");
-            foreach (var e in c.WaxRecords) Assert.True(e.LogText.Length >= 20, $"{e.Id}: too short");
-            foreach (var e in c.WickReports) Assert.True(e.LogText.Length >= 20, $"{e.Id}: too short");
-            foreach (var e in c.CandleAssays) Assert.True(e.LogText.Length >= 20, $"{e.Id}: too short");
+            var catalog = Load();
+            foreach (var entry in catalog.TallowLogs) Assert.True(entry.LogText.Length >= 20, $"{entry.Id}: too short");
+            foreach (var entry in catalog.WaxRecords) Assert.True(entry.LogText.Length >= 20, $"{entry.Id}: too short");
+            foreach (var entry in catalog.WickReports) Assert.True(entry.LogText.Length >= 20, $"{entry.Id}: too short");
+            foreach (var entry in catalog.CandleAssays) Assert.True(entry.LogText.Length >= 20, $"{entry.Id}: too short");
         }
     }
 }

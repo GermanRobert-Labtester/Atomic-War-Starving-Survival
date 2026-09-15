@@ -30,7 +30,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── GODOT-NODE CALLBACK PANEL BIND/UNBIND/REBIND SELF-TEST ──");
             int passedGates = 0;
-            int totalGates = 16;
+            int totalGates = 17;
 
             try
             {
@@ -340,8 +340,8 @@ namespace AtomicWar.GodotApp
                 int callbackFireCount = 0;
                 stressWeather.OnWeatherChanged += _ => callbackFireCount++;
 
-                // Call Bind 10 times consecutively without unbinding
-                for (int i = 0; i < 10; i++)
+                // Call Bind 100 times consecutively without unbinding
+                for (int i = 0; i < 100; i++)
                 {
                     stressPanel.Bind(stressWorld);
                 }
@@ -512,7 +512,11 @@ namespace AtomicWar.GodotApp
                     new DoseLedgerPanel(),
                     new SurvivorsPanel(),
                     new RadioPanel(),
-                    new QuestsPanel()
+                    new QuestsPanel(),
+                    new LowBackgroundLeadPanel(),
+                    new InSarMappingPanel(),
+                    new HydraulicExtrusionPanel(),
+                    new RunFlatTirePanel()
                 };
 
                 foreach (var bp in bindablePanels)
@@ -638,47 +642,47 @@ namespace AtomicWar.GodotApp
                 // ── GATE 15: Repeated Bind Subscription Symmetry Regression Gate ──
                 GD.Print("\n[Gate 15] Testing repeated Bind subscription symmetry across four flagship panels...");
 
-                // 1. WeatherHistoryPanel (repeated x10 bind and switch)
+                // 1. WeatherHistoryPanel (repeated x100 bind and switch)
                 var weatherHistPanel = new WeatherHistoryPanel();
                 var wSys1 = new WeatherSystem();
                 var wSys2 = new WeatherSystem();
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     weatherHistPanel.Bind(wSys1);
                 }
                 weatherHistPanel.Bind(wSys2);
                 weatherHistPanel.QueueFree();
 
-                // 2. GeigerCalibrationPanel (repeated x10 bind and switch)
+                // 2. GeigerCalibrationPanel (repeated x100 bind and switch)
                 var geigerPanel = new GeigerCalibrationPanel();
                 var doseHost1 = new DoseLedgerHostSession();
                 var doseHost2 = new DoseLedgerHostSession();
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     geigerPanel.Bind(doseHost1, "tag_1");
                 }
                 geigerPanel.Bind(doseHost2, "tag_1");
                 geigerPanel.QueueFree();
 
-                // 3. FireIncidentPanel (repeated x10 bind and switch)
+                // 3. FireIncidentPanel (repeated x100 bind and switch)
                 var fireIncPanel = new FireIncidentPanel();
                 var fSys1 = new ShelterFireHazardSystem();
                 var fSys2 = new ShelterFireHazardSystem();
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     fireIncPanel.Bind(fSys1);
                 }
                 fireIncPanel.Bind(fSys2);
                 fireIncPanel.QueueFree();
 
-                // 4. TriangulationPanel (repeated x10 bind, location-revealed single propagation, and switch)
+                // 4. TriangulationPanel (repeated x100 bind, location-revealed single propagation, and switch)
                 var triPanel = new TriangulationPanel();
                 var radHost1 = new RadioHostSession(new FactionRadioEngine(), new CoreSeededRng(1), 1);
                 var radHost2 = new RadioHostSession(new FactionRadioEngine(), new CoreSeededRng(2), 1);
                 int discoveredLocationsCount = 0;
                 triPanel.OnLocationDiscovered += _ => discoveredLocationsCount++;
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     triPanel.Bind(radHost1, "sig_distress");
                 }
@@ -702,7 +706,7 @@ namespace AtomicWar.GodotApp
 
                 if (discoveredLocationsCount != 1)
                 {
-                    GD.PrintErr($"[FAIL] Gate 15: Expected exactly 1 location discovery after 10x rebind on radHost1, got {discoveredLocationsCount}.");
+                    GD.PrintErr($"[FAIL] Gate 15: Expected exactly 1 location discovery after 100x rebind on radHost1, got {discoveredLocationsCount}.");
                     return 1;
                 }
 
@@ -1000,6 +1004,188 @@ namespace AtomicWar.GodotApp
 
                 wtPanel.QueueFree();
                 GD.Print("[PASS] Gate 16: WildlifeTrappingPanel Multi-Site Status Rail & Targeted Repair UX verified cleanly.");
+                passedGates++;
+
+                // ── GATE 17: ×100 Bind → Fire → Unbind Reopen Stability (Plan 16 §16C.8) ──
+                GD.Print("\n[Gate 17] Testing ×100 bind/fire/unbind reopen stability across the four former subscription offenders + WeatherPanel...");
+                const int ReopenCycles = 100;
+
+                // 17.1 WeatherHistoryPanel — publisher: WeatherSystem.OnStateChanged (ForceWeather).
+                var g17WeatherSys = new WeatherSystem();
+                var g17WeatherHist = new WeatherHistoryPanel();
+                for (int i = 0; i < ReopenCycles; i++)
+                {
+                    g17WeatherHist.Bind(g17WeatherSys);
+                    int before = g17WeatherHist.RefreshCount;
+                    g17WeatherSys.ForceWeather(i % 2 == 0 ? WeatherKind.FalloutStorm : WeatherKind.BlackRain);
+                    if (g17WeatherHist.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: WeatherHistoryPanel refresh delta {g17WeatherHist.RefreshCount - before} != 1 at cycle {i}.");
+                        return 1;
+                    }
+                    g17WeatherHist.Unbind();
+                    g17WeatherSys.ForceWeather(WeatherKind.Ashfall);
+                    if (g17WeatherHist.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: WeatherHistoryPanel refreshed while unbound at cycle {i}.");
+                        return 1;
+                    }
+                }
+                if (g17WeatherHist.RefreshCount != ReopenCycles)
+                {
+                    GD.PrintErr($"[FAIL] Gate 17: WeatherHistoryPanel total refreshes {g17WeatherHist.RefreshCount} != {ReopenCycles}.");
+                    return 1;
+                }
+                g17WeatherHist.QueueFree();
+
+                // 17.2 GeigerCalibrationPanel — publisher: Calibration.OnStateChanged (RegisterDevice).
+                // Bound with an explicit empty selection to prove the no-device state is safe (N16.6).
+                var g17DoseHost = new DoseLedgerHostSession();
+                var g17Geiger = new GeigerCalibrationPanel();
+                for (int i = 0; i < ReopenCycles; i++)
+                {
+                    g17Geiger.Bind(g17DoseHost, string.Empty);
+                    int before = g17Geiger.RefreshCount;
+                    g17DoseHost.Calibration.RegisterDevice($"calib_dev_{i}", $"roster_member_{i}");
+                    if (g17Geiger.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: GeigerCalibrationPanel refresh delta {g17Geiger.RefreshCount - before} != 1 at cycle {i}.");
+                        return 1;
+                    }
+                    g17Geiger.Unbind();
+                    g17DoseHost.Calibration.RegisterDevice($"calib_dev_unbound_{i}", $"roster_member_unbound_{i}");
+                    if (g17Geiger.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: GeigerCalibrationPanel refreshed while unbound at cycle {i}.");
+                        return 1;
+                    }
+                }
+                if (g17Geiger.RefreshCount != ReopenCycles)
+                {
+                    GD.PrintErr($"[FAIL] Gate 17: GeigerCalibrationPanel total refreshes {g17Geiger.RefreshCount} != {ReopenCycles}.");
+                    return 1;
+                }
+                g17Geiger.QueueFree();
+
+                // 17.3 FireIncidentPanel — publisher: ShelterFireHazardSystem.OnStateChanged (Ignite).
+                var g17FireSys = new ShelterFireHazardSystem();
+                var g17FireZones = new System.Collections.Generic.List<FireZoneState>
+                {
+                    new FireZoneState
+                    {
+                        zoneId = "zone_gate17",
+                        displayName = "Gate 17 Bay",
+                        fireLevel = 0.4f,
+                        smokeLevel = 0.1f,
+                        coLevel = 0.05f,
+                        heatLevel = 0.2f,
+                        damperOpen = true
+                    }
+                };
+                var g17FirePanel = new FireIncidentPanel();
+                for (int i = 0; i < ReopenCycles; i++)
+                {
+                    g17FirePanel.Bind(g17FireSys);
+                    int before = g17FirePanel.RefreshCount;
+                    g17FireSys.Ignite($"gate17_incident_{i}", "zone_gate17", 1, g17FireZones);
+                    if (g17FirePanel.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: FireIncidentPanel refresh delta {g17FirePanel.RefreshCount - before} != 1 at cycle {i}.");
+                        return 1;
+                    }
+                    g17FirePanel.Unbind();
+                    g17FireSys.Ignite($"gate17_incident_unbound_{i}", "zone_gate17", 1, g17FireZones);
+                    if (g17FirePanel.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: FireIncidentPanel refreshed while unbound at cycle {i}.");
+                        return 1;
+                    }
+                }
+                if (g17FirePanel.RefreshCount != ReopenCycles)
+                {
+                    GD.PrintErr($"[FAIL] Gate 17: FireIncidentPanel total refreshes {g17FirePanel.RefreshCount} != {ReopenCycles}.");
+                    return 1;
+                }
+                g17FirePanel.QueueFree();
+
+                // 17.4 TriangulationPanel — publisher: Triangulation.OnStateChanged (RecordObservation).
+                var g17RadioHost = new RadioHostSession(new FactionRadioEngine(), new CoreSeededRng(17), 1);
+                var g17TriPanel = new TriangulationPanel();
+                for (int i = 0; i < ReopenCycles; i++)
+                {
+                    g17TriPanel.Bind(g17RadioHost, "sig_gate17");
+                    int before = g17TriPanel.RefreshCount;
+                    g17RadioHost.Triangulation.RecordObservation(new RadioObservation
+                    {
+                        signalId = "sig_gate17",
+                        stationId = $"st_gate17_{i}",
+                        day = 1,
+                        bearingDegrees = (i * 37) % 360,
+                        errorDegrees = 2f,
+                        signalStrength = 0.95f,
+                        noiseLevel = 0.02f,
+                        operatorSkill = 0.9f
+                    });
+                    if (g17TriPanel.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: TriangulationPanel refresh delta {g17TriPanel.RefreshCount - before} != 1 at cycle {i}.");
+                        return 1;
+                    }
+                    g17TriPanel.Unbind();
+                    g17RadioHost.Triangulation.RecordObservation(new RadioObservation
+                    {
+                        signalId = "sig_gate17",
+                        stationId = $"st_gate17_unbound_{i}",
+                        day = 1,
+                        bearingDegrees = ((i * 37) + 180) % 360,
+                        errorDegrees = 2f,
+                        signalStrength = 0.95f,
+                        noiseLevel = 0.02f,
+                        operatorSkill = 0.9f
+                    });
+                    if (g17TriPanel.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: TriangulationPanel refreshed while unbound at cycle {i}.");
+                        return 1;
+                    }
+                }
+                if (g17TriPanel.RefreshCount != ReopenCycles)
+                {
+                    GD.PrintErr($"[FAIL] Gate 17: TriangulationPanel total refreshes {g17TriPanel.RefreshCount} != {ReopenCycles}.");
+                    return 1;
+                }
+                g17TriPanel.QueueFree();
+
+                // 17.5 WeatherPanel (clean representative) — publisher: WeatherSystem.OnWeatherChanged (ForceWeather).
+                var g17WeatherSys2 = new WeatherSystem();
+                var g17WeatherHost = new WeatherHostSession(g17WeatherSys2);
+                var g17WeatherPanel = new WeatherPanel();
+                for (int i = 0; i < ReopenCycles; i++)
+                {
+                    g17WeatherPanel.Bind(g17WeatherHost);
+                    int before = g17WeatherPanel.RefreshCount;
+                    g17WeatherSys2.ForceWeather(i % 2 == 0 ? WeatherKind.Ashfall : WeatherKind.BlackRain);
+                    if (g17WeatherPanel.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: WeatherPanel refresh delta {g17WeatherPanel.RefreshCount - before} != 1 at cycle {i}.");
+                        return 1;
+                    }
+                    g17WeatherPanel.Unbind();
+                    g17WeatherSys2.ForceWeather(WeatherKind.FalloutStorm);
+                    if (g17WeatherPanel.RefreshCount != before + 1)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 17: WeatherPanel refreshed while unbound at cycle {i}.");
+                        return 1;
+                    }
+                }
+                if (g17WeatherPanel.RefreshCount != ReopenCycles)
+                {
+                    GD.PrintErr($"[FAIL] Gate 17: WeatherPanel total refreshes {g17WeatherPanel.RefreshCount} != {ReopenCycles}.");
+                    return 1;
+                }
+                g17WeatherPanel.QueueFree();
+
+                GD.Print("[PASS] Gate 17: ×100 bind/fire/unbind reopen stability verified — exactly one refresh per event, zero refreshes while unbound, across WeatherHistory, GeigerCalibration, FireIncident, Triangulation, and WeatherPanel.");
                 passedGates++;
 
                 GD.Print($"\n=== PANEL BIND LIFECYCLE SELF-TEST PASS ({passedGates}/{totalGates} gates verified) ===");

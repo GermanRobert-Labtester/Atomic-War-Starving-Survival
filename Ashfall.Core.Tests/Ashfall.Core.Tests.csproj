@@ -27,17 +27,14 @@
        First green reinstatement: MoralChoiceFactionReactionsExpansionTests (10/10).
        From CI runs 33957813182 / 33958204127 + local test_core_suite. -->
   <ItemGroup>
-    <!-- Audit #47: ContentAcceptanceLadderTests API-drifted (ExpiryDate/Run arity); rematch before re-enable. -->
-    <Compile Remove="Content/ContentAcceptanceLadderTests.cs" />
     <!-- Plan 203 wave: AquiferPiezometerEngine + tests are an in-flight concurrent-stream
          drop (untracked, does not compile together yet). Quarantined so the canonical
          suite stays green; owned by that stream to fix and unquarantine. -->
     <Compile Remove="AquiferPiezometerEngineTests.cs" />
     <!-- Audit #47: PortContractGateTests — policy drift (untracked seams + stale HOST_REQUIRED); rematch docs/ci/port_contract_policy.json. -->
     <Compile Remove="Tooling/PortContractGateTests.cs" />
-    <!-- Audit #39: UtilityAiExpandedCatalogTests expects 20 actions; live catalog has 6 — rematch catalog or soften census. -->
-    <Compile Remove="UtilityAiExpandedCatalogTests.cs" />
-    <Compile Remove="ArchiveInksCatalogTests.cs" />
+    <!-- REINSTATED 2026-09-12: UtilityAiExpandedCatalogTests — live utility_actions.json has 20 actions; stale “6” census note retired. -->
+    <!-- REINSTATED 2026-09-12: ArchiveInksCatalogTests — live archive_inks.json 12 inks; InkMaterialDefinition JsonPropertyName binds snake_case. -->
     <!-- RETIRED 2026-09-06 (quarantine evidence audit) — Collectible family:
          collectibles.json landed (40 entries) but its integration never did:
          (a) 0 collectibles placed in any scavenging/loot table (placement,
@@ -55,20 +52,17 @@
     <Compile Remove="RegionalTreatyConsequenceTests.cs" />
     <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
     <Compile Remove="Integration/Plans72To75CampaignIntegrationTests.cs" /> <!-- TEMP; restored -->
-    <Compile Remove="Narrative/HoldfastNpcCatalogTests.cs" />
-    <Compile Remove="DutyRoster/DutyRosterSeasonCatalogTests.cs" />
+    <!-- REINSTATED 2026-09-12: HoldfastNpcCatalogTests — live holdfast_npcs.json 10 IDs; NPC owner is HoldfastNpcCatalogLoader (not HoldfastCatalog.Npcs). -->
 <Compile Remove="CollectibleMerchantBalanceTests.cs" />
 <Compile Remove="CollectibleReplayFixture.cs" />
 <Compile Remove="CollectibleReplayTests.cs" />
 <Compile Remove="CollectibleScavengingSimulationTests.cs" />
-    <Compile Remove="CraftAttributionTradeSpecialtyTests.cs" />
     <Compile Remove="DebtBountyHandoffTests.cs" />
     <Compile Remove="DebtLifecycleSmokeTests.cs" />
     <Compile Remove="DebtStandingHandoffTests.cs" />
     <Compile Remove="Expeditions/ArmoredCrawlerExpeditionTests.cs" />
 <Compile Remove="Expeditions/CollectibleGenerationChannelGateTests.cs" />
 <Compile Remove="Expeditions/CollectibleScavengingPlacementTests.cs" />
-    <Compile Remove="GreenhouseEquipmentScalingTests.cs" />
     <!-- Plan 99 reinstated: authoritative hardcore economy catalog now has the
          expanded enum/matcher support and exact 8/8/6 data contract. -->
     <Compile Remove="Integration/InfrastructureSystemsIntegrationTests.cs" />

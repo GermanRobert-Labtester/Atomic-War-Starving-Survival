@@ -66,7 +66,7 @@
       "id": "npc_wren",
       "display_name": "Wren",
       "profession": "Trader",
-      "bio": "Eleven. Attends the nine-pupil school at the gymnasium. Trades small found objects at prices that are always slightly too generous to the player. Born the year of the Exchange: every explanation the player gives is the first and only version they will ever hear, and the game records which ones were told and whether they were true.",
+      "bio": "Eleven. Attends the nine-pupil school at the gymnasium. Trades small found objects at prices that are always slightly too generous. Born the year of the Exchange: every explanation an adult gives is the first and only version they will ever hear.",
       "faction": "none",
       "region": "the_verge",
       "first_day": 25,

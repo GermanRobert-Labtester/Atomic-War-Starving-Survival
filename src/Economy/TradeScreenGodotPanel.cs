@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using AtomicWar.GodotApp.UI;
 using System;
 using System.Collections.Generic;
@@ -122,6 +123,7 @@ namespace AtomicWar.GodotApp.Economy
 
         public override void _Ready()
         {
+            Visible = false;
             SetAnchorsPreset(LayoutPreset.FullRect);
             CustomMinimumSize = new Vector2(global::Ashfall.Core.UI.Theme.TradePanelMinWidth, global::Ashfall.Core.UI.Theme.TradePanelMaxHeight);
 
@@ -508,6 +510,23 @@ namespace AtomicWar.GodotApp.Economy
         {
             _activeFactionId = factionId;
             RefreshView();
+        }
+
+        /// <summary>
+        /// Caravan ledger sidebar focus helper. Section ids are local chrome ops
+        /// (not faction ids). Biology expands the existing grim drawer; other
+        /// sections currently have no dedicated scroll target.
+        /// </summary>
+        public void FocusLedgerSection(string sectionId)
+        {
+            if (string.IsNullOrEmpty(sectionId)) return;
+            if (string.Equals(sectionId, "biology", StringComparison.Ordinal))
+            {
+                if (_grimDrawerToggle != null && !_grimDrawerToggle.ButtonPressed)
+                    _grimDrawerToggle.ButtonPressed = true;
+                if (_grimDrawerBody != null)
+                    _grimDrawerBody.Visible = true;
+            }
         }
 
         public void SetTraderVoiceContext(TradeVoiceContext context)

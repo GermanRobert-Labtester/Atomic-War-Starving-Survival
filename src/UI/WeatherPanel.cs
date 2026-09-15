@@ -59,7 +59,14 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        private void HandleWeatherChanged(WeatherKind _) => RefreshView();
+        /// <summary>Test/selftest observable: event-driven refresh count — exactly one per publisher event while bound.</summary>
+        public int RefreshCount { get; private set; }
+
+        private void HandleWeatherChanged(WeatherKind _)
+        {
+            RefreshCount++;
+            RefreshView();
+        }
 
         public void RefreshView()
         {

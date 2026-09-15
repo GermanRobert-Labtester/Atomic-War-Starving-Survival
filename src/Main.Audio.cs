@@ -31,6 +31,7 @@ namespace AtomicWar.GodotApp
         StartingLevelSystem? IAudioDomainProvider.AudioStartingLevel => _startingLevel?.System;
         Ashfall.Core.AudioConditionSystem? IAudioDomainProvider.AudioConditions => _audioConditions;
         Ashfall.Core.Survivors.SomaticFlashbackSystem? IAudioDomainProvider.AudioFlashbacks => _phase0?.Flashbacks;
+        Ashfall.Core.Narrative.EchoSystem? IAudioDomainProvider.AudioEchoes => _echoes?.Engine;
 
         Ashfall.Core.Survivors.DesperationSystem? IExpansionAudioProvider.AudioDesperation => EnsureDesperation();
         Ashfall.Core.Medical.MutationSystem? IExpansionAudioProvider.AudioMutation => EnsureMutations();

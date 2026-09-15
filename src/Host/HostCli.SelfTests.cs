@@ -40,6 +40,29 @@ namespace AtomicWar.GodotApp
                 GD.PrintErr("[DATA] " + line);
             foreach (string line in report.Warnings)
                 GD.Print("[DATA] (warn) " + line);
+
+            // Tasks 5–8 — the collectible catalog integrity validator (knowledge /
+            // location / journal effect-target FKs, acquisition-source graph,
+            // item↔definition bijection) runs as part of the PERMANENT gate. The
+            // validator existed but had zero consumers; unwired validation is
+            // dead content (Trap G).
+            try
+            {
+                var colFindings = Ashfall.Core.Content.CollectibleCatalogIntegrityValidator.Validate(
+                    dataDirectory, files, new SystemTextJsonSerializer(), null);
+                foreach (var f in colFindings)
+                {
+                    string line = $"[COLLECTIBLE] {f.SourceCatalog}:{f.SourceId}:{f.FieldPath} {f.ErrorCode} — {f.Message}";
+                    report.Error(line);
+                    GD.PrintErr(line);
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = "[COLLECTIBLE] collectible integrity validation crashed: " + ex.Message;
+                report.Error(message);
+                GD.PrintErr(message);
+            }
             int catalogCount;
             try
             {

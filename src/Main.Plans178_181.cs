@@ -81,7 +81,7 @@ namespace AtomicWar.GodotApp
         {
             if (_generational != null)
             {
-                CaptureSection("child_development", GenerationalSaveStore.TryCapturePersisted(_generational.State));
+                CaptureSection("child_development", GenerationalSaveStore.TryCapturePersisted(_generational.CaptureState()));
             }
         }
 
@@ -153,7 +153,7 @@ namespace AtomicWar.GodotApp
         {
             if (_prisoners != null)
             {
-                CaptureSection("prisoner_management", PrisonerSaveStore.TryCapturePersisted(_prisoners.State));
+                CaptureSection("prisoner_management", PrisonerSaveStore.TryCapturePersisted(_prisoners.CaptureState()));
             }
         }
 
@@ -215,7 +215,7 @@ namespace AtomicWar.GodotApp
         {
             if (_mutations != null)
             {
-                CaptureSection("mutation_tree", MutationSaveStore.TryCapturePersisted(_mutations.State));
+                CaptureSection("mutation_tree", MutationSaveStore.TryCapturePersisted(_mutations.CaptureState()));
             }
         }
 
@@ -276,7 +276,7 @@ namespace AtomicWar.GodotApp
         {
             if (_stealth != null)
             {
-                CaptureSection("expedition_stealth", StealthSaveStore.TryCapturePersisted(_stealth.State));
+                CaptureSection("expedition_stealth", StealthSaveStore.TryCapturePersisted(_stealth.CaptureState()));
             }
         }
 
@@ -286,6 +286,146 @@ namespace AtomicWar.GodotApp
         {
             EnsureGenerational().GrowthTick(currentDay);
             EnsurePrisoners().TickUpkeepAndEscape(currentDay);
+        }
+
+        private void HandlePrisonerAction(string action, string param)
+        {
+            if (string.Equals(action, "OPEN", StringComparison.OrdinalIgnoreCase))
+            {
+                SetupPrisoners();
+                _prisonerPanel.Bind(EnsurePrisoners());
+                _prisonerPanel.Open();
+                return;
+            }
+            if (string.Equals(action, "CLOSE", StringComparison.OrdinalIgnoreCase))
+            {
+                _prisonerPanel.Close();
+                return;
+            }
+
+            SetupPrisoners();
+            var system = EnsurePrisoners();
+            if (string.IsNullOrWhiteSpace(param))
+            {
+                _prisonerPanel.ShowFeedback("No detained captive selected.", isFailure: true);
+                _prisonerPanel.RefreshView();
+                return;
+            }
+
+            switch (action)
+            {
+                case "interrogate":
+                {
+                    string? tacticId = system.FirstTacticId;
+                    if (string.IsNullOrEmpty(tacticId))
+                    {
+                        _prisonerPanel.ShowFeedback("No interrogation tactics registered.", isFailure: true);
+                        break;
+                    }
+                    var result = system.Interrogate(param, tacticId, _simDay);
+                    string successMsg = result.IntelDiscovered
+                        ? (result.IsFalseIntel
+                            ? $"Interrogation yielded a lead ({result.ExtractedIntelId}) — authenticity uncertain."
+                            : $"Interrogation extracted intel {result.ExtractedIntelId}.")
+                        : "Interrogation complete — no new intel this round.";
+                    _prisonerPanel.ShowFeedback(
+                        result.Success ? successMsg : $"Interrogation failed: {result.FailureCode}",
+                        isFailure: !result.Success);
+                    break;
+                }
+                case "recruit":
+                {
+                    bool ok = system.RecruitPrisoner(param, _simDay);
+                    _prisonerPanel.ShowFeedback(
+                        ok ? $"Captive {param} recruited into the holdfast." : "Recruitment refused — trust, time, or abuse history blocks it.",
+                        isFailure: !ok);
+                    break;
+                }
+                case "release":
+                {
+                    bool ok = system.ReleasePrisoner(param);
+                    _prisonerPanel.ShowFeedback(
+                        ok ? $"Captive {param} released." : "Release failed — captive not detained.",
+                        isFailure: !ok);
+                    break;
+                }
+                default:
+                    _prisonerPanel.ShowFeedback($"Unknown detention action: {action}", isFailure: true);
+                    break;
+            }
+            _prisonerPanel.RefreshView();
+        }
+
+        private void HandleNurseryAction(string action, string param)
+        {
+            if (string.Equals(action, "OPEN", StringComparison.OrdinalIgnoreCase))
+            {
+                SetupGenerational();
+                _nurseryPanel.Bind(EnsureGenerational());
+                _nurseryPanel.Open();
+                return;
+            }
+            if (string.Equals(action, "CLOSE", StringComparison.OrdinalIgnoreCase))
+            {
+                _nurseryPanel.Close();
+                return;
+            }
+
+            SetupGenerational();
+            var system = EnsureGenerational();
+            if (string.IsNullOrWhiteSpace(param))
+            {
+                _nurseryPanel.ShowFeedback("No child under care selected.", isFailure: true);
+                _nurseryPanel.RefreshView();
+                return;
+            }
+
+            string? adultId = FirstAvailableAdultId(system);
+            if (string.IsNullOrEmpty(adultId))
+            {
+                _nurseryPanel.ShowFeedback("No available adult on the roster.", isFailure: true);
+                _nurseryPanel.RefreshView();
+                return;
+            }
+
+            switch (action)
+            {
+                case "assign_guardian":
+                {
+                    bool ok = system.AssignGuardian(param, adultId);
+                    _nurseryPanel.ShowFeedback(
+                        ok ? $"Guardian {adultId} assigned to {param}." : "Guardian assignment failed.",
+                        isFailure: !ok);
+                    break;
+                }
+                case "assign_teacher":
+                {
+                    var child = system.GetChild(param);
+                    string focus = child?.educationFocusId ?? "practical_survival";
+                    bool ok = system.AssignTeacher(param, adultId, focus);
+                    _nurseryPanel.ShowFeedback(
+                        ok ? $"Teacher {adultId} assigned to {param} ({focus})." : "Teacher assignment failed.",
+                        isFailure: !ok);
+                    break;
+                }
+                default:
+                    _nurseryPanel.ShowFeedback($"Unknown nursery action: {action}", isFailure: true);
+                    break;
+            }
+            _nurseryPanel.RefreshView();
+        }
+
+        private string? FirstAvailableAdultId(GenerationalSystem generational)
+        {
+            if (_survivors == null) return null;
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var s = _survivors.RosterState[i];
+                if (s == null || string.IsNullOrWhiteSpace(s.Id)) continue;
+                if (generational.GetChild(s.Id) != null) continue;
+                return s.Id;
+            }
+            return null;
         }
     }
 }

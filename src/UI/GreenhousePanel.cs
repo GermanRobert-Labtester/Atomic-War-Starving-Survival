@@ -57,6 +57,7 @@ public partial class GreenhousePanel : Control
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("The Glass Orchard // Sub-surface Hydroponics", minWidth: 1100, minHeight: 720);
@@ -502,6 +503,32 @@ public partial class GreenhousePanel : Control
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Blight", $"{p.blight * 100f:0}%",
             p.blight > 0f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+        // ── B5–B8 Phase 4/9: visible blight-risk contributors (§7.12, §17.3) ──
+        // The risk band comes from the same decomposition the daily roll
+        // consumes — current contributors, never a forecast of the roll.
+        if (!GreenhouseSystem.IsFallow(p) && ((GreenhouseStage)p.stage) != GreenhouseStage.Failed)
+        {
+            var risk = _host.System.GetBlightRiskProfile(p.plotIndex, hasWater: p.water > 0f);
+            if (risk.PlotExists)
+            {
+                string band = risk.FinalChancePerDay <= 0f ? "none (prevented)"
+                    : risk.FinalChancePerDay < 0.02f ? "low"
+                    : risk.FinalChancePerDay < 0.08f ? "elevated"
+                    : "high";
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Blight risk",
+                    $"{band} (contam {risk.ContaminationPressure:P0} · drought ×{risk.DroughtStress:0.#}"
+                    + (risk.NutrientReduction > 0f ? $" · fed −{risk.NutrientReduction:F2}" : "")
+                    + (risk.RotationPressure > 0f ? $" · monoculture ×{risk.RotationStreak}" : "") + ")",
+                    risk.FinalChancePerDay < 0.02f ? AshfallUiHelpers.ToColor(DesignTheme.Lethe)
+                    : risk.FinalChancePerDay < 0.08f ? AshfallUiHelpers.ToColor(DesignTheme.Warm)
+                    : AshfallUiHelpers.ToColor(DesignTheme.Critical)));
+                if (p.nutrientLevel <= 0f)
+                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall("Unfed crop — nutrient dosing lowers blight risk."));
+                if (risk.RotationPressure > 0f)
+                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall($"Repeated {FriendlySeed(p.seedItemId)} crops exhaust this bed — rotate to another crop to clear the pressure."));
+            }
+        }
         if (!string.IsNullOrEmpty(_host.LastEvent))
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -536,6 +563,12 @@ public partial class GreenhousePanel : Control
             () => OnActionRequested?.Invoke("harvest", _selectedIndex));
         harvestBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(harvestBtn);
+
+        // B5–B8 Phase 4: nutrient dosing (canonical item_hydroponic_nutrients).
+        var doseBtn = AshfallUiHelpers.MakeButton("DOSE NUTRIENTS",
+            () => OnActionRequested?.Invoke("dose_nutrients", _selectedIndex));
+        doseBtn.CustomMinimumSize = new Vector2(140, 30);
+        actionRow.AddChild(doseBtn);
         _detailBox.AddChild(actionRow);
 
         // GAP-6: water split — three discrete options.

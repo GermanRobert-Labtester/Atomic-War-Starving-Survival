@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -54,6 +55,11 @@ namespace AtomicWar.GodotApp
 
             // Phase 3: Survivors, Medical, Disease & Social
             _campaignDay.Register("duty_roster", new DutyRosterDayOwner(this), phase: 3);
+            // Plan 210 — sanitation runs BEFORE the disease tick within phase 3:
+            // `hygiene` (h) sorts alphabetically before `medical_disease` (m),
+            // so waste burden → hygiene → pathogen exposure modifiers are
+            // current when the disease authority resolves its daily tick.
+            _campaignDay.Register("hygiene", new HygieneDayOwner(this), phase: 3);
             _campaignDay.Register("medical_disease", new MedicalDiseaseDayOwner(this), phase: 3);
             _campaignDay.Register("phase0_psychology", new Phase0PsychologyDayOwner(this), phase: 3);
             _campaignDay.Register("survivor_social", new SurvivorSocialDayOwner(this), phase: 3);
@@ -68,12 +74,20 @@ namespace AtomicWar.GodotApp
             // Plan IV: ledger debt ages with the campaign; forfeits dispatch
             // consequences into faction war / raids / inventory / labor.
             _campaignDay.Register("debt_ledger", new DebtLedgerDayOwner(this), phase: 4);
+            // Plan 211 — underworld stock refresh + debt/heat tick AFTER the
+            // debt-ledger tick: `underworld_market` (u) sorts alphabetically
+            // after `debt_ledger` (d) within phase 4 (owner id is not the
+            // section key — the save section is `black_market`).
+            _campaignDay.Register("underworld_market", new UnderworldMarketDayOwner(this), phase: 4);
             // Flagship XI (Plan 156): underground hazards tick after expeditions
             // (ordinal 's' > 'e', < 'w') so the bridge reads fresh sortie phases.
             _campaignDay.Register("subterranean_network", new SubterraneanDayOwner(this), phase: 4);
             // Flagship XI (Plan 157): psyops broadcast day resolves after
             // expeditions (leaflets) and alongside the world-evolution radio feed.
             _campaignDay.Register("psyops", new PsyOpsDayOwner(this), phase: 4);
+            // Plan 173 Phase 2: program prep ticks after psyops so StartCampaign
+            // on delivery can reach an already-constructed PsyOpsSystem.
+            _campaignDay.Register("radio_program_production", new RadioProgramProductionDayOwner(this), phase: 4);
             // Plans 162-165 (Plan 164): breakdown arcs evaluate AFTER the
             // phase-3 needs tick finalized canonical stress (plan §11.3).
             _campaignDay.Register("psychology_arcs_162", new PsychologyArcsDayOwner(this), phase: 4);
@@ -251,11 +265,10 @@ namespace AtomicWar.GodotApp
             public void CapturePreDaySnapshot(int day) { }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
-                _m.SetupExpansions();
-                if (_m._expansions.Greenhouse.PlotCount > 0)
-                    _m._expansions.TickGreenhouse(day);
-
+                // Single growth authority: player GreenhouseHostSession (shared
+                // into the expansion hub). Do not also TickGreenhouse on a twin.
                 _m.SetupGreenhouse();
+                _m.SetupExpansions();
                 _m.SetupAgriculture();
                 if (_m._agriculture != null)
                 {
@@ -380,8 +393,14 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupEconomy();
+                // Plan 212 — weather (phase 1) already ticked; convert today's
+                // severity into a bounded market shock BEFORE the index update.
+                _m.TickEconomyWeatherBridge(day);
                 _m._economy.TickDay(day, _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Economy, day, 0));
+                var activeShockCount = _m._economy.Market.ActiveShocks.Count;
                 events.Add(new DayStateChangeEvent("market_ticked", "economy_market", null, null, _m._economy.Market.Day));
+                if (activeShockCount > 0)
+                    events.Add(new DayStateChangeEvent("market_shocks_active", "economy_market", null, null, activeShockCount));
             }
         }
 
@@ -392,9 +411,49 @@ namespace AtomicWar.GodotApp
             public void CapturePreDaySnapshot(int day) { }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
+                // C2 / Plan 20B (§29) — capture pre-tick shelter shielding state
+                // so degradation/unseal transitions become semantic day events
+                // (canonical vocabulary; the briefing builder renders them).
+                string filterBandBefore = _m._startingLevel?.System.AirFilterConditionBand ?? "healthy";
+                bool deconActiveBefore = _m._decontamination?.System.HasActiveCase ?? false;
+                AirlockDoorState airlockBefore = _m._airlockSecurity?.System.State.doorState
+                    ?? AirlockDoorState.Secure;
+
                 _m.TickAllExpandedShelterSystems(day);
+
+                string filterBandAfter = _m._startingLevel?.System.AirFilterConditionBand ?? "healthy";
+                if (FilterBandRank(filterBandAfter) < FilterBandRank(filterBandBefore))
+                {
+                    events.Add(new DayStateChangeEvent("shelter_filter_degraded",
+                        "starting_level_air_filter", "air_filter", filterBandAfter,
+                        _m._startingLevel?.System.State.airFilterHealthPercent ?? 0f));
+                }
+
+                bool deconActiveAfter = _m._decontamination?.System.HasActiveCase ?? false;
+                if (!deconActiveBefore && deconActiveAfter)
+                    events.Add(new DayStateChangeEvent("shelter_decon_started", "decontamination"));
+                else if (deconActiveBefore && !deconActiveAfter)
+                    events.Add(new DayStateChangeEvent("shelter_decon_completed", "decontamination"));
+
+                AirlockDoorState airlockAfter = _m._airlockSecurity?.System.State.doorState
+                    ?? AirlockDoorState.Secure;
+                if (airlockBefore == AirlockDoorState.Secure && airlockAfter != AirlockDoorState.Secure)
+                {
+                    events.Add(new DayStateChangeEvent("shelter_hatch_unsealed",
+                        "airlock_security", "airlock", airlockAfter.ToString()));
+                }
+
                 events.Add(new DayStateChangeEvent("shelter_facilities_ticked", "shelter_facilities", null, null, day));
             }
+
+            /// <summary>Ordering for filter condition bands (higher = healthier).</summary>
+            private static int FilterBandRank(string? band) => band switch
+            {
+                "healthy" => 2,
+                "degraded" => 1,
+                "critical" => 0,
+                _ => 2
+            };
         }
 
         private sealed class ShelterFireDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
@@ -477,6 +536,111 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        /// <summary>
+        /// Plan 210 — sanitation day owner (ownerId `hygiene`, phase 3).
+        /// Feeds the living population into the sanitation authority and
+        /// persists its state. Facility powered/staffed flags ride their
+        /// persisted values until the Wave 6 power-grid feed lands.
+        /// </summary>
+        private sealed class HygieneDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.SanitationState? _snapshot;
+            public HygieneDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSanitation();
+                _snapshot = _m._sanitation!.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                    _m._sanitation!.RestoreSave(_snapshot);
+            }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSanitation();
+                int population = 0;
+                if (_m._survivors != null)
+                {
+                    foreach (var entry in _m._survivors.Roster.Roster)
+                        if (entry != null && entry.isAlive) population++;
+                }
+                _m._sanitation!.TickDay(day, population);
+
+                TickSanitationConsequences(day, events);
+
+                if (_m._sanitationDirty) _m.SaveSanitation();
+                var spill = _m._sanitation.System.ActiveSpill;
+                events.Add(new DayStateChangeEvent("sanitation_ticked", "hygiene", null, null,
+                    _m._sanitation.System.GetShelterHygienePermille()));
+                if (spill != null)
+                    events.Add(new DayStateChangeEvent("sanitation_spill", "hygiene", spill.roomId, null, spill.severity));
+            }
+
+            /// <summary>
+            /// Plan 210 Wave 6 — the three cross-plan consequences (Core
+            /// policy, host adapter): a bounded daily cholera sweep through
+            /// the AUTHORED foul_water_draw source (disease system keeps
+            /// infection ownership), a reversible Hazardous morale mark, and
+            /// a small bounded medical demand shock on crisis.
+            /// </summary>
+            private void TickSanitationConsequences(int day, List<DayStateChangeEvent> events)
+            {
+                var system = _m._sanitation!.System;
+                var band = system.GetShelterHygieneBand();
+                bool spillActive = system.ActiveSpill != null;
+
+                // 1. Disease sweep — DiseaseSystem rolls and owns the outcome.
+                if (_m._disease?.Engine != null
+                    && Ashfall.Core.Shelter.SanitationConsequenceRules.ShouldRunDailyExposureSweep(band, spillActive))
+                {
+                    foreach (var entry in _m._survivors?.Roster.Roster ?? new List<Ashfall.Core.Survivors.SurvivorRosterEntry>())
+                    {
+                        if (entry == null || !entry.isAlive) continue;
+                        string roomId = system.State.rooms.Count > 0 ? system.State.rooms[0].roomId : string.Empty;
+                        _m._disease.Engine.TryExpose(new Ashfall.Core.Disease.DiseaseExposureContext
+                        {
+                            SurvivorId = entry.survivorId,
+                            DiseaseId = Ashfall.Core.Disease.DiseaseIds.Cholera,
+                            SourceId = Ashfall.Core.Shelter.SanitationConsequenceRules.CholeraSourceId,
+                            Day = day,
+                            ProbabilityModifier = system.GetPathogenExposureModifier(roomId)
+                        });
+                    }
+                    events.Add(new DayStateChangeEvent("sanitation_disease_sweep", "hygiene", null, null, day));
+                }
+
+                // 2. Reversible morale mark (Hazardous only; cleared on recovery).
+                if (_m._dutyRoster?.Marks != null)
+                {
+                    if (Ashfall.Core.Shelter.SanitationConsequenceRules.ShouldSetHazardousMark(band)
+                        && !_m._dutyRoster.Marks.HasMark(Ashfall.Core.Shelter.SanitationConsequenceRules.HazardousMarkId))
+                    {
+                        _m._dutyRoster.Marks.SetMark(
+                            Ashfall.Core.Shelter.SanitationConsequenceRules.HazardousMarkId,
+                            "The shelter has become genuinely hazardous.", day);
+                    }
+                    else if (Ashfall.Core.Shelter.SanitationConsequenceRules.ShouldClearHazardousMark(band)
+                        && _m._dutyRoster.Marks.HasMark(Ashfall.Core.Shelter.SanitationConsequenceRules.HazardousMarkId))
+                    {
+                        _m._dutyRoster.Marks.ClearMark(Ashfall.Core.Shelter.SanitationConsequenceRules.HazardousMarkId);
+                    }
+                }
+
+                // 3. Crisis demand shock (idempotent refresh via source id).
+                if (_m._economy != null
+                    && Ashfall.Core.Shelter.SanitationConsequenceRules.ShouldApplyCrisisDemandShock(band, spillActive))
+                {
+                    _m._economy.Market.ApplyShock(
+                        "medical", isShortage: true,
+                        severityBp: Ashfall.Core.Shelter.SanitationConsequenceRules.CrisisShockSeverityBp,
+                        startDay: day, durationDays: Ashfall.Core.Shelter.SanitationConsequenceRules.CrisisShockDurationDays,
+                        sourceId: Ashfall.Core.Shelter.SanitationConsequenceRules.CrisisShockSourceId);
+                }
+            }
+        }
+
         private sealed class MedicalDiseaseDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
@@ -493,12 +657,9 @@ namespace AtomicWar.GodotApp
                 _pipelineSnapshot = _m._medical.CapturePipelineSave();
 
                 _m.SetupDisease();
-                // DiseaseSystem.CaptureState() returns its live state object by
-                // reference (not a copy), so a plain assignment here would
-                // alias the pre-day baseline to the same instance TickDay
-                // mutates next. Round-trip through JSON — the system's own
-                // save format — to take a true independent snapshot without
-                // adding a new capture contract to Core.
+                // CaptureState() already returns an independent clone; serialize
+                // to JSON so RestorePreDaySnapshot can rebuild from the same
+                // durable save format used by the hub envelope.
                 _diseaseSnapshotJson = s_json.Serialize(_m._disease.Engine.CaptureState());
             }
             public void RestorePreDaySnapshot(int day)
@@ -669,7 +830,12 @@ namespace AtomicWar.GodotApp
                 }
 
                 _m.SetupCaravans();
-                _m._caravans.TickRoute();
+                // Plan 14A — the authoritative weather (advanced in phase 1)
+                // drives caravan embargo blocking/slowing for this movement day.
+                _m._caravans.TickRoute(
+                    _m._world != null && _m._world.Weather != null
+                        ? _m._world.Weather.Current
+                        : WeatherKind.Clear);
 
                 events.Add(new DayStateChangeEvent("expeditions_caravans_ticked", "expeditions_caravans", null, null, day));
             }
@@ -701,12 +867,65 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Plan 173 Phase 2 — radio program production day: prep ticks and
+        /// opportunistic delivery via existing schedule Resolve facts.
+        /// </summary>
+        private sealed class RadioProgramProductionDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public RadioProgramProductionDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { /* jobs are day-local; capture via save section */ }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                int before = _m._radioProgramProduction?.System.GetActiveJobs().Count ?? 0;
+                _m.TickRadioProgramProduction(day);
+                int after = _m._radioProgramProduction?.System.GetActiveJobs().Count ?? 0;
+                events.Add(new DayStateChangeEvent("radio_program_production_ticked", "radio_program_production", null, null, after));
+                if (before != after)
+                    events.Add(new DayStateChangeEvent("radio_program_production_active_delta", "radio_program_production", null, null, after - before));
+            }
+        }
+
+        /// <summary>
         /// Flagship XI (Plan 156) — underground day: oxygen, cave-in and flood
         /// hazards for every active underground sortie, claustrophobia morale
         /// through the needs authority, and forced retreats back through the
         /// expedition engine. Runs after expeditions (registration phase 4,
         /// ordinal after expeditions_caravans) and before world_evolution.
         /// </summary>
+        /// <summary>
+        /// Plan 211 — underworld market day owner (ownerId `underworld_market`,
+        /// phase 4, after the debt-ledger tick). Refreshes discovered
+        /// syndicates' stock snapshots from the black_market_stock RNG
+        /// stream (fork-per-day, position-independent), then runs the debt
+        /// due/overdue + heat tick. Emits underworld day events.
+        /// </summary>
+        private sealed class UnderworldMarketDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Economy.BlackMarketState? _snapshot;
+            public UnderworldMarketDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupBlackMarket();
+                _snapshot = _m._blackMarket!.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                    _m._blackMarket!.RestoreSave(_snapshot);
+            }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupBlackMarket();
+                var stockRng = _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.BlackMarketStock, day, 0);
+                _m._blackMarket!.TickDay(day, stockRng);
+                if (_m._blackMarketDirty) _m.SaveBlackMarket();
+                events.Add(new DayStateChangeEvent("underworld_ticked", "underworld_market", null, null,
+                    _m._blackMarket.System.DiscoveredContacts.Count));
+            }
+        }
+
         private sealed class SubterraneanDayOwner : IDayAdvanceOwner
         {
             private readonly Main _m;
@@ -960,8 +1179,23 @@ namespace AtomicWar.GodotApp
                 // ── Plans 186-189: Radioactive Fallout, Desperation, Mercenary, Archaeology ──
                 _m.TickPlans186_189(day, 24.0f);
 
+                // ── Plan 176: anomaly hazard movement + approach warnings ──
+                _m.TickAnomalyHazard(day);
+
+                // ── Plan 174: companion care, bond/training, roles ──
+                _m.TickCompanionDay(day);
+
+                // ── Plan 177: bionics decay/power + anomaly disruption ──
+                _m.TickBionicsDay(day);
+
+                // ── Plan 175: ideological pressure, rituals, tension ──
+                _m.TickZealotryDay(day);
+
                 // ── Plans 190-193: Infection & Amputation, Railways, Subterranean Fungi, Wasteland Justice ──
                 _m.TickPlans190_193(day);
+
+                // ── Plans 126-129: fermentation (drone/caster/lidar land in later waves) ──
+                _m.TickPlans126_129(day);
 
                 // ── Plan 147: contraband stash discovery rumors (pure reads + deduped journal) ──
                 _m.TickContrabandStashDay(day);
@@ -1094,6 +1328,32 @@ namespace AtomicWar.GodotApp
                         "narrative_arc_selected",
                         "narrative_quests_verdict",
                         arc.Id,
+                        null,
+                        day));
+                }
+
+                _m.SetupEchoes();
+                var dueEchoConsequences = _m._echoes?.TickDay(day);
+                if (dueEchoConsequences != null && dueEchoConsequences.Count > 0)
+                {
+                    events.Add(new DayStateChangeEvent(
+                        "echo_consequence_due",
+                        "narrative_quests_verdict",
+                        dueEchoConsequences.Count.ToString(),
+                        null,
+                        day));
+                }
+                var echo = arc == null
+                    ? _m._echoes?.SelectForDay(
+                        day,
+                        _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Echo, day, 0))
+                    : null;
+                if (echo != null)
+                {
+                    events.Add(new DayStateChangeEvent(
+                        "echo_surfaced",
+                        "narrative_quests_verdict",
+                        echo.Id,
                         null,
                         day));
                 }

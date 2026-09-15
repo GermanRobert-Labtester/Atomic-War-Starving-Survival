@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -148,14 +149,23 @@ namespace AtomicWar.GodotApp
             if (InventorySession != null)
             {
                 string canonical = ItemAliases.ToCanonical(itemId);
-                if (InventorySession.Inventory.CountById(canonical) <= 0 && InventorySession.Inventory.CountById(itemId) <= 0)
+                bool hasCanonical = InventorySession.Inventory.CountById(canonical) > 0;
+                bool hasRaw = !string.Equals(canonical, itemId, StringComparison.Ordinal)
+                    && InventorySession.Inventory.CountById(itemId) > 0;
+                if (!hasCanonical && !hasRaw)
                 {
                     resultText = $"Item '{itemId}' not present in shelter inventory.";
                     return false;
                 }
                 if (consumeItem)
                 {
-                    InventorySession.Inventory.TryConsume(canonical, 1);
+                    string consumeId = hasCanonical ? canonical : itemId;
+                    if (!InventorySession.Inventory.TryConsume(consumeId, 1)
+                        && !(hasCanonical && hasRaw && InventorySession.Inventory.TryConsume(itemId, 1)))
+                    {
+                        resultText = $"Could not consume '{itemId}' from shelter inventory.";
+                        return false;
+                    }
                 }
             }
 

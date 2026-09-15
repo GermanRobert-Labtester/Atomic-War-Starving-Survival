@@ -223,6 +223,11 @@ namespace Ashfall.Core.Shelter
     public sealed class FluidLogisticsSystem
     {
         public const string SystemId = "fluid_logistics";
+        public const string DefaultReservoirId = "reservoir_main";
+        public const string DefaultGreenhouseSinkId = "sink_greenhouse";
+        public const string DefaultDrinkingSinkId = "sink_drinking";
+        public const string DefaultPipeGreenhouseId = "pipe_res_gh";
+        public const string DefaultPipeDrinkingId = "pipe_res_drink";
 
         private FluidLogisticsState _state;
         private readonly Dictionary<string, FluidPipeDef> _pipes = new Dictionary<string, FluidPipeDef>(StringComparer.Ordinal);
@@ -281,6 +286,99 @@ namespace Ashfall.Core.Shelter
             }
             _state.edges.Add(CloneEdge(edge));
             return true;
+        }
+
+        /// <summary>
+        /// Plan 168: seed the shelter default graph when empty/partial.
+        /// Idempotent — existing matching node/edge ids are left alone.
+        /// </summary>
+        public bool EnsureDefaultShelterTopology(
+            float reservoirCapacity = 200f,
+            float greenhouseDemand = 20f,
+            float drinkingDemand = 30f)
+        {
+            bool changed = false;
+            if (FindNode(DefaultReservoirId) == null)
+            {
+                changed |= AddNode(new FluidNodeState
+                {
+                    nodeId = DefaultReservoirId,
+                    nodeType = FluidNodeType.Reservoir,
+                    capacity = Math.Max(1f, reservoirCapacity),
+                    pressure = 1f,
+                    quality = new FluidQuality()
+                });
+            }
+
+            if (FindNode(DefaultGreenhouseSinkId) == null)
+            {
+                changed |= AddNode(new FluidNodeState
+                {
+                    nodeId = DefaultGreenhouseSinkId,
+                    nodeType = FluidNodeType.Sink,
+                    demand = Math.Max(0f, greenhouseDemand),
+                    priority = 2,
+                    pressure = 0.5f
+                });
+            }
+            else
+            {
+                changed |= ConfigureSink(DefaultGreenhouseSinkId, Math.Max(0f, greenhouseDemand), 2);
+            }
+
+            if (FindNode(DefaultDrinkingSinkId) == null)
+            {
+                changed |= AddNode(new FluidNodeState
+                {
+                    nodeId = DefaultDrinkingSinkId,
+                    nodeType = FluidNodeType.Sink,
+                    demand = Math.Max(0f, drinkingDemand),
+                    priority = 1,
+                    pressure = 0.5f
+                });
+            }
+            else
+            {
+                changed |= ConfigureSink(DefaultDrinkingSinkId, Math.Max(0f, drinkingDemand), 1);
+            }
+
+            if (FindEdge(DefaultPipeGreenhouseId) == null)
+            {
+                changed |= AddEdge(new FluidEdgeState
+                {
+                    edgeId = DefaultPipeGreenhouseId,
+                    fromNodeId = DefaultReservoirId,
+                    toNodeId = DefaultGreenhouseSinkId,
+                    maxFlow = 100f,
+                    resistance = 0.1f
+                });
+            }
+
+            if (FindEdge(DefaultPipeDrinkingId) == null)
+            {
+                changed |= AddEdge(new FluidEdgeState
+                {
+                    edgeId = DefaultPipeDrinkingId,
+                    fromNodeId = DefaultReservoirId,
+                    toNodeId = DefaultDrinkingSinkId,
+                    maxFlow = 100f,
+                    resistance = 0.1f
+                });
+            }
+
+            if (changed) OnStateChanged?.Invoke();
+            return FindNode(DefaultReservoirId) != null
+                && FindNode(DefaultGreenhouseSinkId) != null
+                && FindNode(DefaultDrinkingSinkId) != null
+                && FindEdge(DefaultPipeGreenhouseId) != null
+                && FindEdge(DefaultPipeDrinkingId) != null;
+        }
+
+        public float GetFreeCapacity(string nodeId)
+        {
+            var node = FindNode(nodeId);
+            if (node == null) return 0f;
+            return Math.Max(0f, node.capacity - node.volume);
         }
 
         public bool InjectWater(string nodeId, float amount, FluidQuality quality)
@@ -432,6 +530,17 @@ namespace Ashfall.Core.Shelter
                 float pressureRisk = edge.lastPressure > 0f && edge.lastPressure > (definition?.MaxPressure ?? 1f) ? 0.6f : 0f;
                 float risk = Math.Clamp(conditionRisk + freezeRisk + pressureRisk, 0f, 0.9f);
                 if (risk <= 0f || _rng.NextDouble() >= risk) continue;
+
+                // Freeze dominates when cold is the primary hazard and pressure
+                // is within rating — pipe blocks flow but remains repairable.
+                bool freezeDominates = freezeRisk >= conditionRisk && freezeRisk >= pressureRisk && freezeRisk > 0f;
+                if (freezeDominates)
+                {
+                    edge.frozen = true;
+                    _log.Warn($"[Fluid] pipe frozen: {edge.edgeId} on day {day}");
+                    continue;
+                }
+
                 edge.burst = true;
                 edge.condition01 = 0f;
                 OnPipeBurst?.Invoke(edge.edgeId);

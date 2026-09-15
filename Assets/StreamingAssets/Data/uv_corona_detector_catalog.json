@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "detectors": [
+    {
+      "detector_id": "uv_corona_camera_mk1",
+      "battery_item_id": "battery",
+      "base_detection_range": 6.0,
+      "minimum_fault_intensity": 0.25,
+      "sensor_noise": 0.08,
+      "battery_use_per_scan": 1,
+      "calibration_drift_per_day": 0.001,
+      "condition_noise_factor": 0.15
+    }
+  ],
+  "environments": [
+    { "environment_id": "clear", "visibility": 0.95, "humidity": 0.20, "ash_load": 0.05, "fault_activity_modifier": 0.95 },
+    { "environment_id": "fog", "visibility": 0.45, "humidity": 0.80, "ash_load": 0.10, "fault_activity_modifier": 1.15 },
+    { "environment_id": "ashfall", "visibility": 0.60, "humidity": 0.40, "ash_load": 0.80, "fault_activity_modifier": 0.90 }
+  ]
+}

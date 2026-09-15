@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -11,11 +12,11 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void CropCatalog_ContainsAll13Crops()
         {
-            // 12 canonical item_seed_* crops + the F18 mixed-packet route:
-            // "seed_packets" (items.json assorted-vegetable envelope) maps to
+            // 14 canonical item_seed_* crops + the F18 mixed-packet route:
+            // (items.json assorted-vegetable envelope) maps to
             // the tuber profile so micro-location seed grants are plantable
             // through the one canonical CropCatalog contract.
-            Assert.Equal(13, GreenhouseExpansionCatalog.CropCatalog.All.Length);
+            Assert.Equal(15, GreenhouseExpansionCatalog.CropCatalog.All.Length);
         }
 
         [Fact]
@@ -30,30 +31,58 @@ namespace Ashfall.Core.Tests
             Assert.False(def.RequiresUnlock);
         }
 
-        [Theory]
-        [InlineData("item_seed_mushroom", "crop_mushroom")]
-        [InlineData("item_seed_tuber", "crop_tuber")]
-        [InlineData("item_seed_grain", "crop_grain")]
-        [InlineData("item_seed_wheat", "crop_wheat")]
-        [InlineData("item_seed_hardy_tuber", "crop_hardy_tuber")]
-        [InlineData("item_seed_ash_grain", "crop_ash_grain")]
-        [InlineData("item_seed_biolum_mushroom", "crop_biolum_mushroom")]
-        [InlineData("item_seed_nutrient_algae", "crop_nutrient_algae")]
-        [InlineData("item_seed_medicinal_herb", "crop_medicinal_herb")]
-        [InlineData("item_seed_leafy_green", "crop_leafy_green")]
-        [InlineData("item_seed_oilseed", "crop_oilseed")]
-        [InlineData("item_seed_cold_legume", "crop_cold_legume")]
-        public void CropCatalog_ResolvesSeedToCleanYield(string seedItemId, string expectedCleanYield)
+        [Fact]
+        public void CropCatalog_ResolvesSeedToCleanYield()
         {
-            var def = GreenhouseExpansionCatalog.CropCatalog.Get(seedItemId);
-            Assert.NotNull(def);
-            Assert.Equal(expectedCleanYield, def.YieldCleanId);
-            Assert.Equal("tainted_food", def.YieldTaintedId);
-            Assert.True(def.GrowthHoursToMature > 0);
-            Assert.True(def.WaterPerDay > 0);
-            Assert.True(def.BaseYield > 0);
-            Assert.True(def.BlightResistance > 0);
-            Assert.True(def.ContaminationTolerance > 0);
+            var cases = new (string SeedItemId, string ExpectedCleanYield)[]
+            {
+                ("item_seed_mushroom", "crop_mushroom"),
+                ("item_seed_tuber", "crop_tuber"),
+                ("item_seed_grain", "crop_grain"),
+                ("item_seed_wheat", "crop_wheat"),
+                ("item_seed_hardy_tuber", "crop_hardy_tuber"),
+                ("item_seed_ash_grain", "crop_ash_grain"),
+                ("item_seed_biolum_mushroom", "crop_biolum_mushroom"),
+                ("item_seed_nutrient_algae", "crop_nutrient_algae"),
+                ("item_seed_medicinal_herb", "crop_medicinal_herb"),
+                ("item_seed_leafy_green", "crop_leafy_green"),
+                ("item_seed_oilseed", "crop_oilseed"),
+                ("item_seed_cold_legume", "crop_cold_legume")
+            };
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var def = GreenhouseExpansionCatalog.CropCatalog.Get(testCase.SeedItemId);
+                if (def == null)
+                {
+                    failures.Add($"{testCase.SeedItemId}: expected {testCase.ExpectedCleanYield}, got null");
+                    continue;
+                }
+
+                var rowFailures = new List<string>();
+                if (def.YieldCleanId != testCase.ExpectedCleanYield)
+                    rowFailures.Add($"clean yield expected {testCase.ExpectedCleanYield}, got {def.YieldCleanId}");
+                if (def.YieldTaintedId != "tainted_food")
+                    rowFailures.Add($"tainted yield expected tainted_food, got {def.YieldTaintedId}");
+                if (def.GrowthHoursToMature <= 0)
+                    rowFailures.Add("growth hours must be positive");
+                if (def.WaterPerDay <= 0)
+                    rowFailures.Add("water per day must be positive");
+                if (def.BaseYield <= 0)
+                    rowFailures.Add("base yield must be positive");
+                if (def.BlightResistance <= 0)
+                    rowFailures.Add("blight resistance must be positive");
+                if (def.ContaminationTolerance <= 0)
+                    rowFailures.Add("contamination tolerance must be positive");
+
+                if (rowFailures.Count > 0)
+                {
+                    failures.Add($"{testCase.SeedItemId}: {string.Join(", ", rowFailures)}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

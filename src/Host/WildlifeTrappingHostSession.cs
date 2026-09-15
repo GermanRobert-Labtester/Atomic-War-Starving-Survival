@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -162,7 +163,13 @@ namespace AtomicWar.GodotApp
                 return setResult;
             }
 
-            tx.TryCommit();
+            if (!tx.TryCommit())
+            {
+                // Domain already mutated; materials must not silently vanish or
+                // report success when the inventory commit failed.
+                System.RemoveTrap(siteId);
+                return ActionResult.Blocked("commit_failed", "trapping.commit_failed");
+            }
             if (!consumedFinishedTrap)
                 OnTrapCrafted?.Invoke(trapId);
             LastEvent = $"Set {trapDef.displayName} at {siteId} (Hunter: {hunterId})";
@@ -419,6 +426,34 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Preserve hide after butchery. Core marks the site once; inventory
+        /// projection is best-effort (same pattern as <see cref="Butcher"/>).
+        /// </summary>
+        public ActionResult PreserveHide(string siteId)
+        {
+            var res = System.PreserveHide(siteId, out string hideItemId, out float hideQuantity);
+            if (!res.IsSuccess)
+                return res;
+
+            int qty = Math.Max(0, (int)Math.Round(hideQuantity, MidpointRounding.AwayFromZero));
+            if (!string.IsNullOrEmpty(hideItemId) && qty > 0)
+            {
+                bool accepted = Inventory != null
+                    && (Inventory.TryAdd(hideItemId, qty)
+                        || Inventory.Inventory.TryProduce(hideItemId, qty));
+                if (!accepted)
+                    GD.PushWarning(
+                        $"[WildlifeTrapping] Hide output {hideItemId} x{qty} was not accepted by inventory.");
+            }
+
+            LastEvent = string.IsNullOrEmpty(hideItemId) || qty <= 0
+                ? $"No usable hide at {siteId}"
+                : $"Preserved hide at {siteId}: {hideItemId} x{qty}";
+            RaiseStateChanged();
+            return res;
+        }
+
+        /// <summary>
         /// Workstream D: Shared repair bill calculation authority.
         /// Resolves the site, checks broken/durability, and calculates repair bill from trap definition.
         /// </summary>
@@ -506,15 +541,23 @@ namespace AtomicWar.GodotApp
             if (!tx.Validation.IsValid)
                 return ActionResult.Blocked("insufficient_materials", "trapping.insufficient_materials");
 
-            // Repair the trap
-            var repairResult = System.RepairTrap(siteId, trapDef.durabilityChecks);
-            if (!repairResult.IsSuccess)
+            ActionResult repairResult = ActionResult.Blocked("repair_unavailable", "trapping.repair_unavailable");
+            try
             {
-                tx.Cancel();
+                if (!tx.TryCommit(() =>
+                    {
+                        repairResult = System.RepairTrap(siteId, trapDef.durabilityChecks);
+                        if (!repairResult.IsSuccess)
+                            throw new InvalidOperationException(repairResult.FailureCode ?? "trapping.repair_failed");
+                    }))
+                {
+                    return ActionResult.Blocked("commit_failed", "trapping.commit_failed");
+                }
+            }
+            catch (InvalidOperationException)
+            {
                 return repairResult;
             }
-
-            tx.TryCommit();
             LastEvent = $"Repaired {trapDef.displayName} at {siteId}";
             RaiseStateChanged();
             return repairResult;

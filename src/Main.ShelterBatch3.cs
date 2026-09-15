@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -404,7 +405,7 @@ namespace AtomicWar.GodotApp
         private void SaveShelterDecor()
         {
             if (_shelterDecor == null) return;
-            if (CaptureSection("shelter_decor", ShelterDecorSaveStore.TryCapturePersisted(_shelterDecor.System.State)))
+            if (CaptureSection("shelter_decor", ShelterDecorSaveStore.TryCapturePersisted(_shelterDecor.System.CaptureState())))
                 _shelterDecor.ClearDirty();
         }
     }

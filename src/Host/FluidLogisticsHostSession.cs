@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Ashfall.Core;
+using Ashfall.Core.Disease;
 using Ashfall.Core.Shelter;
 
 namespace AtomicWar.GodotApp
@@ -9,6 +11,7 @@ namespace AtomicWar.GodotApp
     {
         public FluidLogisticsSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
+        public FluidDeliveryApplicator.ApplicationReport? LastDelivery { get; private set; }
 
         public static FluidLogisticsHostSession Create(string dataDir, FluidLogisticsSystem? system = null)
         {
@@ -38,13 +41,44 @@ namespace AtomicWar.GodotApp
             System.OnStateChanged += () => RaiseStateChanged();
         }
 
-        public FluidDistributionReport AdvanceDay(int day, float temperatureC, float powerAvailability01 = 1f)
+        /// <summary>
+        /// Plan 168 daily cadence: ensure topology → WT transfer → Tick/Solve → apply.
+        /// Inventory bottle watering remains a separate packaging path.
+        /// </summary>
+        public FluidDistributionReport AdvanceDay(
+            int day,
+            float temperatureC,
+            float powerAvailability01,
+            WaterTreatmentSystem? treatment,
+            GreenhouseSystem? greenhouse,
+            DiseaseSystem? disease,
+            Func<string?>? pickLivingSurvivorId)
         {
+            System.EnsureDefaultShelterTopology();
+            if (treatment != null)
+            {
+                var transfer = FluidDeliveryApplicator.TransferBoundedCleanWater(treatment, System);
+                if (transfer.IsSuccess)
+                    LastEvent = "Fluid transfer: " + transfer.MessageKey;
+            }
+
             var report = System.Tick(day, temperatureC, powerAvailability01);
-            LastEvent = $"Fluid tick @ day {day}: {report.deliveredVolume:F1} units delivered";
+            LastDelivery = FluidDeliveryApplicator.Apply(
+                System,
+                greenhouse,
+                disease,
+                pickLivingSurvivorId,
+                day);
+            LastEvent = $"Fluid tick @ day {day}: {report.deliveredVolume:F1} units delivered"
+                + (LastDelivery != null
+                    ? $" (gh={LastDelivery.greenhouseLiters:F1}, drink={LastDelivery.drinkingLiters:F1})"
+                    : string.Empty);
             RaiseStateChanged();
             return report;
         }
+
+        public FluidDistributionReport AdvanceDay(int day, float temperatureC, float powerAvailability01 = 1f)
+            => AdvanceDay(day, temperatureC, powerAvailability01, null, null, null, null);
 
         public FluidLogisticsState CaptureState() => System.CaptureState();
         public void RestoreState(FluidLogisticsState state) => System.RestoreState(state);

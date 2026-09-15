@@ -612,8 +612,8 @@
         "gas_mask",
         "fuel"
       ],
-      "description": "Very valuable. Hard to find. Essential for many things.",
-      "trader_text": "This is worth a lot, and a lot is what I'm asking, and the asking is fair."
+      "description": "Med kits, fuel, masks. Worth a hard bargain and a longer walk.",
+      "trader_text": "This costs what the road costs. I'm not padding it."
     },
     "medium": {
       "items": [
@@ -668,15 +668,15 @@
       "trader_text": "This is life or death, and I'm the one holding the life. I can't give it away, and I won't."
     },
     "High": {
-      "description": "Very valuable. Hard to find. Essential for many things.",
-      "trader_text": "This is rare, and rare has a price, and the price is high, and I'm not the one who made it so."
+      "description": "Hard to replace. The stall will not last the week at this price.",
+      "trader_text": "This is rare, and rare has a price. I didn't make the road that way."
     },
     "Medium": {
       "description": "Useful. Common enough to find, rare enough to value.",
       "trader_text": "This is useful, and useful has a fair price, and I'm offering it fair."
     },
     "Low": {
-      "description": "Common. Easy to find. Not very valuable.",
+      "description": "Scrap and parts. Useful on a bench, cheap on a stall.",
       "trader_text": "This is common, and common doesn't cost much, and I'll offer you a little for it."
     }
   },

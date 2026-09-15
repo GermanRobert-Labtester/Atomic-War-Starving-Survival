@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Ashfall.Core.Crossing;
 using Ashfall.Core.Disease;
@@ -23,9 +24,10 @@ namespace Ashfall.Core
         /// treaty-consequence ledger (standing + market/logistics modifiers);
         /// v4 adds the Disease Expansion state; v5 adds the debt-consequence
         /// integration (dispatcher fired-set, embargo ledger, labor
-        /// obligations). Earlier saves migrate forward with safe defaults.
+        /// obligations); v6 adds SaltMine extraction state beside foundry.
+        /// Earlier saves migrate forward with safe defaults.
         /// </summary>
-        public const int CurrentSaveVersion = 5;
+        public const int CurrentSaveVersion = 6;
 
         public int saveVersion = CurrentSaveVersion;
         public int simDay;
@@ -49,8 +51,35 @@ namespace Ashfall.Core
         public FactionEmbargoLedgerState embargoes = new FactionEmbargoLedgerState();
         /// <summary>v5: bounded bonded-labor obligations from debt defaults.</summary>
         public DebtConsequenceBridgeState debtBridge = new DebtConsequenceBridgeState();
+        /// <summary>v6: SaltMine veins/storage/deliveries (companion to foundry).</summary>
+        public SaltMineState saltMine = new SaltMineState();
 
         /// <summary>Integrity hash computed over all payload fields.</summary>
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>Frozen v5 shape (debt-consequence present; SaltMine absent).</summary>
+    [Serializable]
+    public sealed class ExpansionHubSaveV5
+    {
+        public int saveVersion = 5;
+        public int simDay;
+        public WaystationSystemState waystation = new WaystationSystemState();
+        public LocationLayoutState layouts = new LocationLayoutState();
+        public LocationMemoryState memory = new LocationMemoryState();
+        public SiteEncounterState siteEncounters = new SiteEncounterState();
+        public VouchAccessSystemState vouch = new VouchAccessSystemState();
+        public GreenhouseState greenhouse = new GreenhouseState();
+        public CrossingArbitrationState arbitration = new CrossingArbitrationState();
+        public LedgerDebtSystemState ledger = new LedgerDebtSystemState();
+        public CrossingQuestSystemState crossingQuests = new CrossingQuestSystemState();
+        public GenerationalSuccessionSaveState generational = new GenerationalSuccessionSaveState();
+        public SilentFoundryState foundry = new SilentFoundryState();
+        public SilentFoundryConsequenceState consequences = new SilentFoundryConsequenceState();
+        public DiseaseSystemState disease = new DiseaseSystemState();
+        public DebtDispatcherState debtDispatcher = new DebtDispatcherState();
+        public FactionEmbargoLedgerState embargoes = new FactionEmbargoLedgerState();
+        public DebtConsequenceBridgeState debtBridge = new DebtConsequenceBridgeState();
         public string Checksum = string.Empty;
     }
 
@@ -160,7 +189,8 @@ SilentFoundrySystem? silentFoundry = null,
 DiseaseSystem? disease = null,
 DebtConsequenceDispatcher? debtDispatcher = null,
 FactionEmbargoLedger? embargoes = null,
-DebtConsequenceBridgeState? debtBridge = null)
+DebtConsequenceBridgeState? debtBridge = null,
+SaltMineExtractionSystem? saltMine = null)
         {
             var save = new ExpansionHubSave
             {
@@ -185,6 +215,7 @@ DebtConsequenceBridgeState? debtBridge = null)
             if (debtDispatcher != null) save.debtDispatcher = debtDispatcher.CaptureState();
             if (embargoes != null) save.embargoes = embargoes.CaptureState();
             if (debtBridge != null) save.debtBridge = debtBridge;
+            if (saltMine != null) save.saltMine = saltMine.CaptureState();
             save.Checksum = SaveChecksum.Compute(save);
             return save;
         }
@@ -315,7 +346,39 @@ DebtConsequenceBridgeState? debtBridge = null)
                         disease = v4.disease ?? new DiseaseSystemState(),
                         debtDispatcher = new DebtDispatcherState(),
                         embargoes = new FactionEmbargoLedgerState(),
-                        debtBridge = new DebtConsequenceBridgeState()
+                        debtBridge = new DebtConsequenceBridgeState(),
+                        saltMine = new SaltMineState()
+                    };
+                    migrated.Checksum = SaveChecksum.Compute(migrated);
+                    return migrated;
+                }
+
+                // v5 saves carry debt-consequence integration but pre-date SaltMine (v6).
+                var v5 = json.Deserialize<ExpansionHubSaveV5>(jsonText);
+                if (v5 != null && v5.saveVersion == 5)
+                {
+                    ValidateChecksum(v5.Checksum, v5, "v5");
+                    var migrated = new ExpansionHubSave
+                    {
+                        saveVersion = ExpansionHubSave.CurrentSaveVersion,
+                        simDay = v5.simDay,
+                        waystation = v5.waystation ?? new WaystationSystemState(),
+                        layouts = v5.layouts ?? new LocationLayoutState(),
+                        memory = v5.memory ?? new LocationMemoryState(),
+                        siteEncounters = v5.siteEncounters ?? new SiteEncounterState(),
+                        vouch = v5.vouch ?? new VouchAccessSystemState(),
+                        greenhouse = v5.greenhouse ?? new GreenhouseState(),
+                        arbitration = v5.arbitration ?? new CrossingArbitrationState(),
+                        ledger = v5.ledger ?? new LedgerDebtSystemState(),
+                        crossingQuests = v5.crossingQuests ?? new CrossingQuestSystemState(),
+                        generational = v5.generational ?? new GenerationalSuccessionSaveState(),
+                        foundry = v5.foundry ?? new SilentFoundryState(),
+                        consequences = v5.consequences ?? new SilentFoundryConsequenceState(),
+                        disease = v5.disease ?? new DiseaseSystemState(),
+                        debtDispatcher = v5.debtDispatcher ?? new DebtDispatcherState(),
+                        embargoes = v5.embargoes ?? new FactionEmbargoLedgerState(),
+                        debtBridge = v5.debtBridge ?? new DebtConsequenceBridgeState(),
+                        saltMine = new SaltMineState()
                     };
                     migrated.Checksum = SaveChecksum.Compute(migrated);
                     return migrated;
@@ -367,6 +430,7 @@ DebtConsequenceBridgeState? debtBridge = null)
             if (save.debtDispatcher == null) save.debtDispatcher = new DebtDispatcherState();
             if (save.embargoes == null) save.embargoes = new FactionEmbargoLedgerState();
             if (save.debtBridge == null) save.debtBridge = new DebtConsequenceBridgeState();
+            if (save.saltMine == null) save.saltMine = new SaltMineState();
             return save;
         }
 
@@ -398,7 +462,8 @@ SilentFoundrySystem? silentFoundry = null,
 DiseaseSystem? disease = null,
 DebtConsequenceDispatcher? debtDispatcher = null,
 FactionEmbargoLedger? embargoes = null,
-DebtConsequenceHostBridge? debtBridge = null)
+DebtConsequenceHostBridge? debtBridge = null,
+SaltMineExtractionSystem? saltMine = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));
@@ -434,6 +499,9 @@ DebtConsequenceHostBridge? debtBridge = null)
                 embargoes.RestoreState(save.embargoes);
             if (debtBridge != null && save.debtBridge != null)
                 debtBridge.RestoreState(save.debtBridge);
+            // SaltMine (v6): missing state (v1..v5) defaults to empty veins/storage.
+            if (saltMine != null && save.saltMine != null)
+                saltMine.RestoreState(save.saltMine);
         }
     }
 }

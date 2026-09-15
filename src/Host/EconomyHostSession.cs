@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 #pragma warning disable CS8618
 using Ashfall.Core;
@@ -17,6 +18,17 @@ namespace AtomicWar.GodotApp
 
         public MarketSystem Market { get; }
         public GoodsCatalog Catalog { get; private set; }
+        /// <summary>Plan 212 — bound commodity behavior catalog (null when missing/invalid; market then runs the legacy v1 path).</summary>
+        public CommodityBaselineCatalog? CommodityCatalog { get; private set; }
+        /// <summary>
+        /// Plan 14A — the campaign's ONE embargo authority (rules from
+        /// trade_embargoes.json). Null only when the data file is missing or
+        /// invalid; the market then runs without embargo factors. Caravans and
+        /// the weather bridge share this single instance.
+        /// </summary>
+        public TradeEmbargoSystem? EmbargoSystem { get; private set; }
+        /// <summary>Plan 14B — the regional price atlas (null when missing/invalid; regional pricing then neutral).</summary>
+        public RegionalPriceAtlas? RegionalAtlas { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
 
@@ -30,6 +42,18 @@ namespace AtomicWar.GodotApp
             };
             Market.OnEconomyChanged += () => RaiseStateChanged();
             Market.OnStateChanged += _ => RaiseStateChanged();
+            // Plan 212 — shocks surface in the session event line like other
+            // economy facts (host adapts; Core owns state).
+            Market.OnShockStarted += shock =>
+            {
+                LastEvent = $"{(shock.isShortage ? "Shortage" : "Crash")} {shock.categoryId} (x{shock.severityBp / 10000f:0.00}, until day {shock.expiryDay})";
+                RaiseStateChanged();
+            };
+            Market.OnShockExpired += shock =>
+            {
+                LastEvent = $"Shock ended {shock.categoryId}";
+                RaiseStateChanged();
+            };
         }
 
         public static EconomyHostSession Create(string dataDir)
@@ -48,6 +72,47 @@ namespace AtomicWar.GodotApp
                 else
                 {
                     session.LastEvent = "Goods catalog failed validation: " + load.Errors[0];
+                }
+
+                // Plan 212 — commodity behavior catalog. Optional: a missing or
+                // invalid file leaves the market on the legacy v1 path (no
+                // category/shock factors), never a hard failure.
+                var commodityLoad = CommodityBaselineCatalogLoader.Load(dataDir, fileIO, serializer);
+                if (!commodityLoad.HasErrors && commodityLoad.Categories.Count > 0)
+                {
+                    session.CommodityCatalog = CommodityBaselineCatalogLoader.ToCatalog(commodityLoad);
+                    session.Market.BindCommodityCatalog(session.CommodityCatalog);
+                }
+                else if (commodityLoad.HasErrors)
+                {
+                    session.LastEvent = "Commodity catalog using legacy path: " + commodityLoad.Errors[0];
+                }
+
+                // Plan 14A/14B — embargo rules + regional price geography.
+                // Optional collaborators: a missing or invalid file leaves the
+                // market on the pre-C1 path (neutral regional, no embargo),
+                // never a hard failure. The market region is the settlement
+                // profile — the balanced home-market baseline.
+                var embargoLoad = TradeEmbargoCatalogLoader.Load(dataDir, fileIO, serializer);
+                if (!embargoLoad.HasErrors && embargoLoad.Rules.Count > 0)
+                {
+                    session.EmbargoSystem = new TradeEmbargoSystem(TradeEmbargoCatalogLoader.ToCatalog(embargoLoad));
+                    session.Market.BindEmbargoSystem(session.EmbargoSystem);
+                }
+                else if (embargoLoad.HasErrors)
+                {
+                    session.LastEvent = "Embargo rules using neutral path: " + embargoLoad.Errors[0];
+                }
+
+                var atlasLoad = RegionalPriceCatalogLoader.Load(dataDir, fileIO, serializer);
+                if (!atlasLoad.HasErrors && atlasLoad.Entries.Count > 0)
+                {
+                    session.RegionalAtlas = new RegionalPriceAtlas(RegionalPriceCatalogLoader.ToCatalog(atlasLoad));
+                    session.Market.BindRegionalPriceAtlas(session.RegionalAtlas, marketRegion: "settlement");
+                }
+                else if (atlasLoad.HasErrors)
+                {
+                    session.LastEvent = "Regional prices using neutral path: " + atlasLoad.Errors[0];
                 }
             }
             var save = EconomySaveStore.TryLoad();
@@ -70,6 +135,15 @@ namespace AtomicWar.GodotApp
         {
             Market.TickDay(day, rng);
         }
+
+        /// <summary>
+        /// Return the Core-owned decomposition used by the quote display. The
+        /// host only adapts typed factor records into player-facing copy.
+        /// </summary>
+        public PriceExplanation ExplainPrice(
+            string itemId,
+            MarketTransactionSide side = MarketTransactionSide.Buy)
+            => Market.ExplainPrice(itemId, side);
 
         public string StatusLine()
         {

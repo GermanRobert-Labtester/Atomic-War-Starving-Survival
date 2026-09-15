@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,6 +48,16 @@ namespace AtomicWar.GodotApp
         public RadioRecordingSystem RecordingSystem { get; }
         public RadioSignalLog SignalLog { get; }
         public DistressRescueMissionManager RescueMissions { get; }
+
+        /// <summary>Tasks 9–12 Wave 2 — radio-owned signal-trust ledger. Owned
+        /// by the session, bound to the default mission manager, persisted in
+        /// the radio save section (V5).</summary>
+        public SignalTrustLedger SignalTrust { get; }
+
+        /// <summary>Tasks 9–12 Wave 3 — radio-owned follow-up scheduler. Owned
+        /// by the session, bound to the mission lifecycle events, persisted in
+        /// the radio save section (V6).</summary>
+        public DistressFollowUpScheduler FollowUps { get; }
         public ISeededRng Rng { get; }
         public IReadOnlyList<RadioIntercept> History => _history;
         public int Day { get; private set; }
@@ -95,14 +106,51 @@ namespace AtomicWar.GodotApp
             DistressSystem = distressSystem ?? new RadioDistressSystem();
             RecordingSystem = recordingSystem ?? new RadioRecordingSystem();
             SignalLog = signalLog ?? new RadioSignalLog();
-            RescueMissions = rescueMissions ?? new DistressRescueMissionManager();
+            // Tasks 9–12 Wave 2 — the session owns the signal-trust ledger and
+            // binds it to the default mission manager so trust events flow from
+            // the exactly-once lifecycle transitions. Externally supplied
+            // managers keep their own wiring.
+            SignalTrust = new SignalTrustLedger();
+            RescueMissions = rescueMissions ?? new DistressRescueMissionManager(null, DistressSystem, SignalTrust);
+            // Tasks 9–12 Wave 3 — the session owns the follow-up scheduler,
+            // binds it to the mission manager's exactly-once lifecycle events,
+            // and ticks it beside the mission daily tick.
+            FollowUps = new DistressFollowUpScheduler(DistressSystem, RescueMissions);
+            FollowUps.BindToMissionEvents();
+            FollowUps.OnFollowUpFired += (parentId, followUp, day) =>
+            {
+                LastEvent = $"Follow-up transmission from {parentId}: {followUp.Text}";
+                // Tasks 9–12 Wave 4 — follow-up transmissions resolve their own
+                // audio cue exactly like other radio content. Follow-ups fire
+                // exactly once by scheduler construction, so no dedupe is needed.
+                if (!string.IsNullOrWhiteSpace(followUp.AudioCue))
+                    AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(followUp.AudioCue);
+                RaiseStateChanged();
+            };
 
             CurrentFrequency = FirstFrequency();
             Triangulation.OnStateChanged += _ => RaiseStateChanged();
             Triangulation.OnLocationRevealed += id => { LastEvent = $"Location discovered: {id}"; RaiseStateChanged(); };
             DistressSystem.OnSignalIntercepted += (def, state) => { LastEvent = $"Distress intercepted: {def.SourceName}"; RaiseStateChanged(); };
             DistressSystem.OnSignalExpired += (def, state) => { LastEvent = $"Distress expired: {def.SourceName}"; RaiseStateChanged(); };
-            RescueMissions.OnStageChanged += (m, stage) => { LastEvent = $"Distress mission {m.QuestId}: {stage}"; RaiseStateChanged(); };
+            RescueMissions.OnStageChanged += (m, stage) =>
+            {
+                LastEvent = $"Distress mission {m.QuestId}: {stage}";
+                // Claim once on successful terminal stages so OnRewardsGranted
+                // can reach inventory / reputation consumers in Main.
+                // TerminalFailed also claims: eligibility lives in Core — only a
+                // real dead-arrival salvage (sender dead + arrival resolved +
+                // survival model) grants anything, always with rep 0.
+                if (stage == DistressRescueMissionStage.TerminalRescued
+                    || stage == DistressRescueMissionStage.TerminalSurvived
+                    || stage == DistressRescueMissionStage.TerminalFailed)
+                {
+                    var (items, rep) = RescueMissions.ClaimIdempotentRewards(m.QuestId);
+                    if (items.Count > 0 || rep != 0)
+                        LastEvent = $"Distress rewards claimed for {m.QuestId}: {items.Count} items, rep {rep}.";
+                }
+                RaiseStateChanged();
+            };
         }
 
         public static RadioHostSession Create(string dataDir, int day = 1)
@@ -178,7 +226,13 @@ namespace AtomicWar.GodotApp
         {
             Day = Math.Max(1, day);
             DistressSystem.TickDaily(Day);
+            // Tasks 9–12 Wave 3 — the scheduler must know the day BEFORE the
+            // mission tick so event-time schedules compute due = day + delay.
+            FollowUps.SetDay(Day);
             RescueMissions.TickDaily(Day);
+            // After the mission tick so an expiry that schedules a 0-delay
+            // follow-up this day can fire deterministically.
+            FollowUps.TickDaily(Day);
         }
 
         public string Listen(float? frequencyMhz = null)
@@ -200,7 +254,6 @@ namespace AtomicWar.GodotApp
                 DistressSystem.Intercept(distress.FrequencyId, Day);
                 RescueMissions.RecordSignalHeard(distress.FrequencyId, Day);
             }
-
             var intercept = Engine.GetBroadcastAtFrequency(CurrentFrequency, Day, Rng);
             LastIntercept = intercept;
             _history.Add(intercept);
@@ -220,6 +273,25 @@ namespace AtomicWar.GodotApp
             audio?.PlayRadioStatic();
             if (!string.IsNullOrWhiteSpace(intercept.FactionId) || (LastScheduledBroadcast != null && LastScheduledBroadcast.HasTransmission && !LastScheduledBroadcast.IsSilence))
                 audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.RadioSignalLock);
+
+            // Tasks 9–12 Wave 4 — distress-signal audio projection. Plays only
+            // when the signal was LEGITIMATELY detected through the tuner flow
+            // (the Intercept transition above — never on catalog load, internal
+            // eligibility, or a save containing an undiscovered signal). Cue is
+            // derived from the authoritative stage (stage override → signal
+            // default → text-only fallback); the dedupe key rides the existing
+            // persisted playedBroadcastKeys ledger, so an already-heard cue does
+            // not replay after a reload and a stage change to a new cue plays.
+            if (distress != null)
+            {
+                string distressCue = Ashfall.Core.Radio.DistressAudioCueResolver.ResolveForDay(distress, Day);
+                if (!string.IsNullOrEmpty(distressCue))
+                {
+                    string distressKey = $"distress:{distress.FrequencyId}:{distressCue}";
+                    if (_playedBroadcastKeys.Add(distressKey))
+                        audio?.PlayCue(distressCue); // missing cue → logged once, text continues
+                }
+            }
 
             // Audio: voice-over only for new (non-duplicate) broadcasts with a mapped clip
             string? voiceOverClip = ResolveVoiceOver(intercept);
@@ -337,6 +409,33 @@ namespace AtomicWar.GodotApp
                 RaiseStateChanged();
             }
             return candidate;
+        }
+
+        /// <summary>
+        /// Plan 212 follow-up — market rumor bridge. Real market state (a
+        /// shock the canonical market applied or expired) relayed as a short
+        /// band item so trade news reaches the receiver the way other world
+        /// facts do. No invented prices; the text comes from Core's
+        /// <see cref="Ashfall.Core.Economy.EconomyMarketRumorRules"/>.
+        /// </summary>
+        public string RecordMarketRumor(string message, int day)
+        {
+            if (string.IsNullOrWhiteSpace(message)) return LastEvent;
+            var rumor = new RadioIntercept(
+                "faction_holdfast",
+                "MARKET WATCH",
+                CurrentFrequency,
+                RadioEventKind.MarketRumor,
+                message,
+                4,
+                day > 0 ? day : Day);
+            _history.Add(rumor);
+            if (_history.Count > 32)
+                _history.RemoveAt(0);
+            LastEvent = $"Market rumor on the band: {message}";
+            BroadcastIntercepted?.Invoke(rumor, null);
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         /// <summary>
@@ -487,6 +586,17 @@ namespace AtomicWar.GodotApp
             // Plan B88 — persist continuous DF triangulation (observations/candidates/baselines).
             state.triangulation = Triangulation.CaptureState();
 
+            // Rescue-signal runtime (V4) — mission stages, deadlines, expedition
+            // association, receipts, sender survival, ignore consequence, and
+            // authenticity assessments survive a reload.
+            state.rescueMissions = RescueMissions.CaptureState();
+
+            // Tasks 9–12 Wave 2 (V5) — signal-trust ledger survives a reload.
+            state.signalTrust = SignalTrust.CaptureState();
+
+            // Tasks 9–12 Wave 3 (V6) — pending/fired follow-ups survive a reload.
+            state.signalFollowUps = FollowUps.CaptureState();
+
             return state;
         }
 
@@ -537,6 +647,21 @@ namespace AtomicWar.GodotApp
             // Plan B88 — restore continuous DF triangulation nest (empty on pre-V3 saves).
             if (state.triangulation != null)
                 Triangulation.RestoreState(state.triangulation);
+
+            // Rescue-signal runtime (V4) — mission state restored additively;
+            // pre-V4 saves leave missions at their neutral authored defaults.
+            if (state.rescueMissions != null)
+                RescueMissions.RestoreState(state.rescueMissions);
+
+            // Tasks 9–12 Wave 2 (V5) — trust ledger restored additively;
+            // pre-V5 saves leave trust at its neutral default (score 50).
+            SignalTrust.RestoreState(state.signalTrust);
+
+            // Tasks 9–12 Wave 3 (V6) — follow-up scheduler restored additively;
+            // pre-V6 saves leave it empty. Restore fires no events, so a
+            // restored pending follow-up fires exactly once on its due tick.
+            FollowUps.RestoreState(state.signalFollowUps);
+            FollowUps.SetDay(Day);
 
             LastEvent = "Radio state restored.";
         }

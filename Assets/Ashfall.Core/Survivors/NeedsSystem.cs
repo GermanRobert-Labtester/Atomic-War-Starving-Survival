@@ -4,9 +4,9 @@ using System;
 
 namespace Ashfall.Core.Survivors
 {
-    /// <summary>The seven tracked survival needs. Hunger/Thirst/Fatigue/Morale are
-    /// 0..100 where HIGHER = WORSE (critical = starving); Warmth is 0..100 where
-    /// LOWER = worse; Health 0..100 where lower = worse.</summary>
+    /// <summary>The nine tracked survival needs. Hunger/Thirst/Fatigue/Morale,
+    /// Numbness, and RadiationAnxiety are 0..100 where HIGHER = WORSE;
+    /// Warmth is 0..100 where LOWER = worse; Health 0..100 where lower = worse.</summary>
     public enum NeedKind
     {
         Hunger,
@@ -15,7 +15,9 @@ namespace Ashfall.Core.Survivors
         Warmth,
         Morale,
         Health,
-        Hygiene
+        Hygiene,
+        Numbness,
+        RadiationAnxiety
     }
 
     /// <summary>
@@ -32,6 +34,8 @@ namespace Ashfall.Core.Survivors
         public float Morale = 50f;
         public float Health = 100f;
         public float Hygiene = 100f;
+        public float Numbness;
+        public float RadiationAnxiety;
 
         public bool WasHungerCritical;
         public bool WasThirstCritical;
@@ -322,6 +326,8 @@ namespace Ashfall.Core.Survivors
             OnNeedChanged.Invoke(survivor, NeedKind.Morale, survivor.Morale);
             OnNeedChanged.Invoke(survivor, NeedKind.Health, survivor.Health);
             OnNeedChanged.Invoke(survivor, NeedKind.Hygiene, survivor.Hygiene);
+            OnNeedChanged.Invoke(survivor, NeedKind.Numbness, survivor.Numbness);
+            OnNeedChanged.Invoke(survivor, NeedKind.RadiationAnxiety, survivor.RadiationAnxiety);
         }
 
         private static float GetValue(SurvivorNeedsState s, NeedKind kind) => kind switch
@@ -333,6 +339,8 @@ namespace Ashfall.Core.Survivors
             NeedKind.Morale => s.Morale,
             NeedKind.Health => s.Health,
             NeedKind.Hygiene => s.Hygiene,
+            NeedKind.Numbness => s.Numbness,
+            NeedKind.RadiationAnxiety => s.RadiationAnxiety,
             _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
         };
 
@@ -347,6 +355,8 @@ namespace Ashfall.Core.Survivors
                 case NeedKind.Morale: s.Morale = value; break;
                 case NeedKind.Health: s.Health = value; break;
                 case NeedKind.Hygiene: s.Hygiene = value; break;
+                case NeedKind.Numbness: s.Numbness = value; break;
+                case NeedKind.RadiationAnxiety: s.RadiationAnxiety = value; break;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
             OnNeedChanged?.Invoke(s, kind, value);

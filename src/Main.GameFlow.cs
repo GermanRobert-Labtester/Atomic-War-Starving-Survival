@@ -9,6 +9,7 @@ using Ashfall.Core.Campaign;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Expeditions;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.World;
 
 namespace AtomicWar.GodotApp
 {
@@ -19,6 +20,10 @@ namespace AtomicWar.GodotApp
             BuildUserInterface();
             SetupHoldfastRuntime();
             UpdateHud();
+            // Dashboard + inventory are gameplay surfaces; open them from the
+            // Playing state so the PanelRegistry menu-availability rule does not
+            // correctly block the inventory route.
+            _state = GameState.Playing;
             _dashboard.Visible = true;
 
             bool shellBuilt = _dashboard.GetChildCount() > 0 && _dashboard.Visible;
@@ -32,6 +37,51 @@ namespace AtomicWar.GodotApp
             GD.Print($"[DashboardUiTest] shell={shellBuilt} rootOverlay={overlayParentedToRoot} inventory={inventoryOpened} liveSources={liveSources}");
             HostCli.EmitSummary("dashboard_uitest", pass, pass ? 0 : 1);
             QuitUiTestAfterFrame(pass ? 0 : 1);
+        }
+
+        /// <summary>
+        /// Physics-base self-test: proves the survivor actor is a grounded
+        /// CharacterBody2D that collides with the interior static bounds, seeks
+        /// its room anchor under acceleration, and animates from the blockout
+        /// character sheet. Presentation-only — no Core state is touched.
+        /// </summary>
+        private async void RunShelterPhysicsSelfTestAndQuit()
+        {
+            int pass = 0, fail = 0;
+
+            var view = new HoldfastInteriorView();
+            AddChild(view);
+
+            var actor = new SurvivorActorView { SurvivorId = "selftest_actor" };
+            view.AddChild(actor);
+
+            bool sheetLoaded = actor.Body.Texture != null;
+            if (sheetLoaded) pass++; else fail++;
+
+            // Initialise at a start anchor, then seek a distant anchor.
+            actor.Position = new Vector2(300f, HoldfastInteriorView.FloorStandY);
+            actor.SetMoveTarget(new Vector2(300f, HoldfastInteriorView.FloorStandY));
+            actor.SetMoveTarget(new Vector2(430f, HoldfastInteriorView.FloorStandY));
+
+            // Let the engine run real physics steps so gravity, floor collision,
+            // and MoveAndSlide actually execute (manual pumping is a no-op).
+            for (int i = 0; i < 180; i++)
+                await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+            float dx = Mathf.Abs(actor.Position.X - 430f);
+            bool arrived = dx < 12f;
+            if (arrived) pass++; else fail++;
+
+            bool grounded = actor.IsOnFloor() && Mathf.Abs(actor.Position.Y - HoldfastInteriorView.FloorStandY) < 10f;
+            if (grounded) pass++; else fail++;
+
+            bool animated = actor.Body.Texture != null && actor.Body.Frame >= 0;
+            if (animated) pass++; else fail++;
+
+            GD.Print($"[ShelterPhysics] sheet={sheetLoaded} arrived={arrived} grounded={grounded} " +
+                     $"x={actor.Position.X:F1} y={actor.Position.Y:F1} dx={dx:F1} frame={actor.Body.Frame} onFloor={actor.IsOnFloor()}");
+            HostCli.EmitSummary("shelter_physics", fail == 0, fail == 0 ? 0 : 1);
+            QuitUiTestAfterFrame(fail == 0 ? 0 : 1);
         }
 
 
@@ -140,7 +190,11 @@ namespace AtomicWar.GodotApp
             ComposeCampaign();
 
             _openingProtocolModal.Bind(_startingLevel);
-            _openingProtocolModal.Open();
+            // Veteran mode (TutorialMode 2): land on the clean game view instead
+            // of forcing the protocol modal. It stays openable via its registry
+            // route and bind action (see RegisterPlayerSurfaces).
+            if (AtomicWar.GodotApp.Settings.UserSettingsStore.Current.TutorialMode != 2)
+                _openingProtocolModal.Open();
 
             // Update HUD
             UpdateHud();
@@ -560,6 +614,19 @@ namespace AtomicWar.GodotApp
                 case "sump_flooding":
                 case "decontamination":
                 case "low_background_metrology":
+                case "insar_mapping":
+                case "hydraulic_extrusion":
+                case "runflat_tire":
+                case "sofc_power":
+                case "sound_ranging":
+                case "cvd_diamond":
+                case "amphibious_draisine":
+                case "sanitation":
+                case "black_market":
+                case "companion_kennel":
+                case "beliefs_panel":
+                case "anomaly_watch":
+                case "cybernetics":
                 case "kitchen_nutrition":
                 case "equipment_condition":
                 case "library_study":

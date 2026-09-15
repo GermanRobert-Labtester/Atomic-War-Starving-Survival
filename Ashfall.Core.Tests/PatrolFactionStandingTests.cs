@@ -2,6 +2,7 @@
 // ASHFALL Patrol Faction Standing Tests (PAT-F1-001 through PAT-F1-010)
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Xunit;
 using Ashfall.Core;
@@ -27,17 +28,30 @@ namespace Ashfall.Core.Tests
             _catalog = TravelEncounterCatalog.LoadFromDirectory(_dataDir, new FileSystemIO());
         }
 
-        [Theory]
-        [InlineData("iron_garrison", "faction_central_garrison")]
-        [InlineData("ash_militia", "faction_upland_militia")]
-        [InlineData("cult_of_ash_sign", "faction_cult_of_the_glow")]
-        [InlineData("warlords_sector_4", "faction_scavenger_warlords")]
-        [InlineData("faction_black_ops", "faction_black_ops")]
-        [InlineData("unknown_faction", "unknown_faction")]
-        public void FactionStandingIdResolver_MapsLoreIdToSystemsId(string loreId, string expectedSystemId)
+        [Fact]
+        public void FactionStandingIdResolver_MappingTable_MapsLoreIdsToSystemsIds()
         {
-            string mapped = FactionStandingIdResolver.ToSystemsId(loreId);
-            Assert.Equal(expectedSystemId, mapped);
+            var failures = new List<string>();
+
+            foreach (var testCase in new[]
+            {
+                (LoreId: "iron_garrison", ExpectedSystemId: "faction_central_garrison"),
+                (LoreId: "ash_militia", ExpectedSystemId: "faction_upland_militia"),
+                (LoreId: "cult_of_ash_sign", ExpectedSystemId: "faction_cult_of_the_glow"),
+                (LoreId: "warlords_sector_4", ExpectedSystemId: "faction_scavenger_warlords"),
+                (LoreId: "faction_black_ops", ExpectedSystemId: "faction_black_ops"),
+                (LoreId: "unknown_faction", ExpectedSystemId: "unknown_faction"),
+            })
+            {
+                string mapped = FactionStandingIdResolver.ToSystemsId(testCase.LoreId);
+                if (mapped != testCase.ExpectedSystemId)
+                {
+                    failures.Add(
+                        $"lore id '{testCase.LoreId}' expected '{testCase.ExpectedSystemId}', got '{mapped}'");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

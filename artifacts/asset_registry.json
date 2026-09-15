@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-08T14:24:40.619806+00:00",
+  "generated_at": "2026-09-13T09:29:16.266257+00:00",
   "strict_mode": false,
   "summary": {
-    "total_ids": 1646,
+    "total_ids": 1695,
     "loaded": 507,
-    "fallback": 1139,
+    "fallback": 1188,
     "missing": 0,
-    "coverage_pct": 30.8,
+    "coverage_pct": 29.91,
     "by_category": {
       "item": {
-        "total": 913,
+        "total": 957,
         "loaded": 342,
-        "fallback": 571,
+        "fallback": 615,
         "missing": 0
       },
       "portrait": {
@@ -28,9 +28,9 @@
         "missing": 0
       },
       "faction": {
-        "total": 91,
+        "total": 96,
         "loaded": 1,
-        "fallback": 90,
+        "fallback": 95,
         "missing": 0
       }
     }
@@ -363,6 +363,14 @@
       "resolved_path": "res://assets/art/dirty_water.jpg",
       "status": "LOADED",
       "is_fallback": false
+    },
+    {
+      "id": "morphine",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
     },
     {
       "id": "medical_kit",
@@ -5309,6 +5317,238 @@
       "is_fallback": true
     },
     {
+      "id": "item_fermentation_sugar_feedstock",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_starch_feedstock",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_culture_starter",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_filter_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_service_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_preservation_concentrate",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_cleaning_reagent",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermented_organic_acid_carboy",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_waste_pomace",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_crop_waste",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofuel_low_grade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofuel_generator_grade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofuel_high_grade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_separation_media_cartridge",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_ecm_jammer_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_machined_blank_small",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_machined_blank_medium",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_internal_spline_hub",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_keyed_actuator_collar",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_cutting_fluid_canister",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hydraulic_ram_assembly",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fog_mesh_roll",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_powered_mist_assist_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_reinforced_support_cable",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_runflat_insert_utility",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_runflat_insert_reinforced",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rim_bead_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_armored_beadlock_set",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_runflat_balancing_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
       "id": "paper_scrap",
       "category": "item",
       "source_catalog": "black_flotilla_items.json",
@@ -5683,6 +5923,118 @@
       "resolved_path": "res://assets/art/item_wyn_receipt_paid.jpg",
       "status": "LOADED",
       "is_fallback": false
+    },
+    {
+      "id": "item_arbitration_token",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_charter_stamp",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_weighbridge_chit",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_smuggled_medicine",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_crossing_bread",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_lamp_oil_crossing",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_filtered_water_crossing",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_quarantine_bands",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_granary_receipt",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_smugglers_ledger",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rejection_notice",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_crossing_map",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_black_market_pouch",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_charter_draft",
+      "category": "item",
+      "source_catalog": "crossing_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
     },
     {
       "id": "item_dose_ledger",
@@ -12630,6 +12982,46 @@
     },
     {
       "id": "faction_the_compact",
+      "category": "faction",
+      "source_catalog": "crossing_factions.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_lamplighters",
+      "category": "faction",
+      "source_catalog": "crossing_factions.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_granary_wardens",
+      "category": "faction",
+      "source_catalog": "crossing_factions.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_water_committee",
+      "category": "faction",
+      "source_catalog": "crossing_factions.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_quarantine_post",
+      "category": "faction",
+      "source_catalog": "crossing_factions.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_the_smugglers_court",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",

@@ -1,73 +1,41 @@
+// SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core.Narrative;
 using Xunit;
 
 namespace Ashfall.Core.Tests
 {
-    public class TextileSpinningWeavingCatalogTests
-    : CatalogTestBase{
-        private static string DataDir =>
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                         "..", "..", "..", "..",
-                         "Assets", "StreamingAssets", "Data", "narrative");
+    public class TextileSpinningWeavingCatalogTests : CatalogTestBase
+    {
+        private static string DataDir => Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..",
+            "Assets", "StreamingAssets", "Data", "narrative");
 
         private static TextileSpinningWeavingCatalog Load() =>
             TextileSpinningWeavingCatalog.LoadFromDirectory(DataDir);
 
-        // ── Batch 1: Drop-Spindle & Flyer-Wheel Fibre Drafting Logs ──────────────
-
         [Fact]
-        public void DraftingLogs_LoadsEightEntries()
+        public void DraftingLogs_StructuralContract_IsComplete()
         {
             var catalog = Load();
-            Assert.Equal(8, catalog.DraftingLogs.Count);
-        }
-
-        [Fact]
-        public void DraftingLogs_AllIdsPopulated()
-        {
-            foreach (var e in Load().DraftingLogs)
-                Assert.False(string.IsNullOrWhiteSpace(e.Id), $"Empty id in drafting log");
-        }
-
-        [Fact]
-        public void DraftingLogs_AllSpindleUnitIdsPopulated()
-        {
-            foreach (var e in Load().DraftingLogs)
-                Assert.False(string.IsNullOrWhiteSpace(e.SpindleUnitId),
-                    $"{e.Id}: missing spindle_unit_id");
-        }
-
-        [Fact]
-        public void DraftingLogs_AllFibreStockTypesPopulated()
-        {
-            foreach (var e in Load().DraftingLogs)
-                Assert.False(string.IsNullOrWhiteSpace(e.FibreStockType),
-                    $"{e.Id}: missing fibre_stock_type");
-        }
-
-        [Fact]
-        public void DraftingLogs_AllDraftRatiosPositive()
-        {
-            foreach (var e in Load().DraftingLogs)
-                Assert.True(e.DraftRatioTarget > 0f,
-                    $"{e.Id}: draft_ratio_target must be positive");
-        }
-
-        [Fact]
-        public void DraftingLogs_AllLogTextsPopulated()
-        {
-            foreach (var e in Load().DraftingLogs)
-                Assert.False(string.IsNullOrWhiteSpace(e.LogText),
-                    $"{e.Id}: missing log_text");
+            AssertCounts(("DraftingLogs", catalog.DraftingLogs.Count, 8));
+            AssertStringPropertiesPopulated(
+                "DraftingLogs", catalog.DraftingLogs, e => e.Id,
+                ("id", e => e.Id),
+                ("spindle_unit_id", e => e.SpindleUnitId),
+                ("fibre_stock_type", e => e.FibreStockType),
+                ("log_text", e => e.LogText));
+            AssertPositiveProperties(
+                "DraftingLogs", catalog.DraftingLogs, e => e.Id,
+                ("draft_ratio_target", e => (double)e.DraftRatioTarget));
         }
 
         [Fact]
         public void DraftingLogs_QueryByFibre_ReturnsResults()
         {
-            var results = Load().GetDraftingLogsByFibre("nettle_bast");
-            Assert.NotEmpty(results);
+            Assert.NotEmpty(Load().GetDraftingLogsByFibre("nettle_bast"));
         }
 
         [Fact]
@@ -76,65 +44,31 @@ namespace Ashfall.Core.Tests
             var catalog = Load();
             var lower = catalog.GetDraftingLogsByFibre("hemp_tow");
             var upper = catalog.GetDraftingLogsByFibre("HEMP_TOW");
-            Assert.Equal(new System.Collections.Generic.List<string>(
-                             System.Linq.Enumerable.Select(lower, e => e.Id)),
-                         new System.Collections.Generic.List<string>(
-                             System.Linq.Enumerable.Select(upper, e => e.Id)));
+            Assert.Equal(
+                new List<string>(System.Linq.Enumerable.Select(lower, e => e.Id)),
+                new List<string>(System.Linq.Enumerable.Select(upper, e => e.Id)));
         }
 
-        // ── Batch 2: Inkle & Backstrap Loom Warp/Weft Tally Sheets ──────────────
-
         [Fact]
-        public void WarpTallies_LoadsEightEntries()
+        public void WarpTallies_StructuralContract_IsComplete()
         {
             var catalog = Load();
-            Assert.Equal(8, catalog.WarpTallies.Count);
-        }
-
-        [Fact]
-        public void WarpTallies_AllIdsPopulated()
-        {
-            foreach (var e in Load().WarpTallies)
-                Assert.False(string.IsNullOrWhiteSpace(e.Id), $"Empty id in warp tally");
-        }
-
-        [Fact]
-        public void WarpTallies_AllLoomFrameIdsPopulated()
-        {
-            foreach (var e in Load().WarpTallies)
-                Assert.False(string.IsNullOrWhiteSpace(e.LoomFrameId),
-                    $"{e.Id}: missing loom_frame_id");
-        }
-
-        [Fact]
-        public void WarpTallies_AllWarpFibreTypesPopulated()
-        {
-            foreach (var e in Load().WarpTallies)
-                Assert.False(string.IsNullOrWhiteSpace(e.WarpFibreType),
-                    $"{e.Id}: missing warp_fibre_type");
-        }
-
-        [Fact]
-        public void WarpTallies_AllWeftCountsPositive()
-        {
-            foreach (var e in Load().WarpTallies)
-                Assert.True(e.WeftThreadCount > 0,
-                    $"{e.Id}: weft_thread_count must be positive");
-        }
-
-        [Fact]
-        public void WarpTallies_AllLogTextsPopulated()
-        {
-            foreach (var e in Load().WarpTallies)
-                Assert.False(string.IsNullOrWhiteSpace(e.LogText),
-                    $"{e.Id}: missing log_text");
+            AssertCounts(("WarpTallies", catalog.WarpTallies.Count, 8));
+            AssertStringPropertiesPopulated(
+                "WarpTallies", catalog.WarpTallies, e => e.Id,
+                ("id", e => e.Id),
+                ("loom_frame_id", e => e.LoomFrameId),
+                ("warp_fibre_type", e => e.WarpFibreType),
+                ("log_text", e => e.LogText));
+            AssertPositiveProperties(
+                "WarpTallies", catalog.WarpTallies, e => e.Id,
+                ("weft_thread_count", e => e.WeftThreadCount));
         }
 
         [Fact]
         public void WarpTallies_QueryByFrame_ReturnsResults()
         {
-            var results = Load().GetWarpTalliesByFrame("il_peg_frame_01");
-            Assert.NotEmpty(results);
+            Assert.NotEmpty(Load().GetWarpTalliesByFrame("il_peg_frame_01"));
         }
 
         [Fact]
@@ -143,63 +77,31 @@ namespace Ashfall.Core.Tests
             var catalog = Load();
             var lower = catalog.GetWarpTalliesByFrame("bl_cord_frame_01");
             var upper = catalog.GetWarpTalliesByFrame("BL_CORD_FRAME_01");
-            Assert.Equal(System.Linq.Enumerable.Count(lower),
-                         System.Linq.Enumerable.Count(upper));
+            Assert.Equal(
+                System.Linq.Enumerable.Count(lower),
+                System.Linq.Enumerable.Count(upper));
         }
 
-        // ── Batch 3: Treadle Loom Heddle Threading & Tie-Up Reports ─────────────
-
         [Fact]
-        public void HeddleReports_LoadsSevenEntries()
+        public void HeddleReports_StructuralContract_IsComplete()
         {
             var catalog = Load();
-            Assert.Equal(7, catalog.HeddleReports.Count);
-        }
-
-        [Fact]
-        public void HeddleReports_AllIdsPopulated()
-        {
-            foreach (var e in Load().HeddleReports)
-                Assert.False(string.IsNullOrWhiteSpace(e.Id), $"Empty id in heddle report");
-        }
-
-        [Fact]
-        public void HeddleReports_AllTreadleUnitIdsPopulated()
-        {
-            foreach (var e in Load().HeddleReports)
-                Assert.False(string.IsNullOrWhiteSpace(e.TreadleUnitId),
-                    $"{e.Id}: missing treadle_unit_id");
-        }
-
-        [Fact]
-        public void HeddleReports_AllHeddleCountsPositive()
-        {
-            foreach (var e in Load().HeddleReports)
-                Assert.True(e.HeddleCount > 0,
-                    $"{e.Id}: heddle_count must be positive");
-        }
-
-        [Fact]
-        public void HeddleReports_AllTieUpPatternsPopulated()
-        {
-            foreach (var e in Load().HeddleReports)
-                Assert.False(string.IsNullOrWhiteSpace(e.TieUpPattern),
-                    $"{e.Id}: missing tie_up_pattern");
-        }
-
-        [Fact]
-        public void HeddleReports_AllLogTextsPopulated()
-        {
-            foreach (var e in Load().HeddleReports)
-                Assert.False(string.IsNullOrWhiteSpace(e.LogText),
-                    $"{e.Id}: missing log_text");
+            AssertCounts(("HeddleReports", catalog.HeddleReports.Count, 7));
+            AssertStringPropertiesPopulated(
+                "HeddleReports", catalog.HeddleReports, e => e.Id,
+                ("id", e => e.Id),
+                ("treadle_unit_id", e => e.TreadleUnitId),
+                ("tie_up_pattern", e => e.TieUpPattern),
+                ("log_text", e => e.LogText));
+            AssertPositiveProperties(
+                "HeddleReports", catalog.HeddleReports, e => e.Id,
+                ("heddle_count", e => e.HeddleCount));
         }
 
         [Fact]
         public void HeddleReports_QueryByPattern_ReturnsResults()
         {
-            var results = Load().GetHeddleReportsByPattern("plain_weave");
-            Assert.NotEmpty(results);
+            Assert.NotEmpty(Load().GetHeddleReportsByPattern("plain_weave"));
         }
 
         [Fact]
@@ -210,51 +112,23 @@ namespace Ashfall.Core.Tests
             Assert.Equal(2, results.Count);
         }
 
-        // ── Batch 4: Fulling Trough & Nap-Raising Surface-Finish Assays ──────────
-
         [Fact]
-        public void NapAssays_LoadsSevenEntries()
+        public void NapAssays_StructuralContract_IsComplete()
         {
             var catalog = Load();
-            Assert.Equal(7, catalog.NapAssays.Count);
-        }
-
-        [Fact]
-        public void NapAssays_AllIdsPopulated()
-        {
-            foreach (var e in Load().NapAssays)
-                Assert.False(string.IsNullOrWhiteSpace(e.Id), $"Empty id in nap assay");
-        }
-
-        [Fact]
-        public void NapAssays_AllFullingTroughIdsPopulated()
-        {
-            foreach (var e in Load().NapAssays)
-                Assert.False(string.IsNullOrWhiteSpace(e.FullingTroughId),
-                    $"{e.Id}: missing fulling_trough_id");
-        }
-
-        [Fact]
-        public void NapAssays_AllClothSubstratesPopulated()
-        {
-            foreach (var e in Load().NapAssays)
-                Assert.False(string.IsNullOrWhiteSpace(e.ClothSubstrateType),
-                    $"{e.Id}: missing cloth_substrate_type");
-        }
-
-        [Fact]
-        public void NapAssays_AllLogTextsPopulated()
-        {
-            foreach (var e in Load().NapAssays)
-                Assert.False(string.IsNullOrWhiteSpace(e.LogText),
-                    $"{e.Id}: missing log_text");
+            AssertCounts(("NapAssays", catalog.NapAssays.Count, 7));
+            AssertStringPropertiesPopulated(
+                "NapAssays", catalog.NapAssays, e => e.Id,
+                ("id", e => e.Id),
+                ("fulling_trough_id", e => e.FullingTroughId),
+                ("cloth_substrate_type", e => e.ClothSubstrateType),
+                ("log_text", e => e.LogText));
         }
 
         [Fact]
         public void NapAssays_QueryBySubstrate_ReturnsResults()
         {
-            var results = Load().GetNapAssaysBySubstrate("hemp_plain_weave");
-            Assert.NotEmpty(results);
+            Assert.NotEmpty(Load().GetNapAssaysBySubstrate("hemp_plain_weave"));
         }
 
         [Fact]
@@ -273,8 +147,6 @@ namespace Ashfall.Core.Tests
             Assert.Equal("none", linen.NapRaisingTool);
         }
 
-        // ── Cross-Batch Integrity ─────────────────────────────────────────────────
-
         [Fact]
         public void AllEntries_TotalCount_IsThirty()
         {
@@ -290,13 +162,13 @@ namespace Ashfall.Core.Tests
         public void AllEntries_IdsAreUnique()
         {
             var catalog = Load();
-            var seen = new System.Collections.Generic.HashSet<string>();
+            var seen = new HashSet<string>();
             void Check(string id) => Assert.True(seen.Add(id), $"Duplicate id: {id}");
 
-            foreach (var e in catalog.DraftingLogs) Check(e.Id);
-            foreach (var e in catalog.WarpTallies) Check(e.Id);
-            foreach (var e in catalog.HeddleReports) Check(e.Id);
-            foreach (var e in catalog.NapAssays) Check(e.Id);
+            foreach (var entry in catalog.DraftingLogs) Check(entry.Id);
+            foreach (var entry in catalog.WarpTallies) Check(entry.Id);
+            foreach (var entry in catalog.HeddleReports) Check(entry.Id);
+            foreach (var entry in catalog.NapAssays) Check(entry.Id);
         }
 
         [Fact]
@@ -306,10 +178,10 @@ namespace Ashfall.Core.Tests
             void Check(string id, string text) =>
                 Assert.True(text.Length >= 20, $"{id}: log_text too short");
 
-            foreach (var e in catalog.DraftingLogs) Check(e.Id, e.LogText);
-            foreach (var e in catalog.WarpTallies) Check(e.Id, e.LogText);
-            foreach (var e in catalog.HeddleReports) Check(e.Id, e.LogText);
-            foreach (var e in catalog.NapAssays) Check(e.Id, e.LogText);
+            foreach (var entry in catalog.DraftingLogs) Check(entry.Id, entry.LogText);
+            foreach (var entry in catalog.WarpTallies) Check(entry.Id, entry.LogText);
+            foreach (var entry in catalog.HeddleReports) Check(entry.Id, entry.LogText);
+            foreach (var entry in catalog.NapAssays) Check(entry.Id, entry.LogText);
         }
     }
 }

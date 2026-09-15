@@ -102,7 +102,9 @@ namespace AtomicWar.GodotApp
             if (_radioStationSystem != null) return _radioStationSystem;
 
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("radio_station") : new SeededRng(47);
-            _radioStationSystem = new ShelterRadioStationSystem(rng, null, new GodotLog());
+            // Bind the canonical orbital harrow telemetry at construction — the
+            // field is readonly and null leaves impact-warning radio cues dead.
+            _radioStationSystem = new ShelterRadioStationSystem(rng, EnsureOrbitalHarrowTelemetry(), new GodotLog());
 
             // Plan B67: radio detection consumes the canonical weather
             // authority — atmospheric interference rises with storm severity.

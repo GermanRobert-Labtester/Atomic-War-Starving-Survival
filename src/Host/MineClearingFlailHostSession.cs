@@ -11,6 +11,8 @@ namespace AtomicWar.GodotApp
     public sealed class MineClearingFlailHostSession : HostSessionBase
     {
         public MineClearingFlailEngine System { get; }
+        /// <summary>Optional route authority for panel corridor lists (owned by Main).</summary>
+        public RouteInfrastructureSystem? Routes { get; set; }
         public string LastEvent { get; private set; } = string.Empty;
 
         public MineClearingFlailHostSession(MineClearingFlailEngine system)

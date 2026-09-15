@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,18 +42,8 @@ namespace Ashfall.Core.Tests
             public int amount { get; set; }
         }
 
-        [Theory]
-        [InlineData("craft_pickled_tubers", "item_pickled_tubers", 4, "stove")]
-        [InlineData("craft_dried_mushrooms", "item_dried_mushrooms", 6, "stove")]
-        [InlineData("craft_smoked_meat_rations", "item_smoked_meat", 4, "stove")]
-        [InlineData("craft_canned_grain_stew", "item_canned_grain_stew", 3, "stove")]
-        [InlineData("craft_salted_fish_meat", "item_salted_meat", 5, "workbench")]
-        [InlineData("craft_rendered_fat_confit", "item_fat_confit", 3, "stove")]
-        [InlineData("craft_fermented_sauerkraut", "item_fermented_sauerkraut", 5, "workbench")]
-        [InlineData("craft_honey_preserved_pulp", "item_honey_preserved_pulp", 4, "stove")]
-        [InlineData("craft_dried_herb_packets", "item_dried_herb_packets", 4, "workbench")]
-        [InlineData("craft_brined_legume_mash", "item_brined_legume_mash", 4, "stove")]
-        public void PreservationRecipes_AreAuthoredAndValid(string recipeId, string expectedResultItem, int expectedAmount, string expectedStation)
+        [Fact]
+        public void PreservationRecipes_CatalogTable_IsAuthoredAndValid()
         {
             string dataDir = FindDataDir();
             string recipesPath = Path.Combine(dataDir, "recipes.json");
@@ -61,14 +52,59 @@ namespace Ashfall.Core.Tests
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var file = JsonSerializer.Deserialize<RecipeFileDto>(json, options);
             Assert.NotNull(file);
+            var failures = new List<string>();
 
-            var recipe = file.recipes.Find(r => r.id == recipeId);
-            Assert.NotNull(recipe);
-            Assert.Equal(expectedResultItem, recipe.resultItemId);
-            Assert.Equal(expectedAmount, recipe.resultAmount);
-            Assert.Equal(expectedStation, recipe.requiredStationId);
-            Assert.True(recipe.craftingTimeHours > 0);
-            Assert.NotEmpty(recipe.ingredients);
+            foreach (var testCase in new[]
+            {
+                (RecipeId: "craft_pickled_tubers", ExpectedResultItem: "item_pickled_tubers", ExpectedAmount: 4, ExpectedStation: "stove"),
+                (RecipeId: "craft_dried_mushrooms", ExpectedResultItem: "item_dried_mushrooms", ExpectedAmount: 6, ExpectedStation: "stove"),
+                (RecipeId: "craft_smoked_meat_rations", ExpectedResultItem: "item_smoked_meat", ExpectedAmount: 4, ExpectedStation: "stove"),
+                (RecipeId: "craft_canned_grain_stew", ExpectedResultItem: "item_canned_grain_stew", ExpectedAmount: 3, ExpectedStation: "stove"),
+                (RecipeId: "craft_salted_fish_meat", ExpectedResultItem: "item_salted_meat", ExpectedAmount: 5, ExpectedStation: "workbench"),
+                (RecipeId: "craft_rendered_fat_confit", ExpectedResultItem: "item_fat_confit", ExpectedAmount: 3, ExpectedStation: "stove"),
+                (RecipeId: "craft_fermented_sauerkraut", ExpectedResultItem: "item_fermented_sauerkraut", ExpectedAmount: 5, ExpectedStation: "workbench"),
+                (RecipeId: "craft_honey_preserved_pulp", ExpectedResultItem: "item_honey_preserved_pulp", ExpectedAmount: 4, ExpectedStation: "stove"),
+                (RecipeId: "craft_dried_herb_packets", ExpectedResultItem: "item_dried_herb_packets", ExpectedAmount: 4, ExpectedStation: "workbench"),
+                (RecipeId: "craft_brined_legume_mash", ExpectedResultItem: "item_brined_legume_mash", ExpectedAmount: 4, ExpectedStation: "stove"),
+            })
+            {
+                var recipe = file!.recipes.Find(r => r.id == testCase.RecipeId);
+                if (recipe == null)
+                {
+                    failures.Add($"recipe '{testCase.RecipeId}' is missing");
+                    continue;
+                }
+
+                if (recipe.resultItemId != testCase.ExpectedResultItem)
+                {
+                    failures.Add(
+                        $"recipe '{testCase.RecipeId}' expected result '{testCase.ExpectedResultItem}', got '{recipe.resultItemId}'");
+                }
+
+                if (recipe.resultAmount != testCase.ExpectedAmount)
+                {
+                    failures.Add(
+                        $"recipe '{testCase.RecipeId}' expected amount {testCase.ExpectedAmount}, got {recipe.resultAmount}");
+                }
+
+                if (recipe.requiredStationId != testCase.ExpectedStation)
+                {
+                    failures.Add(
+                        $"recipe '{testCase.RecipeId}' expected station '{testCase.ExpectedStation}', got '{recipe.requiredStationId}'");
+                }
+
+                if (recipe.craftingTimeHours <= 0)
+                {
+                    failures.Add($"recipe '{testCase.RecipeId}' must have positive crafting time");
+                }
+
+                if (recipe.ingredients.Count == 0)
+                {
+                    failures.Add($"recipe '{testCase.RecipeId}' must have ingredients");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

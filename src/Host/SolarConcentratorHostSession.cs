@@ -43,6 +43,19 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>
+        /// B5–B8 Phase 2 (Plan 65): wire the grid-tie inverter. The engine
+        /// checks/consumes the canonical item; the Main publish path picks the
+        /// resulting feed up via OnSolarOutputChanged.
+        /// </summary>
+        public ActionResult ConnectGridTie()
+        {
+            var res = System.ConnectGridTie();
+            if (res.IsFailure) LastEvent = "Grid-tie blocked: " + res.FailureCode;
+            RaiseStateChanged();
+            return res;
+        }
+
         public override void Save()
         {
             if (!IsDirty) return;

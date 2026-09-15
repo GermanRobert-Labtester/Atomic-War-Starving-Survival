@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.UI;
@@ -734,7 +735,10 @@ namespace AtomicWar.GodotApp.UI
 
         public static Color ToColor((float r, float g, float b, float a) token)
         {
-            return new Color(token.r, token.g, token.b, token.a);
+            // Plan 184 — preference-aware CVD simulation; Theme constants stay unchanged.
+            string mode = AtomicWar.GodotApp.Settings.UserSettingsStore.Current.ColorblindMode;
+            var mapped = Ashfall.Core.Settings.ColorblindColorMapper.Map(token, mode);
+            return new Color(mapped.r, mapped.g, mapped.b, mapped.a);
         }
 
         // ── Texture Loading ─────────────────────────────────────────────
@@ -931,6 +935,10 @@ namespace AtomicWar.GodotApp.UI
         /// source (e.g. "demo_scan") — never invents a label.</summary>
         public static string FormatDoseSource(Ashfall.Core.DoseContentCatalog? content, string? sourceId)
         {
+            // "Always Show Hazard Text" off → omit humanized exposure labels.
+            if (!AtomicWar.GodotApp.Settings.UserSettingsStore.Current.HazardTextLabels)
+                return string.IsNullOrEmpty(sourceId) ? string.Empty : sourceId!;
+
             if (string.IsNullOrEmpty(sourceId)) return "— exposure —";
             if (content?.locations != null)
             {

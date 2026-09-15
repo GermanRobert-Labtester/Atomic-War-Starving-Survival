@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -110,6 +111,9 @@ namespace AtomicWar.GodotApp
             _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters);
             _expeditions.Flags = _consequenceLedger;
             _expeditions.CurrentDay = _simDay;
+            // Plan 174 — pack-companion cargo route binds from the expedition
+            // side too, so composition order never drops the seam.
+            if (_companions != null) BindCompanionSeams();
             // F17 — micro-location hazard exposure routes into the disease
             // authority through the same lazy-delegate pattern as wildlife
             // trapping (Plan 36): the ward session is created on first use if
@@ -133,11 +137,41 @@ namespace AtomicWar.GodotApp
                 _expeditions.NarrativeEngine.QuestLink = _expansionQuests.System;
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
-            _expeditions.Engine.OnExpeditionStarted += _ => ObserveSigil("expedition.dispatched");
+            // C2 / Plan 21C (P6) — party-protection inputs for the dispatch
+            // estimate, assembled from the canonical authorities (exposure
+            // resolver ambient + gear projection + bound wear multiplier).
+            _expeditions.SetEstimateProtectiveInputs(locationId =>
+                _survivors?.BuildProtectiveEstimateInputs(locationId));
+            // C2 / Plan 20A (G3) — the documented contract of
+            // OnWeatherGateForced is that the radiation owner applies
+            // block.ForceRadDose to the survivor. This is an acute discrete
+            // dose (forced entry through a blocked weather gate), distinct
+            // from continuous ambient exposure — never routed through the
+            // zone-rate providers, so it cannot double-count the ambient path.
+            _expeditions.OnWeatherGateForced += (survivorId, locationId, gateBlock) =>
+            {
+                if (_survivors == null || gateBlock == null || gateBlock.ForceRadDose <= 0f) return;
+                string reason = $"Forced entry through blocked weather gate ({gateBlock.GateId})";
+                float applied = _survivors.ApplyAcuteRadDose(survivorId, gateBlock.ForceRadDose, reason);
+                if (applied > 0f)
+                {
+                    _journal?.TryAddRawEntry(
+                        $"exp_forced_gate_rad_{survivorId}_{locationId}_{gateBlock.GateId}",
+                        $"{survivorId} forced a blocked weather gate at {locationId} and took {applied:F0} acute rad dose.",
+                        null!,
+                        _simDay);
+                }
+            };
+            _expeditions.Engine.OnExpeditionStarted += state =>
+            {
+                ObserveSigil("expedition.dispatched");
+                BridgeDistressRescueOnDispatch(state);
+            };
             SyncWaterRoutes();
             _expeditions.Engine.OnExpeditionCompleted += state =>
             {
                 if (state == null) return;
+                BridgeDistressRescueOnArrive(state);
                 if (_inventory != null && state.loot != null)
                 {
                     for (int i = 0; i < state.loot.Count; i++)
@@ -230,6 +264,8 @@ namespace AtomicWar.GodotApp
                 _combat.Survivors = _survivors;
                 _combat.Equipment = _equipmentCondition?.System;
                 _combat.Ballistics = _ballisticsWorkbench?.System;
+                // CBRN: evaluate lane exposure after each EndTurn when hazards are live.
+                _combat.ChemWarfare = EnsureChemWarfare();
                 // MarkCombatSurvived is a required combat effect (see
                 // CombatHostSession.ValidatePorts / WeaponConditionSystem's
                 // UnboundRequiredEffects) that was previously left unwired,
@@ -462,6 +498,55 @@ namespace AtomicWar.GodotApp
             // else: panel closed/headless — encounter surfaced without a diegetic surface.
         }
 
+        /// <summary>
+        /// Bridge expedition dispatch into the distress-rescue mission ledger when
+        /// the destination matches an active Heard/Identified rescue. Selection
+        /// and association rules are Core-owned (plan §5.8).
+        /// </summary>
+        private void BridgeDistressRescueOnDispatch(ExpeditionState? state)
+        {
+            if (state == null || string.IsNullOrEmpty(state.locationId)) return;
+            SetupRadio();
+            var mission = _radio?.RescueMissions?.GetActiveMissionForDispatch(state.locationId);
+            if (mission == null) return;
+            string expeditionId = !string.IsNullOrEmpty(state.survivorId)
+                ? $"exp_{state.survivorId}_{state.locationId}"
+                : $"exp_{state.locationId}";
+            _radio!.RescueMissions.RecordExpeditionDispatched(mission.QuestId, expeditionId);
+        }
+
+        /// <summary>
+        /// Bridge expedition return into distress-rescue arrival / ambush survival,
+        /// which triggers ClaimIdempotentRewards via RadioHostSession stage hooks.
+        /// Association resolves Core-side: persisted ExpeditionId first, legacy
+        /// destination fallback only when no association exists (plan §5.8).
+        /// </summary>
+        private void BridgeDistressRescueOnArrive(ExpeditionState? state)
+        {
+            if (state == null || string.IsNullOrEmpty(state.locationId)) return;
+            SetupRadio();
+            var missions = _radio?.RescueMissions;
+            if (missions == null) return;
+
+            string expeditionId = !string.IsNullOrEmpty(state.survivorId)
+                ? $"exp_{state.survivorId}_{state.locationId}"
+                : $"exp_{state.locationId}";
+            DistressRescueMission? mission = missions.GetMissionForArrival(state.locationId, expeditionId);
+            if (mission == null) return;
+
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            if (mission.Stage == DistressRescueMissionStage.Dispatched)
+            {
+                var stage = missions.RecordDestinationReached(mission.QuestId, day);
+                if (stage == DistressRescueMissionStage.TerminalAmbush)
+                    missions.ResolveAmbushSurvived(mission.QuestId, "Expedition returned after the ambush.");
+            }
+            else if (mission.Stage == DistressRescueMissionStage.TerminalAmbush)
+            {
+                missions.ResolveAmbushSurvived(mission.QuestId, "Expedition returned after the ambush.");
+            }
+        }
+
         private void CloseCombatPanel()
         {
             _combatPanel.Visible = false;
@@ -510,16 +595,23 @@ namespace AtomicWar.GodotApp
                     _reconTelemetry.System.LaunchMission(param, "loc_holdfast");
                     break;
                 case "survey":
-                    var mission = _reconTelemetry.System.GetMission(_reconTelemetry.System.State.activeMissions[0].missionId);
-                    if (mission != null)
-                        _reconTelemetry.System.SurveySectors(mission.missionId, new System.Collections.Generic.List<string> { param });
+                    if (_reconTelemetry.System.State.activeMissions.Count > 0)
+                    {
+                        var mission = _reconTelemetry.System.GetMission(
+                            _reconTelemetry.System.State.activeMissions[0].missionId);
+                        if (mission != null)
+                            _reconTelemetry.System.SurveySectors(
+                                mission.missionId,
+                                new System.Collections.Generic.List<string> { param });
+                    }
                     break;
                 case "recover":
                     if (_reconTelemetry.System.State.activeMissions.Count > 0)
                         _reconTelemetry.System.RecoverPlatform(_reconTelemetry.System.State.activeMissions[0].missionId);
                     break;
                 case "forecast":
-                    _reconTelemetry.System.GenerateForecast(_reconTelemetry.System.State.launchedPlatformIds[0]);
+                    if (_reconTelemetry.System.State.launchedPlatformIds.Count > 0)
+                        _reconTelemetry.System.GenerateForecast(_reconTelemetry.System.State.launchedPlatformIds[0]);
                     break;
                 case "scout":
                     if (_reconTelemetry.System.State.activeMissions.Count > 0)

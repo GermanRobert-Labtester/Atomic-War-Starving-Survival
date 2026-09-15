@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -97,6 +98,17 @@ namespace AtomicWar.GodotApp
                 _inventoryPanel.RefreshView();
             }
             _inventoryOverlay?.Bind(_inventory);
+
+            // Plan 52: the Holdfast air system reads the campaign-owned
+            // inventory and shared research capability directly. This is the
+            // only production binding; the starting-level system does not
+            // maintain a second item or research ledger.
+            if (_startingLevel != null)
+            {
+                _startingLevel.BindMaintenance(
+                    _inventory.Inventory,
+                    knowledgeId => EnsureSharedResearch().HasCapability(knowledgeId));
+            }
 
             // Collectible effect feeder (audit #27): inventory may construct
             // after SetupCollectibles at boot; wire when both sides exist.

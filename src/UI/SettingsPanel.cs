@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.Settings;
@@ -38,6 +39,7 @@ namespace AtomicWar.GodotApp.UI
 
         // Accessibility & Language
         private OptionButton _optLanguage = null!;
+        private OptionButton _optColorblind = null!;
         private Button _btnHighContrast = null!;
         private Button _btnHazardLabels = null!;
         private Button _btnReducedMotion = null!;
@@ -120,7 +122,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Header
             var headerHBox = new HBoxContainer();
-            var title = AshfallUiHelpers.MakeTitle("SYSTEM CONFIGURATION // SETTINGS", DesignTheme.FontSizeH2);
+            var title = AshfallUiHelpers.MakeTitle("SETTINGS", DesignTheme.FontSizeH2);
             headerHBox.AddChild(title);
             headerHBox.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
             var btnCloseTop = AshfallUiHelpers.MakeButton("✕", CancelAndClose);
@@ -216,7 +218,7 @@ namespace AtomicWar.GodotApp.UI
             contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── 2. AUDIO SECTION ───────────────────────────────────────────
-            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("AUDIO SIGNALS"));
+            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("AUDIO"));
 
             _btnMute = AshfallUiHelpers.MakeButton("ALL AUDIO: ACTIVE", () =>
             {
@@ -228,10 +230,10 @@ namespace AtomicWar.GodotApp.UI
             contentVBox.AddChild(_btnMute);
 
             contentVBox.AddChild(MakeVolumeRow("Master Volume", v => _working.MasterVolume = v, () => _working.MasterVolume, out _lblMasterVol));
-            contentVBox.AddChild(MakeVolumeRow("Music / Ambience Score", v => _working.MusicVolume = v, () => _working.MusicVolume, out _lblMusicVol));
-            contentVBox.AddChild(MakeVolumeRow("Sound Effects / Machinery", v => _working.SfxVolume = v, () => _working.SfxVolume, out _lblSfxVol));
-            contentVBox.AddChild(MakeVolumeRow("Radio Receiver / Transmissions", v => _working.RadioVolume = v, () => _working.RadioVolume, out _lblRadioVol));
-            contentVBox.AddChild(MakeVolumeRow("Bunker Ambience / Air Duct", v => _working.AmbienceVolume = v, () => _working.AmbienceVolume, out _lblAmbienceVol));
+            contentVBox.AddChild(MakeVolumeRow("Music / Ambience", v => _working.MusicVolume = v, () => _working.MusicVolume, out _lblMusicVol));
+            contentVBox.AddChild(MakeVolumeRow("Sound Effects", v => _working.SfxVolume = v, () => _working.SfxVolume, out _lblSfxVol));
+            contentVBox.AddChild(MakeVolumeRow("Radio", v => _working.RadioVolume = v, () => _working.RadioVolume, out _lblRadioVol));
+            contentVBox.AddChild(MakeVolumeRow("Bunker Ambience", v => _working.AmbienceVolume = v, () => _working.AmbienceVolume, out _lblAmbienceVol));
 
             contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
@@ -281,6 +283,35 @@ namespace AtomicWar.GodotApp.UI
             rowRm.AddChild(_btnReducedMotion);
             contentVBox.AddChild(rowRm);
 
+            var rowLf = MakeSettingRow("Large Fonts");
+            _btnLargeFonts = AshfallUiHelpers.MakeButton("DISABLED", () =>
+            {
+                _working.LargeFonts = !_working.LargeFonts;
+                _btnLargeFonts.Text = _working.LargeFonts ? "ENABLED" : "DISABLED";
+            });
+            _btnLargeFonts.CustomMinimumSize = new Vector2(240, 32);
+            rowLf.AddChild(_btnLargeFonts);
+            contentVBox.AddChild(rowLf);
+
+            var rowCb = MakeSettingRow("Colorblind Simulation");
+            _optColorblind = new OptionButton { CustomMinimumSize = new Vector2(240, 32) };
+            _optColorblind.AddItem("None", 0);
+            _optColorblind.AddItem("Protanopia", 1);
+            _optColorblind.AddItem("Deuteranopia", 2);
+            _optColorblind.AddItem("Tritanopia", 3);
+            _optColorblind.ItemSelected += idx =>
+            {
+                _working.ColorblindMode = idx switch
+                {
+                    1 => ColorblindColorMapper.Protanopia,
+                    2 => ColorblindColorMapper.Deuteranopia,
+                    3 => ColorblindColorMapper.Tritanopia,
+                    _ => ColorblindColorMapper.None
+                };
+            };
+            rowCb.AddChild(_optColorblind);
+            contentVBox.AddChild(rowCb);
+
             contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── 4. GAMEPLAY PREFERENCES ────────────────────────────────────
@@ -317,7 +348,7 @@ namespace AtomicWar.GodotApp.UI
             rowEndDay.AddChild(_btnConfirmEndDay);
             contentVBox.AddChild(rowEndDay);
 
-            var rowRadioLog = MakeSettingRow("Detailed Radio Log Dispatches");
+            var rowRadioLog = MakeSettingRow("Detailed Radio Log");
             _btnVerboseRadio = AshfallUiHelpers.MakeButton("ENABLED", () =>
             {
                 _working.VerboseRadioLog = !_working.VerboseRadioLog;
@@ -449,6 +480,17 @@ namespace AtomicWar.GodotApp.UI
             _btnHighContrast.Text = _working.HighContrast ? "ENABLED" : "DISABLED";
             _btnHazardLabels.Text = _working.HazardTextLabels ? "ENABLED" : "DISABLED";
             _btnReducedMotion.Text = _working.ReducedMotion ? "ENABLED" : "DISABLED";
+            _btnLargeFonts.Text = _working.LargeFonts ? "ENABLED" : "DISABLED";
+            if (_optColorblind != null)
+            {
+                _optColorblind.Selected = ColorblindColorMapper.NormalizeMode(_working.ColorblindMode) switch
+                {
+                    ColorblindColorMapper.Protanopia => 1,
+                    ColorblindColorMapper.Deuteranopia => 2,
+                    ColorblindColorMapper.Tritanopia => 3,
+                    _ => 0
+                };
+            }
             _btnConfirmEndDay.Text = _working.ConfirmEndDay ? "ENABLED" : "DISABLED";
             _btnVerboseRadio.Text = _working.VerboseRadioLog ? "ENABLED" : "DISABLED";
         }

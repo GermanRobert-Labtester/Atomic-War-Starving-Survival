@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 111,
-  "headless_test_count": 109,
+  "total_tests": 121,
+  "headless_test_count": 119,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -162,6 +162,48 @@
       "description": "SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance",
       "headless_compatible": true,
       "expected_summary_id": "standalone_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "plans_139_141_selftest",
+      "action": "Plans139To141SelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--plans-139-141-selftest",
+      "aliases": [
+        "--insar-selftest",
+        "--hydraulic-extrusion-selftest",
+        "--runflat-tire-selftest"
+      ],
+      "description": "Flagship Plans 139\u2013141: InSAR repeat-pass classification, extrusion quality/defect/tool-wear, run-flat hazard/heat/rolling-resistance",
+      "headless_compatible": true,
+      "expected_summary_id": "plans_139_141_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "plans_122_125_selftest",
+      "action": "Plans122to125SelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--plans-122-125-selftest",
+      "aliases": [
+        "--sofc-power-selftest",
+        "--sound-ranging-selftest",
+        "--cvd-diamond-selftest",
+        "--amphibious-draisine-selftest"
+      ],
+      "description": "Flagship Plans 122-125: SOFC grid/CHP wiring, CVD consumer wear registry, defensive threat projection, amphibious route capability",
+      "headless_compatible": true,
+      "expected_summary_id": "plans_122_125_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "late_tech_mobility_selftest",
+      "action": "LateTechMobilitySelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--late-tech-mobility-selftest",
+      "aliases": [],
+      "description": "Flagship Plans 122-125 Phase 10: deterministic 75-day combined scenario \u2014 SOFC commissioning/baseload, acoustic threat narrowing, diamond tool economy, amphibious retrofit/crossing, day-71 save + replay parity via state hashes",
+      "headless_compatible": true,
+      "expected_summary_id": "late_tech_mobility_selftest",
       "timeout_seconds": 30
     },
     {
@@ -669,6 +711,61 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "synthetic_lubricant_selftest",
+      "action": "SyntheticLubricantSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--synthetic-lubricant-selftest",
+      "aliases": [],
+      "description": "Plan 118: deterministic catalog-backed synthesis, catalyst, product routing, consumer registration, and save-state proof",
+      "headless_compatible": true,
+      "expected_summary_id": "synthetic_lubricant_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "uv_corona_selftest",
+      "action": "UvCoronaSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--uv-corona-selftest",
+      "aliases": [],
+      "description": "Plan 119: bounded seeded electrical-fault observations, environmental limits, and detector state proof",
+      "headless_compatible": true,
+      "expected_summary_id": "uv_corona_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "carbon_composite_selftest",
+      "action": "CarbonCompositeSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--carbon-composite-selftest",
+      "aliases": [],
+      "description": "Plan 120: deterministic composite cure quality, explicit component projections, and active-job proof",
+      "headless_compatible": true,
+      "expected_summary_id": "carbon_composite_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "gpr_cartography_selftest",
+      "action": "GprCartographySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--gpr-cartography-selftest",
+      "aliases": [],
+      "description": "Plan 121: uncertain terrain-aware GPR observations, staged leads, and active-survey proof",
+      "headless_compatible": true,
+      "expected_summary_id": "gpr_cartography_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "advanced_industrial_recon_selftest",
+      "action": "AdvancedIndustrialReconSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--advanced-industrial-recon-selftest",
+      "aliases": [],
+      "description": "Plans 118-121: deterministic advanced industrial/reconnaissance catalog and 60-day Core proof",
+      "headless_compatible": true,
+      "expected_summary_id": "advanced_industrial_recon_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "dose_ledger_selftest",
       "action": "DoseLedgerSelfTest",
       "category": "Host Domains & Save Stores",
@@ -732,6 +829,17 @@
       "description": "Expedition domain: sorties, encounter resolution, loot drops, and save round-trip",
       "headless_compatible": true,
       "expected_summary_id": "expedition_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expedition_playtest_selftest",
+      "action": "ExpeditionPlaytestSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--expedition-playtest-selftest",
+      "aliases": [],
+      "description": "Plans 51: deterministic 30-day expedition campaign, vehicle balance ledger, breakdown, wear, and save/resume proof",
+      "headless_compatible": true,
+      "expected_summary_id": "expedition_playtest_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1148,6 +1256,19 @@
       "description": "Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification",
       "headless_compatible": true,
       "expected_summary_id": "shelter_decor_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_physics_selftest",
+      "action": "ShelterPhysicsSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--shelter-physics-selftest",
+      "aliases": [
+        "--shelter-actor-physics-selftest"
+      ],
+      "description": "Physics base: CharacterBody2D gravity/floor collision, accelerated horizontal seek to room anchors, and blockout character sheet animation",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_physics_selftest",
       "timeout_seconds": 30
     },
     {

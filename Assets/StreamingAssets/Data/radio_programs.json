@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "programs": [
+    {
+      "id": "radio_prog_shelter_morning_bulletin",
+      "display_name": "Shelter Morning Bulletin",
+      "description": "A prepared civil-defense morning read: water hours, route notes, and names the holdfast still hopes to hear.",
+      "station_id": "station_civil_defense",
+      "slot_id": "slot_cd_morning",
+      "psyops_campaign_id": "psyops_campaign_scavenger_lantern_hour",
+      "prep_ticks_required": 1,
+      "genre": "civilian_news",
+      "required_equipment_item_ids": ["radio_headset"],
+      "prep_cost_item_id": "aa_batteries",
+      "prep_cost_count": 1
+    },
+    {
+      "id": "radio_prog_classroom_evening_story",
+      "display_name": "Open Classroom Evening Story",
+      "description": "An education-hour story block prepared for the open classroom evening culture slot. No propaganda campaign attached.",
+      "station_id": "station_open_classroom",
+      "slot_id": "slot_classroom_evening",
+      "psyops_campaign_id": "",
+      "prep_ticks_required": 2,
+      "genre": "storytelling",
+      "required_equipment_item_ids": ["radio_headset"],
+      "prep_cost_item_id": "",
+      "prep_cost_count": 0
+    }
+  ]
+}

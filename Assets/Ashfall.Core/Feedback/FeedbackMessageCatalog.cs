@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -15,26 +16,26 @@ namespace Ashfall.Core.Feedback
 
         private static readonly Dictionary<string, string> CategoryDefaults = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            { "success", "Success! Operation completed." },
-            { "failure", "Operation failed. Check your inputs." },
-            { "warning", "Warning: Proceed with caution." },
-            { "error", "Error: Something went wrong." },
-            { "confirmation", "Are you sure you want to proceed?" },
-            { "progress", "Progress: {0}% complete." },
-            { "reward", "You've earned a reward!" },
-            { "penalty", "Penalty incurred. Check your status." },
-            { "status", "Status: Normal." },
-            { "alert", "ALERT: Important update available!" },
-            { "hint", "Tip: Check your surroundings for clues." },
-            { "spoiler", "SPOILER WARNING: This action may reveal major plot points." },
-            { "time_pressure", "HURRY! Time is running out!" },
-            { "resource_warning", "WARNING: Resource levels are critical!" },
-            { "health_warning", "DANGER: Health critical!" },
-            { "morale_warning", "WARNING: Morale is dangerously low!" },
-            { "relationship", "Relationship status updated." },
-            { "faction", "Faction relationship updated." },
-            { "world_state", "World state updated." },
-            { "system", "System status updated." }
+            { "success", "Done." },
+            { "failure", "That didn't take. Check the inputs." },
+            { "warning", "Caution." },
+            { "error", "Something went wrong." },
+            { "confirmation", "Continue?" },
+            { "progress", "Progress: {0}%." },
+            { "reward", "Received a reward." },
+            { "penalty", "A cost was taken. Check the ledger." },
+            { "status", "Status: steady." },
+            { "alert", "ALERT: Something needs attention." },
+            { "hint", "Look around before you move." },
+            { "spoiler", "This may not go back in the box." },
+            { "time_pressure", "Time is short." },
+            { "resource_warning", "WARNING: Stores are critical." },
+            { "health_warning", "DANGER: Health is critical." },
+            { "morale_warning", "WARNING: Morale is critically low." },
+            { "relationship", "Standing updated." },
+            { "faction", "Faction standing updated." },
+            { "world_state", "The valley shifted." },
+            { "system", "System updated." }
         };
 
         private readonly List<FeedbackMessageTemplate> _allTemplates = new List<FeedbackMessageTemplate>();

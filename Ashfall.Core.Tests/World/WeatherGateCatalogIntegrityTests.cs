@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -185,37 +186,54 @@ namespace Ashfall.Core.Tests.World
 
         // ── F16.8 Weather × gate truth table ───────────────────────────
 
-        [Theory]
-        [InlineData(WeatherKind.Clear)]
-        [InlineData(WeatherKind.Rain)]
-        [InlineData(WeatherKind.Overcast)]
-        [InlineData(WeatherKind.Ashfall)]
-        [InlineData(WeatherKind.FalloutStorm)]
-        [InlineData(WeatherKind.Blizzard)]
-        [InlineData(WeatherKind.BlackRain)]
-        public void F16_WeatherGateTruthTable_AllGatesCorrect(WeatherKind weather)
+        [Fact]
+        public void F16_WeatherGateTruthTable_WeatherRowsAllGatesCorrect()
         {
-            foreach (var gateDef in _routeCatalog.Gates)
-            {
-                var domain = WeatherGateEvaluator.FromDef(gateDef);
-                var state = WeatherGateEvaluator.EvaluateGateStatic(domain, weather);
+            var failures = new List<string>();
 
-                // Verify positive gates
-                if (gateDef.required_weather != null && gateDef.required_weather.Count > 0 &&
-                    (gateDef.blocked_weather == null || gateDef.blocked_weather.Count == 0))
+            foreach (WeatherKind weather in new[]
+            {
+                WeatherKind.Clear,
+                WeatherKind.Rain,
+                WeatherKind.Overcast,
+                WeatherKind.Ashfall,
+                WeatherKind.FalloutStorm,
+                WeatherKind.Blizzard,
+                WeatherKind.BlackRain,
+            })
+            {
+
+                foreach (var gateDef in _routeCatalog.Gates)
                 {
-                    bool requiredMatch = gateDef.required_weather.Contains(weather.ToString());
-                    Assert.Equal(requiredMatch, state.IsOpen);
-                    Assert.True(state.IsPositiveGate);
-                }
-                // Verify negative gates
-                else if (gateDef.blocked_weather != null && gateDef.blocked_weather.Count > 0 &&
-                         (gateDef.required_weather == null || gateDef.required_weather.Count == 0))
-                {
-                    bool blockedMatch = gateDef.blocked_weather.Contains(weather.ToString());
-                    Assert.Equal(!blockedMatch, state.IsOpen);
+                    var domain = WeatherGateEvaluator.FromDef(gateDef);
+                    var state = WeatherGateEvaluator.EvaluateGateStatic(domain, weather);
+                    var exception = Record.Exception(() =>
+                    {
+                        // Verify positive gates
+                        if (gateDef.required_weather != null && gateDef.required_weather.Count > 0 &&
+                            (gateDef.blocked_weather == null || gateDef.blocked_weather.Count == 0))
+                        {
+                            bool requiredMatch = gateDef.required_weather.Contains(weather.ToString());
+                            Assert.Equal(requiredMatch, state.IsOpen);
+                            Assert.True(state.IsPositiveGate);
+                        }
+                        // Verify negative gates
+                        else if (gateDef.blocked_weather != null && gateDef.blocked_weather.Count > 0 &&
+                                 (gateDef.required_weather == null || gateDef.required_weather.Count == 0))
+                        {
+                            bool blockedMatch = gateDef.blocked_weather.Contains(weather.ToString());
+                            Assert.Equal(!blockedMatch, state.IsOpen);
+                        }
+                    });
+
+                    if (exception != null)
+                    {
+                        failures.Add($"weather={weather}: {exception.Message}");
+                    }
                 }
             }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ── F16.9 Positive gate contract ───────────────────────────────

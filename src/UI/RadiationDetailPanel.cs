@@ -76,6 +76,12 @@ namespace AtomicWar.GodotApp.UI
                         AshfallUiHelpers.ToColor(dose >= 50f
                             ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe));
                     _currentData.AddChild(row);
+                    // C2 / Plan 20A (§16) — canonical input breakdown from the
+                    // shared read model (same environment + effective-rate
+                    // resolver the tick used). Never recomputed here.
+                    var breakdown = _survivors.GetExposureBreakdown(state.Id);
+                    if (breakdown != null)
+                        _currentData.AddChild(MakeDimLine(breakdown.ToDisplayLine()));
                     RenderedCurrentCount++;
                 }
                 return;
@@ -152,6 +158,31 @@ namespace AtomicWar.GodotApp.UI
             else
             {
                 _protectionData.AddChild(MakeDimLine("Shelter shielding not monitored."));
+            }
+
+            // C2 / Plan 20B (§28) — the model's own breakdown names the largest
+            // contributor so "why is interior radiation high?" has an answer.
+            var shielding = _survivors?.GetShieldingBreakdown();
+            if (shielding != null)
+            {
+                _protectionData.AddChild(AshfallUiHelpers.MakeDataRow("Interior radiation",
+                    $"{shielding.InteriorRad:0.00} mSv/h · weakest: {shielding.WeakestContributor} " +
+                    $"({shielding.WeakestContribution:0.00} mSv/h)" +
+                    (shielding.DeconReduced ? " · decon active" : ""),
+                    AshfallUiHelpers.ToColor(shielding.InteriorRad > 1f
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+            }
+
+            // C2 / Plan 21A (P3/§12) — remaining life of the weakest protective
+            // item from the Core estimate (no panel-side wear arithmetic).
+            var weakestGear = _survivors?.GetWeakestProtectiveLife();
+            if (weakestGear != null)
+            {
+                _protectionData.AddChild(AshfallUiHelpers.MakeDataRow("Weakest protective gear",
+                    $"{weakestGear.DisplayName} · condition {weakestGear.CurrentDurability:0}/{weakestGear.MaxDurability:0}" +
+                    (weakestGear.ExposureMultiplier > 1f ? $" · ~{weakestGear.HoursRemaining:0} h at current exposure (×{weakestGear.ExposureMultiplier:0.#})" : $" · ~{weakestGear.HoursRemaining:0} h at current exposure"),
+                    AshfallUiHelpers.ToColor(weakestGear.HoursRemaining < 24f
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
             }
 
             if (_dose?.Ledger != null)

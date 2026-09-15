@@ -2,6 +2,8 @@
 # ASHFALL Godot-side deep audit battery — IDENTIFICATION ONLY (no fixes).
 # Each loop runs all checks and appends findings to a running master list.
 cd "$(dirname "$0")/.."
+GODOT_RUNNER="scripts/ci/run-godot-bounded.sh"
+MAX_SECONDS=180
 
 MASTER=/tmp/ashfall_audit_master.txt
 : > "$MASTER"
@@ -12,9 +14,11 @@ for L in $(seq 1 $LOOPS); do
   {
     echo "########## LOOP $L ##########"
     echo "--- build ---"
-    dotnet build Ashfall.csproj -v:q 2>&1 | grep -E "error CS" | sort -u
+    timeout --foreground --signal=TERM --kill-after=5s "${MAX_SECONDS}s" \
+      dotnet build Ashfall.csproj -v:q 2>&1 | grep -E "error CS" | sort -u
     echo "--- core tests ---"
-    dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj 2>&1 | grep -E "Failed|Passed:" | tail -1
+    timeout --foreground --signal=TERM --kill-after=5s "${MAX_SECONDS}s" \
+      dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj 2>&1 | grep -E "Failed|Passed:" | tail -1
     echo "--- NotImplemented in src/Ashfall.Core (non-bridge) ---"
     grep -rn "NotImplementedException" src Assets/Ashfall.Core --include="*.cs" | grep -v "BridgeGap.cs"
     echo "--- empty catch ---"
@@ -35,7 +39,7 @@ for L in $(seq 1 $LOOPS); do
     git status --short | grep -E "obj/|bin/|\.godot/" | head -5
     echo "--- selftest sweep ---"
     for t in expansions-selftest year-of-ash-save-selftest duty-roster-save-selftest expansion-hub-save-selftest journal-selftest holdfast-save-selftest bridge-selftest; do
-      r=$(timeout 40 godot --headless --path . -- --$t 2>&1 | grep -iE "FAIL|PASS$|result:" | tail -1)
+      r=$(timeout 40 bash "$GODOT_RUNNER" --path . -- --$t 2>&1 | grep -iE "FAIL|PASS$|result:" | tail -1)
       echo "  $t: $(echo "$r" | grep -qi fail && echo FAIL || echo pass)"
     done
   } >> "$MASTER" 2>&1

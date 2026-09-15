@@ -823,7 +823,11 @@
       "weight_kg": 1.2,
       "durability": 0.85,
       "value": 14,
-      "tags": ["electronics", "scientific", "recovered"]
+      "tags": [
+        "electronics",
+        "scientific",
+        "recovered"
+      ]
     },
     {
       "id": "solar_cell",
@@ -1347,6 +1351,7 @@
       "weight": 1.5,
       "radProtection": 5,
       "durability": 40,
+      "degradeRate": 0.5,
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -1607,6 +1612,7 @@
       "weight": 2.0,
       "radProtection": 100,
       "durability": 80,
+      "degradeRate": 0.5,
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -1627,6 +1633,7 @@
       "weight": 0.8,
       "radProtection": 40,
       "durability": 70,
+      "degradeRate": 1.0,
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -1807,6 +1814,7 @@
       "weight": 3.0,
       "radProtection": 100,
       "durability": 100,
+      "degradeRate": 0.5,
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -2807,6 +2815,7 @@
       "weight": 0.4,
       "radProtection": 15,
       "durability": 50,
+      "degradeRate": 0.5,
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -3367,6 +3376,7 @@
       "weight": 0.1,
       "radProtection": 20,
       "durability": 60,
+      "degradeRate": 0.5,
       "contamination": 5,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -5199,6 +5209,267 @@
       "weight": 0.1,
       "tradeValue": 7,
       "empShielded": true
+    },
+    {
+      "id": "item_fermentation_sugar_feedstock",
+      "displayName": "Sealed Sugar Feedstock",
+      "description": "Crated drums of dense syrup left over from pre-war food processing. Far too concentrated to drink and too valuable to waste: the fermenter converts it into preservation and industrial resources. Gooey, heavy, and sealed against the wasteland.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 5.0,
+      "tradeValue": 6
+    },
+    {
+      "id": "item_fermentation_starch_feedstock",
+      "displayName": "Pressed Starch Cake Feedstock",
+      "description": "Compressed bricks of starchy meal milled from surplus tubers and grain sweepings. Nobody wants to eat them straight, but the fermentation reactor turns them into something the shelter can actually use.",
+      "type": "Consumable",
+      "stackMax": 20,
+      "weight": 1.5,
+      "tradeValue": 3
+    },
+    {
+      "id": "item_fermentation_culture_starter",
+      "displayName": "Inert Culture Starter",
+      "description": "A sealed vial of starter medium. The label says only that it is inert until introduced into the reactor's prepared environment, and that each vial is good for exactly one batch. The rest of the label dissolved long ago.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 0.2,
+      "tradeValue": 8
+    },
+    {
+      "id": "item_fermentation_filter_module",
+      "displayName": "Fermentation Filter Module",
+      "description": "A replaceable breather and scrubber cartridge for the fermentation reactor's gas and effluent lines. Pressure-packed filtration medium inside a scored steel canister. One module keeps the reactor's air path clean until it clogs.",
+      "type": "Equipment",
+      "stackMax": 5,
+      "weight": 1.2,
+      "tradeValue": 7
+    },
+    {
+      "id": "item_fermentation_service_kit",
+      "displayName": "Reactor Service Kit",
+      "description": "Aboard-shelf kit of abstract maintenance supplies for the fermentation reactor: replacement seals, scrub pads, calibration shims, and a bound checklist. The work itself is wearisome, not dangerous — the reactor never holds anything alive between batches by design.",
+      "type": "Tool",
+      "stackMax": 5,
+      "weight": 2.0,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_fermentation_preservation_concentrate",
+      "displayName": "Preservation Concentrate",
+      "description": "A shelf-stable draw of concentrated preservation medium from the fermentation reactor. A little of it in the curing brine stretches meat and garden surplus far past their natural span. The kitchen keeps its own ledger of what gets cured with it.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 0.8,
+      "tradeValue": 12
+    },
+    {
+      "id": "item_fermentation_cleaning_reagent",
+      "displayName": "Industrial Cleaning Reagent",
+      "description": "A mild reactive draw from the fermenter, bottled for the workshop. Eats through rust and corrosion without touching sound metal underneath. The machinists use it to reclaim seized scrap for the foundry's feed stock.",
+      "type": "Consumable",
+      "stackMax": 10,
+      "weight": 1.0,
+      "tradeValue": 11
+    },
+    {
+      "id": "item_fermented_organic_acid_carboy",
+      "displayName": "Fermented Organic Acid Carboy",
+      "description": "A heavy glass carboy of cloudy, sharp-smelling acid drawn off the fermentation reactor. Traders pay well for it; the chemists talk about what it might wash out of contaminated earth, someday, if anyone ever builds the rig for it.",
+      "type": "Consumable",
+      "stackMax": 4,
+      "weight": 6.0,
+      "tradeValue": 15
+    },
+    {
+      "id": "item_fermentation_waste_pomace",
+      "displayName": "Fermentation Waste Pomace",
+      "description": "The pressed-out remainder of a fermentation batch: spent solids, dead medium, and filter leavings sealed into a drum. Mostly useless — it can be buried, traded for a fraction, or held against some future composting use.",
+      "type": "Consumable",
+      "stackMax": 5,
+      "weight": 3.0,
+      "tradeValue": 1
+    },
+    {
+      "id": "item_crop_waste",
+      "displayName": "Crop Waste",
+      "description": "Cut stalks, husks, and leaf rot stripped from the greenhouse beds after a harvest. Heavy, bulky, and nearly worthless as food. It burns poorly and composts slowly, but there is more of it than anything else the shelter throws away.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.5,
+      "tradeValue": 1
+    },
+    {
+      "id": "item_biofuel_low_grade",
+      "displayName": "Low-Grade Biofuel Canister",
+      "description": "A canister of cloudy, watery fuel drawn off a half-finished cellulose run. It burns, after a fashion. Generators cough on it and engines wear fast, but in a cold week nobody asks questions about the color.",
+      "type": "Consumable",
+      "stackMax": 5,
+      "weight": 4.0,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_biofuel_generator_grade",
+      "displayName": "Generator-Grade Biofuel Canister",
+      "description": "Steady-burning fuel settled and strained in the still bay. Not clean enough for a long drive, but the grid takes it without complaint, and the price of a quiet generator is measured in more than cans.",
+      "type": "Consumable",
+      "stackMax": 5,
+      "weight": 4.0,
+      "tradeValue": 7
+    },
+    {
+      "id": "item_biofuel_high_grade",
+      "displayName": "High-Grade Biofuel Canister",
+      "description": "Clear, dense fuel from a patient, well-tended run. It costs power, labor, and cartridges that are hard to replace. Engines run long on it, and traders who know the difference pay for it.",
+      "type": "Consumable",
+      "stackMax": 5,
+      "weight": 4.0,
+      "tradeValue": 11
+    },
+    {
+      "id": "item_separation_media_cartridge",
+      "displayName": "Separation Media Cartridge",
+      "description": "A sealed cartridge of packing and filter media for the still bay's settling columns. Each one swells, clogs, and dies a little more with every batch. When the last cartridge goes, the runs go cloudy.",
+      "type": "Component",
+      "stackMax": 4,
+      "weight": 1.5,
+      "tradeValue": 6
+    },
+    {
+      "id": "item_ecm_jammer_module",
+      "displayName": "Deception Suite Module",
+      "description": "A rack of decoy transmitters and noise boxes pulled from a dead broadcast van. Bolted to a vehicle it can make a hostile scanner argue with itself about where the truck actually is. It runs hot, eats power, and every minute it shouts is a minute someone might be triangulating the shouting.",
+      "type": "Device",
+      "stackMax": 2,
+      "weight": 8.0,
+      "tradeValue": 22
+    },
+    {
+      "id": "item_machined_blank_small",
+      "displayName": "Machined Blank, Small",
+      "description": "A measured steel blank, faced and trued on the lathe, waiting for its final shape. Half the work is already in it. The other half wants a machine the shelter almost has.",
+      "type": "Component",
+      "stackMax": 6,
+      "weight": 2.0,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_machined_blank_medium",
+      "displayName": "Machined Blank, Medium",
+      "description": "A heavier steel blank, bored and trued, staged for internal work. Good steel is scarce; a true blank is scarcer. The broaching station turns these into parts nothing else in the wasteland can make.",
+      "type": "Component",
+      "stackMax": 4,
+      "weight": 4.5,
+      "tradeValue": 9
+    },
+    {
+      "id": "item_internal_spline_hub",
+      "displayName": "Internal Spline Hub",
+      "description": "A steel hub with teeth cut into its bore, true to a tolerance measured in wisps of nothing. Pumps, gearboxes, and couplings that run on parts like this simply keep running. Everything else clatters, heats, and dies.",
+      "type": "Component",
+      "stackMax": 3,
+      "weight": 3.5,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_keyed_actuator_collar",
+      "displayName": "Keyed Actuator Collar",
+      "description": "A small collar with a cut keyway, made to lock a shaft and a wheel into one will. Cheap-looking and exact. Machinery built with them stops eating itself.",
+      "type": "Component",
+      "stackMax": 6,
+      "weight": 1.2,
+      "tradeValue": 8
+    },
+    {
+      "id": "item_cutting_fluid_canister",
+      "description": "A canister of foul-smelling cutting oil, rendered and strained in the workshop. It keeps tools cool and edges alive through long cuts. Without it, steel burns and broaches snap.",
+      "displayName": "Cutting Fluid Canister",
+      "type": "Consumable",
+      "stackMax": 4,
+      "weight": 2.5,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_hydraulic_ram_assembly",
+      "displayName": "Hydraulic Ram Assembly",
+      "description": "A heavy ram assembly pulled intact from a dead grain press. It is the muscle a broaching station needs to push a tool through steel without shuddering. Finding one intact is luck. Keeping it sealed is discipline.",
+      "type": "Component",
+      "stackMax": 1,
+      "weight": 14.0,
+      "tradeValue": 20
+    },
+    {
+      "id": "item_fog_mesh_roll",
+      "displayName": "Fog Mesh Roll",
+      "description": "A roll of fine, dark mesh woven to catch what the air carries. Strung on a ridge in the right weather, it weeps water all night. Strung wrong, or in the wrong place, it catches wind and nothing else.",
+      "type": "Component",
+      "stackMax": 4,
+      "weight": 3.0,
+      "tradeValue": 7
+    },
+    {
+      "id": "item_powered_mist_assist_module",
+      "displayName": "Powered Mist-Assist Module",
+      "description": "A sealed collector unit that pulls moisture out of heavy air faster than the wind alone manages. It hums all night, eats power, and fouls quickly in ash-laden fog. Worth it only where the fog is honest and frequent.",
+      "type": "Device",
+      "stackMax": 1,
+      "weight": 9.0,
+      "tradeValue": 16
+    },
+    {
+      "id": "item_reinforced_support_cable",
+      "displayName": "Reinforced Support Cable",
+      "description": "Guy-wire stock, double-stranded and crimped at the ends. It holds fog nets against gusts that turn loose mesh into rags. A storm finds every lazy tension job eventually.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.0,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_runflat_insert_utility",
+      "displayName": "Utility Run-Flat Insert",
+      "description": "A dense salvaged insert pressed into a light truck tyre. It keeps the wheel rolling after a puncture but adds unsprung mass and drag. Fitting it takes a workshop and patience.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 4.0,
+      "tradeValue": 14
+    },
+    {
+      "id": "item_runflat_insert_reinforced",
+      "displayName": "Reinforced Run-Flat Insert",
+      "description": "A heavy laminated insert built for long hauls. Tolerates wire and scrap better than the utility insert, at a real fuel and heat cost.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 7.0,
+      "tradeValue": 28
+    },
+    {
+      "id": "item_rim_bead_kit",
+      "displayName": "Rim & Bead Kit",
+      "description": "Seals, beadlock wedges, and a seating tool. The parts that keep a run-flat seated on the rim when the sidewall takes a hit.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 2.5,
+      "tradeValue": 18
+    },
+    {
+      "id": "item_armored_beadlock_set",
+      "displayName": "Armored Beadlock Set",
+      "description": "Matched beadlock rims with armored sidewall plates. Nearly shrugs off road debris; runs hot and is hard to field-repair.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 9.0,
+      "tradeValue": 42
+    },
+    {
+      "id": "item_runflat_balancing_kit",
+      "displayName": "Run-Flat Balancing Kit",
+      "description": "Weights and a static balancer for a run-flat wheel set. Without balancing, a heavy insert shakes the whole vehicle apart.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 2.0,
+      "tradeValue": 16
     },
     {
       "id": "crop_cold_legume",
@@ -7176,7 +7447,10 @@
       "weight_kg": 2.0,
       "durability": 0.9,
       "value": 8,
-      "tags": ["cultural", "craft"]
+      "tags": [
+        "cultural",
+        "craft"
+      ]
     },
     {
       "id": "microfiche_film",
@@ -7186,7 +7460,10 @@
       "weight_kg": 0.4,
       "durability": 0.95,
       "value": 12,
-      "tags": ["cultural", "archive"]
+      "tags": [
+        "cultural",
+        "archive"
+      ]
     },
     {
       "id": "acetate_blank_disc",
@@ -7196,7 +7473,10 @@
       "weight_kg": 0.5,
       "durability": 0.7,
       "value": 15,
-      "tags": ["cultural", "audio"]
+      "tags": [
+        "cultural",
+        "audio"
+      ]
     },
     {
       "id": "ammo_76mm_he_flak",
@@ -7206,7 +7486,10 @@
       "weight_kg": 7.5,
       "durability": 1.0,
       "value": 40,
-      "tags": ["ordnance", "sky_defense"]
+      "tags": [
+        "ordnance",
+        "sky_defense"
+      ]
     },
     {
       "id": "ammo_76mm_proximity_fuse",
@@ -7216,7 +7499,11 @@
       "weight_kg": 7.8,
       "durability": 1.0,
       "value": 60,
-      "tags": ["ordnance", "sky_defense", "precision"]
+      "tags": [
+        "ordnance",
+        "sky_defense",
+        "precision"
+      ]
     },
     {
       "id": "ammo_76mm_tungsten_penetrator",
@@ -7226,7 +7513,11 @@
       "weight_kg": 9.2,
       "durability": 1.0,
       "value": 85,
-      "tags": ["ordnance", "sky_defense", "heavy"]
+      "tags": [
+        "ordnance",
+        "sky_defense",
+        "heavy"
+      ]
     },
     {
       "id": "ammo_chaff_burst",
@@ -7236,7 +7527,11 @@
       "weight_kg": 3.1,
       "durability": 1.0,
       "value": 22,
-      "tags": ["ordnance", "sky_defense", "utility"]
+      "tags": [
+        "ordnance",
+        "sky_defense",
+        "utility"
+      ]
     },
     {
       "id": "ammo_76mm_beacon_smokey",
@@ -7246,7 +7541,11 @@
       "weight_kg": 6.4,
       "durability": 1.0,
       "value": 25,
-      "tags": ["ordnance", "sky_defense", "utility"]
+      "tags": [
+        "ordnance",
+        "sky_defense",
+        "utility"
+      ]
     },
     {
       "id": "ammo_76mm_shaped_charge",
@@ -7256,7 +7555,11 @@
       "weight_kg": 8.6,
       "durability": 1.0,
       "value": 70,
-      "tags": ["ordnance", "sky_defense", "heavy"]
+      "tags": [
+        "ordnance",
+        "sky_defense",
+        "heavy"
+      ]
     },
     {
       "id": "item_grain_flour",

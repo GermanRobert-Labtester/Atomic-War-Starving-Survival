@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,6 +129,41 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0, replayed);
             Assert.Equal(saved.networks[0].networkId, restored.State.networks[0].networkId);
             Assert.Equal(saved.knownIntel.Count, restored.State.knownIntel.Count);
+        }
+
+        [Fact]
+        public void AbstractSabotage_EmitsBoundedTypedIntentForCanonicalFaction()
+        {
+            var system = Create(new FixedRng(0.0));
+            system.LoadMissionCatalog(new[]
+            {
+                new EspionageMissionDef
+                {
+                    Id = "espionage_test_sabotage",
+                    MissionType = EspionageMissionType.AbstractSabotage,
+                    MinimumIntelLevel = 2,
+                    PossibleConsequenceIds = new List<string> { "consequence_supply_disruption" }
+                }
+            });
+            system.State.networks.Add(new SpyNetworkState
+            {
+                networkId = "network_1",
+                targetFactionId = "faction_central_garrison",
+                intelLevel = 2
+            });
+            EspionageConsequenceIntent? emitted = null;
+            system.OnConsequenceIntent += intent => emitted = intent;
+
+            var result = system.ExecuteAbstractSabotage("network_1", "espionage_test_sabotage", 42);
+
+            Assert.True(result.IsSuccess);
+            Assert.NotNull(emitted);
+            Assert.Equal("espionage_incident_0001", emitted!.incidentId);
+            Assert.Equal("faction_central_garrison", emitted.targetFactionId);
+            Assert.Equal("consequence_supply_disruption", emitted.consequenceType);
+            Assert.Equal(0.2f, emitted.magnitude);
+            Assert.Equal(42, emitted.startDay);
+            Assert.Equal(45, emitted.expiryDay);
         }
 
         [Fact]

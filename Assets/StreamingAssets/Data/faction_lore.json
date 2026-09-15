@@ -10,7 +10,7 @@
         "Civilization is maintained by supply chains and ammunition counts",
         "Democracy is a luxury of peacetime",
         "Every mouth must earn its rations through labor or combat service",
-        "The chain of command is sacred \u2014 orders are not debated, they are executed"
+        "The chain of command is sacred — orders are not debated, they are executed"
       ],
       "dialogue_style": "Formal, terse, military acronyms, cold operational efficiency",
       "signature_quote": "Civilization isn't built on sympathy; it's maintained by supply chains and ammunition counts.",
@@ -33,11 +33,11 @@
       "faction_id": "ash_militia",
       "display_name": "The Ash Militia",
       "ideology": "Local democracy, resource sharing, mutual defense, civilian autonomy",
-      "origin_story": "A coalition of pre-war farmers, miners, teachers, and tradespeople who banded together when both raider gangs and Garrison conscription units threatened their communities. Founded by a farmer named Delacroix with 47 members and 12 rifles. They hold weekly council meetings in the old Grange Hall, lit by salvaged oil lamps. Every member \u2014 regardless of age, gender, or pre-war status \u2014 gets one vote.",
+      "origin_story": "A coalition of pre-war farmers, miners, teachers, and tradespeople who banded together when both raider gangs and Garrison conscription units threatened their communities. Founded by a farmer named Delacroix with 47 members and 12 rifles. They hold weekly council meetings in the old Grange Hall, lit by salvaged oil lamps. Every member — regardless of age, gender, or pre-war status — gets one vote.",
       "key_beliefs": [
         "If we turn into monsters just to survive, the war already won",
         "Everyone gets a vote and everyone gets a share",
-        "The old world ended \u2014 we decide what replaces it",
+        "The old world ended — we decide what replaces it",
         "A community that abandons its weakest has already lost"
       ],
       "dialogue_style": "Informal, warm, pragmatic, weary but determined",
@@ -59,12 +59,12 @@
       "faction_id": "cult_of_ash_sign",
       "display_name": "The Cult of the Ash Sign",
       "ideology": "Apocalyptic purification, radiation worship, ascetic martyrdom",
-      "origin_story": "A fanatical religious movement that arose in the highest fallout zones \u2014 areas too lethal for military patrols. Their prophet, known only as The Vessel, emerged from the ruins of a destroyed reactor unscathed \u2014 or so they claim. They believe the nuclear exchange was a divine purging of a corrupt world and view radiation sickness as a spiritual ordeal that cleanses the soul. Members willingly expose themselves to low-level radiation as acts of devotion.",
+      "origin_story": "A fanatical religious movement that arose in the highest fallout zones — areas too lethal for military patrols. Their prophet, known only as The Vessel, emerged from the ruins of a destroyed reactor unscathed — or so they claim. They believe the nuclear exchange was a divine purging of a corrupt world and view radiation sickness as a spiritual ordeal that cleanses the soul. Members willingly expose themselves to low-level radiation as acts of devotion.",
       "key_beliefs": [
         "The nuclear fire was divine judgment on a corrupt world",
-        "Radiation is the breath of the new god \u2014 breathe it and be cleansed",
+        "Radiation is the breath of the new god — breathe it and be cleansed",
         "Death by fallout is not death; it is ascension to the Clear World",
-        "The old world's lies were burned away \u2014 only truth remains in the ash"
+        "The old world's lies were burned away — only truth remains in the ash"
       ],
       "dialogue_style": "Arcane, rhythmic, serene, unsettlingly peaceful amidst horror",
       "signature_quote": "Do not fear the glow, child. The fire burned away the old world's lies. Drink the ash and be renewed.",
@@ -87,11 +87,11 @@
       "faction_id": "warlords_sector_4",
       "display_name": "The Warlords of Sector 4",
       "ideology": "Mercenary opportunism, trade control, survival of the fittest",
-      "origin_story": "A loose syndicate of armed scavengers, former convicts, and ex-mercenaries who control key highway bottlenecks, fuel depots, and river crossings. They have no loyalty beyond the contract. Their leader, The Tollman, rose to power by being the only person who knew the bridge demolition codes after the Exchange. He charges passage in blood or bullets \u2014 literal or metaphorical.",
+      "origin_story": "A loose syndicate of armed scavengers, former convicts, and ex-mercenaries who control key highway bottlenecks, fuel depots, and river crossings. They have no loyalty beyond the contract. Their leader, The Tollman, rose to power by being the only person who knew the bridge demolition codes after the Exchange. He charges passage in blood or bullets — literal or metaphorical.",
       "key_beliefs": [
-        "Clean water costs blood or bullets \u2014 pick which you're paying with",
+        "Clean water costs blood or bullets — pick which you're paying with",
         "Loyalty is a tradable commodity, like diesel or antibiotics",
-        "The strong don't survive because they're strong \u2014 they survive because they're useful",
+        "The strong don't survive because they're strong — they survive because they're useful",
         "A contract is sacred; everything else is negotiable"
       ],
       "dialogue_style": "Rough, cynical, transactional, threatening but honest",
@@ -117,7 +117,7 @@
       "faction_id": "faction_rebuilders",
       "display_name": "The Rebuilders",
       "ideology": "Municipal continuity. Public works, minuted decisions, and plans longer than the people making them",
-      "origin_story": "Three surviving employees of a district public works department walked out to the floodplain allotments in the first winter because it was the only good soil left in Sector 4, and began farming it in plot order off the pre-war waiting list. They call themselves the Works. The Rebuilders is what the Toll called them, and it was not meant kindly. The soil is good because the ground floods, and everything that floods there is contaminated, so they can grow food and cannot drink; two hundred people now live seventy days from thirst on the best farmland in the sector. They hold the only still and the only working autoclave for forty kilometres, which makes a caretaker's hut the sector's clinic. Their standing purchase order is brass -- door handles, nameplates, lamp bases -- because you cannot cast a valve seat out of scrap steel and every joint in a water system is brass or it is a leak with a schedule. Years on, the Works' most visible face in the district is no longer the allotments but the grain exchange it came to run at the old leaning silo: a market floor with its own scales, its own roster, and its own rope keeping weapons off the trading floor. Adaeze Okonkwo runs that floor the way the Works has always run everything \u2014 by name, by shift, by minute \u2014 and most traders who deal with the Rebuilders daily have never once seen the floodplain that started it.",
+      "origin_story": "Three surviving employees of a district public works department walked out to the floodplain allotments in the first winter because it was the only good soil left in Sector 4, and began farming it in plot order off the pre-war waiting list. They call themselves the Works. The Rebuilders is what the Toll called them, and it was not meant kindly. The soil is good because the ground floods, and everything that floods there is contaminated, so they can grow food and cannot drink; two hundred people now live seventy days from thirst on the best farmland in the sector. They hold the only still and the only working autoclave for forty kilometres, which makes a caretaker's hut the sector's clinic. Their standing purchase order is brass -- door handles, nameplates, lamp bases -- because you cannot cast a valve seat out of scrap steel and every joint in a water system is brass or it is a leak with a schedule. Years on, the Works' most visible face in the district is no longer the allotments but the grain exchange it came to run at the old leaning silo: a market floor with its own scales, its own roster, and its own rope keeping weapons off the trading floor. Adaeze Okonkwo runs that floor the way the Works has always run everything — by name, by shift, by minute — and most traders who deal with the Rebuilders daily have never once seen the floodplain that started it.",
       "key_beliefs": [
         "Write it down or it did not happen and cannot be handed over",
         "The waiting list is the waiting list; plot 114 is still plot 114",
@@ -203,7 +203,7 @@
       "faction_id": "faction_ash_sign",
       "display_name": "The Ash Sign",
       "ideology": "Redemptive catastrophe, ash as judgement, conversion through survival",
-      "origin_story": "The cult of the Ash Sign preaches that the exchange was a cleansing and the survivors are the chosen remnant. Their charity is real and their prices are theological. They recruit by hunger and by grief, and their judgement falls on those who refuse the sign. What began as small groups reading meaning into dosimeter numbers at the old survey cairn has, in the years since, become an organized presence with its own switchback trail up to a built shrine and its own shrine-keepers to read it. The public sermon is judgement and the chosen remnant; the shrine-keepers' actual daily discipline is narrower and stranger than that \u2014 reading the pattern of what the ash burns and what it spares as a text, and in the last year, making predictions that land with a precision the pilgrims find holy and a few outsiders find worth investigating.",
+      "origin_story": "The cult of the Ash Sign preaches that the exchange was a cleansing and the survivors are the chosen remnant. Their charity is real and their prices are theological. They recruit by hunger and by grief, and their judgement falls on those who refuse the sign. What began as small groups reading meaning into dosimeter numbers at the old survey cairn has, in the years since, become an organized presence with its own switchback trail up to a built shrine and its own shrine-keepers to read it. The public sermon is judgement and the chosen remnant; the shrine-keepers' actual daily discipline is narrower and stranger than that — reading the pattern of what the ash burns and what it spares as a text, and in the last year, making predictions that land with a precision the pilgrims find holy and a few outsiders find worth investigating.",
       "key_beliefs": [
         "The ash is the proof",
         "The chosen survive; the rest are seed",
@@ -359,7 +359,7 @@
         "Adaeze kept the ledger. We kept the argument that made the ledger necessary",
         "Nobody elected us. Nobody un-elects a fence either"
       ],
-      "dialogue_style": "Clipped, half military and half market \u2014 shift schedules and watch orders spoken in the same breath as trade terms",
+      "dialogue_style": "Clipped, half military and half market — shift schedules and watch orders spoken in the same breath as trade terms",
       "signature_quote": "We're not the Garrison. We just stand where the Garrison would, before the Garrison gets there.",
       "relationships": {
         "rebuilders": "estranged",
@@ -408,7 +408,7 @@
       "ideology": "People who can be measured are the only currency that does not run out",
       "origin_story": "Mireles keeps a list. The list has names and the names have weights and the weights are how much each name is worth in fuel tins and antibiotics. He does not take fuel depots; he takes the people who tend them. They work for him because the list says they must, and the list does not need to be argued with because the list was the only thing in Mireles' camps that did not run out. He calls it redistribution. The Toll called it a list.",
       "key_beliefs": [
-        "Name, weight, worth \u2014 three columns and the spreadsheet is the spreadsheet",
+        "Name, weight, worth — three columns and the spreadsheet is the spreadsheet",
         "A working pair of hands is worth more than a fuel drum full of rain",
         "Do not march captives to the front; sell them forward, slowly",
         "The ledger survives the war. The ledger is the war."
@@ -1089,6 +1089,38 @@
         "salt_artery_passage",
         "caravan_circuit_slot"
       ]
+    },
+    {
+      "faction_id": "faction_ash_market_brokers",
+      "display_name": "The Ash Market",
+      "ideology": "Scarcity is a trade good; whoever measures it sets the price",
+      "origin_story": "Formed around the old barter posts after the Exchange collapsed the registry ledgers. The Ash Market keeps its own lists: what the settlements lack, what caravans failed to carry, and who is desperate enough to pay the difference.",
+      "key_beliefs": [
+        "Everything has a waiting list",
+        "Never hold the stock you sell",
+        "Standing buys softness in the price"
+      ],
+      "dialogue_style": "Measured, procedural, never hostile unless the ledger is.",
+      "signature_quote": "You are not buying from me. You are borrowing from everyone who wanted it first.",
+      "relationships": [],
+      "tribute_demands": [],
+      "tech_offerings": []
+    },
+    {
+      "faction_id": "faction_cold_ledger",
+      "display_name": "The Cold Ledger",
+      "ideology": "Credit binds tighter than chains",
+      "origin_story": "Began as a ration-book clearing house between two flooded settlements. When the books drowned, the clerks kept lending from memory — and the memory was excellent. The Cold Ledger's ink is the region's quietest currency.",
+      "key_beliefs": [
+        "A loan made is a door opened",
+        "Repayment is reputation",
+        "Everything owed is written down, twice"
+      ],
+      "dialogue_style": "Calm, formal, patient past the point of menace.",
+      "signature_quote": "The due date is not a suggestion. It is a promise we keep for you.",
+      "relationships": [],
+      "tribute_demands": [],
+      "tech_offerings": []
     }
   ]
 }

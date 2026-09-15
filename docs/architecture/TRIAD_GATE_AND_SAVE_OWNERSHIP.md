@@ -1,7 +1,7 @@
 # ASHFALL — Triad Drift Gate & Subsystem Save Ownership
 
-**Date:** 2026-08-27
-**Scope:** Documents the architectural rationale, save store bindings, and domain ownership for all intentional exceptions to the `SetupXxx` ↔ `SaveXxx` naming convention checked by `scripts/ci/triad-drift-gate.sh`.
+**Date:** 2026-09-10
+**Scope:** Documents the architectural rationale, save store bindings, and domain ownership for the `SetupXxx` / `SaveXxx` / `FlushXxxIfDirty` contract. The authoritative default-suite gate is `Ashfall.Core.Tests.MainTriadDriftGateTests`; the legacy shell scan remains supplementary.
 
 ---
 
@@ -18,11 +18,17 @@ FlushXxxIfDirty()   ── (Optional) Performs deferred write-to-disk when dirty
 ### The Declarative Save Section Authority (`Invariant H7`)
 If a developer implements a `SetupXxx()` method without a corresponding `SaveXxx()` method declared in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](../../Assets/Ashfall.Core/Save/SaveSectionRegistry.cs), that subsystem will operate during runtime but silently drop its state upon save or shutdown.
 
-The CI script [`scripts/ci/triad-drift-gate.sh`](../../scripts/ci/triad-drift-gate.sh) runs in **Tier 1 Mandatory CI** to enforce that:
+The default xUnit gate runs in the canonical test suite and enforces that:
 1. Every save section declared in `SaveSectionRegistry.cs` has a matching `SaveXxx()` method in `src/Main*.cs`.
 2. Every declared save section requiring setup has its matching `SetupXxx()` method in `src/Main*.cs`.
-3. `Main.SaveOrchestrator.cs` consumes `SaveSectionRegistry.SectionKeys` for all section aggregation.
-4. No un-registered rogue `SaveXxx()` methods exist in the Godot host.
+3. Every registered save method is reachable from `SaveAll()`, including composite `SaveAllExpandedShelterSystems()` and `PersistPlans*()` delegates.
+4. Flush methods contain a dirty/save guard or a documented transient/composite disposition.
+5. The lifecycle and architecture-citation files remain present.
+
+The gate is deliberately source-based rather than line-number-based. It
+understands normal block-bodied methods and expression-bodied methods, and
+follows the call graph far enough to catch a save child dropped from the
+canonical orchestration.
 
 ---
 

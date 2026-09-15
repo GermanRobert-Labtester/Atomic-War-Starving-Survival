@@ -111,7 +111,7 @@ namespace Ashfall.Core.Tests
         public void GreenhouseFile_ContainsExactlyThirtyEntries()
         {
             var entries = LoadEntries("greenhouse_items.json");
-            Assert.Equal(30, entries.Count);
+            Assert.Equal(34, entries.Count);
         }
 
         [Fact]

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 
@@ -115,19 +116,8 @@ namespace AtomicWar.GodotApp.Audio
             float baseDb = AudioSettings.PercentToDb(basePercent);
             float finalTargetDb = baseDb + targetDuckDb;
 
-            // Note: For true implementation, we would use a Tween here.
-            // For headless compatibility, we apply immediately if CreateTween fails.
-            var tween = GetTree()?.CreateTween();
-            if (tween != null)
-            {
-                // We don't have a direct property for AudioServer bus volume, we must interpolate manually
-                // A simpler way is to just set it since AudioServer doesn't expose tweenable properties on Node
-                AudioServer.SetBusVolumeDb(idx, finalTargetDb);
-            }
-            else
-            {
-                AudioServer.SetBusVolumeDb(idx, finalTargetDb);
-            }
+            // AudioServer bus volume is not a tweenable Node property; snap.
+            AudioServer.SetBusVolumeDb(idx, finalTargetDb);
         }
     }
 }

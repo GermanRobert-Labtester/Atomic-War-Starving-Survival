@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 
@@ -293,11 +294,23 @@ namespace Ashfall.Core.Needs
             return Math.Clamp(penalty, 0, 1000);
         }
 
-        public SurvivorMentalHealthState CaptureState() => _state;
+        public SurvivorMentalHealthState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<SurvivorMentalHealthState>(json) ?? new SurvivorMentalHealthState();
+        }
 
         public void RestoreState(SurvivorMentalHealthState? state)
         {
-            _state = state ?? new SurvivorMentalHealthState();
+            if (state == null)
+            {
+                _state = new SurvivorMentalHealthState();
+                return;
+            }
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<SurvivorMentalHealthState>(json) ?? new SurvivorMentalHealthState();
         }
     }
 }

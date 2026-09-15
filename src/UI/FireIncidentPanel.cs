@@ -26,7 +26,14 @@ namespace AtomicWar.GodotApp.UI
         private ShelterFireHazardSystem? _fireSystem;
         private string _incidentId = string.Empty;
 
-        private void OnFireStateChanged(Dictionary<string, FireIncidentState> _) => RefreshView();
+        /// <summary>Test/selftest observable: event-driven refresh count — exactly one per publisher event while bound.</summary>
+        public int RefreshCount { get; private set; }
+
+        private void OnFireStateChanged(Dictionary<string, FireIncidentState> _)
+        {
+            RefreshCount++;
+            RefreshView();
+        }
 
         public ShelterFireHostSession? HostSession => _hostSession;
         public ShelterFireHazardSystem? FireSystem => _fireSystem;

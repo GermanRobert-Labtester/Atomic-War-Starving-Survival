@@ -18,7 +18,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnClose;
 
         private DoseLedgerHostSession? _doseHost;
-        private string _selectedDeviceTag = "tag_1";
+        private string _selectedDeviceTag = string.Empty;
 
         private Label _headerLabel = null!;
         private Label _deviceTagLabel = null!;
@@ -41,9 +41,16 @@ namespace AtomicWar.GodotApp.UI
         public bool IsBound => _doseHost != null;
         public int SimDay { get; set; } = 1;
 
-        private void OnCalibrationStateChanged(DosimeterCalibrationState _) => RefreshView();
+        /// <summary>Test/selftest observable: event-driven refresh count — exactly one per publisher event while bound.</summary>
+        public int RefreshCount { get; private set; }
 
-        public void Bind(DoseLedgerHostSession doseHost, string deviceTag = "tag_1")
+        private void OnCalibrationStateChanged(DosimeterCalibrationState _)
+        {
+            RefreshCount++;
+            RefreshView();
+        }
+
+        public void Bind(DoseLedgerHostSession doseHost, string deviceTag = "")
         {
             if (_doseHost != null)
             {
@@ -198,9 +205,14 @@ namespace AtomicWar.GodotApp.UI
             var device = _doseHost.Calibration.GetDevice(_selectedDeviceTag);
             if (device == null)
             {
-                _deviceTagLabel.Text = "Device: Not registered";
-                _statusLabel.Text = "Status: No dosimeter profile found";
+                bool noneRegistered = string.IsNullOrEmpty(_selectedDeviceTag);
+                _deviceTagLabel.Text = noneRegistered ? "Device: None registered" : "Device: Not registered";
+                _statusLabel.Text = noneRegistered
+                    ? "Status: No dosimeter devices registered"
+                    : "Status: No dosimeter profile found";
                 if (_calibrateButton != null) _calibrateButton.Disabled = true;
+                if (_replaceBatteryButton != null) _replaceBatteryButton.Disabled = true;
+                if (_serviceSensorButton != null) _serviceSensorButton.Disabled = true;
                 return;
             }
 
@@ -248,13 +260,19 @@ namespace AtomicWar.GodotApp.UI
             _serviceSensorButton.Disabled = device.sensorCondition >= 0.95f;
         }
 
-        public override void _ExitTree()
+        /// <summary>Detach the panel before its session authority is replaced (INV-16.5).</summary>
+        public void Unbind()
         {
             if (_doseHost != null)
             {
                 _doseHost.Calibration.OnStateChanged -= OnCalibrationStateChanged;
                 _doseHost = null;
             }
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

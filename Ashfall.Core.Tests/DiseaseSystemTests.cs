@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -440,16 +441,11 @@ namespace Ashfall.Core.Tests
         // -----------------------------------------------------------------
 
         /// <summary>
-        /// CaptureState() intentionally returns the live state object by
-        /// reference (documented at its call site in
-        /// Main.CampaignOwners.MedicalDiseaseDayOwner) so that a
-        /// campaign-day owner cannot use a bare assignment as a pre-day
-        /// snapshot: later mutation would alias the "baseline" too. Pin this
-        /// so the behavior cannot silently change without the day-owner's
-        /// JSON-round-trip workaround being revisited.
+        /// CaptureState() returns an independent JSON clone so hub/save
+        /// holders and pre-day snapshots cannot alias the live ward.
         /// </summary>
         [Fact]
-        public void CaptureState_ReturnsLiveStateByReference_NotACopy()
+        public void CaptureState_ReturnsIndependentClone_NotLiveAlias()
         {
             var sys = new DiseaseSystem(rng: new Ashfall.Core.SeededRng(4242));
             sys.BindCatalog(LoadCatalog());
@@ -460,12 +456,11 @@ namespace Ashfall.Core.Tests
 
             sys.Infect("b", DiseaseIds.Cholera, 1);
             int countAfterViaLiveSystem = sys.CaptureState().diseases.Find(d => d.disease_id == DiseaseIds.Cholera)!.infected.Count;
-            int countAfterViaOldReference = captured.diseases.Find(d => d.disease_id == DiseaseIds.Cholera)!.infected.Count;
+            int countAfterViaOldCapture = captured.diseases.Find(d => d.disease_id == DiseaseIds.Cholera)!.infected.Count;
 
             Assert.True(countAfterViaLiveSystem > countBefore);
-            // The "old" captured reference sees the new infection too, proving
-            // it is the same object, not an independent snapshot.
-            Assert.Equal(countAfterViaLiveSystem, countAfterViaOldReference);
+            Assert.Equal(countBefore, countAfterViaOldCapture);
+            Assert.False(ReferenceEquals(captured, sys.CaptureState()));
         }
 
         /// <summary>

@@ -50,6 +50,38 @@ namespace AtomicWar.GodotApp
             ThermalSystem = thermal;
         }
 
+        // ── Plan 213 follow-up — interactive forging commands (presentation
+        // adapters over the Core-owned deterministic forging pass; no rules here).
+
+        /// <summary>Begin a forging pass on the latest provenance-bearing batch.</summary>
+        public string BeginForging(string outputItemId, int day)
+        {
+            string result = Engine.BeginForging(outputItemId, day);
+            LastEvent = result;
+            StateChanged?.Invoke();
+            return result;
+        }
+
+        /// <summary>Record one abstract forging command (heat/shape/finish/inspect).</summary>
+        public string SubmitForgingCommand(Ashfall.Core.Foundry.FoundryForgingCommand command, int day)
+        {
+            string result = Engine.SubmitForgingCommand(command, day);
+            LastEvent = result;
+            StateChanged?.Invoke();
+            return result;
+        }
+
+        /// <summary>Complete the pass: deterministic scoring against the authored sequence.</summary>
+        public string CompleteForging(int day)
+        {
+            var result = Engine.CompleteForging(day);
+            LastEvent = result.Accepted
+                ? $"Forging pass complete: {result.Purity} purity, quality {result.FinalQualityPermille}/1000."
+                : $"Forging pass not completed ({result.Reason}).";
+            StateChanged?.Invoke();
+            return LastEvent;
+        }
+
         public void TickDaily(int day)
         {
             if (Engine.IsHeatActive)
@@ -147,7 +179,17 @@ namespace AtomicWar.GodotApp
                 });
 
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
-            Engine.OnProductionCompleted += _ => { LastEvent = "Cast complete. Output stored."; StateChanged?.Invoke(); };
+            Engine.OnProductionCompleted += r =>
+            {
+                // Plan 213 — semantic payload: job/product, output, quality tier.
+                LastEvent = $"Cast complete: {r.displayName} ×{r.amount} ({r.tier}, purity {r.purity}). Output stored.";
+                StateChanged?.Invoke();
+            };
+            Engine.OnForgingCompleted += f =>
+            {
+                LastEvent = $"Forging completed: {f.ProductOutputItemId} quality {f.FinalQualityPermille}/1000 ({f.Purity}).";
+                StateChanged?.Invoke();
+            };
             Engine.OnCastFailed += f => { LastEvent = "Cast failed: " + f.reason; StateChanged?.Invoke(); };
             Engine.OnIncident += i => { LastEvent = "INCIDENT: " + i.summary; StateChanged?.Invoke(); };
             Engine.OnTreatyQuotaMet += c => { LastEvent = "Treaty quota met: " + c.treatyId; StateChanged?.Invoke(); };

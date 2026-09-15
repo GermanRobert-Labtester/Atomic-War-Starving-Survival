@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -391,7 +392,7 @@ namespace Ashfall.Core.Tests.Narrative
 
             Assert.Equal(2, system.State.heardLoreIds.Count);
             Assert.All(system.State.heardLoreIds, id =>
-                Assert.True(id.StartsWith("oral_b2_", StringComparison.Ordinal)));
+                Assert.StartsWith("oral_b2_", id, StringComparison.Ordinal));
         }
     }
 }

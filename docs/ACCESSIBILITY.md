@@ -86,6 +86,23 @@ To prevent illegible micro-text, ASHFALL enforces strict typographic minimums in
 2. **Reduced Motion Compatibility**:
    - UI panel animations are restrained and fast (fade/slide <= 150ms).
    - Screen-shake during catastrophe events is clamped and respects the game's display settings.
+   - Plan 184 Path α: `UserSettingsData.reduced_motion` gates `AccessibilityPresentation.MotionAllowed` (AudioManager fade consumers).
+
+---
+
+## 6.1 Plan 184 Preference Bridge (UserSettings sole authority)
+
+Structural floors above remain Plan 80. Expanded preference wiring (map:
+`docs/ui/PLAN_184_EXPANDED_ACCESSIBILITY_AUTHORITY_MAP.md`):
+
+| Preference | Field | Presentation seam |
+|---|---|---|
+| Large fonts / high contrast | `large_fonts`, `high_contrast` | `UserSettingsStore.Apply` content scale + modulate |
+| Hazard text labels | `hazard_text_labels` | `AshfallUiHelpers.FormatDoseSource` |
+| Reduced motion | `reduced_motion` | `AccessibilityPresentation.MotionAllowed` |
+| Colorblind simulation | `colorblind_mode` (`none` / `protanopia` / `deuteranopia` / `tritanopia`) | Core `ColorblindColorMapper` → `AshfallUiHelpers.ToColor` (Theme constants unchanged) |
+
+Remap, screen-reader AT, audio descriptions, and cognitive-load modes remain **OUT** per the signed map.
 
 ---
 

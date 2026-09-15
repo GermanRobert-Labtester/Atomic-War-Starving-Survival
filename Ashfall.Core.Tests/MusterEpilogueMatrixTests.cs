@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -227,48 +228,89 @@ namespace Ashfall.Core.Tests
             Assert.Equal(EpilogueMatrix.FuelDepotBurned, EpilogueMatrix.Evaluate(fuelOnly));
         }
 
-        [Theory]
-        [InlineData(FactionTerminalOutcome.GarrisonAbsorbed, EpilogueMatrix.GarrisonAbsorbsCoalition)]
-        [InlineData(FactionTerminalOutcome.RebuildersJoined, EpilogueMatrix.RebuildersJoined)]
-        [InlineData(FactionTerminalOutcome.Independent, EpilogueMatrix.CoalitionIndependent)]
-        [InlineData(FactionTerminalOutcome.FoundryAnnexed, EpilogueMatrix.FoundryAnnexation)]
-        public void Evaluate_FactionEndings_SelectsCorrectly(FactionTerminalOutcome faction, string expectedKey)
+        [Fact]
+        public void Evaluate_FactionEndings_SelectsCorrectly()
         {
-            var input = new EpilogueMatrixInput
+            var cases = new[]
             {
-                FactionOutcome = faction
+                (FactionTerminalOutcome.GarrisonAbsorbed, EpilogueMatrix.GarrisonAbsorbsCoalition),
+                (FactionTerminalOutcome.RebuildersJoined, EpilogueMatrix.RebuildersJoined),
+                (FactionTerminalOutcome.Independent, EpilogueMatrix.CoalitionIndependent),
+                (FactionTerminalOutcome.FoundryAnnexed, EpilogueMatrix.FoundryAnnexation)
             };
-            Assert.Equal(expectedKey, EpilogueMatrix.Evaluate(input));
+            var failures = new List<string>();
+
+            foreach (var (faction, expectedKey) in cases)
+            {
+                string actual = EpilogueMatrix.Evaluate(new EpilogueMatrixInput
+                {
+                    FactionOutcome = faction
+                });
+                if (!string.Equals(expectedKey, actual, StringComparison.Ordinal))
+                    failures.Add($"{faction}: expected {expectedKey}, got {actual}");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(true, false, false, EpilogueMatrix.WaterPlantHeld)]
-        [InlineData(false, true, false, EpilogueMatrix.GrainSiloCaptured)]
-        [InlineData(false, false, true, EpilogueMatrix.FuelDepotBurned)]
-        public void Evaluate_ResourceEndings_SelectsCorrectly(bool water, bool grain, bool fuel, string expectedKey)
+        [Fact]
+        public void Evaluate_ResourceEndings_SelectsCorrectly()
         {
-            var input = new EpilogueMatrixInput
+            var cases = new[]
             {
-                WaterPlantHeld = water,
-                GrainSiloCaptured = grain,
-                FuelDepotBurned = fuel
+                (Water: true, Grain: false, Fuel: false, Expected: EpilogueMatrix.WaterPlantHeld),
+                (Water: false, Grain: true, Fuel: false, Expected: EpilogueMatrix.GrainSiloCaptured),
+                (Water: false, Grain: false, Fuel: true, Expected: EpilogueMatrix.FuelDepotBurned)
             };
-            Assert.Equal(expectedKey, EpilogueMatrix.Evaluate(input));
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                string actual = EpilogueMatrix.Evaluate(new EpilogueMatrixInput
+                {
+                    WaterPlantHeld = test.Water,
+                    GrainSiloCaptured = test.Grain,
+                    FuelDepotBurned = test.Fuel
+                });
+                if (!string.Equals(test.Expected, actual, StringComparison.Ordinal))
+                {
+                    failures.Add(
+                        $"water={test.Water}, grain={test.Grain}, fuel={test.Fuel}: " +
+                        $"expected {test.Expected}, got {actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(true, false, false, EpilogueMatrix.MercyRoad)]
-        [InlineData(false, true, false, EpilogueMatrix.IronWay)]
-        [InlineData(false, false, true, EpilogueMatrix.ListenersThread)]
-        public void Evaluate_MoralEndings_SelectsCorrectly(bool mercy, bool iron, bool diplomacy, string expectedKey)
+        [Fact]
+        public void Evaluate_MoralEndings_SelectsCorrectly()
         {
-            var input = new EpilogueMatrixInput
+            var cases = new[]
             {
-                MercyPattern = mercy,
-                IronPattern = iron,
-                DiplomacyPattern = diplomacy
+                (Mercy: true, Iron: false, Diplomacy: false, Expected: EpilogueMatrix.MercyRoad),
+                (Mercy: false, Iron: true, Diplomacy: false, Expected: EpilogueMatrix.IronWay),
+                (Mercy: false, Iron: false, Diplomacy: true, Expected: EpilogueMatrix.ListenersThread)
             };
-            Assert.Equal(expectedKey, EpilogueMatrix.Evaluate(input));
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                string actual = EpilogueMatrix.Evaluate(new EpilogueMatrixInput
+                {
+                    MercyPattern = test.Mercy,
+                    IronPattern = test.Iron,
+                    DiplomacyPattern = test.Diplomacy
+                });
+                if (!string.Equals(test.Expected, actual, StringComparison.Ordinal))
+                {
+                    failures.Add(
+                        $"mercy={test.Mercy}, iron={test.Iron}, diplomacy={test.Diplomacy}: " +
+                        $"expected {test.Expected}, got {actual}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -340,39 +382,28 @@ namespace Ashfall.Core.Tests
         // Reachability Witnesses for All 25 Outcomes
         // ====================================================================
 
-        [Theory]
-        [InlineData(EpilogueMatrix.TheOpenMuster)]
-        [InlineData(EpilogueMatrix.TheAmnesty)]
-        [InlineData(EpilogueMatrix.TheCorridor)]
-        [InlineData(EpilogueMatrix.TheBloodPrice)]
-        [InlineData(EpilogueMatrix.TheRateCardRevised)]
-        [InlineData(EpilogueMatrix.TheAdministrator)]
-        [InlineData(EpilogueMatrix.TheMeasuredTruthContested)]
-        [InlineData(EpilogueMatrix.TheMeasuredTruth)]
-        [InlineData(EpilogueMatrix.Unwritten)]
-        [InlineData(EpilogueMatrix.VerdictSectorRecounts)]
-        [InlineData(EpilogueMatrix.VerdictCountHeld)]
-        [InlineData(EpilogueMatrix.VerdictOfferLease)]
-        [InlineData(EpilogueMatrix.GarrisonAbsorbsCoalition)]
-        [InlineData(EpilogueMatrix.RebuildersJoined)]
-        [InlineData(EpilogueMatrix.CoalitionIndependent)]
-        [InlineData(EpilogueMatrix.FoundryAnnexation)]
-        [InlineData(EpilogueMatrix.WaterPlantHeld)]
-        [InlineData(EpilogueMatrix.GrainSiloCaptured)]
-        [InlineData(EpilogueMatrix.FuelDepotBurned)]
-        [InlineData(EpilogueMatrix.MercyRoad)]
-        [InlineData(EpilogueMatrix.IronWay)]
-        [InlineData(EpilogueMatrix.ListenersThread)]
-        [InlineData(EpilogueMatrix.MercyWaterHeld)]
-        [InlineData(EpilogueMatrix.IronFuelAsh)]
-        [InlineData(EpilogueMatrix.ShelterFalls)]
-        public void EveryKey_HasProseInLoadedCatalog(string key)
+        [Fact]
+        public void EveryKey_HasProseInLoadedCatalog()
         {
             var epilogues = LoadAllEpilogues();
-            var entry = epilogues.FirstOrDefault(e => e.endingKey == key);
-            Assert.NotNull(entry);
-            Assert.False(string.IsNullOrEmpty(entry.title));
-            Assert.False(string.IsNullOrEmpty(entry.prose));
+            var failures = new List<string>();
+
+            foreach (var key in EpilogueMatrix.AllKeys)
+            {
+                var entry = epilogues.FirstOrDefault(e => e.endingKey == key);
+                if (entry == null)
+                {
+                    failures.Add($"{key}: missing from loaded catalog");
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(entry.title))
+                    failures.Add($"{key}: title is empty");
+                if (string.IsNullOrEmpty(entry.prose))
+                    failures.Add($"{key}: prose is empty");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ====================================================================
@@ -478,47 +509,45 @@ namespace Ashfall.Core.Tests
             Assert.Equal(string.Empty, input.MusterEndingKey);
         }
 
-        [Theory]
-        [InlineData(EpilogueMatrix.TheOpenMuster)]
-        [InlineData(EpilogueMatrix.TheAmnesty)]
-        [InlineData(EpilogueMatrix.TheCorridor)]
-        [InlineData(EpilogueMatrix.TheBloodPrice)]
-        [InlineData(EpilogueMatrix.TheRateCardRevised)]
-        [InlineData(EpilogueMatrix.TheAdministrator)]
-        [InlineData(EpilogueMatrix.TheMeasuredTruthContested)]
-        [InlineData(EpilogueMatrix.TheMeasuredTruth)]
-        [InlineData(EpilogueMatrix.Unwritten)]
-        [InlineData(EpilogueMatrix.VerdictSectorRecounts)]
-        [InlineData(EpilogueMatrix.VerdictCountHeld)]
-        [InlineData(EpilogueMatrix.VerdictOfferLease)]
-        [InlineData(EpilogueMatrix.GarrisonAbsorbsCoalition)]
-        [InlineData(EpilogueMatrix.RebuildersJoined)]
-        [InlineData(EpilogueMatrix.CoalitionIndependent)]
-        [InlineData(EpilogueMatrix.FoundryAnnexation)]
-        [InlineData(EpilogueMatrix.WaterPlantHeld)]
-        [InlineData(EpilogueMatrix.GrainSiloCaptured)]
-        [InlineData(EpilogueMatrix.FuelDepotBurned)]
-        [InlineData(EpilogueMatrix.MercyRoad)]
-        [InlineData(EpilogueMatrix.IronWay)]
-        [InlineData(EpilogueMatrix.ListenersThread)]
-        [InlineData(EpilogueMatrix.MercyWaterHeld)]
-        [InlineData(EpilogueMatrix.IronFuelAsh)]
-        [InlineData(EpilogueMatrix.ShelterFalls)]
-        public void Plan96_All25Keys_CanBeBuiltIntoEpilogueChronicle(string key)
+        [Fact]
+        public void Plan96_All25Keys_CanBeBuiltIntoEpilogueChronicle()
         {
-            var builder = new Ashfall.Core.Endgame.EpilogueChronicleBuilder();
-            var chronicle = builder.Build(new Ashfall.Core.Endgame.EpilogueChronicleInput
-            {
-                EndingKey = key,
-                Day = 360,
-                BuildSeed = 12345
-            });
+            var failures = new List<string>();
 
-            Assert.NotNull(chronicle);
-            Assert.Equal(key, chronicle.EndingKey);
-            Assert.Equal(360, chronicle.GeneratedDay);
-            Assert.Equal(12345, chronicle.BuildSeed);
-            Assert.False(string.IsNullOrEmpty(chronicle.Title));
+            foreach (var key in EpilogueMatrix.AllKeys)
+            {
+                try
+                {
+                    var builder = new Ashfall.Core.Endgame.EpilogueChronicleBuilder();
+                    var chronicle = builder.Build(new Ashfall.Core.Endgame.EpilogueChronicleInput
+                    {
+                        EndingKey = key,
+                        Day = 360,
+                        BuildSeed = 12345
+                    });
+
+                    if (chronicle == null)
+                    {
+                        failures.Add($"{key}: builder returned null");
+                        continue;
+                    }
+
+                    if (!string.Equals(key, chronicle.EndingKey, StringComparison.Ordinal))
+                        failures.Add($"{key}: chronicle key was {chronicle.EndingKey}");
+                    if (chronicle.GeneratedDay != 360)
+                        failures.Add($"{key}: generated day was {chronicle.GeneratedDay}");
+                    if (chronicle.BuildSeed != 12345)
+                        failures.Add($"{key}: build seed was {chronicle.BuildSeed}");
+                    if (string.IsNullOrEmpty(chronicle.Title))
+                        failures.Add($"{key}: title is empty");
+                }
+                catch (Exception exception)
+                {
+                    failures.Add($"{key}: {exception.GetType().Name}: {exception.Message}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
     }
 }

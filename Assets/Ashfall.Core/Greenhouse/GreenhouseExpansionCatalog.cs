@@ -36,6 +36,13 @@ namespace Ashfall.Core
             public const string SeedOilseed = "item_seed_oilseed";
             public const string SeedColdLegume = "item_seed_cold_legume";
 
+            /// <summary>B5–B8 expansion (§27 seasonal catalog): winter-window
+            /// crops — minimal light demand, high cold tolerance.</summary>
+            public const string SeedFrostPea = "item_seed_frost_pea";
+            public const string CropFrostPea = "crop_frost_pea";
+            public const string SeedGlacierGreens = "item_seed_glacier_greens";
+            public const string CropGlacierGreens = "crop_glacier_greens";
+
             public const string PlanterBox = "item_planter_box";
             public const string GrowLamp = "item_grow_lamp";
             public const string LeadGlassPane = "item_lead_glass_pane";
@@ -280,6 +287,37 @@ namespace Ashfall.Core
                     BaseYield = 4,
                     BlightResistance = 0.75f,
                     ContaminationTolerance = 40f,
+                    RequiresUnlock = false
+                },
+                // ── B5–B8 expansion (§27 seasonal crop catalog): winter-window
+                // crops — minimal light demand pairs them with the winter
+                // light-pressure model (deep winter still cuts effective
+                // hours; these crops need the fewest, so the microclimate
+                // compensation becomes optional rather than mandatory). ──
+                new CropDef
+                {
+                    SeedItemId = Items.SeedFrostPea,
+                    YieldCleanId = Items.CropFrostPea,
+                    YieldTaintedId = Items.TaintedFood,
+                    GrowthHoursToMature = 168f,
+                    WaterPerDay = 8f,
+                    LightHoursPerDay = 2f,
+                    BaseYield = 4,
+                    BlightResistance = 0.85f,
+                    ContaminationTolerance = 55f,
+                    RequiresUnlock = false
+                },
+                new CropDef
+                {
+                    SeedItemId = Items.SeedGlacierGreens,
+                    YieldCleanId = Items.CropGlacierGreens,
+                    YieldTaintedId = Items.TaintedFood,
+                    GrowthHoursToMature = 120f,
+                    WaterPerDay = 6f,
+                    LightHoursPerDay = 3f,
+                    BaseYield = 3,
+                    BlightResistance = 0.80f,
+                    ContaminationTolerance = 60f,
                     RequiresUnlock = false
                 }
             };

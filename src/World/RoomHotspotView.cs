@@ -9,10 +9,23 @@ namespace AtomicWar.GodotApp.World
         [Signal]
         public delegate void ClickedEventHandler(string roomId);
 
-        public string RoomId { get; set; } = string.Empty;
+        public string RoomId
+        {
+            get => _roomId;
+            set
+            {
+                if (_roomId != value)
+                {
+                    _roomId = value;
+                    UpdateIcon();
+                }
+            }
+        }
+        private string _roomId = string.Empty;
         public Label Label { get; private set; }
         public Area2D HotspotArea { get; private set; }
         public ColorRect Background { get; private set; }
+        public Sprite2D Icon { get; private set; }
 
         private string _displayName = string.Empty;
         private string _statusText = string.Empty;
@@ -20,6 +33,14 @@ namespace AtomicWar.GodotApp.World
 
         public RoomHotspotView()
         {
+            // Placeholder room prop pictogram (absent art simply leaves the badge).
+            Icon = new Sprite2D
+            {
+                Position = new Vector2(0, -60),
+                Scale = new Vector2(0.5f, 0.5f)
+            };
+            AddChild(Icon);
+
             // Semi-transparent background badge
             Background = new ColorRect
             {
@@ -55,6 +76,15 @@ namespace AtomicWar.GodotApp.World
             _statusText = statusText;
             _occupantCount = occupantCount;
             UpdateDisplay();
+        }
+
+        /// <summary>Resolves the placeholder room pictogram, null-safe when art is absent.</summary>
+        private void UpdateIcon()
+        {
+            if (Icon == null) return;
+            Icon.Texture = string.IsNullOrEmpty(_roomId)
+                ? null
+                : HoldfastInteriorView.TryLoadShelterTexture(HoldfastInteriorView.ShelterArtDir + _roomId + ".png");
         }
 
         private void UpdateDisplay()

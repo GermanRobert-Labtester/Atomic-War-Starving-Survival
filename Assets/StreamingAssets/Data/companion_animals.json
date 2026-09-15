@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "companions": [
+    {
+      "species_id": "species_ash_hound",
+      "display_name": "Ash Hound",
+      "role_tags": ["guard", "morale"],
+      "base_food_per_day": 2,
+      "preferred_food_tags": ["meat", "raw_meat"],
+      "fallback_food_item_ids": ["raw_meat", "cooked_meat", "item_smoked_meat", "item_salted_meat"],
+      "max_health": 80,
+      "trainability": 7,
+      "bond_rate": 9,
+      "guard_rating": 45,
+      "pack_capacity_kg": 0,
+      "morale_support_bp": 250,
+      "disease_resistance": 4,
+      "terrain_tags": ["open_waste", "forest_burn", "highway"],
+      "tags": ["canine", "guard_breed", "nocturnal_senses"]
+    },
+    {
+      "species_id": "species_feral_goat",
+      "display_name": "Feral Goat",
+      "role_tags": ["pack", "morale"],
+      "base_food_per_day": 3,
+      "preferred_food_tags": ["forage", "grain"],
+      "fallback_food_item_ids": ["crop_ash_grain", "item_grain_flour", "item_pickled_tubers"],
+      "max_health": 70,
+      "trainability": 5,
+      "bond_rate": 6,
+      "guard_rating": 5,
+      "pack_capacity_kg": 25,
+      "morale_support_bp": 120,
+      "disease_resistance": 6,
+      "terrain_tags": ["highland", "forest_burn", "open_waste"],
+      "tags": ["hoofed", "load_bearing", "hardy"]
+    },
+    {
+      "species_id": "species_cotton_hare",
+      "display_name": "Cotton Hare",
+      "role_tags": ["morale"],
+      "base_food_per_day": 1,
+      "preferred_food_tags": ["forage", "greens"],
+      "fallback_food_item_ids": ["crop_leafy_green", "item_aeroponic_food_leaf"],
+      "max_health": 30,
+      "trainability": 4,
+      "bond_rate": 10,
+      "guard_rating": 0,
+      "pack_capacity_kg": 0,
+      "morale_support_bp": 300,
+      "disease_resistance": 2,
+      "terrain_tags": ["forest_burn", "lowland"],
+      "tags": ["small", "quiet", "den_animal"]
+    }
+  ]
+}

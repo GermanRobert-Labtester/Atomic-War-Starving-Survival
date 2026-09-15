@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "description": "Plan 125 Phase 2 — amphibious draisine outrigger authority. Fictionalized vehicle-kit capability: flotation, current tolerance, ingress risk, pumps, deployment. Water routes stay topology-owned; open-water naval travel stays with the naval authority.",
+  "kit_profiles": [
+    {
+      "id": "amphibious_draisine_mk1",
+      "display_name": "Draisine Outrigger Mk I",
+      "description": "Field-fabricated outrigger pontoons and paddle vanes for heavy rail draisines. Expensive, weighty, and never carefree.",
+      "compatible_vehicle_tags": ["rail_draisine", "rail_draisine_heavy"],
+      "flotation_rating": 0.80,
+      "current_tolerance": 0.55,
+      "cargo_capacity_modifier_bp": 8200,
+      "water_speed_modifier_bp": 3500,
+      "deployment_ticks": 3,
+      "mass_kg": 220,
+      "min_vehicle_condition_bp": 4000,
+      "pump_profile_id": "bilge_pump_mk1",
+      "install_item_ids": ["item_hermetic_hatch_silicone_gasket", "item_high_tensile_steel_culvert_brace"],
+      "repair_item_ids": ["item_epoxy_injector"],
+      "maintenance_profile_id": "maint_kit_field",
+      "route_class_ids": ["route_class_flooded_rail_bed"],
+      "tags": ["water_crossing", "expedition"]
+    },
+    {
+      "id": "amphibious_draisine_mk2",
+      "display_name": "Draisine Outrigger Mk II",
+      "description": "Reinforced twin-pontoon rig with a powered bilge pump. Tolerates stronger current; heavier on the chassis.",
+      "compatible_vehicle_tags": ["rail_draisine_heavy"],
+      "flotation_rating": 0.9,
+      "current_tolerance": 0.8,
+      "cargo_capacity_modifier_bp": 7200,
+      "water_speed_modifier_bp": 3000,
+      "deployment_ticks": 4,
+      "mass_kg": 340,
+      "min_vehicle_condition_bp": 5000,
+      "pump_profile_id": "bilge_pump_mk2",
+      "install_item_ids": ["item_hermetic_hatch_silicone_gasket", "item_high_tensile_steel_culvert_brace", "item_diving_suit_vulcanized"],
+      "repair_item_ids": ["item_epoxy_injector", "item_battery_reconditioned"],
+      "maintenance_profile_id": "maint_kit_field",
+      "route_class_ids": ["route_class_flooded_rail_bed", "route_class_destroyed_bridge", "route_class_submerged_causeway"],
+      "tags": ["water_crossing", "expedition", "reinforced"]
+    }
+  ],
+  "pump_profiles": [
+    {
+      "id": "bilge_pump_mk1",
+      "display_name": "Hand Bilge Pump",
+      "description": "Manual pump. Works until the crew tires.",
+      "ingress_mitigation_bp": 4000,
+      "power_source": "manual",
+      "repair_item_ids": ["item_epoxy_injector"]
+    },
+    {
+      "id": "bilge_pump_mk2",
+      "display_name": "Powered Bilge Pump",
+      "description": "Battery-driven pump with more capacity; needs charged cells.",
+      "ingress_mitigation_bp": 7000,
+      "power_source": "battery",
+      "repair_item_ids": ["item_epoxy_injector", "item_battery_reconditioned"]
+    }
+  ],
+  "route_class_profiles": [
+    {
+      "id": "route_class_flooded_rail_bed",
+      "display_name": "Flooded Rail Corridor",
+      "description": "Standing water over the ballast. Slow, but shallow.",
+      "max_current_risk": 0.55,
+      "min_flotation_rating": 0.7,
+      "tags": ["water_crossing_shallow"]
+    },
+    {
+      "id": "route_class_destroyed_bridge",
+      "display_name": "Destroyed Bridge Crossing",
+      "description": "Collapsed span with a wet ford below. Narrow margin of error.",
+      "max_current_risk": 0.65,
+      "min_flotation_rating": 0.75,
+      "tags": ["water_crossing_shallow", "hazard"]
+    },
+    {
+      "id": "route_class_submerged_causeway",
+      "display_name": "Submerged Causeway",
+      "description": "Deep causeway stretch. Only the reinforced rig should attempt it.",
+      "max_current_risk": 0.75,
+      "min_flotation_rating": 0.85,
+      "tags": ["water_crossing_deep", "hazard"]
+    }
+  ],
+  "repair_profiles": [
+    {
+      "id": "maint_kit_field",
+      "display_name": "Field Kit Upkeep",
+      "inspection_interval_days": 10,
+      "repair_skill_minimum": 35
+    }
+  ]
+}

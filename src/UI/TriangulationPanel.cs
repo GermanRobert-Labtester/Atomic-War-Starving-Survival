@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnLocationDiscovered;
 
         private RadioHostSession? _radioHost;
-        private string _activeSignalId = "sig_distress";
+        private string _activeSignalId = string.Empty;
 
         private Label _headerLabel = null!;
         private Label _signalLabel = null!;
@@ -38,10 +38,18 @@ namespace AtomicWar.GodotApp.UI
 
         public bool IsBound => _radioHost != null;
 
-        private void OnTriangulationStateChanged(TriangulationState _) => RefreshView();
+        /// <summary>Test/selftest observable: event-driven refresh count — exactly one per publisher event while bound.</summary>
+        public int RefreshCount { get; private set; }
+
+        private void OnTriangulationStateChanged(TriangulationState _)
+        {
+            RefreshCount++;
+            RefreshView();
+        }
+
         private void HandleLocationRevealed(string id) => OnLocationDiscovered?.Invoke(id);
 
-        public void Bind(RadioHostSession radioHost, string signalId = "sig_distress")
+        public void Bind(RadioHostSession radioHost, string signalId = "")
         {
             if (_radioHost != null)
             {
@@ -140,7 +148,7 @@ namespace AtomicWar.GodotApp.UI
 
         private void OnRecordPressed()
         {
-            if (_radioHost == null) return;
+            if (_radioHost == null || string.IsNullOrEmpty(_activeSignalId)) return;
             float bearing = (float)_bearingInput.Value;
             float strength = (float)_strengthInput.Value;
             float noise = (float)_noiseInput.Value;
@@ -151,7 +159,7 @@ namespace AtomicWar.GodotApp.UI
 
         private void OnTriangulatePressed()
         {
-            if (_radioHost == null) return;
+            if (_radioHost == null || string.IsNullOrEmpty(_activeSignalId)) return;
             string result = _radioHost.TriangulateSignal(_activeSignalId);
             _feedbackLabel.Text = result;
             RefreshView();
@@ -164,6 +172,23 @@ namespace AtomicWar.GodotApp.UI
 
             if (_signalLabel == null || _radioHost == null) return;
 
+            if (string.IsNullOrEmpty(_activeSignalId))
+            {
+                // Explicit no-signal state: never a canned demo signal id (N16.6).
+                _signalLabel.Text = "Signal: None under direction-finding";
+                _observationCountLabel.Text = "Observations: —";
+                _candidateLabel.Text = "Candidate: —";
+                _confidenceLabel.Text = "Confidence: —";
+                _uncertaintyLabel.Text = "Uncertainty: —";
+                _discoveryLabel.Text = "Discovery: —";
+                _discoveryLabel.Modulate = Colors.White;
+                _recordButton.Disabled = true;
+                _triangulateButton.Disabled = true;
+                return;
+            }
+
+            _recordButton.Disabled = false;
+            _triangulateButton.Disabled = false;
             _signalLabel.Text = $"Signal: {_activeSignalId}";
             _observationCountLabel.Text = $"Observations: {_radioHost.Triangulation.GetObservationCount(_activeSignalId)}";
 
@@ -188,7 +213,8 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public override void _ExitTree()
+        /// <summary>Detach the panel before its session authority is replaced (INV-16.5).</summary>
+        public void Unbind()
         {
             if (_radioHost != null)
             {
@@ -196,6 +222,11 @@ namespace AtomicWar.GodotApp.UI
                 _radioHost.Triangulation.OnLocationRevealed -= HandleLocationRevealed;
                 _radioHost = null;
             }
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
             base._ExitTree();
         }
     }

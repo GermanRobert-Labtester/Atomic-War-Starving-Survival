@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,8 +128,10 @@ namespace AtomicWar.GodotApp
                 return "Not enough materials: 4 scrap metal, 2 cloth, 1 battery.";
             }
 
-            _moraleContagion.InstallHopeBeacon(day);
-            tx.TryCommit();
+            if (!tx.TryCommit(() => _moraleContagion.InstallHopeBeacon(day)))
+            {
+                return "Could not assemble the beacon — materials were not reserved.";
+            }
             return "The beacon lamp is assembled. It needs a light-keeper and power to matter.";
         }
 

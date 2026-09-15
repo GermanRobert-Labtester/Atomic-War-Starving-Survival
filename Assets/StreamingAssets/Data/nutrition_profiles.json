@@ -83,6 +83,24 @@
       "fiber": 0.7
     },
     {
+      "item_id": "crop_frost_pea",
+      "calories": 0.8,
+      "protein": 0.9,
+      "vitamin_c": 0.2,
+      "micronutrients": 0.3,
+      "fats": 0.1,
+      "fiber": 0.6
+    },
+    {
+      "item_id": "crop_glacier_greens",
+      "calories": 0.5,
+      "protein": 0.3,
+      "vitamin_c": 0.6,
+      "micronutrients": 0.4,
+      "fats": 0.0,
+      "fiber": 0.5
+    },
+    {
       "item_id": "crop_oilseed",
       "calories": 0.6,
       "protein": 0.25,

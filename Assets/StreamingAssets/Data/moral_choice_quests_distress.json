@@ -1,163 +1,331 @@
 {
-  "schema_version": 1,
-  "quests": [
+ "schema_version": 1,
+ "quests": [
+  {
+   "id": "quest_moral_distress_trapped_mechanic",
+   "display_name": "Distress: Trapped Mechanic",
+   "category": "trust",
+   "trigger": "A trapped mechanic at the rail recovery yard requests emergency rescue before her beam shifts.",
+   "discovery": "Daria is pinned beneath a fallen steel crane at the recovery yard. She has survived for days with a radio, but her water is gone. You can dispatch an expedition to free her, or ignore the broadcast and conserve fuel.",
+   "location_id": "loc_recovery_yard",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
     {
-      "id": "quest_moral_distress_trapped_mechanic",
-      "display_name": "Distress: Trapped Mechanic",
-      "category": "trust",
-      "trigger": "A trapped mechanic at the rail recovery yard requests emergency rescue before her beam shifts.",
-      "discovery": "Daria is pinned beneath a fallen steel crane at the recovery yard. She has survived for days with a radio, but her water is gone. You can dispatch an expedition to free her, or ignore the broadcast and conserve fuel.",
-      "location_id": "loc_recovery_yard",
-      "min_day": 1,
-      "max_day": 200,
-      "choices": [
-        {
-          "label": "Dispatch rescue expedition",
-          "moral_delta": 12,
-          "empathy_delta": 2,
-          "set_flag": "flag_responded_distress",
-          "outcome_text": "You commit to the rescue and dispatch a crew to the rail depot. Daria is extracted from the collapsed crane and joins your network.",
-          "epitaph": "Heard a voice under iron and sent help. The crane was heavy, but living people are heavier."
-        },
-        {
-          "label": "Disregard the transmission",
-          "moral_delta": -8,
-          "empathy_delta": -1,
-          "set_flag": "flag_ignored_distress",
-          "outcome_text": "You turn off the radio. Days later, the frequency falls permanently silent as the beam shifts.",
-          "epitaph": "Left Daria under the crane. Silence came on the fifth day."
-        }
-      ]
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 12,
+     "empathy_delta": 2,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You commit to the rescue and dispatch a crew to the rail depot. Daria is extracted from the collapsed crane and joins your network.",
+     "epitaph": "Heard a voice under iron and sent help. The crane was heavy, but living people are heavier."
     },
     {
-      "id": "quest_moral_distress_injured_trader",
-      "display_name": "Distress: Injured Trader",
-      "category": "trust",
-      "trigger": "A traveling merchant with a compound fracture is stranded at Route 6 gas station.",
-      "discovery": "Olen has broken his leg and barricaded himself in the back room of a ruined fuel stop. Hostile predators circle outside. He offers batteries and medical salvage if you bring him in.",
-      "location_id": "rural_gas_station",
-      "min_day": 1,
-      "max_day": 200,
-      "choices": [
-        {
-          "label": "Dispatch rescue party",
-          "moral_delta": 10,
-          "empathy_delta": 2,
-          "outcome_text": "You reach the station and clear the perimeter. Olen survives and shares his battery reserves.",
-          "epitaph": "Brought Olen back from Route 6. A broken leg is not a death sentence."
-        },
-        {
-          "label": "Ignore his coordinates",
-          "moral_delta": -7,
-          "empathy_delta": -1,
-          "outcome_text": "You leave the trader to his fate. By nightfall, the radio signal cuts out abruptly.",
-          "epitaph": "Left the trader on Route 6. The dark took him."
-        }
-      ]
-    },
-    {
-      "id": "quest_moral_distress_family_shelter",
-      "display_name": "Distress: Family Shelter",
-      "category": "comfort",
-      "trigger": "A twelve-year-old child broadcasts from a locked backyard bunker with her unresponsive mother.",
-      "discovery": "Lena is trapped behind a jammed security door in a residential shed bunker. She has no food and her mother has succumbed to fever.",
-      "location_id": "family_bunker_backyard_shed",
-      "min_day": 1,
-      "max_day": 200,
-      "choices": [
-        {
-          "label": "Breach the shelter door",
-          "moral_delta": 14,
-          "empathy_delta": 3,
-          "outcome_text": "Your team forces the jammed door. Lena is brought to safety and given warm broth.",
-          "epitaph": "Breached the blue door. A child was pulled into the light."
-        },
-        {
-          "label": "Leave the shelter closed",
-          "moral_delta": -12,
-          "empathy_delta": -2,
-          "outcome_text": "You decide the journey is too dangerous. Lena's voice fades from the airwaves after two days.",
-          "epitaph": "Ignored the blue door. The radio went quiet."
-        }
-      ]
-    },
-    {
-      "id": "quest_moral_distress_child_school",
-      "display_name": "Distress: Child at School",
-      "category": "comfort",
-      "trigger": "A frightened child broadcasts on an emergency frequency from a collapsed school basement.",
-      "discovery": "Petar is huddled under a collapsed timber joist in the school basement. His teacher told him to use the radio in an emergency.",
-      "location_id": "loc_school_gymnasium",
-      "min_day": 1,
-      "max_day": 200,
-      "choices": [
-        {
-          "label": "Send a rescue team to the school",
-          "moral_delta": 15,
-          "empathy_delta": 3,
-          "outcome_text": "Your scavengers dig through the collapsed timbers and carry Petar out safely.",
-          "epitaph": "Pulled Petar from the ruins of the school. The radio did not lie."
-        },
-        {
-          "label": "Disregard the school broadcast",
-          "moral_delta": -14,
-          "empathy_delta": -2,
-          "outcome_text": "You decide the building is structurally unsound. The static swallows the frequency.",
-          "epitaph": "Left Petar in the basement. The silence was absolute."
-        }
-      ]
-    },
-    {
-      "id": "quest_moral_distress_siblings_clinic",
-      "display_name": "Distress: Hiding Siblings",
-      "category": "share",
-      "trigger": "Two young siblings broadcast from a storm cellar beneath an abandoned clinic.",
-      "discovery": "Ana and Miko have locked themselves in the basement with water but no food while armed raiders scour the area.",
-      "location_id": "prewar_medical_cache",
-      "min_day": 1,
-      "max_day": 200,
-      "choices": [
-        {
-          "label": "Knock three times and extract the siblings",
-          "moral_delta": 12,
-          "empathy_delta": 2,
-          "outcome_text": "You arrive, give the secret knock, and extract Ana and Miko with food rations.",
-          "epitaph": "Knocked three times on the cellar door. Two siblings walked out alive."
-        },
-        {
-          "label": "Leave the cellar untouched",
-          "moral_delta": -9,
-          "empathy_delta": -1,
-          "outcome_text": "You do not intervene. The broadcast ceases when food runs out.",
-          "epitaph": "Did not knock on the cellar door. Two children waited in vain."
-        }
-      ]
-    },
-    {
-      "id": "quest_moral_distress_military_patrol",
-      "display_name": "Distress: Stranded Patrol",
-      "category": "trust",
-      "trigger": "Sergeant Voss of the Iron Garrison requests extraction from a pinned culvert.",
-      "discovery": "An Iron Garrison patrol has been ambushed and pinned down with wounded. Voss offers tactical intelligence in exchange for ammunition and medical aid.",
-      "location_id": "checkpoint_kilo_armory",
-      "min_day": 1,
-      "max_day": 200,
-      "choices": [
-        {
-          "label": "Supply and extract patrol six",
-          "moral_delta": 8,
-          "empathy_delta": 1,
-          "outcome_text": "Your expedition arrives with field dressings and ammo, breaking the encirclement. Garrison standing rises significantly.",
-          "epitaph": "Brought patrol six out of the culvert. The Garrison remembers."
-        },
-        {
-          "label": "Abandon the Garrison patrol",
-          "moral_delta": -6,
-          "empathy_delta": -1,
-          "outcome_text": "You leave the soldiers pinned. The patrol is overrun, severely damaging your standing with the Iron Garrison.",
-          "epitaph": "Let patrol six fall in the culvert. The Garrison found the bodies."
-        }
-      ]
+     "label": "Disregard the transmission",
+     "moral_delta": -8,
+     "empathy_delta": -1,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "You turn off the radio. Days later, the frequency falls permanently silent as the beam shifts.",
+     "epitaph": "Left Daria under the crane. Silence came on the fifth day."
     }
-  ]
+   ]
+  },
+  {
+   "id": "quest_moral_distress_injured_trader",
+   "display_name": "Distress: Injured Trader",
+   "category": "trust",
+   "trigger": "A traveling merchant with a compound fracture is stranded at Route 6 gas station.",
+   "discovery": "Olen has broken his leg and barricaded himself in the back room of a ruined fuel stop. Hostile predators circle outside. He offers batteries and medical salvage if you bring him in.",
+   "location_id": "rural_gas_station",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue party",
+     "moral_delta": 10,
+     "empathy_delta": 2,
+     "outcome_text": "You reach the station and clear the perimeter. Olen survives and shares his battery reserves.",
+     "epitaph": "Brought Olen back from Route 6. A broken leg is not a death sentence."
+    },
+    {
+     "label": "Ignore his coordinates",
+     "moral_delta": -7,
+     "empathy_delta": -1,
+     "outcome_text": "You leave the trader to his fate. By nightfall, the radio signal cuts out abruptly.",
+     "epitaph": "Left the trader on Route 6. The dark took him."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_family_shelter",
+   "display_name": "Distress: Family Shelter",
+   "category": "comfort",
+   "trigger": "A twelve-year-old child broadcasts from a locked backyard bunker with her unresponsive mother.",
+   "discovery": "Lena is trapped behind a jammed security door in a residential shed bunker. She has no food and her mother has succumbed to fever.",
+   "location_id": "family_bunker_backyard_shed",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Breach the shelter door",
+     "moral_delta": 14,
+     "empathy_delta": 3,
+     "outcome_text": "Your team forces the jammed door. Lena is brought to safety and given warm broth.",
+     "epitaph": "Breached the blue door. A child was pulled into the light."
+    },
+    {
+     "label": "Leave the shelter closed",
+     "moral_delta": -12,
+     "empathy_delta": -2,
+     "outcome_text": "You decide the journey is too dangerous. Lena's voice fades from the airwaves after two days.",
+     "epitaph": "Ignored the blue door. The radio went quiet."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_child_school",
+   "display_name": "Distress: Child at School",
+   "category": "comfort",
+   "trigger": "A frightened child broadcasts on an emergency frequency from a collapsed school basement.",
+   "discovery": "Petar is huddled under a collapsed timber joist in the school basement. His teacher told him to use the radio in an emergency.",
+   "location_id": "loc_school_gymnasium",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Send a rescue team to the school",
+     "moral_delta": 15,
+     "empathy_delta": 3,
+     "outcome_text": "Your scavengers dig through the collapsed timbers and carry Petar out safely.",
+     "epitaph": "Pulled Petar from the ruins of the school. The radio did not lie."
+    },
+    {
+     "label": "Disregard the school broadcast",
+     "moral_delta": -14,
+     "empathy_delta": -2,
+     "outcome_text": "You decide the building is structurally unsound. The static swallows the frequency.",
+     "epitaph": "Left Petar in the basement. The silence was absolute."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_siblings_clinic",
+   "display_name": "Distress: Hiding Siblings",
+   "category": "share",
+   "trigger": "Two young siblings broadcast from a storm cellar beneath an abandoned clinic.",
+   "discovery": "Ana and Miko have locked themselves in the basement with water but no food while armed raiders scour the area.",
+   "location_id": "prewar_medical_cache",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Knock three times and extract the siblings",
+     "moral_delta": 12,
+     "empathy_delta": 2,
+     "outcome_text": "You arrive, give the secret knock, and extract Ana and Miko with food rations.",
+     "epitaph": "Knocked three times on the cellar door. Two siblings walked out alive."
+    },
+    {
+     "label": "Leave the cellar untouched",
+     "moral_delta": -9,
+     "empathy_delta": -1,
+     "outcome_text": "You do not intervene. The broadcast ceases when food runs out.",
+     "epitaph": "Did not knock on the cellar door. Two children waited in vain."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_military_patrol",
+   "display_name": "Distress: Stranded Patrol",
+   "category": "trust",
+   "trigger": "Sergeant Voss of the Iron Garrison requests extraction from a pinned culvert.",
+   "discovery": "An Iron Garrison patrol has been ambushed and pinned down with wounded. Voss offers tactical intelligence in exchange for ammunition and medical aid.",
+   "location_id": "checkpoint_kilo_armory",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Supply and extract patrol six",
+     "moral_delta": 8,
+     "empathy_delta": 1,
+     "outcome_text": "Your expedition arrives with field dressings and ammo, breaking the encirclement. Garrison standing rises significantly.",
+     "epitaph": "Brought patrol six out of the culvert. The Garrison remembers."
+    },
+    {
+     "label": "Abandon the Garrison patrol",
+     "moral_delta": -6,
+     "empathy_delta": -1,
+     "outcome_text": "You leave the soldiers pinned. The patrol is overrun, severely damaging your standing with the Iron Garrison.",
+     "epitaph": "Let patrol six fall in the culvert. The Garrison found the bodies."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_hostage_call",
+   "display_name": "Distress: Verity Motel Hostage",
+   "category": "trust",
+   "trigger": "A hostage at the Verity Motel broadcasts at noon each day, kept on the air by the man holding her door shut.",
+   "discovery": "Ruta is a payment in a fuel dispute at the Verity Motel. Her captor lets her key the handset at noon to prove she is alive. Rescue is a door you would have to argue with; silence is a frequency you could simply stop keeping.",
+   "location_id": "loc_motel_verity",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 10,
+     "empathy_delta": 2,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You commit a crew to the Verity Motel. What happens at room fourteen happens because someone decided a voice at noon was worth a convoy.",
+     "epitaph": "Kept the noon appointment with a stranger's voice. The vacancy sign buzzed either way."
+    },
+    {
+     "label": "Disregard the transmission",
+     "moral_delta": -9,
+     "empathy_delta": -1,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "You stop keeping the noon appointment. The offer expires on the fourth day, the way he said it would.",
+     "epitaph": "Let the noon appointment lapse. Nobody called to cancel."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_infected_survivor",
+   "display_name": "Distress: Fever Ward Warden",
+   "category": "comfort",
+   "trigger": "A hospice warden sealed in the almshouse fever ward asks for gloved hands and boiled water before the ward's ledger runs out of names.",
+   "discovery": "Warden Otilia has barred the almshouse fever ward from her own side, keeping the sickness in and the help out until someone decides otherwise. The dispensary ledger is left open on the table. Treatment here means discipline, not heroics.",
+   "location_id": "loc_st_brigids_almshouse",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 12,
+     "empathy_delta": 3,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You commit boiled water, gloves, and a course of antibiotics to the east ward. The ledger keeps more names than it was on course to.",
+     "epitaph": "Answered a ward that had barred itself in. The ledger kept its names."
+    },
+    {
+     "label": "Disregard the transmission",
+     "moral_delta": -8,
+     "empathy_delta": -2,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "The dispensary stays locked and the ledger runs out of names in the order it was always going to.",
+     "epitaph": "Left the ledger to run out of names in its own order."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_convoy_sos",
+   "display_name": "Distress: Salvage Crew Collapse",
+   "category": "trust",
+   "trigger": "A three-person salvage crew is pinned under a collapsed mezzanine in the warehouse district with their own jacks and slings intact.",
+   "discovery": "Crew two cut the wrong column in the warehouse district and the mezzanine answered. They kept the tools dry and the channel open. What they need is not strength so much as somebody willing to stand at the other end of a jack.",
+   "location_id": "loc_warehouse_district",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 9,
+     "empathy_delta": 2,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You stand at the other end of their jacks. The column holds long enough for crew two to leave with the rest of them.",
+     "epitaph": "Stood at the far end of a jack until the weight agreed to move."
+    },
+    {
+     "label": "Disregard the transmission",
+     "moral_delta": -7,
+     "empathy_delta": -1,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "Their own kit sits in the dark beside them. The channel stays open until it does not.",
+     "epitaph": "The channel stayed open. The column did not."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_ransom_demand",
+   "display_name": "Distress: Ransom Demand",
+   "category": "trust",
+   "trigger": "Holders at Dentists' Row demand a toll for a nomad courier they took off the salt route.",
+   "discovery": "The courier at Dentists' Row is a nomad by marriage to the salt route and a bill in the holders' ledger. The toll is due on the fourth day. The river nomads will remember whoever paid it — and whoever did not.",
+   "location_id": "loc_dentists_row",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 11,
+     "empathy_delta": 2,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You answer the bill with boots instead of goods. What the holders kept is handed back to the people it belongs to.",
+     "epitaph": "Paid the toll in a currency the holders had not priced."
+    },
+    {
+     "label": "Disregard the transmission",
+     "moral_delta": -8,
+     "empathy_delta": -1,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "The toll deadline passes on the fourth day. The nomads heard the band too, and heard you not answer it.",
+     "epitaph": "Let the fourth day pass. The nomads counted the days too."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_military_beacon",
+   "display_name": "Distress: Command Post Echo",
+   "category": "trust",
+   "trigger": "A sergeant still counting holds the Ordnance Shoulder with one working pair of legs between two of them.",
+   "discovery": "Sergeant Brenner held the shoulder so the ordnance could not roll back downhill. The automated beacon calls it a monument. The sergeant calls it a place four people walked into and two can still walk out of. Bring a litter or bring nothing.",
+   "location_id": "loc_ordnance_shoulder",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 12,
+     "empathy_delta": 2,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You bring the litter. Somebody profits from the shoulder holding, and for once it is the people who held it.",
+     "epitaph": "Brought the litter. The beacon sounded less like a monument on the way back."
+    },
+    {
+     "label": "Disregard the transmission",
+     "moral_delta": -9,
+     "empathy_delta": -1,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "The beacon keeps its twelve-hour schedule. It keeps it alone.",
+     "epitaph": "The beacon kept its schedule. It kept it alone."
+    }
+   ]
+  },
+  {
+   "id": "quest_moral_distress_winter_crossing",
+   "display_name": "Distress: Winter Crossing",
+   "category": "comfort",
+   "trigger": "A salt-route courier is pinned by the weather in the Shallows market with perhaps four days before the ice road closes.",
+   "discovery": "The courier wants what any crossing wants: weather you would travel in yourself. The Shallows are far, the route is weather-gated, and the couriers'd rather be waited for than mourned for. The clock is the frost, not the paperwork.",
+   "location_id": "loc_the_shallows_market",
+   "min_day": 1,
+   "max_day": 200,
+   "choices": [
+    {
+     "label": "Dispatch rescue expedition",
+     "moral_delta": 10,
+     "empathy_delta": 2,
+     "set_flag": "flag_responded_distress",
+     "outcome_text": "You cross in weather you would travel in yourself. The courier's ledger closes in credit.",
+     "epitaph": "Crossed in weather that would have kept you home. The ledger closed in credit."
+    },
+    {
+     "label": "Disregard the transmission",
+     "moral_delta": -7,
+     "empathy_delta": -1,
+     "set_flag": "flag_ignored_distress",
+     "outcome_text": "The ice road closes. What it closes, it keeps.",
+     "epitaph": "What the ice road closed, it kept."
+    }
+   ]
+  }
+ ]
 }

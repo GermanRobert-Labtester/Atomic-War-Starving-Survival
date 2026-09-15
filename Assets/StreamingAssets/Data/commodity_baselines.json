@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "collection_id": "commodity_baselines_212",
+  "description": "Plan 212 commodity behavior catalog. Per-category market dynamics for the canonical MarketSystem: target multipliers, trade-pressure response classes, and bounded scarcity ranges. Authored gameplay values only — no real-world economics. Item base prices remain the authority in economy_goods.json; this file never duplicates them.",
+  "categories": [
+    {
+      "category_id": "food",
+      "base_multiplier_permille": 1000,
+      "elasticity_class": "medium",
+      "scarcity_floor_permille": 700,
+      "scarcity_ceiling_permille": 2000
+    },
+    {
+      "category_id": "water",
+      "base_multiplier_permille": 1000,
+      "elasticity_class": "medium",
+      "scarcity_floor_permille": 700,
+      "scarcity_ceiling_permille": 2200
+    },
+    {
+      "category_id": "medical",
+      "base_multiplier_permille": 1100,
+      "elasticity_class": "high",
+      "scarcity_floor_permille": 800,
+      "scarcity_ceiling_permille": 2600
+    },
+    {
+      "category_id": "fuel",
+      "base_multiplier_permille": 1000,
+      "elasticity_class": "medium",
+      "scarcity_floor_permille": 700,
+      "scarcity_ceiling_permille": 2000
+    },
+    {
+      "category_id": "weapons",
+      "base_multiplier_permille": 1050,
+      "elasticity_class": "high",
+      "scarcity_floor_permille": 800,
+      "scarcity_ceiling_permille": 2400
+    },
+    {
+      "category_id": "tools",
+      "base_multiplier_permille": 1000,
+      "elasticity_class": "medium",
+      "scarcity_floor_permille": 750,
+      "scarcity_ceiling_permille": 1800
+    },
+    {
+      "category_id": "materials",
+      "base_multiplier_permille": 950,
+      "elasticity_class": "low",
+      "scarcity_floor_permille": 600,
+      "scarcity_ceiling_permille": 1600
+    },
+    {
+      "category_id": "ammo",
+      "base_multiplier_permille": 1050,
+      "elasticity_class": "high",
+      "scarcity_floor_permille": 750,
+      "scarcity_ceiling_permille": 2400
+    },
+    {
+      "category_id": "documents",
+      "base_multiplier_permille": 1000,
+      "elasticity_class": "medium",
+      "scarcity_floor_permille": 700,
+      "scarcity_ceiling_permille": 2000
+    },
+    {
+      "category_id": "luxury",
+      "base_multiplier_permille": 900,
+      "elasticity_class": "high",
+      "scarcity_floor_permille": 500,
+      "scarcity_ceiling_permille": 2000
+    },
+    {
+      "category_id": "misc",
+      "base_multiplier_permille": 950,
+      "elasticity_class": "low",
+      "scarcity_floor_permille": 600,
+      "scarcity_ceiling_permille": 1600
+    },
+    {
+      "category_id": "contraband",
+      "base_multiplier_permille": 1200,
+      "elasticity_class": "medium",
+      "scarcity_floor_permille": 800,
+      "scarcity_ceiling_permille": 2600
+    }
+  ]
+}

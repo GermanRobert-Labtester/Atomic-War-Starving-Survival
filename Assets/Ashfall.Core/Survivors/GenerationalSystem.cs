@@ -378,12 +378,19 @@ namespace Ashfall.Core.Survivors
             return Math.Min(15.0f, safeCount * 3.0f);
         }
 
-        public GenerationalState CaptureState() => _state;
+        public GenerationalState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<GenerationalState>(json) ?? new GenerationalState();
+        }
 
         public void RestoreState(GenerationalState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<GenerationalState>(json) ?? new GenerationalState();
         }
     }
 }

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
@@ -96,7 +97,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void FreezeBurstIsSeededAndRepairRestoresTopology()
+        public void FreezeHazardIsSeededAndRepairRestoresTopology()
         {
             var system = CreateGraph();
             system.BindRng(new FixedRng(0.0, 0.99));
@@ -104,10 +105,12 @@ namespace Ashfall.Core.Tests
             string? burstEdge = null;
             system.OnPipeBurst += edge => burstEdge = edge;
 
-            var frozen = system.Tick(8, outdoorTemperatureC: -20f);
+            var report = system.Tick(8, outdoorTemperatureC: -20f);
 
-            Assert.Equal("pipe_a", burstEdge);
-            Assert.Equal(0f, frozen.deliveredVolume, 4);
+            // Extreme cold with healthy pipes freezes rather than bursts.
+            Assert.Null(burstEdge);
+            Assert.True(system.State.edges.Exists(e => e.edgeId == "pipe_a" && e.frozen && !e.burst));
+            Assert.Equal(0f, report.deliveredVolume, 4);
             Assert.True(system.RepairPipe("pipe_a"));
             Assert.Equal(10f, system.Solve(9).deliveredVolume, 4);
         }

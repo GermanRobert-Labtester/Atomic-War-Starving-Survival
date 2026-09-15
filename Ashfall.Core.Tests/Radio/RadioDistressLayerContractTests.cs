@@ -31,7 +31,7 @@ namespace Ashfall.Core.Tests.Radio
         }
 
         [Fact]
-        public void LandedCatalogLayers_Are25PrimaryAnd16Expansion_WithFiveSharedIds()
+        public void LandedCatalogLayers_Are25PrimaryAnd19Expansion_WithFiveSharedIds()
         {
             var primary = LoadFile("radio_distress_signals.json");
             var expansion = LoadFile("radio_distress_signals_expansion.json");
@@ -39,11 +39,12 @@ namespace Ashfall.Core.Tests.Radio
             var expansionIds = expansion.Select(signal => signal.FrequencyId).ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             Assert.Equal(25, primary.Count);
-            Assert.Equal(16, expansion.Count);
+            // 16 landed + §24 content waves (3 + 4 new scenarios).
+            Assert.Equal(23, expansion.Count);
             Assert.Equal(primary.Count, primaryIds.Count);
             Assert.Equal(expansion.Count, expansionIds.Count);
             Assert.Equal(5, primaryIds.Intersect(expansionIds, StringComparer.OrdinalIgnoreCase).Count());
-            Assert.Equal(36, primaryIds.Union(expansionIds, StringComparer.OrdinalIgnoreCase).Count());
+            Assert.Equal(43, primaryIds.Union(expansionIds, StringComparer.OrdinalIgnoreCase).Count());
         }
 
         [Fact]
@@ -91,9 +92,9 @@ namespace Ashfall.Core.Tests.Radio
                 Assert.NotEmpty(definition.ResolveQuestId);
             }
 
-            // 36 JSON identities plus four built-in compatibility fallbacks
-            // that do not exist in either JSON layer.
-            Assert.Equal(40, system.TotalRegisteredSignals);
+            // 43 JSON identities (36 landed + 7 §24 expansion scenarios) plus
+            // four built-in compatibility fallbacks that exist in neither layer.
+            Assert.Equal(47, system.TotalRegisteredSignals);
         }
 
         [Fact]

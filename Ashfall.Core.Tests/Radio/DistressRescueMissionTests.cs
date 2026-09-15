@@ -11,10 +11,28 @@ namespace Ashfall.Core.Tests.Radio
         private readonly DistressRescueMissionManager _manager = new DistressRescueMissionManager();
 
         [Fact]
-        public void AllFiveRescueMissions_AreRegisteredWithCorrectCorrelation()
+        public void AllRescueMissions_AreRegisteredWithCorrectCorrelation()
         {
+            // Five flagship rescues + seven §24 expansion scenarios across
+            // two content tranches (hostage, fever ward, salvage crew, ransom,
+            // false evacuation, command-post beacon, winter crossing).
             var missions = _manager.AllMissions;
-            Assert.Equal(5, missions.Count);
+            Assert.Equal(12, missions.Count);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_ransom_demand"));
+            Assert.Equal("loc_dentists_row", _manager.GetMissionByQuest("quest_distress_ransom_demand")!.DestinationId);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_false_evacuation"));
+            Assert.Equal("collapsed_building", _manager.GetMissionByQuest("quest_distress_false_evacuation")!.DestinationId);
+            Assert.True(_manager.GetMissionByQuest("quest_distress_false_evacuation")!.IsTrap);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_military_beacon"));
+            Assert.Equal("loc_ordnance_shoulder", _manager.GetMissionByQuest("quest_distress_military_beacon")!.DestinationId);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_winter_crossing"));
+            Assert.Equal("loc_the_shallows_market", _manager.GetMissionByQuest("quest_distress_winter_crossing")!.DestinationId);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_hostage_call"));
+            Assert.Equal("loc_motel_verity", _manager.GetMissionByQuest("quest_distress_hostage_call")!.DestinationId);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_infected_survivor"));
+            Assert.Equal("loc_st_brigids_almshouse", _manager.GetMissionByQuest("quest_distress_infected_survivor")!.DestinationId);
+            Assert.NotNull(_manager.GetMissionByQuest("quest_distress_convoy_sos"));
+            Assert.Equal("loc_warehouse_district", _manager.GetMissionByQuest("quest_distress_convoy_sos")!.DestinationId);
 
             var mechanic = _manager.GetMissionByQuest("quest_distress_trapped_mechanic");
             Assert.NotNull(mechanic);
@@ -96,11 +114,14 @@ namespace Ashfall.Core.Tests.Radio
             _manager.RecordSignalIdentified("freq_distress_156_8");
             _manager.RecordExpeditionDispatched("quest_distress_injured_trader", "exp_sort_002");
 
-            // Arrive on Day 5 (past Day 4 deadline)
+            // Arrive on Day 5 — rescue-signal runtime: the arrival DAY governs
+            // the outcome; the trader's sender death day is 1 + survival 3 = 4,
+            // so Day-5 arrival resolves the dead branch (plan §8.6).
             var stage = _manager.RecordDestinationReached("quest_distress_injured_trader", 5);
             Assert.Equal(DistressRescueMissionStage.TerminalFailed, stage);
             Assert.Equal(DistressRescueMissionStage.TerminalFailed, m.Stage);
-            Assert.Contains("past the rescue deadline", m.OutcomeSummary);
+            Assert.False(m.SenderAlive);
+            Assert.Contains("died on Day 4", m.OutcomeSummary);
         }
 
         [Fact]

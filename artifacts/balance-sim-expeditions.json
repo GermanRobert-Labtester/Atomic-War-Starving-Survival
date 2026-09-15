@@ -12,8 +12,8 @@
     "holdfast_items.json",
     "verdict_items.json",
     "agriculture_items.json",
-    "items.json",
-    "year_of_ash_items.json"
+    "year_of_ash_items.json",
+    "items.json"
   ],
   "unknownValueItems": [],
   "destinations": [
@@ -178,12 +178,12 @@
       "dangerLevel": 3,
       "distanceTicks": 2,
       "table": "table_loot_chemical_plant",
-      "meanValue": 35.21,
+      "meanValue": 71.22,
       "meanEncounters": 0.605,
       "meanTicks": 7,
       "meanStaminaSpent": 9.91,
       "collapseP": 0,
-      "valuePerStamina": 3.5534,
+      "valuePerStamina": 7.1871,
       "completedRate": 1
     },
     {
@@ -191,12 +191,12 @@
       "dangerLevel": 4,
       "distanceTicks": 6,
       "table": "table_loot_hospital",
-      "meanValue": 43.45,
+      "meanValue": 62.91,
       "meanEncounters": 1.3,
       "meanTicks": 15,
       "meanStaminaSpent": 23.44,
       "collapseP": 0,
-      "valuePerStamina": 1.854,
+      "valuePerStamina": 2.6844,
       "completedRate": 1
     },
     {
@@ -373,12 +373,12 @@
       "dangerLevel": 5,
       "distanceTicks": 8,
       "table": "table_loot_hospital",
-      "meanValue": 45.35,
+      "meanValue": 62.24,
       "meanEncounters": 1.93,
       "meanTicks": 19,
       "meanStaminaSpent": 32.93,
       "collapseP": 0,
-      "valuePerStamina": 1.3774,
+      "valuePerStamina": 1.8903,
       "completedRate": 1
     },
     {
@@ -425,12 +425,12 @@
       "dangerLevel": 6,
       "distanceTicks": 4,
       "table": "table_loot_hospital",
-      "meanValue": 49.59,
+      "meanValue": 71.51,
       "meanEncounters": 1.235,
       "meanTicks": 11,
       "meanStaminaSpent": 20.33,
       "collapseP": 0,
-      "valuePerStamina": 2.4396,
+      "valuePerStamina": 3.518,
       "completedRate": 1
     },
     {
@@ -581,12 +581,12 @@
       "dangerLevel": 7,
       "distanceTicks": 7,
       "table": "table_loot_metro_station",
-      "meanValue": 33.73,
+      "meanValue": 43.1,
       "meanEncounters": 2.09,
       "meanTicks": 17,
       "meanStaminaSpent": 35.58,
       "collapseP": 0,
-      "valuePerStamina": 0.948,
+      "valuePerStamina": 1.2115,
       "completedRate": 1
     },
     {
@@ -659,12 +659,12 @@
       "dangerLevel": 10,
       "distanceTicks": 18,
       "table": "table_loot_dead_hand_core",
-      "meanValue": 60.85,
+      "meanValue": 80.87,
       "meanEncounters": 5.975,
       "meanTicks": 38.8,
       "meanStaminaSpent": 95.22,
       "collapseP": 0.215,
-      "valuePerStamina": 0.6391,
+      "valuePerStamina": 0.8493,
       "completedRate": 0.785
     },
     {
@@ -737,12 +737,12 @@
       "dangerLevel": 7,
       "distanceTicks": 7,
       "table": "table_loot_chemical_plant",
-      "meanValue": 46.09,
+      "meanValue": 104.85,
       "meanEncounters": 1.655,
       "meanTicks": 17,
       "meanStaminaSpent": 32.95,
       "collapseP": 0,
-      "valuePerStamina": 1.3987,
+      "valuePerStamina": 3.1819,
       "completedRate": 1
     },
     {
@@ -750,12 +750,12 @@
       "dangerLevel": 5,
       "distanceTicks": 9,
       "table": "table_loot_rail_yard",
-      "meanValue": 25.45,
+      "meanValue": 29.53,
       "meanEncounters": 2.12,
       "meanTicks": 21,
       "meanStaminaSpent": 39.7,
       "collapseP": 0,
-      "valuePerStamina": 0.6412,
+      "valuePerStamina": 0.744,
       "completedRate": 1
     },
     {
@@ -763,12 +763,12 @@
       "dangerLevel": 8,
       "distanceTicks": 11,
       "table": "table_loot_military_depot",
-      "meanValue": 61.58,
+      "meanValue": 71.6,
       "meanEncounters": 2.965,
       "meanTicks": 24.46,
       "meanStaminaSpent": 75.46,
       "collapseP": 0.34,
-      "valuePerStamina": 0.8161,
+      "valuePerStamina": 0.9488,
       "completedRate": 0.66
     },
     {
@@ -867,12 +867,12 @@
       "dangerLevel": 6,
       "distanceTicks": 18,
       "table": "table_loot_military_depot",
-      "meanValue": 18.58,
+      "meanValue": 23.58,
       "meanEncounters": 3.045,
       "meanTicks": 35.45,
       "meanStaminaSpent": 84.42,
       "collapseP": 0.53,
-      "valuePerStamina": 0.2201,
+      "valuePerStamina": 0.2794,
       "completedRate": 0.47
     },
     {
@@ -880,12 +880,12 @@
       "dangerLevel": 7,
       "distanceTicks": 14,
       "table": "table_loot_dead_hand_core",
-      "meanValue": 66.53,
+      "meanValue": 85.12,
       "meanEncounters": 2.695,
       "meanTicks": 31,
       "meanStaminaSpent": 59.45,
       "collapseP": 0,
-      "valuePerStamina": 1.1191,
+      "valuePerStamina": 1.4318,
       "completedRate": 1
     },
     {
@@ -919,12 +919,12 @@
       "dangerLevel": 3,
       "distanceTicks": 8,
       "table": "table_loot_hospital",
-      "meanValue": 36.88,
+      "meanValue": 55.18,
       "meanEncounters": 1.115,
       "meanTicks": 19,
       "meanStaminaSpent": 28.69,
       "collapseP": 0,
-      "valuePerStamina": 1.2855,
+      "valuePerStamina": 1.9236,
       "completedRate": 1
     },
     {

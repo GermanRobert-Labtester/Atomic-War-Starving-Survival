@@ -31,6 +31,11 @@ namespace Ashfall.Core
         /// </summary>
         public event Action<ResearchKnowledgeDef>? OnResearchCompleted;
 
+        /// <summary>Tasks 5–8 §6.8 — raised when a manual/collectible reveal adds a
+        /// node to unlockedIds. Panels observe this; collectible code never
+        /// touches panel rows directly.</summary>
+        public event Action<string>? OnManualUnlocked;
+
         public ResearchSystem(ILog? log = null, ResearchState? state = null)
         {
             _log = log ?? NullLog.Instance;
@@ -55,8 +60,10 @@ namespace Ashfall.Core
         public void UnlockManual(string id)
         {
             if (string.IsNullOrEmpty(id)) return;
-            if (!State.unlockedIds.Contains(id)) State.unlockedIds.Add(id);
+            bool isNew = !State.unlockedIds.Contains(id);
+            if (isNew) State.unlockedIds.Add(id);
             if (_catalog.TryGetValue(id, out var def)) def.isUnlocked = true;
+            if (isNew) OnManualUnlocked?.Invoke(id);
         }
 
         public bool IsManualUnlocked(string id) => !string.IsNullOrEmpty(id) && State.unlockedIds.Contains(id);

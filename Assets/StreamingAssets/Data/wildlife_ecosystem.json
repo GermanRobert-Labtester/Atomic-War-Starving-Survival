@@ -2,6 +2,7 @@
   "schema_version": 1,
   "species": [
     { "id": "species_cotton_hare", "display_name": "Cotton Hare", "radiation_tolerance": 0.3, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": true, "tameness_chance": 0.2, "tags": ["prey", "soft_fur"] },
+    { "id": "species_ash_hound", "display_name": "Ash Hound", "radiation_tolerance": 0.55, "diet_type": "carnivore", "apex_population_threshold": 0, "tameable": true, "tameness_chance": 0.08, "tags": ["predator", "pack_canine", "loyal"] },
     { "id": "species_feral_goat", "display_name": "Feral Goat", "radiation_tolerance": 0.5, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": true, "tameness_chance": 0.12, "tags": ["prey", "pack_animal"] },
     { "id": "species_blight_rat", "display_name": "Blight Rat", "radiation_tolerance": 0.9, "diet_type": "scavenger", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["prey", "mutant", "swarm"] },
     { "id": "species_ash_boar", "display_name": "Ash Boar", "radiation_tolerance": 0.6, "diet_type": "herbivore", "apex_population_threshold": 0, "tameable": false, "tameness_chance": 0, "tags": ["prey", "large"] },

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -311,44 +312,61 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData(MoralPathBand.VeryPositive, MilitaryBranchIds.EndingQuartermasterA)]
-        [InlineData(MoralPathBand.Positive, MilitaryBranchIds.EndingQuartermasterA)]
-        [InlineData(MoralPathBand.Neutral, MilitaryBranchIds.EndingQuartermasterB)]
-        [InlineData(MoralPathBand.SlightlyEvil, MilitaryBranchIds.EndingQuartermasterB)]
-        [InlineData(MoralPathBand.Evil, MilitaryBranchIds.EndingQuartermasterC)]
-        [InlineData(MoralPathBand.VeryEvil, MilitaryBranchIds.EndingQuartermasterC)]
-        public void MilitaryBranchSystem_ResolvesCorrectEnding_ForQuartermaster(MoralPathBand band, string expectedEnding)
+        // TEST-AGGREGATION: source_rows=6 aggregate_cases=1 saved_cases=5
+        [Fact]
+        public void MilitaryBranchSystem_ResolvesCorrectEnding_ForQuartermaster()
         {
             var catalog = LoadCatalog();
-            var flags = new InMemoryFlagLedger();
-            var system = new MilitaryBranchSystem(catalog, flags);
-            var moral = MakeMoralChoiceWithBand(band);
+            var failures = new List<string>();
+            foreach (var testCase in new[]
+            {
+                (Band: MoralPathBand.VeryPositive, ExpectedEnding: MilitaryBranchIds.EndingQuartermasterA),
+                (Band: MoralPathBand.Positive, ExpectedEnding: MilitaryBranchIds.EndingQuartermasterA),
+                (Band: MoralPathBand.Neutral, ExpectedEnding: MilitaryBranchIds.EndingQuartermasterB),
+                (Band: MoralPathBand.SlightlyEvil, ExpectedEnding: MilitaryBranchIds.EndingQuartermasterB),
+                (Band: MoralPathBand.Evil, ExpectedEnding: MilitaryBranchIds.EndingQuartermasterC),
+                (Band: MoralPathBand.VeryEvil, ExpectedEnding: MilitaryBranchIds.EndingQuartermasterC)
+            })
+            {
+                var system = new MilitaryBranchSystem(catalog, new InMemoryFlagLedger());
+                var moral = MakeMoralChoiceWithBand(testCase.Band);
+                system.CommitBranch(MilitaryBranchIds.BranchQuartermaster, moral);
+                system.LockPointOfNoReturn();
 
-            system.CommitBranch(MilitaryBranchIds.BranchQuartermaster, moral);
-            system.LockPointOfNoReturn();
+                string ending = system.ResolveEnding(moral);
+                if (ending != testCase.ExpectedEnding)
+                    failures.Add($"{testCase.Band}: expected '{testCase.ExpectedEnding}', got '{ending}'");
+                if (system.ResolvedEndingId != testCase.ExpectedEnding)
+                    failures.Add($"{testCase.Band}: persisted '{system.ResolvedEndingId}', expected '{testCase.ExpectedEnding}'");
+            }
 
-            string ending = system.ResolveEnding(moral);
-            Assert.Equal(expectedEnding, ending);
-            Assert.Equal(expectedEnding, system.ResolvedEndingId);
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
-        [Theory]
-        [InlineData(MoralPathBand.VeryPositive, MilitaryBranchIds.EndingPeacekeeperA)]
-        [InlineData(MoralPathBand.Positive, MilitaryBranchIds.EndingPeacekeeperA)]
-        [InlineData(MoralPathBand.Neutral, MilitaryBranchIds.EndingPeacekeeperB)]
-        public void MilitaryBranchSystem_ResolvesCorrectEnding_ForPeacekeeper(MoralPathBand band, string expectedEnding)
+        // TEST-AGGREGATION: source_rows=3 aggregate_cases=1 saved_cases=2
+        [Fact]
+        public void MilitaryBranchSystem_ResolvesCorrectEnding_ForPeacekeeper()
         {
             var catalog = LoadCatalog();
-            var flags = new InMemoryFlagLedger();
-            var system = new MilitaryBranchSystem(catalog, flags);
-            var moral = MakeMoralChoiceWithBand(band);
+            var failures = new List<string>();
+            foreach (var testCase in new[]
+            {
+                (Band: MoralPathBand.VeryPositive, ExpectedEnding: MilitaryBranchIds.EndingPeacekeeperA),
+                (Band: MoralPathBand.Positive, ExpectedEnding: MilitaryBranchIds.EndingPeacekeeperA),
+                (Band: MoralPathBand.Neutral, ExpectedEnding: MilitaryBranchIds.EndingPeacekeeperB)
+            })
+            {
+                var system = new MilitaryBranchSystem(catalog, new InMemoryFlagLedger());
+                var moral = MakeMoralChoiceWithBand(testCase.Band);
+                system.CommitBranch(MilitaryBranchIds.BranchPeacekeeper, moral);
+                system.LockPointOfNoReturn();
 
-            system.CommitBranch(MilitaryBranchIds.BranchPeacekeeper, moral);
-            system.LockPointOfNoReturn();
+                string ending = system.ResolveEnding(moral);
+                if (ending != testCase.ExpectedEnding)
+                    failures.Add($"{testCase.Band}: expected '{testCase.ExpectedEnding}', got '{ending}'");
+            }
 
-            string ending = system.ResolveEnding(moral);
-            Assert.Equal(expectedEnding, ending);
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

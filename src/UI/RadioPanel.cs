@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Radio;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
@@ -16,11 +18,15 @@ namespace AtomicWar.GodotApp.UI
     /// strongest recent signal / last intercept day) plus a DataGrid of the
     /// last 16 intercepts. Per the brief, no waveform / spectrogram is added —
     /// there is no Core data source exposed.
+    /// Plan 173 Phase 3 adds a thin PROGRAM PRODUCTION strip over
+    /// <see cref="RadioProgramProductionHostSession"/> (start/cancel/status only).
     /// </summary>
     public partial class RadioPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
         public event Action? OnRadioBroadcastSent;
+
+        private const string DefaultPresenterId = "presenter_shelter_desk";
 
         private readonly (float Freq, string Label)[] _presets =
         {
@@ -34,19 +40,37 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private AshfallDataGrid? _interceptsGrid;
         private AshfallDataGrid? _stationsGrid;
+        private VBoxContainer? _productionBox;
+        private Label? _productionEventLabel;
+        private VBoxContainer? _rescueBox;
+        private Label? _rescueEventLabel;
+        private VBoxContainer? _followUpBox;
+        private Label? _followUpEventLabel;
         private RadioHostSession? _radioHost;
+        private RadioProgramProductionHostSession? _productionHost;
 
         public bool IsBound => _radioHost != null;
+        public bool IsProductionBound => _productionHost != null;
         public int RenderedSignalCount => _interceptsGrid?.RowCount ?? 0;
 
         public void Bind(RadioHostSession radio)
         {
-            Unbind();
+            if (_radioHost != null)
+                _radioHost.StateChanged -= RefreshView;
             _radioHost = radio;
             if (_radioHost != null)
-            {
                 _radioHost.StateChanged += RefreshView;
-            }
+            RefreshView();
+        }
+
+        /// <summary>Plan 173 — bind program production session for the production strip.</summary>
+        public void BindProduction(RadioProgramProductionHostSession production)
+        {
+            if (_productionHost != null)
+                _productionHost.StateChanged -= RefreshView;
+            _productionHost = production;
+            if (_productionHost != null)
+                _productionHost.StateChanged += RefreshView;
             RefreshView();
         }
 
@@ -57,15 +81,21 @@ namespace AtomicWar.GodotApp.UI
                 _radioHost.StateChanged -= RefreshView;
                 _radioHost = null;
             }
+            if (_productionHost != null)
+            {
+                _productionHost.StateChanged -= RefreshView;
+                _productionHost = null;
+            }
         }
-
-
 
         public void RefreshView()
         {
             RefreshStatusRail();
             BuildStationsGrid();
             BuildInterceptsGrid();
+            RefreshProductionStrip();
+            RefreshRescueStrip();
+            RefreshFollowUpStrip();
         }
 
         private void RefreshStatusRail()
@@ -409,7 +439,233 @@ namespace AtomicWar.GodotApp.UI
             gridCol.AddChild(_interceptsGrid);
             topRow.AddChild(gridCol);
 
-            _shell.SetContent(topRow);
+            // Plan 173 — PROGRAM PRODUCTION strip under tuner/intercepts.
+            var root = new VBoxContainer();
+            root.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            root.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            root.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+            root.AddChild(topRow);
+            root.AddChild(AshfallUiHelpers.MakeSeparator());
+            root.AddChild(AshfallUiHelpers.MakeSectionHeader("PROGRAM PRODUCTION"));
+            _productionEventLabel = AshfallUiHelpers.MakeMono("Last event: —");
+            _productionEventLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            root.AddChild(_productionEventLabel);
+            _productionBox = new VBoxContainer();
+            _productionBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            _productionBox.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            root.AddChild(_productionBox);
+
+            // ── Rescue-signal runtime strip: truthful stage/deadline/analysis state ──
+            root.AddChild(AshfallUiHelpers.MakeSeparator());
+            root.AddChild(AshfallUiHelpers.MakeSectionHeader("RESCUE SIGNALS"));
+            _rescueEventLabel = AshfallUiHelpers.MakeMono("—");
+            _rescueEventLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            root.AddChild(_rescueEventLabel);
+            _rescueBox = new VBoxContainer();
+            _rescueBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            _rescueBox.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            root.AddChild(_rescueBox);
+
+            // ── Tasks 9–12: follow-up transmissions strip (pending + last fired) ──
+            root.AddChild(AshfallUiHelpers.MakeSeparator());
+            root.AddChild(AshfallUiHelpers.MakeSectionHeader("FOLLOW-UP TRANSMISSIONS"));
+            _followUpEventLabel = AshfallUiHelpers.MakeMono("—");
+            _followUpEventLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            root.AddChild(_followUpEventLabel);
+            _followUpBox = new VBoxContainer();
+            _followUpBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            _followUpBox.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            root.AddChild(_followUpBox);
+
+            _shell.SetContent(root);
+        }
+
+        /// <summary>
+        /// Tasks 9–12 follow-up strip: the scheduler's pending queue (due day
+        /// always shown) and the last fired transmission. Truthful scheduler
+        /// projection — the panel never invents schedules or replays state.
+        /// </summary>
+        private void RefreshFollowUpStrip()
+        {
+            if (_followUpBox == null) return;
+            AshfallUiHelpers.EmptyChildren(_followUpBox);
+
+            if (_radioHost == null)
+            {
+                _followUpBox.AddChild(AshfallUiHelpers.MakeMono("Follow-up scheduler offline."));
+                if (_followUpEventLabel != null) _followUpEventLabel.Text = "—";
+                return;
+            }
+
+            var pending = _radioHost.FollowUps.GetPendingView();
+            if (pending.Count == 0)
+                _followUpBox.AddChild(AshfallUiHelpers.MakeMono("No follow-up transmissions scheduled."));
+            foreach (var p in pending)
+            {
+                _followUpBox.AddChild(AshfallUiHelpers.MakeMono($"{p.ParentSignalId} → {p.FollowUpId} (due day {p.DueDay})"));
+            }
+
+            var last = _radioHost.FollowUps.LastFired;
+            if (_followUpEventLabel != null)
+            {
+                _followUpEventLabel.Text = last.HasValue
+                    ? $"Last fired: {last.Value.ParentSignalId} / {last.Value.FollowUp.Id} on day {last.Value.Day}"
+                    : "—";
+            }
+        }
+
+        /// <summary>
+        /// Rescue-signal runtime strip: one truthful line per registered rescue
+        /// mission — stage, deadline, sender survival, persisted analysis
+        /// verdict, and the structured preflight advisory. Verdicts and
+        /// recommendations are always words, never color-only.
+        /// </summary>
+        private void RefreshRescueStrip()
+        {
+            if (_rescueBox == null) return;
+            AshfallUiHelpers.EmptyChildren(_rescueBox);
+
+            if (_radioHost == null)
+            {
+                _rescueBox.AddChild(AshfallUiHelpers.MakeMono("Rescue signal runtime offline."));
+                if (_rescueEventLabel != null) _rescueEventLabel.Text = "—";
+                return;
+            }
+
+            var missions = _radioHost.RescueMissions.AllMissions;
+            if (missions == null || missions.Count == 0)
+            {
+                _rescueBox.AddChild(AshfallUiHelpers.MakeMono("No rescue missions registered."));
+                if (_rescueEventLabel != null) _rescueEventLabel.Text = "—";
+                return;
+            }
+
+            int active = 0, threats = 0, overdue = 0;
+            var sorted = new List<DistressRescueMission>(missions);
+            sorted.Sort((a, b) => string.Compare(a.QuestId, b.QuestId, StringComparison.Ordinal));
+            foreach (var mission in sorted)
+            {
+                if (mission == null) continue;
+                var preflight = _radioHost.RescueMissions.GetDispatchPreflight(mission.SignalId);
+                if (preflight != null)
+                {
+                    if (!mission.IsTerminal && !mission.Expired) active++;
+                    if (preflight.ThreatDetected) threats++;
+                    if (mission.Expired) overdue++;
+                }
+                _rescueBox.AddChild(AshfallUiHelpers.MakeMono(FormatRescueLine(mission, preflight)));
+            }
+
+            if (_rescueEventLabel != null)
+            {
+                _rescueEventLabel.Text =
+                    $"{sorted.Count} rescue calls tracked · {active} actionable · " +
+                    (threats > 0 ? $"{threats} deception warning(s) · " : string.Empty) +
+                    (overdue > 0 ? $"{overdue} gone unanswered past deadline" : "none expired");
+            }
+        }
+
+        private static string FormatRescueLine(DistressRescueMission mission, RescueDispatchPreflight? preflight)
+        {
+            string stage = mission.Expired ? "EXPIRED (unanswered)" : mission.Stage.ToString();
+            string sender = mission.SenderDeathDay > 0
+                ? (mission.SenderAlive ? $"sender alive · dies day {mission.SenderDeathDay}" : $"sender dead (day {mission.SenderDeathDay})")
+                : "no live-sender window";
+            string analysis = mission.AuthenticityChecked
+                ? $"analysis: {((SignalAuthenticityCategory)mission.AuthenticityAssessment).ToString().ToUpperInvariant()}" +
+                  (mission.AssessmentThreatDetected ? " · DECEPTION FLAGGED" : string.Empty)
+                : "analysis: not performed";
+            string advisory = preflight != null ? $"advisory: {preflight.Recommendation}" : "advisory: unavailable";
+            return $"{mission.QuestId} — {stage} · deadline day {mission.ExpiryDay} · {sender} · {analysis} · {advisory}";
+        }
+
+        private void RefreshProductionStrip()
+        {
+            if (_productionBox == null) return;
+            AshfallUiHelpers.EmptyChildren(_productionBox);
+
+            if (_productionHost == null)
+            {
+                _productionBox.AddChild(AshfallUiHelpers.MakeMono("Program production offline."));
+                if (_productionEventLabel != null)
+                    _productionEventLabel.Text = "Last event: —";
+                return;
+            }
+
+            if (_productionEventLabel != null)
+            {
+                string last = string.IsNullOrEmpty(_productionHost.LastEvent)
+                    ? "None recorded"
+                    : _productionHost.LastEvent;
+                _productionEventLabel.Text = $"Last event: {last}";
+            }
+
+            _productionBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("TEMPLATES"));
+            var templates = _productionHost.System.Catalog.All;
+            if (templates.Count == 0)
+            {
+                _productionBox.AddChild(AshfallUiHelpers.MakeMono("No program templates loaded."));
+            }
+            else
+            {
+                foreach (var template in templates)
+                {
+                    string tid = template.id;
+                    string name = string.IsNullOrEmpty(template.display_name) ? tid : template.display_name;
+                    string equip = template.required_equipment_item_ids != null && template.required_equipment_item_ids.Count > 0
+                        ? string.Join(", ", template.required_equipment_item_ids)
+                        : "none";
+                    string cost = !string.IsNullOrEmpty(template.prep_cost_item_id) && template.prep_cost_count > 0
+                        ? $"{template.prep_cost_count}× {template.prep_cost_item_id}"
+                        : "none";
+
+                    var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                    var info = AshfallUiHelpers.MakeMono($"{name} · equip {equip} · cost {cost}");
+                    info.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                    row.AddChild(info);
+                    var startBtn = AshfallUiHelpers.MakeButton("START PREP", () =>
+                    {
+                        if (_productionHost == null) return;
+                        int day = _radioHost?.Day ?? 1;
+                        _productionHost.StartPrep(tid, DefaultPresenterId, day);
+                        RefreshView();
+                    });
+                    startBtn.CustomMinimumSize = new Vector2(110, 26);
+                    row.AddChild(startBtn);
+                    _productionBox.AddChild(row);
+                }
+            }
+
+            _productionBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("ACTIVE JOBS"));
+            var jobs = _productionHost.System.GetActiveJobs();
+            if (jobs.Count == 0)
+            {
+                _productionBox.AddChild(AshfallUiHelpers.MakeMono("No active prep jobs."));
+                return;
+            }
+
+            for (int i = 0; i < jobs.Count; i++)
+            {
+                var job = jobs[i];
+                string jid = job.JobId;
+                string status = ((RadioProgramJobStatus)job.Status).ToString().ToUpperInvariant();
+                string progress = job.Status == (int)RadioProgramJobStatus.Preparing
+                    ? $"{job.PrepTicks}/{job.PrepTicksRequired}"
+                    : "ready";
+
+                var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                var info = AshfallUiHelpers.MakeMono($"{job.TemplateId} · {status} · {progress}");
+                info.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                row.AddChild(info);
+                var cancelBtn = AshfallUiHelpers.MakeButton("CANCEL", () =>
+                {
+                    _productionHost?.CancelJob(jid);
+                    RefreshView();
+                });
+                cancelBtn.CustomMinimumSize = new Vector2(90, 26);
+                row.AddChild(cancelBtn);
+                _productionBox.AddChild(row);
+            }
         }
 
         public void Open()

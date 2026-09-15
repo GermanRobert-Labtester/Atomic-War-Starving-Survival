@@ -114,6 +114,10 @@ namespace Ashfall.Core.World
         public const int ObservationLogCapacity = 200;
         public const int PressureDecayPerDay = 1;
 
+        /// <summary>Plan 176 — max per-day probability a pack migrates away from a
+        /// full-avoidance (−1.0) hazard sector; scales linearly with avoidance.</summary>
+        public const float HazardAvoidanceMigrationChance = 0.35f;
+
         private readonly WildlifeEcosystemContainer _catalog = new WildlifeEcosystemContainer();
         private readonly Dictionary<string, FaunaSpeciesDef> _speciesById =
             new Dictionary<string, FaunaSpeciesDef>(StringComparer.Ordinal);
@@ -121,6 +125,7 @@ namespace Ashfall.Core.World
 
         public event Action<string, string>? OnWildlifeObserved;             // species, sector
         public event Action<string, string>? OnLocalExtinction;              // species, sector
+        public event Action<string, string, string>? OnHazardAvoidanceMigration; // species, fromSector, toSector
         public event Action<string, string>? OnApexPredatorSpotted;          // species, sector
         public event Action<DomesticAnimalState>? OnWildlifeTamed;
         public event Action<string, string, int>? OnWildlifePopulationShifted; // species, sector, delta
@@ -257,7 +262,7 @@ namespace Ashfall.Core.World
 
         // ------------------------------------------------------------------
         // Daily ecology tick (plan §8.10 order: predation → pressure decay →
-        // seasonal moves → extinction/recolonization → apex)
+        // seasonal moves → hazard avoidance → extinction/recolonization → apex)
         // ------------------------------------------------------------------
 
         public void TickDay(
@@ -267,7 +272,8 @@ namespace Ashfall.Core.World
             string seasonWindowId,
             ISeededRng populationRng,
             ISeededRng migrationRng,
-            ISeededRng apexRng)
+            ISeededRng apexRng,
+            IReadOnlyDictionary<string, float>? sectorHazardModifiers = null)
         {
             if (_state.last_tick_day == day) return;
             _state.last_tick_day = day;
@@ -338,7 +344,30 @@ namespace Ashfall.Core.World
                 }
             }
 
-            // 4. Extinction / recolonization flags over the pack populations.
+            // 4. Anomaly hazard avoidance (Plan 176): packs in sectors under
+            //    authored avoidance pressure (negative modifier) migrate to a
+            //    deterministic neighbor — through the ONE migration authority,
+            //    using the ecology's own migration fork. Attraction (positive
+            //    modifier) is a v1 no-op; no synthetic spawning.
+            if (sectorHazardModifiers != null && migrationRng != null)
+            {
+                foreach (var pack in migration.State.packs)
+                {
+                    if (pack == null) continue;
+                    if (!sectorHazardModifiers.TryGetValue(pack.currentSectorId, out float mod)) continue;
+                    float avoidance = Math.Clamp(-mod, 0f, 1f);
+                    if (avoidance <= 0f) continue;
+                    if (migrationRng.NextDouble() >= avoidance * HazardAvoidanceMigrationChance) continue;
+                    if (!migration.TryGetNeighbors(pack.currentSectorId, out var hazardNeighbors)
+                        || hazardNeighbors == null || hazardNeighbors.Count == 0) continue;
+                    int hazardIndex = migrationRng.Next(0, hazardNeighbors.Count);
+                    string fromSector = pack.currentSectorId;
+                    migration.MigratePack(pack.packId, hazardNeighbors[hazardIndex]);
+                    OnHazardAvoidanceMigration?.Invoke(pack.speciesId, fromSector, hazardNeighbors[hazardIndex]);
+                }
+            }
+
+            // 5. Extinction / recolonization flags over the pack populations.
             var flags = new HashSet<string>(_state.extinct_species_sectors, StringComparer.Ordinal);
             foreach (var sector in AllSectors(migration))
             {

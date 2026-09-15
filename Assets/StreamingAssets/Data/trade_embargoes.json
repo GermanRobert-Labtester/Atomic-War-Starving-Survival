@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "collection_id": "trade_embargoes_14a",
+  "description": "Plan 14A commodity embargo rules. Weather-driven trade disruption: route blocking/slowing per region and temporary price surcharges per goods category or item. Every weather_kind resolves to a canonical WeatherKind; every region is a RegionalSupplyRouter supply tag or '*'; every category is a known goods category; every item id resolves in economy_goods.json (integrity-gated). Multipliers are permille (1500 = +50%). Price shocks decay to exactly neutral over decay_days after the weather clears; routes recover immediately.",
+  "rules": [
+    {
+      "rule_id": "embargo_fallout_storm_medical",
+      "weather_kind": "FalloutStorm",
+      "affected_regions": ["*"],
+      "affected_categories": ["medical"],
+      "price_multiplier_permille": 1500,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_black_rain_water",
+      "weather_kind": "BlackRain",
+      "affected_regions": ["flotilla"],
+      "affected_categories": ["water"],
+      "price_multiplier_permille": 1800,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_emp_storm_electronics",
+      "weather_kind": "EMPStorm",
+      "affected_regions": ["foundry"],
+      "affected_item_ids": ["electronic_scrap", "solar_cell"],
+      "price_multiplier_permille": 2000,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 3
+    },
+    {
+      "rule_id": "embargo_blizzard_food",
+      "weather_kind": "Blizzard",
+      "affected_regions": ["traplines"],
+      "affected_categories": ["food"],
+      "price_multiplier_permille": 1400,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 3
+    },
+    {
+      "rule_id": "embargo_acid_snow_tools",
+      "weather_kind": "AcidSnow",
+      "affected_regions": ["*"],
+      "affected_categories": ["tools"],
+      "price_multiplier_permille": 1300,
+      "caravan_blocked": false,
+      "route_slow_permille": 500,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_bio_fog_seeds",
+      "weather_kind": "BioFog",
+      "affected_regions": ["greenhouse"],
+      "affected_item_ids": ["seed_packets", "canned_food"],
+      "price_multiplier_permille": 1600,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_glass_storm_materials",
+      "weather_kind": "GlassStorm",
+      "affected_regions": ["settlement"],
+      "affected_categories": ["materials"],
+      "price_multiplier_permille": 1400,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_rad_hail_all",
+      "weather_kind": "RadHail",
+      "affected_regions": ["*"],
+      "affects_all_goods": true,
+      "price_multiplier_permille": 1250,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 1
+    },
+    {
+      "rule_id": "embargo_black_snow_food",
+      "weather_kind": "BlackSnow",
+      "affected_regions": ["*"],
+      "affected_categories": ["food"],
+      "price_multiplier_permille": 1300,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_ice_storm_fuel",
+      "weather_kind": "IceStorm",
+      "affected_regions": ["settlement"],
+      "affected_categories": ["fuel"],
+      "price_multiplier_permille": 1200,
+      "caravan_blocked": false,
+      "route_slow_permille": 700,
+      "decay_days": 2
+    }
+  ]
+}

@@ -19,6 +19,8 @@ set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )/../.." && pwd)"
 cd "$DIR"
 
+GODOT_RUNNER=(bash "$DIR/scripts/ci/run-godot-bounded.sh")
+MAX_SECONDS=180
 fail=0
 run() { echo; echo "── $* ──"; "$@"; }
 
@@ -44,13 +46,13 @@ fi
 
 # One-time / first-clone compile + import (idempotent; no-ops if already done).
 run dotnet build Ashfall.csproj || fail=1
-if ! godot --headless --path . --import >/tmp/godot-import.log 2>&1; then
+if ! "${GODOT_RUNNER[@]}" --path . --import >/tmp/godot-import.log 2>&1; then
     echo "godot --import reported a problem (see /tmp/godot-import.log) — continuing to gates." >&2
 fi
 
 for gate in --asset-registry-selftest --data-integrity-selftest --disease-selftest --expansions-selftest --black-flotilla-selftest --radio-selftest; do
     echo; echo "── gate: $gate ──"
-    if godot --headless --path . -- "$gate"; then
+    if "${GODOT_RUNNER[@]}" --path . -- "$gate"; then
         echo "GATE PASS: $gate"
     else
         echo "GATE FAIL: $gate" >&2
@@ -89,8 +91,14 @@ else
                 fail=1
             fi
         done
+        run_exported() {
+            timeout --foreground --signal=TERM --kill-after=5s "${MAX_SECONDS}s" \
+                env ASHFALL_DATA= "$TMP_ISO/ashfall.x86_64" \
+                --headless --fixed-fps 15 --max-fps 15 -- "$@"
+        }
+
         echo "── isolated: $TMP_ISO/ashfall.x86_64 -- --data-integrity-selftest ──"
-        if "$TMP_ISO/ashfall.x86_64" -- --data-integrity-selftest 2>&1 | tee /tmp/isolated-data-integrity.log; then
+        if run_exported --data-integrity-selftest 2>&1 | tee /tmp/isolated-data-integrity.log; then
             if grep -q "DATA_INTEGRITY_SELFTEST PASS" /tmp/isolated-data-integrity.log; then
                 echo "GATE PASS: isolated data-integrity-selftest"
             else
@@ -109,7 +117,7 @@ else
         # Also smoke the exported binary for other self-tests
         for iso_gate in --bridge-selftest --survivors-selftest --world-selftest --economy-selftest --asset-registry-selftest; do
             echo "── isolated: $iso_gate ──"
-            if "$TMP_ISO/ashfall.x86_64" -- "$iso_gate" >/tmp/isolated-"$(echo $iso_gate | tr -d '-')".log 2>&1; then
+            if run_exported "$iso_gate" >/tmp/isolated-"$(echo $iso_gate | tr -d '-')".log 2>&1; then
                 echo "GATE PASS: isolated $iso_gate"
             else
                 echo "GATE FAIL: isolated $iso_gate" >&2

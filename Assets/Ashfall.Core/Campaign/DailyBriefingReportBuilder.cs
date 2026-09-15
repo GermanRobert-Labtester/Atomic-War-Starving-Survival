@@ -47,6 +47,8 @@ namespace Ashfall.Core.Campaign
             var weatherForecast = new List<DailyBriefingEntry>();
             var radioIntercepts = new List<DailyBriefingEntry>();
             var expeditionMilestones = new List<DailyBriefingEntry>();
+            var systemActivity = new List<DailyBriefingEntry>();
+            var shelterConditions = new List<DailyBriefingEntry>();
 
             int order = 0;
             foreach (var evt in events)
@@ -65,6 +67,28 @@ namespace Ashfall.Core.Campaign
                     case "hazard_warning":
                         warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
                             string.IsNullOrEmpty(evt.SecondaryId) ? $"{evt.PrimaryId} warning." : $"{evt.PrimaryId}: {evt.SecondaryId}", order: order, numeric: evt.Numeric));
+                        break;
+
+                    // C2 / Plan 20B (§29) — shelter shielding causality: the
+                    // player can trace filter/integrity loss to rising dose.
+                    case "shelter_filter_degraded":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Air filter",
+                            $"Air filter condition: {evt.SecondaryId} ({evt.Numeric:F0}%). Interior shielding is weaker.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "shelter_hatch_unsealed":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Airlock",
+                            $"Airlock state: {evt.SecondaryId}. Contamination ingress risk while unsealed.", order: order));
+                        break;
+
+                    case "shelter_decon_started":
+                        shelterConditions.Add(new DailyBriefingEntry("Shelter", "Decontamination",
+                            "Decontamination cycle started — interior contamination will fall while it runs.", order: order));
+                        break;
+
+                    case "shelter_decon_completed":
+                        shelterConditions.Add(new DailyBriefingEntry("Shelter", "Decontamination",
+                            "Decontamination cycle complete — interior contamination reduced.", order: order));
                         break;
 
                     case "survivor_condition":
@@ -195,6 +219,24 @@ namespace Ashfall.Core.Campaign
                         production.Add(new DailyBriefingEntry("Production & Maintenance", evt.PrimaryId,
                             $"Machine overhaul completed in {evt.PrimaryId}.", order: order, numeric: evt.Numeric));
                         break;
+
+                    default:
+                        // C2 / Plan 17A-S — no silent drops. A valid emitted event
+                        // must never disappear because the switch has no case for
+                        // it. Heartbeat kinds are intentionally non-player-facing
+                        // (briefing noise budget); every other unhandled kind is
+                        // rendered through the documented generic representation.
+                        if (!DayEventVocabulary.IsInternalHeartbeat(evt.Kind))
+                        {
+                            systemActivity.Add(new DailyBriefingEntry(
+                                DayEventVocabulary.GenericSectionTitle,
+                                string.IsNullOrEmpty(evt.PrimaryId) ? evt.Kind : evt.PrimaryId,
+                                DayEventVocabulary.RenderGeneric(evt),
+                                order: order,
+                                secondaryId: evt.SecondaryId,
+                                numeric: evt.Numeric));
+                        }
+                        break;
                 }
             }
 
@@ -208,6 +250,8 @@ namespace Ashfall.Core.Campaign
             AddSectionIfNotEmpty(r, "Weather Forecast", weatherForecast, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Radio Intercepts", radioIntercepts, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Expedition Milestones", expeditionMilestones, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Shelter", shelterConditions, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, DayEventVocabulary.GenericSectionTitle, systemActivity, maxEntriesPerSection);
 
             return r;
         }

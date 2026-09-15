@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Globalization;
 using System.Linq;
@@ -136,6 +137,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _profiles = null!;
         private LineEdit _weaponId = null!;
         private LineEdit _profileId = null!;
+        private LineEdit _opticItemId = null!;
 
         public bool IsBound => _host != null;
 
@@ -168,16 +170,20 @@ namespace AtomicWar.GodotApp.UI
             root.AddChild(AshfallUiHelpers.MakeSeparator());
             _weaponId = Field("canonical weapon instance id");
             _profileId = Field("profile id or weapon tag", "rifle");
+            _opticItemId = Field("completed optic item id");
             AddRow(root, "WEAPON", _weaponId);
             AddRow(root, "PROFILE", _profileId);
+            AddRow(root, "OPTIC ITEM", _opticItemId);
             root.AddChild(Action("REGISTER PROFILE", () => OnActionRequested?.Invoke(
                 "ensure", $"{_weaponId.Text}|{_profileId.Text}")));
             var controls = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             controls.AddChild(Action("INSPECT", () => OnActionRequested?.Invoke("inspect", _weaponId.Text)));
             controls.AddChild(Action("CALIBRATE", () => OnActionRequested?.Invoke("calibrate", _weaponId.Text)));
             controls.AddChild(Action("REFURBISH", () => OnActionRequested?.Invoke("refurbish", _weaponId.Text)));
+            controls.AddChild(Action("ATTACH OPTIC", () => OnActionRequested?.Invoke(
+                "attach_optic", $"{_weaponId.Text}|{_profileId.Text}|{_opticItemId.Text}")));
             root.AddChild(controls);
-            root.AddChild(Label("FIRING wear is recorded by TacticalCombatSystem; this bench owns calibration and service."));
+            root.AddChild(Label("FIRING wear is recorded by TacticalCombatSystem; this bench owns calibration, service, and optic mount."));
             Visible = false;
         }
 

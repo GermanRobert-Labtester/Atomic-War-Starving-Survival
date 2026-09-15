@@ -269,6 +269,7 @@ namespace AtomicWar.GodotApp
                 _perimeterDefenseDirty = true;
             };
             _perimeterDefense.OnAmmoLoaded += (_, _) => _perimeterDefenseDirty = true;
+            _perimeterDefense.OnIntrusionLogged += _ => _perimeterDefenseDirty = true;
 
             // Plan 203: sector alarms, false alarms, weather wear, intrusion log.
             _perimeterDefense.OnFalseAlarm += (sectorId, day) =>

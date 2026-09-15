@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 #pragma warning disable CS8618
 using Ashfall.Core.Journal;
 
@@ -19,10 +21,16 @@ namespace Ashfall.Core
     {
         public string ink_id = string.Empty;
         public string display_name = string.Empty;
+        // archive_inks.json is snake_case; C# fields stay camelCase for existing callers.
+        [JsonPropertyName("legibility_score")]
         public float legibilityScore = 1f;      // 0-1
+        [JsonPropertyName("archival_longevity_days")]
         public float archivalLongevityDays = 365f;
+        [JsonPropertyName("fade_rate_per_day")]
         public float fadeRatePerDay = 0.001f;
+        [JsonPropertyName("required_item_id")]
         public string requiredItemId = string.Empty;
+        [JsonPropertyName("required_amount")]
         public int requiredAmount = 1;
     }
 

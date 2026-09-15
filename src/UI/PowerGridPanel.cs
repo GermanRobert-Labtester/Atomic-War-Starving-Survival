@@ -18,6 +18,9 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnRoomToggled;
         public event Action<string, PowerGridRoomPriority>? OnPriorityChanged;
         public event Action<float>? OnFuelAdded;
+        public event Action? OnBatteryBankInstallRequested;
+        public event Action? OnGeneratorServiceRequested;
+        public event Action<string>? OnEmergencyPresetRequested;
         public event Action? OnClose;
 
         private PowerGridHostSession? _session;
@@ -46,36 +49,72 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_session == null || _genLabel == null || _drawLabel == null || _batteryLabel == null || _fuelLabel == null || _brownoutLabel == null || _roomList == null) return;
             var snap = _session.LastSnapshot;
-            _genLabel.Text = $"GEN {snap.GenerationWatts:0} W";
+            var tick = _session.LastTickSummary;
+            float cond = _session.System.GeneratorCondition;
+            _genLabel.Text = $"GEN {snap.GenerationWatts:0} W (CONDITION {cond:0}%)";
+            _genLabel.AddThemeColorOverride("font_color",
+                AshfallUiHelpers.ToColor(cond < PowerGridSystem.GeneratorDegradationThreshold
+                    ? DesignTheme.Critical : DesignTheme.Pale));
             _drawLabel.Text = $"DRAW {snap.TotalDrawWatts:0} W (net {snap.NetWatts:+0;-0;0})";
             float pct = snap.BatteryCapacityWh > 0
                 ? (snap.BatteryReserveWh / snap.BatteryCapacityWh) * 100f : 0f;
-            _batteryLabel.Text = $"BATTERY {snap.BatteryReserveWh:0}/{snap.BatteryCapacityWh:0} Wh ({pct:0}%)";
+            int banks = _session.System.InstalledBatteryBankCount;
+            int maxBanks = PowerGridSystem.MaxInstalledBatteryBanks;
+            _batteryLabel.Text = $"BATTERY {snap.BatteryReserveWh:0}/{snap.BatteryCapacityWh:0} Wh ({pct:0}%) — BANKS {banks}/{maxBanks}";
             _fuelLabel.Text = $"FUEL {snap.FuelUnits:0} units";
-            _brownoutLabel.Text = snap.IsBrownout ? "BROWNOUT // LOAD SHED ACTIVE" : "STABLE";
-            _brownoutLabel.AddThemeColorOverride("font_color",
-                AshfallUiHelpers.ToColor(snap.IsBrownout ? DesignTheme.Critical : DesignTheme.Pale));
+            // B5–B8 Phase 9: honest status line — brownout vs critical
+            // life-support deficit are different states (§8.6), and served/shed
+            // numbers come from the actual tick allocation, not a guess.
+            if (tick != null && tick.HasCriticalDeficit)
+            {
+                _brownoutLabel.Text = $"CRITICAL DEFICIT // LIFE SUPPORT UNSERVED ({tick.UnservedWatts:0} W shed)";
+                _brownoutLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+            }
+            else if (snap.IsBrownout)
+            {
+                _brownoutLabel.Text = tick != null
+                    ? $"BROWNOUT // {tick.ShedRoomIds.Count} LOAD(S) SHED ({tick.UnservedWatts:0} W)"
+                    : "BROWNOUT // LOAD SHED ACTIVE";
+                _brownoutLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+            }
+            else
+            {
+                _brownoutLabel.Text = "STABLE";
+                _brownoutLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+            }
 
             AshfallUiHelpers.EmptyChildren(_roomList);
+            // B5–B8 Phase 9: allocation-aware per-room truth. Served ≠ the old
+            // global powered read — during a brownout critical loads show
+            // SERVED while optional loads show SHED, matching the tick's
+            // deterministic allocation (Phase 2).
+            var tickRooms = _session.LastTickSummary;
             foreach (var r in _session.System.Rooms)
             {
-                bool powered = _session.System.IsRoomPowered(r.RoomId);
+                bool served = tickRooms != null
+                    ? tickRooms.ServedRoomIds.Contains(r.RoomId)
+                    : _session.System.IsRoomServed(r.RoomId);
+                bool legacyPowered = _session.System.IsRoomPowered(r.RoomId);
                 var pri = _session.System.EffectivePriority(r.RoomId);
-                _roomList.AddChild(MakeRoomRow(r, powered, pri));
+                _roomList.AddChild(MakeRoomRow(r, served, pri, legacyPowered));
             }
         }
 
-        private Control MakeRoomRow(PowerGridRoom r, bool powered, PowerGridRoomPriority pri)
+        private Control MakeRoomRow(PowerGridRoom r, bool served, PowerGridRoomPriority pri, bool legacyPowered)
         {
             var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             var nameLbl = AshfallUiHelpers.MakeMono(r.DisplayName);
             nameLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            nameLbl.AddThemeColorOverride("font_color",
-                AshfallUiHelpers.ToColor(powered ? DesignTheme.Pale : DesignTheme.Muted));
+            // Shed-but-breaker-closed loads get a distinct warn tone; fully
+            // offline rooms (open breaker/tripped) stay muted.
+            var nameColor = served ? DesignTheme.Pale
+                : legacyPowered ? DesignTheme.Warning
+                : DesignTheme.Muted;
+            nameLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(nameColor));
             row.AddChild(nameLbl);
 
-            var drawLbl = AshfallUiHelpers.MakeMono($"{r.DrawWatts:0} W");
-            drawLbl.CustomMinimumSize = new Vector2(70, 0);
+            var drawLbl = AshfallUiHelpers.MakeMono($"{r.DrawWatts:0} W{(legacyPowered ? "" : served ? " · SERVED" : " · SHED")}");
+            drawLbl.CustomMinimumSize = new Vector2(110, 0);
             row.AddChild(drawLbl);
 
             var priRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingXs);
@@ -91,11 +130,11 @@ namespace AtomicWar.GodotApp.UI
             row.AddChild(priRow);
 
             var state = AshfallUiHelpers.MakeButton(
-                powered ? "ON" : "OFF",
+                legacyPowered ? "ON" : "OFF",
                 () => OnRoomToggled?.Invoke(r.RoomId));
             state.CustomMinimumSize = new Vector2(60, 24);
             state.AddThemeColorOverride("font_color",
-                AshfallUiHelpers.ToColor(powered ? DesignTheme.Pale : DesignTheme.Warm));
+                AshfallUiHelpers.ToColor(legacyPowered ? DesignTheme.Pale : DesignTheme.Warm));
             row.AddChild(state);
             return row;
         }
@@ -138,6 +177,33 @@ namespace AtomicWar.GodotApp.UI
             stats.AddChild(_fuelLabel);
             stats.AddChild(_brownoutLabel);
             vbox.AddChild(stats);
+
+            // B5–B8 Phase 2: battery-bank install (canonical item consumed by
+            // the host route; the panel only raises the request).
+            var bankBtn = AshfallUiHelpers.MakeButton("INSTALL BATTERY BANK",
+                () => OnBatteryBankInstallRequested?.Invoke());
+            bankBtn.CustomMinimumSize = new Vector2(220, 26);
+            vbox.AddChild(bankBtn);
+
+            // B5–B8 Phase 5: generator service (canonical machine_oil consumed
+            // by the host route; the panel only raises the request).
+            var serviceBtn = AshfallUiHelpers.MakeButton("SERVICE GENERATOR",
+                () => OnGeneratorServiceRequested?.Invoke());
+            serviceBtn.CustomMinimumSize = new Vector2(220, 26);
+            vbox.AddChild(serviceBtn);
+
+            // B5–B8 expansion (§27): emergency priority presets — the brownout
+            // shortcut; the host applies the Core policy and journals it.
+            var presetRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var shedBtn = AshfallUiHelpers.MakeButton("EMERGENCY: PRESERVE LIFE SUPPORT",
+                () => OnEmergencyPresetRequested?.Invoke("shed"));
+            shedBtn.CustomMinimumSize = new Vector2(280, 26);
+            presetRow.AddChild(shedBtn);
+            var defaultsBtn = AshfallUiHelpers.MakeButton("RESTORE DEFAULTS",
+                () => OnEmergencyPresetRequested?.Invoke("defaults"));
+            defaultsBtn.CustomMinimumSize = new Vector2(180, 26);
+            presetRow.AddChild(defaultsBtn);
+            vbox.AddChild(presetRow);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 

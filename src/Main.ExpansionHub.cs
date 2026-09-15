@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Globalization;
@@ -61,6 +62,12 @@ namespace AtomicWar.GodotApp
                 _debtBridgeDirty = false;
                 GD.Print($"[Ashfall Godot] Expansion hub state restored (day {save.simDay}).");
             }
+
+            // Prefer the player greenhouse growth authority when it already exists
+            // (SetupGreenhouse-first path). Otherwise the hub twin stands in until
+            // SetupGreenhouse calls BindGreenhouse.
+            if (_greenhouse?.System != null)
+                _expansions.BindGreenhouse(_greenhouse.System);
 
             _expansions.EnsureGreenhousePlots(3);
             RefreshExpansionsStatus();
@@ -289,9 +296,15 @@ namespace AtomicWar.GodotApp
             EnsureDebtConsequenceIntegration();
             int day = _core != null ? _core.Clock.Day : _simDay;
             var bridgeState = _debtBridge != null ? _debtBridge.CaptureState() : null;
-            if (CaptureSection("expansion_hub", ExpansionHubSaveStore.TryCapturePersisted(_expansions.CaptureSave(day, bridgeState))))
+            var save = _expansions.CaptureSave(day, bridgeState);
+            // v6: SaltMine lives on SilentFoundryHostSession; merge into the hub
+            // envelope so veins/storage/deliveries survive reload.
+            if (_silentFoundry?.SaltMine != null)
+                save.saltMine = _silentFoundry.SaltMine.CaptureState();
+            if (CaptureSection("expansion_hub", ExpansionHubSaveStore.TryCapturePersisted(save)))
             {
                 _expansionHubDirty = false;
+                _foundryDirty = false;
                 _debtBridgeDirty = false;
                 GD.Print($"[Ashfall Godot] Expansion hub save written (day {day}).");
             }

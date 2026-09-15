@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,53 +45,75 @@ namespace Ashfall.Core.Tests.Foundry
             Assert.Contains(melt.ingredients, i => i.item_id == "item_sludge_cake");
         }
 
-        [Theory]
-        [InlineData("foundry_prod_plowshare", "item_foundry_plowshare", "agricultural_tool")]
-        [InlineData("foundry_prod_t_beam", "item_foundry_t_beam", "structural_beam")]
-        [InlineData("foundry_prod_ice_anchor", "item_foundry_ice_anchor", "ice_anchor")]
-        [InlineData("foundry_prod_winch_drum", "item_foundry_winch_drum", "winch_drum")]
-        [InlineData("foundry_prod_brine_pipe", "item_foundry_brine_pipe", "brine_resistant_pipe")]
-        [InlineData("foundry_prod_repair_plate", "item_foundry_repair_plate", "repair_plate")]
-        [InlineData("foundry_prod_fastener_bracket", "item_foundry_bracket_fastener", "bracket_fastener")]
-        [InlineData("foundry_prod_valve_body", "item_foundry_valve_body", "water_component")]
-        [InlineData("foundry_prod_heavy_tool", "item_foundry_heavy_tool", "heavy_tool")]
-        [InlineData("foundry_prod_alloy_part", "item_foundry_alloy_part", "heavy_alloy_part")]
-        [InlineData("foundry_prod_defense_plate", "item_foundry_defense_plate", "defense_plate")]
-        [InlineData("foundry_prod_roof_armor_plate", "item_foundry_roof_armor_plate", "structural_armor")]
-        [InlineData("foundry_prod_shoring_bracket", "item_foundry_shoring_bracket", "structural_bracket")]
-        [InlineData("foundry_prod_blast_fitting", "item_foundry_blast_fitting", "structural_fitting")]
-        [InlineData("foundry_prod_reinforcement_shoe", "item_foundry_reinforcement_shoe", "structural_support")]
-        [InlineData("foundry_prod_structural_coupling", "item_foundry_structural_coupling", "structural_coupling")]
-        [InlineData("foundry_prod_replacement_die", "item_foundry_replacement_die", "tooling_die")]
-        [InlineData("foundry_prod_drill_blanks", "item_foundry_drill_blanks", "drill_blank")]
-        [InlineData("foundry_prod_crucible_spare", "item_foundry_crucible_spare", "crucible_spare")]
-        [InlineData("foundry_prod_press_fitting", "item_foundry_press_fitting", "press_fitting")]
-        [InlineData("foundry_prod_bearing_housing", "item_foundry_bearing_housing", "bearing_housing")]
-        [InlineData("foundry_prod_furnace_grate", "item_foundry_furnace_grate", "furnace_grate")]
-        [InlineData("foundry_prod_weather_canister", "item_foundry_weather_canister", "abstract_ordnance")]
-        [InlineData("foundry_prod_cast_shot", "item_foundry_cast_shot", "abstract_ordnance")]
-        [InlineData("foundry_prod_casing_blanks", "item_foundry_casing_blanks", "abstract_ordnance")]
-        [InlineData("foundry_prod_bronze_datum_plate", "item_datum_plate_bronze", "survey_datum")]
-        [InlineData("foundry_prod_flywheel_rotor_shaft", "item_forged_rotor_shaft", "rotor_shaft")]
-        [InlineData("foundry_prod_flywheel_containment_ring", "item_containment_ring_steel", "containment_ring")]
-        [InlineData("foundry_prod_culvert_brace", "item_high_tensile_steel_culvert_brace", "structural_brace")]
-        [InlineData("foundry_prod_sealed_lead_pig", "item_sealed_lead_pig", "radiation_container")]
-        [InlineData("foundry_prod_ground_anchor_spikes", "item_hardened_ground_anchor_spikes", "defense_anchor")]
-        [InlineData("foundry_prod_turbine_blade_blank", "item_superalloy_turbine_blade_blank", "turbine_blank")]
-        [InlineData("foundry_prod_rail_grinding_head", "item_rail_grinding_head", "rail_tooling")]
-        [InlineData("foundry_prod_press_tooling_set", "item_press_tooling_set", "press_tooling")]
-        public void ProductionProduct_HasValidProperties(string productId, string expectedResultItem, string expectedCategory)
+        [Fact]
+        public void ProductionProduct_HasValidProperties()
         {
+            var cases = new[]
+            {
+                (ProductId: "foundry_prod_plowshare", ExpectedResultItem: "item_foundry_plowshare", ExpectedCategory: "agricultural_tool"),
+                (ProductId: "foundry_prod_t_beam", ExpectedResultItem: "item_foundry_t_beam", ExpectedCategory: "structural_beam"),
+                (ProductId: "foundry_prod_ice_anchor", ExpectedResultItem: "item_foundry_ice_anchor", ExpectedCategory: "ice_anchor"),
+                (ProductId: "foundry_prod_winch_drum", ExpectedResultItem: "item_foundry_winch_drum", ExpectedCategory: "winch_drum"),
+                (ProductId: "foundry_prod_brine_pipe", ExpectedResultItem: "item_foundry_brine_pipe", ExpectedCategory: "brine_resistant_pipe"),
+                (ProductId: "foundry_prod_repair_plate", ExpectedResultItem: "item_foundry_repair_plate", ExpectedCategory: "repair_plate"),
+                (ProductId: "foundry_prod_fastener_bracket", ExpectedResultItem: "item_foundry_bracket_fastener", ExpectedCategory: "bracket_fastener"),
+                (ProductId: "foundry_prod_valve_body", ExpectedResultItem: "item_foundry_valve_body", ExpectedCategory: "water_component"),
+                (ProductId: "foundry_prod_heavy_tool", ExpectedResultItem: "item_foundry_heavy_tool", ExpectedCategory: "heavy_tool"),
+                (ProductId: "foundry_prod_alloy_part", ExpectedResultItem: "item_foundry_alloy_part", ExpectedCategory: "heavy_alloy_part"),
+                (ProductId: "foundry_prod_defense_plate", ExpectedResultItem: "item_foundry_defense_plate", ExpectedCategory: "defense_plate"),
+                (ProductId: "foundry_prod_roof_armor_plate", ExpectedResultItem: "item_foundry_roof_armor_plate", ExpectedCategory: "structural_armor"),
+                (ProductId: "foundry_prod_shoring_bracket", ExpectedResultItem: "item_foundry_shoring_bracket", ExpectedCategory: "structural_bracket"),
+                (ProductId: "foundry_prod_blast_fitting", ExpectedResultItem: "item_foundry_blast_fitting", ExpectedCategory: "structural_fitting"),
+                (ProductId: "foundry_prod_reinforcement_shoe", ExpectedResultItem: "item_foundry_reinforcement_shoe", ExpectedCategory: "structural_support"),
+                (ProductId: "foundry_prod_structural_coupling", ExpectedResultItem: "item_foundry_structural_coupling", ExpectedCategory: "structural_coupling"),
+                (ProductId: "foundry_prod_replacement_die", ExpectedResultItem: "item_foundry_replacement_die", ExpectedCategory: "tooling_die"),
+                (ProductId: "foundry_prod_drill_blanks", ExpectedResultItem: "item_foundry_drill_blanks", ExpectedCategory: "drill_blank"),
+                (ProductId: "foundry_prod_crucible_spare", ExpectedResultItem: "item_foundry_crucible_spare", ExpectedCategory: "crucible_spare"),
+                (ProductId: "foundry_prod_press_fitting", ExpectedResultItem: "item_foundry_press_fitting", ExpectedCategory: "press_fitting"),
+                (ProductId: "foundry_prod_bearing_housing", ExpectedResultItem: "item_foundry_bearing_housing", ExpectedCategory: "bearing_housing"),
+                (ProductId: "foundry_prod_furnace_grate", ExpectedResultItem: "item_foundry_furnace_grate", ExpectedCategory: "furnace_grate"),
+                (ProductId: "foundry_prod_weather_canister", ExpectedResultItem: "item_foundry_weather_canister", ExpectedCategory: "abstract_ordnance"),
+                (ProductId: "foundry_prod_cast_shot", ExpectedResultItem: "item_foundry_cast_shot", ExpectedCategory: "abstract_ordnance"),
+                (ProductId: "foundry_prod_casing_blanks", ExpectedResultItem: "item_foundry_casing_blanks", ExpectedCategory: "abstract_ordnance"),
+                (ProductId: "foundry_prod_bronze_datum_plate", ExpectedResultItem: "item_datum_plate_bronze", ExpectedCategory: "survey_datum"),
+                (ProductId: "foundry_prod_flywheel_rotor_shaft", ExpectedResultItem: "item_forged_rotor_shaft", ExpectedCategory: "rotor_shaft"),
+                (ProductId: "foundry_prod_flywheel_containment_ring", ExpectedResultItem: "item_containment_ring_steel", ExpectedCategory: "containment_ring"),
+                (ProductId: "foundry_prod_culvert_brace", ExpectedResultItem: "item_high_tensile_steel_culvert_brace", ExpectedCategory: "structural_brace"),
+                (ProductId: "foundry_prod_sealed_lead_pig", ExpectedResultItem: "item_sealed_lead_pig", ExpectedCategory: "radiation_container"),
+                (ProductId: "foundry_prod_ground_anchor_spikes", ExpectedResultItem: "item_hardened_ground_anchor_spikes", ExpectedCategory: "defense_anchor"),
+                (ProductId: "foundry_prod_turbine_blade_blank", ExpectedResultItem: "item_superalloy_turbine_blade_blank", ExpectedCategory: "turbine_blank"),
+                (ProductId: "foundry_prod_rail_grinding_head", ExpectedResultItem: "item_rail_grinding_head", ExpectedCategory: "rail_tooling"),
+                (ProductId: "foundry_prod_press_tooling_set", ExpectedResultItem: "item_press_tooling_set", ExpectedCategory: "press_tooling")
+            };
             var catalog = LoadCatalog();
-            var prod = catalog.GetProduct(productId);
-            Assert.NotNull(prod);
-            Assert.Equal(expectedResultItem, prod.result_item_id);
-            Assert.Equal(expectedCategory, prod.category);
-            Assert.True(prod.labor_hours > 0);
-            Assert.True(prod.cast_hours > 0);
-            Assert.True(prod.fuel_units > 0);
-            Assert.True(prod.water_litres > 0);
-            Assert.NotEmpty(prod.ingredients);
+            var failures = new List<string>();
+
+            foreach (var test in cases)
+            {
+                var product = catalog.GetProduct(test.ProductId);
+                if (product == null)
+                {
+                    failures.Add($"{test.ProductId}: product is missing");
+                    continue;
+                }
+
+                if (!string.Equals(test.ExpectedResultItem, product.result_item_id, StringComparison.Ordinal))
+                    failures.Add($"{test.ProductId}: expected result {test.ExpectedResultItem}, got {product.result_item_id}");
+                if (!string.Equals(test.ExpectedCategory, product.category, StringComparison.Ordinal))
+                    failures.Add($"{test.ProductId}: expected category {test.ExpectedCategory}, got {product.category}");
+                if (product.labor_hours <= 0)
+                    failures.Add($"{test.ProductId}: labor_hours must be positive");
+                if (product.cast_hours <= 0)
+                    failures.Add($"{test.ProductId}: cast_hours must be positive");
+                if (product.fuel_units <= 0)
+                    failures.Add($"{test.ProductId}: fuel_units must be positive");
+                if (product.water_litres <= 0)
+                    failures.Add($"{test.ProductId}: water_litres must be positive");
+                if (product.ingredients == null || product.ingredients.Count == 0)
+                    failures.Add($"{test.ProductId}: ingredients must not be empty");
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

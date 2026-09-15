@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -19,6 +20,12 @@ namespace Ashfall.Core.Disease
         public const string ZoonoticFlu = "disease_zoonotic_flu";
         public const string BloodFever = "disease_blood_fever";
         public const string SporeBlight = "disease_spore_blight";
+
+        // B5–B8 expansion (§9.12): authored waterborne ids — the treatment
+        // authority's pathogen exposure routes here (disease-specific
+        // outbreaks only through TryExpose; never direct stat writes).
+        public const string TyphoidWaterborne = "disease_typhoid_waterborne";
+        public const string Dysentery = "disease_dysentery";
 
         // Event-id strings forwarded on the string bus (typed events are the
         // primary surface; hosts may forward these).
@@ -1543,7 +1550,10 @@ ILog? log = null)
             // Flagship XI: persist the live stream position so a reload mid-run
             // continues the exact sequence (legacy saves carry 0 = seed-only).
             _state.rngPosition = _rng is SeededRng seeded ? (long)seeded.PeekState() : 0;
-            return _state;
+            // JSON-clone so hub/save holders never alias the live ward object.
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<DiseaseSystemState>(json) ?? new DiseaseSystemState();
         }
 
         public void RestoreState(DiseaseSystemState saved)

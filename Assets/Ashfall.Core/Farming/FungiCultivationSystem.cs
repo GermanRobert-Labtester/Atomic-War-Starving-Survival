@@ -635,10 +635,19 @@ namespace Ashfall.Core.Farming
             return totalHazard;
         }
 
+        public FungiCultivationState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<FungiCultivationState>(json) ?? new FungiCultivationState();
+        }
+
         public void RestoreState(FungiCultivationState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<FungiCultivationState>(json) ?? new FungiCultivationState();
         }
     }
 }

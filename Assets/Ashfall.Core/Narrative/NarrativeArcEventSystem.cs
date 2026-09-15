@@ -133,6 +133,34 @@ namespace Ashfall.Core.Narrative
     [Serializable]
     public sealed class NarrativeArcEventDefinition
     {
+        /// <summary>
+        /// Creates a presentation-only definition for an existing choice
+        /// surface. It carries no narrative authority and must be resolved by
+        /// the owning system that supplied the IDs.
+        /// </summary>
+        public NarrativeArcEventDefinition(
+            string id,
+            string title,
+            string bodyText,
+            IEnumerable<(string ChoiceId, string Text)> presentationChoices)
+        {
+            Id = id ?? string.Empty;
+            Title = title ?? string.Empty;
+            BodyText = bodyText ?? string.Empty;
+            Weight = 1f;
+            foreach (var presentationChoice in presentationChoices ?? Array.Empty<(string, string)>())
+            {
+                _choices.Add(new NarrativeArcChoiceDefinition
+                {
+                    ChoiceId = presentationChoice.ChoiceId ?? string.Empty,
+                    Text = presentationChoice.Text ?? string.Empty,
+                    IsExecutable = true
+                });
+            }
+        }
+
+        public NarrativeArcEventDefinition() { }
+
         public string Id { get; internal set; } = string.Empty;
         public string Title { get; internal set; } = string.Empty;
         public string BodyText { get; internal set; } = string.Empty;

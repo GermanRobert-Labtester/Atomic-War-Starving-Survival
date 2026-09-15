@@ -1,15 +1,15 @@
 # ASHFALL Agent-Rulebook Synchronization Report
 
 **Canonical source:** `AGENTS.md`<br>
-**Synced files:** 12 derived client files<br>
-**Sync date:** 2026-09-10<br>
+**Synced files:** 13 derived client files<br>
+**Sync date:** 2026-09-15<br>
 **Tool:** `scripts/ci/sync-agent-rulebooks.py`
 
 ---
 
 ## PHASE 1 — Drift Audit & Status
 
-All 12 derived files are structurally synchronized with `AGENTS.md`.
+All 13 derived files are structurally synchronized with `AGENTS.md`.
 
 | File | Divergence Class | Header Branding |
 |---|---|---|
@@ -20,6 +20,7 @@ All 12 derived files are structurally synchronized with `AGENTS.md`.
 | `CLAUDE.md` | SYNCED | `CLAUDE CODE INSTRUCTIONS — ASHFALL PROJECT` |
 | `CODEX.md` | SYNCED | `ASHFALL PROJECT — CODEX Instructions` |
 | `CRUSH.md` | SYNCED | `ASHFALL PROJECT — CRUSH Instructions` |
+| `GEMINI.md` | SYNCED | `ASHFALL PROJECT — GEMINI Instructions` |
 | `GOOSE.md` | SYNCED | `ASHFALL PROJECT — GOOSE Instructions` |
 | `MIMOCODE.md` | SYNCED | `ASHFALL PROJECT — MIMOCODE Instructions` |
 | `OPENSETUP.md` | SYNCED | `ASHFALL PROJECT — OPENSETUP Instructions` |

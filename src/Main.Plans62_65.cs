@@ -56,6 +56,7 @@ namespace AtomicWar.GodotApp
 
                 _foodPreservation64.OnFoodSpoiled += _ => _foodPreservation64Dirty = true;
                 _foodPreservation64.OnCuringCompleted += _ => _foodPreservation64Dirty = true;
+                _foodPreservation64.OnFoodConsumed += (_, _, _) => _foodPreservation64Dirty = true;
             }
 
             // 2. Pre-war Archive Decryption (Plan 62)
@@ -156,6 +157,21 @@ namespace AtomicWar.GodotApp
             if (_foodPreservation64 != null)
             {
                 _foodPreservation64.SetPowerStatus(isPowerOnline);
+                // Plan 196: project storage-bay °C from thermal authority (no weather copy).
+                float storageTempC = FoodPreservationSystem.DefaultStorageTemperatureC;
+                var thermalRooms = _shelterThermal?.System.State.rooms;
+                if (thermalRooms != null)
+                {
+                    for (int i = 0; i < thermalRooms.Count; i++)
+                    {
+                        if (thermalRooms[i].roomId == FoodPreservationSystem.DefaultStorageRoomId)
+                        {
+                            storageTempC = thermalRooms[i].currentTempC;
+                            break;
+                        }
+                    }
+                }
+                _foodPreservation64.SetStorageTemperatureC(storageTempC);
                 _foodPreservation64.TickDay(day);
                 _foodPreservation64Dirty = true;
             }

@@ -67,7 +67,7 @@
       "base_weight": 1.8,
       "stance_weights": { "Cautious": 0.5, "Balanced": 1.0, "Aggressive": 2.0, "Scavenging": 1.3, "Rapid": 0.7 },
       "season_tags": ["all"],
-      "description": "A massive iron-bristled boar violently roots up concrete pavers in search of mycorrhizal fungi, raising its reinforced cranial shield at your footsteps.",
+      "description": "An iron-bristled boar roots up concrete pavers in search of mycorrhizal fungi, its broad armoured head turned toward your footsteps, deciding whether any of you is worth the charge.",
       "choices": [
         { "choice_id": "choice_side_flank_shot", "text": "Maneuver to shoot the soft shoulder crease behind its ear.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_bristleback_boar" },
         { "choice_id": "choice_climb_rubble", "text": "Climb onto an elevated masonry wall until the boar moves on.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_bristleback_boar" },
@@ -120,7 +120,7 @@
       "base_weight": 2.0,
       "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.5, "Rapid": 1.0 },
       "season_tags": ["all"],
-      "description": "A magnificent pure-white specter owl perches motionless atop a rusted microwave tower, watching your party with unblinking amber eyes.",
+      "description": "A pure-white specter owl perches motionless atop a rusted microwave tower, watching your party with unblinking amber eyes.",
       "choices": [
         { "choice_id": "choice_search_pellets", "text": "Search the base of the mast for regurgitated brass and battery scrap.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 2, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_specter_owl" },
         { "choice_id": "choice_quiet_passage", "text": "Move silently beneath the tower without disturbing its watch.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 1, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_specter_owl" }
@@ -137,7 +137,7 @@
       "base_weight": 0.8,
       "stance_weights": { "Cautious": 0.2, "Balanced": 0.8, "Aggressive": 2.5, "Scavenging": 0.9, "Rapid": 0.4 },
       "season_tags": ["window_deep_freeze", "window_long_winter"],
-      "description": "Massive claw gouges score the limestone tunnel mouth ahead. A low infrasonic growl vibrates the gravel under your boots—the atomic cave bear is near.",
+      "description": "Fresh claw gouges score the limestone tunnel mouth ahead. A low infrasonic growl vibrates the gravel under your boots. The atomic cave bear is near.",
       "choices": [
         { "choice_id": "choice_retreat_quietly", "text": "Back away slowly into the downwind gorge without making sudden noise.", "is_nonviolent": true, "is_avoidance": true, "morale_delta": 0, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_cave_bear" },
         { "choice_id": "choice_heavy_ordnance_trap", "text": "Rig explosive demolition charges across the tunnel arch and engage.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 5, "guilt_delta": 0, "unlocks_field_guide_id": "field_fauna_cave_bear" },
@@ -273,7 +273,7 @@
       "base_weight": 1.7,
       "stance_weights": { "Cautious": 0.7, "Balanced": 1.0, "Aggressive": 1.7, "Scavenging": 1.5, "Rapid": 0.7 },
       "season_tags": ["all"],
-      "description": "Two rival scavenger teams with drawn revolvers are arguing over salvage rights to a massive copper-wound substation transformer.",
+      "description": "Two rival scavenger teams with drawn revolvers are arguing over salvage rights to a two-ton copper-wound substation transformer.",
       "choices": [
         { "choice_id": "choice_mediate_even_split", "text": "Step in as neutral arbitrator to negotiate an equal division of the coils.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
         { "choice_id": "choice_intimidate_and_claim", "text": "Display heavy weapons to run both crews off and claim the copper yourself.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 2 },
@@ -628,7 +628,7 @@
       "base_weight": 3.0,
       "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 1.0, "Scavenging": 1.0, "Rapid": 1.0 },
       "season_tags": ["all"],
-      "description": "The colossal blind cave bear returns to its lair. Trapped in your deadfall and disoriented by acoustic sirens, it roars a challenge in the mountain pass.",
+      "description": "The blind cave bear returns to its lair. Trapped by your deadfall and disoriented by acoustic sirens, it roars a challenge in the mountain pass.",
       "choices": [
         { "choice_id": "choice_execute_killing_volley", "text": "Coordinate high-caliber rifle fire to bring down the titan beast.", "is_nonviolent": false, "is_avoidance": false, "morale_delta": 6, "guilt_delta": 0, "advances_chain_stage": 4, "unlocks_field_guide_id": "field_fauna_cave_bear" }
       ]

@@ -108,7 +108,9 @@ namespace Ashfall.Core.Tests.UI
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
                 "contractor_roster", "mental_health_crisis", "phantom_memory",
-                "traveling_caravan", "medical_ward"
+                "traveling_caravan", "medical_ward", "low_background_metrology", "insar_mapping",
+                "hydraulic_extrusion",
+                "runflat_tire"
             };
 
             foreach (var id in expandedIds)
@@ -118,6 +120,30 @@ namespace Ashfall.Core.Tests.UI
                 var d = PanelRegistry.Get(id)!;
                 Assert.Equal(PanelGroup.Expanded, d.Group);
             }
+        }
+
+        [Fact]
+        public void AllExpandedPanelSwitchCases_HaveRegisteredDescriptor()
+        {
+            // Structural guard for the Plan 138/139 gap class: a route that is
+            // handled in OpenExpandedPanel's switch but absent from the registry
+            // is unreachable from the player shell. Scan the switch literals and
+            // require every one to be registered as an Expanded surface.
+            string srcRoot = FindSrcRoot();
+            string switchFile = Path.Combine(srcRoot, "Main.ExpandedShelterSystems.cs");
+            Assert.True(File.Exists(switchFile), "Main.ExpandedShelterSystems.cs must exist.");
+
+            var casePattern = new Regex(@"case\s+""([a-z][a-z0-9_]*)""\s*:", RegexOptions.Compiled);
+            var missing = new List<string>();
+            foreach (Match m in casePattern.Matches(File.ReadAllText(switchFile)))
+            {
+                string id = m.Groups[1].Value;
+                if (!PanelRegistry.IsRegistered(id))
+                    missing.Add(id);
+            }
+
+            Assert.True(missing.Count == 0,
+                "OpenExpandedPanel handles routes with no registered descriptor: " + string.Join(", ", missing));
         }
 
         [Fact]

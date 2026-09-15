@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Ashfall.Core.Onboarding
             new OnboardingStageDef(
                 OnboardingStage.Protocol,
                 "Resolve the Day 1 protocol",
-                "Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.",
+                "Handle rationing, maintenance, then radio. Each choice costs something.",
                 "protocol",
                 ("protocol.ration", 1),
                 ("protocol.maintenance", 1),
@@ -78,13 +79,13 @@ namespace Ashfall.Core.Onboarding
             new OnboardingStageDef(
                 OnboardingStage.InventoryUse,
                 "Use an item from the stores",
-                "Equip a protective item or consume something real from the ledger. Both are real commands.",
+                "Equip protection, or use something from stores.",
                 "inventory",
                 ("inventory.used", 1)),
             new OnboardingStageDef(
                 OnboardingStage.DayAdvance,
                 "End Day 1",
-                "Press the Advance Day confirm. The first night ticks; the morning briefing returns.",
+                "Confirm Advance Day. Morning briefing comes with Day 2.",
                 "dashboard",
                 (DaySentinel, 2)),
         };
@@ -103,31 +104,31 @@ namespace Ashfall.Core.Onboarding
             new OnboardingStageDef(
                 OnboardingStage.Water,
                 "Treat the water",
-                "Start a real water-treatment batch. The shelter cannot drink intention.",
+                "Start a water-treatment batch. Untreated water stays unsafe.",
                 "water_treatment",
                 ("water.treatment_started", 1)),
             new OnboardingStageDef(
                 OnboardingStage.Power,
                 "Restore power",
-                "Operate a shelter breaker and see the grid state change.",
+                "Throw a shelter breaker and watch the grid change.",
                 "power_grid",
                 ("power.breaker_toggled", 1)),
             new OnboardingStageDef(
                 OnboardingStage.Food,
                 "Use a food ration",
-                "Consume a real food ration from the stores.",
+                "Eat a food ration from stores.",
                 "inventory",
                 ("food.ration_consumed", 1)),
             new OnboardingStageDef(
                 OnboardingStage.Research,
                 "Start research",
-                "Start one available research node. Knowledge takes time.",
+                "Start one available research node. It takes days.",
                 "research",
                 ("research.started", 1)),
             new OnboardingStageDef(
                 OnboardingStage.Expedition,
                 "Dispatch an expedition",
-                "Dispatch a real expedition. The surface will answer for it.",
+                "Send an expedition. They leave the hatch; the cost comes back with them.",
                 "expeditions",
                 ("expedition.dispatched", 1)),
         };

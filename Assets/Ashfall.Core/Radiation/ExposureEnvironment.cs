@@ -37,9 +37,21 @@ namespace Ashfall.Core.Radiation
         public float BaseRadRate { get; set; }
         public float WeatherRadModifier { get; set; }
         public float FalloutContamination { get; set; }
+        /// <summary>Plan 176 — anomaly/storm-front radiation contribution at the
+        /// survivor's current location (additive, host-provided). Zero on old
+        /// saves and whenever no anomaly layer is bound; never persisted state.</summary>
+        public float AnomalyRadRate { get; set; }
         public float ShelterShielding { get; set; }
         public float EffectiveZoneRadLevel { get; set; }
         public string ExposureReason { get; set; } = string.Empty;
+
+        /// <summary>
+        /// C2 / Plan 20B — interior-rad query supplied by the shelter shielding
+        /// model for indoor positions. When present, RadiationSystem consumes it
+        /// in preference to the shielding-subtraction fallback (seam pinned by
+        /// ShelterRadQuerySeamTests). Null keeps the legacy path byte-identical.
+        /// </summary>
+        public Func<float, float>? InteriorRadQuery { get; set; }
 
         public ExposureContext ToExposureContext(List<WornGear>? wornGear = null)
         {
@@ -47,6 +59,7 @@ namespace Ashfall.Core.Radiation
             {
                 ZoneRadLevel = EffectiveZoneRadLevel,
                 ShelterShielding = ShelterShielding,
+                ShelterRadQuery = InteriorRadQuery,
                 WornGear = wornGear ?? new List<WornGear>(),
                 ExposureReason = ExposureReason,
                 Environment = this
@@ -54,7 +67,8 @@ namespace Ashfall.Core.Radiation
         }
 
         public override string ToString() =>
-            $"{ExposureReason}: Zone={EffectiveZoneRadLevel:F1} mSv/h, Shielding={ShelterShielding:F1} mSv/h";
+            $"{ExposureReason}: Zone={EffectiveZoneRadLevel:F1} mSv/h, Shielding={ShelterShielding:F1} mSv/h" +
+            (AnomalyRadRate > 0f ? $", Anomaly +{AnomalyRadRate:F1}" : "");
     }
 
     /// <summary>
@@ -84,8 +98,20 @@ namespace Ashfall.Core.Radiation
         /// <summary>Optional provider for location-specific fallout contamination.</summary>
         public Func<string, float>? FalloutContaminationProvider { get; set; }
 
+        /// <summary>Plan 176 — optional provider for anomaly/storm-front radiation
+        /// at a location (rads/hr, additive). Null preserves legacy behavior
+        /// byte-for-byte; the host owns the location→coordinate mapping.</summary>
+        public Func<string, float>? AnomalyRadRateProvider { get; set; }
+
         /// <summary>Optional external query for survivor location kind and target location id.</summary>
         public Func<string, (SurvivorExposureLocation Kind, string LocationId)>? SurvivorLocationQuery { get; set; }
+
+        /// <summary>
+        /// C2 / Plan 20B — optional interior-rad query bound to the shelter
+        /// shielding model. Applied to ShelterInterior resolutions only; other
+        /// location kinds stay on the legacy path. Null preserves old behavior.
+        /// </summary>
+        public Func<float, float>? ShelterInteriorRadQuery { get; set; }
 
         private readonly Dictionary<string, (SurvivorExposureLocation Kind, string LocationId)> _explicitLocations =
             new(StringComparer.Ordinal);
@@ -139,6 +165,8 @@ namespace Ashfall.Core.Radiation
             float weatherMod = 0f;
             float fallout = 0f;
             float shielding = 0f;
+            float effectiveAnomalyRate = 0f;
+            Func<float, float>? interiorRadQuery = null;
             string reason;
 
             switch (kind)
@@ -148,6 +176,7 @@ namespace Ashfall.Core.Radiation
                     float attenuation = ShelterAttenuationProvider != null ? ShelterAttenuationProvider() : 0f;
                     shielding = baseRate * attenuation;
                     reason = "Shelter Interior";
+                    interiorRadQuery = ShelterInteriorRadQuery;
                     break;
 
                 case SurvivorExposureLocation.ShelterPerimeter:
@@ -184,11 +213,19 @@ namespace Ashfall.Core.Radiation
                         fallout = FalloutContaminationProvider(locationId);
                     }
 
+                    float anomalyRate = 0f;
+                    if (!string.IsNullOrEmpty(locationId) && AnomalyRadRateProvider != null)
+                    {
+                        anomalyRate = MathF.Max(0f, AnomalyRadRateProvider(locationId));
+                    }
+
                     weatherMod = WeatherRadModifierProvider != null ? WeatherRadModifierProvider() : 0f;
                     shielding = 0f;
                     reason = string.IsNullOrEmpty(locationId)
                         ? (weatherMod > 0f ? $"Expedition (Weather +{weatherMod:F0})" : "Expedition")
                         : (weatherMod > 0f ? $"Expedition {locationId} (Weather +{weatherMod:F0})" : $"Expedition {locationId}");
+                    if (anomalyRate > 0f) reason += $", Anomaly +{anomalyRate:F0}";
+                    effectiveAnomalyRate = anomalyRate;
                     break;
 
                 default:
@@ -197,7 +234,7 @@ namespace Ashfall.Core.Radiation
                     break;
             }
 
-            float effectiveZone = MathF.Max(0f, baseRate + weatherMod + fallout);
+            float effectiveZone = MathF.Max(0f, baseRate + weatherMod + fallout + effectiveAnomalyRate);
 
             return new ExposureEnvironment
             {
@@ -206,9 +243,11 @@ namespace Ashfall.Core.Radiation
                 BaseRadRate = baseRate,
                 WeatherRadModifier = weatherMod,
                 FalloutContamination = fallout,
+                AnomalyRadRate = effectiveAnomalyRate,
                 ShelterShielding = shielding,
                 EffectiveZoneRadLevel = effectiveZone,
-                ExposureReason = reason
+                ExposureReason = reason,
+                InteriorRadQuery = interiorRadQuery
             };
         }
 

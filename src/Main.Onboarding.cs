@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using Godot;
@@ -191,6 +192,9 @@ namespace AtomicWar.GodotApp
 
         private void ApplyOnboardingSettings(Ashfall.Core.Settings.UserSettingsData settings)
         {
+            // Plan 184 Path α — refresh owner for preference-sensitive surfaces.
+            RefreshAccessibilityPreferenceSurfaces();
+
             if (settings.TutorialMode == 2)
             {
                 if (_onboardingHintPanel != null)
@@ -203,6 +207,18 @@ namespace AtomicWar.GodotApp
             if (_onboardingJourney == null)
                 SetupOnboarding();
             _onboardingHintPanel?.RefreshView();
+        }
+
+        /// <summary>
+        /// Re-renders open panels that cache hazard/dose presentation so
+        /// <c>hazard_text_labels</c> (and later preference-aware text) stay truthful
+        /// after APPLY &amp; SAVE. Engine scale/modulate already applied in
+        /// <see cref="Settings.UserSettingsStore.Apply"/>.
+        /// </summary>
+        private void RefreshAccessibilityPreferenceSurfaces()
+        {
+            _doseLedgerPanel?.RefreshView();
+            _radiationHistoryPanel?.RefreshView();
         }
 
         public void DismissOnboardingHint()

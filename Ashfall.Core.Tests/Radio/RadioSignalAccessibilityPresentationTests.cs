@@ -148,17 +148,30 @@ namespace Ashfall.Core.Tests.Radio
             _ => "Unknown Status"
         };
 
-        [Theory]
-        [InlineData(0.05f, "Unintelligible")]
-        [InlineData(0.20f, "Heavy Static")]
-        [InlineData(0.40f, "Faint Audio")]
-        [InlineData(0.65f, "Broken Signal")]
-        [InlineData(0.85f, "Clear Audio")]
-        [InlineData(0.98f, "Optimal Reception")]
-        public void ClarityLevels_MapToQualitativeTiers(float clarity, string expectedTier)
+        [Fact]
+        public void ClarityLevels_ThresholdTable_MapsToQualitativeTiers()
         {
-            string tier = GetClarityTier(clarity);
-            Assert.Equal(expectedTier, tier);
+            var failures = new List<string>();
+
+            foreach (var testCase in new[]
+            {
+                (Clarity: 0.05f, ExpectedTier: "Unintelligible"),
+                (Clarity: 0.20f, ExpectedTier: "Heavy Static"),
+                (Clarity: 0.40f, ExpectedTier: "Faint Audio"),
+                (Clarity: 0.65f, ExpectedTier: "Broken Signal"),
+                (Clarity: 0.85f, ExpectedTier: "Clear Audio"),
+                (Clarity: 0.98f, ExpectedTier: "Optimal Reception"),
+            })
+            {
+                string actualTier = GetClarityTier(testCase.Clarity);
+                if (actualTier != testCase.ExpectedTier)
+                {
+                    failures.Add(
+                        $"clarity={testCase.Clarity}, expected '{testCase.ExpectedTier}', got '{actualTier}'");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         private static string GetClarityTier(float clarity)

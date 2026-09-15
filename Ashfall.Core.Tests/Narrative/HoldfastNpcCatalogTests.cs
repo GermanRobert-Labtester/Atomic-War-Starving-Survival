@@ -76,18 +76,21 @@ namespace Ashfall.Core.Tests.Narrative
         }
 
         [Fact]
-        public void HoldfastCatalog_Integration_NpcsLoadedWithHoldfastCatalog()
+        public void HoldfastCatalog_DoesNotOwnNpcs_NpcAuthorityIsHoldfastNpcCatalogLoader()
         {
             string dataDir = FindDataDir();
             var files = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
 
-            var loader = new HoldfastCatalogLoader(files, json);
-            var holdfastCatalog = loader.Load(dataDir);
+            var holdfastCatalog = new HoldfastCatalogLoader(files, json).Load(dataDir);
+            Assert.NotNull(holdfastCatalog);
+            Assert.Null(typeof(HoldfastCatalog).GetProperty("Npcs"));
+            Assert.Null(typeof(HoldfastCatalog).GetMethod("GetNpc"));
 
-            Assert.NotNull(holdfastCatalog.Npcs);
-            Assert.Equal(10, holdfastCatalog.Npcs.Count);
-            Assert.NotNull(holdfastCatalog.GetNpc("npc_cael_ormund"));
+            var npcs = HoldfastNpcCatalogLoader.Load(dataDir, files, json);
+            Assert.True(npcs.IsValid);
+            Assert.Equal(10, npcs.Count);
+            Assert.NotNull(npcs.GetById("npc_cael_ormund"));
         }
 
         [Fact]

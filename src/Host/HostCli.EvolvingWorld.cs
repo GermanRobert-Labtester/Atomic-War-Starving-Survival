@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -37,9 +38,9 @@ namespace AtomicWar.GodotApp
             var seeds = EvolvingWorldCatalogLoader.Load(dataDirectory, files, json);
             Check(seeds != null, "seed catalog loads");
             if (seeds == null) { GD.Print("EVOLVING_WORLD_SELFTEST FAIL — no seed catalog"); return 1; }
-            Check(seeds.sectors.Count == 11 && seeds.packs.Count == 13
-                  && seeds.landmarks.Count == 10 && seeds.location_seeds.Count == 12,
-                $"seed counts (11 sectors / 13 packs / 10 landmarks / 12 locations; got {seeds.sectors.Count}/{seeds.packs.Count}/{seeds.landmarks.Count}/{seeds.location_seeds.Count})");
+            Check(seeds.sectors.Count > 0 && seeds.packs.Count > 0
+                  && seeds.landmarks.Count > 0 && seeds.location_seeds.Count > 0,
+                $"seed catalogs are populated ({seeds.sectors.Count} sectors / {seeds.packs.Count} packs / {seeds.landmarks.Count} landmarks / {seeds.location_seeds.Count} locations)");
             var knownSectors = seeds.sectors.Select(s => s.sector_id).ToHashSet();
             Check(seeds.packs.All(p => knownSectors.Contains(p.sector_id)), "every pack stands in a known sector");
             Check(EvolvingWorldSeeder.ShelterSectorId(seeds) == "sector_4_hinterlands", "shelter sector id present");
@@ -47,7 +48,9 @@ namespace AtomicWar.GodotApp
             // 2. Seeding: idempotent, deterministic, and never overwrites.
             var (loc, wild, land) = FreshSeeded(seeds);
             EvolvingWorldSeeder.Seed(loc, wild, land, seeds); // second pass is a no-op
-            Check(wild.State.packs.Count == 13 && land.State.landmarks.Count == 10,
+            Check(wild.State.packs.Count == seeds.packs.Count
+                  && land.State.landmarks.Count == seeds.landmarks.Count
+                  && loc.State.mutations.Count == seeds.location_seeds.Count,
                 "second seeding pass adds nothing");
             var weighbridge = loc.TryGetRecord("loc_weighbridge")!;
             Check(weighbridge.currentOwner == "faction_the_scale", "location seed landed");

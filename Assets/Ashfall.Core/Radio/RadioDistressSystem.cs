@@ -45,6 +45,20 @@ namespace Ashfall.Core.Radio
 
         [JsonPropertyName("text")]
         public string Text { get; set; } = string.Empty;
+
+        /// <summary>Tasks 9–12 Wave 1 — additive, optional player-facing clue for
+        /// this stage (e.g. "Multiple voices in background."). Empty = no hint
+        /// authored at this stage. A hint is an intelligence presentation layer,
+        /// never an authoritative outcome flag: it must not expose hidden truth
+        /// (trap authenticity, quest internals) that the player has not learned.</summary>
+        [JsonPropertyName("outcome_hint")]
+        public string OutcomeHint { get; set; } = string.Empty;
+
+        /// <summary>Tasks 9–12 Wave 4 — optional stage-level audio cue override
+        /// (clarity-dependent audio, plan Option A). Empty = inherit the
+        /// signal's default cue. Presentation only — never gameplay truth.</summary>
+        [JsonPropertyName("audio_cue")]
+        public string AudioCue { get; set; } = string.Empty;
     }
 
     [Serializable]
@@ -155,6 +169,20 @@ namespace Ashfall.Core.Radio
 
         [JsonPropertyName("message_fragments")]
         public List<DistressMessageFragment> MessageFragments { get; set; } = new List<DistressMessageFragment>();
+
+        /// <summary>Tasks 9–12 Wave 4 — additive default audio cue for this
+        /// signal. Empty = text-only fallback (the signal remains fully
+        /// usable without audio). Stage-level overrides take precedence.
+        /// Presentation only — never gameplay truth, never authenticity.</summary>
+        [JsonPropertyName("audio_cue")]
+        public string AudioCue { get; set; } = string.Empty;
+
+        /// <summary>Tasks 9–12 Wave 3 — additive authored follow-up
+        /// transmissions. Empty = no follow-ups authored. Distinct from
+        /// message stages: event-caused delayed transmissions, not time-based
+        /// presentation progression. See DistressFollowUpScheduler.</summary>
+        [JsonPropertyName("follow_up_signals")]
+        public List<SignalFollowUpDefinition> FollowUpSignals { get; set; } = new List<SignalFollowUpDefinition>();
 
         [JsonPropertyName("narrative_id")]
         public string NarrativeId { get; set; } = string.Empty;
@@ -396,7 +424,8 @@ namespace Ashfall.Core.Radio
             MoralChoiceQuestDefinition questDef,
             int day,
             out MoralChoiceResolution? resolution,
-            FactionWarSystem? factionWar = null)
+            FactionWarSystem? factionWar = null,
+            SignalTrustLedger? signalTrust = null)
         {
             resolution = null;
             if (string.IsNullOrEmpty(signalId) || questDef == null || moral == null) return false;
@@ -426,6 +455,12 @@ namespace Ashfall.Core.Radio
                 state.IsResolved = true;
                 state.IsIgnored = true;
                 state.ResolutionSummary = "Signal ignored by command; sender_death inevitable.";
+
+                // Tasks 9–12 Wave 2: explicit player decline of an actionable
+                // signal → ignored. Exactly once per signal (the idempotent
+                // replay branch above never reaches this path; the ledger
+                // dedupes against the deadline-expiry path).
+                signalTrust?.RecordIgnored(signalId);
 
                 if (factionWar != null)
                 {

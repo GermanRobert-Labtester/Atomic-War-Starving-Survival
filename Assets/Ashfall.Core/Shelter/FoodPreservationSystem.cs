@@ -47,16 +47,22 @@ namespace Ashfall.Core.Shelter
     {
         public const string SystemId = "food_preservation";
 
+        public const string DefaultStorageRoomId = "room_storage_bay";
+        public const float DefaultStorageTemperatureC = 10f;
+
         private FoodPreservationState _state = new FoodPreservationState();
         private readonly ISeededRng _rng;
         private readonly Inventory.Inventory _inventory;
         private readonly FoodPreservationCatalog _catalog;
         private readonly ILog _log;
         private int _currentDay;
+        private float _storageTemperatureC = DefaultStorageTemperatureC;
 
         public FoodPreservationState State => _state;
         public bool IsPowerOnline => _state.IsPowerOnline;
         public int UnpoweredDays => _state.UnpoweredDays;
+        /// <summary>Host-projected storage-room °C; not a parallel thermal ledger.</summary>
+        public float StorageTemperatureC => _storageTemperatureC;
 
         public event Action<FoodBatchCohort>? OnFoodSpoiled;
         public event Action<ActiveCuringJob>? OnCuringCompleted;
@@ -83,6 +89,26 @@ namespace Ashfall.Core.Shelter
             }
         }
 
+        /// <summary>
+        /// Host projects storage-room °C from the shelter thermal authority.
+        /// Core does not own thermal simulation.
+        /// </summary>
+        public void SetStorageTemperatureC(float temperatureC)
+        {
+            _storageTemperatureC = Math.Clamp(temperatureC, -40f, 60f);
+        }
+
+        /// <summary>
+        /// Deterministic shelf-life factor from storage °C.
+        /// Cold (≤5) extends life; warm (&gt;15) shortens; default band preserves prior decay.
+        /// </summary>
+        public static float StorageTempShelfLifeFactor(float temperatureC)
+        {
+            if (temperatureC <= 5f) return 1.5f;
+            if (temperatureC <= 15f) return 1.0f;
+            return 0.5f;
+        }
+
         public ActionResult AddCohort(string foodItemId, int quantity, string tierId, int currentDay)
         {
             if (string.IsNullOrEmpty(foodItemId) || quantity <= 0)
@@ -90,6 +116,10 @@ namespace Ashfall.Core.Shelter
 
             var tier = _catalog.GetTier(tierId) ?? _catalog.GetTier("preservation_ambient");
             string actualTierId = tier?.id ?? "preservation_ambient";
+
+            string foodType = _catalog.ResolveFoodType(foodItemId);
+            if (!_catalog.IsFoodTypeAllowed(tier, foodType))
+                return ActionResult.Blocked("food_type_not_allowed", "food.type_not_allowed_for_tier");
 
             _state.NextCohortSeq++;
             var cohort = new FoodBatchCohort
@@ -104,7 +134,7 @@ namespace Ashfall.Core.Shelter
             };
 
             _state.Cohorts.Add(cohort);
-            _log.Info($"[FoodPreservation] Added {quantity}x {foodItemId} under {actualTierId}");
+            _log.Info($"[FoodPreservation] Added {quantity}x {foodItemId} ({foodType}) under {actualTierId}");
             return ActionResult.Success("food.cohort_added");
         }
 
@@ -165,6 +195,8 @@ namespace Ashfall.Core.Shelter
                         shelfDays = 5f; // ambient rate
                     }
                 }
+
+                shelfDays *= StorageTempShelfLifeFactor(_storageTemperatureC);
 
                 float decayPercentPerDay = 100f / Math.Max(1f, shelfDays);
                 cohort.FreshnessPercent -= decayPercentPerDay;

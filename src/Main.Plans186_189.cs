@@ -81,7 +81,7 @@ namespace AtomicWar.GodotApp
         {
             if (_fallout != null)
             {
-                CaptureSection("fallout", FalloutSaveStore.TryCapturePersisted(_fallout.State));
+                CaptureSection("fallout", FalloutSaveStore.TryCapturePersisted(_fallout.CaptureState()));
             }
         }
 
@@ -144,7 +144,7 @@ namespace AtomicWar.GodotApp
         {
             if (_desperation != null)
             {
-                CaptureSection("desperation", DesperationSaveStore.TryCapturePersisted(_desperation.State));
+                CaptureSection("desperation", DesperationSaveStore.TryCapturePersisted(_desperation.CaptureState()));
             }
         }
 
@@ -243,7 +243,7 @@ namespace AtomicWar.GodotApp
         {
             if (_mercenary != null)
             {
-                CaptureSection("mercenary_bounties", MercenarySaveStore.TryCapturePersisted(_mercenary.State));
+                CaptureSection("mercenary_bounties", MercenarySaveStore.TryCapturePersisted(_mercenary.CaptureState()));
             }
         }
 
@@ -305,7 +305,7 @@ namespace AtomicWar.GodotApp
         {
             if (_archaeology != null)
             {
-                CaptureSection("archaeology", ArchaeologySaveStore.TryCapturePersisted(_archaeology.State));
+                CaptureSection("archaeology", ArchaeologySaveStore.TryCapturePersisted(_archaeology.CaptureState()));
             }
         }
 

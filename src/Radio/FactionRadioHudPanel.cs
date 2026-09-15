@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using AtomicWar.GodotApp.UI;
 using System;
 using System.Collections.Generic;
@@ -317,8 +318,9 @@ namespace AtomicWar.GodotApp.Radio
                 _lblCrtLiveText.Text = intercept.Message;
             }
 
-            // Append to Archive Log
-            AppendLogEntry(intercept);
+            // Append to Archive Log when verbose radio log is enabled.
+            if (AtomicWar.GodotApp.Settings.UserSettingsStore.Current.VerboseRadioLog)
+                AppendLogEntry(intercept);
         }
 
         private void AppendLogEntry(RadioIntercept intercept)

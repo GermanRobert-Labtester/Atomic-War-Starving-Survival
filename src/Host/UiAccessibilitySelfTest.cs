@@ -215,6 +215,10 @@ namespace AtomicWar.GodotApp
                 ("DutyRosterPanel", new DutyRosterPanel()),
                 ("AchievementsPanel", new AchievementsPanel()),
                 ("GameDashboardPanel", new GameDashboardPanel()),
+                ("LowBackgroundLeadPanel", new LowBackgroundLeadPanel()),
+                ("InSarMappingPanel", new InSarMappingPanel()),
+                ("HydraulicExtrusionPanel", new HydraulicExtrusionPanel()),
+                ("RunFlatTirePanel", new RunFlatTirePanel()),
                 ("DailyBriefingModal", new DailyBriefingModal())
             };
 

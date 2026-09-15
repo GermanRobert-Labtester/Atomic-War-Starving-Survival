@@ -113,7 +113,7 @@ namespace AtomicWar.GodotApp
         {
             if (_plasticPyrolysis != null)
             {
-                CaptureSection("plastic_pyrolysis", PlasticPyrolysisSaveStore.TryCapturePersisted(_plasticPyrolysis.State));
+                CaptureSection("plastic_pyrolysis", PlasticPyrolysisSaveStore.TryCapturePersisted(_plasticPyrolysis.CaptureState()));
             }
         }
 
@@ -222,7 +222,7 @@ namespace AtomicWar.GodotApp
         {
             if (_cargoAirdrop != null)
             {
-                CaptureSection("cargo_airdrop", CargoAirdropSaveStore.TryCapturePersisted(_cargoAirdrop.State));
+                CaptureSection("cargo_airdrop", CargoAirdropSaveStore.TryCapturePersisted(_cargoAirdrop.CaptureState()));
             }
         }
 

@@ -19,6 +19,46 @@
       "weight": 0.3,
       "tradeValue": 6
     },
+        {
+      "id": "item_seed_frost_pea",
+      "displayName": "Frost Pea Seeds",
+      "description": "A twist of waxed paper holding six dark peas with frost-hardened coats. The old cold-crop crews swore by them: they ask for almost no light and shrug off the blight that kills everything else when the lamps dim.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.3,
+      "tradeValue": 8
+    },
+    {
+      "id": "crop_frost_pea",
+      "displayName": "Frost Peas",
+      "description": "Slate-green pods, sweetened by the cold itself. Simmered into paste they keep a body honest through the long dark.",
+      "type": "Food",
+      "stackMax": 12,
+      "weight": 0.3,
+      "tradeValue": 6,
+      "hungerRestore": 10,
+      "thirstRestore": 1
+    },
+    {
+      "id": "item_seed_glacier_greens",
+      "displayName": "Glacier Greens Cutting",
+      "description": "A chilled cutting of pale, thick-leafed greens bred for lamp rationing. Grows when everything else sulks.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.3,
+      "tradeValue": 7
+    },
+    {
+      "id": "crop_glacier_greens",
+      "displayName": "Glacier Greens",
+      "description": "Crisp, bitter leaves with a frost-line through the stem. Roughly half a meal's worth of anything, and grateful for it.",
+      "type": "Food",
+      "stackMax": 12,
+      "weight": 0.25,
+      "tradeValue": 5,
+      "hungerRestore": 8,
+      "thirstRestore": 2
+    },
     {
       "id": "item_seed_grain",
       "displayName": "Mutated Grain Spike",

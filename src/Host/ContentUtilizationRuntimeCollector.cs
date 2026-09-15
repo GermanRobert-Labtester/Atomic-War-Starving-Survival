@@ -22,6 +22,7 @@ using Ashfall.Core.Survivors;
 using Ashfall.Core.Disease;
 using Ashfall.Core.Factions;
 using Ashfall.Core.Shelter;
+using Ashfall.Core.Radio;
 
 namespace AtomicWar.GodotApp
 {
@@ -49,6 +50,7 @@ namespace AtomicWar.GodotApp
                 TryLoadStartingCohortCatalog(dataDir, files, json, instr);
                 TryLoadNarrativeEncounters(dataDir, files, json, instr);
                 TryLoadNarrativeArcEvents(dataDir, files, json, instr);
+                TryLoadEchoes(dataDir, files, json, instr);
                 TryLoadQuestlineMaster(dataDir, files, json, instr);
                 TryLoadExpeditionCatalog(dataDir, files, json, instr);
                 TryLoadRadioCatalog(dataDir, files, json, instr);
@@ -79,6 +81,7 @@ namespace AtomicWar.GodotApp
                 TryLoadFringeCultRecords(dataDir, files, json, instr);
                 TryLoadPaperPrintingRecords(dataDir, files, json, instr);
                 TryLoadBoneHornRecords(dataDir, files, json, instr);
+                TryLoadAdvancedIndustrialReconCatalogs(dataDir, files, json, instr);
 
                 // Simulate representative queries for N days
                 RunRepresentativeQueries(instr, 7);
@@ -98,6 +101,38 @@ namespace AtomicWar.GodotApp
         }
 
         // ── Individual catalog load helpers ──────────────────────────
+
+        private static void TryLoadEchoes(
+            string dataDir,
+            IFileIO files,
+            IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            try
+            {
+                var load = EchoCatalogLoader.LoadDetailed(dataDir, files, json, instr);
+                if (!load.IsSuccess)
+                {
+                    Godot.GD.PrintErr("[RuntimeEvidence] echoes.json: " + string.Join(" | ", load.Errors));
+                    return;
+                }
+
+                var system = new EchoSystem(load.Echoes, instrumentation: instr)
+                {
+                    HasWorldFlag = _ => true
+                };
+                var selected = system.SelectForDay(31, new SeededRng(DefaultSeed));
+                if (selected == null || selected.Choices.Count == 0) return;
+
+                // The collector uses the real selection and resolution path,
+                // not a synthetic SELECTED/EFFECT_PRODUCED event.
+                system.Resolve(selected.Id, selected.Choices[0].ChoiceId, 31);
+            }
+            catch (Exception ex)
+            {
+                Godot.GD.PrintErr($"[RuntimeEvidence] echoes: {ex.Message}");
+            }
+        }
 
         private static void TryLoadJournalCorpus(
             string dataDir,
@@ -1113,6 +1148,38 @@ namespace AtomicWar.GodotApp
         }
 
         // ── Representative Queries ───────────────────────────────────
+
+        private static void TryLoadAdvancedIndustrialReconCatalogs(string dataDir, IFileIO files, IJsonSerializer json,
+            ContentUtilizationInstrumentation instr)
+        {
+            TryLoadAdvancedCatalog(FischerTropschCatalogLoader.CatalogFileName, "FischerTropschCatalogLoader",
+                dataDir, files, instr, () =>
+                {
+                    var catalog = FischerTropschCatalogLoader.Load(dataDir, files, json);
+                    return catalog.Reactors.Count + catalog.Products.Count + catalog.Catalysts.Count;
+                });
+            TryLoadAdvancedCatalog("uv_corona_detector_catalog.json", "UvCoronaDetectionCatalogLoader",
+                dataDir, files, instr, () => UvCoronaDetectionCatalogLoader.Load(dataDir, files, json).Detectors.Count);
+            TryLoadAdvancedCatalog("carbon_composite_catalog.json", "CarbonCompositeCatalogLoader",
+                dataDir, files, instr, () => CarbonCompositeCatalogLoader.Load(dataDir, files, json).Components.Count);
+            TryLoadAdvancedCatalog("gpr_exploration_catalog.json", "GroundPenetratingRadarCatalogLoader",
+                dataDir, files, instr, () => GroundPenetratingRadarCatalogLoader.Load(dataDir, files, json).Modes.Count);
+        }
+
+        private static void TryLoadAdvancedCatalog(string file, string loader, string dataDir, IFileIO files,
+            ContentUtilizationInstrumentation instr, Func<int> definitionCount)
+        {
+            try
+            {
+                string path = Path.Combine(dataDir, file);
+                if (!files.FileExists(path)) return;
+                instr.RecordCatalogOpened(file, loader);
+                int count = definitionCount();
+                instr.RecordCatalogDeserialized(file, count);
+                instr.RecordDefinitionsRegistered(file, loader, count);
+            }
+            catch (Exception ex) { Godot.GD.PrintErr($"[RuntimeEvidence] {file}: {ex.Message}"); }
+        }
 
         private static void RunRepresentativeQueries(ContentUtilizationInstrumentation instr, int days)
         {

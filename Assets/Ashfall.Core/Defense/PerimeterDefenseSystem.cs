@@ -123,10 +123,17 @@ namespace Ashfall.Core.Defense
             return null;
         }
 
-        public ActionResult ConstructEmplacement(string defenseId)
+        public ActionResult ConstructEmplacement(string defenseId, bool hasRequiredCapability = true)
         {
             if (!_defsById.TryGetValue(defenseId, out var def))
                 return ActionResult.Failed("unknown_defense", "defense.unknown_defense");
+
+            // B5–B8 Phase 7 (Plan 67 §10.5): research-gated builds. The host
+            // passes the live capability query result; an unlocked node without
+            // the physical build never contributes defense. Empty
+            // required_knowledge = basic fieldworks (always constructible).
+            if (!string.IsNullOrEmpty(def.required_knowledge) && !hasRequiredCapability)
+                return ActionResult.Blocked("missing_knowledge", "defense.missing_knowledge");
 
             // Check costs
             foreach (var cost in def.build_costs)
@@ -403,6 +410,20 @@ namespace Ashfall.Core.Defense
             var counters = attackerCounterTags != null ? new HashSet<string>(attackerCounterTags, StringComparer.Ordinal) : null;
             var snap = new PerimeterEncounterSnapshot();
             float delay = 1f;
+            var touchedSectors = new HashSet<string>(StringComparer.Ordinal);
+
+            // B5–B8 expansion (§10.11): disabled/jammed counts first — they are
+            // part of the snapshot even when they cannot slow an approach.
+            for (int i = 0; i < _state.emplacements.Count; i++)
+            {
+                var emp = _state.emplacements[i];
+                if (emp.is_destroyed || !emp.is_active)
+                {
+                    snap.emplacements_disabled++;
+                    continue;
+                }
+                if (emp.is_jammed) snap.turrets_jammed++;
+            }
 
             for (int i = 0; i < _state.emplacements.Count; i++)
             {
@@ -419,6 +440,10 @@ namespace Ashfall.Core.Defense
 
                 if (!countered)
                 {
+                    snap.emplacements_ready++;
+                    if (emp.magazine_capacity > 0 && emp.loaded_ammo_count > 0 && !emp.is_jammed)
+                        snap.turrets_ready++;
+
                     // Entanglements and barriers slow approach proportionally to integrity.
                     if (def.slow_factor > 0f)
                     {
@@ -430,9 +455,23 @@ namespace Ashfall.Core.Defense
                         snap.detection_initiative_bonus += 0.1f + def.night_accuracy_bonus;
 
                     var sector = FindSectorOf(emp.emplacement_id);
-                    if (sector != null && !snap.protected_sectors.Contains(sector.sector_id))
-                        snap.protected_sectors.Add(sector.sector_id);
+                    if (sector != null)
+                    {
+                        touchedSectors.Add(sector.sector_id);
+                        if (sector.alarm_spent && !snap.alarms_spent.Contains(sector.sector_id))
+                            snap.alarms_spent.Add(sector.sector_id);
+                        if (!snap.protected_sectors.Contains(sector.sector_id))
+                            snap.protected_sectors.Add(sector.sector_id);
+                    }
                 }
+            }
+
+            // B5–B8 expansion: the honest breach surface — canonical sectors
+            // with no intact emplacement at all.
+            foreach (var sectorId in PerimeterSector.All)
+            {
+                if (!touchedSectors.Contains(sectorId))
+                    snap.unguarded_sectors.Add(sectorId);
             }
 
             snap.movement_delay_multiplier = delay;
@@ -636,7 +675,8 @@ namespace Ashfall.Core.Defense
             {
                 systemId = SystemId,
                 schema_version = 2,
-                last_tick_day = _state.last_tick_day
+                last_tick_day = _state.last_tick_day,
+                assault_count = _state.assault_count
             };
 
             foreach (var emp in _state.emplacements)
@@ -657,9 +697,19 @@ namespace Ashfall.Core.Defense
                 });
             }
 
-            // Plan 203: sectors + bounded intrusion log.
-            save.sectors = new List<PerimeterSectorState>(_state.sectors);
-            save.intrusion_log = new List<PerimeterIntrusionLogEntry>(_state.intrusion_log);
+            // Plan 203: deep-clone sectors + intrusion log (emplacement_ids are mutable).
+            save.sectors = new List<PerimeterSectorState>(_state.sectors.Count);
+            foreach (var s in _state.sectors)
+            {
+                if (s == null) continue;
+                save.sectors.Add(CloneSector(s));
+            }
+            save.intrusion_log = new List<PerimeterIntrusionLogEntry>(_state.intrusion_log.Count);
+            foreach (var e in _state.intrusion_log)
+            {
+                if (e == null) continue;
+                save.intrusion_log.Add(CloneIntrusion(e));
+            }
 
             return save;
         }
@@ -668,6 +718,7 @@ namespace Ashfall.Core.Defense
         {
             if (save == null) return;
             _state.last_tick_day = save.last_tick_day;
+            _state.assault_count = save.assault_count;
             _state.emplacements.Clear();
 
             if (save.emplacements != null)
@@ -691,11 +742,54 @@ namespace Ashfall.Core.Defense
                 }
             }
 
-            // Plan 203: additive restore — old saves carry no sectors/log (safe defaults).
-            _state.sectors = save.sectors ?? new List<PerimeterSectorState>();
-            _state.intrusion_log = save.intrusion_log ?? new List<PerimeterIntrusionLogEntry>();
+            // Plan 203: additive restore — deep-copy so save DTOs never alias live state.
+            _state.sectors = new List<PerimeterSectorState>();
+            if (save.sectors != null)
+            {
+                foreach (var s in save.sectors)
+                {
+                    if (s == null) continue;
+                    _state.sectors.Add(CloneSector(s));
+                }
+            }
+            _state.intrusion_log = new List<PerimeterIntrusionLogEntry>();
+            if (save.intrusion_log != null)
+            {
+                foreach (var e in save.intrusion_log)
+                {
+                    if (e == null) continue;
+                    _state.intrusion_log.Add(CloneIntrusion(e));
+                }
+            }
             if (_state.intrusion_log.Count > IntrusionLogCapacity)
                 _state.intrusion_log.RemoveRange(0, _state.intrusion_log.Count - IntrusionLogCapacity);
+        }
+
+        private static PerimeterSectorState CloneSector(PerimeterSectorState s)
+        {
+            return new PerimeterSectorState
+            {
+                sector_id = s.sector_id,
+                emplacement_ids = s.emplacement_ids != null
+                    ? new List<string>(s.emplacement_ids)
+                    : new List<string>(),
+                alarm_armed = s.alarm_armed,
+                alarm_spent = s.alarm_spent,
+                last_trigger_day = s.last_trigger_day,
+                false_alarm_count = s.false_alarm_count,
+                hostile_trigger_count = s.hostile_trigger_count,
+            };
+        }
+
+        private static PerimeterIntrusionLogEntry CloneIntrusion(PerimeterIntrusionLogEntry e)
+        {
+            return new PerimeterIntrusionLogEntry
+            {
+                day = e.day,
+                sector_id = e.sector_id,
+                kind = e.kind,
+                detail = e.detail,
+            };
         }
     }
 }

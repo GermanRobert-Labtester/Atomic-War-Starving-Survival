@@ -285,12 +285,19 @@ namespace Ashfall.Core.Combat
             return true;
         }
 
-        public StealthState CaptureState() => _state;
+        public StealthState CaptureState()
+        {
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<StealthState>(json) ?? new StealthState();
+        }
 
         public void RestoreState(StealthState state)
         {
             if (state == null) return;
-            _state = state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(state);
+            _state = s.Deserialize<StealthState>(json) ?? new StealthState();
         }
     }
 }

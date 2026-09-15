@@ -25,12 +25,6 @@ namespace AtomicWar.GodotApp
         private Label _lblWeather = null!;
         private Button _btnMenu = null!;
 
-        // Animation state
-        private float _healthAnimProgress = 1f;
-        private float _radAnimProgress = 0f;
-        private bool _healthAnimating = false;
-        private bool _radAnimating = false;
-
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopWide);
@@ -105,13 +99,9 @@ namespace AtomicWar.GodotApp
             AddChild(_btnMenu);
 
             // Disable per-frame process polling as meters update reactively via UpdateState/UpdateHealth/UpdateRadiation.
+            // (No _Process override: HUD is event-driven; per-frame polling would
+            // waste frame budget for state that only changes on game events.)
             SetProcess(false);
-        }
-
-        public override void _Process(double delta)
-        {
-            _healthAnimating = false;
-            _radAnimating = false;
         }
 
         /// <summary>

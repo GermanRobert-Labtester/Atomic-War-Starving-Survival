@@ -154,6 +154,11 @@ namespace AtomicWar.GodotApp
                     _world?.Dispose();
                     _world = null!;
                     _worldDirty = false;
+                    // The sonde wrapper caches the world's WeatherSystem; drop it
+                    // with the world so a new campaign re-resolves a live weather
+                    // session instead of displaying the previous campaign's state
+                    // (INV-16.6 — session swap invalidates bindings).
+                    _weatherSondeHost = null;
                 }));
 
             // Medical & Disease
@@ -184,6 +189,18 @@ namespace AtomicWar.GodotApp
                     _radio?.Dispose();
                     _radio = null!;
                     _radioTerminal = null!;
+                }));
+
+            // Field echoes
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "echoes",
+                dependsOn: new[] { "narrative_radio", "journal" },
+                saveSectionKey: "echoes",
+                onReset: () =>
+                {
+                    _echoes?.Dispose();
+                    _echoes = null;
+                    _echoesDirty = false;
                 }));
 
             // Journal

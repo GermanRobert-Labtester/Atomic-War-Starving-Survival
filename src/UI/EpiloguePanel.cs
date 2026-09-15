@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.Endgame;
@@ -227,12 +228,12 @@ namespace AtomicWar.GodotApp.UI
                     lbl.AutowrapMode = TextServer.AutowrapMode.WordSmart;
                     _traceContainer.AddChild(lbl);
                 }
-                _statusLabel.Text = $"Chronicle derived from live campaign authorities ({_snapshot.OutcomeTrace.Count} trace facts).";
+                _statusLabel.Text = $"Chronicle drawn from the campaign record ({_snapshot.OutcomeTrace.Count} facts).";
             }
             else
             {
-                _traceContainer.AddChild(AshfallUiHelpers.MakeMono("Direct matrix context evaluation (no external trace)."));
-                _statusLabel.Text = "Chronicle matrix evaluated against active world ledger flags.";
+                _traceContainer.AddChild(AshfallUiHelpers.MakeMono("No extra traces on file."));
+                _statusLabel.Text = "Chronicle checked against the current record.";
             }
         }
 

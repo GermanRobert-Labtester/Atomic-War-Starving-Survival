@@ -173,7 +173,7 @@
       "tradeValue": 0,
       "category": "story_item",
       "tier": "Old-World",
-      "description": "The count names the shelter's persons, one by one, in the machine's register — fourteen, then fifteen, then the hand that wrote them down. The game does not read it aloud, because the player is the hand, and the count is their own.",
+      "description": "The count names the shelter's persons, one by one, in the machine's register — fourteen, then fifteen, then the hand that wrote them down. The register does not read itself aloud. Whoever holds the count already knows the names.",
       "mechanical_effects": {
         "enrolled_evidence": 1
       },

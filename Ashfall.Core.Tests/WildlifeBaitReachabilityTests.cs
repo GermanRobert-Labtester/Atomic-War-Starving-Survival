@@ -70,21 +70,42 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData("bait_scrap_meat", "rat")]
-        [InlineData("bait_grain_lure", "rabbit")]
-        [InlineData("bait_pheromone", "ash_crow")]
-        [InlineData("bait_fat_cake", "fox")]
-        [InlineData("bait_berry_mash", "deer")]
-        [InlineData("bait_salt_lick", "boar")]
-        public void NamedBait_IsReachedByExpectedPrey(string baitId, string expectedPrey)
+        [Fact]
+        public void NamedBait_ReachabilityTable_MapsToExpectedPrey()
         {
             var catalog = LoadCatalog();
-            Assert.True(catalog.Baits.ContainsKey(baitId), $"Bait '{baitId}' missing from catalog");
-            Assert.True(catalog.Prey.ContainsKey(expectedPrey), $"Expected prey '{expectedPrey}' missing from catalog");
+            var failures = new List<string>();
 
-            var prey = catalog.Prey[expectedPrey];
-            Assert.Contains(baitId, prey.attractedByBaitIds);
+            foreach (var testCase in new[]
+            {
+                (BaitId: "bait_scrap_meat", ExpectedPrey: "rat"),
+                (BaitId: "bait_grain_lure", ExpectedPrey: "rabbit"),
+                (BaitId: "bait_pheromone", ExpectedPrey: "ash_crow"),
+                (BaitId: "bait_fat_cake", ExpectedPrey: "fox"),
+                (BaitId: "bait_berry_mash", ExpectedPrey: "deer"),
+                (BaitId: "bait_salt_lick", ExpectedPrey: "boar"),
+            })
+            {
+                if (!catalog.Baits.ContainsKey(testCase.BaitId))
+                {
+                    failures.Add($"bait '{testCase.BaitId}' is missing from the catalog");
+                    continue;
+                }
+
+                if (!catalog.Prey.TryGetValue(testCase.ExpectedPrey, out var prey))
+                {
+                    failures.Add($"expected prey '{testCase.ExpectedPrey}' is missing from the catalog");
+                    continue;
+                }
+
+                if (prey.attractedByBaitIds == null || !prey.attractedByBaitIds.Contains(testCase.BaitId))
+                {
+                    failures.Add(
+                        $"prey '{testCase.ExpectedPrey}' does not reference bait '{testCase.BaitId}'");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ====================================================================

@@ -199,10 +199,15 @@ namespace Ashfall.Core
             if (_state.queue.Count == 0)
                 return ActionResult.Blocked("empty_queue", "decon.empty_queue");
 
-            // Atomic resource consumption: clean water + soap
-            if (!_inventory.TryConsumeBill(new[] { "water_clean", "soap" }))
+            // Atomic resource consumption: potable water + disinfectant.
+            // B5–B8 Phase 3 repair: the canonical ids are `clean_water` (the
+            // spendable potable inventory item) and `item_liquid_bleach_carboy`
+            // (produced by the chlor-alkali plant — this closes that producer→
+        	// consumer chain). The previous "water_clean"/"soap" ids exist in no
+            // catalog, which left every decon wash permanently blocked.
+            if (!_inventory.TryConsumeBill(new[] { "clean_water", "item_liquid_bleach_carboy" }))
             {
-                if (_inventory.CountById("water_clean") < 1)
+                if (_inventory.CountById("clean_water") < 1)
                     return ActionResult.Blocked("no_water", "decon.no_water");
                 return ActionResult.Blocked("no_soap", "decon.no_soap");
             }
@@ -326,10 +331,10 @@ namespace Ashfall.Core
                     return ActionResult.Blocked("no_chelator", "decon.no_chelator");
             }
 
-            // Check resources
-            if (!_inventory.TryConsumeBill(new[] { "water_clean", "soap" }))
+            // Check resources (canonical ids — see the Phase 3 repair note above)
+            if (!_inventory.TryConsumeBill(new[] { "clean_water", "item_liquid_bleach_carboy" }))
             {
-                if (_inventory.CountById("water_clean") < 1)
+                if (_inventory.CountById("clean_water") < 1)
                     return ActionResult.Blocked("no_water", "decon.no_water");
                 return ActionResult.Blocked("no_soap", "decon.no_soap");
             }
@@ -558,9 +563,9 @@ namespace Ashfall.Core
             _state.effluentTankContamination = 0;
             _state.effluentSludgeVolume += sludgeProduced;
 
-            // Return recovered water (limited, treated)
+            // Return recovered water (limited, treated) — canonical potable item
             if (waterRecovered > 0)
-                _inventory.AddById("water_clean", (int)Math.Ceiling(waterRecovered));
+                _inventory.AddById("clean_water", (int)Math.Ceiling(waterRecovered));
 
             _log.Info($"[Decon] effluent treated: recovered {waterRecovered:F1}L water, {sludgeProduced:F2}L sludge");
             OnDeconChanged?.Invoke();

@@ -14,12 +14,12 @@ ui.common.dormant,DORMANT,,src/UI/AshfallUiHelpers.cs
 ui.common.stable,STABLE,,src/UI/AshfallUiHelpers.cs
 ui.common.critical,CRITICAL,,src/UI/AshfallUiHelpers.cs
 ui.common.warning,WARNING,,src/UI/AshfallUiHelpers.cs
-settings.title,SYSTEM CONFIGURATION // SETTINGS,,src/UI/SettingsPanel.cs
+settings.title,SETTINGS,,src/UI/SettingsPanel.cs
 settings.section.display,DISPLAY & GRAPHICS,,src/UI/SettingsPanel.cs
-settings.section.audio,AUDIO SIGNALS,,src/UI/SettingsPanel.cs
+settings.section.audio,AUDIO,,src/UI/SettingsPanel.cs
 settings.section.accessibility,ACCESSIBILITY & READABILITY,,src/UI/SettingsPanel.cs
-settings.section.gameplay,GAMEPLAY PROTOCOLS,,src/UI/SettingsPanel.cs
-settings.section.language,LANGUAGE & LOCALIZATION,,src/UI/SettingsPanel.cs
+settings.section.gameplay,GAMEPLAY,,src/UI/SettingsPanel.cs
+settings.section.language,LANGUAGE,,src/UI/SettingsPanel.cs
 settings.display.window_mode,Window Mode,,src/UI/SettingsPanel.cs
 settings.display.resolution,Resolution Preset,,src/UI/SettingsPanel.cs
 settings.display.ui_scale,Interface Scale,,src/UI/SettingsPanel.cs
@@ -27,23 +27,23 @@ settings.display.vsync,Vertical Sync,,src/UI/SettingsPanel.cs
 settings.display.max_fps,Frame Rate Cap,,src/UI/SettingsPanel.cs
 settings.audio.mute_all,Mute All Audio,,src/UI/SettingsPanel.cs
 settings.audio.master,Master Volume,,src/UI/SettingsPanel.cs
-settings.audio.music,Music / Ambience Score,,src/UI/SettingsPanel.cs
-settings.audio.sfx,Sound Effects / Machinery,,src/UI/SettingsPanel.cs
-settings.audio.radio,Radio Receiver / Transmissions,,src/UI/SettingsPanel.cs
-settings.audio.ambience,Bunker Ambience / Air Duct,,src/UI/SettingsPanel.cs
+settings.audio.music,Music / Ambience,,src/UI/SettingsPanel.cs
+settings.audio.sfx,Sound Effects,,src/UI/SettingsPanel.cs
+settings.audio.radio,Radio,,src/UI/SettingsPanel.cs
+settings.audio.ambience,Bunker Ambience,,src/UI/SettingsPanel.cs
 settings.accessibility.high_contrast,High Contrast HUD,,src/UI/SettingsPanel.cs
 settings.accessibility.hazard_labels,Always Show Hazard Text,,src/UI/SettingsPanel.cs
 settings.accessibility.reduced_motion,Reduced Motion,,src/UI/SettingsPanel.cs
 settings.accessibility.large_fonts,Large Font Floor,,src/UI/SettingsPanel.cs
-settings.gameplay.tutorial_mode,Tutorial & Onboarding Guidance,,src/UI/SettingsPanel.cs
+settings.gameplay.tutorial_mode,Tutorial Guidance,,src/UI/SettingsPanel.cs
 settings.gameplay.confirm_end_day,Confirm Before Ending Day,,src/UI/SettingsPanel.cs
-settings.gameplay.verbose_radio,Detailed Radio Log Dispatches,,src/UI/SettingsPanel.cs
+settings.gameplay.verbose_radio,Detailed Radio Log,,src/UI/SettingsPanel.cs
 settings.gameplay.auto_save,Auto-Save on Day Advance,,src/UI/SettingsPanel.cs
 settings.gameplay.reset_tutorials,Reset Tutorial Guidance,,src/UI/SettingsPanel.cs
 settings.language.locale,Language / Locale,,src/UI/SettingsPanel.cs
 tutorial.title,DAY 1 OBJECTIVE,,src/UI/OnboardingHintPanel.cs
 tutorial.protocol.title,Resolve the Day 1 protocol,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
-tutorial.protocol.objective,"Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.",,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.protocol.objective,"Handle rationing, maintenance, then radio. Each choice costs something.",,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.inspect.title,Inspect three bunker rooms,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.inspect.objective,Open the shelter and inspect rooms until three have confirming notes.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.rationing.title,Open the stores and read them,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
@@ -53,20 +53,20 @@ tutorial.assignment.objective,Open the duty roster and assign one survivor to a 
 tutorial.weather.title,Read the weather,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.weather.objective,Open the weather forecast or panel to learn what tomorrow will bring.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.inventory.title,Use an item from the stores,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
-tutorial.inventory.objective,Equip a protective item or consume something real from the ledger. Both are real commands.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.inventory.objective,"Equip protection, or use something from stores.",,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.day_advance.title,End Day 1,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
-tutorial.day_advance.objective,Press the Advance Day confirm. The first night ticks; the morning briefing returns.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
-warning.radiation.acute,ACUTE RADIATION DETECTED: Survivor {0} has {1:F0} mSv exposure (-5 HP/h decay). Administer Rad-Away or Iodine.,,Assets/Ashfall.Core/Radiation/RadiationSystem.cs
-warning.radiation.storm,FALLOUT STORM INCOMING: Elevated environmental radiation. Keep survivors indoors or equip hazmat gear.,,Assets/Ashfall.Core/Weather/WeatherSystem.cs
-warning.water.low,WATER RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Run filtration or desalination.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
-warning.food.low,FOOD RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Adjust rations or scavenge.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
-warning.power.brownout,POWER DEFICIT: Generator reserve depleted. Air filtration offline; indoor contamination rising.,,Assets/Ashfall.Core/Shelter/PowerGridSystem.cs
-warning.survivor.critical,SURVIVOR IN DANGER: {0} has reached critical {1}. Triage immediately.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+tutorial.day_advance.objective,Confirm Advance Day. Morning briefing comes with Day 2.,,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+warning.radiation.acute,ACUTE RADIATION: {0} at {1:F0} mSv (-5 HP/h). Give Rad-Away or iodine.,,Assets/Ashfall.Core/Radiation/RadiationSystem.cs
+warning.radiation.storm,FALLOUT STORM: Outdoor dose is rising. Keep people inside or kit them in hazmat.,,Assets/Ashfall.Core/Weather/WeatherSystem.cs
+warning.water.low,WATER LOW: {0:F1} units left (~{1:F1} days). Run filtration or desalination.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+warning.food.low,FOOD LOW: {0:F1} units left (~{1:F1} days). Tighten rations or scavenge.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+warning.power.brownout,POWER DEFICIT: Generator reserve is gone. Filters are offline; indoor contamination is rising.,,Assets/Ashfall.Core/Shelter/PowerGridSystem.cs
+warning.survivor.critical,SURVIVOR IN DANGER: {0} is critical on {1}. Triage now.,,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
 codex.manual.title,FIELD SURVIVAL MANUAL,,src/UI/JournalPanel.cs
-codex.manual.radiation,Radiation & Dosimeter: Dose accumulates from fallout and storms. Above 50 mSv triggers acute radiation sickness with 5 HP/hr health decay. Administer Rad-Away or Iodine.,,src/UI/JournalPanel.cs
-codex.manual.rations,Rations & Water: Clean water is essential. 3 survivors consume ~3.6 units daily. Maintain filtration membranes.,,src/UI/JournalPanel.cs
-codex.manual.power,Power & Grid: Air filtration requires continuous electrical power. Stock batteries and generator fuel.,,src/UI/JournalPanel.cs
-codex.manual.duty,Duty Shifts: Unassigned survivors suffer morale decay and cannot maintain bunker facilities.,,src/UI/JournalPanel.cs
+codex.manual.radiation,Radiation: Dose climbs in fallout and storms. Above 50 mSv, acute sickness takes 5 HP/hr. Give Rad-Away or iodine.,,src/UI/JournalPanel.cs
+codex.manual.rations,Rations: Three people drink ~3.6 clean water a day. Keep filtration membranes working.,,src/UI/JournalPanel.cs
+codex.manual.power,Power: Air filtration needs a live grid. Stock batteries and generator fuel.,,src/UI/JournalPanel.cs
+codex.manual.duty,Duty: Unassigned people lose morale and cannot keep rooms running.,,src/UI/JournalPanel.cs
 discovery.micro_roadside_memorial.title,Roadside Memorial,Straßenrand-Gedenkstätte,Assets/StreamingAssets/Data/micro_locations.json
 discovery.micro_roadside_memorial.description,"Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs.","Geschmolzene Talgreste sitzen in verrosteten Rationsdosen um einen verbogenen Pfahl. Ein Foto wurde weggerissen, nur eine blutbefleckte Ecke blieb unter einem Stein zurück. Das Wachs ist zu blassen, grauen Scheiben erstarrt.",Assets/StreamingAssets/Data/micro_locations.json
 discovery.micro_roadside_memorial.choice.leave_memorial,Leave it untouched.,Unberührt lassen.,Assets/StreamingAssets/Data/micro_locations.json
@@ -230,11 +230,11 @@ research.completed.breakthrough,(Breakthrough: {0}),(Durchbruch: {0}),src/UI/Res
 research.empty.knowledge,No knowledge unlocked yet.,Noch kein Wissen freigeschaltet.,src/UI/ResearchPanel.cs
 research.knowledge.row,{0} — {1},{0} — {1},src/UI/ResearchPanel.cs
 onboarding.title,FIRST-HOUR OBJECTIVE,ZIEL DER ERSTEN STUNDE,src/UI/OnboardingHintPanel.cs
-onboarding.status.offline,ONBOARDING OFFLINE,ONBOARDING OFFLINE,src/UI/OnboardingHintPanel.cs
-onboarding.status.booting,Booting renderer — a real save/load resume is wired in Core.,Renderer startet — echtes Speichern und Fortsetzen ist im Core verdrahtet.,src/UI/OnboardingHintPanel.cs
+onboarding.status.offline,GUIDANCE UNAVAILABLE,HILFE NICHT VERFÜGBAR,src/UI/OnboardingHintPanel.cs
+onboarding.status.booting,Reading the day's objective.,Liest das Tagesziel.,src/UI/OnboardingHintPanel.cs
 onboarding.status.complete,JOURNEY COMPLETE,WEG ABGESCHLOSSEN,src/UI/OnboardingHintPanel.cs
 onboarding.status.current,CURRENT: {0},AKTUELL: {0},src/UI/OnboardingHintPanel.cs
-onboarding.status.day_two,You reached Day 2. Returning the ledger to your command.,Tag 2 erreicht. Das Protokoll kehrt unter dein Kommando zurück.,src/UI/OnboardingHintPanel.cs
+onboarding.status.day_two,Day 2. The shelter is yours to run.,Tag 2. Der Bunker liegt in deiner Hand.,src/UI/OnboardingHintPanel.cs
 onboarding.status.first_hour_complete,The first-hour sequence is complete. The shelter is yours to manage.,Die Sequenz der ersten Stunde ist abgeschlossen. Der Bunker liegt in deiner Hand.,src/UI/OnboardingHintPanel.cs
 onboarding.status.disabled,ONBOARDING DISABLED — veteran mode is active.,ONBOARDING DEAKTIVIERT — Veteranenmodus ist aktiv.,src/Main.PlayerSurfaces.cs
 onboarding.status.inactive,Onboarding is not active for this run.,Onboarding ist für diesen Durchlauf nicht aktiv.,src/UI/OnboardingHintPanel.cs
@@ -250,18 +250,18 @@ onboarding.checklist.title,JOURNEY CHECKLIST,WEG-CHECKLISTE,src/UI/OnboardingHin
 onboarding.hint.empty,HINT: —,HINWEIS: —,src/UI/OnboardingHintPanel.cs
 onboarding.hint.prefix,HINT:,HINWEIS:,src/UI/OnboardingHintPanel.cs
 onboarding.hint.dismissed,HINT: (dismissed),HINWEIS: (ausgeblendet),src/UI/OnboardingHintPanel.cs
-onboarding.tooltip.tracker,The first-hour onboarding tracker. Survives save/load.,Der Onboarding-Tracker für die erste Stunde. Überlebt Speichern und Laden.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.tracker,First-hour checklist. Progress is kept with the save.,Checkliste der ersten Stunde. Der Fortschritt bleibt im Spielstand.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.close,Close the onboarding hint panel. Your progress is preserved.,Onboarding-Hinweis schließen. Dein Fortschritt bleibt erhalten.,src/UI/OnboardingHintPanel.cs
-onboarding.tooltip.assistance,How much the journey guides each beat. Toggle via the assistance button below.,Wie stark der Weg jeden Schritt führt. Unten umschalten.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.assistance,How much guidance each step shows. Toggle with the button below.,Wie viel Hilfe jeder Schritt zeigt. Unten umschalten.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.objective,Exactly what is required to complete this onboarding step.,Was genau zum Abschluss dieses Onboarding-Schritts erforderlich ist.,src/UI/OnboardingHintPanel.cs
-onboarding.tooltip.hint,A contextual nudge that appears when you pause or hit a wall.,Ein kontextbezogener Hinweis, wenn du innehältst oder feststeckst.,src/UI/OnboardingHintPanel.cs
-onboarding.tooltip.show_where,Open the real system for this step so you can act.,Das echte System für diesen Schritt öffnen.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.hint,A short hint if you stall on this step.,Ein kurzer Hinweis, wenn du bei diesem Schritt feststeckst.,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.show_where,Open the panel this step needs.,Das Panel für diesen Schritt öffnen.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.skip,Mark this step known and move on. Real actions are still yours to take when ready.,Diesen Schritt als bekannt markieren und weitergehen.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.dismiss,Hide the contextual hint for this step until you advance.,Diesen Hinweis bis zum nächsten Schritt ausblenden.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.assistance_cycle,"Cycle between MINIMAL (objective only), STANDARD (default), GUIDED (extra help).","Zwischen MINIMAL (nur Ziel), STANDARD (Standard) und GEFÜHRT (mehr Hilfe) wechseln.",src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.replay,Restart the onboarding hints from Day 1 (does not undo gameplay).,Onboarding-Hinweise ab Tag 1 neu starten (ändert das Spiel nicht).,src/UI/OnboardingHintPanel.cs
 onboarding.protocol.title,Resolve the Day 1 protocol,Das Protokoll von Tag 1 abarbeiten,src/UI/OnboardingHintPanel.cs
-onboarding.protocol.objective,"Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.","Die ersten Anweisungen abarbeiten: Rationen, Wartung, dann Funk. Jede Wahl kostet.",src/UI/OnboardingHintPanel.cs
+onboarding.protocol.objective,"Handle rationing, maintenance, then radio. Each choice costs something.","Rationen, Wartung und Funk abarbeiten. Jede Wahl kostet.",src/UI/OnboardingHintPanel.cs
 onboarding.inspect.title,Inspect three bunker rooms,Drei Bunkerräume prüfen,src/UI/OnboardingHintPanel.cs
 onboarding.inspect.objective,Open the shelter and inspect rooms until three have confirming notes.,Unterkunft öffnen und Räume prüfen, bis drei bestätigende Notizen vorliegen.,src/UI/OnboardingHintPanel.cs
 onboarding.rationing.title,Open the stores and read them,Lager öffnen und prüfen,src/UI/OnboardingHintPanel.cs
@@ -271,31 +271,31 @@ onboarding.assignment.objective,Open the duty roster and assign one survivor to 
 onboarding.weather.title,Read the weather,Wetter lesen,src/UI/OnboardingHintPanel.cs
 onboarding.weather.objective,Open the weather forecast or panel to learn what tomorrow will bring.,Wettervorhersage öffnen und sehen, was morgen kommt.,src/UI/OnboardingHintPanel.cs
 onboarding.inventory_use.title,Use an item from the stores,Einen Gegenstand aus dem Lager verwenden,src/UI/OnboardingHintPanel.cs
-onboarding.inventory_use.objective,Equip a protective item or consume something real from the ledger. Both are real commands.,Schutzausrüstung anlegen oder etwas aus dem Lager verbrauchen. Beides sind echte Befehle.,src/UI/OnboardingHintPanel.cs
+onboarding.inventory_use.objective,Equip protection, or use something from stores.,Schutzausrüstung anlegen oder etwas aus dem Lager verbrauchen.,src/UI/OnboardingHintPanel.cs
 onboarding.day_advance.title,End Day 1,Tag 1 beenden,src/UI/OnboardingHintPanel.cs
-onboarding.day_advance.objective,Press the Advance Day confirm. The first night ticks; the morning briefing returns.,Tag bestätigen. Die erste Nacht vergeht; die Morgenbesprechung kehrt zurück.,src/UI/OnboardingHintPanel.cs
+onboarding.day_advance.objective,Confirm Advance Day. Morning briefing comes with Day 2.,Tag bestätigen. Die Morgenbesprechung kommt mit Tag 2.,src/UI/OnboardingHintPanel.cs
 onboarding.water.title,Treat the water,Wasser aufbereiten,src/UI/OnboardingHintPanel.cs
-onboarding.water.objective,Start a real water-treatment batch. The shelter cannot drink intention.,Einen echten Wasseraufbereitungszyklus starten. Der Bunker kann keine Absicht trinken.,src/UI/OnboardingHintPanel.cs
+onboarding.water.objective,Start a water-treatment batch. Untreated water stays unsafe.,Einen Wasseraufbereitungszyklus starten. Unbehandeltes Wasser bleibt unsicher.,src/UI/OnboardingHintPanel.cs
 onboarding.power.title,Restore power,Strom wiederherstellen,src/UI/OnboardingHintPanel.cs
-onboarding.power.objective,Operate a shelter breaker and see the grid state change.,Einen Bunkerschalter bedienen und die Änderung im Netz sehen.,src/UI/OnboardingHintPanel.cs
+onboarding.power.objective,Throw a shelter breaker and watch the grid change.,Einen Bunkerschalter umlegen und die Änderung im Netz sehen.,src/UI/OnboardingHintPanel.cs
 onboarding.food.title,Use a food ration,Nahrungsration verwenden,src/UI/OnboardingHintPanel.cs
-onboarding.food.objective,Consume a real food ration from the stores.,Eine echte Nahrungsration aus den Vorräten verbrauchen.,src/UI/OnboardingHintPanel.cs
+onboarding.food.objective,Eat a food ration from stores.,Eine Nahrungsration aus den Vorräten verbrauchen.,src/UI/OnboardingHintPanel.cs
 onboarding.research.title,Start research,Forschung starten,src/UI/OnboardingHintPanel.cs
-onboarding.research.objective,Start one available research node. Knowledge takes time.,Einen verfügbaren Forschungsknoten starten. Wissen braucht Zeit.,src/UI/OnboardingHintPanel.cs
+onboarding.research.objective,Start one available research node. It takes days.,Einen verfügbaren Forschungsknoten starten. Das dauert Tage.,src/UI/OnboardingHintPanel.cs
 onboarding.expedition.title,Dispatch an expedition,Expedition entsenden,src/UI/OnboardingHintPanel.cs
-onboarding.expedition.objective,Dispatch a real expedition. The surface will answer for it.,Eine echte Expedition entsenden. Die Oberfläche wird antworten.,src/UI/OnboardingHintPanel.cs
+onboarding.expedition.objective,Send an expedition. They leave the hatch; the cost comes back with them.,Eine Expedition entsenden. Sie verlassen die Luke; die Kosten kommen mit ihnen zurück.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.protocol,"Pick ration, maintenance, and radio. The bunker stores adjust around your choices.","Rationen, Wartung und Funk wählen. Die Bunkervorräte richten sich danach.",src/UI/OnboardingHintPanel.cs
-onboarding.hint.inspect,Inspect any three rooms — every confirming note is a fallback if the next storm cuts light.,Drei Räume prüfen — jede Notiz hilft, wenn der nächste Sturm das Licht nimmt.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.inspect,Inspect any three rooms — every confirming note is a fallback if the next storm cuts light.,"Drei Räume prüfen — jede Notiz hilft, wenn der nächste Sturm das Licht nimmt.",src/UI/OnboardingHintPanel.cs
 onboarding.hint.rationing,Open the stores. Read the food and water you are rationing against.,Lager öffnen. Die rationierten Vorräte prüfen.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.assignment,Pull one survivor onto a duty from the Duty Roster. Their shifts move the bunker forward.,Einen Überlebenden im Dienstplan einteilen. Seine Schicht hält den Bunker in Bewegung.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.weather,Read the forecast before you end the day — fallout storms change outdoor rad.,Vor Tagesende die Vorhersage lesen — Falloutstürme verändern die Außenstrahlung.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.inventory,Equip something real. The geiger or gas mask only protects the hands that wear them.,Etwas Echtes ausrüsten. Geigerzähler und Maske schützen nur, wer sie trägt.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.inventory,Equip something real. The geiger or gas mask only protects the hands that wear them.,"Etwas Echtes ausrüsten. Geigerzähler und Maske schützen nur, wer sie trägt.",src/UI/OnboardingHintPanel.cs
 onboarding.hint.day_advance,Confirm the advance. The morning briefing returns once Day 2 lands.,Vormarsch bestätigen. Die Morgenbesprechung kehrt an Tag 2 zurück.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.water,Start a treatment batch from the water plant. A real batch changes the shelter ledger.,Einen Aufbereitungszyklus in der Wasseranlage starten. Ein echter Zyklus ändert das Bunkerprotokoll.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.power,Open the grid and operate one breaker. Watch the room state, not a tutorial promise.,Netz öffnen und einen Schalter bedienen. Den Raumstatus beobachten, nicht ein Tutorialversprechen.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.food,Consume one food ration. The stores must actually lose it.,Eine Nahrungsration verbrauchen. Die Vorräte müssen sie wirklich verlieren.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.research,Start an available research node. The queue is the proof.,Einen verfügbaren Forschungsknoten starten. Die Warteschlange ist der Beweis.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.expedition,Dispatch a sortie with the real expedition command. The surface decides the cost.,Eine Sortie mit dem echten Expeditionsbefehl entsenden. Die Oberfläche bestimmt den Preis.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.water,Start a treatment batch at the water plant. The stores only change if a batch actually runs.,"Einen Aufbereitungszyklus in der Wasseranlage starten. Die Vorräte ändern sich nur, wenn ein Zyklus wirklich läuft.",src/UI/OnboardingHintPanel.cs
+onboarding.hint.power,Open the grid and throw one breaker. Watch the rooms change.,Netz öffnen und einen Schalter umlegen. Die Räume beobachten.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.food,Eat one ration from stores. The count should drop.,Eine Nahrungsration aus den Vorräten essen. Der Bestand sollte sinken.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.research,Start an available research node. It appears in the queue.,Einen verfügbaren Forschungsknoten starten. Er erscheint in der Warteschlange.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.expedition,Send a team with the expedition command. They leave the shelter.,Ein Team mit dem Expeditionsbefehl entsenden. Sie verlassen den Bunker.,src/UI/OnboardingHintPanel.cs
 wildlife.trap.trap_snare.name,Wire Snare,Drahtschlinge,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
 wildlife.trap.trap_snare.description,"A loop of cord or wire set across a game trail, tightened by a springy branch. Cheap enough to deploy more than one, unreliable enough that materials still matter. The wire remembers the shape of the animal it was meant to hold.","Eine Schnur- oder Drahtschlinge über einem Wildwechsel. Billig genug für mehrere Versuche, unzuverlässig genug, dass Material zählt.",Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
 wildlife.trap.trap_deadfall.name,Deadfall Trap,Steinfallfalle,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
@@ -352,9 +352,9 @@ wildlife.bait.bait_pheromone.name,Mutated-Beast Pheromone Lure,Pheromonlockstoff
 wildlife.bait.bait_fat_cake.name,Rendered Fat Cake,Schmalzkuchen,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
 wildlife.bait.bait_berry_mash.name,Fermented Berry Mash,Beerenmaische,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
 wildlife.bait.bait_salt_lick.name,Mineral Salt Lick,Mineralsalzleckstein,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
-wildlife.trapping.first_snare.title,Setting Your First Snare,Die erste Schlinge setzen,src/UI/TutorialPanel.cs
-wildlife.trapping.first_snare.body,"Acquire or craft a trap, deploy it at a valid site, and bait it when supplies allow. Traps work over time: return to check them, then butcher a catch. Wild prey can carry disease or contamination.","Beschaffe oder fertige eine Falle und setze sie an einem gültigen Ort. Köder kann helfen. Prüfe sie später und zerlege den Fang; Wildtiere können Krankheiten oder Kontamination tragen.",src/UI/TutorialPanel.cs
+wildlife.trapping.first_snare.title,The First Snare,Die erste Schlinge,src/UI/TutorialPanel.cs
+wildlife.trapping.first_snare.body,"Make or find a trap, set it on a valid site, and bait it if you can spare the food. Check it later, then butcher a catch. Wild prey can carry sickness or contamination.","Finde oder fertige eine Falle, setze sie an einem gültigen Ort, und ködere sie wenn möglich. Prüfe sie später und zerlege den Fang; Wildtiere können Krankheiten oder Kontamination tragen.",src/UI/TutorialPanel.cs
 wildlife.trapping.wear_out.title,Traps Wear Out,Fallen verschleißen,src/UI/TutorialPanel.cs
-wildlife.trapping.wear_out.body,"Tracked traps lose durability as they work. A broken trap stops catching, but remains findable on the map. Repair it with supplies or replace it.","Verfolgte Fallen verlieren bei der Arbeit Haltbarkeit. Eine kaputte Falle fängt nichts mehr, bleibt aber auf der Karte. Repariere oder ersetze sie.",src/UI/TutorialPanel.cs
+wildlife.trapping.wear_out.body,"Traps wear as they work. A broken trap stops catching but stays on the map. Repair it or replace it.","Fallen verschleißen bei der Arbeit. Eine kaputte Falle fängt nichts mehr, bleibt aber auf der Karte. Repariere oder ersetze sie.",src/UI/TutorialPanel.cs
 wildlife.trapping.bycatch.title,Unexpected Catches,Unerwartete Fänge,src/UI/TutorialPanel.cs
 wildlife.trapping.bycatch.body,"A trap can catch something unintended. Inspect catches before processing: bycatch may help, hurt, or carry disease or contamination.","Eine Falle kann etwas Unerwartetes fangen. Prüfe den Fang vor der Verarbeitung: Beifang kann helfen, schaden oder Krankheit und Kontamination tragen.",src/UI/TutorialPanel.cs

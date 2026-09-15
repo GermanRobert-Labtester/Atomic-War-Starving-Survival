@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "description": "Plan 122 Phase 2 — subterranean solid-oxide fuel cell power authority. Gameplay abstractions only: fuel quality, thermal band, degradation, waste heat, acoustic signature class. No real electrochemistry. Multiplier fields use bp scale: 10000 bp = 1.0x baseline.",
+  "acoustic_signature_classes": [
+    "very_low",
+    "low",
+    "medium",
+    "high"
+  ],
+  "fuel_quality_classes": [
+    "dirty",
+    "treated",
+    "clean"
+  ],
+  "stack_profiles": [
+    {
+      "id": "sofc_stack_mk1",
+      "display_name": "SOFC Stack Mk I",
+      "description": "First-generation planar stack salvaged from pre-war research cell designs. Slow to reach temperature; efficient and quiet once online.",
+      "fuel_profile_id": "fuel_clean_biomethane",
+      "grade_profile_id": "grade_standard_ceramic",
+      "waste_heat_profile_id": "waste_heat_plenum_mk1",
+      "maintenance_profile_id": "maint_sofc_standard",
+      "rated_power_kw": 18.0,
+      "fuel_efficiency": 0.62,
+      "waste_heat_units_per_tick": 8.0,
+      "startup_ticks": 4,
+      "cooldown_ticks": 3,
+      "thermal_band": {
+        "minimum": 0.65,
+        "optimal_min": 0.78,
+        "optimal_max": 0.92,
+        "maximum": 1.0
+      },
+      "degradation_per_operating_tick_bp": 15,
+      "acoustic_signature_class": "very_low",
+      "install_item_ids": [
+        "item_ebpvd_ceramic_target_ingot",
+        "item_hermetic_hatch_silicone_gasket",
+        "item_metallurgy_steel_billet"
+      ],
+      "repair_item_ids": [
+        "item_bearing_grease"
+      ],
+      "tags": [
+        "baseload",
+        "quiet"
+      ]
+    },
+    {
+      "id": "sofc_stack_mk2",
+      "display_name": "SOFC Stack Mk II",
+      "description": "Reinforced interconnect variant. Higher rated output and cleaner waste-heat plenum, at the cost of a longer preheat cycle.",
+      "fuel_profile_id": "fuel_treated_biomethane",
+      "grade_profile_id": "grade_reinforced_interconnect",
+      "waste_heat_profile_id": "waste_heat_plenum_mk2",
+      "maintenance_profile_id": "maint_sofc_intensive",
+      "rated_power_kw": 30.0,
+      "fuel_efficiency": 0.66,
+      "waste_heat_units_per_tick": 11.0,
+      "startup_ticks": 5,
+      "cooldown_ticks": 4,
+      "thermal_band": {
+        "minimum": 0.68,
+        "optimal_min": 0.8,
+        "optimal_max": 0.94,
+        "maximum": 1.0
+      },
+      "degradation_per_operating_tick_bp": 12,
+      "acoustic_signature_class": "very_low",
+      "install_item_ids": [
+        "item_ebpvd_ceramic_target_ingot",
+        "item_hermetic_hatch_silicone_gasket",
+        "item_metallurgy_steel_billet",
+        "item_magnetic_bearing_coil"
+      ],
+      "repair_item_ids": [
+        "item_bearing_grease",
+        "item_manual_generator_maintenance"
+      ],
+      "tags": [
+        "baseload",
+        "quiet",
+        "reinforced"
+      ]
+    }
+  ],
+  "fuel_profiles": [
+    {
+      "id": "fuel_dirty_biomass_gas",
+      "display_name": "Raw Digester Gas",
+      "description": "Unscrubbed biogas straight off an unfiltered digester line. Runs, but the stack pays for it.",
+      "quality_class": "dirty",
+      "output_modifier_bp": 8000,
+      "degradation_multiplier_bp": 22000,
+      "fault_risk_bp": 350,
+      "feedstock_item_ids": [
+        "item_biofuel_low_grade"
+      ]
+    },
+    {
+      "id": "fuel_treated_biomethane",
+      "display_name": "Treated Biomethane",
+      "description": "Scrubbed through the shelter filter train. Acceptable duty fuel.",
+      "quality_class": "treated",
+      "output_modifier_bp": 9500,
+      "degradation_multiplier_bp": 12000,
+      "fault_risk_bp": 100,
+      "feedstock_item_ids": [
+        "item_biofuel_generator_grade"
+      ]
+    },
+    {
+      "id": "fuel_clean_biomethane",
+      "display_name": "Clean Biomethane",
+      "description": "Polished fuel gas. Baseline for stack longevity.",
+      "quality_class": "clean",
+      "output_modifier_bp": 10000,
+      "degradation_multiplier_bp": 10000,
+      "fault_risk_bp": 20,
+      "feedstock_item_ids": [
+        "item_biofuel_high_grade"
+      ]
+    }
+  ],
+  "grade_profiles": [
+    {
+      "id": "grade_standard_ceramic",
+      "display_name": "Standard Planar Cells",
+      "description": "Workshop-grade ceramic cells. No bonuses.",
+      "stack_health_bonus_bp": 0,
+      "seal_integrity_bonus_bp": 0
+    },
+    {
+      "id": "grade_reinforced_interconnect",
+      "display_name": "Reinforced Interconnects",
+      "description": "Heavier interconnect plates and better seals hold the stack band longer.",
+      "stack_health_bonus_bp": 400,
+      "seal_integrity_bonus_bp": 250
+    }
+  ],
+  "waste_heat_profiles": [
+    {
+      "id": "waste_heat_plenum_mk1",
+      "display_name": "Mk I Heat Plenum",
+      "heat_kw_per_unit": 1.5,
+      "max_allocatable_kw": 12.0
+    },
+    {
+      "id": "waste_heat_plenum_mk2",
+      "display_name": "Mk II Heat Plenum",
+      "heat_kw_per_unit": 1.8,
+      "max_allocatable_kw": 20.0
+    }
+  ],
+  "maintenance_profiles": [
+    {
+      "id": "maint_sofc_standard",
+      "display_name": "Standard Stack Upkeep",
+      "inspection_interval_days": 14,
+      "repair_skill_minimum": 45
+    },
+    {
+      "id": "maint_sofc_intensive",
+      "display_name": "Intensive Upkeep",
+      "description": "Shorter inspection cadence; suited to dirty-fuel operation.",
+      "inspection_interval_days": 7,
+      "repair_skill_minimum": 30
+    }
+  ]
+}

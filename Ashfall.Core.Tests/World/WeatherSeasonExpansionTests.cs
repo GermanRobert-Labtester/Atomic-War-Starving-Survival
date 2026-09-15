@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -121,53 +122,58 @@ namespace Ashfall.Core.Tests.World
         // Points 17–38: Active Window Selection Semantics & Day Boundaries
         // ────────────────────────────────────────────────────────────────────────
 
-        [Theory]
-        [InlineData(-1, "default")]     // Point 17: negative day returns default/fallback
-        [InlineData(-50, "default")]
-        [InlineData(0, "window_first_thaw")]    // Point 18: Day 0 -> First Thaw
-        [InlineData(15, "window_first_thaw")]
-        [InlineData(29, "window_first_thaw")]   // Point 19: Day 29 -> First Thaw
-        [InlineData(30, "window_ash_settling")] // Point 20: Day 30 -> Ash Settling
-        [InlineData(45, "window_ash_settling")]
-        [InlineData(59, "window_ash_settling")] // Point 21: Day 59 -> Ash Settling
-        [InlineData(60, "window_deep_freeze")]  // Point 22: Day 60 -> Deep Freeze
-        [InlineData(75, "window_deep_freeze")]
-        [InlineData(89, "window_deep_freeze")]  // Point 23: Day 89 -> Deep Freeze
-        [InlineData(90, "window_spring_storms")] // Point 24: Day 90 -> Spring Storms
-        [InlineData(105, "window_spring_storms")]
-        [InlineData(119, "window_spring_storms")] // Point 25: Day 119 -> Spring Storms
-        [InlineData(120, "window_dry_ash")]     // Point 26: Day 120 -> Dry Ash
-        [InlineData(135, "window_dry_ash")]
-        [InlineData(149, "window_dry_ash")]     // Point 27: Day 149 -> Dry Ash
-        [InlineData(150, "window_first_fallout")] // Point 28: Day 150 -> First Fallout
-        [InlineData(165, "window_first_fallout")]
-        [InlineData(179, "window_first_fallout")] // Point 29: Day 179 -> First Fallout
-        [InlineData(180, "window_false_spring")] // Point 30: Day 180 -> False Spring
-        [InlineData(190, "window_false_spring")]
-        [InlineData(199, "window_false_spring")] // Point 31: Day 199 -> False Spring
-        [InlineData(200, "window_deep_ash")]    // Point 32: Day 200 -> Deep Ash
-        [InlineData(220, "window_deep_ash")]
-        [InlineData(239, "window_deep_ash")]    // Point 33: Day 239 -> Deep Ash
-        [InlineData(240, "window_long_winter")] // Point 34: Day 240 -> Long Winter
-        [InlineData(260, "window_long_winter")]
-        [InlineData(279, "window_long_winter")] // Point 35: Day 279 -> Long Winter
-        [InlineData(280, "window_black_rain_season")] // Point 36: Day 280 -> Black Rain Season
-        [InlineData(365, "window_black_rain_season")] // Point 37: Day 365 -> Black Rain Season
-        [InlineData(500, "window_black_rain_season")] // Point 38: Large future day -> Black Rain Season
-        [InlineData(1000, "window_black_rain_season")]
-        public void Points_17_to_38_ActiveWindow_SelectionSemantics_AndBoundaryDays(int day, string expectedId)
+        [Fact]
+        public void Points_17_to_38_ActiveWindow_SelectionSemantics_AndBoundaryDays()
         {
+            var cases = new (int Day, string ExpectedId)[]
+            {
+                (-1, "default"),
+                (-50, "default"),
+                (0, "window_first_thaw"),
+                (15, "window_first_thaw"),
+                (29, "window_first_thaw"),
+                (30, "window_ash_settling"),
+                (45, "window_ash_settling"),
+                (59, "window_ash_settling"),
+                (60, "window_deep_freeze"),
+                (75, "window_deep_freeze"),
+                (89, "window_deep_freeze"),
+                (90, "window_spring_storms"),
+                (105, "window_spring_storms"),
+                (119, "window_spring_storms"),
+                (120, "window_dry_ash"),
+                (135, "window_dry_ash"),
+                (149, "window_dry_ash"),
+                (150, "window_first_fallout"),
+                (165, "window_first_fallout"),
+                (179, "window_first_fallout"),
+                (180, "window_false_spring"),
+                (190, "window_false_spring"),
+                (199, "window_false_spring"),
+                (200, "window_deep_ash"),
+                (220, "window_deep_ash"),
+                (239, "window_deep_ash"),
+                (240, "window_long_winter"),
+                (260, "window_long_winter"),
+                (279, "window_long_winter"),
+                (280, "window_black_rain_season"),
+                (365, "window_black_rain_season"),
+                (500, "window_black_rain_season"),
+                (1000, "window_black_rain_season")
+            };
             var weather = CreateBoundWeather();
-            var window = weather.GetSeasonForDay(day);
+            var failures = new List<string>();
 
-            if (day < 0)
+            foreach (var testCase in cases)
             {
-                Assert.Equal("default", window.id);
+                var actual = weather.GetSeasonForDay(testCase.Day).id;
+                if (actual != testCase.ExpectedId)
+                {
+                    failures.Add($"day {testCase.Day}: expected {testCase.ExpectedId}, got {actual}");
+                }
             }
-            else
-            {
-                Assert.Equal(expectedId, window.id);
-            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         // ────────────────────────────────────────────────────────────────────────

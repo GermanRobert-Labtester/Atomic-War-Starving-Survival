@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -593,11 +594,33 @@ namespace Ashfall.Core.Narrative
         }
     }
 
+    /// <summary>
+    /// Exact source allowlist for Plan 150. Personal and unsent letters are
+    /// journal-only artifacts; this contract never routes into inventory,
+    /// faction, or quest authority.
+    /// </summary>
+    public static class PersonalLetterRuntimeContract
+    {
+        public const string LettersExpansionCatalog = "narrative/letters_expansion.json";
+        public const string UnsentLettersBatch2Catalog = "narrative/unsent_letters_batch_2.json";
+
+        public static readonly string[] SourceCatalogs =
+        {
+            LettersExpansionCatalog, UnsentLettersBatch2Catalog
+        };
+
+        public static bool IsSourceCatalog(string sourceCatalog)
+        {
+            string normalized = (sourceCatalog ?? string.Empty).Replace('\\', '/');
+            return normalized.EndsWith("letters_expansion.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.EndsWith("unsent_letters_batch_2.json", StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
     public sealed class PersonalLetterSourceAdapter : INarrativeSourceAdapter
     {
         public bool CanAdapt(string sourceCatalog) =>
-            sourceCatalog.EndsWith("letters_expansion.json", StringComparison.OrdinalIgnoreCase)
-            || sourceCatalog.EndsWith("unsent_letters_batch_2.json", StringComparison.OrdinalIgnoreCase);
+            PersonalLetterRuntimeContract.IsSourceCatalog(sourceCatalog);
 
         public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
         {
@@ -629,13 +652,43 @@ namespace Ashfall.Core.Narrative
         }
     }
 
+    /// <summary>
+    /// Exact source allowlist for Plan 151. Abyssal science logs are archival
+    /// observations only; historical measurements never mutate live systems.
+    /// </summary>
+    public static class AbyssalAnomaliesRuntimeContract
+    {
+        public const string HydrophoneCatalog = "narrative/hydrophone_acoustic_logs.json";
+        public const string GeothermalCatalog = "narrative/geothermal_borehole_logs.json";
+        public const string CryopodCatalog = "narrative/cryopod_failure_logs.json";
+        public const string SaltMineCatalog = "narrative/salt_mine_inscriptions.json";
+
+        public static readonly string[] SourceCatalogs =
+        {
+            HydrophoneCatalog, GeothermalCatalog, CryopodCatalog, SaltMineCatalog
+        };
+
+        public static bool IsSourceCatalog(string sourceCatalog)
+        {
+            string normalized = (sourceCatalog ?? string.Empty).Replace('\\', '/');
+            return normalized.EndsWith("hydrophone_acoustic_logs.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.EndsWith("geothermal_borehole_logs.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.EndsWith("cryopod_failure_logs.json", StringComparison.OrdinalIgnoreCase)
+                || normalized.EndsWith("salt_mine_inscriptions.json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Activated records only — deferred Phase-2 rows stay locked even when
+        /// their producer is inspected.
+        /// </summary>
+        public static bool IsActivatedSourceRecord(string sourceRecordId)
+            => AbyssalAnomaliesProjection.IsActivated(sourceRecordId);
+    }
+
     public sealed class AbyssalAnomaliesSourceAdapter : INarrativeSourceAdapter
     {
         public bool CanAdapt(string sourceCatalog) =>
-            sourceCatalog.EndsWith("hydrophone_acoustic_logs.json", StringComparison.OrdinalIgnoreCase)
-            || sourceCatalog.EndsWith("geothermal_borehole_logs.json", StringComparison.OrdinalIgnoreCase)
-            || sourceCatalog.EndsWith("cryopod_failure_logs.json", StringComparison.OrdinalIgnoreCase)
-            || sourceCatalog.EndsWith("salt_mine_inscriptions.json", StringComparison.OrdinalIgnoreCase);
+            AbyssalAnomaliesRuntimeContract.IsSourceCatalog(sourceCatalog);
 
         public NarrativeDiscoveredRecord Adapt(NarrativeDiscoveryManifestEntry entry, JsonElement sourceRecord)
         {

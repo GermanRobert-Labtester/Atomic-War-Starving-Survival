@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -144,29 +145,47 @@ namespace Ashfall.Core.Tests
             }
         }
 
-        [Theory]
-        [InlineData(0, "season_first_ashfall")]
-        [InlineData(7, "season_first_ashfall")]
-        [InlineData(8, "season_second_winter")]
-        [InlineData(12, "season_second_winter")]
-        [InlineData(13, "season_settling")]
-        [InlineData(30, "season_settling")]
-        [InlineData(31, "season_spring_thaw")]
-        [InlineData(60, "season_spring_thaw")]
-        [InlineData(61, "season_faction_pressure")]
-        [InlineData(120, "season_faction_pressure")]
-        [InlineData(121, "season_first_siege")]
-        [InlineData(180, "season_first_siege")]
-        [InlineData(181, "season_consolidation")]
-        [InlineData(240, "season_consolidation")]
-        [InlineData(241, "season_long_winter")]
-        [InlineData(365, "season_long_winter")]
-        public void Selection_ExactTransitionBoundaries(int day, string expectedSeasonId)
+        [Fact]
+        public void Selection_ExactTransitionBoundaries()
         {
+            var cases = new (int Day, string ExpectedSeasonId)[]
+            {
+                (0, "season_first_ashfall"),
+                (7, "season_first_ashfall"),
+                (8, "season_second_winter"),
+                (12, "season_second_winter"),
+                (13, "season_settling"),
+                (30, "season_settling"),
+                (31, "season_spring_thaw"),
+                (60, "season_spring_thaw"),
+                (61, "season_faction_pressure"),
+                (120, "season_faction_pressure"),
+                (121, "season_first_siege"),
+                (180, "season_first_siege"),
+                (181, "season_consolidation"),
+                (240, "season_consolidation"),
+                (241, "season_long_winter"),
+                (365, "season_long_winter")
+            };
             var catalog = LoadCatalog();
-            var season = catalog.GetSeasonForDay(day);
-            Assert.NotNull(season);
-            Assert.Equal(expectedSeasonId, season.id);
+            var failures = new List<string>();
+
+            foreach (var testCase in cases)
+            {
+                var season = catalog.GetSeasonForDay(testCase.Day);
+                if (season == null)
+                {
+                    failures.Add($"day {testCase.Day}: expected {testCase.ExpectedSeasonId}, got null");
+                    continue;
+                }
+
+                if (season.id != testCase.ExpectedSeasonId)
+                {
+                    failures.Add($"day {testCase.Day}: expected {testCase.ExpectedSeasonId}, got {season.id}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

@@ -781,20 +781,30 @@ namespace AtomicWar.GodotApp.UI
             if (_system == null || string.IsNullOrEmpty(_selectedRecordId)) return;
 
             string title = GetRecordShortTitle(_selectedRecordId);
-            string journalKey = $"black_projects_archive_manual_{_selectedRecordId}";
-            string text = $"[ARCHIVAL INTEL] Filed reference for {title}. Preserved in Journal Codex for historical analysis.";
 
-            if (_journal != null)
+            // De-theater: only file a journal reference for records the archive
+            // has already recovered via a producer site. Never invent recovery.
+            if (!_system.IsDiscovered(_selectedRecordId))
             {
-                var added = _journal.TryAddRawEntry(journalKey, text, null!, 0);
-                _feedbackLabel.Text = added != null
-                    ? $"Dossier for {title} successfully logged to Journal Codex."
-                    : $"Dossier for {title} is already recorded in Journal Codex.";
+                string? producer = _system.GetProducer(_selectedRecordId);
+                _feedbackLabel.Text = string.IsNullOrEmpty(producer)
+                    ? $"No producer site is activated for {title}. Record stays deferred."
+                    : $"Recover {title} by discovering its producer site first.";
+                return;
             }
-            else
+
+            if (_journal == null)
             {
                 _feedbackLabel.Text = $"Dossier reference noted for {title}. (Journal offline).";
+                return;
             }
+
+            string journalKey = $"black_projects_archive_manual_{_selectedRecordId}";
+            string text = $"[ARCHIVAL INTEL] Filed reference for {title}. Preserved in Journal Codex for historical analysis.";
+            var added = _journal.TryAddRawEntry(journalKey, text, null!, 0);
+            _feedbackLabel.Text = added != null
+                ? $"Dossier for {title} successfully logged to Journal Codex."
+                : $"Dossier for {title} is already recorded in Journal Codex.";
         }
 
         // ── Event Handlers ──────────────────────────────────────────────────

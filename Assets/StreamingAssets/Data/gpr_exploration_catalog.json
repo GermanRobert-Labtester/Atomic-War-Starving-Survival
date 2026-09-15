@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "equipment": [
+    { "gpr_id": "gpr_cart_mk1", "battery_item_id": "battery_pack", "starting_condition": 1.0, "starting_calibration": 1.0 }
+  ],
+  "modes": [
+    { "mode_id": "gpr_deep_scan", "penetration_rating": 0.85, "resolution_rating": 0.35, "power_cost": 2, "scan_time_ticks": 3 },
+    { "mode_id": "gpr_detail_scan", "penetration_rating": 0.35, "resolution_rating": 0.90, "power_cost": 3, "scan_time_ticks": 4 }
+  ],
+  "terrains": [
+    { "terrain_id": "dry_soil", "attenuation": 0.10, "moisture": 0.10 },
+    { "terrain_id": "wet_mud", "attenuation": 0.55, "moisture": 0.85 },
+    { "terrain_id": "saline_ground", "attenuation": 0.70, "moisture": 0.65 },
+    { "terrain_id": "rock_debris", "attenuation": 0.40, "moisture": 0.20 }
+  ],
+  "anomalies": [
+    { "anomaly_id": "gpr_buried_structure", "anomaly_class": "buried_structure", "depth_band": 30.0, "signal_strength": 0.80 },
+    { "anomaly_id": "gpr_void", "anomaly_class": "void", "depth_band": 18.0, "signal_strength": 0.65 },
+    { "anomaly_id": "gpr_debris_field", "anomaly_class": "debris_field", "depth_band": 8.0, "signal_strength": 0.45 }
+  ]
+}

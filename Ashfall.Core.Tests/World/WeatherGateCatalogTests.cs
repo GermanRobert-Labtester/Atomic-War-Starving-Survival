@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ashfall.Core.World;
 using Xunit;
@@ -26,16 +28,25 @@ namespace Ashfall.Core.Tests
             Assert.Equal(1, catalog.Count);
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("   ")]
-        public void Register_EmptyId_Throws(string? id)
+        [Fact]
+        public void Register_EmptyIdTable_Throws()
         {
-            var catalog = new WeatherGateCatalog();
-            var gate = ValidGate("gate_a");
-            gate.Id = id!;
-            Assert.Throws<WeatherGateCatalogException>(() => catalog.Register(gate));
+            var failures = new List<string>();
+
+            foreach (string? id in new[] { null, "", "   " })
+            {
+                var catalog = new WeatherGateCatalog();
+                var gate = ValidGate("gate_a");
+                gate.Id = id!;
+                var exception = Record.Exception(() => catalog.Register(gate));
+                if (exception is not WeatherGateCatalogException)
+                {
+                    failures.Add(
+                        $"id '{id ?? "<null>"}' expected {nameof(WeatherGateCatalogException)}, got {exception?.GetType().Name ?? "no exception"}");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
@@ -55,24 +66,35 @@ namespace Ashfall.Core.Tests
             Assert.Throws<WeatherGateCatalogException>(() => catalog.Register(gate));
         }
 
-        [Theory]
-        [InlineData("Blizzard")]
-        [InlineData("BlackRain")]
-        [InlineData("FalloutStorm")]
-        [InlineData("BioFog")]
-        [InlineData("EMPStorm")]
-        [InlineData("IceStorm")]
-        public void Register_KnownWeatherKind_Succeeds(string kind)
+        [Fact]
+        public void Register_KnownWeatherKindTable_Succeeds()
         {
-            var catalog = new WeatherGateCatalog();
-            var gate = new WeatherGate
+            var failures = new List<string>();
+
+            foreach (string kind in new[]
             {
-                Id = "gate_kind_" + kind,
-                TargetId = "route_01",
-                BlockedWeather = { kind }
-            };
-            catalog.Register(gate);
-            Assert.Equal(1, catalog.Count);
+                "Blizzard", "BlackRain", "FalloutStorm", "BioFog", "EMPStorm", "IceStorm"
+            })
+            {
+                var catalog = new WeatherGateCatalog();
+                var gate = new WeatherGate
+                {
+                    Id = "gate_kind_" + kind,
+                    TargetId = "route_01",
+                    BlockedWeather = { kind }
+                };
+                var exception = Record.Exception(() => catalog.Register(gate));
+                if (exception != null)
+                {
+                    failures.Add($"weather kind '{kind}' unexpectedly threw: {exception.Message}");
+                }
+                else if (catalog.Count != 1)
+                {
+                    failures.Add($"weather kind '{kind}' registered {catalog.Count} gates instead of 1");
+                }
+            }
+
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]

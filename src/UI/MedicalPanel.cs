@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Linq;
 using Godot;
@@ -366,6 +367,7 @@ namespace AtomicWar.GodotApp.UI
 
             _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(_medicalHost.VigilStatusLine()));
 
+            RenderScheduledProcedures();
             RenderDiseaseSection();
 
             // ── Medical supplies on hand ───────────────────────────────
@@ -398,6 +400,81 @@ namespace AtomicWar.GodotApp.UI
             if (!string.IsNullOrWhiteSpace(_medicalHost.LastEvent))
                 _supplyList.AddChild(
                     AshfallUiHelpers.MakeMetadata($"Last medical event: {_medicalHost.LastEvent}"));
+        }
+
+        /// <summary>
+        /// Projects the pipeline's persisted procedure ledger. The panel never
+        /// advances or validates a procedure; it only offers the existing
+        /// typed cancellation command and displays reservation/readiness data
+        /// already owned by Core.
+        /// </summary>
+        private void RenderScheduledProcedures()
+        {
+            var host = _medicalHost;
+            var pipeline = host?.Pipeline;
+            if (pipeline == null) return;
+
+            _treatmentList.AddChild(AshfallUiHelpers.MakeSeparator());
+            _treatmentList.AddChild(AshfallUiHelpers.MakeSubsectionHeader("SCHEDULED PROCEDURES"));
+
+            var active = pipeline.Schedule.Active;
+            if (active.Count == 0)
+            {
+                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata("No procedures currently queued."));
+                return;
+            }
+
+            foreach (var row in active.OrderBy(r => r.procedureId))
+            {
+                var def = MedicalTreatmentCatalog.Get(row.treatmentId);
+                string displayName = def?.DisplayName ?? row.treatmentId.Replace('_', ' ');
+                string readiness = row.remainingHours <= 0f
+                    ? "READY FOR TICK"
+                    : $"READY IN {row.remainingHours:0.#}h";
+                string reservations = string.Join(", ", row.reservationIds
+                    .Select(id => pipeline.Reservations.TryGet(id, out var claim)
+                        ? $"{ResolveItemDisplayName(claim.targetId)} ×{claim.quantity}"
+                        : "reservation missing")
+                    .OrderBy(value => value, StringComparer.Ordinal));
+                if (string.IsNullOrEmpty(reservations)) reservations = "none";
+
+                var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+                card.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                card.AddChild(AshfallUiHelpers.MakeDataRow(
+                    $"#{row.procedureId} {displayName}",
+                    $"{FormatSurvivorName(row.survivorId)} · {readiness}",
+                    AshfallUiHelpers.ToColor(row.remainingHours <= 0f
+                        ? Ashfall.Core.UI.Theme.Lethe
+                        : Ashfall.Core.UI.Theme.Pale)));
+                card.AddChild(AshfallUiHelpers.MakeMetadata($"RESERVED: {reservations}"));
+
+                var cancel = AshfallUiHelpers.MakeButton("CANCEL / RELEASE RESERVATION", () =>
+                {
+                    var result = pipeline.ExecuteCancel(row.procedureId);
+                    if (result.Success)
+                        host!.AddCareEntry(row.survivorId, $"Cancelled {displayName}; reserved treatment inputs released.");
+                    else
+                        GD.PushWarning($"[Medical] procedure {row.procedureId} cancellation refused: {result.ReasonCode}");
+                    RefreshView();
+                });
+                cancel.CustomMinimumSize = new Vector2(250, 28);
+                card.AddChild(cancel);
+                var panel = AshfallUiHelpers.MakePanel();
+                panel.AddChild(card);
+                _treatmentList.AddChild(panel);
+            }
+        }
+
+        private string ResolveItemDisplayName(string itemId)
+        {
+            if (_inventoryHost?.Catalog != null)
+            {
+                var definition = _inventoryHost.Catalog.Get(itemId);
+                if (definition != null && !string.IsNullOrEmpty(definition.displayName))
+                    return definition.displayName;
+            }
+            return System.Globalization.CultureInfo.InvariantCulture.TextInfo
+                .ToTitleCase(itemId.Replace('_', ' '));
         }
 
         private int CountItem(string primaryId, string fallbackId = null!)

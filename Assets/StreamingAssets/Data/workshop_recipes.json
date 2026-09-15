@@ -497,5 +497,45 @@
         "engine"
       ]
     }
-  ]
+  ,
+  {
+    "id": "recipe_workshop_rust_treatment",
+    "display_name": "Rust-Recovery Treatment",
+    "category": "metal_reclamation",
+    "required_room_ids": [
+      "room_workshop_heavy"
+    ],
+    "required_rule_ids": [
+      "rule_workshop_machinist"
+    ],
+    "inputs": [
+      {
+        "item_id": "scrap_metal",
+        "amount": 3
+      },
+      {
+        "item_id": "item_fermentation_cleaning_reagent",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_metallurgy_steel_billet",
+        "amount": 1
+      }
+    ],
+    "base_labor_ticks": 60,
+    "base_scrap_waste_permille": 50,
+    "tool_wear_permille": 10,
+    "calibration_requirement": 0.35,
+    "skill_weights": {
+      "skill_rough_repairs": 1.2
+    },
+    "tags": [
+      "metal",
+      "reclamation",
+      "rust"
+    ]
+  }
+]
 }

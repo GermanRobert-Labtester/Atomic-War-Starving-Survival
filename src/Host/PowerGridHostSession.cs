@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS0649
@@ -21,6 +22,12 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public PowerGridSystem System { get; private set; }
         public PowerGridSnapshot LastSnapshot { get; private set; }
+
+        /// <summary>B5–B8 Phase 9: latest tick summary (served/shed/critical
+        /// deficit/brownout edges) for UI projection. Updated on every tick;
+        /// null before the first tick — panels render from the snapshot until
+        /// then (no fake state).</summary>
+        public PowerGridTickSummary? LastTickSummary { get; private set; }
 
         private ISeededRng _tickRng;
         private readonly List<PowerGridRoom> _rooms;
@@ -78,7 +85,7 @@ namespace AtomicWar.GodotApp
             _tickRng = rng ?? throw new ArgumentNullException(nameof(rng));
             System = new PowerGridSystem(initialState, rooms, rng);
             System.OnPowerChanged += _ => OnStateChanged?.Invoke();
-            System.OnTickSummary += _ => OnStateChanged?.Invoke();
+            System.OnTickSummary += summary => LastTickSummary = summary;
             LastSnapshot = System.Snapshot();
         }
 
@@ -109,10 +116,69 @@ namespace AtomicWar.GodotApp
             LastSnapshot = System.Snapshot();
         }
 
+        /// <summary>
+        /// Plans 146–149 MED: install a coated generator part. Caller must
+        /// consume the inventory item first; this only mutates PowerGrid state.
+        /// </summary>
+        public bool TryInstallCoatedPart(string itemId, out string reason)
+        {
+            bool ok = System.TryInstallCoatedPart(itemId, out reason);
+            if (ok)
+            {
+                LastSnapshot = System.Snapshot();
+                OnStateChanged?.Invoke();
+            }
+            return ok;
+        }
+
+        public bool TryUninstallCoatedPart(string itemId, out string reason)
+        {
+            bool ok = System.TryUninstallCoatedPart(itemId, out reason);
+            if (ok)
+            {
+                LastSnapshot = System.Snapshot();
+                OnStateChanged?.Invoke();
+            }
+            return ok;
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 2: install one battery bank. Caller must consume the
+        /// canonical <see cref="PowerGridSystem.BatteryBankItemId"/> item
+        /// first; this only mutates PowerGrid state.
+        /// </summary>
+        public bool TryInstallBatteryBank(out string reason)
+        {
+            bool ok = System.TryInstallBatteryBank(out reason);
+            if (ok)
+            {
+                LastSnapshot = System.Snapshot();
+                OnStateChanged?.Invoke();
+            }
+            return ok;
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 5: service the generator. Caller must consume the
+        /// canonical <see cref="PowerGridSystem.GeneratorMaintenanceItemId"/>
+        /// item first; this only mutates PowerGrid state.
+        /// </summary>
+        public bool PerformGeneratorMaintenance(out string reason)
+        {
+            bool ok = System.PerformGeneratorMaintenance(out reason);
+            if (ok)
+            {
+                LastSnapshot = System.Snapshot();
+                OnStateChanged?.Invoke();
+            }
+            return ok;
+        }
+
         public PowerGridTickSummary TickDay(int day)
         {
             var sum = System.TickDay(day, _tickRng);
             LastSnapshot = System.Snapshot();
+            LastTickSummary = sum;
             OnStateChanged?.Invoke();
             return sum;
         }
@@ -132,7 +198,7 @@ namespace AtomicWar.GodotApp
         {
             var loaded = PowerGridSaveStore.TryLoad();
             if (loaded == null) return false;
-            System.State.RestoreInto(loaded.State, _rooms);
+            System.RestoreState(loaded.State);
             LastSnapshot = System.Snapshot();
             OnStateChanged?.Invoke();
             return true;

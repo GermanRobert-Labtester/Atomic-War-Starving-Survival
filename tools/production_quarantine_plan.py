@@ -19,17 +19,23 @@ A file is eligible for quarantine iff:
 The plan records:
    - hash evidence (SHA256 of deprecated and partner)
    - src/grep evidence for live-game references
-   - the proposed destination under assets/_quarantine_legacy/
+   - the proposed destination under the external Twin_ASHFall archive
    - the canonical active counterpart that remains the surviving stem.
 """
 import json
 import hashlib
+import os
 import re
 from pathlib import Path
 
 REPO = Path("/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War")
 ART = REPO / "assets/art"
-QUAR = REPO / "assets/_quarantine_legacy"
+QUAR = Path(
+    os.environ.get(
+        "ASHFALL_QUARANTINE_ROOT",
+        str(Path.home() / "Twin_ASHFall" / "quarantine" / "assets" / "quarantine" / "deprecated_ammo"),
+    )
+)
 SRC = REPO / "src"
 
 GENERIC_PARTNER_STEMS = {
@@ -101,7 +107,7 @@ for fp in sorted(ART.glob("ammo_deprecated_*")):
         "active_partner_sha256": sha(real_partner),
         "live_runtime_ref_count": live_ref_count,
         "decision": "QUARANTINE_OK" if live_ref_count == 0 else "REVIEW_LIVE_REF",
-        "destination": str((QUAR / fp.name).relative_to(REPO)),
+        "destination": str(QUAR / fp.name),
         "rationale": "byte-identical to a real active caliber art; no live-runtime references" if live_ref_count == 0 else "byte-identical to a real active caliber art BUT live runtime code references this stem — defer",
     })
 
@@ -138,10 +144,10 @@ if ok > 0:
         if e["decision"] == "QUARANTINE_OK":
             src_rel = e["deprecated"]
             dst_rel = e["destination"]
-            script_lines.append(f'  if [ -f "{src_rel}" ]; then git mv "{src_rel}" "assets/_quarantine_legacy/{Path(dst_rel).name}" || mv "{src_rel}" "assets/_quarantine_legacy/{Path(dst_rel).name}"; fi')
+            script_lines.append(f'  if [ -f "{src_rel}" ]; then mv "{src_rel}" "$QUAR/{Path(dst_rel).name}"; fi')
             import_basename = Path(src_rel).name + ".import"
             import_src = f"assets/art/{import_basename}"
-            script_lines.append(f'  if [ -f "{import_src}" ]; then mv "{import_src}" "assets/_quarantine_legacy/{import_basename}" || true; fi')
+            script_lines.append(f'  if [ -f "{import_src}" ]; then mv "{import_src}" "$QUAR/{import_basename}" || true; fi')
     script_lines.append('else')
     script_lines.append('  echo "[quarantine] DRY-RUN. invoke with --apply to execute."')
     script_lines.append('fi')

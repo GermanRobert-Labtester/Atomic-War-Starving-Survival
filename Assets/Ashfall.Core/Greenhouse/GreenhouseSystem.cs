@@ -27,6 +27,29 @@ namespace Ashfall.Core
         public float soilContamination;
         public float blight;
         public int plantedDay;
+
+        /// <summary>
+        /// B5–B8 Phase 4 (Plan 64): nutrient band 0..1 (additive field —
+        /// legacy saves restore 0). Raised by canonical
+        /// <c>item_hydroponic_nutrients</c> application; decays daily. A fed
+        /// crop sits in the correct nutrient band, which lowers blight risk
+        /// (visible prevention contributor — see
+        /// <see cref="GreenhouseSystem.NutrientBlightRiskReduction"/>).
+        /// </summary>
+        public float nutrientLevel;
+
+        /// <summary>
+        /// B5–B8 expansion (§27 crop rotation): consecutive plantings of the
+        /// same crop on this plot (additive field — legacy saves restore 0).
+        /// Monoculture exhausts the bed's disease resistance; planting a
+        /// different crop resets it. Visible as a blight-risk contributor.
+        /// </summary>
+        public int sameCropStreak;
+
+        /// <summary>The previous crop planted on this bed (rotation ledger —
+        /// survives harvest/reset because the soil, not the tray state,
+        /// remembers the monoculture; additive, legacy restores empty).</summary>
+        public string lastCropId = string.Empty;
     }
 
     [Serializable]
@@ -51,6 +74,28 @@ namespace Ashfall.Core
     }
 
     /// <summary>
+    /// B5–B8 Phase 4 (Plan 64): read-only blight-risk decomposition for UI
+    /// projection and balance harnesses (flagship §7.7 — visible prevention
+    /// contributors, no fake precision: this is exactly the TickDay roll's
+    /// input, not a forecast of the roll itself).
+    /// chance = Base·Resistance·Contamination·Drought − Nutrient, clamped [0,1].
+    /// </summary>
+    public struct BlightRiskProfile
+    {
+        public int PlotIndex;
+        public bool PlotExists;
+        public float BaseChancePerDay;
+        public float ResistanceFactor;
+        public float ContaminationPressure;
+        public float DroughtStress;
+        public float NutrientReduction;
+        public float RotationPressure;
+        public int RotationStreak;
+        public float NutrientLevel;
+        public float FinalChancePerDay;
+    }
+
+    /// <summary>
     /// ASHFALL: THE GLASS ORCHARD (Expansion 05 / XI).
     /// Pure C# save-safe agricultural simulation engine under lead-glass and grow-lights.
     /// </summary>
@@ -64,6 +109,38 @@ namespace Ashfall.Core
         public const float BaseBlightChancePerDay = 0.06f;
         public const float TaintedWaterContaminationPerUnit = 1.5f;
         public const float ResidualContaminationAfterHarvest = 0.5f;
+
+        // ---- B5–B8 Phase 4 (Plan 64): nutrient band + visible blight prevention
+
+        /// <summary>Canonical nutrient item consumed by
+        /// <see cref="ApplyNutrients"/> (host checks inventory first).</summary>
+        public const string NutrientItemId = "item_hydroponic_nutrients";
+
+        /// <summary>Nutrient-band level one application adds (two applications
+        /// saturate the band).</summary>
+        public const float NutrientApplicationLevel = 0.5f;
+
+        /// <summary>Daily nutrient decay — dosing is a recurring cost, not a
+        /// permanent buff.</summary>
+        public const float NutrientDecayPerDay = 0.1f;
+
+        /// <summary>Bounded blight-risk reduction at a full nutrient band
+        /// (subtractive, applied after the legacy multiplicative factors; the
+        /// final chance clamps at 0 — prevention can never make risk negative).</summary>
+        public const float NutrientBlightRiskReduction = 0.04f;
+
+        /// <summary>Nutrient level at which the full risk reduction applies.</summary>
+        public const float NutrientFullBandLevel = 0.5f;
+
+        /// <summary>B5–B8 expansion (§27): blight-risk step per consecutive
+        /// planting of the same crop on one plot (monoculture pressure).
+        /// Bounded by the final clamp; rotation (a different crop) resets the
+        /// streak to zero.</summary>
+        public const float RotationBlightStepPerStreak = 0.015f;
+
+        /// <summary>Hard cap on the streak's risk contribution (ten same-crop
+        /// plantings reach the ceiling).</summary>
+        public const int MaxRotationStreakCount = 10;
 
         private readonly GreenhouseState _state;
         private readonly int _seed;
@@ -115,7 +192,10 @@ namespace Ashfall.Core
                     water = s.water,
                     soilContamination = s.soilContamination,
                     blight = s.blight,
-                    plantedDay = s.plantedDay
+                    plantedDay = s.plantedDay,
+                    nutrientLevel = Math.Clamp(s.nutrientLevel, 0f, 1f),
+                    sameCropStreak = Math.Clamp(s.sameCropStreak, 0, MaxRotationStreakCount),
+                    lastCropId = s.lastCropId ?? string.Empty
                 });
             }
         }
@@ -162,6 +242,13 @@ namespace Ashfall.Core
             if (def.RequiresUnlock && !_state.preWarWheatUnlocked) return false;
             if (!IsFallow(plot)) return false;
 
+            // B5–B8 expansion (§27): rotation ledger — the same crop again on
+            // the same bed builds monoculture pressure; rotating resets it.
+            // The bed remembers via lastCropId, which survives harvest/reset.
+            plot.sameCropStreak = string.Equals(plot.lastCropId, seedItemId, StringComparison.Ordinal)
+                ? Math.Min(MaxRotationStreakCount, plot.sameCropStreak + 1)
+                : 0;
+            plot.lastCropId = seedItemId;
             plot.seedItemId = seedItemId;
             plot.stage = (int)GreenhouseStage.Sprouting;
             plot.growth = 0f;
@@ -172,15 +259,78 @@ namespace Ashfall.Core
             return true;
         }
 
-        public void Water(int plotIndex, float waterUnits, bool tainted)
+        public bool Water(int plotIndex, float waterUnits, bool tainted)
         {
             var plot = PlotAt(plotIndex);
-            if (plot == null) return;
+            if (plot == null) return false;
             float add = Math.Max(0f, waterUnits);
             plot.water = Math.Min(MaxWater, plot.water + add);
             if (tainted && add > 0f)
                 plot.soilContamination = Math.Min(MaxContamination,
                     plot.soilContamination + add * TaintedWaterContaminationPerUnit);
+            return true;
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 4 (Plan 64): apply one canonical
+        /// <see cref="NutrientItemId"/> dose to a planted plot. The host
+        /// checks/consumes the inventory item first (same discipline as the
+        /// treatment path); this raises the plot's nutrient band toward
+        /// saturation. Blocked on fallow/failed plots — nutrients feed a
+        /// crop, not the soil.
+        /// </summary>
+        public bool ApplyNutrients(int plotIndex, out string consumedItemId)
+        {
+            consumedItemId = NutrientItemId;
+            var plot = PlotAt(plotIndex);
+            if (plot == null) return false;
+            if (IsFallow(plot)) return false;
+            if (plot.stage == (int)GreenhouseStage.Failed) return false;
+            plot.nutrientLevel = Math.Min(1f, plot.nutrientLevel + NutrientApplicationLevel);
+            return true;
+        }
+
+        /// <summary>
+        /// B5–B8 Phase 4: read-only blight-risk decomposition for one plot
+        /// (flagship §7.7 — visible prevention contributors, no RNG consumed,
+        /// no state mutated). The final chance matches the TickDay outbreak
+        /// roll exactly, so UI projections are truthful.
+        /// </summary>
+        public BlightRiskProfile GetBlightRiskProfile(int plotIndex, bool hasWater)
+        {
+            var plot = PlotAt(plotIndex);
+            if (plot == null || IsFallow(plot) ||
+                plot.stage == (int)GreenhouseStage.Failed)
+            {
+                return new BlightRiskProfile { PlotIndex = plotIndex, PlotExists = false };
+            }
+
+            var def = GreenhouseExpansionCatalog.CropCatalog.Get(plot.seedItemId);
+            if (def == null)
+                return new BlightRiskProfile { PlotIndex = plotIndex, PlotExists = false };
+
+            float contaminationPressure = Math.Clamp(plot.soilContamination / MaxContamination, 0f, 1f);
+            float droughtStress = hasWater ? 1f : 2.5f;
+            float nutrientReduction = NutrientBlightRiskReduction
+                                      * Math.Min(1f, plot.nutrientLevel / NutrientFullBandLevel);
+            float rotationPressure = RotationBlightStepPerStreak
+                                     * Math.Min(MaxRotationStreakCount, plot.sameCropStreak);
+            float core = BaseBlightChancePerDay * (1f - def.BlightResistance)
+                         * contaminationPressure * droughtStress;
+            return new BlightRiskProfile
+            {
+                PlotIndex = plotIndex,
+                PlotExists = true,
+                BaseChancePerDay = BaseBlightChancePerDay,
+                ResistanceFactor = 1f - def.BlightResistance,
+                ContaminationPressure = contaminationPressure,
+                DroughtStress = droughtStress,
+                NutrientReduction = nutrientReduction,
+                RotationPressure = rotationPressure,
+                RotationStreak = plot.sameCropStreak,
+                FinalChancePerDay = Math.Clamp(core - nutrientReduction + rotationPressure, 0f, 1f),
+                NutrientLevel = plot.nutrientLevel
+            };
         }
 
         public GreenhouseHarvest Harvest(int plotIndex)
@@ -345,10 +495,21 @@ namespace Ashfall.Core
 
             float droughtFactor = hasWater ? 1f : 2.5f;
             float contamFactor = Math.Clamp(p.soilContamination / MaxContamination, 0f, 1f);
-            float chance = BaseBlightChancePerDay
-                           * (1f - def.BlightResistance)
-                           * contamFactor
-                           * droughtFactor;
+            // B5–B8 Phase 4: nutrient-band prevention — subtractive, bounded,
+            // never negative (flagship §7.7 probability decomposition). At
+            // nutrientLevel 0 the legacy chance is untouched (parity).
+            float nutrientReduction = NutrientBlightRiskReduction
+                                      * Math.Min(1f, p.nutrientLevel / NutrientFullBandLevel);
+            // B5–B8 expansion (§27): monoculture pressure — consecutive same-
+            // crop plantings raise disease pressure (visible contributor).
+            float rotationPressure = RotationBlightStepPerStreak
+                                     * Math.Min(MaxRotationStreakCount, p.sameCropStreak);
+            float chance = Math.Clamp(
+                BaseBlightChancePerDay * (1f - def.BlightResistance) * contamFactor * droughtFactor
+                - nutrientReduction + rotationPressure,
+                0f, 1f);
+            // Daily nutrient decay: dosing is a recurring cost.
+            p.nutrientLevel = Math.Max(0f, p.nutrientLevel - NutrientDecayPerDay);
             // A11: deterministic reseed-per-roll (seed + roll count); the count
             // is persisted so restored saves continue, not replay, the stream.
             var blightRng = new SeededRng(unchecked(_seed * 397 + (int)(_state.blightRollCount & 0x7FFFFFFF)));
@@ -387,6 +548,10 @@ namespace Ashfall.Core
             p.growth = 0f;
             p.blight = 0f;
             p.water = 0f;
+            p.nutrientLevel = 0f;
+            // sameCropStreak persists through harvest/clear — the soil
+            // remembers the monoculture; only planting a different crop
+            // resets it (rotation ledger in Plant).
             p.soilContamination = Math.Max(0f, p.soilContamination * ResidualContaminationAfterHarvest);
             p.plantedDay = 0;
         }

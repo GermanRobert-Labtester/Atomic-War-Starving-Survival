@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.IO;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.Save;
 
@@ -14,6 +16,7 @@ namespace AtomicWar.GodotApp
     public sealed class StartingLevelHostSession
     : HostSessionBase{
         public StartingLevelSystem System { get; }
+        public bool HasMaintenanceDependencies => System.HasMaintenanceDependencies;
         public string LastEvent { get; private set; } = string.Empty;
         public StartingLevelHostSession(StartingLevelSystem? system = null)
         {
@@ -32,6 +35,18 @@ namespace AtomicWar.GodotApp
                 session.LastEvent = "Holdfast starting state restored from disk.";
             }
             return session;
+        }
+
+        /// <summary>
+        /// Bind the campaign-owned inventory and shared research capability
+        /// query. Must be called after the composition root creates those
+        /// services; legacy standalone callers continue to use the old
+        /// counter-backed compatibility wrappers below.
+        /// </summary>
+        public void BindMaintenance(IPlayerInventoryPort inventory, Func<string, bool>? hasCapability = null)
+        {
+            System.BindMaintenance(inventory, hasCapability);
+            RaiseStateChanged();
         }
 
         public void ResolveMorningRationTriage(RationPolicy policy)
@@ -60,6 +75,9 @@ namespace AtomicWar.GodotApp
 
         public bool ServiceAirFilter()
         {
+            if (System.HasMaintenanceDependencies)
+                return MaintainAirFilter().IsSuccess;
+
             bool success = System.ServiceAirFilter();
             if (success) RaiseStateChanged();
             return success;
@@ -67,9 +85,19 @@ namespace AtomicWar.GodotApp
 
         public bool ReplaceAirFilter()
         {
+            if (System.HasMaintenanceDependencies)
+                return MaintainAirFilter(replace: true).IsSuccess;
+
             bool success = System.ReplaceAirFilter();
             if (success) RaiseStateChanged();
             return success;
+        }
+
+        public ActionResult MaintainAirFilter(bool replace = false)
+        {
+            var result = System.MaintainAirFilter(replace);
+            if (result.IsSuccess) RaiseStateChanged();
+            return result;
         }
 
         public void TickDay() => TickDay(false, Ashfall.Core.WeatherKind.Clear);

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "collection": "character_placeholder_base",
+  "status": "PLACEHOLDER \u2014 NOT FINAL ART",
+  "scope": "Non-real blockout mannequin; 4-frame walk x front/side/back",
+  "generator": "scripts/tools/generate-character-placeholders.py",
+  "generated_by": "Pillow, programmatic line art",
+  "layout": {
+    "frame": [
+      64,
+      96
+    ],
+    "cols": 4,
+    "rows": 3,
+    "rows_order": [
+      "front",
+      "side",
+      "back"
+    ],
+    "godot": "hframes=4, vframes=3"
+  },
+  "license": "MIT",
+  "replace_with_final_art": true,
+  "files": [
+    {
+      "file": "char_base_sheet.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "char_base_sheet_rust.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "char_base_sheet_olive.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "char_base_sheet_bone.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    }
+  ]
+}

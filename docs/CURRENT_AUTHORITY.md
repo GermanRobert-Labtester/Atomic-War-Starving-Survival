@@ -9,7 +9,9 @@
 
 | Area | Primary Authority Document | Key Principles |
 |---|---|---|
-| **Master Agent Rules** | [`AGENTS.md`](../AGENTS.md) | **Godot is authoritative.** Unity is fully removed. Core has zero engine references. Verification uses `dotnet` + `godot --headless`. |
+| **Master Agent Rules** | [`AGENTS.md`](../AGENTS.md) | Compact universal rules: Godot authority, engine-free Core, data/save/determinism ownership, focused verification, and secret safety. |
+| **AI Foreman Workflow** | [`AI_AGENT_WORKFLOW.md`](../AI_AGENT_WORKFLOW.md)<br>[`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md)<br>[`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | Current batch, exact path ownership, role routing, handoffs, cheap read-only sweeps, and integration acceptance. |
+| **Test and Debt Policy** | [`TEST_POLICY.md`](../TEST_POLICY.md)<br>[`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | Targeted test selection, aggregation/quarantine rules, and the current accepted/blocked/retired debt register. |
 | **Migration Status** | [`docs/GODOT_MIGRATION_STATUS.md`](GODOT_MIGRATION_STATUS.md) | 100% complete migration record; documents the removal of `Assets/_Game/` and the bridge shim. |
 | **Code Index** | [`docs/ASHFALL_CODE_INDEX.md`](ASHFALL_CODE_INDEX.md) | Comprehensive map of systems across Core (`Ashfall.Core.*`) and Godot Host (`AtomicWar.GodotApp.*`). |
 
@@ -31,11 +33,11 @@
 | Gate / Suite | Documentation | Verification Command |
 |---|---|---|
 | **Fast-Tier Local Runner** | [`scripts/ci/verify-fast.sh`](../scripts/ci/verify-fast.sh)<br>[`docs/CI.md`](CI.md) | `bash scripts/ci/verify-fast.sh` (mirrors all 14 CI gates in order, fails fast) |
-| **Unit Test Suite** | [`Ashfall.Core.Tests/`](../Ashfall.Core.Tests) | `dotnet test` (all unit tests passing, 0 failures) |
+| **Focused Unit Tests** | [`Ashfall.Core.Tests/`](../Ashfall.Core.Tests)<br>[`scripts/run_test.sh`](../scripts/run_test.sh) | `bash scripts/run_test.sh <file-or-focused-directory>`; no default full-suite run. |
 | **Host Build** | [`Ashfall.csproj`](../Ashfall.csproj) | `dotnet build Ashfall.csproj` |
 | **Data Integrity Gate** | [`Assets/Ashfall.Core/CatalogIntegrityValidator.cs`](../Assets/Ashfall.Core/CatalogIntegrityValidator.cs) | `godot --headless --path . -- --data-integrity-selftest` (129 catalogs, 0 errors) |
 | **Triad Drift Gate** | [`scripts/ci/triad-drift-gate.sh`](../scripts/ci/triad-drift-gate.sh)<br>[`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md) | `bash scripts/ci/triad-drift-gate.sh` (enforces Setup/Save/Flush parity) |
-| **Integration Batch Manifest** | [`docs/CURRENT_INTEGRATION_BATCH.md`](CURRENT_INTEGRATION_BATCH.md) | Lists uncommitted working-tree systems, changes, and verification commands. |
+| **Integration Batch Manifest** | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | Sole live batch ledger: premise, dependency order, owner, acceptance, and focused verification. |
 | **CI & Gating Map** | [`docs/CI.md`](CI.md)<br>[`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | Defines Tier 1 blocking gates vs. Tier 2 quality gates vs. Tier 3 diagnostic tools. |
 | **Host CLI Catalog** | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | Generated reference for every CLI verb and flag (regenerated from `--host-help` by `scripts/ci/generate-cli-catalog.sh`; never hand-edited). |
 | **Save-Store Contract Matrix** | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | Generated completeness authority for all 62 save store classes, checksum envelopes, and slot-root isolation (`scripts/ci/generate-save-store-matrix.sh --check`). |
@@ -63,8 +65,7 @@ The following documents describe superseded Unity architectures, completed port 
 
 | Historical Document | Historical Context & Current Replacement |
 |---|---|
-| [`REPO_REVIEW_REPORT.md`](../REPO_REVIEW_REPORT.md) | Deep repository review from 2026-08-16 during dual-engine era. All C1-C8 critical findings are now resolved, and Unity host is deleted. Active truth: [`AGENTS.md`](../AGENTS.md). |
-| [`COMPREHENSIVE_GAME_AUDIT.md`](../COMPREHENSIVE_GAME_AUDIT.md) | Comprehensive project audit from 2026-08-18 (pre-Unity removal). Superseded by modern Godot-authoritative documentation. |
+| Missing legacy review reports | `REPO_REVIEW_REPORT.md` and `COMPREHENSIVE_GAME_AUDIT.md` are not present in this checkout. Do not treat references to them as active task prerequisites; use the current authority map and source evidence. |
 | [`docs/plans/sources.md`](plans/sources.md) | Describes early August 2026 Unity/Bridge strangler migration. Current truth is [`AGENTS.md`](../AGENTS.md). |
 | [`docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md`](gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md) | Pre-migration gap audit from Unity era; all critical and high items are resolved. |
 | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | Historical port plan for `SkillProgressionSystem` (closed; fully ported in Core Phase 18 and tested). |

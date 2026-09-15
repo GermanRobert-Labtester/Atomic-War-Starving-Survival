@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "collection_id": "regional_prices_14b",
+  "description": "Plan 14B regional price atlas. Persistent price geography per region: each entry distorts one good (or one whole goods category) in one region. Base prices remain the authority in economy_goods.json — this file never duplicates them. Modifiers are permille (700 = 0.7x), bounded [500, 2000]. Item-level entries override category-level entries for the same item; goods without an entry are neutral (1.0x). scarcity_profile is a closed textual vocabulary for accessible UI labels: local_surplus / balanced / imported_scarce.",
+  "entries": [
+    { "region": "flotilla", "item_id": "item_foundry_brine_pipe", "base_price_modifier_permille": 700, "scarcity_profile": "local_surplus" },
+    { "region": "flotilla", "item_id": "item_desal_membrane", "base_price_modifier_permille": 700, "scarcity_profile": "local_surplus" },
+    { "region": "flotilla", "item_id": "item_ro_membrane", "base_price_modifier_permille": 700, "scarcity_profile": "local_surplus" },
+    { "region": "flotilla", "item_id": "seed_packets", "base_price_modifier_permille": 1500, "scarcity_profile": "imported_scarce" },
+    { "region": "flotilla", "item_id": "trap_fish", "base_price_modifier_permille": 800, "scarcity_profile": "local_surplus" },
+    { "region": "foundry", "item_id": "mechanical_parts", "base_price_modifier_permille": 800, "scarcity_profile": "local_surplus" },
+    { "region": "foundry", "item_id": "electronic_scrap", "base_price_modifier_permille": 800, "scarcity_profile": "local_surplus" },
+    { "region": "foundry", "item_id": "chemicals", "base_price_modifier_permille": 800, "scarcity_profile": "local_surplus" },
+    { "region": "foundry", "category": "food", "base_price_modifier_permille": 1300, "scarcity_profile": "imported_scarce" },
+    { "region": "greenhouse", "item_id": "seed_packets", "base_price_modifier_permille": 800, "scarcity_profile": "local_surplus" },
+    { "region": "greenhouse", "item_id": "canned_food", "base_price_modifier_permille": 800, "scarcity_profile": "local_surplus" },
+    { "region": "greenhouse", "category": "tools", "base_price_modifier_permille": 1400, "scarcity_profile": "imported_scarce" },
+    { "region": "traplines", "item_id": "cooked_meat", "base_price_modifier_permille": 700, "scarcity_profile": "local_surplus" },
+    { "region": "traplines", "item_id": "item_frostbite_salve", "base_price_modifier_permille": 700, "scarcity_profile": "local_surplus" },
+    { "region": "traplines", "item_id": "electronic_scrap", "base_price_modifier_permille": 1500, "scarcity_profile": "imported_scarce" },
+    { "region": "settlement", "item_id": "medical_kit", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" },
+    { "region": "settlement", "item_id": "anti_rad", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" },
+    { "region": "settlement", "item_id": "solar_cell", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" }
+  ]
+}

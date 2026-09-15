@@ -319,6 +319,30 @@ namespace Ashfall.Core.Tests.Defense
             Assert.Equal(sys.IntrusionLog.Count, sys2.IntrusionLog.Count);
         }
 
+        [Fact]
+        public void CaptureState_SectorsAndLogAreIndependentClones()
+        {
+            var (sys, _) = MakeSystem(7);
+            Assert.True(sys.ConstructEmplacement("def_razorwire").IsSuccess);
+            sys.SimulateRaiderAssault(1, currentDay: 2);
+
+            var captured = sys.CaptureState();
+            Assert.NotEmpty(captured.sectors);
+            Assert.NotSame(sys.Sectors[0], captured.sectors[0]);
+            Assert.NotSame(sys.Sectors[0].emplacement_ids, captured.sectors[0].emplacement_ids);
+
+            int liveCount = sys.Sectors[0].emplacement_ids.Count;
+            captured.sectors[0].emplacement_ids.Clear();
+            Assert.Equal(liveCount, sys.Sectors[0].emplacement_ids.Count);
+
+            if (captured.intrusion_log.Count > 0 && sys.IntrusionLog.Count > 0)
+            {
+                Assert.NotSame(sys.IntrusionLog[0], captured.intrusion_log[0]);
+                captured.intrusion_log[0].day = 9999;
+                Assert.NotEqual(9999, sys.IntrusionLog[0].day);
+            }
+        }
+
         // ── Deterministic replay ────────────────────────────────────────
 
         [Fact]

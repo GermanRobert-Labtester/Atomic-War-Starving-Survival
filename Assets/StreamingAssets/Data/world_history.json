@@ -293,7 +293,7 @@
       "era": "black_sky",
       "year_month": "Exchange+3M",
       "title": "The Vessel's Cell",
-      "body": "Where the Cult's prophet is said to have emerged unscathed. The room is shielded on three sides by accident of construction, and there are eleven weeks of tally marks on the wall. Both the miracle and the mundane explanation are fully supported by the evidence, and the game never picks.",
+      "body": "Where the Cult's prophet is said to have emerged unscathed. The room is shielded on three sides by accident of construction, and there are eleven weeks of tally marks on the wall. Both the miracle and the mundane explanation are fully supported by the evidence. Nobody has chosen between them.",
       "discovery_location_id": "loc_the_vessels_cell",
       "discovery_trigger": "location_explore",
       "knowledge_key": "lore_spine_the_cell"
@@ -707,7 +707,7 @@
       "era": "post_exchange",
       "year_month": "Day 320",
       "title": "Just Passing Through",
-      "body": "The Crossing continues exactly as uneasily as it always has. The shelter got what it came for. Nobody there will remember the player's name in a year, which several people there would say is the whole point of the place.",
+      "body": "The Crossing continues exactly as uneasily as it always has. The shelter got what it came for. Nobody there will remember a visitor's name in a year, which several people there would say is the whole point of the place.",
       "discovery_location_id": "loc_crossing_records_room",
       "discovery_trigger": "ending_reached",
       "knowledge_key": "ending_crossing_walked"

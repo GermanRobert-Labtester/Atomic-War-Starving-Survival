@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core;
@@ -202,16 +203,28 @@ public partial class CaravanBarterLedgerPanel : Control, IBindablePanel
             _tradeInner.BindSession(_session, _stance!);
         }
 
-        // Sidebar nav highlights the relevant sub-section by changing
-        // the active faction (default already at the top). Selecting
-        // "Your Offers" / "Their Asks" / "Fairness" / "Biology" broadcasts
-        // a hint to the host — the host can drive secondary UI if needed.
-        // The actual arbitration/confirm action lives inside TradeScreen.
+        // Sidebar ids are ledger section ops (context/your_offers/their_asks/
+        // fairness/biology), not faction ids. Never route section ids through
+        // SetActiveFaction / OnSetActiveFaction — that would corrupt stance rail.
         if (_sidebar != null)
         {
             _sidebar.OnSelected += id =>
             {
-                OnSetActiveFaction?.Invoke(id);
+                switch (id)
+                {
+                    case "context":
+                    case "your_offers":
+                    case "their_asks":
+                    case "fairness":
+                    case "biology":
+                        _tradeInner?.FocusLedgerSection(id);
+                        break;
+                    default:
+                        // Real faction ids only.
+                        SetActiveFaction(id);
+                        OnSetActiveFaction?.Invoke(id);
+                        break;
+                }
                 RefreshView();
             };
         }

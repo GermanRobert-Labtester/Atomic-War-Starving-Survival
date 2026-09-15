@@ -166,6 +166,74 @@
       "tags": ["legume"]
     },
     {
+      "id": "strain_frostpea_highland",
+      "display_name": "Highland Frost Pea Line",
+      "seed_item_id": "item_seed_frost_pea",
+      "yield_modifier": 1.0,
+      "soil_tolerance": 0.7,
+      "toxicity_tolerance_permille": 450,
+      "radiation_tolerance": 0.6,
+      "pest_susceptibility": 0.3,
+      "mutation_threshold": 0.65,
+      "nutrition_profile": {
+        "calories": 0.8,
+        "protein": 0.9,
+        "vitamin_c": 0.2,
+        "micronutrients": 0.3,
+        "fats": 0.1,
+        "fiber": 0.6
+      },
+      "mutation_outcomes": [
+        {
+          "outcome": "no_mutation",
+          "weight": 88
+        },
+        {
+          "outcome": "yield_penalty",
+          "weight": 7
+        },
+        {
+          "outcome": "toxic_harvest",
+          "weight": 5
+        }
+      ],
+      "tags": ["legume", "cold_hardy"]
+    },
+    {
+      "id": "strain_glaciargreens_rimewool",
+      "display_name": "Rimewool Greens Line",
+      "seed_item_id": "item_seed_glacier_greens",
+      "yield_modifier": 0.9,
+      "soil_tolerance": 0.75,
+      "toxicity_tolerance_permille": 500,
+      "radiation_tolerance": 0.65,
+      "pest_susceptibility": 0.35,
+      "mutation_threshold": 0.6,
+      "nutrition_profile": {
+        "calories": 0.5,
+        "protein": 0.3,
+        "vitamin_c": 0.6,
+        "micronutrients": 0.4,
+        "fats": 0.0,
+        "fiber": 0.5
+      },
+      "mutation_outcomes": [
+        {
+          "outcome": "no_mutation",
+          "weight": 86
+        },
+        {
+          "outcome": "yield_penalty",
+          "weight": 8
+        },
+        {
+          "outcome": "toxic_harvest",
+          "weight": 6
+        }
+      ],
+      "tags": ["greens", "cold_hardy"]
+    },
+    {
       "id": "strain_oilseed_press",
       "display_name": "Press Oilseed Line",
       "seed_item_id": "item_seed_oilseed",

@@ -186,24 +186,16 @@ namespace Ashfall.Core.Radio
             bool isLocked = vu >= LockVuThreshold;
 
             // Resolve audible fragment and clarity
-            int fragIdx = -1;
             float clarity = 0.2f;
 
-            if (signal.MessageFragments != null && signal.MessageFragments.Count > 0)
+            // Tasks 9–12 Wave 1: single shared stage resolver (was a duplicated
+            // inline loop; contract documented on the resolver). Authored clarity
+            // is still attenuated by atmospheric conditions below.
+            int fragIdx = DistressStageResolver.ResolveStageIndex(signal, ctx.Day);
+
+            if (fragIdx >= 0)
             {
-                for (int i = 0; i < signal.MessageFragments.Count; i++)
-                {
-                    var frag = signal.MessageFragments[i];
-                    if (frag.Day <= ctx.Day)
-                    {
-                        if (fragIdx == -1 || frag.Day > signal.MessageFragments[fragIdx].Day)
-                        {
-                            fragIdx = i;
-                        }
-                    }
-                }
-                if (fragIdx == -1) fragIdx = 0;
-                var activeFrag = signal.MessageFragments[fragIdx];
+                var activeFrag = signal.MessageFragments![fragIdx];
                 // Base clarity attenuated by atmospheric conditions
                 clarity = Math.Clamp(activeFrag.Clarity * attenuation, 0.1f, activeFrag.Clarity);
             }

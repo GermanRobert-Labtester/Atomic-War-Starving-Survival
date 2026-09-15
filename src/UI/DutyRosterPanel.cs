@@ -81,6 +81,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
 
     public override void _Ready()
     {
+        Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
         _shell = new AshfallDashboardShell("Duty Roster // Shift Coverage & Sick-List", minWidth: 1100, minHeight: 720);

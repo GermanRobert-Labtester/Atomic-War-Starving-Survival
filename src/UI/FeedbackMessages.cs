@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -12,291 +13,291 @@ namespace AtomicWar.GodotApp.UI
     {
         private static readonly Dictionary<string, string> _successMessages = new Dictionary<string, string>
         {
-            {"quest_completed", "Quest completed! You've earned {0} reputation and {1} resources."},
-            {"survivor_recruited", "{0} has joined your bunker!"},
-            {"resource_gained", "You've gained {0} {1}."},
-            {"technology_unlocked", "New technology unlocked: {0}."},
-            {"relationship_improved", "Your relationship with {0} has improved."},
-            {"bunker_upgraded", "Bunker upgraded! Capacity increased by {0}."},
-            {"medical_treatment_success", "Medical treatment successful. {0}'s condition improved."},
-            {"trade_success", "Trade completed! Received {0} in exchange for {1}."},
-            {"alliance_formed", "Alliance formed with {0}."},
-            {"expedition_success", "Expedition returned safely with {0} resources."}
+            {"quest_completed", "Task closed. Standing {0}. Stores {1}."},
+            {"survivor_recruited", "{0} has joined the shelter."},
+            {"resource_gained", "Received {0} {1}."},
+            {"technology_unlocked", "Research available: {0}."},
+            {"relationship_improved", "Standing with {0} improved."},
+            {"bunker_upgraded", "Shelter expanded. Capacity +{0}."},
+            {"medical_treatment_success", "Treatment took. {0} is better."},
+            {"trade_success", "Trade settled. Received {0} for {1}."},
+            {"alliance_formed", "Accord struck with {0}."},
+            {"expedition_success", "Team returned. Salvage: {0}."}
         };
 
         private static readonly Dictionary<string, string> _failureMessages = new Dictionary<string, string>
         {
-            {"quest_failed", "Quest failed. You lost {0} reputation and {1} morale."},
-            {"survivor_lost", "{0} has died. Their skills are lost to the bunker."},
-            {"resource_lost", "You've lost {0} {1}."},
-            {"technology_lost", "Technology {0} was damaged and is now unusable."},
-            {"relationship_damaged", "Your relationship with {0} has been damaged."},
-            {"bunker_damaged", "Bunker took damage! Repairs needed."},
-            {"medical_failure", "Medical treatment failed. {0}'s condition worsened."},
-            {"trade_failed", "Trade failed. {0} took your resources without delivering."},
-            {"alliance_broken", "Alliance with {0} has been broken."},
-            {"expedition_failed", "Expedition failed. No resources recovered."}
+            {"quest_failed", "Task failed. Standing −{0}. Morale −{1}."},
+            {"survivor_lost", "{0} is dead. Their work dies with them."},
+            {"resource_lost", "Lost {0} {1}."},
+            {"technology_lost", "{0} is damaged and unusable."},
+            {"relationship_damaged", "Standing with {0} worsened."},
+            {"bunker_damaged", "Shelter took damage. Repairs needed."},
+            {"medical_failure", "Treatment failed. {0} is worse."},
+            {"trade_failed", "Trade failed. {0} took the goods and left."},
+            {"alliance_broken", "Accord with {0} is broken."},
+            {"expedition_failed", "Expedition failed. Nothing came back."}
         };
 
         private static readonly Dictionary<string, string> _warningMessages = new Dictionary<string, string>
         {
-            {"low_food", "Food supplies are critically low! Prioritize rationing."},
-            {"low_medical", "Medical supplies are running out. Assign scavengers to find more."},
-            {"low_fuel", "Fuel reserves are at {0}%. Send an expedition soon."},
-            {"high_radiation", "Radiation levels are elevated. Avoid outdoor activities."},
-            {"low_morale", "Morale is dangerously low. Survivors are restless."},
-            {"bunker_deteriorating", "Bunker structures are deteriorating. Assign laborers to repairs."},
-            {"disease_outbreak", "A disease is spreading. Quarantine infected survivors immediately."},
-            {"raider_activity", "Raider activity detected in Sector {0}. Stay alert."},
-            {"storm_approaching", "A storm is approaching in {0} hours. Prepare the bunker."},
-            {"power_critical", "Power levels are critical. Generator needs immediate attention."}
+            {"low_food", "Food is critically low. Tighten rations."},
+            {"low_medical", "Medical stores running out. Send someone to find more."},
+            {"low_fuel", "Fuel at {0}%. Send a team soon."},
+            {"high_radiation", "Outdoor radiation is high. Keep people inside."},
+            {"low_morale", "Morale is low. People are restless."},
+            {"bunker_deteriorating", "Shelter fabric is failing. Put people on repairs."},
+            {"disease_outbreak", "Sickness is spreading. Quarantine the infected."},
+            {"raider_activity", "Armed movement in Sector {0}."},
+            {"storm_approaching", "Storm in {0} hours. Seal the intake."},
+            {"power_critical", "Power is critical. The generator needs work now."}
         };
 
         private static readonly Dictionary<string, string> _errorMessages = new Dictionary<string, string>
         {
-            {"invalid_action", "Invalid action. Please try again."},
-            {"insufficient_resources", "Insufficient {0} to complete this action."},
-            {"missing_id", "Error: Missing ID '{0}'. Check your data files."},
-            {"system_overload", "System overload detected. Please wait and try again."},
-            {"file_not_found", "File not found: {0}. Check your installation."},
-            {"corrupt_data", "Corrupt data detected in {0}. The file may be damaged."},
-            {"permission_denied", "Permission denied. You don't have access to this action."},
-            {"network_error", "Network error. Unable to connect to {0}."},
-            {"out_of_bounds", "Error: Value out of bounds. Check your inputs."},
-            {"invalid_input", "Invalid input. Please enter a valid value."}
+            {"invalid_action", "That action isn't available."},
+            {"insufficient_resources", "Not enough {0}."},
+            {"missing_id", "Missing ID '{0}'."},
+            {"system_overload", "System busy. Wait and try again."},
+            {"file_not_found", "File not found: {0}."},
+            {"corrupt_data", "Corrupt data in {0}."},
+            {"permission_denied", "You don't have access to that."},
+            {"network_error", "Cannot reach {0}."},
+            {"out_of_bounds", "Value out of range."},
+            {"invalid_input", "That value isn't valid."}
         };
 
         private static readonly Dictionary<string, string> _confirmationMessages = new Dictionary<string, string>
         {
-            {"delete_survivor", "Are you sure you want to exile {0}? This cannot be undone."},
-            {"abandon_quest", "Are you sure you want to abandon this quest? Progress will be lost."},
-            {"use_medicine", "Are you sure you want to use {0} medicine on {1}? This cannot be undone."},
-            {"scavenge_dangerous", "Are you sure you want to send an expedition to this dangerous location?"},
-            {"trade_with_faction", "Are you sure you want to trade with {0}? Their reputation is questionable."},
-            {"upgrade_bunker", "Are you sure you want to upgrade the bunker? This will cost {0} resources."},
-            {"start_expedition", "Are you sure you want to start this expedition? Survivors will be at risk."},
-            {"accept_alliance", "Are you sure you want to accept this alliance? It may have hidden costs."},
-            {"use_technology", "Are you sure you want to use this unstable technology? It may cause damage."},
-            {"close_bunker", "Are you sure you want to close the bunker? Survivors outside will be at risk."}
+            {"delete_survivor", "Exile {0}? This cannot be undone."},
+            {"abandon_quest", "Abandon this task? Progress will be lost."},
+            {"use_medicine", "Use {0} on {1}? The dose is spent."},
+            {"scavenge_dangerous", "Send a team to this dangerous site?"},
+            {"trade_with_faction", "Trade with {0}? Their word is thin."},
+            {"upgrade_bunker", "Expand the shelter? Cost: {0}."},
+            {"start_expedition", "Send this expedition? The team will be at risk."},
+            {"accept_alliance", "Accept this accord? It may cost more later."},
+            {"use_technology", "Use this unstable equipment? It may damage the shelter."},
+            {"close_bunker", "Seal the hatch? Anyone still outside is on their own."}
         };
 
         private static readonly Dictionary<string, string> _progressMessages = new Dictionary<string, string>
         {
-            {"quest_progress", "Quest progress: {0}% complete. {1} remaining."},
-            {"construction_progress", "Construction progress: {0}% complete. {1} days remaining."},
-            {"training_progress", "Training progress: {0}% complete. {1} survivors remaining."},
+            {"quest_progress", "Task: {0}% done. {1} remaining."},
+            {"construction_progress", "Build: {0}% done. {1} days remaining."},
+            {"training_progress", "Training: {0}% done. {1} people remaining."},
             {
                 "expedition_progress",
-                "Expedition progress: {0} days elapsed. {1} days remaining. Distance: {2} km."
+                "Expedition: {0} days out. {1} days left. Distance: {2} km."
             },
-            {"medical_progress", "Medical treatment: {0}% complete. {1} remaining."},
-            {"repair_progress", "Repair progress: {0}% complete. {1} systems remaining."},
-            {"ration_progress", "Rationing: {0} days of supplies remaining. {1} days until restock."},
-            {"morale_progress", "Morale: {0}/100. {1} survivors affected."},
-            {"relationship_progress", "Relationship with {0}: {1}/100."},
+            {"medical_progress", "Treatment: {0}% done. {1} remaining."},
+            {"repair_progress", "Repair: {0}% done. {1} systems remaining."},
+            {"ration_progress", "Rations: {0} days left. Restock in {1} days."},
+            {"morale_progress", "Morale: {0}/100. {1} people affected."},
+            {"relationship_progress", "Standing with {0}: {1}/100."},
             {"resource_progress", "{0}: {1}/{2} available."}
         };
 
         private static readonly Dictionary<string, string> _rewardMessages = new Dictionary<string, string>
         {
-            {"reputation_gained", "You've gained {0} reputation with {1}."},
-            {"resource_reward", "You've earned {0} {1}."},
-            {"item_reward", "You've received: {0}."},
-            {"technology_reward", "New technology unlocked: {0}."},
-            {"skill_reward", "{0} has learned a new skill: {1}."},
-            {"morale_boost", "Morale increased by {0} points."},
-            {"health_reward", "{0}'s health improved by {1} points."},
-            {"faction_reward", "Your alliance with {0} has strengthened."},
-            {"experience_reward", "{0} gained {1} experience points."},
-            {"bonus_reward", "Bonus reward: {0}."}
+            {"reputation_gained", "Standing with {1} +{0}."},
+            {"resource_reward", "Received {0} {1}."},
+            {"item_reward", "Received: {0}."},
+            {"technology_reward", "Research available: {0}."},
+            {"skill_reward", "{0} learned {1}."},
+            {"morale_boost", "Morale +{0}."},
+            {"health_reward", "{0}'s health +{1}."},
+            {"faction_reward", "Accord with {0} holds firmer."},
+            {"experience_reward", "{0} gained {1} experience."},
+            {"bonus_reward", "Extra: {0}."}
         };
 
         private static readonly Dictionary<string, string> _penaltyMessages = new Dictionary<string, string>
         {
-            {"reputation_lost", "You've lost {0} reputation with {1}."},
-            {"resource_penalty", "You've lost {0} {1}."},
-            {"item_penalty", "You've lost: {0}."},
-            {"technology_damaged", "Technology {0} was damaged and is now unusable."},
-            {"skill_penalty", "{0} lost the skill: {1}."},
-            {"morale_penalty", "Morale decreased by {0} points."},
-            {"health_penalty", "{0}'s health decreased by {1} points."},
-            {"faction_penalty", "Your alliance with {0} has weakened."},
-            {"experience_penalty", "{0} lost {1} experience points."},
-            {"time_penalty", "You've lost {0} days due to delays."}
+            {"reputation_lost", "Standing with {1} −{0}."},
+            {"resource_penalty", "Lost {0} {1}."},
+            {"item_penalty", "Lost: {0}."},
+            {"technology_damaged", "{0} is damaged and unusable."},
+            {"skill_penalty", "{0} lost {1}."},
+            {"morale_penalty", "Morale −{0}."},
+            {"health_penalty", "{0}'s health −{1}."},
+            {"faction_penalty", "Accord with {0} is thinner."},
+            {"experience_penalty", "{0} lost {1} experience."},
+            {"time_penalty", "Lost {0} days to delay."}
         };
 
         private static readonly Dictionary<string, string> _statusMessages = new Dictionary<string, string>
         {
-            {"bunker_status", "Bunker: {0}/{1} capacity. {2}% structural integrity."},
-            {"survivor_status", "Survivors: {0}/{1} alive. {2} injured."},
-            {"food_status", "Food: {0}/{1} days remaining. {2}% waste."},
-            {"water_status", "Water: {0}/{1} liters remaining. {2}% clean."},
-            {"medical_status", "Medical: {0}/{1} supplies remaining. {2} patients."},
-            {"fuel_status", "Fuel: {0}/{1} liters remaining. {2}% efficiency."},
-            {"power_status", "Power: {0}/{1}%. Generator status: {2}."},
-            {"morale_status", "Morale: {0}/100. {1} survivors affected."},
-            {"radiation_status", "Radiation: {0} mSv/hr outside. {1} mSv/hr inside."},
-            {"weather_status", "Weather: {0}. Visibility: {1} km. Temperature: {2}°C."}
+            {"bunker_status", "Shelter: {0}/{1} capacity. {2}% integrity."},
+            {"survivor_status", "People: {0}/{1} alive. {2} injured."},
+            {"food_status", "Food: {0}/{1} days left. {2}% waste."},
+            {"water_status", "Water: {0}/{1} litres left. {2}% clean."},
+            {"medical_status", "Medical: {0}/{1} supplies left. {2} patients."},
+            {"fuel_status", "Fuel: {0}/{1} litres left. {2}% efficiency."},
+            {"power_status", "Power: {0}/{1}%. Generator: {2}."},
+            {"morale_status", "Morale: {0}/100. {1} people affected."},
+            {"radiation_status", "Radiation: {0} mSv/h outside. {1} mSv/h inside."},
+            {"weather_status", "Weather: {0}. Visibility: {1} km. {2}°C."}
         };
 
         private static readonly Dictionary<string, string> _alertMessages = new Dictionary<string, string>
         {
-            {"storm_alert", "ALERT: Radiation storm approaching in {0} hours!"},
-            {"raider_alert", "ALERT: Raiders detected near Sector {0}!"},
-            {"disease_alert", "ALERT: Disease outbreak detected! Quarantine required."},
-            {"fire_alert", "ALERT: Fire in {0}! Evacuate if necessary."},
-            {"intruder_alert", "ALERT: Intruder detected in the bunker!"},
-            {"power_alert", "ALERT: Power failure in {0}! Emergency protocols activated."},
-            {"radiation_alert", "ALERT: Radiation leak detected! Seal affected areas immediately."},
-            {"food_alert", "ALERT: Food storage compromised! Check for contamination."},
-            {"water_alert", "ALERT: Water filtration system failing! Repairs needed."},
-            {"medical_alert", "ALERT: Medical bay at capacity! Prioritize critical cases."}
+            {"storm_alert", "ALERT: Fallout storm in {0} hours."},
+            {"raider_alert", "ALERT: Armed group near Sector {0}."},
+            {"disease_alert", "ALERT: Sickness in the shelter. Quarantine."},
+            {"fire_alert", "ALERT: Fire in {0}."},
+            {"intruder_alert", "ALERT: Intruder inside."},
+            {"power_alert", "ALERT: Power failure in {0}."},
+            {"radiation_alert", "ALERT: Radiation leak. Seal the rooms."},
+            {"food_alert", "ALERT: Food stores compromised. Check for contamination."},
+            {"water_alert", "ALERT: Water filter failing. Needs repair."},
+            {"medical_alert", "ALERT: Infirmary full. Critical cases first."}
         };
 
         private static readonly Dictionary<string, string> _hintMessages = new Dictionary<string, string>
         {
-            {"scavenge_hint", "Tip: Scavenge in areas with low radiation for better results."},
-            {"ration_hint", "Tip: Equal rationing maintains morale, but priority rationing saves lives."},
-            {"medical_hint", "Tip: Assign your best medics to critical cases to improve survival rates."},
-            {"trade_hint", "Tip: Trade with factions you trust, but always verify their claims."},
-            {"expedition_hint", "Tip: Send experienced survivors on dangerous expeditions."},
-            {"morale_hint", "Tip: Small celebrations boost morale more than large ones."},
-            {"repair_hint", "Tip: Assign laborers to repair bunker structures to prevent deterioration."},
-            {"radiation_hint", "Tip: Use protective gear when radiation levels are elevated."},
-            {"faction_hint", "Tip: Maintain good relationships with multiple factions to avoid isolation."},
-            {"resource_hint", "Tip: Stockpile resources before winter to avoid shortages."}
+            {"scavenge_hint", "Low-radiation ground yields cleaner salvage."},
+            {"ration_hint", "Equal rations keep morale. Unequal rations keep people alive."},
+            {"medical_hint", "Put the best medic on the worst case."},
+            {"trade_hint", "Trade with people you trust. Count the goods anyway."},
+            {"expedition_hint", "Send experienced people on the hard roads."},
+            {"morale_hint", "A small meal lifts the room more than a speech."},
+            {"repair_hint", "Put hands on repairs before the rooms fail."},
+            {"radiation_hint", "Kit up when the outdoor dose climbs."},
+            {"faction_hint", "Don't owe everything to one faction."},
+            {"resource_hint", "Stock before winter. The road closes."}
         };
 
         private static readonly Dictionary<string, string> _spoilerMessages = new Dictionary<string, string>
         {
-            {"major_reveal", "SPOILER WARNING: This action will reveal major plot points. Continue?"},
-            {"ending_spoiler", "SPOILER: This choice affects the game's ending. Are you sure?"},
-            {"faction_spoiler", "SPOILER: This choice may permanently alter faction relationships."},
-            {"survivor_spoiler", "SPOILER: This action may result in a survivor's death."},
-            {"technology_spoiler", "SPOILER: This technology has hidden consequences. Proceed with caution."},
-            {"quest_spoiler", "SPOILER: This quest has branching paths with different outcomes."},
-            {"world_spoiler", "SPOILER: This choice may permanently change the game world."},
-            {"secret_spoiler", "SPOILER: You're about to uncover a hidden secret. Continue?"},
-            {"ending_choice", "SPOILER: This is a major story choice. Think carefully before proceeding."},
-            {"final_consequence", "SPOILER: This action has irreversible consequences. Are you certain?"}
+            {"major_reveal", "Once you open this, you cannot put it back. Continue?"},
+            {"ending_spoiler", "This choice decides who is left standing. Continue?"},
+            {"faction_spoiler", "This may settle standing with a faction for good."},
+            {"survivor_spoiler", "Someone may not come back from this."},
+            {"technology_spoiler", "This equipment has costs that are not on the label."},
+            {"quest_spoiler", "This task forks. The other path closes."},
+            {"world_spoiler", "The valley will not look the same after this."},
+            {"secret_spoiler", "You are about to read something that was meant to stay closed. Continue?"},
+            {"ending_choice", "This is a lasting choice. Be sure."},
+            {"final_consequence", "This cannot be undone. Continue?"}
         };
 
         private static readonly Dictionary<string, string> _timePressureMessages = new Dictionary<string, string>
         {
-            {"storm_countdown", "HURRY! Storm arrives in {0} hours. {1} tasks remaining."},
-            {"raid_countdown", "HURRY! Raiders attack in {0} minutes. Prepare defenses now."},
-            {"medical_emergency", "HURRY! {0} is critical. {1} minutes until irreversible damage."},
-            {"power_failure", "HURRY! Power failure in {0} minutes. Activate backup generator."},
-            {"food_shortage", "HURRY! Food runs out in {0} days. Send scavengers immediately."},
-            {"water_contamination", "HURRY! Water contaminated. {0} hours until unusable."},
-            {"radiation_spike", "HURRY! Radiation spike detected. {0} minutes to find shelter."},
-            {"siege_imminent", "HURRY! Siege begins in {0} hours. Fortify the bunker now."},
-            {"expedition_timeout", "HURRY! Expedition deadline in {0} hours. Recall team if overdue."},
-            {"trade_deadline", "HURRY! Trade deadline in {0} minutes. Meet at the rendezvous point."}
+            {"storm_countdown", "Storm in {0} hours. {1} tasks still open."},
+            {"raid_countdown", "Attack in {0} minutes. Get people on the hatch."},
+            {"medical_emergency", "{0} is critical. {1} minutes before it will not reverse."},
+            {"power_failure", "Power fails in {0} minutes. Start the backup."},
+            {"food_shortage", "Food runs out in {0} days. Send a team."},
+            {"water_contamination", "Water is contaminated. {0} hours until it is unusable."},
+            {"radiation_spike", "Radiation spike. {0} minutes to get under cover."},
+            {"siege_imminent", "Siege in {0} hours. Bar the hatch."},
+            {"expedition_timeout", "Expedition overdue in {0} hours. Recall them."},
+            {"trade_deadline", "Trade window closes in {0} minutes."}
         };
 
         private static readonly Dictionary<string, string> _resourceWarnings = new Dictionary<string, string>
         {
-            {"food_low", "WARNING: Food supplies at {0}%. Assign scavengers to find more."},
-            {"water_low", "WARNING: Water supplies at {0}%. Filter repairs needed."},
-            {"medical_low", "WARNING: Medical supplies at {0}%. Prioritize critical cases."},
-            {"fuel_low", "WARNING: Fuel at {0}%. Send expedition to scavenge."},
-            {"scrap_low", "WARNING: Scrap metal at {0}%. Construction projects delayed."},
-            {"technology_low", "WARNING: Technology at {0}%. Research projects stalled."},
-            {"ammo_low", "WARNING: Ammunition at {0}%. Assign survivors to scavenge weapons."},
-            {"medicine_low", "WARNING: Medicine at {0}%. Disease risk increases."},
-            {"fuel_critical", "CRITICAL: Fuel at {0}%. Bunker operations at risk."},
-            {"food_critical", "CRITICAL: Food at {0}%. Starvation imminent without action."}
+            {"food_low", "WARNING: Food at {0}%. Send someone for more."},
+            {"water_low", "WARNING: Water at {0}%. The filter needs work."},
+            {"medical_low", "WARNING: Medical stores at {0}%. Critical cases first."},
+            {"fuel_low", "WARNING: Fuel at {0}%. Send a team."},
+            {"scrap_low", "WARNING: Scrap at {0}%. Builds will wait."},
+            {"technology_low", "WARNING: Research stock at {0}%. The queue is stalling."},
+            {"ammo_low", "WARNING: Ammunition at {0}%. Send people for more."},
+            {"medicine_low", "WARNING: Medicine at {0}%. Sickness will run."},
+            {"fuel_critical", "CRITICAL: Fuel at {0}%. Shelter systems at risk."},
+            {"food_critical", "CRITICAL: Food at {0}%. People will starve without a run."}
         };
 
         private static readonly Dictionary<string, string> _healthWarnings = new Dictionary<string, string>
         {
-            {"radiation_high", "DANGER: Radiation levels at {0} mSv/hr. Seek shelter immediately."},
-            {"injury_critical", "DANGER: {0} is critically injured. Medical attention required NOW."},
-            {"sickness_spreading", "DANGER: Disease spreading. Quarantine infected survivors."},
-            {"starvation_imminent", "DANGER: {0} is starving. Feed them immediately or they will die."},
-            {"dehydration_imminent", "DANGER: {0} is dehydrated. Provide water immediately or they will die."},
+            {"radiation_high", "DANGER: Radiation {0} mSv/h. Get under cover."},
+            {"injury_critical", "DANGER: {0} is critically injured. Get them to Medical."},
+            {"sickness_spreading", "DANGER: Sickness spreading. Quarantine the infected."},
+            {"starvation_imminent", "DANGER: {0} is starving. Feed them or they die."},
+            {"dehydration_imminent", "DANGER: {0} is dehydrated. Water, or they die."},
             {
                 "radiation_sickness",
-                "DANGER: {0} has radiation sickness. Immediate medical treatment required."
+                "DANGER: {0} has radiation sickness. Treat them now."
             },
-            {"hypothermia_risk", "DANGER: Hypothermia risk high. Provide warmth immediately."},
-            {"heatstroke_risk", "DANGER: Heatstroke risk high. Provide cooling immediately."},
-            {"mental_break", "DANGER: {0} is having a mental breakdown. Provide support immediately."},
-            {"poisoning_risk", "DANGER: {0} has been poisoned. Provide antidote immediately."}
+            {"hypothermia_risk", "DANGER: Hypothermia risk. Get them warm."},
+            {"heatstroke_risk", "DANGER: Heatstroke risk. Get them cool."},
+            {"mental_break", "DANGER: {0} is breaking. Someone stay with them."},
+            {"poisoning_risk", "DANGER: {0} is poisoned. Get the antidote."}
         };
 
         private static readonly Dictionary<string, string> _moraleWarnings = new Dictionary<string, string>
         {
-            {"morale_critical", "CRITICAL: Morale at {0}/100. Survivors may abandon the bunker."},
-            {"starvation_morale", "Morale dropping: Survivors are hungry and restless."},
-            {"death_morale", "Morale dropping: A survivor has died. Community in mourning."},
-            {"isolation_morale", "Morale dropping: Bunker feels isolated. Survivors crave connection."},
-            {"fear_morale", "Morale dropping: Radiation storms and raids increase fear."},
-            {"hope_low", "Morale low: Survivors have lost hope for the future."},
-            {"celebration_needed", "Morale low: Survivors need a celebration to boost spirits."},
-            {"leadership_doubt", "Morale low: Survivors question leadership decisions."},
-            {"community_divided", "Morale low: Survivors are divided and distrustful."},
-            {"survival_fatigue", "Morale low: Survivors are tired of constant struggle."}
+            {"morale_critical", "CRITICAL: Morale at {0}/100. People may walk."},
+            {"starvation_morale", "Morale dropping. People are hungry and pacing."},
+            {"death_morale", "Morale dropping. Someone died. The room knows."},
+            {"isolation_morale", "Morale dropping. The shelter feels cut off."},
+            {"fear_morale", "Morale dropping. Storms and raids are wearing people down."},
+            {"hope_low", "Morale low. People have stopped talking about later."},
+            {"celebration_needed", "Morale low. A shared meal would help more than a speech."},
+            {"leadership_doubt", "Morale low. People are questioning the roster."},
+            {"community_divided", "Morale low. The room is splitting."},
+            {"survival_fatigue", "Morale low. People are tired of the work."}
         };
 
         private static readonly Dictionary<string, string> _relationshipMessages = new Dictionary<string, string>
         {
-            {"relationship_improved", "Your relationship with {0} has improved to {1}/100."},
-            {"relationship_damaged", "Your relationship with {0} has worsened to {1}/100."},
-            {"relationship_hostile", "Your relationship with {0} is now hostile. Avoid contact."},
-            {"relationship_allies", "Your relationship with {0} is now allied. Trade and cooperation possible."},
-            {"relationship_trusting", "Your relationship with {0} is now trusting. They may share secrets."},
-            {"relationship_respected", "{0} now respects you. They may offer valuable information."},
-            {"relationship_fearful", "{0} fears you. They may avoid or betray you."},
-            {"relationship_dependent", "{0} is now dependent on you. They may follow your lead."},
-            {"relationship_manipulated", "You have manipulated {0}. They may seek revenge."},
-            {"relationship_betrayed", "{0} feels betrayed. Trust has been broken."}
+            {"relationship_improved", "Standing with {0} is {1}/100."},
+            {"relationship_damaged", "Standing with {0} fell to {1}/100."},
+            {"relationship_hostile", "Standing with {0} is hostile. Keep clear."},
+            {"relationship_allies", "Standing with {0} is allied. Trade is possible."},
+            {"relationship_trusting", "Standing with {0} is trusting. They may talk."},
+            {"relationship_respected", "{0} respects the shelter. They may pass word."},
+            {"relationship_fearful", "{0} is afraid. They may keep clear — or turn."},
+            {"relationship_dependent", "{0} is depending on the shelter."},
+            {"relationship_manipulated", "{0} knows they were used. They may not forget."},
+            {"relationship_betrayed", "{0} feels betrayed. Trust is gone."}
         };
 
         private static readonly Dictionary<string, string> _factionMessages = new Dictionary<string, string>
         {
-            {"faction_allies", "You are now allied with {0}. Trade and cooperation possible."},
-            {"faction_enemies", "You are now enemies with {0}. Avoid their territory."},
-            {"faction_neutral", "Your relationship with {0} is neutral. Proceed with caution."},
-            {"faction_trade_blocked", "Trade with {0} is now blocked. Find another partner."},
-            {"faction_support_gained", "{0} now supports you. They may provide aid."},
-            {"faction_support_lost", "{0} has withdrawn support. You are on your own."},
-            {"faction_raid_imminent", "{0} is planning a raid. Fortify your defenses."},
-            {"faction_trade_improved", "Trade terms with {0} have improved."},
-            {"faction_trade_worsened", "Trade terms with {0} have worsened."},
-            {"faction_alliance_broken", "Your alliance with {0} has been broken."}
+            {"faction_allies", "Allied with {0}. Trade is open."},
+            {"faction_enemies", "Enemies with {0}. Stay off their roads."},
+            {"faction_neutral", "Standing with {0} is even. Watch the terms."},
+            {"faction_trade_blocked", "Trade with {0} is blocked."},
+            {"faction_support_gained", "{0} will send aid — for now."},
+            {"faction_support_lost", "{0} has withdrawn support."},
+            {"faction_raid_imminent", "{0} is planning a raid. Bar the hatch."},
+            {"faction_trade_improved", "Trade terms with {0} improved."},
+            {"faction_trade_worsened", "Trade terms with {0} worsened."},
+            {"faction_alliance_broken", "Accord with {0} is broken."}
         };
 
         private static readonly Dictionary<string, string> _worldStateMessages = new Dictionary<string, string>
         {
-            {"storm_approaching", "The weather forecast predicts a radiation storm in {0} hours."},
-            {"season_changing", "The season is changing to {0}. Prepare for {1} conditions."},
-            {"radiation_increasing", "Radiation levels are increasing across the wasteland."},
+            {"storm_approaching", "Fallout storm due in {0} hours."},
+            {"season_changing", "Season turning to {0}. Expect {1}."},
+            {"radiation_increasing", "Outdoor radiation is climbing."},
             {
                 "settlement_destroyed",
-                "The settlement at {0} has been destroyed. Survivors may seek refuge here."
+                "The settlement at {0} is gone. People may come here."
             },
-            {"raider_activity_increasing", "Raider activity is increasing in Sector {0}."},
-            {"trade_route_disrupted", "The trade route to {0} has been disrupted by raiders."},
-            {"water_source_contaminated", "The water source at {0} has been contaminated."},
-            {"food_source_depleted", "The food source at {0} has been depleted."},
-            {"technology_scavenged", "A new technology cache has been scavenged at {0}."},
-            {"radiation_storm_passed", "The radiation storm has passed. Radiation levels are returning to normal."}
+            {"raider_activity_increasing", "Armed traffic is rising in Sector {0}."},
+            {"trade_route_disrupted", "The road to {0} is disrupted."},
+            {"water_source_contaminated", "The water at {0} is contaminated."},
+            {"food_source_depleted", "The food cache at {0} is empty."},
+            {"technology_scavenged", "A cache of parts was found at {0}."},
+            {"radiation_storm_passed", "The storm has passed. Outdoor dose is falling."}
         };
 
         private static readonly Dictionary<string, string> _systemMessages = new Dictionary<string, string>
         {
-            {"save_success", "Game saved successfully."},
-            {"save_failed", "Failed to save game. Check your storage device."},
-            {"load_success", "Game loaded successfully."},
-            {"load_failed", "Failed to load game. File may be corrupted."},
-            {"backup_created", "Backup created successfully."},
-            {"backup_failed", "Failed to create backup. Check your storage device."},
-            {"update_available", "Update available! Version {0} is ready to install."},
-            {"update_failed", "Failed to install update. Check your connection."},
-            {"crash_recovered", "Game recovered from crash. Some progress may be lost."},
-            {"performance_warning", "Performance warning: {0}% CPU usage. Optimize your settings."}
+            {"save_success", "Save written."},
+            {"save_failed", "Save failed. Check storage."},
+            {"load_success", "Save loaded."},
+            {"load_failed", "Load failed. The file may be damaged."},
+            {"backup_created", "Backup written."},
+            {"backup_failed", "Backup failed. Check storage."},
+            {"update_available", "Update available: version {0}."},
+            {"update_failed", "Update failed."},
+            {"crash_recovered", "Recovered after a crash. Some progress may be missing."},
+            {"performance_warning", "Machine load {0}%. Drop settings if it stutters."}
         };
 
         public static Ashfall.Core.Feedback.IFeedbackService? Service { get; set; }
@@ -324,7 +325,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Success! Operation completed.";
+            return "Done.";
         }
 
         /// <summary>
@@ -336,7 +337,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Operation failed. Check your inputs.";
+            return "That didn't take. Check the inputs.";
         }
 
         /// <summary>
@@ -348,7 +349,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Warning: Proceed with caution.";
+            return "Caution.";
         }
 
         /// <summary>
@@ -360,7 +361,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Error: Something went wrong.";
+            return "Something went wrong.";
         }
 
         /// <summary>
@@ -372,7 +373,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Are you sure you want to proceed?";
+            return "Continue?";
         }
 
         /// <summary>
@@ -384,7 +385,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Progress: {0}% complete.";
+            return "Progress: {0}%.";
         }
 
         /// <summary>
@@ -396,7 +397,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "You've earned a reward!";
+            return "Received a reward.";
         }
 
         /// <summary>
@@ -408,7 +409,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Penalty incurred. Check your status.";
+            return "A cost was taken. Check the ledger.";
         }
 
         /// <summary>
@@ -420,7 +421,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Status: Normal.";
+            return "Status: steady.";
         }
 
         /// <summary>
@@ -432,7 +433,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "ALERT: Important update available!";
+            return "ALERT: Something needs attention.";
         }
 
         /// <summary>
@@ -444,7 +445,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Tip: Check your surroundings for clues.";
+            return "Look around before you move.";
         }
 
         /// <summary>
@@ -456,7 +457,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "SPOILER WARNING: This action may reveal major plot points.";
+            return "This may not go back in the box.";
         }
 
         /// <summary>
@@ -468,7 +469,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "HURRY! Time is running out!";
+            return "Time is short.";
         }
 
         /// <summary>
@@ -480,7 +481,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "WARNING: Resource levels are critical!";
+            return "WARNING: Stores are critical.";
         }
 
         /// <summary>
@@ -492,7 +493,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "DANGER: Health critical!";
+            return "DANGER: Health is critical.";
         }
 
         /// <summary>
@@ -504,7 +505,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "WARNING: Morale is dangerously low!";
+            return "WARNING: Morale is critically low.";
         }
 
         /// <summary>
@@ -516,7 +517,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Relationship status updated.";
+            return "Standing updated.";
         }
 
         /// <summary>
@@ -528,7 +529,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "Faction relationship updated.";
+            return "Faction standing updated.";
         }
 
         /// <summary>
@@ -540,7 +541,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "World state updated.";
+            return "The valley shifted.";
         }
 
         /// <summary>
@@ -552,7 +553,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 return string.Format(message, args);
             }
-            return "System status updated.";
+            return "System updated.";
         }
     }
 }

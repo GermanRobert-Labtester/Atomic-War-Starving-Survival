@@ -23,6 +23,12 @@ namespace Ashfall.Core
         public bool membraneSaved;
         public bool membraneLetDrop;
         public bool membraneSector4Strip;
+
+        /// <summary>B5–B8 expansion (§27 brine economy): uncollected rendered
+        /// salt stock (kg). Accumulates only while the salt trade is open and
+        /// the steam is up; the host collects it as canonical trade sacks.
+        /// Additive — legacy saves restore 0 stock.</summary>
+        public float saltStockKg;
     }
 
     public class BrineWaterSystem
@@ -36,6 +42,21 @@ namespace Ashfall.Core
         public const int SteamCollapseHours = 48;
         public const float TransportLoss = 0.25f;
         public const float ClusterOutdoorFallbackC = -18f;
+
+        // ── B5–B8 expansion (§27 brine economy depth) ─────────────────
+        /// <summary>The verified consumer is the authored trade network:
+        /// <c>item_trade_salt_sack</c> is the Holdfast settlement's
+        /// primary export and a quoted line in the trade scenarios.
+        /// Until now nothing produced it — the salt trade was a flag with a
+        /// ledger and no product.</summary>
+        public const string TradeSaltItemId = "item_trade_salt_sack";
+
+        /// <summary>Salt rendered per day at a perfect membrane, while the
+        /// salt trade is open and the steam is up (bounded, modest).</summary>
+        public const float SaltRenderKgPerDay = 1.0f;
+
+        /// <summary>Canonical sack size (a day and a half of full render).</summary>
+        public const float SackKg = 1.5f;
 
         private BrineWaterSystemState _state = new BrineWaterSystemState();
 
@@ -66,6 +87,14 @@ namespace Ashfall.Core
             if (weather == WeatherKind.FalseSpring || weather == WeatherKind.IceStorm)
                 load *= 1.15f;
             _state.membraneIntegrity = Math.Clamp(_state.membraneIntegrity - load, 0f, 100f);
+
+            // B5–B8 expansion: salt render — needs an open trade AND live
+            // steam (a tripped plant stops the pans; no repair, no salt).
+            if (_state.saltTradeUnlocked && !_state.steamTripped)
+            {
+                _state.saltStockKg = Math.Min(60f,
+                    _state.saltStockKg + SaltRenderKgPerDay * (_state.membraneIntegrity / 100f));
+            }
 
             if (!_state.steamTripped && _state.membraneIntegrity < SteamTripIntegrity)
             {
@@ -132,6 +161,23 @@ namespace Ashfall.Core
             return barrels * (1f - TransportLoss);
         }
 
+        /// <summary>
+        /// B5–B8 expansion (§27): collect rendered salt as canonical
+        /// <see cref="TradeSaltItemId"/> sacks. The host grants the items into
+        /// the shelter inventory and sells them through the verified trade
+        /// network (settlements export list + trade scenarios). Zero stock →
+        /// nothing collected; the stock is consumed exactly once.
+        /// </summary>
+        public int CollectTradeSalt(int maxSacks)
+        {
+            if (maxSacks <= 0) return 0;
+            int sacks = Math.Min(maxSacks, (int)Math.Floor(_state.saltStockKg / SackKg));
+            if (sacks <= 0) return 0;
+            _state.saltStockKg -= sacks * SackKg;
+            RaiseChanged();
+            return sacks;
+        }
+
         public BrineWaterSystemState CaptureState()
         {
             return new BrineWaterSystemState
@@ -147,7 +193,8 @@ namespace Ashfall.Core
                 saltTradeUnlocked = _state.saltTradeUnlocked,
                 membraneSaved = _state.membraneSaved,
                 membraneLetDrop = _state.membraneLetDrop,
-                membraneSector4Strip = _state.membraneSector4Strip
+                membraneSector4Strip = _state.membraneSector4Strip,
+                saltStockKg = _state.saltStockKg
             };
         }
 
@@ -171,6 +218,7 @@ namespace Ashfall.Core
                 _state.membraneSaved = saved.membraneSaved;
                 _state.membraneLetDrop = saved.membraneLetDrop;
                 _state.membraneSector4Strip = saved.membraneSector4Strip;
+                _state.saltStockKg = Math.Max(0f, saved.saltStockKg);
             }
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             if (_state.saltTradeUnlocked) _state.unlocked = true;

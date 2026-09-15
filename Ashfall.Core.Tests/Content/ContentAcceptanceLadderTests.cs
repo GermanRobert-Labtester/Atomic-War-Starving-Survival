@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: MIT
-// ASHFALL Core Tests: Content Acceptance Ladder Tests
-//
-// Ticket REM-009 / R18 — Verifies 8-rung acceptance ladder, definition counting,
-// and expiring exemption gate enforcement.
-
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Content;
@@ -11,10 +6,14 @@ using Xunit;
 
 namespace Ashfall.Core.Tests.Content
 {
+    /// <summary>
+    /// Current eight-rung acceptance contract. Date-expiring exemption policy
+    /// was removed from ContentExemption and is deliberately not resurrected.
+    /// </summary>
     public sealed class ContentAcceptanceLadderTests
     {
         [Fact]
-        public void ContentAcceptanceRung_Has8OrderedRungs()
+        public void ContentAcceptanceRung_HasEightOrderedRungs()
         {
             Assert.Equal(1, (int)ContentAcceptanceRung.PARSES);
             Assert.Equal(2, (int)ContentAcceptanceRung.IDS_RESOLVE);
@@ -26,148 +25,68 @@ namespace Ashfall.Core.Tests.Content
             Assert.Equal(8, (int)ContentAcceptanceRung.SAVE_ROUNDTRIP);
         }
 
-        [Theory]
-        [InlineData(ContentClassification.GAMEPLAY_CONSUMED, ContentAcceptanceRung.EFFECT_PRODUCED)]
-        [InlineData(ContentClassification.UI_ONLY, ContentAcceptanceRung.PRESENTED)]
-        [InlineData(ContentClassification.CODEX_ONLY, ContentAcceptanceRung.PRESENTED)]
-        [InlineData(ContentClassification.OPTIONAL, ContentAcceptanceRung.LOADED)]
-        [InlineData(ContentClassification.TEST_ONLY, ContentAcceptanceRung.LOADED)]
-        [InlineData(ContentClassification.ORPHANED, ContentAcceptanceRung.CONSUMER_EXISTS)]
-        public void ContentAcceptanceLadder_DefaultRequiredRung(ContentClassification classification, ContentAcceptanceRung expectedRung)
+        // TEST-AGGREGATION: source_rows=6 aggregate_cases=1 saved_cases=5
+        [Fact]
+        public void DefaultRequiredRung_MatchesEachContentClassification()
         {
-            var cat = new CatalogEntry
+            var failures = new List<string>();
+            foreach (var testCase in new[]
             {
-                Path = "test.json",
-                Classification = classification
-            };
+                (ContentClassification.GAMEPLAY_CONSUMED, ContentAcceptanceRung.EFFECT_PRODUCED),
+                (ContentClassification.UI_ONLY, ContentAcceptanceRung.PRESENTED),
+                (ContentClassification.CODEX_ONLY, ContentAcceptanceRung.PRESENTED),
+                (ContentClassification.OPTIONAL, ContentAcceptanceRung.LOADED),
+                (ContentClassification.TEST_ONLY, ContentAcceptanceRung.LOADED),
+                (ContentClassification.ORPHANED, ContentAcceptanceRung.CONSUMER_EXISTS)
+            })
+            {
+                var catalog = new CatalogEntry { Path = "test.json", Classification = testCase.Item1 };
+                ContentAcceptanceRung actual = ContentAcceptanceLadder.GetDefaultRequiredRung(catalog);
+                if (actual != testCase.Item2)
+                    failures.Add($"{testCase.Item1}: expected {testCase.Item2}, got {actual}");
+            }
 
-            var required = ContentAcceptanceLadder.GetDefaultRequiredRung(cat);
-            Assert.Equal(expectedRung, required);
+            Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
         }
 
         [Fact]
-        public void ContentAcceptanceLadder_EvaluateAchievedRung_Progression()
+        public void EvaluateAchievedRung_FollowsCurrentEvidenceProgression()
         {
-            var cat = new CatalogEntry
+            var catalog = new CatalogEntry
             {
                 Path = "test.json",
                 DefinitionCount = 5,
                 Classification = ContentClassification.UNRESOLVED
             };
 
-            // No loader => IDS_RESOLVE
-            Assert.Equal(ContentAcceptanceRung.IDS_RESOLVE, ContentAcceptanceLadder.EvaluateAchievedRung(cat));
+            Assert.Equal(ContentAcceptanceRung.IDS_RESOLVE, ContentAcceptanceLadder.EvaluateAchievedRung(catalog));
 
-            // Has loader => LOADED
-            cat.Loader = "TestLoader";
-            Assert.Equal(ContentAcceptanceRung.LOADED, ContentAcceptanceLadder.EvaluateAchievedRung(cat));
+            catalog.Loader = "TestLoader";
+            Assert.Equal(ContentAcceptanceRung.LOADED, ContentAcceptanceLadder.EvaluateAchievedRung(catalog));
 
-            // Has consumer => PLAYER_OR_SIM_REACHABLE
-            cat.ConsumerSystems.Add("TestSystem");
-            Assert.Equal(ContentAcceptanceRung.PLAYER_OR_SIM_REACHABLE, ContentAcceptanceLadder.EvaluateAchievedRung(cat));
+            catalog.ConsumerSystems.Add("TestSystem");
+            Assert.Equal(ContentAcceptanceRung.PLAYER_OR_SIM_REACHABLE, ContentAcceptanceLadder.EvaluateAchievedRung(catalog));
 
-            // Produces effect => EFFECT_PRODUCED
-            cat.MaxStage = UtilizationStage.EFFECT_PRODUCED;
-            cat.Classification = ContentClassification.GAMEPLAY_CONSUMED;
-            Assert.Equal(ContentAcceptanceRung.EFFECT_PRODUCED, ContentAcceptanceLadder.EvaluateAchievedRung(cat));
+            catalog.MaxStage = UtilizationStage.EFFECT_PRODUCED;
+            catalog.Classification = ContentClassification.GAMEPLAY_CONSUMED;
+            Assert.Equal(ContentAcceptanceRung.EFFECT_PRODUCED, ContentAcceptanceLadder.EvaluateAchievedRung(catalog));
         }
 
         [Fact]
-        public void ContentAcceptanceLadder_IsAccepted_ValidatesRungs()
+        public void IsAccepted_RequiresTheConfiguredRung()
         {
-            var cat = new CatalogEntry
+            var catalog = new CatalogEntry
             {
                 Path = "test.json",
                 RequiredRung = ContentAcceptanceRung.EFFECT_PRODUCED,
                 AchievedRung = ContentAcceptanceRung.LOADED
             };
 
-            Assert.False(ContentAcceptanceLadder.IsAccepted(cat));
-
-            cat.AchievedRung = ContentAcceptanceRung.EFFECT_PRODUCED;
-            Assert.True(ContentAcceptanceLadder.IsAccepted(cat));
-
-            cat.AchievedRung = ContentAcceptanceRung.SAVE_ROUNDTRIP;
-            Assert.True(ContentAcceptanceLadder.IsAccepted(cat));
-        }
-
-        [Fact]
-        public void ContentUtilizationGate_ExpiredExemption_FailsGate()
-        {
-            var graph = new ContentUtilizationGraph();
-            graph.Catalogs.Add(new CatalogEntry
-            {
-                Path = "expired_content.json",
-                Classification = ContentClassification.OPTIONAL,
-                ExemptionId = "exempt_old"
-            });
-
-            var baseline = new UtilizationBaseline();
-            baseline.CatalogClassifications["expired_content.json"] = ContentClassification.OPTIONAL.ToString();
-
-            var registry = new ExemptionRegistry();
-            registry.Exemptions.Add(new ContentExemption
-            {
-                ExemptionId = "exempt_old",
-                ContentPath = "expired_content.json",
-                Owner = "team",
-                Classification = "OPTIONAL",
-                Rationale = "Was temporarily exempted",
-                ExpiryDate = "2024-01-01" // In the past
-            });
-
-            var result = ContentUtilizationGate.Run(graph, baseline, registry, referenceDate: new DateTime(2026, 9, 4));
-
-            Assert.False(result.Passed);
-            Assert.Contains(result.Errors, e => e.StartsWith("EXPIRED EXEMPTION: exempt_old"));
-        }
-
-        [Fact]
-        public void ContentUtilizationGate_InvalidExemption_MissingExpiry_FailsGate()
-        {
-            var graph = new ContentUtilizationGraph();
-            var baseline = new UtilizationBaseline();
-
-            var registry = new ExemptionRegistry();
-            registry.Exemptions.Add(new ContentExemption
-            {
-                ExemptionId = "exempt_bad_no_expiry",
-                ContentPath = "test.json",
-                Owner = "team",
-                Classification = "OPTIONAL",
-                Rationale = "Valid rationale but no expiry condition or date",
-                ExpiryCondition = "",
-                ExpiryDate = ""
-            });
-
-            var result = ContentUtilizationGate.Run(graph, baseline, registry);
-
-            Assert.False(result.Passed);
-            Assert.Contains(result.Errors, e => e.StartsWith("INVALID EXEMPTION: exempt_bad_no_expiry"));
-        }
-
-        [Fact]
-        public void ContentUtilizationGate_ValidExemption_PassesGate()
-        {
-            var graph = new ContentUtilizationGraph();
-            var baseline = new UtilizationBaseline();
-
-            var registry = new ExemptionRegistry();
-            registry.Exemptions.Add(new ContentExemption
-            {
-                ExemptionId = "exempt_good",
-                ContentPath = "test.json",
-                Owner = "team",
-                Classification = "OPTIONAL",
-                Rationale = "Valid rationale",
-                ExpiryCondition = "Permanent codex flavor text",
-                ExpiryDate = "2099-12-31"
-            });
-
-            var result = ContentUtilizationGate.Run(graph, baseline, registry, referenceDate: new DateTime(2026, 9, 4));
-
-            Assert.True(result.Passed);
-            Assert.Empty(result.Errors);
+            Assert.False(ContentAcceptanceLadder.IsAccepted(catalog));
+            catalog.AchievedRung = ContentAcceptanceRung.EFFECT_PRODUCED;
+            Assert.True(ContentAcceptanceLadder.IsAccepted(catalog));
+            catalog.AchievedRung = ContentAcceptanceRung.SAVE_ROUNDTRIP;
+            Assert.True(ContentAcceptanceLadder.IsAccepted(catalog));
         }
     }
 }

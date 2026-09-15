@@ -32,7 +32,7 @@
       "power_draw_watts": 0,
       "flavor_morale_bonus": -1,
       "spoilage_toxin_risk": 0.05,
-      "allowed_food_types": ["raw_meat"]
+      "allowed_food_types": ["raw_meat", "dried_rations"]
     },
     {
       "id": "preservation_smokehouse",
@@ -43,7 +43,7 @@
       "power_draw_watts": 0,
       "flavor_morale_bonus": 1,
       "spoilage_toxin_risk": 0.04,
-      "allowed_food_types": ["raw_meat"]
+      "allowed_food_types": ["raw_meat", "dried_rations"]
     },
     {
       "id": "preservation_fermented",
@@ -54,7 +54,7 @@
       "power_draw_watts": 0,
       "flavor_morale_bonus": 0,
       "spoilage_toxin_risk": 0.06,
-      "allowed_food_types": ["vegetable", "tuber"]
+      "allowed_food_types": ["vegetable", "tuber", "dried_rations", "raw_meat"]
     },
     {
       "id": "preservation_cryogenic",
@@ -93,5 +93,53 @@
       "output_quantity": 2,
       "work_ticks_required": 6
     }
-  ]
+  ,
+  {
+    "id": "recipe_cure_ferment_concentrate",
+    "display_name": "Concentrate-Brined Curing Run",
+    "target_tier": "preservation_fermented",
+    "input_item_id": "raw_meat",
+    "input_quantity": 2,
+    "preservative_item_id": "item_fermentation_preservation_concentrate",
+    "preservative_quantity": 1,
+    "output_item_id": "dried_rations",
+    "output_quantity": 2,
+    "work_ticks_required": 3
+  }
+],
+  "food_type_by_item_id": {
+    "raw_meat": "raw_meat",
+    "cooked_meat": "raw_meat",
+    "dried_rations": "dried_rations",
+    "item_salted_meat": "raw_meat",
+    "item_smoked_meat": "raw_meat",
+    "item_pemmican": "raw_meat",
+    "item_travel_ration": "dried_rations",
+    "military_mre": "dried_rations",
+    "military_rations": "dried_rations",
+    "canned_food": "dried_rations",
+    "canned_soup": "dried_rations",
+    "item_canned_grain_stew": "dried_rations",
+    "item_flatbread": "dried_rations",
+    "item_grain_flour": "dried_rations",
+    "item_vegetable_soup": "vegetable",
+    "item_boiled_roots": "tuber",
+    "item_pickled_tubers": "tuber",
+    "item_brined_legume_mash": "vegetable",
+    "item_fermented_sauerkraut": "vegetable",
+    "item_dried_mushrooms": "vegetable",
+    "harvested_mushrooms_subterranean": "vegetable",
+    "crop_leafy_green": "vegetable",
+    "crop_ash_grain": "vegetable",
+    "crop_nutrient_algae": "vegetable",
+    "crop_biolum_mushroom": "vegetable",
+    "crop_cold_legume": "vegetable",
+    "crop_hardy_tuber": "tuber",
+    "roots": "tuber",
+    "berries": "vegetable",
+    "item_honey_preserved_pulp": "vegetable",
+    "item_honey_pot": "dried_rations",
+    "item_fat_confit": "raw_meat",
+    "cooking_oil": "dried_rations"
+  }
 }

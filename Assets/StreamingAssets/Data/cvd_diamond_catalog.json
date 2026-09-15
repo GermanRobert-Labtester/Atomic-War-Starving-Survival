@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "description": "Plan 124 Phase 2 — synthetic diamond tooling (CVD) authority. Abstract materials-production chain: feed quality, plasma stability, substrate, growth grades, defects, and registered high-wear consumers. No real deposition recipes.",
+  "growth_grades": [
+    { "id": "grade_rejected", "display_name": "Rejected Batch", "rank": 0, "wear_factor_bp": 0 },
+    { "id": "grade_utility", "display_name": "Utility Grade", "rank": 1, "wear_factor_bp": 7000 },
+    { "id": "grade_industrial", "display_name": "Industrial Grade", "rank": 2, "wear_factor_bp": 4000 },
+    { "id": "grade_master", "display_name": "Master Grade", "rank": 3, "wear_factor_bp": 2500, "requires_certification": true }
+  ],
+  "defect_profiles": [
+    { "id": "defect_poor_crystal", "display_name": "Poor Crystal Quality", "grade_penalty_bp": 2000 },
+    { "id": "defect_nonuniform_layer", "display_name": "Non-uniform Layer", "grade_penalty_bp": 1500 },
+    { "id": "defect_graphitic_inclusion", "display_name": "Graphitic Inclusion", "grade_penalty_bp": 2500 },
+    { "id": "defect_bond_flaw", "display_name": "Bond Flaw", "grade_penalty_bp": 1200 },
+    { "id": "defect_surface_pitting", "display_name": "Surface Pitting", "grade_penalty_bp": 800 }
+  ],
+  "reactor_profiles": [
+    {
+      "id": "cvd_reactor_mk1",
+      "display_name": "CVD Growth Chamber Mk I",
+      "description": "Salvaged research deposition chamber. Demanding but capable of industrial-grade growth.",
+      "growth_rate_per_tick_bp": 1200,
+      "plasma_stability_baseline_bp": 7000,
+      "magnetron_wear_per_tick_bp": 25,
+      "chamber_wear_per_tick_bp": 18,
+      "power_demand_kw": 12.0,
+      "cooling_requirement": 6,
+      "install_item_ids": ["item_high_vacuum_pump"],
+      "repair_item_ids": ["item_vacuum_pump_oil", "item_ebpvd_vacuum_pump_seal"],
+      "maintenance_profile_id": "maint_cvd_lab"
+    }
+  ],
+  "feed_profiles": [
+    {
+      "id": "feed_industrial_methane",
+      "display_name": "Industrial Feedstock",
+      "description": "Workshop-filtered hydrocarbon feed. Workable purity.",
+      "purity_bp": 7000,
+      "feedstock_item_ids": ["item_biofuel_generator_grade"]
+    },
+    {
+      "id": "feed_refined_methane",
+      "display_name": "Refined Feedstock",
+      "description": "High-purity feed from the polish filter train.",
+      "purity_bp": 9000,
+      "feedstock_item_ids": ["item_biofuel_high_grade"]
+    }
+  ],
+  "substrate_profiles": [
+    {
+      "id": "substrate_borosilicate_blank",
+      "display_name": "Borosilicate Blank",
+      "description": "Cast glass blank as a growth carrier. Modest lattice match.",
+      "quality_bp": 6000,
+      "input_item_id": "item_cast_borosilicate_glass_blank"
+    },
+    {
+      "id": "substrate_superalloy_billet",
+      "display_name": "Prepared Superalloy Billet",
+      "description": "Machined superalloy carrier for tool-face growth.",
+      "quality_bp": 8000,
+      "input_item_id": "item_superalloy_turbine_blade_blank"
+    }
+  ],
+  "tool_components": [
+    {
+      "id": "diamond_insert_utility",
+      "display_name": "Diamond Tool Insert (Utility)",
+      "description": "As-grown insert from utility-grade output. Registered consumers only.",
+      "min_grade_id": "grade_utility",
+      "requires_certification": false,
+      "accepted_consumer_tags": ["consumer_deep_excavation_cutter"],
+      "install_item_ids": ["item_foundry_drill_blanks"]
+    },
+    {
+      "id": "diamond_insert_industrial",
+      "display_name": "Diamond Tool Insert (Industrial)",
+      "description": "Industrial-grade insert; certification opens the precision path.",
+      "min_grade_id": "grade_industrial",
+      "requires_certification": false,
+      "accepted_consumer_tags": ["consumer_deep_excavation_cutter", "consumer_precision_lathe_insert"],
+      "install_item_ids": ["item_foundry_drill_blanks"]
+    },
+    {
+      "id": "diamond_insert_master",
+      "display_name": "Master-Grade Tool Insert",
+      "description": "Requires precision-metrology certification before any consumer accepts it.",
+      "min_grade_id": "grade_master",
+      "requires_certification": true,
+      "accepted_consumer_tags": ["consumer_deep_excavation_cutter", "consumer_precision_lathe_insert"],
+      "install_item_ids": ["item_foundry_drill_blanks"]
+    }
+  ],
+  "consumer_mappings": [
+    {
+      "id": "consumer_deep_excavation_cutter",
+      "display_name": "Deep Excavation Cutter Head",
+      "description": "Registered high-wear consumer. Service-interval gains are data-driven, never zero-wear.",
+      "accepted_component_ids": ["diamond_insert_utility", "diamond_insert_industrial", "diamond_insert_master"]
+    },
+    {
+      "id": "consumer_precision_lathe_insert",
+      "display_name": "Precision Lathe Insert",
+      "description": "Registered machining consumer. Industrial grade or better only.",
+      "accepted_component_ids": ["diamond_insert_industrial", "diamond_insert_master"]
+    }
+  ],
+  "maintenance_profiles": [
+    {
+      "id": "maint_cvd_lab",
+      "display_name": "CVD Chamber Upkeep",
+      "inspection_interval_days": 10,
+      "repair_skill_minimum": 50
+    }
+  ]
+}

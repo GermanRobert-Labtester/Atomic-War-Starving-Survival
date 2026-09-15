@@ -21,12 +21,18 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public SumpFloodingSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>B5–B8 Phase 9: grid reference for truthful pump-status
+        /// projection (allocation-aware served state per node load).</summary>
+        private readonly PowerGridSystem? _powerGrid;
+
         public SumpFloodingHostSession(
             SumpFloodingSystem system,
             WeatherSystem weather,
             PowerGridSystem powerGrid,
             YearOfAshDeepFreezeSystem deepFreeze)
         {
+            _powerGrid = powerGrid;
             System = system
                 ?? new SumpFloodingSystem(new SeededRng(1986), weather, powerGrid, deepFreeze, new GodotLog());
 
@@ -40,6 +46,16 @@ namespace AtomicWar.GodotApp
             {
                 RaiseStateChanged();
             };
+        }
+
+        /// <summary>B5–B8 Phase 9: is this node's pump actually receiving
+        /// served power? Player toggle AND allocation-aware grid state — the
+        /// panel must never claim RUNNING when the load is shed.</summary>
+        public bool IsPumpEffectivelyPowered(string nodeId)
+        {
+            var node = System.State.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null || !node.hasSumpPump || !node.pumpPowered) return false;
+            return _powerGrid?.IsRoomServed(nodeId) ?? false;
         }
 
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)

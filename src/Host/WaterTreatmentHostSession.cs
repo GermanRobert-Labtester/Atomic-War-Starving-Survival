@@ -17,6 +17,14 @@ namespace AtomicWar.GodotApp
         public InventoryHostSession? InventoryHost { get; set; }
         public string LastEvent { get; private set; } = string.Empty;
         public event Action? OnTreatmentStarted;
+
+        /// <summary>
+        /// B5–B8 expansion (§9.12): unsafe-water exposure sink. Main wires it
+        /// to the canonical disease sweep (roster → TryExpose with the pure
+        /// WaterborneExposureRules mapping); the session only forwards the
+        /// fact. Null = legacy behavior (event surfaces as text only).
+        /// </summary>
+        public Action<float>? PathogenExposureSink { get; set; }
         public WaterTreatmentHostSession(WaterTreatmentSystem system, InventoryHostSession? inventoryHost = null)
         {
             System = system ?? new WaterTreatmentSystem(new GodotLog());
@@ -44,6 +52,10 @@ namespace AtomicWar.GodotApp
             System.OnPathogenExposure += dose =>
             {
                 LastEvent = $"[WaterTreatment] WARNING: Pathogen contamination ({dose:F1} CFU) detected in water output!";
+                // B5–B8 expansion: route the fact through the canonical disease
+                // contract (the sink owns the roster sweep; DiseaseSystem owns
+                // the outcome roll).
+                PathogenExposureSink?.Invoke(dose);
                 RaiseStateChanged();
             };
         }
@@ -66,15 +78,47 @@ namespace AtomicWar.GodotApp
 
         public CommandResult ReplaceFilter()
         {
-            var result = System.ReplaceFilter();
-            if (result.IsSuccess)
+            // B5–B8 Phase 6 repair (§8.8/§9.16): the replacement now costs the
+            // canonical filter item. Core's doc comment always claimed a
+            // consumed item; neither layer actually consumed one — a free
+            // maintenance loop on the authority that gates treatment quality.
+            // Atomic: the item is consumed only when the Core commit succeeds.
+            const string filterItemId = "water_filter";
+            if (InventoryHost != null)
+            {
+                if (InventoryHost.Inventory.CountById(filterItemId) < 1)
+                {
+                    LastEvent = $"Filter replacement blocked: requires {filterItemId}.";
+                    return new CommandResult(
+                        PlayerCommandCode.TreatmentReplaceFilter,
+                        ActionResult.Blocked("missing_filter", "water.filter_missing"),
+                        StateVersion,
+                        StateVersion);
+                }
+
+                var result = System.ReplaceFilter();
+                if (result.IsSuccess)
+                {
+                    InventoryHost.Remove(filterItemId, 1);
+                    LastEvent = "Replaced sediment/charcoal filter membrane.";
+                    RaiseStateChanged();
+                }
+                return new CommandResult(
+                    PlayerCommandCode.TreatmentReplaceFilter,
+                    result,
+                    StateVersion,
+                    StateVersion);
+            }
+
+            var legacy = System.ReplaceFilter();
+            if (legacy.IsSuccess)
             {
                 LastEvent = "Replaced sediment/charcoal filter membrane.";
                 RaiseStateChanged();
             }
             return new CommandResult(
                 PlayerCommandCode.TreatmentReplaceFilter,
-                result,
+                legacy,
                 StateVersion,
                 StateVersion);
         }

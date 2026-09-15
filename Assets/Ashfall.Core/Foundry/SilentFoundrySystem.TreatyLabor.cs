@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 
@@ -71,7 +72,9 @@ namespace Ashfall.Core.Foundry
             NormalizeState();
             _state.stateVersion = SilentFoundryState.CurrentVersion;
             _state.rngSeed = _rng.Seed;
-            return _state;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_state);
+            return s.Deserialize<SilentFoundryState>(json) ?? new SilentFoundryState();
         }
 
         /// <summary>Capture the durable consequence ledger (rides the hub save envelope).</summary>
@@ -79,7 +82,9 @@ namespace Ashfall.Core.Foundry
         {
             if (_consequenceState.applied == null) _consequenceState.applied = new List<FoundryConsequenceRecord>();
             _consequenceState.stateVersion = SilentFoundryConsequenceState.CurrentVersion;
-            return _consequenceState;
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(_consequenceState);
+            return s.Deserialize<SilentFoundryConsequenceState>(json) ?? new SilentFoundryConsequenceState();
         }
 
         /// <summary>
@@ -90,61 +95,79 @@ namespace Ashfall.Core.Foundry
         public void RestoreConsequenceState(SilentFoundryConsequenceState save)
         {
             if (save == null) return;
-            _consequenceState.stateVersion = Math.Max(1, save.stateVersion);
-            _consequenceState.applied = save.applied ?? new List<FoundryConsequenceRecord>();
-            _consequenceState.guildStanding = MathfCompat.Clamp(save.guildStanding, StandingMin, StandingMax);
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(save);
+            var cloned = s.Deserialize<SilentFoundryConsequenceState>(json)
+                ?? new SilentFoundryConsequenceState();
+            _consequenceState.stateVersion = Math.Max(1, cloned.stateVersion);
+            _consequenceState.applied = cloned.applied ?? new List<FoundryConsequenceRecord>();
+            _consequenceState.guildStanding = MathfCompat.Clamp(
+                cloned.guildStanding, StandingMin, StandingMax);
         }
 
         public void RestoreState(SilentFoundryState save)
         {
             if (save == null) return;
-            _state.stateVersion = save.stateVersion;
-            _state.unlocked = save.unlocked;
-            _state.unlockDay = save.unlockDay;
-            _state.refractoryLining = save.refractoryLining;
-            _state.hearthTuyeres = save.hearthTuyeres;
-            _state.sandBeds = save.sandBeds;
-            _state.structuralSupports = save.structuralSupports;
-            _state.safetyExhaust = save.safetyExhaust;
-            _state.maintenanceCycleDays = save.maintenanceCycleDays > 0 ? save.maintenanceCycleDays : 4;
-            _state.maintenanceDueDay = save.maintenanceDueDay;
-            _state.daysSinceMaintenance = save.daysSinceMaintenance;
-            _state.maintenancePerformed = save.maintenancePerformed;
-            _state.sandQuality = save.sandQuality;
-            _state.sandMoisture = save.sandMoisture;
-            _state.binderQuality = save.binderQuality;
-            _state.patternQuality = save.patternQuality;
-            _state.contamination = save.contamination;
-            _state.moldReuseCount = save.moldReuseCount;
-            _state.compaction = save.compaction;
-            _state.heatStage = save.heatStage;
-            _state.heatStartedDay = save.heatStartedDay;
-            _state.stageElapsedDays = save.stageElapsedDays;
-            _state.activeProductId = save.activeProductId;
-            _state.assignedWorkers = save.assignedWorkers;
-            _state.workerSkill = save.workerSkill;
-            _state.laborAccumulated = save.laborAccumulated;
-            _state.workerExposure = save.workerExposure;
-            _state.materialsConsumed = save.materialsConsumed;
-            _state.childLaborUsed = save.childLaborUsed;
-            _state.pendingQuality = save.pendingQuality;
-            _state.completed = save.completed ?? new List<FoundryProductionRecord>();
-            _state.failed = save.failed ?? new List<FoundryFailedCastRecord>();
-            _state.incidents = save.incidents ?? new List<FoundryIncidentRecord>();
-            _state.repairs = save.repairs ?? new List<FoundryRepairRecord>();
-            _state.laborDispute = save.laborDispute;
-            _state.laborDisputeStartedDay = save.laborDisputeStartedDay;
-            _state.strikeStartedDay = save.strikeStartedDay;
-            _state.overtimeFlag = save.overtimeFlag;
-            _state.educationConflictFlag = save.educationConflictFlag;
-            _state.treatyCompliance = save.treatyCompliance ?? new List<FoundryTreatyCompliance>();
-            _state.triggeredJournals = save.triggeredJournals ?? new List<string>();
-            _state.cumulativeStress = save.cumulativeStress;
-            _state.cumulativeHope = save.cumulativeHope;
-            _state.firstHeatDay = save.firstHeatDay;
-            _state.strikeDay = save.strikeDay;
-            if (save.rngSeed != 0 && save.rngSeed != _rng.Seed)
-                _rng = _rngFactory(save.rngSeed);
+            var serializer = new SystemTextJsonSerializer();
+            var json = serializer.Serialize(save);
+            var cloned = serializer.Deserialize<SilentFoundryState>(json) ?? new SilentFoundryState();
+            _state.stateVersion = cloned.stateVersion;
+            _state.unlocked = cloned.unlocked;
+            _state.unlockDay = cloned.unlockDay;
+            _state.refractoryLining = cloned.refractoryLining;
+            _state.hearthTuyeres = cloned.hearthTuyeres;
+            _state.sandBeds = cloned.sandBeds;
+            _state.structuralSupports = cloned.structuralSupports;
+            _state.safetyExhaust = cloned.safetyExhaust;
+            _state.maintenanceCycleDays = cloned.maintenanceCycleDays > 0 ? cloned.maintenanceCycleDays : 4;
+            _state.maintenanceDueDay = cloned.maintenanceDueDay;
+            _state.daysSinceMaintenance = cloned.daysSinceMaintenance;
+            _state.maintenancePerformed = cloned.maintenancePerformed;
+            _state.sandQuality = cloned.sandQuality;
+            _state.sandMoisture = cloned.sandMoisture;
+            _state.binderQuality = cloned.binderQuality;
+            _state.patternQuality = cloned.patternQuality;
+            _state.contamination = cloned.contamination;
+            _state.moldReuseCount = cloned.moldReuseCount;
+            _state.compaction = cloned.compaction;
+            _state.heatStage = cloned.heatStage;
+            _state.heatStartedDay = cloned.heatStartedDay;
+            _state.stageElapsedDays = cloned.stageElapsedDays;
+            _state.activeProductId = cloned.activeProductId;
+            _state.assignedWorkers = cloned.assignedWorkers;
+            _state.workerSkill = cloned.workerSkill;
+            _state.laborAccumulated = cloned.laborAccumulated;
+            _state.workerExposure = cloned.workerExposure;
+            _state.materialsConsumed = cloned.materialsConsumed;
+            _state.childLaborUsed = cloned.childLaborUsed;
+            _state.pendingQuality = cloned.pendingQuality;
+            // Cloned lists are independent of the save DTO — no shared element refs.
+            _state.completed = cloned.completed ?? new List<FoundryProductionRecord>();
+            _state.failed = cloned.failed ?? new List<FoundryFailedCastRecord>();
+            _state.incidents = cloned.incidents ?? new List<FoundryIncidentRecord>();
+            _state.repairs = cloned.repairs ?? new List<FoundryRepairRecord>();
+            _state.laborDispute = cloned.laborDispute;
+            _state.laborDisputeStartedDay = cloned.laborDisputeStartedDay;
+            _state.strikeStartedDay = cloned.strikeStartedDay;
+            _state.overtimeFlag = cloned.overtimeFlag;
+            _state.educationConflictFlag = cloned.educationConflictFlag;
+            _state.treatyCompliance = cloned.treatyCompliance ?? new List<FoundryTreatyCompliance>();
+            _state.triggeredJournals = cloned.triggeredJournals ?? new List<string>();
+            _state.cumulativeStress = cloned.cumulativeStress;
+            _state.cumulativeHope = cloned.cumulativeHope;
+            _state.firstHeatDay = cloned.firstHeatDay;
+            _state.strikeDay = cloned.strikeDay;
+            // Plan B66 — heavy metallurgy fields (were silently dropped on
+            // restore; additive restore keeps old saves' neutral defaults —
+            // no active heavy batch, no slag — per the B66 legacy contract).
+            _state.activeMetallurgyRecipeId = cloned.activeMetallurgyRecipeId ?? string.Empty;
+            _state.metallurgySlag = MathfCompat.Clamp(cloned.metallurgySlag, 0f, 100f);
+            _state.metallurgyBatchesCompleted = Math.Max(0, cloned.metallurgyBatchesCompleted);
+            // Plan 213 — forging session (null = no pass, legacy clean; a
+            // mid-batch restore resumes the exact submitted sequence).
+            _state.activeForging = cloned.activeForging;
+            if (cloned.rngSeed != 0 && cloned.rngSeed != _rng.Seed)
+                _rng = _rngFactory(cloned.rngSeed);
             _state.rngSeed = _rng.Seed;
             NormalizeState();
             EnsureTreatyComplianceRows();

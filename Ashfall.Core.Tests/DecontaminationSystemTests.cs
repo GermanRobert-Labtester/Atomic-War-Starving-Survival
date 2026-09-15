@@ -30,7 +30,7 @@ namespace Ashfall.Core.Tests
             var d = Create(out var inv, out _, out _, out _);
             d.Enqueue("survivor_1", "gear_1", 0.5f);
             // Ensure no water
-            while (inv.RemoveById("water_clean", 1)) { }
+            while (inv.RemoveById("clean_water", 1)) { }
             var r = d.ProcessQueue();
             Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
         }
@@ -38,8 +38,8 @@ namespace Ashfall.Core.Tests
         [Fact] public void ProcessQueue_WithResources_StartsProcessing()
         {
             var d = Create(out var inv, out _, out _, out _);
-            inv.AddById("water_clean", 5);
-            inv.AddById("soap", 5);
+            inv.AddById("clean_water", 5);
+            inv.AddById("item_liquid_bleach_carboy", 5);
             d.Enqueue("survivor_1", "gear_1", 0.5f);
             var r = d.ProcessQueue();
             Assert.Equal(ActionResult.StatusKind.Success, r.Status);
@@ -49,8 +49,8 @@ namespace Ashfall.Core.Tests
         [Fact] public void CompleteCycle_ReducesContamination()
         {
             var d = Create(out var inv, out _, out _, out _);
-            inv.AddById("water_clean", 5);
-            inv.AddById("soap", 5);
+            inv.AddById("clean_water", 5);
+            inv.AddById("item_liquid_bleach_carboy", 5);
             d.Enqueue("survivor_1", "gear_1", 0.9f);
             d.ProcessQueue();
             var before = d.State.activeCase;
@@ -70,8 +70,8 @@ namespace Ashfall.Core.Tests
             // (the event is real - the case bypassed a designed airlock
             // step), but the level itself stays put.
             var d = Create(out var inv, out _, out _, out _);
-            inv.AddById("water_clean", 5);
-            inv.AddById("soap", 5);
+            inv.AddById("clean_water", 5);
+            inv.AddById("item_liquid_bleach_carboy", 5);
             d.Enqueue("survivor_1", "gear_1", 0.5f);
             d.ProcessQueue();
             d.CompleteCycle(safeRelease: false);
@@ -134,8 +134,8 @@ namespace Ashfall.Core.Tests
         [Fact] public void Bug11_Bypass_NetShelterContamination_IsNotIncreased()
         {
             var d = Create(out var inv, out _, out _, out _);
-            inv.AddById("water_clean", 5);
-            inv.AddById("soap", 5);
+            inv.AddById("clean_water", 5);
+            inv.AddById("item_liquid_bleach_carboy", 5);
             d.State.shelterContaminationLevel = 0.4f;
             d.Enqueue("survivor_bypass", "gear_bypass", 0.9f);
             d.ProcessQueue();

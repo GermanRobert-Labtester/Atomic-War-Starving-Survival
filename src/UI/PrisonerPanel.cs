@@ -13,6 +13,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class PrisonerPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action<string, string>? OnActionRequested;
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -20,8 +21,25 @@ namespace AtomicWar.GodotApp.UI
         private Label _detailText = null!;
 
         private PrisonerSystem? _system;
+        private HBoxContainer? _actionButtons;
+        private Button? _btnInterrogate;
+        private Button? _btnRecruit;
+        private Button? _btnRelease;
 
         public bool IsBound => _system != null;
+
+        /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
+        public string LastFeedback { get; private set; } = string.Empty;
+        private string _feedbackText = string.Empty;
+        private bool _feedbackIsFailure;
+
+        public void ShowFeedback(string message, bool isFailure)
+        {
+            _feedbackText = message;
+            _feedbackIsFailure = isFailure;
+            LastFeedback = message;
+            RefreshView();
+        }
 
         public void Bind(PrisonerSystem system)
         {
@@ -57,6 +75,30 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_detailText);
 
             _shell.SetContent(_contentStack);
+            _actionButtons = new HBoxContainer { };
+            _actionButtons.AddThemeConstantOverride("separation", 12);
+            _btnInterrogate = new Button { Text = "INTERROGATE (FIRST TACTIC)" };
+            _btnInterrogate.TooltipText = "Uses the first listed interrogation tactic on the first detained captive. Costs come from the catalog.";
+            _btnInterrogate.Pressed += () => OnActionRequested?.Invoke("interrogate", FirstDetainedId());
+            _actionButtons.AddChild(_btnInterrogate);
+
+            _btnRecruit = new Button { Text = "RECRUIT (WHEN ELIGIBLE)" };
+            _btnRecruit.TooltipText = "Recruitment requires trust, time and no severe abuse history — not just compliance.";
+            _btnRecruit.Pressed += () => OnActionRequested?.Invoke("recruit", FirstDetainedId());
+            _actionButtons.AddChild(_btnRecruit);
+
+            _btnRelease = new Button { Text = "RELEASE" };
+            _btnRelease.TooltipText = "Frees the captive and removes the detention burden.";
+            _btnRelease.Pressed += () => OnActionRequested?.Invoke("release", FirstDetainedId());
+            _actionButtons.AddChild(_btnRelease);
+
+            var feedback = new Label { Text = "" };
+            feedback.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            feedback.SetMeta("role", "feedback");
+            _actionButtons.AddChild(feedback);
+            _shell.SetContent(_contentStack);
+            _contentStack.AddChild(_actionButtons);
+
             _shell.AttachHeaderCloseButton("CLOSE", () => OnClose?.Invoke());
 
             // Overlay panels start hidden; PanelRegistry drives visibility.
@@ -98,9 +140,11 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("recruits", state.totalRecruits.ToString(), AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("escapes", state.totalEscapes.ToString(), AshfallMetricCard.Criticality.Normal);
 
+            bool hasDetained = state.captives.Exists(c => c.status == CaptiveStatus.Detained);
+
             if (state.captives.Count == 0)
             {
-                _detailText.Text = "All detention cells vacant. Capture hostile combatants during wasteland sorties.";
+                _detailText.Text = "No one in the cells. Prisoners come from surface fights.";
                 return;
             }
 
@@ -124,7 +168,22 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
+            summary.AppendLine();
+            summary.AppendLine(hasDetained
+                ? "ACTIONS: interrogate (first tactic) / release / recruit — handled by the host authority."
+                : "No detained captives.");
             _detailText.Text = summary.ToString();
+            if (_actionButtons == null || _btnInterrogate == null || _btnRelease == null || _btnRecruit == null) return;
+            _btnInterrogate.Disabled = !hasDetained;
+            _btnRelease.Disabled = !hasDetained;
+            _btnRecruit.Disabled = !hasDetained;
+        }
+        private string FirstDetainedId()
+        {
+            if (_system == null) return string.Empty;
+            foreach (var c in _system.State.captives)
+                if (c.status == CaptiveStatus.Detained) return c.captiveId;
+            return string.Empty;
         }
     }
 }

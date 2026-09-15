@@ -80,6 +80,16 @@ namespace AtomicWar.GodotApp
                 dayProvider: () => _simDay);
 
             WireCollectibleInventoryFeeder();
+
+            // Tasks 5–8 §12 — legacy reconciliation (Cases A/B/C): discovered
+            // collectibles whose subsystem effects predate wiring are reconciled
+            // ONCE per campaign load, after restore. Idempotent by construction.
+            if (discoverySaved != null)
+            {
+                _collectibleDispatcher!.ReconcileDiscoveredSubsystemState(
+                    vinylProvider: () => _vinylMorale?.System);
+                _collectiblesDirty = true;
+            }
         }
 
         /// <summary>

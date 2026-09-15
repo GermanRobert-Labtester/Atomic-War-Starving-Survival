@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 namespace Ashfall.Core.UI
 {
     /// <summary>
@@ -105,6 +106,20 @@ namespace Ashfall.Core.UI
             R("shelter_barter",      "Shelter Barter Terminal",       PanelGroup.Expanded,   new[] { "inventory" });
             R("black_projects_archive", "Black Projects Intelligence Archive", PanelGroup.Expanded, new[] { "black_projects_archive" });
             R("medical_ward",        "Medical Ward",                  PanelGroup.Expanded);
+            R("low_background_metrology", "Low-Background Metrology",   PanelGroup.Expanded);
+            R("insar_mapping",       "InSAR Deformation Mapping",      PanelGroup.Expanded);
+            R("hydraulic_extrusion", "Hydraulic Extrusion Press",       PanelGroup.Expanded);
+            R("runflat_tire",        "Run-Flat Wheel Set",             PanelGroup.Expanded);
+            R("sofc_power",          "Solid-Oxide Fuel Cell",           PanelGroup.Expanded);
+            R("sound_ranging",       "Acoustic Sound-Ranging",          PanelGroup.Expanded);
+            R("cvd_diamond",         "Synthetic Diamond Tooling",       PanelGroup.Expanded);
+            R("amphibious_draisine", "Amphibious Draisine Outrigger",   PanelGroup.Expanded);
+            R("sanitation",          "Waste & Sanitation",               PanelGroup.Expanded);
+            R("black_market",        "The Quiet Counter",               PanelGroup.Expanded);
+            R("companion_kennel",    "Kennel // Companion Animals",      PanelGroup.Expanded);
+            R("beliefs_panel",       "Beliefs // Doctrinal Climate",     PanelGroup.Expanded);
+            R("anomaly_watch",       "Anomaly Watch // Moving Hazards",  PanelGroup.Expanded);
+            R("cybernetics",         "Cybernetics // Prosthetic Care",   PanelGroup.Expanded);
 
             // ── Standalone & Subsystem Consoles ──────────────────────────────
             R("brine_extraction",    "Brine Extraction",              PanelGroup.Expanded,   new[] { "silent_foundry" });
@@ -212,6 +227,8 @@ namespace Ashfall.Core.UI
             // Plans 186-187: fallout radar + desperation crisis (Live).
             R("expansion_fallout_plume",    "Fallout Plume Radar",         PanelGroup.Expanded, new[] { "world" });
             R("desperation_crisis",         "Desperation & Taboo Monitor", PanelGroup.Expanded, new[] { "survivors", "inventory" });
+            // ── Plan 126: biological fermentation reactor (Live) ──────────
+            R("bio_fermentation",           "Fermentation Reactor",        PanelGroup.Expanded, new[] { "farming", "inventory", "power_grid" });
         }
 
         private static void R(

@@ -117,6 +117,13 @@ namespace Ashfall.Core.Foundry
         public FoundryQualityTier tier = FoundryQualityTier.Usable;
         public int completedDay = 0;
         public int workers = 0;
+
+        // Plan 213 — additive provenance. Old saves deserialize to the
+        // defaults (Standard/unknown, no craft pass) and are never
+        // recalculated retroactively.
+        public string purity = FoundryPurityNames.Standard;
+        public string materialProfileId = string.Empty;
+        public int craftQualityPermille = 0;
     }
 
     [Serializable]
@@ -251,6 +258,9 @@ namespace Ashfall.Core.Foundry
         public string activeMetallurgyRecipeId = string.Empty;
         public float metallurgySlag = 0f;              // 0..100 normalized
         public int metallurgyBatchesCompleted = 0;
+
+        // Plan 213 — forging session (additive; null = no pass, legacy clean).
+        public FoundryForgingSessionState? activeForging = null;
 
         // Determinism.
         public int rngSeed = 0;

@@ -26,6 +26,7 @@ namespace AtomicWar.GodotApp.UI
             Action onShowBriefing,
             Action onCensusLevy,
             Action onOrder12C,
+            Action onCollectTradeSalt,
             Action onUnlockPlant,
             Action onRepairMembrane,
             Action onToggleOutfall,
@@ -129,6 +130,7 @@ namespace AtomicWar.GodotApp.UI
             // ── Holdfast & Infrastructure ──
             addHeader("HOLDFAST & INFRASTRUCTURE");
             addBtn("Unlock plant (salt trade)", onUnlockPlant);
+            addBtn("Collect trade salt", onCollectTradeSalt);
             addBtn("Repair membrane (resin)", onRepairMembrane);
             addBtn("Toggle outfall shift", onToggleOutfall);
             addBtn("Save holdfast state", onSaveHoldfast);

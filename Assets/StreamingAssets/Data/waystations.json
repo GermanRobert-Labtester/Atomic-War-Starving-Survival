@@ -132,7 +132,9 @@
       "stock_item_ids": [
         "dried_rations",
         "clean_water",
-        "scrap_wood"
+        "scrap_wood",
+        "item_seed_frost_pea",
+        "item_seed_glacier_greens"
       ],
       "local_problem": "The garrison sentries want a bigger cut of every grain shipment. Orlov argues the numbers at the weighing plate each dawn, and each dawn the sentries' rifles get a little more casually pointed at the silo door."
     },

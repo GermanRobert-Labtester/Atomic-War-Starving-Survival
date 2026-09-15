@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "description": "Plan 123 Phase 2 — defensive long-range acoustic sound-ranging authority. Defensive early-warning and threat-localization values only; the catalog carries no fire-control or targeting schema.",
+  "array_profiles": [
+    {
+      "id": "sound_array_mk1",
+      "display_name": "Microbarom Array Mk I",
+      "description": "Four-node surface microphone array for defensive hostile-fire warning. Produces bearing sectors and probable-origin regions, never weapon coordinates.",
+      "sensor_profile_id": "sensor_carbon_microphone_node",
+      "sensor_count": 4,
+      "base_bearing_error_deg": 8.0,
+      "base_region_radius_cells": 3,
+      "timing_quality": 0.75,
+      "weather_sensitivity": 0.45,
+      "maintenance_drift_per_day_bp": 20,
+      "confidence_cap_bp": 9000,
+      "install_item_ids": ["item_bedrock_sensor_rig", "item_low_noise_sensor_amplifier"],
+      "repair_item_ids": ["item_military_radio_module", "item_battery_reconditioned"],
+      "maintenance_profile_id": "maint_array_field",
+      "tags": ["defensive", "surface"]
+    }
+  ],
+  "sensor_profiles": [
+    {
+      "id": "sensor_carbon_microphone_node",
+      "display_name": "Carbon Microphone Node",
+      "description": "Passive pressure node. Degrades with weather exposure; loss narrows usable geometry.",
+      "reliability_bp": 8500,
+      "install_item_ids": ["item_low_noise_sensor_amplifier"],
+      "repair_item_ids": ["item_military_radio_module", "item_battery_reconditioned"]
+    }
+  ],
+  "timing_quality_profiles": [
+    {
+      "id": "timing_wire_sync",
+      "display_name": "Wire Synchronization",
+      "description": "Field telephone wire between nodes. Workable, drifts.",
+      "quality_bp": 7500,
+      "drift_per_day_bp": 15
+    },
+    {
+      "id": "timing_crystal_sync",
+      "display_name": "Crystal Clock Sync",
+      "description": "Salvaged crystal timing. Tight arrival-time comparison.",
+      "quality_bp": 9000,
+      "drift_per_day_bp": 8
+    }
+  ],
+  "atmospheric_error_profiles": [
+    {
+      "id": "atmos_clear_cold",
+      "display_name": "Clear Cold Air",
+      "description": "Stable inversion: good propagation, tight regions.",
+      "error_multiplier_bp": 10000
+    },
+    {
+      "id": "atmos_wind_gusty",
+      "display_name": "Gusty Wind",
+      "description": "Wind shear broadens arrival-time differences.",
+      "error_multiplier_bp": 14000
+    },
+    {
+      "id": "atmos_storm",
+      "display_name": "Storm Front",
+      "description": "Storm noise swamps arrivals; regions widen sharply.",
+      "error_multiplier_bp": 22000
+    }
+  ],
+  "source_class_signatures": [
+    {
+      "id": "src_class_light_indirect",
+      "display_name": "Light Indirect Fire",
+      "description": "Short-range mortar-class signature: sharp crack, short boom.",
+      "bearing_error_bonus_deg": 0.0,
+      "region_radius_bonus_cells": 0
+    },
+    {
+      "id": "src_class_heavy_artillery",
+      "display_name": "Heavy Artillery",
+      "description": "Long-range battery signature: deep report, long roll.",
+      "bearing_error_bonus_deg": 2.0,
+      "region_radius_bonus_cells": 1
+    }
+  ],
+  "maintenance_profiles": [
+    {
+      "id": "maint_array_field",
+      "display_name": "Field Array Upkeep",
+      "inspection_interval_days": 7,
+      "repair_skill_minimum": 40
+    }
+  ]
+}

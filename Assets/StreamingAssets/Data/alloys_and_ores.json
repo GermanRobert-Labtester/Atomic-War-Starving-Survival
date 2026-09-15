@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "collection_id": "alloys_and_ores_213",
+  "description": "Plan 213 — abstract material families for foundry outputs. Authored gameplay values only (bp-of-1.0x modifiers); no real metallurgy, alloy formulations, or temperatures. This catalog defines MATERIAL PROPERTIES only — process recipes remain the sole authority in metallurgy_recipes.json. Profiles bind to foundry outputs by result item id at composition time; no recipe-schema change.",
+  "materials": [
+    {
+      "material_id": "material_reclaimed_iron",
+      "family": "ferrous",
+      "workability": "high",
+      "durability_modifier_bp": 900,
+      "armor_modifier_bp": 800,
+      "corrosion_modifier_bp": 1000,
+      "forging_sequence": ["heat", "shape", "finish"],
+      "tags": ["structural", "general"]
+    },
+    {
+      "material_id": "material_refined_copper",
+      "family": "nonferrous",
+      "workability": "high",
+      "durability_modifier_bp": 850,
+      "armor_modifier_bp": 700,
+      "corrosion_modifier_bp": 1150,
+      "forging_sequence": ["heat", "shape"],
+      "tags": ["conductive", "pipes"]
+    },
+    {
+      "material_id": "material_machine_steel",
+      "family": "ferrous",
+      "workability": "medium",
+      "durability_modifier_bp": 1200,
+      "armor_modifier_bp": 1100,
+      "corrosion_modifier_bp": 900,
+      "forging_sequence": ["heat", "shape", "shape", "finish"],
+      "tags": ["structural", "tools"]
+    },
+    {
+      "material_id": "material_acid_resistant_alloy",
+      "family": "exotic",
+      "workability": "low",
+      "durability_modifier_bp": 1100,
+      "armor_modifier_bp": 950,
+      "corrosion_modifier_bp": 1400,
+      "forging_sequence": ["heat", "shape", "finish", "finish"],
+      "tags": ["pipes", "chemical"]
+    },
+    {
+      "material_id": "material_structural_beam_steel",
+      "family": "ferrous",
+      "workability": "medium",
+      "durability_modifier_bp": 1150,
+      "armor_modifier_bp": 1200,
+      "corrosion_modifier_bp": 950,
+      "forging_sequence": ["heat", "shape", "finish"],
+      "tags": ["structural", "shoring"]
+    },
+    {
+      "material_id": "material_scrap_grade_mix",
+      "family": "mixed",
+      "workability": "medium",
+      "durability_modifier_bp": 750,
+      "armor_modifier_bp": 700,
+      "corrosion_modifier_bp": 800,
+      "forging_sequence": ["shape", "finish"],
+      "tags": ["general"]
+    }
+  ]
+}

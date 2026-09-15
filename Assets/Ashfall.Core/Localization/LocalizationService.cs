@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -366,12 +367,12 @@ namespace Ashfall.Core.Localization
             RegisterString("ui.common.warning", "WARNING");
 
             // Settings labels
-            RegisterString("settings.title", "SYSTEM CONFIGURATION // SETTINGS");
+            RegisterString("settings.title", "SETTINGS");
             RegisterString("settings.section.display", "DISPLAY & GRAPHICS");
-            RegisterString("settings.section.audio", "AUDIO SIGNALS");
+            RegisterString("settings.section.audio", "AUDIO");
             RegisterString("settings.section.accessibility", "ACCESSIBILITY & READABILITY");
-            RegisterString("settings.section.gameplay", "GAMEPLAY PROTOCOLS");
-            RegisterString("settings.section.language", "LANGUAGE & LOCALIZATION");
+            RegisterString("settings.section.gameplay", "GAMEPLAY");
+            RegisterString("settings.section.language", "LANGUAGE");
             RegisterString("settings.display.window_mode", "Window Mode");
             RegisterString("settings.display.resolution", "Resolution Preset");
             RegisterString("settings.display.ui_scale", "Interface Scale");
@@ -379,17 +380,17 @@ namespace Ashfall.Core.Localization
             RegisterString("settings.display.max_fps", "Frame Rate Cap");
             RegisterString("settings.audio.mute_all", "Mute All Audio");
             RegisterString("settings.audio.master", "Master Volume");
-            RegisterString("settings.audio.music", "Music / Ambience Score");
-            RegisterString("settings.audio.sfx", "Sound Effects / Machinery");
-            RegisterString("settings.audio.radio", "Radio Receiver / Transmissions");
-            RegisterString("settings.audio.ambience", "Bunker Ambience / Air Duct");
+            RegisterString("settings.audio.music", "Music / Ambience");
+            RegisterString("settings.audio.sfx", "Sound Effects");
+            RegisterString("settings.audio.radio", "Radio");
+            RegisterString("settings.audio.ambience", "Bunker Ambience");
             RegisterString("settings.accessibility.high_contrast", "High Contrast HUD");
             RegisterString("settings.accessibility.hazard_labels", "Always Show Hazard Text");
             RegisterString("settings.accessibility.reduced_motion", "Reduced Motion");
             RegisterString("settings.accessibility.large_fonts", "Large Font Floor");
-            RegisterString("settings.gameplay.tutorial_mode", "Tutorial & Onboarding Guidance");
+            RegisterString("settings.gameplay.tutorial_mode", "Tutorial Guidance");
             RegisterString("settings.gameplay.confirm_end_day", "Confirm Before Ending Day");
-            RegisterString("settings.gameplay.verbose_radio", "Detailed Radio Log Dispatches");
+            RegisterString("settings.gameplay.verbose_radio", "Detailed Radio Log");
             RegisterString("settings.gameplay.auto_save", "Auto-Save on Day Advance");
             RegisterString("settings.gameplay.reset_tutorials", "Reset Tutorial Guidance");
             RegisterString("settings.language.locale", "Language / Locale");
@@ -397,7 +398,7 @@ namespace Ashfall.Core.Localization
             // Tutorial & Onboarding
             RegisterString("tutorial.title", "DAY 1 OBJECTIVE");
             RegisterString("tutorial.protocol.title", "Resolve the Day 1 protocol");
-            RegisterString("tutorial.protocol.objective", "Walk the opening directives: ration, maintenance, then radio. Each choice has a cost.");
+            RegisterString("tutorial.protocol.objective", "Handle rationing, maintenance, then radio. Each choice costs something.");
             RegisterString("tutorial.inspect.title", "Inspect three bunker rooms");
             RegisterString("tutorial.inspect.objective", "Open the shelter and inspect rooms until three have confirming notes.");
             RegisterString("tutorial.rationing.title", "Open the stores and read them");
@@ -407,28 +408,28 @@ namespace Ashfall.Core.Localization
             RegisterString("tutorial.weather.title", "Read the weather");
             RegisterString("tutorial.weather.objective", "Open the weather forecast or panel to learn what tomorrow will bring.");
             RegisterString("tutorial.inventory.title", "Use an item from the stores");
-            RegisterString("tutorial.inventory.objective", "Equip a protective item or consume something real from the ledger. Both are real commands.");
+            RegisterString("tutorial.inventory.objective", "Equip protection, or use something from stores.");
             RegisterString("tutorial.day_advance.title", "End Day 1");
-            RegisterString("tutorial.day_advance.objective", "Press the Advance Day confirm. The first night ticks; the morning briefing returns.");
+            RegisterString("tutorial.day_advance.objective", "Confirm Advance Day. Morning briefing comes with Day 2.");
             RegisterString("tutorial.collectible.cultural_artifacts.title", "Cultural Artifacts");
-            RegisterString("tutorial.collectible.cultural_artifacts.body", "Cultural Artifacts are surviving objects from the pre-war world. Discovering them records their history, and some can unlock knowledge, journal entries, or new locations.");
+            RegisterString("tutorial.collectible.cultural_artifacts.body", "Objects that survived the exchange. Finding them records what they were; some open a journal page, a map mark, or a scrap of knowledge.");
             RegisterString("tutorial.collectible.reading_and_discovering.title", "Reading and Discovering");
-            RegisterString("tutorial.collectible.reading_and_discovering.body", "Some artifacts contain useful information. Discovering them can unlock journal entries, knowledge, faction intel, or map locations. These discoveries are recorded permanently.");
+            RegisterString("tutorial.collectible.reading_and_discovering.body", "Some finds carry information. Reading them can add a journal entry, a fact, faction intel, or a map location. Those discoveries stay on the record.");
 
             // Critical Warnings & Causality
-            RegisterString("warning.radiation.acute", "ACUTE RADIATION DETECTED: Survivor {0} has {1:F0} mSv exposure (-5 HP/h decay). Administer Rad-Away or Iodine.");
-            RegisterString("warning.radiation.storm", "FALLOUT STORM INCOMING: Elevated environmental radiation. Keep survivors indoors or equip hazmat gear.");
-            RegisterString("warning.water.low", "WATER RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Run filtration or desalination.");
-            RegisterString("warning.food.low", "FOOD RESERVES LOW: {0:F1} units remaining (~{1:F1} days). Adjust rations or scavenge.");
-            RegisterString("warning.power.brownout", "POWER DEFICIT: Generator reserve depleted. Air filtration offline; indoor contamination rising.");
-            RegisterString("warning.survivor.critical", "SURVIVOR IN DANGER: {0} has reached critical {1}. Triage immediately.");
+            RegisterString("warning.radiation.acute", "ACUTE RADIATION: {0} at {1:F0} mSv (-5 HP/h). Give Rad-Away or iodine.");
+            RegisterString("warning.radiation.storm", "FALLOUT STORM: Outdoor dose is rising. Keep people inside or kit them in hazmat.");
+            RegisterString("warning.water.low", "WATER LOW: {0:F1} units left (~{1:F1} days). Run filtration or desalination.");
+            RegisterString("warning.food.low", "FOOD LOW: {0:F1} units left (~{1:F1} days). Tighten rations or scavenge.");
+            RegisterString("warning.power.brownout", "POWER DEFICIT: Generator reserve is gone. Filters are offline; indoor contamination is rising.");
+            RegisterString("warning.survivor.critical", "SURVIVOR IN DANGER: {0} is critical on {1}. Triage now.");
 
             // Field Manual topics
             RegisterString("codex.manual.title", "FIELD SURVIVAL MANUAL");
-            RegisterString("codex.manual.radiation", "Radiation & Dosimeter: Dose accumulates from fallout and storms. Above 50 mSv triggers acute radiation sickness with 5 HP/hr health decay. Administer Rad-Away or Iodine.");
-            RegisterString("codex.manual.rations", "Rations & Water: Clean water is essential. 3 survivors consume ~3.6 units daily. Maintain filtration membranes.");
-            RegisterString("codex.manual.power", "Power & Grid: Air filtration requires continuous electrical power. Stock batteries and generator fuel.");
-            RegisterString("codex.manual.duty", "Duty Shifts: Unassigned survivors suffer morale decay and cannot maintain bunker facilities.");
+            RegisterString("codex.manual.radiation", "Radiation: Dose climbs in fallout and storms. Above 50 mSv, acute sickness takes 5 HP/hr. Give Rad-Away or iodine.");
+            RegisterString("codex.manual.rations", "Rations: Three people drink ~3.6 clean water a day. Keep filtration membranes working.");
+            RegisterString("codex.manual.power", "Power: Air filtration needs a live grid. Stock batteries and generator fuel.");
+            RegisterString("codex.manual.duty", "Duty: Unassigned people lose morale and cannot keep rooms running.");
             LoadMicroLocationStrings();
         }
 

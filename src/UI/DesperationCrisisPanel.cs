@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 using System;
 using Godot;
 using Ashfall.Core.Survivors;
@@ -62,7 +63,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
             _detailText = new Label();
-            _detailText.Text = "Sanctuary is stable. No severe desperation protocols required.";
+            _detailText.Text = "Shelter is holding. No emergency rationing.";
             _contentStack.AddChild(_detailText);
 
             var buttonRow = new HBoxContainer();

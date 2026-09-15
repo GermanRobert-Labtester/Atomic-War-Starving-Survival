@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "collection": "wasteland_surface_placeholders",
+  "status": "PLACEHOLDER \u2014 NOT FINAL ART",
+  "scope": "Intact wasteland surface, days 1-7 (no impact sites, craters, or mushroom clouds)",
+  "generator": "scripts/tools/generate-surface-placeholders.py",
+  "generated_by": "Pillow, programmatic line art",
+  "lighting_phases": [
+    "day1_7",
+    "dawn",
+    "dusk",
+    "night"
+  ],
+  "license": "MIT",
+  "replace_with_final_art": true,
+  "files": [
+    {
+      "file": "wasteland_sky_day1_7.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "wasteland_sky_dawn.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "wasteland_sky_dusk.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "wasteland_sky_night.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "surface_hatch_approach_day1_7.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "surface_hatch_approach_dawn.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "surface_hatch_approach_dusk.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "surface_hatch_approach_night.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "expedition_departure_day1_7.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "expedition_departure_dawn.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "expedition_departure_dusk.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    },
+    {
+      "file": "expedition_departure_night.png",
+      "placeholder": true,
+      "label_in_image": "PLACEHOLDER"
+    }
+  ]
+}

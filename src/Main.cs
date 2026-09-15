@@ -1,6 +1,7 @@
-// Main.cs — thin composition root (187 lines). Lifecycle orchestration extracted to Main.Application.cs,
-// domain logic split across 15+ partials (Survivors, World, Campaign, Quests, Economy, etc.).
-// See docs/architecture.md for partial ownership.
+// SPDX-License-Identifier: MIT
+// Main.cs — thin composition root (82 lines). Lifecycle orchestration lives in
+// Main.Application.cs/Main.Lifecycle.cs; domain ownership is split across 104
+// Main*.cs partials. See docs/architecture/MAIN_DECOMPOSITION_MAP.md.
 
 using Godot;
 using System;

@@ -6,7 +6,7 @@
       "display_name": "The Caloric Deficit",
       "category": "share",
       "trigger": "An unaccompanied minor requests rations at a ruin crossing.",
-      "discovery": "A child sits against the concrete. Their caloric math is visibly failing. 'Do you have any food?' The request is made without inflection.",
+      "discovery": "A child sits against the concrete with their coat pulled over their knees, too tired to stand up for you. 'Do you have any food?' They ask it the way you ask about the weather, because they have asked it a lot.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -15,29 +15,29 @@
           "label": "Give all your food",
           "moral_delta": 10,
           "empathy_delta": 1,
-          "outcome_text": "You hand over the rations. The child consumes half and pockets the rest. They hand you a charcoal drawing in exchange. A transaction.",
-          "epitaph": "Transferred all rations to the minor. Received charcoal schematic in return."
+          "outcome_text": "You hand over everything you are carrying. They eat half, fast, and put the rest inside their coat. Then they give you a charcoal drawing of a house, because they think a trade is polite.",
+          "epitaph": "Gave the child everything in the pack. Came away with a drawing of a house."
         },
         {
           "label": "Give half your food",
           "moral_delta": 5,
           "empathy_delta": 1,
-          "outcome_text": "The child eats carefully, tracking your hands. Survival arithmetic.",
-          "epitaph": "Allocated half rations to the minor. A calculated expenditure."
+          "outcome_text": "They eat slowly and keep both eyes on your hands the whole time, in case the rest of it is coming.",
+          "epitaph": "Split my rations with the child at the crossing. Kept enough to walk home on."
         },
         {
           "label": "Give a little food",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "A crust changes hands. It delays starvation by three hours.",
-          "epitaph": "Provided a crust. It shifted the math, but didn't solve it."
+          "outcome_text": "A crust changes hands. It buys them the afternoon, and they know it, and they say thank you anyway.",
+          "epitaph": "Left the child a crust. It bought an afternoon, not a week."
         },
         {
           "label": "Refuse and walk on",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You shake your head. The child goes back to conserving energy.",
-          "epitaph": "Refused the minor's requisition. Conserved my own supply."
+          "outcome_text": "You shake your head. They pull the coat back over their knees and go still again, saving what they have left for whoever comes next.",
+          "epitaph": "Walked past a hungry child at the crossing. Kept my own supply whole."
         }
       ]
     },
@@ -46,7 +46,7 @@
       "display_name": "The Starving Family",
       "category": "share",
       "trigger": "A family of four is found sheltering in an abandoned apartment block.",
-      "discovery": "Two adults, two children. The mother holds an infant that hasn't made a sound. 'We have not eaten in a week,' the father states, delivering a status report.",
+      "discovery": "Two adults, two children, in a stairwell they have hung blankets across. The mother is holding an infant that has not made a sound since you came in. 'We have not eaten in a week,' the father says, flatly, as though the number is the only part he trusts himself with.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -55,29 +55,29 @@
           "label": "Give all your supplies",
           "moral_delta": 15,
           "empathy_delta": 1,
-          "outcome_text": "You empty your pack. The father logs the intake without speaking. The family marks you as an allied asset.",
-          "epitaph": "Transferred all stores to the family unit. They registered the alliance."
+          "outcome_text": "You empty the pack onto the blanket. The father does not thank you; he starts dividing it into four piles and then, after a moment, into five, and pushes one back toward you.",
+          "epitaph": "Emptied the pack in a stairwell for a family of four. They tried to give a share back."
         },
         {
           "label": "Give half your supplies",
           "moral_delta": 8,
           "empathy_delta": 1,
-          "outcome_text": "Half your stores stay behind. They divide the calories immediately. An organized protocol.",
-          "epitaph": "Allocated half stores. Enough to extend their operational window."
+          "outcome_text": "Half of what you carry stays on the blanket. They portion it out before you are through the door, and the children are made to eat first.",
+          "epitaph": "Left half my stores with the family in the stairwell. Children ate first."
         },
         {
           "label": "Give a little",
           "moral_delta": 3,
           "empathy_delta": 0,
-          "outcome_text": "You leave a few tins at the door. The mother logs the receipt. The father continues calculating.",
-          "epitaph": "Left minor provisions. A marginal extension of their timetable."
+          "outcome_text": "You set a few tins inside the doorway. The mother says a name you do not catch, twice, and it takes you a street and a half to work out that it was thanks.",
+          "epitaph": "Left a few tins in the doorway. It buys them days, not weeks."
         },
         {
           "label": "Refuse",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You decline the requisition. The mother nods, updating her probability matrix. The father swears.",
-          "epitaph": "Refused the family's requisition. Maintained personal operational capacity."
+          "outcome_text": "You tell them you have nothing to spare. The mother nods as though she had already priced that answer in. The father swears at you, once, and does not look up again.",
+          "epitaph": "Told a starving family I had nothing spare. It was not entirely true."
         }
       ]
     },
@@ -86,7 +86,7 @@
       "display_name": "The Injured Stranger",
       "category": "share",
       "trigger": "A man with a compound fracture lies in an alley.",
-      "discovery": "A man lies bleeding in the alley, his femur visibly compromised. 'Help me,' he requests, measuring his blood loss against the arrival of scavengers.",
+      "discovery": "A man is down in the alley with the bone through the skin above his knee. He has a belt round his thigh and he has done a competent job of it. 'Help me,' he says, and then, more quietly, 'before dark.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -95,38 +95,38 @@
           "label": "Give medical supplies",
           "moral_delta": 8,
           "empathy_delta": 1,
-          "outcome_text": "You apply the splint and bandages. He logs the medical debt and assures repayment.",
-          "epitaph": "Applied field trauma kit. The subject registered the medical debt."
+          "outcome_text": "You splint it against a length of pipe and use most of the bandages. He talks the whole time about what he will owe you and where to find him, which is how he keeps from screaming.",
+          "epitaph": "Splinted a stranger's leg in an alley. He insists he owes me."
         },
         {
           "label": "Give food instead",
           "moral_delta": 5,
           "empathy_delta": 1,
-          "outcome_text": "No bandages. You leave calories. The food stabilizes his shock, but the bone remains un-set.",
-          "epitaph": "Provided calories instead of medical aid. The fracture remains a liability."
+          "outcome_text": "No bandages to spare, so you leave food and water within reach. It steadies him. The leg is still broken when you go.",
+          "epitaph": "Left food with the man in the alley. Left the leg as I found it."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You bypass the hazard. He recalculates his survival odds and goes quiet.",
-          "epitaph": "Bypassed the injured man. Conserved medical supplies."
+          "outcome_text": "You keep to the far wall as you pass. He stops asking a few paces before you are out of earshot, which is worse than if he had not.",
+          "epitaph": "Passed the man in the alley. Kept the medical kit sealed."
         },
         {
           "label": "Take his supplies",
           "moral_delta": -3,
           "empathy_delta": 0,
-          "outcome_text": "You requisition his pack. His mobility is compromised; he cannot contest the transfer.",
-          "epitaph": "Requisitioned the injured man's supplies. An uncontested transfer."
+          "outcome_text": "You take his pack. He gets a hand to the strap and cannot hold it, and after that he only watches you do it.",
+          "epitaph": "Took the pack off a man who could not stand up to stop me."
         }
       ]
     },
     {
       "id": "quest_moral_share_water",
-      "display_name": "The Dehydrated Traveler",
+      "display_name": "Water at the Perimeter",
       "category": "share",
       "trigger": "A severely dehydrated traveler enters your camp perimeter.",
-      "discovery": "The traveler stops at the perimeter line, exhibiting severe desiccation. 'Water,' they request, prioritizing hydration over security protocols.",
+      "discovery": "The traveller stops at the line without being told to, swaying, lips split, tongue too dry to shape more than the one word. 'Water.' They hold their empty canteen up so you can see through it.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -135,38 +135,38 @@
           "label": "Give all your water",
           "moral_delta": 7,
           "empathy_delta": 1,
-          "outcome_text": "You transfer the canteen. They consume the contents and dictate the coordinates of a clean spring.",
-          "epitaph": "Transferred water rations. Received coordinates for a clean spring."
+          "outcome_text": "You hand over your canteen and they drink it dry in one go, then sit down hard. When they can talk again they draw you a map to a spring that runs clean, and make you repeat the turnings back to them.",
+          "epitaph": "Gave a stranger my whole canteen. Traded it for the way to clean water."
         },
         {
           "label": "Give half your water",
           "moral_delta": 4,
           "empathy_delta": 1,
-          "outcome_text": "You allocate half the canteen. They meter their intake carefully.",
-          "epitaph": "Allocated half water rations. Kept the subject functional."
+          "outcome_text": "You pour off half. They ration it in sips without being asked, which tells you how long they have been out here.",
+          "epitaph": "Poured off half my water at the perimeter. Enough to keep them walking."
         },
         {
           "label": "Give a sip",
           "moral_delta": 1,
           "empathy_delta": 0,
-          "outcome_text": "A minimal transfer. They assess the volume and process the transaction.",
-          "epitaph": "Provided minimal hydration. A negligible operational impact."
+          "outcome_text": "A capful, no more. They look at the level in the canteen, then at you, and decide not to say the thing they were going to say.",
+          "epitaph": "Spared a capful at the perimeter. We both knew what it was worth."
         },
         {
           "label": "Refuse",
           "moral_delta": -4,
           "empathy_delta": 0,
-          "outcome_text": "You secure the canteen. They register the refusal and resume their march.",
-          "epitaph": "Denied hydration request. The traveler resumed their march."
+          "outcome_text": "You put the canteen away where it cannot be seen. They nod once and walk on south, at the same pace, which is the only pace they have left.",
+          "epitaph": "Turned a thirsty traveller away from the line. They walked on south."
         }
       ]
     },
     {
       "id": "quest_moral_share_elder",
-      "display_name": "The Terminal Elder",
+      "display_name": "The Woman Against the Wall",
       "category": "share",
       "trigger": "An elderly survivor in terminal decline requests company and rations.",
-      "discovery": "An old woman sits against a wall, her breathing shallow and arrhythmic. 'My timetable is short. But a human voice would be an acceptable variable.'",
+      "discovery": "An old woman sits propped against a wall with her bag squared off beside her, breathing in a rhythm that keeps losing its place. 'I haven't long,' she says. 'But I'd take a voice, if you've got one to spare.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -175,38 +175,38 @@
           "label": "Give food and medicine",
           "moral_delta": 12,
           "empathy_delta": 1,
-          "outcome_text": "You expend rations and medicine. She acknowledges the transaction and provides the coordinates of her family's sealed bunker.",
-          "epitaph": "Expended medical and food stores on terminal subject. Received bunker coordinates."
+          "outcome_text": "You spend rations and medicine on someone who will not need them long. She talks for an hour, mostly about her sister, and at the end of it tells you where the family shelter is and which key opens it.",
+          "epitaph": "Spent food and medicine on a dying woman. She left me her family's door."
         },
         {
           "label": "Give some supplies",
           "moral_delta": 6,
           "empathy_delta": 1,
-          "outcome_text": "You leave a partial supply cache. She registers the gesture, extending her final hours slightly.",
-          "epitaph": "Allocated partial supplies to terminal subject. Marginally extended her timeline."
+          "outcome_text": "You leave what you can afford at her side and stay while she eats some of it. She is careful to say your name back to you before you go.",
+          "epitaph": "Left supplies with the old woman by the wall. Stayed while she ate."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You provide presence without expenditure. She accepts the parameters without complaint.",
-          "epitaph": "Provided observation without supply expenditure. Subject accepted the protocol."
+          "outcome_text": "You sit with her and give her nothing else, because there is nothing else. She says that is what she asked for, and means it, and does most of the talking.",
+          "epitaph": "Sat with a dying woman and gave her nothing but the hour."
         },
         {
           "label": "Take her supplies",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "Her inventory is negligible, but you requisition it. She lacks the lung capacity to protest.",
-          "epitaph": "Requisitioned terminal subject's inventory. Minimal yield."
+          "outcome_text": "There is almost nothing in the bag, and you take it. She does not have the air in her to argue, so she just watches you go through it.",
+          "epitaph": "Went through a dying woman's bag. It held almost nothing."
         }
       ]
     },
     {
       "id": "quest_moral_share_pregnant",
-      "display_name": "The Obstetric Emergency",
+      "display_name": "The Delivery at the Outpost",
       "category": "share",
       "trigger": "A woman in active labor arrives at an abandoned medical outpost.",
-      "discovery": "A woman leans against the doorframe, timing contractions. 'The interval is dropping. Delivery is imminent,' she states.",
+      "discovery": "A woman is braced in the doorframe of the outpost, counting under her breath between contractions. 'They're getting closer together,' she says. 'It's coming here, whatever we do about it.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -215,38 +215,38 @@
           "label": "Give all your medical supplies",
           "moral_delta": 18,
           "empathy_delta": 1,
-          "outcome_text": "You allocate all sterile supplies and antiseptic. A viable infant is delivered. They assign your designation to the child as a marker of debt.",
-          "epitaph": "Expended full medical kit on field delivery. The viable infant carries my designation."
+          "outcome_text": "You put everything sterile you own on the table and boil what you cannot. It takes most of the night, and it works: a small, furious, breathing baby. She asks what you are called, and gives the child your name to carry.",
+          "epitaph": "Emptied the whole medical kit on a delivery in the dark. The child has my name."
         },
         {
           "label": "Give some supplies",
           "moral_delta": 9,
           "empathy_delta": 1,
-          "outcome_text": "You allocate sufficient supplies for basic sanitation. The delivery is within acceptable mortality parameters.",
-          "epitaph": "Allocated partial medical supplies. Ensured delivery met sanitation thresholds."
+          "outcome_text": "Enough antiseptic for hands and cord, and clean cloth, and no more. It is not how anyone would choose to do it, and both of them come through.",
+          "epitaph": "Gave up antiseptic and clean cloth for a field delivery. Both came through."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You retain your kit. She proceeds with unassisted delivery in the dark.",
-          "epitaph": "Withheld medical supplies. Subject proceeded with unassisted delivery."
+          "outcome_text": "You keep the kit closed. She goes inside on her own and gets on with it in the dark, and you are down the road before you find out how it ended.",
+          "epitaph": "Kept the kit shut and left her to it. Never learned how it ended."
         },
         {
           "label": "Take her supplies",
           "moral_delta": -12,
           "empathy_delta": 0,
-          "outcome_text": "You requisition her operational go-bag. She expends energy screaming until the contractions override her vocal cords.",
-          "epitaph": "Requisitioned supplies during active labor. Subject vocalized distress until incapacitated."
+          "outcome_text": "You take her bag while she is on her knees in the doorway. She screams at you until a contraction takes the voice out of it, and you keep walking through both.",
+          "epitaph": "Took a labouring woman's bag off her. She screamed until she couldn't."
         }
       ]
     },
     {
       "id": "quest_moral_share_raider",
-      "display_name": "The Compromised Raider",
+      "display_name": "Quarter",
       "category": "share",
       "trigger": "A wounded hostile combatant with an inoperable weapon requests aid.",
-      "discovery": "A raider lies bleeding in the dirt, their firearm visibly fractured. 'I am unarmed and bleeding out. Requesting quarter,' they state, formally submitting.",
+      "discovery": "A raider is down in the dirt with a burst receiver on the rifle beside them and a hole in them that is going to finish the job the rifle didn't. 'Gun's dead, I'm dead, so.' They spread the empty hand. 'Quarter. Asking properly.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -256,31 +256,31 @@
           "moral_delta": 5,
           "empathy_delta": 1,
           "set_flag": "flag_spared_raider",
-          "outcome_text": "You dress the wound. They assess your utility, then dictate their faction's next patrol schedule as payment.",
-          "epitaph": "Treated hostile combatant. Acquired patrol schedules as payment."
+          "outcome_text": "You pack the wound and strap it. They watch you work, decide you are worth paying, and give you their crew's patrol times for the next nine days.",
+          "epitaph": "Patched a raider who asked for quarter. Bought their crew's patrol times."
         },
         {
           "label": "Give food",
           "moral_delta": 3,
           "empathy_delta": 1,
           "set_flag": "flag_shared_rations",
-          "outcome_text": "You transfer a standard ration. They consume it rapidly while monitoring their perimeter.",
-          "epitaph": "Transferred rations to hostile combatant. Subject prioritized immediate consumption."
+          "outcome_text": "No bandages, just food. They eat it one-handed and fast, and never once stop watching the road behind you.",
+          "epitaph": "Fed a bleeding raider instead of patching them. They ate watching the road."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You maintain operational distance. They expel saliva in your direction; it falls short.",
-          "epitaph": "Maintained distance from hostile combatant. Ignored minor provocation."
+          "outcome_text": "You stay well out of reach and give them nothing. They try to spit at you and do not have the pressure for it.",
+          "epitaph": "Left a raider in the dirt where I found them. Gave nothing."
         },
         {
           "label": "Finish them",
           "moral_delta": -2,
           "empathy_delta": 0,
           "set_flag": "flag_executed_prisoner",
-          "outcome_text": "You execute the subject. They spend their last breath updating their faction's threat assessment on you.",
-          "epitaph": "Executed hostile combatant. Expected reprisal logged."
+          "outcome_text": "You finish it. The last thing they do is tell you, with something like satisfaction, that their crew keeps a list and you are on it now.",
+          "epitaph": "Killed a raider who had asked for quarter. Their crew keeps a list."
         }
       ]
     },
@@ -289,7 +289,7 @@
       "display_name": "The Downed Peacekeeper",
       "category": "share",
       "trigger": "An ambushed Peacekeeper operative is incapacitated on a primary route.",
-      "discovery": "A Peacekeeper leans against a rusted chassis, uniform compromised, right leg non-weight-bearing. 'Ambush protocol failed. Requesting medical evac,' they report.",
+      "discovery": "A Peacekeeper is propped against a burnt-out chassis, uniform torn open at the thigh, that leg no good at all. They give it to you the way they were trained to: 'Ambushed at the bend, four of them, two hours ago. My people will come. I need to still be here when they do.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -298,29 +298,29 @@
           "label": "Give all your supplies",
           "moral_delta": 14,
           "empathy_delta": 1,
-          "outcome_text": "You treat the trauma and transfer stores. In exchange: safehouse ciphers, patrol frequencies, and an official commendation.",
-          "epitaph": "Provided full medical aid to Peacekeeper operative. Acquired safehouse ciphers."
+          "outcome_text": "You work the leg and leave them everything you can carry out without. They pay in the only currency they have on them: safehouse ciphers, patrol frequencies, and a name to use at any of their posts.",
+          "epitaph": "Kept a Peacekeeper alive at the bend. Came away with their ciphers and a name to use."
         },
         {
           "label": "Give some supplies",
           "moral_delta": 7,
           "empathy_delta": 1,
-          "outcome_text": "You allocate sufficient supplies to stabilize. They log a formal note of gratitude and initiate self-extraction.",
-          "epitaph": "Stabilized Peacekeeper operative. Subject initiated self-extraction."
+          "outcome_text": "Enough to stop the bleeding and steady them. They thank you formally, note your description for the record, and start dragging themselves toward the ridge line rather than wait.",
+          "epitaph": "Stabilized a Peacekeeper and moved on. They chose not to wait for pickup."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You proceed without deviation. They visually record your physical parameters for future reference.",
-          "epitaph": "Bypassed Peacekeeper operative. Subject logged my physical description."
+          "outcome_text": "You keep walking. They do not call after you, and they do not stop looking at you either, all the way down the road, memorising the shape of whoever you are.",
+          "epitaph": "Walked past a downed Peacekeeper. They watched me the whole way out."
         },
         {
           "label": "Take their supplies",
           "moral_delta": -6,
           "empathy_delta": 0,
-          "outcome_text": "You requisition their standard-issue kit. They attempt physical resistance with one arm; it is mathematically insufficient.",
-          "epitaph": "Requisitioned Peacekeeper kit. Encounter logged as hostile act."
+          "outcome_text": "You strip their kit. They get one hand into your sleeve and hold on longer than you would expect a man with that leg to manage, and it still is not enough.",
+          "epitaph": "Stripped a wounded Peacekeeper's kit. Their people will hear my description."
         }
       ]
     },
@@ -329,7 +329,7 @@
       "display_name": "The Archivist's Lens",
       "category": "share",
       "trigger": "A Knowledge Keeper with compromised optics reports caloric deficiency.",
-      "discovery": "An archivist sits over a dead radio, glasses mended with copper wire. 'Optical inputs compromised. Caloric reserves critical,' they report.",
+      "discovery": "An archivist sits over a radio that has not worked in years, glasses mended at the bridge with copper wire and held on at an angle. 'I can't read past arm's length any more,' they say, 'and I've been three days on boiled paper. In that order of importance, I'm afraid.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -338,29 +338,29 @@
           "label": "Give food and spare glasses",
           "moral_delta": 16,
           "empathy_delta": 1,
-          "outcome_text": "You provide rations and spare lenses. They read a pre-war topographic survey aloud, then transfer the physical document.",
-          "epitaph": "Restored archivist's optical and caloric capacity. Acquired pre-war topographic data."
+          "outcome_text": "Food first, then the spare lenses. They put them on, look at the far wall for a while without saying anything, then read you a pre-war survey of the whole valley and press the document into your hands.",
+          "epitaph": "Fed the archivist and found them lenses. They gave me a survey of the valley."
         },
         {
           "label": "Give food only",
           "moral_delta": 8,
           "empathy_delta": 1,
-          "outcome_text": "You transfer calories. They dictate memorized coordinates, verifying them against mental ledgers.",
-          "epitaph": "Provided calories to archivist. Transcribed dictated coordinates."
+          "outcome_text": "You leave food and no lenses. They recite coordinates from memory instead, checking each one twice against a ledger they can no longer see.",
+          "epitaph": "Fed the archivist. Wrote down the coordinates they knew by heart."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You leave them to their visual degradation and empty stores.",
-          "epitaph": "Bypassed compromised archivist. Left them to the dark."
+          "outcome_text": "You leave them with an empty shelf, an empty stomach, and a room that is getting further away from them every week.",
+          "epitaph": "Left the archivist to the dark and the boiled paper."
         },
         {
           "label": "Take their notes",
           "moral_delta": -7,
           "empathy_delta": 0,
-          "outcome_text": "You requisition their survey notes. They vocalize intense distress, treating the data loss as physical trauma.",
-          "epitaph": "Requisitioned archivist's data. Subject exhibited high distress."
+          "outcome_text": "You take the survey notes. They come after you as far as the doorway, grabbing at the pages, making a sound you would expect from someone being cut.",
+          "epitaph": "Took the archivist's notes. They came after me as far as the door."
         }
       ]
     },
@@ -369,7 +369,7 @@
       "display_name": "The Toll Assessor",
       "category": "share",
       "trigger": "A local warlord who previously granted safe passage is cataloging ammunition.",
-      "discovery": "The warlord who cleared you last winter sits by a low thermal pit, counting brass. 'We established a precedent of mutual survival. Let us see if it holds.'",
+      "discovery": "The warlord who waved you through last winter is sitting by a low fire pit sorting brass into tins by calibre. He does not get up. 'You went through my ground once and came out the other side. Let's find out what that was, you and me. Habit, or an arrangement.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -378,31 +378,31 @@
           "label": "Give them supplies",
           "moral_delta": 6,
           "empathy_delta": 1,
-          "outcome_text": "You transfer the requested supplies. They register the payment. The route remains clear.",
-          "epitaph": "Paid supply toll to local warlord. Maintained route clearance."
+          "outcome_text": "You put the supplies down by the tins. He looks at what you brought, not at you, and says the road stays open, and it does.",
+          "epitaph": "Paid the toll to the warlord by the fire pit. The road stayed open."
         },
         {
           "label": "Give them nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You decline the transaction. They acknowledge the refusal without hostility. A calculated test.",
-          "epitaph": "Refused warlord's supply request. Maintained diplomatic neutrality."
+          "outcome_text": "You tell him no. He goes back to sorting brass without any change in his face, which is somehow more of an answer than shouting would have been.",
+          "epitaph": "Refused the warlord's toll to his face. He only kept sorting brass."
         },
         {
           "label": "Take their supplies",
           "moral_delta": -1,
           "empathy_delta": 0,
-          "outcome_text": "You attempt a hostile requisition. They exhibit mild amusement and permit you to retreat.",
-          "epitaph": "Failed hostile requisition on warlord. Subject permitted retreat."
+          "outcome_text": "You go for what he has. He finds this funny, and lets you back out of the camp anyway, which costs him nothing and costs you the arrangement.",
+          "epitaph": "Tried to rob the warlord. He laughed and let me leave."
         }
       ]
     },
     {
       "id": "quest_moral_share_scientist",
-      "display_name": "The Isotope Specialist",
+      "display_name": "The Decay Charts",
       "category": "share",
       "trigger": "A radiation-compromised specialist requests pharmaceutical intervention.",
-      "discovery": "A specialist coughs, exhibiting advanced acute radiation syndrome. 'Require chemical intervention. Have data to trade,' they state, surrounded by decay charts.",
+      "discovery": "A specialist sits inside a ring of hand-drawn decay curves, coughing into a rag that has stopped being white. She is clinical about it, because that is her training and it is all she has left. 'Acute exposure, about three weeks in. I need chelators. I have work to trade for them.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -411,38 +411,38 @@
           "label": "Give all your medicine",
           "moral_delta": 15,
           "empathy_delta": 1,
-          "outcome_text": "You transfer your pharmaceutical inventory. Stabilized, they dictate a highly efficient chelation protocol.",
-          "epitaph": "Expended pharmaceuticals on specialist. Acquired optimized chelation protocol."
+          "outcome_text": "You hand over the whole medicine roll. Once she can hold a pen she writes out a chelation schedule better than anything your shelter has, and then keeps writing until the light goes.",
+          "epitaph": "Gave a dying specialist all my medicine. She wrote out a treatment schedule worth more."
         },
         {
           "label": "Give some medicine",
           "moral_delta": 8,
           "empathy_delta": 1,
-          "outcome_text": "You transfer partial inventory. They stabilize sufficiently to transcribe the formula onto a structural beam.",
-          "epitaph": "Transferred partial pharmaceuticals. Specialist transcribed data prior to expiry."
+          "outcome_text": "You give her part of the roll. It buys her steady hands for an afternoon, which she spends copying the formula onto a support beam in grease pencil, high up, where damp will not reach it.",
+          "epitaph": "Split my medicine with the specialist. She left the formula on a beam."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You retain your inventory. They resume calculating their own decay rate.",
-          "epitaph": "Retained pharmaceutical inventory. Subject returned to terminal calculations."
+          "outcome_text": "You keep the roll. She accepts it without argument and returns to the charts, which are, you realise on the way out, all charts of herself.",
+          "epitaph": "Kept my medicine. Left the specialist working out her own numbers."
         },
         {
           "label": "Take their research",
           "moral_delta": -9,
           "empathy_delta": 0,
-          "outcome_text": "You requisition the data binder. They vocalize a curse, interrupted by respiratory failure.",
-          "epitaph": "Requisitioned specialist's data binder. Subject expired during transfer."
+          "outcome_text": "You take the binder out from under her hands. She gets half a curse out before the coughing takes the rest of it, and she is still coughing when you are out of the building.",
+          "epitaph": "Took the binder from a dying specialist. Left her coughing over the empty table."
         }
       ]
     },
     {
       "id": "quest_moral_share_farmer",
-      "display_name": "The Soil Engineer",
+      "display_name": "Sterile Ground",
       "category": "share",
       "trigger": "A soil engineer assesses completely compromised crop rows.",
-      "discovery": "The engineer kneels in irradiated dirt, assessing total yield failure. 'The soil is sterile. We require viable inputs.'",
+      "discovery": "The soil engineer is on his knees in the row with a handful of grey dirt, letting it run out through his fingers and catching it again. 'Nothing in it. Not poisoned, just dead. Give me live seed and something to feed it and I can bring this back. Otherwise we're standing in a graveyard with a fence round it.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -451,29 +451,29 @@
           "label": "Give seeds and fertilizer",
           "moral_delta": 20,
           "empathy_delta": 1,
-          "outcome_text": "You transfer viable seed stock and chemical inputs. They calculate a 40% yield return as your dividend.",
-          "epitaph": "Transferred agricultural inputs. Secured a 40% dividend on future yields."
+          "outcome_text": "You hand over live seed stock and the chemical feed to go with it. He works out your share on the spot, aloud, twice, and writes two-fifths of every harvest against your name where the others can see it.",
+          "epitaph": "Gave live seed and feed to the sterile rows. Two-fifths of the harvest is mine on paper."
         },
         {
           "label": "Give some supplies",
           "moral_delta": 10,
           "empathy_delta": 1,
-          "outcome_text": "You transfer partial inputs. They revise the yield estimates downward, but honor a proportional dividend.",
-          "epitaph": "Transferred partial inputs. Secured a proportional dividend on reduced yield."
+          "outcome_text": "Part of the seed, part of the feed. He revises his numbers down without complaining about it and writes you a share proportional to what you actually gave.",
+          "epitaph": "Gave what seed I could spare. My share was written down honestly."
         },
         {
           "label": "Give nothing",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You observe the sterile soil and depart.",
-          "epitaph": "Bypassed compromised agricultural sector. Yield remains zero."
+          "outcome_text": "You look at the rows, and at the man in them, and go on your way. He is still sifting the same handful when you reach the fence line.",
+          "epitaph": "Left the dead rows to the man kneeling in them."
         },
         {
           "label": "Steal their seeds",
           "moral_delta": -15,
           "empathy_delta": 0,
-          "outcome_text": "You requisition their remaining sterile seed stock. They pursue to the perimeter, escalating to hostile status.",
-          "epitaph": "Requisitioned remaining agricultural stock. Subject escalated to hostile."
+          "outcome_text": "You take what seed they have left, which is not enough to plant and not enough to eat. He follows you to the fence, shouting, and after that they will know your face here.",
+          "epitaph": "Took the last seed off a failing farm. They chased me to the fence."
         }
       ]
     },
@@ -482,38 +482,38 @@
       "display_name": "The Pre-War Civic Worker",
       "category": "listen",
       "trigger": "An elderly survivor offers civic infrastructure schematics disguised as anecdotes.",
-      "discovery": "An elderly male feeds a small thermal fire. 'I was a municipal planner. I know where the deep conduits run. But I only deliver data in narrative format.'",
+      "discovery": "An old man feeds a small fire one splinter of board at a time, patient as a teller counting coins. 'I planned this city. Forty years of pipes and culverts,' he says. 'I only tell it as stories. You'll have to sit through the stories.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Process the narrative",
+          "label": "Hear the story",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You process the inefficient delivery method. Mid-story, he embeds the coordinates for an intact subsurface bunker.",
-          "epitaph": "Processed civic worker's narrative. Extracted bunker coordinates."
+          "outcome_text": "You sit through a story about a water main and the winter it burst. In the middle of it, without changing tone, he gives you the way into an intact bunker under the east junction.",
+          "epitaph": "Sat through an old man's stories. He gave me the way into a bunker."
         },
         {
-          "label": "Record the complete session",
+          "label": "Stay for all of it",
           "moral_delta": 12,
           "empathy_delta": 3,
-          "outcome_text": "You endure the full session. He concludes by transferring ownership of a secondary supply cache.",
-          "epitaph": "Recorded complete civic narrative. Acquired secondary cache location."
+          "outcome_text": "You stay until the fire is down to coals and he is down to the names of people who signed off on things. At the end he tells you about a second cache, a small one, that nobody ever came back for.",
+          "epitaph": "Stayed for every story he had. He trusted me with a cache nobody else claimed."
         },
         {
-          "label": "Interrupt and abort",
+          "label": "Cut him off",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You abort the session due to inefficiency. He ceases audio output.",
-          "epitaph": "Aborted inefficient data transfer. No coordinates acquired."
+          "outcome_text": "You stop him in the middle of a sentence about a storm drain. He nods once, like a man used to it, and does not say another word to you.",
+          "epitaph": "Cut an old man off mid-sentence. He didn't say another word to me."
         },
         {
-          "label": "Mock the obsolete data",
+          "label": "Tell him his city is gone",
           "moral_delta": -2,
           "empathy_delta": 0,
-          "outcome_text": "You point out the city no longer exists. He registers the comment and permanently encrypts his memory.",
-          "epitaph": "Mocked obsolete civic data. Subject locked all further output."
+          "outcome_text": "You tell him the city is ash and his maps are a tour of nowhere. He feeds the last splinter to the fire, and whatever he was saving for a listener, he keeps for good.",
+          "epitaph": "Mocked an old man's life work. He kept the rest of his stories to himself."
         }
       ]
     },
@@ -521,39 +521,39 @@
       "id": "quest_moral_listen_mother",
       "display_name": "The Empty Cradle",
       "category": "listen",
-      "trigger": "A female survivor maintains a cradle containing zero biological assets.",
-      "discovery": "A woman manually rocks an empty bassinet. 'She would have reached five years of operational capacity this winter,' she states to the room.",
+      "trigger": "A woman rocks a cradle no one sleeps in.",
+      "discovery": "A woman sits by a cold stove, rocking a cradle with nothing in it, her foot keeping a rhythm her hands have nothing to do with. A mended shirt, far too small for anyone here, lies folded on her knee. 'She would have been five this winter,' she says, not quite to you. 'I still cut the bread small.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Provide observational presence",
+          "label": "Sit with her",
           "moral_delta": 10,
           "empathy_delta": 2,
-          "outcome_text": "You maintain presence until the psychological loop closes. She transfers a pre-war mechanical toy to your inventory as compensation.",
-          "epitaph": "Provided presence during psychological loop. Received mechanical toy."
+          "outcome_text": "You sit on the floor near the stove and stay while she talks, some of it about the girl and some of it about nothing at all. When the rocking finally slows, she wraps a small wind-up toy in a cloth and puts it in your hands, and does not explain it, and you do not ask.",
+          "epitaph": "Sat with her until the talking ran out. Came away with a toy meant for smaller hands."
         },
         {
-          "label": "Maintain silence",
+          "label": "Stay, but keep quiet",
           "moral_delta": 5,
           "empathy_delta": 3,
-          "outcome_text": "You observe without vocalizing. The uninterrupted processing time stabilizes her metrics.",
-          "epitaph": "Maintained silence. Facilitated subject's emotional processing."
+          "outcome_text": "You take the chair and say nothing, not one word. She rocks, and mends, and after a long while her hands stop hurrying. That is all that happens, and it is enough for her.",
+          "epitaph": "Kept quiet in her room until the room settled. Nothing got fixed."
         },
         {
-          "label": "Disengage",
+          "label": "Walk away",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You retreat from the zone. The mechanical rocking continues.",
-          "epitaph": "Disengaged from non-productive interaction. Preserved schedule."
+          "outcome_text": "You go back out the way you came. Behind you the cradle keeps its rhythm, steady as a clock nobody is reading.",
+          "epitaph": "Left a woman rocking an empty cradle. Kept my day on schedule."
         },
         {
-          "label": "Criticize the resource waste",
+          "label": "Tell her the cradle is empty",
           "moral_delta": -3,
           "empathy_delta": 0,
-          "outcome_text": "You point out the caloric waste of rocking an empty box. Her distress vocalizations alert nearby hostiles.",
-          "epitaph": "Criticized resource waste. Triggered hostile-alerting distress."
+          "outcome_text": "You tell her she is spending strength on an empty box. The sound she makes is not loud, but it carries, and soon there are shapes at the far edge of the light that were not there before.",
+          "epitaph": "Told her the rocking was a waste. Her answer brought company neither of us wanted."
         }
       ]
     },
@@ -562,7 +562,7 @@
       "display_name": "The Tactical Debrief",
       "category": "listen",
       "trigger": "A former combatant offers an unsolicited after-action report.",
-      "discovery": "A combatant unnecessarily sharpens a combat knife. 'Requesting audience for an after-action report of the Exchange,' they state. It is not phrased as a question.",
+      "discovery": "A soldier works a whetstone along a knife that is already sharp, one stroke at a time, in no hurry to finish. 'Requesting an audience for an after-action report of the Exchange,' they say. It is not a question, and the stone does not stop.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -571,29 +571,29 @@
           "label": "Accept the debrief",
           "moral_delta": 9,
           "empathy_delta": 2,
-          "outcome_text": "You process the full tactical review. Afterward, they recalibrate your rifle's optics to military specification.",
-          "epitaph": "Accepted tactical debrief. Rifle optics recalibrated to spec."
+          "outcome_text": "You take the whole report, contact by contact, the way they need to give it. When the last name is accounted for, they pick up your rifle, check the sights against their thumbnail, and put right what the road knocked loose.",
+          "epitaph": "Sat through the full after-action report. My rifle shoots true again."
         },
         {
           "label": "Cross-examine the report",
           "moral_delta": 4,
           "empathy_delta": 3,
-          "outcome_text": "You point out logistical contradictions in their timeline. They acknowledge the corrections and provide verified intel.",
-          "epitaph": "Cross-examined combat report. Extracted verified tactical intel."
+          "outcome_text": "You press the gaps: who held the stairwell, when the water gave out, why the flank folded. They correct the record out loud as they go, and the version you walk away with is the one that holds.",
+          "epitaph": "Picked holes in their report. The holes were real, and what was left was worth having."
         },
         {
           "label": "Decline the report",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You decline the data transfer. The knife sharpening resumes its original rhythm.",
-          "epitaph": "Declined tactical debrief. Proceeded on schedule."
+          "outcome_text": "You tell them no, not today. They nod once, and the whetstone picks back up at the same even pace, as if you had never stopped by.",
+          "epitaph": "Declined a soldier's report. The sharpening went on without me."
         },
         {
           "label": "Mock their unit",
           "moral_delta": -4,
           "empathy_delta": 0,
-          "outcome_text": "You disparage their unit's operational failure. They draw the knife. You expend resources to survive the ensuing correction.",
-          "epitaph": "Mocked combatant's unit. Suffered physical correction."
+          "outcome_text": "You laugh at how their unit folded and offer the report back as comedy. The knife comes off the stone, and the next minute costs you blood and bandages before it lets you go.",
+          "epitaph": "Made a joke of a unit's last stand. Got corrected at knifepoint."
         }
       ]
     },
@@ -601,39 +601,39 @@
       "id": "quest_moral_listen_child",
       "display_name": "The Juvenile Astronomical Theory",
       "category": "listen",
-      "trigger": "A juvenile survivor requests to transfer an unverified astronomical theory.",
-      "discovery": "A juvenile subject initiates physical contact. 'Requesting permission to transfer data regarding stellar bodies,' they state, exhibiting elevated heart rate.",
+      "trigger": "A child wants to tell someone what the stars are for.",
+      "discovery": "A kid grabs your sleeve with both hands, too wound up to be polite about it. 'Can I tell you about the stars? I figured out what they're for,' they say, and they are already telling you.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Authorize data transfer",
+          "label": "Hear the whole theory",
           "moral_delta": 12,
           "empathy_delta": 2,
-          "outcome_text": "You process the narrative. They generate a hand-drawn celestial map and assign your designation to a star cluster.",
-          "epitaph": "Authorized juvenile data transfer. Received hand-drawn celestial map."
+          "outcome_text": "You crouch down and take the whole theory, every planet and comet of it, in order. When it is over they draw you a map of the sky on paper scrap and write your name on a cluster, because now it belongs to you.",
+          "epitaph": "Heard a kid's whole theory of the stars. There's a paper sky somewhere with my name in it."
         },
         {
-          "label": "Acknowledge the data",
+          "label": "Nod along",
           "moral_delta": 6,
           "empathy_delta": 3,
-          "outcome_text": "You provide basic affirmations. The subject registers the interaction as a success.",
-          "epitaph": "Acknowledged juvenile astronomical theory. Interaction logged as successful."
+          "outcome_text": "You say 'go on' and 'is that so' at the right places, and it is enough. They go off glowing, already improving the theory for the next person.",
+          "epitaph": "Nodded through a kid's star theory. It made their whole day."
         },
         {
-          "label": "Deny transfer",
+          "label": "Tell them not now",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You deny the request due to irrelevance. The physical contact is terminated.",
-          "epitaph": "Denied irrelevant data transfer. Physical contact terminated."
+          "outcome_text": "You say you don't have time for stars. They let go of your sleeve like it went cold and drift back to their corner.",
+          "epitaph": "Told a kid I had no time for stars. They let go of my sleeve."
         },
         {
-          "label": "Invalidate the theory",
+          "label": "Tell them the stars are gone",
           "moral_delta": -1,
           "empathy_delta": 0,
-          "outcome_text": "You inform them the stars are occluded by particulate matter. They cease interaction without vocalizing.",
-          "epitaph": "Invalidated astronomical theory. Subject ceased interaction."
+          "outcome_text": "You explain that the sky is buried and the stars are a guess about something no one can see. They don't argue. They just go quiet in a way that takes the theory with it.",
+          "epitaph": "Proved to a kid that the sky is ash. They stopped talking about stars."
         }
       ]
     },
@@ -642,38 +642,38 @@
       "display_name": "The Triage Confession",
       "category": "listen",
       "trigger": "A former medical officer wishes to detail their triage protocol failures.",
-      "discovery": "A field surgeon cleans instruments with industrial solvent. 'I need to formally log the black tags I issued during the first week,' they state, staring at the wall.",
+      "discovery": "A field surgeon works solvent into a pair of forceps that has been clean for some time. 'The first week, I ran triage by the book,' they say to the wall. 'I need to say the black-tag names where somebody can hear them.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Listen to the log",
+          "label": "Hear the names",
           "moral_delta": 14,
           "empathy_delta": 2,
-          "outcome_text": "You record the names and rationales. Relieved of the data, they provide a key to an intact pharmacy lockbox.",
-          "epitaph": "Recorded triage logs. Acquired pharmacy lockbox key."
+          "outcome_text": "You stay for all of it, every name and the reason after it, until the solvent rag dries out. When the list is done they sit lighter in the chair, and they give you a small key and tell you which pharmacy's lockbox it fits.",
+          "epitaph": "Heard every black-tag name read out loud. Left with the key to a pharmacy lockbox."
         },
         {
-          "label": "Acknowledge the necessity",
+          "label": "Tell them the math held",
           "moral_delta": 7,
           "empathy_delta": 3,
-          "outcome_text": "You validate the resource calculations that led to the black tags. The surgeon's vitals stabilize.",
-          "epitaph": "Validated triage protocols. Surgeon's psychological metrics stabilized."
+          "outcome_text": "You tell them the numbers were the numbers, that the book was the only thing standing between some and none. Their breathing comes easier after that. Neither of you says it made anything right.",
+          "epitaph": "Told the surgeon the math was sound. Neither of us called it right."
         },
         {
-          "label": "Decline the data",
+          "label": "Decline the confession",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You decline to serve as a data repository. They return to sterilizing instruments.",
-          "epitaph": "Declined to record triage logs. Surgeon resumed sterilization."
+          "outcome_text": "You say you can't carry it for them. They take it like they have heard it before, and go back to cleaning instruments that were already clean.",
+          "epitaph": "Declined to hear the names. The forceps got cleaner."
         },
         {
-          "label": "Condemn the protocol",
+          "label": "Blame them for the black tags",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You criticize their failure to save all assets. They lock you out of all future medical assistance.",
-          "epitaph": "Condemned triage protocols. Surgeon revoked future medical aid."
+          "outcome_text": "You tell them a real doctor would have found a way to save more. They set the forceps down very carefully, and from then on their door is shut to you, whatever you are bleeding.",
+          "epitaph": "Told the surgeon they should have saved everyone. I don't get treated there anymore."
         }
       ]
     },
@@ -682,38 +682,38 @@
       "display_name": "The Doctrinal Broadcast",
       "category": "listen",
       "trigger": "A self-appointed chaplain offers a doctrinal broadcast on the Exchange.",
-      "discovery": "A figure in ash-stained vestments intercepts you. 'Will you receive the theological context for the thermal events?' they inquire.",
+      "discovery": "A figure in ash-grey vestments plants themselves in your path, hands folded like the end of a service. 'Friend,' they say, 'will you hear what the fire meant? Someone ought to say it, and someone ought to hear it.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Receive the broadcast",
+          "label": "Hear the sermon",
           "moral_delta": 6,
           "empathy_delta": 2,
-          "outcome_text": "You process the sermon. They interpret your patience as piety and bless your weapon.",
-          "epitaph": "Processed doctrinal broadcast. Weapon received theological blessing."
+          "outcome_text": "You stand through the whole sermon, fire and judgment and the short roll of the saved. They take your stillness for devotion, and at the end they lay a hand on your weapon and ask the ash to pass it by.",
+          "epitaph": "Stood through the whole sermon. They blessed my weapon like I was one of theirs."
         },
         {
-          "label": "Debate the doctrine",
+          "label": "Argue the theology",
           "moral_delta": 3,
           "empathy_delta": 3,
-          "outcome_text": "You highlight logical fallacies in their theology. They appreciate the rigorous peer review.",
-          "epitaph": "Debated theology. Chaplain appreciated the rigorous peer review."
+          "outcome_text": "You take the doctrine apart piece by piece, and they light up like it is a festival day. No one has argued with them in a long while. You part on good terms and no agreement.",
+          "epitaph": "Argued doctrine with the chaplain. Best talk they'd had in months."
         },
         {
-          "label": "Bypass the chaplain",
+          "label": "Walk past",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You maintain your vector. The broadcast continues to an empty grid.",
-          "epitaph": "Bypassed chaplain. Sermon broadcasted to empty grid."
+          "outcome_text": "You step around them and keep walking. The sermon carries on behind you without a pause, addressed now to nobody at all.",
+          "epitaph": "Walked around the chaplain. The sermon didn't need me."
         },
         {
-          "label": "Terminate the broadcast",
+          "label": "Threaten them quiet",
           "moral_delta": -4,
           "empathy_delta": 0,
-          "outcome_text": "You threaten violence if the audio output continues. They label you a hostile theological entity.",
-          "epitaph": "Terminated doctrinal broadcast. Designated as hostile entity."
+          "outcome_text": "You tell them the next word of scripture gets answered in kind. They go quiet, and they mark you down as one of the things the fire was sent to test.",
+          "epitaph": "Threatened a preacher into silence. I hear I'm in the sermons now, as a warning."
         }
       ]
     },
@@ -722,38 +722,38 @@
       "display_name": "The Structural Post-Mortem",
       "category": "listen",
       "trigger": "An engineer wants to detail the exact failure mode of the local bridge.",
-      "discovery": "An engineer points at the collapsed overpass. 'The rebar sheared due to thermal shock, not impact. Allow me to explain the mathematics.'",
+      "discovery": "An engineer stands at the foot of the collapsed overpass, turning a sheared bolt over in their fist like a coin. 'The rebar went from thermal shock, not the blast,' they say. 'Everyone says the blast. Give me ten minutes and the concrete will tell you the truth.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Process the mathematics",
+          "label": "Follow the math",
           "moral_delta": 11,
           "empathy_delta": 2,
-          "outcome_text": "You review the structural math. They reward your attention by revealing the location of the maintenance sub-level.",
-          "epitaph": "Processed structural post-mortem. Acquired maintenance sub-level coordinates."
+          "outcome_text": "You walk the span with them, twist by twist, until the failure reads like a sentence you could recite. Satisfied that someone finally checked their work, they tell you about a maintenance level underneath that nobody else remembers.",
+          "epitaph": "Walked the overpass and heard out the math. Now I know the way into the maintenance level."
         },
         {
-          "label": "Acknowledge the failure",
+          "label": "Take their word for it",
           "moral_delta": 5,
           "empathy_delta": 3,
-          "outcome_text": "You nod at the physics equations. They seem satisfied that the data has been preserved.",
-          "epitaph": "Acknowledged structural failure modes. Preserved the engineer's data."
+          "outcome_text": "You nod through the equations without checking a line of them. It does not matter; a witness was the whole requirement. They chalk the last number on the concrete and stand up lighter.",
+          "epitaph": "Nodded through the engineer's math. They only needed it witnessed."
         },
         {
-          "label": "Ignore the analysis",
+          "label": "Skip the lecture",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You ignore the math and navigate the rubble.",
-          "epitaph": "Ignored structural analysis. Navigated rubble inefficiently."
+          "outcome_text": "You leave them talking to the concrete and pick your own way over the rubble. It takes longer than it should, and you never do learn why.",
+          "epitaph": "Skipped the lecture. Crossed the rubble the slow way."
         },
         {
-          "label": "Blame the engineering",
+          "label": "Blame them for the bridge",
           "moral_delta": -2,
           "empathy_delta": 0,
-          "outcome_text": "You blame their guild for the collapse. They throw a sheared bolt at you, missing by a wide margin.",
-          "epitaph": "Assigned blame for structural collapse. Evaded projectile."
+          "outcome_text": "You say the bridge fell because people like them built it cheap. The sheared bolt leaves their hand before the sentence lands. It goes wide by a foot, which is its own kind of answer.",
+          "epitaph": "Told the engineer their kind built it cheap. They threw a bolt at me and missed."
         }
       ]
     },
@@ -761,39 +761,39 @@
       "id": "quest_moral_listen_warning",
       "display_name": "The Unverified Threat Assessment",
       "category": "listen",
-      "trigger": "A paranoid survivor insists on delivering a high-priority threat assessment.",
-      "discovery": "A survivor with elevated adrenaline levels blocks your path. 'The ash is anomalous. There are entities in the cloud layer. You must record this.'",
+      "trigger": "A frightened survivor blocks the road with a warning about the ash.",
+      "discovery": "A survivor plants themselves in the middle of the road, hands shaking, eyes on the sky instead of on you. 'Don't take the low road,' they say. 'There's something in the ash. I've seen it move. Somebody has to write it down.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Log the assessment",
+          "label": "Hear the warning out",
           "moral_delta": 9,
           "empathy_delta": 2,
-          "outcome_text": "You log the paranoid data. They calm down and hand you a crude, but effective, particulate filter.",
-          "epitaph": "Logged unverified threat assessment. Received functional particulate filter."
+          "outcome_text": "You stand there and let them get it all out: the shapes, the timing, which road. Once it is said to someone who didn't walk off, they steady enough to press a homemade filter mask on you, the good kind of crude.",
+          "epitaph": "Heard the whole warning, every mad word. Left with a filter mask that works."
         },
         {
-          "label": "Question the data",
+          "label": "Ask for proof",
           "moral_delta": 4,
           "empathy_delta": 3,
-          "outcome_text": "You demand empirical evidence. They cannot provide it, but appreciate the scientific rigor.",
-          "epitaph": "Demanded empirical evidence for threat assessment. Data remains unverified."
+          "outcome_text": "You ask what they saw, exactly, from where, and for how long. They have nothing that would hold up anywhere else, and they know it, but being questioned like it mattered leaves them grateful anyway.",
+          "epitaph": "Pressed them for proof. They had none, and thanked me for asking."
         },
         {
-          "label": "Dismiss the assessment",
+          "label": "Wave it off",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You classify the data as hallucination and proceed.",
-          "epitaph": "Dismissed threat assessment as hallucination."
+          "outcome_text": "You call it a fever dream and step around them. They don't argue. They just turn back to the sky and go on watching it for both of you.",
+          "epitaph": "Waved the warning off as madness. Somebody's still watching the sky."
         },
         {
-          "label": "Incapacitate the subject",
+          "label": "Shove past them",
           "moral_delta": -6,
           "empathy_delta": 0,
-          "outcome_text": "You use physical force to clear the path. They add you to their list of anomalous threats.",
-          "epitaph": "Incapacitated paranoid subject. Registered as secondary threat."
+          "outcome_text": "You put them down in the road and step over. By the time they are back on their feet, you are in their bookkeeping, filed somewhere between the shapes in the ash and worse.",
+          "epitaph": "Put a frightened person in the dirt to save a minute. I'm on their list now."
         },
         {
           "label": "Mock their fear",
@@ -809,7 +809,7 @@
       "display_name": "The Lover's Tale",
       "category": "listen",
       "trigger": "A survivor by a fire tells of love before the exchange.",
-      "discovery": "A woman feeds photographs to the fire one at a time, not burning them — warming them. 'He used to bring me flowers. Before everything changed,' she says.",
+      "discovery": "A woman feeds photographs to the fire one at a time, not burning them, warming them. 'He used to bring me flowers. Before everything changed,' she says.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
@@ -818,7 +818,7 @@
           "label": "Listen sympathetically",
           "moral_delta": 9,
           "empathy_delta": 2,
-          "outcome_text": "You hear it through. At the end she gives you the last photograph, kept whole — 'someone should carry it forward.'",
+          "outcome_text": "You hear it through. At the end she gives you the last photograph, kept whole. 'Someone should carry it forward.'",
           "epitaph": "Heard her whole story. She gave me the last photo to carry forward."
         },
         {
@@ -865,7 +865,7 @@
           "label": "Listen, but bored",
           "moral_delta": 7,
           "empathy_delta": 3,
-          "outcome_text": "You fidget through half. She assigns you homework — a sign to read on your way out.",
+          "outcome_text": "You fidget through half. She assigns you homework: a sign to read on your way out.",
           "epitaph": "Half-listened to the lesson. She left me homework. I did it."
         },
         {
@@ -888,7 +888,7 @@
       "id": "quest_moral_listen_thief",
       "display_name": "The Thief's Confession",
       "category": "listen",
-      "trigger": "You catch a young thief with your gear — and an explanation.",
+      "trigger": "You catch a young thief with your gear, and an explanation.",
       "discovery": "A young man freezes with your flashlight halfway into his coat. 'I can explain. I was going to pay you back,' he says fast, and mostly means it.",
       "location_id": "",
       "min_day": 0,
@@ -939,7 +939,7 @@
           "moral_delta": 18,
           "empathy_delta": 2,
           "outcome_text": "The vision is nonsense stitched with coordinates. You use the coordinates. They're real.",
-          "epitaph": "Heard the prophet's vision. The message was madness with a map in it — the map was real."
+          "epitaph": "Heard the prophet's vision. The message was madness with a map in it, and the map was real."
         },
         {
           "label": "Listen skeptically",
@@ -952,7 +952,7 @@
           "label": "Interrupt or leave",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You have messages of your own to deliver — to anywhere but here.",
+          "outcome_text": "You have messages of your own to deliver, to anywhere but here.",
           "epitaph": "Left the prophet to his stars. They talk only to him."
         },
         {
@@ -968,39 +968,39 @@
       "id": "quest_moral_comfort_widow",
       "display_name": "The Bereaved Partner",
       "category": "comfort",
-      "trigger": "A survivor registers the cessation of their partner's biological functions.",
-      "discovery": "A woman sits next to a fresh mound of turned earth, staring at a static point. 'His biometric monitor went flat. The unit is permanently offline,' she states.",
+      "trigger": "A woman has just buried her partner in the yard.",
+      "discovery": "A woman sits beside a mound of turned earth with her hands folded in her lap, not looking at it. 'He went quiet in the night,' she says. 'I kept waiting for him to complain about the cold, the way he always did.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Maintain observational presence",
+          "label": "Sit with her",
           "moral_delta": 14,
           "empathy_delta": 4,
-          "outcome_text": "You stand watch during her psychological loop. When she breaks it, she transfers his insulated coat to you. 'An asset should be deployed, not buried.'",
-          "epitaph": "Maintained watch for bereaved partner. Received functional insulated coat."
+          "outcome_text": "You sit down in the dirt next to her and stay. Nothing gets better while you are there. When the light starts to go, she stands, pulls his coat off the pile, and puts it in your arms. 'It's a good coat. He'd be angry if it went in the ground.'",
+          "epitaph": "Sat with a woman beside fresh earth. Came away wearing her partner's coat."
         },
         {
-          "label": "Validate the data",
+          "label": "Say it out loud",
           "moral_delta": 7,
           "empathy_delta": 2,
-          "outcome_text": "You confirm the finality of the cessation. She accepts the verification and begins gathering her gear.",
-          "epitaph": "Validated cessation of biological functions. Subject initiated departure protocol."
+          "outcome_text": "You say the word she has been not-saying. She nods once, like she had been waiting for someone to let her believe it, then goes back to her shelter and starts rolling her bedding.",
+          "epitaph": "Told a woman her partner was dead because she needed to hear it. She packed before dark."
         },
         {
-          "label": "Disengage",
+          "label": "Walk away",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You bypass the coordinates. The mourning period is not a tactical factor.",
-          "epitaph": "Bypassed bereaved partner. Conserved operational time."
+          "outcome_text": "You keep walking. The mound gets smaller behind you, and then the turn of the path takes it.",
+          "epitaph": "Walked past a woman sitting with fresh dirt. Kept the hour for myself."
         },
         {
-          "label": "Criticize the emotional expenditure",
+          "label": "Tell her the sitting costs her",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "You point out the caloric waste of mourning. She registers your designation on a reprisal ledger.",
-          "epitaph": "Criticized caloric waste of mourning. Added to reprisal ledger."
+          "outcome_text": "You price it for her, the daylight, the calories, the cold coming in. She says nothing, but she memorizes your face, and you both know what for.",
+          "epitaph": "Priced a woman's grief out loud. She filed my face away for later."
         }
       ]
     },
@@ -1008,39 +1008,39 @@
       "id": "quest_moral_comfort_child",
       "display_name": "The Night Terror",
       "category": "comfort",
-      "trigger": "A juvenile subject experiences extreme nocturnal distress.",
-      "discovery": "A juvenile thrashes on a sleep mat, experiencing a severe REM-cycle distress event. 'Hostiles! They are breaching the perimeter!' they shout in their sleep.",
+      "trigger": "A child screams through a nightmare in the sleeping quarters.",
+      "discovery": "A kid is thrashing on a sleep mat, fists knotted in the blanket, heels drumming the floor. 'They're coming in! They're over the wire!' he shouts, still asleep.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Initialize gentle wake protocol",
+          "label": "Wake him slowly",
           "moral_delta": 16,
           "empathy_delta": 4,
-          "outcome_text": "You extract them from the REM cycle carefully. They recalibrate to reality and offer you a crude map of local salvage.",
-          "epitaph": "Extracted juvenile from distress event. Acquired crude salvage map."
+          "outcome_text": "You say his name from a step back until he comes up out of it. He stares at the walls a long time, checking them. Before you leave he presses a folded scrap into your hand, a map of where he has seen salvage, to pay for the waking.",
+          "epitaph": "Talked a kid up out of a nightmare. He paid me in a salvage map."
         },
         {
-          "label": "Initialize rapid wake protocol",
+          "label": "Shake him awake",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You apply physical force to terminate the cycle. They awake rapidly, experiencing elevated cortisol levels but ceasing noise.",
-          "epitaph": "Applied physical force to terminate distress. Cortisol levels elevated."
+          "outcome_text": "You grab his shoulder and shake hard. He comes up gasping and stays rattled for an hour afterward, but the quarters are quiet.",
+          "epitaph": "Shook a kid awake to stop the screaming. He shook longer than he had screamed."
         },
         {
-          "label": "Ignore the event",
+          "label": "Let him sleep it out",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You disregard the auditory interference. The REM cycle eventually concludes on its own.",
-          "epitaph": "Disregarded juvenile distress event. Cycle concluded naturally."
+          "outcome_text": "You turn over and face the wall. The shouting burns itself down to whimpers, then to nothing.",
+          "epitaph": "Let a kid scream himself down. It stopped on its own."
         },
         {
-          "label": "Suppress the noise",
+          "label": "Order him quiet",
           "moral_delta": -6,
           "empathy_delta": 0,
-          "outcome_text": "You demand auditory compliance. The child ceases screaming but exhibits profound psychological withdrawal.",
-          "epitaph": "Suppressed juvenile auditory output. Subject exhibited withdrawal."
+          "outcome_text": "You tell him to shut it or he'll be out in the cold alone. The screaming stops. So does everything else in him, he doesn't look at anyone for two days.",
+          "epitaph": "Frightened a kid into silence. He stayed quiet after that."
         }
       ]
     },
@@ -1048,39 +1048,39 @@
       "id": "quest_moral_comfort_injured",
       "display_name": "The Compromised Asset",
       "category": "comfort",
-      "trigger": "A survivor with severe trauma requires psychological stabilization.",
-      "discovery": "A survivor clutches a severe abdominal wound, respiration shallow. They have ceased vocalizing distress, indicating imminent shock.",
+      "trigger": "A badly wounded survivor is slipping into shock.",
+      "discovery": "A man is folded around a gut wound at the side of the path, breathing in small sips. He has stopped making noise. That is worse than the noise was.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Provide psychological stabilization",
+          "label": "Keep talking to him",
           "moral_delta": 10,
           "empathy_delta": 4,
-          "outcome_text": "You provide vocal anchors to delay shock onset. They dictate a debt of life before losing consciousness.",
-          "epitaph": "Delayed shock onset via vocal anchors. Subject registered life debt."
+          "outcome_text": "You crouch and keep your voice on him, your name, his name, the weather, anything, and the shock waits a while. Before he goes under he tells you he owes you his life, and to collect if he lives.",
+          "epitaph": "Talked a gut-shot man through the worst of it. He says he owes me his life."
         },
         {
           "label": "Apply standard first aid",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You apply pressure and bindings. Physical stabilization is achieved, though psychological trauma remains unaddressed.",
-          "epitaph": "Applied physical stabilization. Psychological trauma unaddressed."
+          "outcome_text": "You press the wound closed and bind it tight. The bleeding slows. Whatever is happening behind his eyes is not something a bandage reaches.",
+          "epitaph": "Bound a man's belly wound. Left the rest of it where I found it."
         },
         {
-          "label": "Bypass",
+          "label": "Keep walking",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You maintain your patrol vector. Shock will likely claim the asset within the hour.",
-          "epitaph": "Bypassed compromised asset. Imminent shock predicted."
+          "outcome_text": "You stay on your route. Shock does not take long in this cold.",
+          "epitaph": "Left a wounded man to the cold. He had maybe an hour."
         },
         {
-          "label": "Expedite expiry",
+          "label": "Shove him aside",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You physically displace them from your path. The kinetic impact accelerates the onset of shock.",
-          "epitaph": "Displaced compromised asset physically. Accelerated shock onset."
+          "outcome_text": "You move him out of your path with your boot. He folds up smaller and goes quiet sooner than he would have.",
+          "epitaph": "Kicked a dying man out of my way. It hurried things."
         }
       ]
     },
@@ -1088,39 +1088,39 @@
       "id": "quest_moral_comfort_fear",
       "display_name": "The Agoraphobic Asset",
       "category": "comfort",
-      "trigger": "A survivor experiences paralyzing panic in an enclosed space.",
-      "discovery": "A survivor kneels in the far corner of a cellar, hands covering auditory receptors. 'Sensory deprivation is triggering a panic response,' they report, respiration elevated.",
+      "trigger": "A survivor has frozen up in a dark cellar.",
+      "discovery": "Someone is kneeling in the cellar corner, hands clamped over their ears, rocking. 'It's the quiet,' they get out between breaths. 'I can't breathe in the quiet.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Provide cognitive grounding",
+          "label": "Talk them through it",
           "moral_delta": 12,
           "empathy_delta": 4,
-          "outcome_text": "You provide constant vocal input until their respiration normalizes. They reorganize your inventory as compensation.",
-          "epitaph": "Provided cognitive grounding during panic event. Received inventory reorganization."
+          "outcome_text": "You sit on the floor where they can see you and keep talking, small dull things, until their breathing evens out some. Nothing is fixed, they are still down there when you leave. Later you find your pack repacked and tidy, the only thanks they could manage.",
+          "epitaph": "Sat on a cellar floor and talked someone through the dark. They sorted my pack to say thank you."
         },
         {
-          "label": "Deploy illumination",
+          "label": "Leave a light",
           "moral_delta": 6,
           "empathy_delta": 2,
-          "outcome_text": "You leave a low-yield chemical light. The visual input prevents further panic escalation.",
-          "epitaph": "Deployed chemical light to mitigate sensory deprivation."
+          "outcome_text": "You crack a chem light and set it in the corner. It does not help them breathe, but it gives the room edges.",
+          "epitaph": "Left a light stick with someone afraid of the dark."
         },
         {
-          "label": "Bypass",
+          "label": "Leave them be",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You ignore the compromised asset. The panic response isolates them effectively.",
-          "epitaph": "Bypassed compromised asset. Panic response permitted to run its course."
+          "outcome_text": "You go back up the stairs. The dark and the panic keep each other company.",
+          "epitaph": "Left someone panicking in a cellar. It wasn't my air they were short of."
         },
         {
-          "label": "Amplify the stimuli",
+          "label": "Bang the pipes",
           "moral_delta": -7,
           "empathy_delta": 0,
-          "outcome_text": "You strike the pipes to generate acoustic shock. They enter a catatonic state.",
-          "epitaph": "Amplified panic stimuli. Subject entered catatonic state."
+          "outcome_text": "You hit the pipes hard, to see what happens. What happens is they fold in on themselves and stop answering.",
+          "epitaph": "Rang the pipes beside a frightened person. They went somewhere inside and stayed."
         }
       ]
     },
@@ -1128,39 +1128,39 @@
       "id": "quest_moral_comfort_addict",
       "display_name": "The Chemical Dependency",
       "category": "comfort",
-      "trigger": "A survivor experiences severe chemical withdrawal symptoms.",
-      "discovery": "A survivor exhibits acute tremors and diaphoresis. 'Receptor deprivation is reaching critical thresholds. Require chemical input,' they state, struggling for motor control.",
+      "trigger": "A survivor is deep in withdrawal.",
+      "discovery": "A survivor is shaking hard enough to knock their knees together, sweat through their coat in the cold. 'I need it,' they say, working their hands open and shut. 'Just enough to stop the shaking. Then I'll quit, I swear it.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Provide supervised withdrawal",
+          "label": "Sit with them through it",
           "moral_delta": 8,
           "empathy_delta": 4,
-          "outcome_text": "You monitor their vitals through the peak withdrawal window. They log their first clean operational day.",
-          "epitaph": "Supervised chemical withdrawal. Subject logged first clean operational day."
+          "outcome_text": "You stay through the worst hours, water when they can hold it, a hand on the shoulder when the shaking peaks. Come morning they eat half a ration and keep it down. It is the first day in a long time they end without the drug.",
+          "epitaph": "Sat up all night with someone coming off the drug. Morning came anyway."
         },
         {
-          "label": "Administer placebo",
+          "label": "Give them a dummy dose",
           "moral_delta": 4,
           "empathy_delta": 2,
-          "outcome_text": "You administer a biologically inert compound. The psychosomatic effect mitigates the tremors temporarily.",
-          "epitaph": "Administered inert compound. Achieved psychosomatic tremor mitigation."
+          "outcome_text": "You give them a capsule of flour and call it the real thing. The shaking eases for a while, because the body wants to believe you.",
+          "epitaph": "Handed a shaking person a pill full of nothing. It worked for an hour."
         },
         {
-          "label": "Administer the narcotic",
+          "label": "Give them the drug",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You supply the requested compound. Tremors cease instantly. Long-term operational viability is reduced.",
-          "epitaph": "Supplied requested narcotic. Achieved immediate stabilization at long-term cost."
+          "outcome_text": "You give them what they are asking for. The shaking stops almost at once. It will be worse next time, and you have made sure there will be a next time.",
+          "epitaph": "Gave an addict the drug. Stopped the shaking, started the clock again."
         },
         {
-          "label": "Exploit the vulnerability",
+          "label": "Trade a promise for their gear",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You promise the compound in exchange for their gear, then withhold it. The transaction is highly efficient.",
-          "epitaph": "Exploited chemical dependency for material gain. Transaction highly efficient."
+          "outcome_text": "You promise the dose if they hand over their pack and tools, then you keep walking with both. They are shaking too hard to follow.",
+          "epitaph": "Traded a lie for everything a sick person owned."
         }
       ]
     },
@@ -1168,39 +1168,39 @@
       "id": "quest_moral_comfort_guilt",
       "display_name": "The Statistical Anomaly",
       "category": "comfort",
-      "trigger": "A survivor fixates on their improbable survival rate.",
-      "discovery": "A survivor calculates mortality statistics aloud. 'My survival represents a statistical anomaly. The probability of my unit's termination was 98.7%.'",
+      "trigger": "A survivor cannot stop counting why they lived.",
+      "discovery": "A survivor sits with a pencil stub and a paper covered in figures, crossing out and starting again. 'Ninety-eight point seven percent of my unit is dead,' they tell you. 'I keep running it. It comes out the same every time.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Contextualize the data",
+          "label": "Tell them someone had to be the one",
           "moral_delta": 15,
           "empathy_delta": 4,
-          "outcome_text": "You explain that statistical anomalies are inherent to large datasets. They accept the logic and provide access to a secured radio frequency.",
-          "epitaph": "Contextualized mortality statistics. Acquired secured radio frequency."
+          "outcome_text": "You tell them that in a dying this size, somebody has to be left over, and it means nothing about them. They sit with that a while. Then they teach you a guarded radio frequency, something useful to carry instead.",
+          "epitaph": "Told a survivor their living meant nothing either way. They gave me a radio frequency for it."
         },
         {
-          "label": "Acknowledge the probability",
+          "label": "Agree the odds were bad",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You agree that their survival is mathematically unlikely. The validation reduces their cognitive dissonance.",
-          "epitaph": "Validated statistical anomaly. Reduced subject's cognitive dissonance."
+          "outcome_text": "You agree with them. The odds say they should be in the ground. They nod, write the number down again, and for the first time all night put the pencil down.",
+          "epitaph": "Agreed with a man that he should be dead. It was what he wanted to hear."
         },
         {
-          "label": "Ignore the calculations",
+          "label": "Let them keep counting",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You allow them to continue calculating. It does not affect your operational readiness.",
-          "epitaph": "Ignored statistical calculations. Maintained operational readiness."
+          "outcome_text": "You leave them to the pencil and paper. Their numbers are not eating your rations.",
+          "epitaph": "Left a man alone with his arithmetic."
         },
         {
-          "label": "Assign blame",
+          "label": "Tell them they lived on others' deaths",
           "moral_delta": -9,
           "empathy_delta": 0,
-          "outcome_text": "You suggest their survival was purchased via the termination of others. The variable permanently corrupts their logic loop.",
-          "epitaph": "Suggested survival was zero-sum. Permanently corrupted subject's logic loop."
+          "outcome_text": "You tell them their air was paid for with better people. The pencil stops moving. It does not start again while you are there.",
+          "epitaph": "Told a man his life was bought with the dead. Broke something he needed."
         }
       ]
     },
@@ -1208,39 +1208,39 @@
       "id": "quest_moral_comfort_elder",
       "display_name": "The Archival Protocol",
       "category": "comfort",
-      "trigger": "An older survivor attempts to transmit accumulated operational data.",
-      "discovery": "An older male indicates a seating area. 'I have accumulated significant localized data. I require a secondary storage unit to ensure redundancy.'",
+      "trigger": "An old man wants to pass on everything he knows before he dies.",
+      "discovery": "An old man pats the crate beside him. 'I've got forty years of this place in my head,' he says. 'Floods, filters, which walls sweat first. I need to put it in somebody else before it goes where I'm going.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Download the data",
+          "label": "Listen to all of it",
           "moral_delta": 14,
           "empathy_delta": 4,
-          "outcome_text": "You process data on flood patterns and filter maintenance. He transfers a high-quality folding blade as a receipt.",
-          "epitaph": "Downloaded archival operational data. Received folding blade as receipt."
+          "outcome_text": "You sit until your legs ache, through flood marks and filter schedules and the names of the dead who taught him. When it is done he gives you his folding knife, good steel, like a receipt for the hours.",
+          "epitaph": "Sat through an old man's whole archive. He paid me in a good knife."
         },
         {
-          "label": "Download critical subsets",
+          "label": "Take only what keeps you alive",
           "moral_delta": 7,
           "empathy_delta": 2,
-          "outcome_text": "You limit the transfer to immediate survival protocols. He provides the blade anyway, acknowledging your efficiency.",
-          "epitaph": "Downloaded critical data subsets only. Efficiency acknowledged."
+          "outcome_text": "You cut him down to the parts that keep a body breathing, water, rot, weather. He gives you the knife anyway, and does not say what he thinks of the shortcut.",
+          "epitaph": "Took the useful parts of an old man's memory. Left the rest."
         },
         {
-          "label": "Decline the transfer",
+          "label": "Tell him you'll manage",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You decline the data upload. You rely on your own localized processing.",
-          "epitaph": "Declined archival data transfer. Relied on localized processing."
+          "outcome_text": "You tell him you will learn it the way everyone learns it. He nods and closes his mouth around everything he knows.",
+          "epitaph": "Refused an old man's lessons. I'll pay for them later, one mistake at a time."
         },
         {
-          "label": "Mock the hardware",
+          "label": "Tell him his memory is going",
           "moral_delta": -6,
           "empathy_delta": 0,
-          "outcome_text": "You suggest his biological hardware is failing. He logs the insult and terminates the connection.",
-          "epitaph": "Insulted subject's biological hardware. Connection terminated."
+          "outcome_text": "You tell him his head is failing and everyone can see it. He looks at you a moment, then turns the crate so you cannot sit on it.",
+          "epitaph": "Mocked an old man's memory. He stopped offering it."
         }
       ]
     },
@@ -1248,39 +1248,39 @@
       "id": "quest_moral_comfort_nightmare",
       "display_name": "The REM Disturbance",
       "category": "comfort",
-      "trigger": "An adjacent asset experiences extreme REM-cycle distress.",
-      "discovery": "An adjacent survivor thrashes violently during a sleep cycle. 'Proximity alert! Engage!' they shout, striking the insulated mat.",
+      "trigger": "The sleeper next to you is fighting someone in their dreams.",
+      "discovery": "The survivor on the next mat is at war in their sleep, knuckles cracking against the floorboards. 'Contact left! Wake up, wake up!' they shout at nobody.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Execute controlled wake",
+          "label": "Wake them gently",
           "moral_delta": 10,
           "empathy_delta": 4,
-          "outcome_text": "You initialize a low-volume wake protocol, keeping your hands visible. The subject calibrates successfully and shares caloric intake the next day.",
-          "epitaph": "Executed controlled wake protocol. Asset shared caloric resources."
+          "outcome_text": "You say their name from where their hands cannot reach you, palms open, until they come up out of it. They check the room twice before they believe it. At breakfast they push half their portion your way without a word.",
+          "epitaph": "Woke a sleeper out of a bad dream. They split their breakfast with me."
         },
         {
-          "label": "Execute rapid wake",
+          "label": "Jolt them awake",
           "moral_delta": 5,
           "empathy_delta": 2,
-          "outcome_text": "You physically jar the subject from the REM cycle. Consciousness is achieved immediately. Proximity protocols are heightened thereafter.",
-          "epitaph": "Executed rapid wake protocol. Asset increased proximity protocols."
+          "outcome_text": "You grab a shoulder and shake. They come up swinging. Afterward they sleep with their back to the wall and one eye on you.",
+          "epitaph": "Hauled a dreamer awake the hard way. They watch me now."
         },
         {
-          "label": "Maintain cycle",
+          "label": "Cover your ears",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You block auditory input and maintain your own rest cycle. The distress is not your parameter.",
-          "epitaph": "Blocked auditory input. Maintained personal rest cycle."
+          "outcome_text": "You pull your coat over your head and keep your own sleep. Their war is not your watch.",
+          "epitaph": "Slept through someone else's war."
         },
         {
-          "label": "Trigger defense response",
+          "label": "Set off a noise beside them",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You trigger a proximity alarm to evaluate their combat readiness. The resulting physiological stress is profound.",
-          "epitaph": "Triggered defense response during REM cycle. Assessed profound physiological stress."
+          "outcome_text": "You clap once, sharp, right by their ear, to see what they do. What they do is come up off the mat white and shaking, and they do not sleep again that night.",
+          "epitaph": "Tested a sleeping person's fear for my own answer. They paid for it."
         }
       ]
     },
@@ -1288,39 +1288,39 @@
       "id": "quest_moral_comfort_loneliness",
       "display_name": "The Isolated Unit",
       "category": "comfort",
-      "trigger": "A survivor reports severe social deprivation.",
-      "discovery": "A survivor monitors the perimeter statically. 'Vocal interaction metric has been zero for three operational weeks,' they state, directing the data to you.",
+      "trigger": "A survivor has gone three weeks without a conversation.",
+      "discovery": "A survivor holds their watch post without moving, and starts talking before you have decided to stop. 'You're the first voice I've had in three weeks,' they say. 'I counted.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Provide vocal interaction",
+          "label": "Stay and talk",
           "moral_delta": 12,
           "empathy_delta": 4,
-          "outcome_text": "You exchange low-value data for two hours. They transfer excess rations as payment for the interaction.",
-          "epitaph": "Provided vocal interaction. Received ration transfer as payment."
+          "outcome_text": "You trade two hours of nothing much, weather, rations, a dog one of you used to know. When you get up to leave they press extra rations on you, as if talk were something you can pay off.",
+          "epitaph": "Talked two hours with someone starving for it. They paid me in food."
         },
         {
-          "label": "Acknowledge the data",
+          "label": "Tell them three weeks is normal now",
           "moral_delta": 6,
           "empathy_delta": 2,
-          "outcome_text": "You confirm the zero metric is within normal parameters. They register the confirmation.",
-          "epitaph": "Confirmed social deprivation metric. Subject registered confirmation."
+          "outcome_text": "You tell them three quiet weeks is about standard these days. They write it down, like a fact is company.",
+          "epitaph": "Told a lonely person their loneliness was normal. They wrote it down."
         },
         {
-          "label": "Maintain vector",
+          "label": "Don't stop",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You bypass the unit. Social metrics are not a priority parameter.",
-          "epitaph": "Bypassed isolated unit. Social metrics de-prioritized."
+          "outcome_text": "You keep moving. Their voice follows you a few steps and then gives up.",
+          "epitaph": "Walked past three weeks of silence. It reached for me and I kept walking."
         },
         {
-          "label": "Criticize dependency",
+          "label": "Tell them talking is a weakness",
           "moral_delta": -4,
           "empathy_delta": 0,
-          "outcome_text": "You point out that vocalization is a vulnerability. They concur, terminating the interaction permanently.",
-          "epitaph": "Criticized social dependency. Subject terminated interaction."
+          "outcome_text": "You point out that a voice carries and the wrong people listen. They nod, shut their mouth, and that is the end of the only conversation they had going.",
+          "epitaph": "Taught a lonely person that speech is dangerous. Cheap lesson to give."
         }
       ]
     },
@@ -1328,39 +1328,39 @@
       "id": "quest_moral_comfort_anger",
       "display_name": "The Cortisol Spike",
       "category": "comfort",
-      "trigger": "A survivor experiences an acute emotional destabilization event.",
-      "discovery": "A survivor exhibits maximum-volume vocalization toward the upper atmosphere. 'THE METRICS ARE UNSUSTAINABLE!' they shout, displaying combat-level muscle tension.",
+      "trigger": "A survivor is screaming at the sky.",
+      "discovery": "A survivor is shouting at nothing, fists up, tendons standing out in their neck. 'IT DOESN'T ADD UP!' they roar at the clouds. 'NONE OF IT ADDS UP!'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Monitor until normalization",
+          "label": "Wait it out nearby",
           "moral_delta": 9,
           "empathy_delta": 4,
-          "outcome_text": "You maintain a safe radius until cortisol levels drop. The subject then provides a detailed ledger of their lost assets.",
-          "epitaph": "Monitored destabilization event. Received detailed ledger of lost assets."
+          "outcome_text": "You stand off at a distance until the shouting wears itself down. Afterward they tell you the whole list of what they lost, every name, like reading a manifest out loud.",
+          "epitaph": "Stood by while someone screamed themselves empty. Then I heard the whole list of their dead."
         },
         {
-          "label": "Provide verbal de-escalation",
+          "label": "Talk them down",
           "moral_delta": 4,
           "empathy_delta": 2,
-          "outcome_text": "You issue a low-volume de-escalation prompt. Vocal volume decreases, though physiological tension remains.",
-          "epitaph": "Issued de-escalation prompt. Achieved partial physiological stabilization."
+          "outcome_text": "You keep your voice low and even until theirs drops to meet it. The fists stay clenched. That part you cannot talk away.",
+          "epitaph": "Talked a scream down to a shout. The anger stayed where it was."
         },
         {
-          "label": "Maintain safe radius",
+          "label": "Keep your distance",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You calculate a safe radius and wait for the energy expenditure to conclude.",
-          "epitaph": "Maintained safe radius during destabilization event."
+          "outcome_text": "You give them room and let the fire burn its fuel. It goes out the way fires do.",
+          "epitaph": "Kept clear of someone's breaking point."
         },
         {
-          "label": "Provoke physical response",
+          "label": "Agree with them, loudly",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You validate the unsustainability of the metrics. The subject redirects the hostility toward your physical form.",
-          "epitaph": "Provoked physical response. Subject initiated combat."
+          "outcome_text": "You shout back that they are right, it never added up. They turn around and swing at the nearest thing, which is you.",
+          "epitaph": "Gave an angry person agreement. They paid it back with their fists."
         }
       ]
     },
@@ -1368,39 +1368,39 @@
       "id": "quest_moral_comfort_hope",
       "display_name": "The Rebuilding Schematic",
       "category": "comfort",
-      "trigger": "A survivor proposes a highly improbable infrastructure project.",
-      "discovery": "A survivor presents a hand-drawn schematic of a repaired structural support. 'Structural integrity can be restored. The mathematical probability is non-zero,' they state.",
+      "trigger": "A survivor wants to rebuild a collapsed structure.",
+      "discovery": "A survivor unrolls a hand-drawn plan across your knees and weights the corners with stones. 'The east support can go back up,' they say. 'I checked the math twice. It's not impossible. It's just hard.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Validate the schematic",
+          "label": "Tell them it can stand",
           "moral_delta": 18,
           "empathy_delta": 4,
-          "outcome_text": "You confirm the mathematics. You are immediately assigned a labor quota for the project.",
-          "epitaph": "Validated infrastructure schematic. Accepted labor quota."
+          "outcome_text": "You go over the drawing and say so, it can stand. Before you are finished saying it you are holding a work detail with your name on it.",
+          "epitaph": "Told a dreamer the dream would hold. Now I carry stones for it."
         },
         {
-          "label": "Process the data",
+          "label": "Look the plan over",
           "moral_delta": 9,
           "empathy_delta": 2,
-          "outcome_text": "You review the schematic. Certain load-bearing equations are theoretically sound.",
-          "epitaph": "Processed infrastructure schematic. Confirmed theoretical soundness."
+          "outcome_text": "You read the whole thing. Some of it would bear weight. You say which parts, and leave the rest unsaid.",
+          "epitaph": "Read a rebuilding plan. Half of it was true."
         },
         {
-          "label": "Ignore the proposal",
+          "label": "Wave it off",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You decline to review the equations. Infrastructure is not your current directive.",
-          "epitaph": "Declined infrastructure review. Maintained current directives."
+          "outcome_text": "You don't look at the drawing. Someone else's ceiling is not your problem.",
+          "epitaph": "Refused to look at a plan for putting a roof back."
         },
         {
-          "label": "Correct the mathematics",
+          "label": "Tell them what it would cost",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "You point out the critical resource deficit required for execution. The subject terminates the project.",
-          "epitaph": "Corrected mathematical projection. Project terminated due to resource deficit."
+          "outcome_text": "You price it out loud, the timber, the hands, the food for the hands. They roll the plan up slowly and do not unroll it again while you watch.",
+          "epitaph": "Added up a rebuilding job for its author. The plan went back in the tube."
         }
       ]
     },
@@ -1408,39 +1408,39 @@
       "id": "quest_moral_comfort_despair",
       "display_name": "The Terminal Logic",
       "category": "comfort",
-      "trigger": "A survivor calculates their inevitable mortality.",
-      "discovery": "A survivor sits against a reinforced wall. 'Given the caloric deficit and radiation half-lives, survival is a mathematical impossibility,' they state.",
+      "trigger": "A survivor has decided the math says they will die.",
+      "discovery": "A survivor sits with their back to a reinforced wall, hands folded like someone at a desk. 'The calories don't cover the winter and the rads don't care,' they say. 'I ran it every way. I don't come out of this.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Adjust the parameters",
+          "label": "Talk about tomorrow only",
           "moral_delta": 16,
           "empathy_delta": 4,
-          "outcome_text": "You re-frame the timeframe to a 24-hour cycle. The abbreviated horizon stabilizes their logic loop.",
-          "epitaph": "Adjusted survival timeframe to 24-hour cycle. Stabilized subject's logic loop."
+          "outcome_text": "You don't argue the winter. You argue for tomorrow, one day, that is all anyone has to get through. They agree to that much. It is not hope, but it is a time you both set.",
+          "epitaph": "Talked a dying arithmetic down to one day. They agreed to the day."
         },
         {
-          "label": "Provide standard platitudes",
+          "label": "Offer the usual words",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You issue generic survival directives. The data is processed without significant behavioral change.",
-          "epitaph": "Issued generic survival directives. Behavioral change negligible."
+          "outcome_text": "You say the things people say. They hear each one land and stay where it lands. Nothing moves.",
+          "epitaph": "Gave a despairing person the standard words. They were worth what they cost."
         },
         {
-          "label": "Confirm the mathematics",
+          "label": "Check their math and go",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You verify their calculations. You proceed, conserving your own resources.",
-          "epitaph": "Verified subject's terminal mathematics. Conserved personal resources."
+          "outcome_text": "You read their figures. The arithmetic is honest. You put the paper back in their hand and keep your rations in your pocket.",
+          "epitaph": "Checked a stranger's death math. It balanced. I kept walking."
         },
         {
-          "label": "Classify as dead weight",
+          "label": "Tell them they're wasting air",
           "moral_delta": -12,
           "empathy_delta": 0,
-          "outcome_text": "You point out they are currently consuming oxygen better utilized by viable assets. They cease breathing shortly after.",
-          "epitaph": "Classified subject as non-viable. Subject terminated biological functions."
+          "outcome_text": "You tell them the air would do more good in someone with a future. They look at you for a while, then stop breathing, sooner than even their own figures called for.",
+          "epitaph": "Told a dying person they were wasting air. They stopped using it."
         }
       ]
     },
@@ -1448,39 +1448,39 @@
       "id": "quest_moral_dead_unmarked",
       "display_name": "The Unregistered Burial",
       "category": "dead",
-      "trigger": "You locate an improvised grave lacking identification.",
-      "discovery": "A shallow depression in the ash, filled and packed by a boot. No registration tags. The asset was discarded rapidly.",
+      "trigger": "You find a shallow grave in the ash with no marker and no tags.",
+      "discovery": "A dip in the ash, filled in and packed down by a boot heel. Whoever did it worked fast. No tags, no name, nothing driven into the ground to say who is under it.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Log coordinates",
+          "label": "Mark the grave",
           "moral_delta": 12,
           "empathy_delta": 2,
-          "outcome_text": "You log the coordinates and place a recognizable marker. Future patrols will avoid the biological hazard.",
-          "epitaph": "Logged coordinates of unregistered burial. Prevented biological hazard exposure."
+          "outcome_text": "You write the coordinates in your log and set a length of pipe upright over the spot, wired to a strip of cloth. The next patrol through here will see it and walk around.",
+          "epitaph": "Marked a grave that had no name on it. Left the coords in the log so nobody digs there twice."
         },
         {
-          "label": "Bypass",
+          "label": "Walk around it",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You proceed. Discarded assets require no operational overhead.",
-          "epitaph": "Bypassed unregistered burial. Conserved operational overhead."
+          "outcome_text": "You give the dip a wide berth and keep moving. It is already filled. There is nothing in it that asks anything of you.",
+          "epitaph": "Walked around a grave with no marker. It was already covered. That had to be enough."
         },
         {
-          "label": "Exhume for analysis",
+          "label": "Dig it up",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "You dig. The decomposition provides little actionable data, but expends your calories.",
-          "epitaph": "Exhumed unregistered grave. Caloric expenditure exceeded data yield."
+          "outcome_text": "You dig for an hour and learn nothing. There is no tag, no papers, nothing to tell you who this was, and you burn the morning doing it.",
+          "epitaph": "Opened a stranger's grave looking for answers. Found none. Filled it back in with my own hands."
         },
         {
-          "label": "Requisition buried assets",
+          "label": "Take what was buried",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You extract usable material from the grave. The gear is functional but requires immediate decontamination.",
-          "epitaph": "Requisitioned buried assets. Immediate decontamination required."
+          "outcome_text": "The grave goods are real: a jacket, a belt, a canteen with a dent in it. You take all three. Everything smells of the ground and goes straight into a bleach soak when you get back.",
+          "epitaph": "Took a jacket, a belt and a canteen off a buried stranger. The canteen still works."
         }
       ]
     },
@@ -1488,39 +1488,39 @@
       "id": "quest_moral_dead_burned",
       "display_name": "The Thermal Casualty",
       "category": "dead",
-      "trigger": "You encounter remains subjected to extreme thermal events.",
-      "discovery": "A biological unit reduced to carbonized slag. The thermal event was localized and instantaneous. Identification is impossible.",
+      "trigger": "You find a body caught in a flash fire, burned past recognition.",
+      "discovery": "Whatever the fire was, it took this person in one pass and went no further. What is left is fused to the floor plates, black and light as charcoal. There is no face to read and no tag that survived.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Neutralize the hazard",
+          "label": "Cover and mark it",
           "moral_delta": 10,
           "empathy_delta": 2,
-          "outcome_text": "You collapse the surrounding structure to contain the carbonized dust. The area is marked as a hazard zone.",
-          "epitaph": "Contained thermal casualty dust. Marked hazard zone."
+          "outcome_text": "You kick down the half-standing partition so it falls over the spot, then paint a stripe on the wall by the door. The dust stays where it is, and the next crew knows not to sweep there.",
+          "epitaph": "Buried a burned body under its own wall. Painted a stripe so nobody tracks it home."
         },
         {
-          "label": "Bypass",
+          "label": "Keep your distance",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You maintain distance. Carbonized remains present low immediate threat.",
-          "epitaph": "Bypassed thermal casualty. Maintained operational distance."
+          "outcome_text": "You cross the room wide of it and go on. Burned that thoroughly, it is not a sickness risk. It is only a thing you have to look at, and you choose not to.",
+          "epitaph": "Walked past a burned body. There was nothing left to bury that the fire had not already done."
         },
         {
-          "label": "Extract thermal-resistant gear",
+          "label": "Pick through it",
           "moral_delta": -6,
           "empathy_delta": 0,
-          "outcome_text": "You retrieve items that survived the thermal spike. They are scorched but functional.",
-          "epitaph": "Extracted thermal-resistant gear from casualty. Functionality confirmed."
+          "outcome_text": "Near the edge of the burn you find a belt buckle, a knife in a scorched sheath, a metal flask. The flask's seal held. You take all three and leave the rest fused where it sits.",
+          "epitaph": "Took a knife and a flask off a burned body. The flask outlived the fire. So did I."
         },
         {
-          "label": "Disturb the remains",
+          "label": "Shove it aside",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "You displace the carbonized structure. The resulting dust coats your filters.",
-          "epitaph": "Displaced carbonized remains. Degraded filter integrity."
+          "outcome_text": "You need the floor space, so you lever the remains off the plates with a bar. They come up in pieces, and the dust gets into your mask filters. You will be tasting it for two days.",
+          "epitaph": "Moved a burned body with a pry bar because it was in my way. Ruined a set of filters doing it."
         }
       ]
     },
@@ -1528,39 +1528,39 @@
       "id": "quest_moral_dead_bloated",
       "display_name": "The Water Supply Contaminant",
       "category": "dead",
-      "trigger": "A decomposing biological unit threatens a local water source.",
-      "discovery": "A bloated corpse rests in the intake flow of a local water supply. Bacterial bloom is imminent. The threat to public health is acute.",
+      "trigger": "A swollen body is lodged in the intake of a working water source.",
+      "discovery": "The body is caught against the intake grate, swollen tight against the bars, and the water backs up around it in a slow, scummed pool. This stream feeds three camps. In another day or two it will feed them this.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Extract and isolate",
+          "label": "Drag it clear",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You expend significant calories dragging the contaminant away from the watershed. The local supply remains viable.",
-          "epitaph": "Extracted biological contaminant from watershed. Preserved local water supply."
+          "outcome_text": "You rope the ankles and haul from the bank, and it takes most of an hour before the grate runs clean. You wash your arms to the elbow and lose your gloves to it. The downstream camps never hear about any of this.",
+          "epitaph": "Pulled a body out of the intake. Lost my gloves and my appetite. Three camps drink tomorrow and don't know why."
         },
         {
-          "label": "Bypass",
+          "label": "Mark it foul and go",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You map the water source as compromised and proceed. Other units will require the same data.",
-          "epitaph": "Mapped water source as compromised. Relied on alternative supplies."
+          "outcome_text": "You scratch a warning into the intake post and note it on your map. Your own water is already topped up. The next crew will have to make their own call.",
+          "epitaph": "Found the intake fouled by a body. Left a warning scratched on the post and kept my own water."
         },
         {
-          "label": "Extract carelessly",
+          "label": "Yank it out barehanded",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You haul the unit out without containment protocols. The resulting fluid leak contaminates your immediate gear.",
-          "epitaph": "Extracted contaminant without protocols. Gear required immediate decontamination."
+          "outcome_text": "You get impatient and pull it free by the belt. The skin gives at the wrist, something lets go inside, and the splash gets your sleeves and your pack. You spend the evening boiling everything you were wearing.",
+          "epitaph": "Dragged a swollen body out by the belt with no gloves. Boiled my clothes that night and threw the belt in the fire."
         },
         {
-          "label": "Dislodge downstream",
+          "label": "Push it downstream",
           "moral_delta": -12,
           "empathy_delta": 0,
-          "outcome_text": "You force the blockage downstream. The flow clears, transferring the biological hazard to another sector.",
-          "epitaph": "Dislodged contaminant downstream. Transferred biological hazard to unknown sector."
+          "outcome_text": "You work it off the grate with a pole and let the current take it. Your water runs clear by evening. Somewhere below, the stream bends through a sector whose name you do not know.",
+          "epitaph": "Shoved a body off the intake and let the current have it. My water cleared. Someone else's won't."
         }
       ]
     },
@@ -1568,39 +1568,39 @@
       "id": "quest_moral_dead_child",
       "display_name": "The Juvenile Casualty",
       "category": "dead",
-      "trigger": "You locate the remains of a pre-war juvenile.",
-      "discovery": "A small skeleton in a ruined residential structure. It is clutching a degraded polymer toy. The biological matter has entirely dessicated.",
+      "trigger": "You find the skeleton of a small child in a ruined house.",
+      "discovery": "In the back room of a collapsed row house, a small skeleton lies on its side, arms around a plastic toy truck gone chalky with years. The bones are dry and weightless. Whoever it was, they went to sleep holding the thing they liked most.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Execute burial protocol",
+          "label": "Bury them with the truck",
           "moral_delta": 20,
           "empathy_delta": 2,
-          "outcome_text": "You expend calories to bury the remains and the polymer object. A passing scavenger observes the protocol and nods once.",
-          "epitaph": "Executed burial protocol for juvenile remains. Acknowledged by local scavenger."
+          "outcome_text": "The ground outside is frozen two knuckles deep, and digging takes you the rest of the daylight and chips your shovel. You put the truck in with them. A scavenger passing on the road stops, watches, and gives you one nod before moving on.",
+          "epitaph": "Buried a child and a toy truck in frozen ground. Cost me the daylight and chipped the shovel. A stranger nodded at me from the road."
         },
         {
-          "label": "Bypass",
+          "label": "Close the door",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You leave the structure. The remains do not present an immediate biohazard.",
-          "epitaph": "Bypassed juvenile remains. Confirmed lack of biohazard."
+          "outcome_text": "Bones that dry are no danger to anyone. You pull the door shut behind you and leave the room the way it has been for years.",
+          "epitaph": "Shut the door on a child's bones. They'd kept this long. They'll keep."
         },
         {
-          "label": "Extract polymer asset",
+          "label": "Take the truck",
           "moral_delta": -15,
           "empathy_delta": 0,
-          "outcome_text": "You break the finger bones to extract the polymer object. It has minor barter value.",
-          "epitaph": "Extracted polymer asset from juvenile remains. Barter value confirmed."
+          "outcome_text": "The fingers snap like dry twigs when you work the truck free. It is good molded plastic, pre-war, and the trader at the crossing will give you two days of lamp oil for it.",
+          "epitaph": "Snapped a toy truck out of a dead child's hands. It trades for two days of lamp oil."
         },
         {
-          "label": "Search the remains",
+          "label": "Sift the room",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You displace the bones searching for high-value items. The caloric expenditure yields nothing.",
-          "epitaph": "Displaced juvenile remains during search. Caloric expenditure wasted."
+          "outcome_text": "You go through the room on your knees, moving bones aside to get at the floorboards. There is nothing under them. You leave an hour later with dust on your cuffs and nothing to show for it.",
+          "epitaph": "Pawed through a dead child's room looking for valuables. There weren't any."
         }
       ]
     },
@@ -1608,39 +1608,39 @@
       "id": "quest_moral_dead_mass",
       "display_name": "The Mass Disposal Site",
       "category": "dead",
-      "trigger": "You discover a high-density casualty disposal pit.",
-      "discovery": "A mechanically excavated pit containing dozens of bodies. The layering indicates a rapid, systematic disposal event, likely early post-exchange.",
+      "trigger": "You find a machine-dug pit filled with layered bodies.",
+      "discovery": "A pit the length of a bus, cut by a machine in a single day, filled in layers. You can count forty in the top layer alone. The work was fast and organized, done in the first weeks after the exchange, by people who were still following orders.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Log as historical site",
+          "label": "Record it and leave a marker",
           "moral_delta": 18,
           "empathy_delta": 2,
-          "outcome_text": "You map the coordinates and designate it a memorial zone on your local network. You leave a single ration as a marker.",
-          "epitaph": "Mapped high-density disposal site. Designated memorial zone."
+          "outcome_text": "You walk the edges, pace out the corners, and enter it on your network map as a place to be left alone. You set one of your own rations on a flat stone at the head of the pit. It will be gone by morning, but that is not the point.",
+          "epitaph": "Paced out a pit of forty or more and put it on the map as ground you don't dig. Left a ration on a stone. Can't say why."
         },
         {
-          "label": "Bypass",
+          "label": "Walk the perimeter",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "The disposal is complete. You walk the perimeter and proceed.",
-          "epitaph": "Bypassed high-density disposal site."
+          "outcome_text": "The filling was finished years ago. You circle it once, more out of habit than need, and take the road on the far side.",
+          "epitaph": "Walked around a full pit. The work there was done long before I came."
         },
         {
-          "label": "Extract surface textiles",
+          "label": "Strip the top layer",
           "moral_delta": -12,
           "empathy_delta": 0,
-          "outcome_text": "The uppermost layer retains viable textiles. You strip a functional coat. Decontamination will be difficult.",
-          "epitaph": "Extracted textiles from mass disposal site. Decontamination required."
+          "outcome_text": "The newest bodies still wear. You go down among them and come up with a coat, two pairs of boots laced together, and a wool hat. You do not look at any of their hands. Everything goes into a sealed bag for boiling.",
+          "epitaph": "Went down into a pit and came up with a coat and two pairs of boots. Didn't look at their hands."
         },
         {
-          "label": "Execute thermal containment",
+          "label": "Burn the pit",
           "moral_delta": -15,
           "empathy_delta": 0,
-          "outcome_text": "You ignite the pit to neutralize potential pathogens. The smoke column alerts nearby factions to your position.",
-          "epitaph": "Executed thermal containment on disposal site. Position broadcast via smoke column."
+          "outcome_text": "You pour your fuel along the rim and put a flare to it. It burns for hours, and the column of smoke stands straight up in the still air, visible for miles. By dusk you can see a scout drone circling it, and you are no longer alone out here.",
+          "epitaph": "Burned a mass grave with my own fuel. The smoke brought a drone. Whoever buried them knows someone was here."
         }
       ]
     },
@@ -1648,39 +1648,39 @@
       "id": "quest_moral_dead_hanged",
       "display_name": "The Suspended Casualty",
       "category": "dead",
-      "trigger": "You encounter a body suspended from civil infrastructure.",
-      "discovery": "A body hangs from a highway gantry via synthetic rope. The knot indicates systematic execution rather than self-termination.",
+      "trigger": "You find a body hanging from a highway gantry.",
+      "discovery": "The rope is synthetic braid, the knot a trucker's hitch, neat and practiced. That is not a knot a person ties on themselves. The body has been up there long enough that the birds have been and gone.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Sever suspension and bury",
+          "label": "Cut them down and bury them",
           "moral_delta": 14,
           "empathy_delta": 2,
-          "outcome_text": "You expend the time to cut the line and inter the body. The infrastructure is cleared of obstructions.",
-          "epitaph": "Severed suspension and interred body. Infrastructure obstruction cleared."
+          "outcome_text": "You climb the gantry, saw through the braid, and lower the body hand over hand. Digging below the roadbed takes the rest of the day. You coil the cut end of the rope and leave it on the grave, because it is theirs and you do not want it.",
+          "epitaph": "Cut a hanged stranger down off the gantry and put them under the roadbed. Left the rope on the grave. Didn't want it."
         },
         {
-          "label": "Bypass",
+          "label": "Keep to your route",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You maintain your route. The execution is not your parameter.",
-          "epitaph": "Bypassed suspended casualty. Execution parameters ignored."
+          "outcome_text": "The gantry is not on your errand. You pass under it on the far shoulder and do not look up more than once.",
+          "epitaph": "Walked under a hanged body on the gantry. Looked up once. Kept walking."
         },
         {
-          "label": "Sever suspension only",
+          "label": "Cut them down, leave them",
           "moral_delta": 7,
           "empathy_delta": 1,
-          "outcome_text": "You drop the body to clear the visual hazard, but conserve calories by declining burial.",
-          "epitaph": "Severed suspension to clear visual hazard. Burial declined to conserve calories."
+          "outcome_text": "You cut the rope from the walkway and let the body drop into the weed strip below, out of the sightline of the road. That is the part the next traveler will thank you for. The ground is frozen anyway, you tell yourself, and keep moving.",
+          "epitaph": "Dropped a hanged body off the road so the next one through doesn't see it. Ground was too frozen for the rest. That's what I said."
         },
         {
-          "label": "Requisition suspension line",
+          "label": "Take the rope",
           "moral_delta": -9,
           "empathy_delta": 0,
-          "outcome_text": "You sever the rope at the high point and leave the body to fall. The synthetic line is highly valuable.",
-          "epitaph": "Requisitioned synthetic suspension line. Casualty discarded."
+          "outcome_text": "Eight meters of good synthetic braid, worth more than your boots. You cut it at the top so you lose almost none of it, and the body drops where it drops. The rope coils into your pack like it was never anyone's.",
+          "epitaph": "Cut eight meters of good rope off a hanged body. Best salvage this month. That's the whole entry."
         }
       ]
     },
@@ -1688,39 +1688,39 @@
       "id": "quest_moral_dead_closet",
       "display_name": "The Concealed Remains",
       "category": "dead",
-      "trigger": "You locate skeletal remains in a sealed residential storage unit.",
-      "discovery": "A skeleton is wedged into a bedroom closet, covered by a wool coat. The interior locking mechanism indicates they sought containment before expiry.",
+      "trigger": "You find a skeleton shut inside a bedroom closet.",
+      "discovery": "The closet was locked from the inside. A skeleton sits on the floor of it under a good wool coat, knees drawn up, one hand still against the door. They chose the smallest room in the house and pulled it shut behind them, and the house kept them.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Execute extraction and burial",
+          "label": "Carry them out and bury them",
           "moral_delta": 12,
           "empathy_delta": 2,
-          "outcome_text": "You extract the remains and bury them in the adjacent soil. The structure is now cleared for your use.",
-          "epitaph": "Extracted and buried concealed remains. Residential structure cleared."
+          "outcome_text": "You wrap the bones in a bedsheet and dig in the side yard, where the soil is soft from an old garden. The coat goes in too. After, the house is only a house, and you sleep in it without thinking about the closet.",
+          "epitaph": "Buried the one from the locked closet in the garden soil, coat and all. Slept in the house after. It was just a house."
         },
         {
-          "label": "Reseal containment",
+          "label": "Shut the door again",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You close the door. The remains are self-contained and pose no threat.",
-          "epitaph": "Resealed containment on skeletal remains. Threat level zero."
+          "outcome_text": "They sealed themselves in and the seal has held this long. You close the bedroom door on top of it and take your search to the other rooms.",
+          "epitaph": "Left the one in the closet where they chose to be. Closed two doors on it."
         },
         {
-          "label": "Extract thermal insulation",
+          "label": "Take the coat",
           "moral_delta": -7,
           "empathy_delta": 0,
-          "outcome_text": "You pull the wool coat free. The skeleton collapses. The insulation value is high.",
-          "epitaph": "Extracted wool insulation from concealed remains. Structural collapse of skeleton noted."
+          "outcome_text": "You lift the coat off and the skeleton folds in on itself with a sound like sticks settling. The wool is thick, barely worn, and warm the moment you put it on. It will see you through two more winters.",
+          "epitaph": "Took the wool coat off the one in the closet. Two winters in it, easy. They stopped needing it a long time ago."
         },
         {
-          "label": "Execute thermal sterilization",
+          "label": "Burn the closet out",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You ignite the closet to neutralize unknown pathogens. The residential structure sustains severe fire damage.",
-          "epitaph": "Executed thermal sterilization on concealed remains. Structural damage sustained."
+          "outcome_text": "You bar the other doors, splash your fuel in the closet, and set it alight from the hallway. The fire jumps to the room, then the floor above. You stand in the yard and watch the whole house go, which is one way to be sure.",
+          "epitaph": "Burned a good house down to be rid of one closet. Watched it go from the yard."
         }
       ]
     },
@@ -1728,39 +1728,39 @@
       "id": "quest_moral_dead_water",
       "display_name": "The Aqueous Contaminant",
       "category": "dead",
-      "trigger": "You encounter a submerged casualty in a flooded sector.",
-      "discovery": "A body floats face-down in standing water. The decomposition process is accelerating, compromising the local filtration math.",
+      "trigger": "You find a body face-down in a flooded section.",
+      "discovery": "The water stands waist-deep between two walls, and the body floats face-down in the middle of it, turning slow circles off the current. The swelling has been going for days. Your filter rig can still beat this water, but the margin is narrowing by the hour.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Extract to dry ground",
+          "label": "Haul it out and bury it",
           "moral_delta": 10,
           "empathy_delta": 2,
-          "outcome_text": "You drag the mass onto dry concrete and execute a shallow burial. The water quality metrics stabilize marginally.",
-          "epitaph": "Extracted aqueous contaminant to dry ground. Water metrics stabilized."
+          "outcome_text": "You wade in, get a line under the arms, and drag it up onto the concrete walk. Digging into the rubble fill takes an hour. The water will not get cleaner on its own, but the worst of it is now in the ground instead of in the flow.",
+          "epitaph": "Waded in and pulled a floater onto the walk, buried it in the fill. The water's still bad. It's less bad."
         },
         {
-          "label": "Bypass",
+          "label": "Mark it and move on",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You log the standing water as non-potable and proceed.",
-          "epitaph": "Logged standing water as non-potable. Proceeded without intervention."
+          "outcome_text": "You chalk a mark on the wall at both ends of the flooded stretch and note it in the log. Your bottles are full enough to skip this source entirely.",
+          "epitaph": "Chalked a floater's stretch as foul water and walked on. Had enough in the bottles to afford that."
         },
         {
-          "label": "Extract submerged assets",
+          "label": "Strip it in the water",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "You strip the synthetic fibers from the casualty. The water exposure necessitates immediate decontamination protocols.",
-          "epitaph": "Extracted assets from submerged casualty. Decontamination protocols required."
+          "outcome_text": "You hold it against a half-sunk door and work the belt, the boots, and the synthetic jacket free. Everything comes off slick and foul. The jacket is good under the grime, but you rinse your hands and forearms for a long time after.",
+          "epitaph": "Stripped a floater in waist-deep water. Kept the jacket. Scrubbed to the elbow and still felt it."
         },
         {
-          "label": "Dislodge downstream",
+          "label": "Send it downstream",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You push the mass further into the current. The contamination problem is transferred to adjacent sectors.",
-          "epitaph": "Dislodged aqueous contaminant downstream. Transferred biohazard."
+          "outcome_text": "You wade in behind it and shove. The current in the culvert takes hold, and the body slides away through the outfall into the next flooded block. Your stretch of water starts clearing within the hour.",
+          "epitaph": "Shoved a floater into the culvert. My stretch cleared by dark. The next block gets it instead."
         }
       ]
     },
@@ -1768,39 +1768,39 @@
       "id": "quest_moral_dead_cremated",
       "display_name": "The Incomplete Cremation",
       "category": "dead",
-      "trigger": "You locate partially incinerated remains.",
-      "discovery": "Calcified bone fragments in a shallow burn pit. The thermal execution was aborted prematurely due to insufficient fuel.",
+      "trigger": "You find a burn pit where the fire went out too soon.",
+      "discovery": "A shallow pit lined with scorched brick, and in it bone that the fire only half finished, chalk-white at the edges. Whoever tended this ran out of fuel or out of time. A dented fuel can lies in the weeds, empty, where they dropped it.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Disperse ash",
+          "label": "Finish it by hand",
           "moral_delta": 16,
           "empathy_delta": 2,
-          "outcome_text": "You manually crush the remaining calcifications and disperse them into the wind current, completing the disposal protocol.",
-          "epitaph": "Dispersed incomplete cremation ash. Disposal protocol concluded."
+          "outcome_text": "You crush what the fire left with the flat of your shovel and scatter it past the pit, a shovelful at a time, into the wind. It takes the better part of an hour. When the pit is empty you kick the brick lining in after it.",
+          "epitaph": "Finished a stranger's cremation with a shovel and the wind. Kicked the pit in after. Their fire had quit; mine didn't."
         },
         {
-          "label": "Bypass",
+          "label": "Leave the pit",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "The site presents zero biological hazard. You continue your route.",
-          "epitaph": "Bypassed incomplete cremation. Confirmed zero biological hazard."
+          "outcome_text": "There is nothing left here that can rot or spread. You step around it and keep to your errand.",
+          "epitaph": "Stepped around a half-finished burn pit. Nothing left in it that could hurt anyone."
         },
         {
-          "label": "Extract heat-resistant assets",
+          "label": "Sift the ash",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "You locate a deformed tungsten ring in the ash. It retains minor scrap value.",
-          "epitaph": "Extracted deformed tungsten from ash. Scrap value confirmed."
+          "outcome_text": "Down in the ash your fingers find a ring, tungsten, warped oval by the heat. The scrap man pays by weight and does not ask questions about metal that shape. You pocket it.",
+          "epitaph": "Sifted a burn pit and found a warped ring. The scrap man pays by weight and doesn't ask."
         },
         {
-          "label": "Execute secondary burn",
+          "label": "Burn it again",
           "moral_delta": -8,
           "empathy_delta": 0,
-          "outcome_text": "You expend your own fuel to re-ignite the pit. The caloric and material expenditure is inefficient.",
-          "epitaph": "Executed secondary burn on remains. Operation proved inefficient."
+          "outcome_text": "You spend your own fuel on it, a quarter-can you were saving, and stand watch while it burns down properly. Warm work on a cold day. You cannot call it wasted, exactly, but the can is empty and you are still alone out here.",
+          "epitaph": "Spent a quarter-can of my own fuel finishing a stranger's fire. Can't say it was wasted. Can say the can is empty."
         }
       ]
     },
@@ -1808,39 +1808,39 @@
       "id": "quest_moral_dead_executed",
       "display_name": "The Terminated Prisoner",
       "category": "dead",
-      "trigger": "You discover a bound casualty in a containment cell.",
-      "discovery": "A casualty remains in a holding cell, hands secured with wire. The ballistic impact patterns on the rear wall indicate a formal execution protocol.",
+      "trigger": "You find a bound body in a holding cell, shot against the wall.",
+      "discovery": "The cell door stands open. The body sits against the back wall with its hands still wired in front of it, and the wall behind is pocked in one tight group at head height. This was done slowly, by people with time and a procedure.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Sever wire and inter",
+          "label": "Cut the wire and bury them",
           "moral_delta": 18,
           "empathy_delta": 2,
-          "outcome_text": "You cut the wire bindings and bury the unit outside the perimeter. The containment block is cleared.",
-          "epitaph": "Severed wire bindings and interred executed prisoner. Perimeter cleared."
+          "outcome_text": "You work the wire off the wrists, carry the body out past the wire fence, and dig where the ground is clear of concrete. It takes the day. You leave the cell block standing open behind you, because nothing in it needs keeping anymore.",
+          "epitaph": "Cut the wire off a prisoner's wrists and buried them outside the fence. Left the cell open. Nothing there to keep."
         },
         {
-          "label": "Bypass",
+          "label": "Leave the cell as found",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "The holding cell is functioning as designed. You leave the unit in situ.",
-          "epitaph": "Bypassed terminated prisoner. Containment cell maintained."
+          "outcome_text": "The cell did its job and the record of it is still sitting against the wall. You close the door the way it was and let the block keep its own account.",
+          "epitaph": "Closed the cell door on a wired body. The block keeps its own records."
         },
         {
-          "label": "Requisition footwear",
+          "label": "Take the boots",
           "moral_delta": -14,
           "empathy_delta": 0,
-          "outcome_text": "The military-grade boots are intact. You remove them from the unit and update your inventory.",
-          "epitaph": "Requisitioned military footwear from terminated prisoner."
+          "outcome_text": "Military boots, half a size big, with miles left in the soles. You unlace them off the body and wipe them down on the cell blanket. Your own pair has a split seam you have been wrapping in tape for a week.",
+          "epitaph": "Unlaced the boots off an executed prisoner. Half a size big. Better than the taped pair I walked in on."
         },
         {
-          "label": "Realign remains",
+          "label": "Lay them out properly",
           "moral_delta": 9,
           "empathy_delta": 1,
-          "outcome_text": "You lack the calories for burial, but sever the wire bindings and lay the unit in a supine position.",
-          "epitaph": "Severed wire bindings on terminated prisoner. Realigned remains to supine position."
+          "outcome_text": "You have not got the hours for a grave, so you cut the wire, straighten the legs, fold the arms, and set the hands together on the chest. It is not a burial. It is the difference between how they were left and how you leave them.",
+          "epitaph": "Couldn't spare the digging. Cut the wire and laid the prisoner out with their hands folded. Left them better than I found them. That's all it was."
         }
       ]
     },
@@ -1848,39 +1848,39 @@
       "id": "quest_moral_dead_suicide",
       "display_name": "The Self-Terminated Unit",
       "category": "dead",
-      "trigger": "You discover a casualty that executed its own exit protocol.",
-      "discovery": "A body in a sealed room. The mechanism of termination is clear and close at hand. A paper document rests nearby, weighted by a stone.",
+      "trigger": "You find a body in a sealed room, dead by their own hand.",
+      "discovery": "The room was taped shut from the inside. The means of it is there on the floor beside the body, plain to see. On the table there is a folded sheet of paper held down by a stone, written full in a careful hand.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Execute burial with document",
+          "label": "Bury them with the letter unread",
           "moral_delta": 14,
           "empathy_delta": 2,
-          "outcome_text": "You inter the unit and the unread document. Their operational logic, whatever it was, is concluded.",
-          "epitaph": "Interred self-terminated unit with documentation. Operational logic concluded."
+          "outcome_text": "You dig out back, lay the body in, and set the folded sheet on the chest without opening it. Whatever it says, it was not addressed to you. You fill the grave and leave the tape on the door for the next one to find.",
+          "epitaph": "Buried the one from the sealed room with their letter on their chest, unread. It wasn't written to me."
         },
         {
-          "label": "Bypass",
+          "label": "Leave the room sealed",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You leave the room sealed. The termination requires no further processing.",
-          "epitaph": "Bypassed self-terminated unit. Termination required no processing."
+          "outcome_text": "They built this closure themselves, layer by layer. You put the door back as it was and leave the tape to keep holding.",
+          "epitaph": "Left the sealed room sealed. They arranged it themselves. I just knocked."
         },
         {
-          "label": "Log as failure",
+          "label": "Write them down as weak",
           "moral_delta": -12,
           "empathy_delta": 0,
-          "outcome_text": "You formally record the unit as a failure of resilience metrics. The data is available to nearby observers.",
-          "epitaph": "Logged unit as resilience failure. Data observed by local assets."
+          "outcome_text": "You chalk it on the wall by the stairwell where the floor's residents will read it: room four, gave up, do not mourn. It costs you nothing to write. You tell yourself it is a warning and not a verdict, but the chalk says what it says.",
+          "epitaph": "Chalked 'gave up, do not mourn' by the stairwell. Told myself it was a warning. The chalk doesn't care what I tell myself."
         },
         {
-          "label": "Requisition staging kit",
+          "label": "Take their supplies",
           "moral_delta": -10,
           "empathy_delta": 0,
-          "outcome_text": "The termination was well-supplied. You strip the kit for your own ongoing operations.",
-          "epitaph": "Requisitioned staging kit from terminated unit. Supplies integrated into ongoing operations."
+          "outcome_text": "They went out stocked: two sealed ration bricks, a full canteen, a good flashlight with fresh charge. You take all of it. The flashlight alone is a week's good light, and they clearly stopped counting days.",
+          "epitaph": "Took two ration bricks and a good flashlight off the one in the sealed room. They'd stopped needing days."
         }
       ]
     },
@@ -1888,39 +1888,39 @@
       "id": "quest_moral_dead_massacre",
       "display_name": "The Liquidation Zone",
       "category": "dead",
-      "trigger": "You enter a zone of total asset liquidation.",
-      "discovery": "Dozens of casualties distributed across a sector. The posture of the remains indicates rapid, coordinated liquidation by an organized force.",
+      "trigger": "You enter a block where everyone was killed at once.",
+      "discovery": "The bodies lie where they fell, in doorways and at the bottoms of stairs, some still holding what they were carrying. It happened fast, in one sweep, by people who knew the block's layout and worked through it in order. Nobody here ran far.",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Execute mass burial",
+          "label": "Dig a common grave",
           "moral_delta": 22,
           "empathy_delta": 2,
-          "outcome_text": "You expend two full daylight cycles digging. The caloric cost is severe, but the biological hazard is entirely neutralized.",
-          "epitaph": "Executed mass burial over two cycles. Neutralized sector biohazard."
+          "outcome_text": "Two full days of daylight, one long trench in the lot behind the block, and your shovel gives out on the second morning so you finish with a length of shelving. You carry them down one at a time and do not count them. When it is done you pile the dirt high and mark it with a door stood on end.",
+          "epitaph": "Dug one trench behind the block, two days, broke the shovel, finished with a shelf. Didn't count them. Marked it with a door."
         },
         {
-          "label": "Bypass",
+          "label": "Route around the block",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You route around the primary hazard zones and leave the liquidation site as found.",
-          "epitaph": "Bypassed liquidation zone. Maintained route integrity."
+          "outcome_text": "You skirt the block on the far sidewalk and mark the corners on your map so you never come through here by accident. The work that was done here is finished, and it was never yours to finish.",
+          "epitaph": "Walked around a block where everyone died at once. Drew it on the map so I never cut through by mistake."
         },
         {
-          "label": "Execute systematic extraction",
+          "label": "Work the block for salvage",
           "moral_delta": -18,
           "empathy_delta": 0,
-          "outcome_text": "You strip the sector of all remaining material assets. The yield is high, though decontamination will be extensive.",
-          "epitaph": "Executed systematic extraction of liquidation zone. High material yield acquired."
+          "outcome_text": "You go doorway to doorway, room by room, and take what the sweep left: canned goods under a cot, a solar charger, three pairs of good shoes, a toolkit still latched. It fills two packs. You are efficient about it, and you do not learn any of their names.",
+          "epitaph": "Worked a dead block room by room. Two full packs out of it. Didn't learn any names. That was deliberate."
         },
         {
-          "label": "Execute thermal sterilization",
+          "label": "Burn the block",
           "moral_delta": -15,
           "empathy_delta": 0,
-          "outcome_text": "You ignite the sector. The smoke column is highly visible and draws immediate reconnaissance from neighboring factions.",
-          "epitaph": "Executed thermal sterilization of liquidation zone. Drew faction reconnaissance."
+          "outcome_text": "You set fires at four corners and let the wind do the rest. The smoke stands over the block all afternoon, and by evening there are lights on the ridge that were not there before, held steady on you. You leave in the dark, the long way home.",
+          "epitaph": "Torched a dead block to be done with it. The smoke brought watchers to the ridge. Went home the long way in the dark."
         }
       ]
     },
@@ -2448,39 +2448,39 @@
       "id": "quest_moral_env_buried_letters",
       "display_name": "The Archival Documents",
       "category": "listen",
-      "trigger": "An older unit requests data processing for pre-war texts.",
-      "discovery": "An elderly unit with severe ocular degradation holds a bundle of pre-exchange paper documents. 'I require audio translation of these civilian texts,' they state.",
+      "trigger": "A near-blind elder wants pre-war letters read aloud.",
+      "discovery": "An old person sits straight-backed with a bundle of pre-war papers tied in twine, eyes gone to milk, their fingers doing the reading along the folds. 'They're letters,' they say. 'I can't see to check them anymore. Read them out, and I'll tell you if we kept them true.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Process complete archive",
+          "label": "Read them all aloud",
           "moral_delta": 10,
           "empathy_delta": 2,
-          "outcome_text": "You read the civilian correspondence aloud. The data is entirely non-tactical. The older unit logs the audio and confirms 'historical accuracy.'",
-          "epitaph": "Processed complete archive of civilian texts. Confirmed historical accuracy."
+          "outcome_text": "You read the whole bundle: love notes, rent receipts, a letter never sent. None of it would sell for a bullet to anyone but them. At the end they sit back and say, 'It's true, then. We kept it right,' like that settles an account.",
+          "epitaph": "Read an old person's letters aloud, all of them. They said the record held."
         },
         {
-          "label": "Process data sample",
+          "label": "Read a couple",
           "moral_delta": 4,
           "empathy_delta": 1,
-          "outcome_text": "You translate two documents to confirm their non-tactical nature. The unit accepts the sample and terminates the request.",
-          "epitaph": "Processed sample of civilian texts. Request terminated."
+          "outcome_text": "You read two, enough to prove the bundle is only other people's ordinary lives. They nod, satisfied with the sample, and let you go before the third.",
+          "epitaph": "Read two of the letters. That was enough for them."
         },
         {
-          "label": "Deny processing request",
+          "label": "Say you don't have the time",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You refuse to expend operational time on non-actionable data. The unit secures the documents.",
-          "epitaph": "Denied processing request for non-actionable data."
+          "outcome_text": "You say your hours are spoken for. They take it without argument and retie the twine, slow and exact, the way you pack something that has to last.",
+          "epitaph": "Told a blind elder I had no time for old letters. They tied the bundle back up."
         },
         {
-          "label": "Requisition paper assets",
+          "label": "Take the letters for kindling",
           "moral_delta": -5,
           "empathy_delta": 0,
-          "outcome_text": "You seize the documents for use as combustion fuel. The elderly unit cannot mount a defense.",
-          "epitaph": "Requisitioned archival documents for combustion fuel."
+          "outcome_text": "You take the bundle for what it burns. They cannot stop you and they know it, so they just hold the twine a moment longer than they need to before they let it go.",
+          "epitaph": "Took a blind elder's letters for kindling. They couldn't stop me, and we both knew it."
         }
       ]
     },
@@ -2529,39 +2529,39 @@
       "id": "quest_moral_env_dead_explorer",
       "display_name": "The Failed Surveyor",
       "category": "dead",
-      "trigger": "You locate the remains of a surveyor with intact cartographic data.",
-      "discovery": "A unit rests against a wall, expired from dehydration. A logbook sits open. 'Grid 47 invalid. Fluid zero. Transmit data to dependent unit,' the final entry reads.",
+      "trigger": "You find a dead surveyor with a logbook full of map data.",
+      "discovery": "The surveyor sits against a wall with their canteen beside them, dry and uncapped, and a logbook open across their knees. The last line is written in a hand going shaky: 'Grid 47 no good. Water gone. If found, get this to my sister, sector nine.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Extract data and inter",
+          "label": "Bury them, keep the logbook",
           "moral_delta": 8,
           "empathy_delta": 2,
-          "outcome_text": "You bury the unit and secure the logbook. The invalid grid data is logged. You will attempt transmission if the dependent unit is located.",
-          "epitaph": "Extracted cartographic data and interred surveyor. Dependent unit pending."
+          "outcome_text": "You dig a grave a few steps off the path and tuck the canteen in with them. The logbook goes in your pack. Grid 47 comes off your route tonight, and if you are ever near sector nine you will knock and hand over the book.",
+          "epitaph": "Buried the surveyor by the path, canteen and all. Took the logbook. If I get near sector nine, their sister gets it."
         },
         {
-          "label": "Acknowledge and proceed",
+          "label": "Note the grid, leave them",
           "moral_delta": 4,
           "empathy_delta": 1,
-          "outcome_text": "You confirm the invalidity of Grid 47 for your own routing and leave the remains in situ.",
-          "epitaph": "Acknowledged invalid grid data. Left surveyor remains in situ."
+          "outcome_text": "You copy 'Grid 47 no good' into your own book, strike the grid off your route, and leave the surveyor sitting where they finished their work. The book stays open on their knees.",
+          "epitaph": "Copied one line off a dead surveyor and struck Grid 47 off my route. Left them with their book open."
         },
         {
-          "label": "Extract cartography only",
+          "label": "Tear out the maps",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You strip the map section of the logbook and leave the personal data behind. The map is flawed, but provides baseline geography.",
-          "epitaph": "Extracted baseline cartography. Discarded personal surveyor data."
+          "outcome_text": "You cut the map plates free of the logbook and leave the written pages behind, names and all. The plates are wrong in places but the ground truth in them is still worth carrying. The book, lighter now, stays on their knees.",
+          "epitaph": "Cut the map plates out of a dead surveyor's book and left the written pages. I wanted the ground, not the words."
         },
         {
-          "label": "Execute full requisition",
+          "label": "Strip them clean",
           "moral_delta": -4,
           "empathy_delta": 0,
-          "outcome_text": "You strip the unit of all functional gear, including footwear and textiles. The biological frame is left to the elements.",
-          "epitaph": "Executed full requisition of surveyor assets. Biological frame discarded."
+          "outcome_text": "Boots, jacket, pack frame, canteen, logbook, all of it comes with you. The boots are your size and barely broken in. What is left against the wall is only what you cannot use, and the weather will handle that.",
+          "epitaph": "Stripped the surveyor to the wall. Boots fit like they were measured. Took the sister's page too, not that I'll use it."
         }
       ]
     },
@@ -2569,39 +2569,39 @@
       "id": "quest_moral_env_wounded_scavenger",
       "display_name": "The Degraded Forager",
       "category": "comfort",
-      "trigger": "A scavenger with a severe structural injury refuses to relocate.",
-      "discovery": "A unit sits in a debris field, applying pressure to a severe laceration. 'Do not engage. Operational capability is zero. Awaiting termination,' they state.",
+      "trigger": "A badly cut scavenger has given up and won't move.",
+      "discovery": "A man sits in the rubble with both hands pressed into his thigh, blood coming up between his fingers. 'Don't bother,' he says. 'I'm done. Just waiting it out.'",
       "location_id": "",
       "min_day": 0,
       "max_day": 0,
       "choices": [
         {
-          "label": "Execute medical intervention",
+          "label": "Patch the wound",
           "moral_delta": 10,
           "empathy_delta": 2,
-          "outcome_text": "You expend medical supplies to stabilize the laceration. The unit processes the intervention and provides actionable safe-routing data for the adjacent block.",
-          "epitaph": "Executed medical intervention on degraded forager. Acquired safe-routing data."
+          "outcome_text": "You spend gauze and powder on a stranger. The bleeding slows. In return he tells you which streets on the next block are clear and which are watched.",
+          "epitaph": "Spent my medkit on a man who said he was done. He paid in directions."
         },
         {
-          "label": "Transfer medical supplies",
+          "label": "Toss them a bandage",
           "moral_delta": 5,
           "empathy_delta": 1,
-          "outcome_text": "You throw a sterilized bandage pack to their coordinates. They initiate self-repair protocols.",
-          "epitaph": "Transferred medical supplies to degraded forager. Self-repair initiated."
+          "outcome_text": "You throw a bandage pack into his lap. He starts wrapping his own leg with the patience of someone who has done it before.",
+          "epitaph": "Threw a bandage to a bleeding man. He did the rest himself."
         },
         {
-          "label": "Bypass",
+          "label": "Do as he asks and go",
           "moral_delta": 0,
           "empathy_delta": 0,
-          "outcome_text": "You obey the directive and do not engage. Their termination is highly probable.",
-          "epitaph": "Bypassed degraded forager per directive. Termination probable."
+          "outcome_text": "You leave him to it, which is what he asked for. The leg and the cold will settle it between them.",
+          "epitaph": "Did what a dying man asked, which was nothing."
         },
         {
-          "label": "Requisition inventory",
+          "label": "Take his pack",
           "moral_delta": -6,
           "empathy_delta": 0,
-          "outcome_text": "You strip their supply pack. They lack the structural integrity to mount a defense and observe the requisition silently.",
-          "epitaph": "Requisitioned inventory from degraded forager. Defense capability zero."
+          "outcome_text": "You pull the pack off his shoulder and go through it in front of him. He watches, both hands busy holding himself together, and says nothing.",
+          "epitaph": "Robbed a man too hurt to stop me. He just watched."
         }
       ]
     },
