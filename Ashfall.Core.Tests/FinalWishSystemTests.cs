@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+using System;
+using System.Collections.Generic;
 using Ashfall.Core.Survivors;
 using Xunit;
 
@@ -262,6 +264,145 @@ namespace Ashfall.Core.Tests
             sys.OnStateChanged += () => fireCount++;
             sys.DeclareTerminalPrognosis("sv_1", "unknown_archetype", isAlive: true);
             Assert.True(fireCount > 0);
+        }
+
+        // ── Catalog pool model ──────────────────────────────────────────
+
+        /// <summary>A minimal in-memory catalog for deterministic system tests.</summary>
+        private sealed class TestCatalog : IFinalWishCatalog
+        {
+            private readonly Dictionary<string, List<string>> _pools = new(StringComparer.Ordinal);
+            private readonly Dictionary<string, FinalWishEntry> _entries = new(StringComparer.Ordinal);
+            public void Add(string archetype, FinalWishEntry entry)
+            {
+                _entries[entry.id] = entry;
+                if (!_pools.TryGetValue(archetype, out var pool)) { pool = new List<string>(); _pools[archetype] = pool; }
+                pool.Add(entry.id);
+            }
+            public IReadOnlyList<string> GetWishIdsForArchetype(string archetypeId) =>
+                _pools.TryGetValue(archetypeId, out var p) ? p : System.Array.Empty<string>();
+            public FinalWishEntry? GetEntry(string wishId) =>
+                _entries.TryGetValue(wishId, out var e) ? e : null;
+        }
+
+        private static TestCatalog TwoStepPool(string archetype, string wishIdA, string wishIdB)
+        {
+            var cat = new TestCatalog();
+            cat.Add(archetype, Entry(wishIdA, archetype, 2));
+            cat.Add(archetype, Entry(wishIdB, archetype, 2));
+            return cat;
+        }
+
+        private static FinalWishEntry Entry(string id, string archetype, int stepCount)
+        {
+            var e = new FinalWishEntry { id = id, archetype_id = archetype, wish_type = FinalWishSystem.WishDeliverLetter };
+            for (int i = 0; i < stepCount; i++) e.steps.Add(new FinalWishStep { step_id = $"{id}_s{i}" });
+            return e;
+        }
+
+        [Fact]
+        public void Catalog_PoolSelection_IsDeterministicForSameSeed()
+        {
+            var cat = TwoStepPool("medic_archetype", "wish_a", "wish_b");
+            var sys1 = CreateSystem(seed: 7); sys1.Catalog = cat;
+            var sys2 = CreateSystem(seed: 7); sys2.Catalog = cat;
+            sys1.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+            sys2.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+            Assert.Equal(sys1.GetWishId("sv_1"), sys2.GetWishId("sv_1"));
+            Assert.NotEmpty(sys1.GetWishId("sv_1"));
+        }
+
+        [Fact]
+        public void Catalog_DifferentSeeds_CanSelectDifferentWishes()
+        {
+            var cat = TwoStepPool("medic_archetype", "wish_a", "wish_b");
+            var picks = new System.Collections.Generic.HashSet<string>();
+            for (int seed = 0; seed < 40; seed++)
+            {
+                var sys = CreateSystem(seed); sys.Catalog = cat;
+                sys.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+                picks.Add(sys.GetWishId("sv_1"));
+            }
+            // With 2 pool entries over 40 seeds, we expect both to appear eventually.
+            Assert.True(picks.Count >= 2, $"expected both pool entries drawn, got {picks.Count}");
+        }
+
+        [Fact]
+        public void Catalog_NullCatalog_LeavesWishIdEmpty()
+        {
+            var sys = CreateSystem();
+            // No Catalog assigned — must behave exactly as before (no wishId).
+            sys.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+            Assert.Empty(sys.GetWishId("sv_1"));
+            Assert.True(sys.HasActiveWish("sv_1"));
+        }
+
+        [Fact]
+        public void Catalog_EmptyPool_LeavesWishIdEmpty()
+        {
+            var sys = CreateSystem(); sys.Catalog = new TestCatalog(); // no pools
+            sys.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+            Assert.Empty(sys.GetWishId("sv_1"));
+        }
+
+        [Fact]
+        public void Catalog_StepCountHonorsEntry()
+        {
+            var cat = new TestCatalog();
+            cat.Add("medic_archetype", Entry("wish_three", "medic_archetype", 3));
+            var sys = CreateSystem(); sys.Catalog = cat;
+            sys.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+            Assert.False(sys.AdvanceWishStep("sv_1", "s1"));
+            Assert.False(sys.AdvanceWishStep("sv_1", "s2"));
+            Assert.True(sys.AdvanceWishStep("sv_1", "s3"));
+            Assert.True(sys.HasCompletedWish("sv_1"));
+        }
+
+        [Fact]
+        public void Catalog_WishId_RoundTripsThroughSave()
+        {
+            var cat = TwoStepPool("medic_archetype", "wish_a", "wish_b");
+            var sys = CreateSystem(seed: 11); sys.Catalog = cat;
+            sys.DeclareTerminalPrognosis("sv_1", "medic_archetype", isAlive: true);
+            string drawnId = sys.GetWishId("sv_1");
+            Assert.NotEmpty(drawnId);
+
+            var saved = sys.CaptureState();
+            var sys2 = CreateSystem(); sys2.Catalog = cat;
+            sys2.RestoreState(saved);
+
+            Assert.Equal(drawnId, sys2.GetWishId("sv_1"));
+        }
+
+        [Fact]
+        public void Catalog_LegacySave_MissingWishId_LoadsGracefully()
+        {
+            // A save authored without wishId (legacy format) must restore without throwing
+            // and surface an empty wishId (degrades to wishType-only behavior).
+            var legacy = new FinalWishSaveState
+            {
+                survivors = new System.Collections.Generic.List<FinalWishSurvivorState>
+                {
+                    new FinalWishSurvivorState
+                    {
+                        survivorId = "sv_legacy",
+                        wishType = FinalWishSystem.WishDeliverLetter,
+                        wishId = null!, // simulate a pre-wishId save
+                        daysRemaining = 5f,
+                        stepsCompleted = 0,
+                        isActive = true,
+                        hasTerminalPrognosis = true,
+                        wishCompleted = false
+                    }
+                }
+            };
+            var sys = CreateSystem(); sys.Catalog = new TestCatalog();
+            sys.RestoreState(legacy);
+            Assert.True(sys.HasActiveWish("sv_legacy"));
+            Assert.True(string.IsNullOrEmpty(sys.GetWishId("sv_legacy")));
+            // Still completable via the wishType fallback (deliver_letter = 2 steps).
+            Assert.False(sys.AdvanceWishStep("sv_legacy", "s1"));
+            Assert.True(sys.AdvanceWishStep("sv_legacy", "s2"));
         }
     }
 }

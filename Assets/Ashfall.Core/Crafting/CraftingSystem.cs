@@ -353,11 +353,13 @@ namespace Ashfall.Core.Crafting
 
         private static bool IsMedicalCraftResult(Recipe recipe)
         {
+            // C2 / Plan 22 (§25.2) — shared item-tag semantics replaced the
+            // hardcoded ID list (bandage/morphine/anti_rad/rad_away/antibiotics/
+            // iodine_pills): medical membership is type- or tag-driven and new
+            // consumables classify by authoring data. Parity-proven over the
+            // full recipe catalog in tests.
             if (recipe?.result == null) return false;
-            if (recipe.result.type == ItemType.Medical) return true;
-            string id = recipe.result.id;
-            return id == "bandage" || id == "morphine" || id == "anti_rad"
-                || id == "rad_away" || id == "antibiotics" || id == "iodine_pills";
+            return ItemTagCatalog.IsMedical(recipe.result);
         }
 
         public static bool IsMedicalRecipe(Recipe recipe) => IsMedicalCraftResult(recipe);

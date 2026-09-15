@@ -42,6 +42,18 @@ namespace AtomicWar.GodotApp
         public float dependencyCombatPenalty = 0f;
         /// <summary>Final-wish state (empty / active / completed / failed).</summary>
         public string finalWishState = string.Empty;
+        /// <summary>Authored final-wish title (empty when no catalog entry is bound).</summary>
+        public string finalWishTitle = string.Empty;
+        /// <summary>Authored final-wish description shown while active.</summary>
+        public string finalWishDescription = string.Empty;
+        /// <summary>Days remaining in the terminal-prognosis window (active only).</summary>
+        public float finalWishDaysRemaining;
+        /// <summary>Steps completed so far in the wish questline.</summary>
+        public int finalWishStepsDone;
+        /// <summary>Total steps required to complete the wish (0 when unknown).</summary>
+        public int finalWishStepsTotal;
+        /// <summary>Authored completion text shown when the wish is completed.</summary>
+        public string finalWishCompletionText = string.Empty;
     }
 
     /// <summary>Serialized Phase-0 effects envelope (all 10 systems).</summary>
@@ -276,6 +288,8 @@ namespace AtomicWar.GodotApp
         private Action _onTradeSpecialtyStateChanged = null!;
         private Action _onFinalWishStateChanged = null!;
         private Action _onRespiratoryStateChanged = null!;
+        /// <summary>Authored final-wish catalog (final_wishes.json); null until <see cref="LoadFinalWishCatalog"/> runs.</summary>
+        private IFinalWishCatalog? _finalWishCatalog;
         private readonly List<Phase0SurvivorEffects> _effects = new List<Phase0SurvivorEffects>();
         private readonly List<string> _aliveSurvivorIds = new List<string>();
         private readonly Dictionary<string, MoralBranchState> _moralStates = new Dictionary<string, MoralBranchState>();
@@ -585,6 +599,29 @@ namespace AtomicWar.GodotApp
             catch (Exception ex)
             {
                 GD.PrintErr($"[Phase0] Failed to load phantom rules: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Load <c>final_wishes.json</c> and bind it to <see cref="FinalWish"/> so a
+        /// terminal prognosis draws an authored wish from the archetype's pool and the
+        /// panel can surface title/description/completion text. Mirrors
+        /// <see cref="LoadPhantomRules"/>. No-op without a data dir; the system stays
+        /// functional (wishType only) when the catalog is absent.
+        /// </summary>
+        public void LoadFinalWishCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            try
+            {
+                var files = new FileSystemIO();
+                var json = new SystemTextJsonSerializer();
+                _finalWishCatalog = FinalWishCatalogLoader.LoadCatalog(dataDir, files, json);
+                FinalWish.Catalog = _finalWishCatalog;
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[Phase0] Failed to load final-wish catalog: {ex.Message}");
             }
         }
 
@@ -930,6 +967,37 @@ namespace AtomicWar.GodotApp
             fx.finalWishState = FinalWish.HasActiveWish(survivorId) ? "active"
                 : FinalWish.HasCompletedWish(survivorId) ? "completed"
                 : FinalWish.HasTerminalPrognosis(survivorId) ? "failed" : string.Empty;
+            PopulateFinalWishEffects(fx, survivorId);
+        }
+
+        /// <summary>
+        /// Resolve authored final-wish narrative fields onto the effects view from the
+        /// loaded catalog + the survivor's bound wishId. Clears them when no wish is
+        /// active/completed/failed or no catalog entry is available (graceful degrade).
+        /// </summary>
+        private void PopulateFinalWishEffects(Phase0SurvivorEffects fx, string survivorId)
+        {
+            fx.finalWishTitle = string.Empty;
+            fx.finalWishDescription = string.Empty;
+            fx.finalWishDaysRemaining = 0f;
+            fx.finalWishStepsDone = 0;
+            fx.finalWishStepsTotal = 0;
+            fx.finalWishCompletionText = string.Empty;
+
+            if (string.IsNullOrEmpty(fx.finalWishState)) return;
+
+            string wishId = FinalWish.GetWishId(survivorId);
+            if (string.IsNullOrEmpty(wishId)) return;
+
+            var entry = _finalWishCatalog?.GetEntry(wishId);
+            if (entry == null) return;
+
+            fx.finalWishTitle = entry.wish_title ?? string.Empty;
+            fx.finalWishDescription = entry.wish_description ?? string.Empty;
+            fx.finalWishCompletionText = entry.completion_text ?? string.Empty;
+            fx.finalWishStepsTotal = entry.steps?.Count ?? 0;
+            fx.finalWishStepsDone = FinalWish.GetStepsCompleted(survivorId);
+            fx.finalWishDaysRemaining = FinalWish.GetDaysRemaining(survivorId);
         }
 
         private void RecomputeAllEffects()

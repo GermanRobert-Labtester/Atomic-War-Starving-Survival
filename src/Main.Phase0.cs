@@ -221,6 +221,11 @@ namespace AtomicWar.GodotApp
                 _phase0Dirty = false; // restore just raised state-change events
                 GD.Print("[Ashfall Godot] Phase-0 effects restored.");
             }
+
+            // Bind the authored final-wish catalog so terminal prognoses draw from a
+            // per-archetype pool and the panel can surface authored text. Safe to run
+            // after restore: it only affects future DeclareTerminalPrognosis calls.
+            _phase0.LoadFinalWishCatalog(_dataDir);
         }
 
         private void SavePhase0()

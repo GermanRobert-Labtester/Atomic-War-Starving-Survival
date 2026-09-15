@@ -182,11 +182,46 @@ namespace AtomicWar.GodotApp.UI
                 card.AddChild(AshfallUiHelpers.MakeDataRow("COMBAT PENALTY", $"-{fx.dependencyCombatPenalty * 100:0}%",
                     AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical)));
             if (!string.IsNullOrEmpty(fx.finalWishState))
-                card.AddChild(AshfallUiHelpers.MakeDataRow("FINAL WISH", fx.finalWishState.ToUpperInvariant(),
-                    fx.finalWishState == "active" ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot) : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
+                AppendFinalWishCard(card, fx);
 
             card.AddChild(AshfallUiHelpers.MakeSeparator());
             return card;
+        }
+
+        /// <summary>
+        /// Render the final-wish block: authored title + (active) description with a
+        /// day/step progress row, or (completed) the completion text. Mirrors the
+        /// Journal house rule — text is rendered verbatim, never paraphrased.
+        /// </summary>
+        private void AppendFinalWishCard(Control card, Phase0SurvivorEffects fx)
+        {
+            bool isActive = fx.finalWishState == "active";
+            var accent = isActive
+                ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)
+                : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe);
+
+            card.AddChild(AshfallUiHelpers.MakeDataRow("FINAL WISH", fx.finalWishState.ToUpperInvariant(), accent));
+
+            if (!string.IsNullOrEmpty(fx.finalWishTitle))
+            {
+                var title = AshfallUiHelpers.MakeSmall(fx.finalWishTitle);
+                title.AddThemeColorOverride("font_color", accent);
+                card.AddChild(title);
+            }
+
+            if (isActive)
+            {
+                if (!string.IsNullOrEmpty(fx.finalWishDescription))
+                    card.AddChild(AshfallUiHelpers.MakeBody(fx.finalWishDescription));
+                if (fx.finalWishStepsTotal > 0)
+                    card.AddChild(AshfallUiHelpers.MakeDataRow("PROGRESS",
+                        $"{fx.finalWishStepsDone}/{fx.finalWishStepsTotal} steps · {fx.finalWishDaysRemaining:0.0} days left",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+            }
+            else if (fx.finalWishState == "completed" && !string.IsNullOrEmpty(fx.finalWishCompletionText))
+            {
+                card.AddChild(AshfallUiHelpers.MakeBody(fx.finalWishCompletionText));
+            }
         }
 
         private void BuildCommands()

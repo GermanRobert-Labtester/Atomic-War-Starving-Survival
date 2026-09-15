@@ -2,6 +2,7 @@
   "schema_version": 1,
   "items": [
     {
+      "id": "wish_surgeon_final_surgery",
       "archetype_id": "the_surgeon",
       "wish_type": "teach_lesson",
       "wish_title": "The Final Surgery",
@@ -27,6 +28,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_soldier_fallens_wall",
       "archetype_id": "the_soldier",
       "wish_type": "build_memorial",
       "wish_title": "The Fallen's Wall",
@@ -57,6 +59,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_nurse_caregivers_legacy",
       "archetype_id": "the_nurse",
       "wish_type": "teach_lesson",
       "wish_title": "The Caregiver's Legacy",
@@ -80,6 +83,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_mother_last_letter",
       "archetype_id": "the_mother",
       "wish_type": "reconcile",
       "wish_title": "The Last Letter",
@@ -103,6 +107,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_mechanic_lost_wrench",
       "archetype_id": "the_mechanic",
       "wish_type": "retrieve_heirloom",
       "wish_title": "The Lost Wrench",
@@ -123,6 +128,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_teacher_last_period",
       "archetype_id": "the_teacher",
       "wish_type": "teach_lesson",
       "wish_title": "The Last Period",
@@ -146,6 +152,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_refugee_one_last_sunrise",
       "archetype_id": "the_refugee",
       "wish_type": "see_the_sky",
       "wish_title": "One Last Sunrise",
@@ -161,6 +168,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_electrician_old_voltmeter",
       "archetype_id": "the_electrician",
       "wish_type": "retrieve_heirloom",
       "wish_title": "The Old Voltmeter",
@@ -667,6 +675,453 @@
       ],
       "completion_text": "Oskar takes the heavy key ring, testing the weight in his hand, and signs his initials beside {name}'s last entry. {name} nods, their duty discharged. 'Count it twice on Tuesdays,' they say.",
       "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_pharmacist_unsent_apology",
+      "archetype_id": "the_pharmacist",
+      "wish_type": "reconcile",
+      "wish_title": "The Unsent Apology",
+      "wish_description": "{name} keeps a folded note in their coat. 'I wrote it to a girl who bought from my counter,' they say. 'Before. I turned her away the day the sirens went. I want her to know I'm sorry.' Whether she lived, {name} doesn't know.",
+      "steps": [
+        {
+          "step_id": "find_survivor_records",
+          "description": "Search the bunker's records for any sign of the woman {name} turned away."
+        },
+        {
+          "step_id": "speak_the_apology_aloud",
+          "description": "{name} reads the note aloud to the bunker's hearth, in case she is listening somewhere."
+        }
+      ],
+      "completion_text": "{name} reads the apology to an empty room and a cold stove. No one answers. {name} folds the note back into their coat and closes their eyes. 'That's all I owed her,' they say. 'The rest was never mine to fix.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_priest_lapsed_parishioner",
+      "archetype_id": "the_priest",
+      "wish_type": "reconcile",
+      "wish_title": "The Lapsed Parishioner",
+      "wish_description": "{name} asks after a survivor who stopped speaking to them months ago. 'I told them their grief was a kind of faith,' they say quietly. 'They needed me to sit with it, not name it. I'd like to sit with them now.'",
+      "steps": [
+        {
+          "step_id": "find_the_parishioner",
+          "description": "Locate the survivor who withdrew from {name}."
+        },
+        {
+          "step_id": "sit_in_silence",
+          "description": "Sit with them for an hour, saying nothing unless they speak first."
+        }
+      ],
+      "completion_text": "{name} sits beside the other survivor until the lamp burns low. Neither of them says much. When {name} finally rises, the other nods once \u2014 small, but real. 'Thank you for staying,' they murmur. 'Thank you for not explaining.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_teacher_former_student",
+      "archetype_id": "the_teacher",
+      "wish_type": "reconcile",
+      "wish_title": "The Former Student",
+      "wish_description": "{name} remembers a student they failed. 'I told him he'd amount to nothing,' they say. 'He was sixteen. He didn't need my verdict \u2014 he needed my patience. If he's still out there, I'd take the words back.'",
+      "steps": [
+        {
+          "step_id": "ask_around_the_bunker",
+          "description": "Ask whether the former student survived, or where they were last seen."
+        },
+        {
+          "step_id": "write_the_retraction",
+          "description": "{name} writes down, in plain words, that they were wrong."
+        }
+      ],
+      "completion_text": "{name} pins the retraction to the bunker wall where anyone passing might read it. 'I was a fool with a chalkboard,' it ends. 'Whoever you became, you deserved better than my verdict.' {name} looks tired, but lighter. 'Words don't travel back,' they say. 'But they can travel forward.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_vet_neighbors_pet",
+      "archetype_id": "the_vet",
+      "wish_type": "reconcile",
+      "wish_title": "The Neighbor's Pet",
+      "wish_description": "{name} can't stop thinking about a dog they couldn't save \u2014 a neighbor's, before the move to the bunker. 'The owners are gone now, almost certainly. But the dog might still be at the house. Waiting. I owe it a look.'",
+      "steps": [
+        {
+          "step_id": "find_the_old_house",
+          "description": "Locate the neighbor's house in the ruined suburbs.",
+          "requires_location": "suburban_house"
+        },
+        {
+          "step_id": "bring_back_the_collar",
+          "description": "If the dog is gone, bring back its collar for the owners' memory."
+        }
+      ],
+      "completion_text": "The house is empty, the bowl dry and cracked. {name} picks up the collar from the floor, brushing the dust off the tag. They carry it back without a word. 'I couldn't save it,' they say. 'But I can remember whose it was. That's the least of the work I do.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_undertaker_estranged_daughter",
+      "archetype_id": "the_undertaker",
+      "wish_type": "reconcile",
+      "wish_title": "The Estranged Daughter",
+      "wish_description": "{name} speaks carefully about a daughter who left home years before the bombs. 'She hated the trade,' they say. 'Said I made my living off the dead. She wasn't wrong. I'd like to know she made it underground somewhere \u2014 anyone's underground.'",
+      "steps": [
+        {
+          "step_id": "ask_the_caravans",
+          "description": "Send word with the next caravan: has anyone sheltered a woman of that name?"
+        },
+        {
+          "step_id": "leave_a_message",
+          "description": "{name} leaves a recorded message where travelers might find it."
+        }
+      ],
+      "completion_text": "No answer comes back \u2014 not yet, maybe never. {name} records the message anyway, voice steady despite everything. 'I'm proud of what you built away from me,' it says. 'You were right to go.' They set down the recorder. 'Even if she never hears it,' they say, 'the air heard it. That has to count for something.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_chef_old_rival",
+      "archetype_id": "the_chef",
+      "wish_type": "reconcile",
+      "wish_title": "The Old Rival",
+      "wish_description": "{name} laughs, then stops. 'There was a cook. Better than me, honestly. We sabotaged each other for years \u2014 stealing recipes, bad-mouthing the other's stock. Stupid. I'd cook him one meal, no tricks, if he were here.'",
+      "steps": [
+        {
+          "step_id": "find_a_working_stove",
+          "description": "Get an improvised cooking stove lit and steady."
+        },
+        {
+          "step_id": "cook_the_honest_meal",
+          "description": "{name} prepares the dish the way the rival would have made it \u2014 his way, not theirs."
+        }
+      ],
+      "completion_text": "{name} plates the meal for no one and sets it on the counter. 'His way,' they say. 'Browned longer, salted less. He was right about that.' They leave it to cool. The bunker eats well that night, and no one asks why {name} is quiet. 'A rival's just a friend you were too proud to lose,' they say.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_surgeon_colleague_reported",
+      "archetype_id": "the_surgeon",
+      "wish_type": "reconcile",
+      "wish_title": "The Colleague I Reported",
+      "wish_description": "{name} confesses something old. 'I reported a colleague. He was drinking before operations. I was right to. But I did it to hurt him, not to save his patients \u2014 and I've known the difference ever since. I'd like to say it plain, before I can't.'",
+      "steps": [
+        {
+          "step_id": "find_a_listener",
+          "description": "Find someone in the bunker willing to hear a confession without judging."
+        },
+        {
+          "step_id": "say_it_plain",
+          "description": "{name} states, aloud and without excuse, what they did and why."
+        }
+      ],
+      "completion_text": "{name} finishes speaking. The listener says nothing for a long moment, then: 'You were right about the surgery. You were wrong about yourself. Both can be true.' {name} exhales slowly. 'That's the first honest verdict I've had,' they say. 'Thank you for not softening it.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_mechanic_brother",
+      "archetype_id": "the_mechanic",
+      "wish_type": "reconcile",
+      "wish_title": "The Brother",
+      "wish_description": "{name} and their brother hadn't spoken in a decade over an inheritance that no longer exists. 'A workshop,' {name} says. 'We fought over a workshop that's slag now. If he's alive, I'd hand him the whole thing. Twice over.'",
+      "steps": [
+        {
+          "step_id": "search_the_survivor_lists",
+          "description": "Check the bunker's intake lists and caravan records for {name}'s brother."
+        },
+        {
+          "step_id": "leave_the_deed",
+          "description": "Whether or not he's found, {name} writes the workshop over to him in plain terms."
+        }
+      ],
+      "completion_text": "{name} scratches out a deed on scrap paper \u2014 to a building that is glass and ash. 'It's his,' they say. 'Always should have been.' They fold it small and tuck it away. 'If he comes looking, he'll find it. If he doesn't, the record stands anyway. Either way I stop carrying it.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_reporter_old_contact",
+      "archetype_id": "the_reporter",
+      "wish_type": "reconcile",
+      "wish_title": "The Source I Burned",
+      "wish_description": "{name} remembers a source they named in print to save their own career. 'She disappeared after that. I told myself she'd have been found out anyway. I don't believe it anymore. I'd like to find her, or her family, and own it.'",
+      "steps": [
+        {
+          "step_id": "trace_the_source",
+          "description": "Follow what leads remain to find the source or any kin."
+        },
+        {
+          "step_id": "publish_the_retraction",
+          "description": "{name} writes the true version and reads it aloud, naming themselves as the one at fault."
+        }
+      ],
+      "completion_text": "{name} reads the retraction to the bunker, voice flat. 'I named her to save myself,' it says. 'That was the story. The rest was excuse.' No one interrupts. When it's done, {name} sets the page down. 'Print will outlast me,' they say. 'Let it outlast me with the truth in it.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_veteran_old_comrade",
+      "archetype_id": "the_veteran",
+      "wish_type": "reconcile",
+      "wish_title": "The Old Comrade",
+      "wish_description": "{name} carries a name they never thanked. 'A man pulled me out of a building, decades back. Never said a word after. I was too proud to thank him. I'd like to find his grave, if there is one, and stand there a minute.'",
+      "steps": [
+        {
+          "step_id": "find_the_grave",
+          "description": "Locate where the old comrade is buried, or was last seen."
+        },
+        {
+          "step_id": "stand_and_speak",
+          "description": "Stand at the place and say the thanks {name} never gave."
+        }
+      ],
+      "completion_text": "{name} stands a long while at the marker \u2014 or at the empty ground where a marker ought to be. 'Thank you,' they say, simply. 'You didn't have to. You did.' They walk back slowly. 'Took me forty years and the end of the world to say three words,' they murmur. 'But I said them.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_pharmacist_ledger",
+      "archetype_id": "the_pharmacist",
+      "wish_type": "retrieve_heirloom",
+      "wish_title": "The Dispensary Ledger",
+      "wish_description": "{name} left their dispensary ledger behind. 'Not for the dosages,' they say. 'The names. Everyone I ever sold to. I'd like to know who I knew. If someone could fetch it...'",
+      "steps": [
+        {
+          "step_id": "reach_the_pharmacy",
+          "description": "Find the old pharmacy where {name} worked.",
+          "requires_location": "hospital_pharmacy"
+        },
+        {
+          "step_id": "retrieve_the_ledger",
+          "description": "Recover the dispensary ledger from behind the counter."
+        }
+      ],
+      "completion_text": "{name} turns the pages slowly, reading names aloud, one by one. Some they pause on. Some they pass quickly. At the end they close the book and hold it against their chest. 'I knew all these people,' they say. 'Most of them are gone now. But I knew them. That book is proof.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_vet_pet_collar",
+      "archetype_id": "the_vet",
+      "wish_type": "retrieve_heirloom",
+      "wish_title": "The Collar That Fits",
+      "wish_description": "{name} kept the first collar they ever fitted \u2014 a stray they treated for free, years ago. 'It's in a tin at the clinic. I'd like to hold it. It reminds me I started this work because I liked animals, not because I was good at it.'",
+      "steps": [
+        {
+          "step_id": "reach_the_clinic",
+          "description": "Find the old veterinary clinic in the ruins."
+        },
+        {
+          "step_id": "retrieve_the_collar",
+          "description": "Recover the tin with the collar from the back room."
+        }
+      ],
+      "completion_text": "{name} turns the worn leather collar over in their hands. The buckle is green with age. 'She bit me the whole time I fitted it,' they say, almost smiling. 'I deserved it. I was clumsy.' They set it on their chest. 'Start with liking them,' they say. 'The skill comes, or it doesn't. The liking is the part that mattered.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_undertaker_register",
+      "archetype_id": "the_undertaker",
+      "wish_type": "retrieve_heirloom",
+      "wish_title": "The Burial Register",
+      "wish_description": "{name} kept a register of every person they laid to rest. 'It's in the chapel vestry,' they say. 'Names, dates, a line each. I'd like it brought here. People deserve to be remembered, even if I'm the only one who'll read the book.'",
+      "steps": [
+        {
+          "step_id": "find_the_vestry",
+          "description": "Locate the old chapel vestry where {name} kept the register."
+        },
+        {
+          "step_id": "retrieve_the_register",
+          "description": "Carry the burial register back to the bunker."
+        }
+      ],
+      "completion_text": "{name} sets the heavy book on the table and opens it to the first page. They read a name aloud, and a date, and the single line they wrote. Then the next. The bunker goes quiet, listening. 'These are people,' {name} says. 'Each one. I won't let the count swallow them.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_electrician_soldering_iron",
+      "archetype_id": "the_electrician",
+      "wish_type": "retrieve_heirloom",
+      "wish_title": "The Grandfather's Iron",
+      "wish_description": "{name} learned to solder with their grandfather's iron \u2014 heavy, brass, stained black at the tip. 'It's in the workshop at the old house. I taught three people to splice wire with that iron. I'd like to teach a fourth before I go.'",
+      "steps": [
+        {
+          "step_id": "reach_the_workshop",
+          "description": "Find {name}'s grandfather's workshop.",
+          "requires_location": "ruined_garage"
+        },
+        {
+          "step_id": "retrieve_the_iron",
+          "description": "Recover the soldering iron from the bench."
+        }
+      ],
+      "completion_text": "{name} plugs the iron in and it still heats. They call over a younger survivor and show them, slowly, how to tin the tip. 'Like this,' they say. 'Patience, then heat, then the join. In that order.' The young one's first splice holds. {name} nods, satisfied. 'That iron's taught four of us now,' they say. 'It'll teach more.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_reporter_observatory",
+      "archetype_id": "the_reporter",
+      "wish_type": "see_the_sky",
+      "wish_title": "The Silent Observatory",
+      "wish_description": "{name} once did a story on the astronomers at the observatory. 'They told me the stars would outlast everything we'd built,' they say. 'I'd like to go up there one more time. See if they were right. See if the stars are still there, and what I built is not.'",
+      "steps": [
+        {
+          "step_id": "climb_to_the_dome",
+          "description": "Escort {name} to the silent observatory at nightfall.",
+          "requires_location": "location_silent_observatory"
+        },
+        {
+          "step_id": "look_up",
+          "description": "Open the dome and let {name} look through the old eyepiece."
+        }
+      ],
+      "completion_text": "The dome groans open on rusted tracks. Above the ash, the stars are there \u2014 dimmer, but there. {name} looks for a long time. 'They were right,' they whisper. 'The stars are still there. Everything I chased is not. And somehow that's a comfort, not a grief.' They close the dome gently. 'Let the sky keep its peace.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_teacher_school_gym",
+      "archetype_id": "the_teacher",
+      "wish_type": "see_the_sky",
+      "wish_title": "The School Gymnasium",
+      "wish_description": "{name} wants to go back to the gymnasium where they first taught. 'Not for the lessons,' they say. 'For the echo. A gymnasium has a particular echo when it's full of children. I want to know if it still echoes, even empty.'",
+      "steps": [
+        {
+          "step_id": "escort_to_the_gym",
+          "description": "Bring {name} to the old school gymnasium.",
+          "requires_location": "loc_school_gymnasium"
+        },
+        {
+          "step_id": "let_it_echo",
+          "description": "{name} stands at center court and speaks, listening to the room answer."
+        }
+      ],
+      "completion_text": "{name} stands at half-court and calls roll \u2014 names from twenty years back. The gymnasium gives each one back, hollow and stretched. When the last name fades, {name} is quiet a long while. 'It still echoes,' they say, smiling thin. 'Empty rooms remember better than full ones, I think. The sound has nowhere to hide.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_veteran_bridge_seven",
+      "archetype_id": "the_veteran",
+      "wish_type": "see_the_sky",
+      "wish_title": "Bridge Seven",
+      "wish_description": "{name} wants to stand on Bridge Seven one last time. 'I crossed it the day I came home,' they say. 'It was the moment the war was over for me. I'd like to stand on it again, now that there's a new war. See if the river still runs underneath.'",
+      "steps": [
+        {
+          "step_id": "reach_the_bridge",
+          "description": "Escort {name} to Bridge Seven.",
+          "requires_location": "loc_bridge_seven"
+        },
+        {
+          "step_id": "stand_over_the_water",
+          "description": "{name} stands at the railing and watches the water below."
+        }
+      ],
+      "completion_text": "The bridge is buckled but standing. Below, the river still moves \u2014 muddy, slow, alive. {name} grips the railing and breathes. 'I came home over this bridge once,' they say. 'I'm not coming home this time. But the river didn't stop. I take some comfort in that.' They turn to leave. 'The water doesn't know about wars,' they say. 'Good for it.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_undertaker_salt_mine",
+      "archetype_id": "the_undertaker",
+      "wish_type": "see_the_sky",
+      "wish_title": "The Salt Mine",
+      "wish_description": "{name} buried people in the collapsed salt mine when the ground above was too hot. 'I'd like to go back,' they say. 'Not to dig. Just to sit at the mouth and let them know someone came. They were alone when I left them there. I hated that part.'",
+      "steps": [
+        {
+          "step_id": "reach_the_mine_mouth",
+          "description": "Escort {name} to the collapsed salt mine entrance.",
+          "requires_location": "location_collapsed_salt_mine"
+        },
+        {
+          "step_id": "sit_and_speak",
+          "description": "{name} sits at the entrance and speaks the names of those buried inside."
+        }
+      ],
+      "completion_text": "{name} sits a long time at the dark mouth of the mine, naming the dead into the shaft. The wind takes the names and gives nothing back. 'I know you can't hear me,' they say finally. 'But I came anyway. You weren't alone when it mattered \u2014 I was there. And I'm here now.' They rise stiffly. 'That's the work. Showing up. The rest is just carpentry.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_pharmacist_burn_ledger",
+      "archetype_id": "the_pharmacist",
+      "wish_type": "deliver_letter",
+      "wish_title": "Burn the Ledger",
+      "wish_description": "{name} has a different sort of wish. 'There's a ledger. Not the dispensary one \u2014 another. Things I did for money, after hours. If anyone reads it, three families break. I want it burned. Let what I did die with me.'",
+      "steps": [
+        {
+          "step_id": "retrieve_the_private_ledger",
+          "description": "Recover {name}'s private ledger from its hiding place."
+        },
+        {
+          "step_id": "burn_it_unread",
+          "description": "Burn the ledger unopened, in front of a witness."
+        }
+      ],
+      "completion_text": "{name} feeds the ledger to the flame page by page, never reading a line. The witness watches the last corner curl to ash. 'Some debts die with the debtor,' {name} says. 'That's not mercy \u2014 it's judgment. I'm choosing who carries this, and it stops with me.' The ash scatters. 'Let them remember me kind,' they say. 'It's a lie I've earned.'",
+      "morale_bonus": 10,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_undertaker_secret_dies",
+      "archetype_id": "the_undertaker",
+      "wish_type": "deliver_letter",
+      "wish_title": "Let It Die With Me",
+      "wish_description": "{name} has a confession they refuse to make. 'I buried a man who wasn't dead,' they say, voice level. 'He'd wronged someone I loved. I buried him conscious. I've kept it thirty years. I won't confess it now and make it someone else's burden. It goes into the ground with me.'",
+      "steps": [
+        {
+          "step_id": "write_it_down_once",
+          "description": "{name} writes the secret down, once, on a single page \u2014 not to share, but to face."
+        },
+        {
+          "step_id": "destroy_the_page",
+          "description": "{name} destroys the page unread by anyone else."
+        }
+      ],
+      "completion_text": "{name} writes the truth on one page, reads it to themselves, and burns it. The witness sees only the flame. 'I faced it,' {name} says. 'That's between me and it now. Not you, not the bunker, not whatever comes after. Some debts are carried to the grave, and that is where they belong.' They close their eyes. 'Let me be the only one who loses sleep over it.'",
+      "morale_bonus": 10,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_priest_withhold_forgiveness",
+      "archetype_id": "the_priest",
+      "wish_type": "deliver_letter",
+      "wish_title": "The Forgiveness I Won't Give",
+      "wish_description": "{name} surprises everyone. 'There's a man who asks my forgiveness every time he sees me,' they say. 'I've withheld it, because he hasn't earned it and I won't cheapen it. I want to die still withholding it. Forgiveness isn't a door you kick down on your way out. It's a gift. He can live without it. I have.'",
+      "steps": [
+        {
+          "step_id": "name_the_thing_unforgiven",
+          "description": "{name} states plainly what was done, and why it remains unforgiven."
+        },
+        {
+          "step_id": "stand_by_it",
+          "description": "{name} refuses, one final time, to grant the forgiveness requested."
+        }
+      ],
+      "completion_text": "{name} speaks the unforgiven thing aloud, names its weight, and declines to absolve it. 'I forgive much,' they say. 'I've built a life on it. But not this. Not him. To forgive what hasn't been reckoned with would be to lie, and I've given my life to not lying about this.' They fold their hands. 'Let him live with it. I have. And now I'll die with it, intact. That's mine.'",
+      "morale_bonus": 10,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "id": "wish_mechanic_destroy_evidence",
+      "archetype_id": "the_mechanic",
+      "wish_type": "deliver_letter",
+      "wish_title": "Destroy the Evidence",
+      "wish_description": "{name} has a cassette \u2014 a recording of a friend confessing to something that would exile him from the bunker. 'I kept it as insurance,' {name} says. 'I'm ashamed I kept it. He's dead now. I want it destroyed, so no one ever hears it and judges him. His ledger's closed.'",
+      "steps": [
+        {
+          "step_id": "retrieve_the_cassette",
+          "description": "Recover the hidden cassette from {name}'s stash."
+        },
+        {
+          "step_id": "smash_it_unplayed",
+          "description": "Destroy the cassette unplayed, in front of a witness."
+        }
+      ],
+      "completion_text": "{name} sets the cassette on the floor and brings a wrench down on it. The tape spools crack and spill. The witness sees only the wreckage. 'He was more than his worst day,' {name} says. 'I kept this as a weapon. That was wrong. Now it's nothing, and so is my hold over him.' They sweep the pieces into the bin. 'Let his name stay clean. He earned that much from me.'",
+      "morale_bonus": 10,
       "buff_id": "their_memory_lives_on"
     }
   ]

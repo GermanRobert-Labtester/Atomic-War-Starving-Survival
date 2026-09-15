@@ -970,6 +970,49 @@ namespace Ashfall.Core.Inventory
         public event Action<EquippedItem, string>? OnProtectiveGearFailed;
 
         /// <summary>
+        /// C2 / Plan 22 (D2/§25) — protective-gear restore-repair through the
+        /// canonical paths: the item's authored <see cref="RepairRecipe"/> bill
+        /// is consumed atomically via <see cref="TryConsumeBill"/>, and the
+        /// SAME <see cref="EquippedItem.CurrentDurability"/> the simulation
+        /// reads is restored, capped by the authored
+        /// <see cref="RepairRecipe.MaxRepairConditionFraction"/> (worn gear
+        /// never quite becomes new; a fully failed item is replace-only).
+        /// Fires <see cref="OnProtectiveGearRepaired"/> on success — never
+        /// <see cref="OnProtectiveGearFailed"/>. No parallel consumption path.
+        /// </summary>
+        public bool TryRepairEquippedGear(EquippedItem item)
+        {
+            var recipe = item?.Item?.repairRecipe;
+            if (recipe == null || recipe.costs == null || recipe.costs.Count == 0)
+                return false;
+            if (item.CurrentDurability <= 0f) return false; // failed ⇒ replace-only
+
+            float fraction = Math.Clamp(recipe.MaxRepairConditionFraction, 0f, 1f);
+            float cap = item.Item.durability * fraction;
+            float restored = cap - item.CurrentDurability;
+            if (restored <= 0f) return false; // already at/above the repair ceiling
+
+            var bill = new Dictionary<string, int>(StringComparer.Ordinal);
+            for (int i = 0; i < recipe.costs.Count; i++)
+            {
+                var cost = recipe.costs[i];
+                if (cost == null || string.IsNullOrEmpty(cost.materialId) || cost.amount <= 0)
+                    return false; // malformed authored bill — refuse honestly
+                bill[cost.materialId] = bill.TryGetValue(cost.materialId, out int n)
+                    ? n + cost.amount : cost.amount;
+            }
+            if (!TryConsumeBill(bill)) return false; // atomic; insufficient → no mutation
+
+            item.CurrentDurability = cap;
+            OnProtectiveGearRepaired?.Invoke(item, restored);
+            return true;
+        }
+
+        /// <summary>C2 / Plan 22 — repair-completed attribution (item, restored
+        /// durability). Repair never fires <see cref="OnProtectiveGearFailed"/>.</summary>
+        public event Action<EquippedItem, float>? OnProtectiveGearRepaired;
+
+        /// <summary>
         /// The one wear-mutation API for equipped protective gear (Plan 21 §3.4/
         /// §22.2): applies a bounded wear delta to the canonical
         /// <see cref="EquippedItem.CurrentDurability"/> with cause attribution
