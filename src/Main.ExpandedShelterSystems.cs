@@ -498,6 +498,12 @@ namespace AtomicWar.GodotApp
                 case "sky_defense_battery":
                     OpenSkyDefenseBatteryPanel();
                     break;
+                case "dynamic_quests":
+                    OpenDynamicQuestlinePanel();
+                    break;
+                case "vehicle_garage":
+                    OpenVehicleGaragePanel();
+                    break;
                 case "companion_kennel":
                     OpenKennelPanel();
                     break;

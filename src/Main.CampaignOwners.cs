@@ -872,6 +872,7 @@ namespace AtomicWar.GodotApp
             private readonly Main _m;
             private ExpeditionAggregateState? _expeditionSnapshot;
             private TravelingCaravanState? _caravanSnapshot;
+            private VehicleGarageState? _garageSnapshot;
             public ExpeditionsCaravansDayOwner(Main m) => _m = m;
             public void CapturePreDaySnapshot(int day)
             {
@@ -879,6 +880,9 @@ namespace AtomicWar.GodotApp
                 _expeditionSnapshot = _m._expeditions.CaptureSaveAggregate();
                 _m.SetupCaravans();
                 _caravanSnapshot = _m._caravans.CaptureSave();
+                // Plan 50 — recovery progress is part of the day's deterministic
+                // state; a failed day restore must roll it back with the rest.
+                _garageSnapshot = _m.EnsureVehicleGarage().CaptureState();
             }
             public void RestorePreDaySnapshot(int day)
             {
@@ -886,11 +890,17 @@ namespace AtomicWar.GodotApp
                     _m._expeditions.RestoreSaveAggregate(_expeditionSnapshot);
                 if (_caravanSnapshot != null)
                     _m._caravans.RestoreSave(_caravanSnapshot);
+                if (_garageSnapshot != null)
+                    _m.EnsureVehicleGarage().RestoreState(_garageSnapshot);
             }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupExpeditions();
                 _m._expeditions.TickHours(24f);
+                // Plan 50 — recovery teams work across campaign days. The garage
+                // owns the mission ledger; this owner supplies the day progress
+                // (the vehicle-garage section is captured by SaveOrchestrator).
+                _m.EnsureVehicleGarage().AdvanceRecoveries(24);
                 _m.SetupReconTelemetry();
                 _m._reconTelemetry?.TickDay(day);
 

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 121,
-  "headless_test_count": 119,
+  "total_tests": 123,
+  "headless_test_count": 121,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -177,6 +177,28 @@
       "description": "Flagship Plans 139\u2013141: InSAR repeat-pass classification, extrusion quality/defect/tool-wear, run-flat hazard/heat/rolling-resistance",
       "headless_compatible": true,
       "expected_summary_id": "plans_139_141_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "sky_defense_selftest",
+      "action": "SkyDefenseSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--sky-defense-selftest",
+      "aliases": [],
+      "description": "Flagship Task 7: kinetic sky-layer counter-battery \u2014 telemetry track intake, magazine logistics, deterministic volley, heat/hydraulics service, crew claim, save round-trip, and player-panel construction",
+      "headless_compatible": true,
+      "expected_summary_id": "sky_defense_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "vehicle_garage_selftest",
+      "action": "VehicleGarageSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--vehicle-garage-selftest",
+      "aliases": [],
+      "description": "Flagship Plan 50: overland vehicle customization & maintenance \u2014 modification install/uninstall, component wear, service, immobilization gate, recovery mission completion, and expedition-profile decoration",
+      "headless_compatible": true,
+      "expected_summary_id": "vehicle_garage_selftest",
       "timeout_seconds": 30
     },
     {

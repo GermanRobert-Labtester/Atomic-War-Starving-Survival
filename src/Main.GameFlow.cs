@@ -640,6 +640,8 @@ namespace AtomicWar.GodotApp
                 case "shelter_barter":
                 case "medical_ward":
                 case "sky_defense_battery":
+                case "dynamic_quests":
+                case "vehicle_garage":
                     OpenExpandedPanel(panelId);
                     break;
             }

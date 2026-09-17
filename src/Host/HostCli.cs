@@ -81,6 +81,8 @@ namespace AtomicWar.GodotApp
         Plans122to125SelfTest,
         LateTechMobilitySelfTest,
         Plans122to125BalanceSoak,
+        SkyDefenseSelfTest,
+        VehicleGarageSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -313,6 +315,10 @@ namespace AtomicWar.GodotApp
             if (Has(args, "--plans-139-141-selftest") || Has(args, "--insar-selftest")
                 || Has(args, "--hydraulic-extrusion-selftest") || Has(args, "--runflat-tire-selftest"))
                 return HostCliAction.Plans139To141SelfTest;
+            if (Has(args, "--sky-defense-selftest"))
+                return HostCliAction.SkyDefenseSelfTest;
+            if (Has(args, "--vehicle-garage-selftest"))
+                return HostCliAction.VehicleGarageSelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
                 return HostCliAction.DiseaseSelfTest;
             if (Has(args, "--combat-selftest"))
@@ -740,6 +746,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --hydraulic-extrusion-selftest  Plan 140 hydraulic extrusion: phases, defect rolls, tool wear, rejected/premium outcomes");
             GD.Print("  --runflat-tire-selftest  Plan 141 run-flat tires: install gating, hazard reduction, heat/fuel penalty, severe-failure paths");
             GD.Print("  --plans-139-141-selftest Plans 139–141 aggregate: InSAR + hydraulic extrusion + run-flat wiring, persistence, and panel reachability");
+            GD.Print("  --sky-defense-selftest   Flagship Task 7 counter-battery: telemetry track intake, magazine logistics, deterministic volley, service, crew claim, save round-trip, and player-panel construction");
+            GD.Print("  --vehicle-garage-selftest Plan 50 overland vehicle garage: modification install/uninstall, component wear, service, immobilization gate, recovery completion, and expedition-profile decoration");
             GD.Print("  --shelter-physics-selftest / --shelter-actor-physics-selftest  Shelter physics and actor movement selftests: interior traversal, hazard interaction");
 
             GD.Print("\n--- User Data & Log Configuration ---");

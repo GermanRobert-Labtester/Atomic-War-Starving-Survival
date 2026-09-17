@@ -111,6 +111,10 @@ namespace AtomicWar.GodotApp
             _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters);
             _expeditions.Flags = _consequenceLedger;
             _expeditions.CurrentDay = _simDay;
+            // Plan 50 — the campaign-owned customization/maintenance garage is
+            // the single source of fitted-modification effects and component
+            // wear for the sortie profile. Optional seam; unbound = legacy path.
+            _expeditions.Garage = EnsureVehicleGarage();
             _expeditions.SurvivorFitnessProvider = EvaluateSurvivorFitness;
             _expeditions.ExpeditionFitnessProvider = survivorId =>
                 EvaluateDutyRoleFitness(survivorId, DutyRosterIds.RoleExpedition);

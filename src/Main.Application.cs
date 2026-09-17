@@ -474,6 +474,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.Plans122to125BalanceSoak:
                     GetTree().Quit(HostCli.RunPlans122to125BalanceSoak(_dataDir));
                     return;
+                case HostCliAction.SkyDefenseSelfTest:
+                    GetTree().Quit(HostCli.RunSkyDefenseSelfTest(_dataDir));
+                    return;
+                case HostCliAction.VehicleGarageSelfTest:
+                    GetTree().Quit(HostCli.RunVehicleGarageSelfTest(_dataDir));
+                    return;
                 case HostCliAction.DeepCoastSelfTest:
                     GetTree().Quit(HostCli.RunDeepCoastSelfTest(_dataDir));
                     return;

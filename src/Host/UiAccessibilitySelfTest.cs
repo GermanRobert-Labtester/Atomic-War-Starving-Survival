@@ -220,6 +220,8 @@ namespace AtomicWar.GodotApp
                 ("HydraulicExtrusionPanel", new HydraulicExtrusionPanel()),
                 ("RunFlatTirePanel", new RunFlatTirePanel()),
                 ("SkyDefenseBatteryPanel", new SkyDefenseBatteryPanel()),
+                ("DynamicQuestlinePanel", new DynamicQuestlinePanel()),
+                ("VehicleGaragePanel", new VehicleGaragePanel()),
                 ("DailyBriefingModal", new DailyBriefingModal())
             };
 

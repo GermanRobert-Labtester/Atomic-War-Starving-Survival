@@ -2,8 +2,8 @@
 
 **Last Verified:** 2026-09-17<br>
 **Total Subsystems Mapped:** 193/193 (100.0%)<br>
-**Verified End-to-End Coverage:** 125/193 (64.8% across all 6 vertical layers)<br>
-**Status Breakdown:** Implemented: 193/193 | Constructed: 193/193 | Ticked: 193/193 | Persisted: 193/193 | Routed: 141/193 | Tested: 130/193<br>
+**Verified End-to-End Coverage:** 128/193 (66.3% across all 6 vertical layers)<br>
+**Status Breakdown:** Implemented: 193/193 | Constructed: 193/193 | Ticked: 193/193 | Persisted: 193/193 | Routed: 143/193 | Tested: 132/193<br>
 **Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`
 
 > **GENERATED FILE — do not edit by hand.**
@@ -67,14 +67,14 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 10 | `campaign_day` | Campaign & Progression | `CampaignDayCoordinator` | — *(Procedural)* | `CampaignDayCoordinator` | `CampaignDaySaveStore` | `GameDashboardPanel` | `--day1-selftest`, `--day1-to-day2-selftest`, `CampaignDayCoordinatorTests` | ✅ 6/6 |
 | 11 | `daily_briefing` | Campaign & Progression | `DailyBriefingReportBuilder`, `DailyBriefingState` | — *(Procedural)* | `DailyBriefingState` | `DailyBriefingSaveStore` | `DailyBriefingModal` | `--day1-selftest`, `DailyBriefingReportBuilderTests` | ✅ 6/6 |
 | 12 | `library_study` | Campaign & Progression | `LibraryStudySystem` | `library_manuals.json` | `LibraryStudyHostSession` | `LibraryStudySaveStore` | `LibraryStudyPanel` | `--shelter-operations-selftest`, `LibraryStudySystemTests` | ✅ 6/6 |
-| 13 | `dynamic_quests` | Campaign & Quests | `DynamicQuestlineSystem` | `dynamic_questlines.json` | `DynamicQuestSaveStore` | `DynamicQuestSaveStore` | *None (GAP)* | `--save-store-checksum-selftest`, `DynamicQuestlineTests` | ❌ GAP |
+| 13 | `dynamic_quests` | Campaign & Quests | `DynamicQuestlineSystem` | `dynamic_questlines.json` | `DynamicQuestSaveStore` | `DynamicQuestSaveStore` | `DynamicQuestlinePanel` | `--save-store-checksum-selftest`, `DynamicQuestlineTests` | ✅ 6/6 |
 | 14 | `narrative_questlines` | Campaign & Quests | `NarrativeQuestlineSystem` | `narrative_questlines.json` | `NarrativeQuestlineHostSession` | `NarrativeQuestlineSaveStore` | `QuestsPanel` | , `NarrativeQuestlineSystemTests` | ❌ GAP |
 | 15 | `personal_quests` | Campaign & Quests | `PersonalQuestSystem` | — *(Procedural)* | `PersonalQuestHostSession` | `PersonalQuestSaveStore` | `QuestsPanel`, `QuestDetailPanel` | `--save-store-checksum-selftest`, `PersonalQuestSystemTests` | ✅ 6/6 |
 | 16 | `chlor_alkali_synthesis` | Chemistry | `ChlorAlkaliSynthesisEngine` | — *(Procedural)* | `ChlorAlkaliHostSession` | `ChlorAlkaliSaveStore` | *None (GAP)* | ,  | ❌ GAP |
 | 17 | `ballistic_shield` | Combat | `BallisticShieldEngine` | — *(Procedural)* | `BallisticShieldHostSession` | `BallisticShieldSaveStore` | *None (GAP)* | ,  | ❌ GAP |
 | 18 | `ballistics_workbench` | Combat | `BallisticsWorkbenchSystem` | `ballistics_workbench_catalog.json` | `Main` | `BallisticsWorkbenchSaveStore` | `BallisticsWorkbenchPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
 | 19 | `settlement_defenses` | Combat | `DefenseSystem` | `defenses.json` | `DefenseHostSession` | `DefenseSaveStore` | `DefenseGridPanel` | , `DefenseSystemTests` | ❌ GAP |
-| 20 | `sky_defense_battery` | Combat | `SkyDefenseBatterySystem` | — *(Procedural)* | `Main` | `SkyDefenseBatterySaveStore` | `SkyDefenseBatteryPanel` | , `SkyDefenseBatteryTests` | ❌ GAP |
+| 20 | `sky_defense_battery` | Combat | `SkyDefenseBatterySystem` | — *(Procedural)* | `Main` | `SkyDefenseBatterySaveStore` | `SkyDefenseBatteryPanel` | `--sky-defense-selftest`, `SkyDefenseBatteryTests` | ✅ 6/6 |
 | 21 | `perimeter_defense` | Combat & Defense | `PerimeterDefenseSystem` | `perimeter_defenses.json` | `Main` | `PerimeterDefenseSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `PerimeterDefenseTests` | ✅ 6/6 |
 | 22 | `sound_ranging` | Combat & Defense | `SoundRangingThreatEngine` | `sound_ranging_catalog.json` | `SoundRangingHostSession` | `SoundRangingSaveStore` | `SoundRangingPanel` | `--plans-122-125-selftest`, `Plan123SoundRangingThreatEngineTests` | ✅ 6/6 |
 | 23 | `chemical_synthesis` | Crafting & Chemistry | `ChemicalSynthesisSystem` | `chemical_syntheses.json` | `ChemicalSynthesisHostSession` | `ChemicalSynthesisSaveStore` | `ChemicalLabPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
@@ -101,7 +101,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 44 | `mine_clearing_flail` | Expeditions | `MineClearingFlailEngine` | `mine_flail_catalog.json` | `MineClearingFlailHostSession` | `MineClearingFlailSaveStore` | `MineFlailPanel` | `--mine-flail-uitest`, `MineClearingFlailEngineTests` | ✅ 6/6 |
 | 45 | `rail_grinding` | Expeditions | `RailGrindingEngine` | `rail_grinding_catalog.json` | `RailGrindingHostSession` | `RailGrindingSaveStore` | `RailGrindingPanel` | `--rail-grinding-uitest`, `RailGrindingEngineTests` | ✅ 6/6 |
 | 46 | `recon_telemetry` | Expeditions | `ReconTelemetrySystem` | — *(Procedural)* | `ReconTelemetrySaveStore` | `ReconTelemetrySaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 47 | `vehicle_garage` | Expeditions | `VehicleGarageSystem` | `vehicle_modifications.json` | `Main` | `VehicleGarageSaveStore` | *None (GAP)* | , `VehicleGarageSystemTests` | ❌ GAP |
+| 47 | `vehicle_garage` | Expeditions | `VehicleGarageSystem` | `vehicle_modifications.json` | `Main` | `VehicleGarageSaveStore` | `VehicleGaragePanel` | `--vehicle-garage-selftest`, `VehicleGarageSystemTests`, `Plan50VehicleGarageIntegrationTests` | ✅ 6/6 |
 | 48 | `counter_intelligence` | Factions | `CounterIntelligenceSystem` | — *(Procedural)* | `CounterIntelligenceSaveStore` | `CounterIntelligenceSaveStore` | *None (GAP)* | ,  | ❌ GAP |
 | 49 | `diplomatic_summits` | Factions | `DiplomaticSummitSystem` | — *(Procedural)* | `Main` | `DiplomaticSummitSaveStore` | *None (GAP)* | , `DiplomaticSummitTests` | ❌ GAP |
 | 50 | `espionage` | Factions | `EspionageSystem` | `espionage_missions.json` | `EspionageHostSession` | `EspionageSaveStore` | *None (GAP)* | , `Plan167EspionageTests` | ❌ GAP |
@@ -396,11 +396,12 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 13. `dynamic_quests` — Campaign-wide emergency dynamic quests (Campaign & Quests)
 - **Owner Domain:** `quests`
 - **Setup Method:** `Main.SetupDynamicQuests()` | **Cadence:** `On-Demand (Campaign-Wide Emergency Quests)`
-- **UI Routes:**
+- **UI Routes:** `dynamic_quests`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Quests/DynamicQuestlines.cs`](../../Assets/Ashfall.Core/Quests/DynamicQuestlines.cs)
   - Host Session: [`src/Host/DynamicQuestSaveStore.cs`](../../src/Host/DynamicQuestSaveStore.cs)
   - Save Store: [`src/Host/DynamicQuestSaveStore.cs`](../../src/Host/DynamicQuestSaveStore.cs)
+  - UI Panel: [`src/UI/DynamicQuestlinePanel.cs`](../../src/UI/DynamicQuestlinePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Quests/DynamicQuestlineTests.cs`](../../Ashfall.Core.Tests/Quests/DynamicQuestlineTests.cs)
 
 ### 14. `narrative_questlines` — Survivor narrative questline arcs and crisis branch outcomes (Campaign & Quests)
@@ -773,11 +774,13 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 47. `vehicle_garage` — Plans 50-53 — expedition overland vehicle modifications and garage maintenance state (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupVehicleGarage()` | **Cadence:** `On-Demand`
-- **UI Routes:**
+- **UI Routes:** `vehicle_garage`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Expeditions/VehicleGarageSystem.cs`](../../Assets/Ashfall.Core/Expeditions/VehicleGarageSystem.cs)
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/VehicleGarageSaveStore.cs`](../../src/Host/VehicleGarageSaveStore.cs)
+  - UI Panel: [`src/UI/VehicleGaragePanel.cs`](../../src/UI/VehicleGaragePanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/VehicleGarageSystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/VehicleGarageSystemTests.cs)
 
 ### 48. `counter_intelligence` — Counter-intelligence, vetting, and defector management (Factions)
@@ -2457,7 +2460,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `dose_ledger` | ✅ | ✅ | ⚡ `On-Demand (Dose Log)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `draisine_recovery` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `duty_roster` | ✅ | ✅ | ✅ `Daily Shift Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `dynamic_quests` | ✅ | ✅ | ⚡ `On-Demand (Campaign-Wide Emergency Quests)` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
+| `dynamic_quests` | ✅ | ✅ | ⚡ `On-Demand (Campaign-Wide Emergency Quests)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `ebpvd_coating` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `echoes` | ✅ | ✅ | ✅ `Narrative Echo Tick` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `ecological_infestation` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -2566,7 +2569,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `shelter_thermal` | ✅ | ✅ | ✅ `Daily HVAC Frost Dissipation` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_workshop` | ✅ | ✅ | ⚡ `On-Demand (Crafting & Refurbishment)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `silent_foundry` | ✅ | ✅ | ✅ `Daily Smelter Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `sky_defense_battery` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
+| `sky_defense_battery` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `sofc_power` | ✅ | ✅ | ✅ `Shelter Power Cadence (TickDay)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `solar_concentrator` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `sound_ranging` | ✅ | ✅ | ⚡ `Event-Driven (Hostile-Fire Observations) + Daily Drift` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -2583,7 +2586,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `thirdonary` | ✅ | ✅ | ⚡ `On-Demand (Arbitration)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `travel_encounters` | ✅ | ✅ | ⚡ `On-Demand (Travel Step)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `unique_claims` | ✅ | ✅ | ⚡ `On-Demand (Global Unique Claim Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `vehicle_garage` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
+| `vehicle_garage` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `verdict` | ✅ | ✅ | ✅ `Daily Machine Log Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `vinyl_morale` | ✅ | ✅ | ✅ `Daily Turntable Morale Broadcast` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `wasteland_justice` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |

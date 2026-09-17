@@ -85,6 +85,60 @@ namespace Ashfall.Core.Expeditions
 
         public IReadOnlyDictionary<string, VehicleModificationDefinition> GetAllModifications() => _modCatalog;
 
+        /// <summary>Read-only customization record for a vehicle, or null when it has none yet.</summary>
+        public VehicleCustomizationRecord? GetRecord(string vehicleId) =>
+            !string.IsNullOrEmpty(vehicleId) && _state.vehicleRecords.TryGetValue(vehicleId, out var record) ? record : null;
+
+        /// <summary>True when the vehicle is stranded/mission-critical-down in the garage.</summary>
+        public bool IsImmobilized(string vehicleId) => GetRecord(vehicleId)?.isImmobilized == true;
+
+        /// <summary>Active recovery missions (read-only).</summary>
+        public IReadOnlyDictionary<string, VehicleRecoveryMission> ActiveRecoveries => _state.activeRecoveries;
+
+        private static readonly Dictionary<string, string> EmptySlots = new Dictionary<string, string>(StringComparer.Ordinal);
+
+        /// <summary>Installed slot→modification map for a vehicle (empty when none).</summary>
+        public IReadOnlyDictionary<string, string> GetInstalledSlots(string vehicleId) =>
+            GetRecord(vehicleId)?.installedSlots ?? EmptySlots;
+
+        /// <summary>
+        /// Apply the installed-modification effects to an expedition profile
+        /// built by <see cref="ExpeditionVehicleSystem.CreateExpeditionProfile"/>.
+        /// The garage decorates; the expedition core stays decoupled and owns
+        /// travel. Read-only over persisted state; zero RNG.
+        /// </summary>
+        public void DecorateProfile(ExpeditionVehicleProfile? profile)
+        {
+            if (profile == null) return;
+            string vehicleId = profile.vehicleId;
+            if (string.IsNullOrEmpty(vehicleId)) return;
+
+            profile.cargoCapacityKg += GetEffectiveCargoCapacityDelta(vehicleId);
+            profile.speedMultiplier = Math.Max(0.01f, profile.speedMultiplier * (1f + GetEffectiveSpeedMultiplierDelta(vehicleId)));
+            profile.fuelPerTravelTick = Math.Max(0f, profile.fuelPerTravelTick * GetEffectiveFuelConsumptionMultiplier(vehicleId));
+        }
+
+        /// <summary>
+        /// Advance every active recovery mission by the given ticks. Missions
+        /// complete at their authored <see cref="VehicleRecoveryMission.requiredTicks"/>
+        /// threshold; completion itself remains the player's command
+        /// (<see cref="CompleteRecoveryMission"/>). Deterministic; no RNG.
+        /// </summary>
+        public int AdvanceRecoveries(int deltaTicks)
+        {
+            if (deltaTicks <= 0) return 0;
+            int advanced = 0;
+            foreach (var mission in _state.activeRecoveries.Values)
+            {
+                if (mission == null || mission.isComplete) continue;
+                mission.progressTicks += deltaTicks;
+                if (mission.progressTicks >= mission.requiredTicks)
+                    mission.isComplete = true;
+                advanced++;
+            }
+            return advanced;
+        }
+
         public VehicleCustomizationRecord GetOrCreateRecord(string vehicleId)
         {
             if (string.IsNullOrEmpty(vehicleId))

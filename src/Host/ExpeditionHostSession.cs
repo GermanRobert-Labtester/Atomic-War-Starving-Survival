@@ -63,6 +63,14 @@ namespace AtomicWar.GodotApp
         /// <summary>Vehicle garage (fuel, condition, repair) — persisted inside the expedition aggregate.</summary>
         public ExpeditionVehicleSystem Vehicles { get; }
 
+        /// <summary>
+        /// Plan 50 modification/maintenance garage. Optional: when bound, fitted
+        /// modification effects decorate the dispatch profile, trip distance
+        /// feeds component wear, and an immobilized vehicle is refused dispatch.
+        /// Unbound ⇒ legacy behaviour is byte-identical.
+        /// </summary>
+        public VehicleGarageSystem? Garage { get; set; }
+
         /// <summary>Optional crossing gate — when set, crossing-node expeditions require vouch access.</summary>
         public VouchAccessSystem CrossingGate { get; set; }
 
@@ -767,6 +775,8 @@ namespace AtomicWar.GodotApp
             var inst = Vehicles.GetVehicle(vehicleId);
             if (inst == null) return $"No such vehicle in the garage: {vehicleId}.";
             if (inst.isBrokenDown) return $"{vehicleId} is broken down — repair it before dispatch.";
+            if (Garage != null && Garage.IsImmobilized(vehicleId))
+                return $"{vehicleId} is immobilized in the maintenance bay — recover it before dispatch.";
 
             float distanceKm = 2f * def.distanceTicks * KmPerTravelTick;
             var vdef = Vehicles.GetDefinition(vehicleId);
@@ -778,6 +788,18 @@ namespace AtomicWar.GodotApp
             var (_, _, prepBreakdown) = Vehicles.PrepareForExpedition(vehicleId, distanceKm);
             if (prepBreakdown)
                 return $"{vehicleId} threw a breakdown during preparation — the sortie is aborted and the vehicle needs repair.";
+
+            // Plan 50 — the same travelled distance feeds the garage's component
+            // wear ledger. Catastrophic wear strands the vehicle and opens a
+            // recovery mission at the destination (recovered over campaign days).
+            if (Garage != null)
+            {
+                Garage.RecordTripWear(vehicleId, distanceKm);
+                if (Garage.IsImmobilized(vehicleId))
+                {
+                    Garage.RegisterRecoveryMission(vehicleId, def.id, requiredFuelUnits: 10, out _, out _);
+                }
+            }
             return null;
         }
 
@@ -813,7 +835,9 @@ namespace AtomicWar.GodotApp
 
         private ExpeditionVehicleProfile? BuildProfile(string vehicleId)
         {
-            return Vehicles.CreateExpeditionProfile(vehicleId, KmPerTravelTick);
+            var profile = Vehicles.CreateExpeditionProfile(vehicleId, KmPerTravelTick);
+            Garage?.DecorateProfile(profile);
+            return profile;
         }
 
         public CommandResult StartDemoExpedition(string survivorId, string locationId)

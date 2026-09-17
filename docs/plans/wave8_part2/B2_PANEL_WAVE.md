@@ -1,89 +1,106 @@
-# Wave 8 — B2 Player-Route Panel Wave (premise verification + build order)
+# Wave 8 — B2 Player-Route Panel Wave (premise verification + build record)
 
-> **Package:** `WAVE8-PART2-B2-PLAYER-ROUTES` · **Builder/Integrator:** user-authorized
-> **Date:** 2026-09-17 · **Premise:** the B2 intent table from the prior session
-> closeout (three settled systems with Core + host + save but no player route).
+> **Package:** `WAVE8-B2-PLAYER-ROUTES` · **Builder/Integrator:** user-authorized
+> **Date:** 2026-09-17 · **Status:** COMPLETE (all three systems routed; both
+> CLI residual items closed; all mapped rows ✅ 6/6).
 
-This note records the source-level verification of that table **before** any
-code was written, per `AGENTS.md` rule 7 ("a plan or audit is not proof") and
-rule 10 ("stop when authority is missing"). It corrects one premise in the
-intent table and re-orders the wave accordingly.
+This document records the source-level verification of the B2 intent table
+**before** any code was written (per `AGENTS.md` rule 7, "a plan or audit is not
+proof"), the one premise correction it produced, and the delivered result.
 
-## 1. Verified intent table (HEAD)
+## 1. Verified intent table (HEAD at start)
 
-| System | Core authority | Host driver at HEAD | Save | Route | Classification | Verified? |
-|---|---|---|---|---|---|---|
-| `sky_defense_battery` | `SkyDefenseBatterySystem` + ordnance catalog | `Main.FlagshipInstitutions.cs` (`EnsureSkyDefense`, turret/volley/service/tick, crew via institution ledger, telemetry intake) | `SkyDefenseBatterySaveStore` | none | **True player-route gap** | ✅ |
-| `dynamic_quests` | `DynamicQuestlineSystem` | `Main.Plans46_49.cs` (workshop/radio/excavation event triggers, complete/fail, daily tick) | `DynamicQuestSaveStore` | none | **True player-route gap (read-mostly)** | ✅ |
-| `vehicle_garage` | `VehicleGarageSystem` + modifications catalog | `Main.Plans50_53.cs` only constructs and exposes it | `VehicleGarageSaveStore` | none | **Mis-classified — see §2** | ✅ |
+| System | Core authority | Host driver at HEAD | Save | Route | Classification at start |
+|---|---|---|---|---|---|
+| `sky_defense_battery` | `SkyDefenseBatterySystem` + ordnance catalog | `Main.FlagshipInstitutions.cs` | `SkyDefenseBatterySaveStore` | none | True player-route gap |
+| `dynamic_quests` | `DynamicQuestlineSystem` | `Main.Plans46_49.cs` | `DynamicQuestSaveStore` | none | True player-route gap (read-mostly) |
+| `vehicle_garage` | `VehicleGarageSystem` + modifications catalog | `Main.Plans50_53.cs` (construction only) | `VehicleGarageSaveStore` | none | **Mis-classified (see §2)** |
 
-## 2. Premise correction — `vehicle_garage` is not a UI-only gap
+## 2. Premise correction — `vehicle_garage` was not a UI-only gap
 
-The intent table classified `vehicle_garage` as "live commands with no player
-route". Source verification shows the commands are **live public API but have
-no host caller and no downstream consumer**, so a panel over them would be a
-*fake operational route* (`AGENTS.md` UI rule):
+The original table called it "live commands with no player route". Verification
+showed the commands had **no host caller and no downstream consumer**:
 
 - `InstallModification` / `UninstallModification` / `ServiceChassis` /
   `ServiceEngine` / `ServiceTransmission` / `RecordTripWear` /
-  `RegisterRecoveryMission` have **zero callers in `src/`**.
-- The effect read models (`GetEffectiveCargoCapacityDelta`,
-  `GetEffectiveSpeedMultiplierDelta`, `GetEffectiveFuelConsumptionMultiplier`,
-  `GetEffectiveWearRateMultiplier`, `GetEffectiveRadiationProtectionPermille`)
-  have **zero consumers** outside their own tests — notably
-  `ExpeditionVehicleSystem.CreateExpeditionProfile` (the profile that actually
-  drives `ExpeditionHostSession.BuildProfile`) does **not** apply them.
-- `isImmobilized` is only ever set by `RecordTripWear`, which is never called,
-  so recovery missions are unreachable by construction.
-- The garage owns a **second wear model** (chassis/engine/transmission
-  permille) beside `ExpeditionVehicleSystem.condition`; `docs/PLANS_50_53_AUTHORITY_MAP.md`
-  and `docs/VEHICLE_GARAGE_AUTHORITY_MAP.md` say the garage "decorates & extends"
-  `ExpeditionVehicleSystem`, but the decoration seam is not implemented.
+  `RegisterRecoveryMission` had **zero callers in `src/`**.
+- Every effect query (`GetEffectiveCargoCapacityDelta` / speed / fuel / wear /
+  radiation) had **zero consumers** — `ExpeditionVehicleSystem.CreateExpeditionProfile`
+  ignored them.
+- `isImmobilized` was only set by `RecordTripWear` (never called), so recovery
+  was unreachable.
 
-Building `GarageDetailPanel` without first resolving that seam would let the
-player spend scrap/parts for effects the simulation ignores. That needs a
-signed integration decision (which wear model is authoritative; where the
-decoration applies), so it is **recorded as a blocker**, not improvised.
+A panel over that surface would have been a fake operational route. The signed
+`docs/PLANS_50_53_AUTHORITY_MAP.md` / `docs/VEHICLE_GARAGE_AUTHORITY_MAP.md`
+already say the garage "decorates & extends `ExpeditionVehicleSystem`", so the
+fix was to **complete the signed seam**, not to invent a new architecture:
 
-**Recommendation (needs foreman signature):** complete the signed Plan 50 seam —
-garage effects decorate the expedition profile at `ExpeditionHostSession` from
-the campaign-owned garage instance; trip distance feeds `RecordTripWear`; the
-duplicate `VehicleInstance.condition` wear becomes a projection or is retired.
-Then build the panel.
+- `VehicleGarageSystem.DecorateProfile(profile)` applies fitted-modification
+  cargo/speed/fuel effects to the profile the expedition authority builds.
+- `ExpeditionHostSession.Garage` (optional) is bound by `Main.Expeditions.cs`;
+  unbound ⇒ legacy path byte-identical.
+- `ExpeditionHostSession.PrepareVehicleForDispatch` refuses an immobilized
+  vehicle, feeds travelled distance into `RecordTripWear`, and opens a recovery
+  mission at the destination on catastrophic wear.
+- `ExpeditionsCaravansDayOwner` advances recovery missions by 24 ticks/day and
+  includes garage state in the pre-day snapshot/restore pair (determinism).
 
-## 3. Build order for this wave
+Read model left intentionally unconsumed: `GetEffectiveRadiationProtectionPermille`
+(no vehicle→expedition radiation seam exists; the panel shows it only as the
+authored modification property, never as an applied effect).
 
-1. **`sky_defense_battery` (this package)** — fully integrated end-to-end
-   (telemetry warning → track → volley → `ApplyInterceptionMitigation` →
-   `SkyLayerArmorSystem` → residual strike), real commands, real observable
-   outcome. Cleanest truthful route; no new architecture decision.
-2. **`dynamic_quests`** — host-driven read model (active emergency quests,
-   deadlines, stages, progress); read-only panel surface.
-3. **`vehicle_garage`** — blocked on the §2 decision.
+## 3. Delivered
 
-## 4. `sky_defense_battery` acceptance
+1. **`sky_defense_battery`** — Expanded `SkyDefenseBatteryPanel` bound to the
+   campaign-owned system (load magazine / fire volley / service hydraulics /
+   crew assign-remove); Core read models only. `--sky-defense-selftest` added.
+2. **`dynamic_quests`** — read-only Emergency Dynamic Quests board over the
+   host-driven runtime.
+3. **`vehicle_garage`** — Expanded `VehicleGaragePanel` (install/uninstall,
+   chassis/engine/transmission service, recovery completion) over the completed
+   Plan 50 seam. `--vehicle-garage-selftest` added.
 
-Presentation-only surface bound to the campaign-owned `SkyDefenseBatterySystem`
-(no new authority, no panel-side intercept math):
+All three rows in `docs/architecture/ARCHITECTURE_TEST_MAP.md` are now **✅ 6/6**.
 
-- status rail: emplacement state, magazine, barrel heat, hydraulics, tracks,
-  interceptions;
-- orbital-track list: severity, impact day, target grid, energy, volleys,
-  resolved state;
-- commands routed to Core: load magazine (`TryLoadMagazine`), fire volley
-  (`TryFireVolley`), hydraulic service (`TryServiceHydraulics`), crew
-  assign/remove (`TryAssignCrew` / `TryRemoveCrew`);
-- intercept preview from the Core read model `PreviewInterceptChance` (never
-  recomputed in the panel); refresh on the system's own events and after each
-  command.
+## 4. Files
 
-## 5. Verification plan
+- **Core:** `Assets/Ashfall.Core/SkyDefense/SkyDefenseBatterySystem.cs`
+  (read-only `OrdnanceCatalog`), `Assets/Ashfall.Core/Expeditions/VehicleGarageSystem.cs`
+  (`GetRecord`/`IsImmobilized`/`ActiveRecoveries`/`GetInstalledSlots`/`DecorateProfile`/`AdvanceRecoveries`),
+  `Assets/Ashfall.Core/HostCliRegistry.cs` (2 selftest descriptors).
+- **Host:** `src/Host/ExpeditionHostSession.cs` (Garage seam), `src/Main.Expeditions.cs`,
+  `src/Main.CampaignOwners.cs` (recovery day tick + snapshot), `src/Host/HostCli.cs`,
+  `src/Main.Application.cs`, `src/Host/HostCli.SkyDefense.cs` (new),
+  `src/Host/HostCli.VehicleGarage.cs` (new), `src/Host/UiAccessibilitySelfTest.cs`.
+- **UI:** `src/UI/SkyDefenseBatteryPanel.cs`, `src/UI/DynamicQuestlinePanel.cs`,
+  `src/UI/VehicleGaragePanel.cs` (all new), `src/Main.SkyDefense.cs`,
+  `src/Main.DynamicQuests.cs`, `src/Main.VehicleGarage.cs` (all new).
+- **Routing:** `PanelRegistryBootstrap.cs`, `Main.PlayerSurfaces.cs`,
+  `Main.GameFlow.cs`, `Main.ExpandedShelterSystems.cs`.
+- **Tests:** `Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs` (new, 5).
+- **Generated:** architecture map, UI panel catalog, CLI catalog, self-test
+  manifest, player-surface manifest, docs index.
 
-- `dotnet build Ashfall.csproj` (0/0)
-- `bash scripts/run_test.sh Ashfall.Core.Tests/UI/PanelRouteGateTests.cs`
-- `bash scripts/run_test.sh Ashfall.Core.Tests/UI/PlayerSurfaceCoverageGateTests.cs`
-- `bash scripts/run_test.sh Ashfall.Core.Tests/SkyDefenseBatteryTests.cs`
-- `godot --headless --path . -- --panel-bind-lifecycle-selftest`
-- `godot --headless --path . -- --ui-accessibility-selftest`
-- `python3 scripts/ci/generate-ui-panel-catalog.py --check`
-- `bash scripts/ci/generate-architecture-map.sh --check`
+## 5. Verification
+
+| Gate | Result |
+|---|---|
+| `dotnet build Ashfall.csproj` | 0/0 |
+| `--sky-defense-selftest` | 17/17 PASS |
+| `--vehicle-garage-selftest` | 19/19 PASS |
+| `--ui-accessibility-selftest` (constructs all three panels) | 5/5 PASS |
+| `--player-panels-uitest` / `--save-load-ui-failure-selftest` | PASS / PASS |
+| `--7-day-smoke-selftest` (day-tick + determinism) | 10/10 PASS |
+| PanelRoute / PlayerSurfaceCoverage / BindingPurity / SubscriptionHygiene / NoFabricatedFallback | 20 / 8 / 2 / 1 / 4 |
+| ArchitectureTestMap / SelfTestManifest / UiPanelContract / HostCliHelpContract | 5 / 4 / 1 / 2 |
+| SkyDefenseBattery / DynamicQuestline / VehicleGarage / Plans50_53 | 13 / 4 / 6 / 3 |
+| Plan50VehicleGarageIntegration | 5/5 |
+| architecture map / UI catalog / CLI catalog / self-test manifest / docs index `--check` | all in sync |
+
+## 6. Residual / follow-up
+
+- None blocking B2. `GetEffectiveRadiationProtectionPermille` remains a
+  documented, intentionally-unconsumed read model (no vehicle→radiation seam).
+- `TickPlans50To53` remains uncalled (pre-existing; espionage/mental-health daily
+  ticks are outside this package). Garage recovery advancement is owned by
+  `ExpeditionsCaravansDayOwner` instead, so the garage is not affected.

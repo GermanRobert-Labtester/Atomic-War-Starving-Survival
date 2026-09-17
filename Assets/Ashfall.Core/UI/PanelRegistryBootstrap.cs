@@ -209,6 +209,10 @@ namespace Ashfall.Core.UI
             // Kinetic sky-layer counter-battery (Flagship Task 7) — bound to
             // SkyDefenseBatterySystem (Wave 8 B2 player route).
             R("sky_defense_battery",       "Sky Defense Battery",         PanelGroup.Expanded, new[] { "combat", "inventory", "survivors" });
+            // Campaign-wide emergency dynamic quests (Wave 8 B2 player route).
+            R("dynamic_quests",           "Emergency Dynamic Quests",     PanelGroup.Expanded, new[] { "quests" });
+            // Plan 50 overland vehicle customization & maintenance garage (Wave 8 B2).
+            R("vehicle_garage",           "Vehicle Garage",              PanelGroup.Expanded, new[] { "expeditions", "inventory" });
             // Communications array (Plan 199) — bound to CommsArraySystem.
             R("comms_array_transceiver",   "Communications Array",        PanelGroup.Expanded, new[] { "power_grid", "radio", "world" });
             // Ceremonies & festivals (Plan 200) — bound to CeremonySystem.

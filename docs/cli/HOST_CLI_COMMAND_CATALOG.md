@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-15<br>
-**Total Registered Actions:** 176 entries / 251 flag tokens (aliases included)
+**Last Verified:** 2026-09-17<br>
+**Total Registered Actions:** 178 entries / 253 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -184,6 +184,8 @@
 | `--hydraulic-extrusion-selftest` | — | Plan 140 hydraulic extrusion: phases, defect rolls, tool wear, rejected/premium outcomes |
 | `--runflat-tire-selftest` | — | Plan 141 run-flat tires: install gating, hazard reduction, heat/fuel penalty, severe-failure paths |
 | `--plans-139-141-selftest` | — | Plans 139–141 aggregate: InSAR + hydraulic extrusion + run-flat wiring, persistence, and panel reachability |
+| `--sky-defense-selftest` | — | Flagship Task 7 counter-battery: telemetry track intake, magazine logistics, deterministic volley, service, crew claim, save round-trip, and player-panel construction |
+| `--vehicle-garage-selftest` | — | Plan 50 overland vehicle garage: modification install/uninstall, component wear, service, immobilization gate, recovery completion, and expedition-profile decoration |
 | `--shelter-physics-selftest` | `--shelter-actor-physics-selftest` | Shelter physics and actor movement selftests: interior traversal, hazard interaction |
 | `--user-data-dir` | — | <path> Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR) |
 | `--log-dir` | — | <path> Configure log output directory for headless runs (or set ASHFALL_LOG_DIR) |

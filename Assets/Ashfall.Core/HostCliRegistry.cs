@@ -40,6 +40,8 @@ namespace Ashfall.Core
         Plans122to125SelfTest,
         LateTechMobilitySelfTest,
         Plans122to125BalanceSoak,
+        SkyDefenseSelfTest,
+        VehicleGarageSelfTest,
 
         // Expansions & Campaign Modules
         ArbitrationSelfTest,
@@ -326,6 +328,18 @@ namespace Ashfall.Core
                     "--plans-139-141-selftest",
                     new[] { "--insar-selftest", "--hydraulic-extrusion-selftest", "--runflat-tire-selftest" },
                     "Flagship Plans 139–141: InSAR repeat-pass classification, extrusion quality/defect/tool-wear, run-flat hazard/heat/rolling-resistance"),
+                new HostCliActionDescriptor(
+                    HostCliAction.SkyDefenseSelfTest,
+                    "Core & System Gates",
+                    "--sky-defense-selftest",
+                    null,
+                    "Flagship Task 7: kinetic sky-layer counter-battery — telemetry track intake, magazine logistics, deterministic volley, heat/hydraulics service, crew claim, save round-trip, and player-panel construction"),
+                new HostCliActionDescriptor(
+                    HostCliAction.VehicleGarageSelfTest,
+                    "Core & System Gates",
+                    "--vehicle-garage-selftest",
+                    null,
+                    "Flagship Plan 50: overland vehicle customization & maintenance — modification install/uninstall, component wear, service, immobilization gate, recovery mission completion, and expedition-profile decoration"),
                 new HostCliActionDescriptor(
                     HostCliAction.Plans122to125SelfTest,
                     "Core & System Gates",
