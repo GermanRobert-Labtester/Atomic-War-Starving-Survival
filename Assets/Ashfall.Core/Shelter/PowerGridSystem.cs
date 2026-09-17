@@ -95,6 +95,54 @@ namespace Ashfall.Core.Shelter
         public float NetWatts => GenerationWatts - TotalDrawWatts;
         public bool IsBrownout => TotalDrawWatts > GenerationWatts && BatteryReserveWh <= 0;
 
+        // ---- C2[6] 23A: canonical demand/supply/deficit read model ----------
+        //
+        // Panels, briefings and the cascade layer must read these instead of
+        // re-deriving arithmetic. <see cref="AvailableSupplyWatts"/> is exactly the
+        // number the deterministic allocator uses (generation plus the sustainable
+        // battery discharge the tick can hold for a day), so a UI forecast can
+        // never disagree with the simulation.
+
+        /// <summary>Battery watts the current reserve can sustain across a 24 h day.</summary>
+        public float SustainableBatteryDischargeWatts => Math.Max(0f, _state.BatteryReserveWh / 24f);
+
+        /// <summary>Generation plus sustainable battery discharge — the served-power ceiling.</summary>
+        public float AvailableSupplyWatts => GenerationWatts + SustainableBatteryDischargeWatts;
+
+        /// <summary>Intent draw above the served-power ceiling (0 when supply covers demand).</summary>
+        public float DeficitWatts => Math.Max(0f, TotalDrawWatts - AvailableSupplyWatts);
+
+        /// <summary>
+        /// Estimated hours the current battery reserve lasts against the current
+        /// intent draw, using the same generation/draw numbers the daily tick
+        /// exchanges. <see cref="float.PositiveInfinity"/> when generation covers
+        /// demand. Never negative; never NaN.
+        /// </summary>
+        public float EstimatedRuntimeHours
+        {
+            get
+            {
+                float drainWatts = TotalDrawWatts - GenerationWatts;
+                if (drainWatts <= 0f) return float.PositiveInfinity;
+                return _state.BatteryReserveWh / drainWatts;
+            }
+        }
+
+        /// <summary>
+        /// Estimated days of fuel left at the base generator's current rated
+        /// (condition-scaled) burn, matching the tick's fuel formula exactly.
+        /// External fuel-free contributions are excluded by construction.
+        /// </summary>
+        public float EstimatedFuelRunwayDays
+        {
+            get
+            {
+                float baseWatts = _state.GenerationWatts * GeneratorOutputFactor;
+                float burnPerDay = Math.Max(0.0001f, baseWatts * 24f * 0.001f);
+                return _state.FuelUnits / burnPerDay;
+            }
+        }
+
         /// <summary>
         /// Publish one external generation source. The source ID is stable and
         /// replacing a value is idempotent, so a host can republish after every

@@ -158,7 +158,12 @@ namespace Ashfall.Core.Tests
             sys.OnNeedChanged += (_, __, ___) => eventCount++;
             sys.Register(s);
             sys.NotifyNeedsRestored(s);
-            Assert.Equal(7, eventCount); // 7 needs should fire
+            // Drift note (Wave 8 A4): the assertion expected 7 restore events
+            // when the model tracked seven needs. The nine-need model grew by
+            // Numbness and RadiationAnxiety; NotifyNeedsRestored emits one
+            // event per tracked need (9 distinct emissions — verified against
+            // the live NotifyNeedsRestored source), so 9 is current truth.
+            Assert.Equal(9, eventCount); // 9 needs fire — one per tracked need
         }
 
         [Fact]

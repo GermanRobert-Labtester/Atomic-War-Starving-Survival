@@ -1,6 +1,6 @@
 # ASHFALL — Save-Store Contract Matrix & Completeness Authority
 
-**Last Verified:** 2026-09-15<br>
+**Last Verified:** 2026-09-17<br>
 **Total Save Stores:** 194 classes<br>
 **Total Static Persistence Methods:** 200 methods<br>
 **Checksum-Protected Stores:** 194/194 (100.0%)<br>
@@ -77,7 +77,7 @@
 | 49 | `DiseaseSaveStore` | [`src/Host/DiseaseSaveStore.cs`](../../src/Host/DiseaseSaveStore.cs) | `disease` | `disease_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `DiseaseSystemTests.cs` *(+1 more)* |
 | 50 | `DoseLedgerSaveStore` | [`src/Host/DoseLedgerSaveStore.cs`](../../src/Host/DoseLedgerSaveStore.cs) | `dose_ledger` | `dose_ledger_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `VersionReportContractTests.cs` |
 | 51 | `DraisineRerailingSaveStore` | [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs) | `draisine_recovery` | `draisine_recovery_save.json` | `TryLoad()` | ✅ | ✅ | — |
-| 52 | `DutyRosterSaveStore` | [`src/Host/DutyRosterSaveStore.cs`](../../src/Host/DutyRosterSaveStore.cs) | `duty_roster` | `duty_roster_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignDayCoordinatorSourceGateTests.cs` *(+3 more)* |
+| 52 | `DutyRosterSaveStore` | [`src/Host/DutyRosterSaveStore.cs`](../../src/Host/DutyRosterSaveStore.cs) | `duty_roster` | `duty_roster_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignDayCoordinatorSourceGateTests.cs` *(+4 more)* |
 | 53 | `DynamicQuestSaveStore` | [`src/Host/DynamicQuestSaveStore.cs`](../../src/Host/DynamicQuestSaveStore.cs) | `dynamic_quests` | `dynamic_quests_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 54 | `EbPvdCoatingSaveStore` | [`src/Host/EbPvdCoatingSaveStore.cs`](../../src/Host/EbPvdCoatingSaveStore.cs) | `ebpvd_coating` | `ebpvd_coating_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 55 | `EchoSaveStore` | [`src/Host/EchoSaveStore.cs`](../../src/Host/EchoSaveStore.cs) | `echoes` | `echoes_save.json` | `TryLoad()` | ✅ | ✅ | `NarrativeContinuityTests.cs` |
@@ -124,8 +124,8 @@
 | 96 | `LyophilizationSaveStore` | [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs) | `lyophilization` | `lyophilization_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 97 | `MaritimeSaveStore` | [`src/Host/MaritimeSaveStore.cs`](../../src/Host/MaritimeSaveStore.cs) | `maritime` | `maritime_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `FoundryAccordExpansionTests.cs` *(+1 more)* |
 | 98 | `MedicalPipelineSaveStore` | [`src/Host/MedicalPipelineSaveStore.cs`](../../src/Host/MedicalPipelineSaveStore.cs) | `medical_pipeline` | `medical_pipeline_save.json` | `TryLoad()` | ✅ | ✅ | `MedicalPipelineArchitectureGateTests.cs` |
-| 99 | `MedicalSaveStore` | [`src/Host/MedicalSaveStore.cs`](../../src/Host/MedicalSaveStore.cs) | `medical` | `medical_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `CampaignConsequenceLedgerTests.cs` *(+32 more)* |
-| 100 | `MedicalWardSaveStore` | [`src/Host/MedicalWardSaveStore.cs`](../../src/Host/MedicalWardSaveStore.cs) | `medical_ward` | `medical_ward_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `EndToEndPlayerJourneyTests.cs` *(+1 more)* |
+| 99 | `MedicalSaveStore` | [`src/Host/MedicalSaveStore.cs`](../../src/Host/MedicalSaveStore.cs) | `medical` | `medical_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `CampaignConsequenceLedgerTests.cs` *(+34 more)* |
+| 100 | `MedicalWardSaveStore` | [`src/Host/MedicalWardSaveStore.cs`](../../src/Host/MedicalWardSaveStore.cs) | `medical_ward` | `medical_ward_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `DailyBriefingReportBuilderTests.cs` *(+2 more)* |
 | 101 | `MemorialSaveStore` | [`src/Host/MemorialSaveStore.cs`](../../src/Host/MemorialSaveStore.cs) | `memorial` | `memorial_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignDayCoordinatorSourceGateTests.cs` *(+6 more)* |
 | 102 | `MentalHealthCrisisSaveStore` | [`src/Host/MentalHealthCrisisHostSession.cs`](../../src/Host/MentalHealthCrisisHostSession.cs) | `mental_health_crisis` | `mental_health_crisis_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 103 | `MercenarySaveStore` | [`src/Host/MercenarySaveStore.cs`](../../src/Host/MercenarySaveStore.cs) | `mercenary_bounties` | `mercenary_bounties_save.json` | `TryLoad()` | ✅ | ✅ | — |
@@ -153,7 +153,7 @@
 | 125 | `PoliticsSaveStore` | [`src/Host/PoliticsSaveStore.cs`](../../src/Host/PoliticsSaveStore.cs) | `settlement_politics` | `settlement_politics_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 126 | `PowderMetallurgySaveStore` | [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs) | `powder_metallurgy` | `powder_metallurgy_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 127 | `PowerDistributionSaveStore` | [`src/Host/PowerDistributionSaveStore.cs`](../../src/Host/PowerDistributionSaveStore.cs) | `power_subgrids` | `power_subgrids_save.json` | `TryLoad()` | ✅ | ✅ | — |
-| 128 | `PowerGridSaveStore` | [`src/Host/PowerGridSaveStore.cs`](../../src/Host/PowerGridSaveStore.cs) | `power_grid` | `power_grid_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
+| 128 | `PowerGridSaveStore` | [`src/Host/PowerGridSaveStore.cs`](../../src/Host/PowerGridSaveStore.cs) | `power_grid` | `power_grid_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `Plan23BPowerDecisionTests.cs` |
 | 129 | `PrecisionMetrologySaveStore` | [`src/Host/PrecisionMetrologySaveStore.cs`](../../src/Host/PrecisionMetrologySaveStore.cs) | `precision_metrology` | `precision_metrology_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 130 | `PrecisionOpticsSaveStore` | [`src/Host/PrecisionOpticsSaveStore.cs`](../../src/Host/PrecisionOpticsSaveStore.cs) | `precision_optics` | `precision_optics_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 131 | `PrewarArchiveSaveStore` | [`src/Host/PrewarArchiveSaveStore.cs`](../../src/Host/PrewarArchiveSaveStore.cs) | `prewar_archives` | `prewar_archives_save.json` | `TryLoad()` | ✅ | ✅ | — |

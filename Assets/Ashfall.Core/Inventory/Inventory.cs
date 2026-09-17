@@ -982,7 +982,8 @@ namespace Ashfall.Core.Inventory
         /// </summary>
         public bool TryRepairEquippedGear(EquippedItem item)
         {
-            var recipe = item?.Item?.repairRecipe;
+            if (item?.Item == null) return false;
+            var recipe = item.Item.repairRecipe;
             if (recipe == null || recipe.costs == null || recipe.costs.Count == 0)
                 return false;
             if (item.CurrentDurability <= 0f) return false; // failed ⇒ replace-only

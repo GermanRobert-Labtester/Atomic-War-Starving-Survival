@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
+using Ashfall.Core.Crafting;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
@@ -113,6 +114,13 @@ namespace AtomicWar.GodotApp
             SetupCrafting();
             SetupExpeditions();
             SetupMedical();
+            SetupEnrichment();
+
+            // Recorded craft-attribution contract: crafting owns recipe completion,
+            // this host supplies the survivor, profession, and result item. Both
+            // _phase0 and _crafting reset through the lifecycle registry, so this
+            // subscription is rebuilt against the fresh engine on a new campaign.
+            _crafting.Engine.OnCraftCompleted += OnCraftCompletedForSpecialty;
 
             _phase0.Consumers = new Phase0EffectConsumers(
                 applyMoraleDelta: (sv, delta) =>
@@ -166,8 +174,27 @@ namespace AtomicWar.GodotApp
                 fireNarrativeEvent: (narrativeId, sv) =>
                 {
                     int day = _holdfastRuntime?.Day ?? _simDay;
+                    string sourceId = $"{narrativeId}_{sv}_{day}";
+
+                    // events.json is the prose authority for narrative event ids.
+                    // Authored ids dispatch through the same catalog seam the
+                    // wildlife bycatch beat uses (journal + codex unlock + HUD).
+                    SetupEventsHost();
+                    if (_eventsHost != null
+                        && _eventsHost.TryGetEvent(narrativeId, out var authored)
+                        && authored != null
+                        && !string.IsNullOrWhiteSpace(authored.BodyText))
+                    {
+                        SetupEventAdapter();
+                        _hostEventAdapter?.DispatchCatalogEvent(authored.Id, authored.BodyText, day, sourceId);
+                        return;
+                    }
+
+                    // Unauthored id (narrative_final_wish_completed has no events.json
+                    // row): keep the beat visible instead of dropping it silently.
+                    GD.PushWarning($"[Phase0] narrative event '{narrativeId}' is not authored in events.json; writing placeholder journal entry.");
                     _journal.TryAddRawEntry(
-                        $"{narrativeId}_{sv}_{day}",
+                        sourceId,
                         $"{sv}: {narrativeId.Replace('_', ' ')}.",
                         author: null!,
                         day: day);
@@ -241,6 +268,73 @@ namespace AtomicWar.GodotApp
         private void FlushPhase0IfDirty()
         {
             if (_phase0Dirty) SavePhase0();
+        }
+
+        /// <summary>
+        /// Bridge a completed production craft into trade specialty progression.
+        /// A player-assigned crafter is authoritative; an unassigned shelter craft
+        /// falls back to a living survivor whose trade actually covers the item.
+        /// A survivor whose profession resolves to no specialty has no tree to advance.
+        /// </summary>
+        private void OnCraftCompletedForSpecialty(Recipe recipe, string crafterId)
+        {
+            if (_phase0 == null || recipe?.result == null) return;
+
+            string itemId = recipe.result.id;
+            string survivorId = string.IsNullOrWhiteSpace(crafterId)
+                ? AutoAssignSpecialtyCrafter(itemId)
+                : crafterId;
+            if (string.IsNullOrEmpty(survivorId)) return;
+
+            string professionId = ResolveSurvivorProfessionId(survivorId);
+            if (string.IsNullOrEmpty(professionId)) return;
+
+            _phase0.CraftItem(survivorId, professionId, itemId);
+        }
+
+        /// <summary>
+        /// Resolve a survivor's trade specialty id. An authored pre_war_profession_id
+        /// wins; otherwise the roster profession label is matched against the
+        /// authored profession_aliases in trade_specialties.json.
+        /// </summary>
+        private string ResolveSurvivorProfessionId(string survivorId, string? definitionId = null)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return string.Empty;
+            SetupEnrichment();
+            string explicitId = _enrichment?.GetSurvivorFields(survivorId)?.pre_war_profession_id ?? string.Empty;
+            string label = _survivors?.Roster?.FindDefinition(definitionId ?? survivorId)?.profession ?? string.Empty;
+            return TradeSpecialtySystem.ResolveProfessionId(explicitId, label);
+        }
+
+        /// <summary>
+        /// Attribute an unassigned craft to a living survivor whose trade covers the
+        /// item. Deterministic: candidates are ordinal-sorted before the forked
+        /// campaign RNG stream picks one, so a replay credits the same survivor and
+        /// no wall-clock or hash-iteration order is involved. Empty when nobody's
+        /// trade matches, which leaves the craft advancing no specialty.
+        /// </summary>
+        private string AutoAssignSpecialtyCrafter(string itemId)
+        {
+            var roster = _survivors?.Roster;
+            if (roster == null || string.IsNullOrEmpty(itemId)) return string.Empty;
+
+            var candidates = new List<string>();
+            for (int i = 0; i < roster.Roster.Count; i++)
+            {
+                var entry = roster.Roster[i];
+                if (entry == null || !entry.isAlive || string.IsNullOrEmpty(entry.survivorId)) continue;
+                string professionId = ResolveSurvivorProfessionId(entry.survivorId, entry.definitionId);
+                if (string.IsNullOrEmpty(professionId)) continue;
+                if (!TradeSpecialtySystem.ProfessionMatchesItem(professionId, itemId)) continue;
+                candidates.Add(entry.survivorId);
+            }
+
+            if (candidates.Count == 0) return string.Empty;
+            if (candidates.Count == 1) return candidates[0];
+
+            candidates.Sort(StringComparer.Ordinal);
+            var rng = _campaignDay?.Rng?.Fork("trade_specialty_attribution");
+            return rng != null ? candidates[rng.Next(0, candidates.Count)] : candidates[0];
         }
 
         private void OnPhase0ScavengeClicked()

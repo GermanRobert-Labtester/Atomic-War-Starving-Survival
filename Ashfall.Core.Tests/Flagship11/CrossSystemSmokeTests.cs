@@ -44,7 +44,7 @@ public class CrossSystemSmokeTests
         {
             AliveSurvivors = () => Alive,
             GetMorale = id => needs.Get(id)?.Morale ?? 50f,
-            ApplyMoraleDelta = (id, delta) => needs.Modify(id, NeedKind.Morale, delta),
+            ApplyMoraleDelta = (id, delta, _) => needs.Modify(id, NeedKind.Morale, delta),
             AreInSameRoom = (a, b) =>
                 Rooms.TryGetValue(a, out var ra) && Rooms.TryGetValue(b, out var rb) && ra == rb,
             GetDutyRole = _ => string.Empty,

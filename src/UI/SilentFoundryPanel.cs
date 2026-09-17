@@ -156,7 +156,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         forgeRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         var forgeBeginBtn = AshfallUiHelpers.MakeButton("BEGIN", () =>
         {
-            if (_host == null) return;
+            if (_host == null || _forgeFeedback == null || _forgeOutputEdit == null) return;
             _forgeFeedback.Text = _host.BeginForging(_forgeOutputEdit.Text.Trim(), _currentDay);
             RefreshView();
         });
@@ -181,7 +181,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
             var c = cmd;
             var btn = AshfallUiHelpers.MakeButton(c.ToString().ToUpperInvariant(), () =>
             {
-                if (_host == null) return;
+                if (_host == null || _forgeFeedback == null) return;
                 _forgeFeedback.Text = _host.SubmitForgingCommand(c, _currentDay);
                 RefreshView();
             });
@@ -194,7 +194,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         completeRow.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
         var completeBtn = AshfallUiHelpers.MakeButton("COMPLETE PASS", () =>
         {
-            if (_host == null) return;
+            if (_host == null || _forgeFeedback == null) return;
             _forgeFeedback.Text = _host.CompleteForging(_currentDay);
             RefreshView();
         });

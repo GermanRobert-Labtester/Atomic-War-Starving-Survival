@@ -68,6 +68,24 @@ namespace AtomicWar.GodotApp
             {
                 _inventory.Survivors = _survivors;
                 _survivors.Inventory = _inventory;
+                _inventory.DefaultSurvivorResolver = () =>
+                    _holdfastRuntime?.PlayerSurvivorId ??
+                    _survivors.RosterState.FirstOrDefault(s => s != null && s.IsAliveState)?.Id;
+            }
+            _inventory.OnChemicalSubstanceConsumed = (sid, item, kind) =>
+            {
+                _chemicalDependency?.System.OnSubstanceConsumed(sid, item, kind);
+            };
+            _inventory.OnAntiRadAdministered = (sid, day) =>
+            {
+                if (_doseLedger != null && !string.IsNullOrEmpty(sid))
+                {
+                    _doseLedger.Ledger.RecordAntiRadTreatment(sid, day);
+                }
+            };
+            if (_medical?.Pipeline != null)
+            {
+                _inventory.MedicalRecordLog = _medical.Pipeline.Record;
             }
             if (_holdfastRuntime != null)
             {
@@ -161,9 +179,10 @@ namespace AtomicWar.GodotApp
         private void OnInventoryConsumeClicked(string itemId)
         {
             SetupInventory();
-            var result = _inventory.ConsumeResult(itemId);
+            string? target = _inventory.ResolveTargetSurvivorId();
+            var result = _inventory.ConsumeResult(itemId, target);
             string deltas = HoldfastTerminalPanel.FormatDeltas(result.Deltas);
-            _statusLabel.Text = result.IsSuccess ? $"Consumed {itemId}. {deltas}".Trim() : result.MessageKey;
+            _statusLabel.Text = result.IsSuccess ? $"{target ?? "Survivor"} consumed {itemId}. {deltas}".Trim() : result.MessageKey;
             _inventoryPanel?.RefreshView();
             _inventoryDetailPanel?.RefreshView();
             if (result.IsSuccess)

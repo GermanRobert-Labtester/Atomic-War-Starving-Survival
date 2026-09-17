@@ -35,6 +35,12 @@ namespace Ashfall.Core.Survivors
         [JsonPropertyName("display_name")]
         public string DisplayName { get; set; } = string.Empty;
 
+        /// <summary>Authored survivor profession labels that resolve to this
+        /// specialty, e.g. "Trauma Surgeon" → bone_setter. Lets the 129-survivor
+        /// roster reach a specialty tree without per-survivor id authoring.</summary>
+        [JsonPropertyName("profession_aliases")]
+        public List<string> ProfessionAliases { get; set; } = new List<string>();
+
         [JsonPropertyName("milestones")]
         public List<TradeSpecialtyMilestoneDto> Milestones { get; set; } = new List<TradeSpecialtyMilestoneDto>();
 
@@ -102,14 +108,38 @@ namespace Ashfall.Core.Survivors
                 {
                     if (string.IsNullOrEmpty(item.ProfessionId)) continue;
                     var patterns = new List<string>();
+                    var info = new TradeSpecialtyProfessionInfo
+                    {
+                        ProfessionId = item.ProfessionId,
+                        DisplayName = item.DisplayName ?? string.Empty,
+                        MasteryNarrativeId = item.MasteryNarrative ?? string.Empty,
+                        MasteryBonusText = item.MasteryBonusText ?? string.Empty
+                    };
+                    if (item.ProfessionAliases != null)
+                    {
+                        foreach (var alias in item.ProfessionAliases)
+                        {
+                            if (!string.IsNullOrWhiteSpace(alias))
+                                info.Aliases.Add(alias.Trim());
+                        }
+                    }
                     if (item.Milestones != null)
                     {
                         foreach (var m in item.Milestones)
                         {
+                            if (m == null) continue;
                             if (m.ItemPatterns != null)
                                 patterns.AddRange(m.ItemPatterns);
+                            info.Milestones[m.Tier] = new TradeSpecialtyMilestoneInfo
+                            {
+                                Tier = m.Tier,
+                                Title = m.Title ?? string.Empty,
+                                NarrativeId = m.Narrative ?? string.Empty,
+                                SkillBonus = m.SkillBonus
+                            };
                         }
                     }
+                    TradeSpecialtySystem.RegisterProfessionInfo(info);
                     TradeSpecialtySystem.RegisterProfessionPatterns(item.ProfessionId, patterns);
                 }
                 return items.Count;

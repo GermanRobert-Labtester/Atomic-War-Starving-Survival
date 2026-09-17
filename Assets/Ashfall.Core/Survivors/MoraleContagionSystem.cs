@@ -139,8 +139,12 @@ namespace Ashfall.Core.Survivors
             () => Array.Empty<string>();
         /// <summary>Canonical morale read (higher = worse, 0..100).</summary>
         public Func<string, float> GetMorale { get; set; } = _ => 50f;
-        /// <summary>Canonical morale mutation (the ONLY morale writer reachable from contagion).</summary>
-        public Action<string, float> ApplyMoraleDelta { get; set; } = (_, _) => { };
+        /// <summary>Canonical morale mutation (the ONLY morale writer reachable from contagion).
+        /// Plan 24B (A1): the port carries the cause's source id
+        /// ("contagion.isolation" / "contagion.pressure") so the host sink can
+        /// route it through the shared attributed needs seam; the (id, delta)
+        /// stream is unchanged.</summary>
+        public Action<string, float, string> ApplyMoraleDelta { get; set; } = (_, _, _) => { };
         /// <summary>True when both survivors are actively assigned to the same room.</summary>
         public Func<string, string, bool> AreInSameRoom { get; set; } = (_, _) => false;
         /// <summary>Survivor's duty-role subgroup id, or empty when none.</summary>
@@ -206,6 +210,12 @@ namespace Ashfall.Core.Survivors
         public const float IsolationCostMoralePerDay = 1f; // isolation has its own cost
         public const float IsolationInfluenceFactor = 0f;  // isolation cuts influence entirely
         public const int MaxActiveSources = 12;
+
+        // Plan 24B (A1) needs-modifier source ids: the morale port names its
+        // cause so the shared attributed seam can distinguish isolation from
+        // the pressure channel (§24B.15 source-distinction rule).
+        public const string IsolationModifierSource = "contagion.isolation";
+        public const string PressureModifierSource = "contagion.pressure";
 
         // Proximity factors (Plan 154.5 — social influence score, not Euclidean radius).
         public const float SameRoomFactor = 1f;
@@ -335,11 +345,15 @@ namespace Ashfall.Core.Survivors
                 survivor.panicPressure = ClampCap(survivor.panicPressure + pair.Value[(int)MoraleEmotion.Panic]);
             }
 
-            // 3. Isolation carries its own social cost (Plan 154.9).
+            // 3. Isolation carries its own social cost (Plan 154.9). Plan
+            // 24B (A1): the cause is named so the shared needs seam can
+            // attribute it distinctly from the pressure channel.
             foreach (var survivor in _state.survivors)
             {
                 if (survivor.isolationEndsDay >= day)
-                    _ports.ApplyMoraleDelta(survivor.survivorId, +IsolationCostMoralePerDay);
+                    _ports.ApplyMoraleDelta(
+                        survivor.survivorId, +IsolationCostMoralePerDay,
+                        IsolationModifierSource);
             }
 
             // 4. Channel pressure → canonical morale (despair up, panic up, hope down).
@@ -349,7 +363,8 @@ namespace Ashfall.Core.Survivors
                             + survivor.panicPressure * PanicMoralePerPressure
                             - survivor.hopePressure * HopeMoralePerPressure;
                 if (MathF.Abs(delta) > 0.01f)
-                    _ports.ApplyMoraleDelta(survivor.survivorId, delta);
+                    _ports.ApplyMoraleDelta(
+                        survivor.survivorId, delta, PressureModifierSource);
             }
 
             // 5. Breakdown crossings + schism ledger (post-commit state only).

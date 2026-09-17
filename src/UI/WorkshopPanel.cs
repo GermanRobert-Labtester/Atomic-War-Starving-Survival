@@ -222,6 +222,48 @@ namespace AtomicWar.GodotApp.UI
                 var overhaulBtn = new Button { Text = "OVERHAUL TOOLING" };
                 overhaulBtn.Pressed += () => { _shelterWorkshop.TryOverhaulTooling(_currentRoomId); RefreshView(); };
                 _machineConditionContainer.AddChild(overhaulBtn);
+
+                // C2 / Plan 22 Phase 4 — protective-gear repair through the
+                // authored repairRecipe bills: atomic TryConsumeBill → the
+                // canonical EquippedItem durability the simulation reads.
+                // Text state + percentages (never color-only); standard
+                // keyboard-focusable buttons.
+                if (_inventory?.Equipped != null)
+                {
+                    foreach (var equipped in _inventory.Equipped)
+                    {
+                        var gearRecipe = equipped?.Item?.repairRecipe;
+                        if (equipped?.Item == null || gearRecipe == null || gearRecipe.costs.Count == 0) continue;
+
+                    float cap = equipped.Item.durability
+                        * Math.Clamp(gearRecipe.MaxRepairConditionFraction, 0f, 1f);
+                    bool failed = equipped.CurrentDurability <= 0f;
+                    bool repairableNow = !failed && equipped.CurrentDurability < cap;
+
+                    string stateText = failed
+                        ? "FAILED — REPLACE (repair refuses dead gear)"
+                        : repairableNow ? "repairable" : "serviceable";
+
+                    var gearRow = new HBoxContainer();
+                    var gearLabel = new Label
+                    {
+                        Text = $"{equipped.Item.displayName} · condition {equipped.CurrentDurability:0}/{equipped.Item.durability:0} · {stateText}"
+                    };
+                    gearLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                    gearRow.AddChild(gearLabel);
+
+                    var repairBtn = new Button { Text = "REPAIR" };
+                    repairBtn.Disabled = !repairableNow;
+                    var equippedRef = equipped;
+                    repairBtn.Pressed += () =>
+                    {
+                        _inventory.TryRepairEquippedGear(equippedRef); // refusal is silent-free: state text already explains
+                        RefreshView();
+                    };
+                    gearRow.AddChild(repairBtn);
+                    _machineConditionContainer.AddChild(gearRow);
+                }
+            }
             }
 
             var recipes = _shelterWorkshop.GetAvailableRecipes(_currentRoomId);

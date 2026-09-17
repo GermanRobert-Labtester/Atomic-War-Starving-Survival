@@ -494,19 +494,12 @@ namespace AtomicWar.GodotApp
 
         // ---- Epilogue Matrix (Endgame) ----
 
+        [Obsolete("Synthetic boolean demo API is deprecated (INV-19.1). Kept for historical selftests only.", false)]
         public string EvaluateEpilogueDemo(int days, int living, int deaths,
             bool treaty, bool tempest, bool burned, bool children)
         {
-            var ctx = new EpilogueEvaluationContext
-            {
-                totalDaysSurvived = days,
-                livingDwellerCount = living,
-                totalDeathsRecorded = deaths,
-                grandTreatySigned = treaty,
-                tempestDecommissioned = tempest,
-                debtLedgersBurned = burned,
-                childrenSurvived = children
-            };
+            var inputs = new EpilogueContextInputs(days, living, deaths, treaty, tempest, burned, children, false);
+            var ctx = EpilogueContextFactory.Build(inputs);
             var fate = Epilogue.EvaluateRegionalFate(ctx);
             var demo = Epilogue.EvaluateDemographics(ctx);
             var moral = Epilogue.EvaluateMoralStanding(ctx);

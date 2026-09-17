@@ -2236,6 +2236,15 @@ namespace AtomicWar.GodotApp
                 session.SeedDemoRoster();
                 session.RegisterDefaultRules();
 
+                // The specialty catalog is the authority for milestone/mastery
+                // narrative ids; without it the assertions below would see zero fires.
+                bool foundPhase0Data =
+                    CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string phase0DataDir)
+                    || CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out phase0DataDir);
+                Check(foundPhase0Data, "phase-0 selftest located Assets/StreamingAssets/Data");
+                if (foundPhase0Data)
+                    session.LoadTradeSpecialties(phase0DataDir);
+
                 // ── 1. Phantom memory: motivation → work efficiency ─────
                 session.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
                 float workMult = session.Phantom.GetWorkEfficiencyMultiplier("survivor_gunner_mikhail");
@@ -2284,9 +2293,8 @@ namespace AtomicWar.GodotApp
                     "flashback is grounded by companion in same room (penalty reduced to 0.10)");
 
                 // ── 3. Trade specialty: milestones → mastery ───────────
-                int narrativeFired = 0;
-                string narrativeId = null!;
-                session.TradeSpecialty.FireNarrativeEvent = (id, sv) => { narrativeFired++; narrativeId = id; };
+                var firedNarratives = new List<string>();
+                session.TradeSpecialty.FireNarrativeEvent = (id, sv) => firedNarratives.Add(id);
                 session.CraftItem("elena_vasquez", "machinist", "wrench_standard");
                 session.CraftItem("elena_vasquez", "machinist", "gear_standard");
                 Check(session.TradeSpecialty.GetMasteryTier("elena_vasquez") == 2,
@@ -2294,8 +2302,14 @@ namespace AtomicWar.GodotApp
                 session.CraftItem("elena_vasquez", "machinist", "lever_standard");
                 Check(session.TradeSpecialty.HasMasteredTrade("elena_vasquez"),
                     "trade specialty mastered at 3 crafts");
-                Check(narrativeFired == 1 && narrativeId == "narrative_trade_mastery_machinist",
-                    "mastery fired narrative event");
+                Check(firedNarratives.SequenceEqual(new[]
+                    {
+                        "narrative_machinist_milestone_1",
+                        "narrative_machinist_milestone_2",
+                        "narrative_machinist_mastery",
+                        "narrative_trade_mastery_machinist"
+                    }),
+                    "each craft fired its authored milestone narrative, mastery fired both tier-3 and mastery ids");
 
                 // ── 4. Final wish: permanent shelter morale buff ────────
                 float buffBefore = session.PermanentShelterMoraleBuff;
@@ -3515,7 +3529,7 @@ namespace AtomicWar.GodotApp
 
                 // 5.9 Tick past duration → OnCraftCompleted fires once per craft
                 int craftCompletions = 0;
-                craftSession.Engine.OnCraftCompleted += _ => craftCompletions++;
+                craftSession.Engine.OnCraftCompleted += (_, _) => craftCompletions++;
                 craftSession.CompleteAll(2f); // recipe_bandage takes 1h each
                 Check(craftSession.Engine.ActiveCraftCount == 0, "both crafts completed after full tick");
                 Check(craftCompletions == 2, $"OnCraftCompleted fired exactly twice (got {craftCompletions})");
@@ -3547,7 +3561,7 @@ namespace AtomicWar.GodotApp
 
                 // 5.13 Tick restored craft to completion
                 int restoredCraftCompletions = 0;
-                craftSession2.Engine.OnCraftCompleted += _ => restoredCraftCompletions++;
+                craftSession2.Engine.OnCraftCompleted += (_, _) => restoredCraftCompletions++;
                 craftSession2.CompleteAll(5f);
                 Check(restoredCraftCompletions == 1,
                     $"restored craft completes exactly once (got {restoredCraftCompletions})");

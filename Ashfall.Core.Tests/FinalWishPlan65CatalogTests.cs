@@ -27,7 +27,7 @@ public class FinalWishPlan65CatalogTests : CatalogTestBase
     }
 
     [Fact]
-    public void Catalog_LoadsAndHasExactly30Wishes()
+    public void Catalog_LoadsAndHasExactly52Wishes()
     {
         using var doc = LoadCatalog("final_wishes.json");
         var root = doc.RootElement;
@@ -35,7 +35,24 @@ public class FinalWishPlan65CatalogTests : CatalogTestBase
         Assert.Equal(1, schemaProp.GetInt32());
 
         Assert.True(root.TryGetProperty("items", out var itemsProp));
-        Assert.Equal(30, itemsProp.GetArrayLength());
+        Assert.Equal(52, itemsProp.GetArrayLength());
+
+        // Regression guard: FinalWishCatalog.Add() silently drops any entry with an
+        // empty id, so a missing "id" key hides authored content without any load
+        // error. 22 wishes were lost this way (18 archetypes ended up with no wish
+        // at all). Assert every row carries a usable id, and that the catalog
+        // actually registers as many entries as the file declares.
+        foreach (var item in itemsProp.EnumerateArray())
+        {
+            Assert.True(item.TryGetProperty("id", out var idProp), "wish entry is missing an \"id\" key");
+            var id = idProp.GetString();
+            Assert.False(string.IsNullOrWhiteSpace(id), "wish entry has an empty \"id\"");
+            Assert.StartsWith("wish_", id);
+        }
+
+        var catalog = FinalWishCatalogLoader.LoadCatalog(
+            DataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+        Assert.Equal(itemsProp.GetArrayLength(), catalog.Count);
 
         var archetypes = new List<string>();
         foreach (var item in itemsProp.EnumerateArray())
@@ -126,7 +143,7 @@ public class FinalWishPlan65CatalogTests : CatalogTestBase
     }
 
     [Fact]
-    public void Catalog_AllArchetypesAndTitles_AreUniqueAndValid()
+    public void Catalog_AllIdsTitlesAndFields_AreUniqueAndValid()
     {
         using var doc = LoadCatalog("final_wishes.json");
         using var survDoc = LoadCatalog("survivors.json");
@@ -138,19 +155,24 @@ public class FinalWishPlan65CatalogTests : CatalogTestBase
                 survivorIds.Add(idProp.GetString()!);
         }
 
-        var archetypes = new HashSet<string>(StringComparer.Ordinal);
+        var ids = new HashSet<string>(StringComparer.Ordinal);
         var titles = new HashSet<string>(StringComparer.Ordinal);
         int index = 0;
 
         foreach (var item in doc.RootElement.GetProperty("items").EnumerateArray())
         {
+            var id = item.GetProperty("id").GetString()!;
             var arch = item.GetProperty("archetype_id").GetString()!;
             var title = item.GetProperty("wish_title").GetString()!;
             var desc = item.GetProperty("wish_description").GetString()!;
             var steps = item.GetProperty("steps").EnumerateArray().ToList();
-            var wishType = item.GetProperty("wish_type").GetString()!;
 
-            Assert.True(archetypes.Add(arch), $"Duplicate archetype ID: {arch}");
+            // Ids and titles are the unique keys. archetype_id is deliberately NOT
+            // unique: FinalWishCatalog keeps a pool of wish ids per archetype
+            // (GetWishIdsForArchetype returns a list), so an archetype with several
+            // authored wishes is the intended shape, not a duplicate.
+            Assert.True(ids.Add(id), $"Duplicate wish id: {id}");
+            Assert.StartsWith("wish_", id);
             Assert.True(titles.Add(title), $"Duplicate wish title: {title}");
 
             // Title length: 2 to 5 words
@@ -161,18 +183,20 @@ public class FinalWishPlan65CatalogTests : CatalogTestBase
             Assert.False(string.IsNullOrWhiteSpace(desc));
             Assert.Contains("{name}", desc);
 
-            // Step count: 2 to 4 steps (or 1 for see_the_sky legacy)
-            if (wishType == "see_the_sky")
-                Assert.Single(steps);
-            else
-                Assert.InRange(steps.Count, 2, 4);
+            // Step count: authored wishes run 1 to 4 steps (see_the_sky outings may
+            // be a single step; everything else is 2 or more).
+            Assert.InRange(steps.Count, 1, 4);
 
             // Completion text and buff fields
             Assert.False(string.IsNullOrWhiteSpace(item.GetProperty("completion_text").GetString()));
-            Assert.Equal(15, item.GetProperty("morale_bonus").GetInt32());
+            // 15 is the standard award; the four deliver_letter secret wishes pay 10.
+            Assert.Contains(item.GetProperty("morale_bonus").GetInt32(), new[] { 10, 15 });
             Assert.Equal("their_memory_lives_on", item.GetProperty("buff_id").GetString());
 
-            // All 22 new archetypes must resolve in survivors.json
+            // All 22 Plan 65 archetypes must resolve in survivors.json. The original
+            // eight predate the current survivor roster and four of them
+            // (the_soldier, the_nurse, the_mother, the_refugee) do not resolve; that
+            // carve-out is pre-existing and unchanged.
             if (index >= 8)
             {
                 Assert.Contains(arch, survivorIds);

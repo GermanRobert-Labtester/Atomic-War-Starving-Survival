@@ -330,6 +330,20 @@ namespace AtomicWar.GodotApp
             _feedback.Text = "No food in inventory. The shelves are bare.";
         }
 
+        private void FeedCrew()
+        {
+            if (_session == null) return;
+            var res = _session.FeedAllCrewResult();
+            if (res.IsSuccess)
+            {
+                string deltas = FormatDeltas(res.Deltas);
+                _feedback.Text = $"{res.MessageKey} {deltas}Day {_session.Day}.";
+                RefreshDispatchLog();
+                return;
+            }
+            _feedback.Text = res.MessageKey;
+        }
+
         private void ConsumeWater()
         {
             if (_session == null) return;
@@ -508,6 +522,10 @@ namespace AtomicWar.GodotApp
             var btnEat = AshfallUiHelpers.MakeButton("EAT", () => ConsumeFood());
             btnEat.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
             header.AddChild(btnEat);
+
+            var btnFeedCrew = AshfallUiHelpers.MakeButton("FEED CREW", () => FeedCrew());
+            btnFeedCrew.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
+            header.AddChild(btnFeedCrew);
 
             var btnDrink = AshfallUiHelpers.MakeButton("DRINK", () => ConsumeWater());
             btnDrink.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));

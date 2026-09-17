@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp.UI
 
             var kind = _weather.Current;
             bool hazard = kind == WeatherKind.FalloutStorm || kind == WeatherKind.BlackRain || kind == WeatherKind.Blizzard;
-            float tempPenalty = WeatherSystem.TemperaturePenaltyForWeather(kind);
+            float tempPenalty = _weather.TemperaturePenaltyC(kind);
             float outdoorRad = _weather.OutdoorRadModifier;
 
             AddRow(_currentWeather, $"Current Weather: {kind}", Ashfall.Core.UI.Theme.Pale);

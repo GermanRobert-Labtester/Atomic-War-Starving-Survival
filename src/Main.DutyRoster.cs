@@ -41,6 +41,8 @@ namespace AtomicWar.GodotApp
             _dutyRoster = DutyRosterHostSession.Create(_dataDir, log: null, journal: _journal);
             _dutyRoster.StateChanged += () => _dutyRosterDirty = true;
             _expansions?.BindDutyRoster(_dutyRoster.Roster);
+            SetupFitnessForDuty();
+            _dutyRoster.Roster.EvaluateRoleFitness = EvaluateDutyRoleFitness;
 
             // Cross-host roundtrip: a save written here (or by the Unity host) restores
             // the chart, marks, and encounter counters instead of starting blank.
@@ -52,7 +54,45 @@ namespace AtomicWar.GodotApp
                 GD.Print($"[Ashfall Godot] Duty Roster state restored (day {_dutyRoster.Clock.Day}).");
             }
 
+            // Restore order can load ward admissions before the roster. Reapply
+            // the same labor-vacancy rule after both authorities exist.
+            if (_medicalWard != null)
+            {
+                for (int i = 0; i < _dutyRoster.Roster.Rows.Count; i++)
+                {
+                    var row = _dutyRoster.Roster.Rows[i];
+                    if (row != null && _medicalWard.GetActiveAdmission(row.survivorId) != null)
+                    {
+                        _dutyRoster.Roster.RemoveAssignmentsFor(row.survivorId);
+                        _dutyRosterDirty = true;
+                    }
+                }
+            }
+
+            // Caregiving is also a labor commitment. Restore order can load
+            // it before the roster, so replay the same vacancy rule here.
+            if (_caregiving != null)
+            {
+                var caregivingSave = _caregiving.System.CaptureState();
+                for (int i = 0; i < caregivingSave.Assignments.Count; i++)
+                {
+                    var assignment = caregivingSave.Assignments[i];
+                    if (assignment == null) continue;
+                    string role = _dutyRoster.Roster.GetRoleOf(assignment.CaregiverId);
+                    if (!string.IsNullOrEmpty(role))
+                    {
+                        _dutyRoster.Roster.Assign(role, string.Empty);
+                        _dutyRosterDirty = true;
+                    }
+                }
+            }
+
             _dutyRoster.Unlock(_simDay);
+            _dutyRoster.Roster.IsCandidateEligible = id =>
+            {
+                SetupDoseLedger();
+                return _doseLedger?.Cohort?.IsWorkEligible(id) ?? true;
+            };
             RefreshRosterStatus();
             GD.Print($"[Ashfall Godot] Duty Roster ready. {_dutyRoster.CatalogLine()}");
         }
@@ -129,12 +169,15 @@ namespace AtomicWar.GodotApp
             {
                 var s = _survivors.RosterState[i];
                 if (s == null || string.IsNullOrEmpty(s.Id) || !s.IsAliveState) continue;
+                bool sleptHere = _shelterSchedule != null
+                    ? _shelterSchedule.System.IsSleepEligible(s.Id)
+                    : true;
                 occupants.Add(new Ashfall.Core.DutyRosterOccupant
                 {
                     survivorId = s.Id,
                     displayName = FormatSurvivorName(s.Id),
                     occupationObserved = string.Empty,
-                    sleptHere = true
+                    sleptHere = sleptHere
                 });
             }
             occupants.Sort((a, b) => string.CompareOrdinal(a.survivorId, b.survivorId));

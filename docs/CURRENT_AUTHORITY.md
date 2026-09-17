@@ -70,3 +70,33 @@ The following documents describe superseded Unity architectures, completed port 
 | [`docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md`](gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md) | Pre-migration gap audit from Unity era; all critical and high items are resolved. |
 | [`docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`](systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md) | Historical port plan for `SkillProgressionSystem` (closed; fully ported in Core Phase 18 and tested). |
 | [`docs/systems/RESEARCH_CORE_PORT_PLAN.md`](systems/RESEARCH_CORE_PORT_PLAN.md) | Historical port plan for `ResearchSystem` (closed; fully ported in Core Phase 28 and tested). |
+
+---
+
+## 6. Continuity Wave 1 Metrics & Plan Integration Authority (Plans 15–19)
+
+**Wave Scope:** Closure of Continuity Wave 1 across Plans 15A/15B, 16A/16B/16C, 17A/17B/17C, 18A/18B/18C, and 19A/19B/19C (`docs/plans/C1_planintegration[3].md`).
+
+| Metric | Prior Baseline | Current Measured Truth | Gate / Authority |
+|---|---:|---:|---|
+| **Hardcoded Epilogue Inputs** | 2 routes (game-over + UI) | **0** | `EpilogueContextFactory.cs` (INV-19.1) |
+| **Unreachable Matrix Branches** | >0 (literals prevented reach) | **0** (32/32 reachable) | `Plan19EndingContinuityTests.cs` (INV-19.4) |
+| **Dangling `.cs.uid` Sidecars** | 14 dangling | **0** | `scripts/ci/uid-sidecar-gate.sh` (INV-19.6) |
+| **Compiler Warnings (net8/net9)** | Baseline warnings | **0** across all 3 targets | `scripts/ci/warning-baseline-gate.sh` |
+| **Fast CI Gate Suite** | Baseline | **47/47 PASS** cleanly | `scripts/ci/verify-fast.sh` |
+| **Cohort Continuity Links** | Underconnected | **3** (rations, schooling/work, ending) | `Plan19CohortContinuityTests.cs` (INV-19.5) |
+| **Session Continuity Journey** | Absent | **PASS** | `Plan19SessionContinuityJourneyTests.cs` |
+| **Content Utilization Runtime Events** | Baseline | **1563 events** | `godot --headless -- --content-utilization-selftest` |
+| **Exempt Catalogs** | Baseline | **4 (0 stale, 0 invalid)** | `artifacts/content-utilization.json` |
+| **Scene-Backed Live Panels** | 22 documented | **22 verified** | `scripts/ci/generate-ui-panel-catalog.py` |
+
+### Plans 15–19 Authority Documents
+
+| Plan | Primary Contract Document | Authority Artefacts & Gates |
+|---|---|---|
+| **Plan 15 (15A/15B/15C)** | [`docs/plans/C1_planintegration.md`](plans/C1_planintegration.md) | `Assets/Ashfall.Core/Economy/` · `TradeEmbargoSystem.cs` · `RegionalPriceAtlas.cs` |
+| **Plan 16 (16A/16B/16C)** | [`docs/plans/C1_planintegration.md`](plans/C1_planintegration.md) | `TravelingCaravanSystem.cs` · `WaystationNetworkSystem.cs` |
+| **Plan 17 (17A/17B/17C)** | [`docs/plans/C1_planintegration[2].md`](plans/C1_planintegration[2].md) | Panel Bind/Unbind/Rebind Lifecycle · `PlayerPanelsUiTest` |
+| **Plan 18 (18A/18B/18C)** | [`docs/plans/C1_planintegration[2].md`](plans/C1_planintegration[2].md) | Honest Navigation · Purity Gates · Route & Session Persistence |
+| **Plan 19 (19A/19B/19C)** | [`docs/plans/C1_planintegration[3].md`](plans/C1_planintegration[3].md) | Ending Continuity · Generational State · Repository Truth · `EpilogueContextFactory.cs` |
+| **Plan 22 (22A/22B/22C)** | [`docs/plans/C1_planintegration[4].md`](plans/C1_planintegration[4].md) | One Food Authority · Eating, Meals, Medicine & Pantry Truth · `KitchenNutritionSystem.cs` |

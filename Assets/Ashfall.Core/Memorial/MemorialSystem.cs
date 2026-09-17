@@ -135,6 +135,11 @@ namespace Ashfall.Core.Memorial
         /// <summary>Raised when a survivor is memorialized.</summary>
         public event Action<MemorialEntry>? OnMemorialized;
 
+        /// <summary>Plan 24C (A3) — raised exactly once per deceased when the
+        /// shelter's mourning vigil is held. The host applies the morale
+        /// recovery and journal line through the attributed seam.</summary>
+        public event Action<MemorialEntry>? OnMourned;
+
         /// <summary>
         /// Plan 09 / 9C Core. Set by the host so <see cref="Memorialize"/>
         /// can route grief to SurvivorRelations and downstream systems.
@@ -149,6 +154,44 @@ namespace Ashfall.Core.Memorial
         }
 
         public IReadOnlyList<MemorialEntry> Entries => _state.Entries;
+
+        /// <summary>
+        /// Plan 24C (A3) — the mourning vigil: a bounded, once-per-death
+        /// player action. The memorial owner holds the exactly-once state
+        /// (persisted `MournedDay` on the entry); the host applies the morale
+        /// recovery and journal line on <see cref="OnMourned"/>. Rejected
+        /// states are explicit results — never silent no-ops.
+        /// </summary>
+        public ActionResult Mourn(string deceasedId, int day)
+        {
+            if (string.IsNullOrEmpty(deceasedId))
+                return ActionResult.Blocked("missing_memorial_id", "memorial.mourn_missing_id");
+            for (int i = 0; i < _state.Entries.Count; i++)
+            {
+                var entry = _state.Entries[i];
+                if (entry == null || !string.Equals(entry.SurvivorId, deceasedId, StringComparison.Ordinal)) continue;
+                if (entry.MournedDay >= 0)
+                    return ActionResult.Blocked("already_mourned", "memorial.mourn_already_mourned");
+                entry.MournedDay = day;
+                OnMourned?.Invoke(entry);
+                return ActionResult.Success("memorial.mourned");
+            }
+            return ActionResult.Blocked("unknown_memorial", "memorial.mourn_unknown");
+        }
+
+        /// <summary>The most recent deceased not yet mourned, or null when every
+        /// entry has had its vigil (the mourning surface's read model).</summary>
+        public MemorialEntry? LatestUnmourned()
+        {
+            MemorialEntry? latest = null;
+            for (int i = 0; i < _state.Entries.Count; i++)
+            {
+                var entry = _state.Entries[i];
+                if (entry == null || entry.MournedDay >= 0) continue;
+                if (latest == null || entry.Day > latest.Day) latest = entry;
+            }
+            return latest;
+        }
 
         /// <summary>
         /// Idempotent memorialization. If <paramref name="survivorId"/>
@@ -223,6 +266,10 @@ namespace Ashfall.Core.Memorial
         // lack these will load with default Peaceful / Burial.
         public DeathQuality DeathQuality = DeathQuality.Peaceful;
         public MemorialOutcome Outcome = MemorialOutcome.Burial;
+        /// <summary>Plan 24C (A3) — campaign day the shelter held this loss's
+        /// mourning vigil (−1 = never). Additive save field; legacy captures
+        /// load as never-mourned. The exactly-once contract rides this field.</summary>
+        public int MournedDay = -1;
     }
 
     [Serializable]

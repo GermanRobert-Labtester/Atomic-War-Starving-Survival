@@ -23,6 +23,11 @@ namespace Ashfall.Core
         public float trust;         // 0 to 100
         public float resentment;    // 0 to 100
         public float grief;         // 0 to 100
+        /// <summary>Plan 24C (A3) — campaign day the relationship's grief was
+        /// last applied by a memorialized death (−1 = never). Persisted canonical
+        /// fact: the derived grief-to-needs projection decays from this onset;
+        /// legacy saves default to −1 (no needs-grief effect).</summary>
+        public int grief_since_day = -1;
         public string bondType = string.Empty; // "friendship", "rivalry", "mentor", "caregiver", etc.
         public List<string> recentCauses = new List<string>();
         /// <summary>
@@ -120,6 +125,27 @@ namespace Ashfall.Core
                 }
             }
             OnRelationsChanged?.Invoke();
+        }
+
+        /// <summary>Plan 24C (A3) — non-creating relationship lookup for the
+        /// grief bridge: returns the pair's existing entry, or false. Unlike
+        /// <see cref="GetOrCreateRelationship"/> it never mutates state.</summary>
+        public bool TryGetRelationship(string a, string b, out RelationshipEntry? entry)
+        {
+            entry = null;
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b)) return false;
+            for (int i = 0; i < _state.relationships.Count; i++)
+            {
+                var rel = _state.relationships[i];
+                if (rel == null) continue;
+                if ((rel.dwellerA == a && rel.dwellerB == b)
+                    || (rel.dwellerA == b && rel.dwellerB == a))
+                {
+                    entry = rel;
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>

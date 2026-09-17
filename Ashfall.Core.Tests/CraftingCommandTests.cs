@@ -219,5 +219,84 @@ namespace Ashfall.Core.Tests
             Assert.False(preview.IsAvailable);
             Assert.Equal("wrong_phase", preview.FailureCode);
         }
+
+        // ── Crafter attribution on completion ──────────────────────────
+        // ActiveCraft.CrafterId is authored, persisted, and consumed by trade
+        // specialty progression; CompleteCraft used to drop it when raising
+        // OnCraftCompleted, so attribution never reached the host.
+
+        private static Recipe MakeCrafterRecipe(Inventory.Inventory inventory)
+        {
+            var recipe = new Recipe
+            {
+                id = "recipe_crafter_test",
+                result = new ItemDefinition { id = "item_crafter_result", type = ItemType.Material, stackMax = 99, weight = 1f },
+                resultAmount = 1,
+                craftingTimeHours = 1f,
+                ingredients = new List<Ingredient>
+                {
+                    new Ingredient { item = new ItemDefinition { id = "scrap_mechanical", type = ItemType.Material, stackMax = 99, weight = 1f }, amount = 1 }
+                }
+            };
+            inventory.Add(recipe.ingredients[0].item, 1);
+            return recipe;
+        }
+
+        [Fact]
+        public void OnCraftCompleted_CarriesAssignedCrafterId()
+        {
+            var inventory = new Inventory.Inventory();
+            var system = new CraftingSystem(inventory);
+            var recipe = MakeCrafterRecipe(inventory);
+
+            Recipe reportedRecipe = null!;
+            string reportedCrafter = "unset";
+            system.OnCraftCompleted += (r, crafter) => { reportedRecipe = r; reportedCrafter = crafter; };
+
+            Assert.True(system.StartCraft(recipe, "survivor_machinist"));
+            system.Tick(2f);
+
+            Assert.Same(recipe, reportedRecipe);
+            Assert.Equal("survivor_machinist", reportedCrafter);
+        }
+
+        [Fact]
+        public void OnCraftCompleted_UnassignedCraft_ReportsEmptyCrafter()
+        {
+            var inventory = new Inventory.Inventory();
+            var system = new CraftingSystem(inventory);
+            var recipe = MakeCrafterRecipe(inventory);
+
+            string reportedCrafter = "unset";
+            system.OnCraftCompleted += (_, crafter) => reportedCrafter = crafter;
+
+            Assert.True(system.StartCraft(recipe));
+            system.Tick(2f);
+
+            // Empty, not null: unassigned shelter craft bypasses specialty progression.
+            Assert.Equal(string.Empty, reportedCrafter);
+        }
+
+        [Fact]
+        public void OnCraftCompleted_CrafterSurvivesSaveRestore()
+        {
+            var inventory = new Inventory.Inventory();
+            var system = new CraftingSystem(inventory);
+            var recipe = MakeCrafterRecipe(inventory);
+            Assert.True(system.StartCraft(recipe, "survivor_machinist"));
+
+            var save = system.CaptureState();
+
+            var restoredInventory = new Inventory.Inventory();
+            var restored = new CraftingSystem(restoredInventory);
+            restored.SetRecipeLookup(id => id == recipe.id ? recipe : null);
+            restored.RestoreState(save);
+
+            string reportedCrafter = "unset";
+            restored.OnCraftCompleted += (_, crafter) => reportedCrafter = crafter;
+            restored.Tick(2f);
+
+            Assert.Equal("survivor_machinist", reportedCrafter);
+        }
     }
 }

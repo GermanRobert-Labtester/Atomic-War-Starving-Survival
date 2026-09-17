@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 49,
-  "fast_tier_count": 46,
+  "total_gates": 50,
+  "fast_tier_count": 47,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -544,6 +544,16 @@
       "depends_on": [
         "build_godot_host"
       ]
+    },
+    {
+      "gate_id": "uid_sidecar_gate",
+      "name": "UID Sidecar Gate (Plan 19 INV-19.6 / 19C-A.2)",
+      "category": "Code & Repo Hygiene",
+      "command": "bash scripts/ci/uid-sidecar-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "UID Sidecar Gate: PASS",
+      "classification": "fast",
+      "critical": true
     }
   ]
 }

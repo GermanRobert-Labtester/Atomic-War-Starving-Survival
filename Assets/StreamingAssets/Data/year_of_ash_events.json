@@ -204,7 +204,7 @@
       "day": 320,
       "phase": "phase_6_the_great_thaw",
       "title": "142.850 MHz Continental Transponder Lock",
-      "description": "A rhythmic carrier wave tone crackles across the emergency frequency. The icebreaker *Aurora Borealis* is broadcasting teletype manifests.",
+      "description": "A rhythmic carrier wave tone crackles across the emergency frequency. The icebreaker Aurora Borealis is broadcasting teletype manifests.",
       "temperatureDeltaC": 1.0,
       "hazardType": "radio_transmission"
     },

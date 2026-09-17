@@ -84,7 +84,11 @@ Ashfall.Core.Tests/UI/PanelRouteGateTests.cs`, `dotnet build Ashfall.csproj`.
 
 ## What is NOT done yet (remaining C1 waves)
 
-- **This UI wave** (above) — completes the Phase 1 combined economy gate.
+- **The economy UI wave (above) is DONE as of Wave 8 B1 (2026-09-17):** both
+  panels render the Core read models (embargo banner, regional heat map,
+  caravan route states with the event-clearing edge); the combined Phase 1
+  economy gate is complete end-to-end. Evidence: the plan's checkpoint report
+  plus panel lifecycle/a11y/caravan/bridge gates.
 - C1.4 crisis prediction → C1.5 cloud seeding → C1.6 trophies → C1.7/C1.8
   kennel (must route through the Plan 174 `CompanionAnimalSystem` authority —
   see plan §1.5) → C1.9 hardening → **C1.10 content expansion tranche (+30%)**

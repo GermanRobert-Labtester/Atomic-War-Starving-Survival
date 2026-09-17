@@ -236,6 +236,12 @@ namespace Ashfall.Core.World
         {
             get
             {
+                // C2 / Plan 20C — data authority first (table row); legacy
+                // switch fallback when unbound.
+                if (_effectsCatalog != null && _effectsCatalog.TryGetEffects(Current, out var effects)
+                    && effects != null)
+                    return Math.Clamp(effects.visibility_modifier, 0f, 1f);
+
                 switch (Current)
                 {
                     case WeatherKind.FalloutStorm:
@@ -310,6 +316,41 @@ namespace Ashfall.Core.World
                 case WeatherKind.BlackRain: return BlackRainTemperaturePenaltyC;
                 default: return 0f;
             }
+        }
+
+        /// <summary>
+        /// C2 / Plan 20C (§42) — shelter thermal load delta from the bound
+        /// weather-effects table (data authority); falls back to the legacy
+        /// static constants when unbound. This is THE thermal coupling: cold
+        /// weather reaches heating/fuel pressure through the existing
+        /// temperature path — never a second fuel drain.
+        /// </summary>
+        public float TemperaturePenaltyC(WeatherKind kind)
+        {
+            if (_effectsCatalog != null && _effectsCatalog.TryGetEffects(kind, out var effects)
+                && effects != null)
+                return effects.thermal_load_additive_c;
+            return TemperaturePenaltyForWeather(kind);
+        }
+
+        /// <summary>
+        /// C2 / Plan 20C (§45) — visibility fraction 0..1 from the bound table;
+        /// legacy switch fallback when unbound (same values the forecast
+        /// projection previously hardcoded).
+        /// </summary>
+        public float VisibilityModifier(WeatherKind kind)
+        {
+            if (_effectsCatalog != null && _effectsCatalog.TryGetEffects(kind, out var effects)
+                && effects != null)
+                return Math.Clamp(effects.visibility_modifier, 0f, 1f);
+
+            return kind switch
+            {
+                WeatherKind.FalloutStorm or WeatherKind.BlackRain => 0f,
+                WeatherKind.Blizzard => BlizzardVisibilityFactor,
+                WeatherKind.Ashfall => 0.65f,
+                _ => 1f
+            };
         }
 
         // ── Save / Load ────────────────────────────────────────────────
@@ -392,13 +433,7 @@ namespace Ashfall.Core.World
 
                 float rad = ForecastRadModifier(predicted);
 
-                float vis = predicted switch
-                {
-                    WeatherKind.FalloutStorm or WeatherKind.BlackRain => 0f,
-                    WeatherKind.Blizzard => BlizzardVisibilityFactor,
-                    WeatherKind.Ashfall => 0.65f,
-                    _ => 1f
-                };
+                float vis = VisibilityModifier(predicted);
 
                 list.Add(new WeatherForecastEntry
                 {
@@ -406,7 +441,12 @@ namespace Ashfall.Core.World
                     Kind = predicted,
                     OutdoorRad = rad,
                     Visibility = vis,
-                    Summary = predicted.ToString()
+                    Summary = predicted.ToString(),
+                    ThermalLoadC = TemperaturePenaltyC(predicted),
+                    TravelSpeedMultiplier = EffectsFor(predicted).travel_speed_multiplier,
+                    TravelEncounterMultiplier = EffectsFor(predicted).travel_encounter_multiplier,
+                    TrapYieldMultiplier = EffectsFor(predicted).trap_yield_multiplier,
+                    CaravanAvailabilityMultiplier = EffectsFor(predicted).caravan_availability_multiplier
                 });
             }
 
@@ -419,6 +459,16 @@ namespace Ashfall.Core.World
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);
+
+        /// <summary>C2 / Plan 20C (§45) — the full effects row for a kind
+        /// (legacy-identity fallback when the catalog is unbound).</summary>
+        private WeatherEffectsDef EffectsFor(WeatherKind kind)
+        {
+            if (_effectsCatalog != null && _effectsCatalog.TryGetEffects(kind, out var fx)
+                && fx != null)
+                return fx;
+            return new WeatherEffectsDef();
+        }
     }
 
     /// <summary>
@@ -432,7 +482,17 @@ namespace Ashfall.Core.World
         public float OutdoorRad;
         public float Visibility;
         public string Summary = string.Empty;
+
+        // C2 / Plan 20C (§45) — decision-relevant effects from the ONE
+        // weather-effects table (populated in PeekForecast; legacy defaults
+        // when unbound: thermal from the static curve, multipliers neutral).
+        public float ThermalLoadC;
+        public float TravelSpeedMultiplier = 1f;
+        public float TravelEncounterMultiplier = 1f;
+        public float TrapYieldMultiplier = 1f;
+        public float CaravanAvailabilityMultiplier = 1f;
     }
+
 
     /// <summary>Engine-agnostic loader for weather_seasons.json.</summary>
     public static class WeatherProfileLoader

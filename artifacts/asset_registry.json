@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-13T09:29:16.266257+00:00",
+  "generated_at": "2026-09-17T13:51:20.566422+00:00",
   "strict_mode": false,
   "summary": {
-    "total_ids": 1695,
-    "loaded": 507,
-    "fallback": 1188,
+    "total_ids": 1706,
+    "loaded": 508,
+    "fallback": 1198,
     "missing": 0,
-    "coverage_pct": 29.91,
+    "coverage_pct": 29.78,
     "by_category": {
       "item": {
-        "total": 957,
-        "loaded": 342,
-        "fallback": 615,
+        "total": 966,
+        "loaded": 343,
+        "fallback": 623,
         "missing": 0
       },
       "portrait": {
@@ -28,9 +28,9 @@
         "missing": 0
       },
       "faction": {
-        "total": 96,
+        "total": 98,
         "loaded": 1,
-        "fallback": 95,
+        "fallback": 97,
         "missing": 0
       }
     }
@@ -425,6 +425,14 @@
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/art/jewelry.jpg",
+      "status": "LOADED",
+      "is_fallback": false
+    },
+    {
+      "id": "diamond",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/art/diamond.jpg",
       "status": "LOADED",
       "is_fallback": false
     },
@@ -2750,6 +2758,238 @@
     },
     {
       "id": "item_seed_cold_legume",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_sugar_feedstock",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_starch_feedstock",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_culture_starter",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_filter_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_service_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_preservation_concentrate",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_cleaning_reagent",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermented_organic_acid_carboy",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fermentation_waste_pomace",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_crop_waste",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofuel_low_grade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofuel_generator_grade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_biofuel_high_grade",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_separation_media_cartridge",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_ecm_jammer_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_machined_blank_small",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_machined_blank_medium",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_internal_spline_hub",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_keyed_actuator_collar",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_cutting_fluid_canister",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_hydraulic_ram_assembly",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_fog_mesh_roll",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_powered_mist_assist_module",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_reinforced_support_cable",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_runflat_insert_utility",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_runflat_insert_reinforced",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_rim_bead_kit",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_armored_beadlock_set",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_runflat_balancing_kit",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -5317,7 +5557,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_fermentation_sugar_feedstock",
+      "id": "item_pharmacist_ledger",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -5325,7 +5565,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_fermentation_starch_feedstock",
+      "id": "item_worn_pet_collar",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -5333,7 +5573,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_fermentation_culture_starter",
+      "id": "item_undertakers_register",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -5341,207 +5581,7 @@
       "is_fallback": true
     },
     {
-      "id": "item_fermentation_filter_module",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_fermentation_service_kit",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_fermentation_preservation_concentrate",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_fermentation_cleaning_reagent",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_fermented_organic_acid_carboy",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_fermentation_waste_pomace",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_crop_waste",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_biofuel_low_grade",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_biofuel_generator_grade",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_biofuel_high_grade",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_separation_media_cartridge",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_ecm_jammer_module",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_machined_blank_small",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_machined_blank_medium",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_internal_spline_hub",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_keyed_actuator_collar",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_cutting_fluid_canister",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_hydraulic_ram_assembly",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_fog_mesh_roll",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_powered_mist_assist_module",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_reinforced_support_cable",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_runflat_insert_utility",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_runflat_insert_reinforced",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_rim_bead_kit",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_armored_beadlock_set",
-      "category": "item",
-      "source_catalog": "items.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
-    },
-    {
-      "id": "item_runflat_balancing_kit",
+      "id": "item_grandfathers_soldering_iron",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -6411,6 +6451,38 @@
       "resolved_path": "res://assets/art/item_seed_tuber.jpg",
       "status": "LOADED",
       "is_fallback": false
+    },
+    {
+      "id": "item_seed_frost_pea",
+      "category": "item",
+      "source_catalog": "greenhouse_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "crop_frost_pea",
+      "category": "item",
+      "source_catalog": "greenhouse_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_seed_glacier_greens",
+      "category": "item",
+      "source_catalog": "greenhouse_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "crop_glacier_greens",
+      "category": "item",
+      "source_catalog": "greenhouse_items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
     },
     {
       "id": "item_seed_grain",
@@ -13590,6 +13662,22 @@
     },
     {
       "id": "faction_the_scale",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_ash_market_brokers",
+      "category": "faction",
+      "source_catalog": "faction_lore.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "faction_cold_ledger",
       "category": "faction",
       "source_catalog": "faction_lore.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",

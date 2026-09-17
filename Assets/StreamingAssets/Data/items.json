@@ -274,6 +274,7 @@
       "displayName": "Iodine Pills",
       "description": "A small blister strip of potassium iodide tablets in foil that still crinkles. Taken before or just after exposure, they saturate the thyroid so it passes on the radioactive kind. Five pills to a pack, light enough to forget in a pocket, worth six. The taste is bitter and chalky. People hoard them for the children first, and say nothing about that at the trade table.",
       "type": "Iodine",
+      "tags": ["medical"],
       "stackMax": 5,
       "weight": 0.1,
       "radProtection": 0,
@@ -294,6 +295,7 @@
       "displayName": "Anti-Rad",
       "description": "Decorporation medication in a foil pack of capsules. Taken after exposure, it pulls accumulated dose out of the body, clearing fifty rads per dose. Not a cure, just a deduction, and the body pays for it later. Five packs to a stack, nearly weightless, worth eight. Pharmacies that still stand trade it only for things they cannot scavenge. People argue over the last pack like it is a promise.",
       "type": "AntiRad",
+      "tags": ["medical"],
       "stackMax": 5,
       "weight": 0.1,
       "radProtection": 0,
@@ -319,6 +321,15 @@
       "radProtection": 30,
       "durability": 100,
       "degradeRate": 1.0,
+      "repairRecipe": {
+        "hours": 2.0,
+        "requiresTools": true,
+        "max_repair_condition_fraction": 0.85,
+        "costs": [
+          { "materialId": "cloth", "amount": 1 },
+          { "materialId": "scrap_metal", "amount": 1 }
+        ]
+      },
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -340,6 +351,15 @@
       "radProtection": 80,
       "durability": 100,
       "degradeRate": 0.5,
+      "repairRecipe": {
+        "hours": 3.0,
+        "requiresTools": true,
+        "max_repair_condition_fraction": 0.85,
+        "costs": [
+          { "materialId": "cloth", "amount": 3 },
+          { "materialId": "scrap_metal", "amount": 2 }
+        ]
+      },
       "contamination": 0,
       "hungerRestore": 0,
       "thirstRestore": 0,
@@ -749,6 +769,26 @@
       "isEquipable": false,
       "equipSlot": "",
       "tradeValue": 50,
+      "empShielded": false
+    },
+    {
+      "id": "diamond",
+      "displayName": "Cut Diamond",
+      "description": "A loose cut stone kept in a dented steel specimen box. It has no practical use at the Holdfast, but the Cold Ledger still recognizes its old scarcity.",
+      "type": "Trade",
+      "stackMax": 1,
+      "weight": 0.01,
+      "radProtection": 0,
+      "durability": 0,
+      "contamination": 0,
+      "hungerRestore": 0,
+      "thirstRestore": 0,
+      "healthEffect": 0,
+      "radCleanse": 0,
+      "moraleEffect": 0,
+      "isEquipable": false,
+      "equipSlot": "",
+      "tradeValue": 150,
       "empShielded": false
     },
     {
@@ -3413,6 +3453,7 @@
       "displayName": "Rad-Away",
       "description": "A pre-war IV chelating agent that binds heavy isotopes in the bloodstream and routes them through the kidneys. The label says 'EDTA-Isotope Flush' and lists a contraindication for kidney disease. Someone has written 'check kidneys first' in ballpoint under it. The bag is flimsy, the tube is kinked from storage, and whoever administers it needs to know what they are doing. It works. When it works.",
       "type": "AntiRad",
+      "tags": ["medical"],
       "stackMax": 3,
       "weight": 0.2,
       "radProtection": 0.0,

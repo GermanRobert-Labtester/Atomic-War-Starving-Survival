@@ -45,6 +45,38 @@ namespace Ashfall.Core.Memorial
         /// events): the number a test compares against expected reach.</summary>
         public int AppliedSurvivorCount { get; private set; }
 
+        /// <summary>Plan 24C (A3) — the bond-grief needs window: a mourner's
+        /// fatigue/morale rates decay linearly to zero over this many days
+        /// from the last loss. Data-authored window length (the plan's
+        /// "duration/intensity from existing grief data where available" — the
+        /// intensity itself derives from the persisted relationship grief).</summary>
+        public const int BondGriefDurationDays = 10;
+        /// <summary>Morale points per day at full grief intensity (negative).</summary>
+        public const float BondGriefMoralePerDay = -2f;
+        /// <summary>Fatigue points per day at full grief intensity.</summary>
+        public const float BondGriefFatiguePerDay = 1.5f;
+
+        /// <summary>Plan 24C (A3) — the pure grief-rate function shared by the
+        /// host's daily projection and the tests: linear decay to zero across
+        /// the window, intensity from the persisted relationship grief (which
+        /// absorbed the death-quality scale), expressed per hour. Zero outside
+        /// the window — the expiry is derivable from canonical facts alone.</summary>
+        public static float BondMoralePerHour(float relationshipGrief, int daysSinceOnset)
+        {
+            if (daysSinceOnset < 0 || daysSinceOnset >= BondGriefDurationDays) return 0f;
+            float intensity = Math.Clamp(relationshipGrief / 100f, 0f, 1f)
+                * (1f - (float)daysSinceOnset / BondGriefDurationDays);
+            return BondGriefMoralePerDay * intensity / 24f;
+        }
+
+        public static float BondFatiguePerHour(float relationshipGrief, int daysSinceOnset)
+        {
+            if (daysSinceOnset < 0 || daysSinceOnset >= BondGriefDurationDays) return 0f;
+            float intensity = Math.Clamp(relationshipGrief / 100f, 0f, 1f)
+                * (1f - (float)daysSinceOnset / BondGriefDurationDays);
+            return BondGriefFatiguePerDay * intensity / 24f;
+        }
+
         /// <param name="relations">The relationship authority. Null makes the
         /// sink an intentional no-op so a host can run without relationships
         /// without failing the memorial pipeline.</param>
@@ -99,6 +131,15 @@ namespace Ashfall.Core.Memorial
             {
                 if (_isAlive != null && !_isAlive(ids[i])) continue;
                 _relations.ApplyGrief(ids[i], amount);
+                // Plan 24C (A3): stamp the grief onset on the affected pair so
+                // the derived grief-to-needs projection (host daily refresh)
+                // can decay the mourner's fatigue/morale rates from persisted
+                // canonical facts alone — nothing about the needs effect is
+                // saved outside the relationship ledger. The latest loss
+                // re-anchors the window.
+                if (_relations.TryGetRelationship(deceasedId, ids[i], out var rel)
+                    && rel != null)
+                    rel.grief_since_day = day;
                 AppliedSurvivorCount++;
             }
         }

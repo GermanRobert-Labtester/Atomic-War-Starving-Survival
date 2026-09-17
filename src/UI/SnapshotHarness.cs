@@ -40,6 +40,7 @@ namespace AtomicWar.GodotApp.UI
             new Target{ StableId="journal_default",           Title="Journal book (default state)",         PanelCtor="AtomicWar.GodotApp.UI.JournalPanel",                   StateHint="default",  Width=1280, Height=720 },
             new Target{ StableId="verdict_default",           Title="Verdict panel (default state)",        PanelCtor="AtomicWar.GodotApp.VerdictPanel",                     StateHint="default",  Width=1280, Height=720 },
             new Target{ StableId="trade_default",             Title="Trade screen (default state)",         PanelCtor="AtomicWar.GodotApp.Economy.TradeScreenGodotPanel",     StateHint="default",  Width=1280, Height=720 },
+            new Target{ StableId="black_market_default",      Title="Black market counter (action state)",  PanelCtor="AtomicWar.GodotApp.UI.BlackMarketPanel",                StateHint="populated_fixture", Width=1280, Height=800, FixtureFactory=BlackMarketSnapshotFixture.Bind },
 
             // Phase 12 pilots — mapped to the new dashboard shell + data-grid primitives.
             new Target{ StableId="survival_workstation_default", Title="Survival Workstation (#19 Stitch)",          PanelCtor="AtomicWar.GodotApp.UI.SurvivalWorkstationPanel",        StateHint="default", Width=1280, Height=800 },

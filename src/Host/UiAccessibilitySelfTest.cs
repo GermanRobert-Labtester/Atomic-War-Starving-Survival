@@ -219,6 +219,7 @@ namespace AtomicWar.GodotApp
                 ("InSarMappingPanel", new InSarMappingPanel()),
                 ("HydraulicExtrusionPanel", new HydraulicExtrusionPanel()),
                 ("RunFlatTirePanel", new RunFlatTirePanel()),
+                ("SkyDefenseBatteryPanel", new SkyDefenseBatteryPanel()),
                 ("DailyBriefingModal", new DailyBriefingModal())
             };
 

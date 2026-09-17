@@ -71,6 +71,13 @@ namespace Ashfall.Core.Survivors
         /// </summary>
         public SurvivorRelationsSystem Relations => _relations;
 
+        /// <summary>Plan 24B needs-modifier source id for the leadership
+        /// crisis aura (attribution only; numeric delta unchanged).</summary>
+        public const string LeadershipCrisisAuraSource = "leadership.crisis_aura";
+        /// <summary>Plan 24B needs-modifier source id for direct per-survivor
+        /// leadership morale deltas (attribution only).</summary>
+        public const string LeadershipModifierSource = "leadership.morale";
+
         private readonly NeedsSystem _needs;
         private readonly SurvivorRelationsSystem _relations;
         private readonly DutyRosterSystem _roster;
@@ -117,16 +124,21 @@ namespace Ashfall.Core.Survivors
 
         private void WireHooks()
         {
-            // Leadership → Needs (morale)
+            // Leadership → Needs (morale). Plan 24B (A1): the sink routes
+            // through the shared attributed seam; the leadership authority
+            // still decides when the aura/delta applies and the numeric value
+            // is unchanged — only the mutation sink moved.
             Leadership.ApplyMoraleDelta = (id, delta) =>
             {
-                if (_needs != null) _needs.Modify(id, NeedKind.Morale, delta);
+                if (_needs != null) _needs.ApplyAttributedDelta(
+                    id, NeedKind.Morale, delta, LeadershipModifierSource);
             };
             Leadership.ApplyShelterMoraleDelta = delta =>
             {
                 if (_needs == null) return;
                 for (int i = 0; i < _aliveIds.Count; i++)
-                    _needs.Modify(_aliveIds[i], NeedKind.Morale, delta);
+                    _needs.ApplyAttributedDelta(
+                        _aliveIds[i], NeedKind.Morale, delta, LeadershipCrisisAuraSource);
             };
             Leadership.GetAliveSurvivorIds = () => _aliveIds;
 
@@ -150,10 +162,14 @@ namespace Ashfall.Core.Survivors
                 _relations?.ModifyAffinity(a, b, delta);
             };
 
-            // RationConflict → Needs (morale)
-            Ration.OnMoraleDelta += (id, delta) =>
+            // RationConflict → Needs (morale). Plan 24B (A1): the morale
+            // event carries its cause's source id (confrontation vs theft);
+            // the sink applies it through the shared attributed seam with the
+            // same numeric delta as the legacy direct path.
+            Ration.OnMoraleDelta += (id, delta, sourceId) =>
             {
-                if (_needs != null) _needs.Modify(id, NeedKind.Morale, delta);
+                if (_needs != null) _needs.ApplyAttributedDelta(
+                    id, NeedKind.Morale, delta, sourceId);
             };
         }
 

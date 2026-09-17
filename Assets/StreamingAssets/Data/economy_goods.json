@@ -556,6 +556,30 @@
       "weightKg": 0.15,
       "regionalSupply": "settlement",
       "barterNote": "Nobody admits what's on it. Music, a sermon, somebody's last recorded voice — morale is whatever plays."
+    },
+    {
+      "id": "cloth",
+      "displayName": "Cloth",
+      "category": "materials",
+      "basePrice": 3.0,
+      "volatility": 0.2,
+      "elasticity": 1.0,
+      "stackSize": 20,
+      "weightKg": 0.2,
+      "regionalSupply": "settlement",
+      "barterNote": "Shifted in bulk from the factories before the clouds came. Patch a suit, wrap a wound, filter water in a pinch. Never worth much by the bolt; priceless by the strip."
+    },
+    {
+      "id": "item_air_filter_hepa",
+      "displayName": "HEPA Filter Cartridge",
+      "category": "tools",
+      "basePrice": 30.0,
+      "volatility": 0.25,
+      "elasticity": 0.9,
+      "stackSize": 4,
+      "weightKg": 1.5,
+      "regionalSupply": "foundry",
+      "barterNote": "The bunker breathes through these. A sealed cartridge trades at the price of the seller's own remaining air."
     }
   ]
 }

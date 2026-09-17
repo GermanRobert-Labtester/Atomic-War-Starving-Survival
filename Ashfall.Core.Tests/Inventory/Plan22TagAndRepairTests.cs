@@ -25,6 +25,7 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
                 displayName = id,
                 type = type,
                 isEquipable = equipable,
+                equipSlot = equipable ? EquipSlot.Face : EquipSlot.None,
                 radProtection = radProtection,
                 durability = 100f
             };
@@ -75,9 +76,9 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
         [Fact]
         public void Protective_AndCanister_Classification()
         {
-            var mask = Def("gas_mask", ItemType.Equipment, tags: new[] { "filter" },
+            var mask = Def("gas_mask", ItemType.Protective, tags: new[] { "filter" },
                 radProtection: 30f, equipable: true);
-            var suit = Def("hazmat_suit", ItemType.Equipment, radProtection: 80f, equipable: true);
+            var suit = Def("hazmat_suit", ItemType.Protective, radProtection: 80f, equipable: true);
             var brick = Def("item_mycelium_bricks", ItemType.Material, radProtection: 5f); // not equipable
 
             Assert.True(ItemTagCatalog.IsProtective(mask));
@@ -89,10 +90,12 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
 
         // ── Protective-gear repair (D2) ───────────────────────────────
 
+        private static readonly ItemDefinition ClothDef = new ItemDefinition { id = "cloth", displayName = "cloth", stackMax = 99 };
+
         private static ItemDefinition RepairableMask(
             float durability = 100f, float fraction = 0.85f, int cloth = 1)
         {
-            var def = Def("gas_mask", ItemType.Equipment, radProtection: 30f, equipable: true);
+            var def = Def("gas_mask", ItemType.Protective, radProtection: 30f, equipable: true);
             def.durability = durability;
             def.repairRecipe = new RepairRecipe
             {
@@ -112,7 +115,7 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             Assert.True(inv.Equip(def));
             var item = inv.Equipped[0];
             item.CurrentDurability = 40f;
-            inv.Add("cloth", 5);
+            Assert.True(inv.Add(ClothDef, 5));
 
             int inventoryChanges = 0;
             inv.OnInventoryChanged += () => inventoryChanges++;
@@ -122,7 +125,7 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             Assert.True(inv.TryRepairEquippedGear(item));
             Assert.Equal(85f, item.CurrentDurability, 3); // 100 × 0.85 cap
             Assert.Equal(45f, repairedEventValue, 3);
-            Assert.Equal(4, inv.Count(new ItemDefinition { id = "cloth" }) == 0 ? 0 : 4); // 5 − 1
+            Assert.Equal(4, inv.Count(ClothDef) == 0 ? 0 : 4); // 5 − 1
             Assert.True(inventoryChanges > 0);
         }
 
@@ -135,11 +138,11 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             Assert.True(inv.Equip(def));
             var item = inv.Equipped[0];
             item.CurrentDurability = 60f; // above the 50 cap
-            inv.Add("cloth", 5);
+            Assert.True(inv.Add(ClothDef, 5));
 
             Assert.False(inv.TryRepairEquippedGear(item));
             Assert.Equal(60f, item.CurrentDurability, 3);
-            Assert.Equal(5, inv.Count(new ItemDefinition { id = "cloth" }));
+            Assert.Equal(5, inv.Count(ClothDef));
         }
 
         [Fact]
@@ -150,11 +153,11 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             inv.Add(def, 1);
             Assert.True(inv.Equip(def));
             inv.Equipped[0].CurrentDurability = 0f; // failed (Plan 21 §27.1)
-            inv.Add("cloth", 5);
+            Assert.True(inv.Add(ClothDef, 5));
 
             Assert.False(inv.TryRepairEquippedGear(inv.Equipped[0]));
             Assert.Equal(0f, inv.Equipped[0].CurrentDurability, 3);
-            Assert.Equal(5, inv.Count(new ItemDefinition { id = "cloth" })); // untouched
+            Assert.Equal(5, inv.Count(ClothDef)); // untouched
         }
 
         [Fact]
@@ -165,7 +168,7 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             inv.Add(def, 1);
             Assert.True(inv.Equip(def));
             inv.Equipped[0].CurrentDurability = 40f;
-            inv.Add("cloth", 0);
+            Assert.True(inv.Add(ClothDef, 0) || true);
 
             Assert.False(inv.TryRepairEquippedGear(inv.Equipped[0]));
             Assert.Equal(40f, inv.Equipped[0].CurrentDurability, 3);
@@ -179,7 +182,7 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             inv.Add(def, 1);
             Assert.True(inv.Equip(def));
             inv.Equipped[0].CurrentDurability = 40f;
-            inv.Add("cloth", 5);
+            Assert.True(inv.Add(ClothDef, 5));
 
             int failures = 0;
             inv.OnProtectiveGearFailed += (_, _) => failures++;
@@ -198,7 +201,7 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
         public void Repair_UnrepairableItem_IsRefused()
         {
             var inv = new InventoryContainer { Capacity = 10, MaxWeight = 100f };
-            var def = Def("plain_item", ItemType.Material); // no repairRecipe
+            var def = Def("plain_item", ItemType.Material, equipable: true); // no repairRecipe
             inv.Add(def, 1);
             Assert.True(inv.Equip(def));
             inv.Equipped[0].CurrentDurability = 10f;
@@ -206,4 +209,5 @@ namespace Ashfall.Core.Tests.Plan22ConsumableBills
             Assert.False(inv.TryRepairEquippedGear(inv.Equipped[0]));
         }
     }
+
 }

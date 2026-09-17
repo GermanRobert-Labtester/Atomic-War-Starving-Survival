@@ -562,10 +562,13 @@ namespace AtomicWar.GodotApp
             var network = new WaystationNetworkSystem();
             if (wsState.network != null)
                 network.RestoreState(wsState.network);
-            _waystation.AttachNetwork(
-                network,
-                _economy.Catalog,
-                () => _economy?.Market.IsSuppliesShort() ?? false);
+            if (_economy?.Catalog != null)
+            {
+                _waystation.AttachNetwork(
+                    network,
+                    _economy.Catalog,
+                    () => _economy?.Market.IsSuppliesShort() ?? false);
+            }
             if (_waystationPanel != null && _waystationPanel.IsInsideTree())
                 RemoveChild(_waystationPanel);
             _waystationPanel = new WaystationNetworkPanel();

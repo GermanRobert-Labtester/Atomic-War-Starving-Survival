@@ -5,13 +5,13 @@
   "model": "stealth, on foot, no vehicle, day sortie, 0.5h ticks, 3 looting ticks auto-retreat",
   "itemValueCatalogs": [
     "black_flotilla_items.json",
+    "foundry_items.json",
+    "holdfast_items.json",
+    "agriculture_items.json",
     "crossing_items.json",
     "dose_items.json",
-    "foundry_items.json",
     "greenhouse_items.json",
-    "holdfast_items.json",
     "verdict_items.json",
-    "agriculture_items.json",
     "year_of_ash_items.json",
     "items.json"
   ],

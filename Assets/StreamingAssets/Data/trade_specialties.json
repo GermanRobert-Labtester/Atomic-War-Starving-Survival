@@ -4,6 +4,9 @@
     {
       "profession_id": "electrician",
       "display_name": "Electrician",
+      "profession_aliases": [
+        "Electrician"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -44,6 +47,13 @@
     {
       "profession_id": "nurse",
       "display_name": "Nurse",
+      "profession_aliases": [
+        "Nurse",
+        "Medic",
+        "Paramedic",
+        "Cryo-Medic",
+        "Pharmacist"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -84,6 +94,14 @@
     {
       "profession_id": "machinist",
       "display_name": "Machinist",
+      "profession_aliases": [
+        "Mechanic",
+        "Mechanical Engineer",
+        "CNC Operator",
+        "Watchmaker",
+        "Engineer",
+        "Carpenter"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -124,6 +142,9 @@
     {
       "profession_id": "teacher",
       "display_name": "Teacher",
+      "profession_aliases": [
+        "Teacher"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -164,6 +185,7 @@
     {
       "profession_id": "miller",
       "display_name": "Miller",
+      "profession_aliases": [],
       "milestones": [
         {
           "tier": 1,
@@ -204,6 +226,9 @@
     {
       "profession_id": "wireman",
       "display_name": "Wireman",
+      "profession_aliases": [
+        "Telecomm Tech"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -244,6 +269,11 @@
     {
       "profession_id": "bone_setter",
       "display_name": "Bone Setter",
+      "profession_aliases": [
+        "Surgeon",
+        "Trauma Surgeon",
+        "Veterinarian"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -284,6 +314,10 @@
     {
       "profession_id": "preservationist",
       "display_name": "Preservationist",
+      "profession_aliases": [
+        "Chef",
+        "Cook"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -324,6 +358,12 @@
     {
       "profession_id": "radio_technician",
       "display_name": "Radio Technician",
+      "profession_aliases": [
+        "Radio Operator",
+        "Radio Signal Technician",
+        "Radio Host",
+        "Sonar Operator"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -364,6 +404,12 @@
     {
       "profession_id": "greenhouse_grower",
       "display_name": "Greenhouse Grower",
+      "profession_aliases": [
+        "Botanist",
+        "Farmer",
+        "Fungus Farmer",
+        "Composter"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -404,6 +450,13 @@
     {
       "profession_id": "surveyor",
       "display_name": "Surveyor",
+      "profession_aliases": [
+        "Cave Mapper",
+        "Scout",
+        "Tunnel Rat",
+        "Architect",
+        "Hunter"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -444,6 +497,14 @@
     {
       "profession_id": "salvage_appraiser",
       "display_name": "Salvage Appraiser",
+      "profession_aliases": [
+        "Scavenger",
+        "Scrapper",
+        "Scavenger/Scrap",
+        "Scuba Scavenger",
+        "Collector",
+        "Prepper"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -484,6 +545,7 @@
     {
       "profession_id": "apiarist",
       "display_name": "Apiarist",
+      "profession_aliases": [],
       "milestones": [
         {
           "tier": 1,
@@ -524,6 +586,7 @@
     {
       "profession_id": "metallurgist",
       "display_name": "Metallurgist",
+      "profession_aliases": [],
       "milestones": [
         {
           "tier": 1,
@@ -564,6 +627,11 @@
     {
       "profession_id": "water_technician",
       "display_name": "Water Technician",
+      "profession_aliases": [
+        "Plumber",
+        "Pump Specialist",
+        "Chemist"
+      ],
       "milestones": [
         {
           "tier": 1,
@@ -604,6 +672,9 @@
     {
       "profession_id": "tailor",
       "display_name": "Tailor",
+      "profession_aliases": [
+        "Tailor"
+      ],
       "milestones": [
         {
           "tier": 1,

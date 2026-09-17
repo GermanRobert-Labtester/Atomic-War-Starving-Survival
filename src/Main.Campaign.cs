@@ -23,6 +23,10 @@ namespace AtomicWar.GodotApp
         private bool _campaignDayDirty;
         private Ashfall.Core.Memorial.MemorialSystem _memorial = null!;
         private bool _memorialDirty;
+        /// <summary>Plan 24C (A3) — the mourning vigil's attributed morale
+        /// recovery per living survivor (restrained: recovers less than half
+        /// of the shelter-wide grief hit).</summary>
+        private const float MourningMoraleRecovery = 3f;
 
         private void SetupCampaignDay()
         {
@@ -201,6 +205,32 @@ namespace AtomicWar.GodotApp
             // Plan 178/190: the same committed death record enters the culture
             // vault chronicle (one creation command; vault owns append/dedup).
             _memorial.OnMemorialized += OnMemorializedForArchiveChronicle;
+            // Plan 24C (A3): the mourning vigil eases the shelter's grief —
+            // one attributed morale recovery per living survivor, exactly once
+            // per deceased (the entry's persisted MournedDay is the gate),
+            // plus one restrained journal line.
+            _memorial.OnMourned += entry =>
+            {
+                _memorialDirty = true;
+                if (_survivors?.Needs != null)
+                {
+                    var living = _survivors.Needs.Registered;
+                    for (int i = 0; i < living.Count; i++)
+                    {
+                        var s = living[i];
+                        if (s == null || !s.IsAliveState) continue;
+                        _survivors.Needs.ApplyAttributedDelta(
+                            s.Id, NeedKind.Morale, MourningMoraleRecovery,
+                            "memorial.mourning");
+                    }
+                }
+                _journal?.TryAddRawEntry(
+                    "memorial_mourned_" + entry?.SurvivorId,
+                    "The shelter held a vigil for "
+                    + FormatSurvivorName(entry?.SurvivorId ?? string.Empty)
+                    + ". For a moment, the weight eased.",
+                    null!, _simDay);
+            };
             LoadMemorial();
         }
 

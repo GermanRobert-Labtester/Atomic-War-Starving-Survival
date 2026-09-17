@@ -313,16 +313,34 @@ namespace Ashfall.Core
         /// <summary>
         /// Pure primary catch chance calculation.
         /// </summary>
+        /// <summary>
+        /// C2 / Plan 20C (§40) — optional shared weather-effects provider.
+        /// When bound by the host, the per-kind trap penalty comes from the
+        /// ONE weather-effects data table (penalty = 1 − trap_yield_multiplier)
+        /// instead of this class's hardcoded curve — no duplicate weather
+        /// tables (plan §40). Unbound keeps the legacy mapping byte-identical.
+        /// </summary>
+        public Func<WeatherKind, float>? WeatherPenaltyProvider { get; set; }
+
+        public float EffectiveWeatherPenalty(WeatherKind weather)
+            => WeatherPenaltyProvider != null
+                ? Math.Clamp(WeatherPenaltyProvider(weather), 0f, 1f)
+                : WeatherPenaltyFor(weather);
+
         public static float CalculatePrimaryCatchChance(
             float densityMultiplier,
             float hunterSkillLevel,
             float baitMultiplier,
             float weatherSensitivity,
-            WeatherKind weather)
+            WeatherKind weather,
+            float? weatherPenaltyOverride = null)
         {
             float baseChance = BaseCatchChance * densityMultiplier;
             float skillMult = SkillMultiplierFor(hunterSkillLevel);
-            float weatherMult = CalculateWeatherMultiplier(weatherSensitivity, weather);
+            float pen = weatherPenaltyOverride.HasValue
+                ? Math.Clamp(weatherPenaltyOverride.Value, 0f, 1f)
+                : WeatherPenaltyFor(weather);
+            float weatherMult = 1f - Math.Clamp(weatherSensitivity, 0f, 1f) * pen;
             float rawChance = baseChance * skillMult * baitMultiplier * weatherMult;
             return Math.Clamp(rawChance, 0.05f, 0.95f);
         }
@@ -862,7 +880,8 @@ namespace Ashfall.Core
                     siteHunterSkill,
                     baitMultiplier,
                     weatherSens,
-                    _selectionContext.CurrentWeather);
+                    _selectionContext.CurrentWeather,
+                    EffectiveWeatherPenalty(_selectionContext.CurrentWeather));
 
                 bool primaryCatchResolved = false;
                 if (_rng.NextDouble() < finalChance)

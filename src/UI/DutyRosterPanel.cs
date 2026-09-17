@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
+using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
@@ -47,6 +48,13 @@ public partial class DutyRosterPanel : Control, IBindablePanel
     private DutyRosterHostSession? _host;
     private SurvivorsHostSession? _survivors;
 
+    // Plan 24B A2 — pending impaired-assignment confirmation. The dialog is
+    // state, not a mutation: confirm issues exactly one confirmed command;
+    // cancel discards without touching the roster.
+    private string _pendingAssignRole = string.Empty;
+    private string _pendingAssignSurvivorId = string.Empty;
+    private List<string> _pendingWarningReasons = new List<string>();
+
     public bool IsBound => _host != null;
 
     public void Bind(DutyRosterHostSession host, SurvivorsHostSession? survivors = null)
@@ -60,6 +68,8 @@ public partial class DutyRosterPanel : Control, IBindablePanel
             _host.Roster.OnNameWritten += HandleSurvivorNameChanged;
             _host.Roster.OnNameErased += HandleSurvivorNameChanged;
         }
+        if (_survivors != null)
+            _survivors.Needs.OnNeedChanged += HandleNeedChanged;
         RefreshView();
     }
 
@@ -72,12 +82,17 @@ public partial class DutyRosterPanel : Control, IBindablePanel
             _host.Roster.OnNameErased -= HandleSurvivorNameChanged;
             _host = null;
         }
+        if (_survivors != null)
+            _survivors.Needs.OnNeedChanged -= HandleNeedChanged;
         _survivors = null;
     }
 
 
 
     private void HandleSurvivorNameChanged(string _) => RefreshView();
+
+    private void HandleNeedChanged(SurvivorNeedsState _, NeedKind __, float ___)
+        => RefreshDetail();
 
     public override void _Ready()
     {
@@ -417,6 +432,177 @@ public partial class DutyRosterPanel : Control, IBindablePanel
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Shift", string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+
+        if (!string.IsNullOrEmpty(roleId))
+        {
+            var fitness = _host.PreviewRoleFitness(survivorId, roleId);
+            if (fitness != null)
+            {
+                string state = fitness.Allowed
+                    ? (fitness.Warning ? "IMPAIRED — ALLOWED" : "FIT — ALLOWED")
+                    : "UNFIT — BLOCKED";
+                var color = fitness.Allowed
+                    ? (fitness.Warning ? DesignTheme.Entropy : DesignTheme.Pale)
+                    : DesignTheme.Hot;
+                _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(
+                    "Fitness", state, AshfallUiHelpers.ToColor(color)));
+                string reasons = fitness.BlockingReasons.Count > 0
+                    ? string.Join(", ", fitness.BlockingReasons)
+                    : string.Join(", ", fitness.WarningReasons);
+                if (!string.IsNullOrEmpty(reasons))
+                    _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                        "Why: " + reasons.Replace('_', ' ') + $" · max {fitness.RecommendedMaxHours:0}h"));
+            }
+
+            // Plan 24B A2 — measured duty hours: the committed shift load vs
+            // the current recommendation, with the overwork flag surfaced as
+            // text (never color-only).
+            var hours = _host.PreviewDutyHours(survivorId);
+            if (hours != null && !string.IsNullOrEmpty(hours.RoleId))
+            {
+                _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(
+                    "Duty Hours",
+                    hours.IsOverworked
+                        ? $"{hours.CommittedHours:0}h committed / {hours.RecommendedHours:0}h recommended — OVERWORKED (+{hours.ExcessHours:0.##}h)"
+                        : $"{hours.CommittedHours:0}h committed / {hours.RecommendedHours:0}h recommended",
+                    AshfallUiHelpers.ToColor(hours.IsOverworked ? DesignTheme.Hot : DesignTheme.Dim)));
+            }
+
+            RenderAssignSection(roleId, survivorId);
+        }
+    }
+
+    /// <summary>
+    /// Plan 24B A2 — the assignment surface. Lists candidate survivors for
+    /// the selected role as keyboard-focusable actions; an impaired candidate
+    /// routes the Core contract's fitness_warning_confirmation_required block
+    /// into an explicit confirm/cancel dialog. Auto-assign never silently
+    /// accepts an impaired warning — the confirm path is the only mutation.
+    /// </summary>
+    private void RenderAssignSection(string roleId, string currentSurvivorId)
+    {
+        _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
+        _detailContent.AddChild(AshfallUiHelpers.MakeSectionHeader("ASSIGNMENT"));
+
+        // Pending confirmation dialog takes precedence until resolved.
+        if (_pendingAssignRole == roleId && !string.IsNullOrEmpty(_pendingAssignSurvivorId))
+        {
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                "IMPAIRED ASSIGNMENT — " + FormatSurvivorName(_pendingAssignSurvivorId)
+                + " is not fully fit for " + RoleTitle(roleId) + ":"));
+            for (int i = 0; i < _pendingWarningReasons.Count; i++)
+                _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                    "  • " + _pendingWarningReasons[i].Replace('_', ' ')));
+
+            var confirmRow = new HBoxContainer();
+            confirmRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            var confirm = new Button { Text = "CONFIRM ASSIGN", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var cancel = new Button { Text = "CANCEL", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            string pendingRole = _pendingAssignRole;
+            string pendingSurvivor = _pendingAssignSurvivorId;
+            confirm.Pressed += () => ConfirmPendingAssignment(pendingRole, pendingSurvivor);
+            cancel.Pressed += () => CancelPendingAssignment();
+            confirmRow.AddChild(confirm);
+            confirmRow.AddChild(cancel);
+            _detailContent.AddChild(confirmRow);
+            return;
+        }
+
+        // Candidates: alive survivors not already holding this role.
+        if (_survivors == null)
+        {
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                "Assignments require a bound survivor session."));
+            return;
+        }
+        var candidates = _survivors.RosterState;
+        int offered = 0;
+        for (int i = 0; i < candidates.Count && offered < 6; i++)
+        {
+            var candidate = candidates[i];
+            if (candidate == null || !candidate.IsAliveState) continue;
+            if (string.Equals(candidate.Id, currentSurvivorId, StringComparison.Ordinal)) continue;
+            string candidateId = candidate.Id;
+
+            var button = new Button
+            {
+                Text = "ASSIGN: " + FormatSurvivorName(candidateId),
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            };
+            button.Pressed += () => TryAssign(roleId, candidateId);
+            _detailContent.AddChild(button);
+            offered++;
+        }
+        if (!string.IsNullOrEmpty(currentSurvivorId))
+        {
+            var vacate = new Button
+            {
+                Text = "VACATE SHIFT",
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            };
+            string role = roleId;
+            vacate.Pressed += () =>
+            {
+                _host?.Roster.AssignWithResult(role, string.Empty);
+                CancelPendingAssignment();
+                RefreshView();
+            };
+            _detailContent.AddChild(vacate);
+        }
+        if (offered == 0 && string.IsNullOrEmpty(currentSurvivorId))
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                "No living candidates available for this shift."));
+    }
+
+    private void TryAssign(string roleId, string survivorId)
+    {
+        if (_host == null) return;
+        var result = _host.Roster.AssignWithResult(roleId, survivorId, confirmFitnessWarning: false);
+        if (result.IsSuccess)
+        {
+            CancelPendingAssignment();
+            RefreshView();
+            return;
+        }
+        if (string.Equals(result.FailureCode, "fitness_warning_confirmation_required", StringComparison.Ordinal))
+        {
+            // Surface the fitness model's own reason ids; the confirm path is
+            // the single explicit mutation (the Core contract's rule).
+            _pendingAssignRole = roleId;
+            _pendingAssignSurvivorId = survivorId;
+            _pendingWarningReasons = new List<string>();
+            var verdict = _host.PreviewRoleFitness(survivorId, roleId);
+            if (verdict != null)
+                _pendingWarningReasons.AddRange(verdict.WarningReasons);
+            RefreshDetail();
+            return;
+        }
+        // Other blocks (dead/quarantined/busy) — show truthful feedback, no dialog.
+        CancelPendingAssignment();
+        _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+            "Assignment blocked: " + (result.MessageKey ?? result.FailureCode ?? "unknown")));
+    }
+
+    private void ConfirmPendingAssignment(string roleId, string survivorId)
+    {
+        if (_host == null) return;
+        // Re-validate at commit time: the warning must still be current before
+        // the single confirmed mutation is issued.
+        var result = _host.Roster.AssignWithResult(roleId, survivorId, confirmFitnessWarning: true);
+        CancelPendingAssignment();
+        if (!result.IsSuccess)
+        {
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                "Assignment failed at commit: " + (result.MessageKey ?? result.FailureCode ?? "unknown")));
+        }
+        RefreshView();
+    }
+
+    private void CancelPendingAssignment()
+    {
+        _pendingAssignRole = string.Empty;
+        _pendingAssignSurvivorId = string.Empty;
+        _pendingWarningReasons = new List<string>();
     }
 
     private static string RoleTitle(string roleId) => roleId switch

@@ -29,27 +29,97 @@ namespace AtomicWar.GodotApp.UI
 
         private TravelingCaravanHostSession? _host;
         private TradeVoiceResolver? _voiceResolver;
+        private Func<WeatherKind>? _weatherProvider;
         private string? _selectedCaravanId;
         private string _voiceEvent = string.Empty;
+        /// <summary>Plan 14A (B1) — last embargo transition reason, set on the
+        /// OnCaravanEmbargoed edge and kept only while a route stays blocked.</summary>
+        private string _embargoReason = string.Empty;
 
         public bool IsBound => _host != null;
         public string CurrentTraderProfileId { get; private set; } = string.Empty;
 
         public void Bind(
             TravelingCaravanHostSession session,
-            TradeVoiceResolver? voiceResolver = null)
+            TradeVoiceResolver? voiceResolver = null,
+            Func<WeatherKind>? weatherProvider = null)
         {
             if (_host != null)
             {
                 _host.StateChanged -= RefreshView;
+                _host.Engine.OnCaravanEmbargoed -= OnCaravanEmbargoed;
+                _host.Engine.OnCaravanResumed -= OnCaravanResumed;
             }
             _host = session;
             _voiceResolver = voiceResolver;
+            _weatherProvider = weatherProvider;
             if (_host != null)
             {
                 _host.StateChanged += RefreshView;
+                // Plan 14A (B1) clearing edge: stale BLOCKED state must clear on
+                // the resume event, never wait for a poll or a reopen.
+                _host.Engine.OnCaravanEmbargoed += OnCaravanEmbargoed;
+                _host.Engine.OnCaravanResumed += OnCaravanResumed;
             }
             RefreshView();
+        }
+
+        private void OnCaravanEmbargoed(CaravanEntry caravan, string weatherReason)
+        {
+            _embargoReason = weatherReason ?? string.Empty;
+            RefreshView();
+        }
+
+        private void OnCaravanResumed(CaravanEntry caravan)
+        {
+            if (_host != null && !_host.Engine.State.activeCaravans.Exists(c => c.embargoBlocked))
+                _embargoReason = string.Empty; // no blocked routes remain
+            RefreshView();
+        }
+
+        /// <summary>Plan 14A (B1) — the card/route state string. The blocked
+        /// flag is the Core authority's durable transition state; the weather
+        /// reason rides the embargo transition event (held only while a route
+        /// remains blocked).</summary>
+        private string ResolveRouteStateText(CaravanEntry caravan)
+        {
+            if (caravan.embargoBlocked)
+            {
+                string reason = string.IsNullOrEmpty(_embargoReason) ? "weather" : _embargoReason;
+                return $"ROUTE: BLOCKED — {reason}";
+            }
+            float progress = ResolveRouteProgress(caravan);
+            if (progress < 1f)
+                return $"ROUTE: SLOWED (x{progress:0.00})";
+            return "ROUTE: NOMINAL";
+        }
+
+        /// <summary>Plan 14B (B1) — the current weather's route multiplier for
+        /// this caravan's origin region, from the embargo authority. The panel
+        /// never computes weather gating.</summary>
+        private float ResolveRouteProgress(CaravanEntry caravan)
+        {
+            var embargoes = _host?.Engine.Embargoes;
+            if (embargoes == null || string.IsNullOrEmpty(caravan.originRegion))
+                return 1f;
+            if (_weatherProvider == null) return 1f; // no weather bound — neutral projection
+            return embargoes.GetRouteProgressMultiplier(caravan.originRegion, _weatherProvider());
+        }
+
+        /// <summary>Plan 14B (B1) — specialty cargo: the caravan's authored
+        /// regional stock (its inventory), named by the best available label.
+        /// Pure read of existing state.</summary>
+        private static string ResolveSpecialtyCargo(CaravanEntry caravan)
+        {
+            if (caravan.inventory == null || caravan.inventory.Count == 0) return string.Empty;
+            var top = caravan.inventory
+                .Where(i => i != null && !string.IsNullOrEmpty(i.itemId))
+                .OrderByDescending(i => i.quantity)
+                .ThenBy(i => i.itemId, StringComparer.Ordinal)
+                .Take(2)
+                .ToList();
+            if (top.Count == 0) return string.Empty;
+            return string.Join(", ", top.Select(i => $"{i.itemId} x{i.quantity}"));
         }
 
         public override void _Ready()
@@ -173,7 +243,11 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("caravans", totalCaravans.ToString(), AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("docked", dockedAtHoldfast > 0 ? $"{dockedAtHoldfast} AT GATE" : "0 AT GATE", dockedAtHoldfast > 0 ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("trades", _host.Engine.State.completedTradesCount.ToString(), AshfallMetricCard.Criticality.Normal);
-            _statusRail.Set("routes", "SECURE", AshfallMetricCard.Criticality.Normal);
+            // Plan 14A (B1): route state from the embargo authority's durable
+            // blocked flags — never a panel-side weather recomputation.
+            int blockedRoutes = caravans.Count(c => c.embargoBlocked);
+            _statusRail.Set("routes", blockedRoutes > 0 ? $"BLOCKED x{blockedRoutes}" : "SECURE",
+                blockedRoutes > 0 ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("status", totalCaravans > 0 ? "TRACKING" : "IDLE", AshfallMetricCard.Criticality.Normal);
 
             if (!string.IsNullOrEmpty(_voiceEvent))
@@ -217,6 +291,13 @@ namespace AtomicWar.GodotApp.UI
                     routeLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(c.currentNodeId == "loc_holdfast_gate" ? DesignTheme.Lethe : DesignTheme.Warm));
                     cardVbox.AddChild(routeLbl);
 
+                    // Plan 14A (B1): BLOCKED/SLOWED state as text on every card.
+                    string routeState = ResolveRouteStateText(c);
+                    var stateLbl = AshfallUiHelpers.MakeSmall(routeState);
+                    stateLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                        c.embargoBlocked ? DesignTheme.Critical : DesignTheme.Dim));
+                    cardVbox.AddChild(stateLbl);
+
                     var factionLbl = AshfallUiHelpers.MakeSmall($"FACTION: {c.factionId}");
                     factionLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                     cardVbox.AddChild(factionLbl);
@@ -242,6 +323,23 @@ namespace AtomicWar.GodotApp.UI
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Affiliated Faction", curCaravan.factionId, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Current Waypoint", curCaravan.currentNodeId, AshfallUiHelpers.ToColor(DesignTheme.Warm)));
                 _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Scheduled Route", string.Join(" -> ", curCaravan.routeNodeIds), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                // Plan 14A/14B (B1): origin + specialty + route progress from
+                // the existing read models (embargo flag, route multiplier,
+                // inventory); the panel formats values, never derives them.
+                _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Origin Region",
+                    string.IsNullOrEmpty(curCaravan.originRegion) ? "—" : curCaravan.originRegion,
+                    AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                string specialty = ResolveSpecialtyCargo(curCaravan);
+                if (!string.IsNullOrEmpty(specialty))
+                    _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Specialty Cargo", specialty,
+                        AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+                var routeStateRow = AshfallUiHelpers.MakeDataRow("Route State", ResolveRouteStateText(curCaravan),
+                    AshfallUiHelpers.ToColor(curCaravan.embargoBlocked ? DesignTheme.Critical : DesignTheme.Lethe));
+                _caravanInspector.AddChild(routeStateRow);
+                float progress = ResolveRouteProgress(curCaravan);
+                _caravanInspector.AddChild(AshfallUiHelpers.MakeDataRow("Route Progress Multiplier",
+                    $"x{progress:0.00}" + (progress <= 0f ? " (blocked)" : string.Empty),
+                    AshfallUiHelpers.ToColor(progress <= 0f ? DesignTheme.Critical : DesignTheme.Dim)));
 
                 string voiceLine = ResolveCaravanVoice(curCaravan);
                 if (!string.IsNullOrWhiteSpace(voiceLine))

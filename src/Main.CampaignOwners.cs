@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
@@ -124,10 +125,36 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupWorld();
+                // C2 / Plan 20C (§39) — capture the station's prediction for
+                // TODAY before the weather advances, so a hazard arrival can be
+                // attributed: predicted / missed / unexpected. The radio layer
+                // has no authored weather predictions yet — the radio/station
+                // distinction is documented as not-yet-authored data.
+                var stationState = _m._world.WeatherIntelligence?.Station?.State;
+                var predictedToday = stationState?.cachedForecast?
+                    .FirstOrDefault(f => f != null && f.day == day)?.weather;
+                bool stationCouldKnow = stationState != null
+                    && stationState.isInstalled
+                    && stationState.lastForecastDay >= 0
+                    && day <= stationState.lastForecastDay + stationState.forecastHorizonDays;
+
                 _m._world.TickHours(24f);
-                _m._world.WeatherIntelligence.TickDay(day);
+                _m._world.WeatherIntelligence?.TickDay(day);
+
+                var actual = _m._world.Weather.Current;
                 events.Add(new DayStateChangeEvent("weather_ticked", "weather_world",
-                    _m._world.Weather.Current.ToString(), null, _m._world.Weather.OutdoorRadModifier));
+                    actual.ToString(), null, _m._world.Weather.OutdoorRadModifier));
+
+                // Severe-weather arrivals get attribution (§39): the briefing
+                // can say why the player wasn't warned — never a silent storm.
+                if (_m._world.IsSevereWeather(actual) && actual != predictedToday)
+                {
+                    events.Add(stationCouldKnow
+                        ? new DayStateChangeEvent("weather_forecast_miss", "weather_world",
+                            actual.ToString(), "station_predicted_other", day)
+                        : new DayStateChangeEvent("weather_unexpected_storm", "weather_world",
+                            actual.ToString(), "no_station_forecast", day));
+                }
             }
         }
 
@@ -164,6 +191,34 @@ namespace AtomicWar.GodotApp
                 _m.TickPowerSubgrids(day);
 
                 events.Add(new DayStateChangeEvent("power_ticked", "power_grid", null, null, day));
+
+                // C2[6] 23B: attributed shedding. The grid reports exactly what the
+                // deterministic allocator served/shed; the briefing distinguishes
+                // grid-automatic shed from the player's own breaker actions.
+                var summary = _m._powerGrid?.LastTickSummary;
+                if (summary != null)
+                {
+                    if (summary.HasCriticalDeficit)
+                        events.Add(new DayStateChangeEvent("power_critical_deficit", "power_grid",
+                            "life_support", null, summary.UnservedWatts));
+                    if (summary.ShedRoomIds != null && summary.ShedRoomIds.Count > 0)
+                        events.Add(new DayStateChangeEvent("power_shed_automatic", "power_grid",
+                            string.Join(",", summary.ShedRoomIds), null, summary.UnservedWatts));
+                    if (summary.BrownoutBegan)
+                        events.Add(new DayStateChangeEvent("power_brownout_began", "power_grid", null, null, day));
+                    if (summary.BrownoutEnded)
+                        events.Add(new DayStateChangeEvent("power_brownout_restored", "power_grid", null, null, day));
+                }
+                if (_m._pendingPlayerSheds.Count > 0)
+                {
+                    events.Add(new DayStateChangeEvent("power_shed_player", "power_grid",
+                        string.Join(",", _m._pendingPlayerSheds), null, _m._pendingPlayerSheds.Count));
+                    _m._pendingPlayerSheds.Clear();
+                }
+
+                // C2[6] 23C: fact-reading cascade authority runs after the grid
+                // resolves, so every stressor reflects the day's real outcome.
+                _m.TickCascade(day, events);
             }
         }
 
@@ -233,7 +288,10 @@ namespace AtomicWar.GodotApp
                 _m._startingLevel.TickDay(isFilterDutyAssigned: false, outdoorWeather: WeatherKind.Clear, powerAvailability01: airPower);
 
                 _m.SetupInventory();
-                int foodToConsume = _m._startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3;
+                _m.SetupDoseLedger();
+                int baseFood = _m._startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3;
+                int childFood = _m._doseLedger?.Cohort?.CalculateChildFoodUnits(_m._startingLevel.System.State.rationPolicy) ?? 0;
+                int foodToConsume = baseFood + childFood;
                 int waterToConsume = _m._startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Irradiated ? 0 : (_m._startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3);
                 _m._inventory.Remove("canned_food", foodToConsume);
                 if (waterToConsume > 0)
@@ -242,6 +300,10 @@ namespace AtomicWar.GodotApp
                     _m._inventory.Remove("irradiated_water", 2);
 
                 events.Add(new DayStateChangeEvent("consumed_rations", "starting_level_rations", "canned_food", null, foodToConsume));
+                if (childFood > 0)
+                {
+                    events.Add(new DayStateChangeEvent("consumed_child_rations", "starting_level_rations", "canned_food", null, childFood));
+                }
             }
         }
 
@@ -420,6 +482,7 @@ namespace AtomicWar.GodotApp
                     ?? AirlockDoorState.Secure;
 
                 _m.TickAllExpandedShelterSystems(day);
+                _m._kitchenNutrition?.DrainDayEvents(events);
 
                 string filterBandAfter = _m._startingLevel?.System.AirFilterConditionBand ?? "healthy";
                 if (FilterBandRank(filterBandAfter) < FilterBandRank(filterBandBefore))
@@ -508,7 +571,23 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupSurvivors();
+                _m._survivors.Needs.CurrentDay = day;
+                _m.ApplyScheduleNeedsModifiers();
                 _m._survivors.TickHour(24f);
+                _m.VacateInvalidFitnessAssignments();
+                // Plan 24B A2 + 24C A3: measured overwork routes data-authored
+                // fatigue/morale rates through the shared needs seam; grief
+                // decays through the same seam from the relationship ledger's
+                // persisted facts. Both read the post-validation assignment
+                // state so vacated shifts never keep a stale rate.
+                _m.ApplyOverworkNeedsModifiers();
+                _m.ApplyGriefNeedsModifiers();
+                _m.SetupInventory();
+                if (_m._inventory != null)
+                {
+                    _m._inventory.CurrentDay = day;
+                    _m._inventory.DrainDayEvents(events);
+                }
                 _m.SetupShelterDecor();
                 // Plan 71: room_common_mess_hall — communal comfort morale is a
                 // shed-able low-priority load (level gate, applied once per day;
@@ -532,6 +611,9 @@ namespace AtomicWar.GodotApp
                 _m.SetupSurvivorFate();
                 if (_m._survivorFate != null)
                     _m._survivorFate.DrainDayEvents(events);
+                _m.SetupDutyRoster();
+                _m._dutyRoster!.DrainDayEvents(events);
+                _m._medicalWardSession?.DrainDayEvents(events);
                 events.Add(new DayStateChangeEvent("survivors_ticked", "survivors_needs", null, null, _m._survivors.RosterState.Count));
             }
         }
@@ -711,6 +793,10 @@ namespace AtomicWar.GodotApp
                 // ladder and keep the memorial grief sink bound. Runs after the
                 // disease tick so it reads this day's stage, and is idempotent.
                 _m.SyncDiseaseTriage(day, events);
+                _m.VacateInvalidFitnessAssignments();
+                _m.ApplyOverworkNeedsModifiers();
+                _m.ApplyGriefNeedsModifiers();
+                _m._medicalWardSession?.DrainDayEvents(events);
 
                 if (_m._expansionHubDirty) _m.SaveExpansionHub();
 
@@ -728,6 +814,7 @@ namespace AtomicWar.GodotApp
                 _m.SetupDutyRoster();
                 _m._dutyRoster!.SyncDay(day);
                 _m._dutyRoster!.TickDay(_m.BuildHomeOccupantSnapshot());
+                _m._dutyRoster.DrainDayEvents(events);
                 _m.SetupIceRoad();
                 _m._dutyRoster.SyncHoldfastToDuty(_m._core.Census, _m._core.IceRoad, _m._expansions.Waystation, _m._core.Brine, day);
                 _m._dutyRosterPanel?.RefreshView();

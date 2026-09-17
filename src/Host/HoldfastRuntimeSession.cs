@@ -463,88 +463,102 @@ namespace AtomicWar.GodotApp
 
         private ActionResult FallbackConsume(string itemId, int amount, string targetSurvivor, ItemType expectedType, float customReduction = 0f)
         {
-            int held = Trade.GetHeld(itemId);
-            if (held < amount)
-                return ActionResult.Blocked("insufficient_inventory", $"Insufficient {itemId} held ({held}/{amount}).");
-
-            Trade.Inventory.RemoveItem(itemId, amount);
-
-            float hungerRestore = 0f;
-            float thirstRestore = 0f;
-            float healthEffect = 0f;
-            float radCleanse = 0f;
-            float contamination = 0f;
-
-            string canonical = ItemAliases.ToCanonical(itemId);
-
-            if (canonical == "canned_food") { hungerRestore = 40f; }
-            else if (canonical == "crop_wheat") { hungerRestore = 50f; }
-            else if (canonical == "crop_tuber") { hungerRestore = 35f; }
-            else if (canonical == "crop_grain") { hungerRestore = 30f; }
-            else if (canonical == "crop_mushroom") { hungerRestore = 25f; }
-            else if (canonical == "clean_water" || canonical == "water_bottle" || canonical == "purified_water") { thirstRestore = 40f; }
-            else if (canonical == "irradiated_water") { thirstRestore = 25f; contamination = 0.5f; }
-            else if (canonical == "bandage") { healthEffect = 30f; }
-            else if (canonical == "anti_rad") { radCleanse = customReduction > 0f ? customReduction : 50f; }
-            else if (canonical == "rad_away") { radCleanse = customReduction > 0f ? customReduction : 30f; }
-            else if (canonical == "iodine_pills") { radCleanse = customReduction > 0f ? customReduction : 20f; }
-            else if (expectedType == ItemType.Food) { hungerRestore = 30f; }
-            else if (expectedType == ItemType.Water) { thirstRestore = 35f; }
-            else if (expectedType == ItemType.AntiRad) { radCleanse = customReduction > 0f ? customReduction : 20f; }
-
-            var deltas = new Dictionary<string, double>(StringComparer.Ordinal);
-            if (hungerRestore > 0f) deltas["hunger"] = -hungerRestore * amount;
-            if (thirstRestore > 0f) deltas["thirst"] = -thirstRestore * amount;
-            if (healthEffect > 0f) deltas["health"] = healthEffect * amount;
-            if (radCleanse > 0f) deltas["rad_cleanse"] = radCleanse * amount;
-            if (contamination > 0f) deltas["contamination"] = contamination * amount * Ashfall.Core.Inventory.Inventory.ContaminationDosePerUnit;
-
-            if (Survivors != null)
+            var session = GetOrCreateInventorySession();
+            if (session != null)
             {
-                if (hungerRestore > 0f) Survivors.Needs.Modify(targetSurvivor, NeedKind.Hunger, -hungerRestore * amount);
-                if (thirstRestore > 0f) Survivors.Needs.Modify(targetSurvivor, NeedKind.Thirst, -thirstRestore * amount);
-                if (healthEffect > 0f) Survivors.Needs.Modify(targetSurvivor, NeedKind.Health, healthEffect * amount);
-                if (radCleanse > 0f) Survivors.AdministerAntiRad(targetSurvivor, radCleanse * amount);
-                if (contamination > 0f)
+                var aggregatedDeltas = new Dictionary<string, double>(StringComparer.Ordinal);
+                for (int i = 0; i < amount; i++)
                 {
-                    var rad = Survivors.RadStateFor(targetSurvivor);
-                    if (rad != null) Survivors.Radiation.AdjustDose(rad, contamination * amount * Ashfall.Core.Inventory.Inventory.ContaminationDosePerUnit);
+                    var r = session.ConsumeResult(itemId, targetSurvivor);
+                    if (!r.IsSuccess) return r;
+                    foreach (var kv in r.Deltas)
+                    {
+                        aggregatedDeltas.TryGetValue(kv.Key, out double cur);
+                        aggregatedDeltas[kv.Key] = cur + kv.Value;
+                    }
+                }
+                StateChanged?.Invoke();
+                return ActionResult.Success($"Consumed {amount} × {itemId}.", aggregatedDeltas);
+            }
+
+            return ActionResult.Blocked("no_inventory", "Cannot consume: no shelter inventory bound.");
+        }
+
+        /// <summary>
+        /// Plan 22 Task 22A §22A.15: Feed all living survivors atomically.
+        /// Preflights survivor count and available food portions before mutation.
+        /// Shortage returns a detailed failure without partial consumption.
+        /// </summary>
+        public ActionResult FeedAllCrewResult(string? itemId = null)
+        {
+            var session = GetOrCreateInventorySession();
+            if (session == null)
+                return ActionResult.Blocked("no_inventory", "Cannot feed crew: no shelter inventory bound.");
+
+            var livingSurvivors = new List<string>();
+            if (Survivors != null && Survivors.RosterState.Count > 0)
+            {
+                for (int i = 0; i < Survivors.RosterState.Count; i++)
+                {
+                    var s = Survivors.RosterState[i];
+                    if (s != null && s.IsAliveState)
+                        livingSurvivors.Add(s.Id);
                 }
             }
             else
             {
-                if (hungerRestore > 0f) _fallbackHunger = Math.Max(0, (int)(_fallbackHunger - hungerRestore * amount));
-                if (thirstRestore > 0f) _fallbackThirst = Math.Max(0, (int)(_fallbackThirst - thirstRestore * amount));
-                if (healthEffect > 0f) _fallbackHealth = Math.Min(MaxHealth, (int)(_fallbackHealth + healthEffect * amount));
-                if (radCleanse > 0f) _fallbackRadiation = Math.Max(0f, _fallbackRadiation - radCleanse * amount);
-                if (contamination > 0f) _fallbackRadiation += contamination * amount * Ashfall.Core.Inventory.Inventory.ContaminationDosePerUnit;
+                livingSurvivors.Add(PlayerSurvivorId);
+            }
+
+            if (livingSurvivors.Count == 0)
+                return ActionResult.Blocked("no_living_survivors", "No living survivors to feed.");
+
+            string? candidateItem = itemId ?? FindAvailableFoodItemId();
+            if (string.IsNullOrEmpty(candidateItem))
+                return ActionResult.Blocked("no_food_available", "No food available in shelter inventory.");
+
+            var def = session.Catalog.Get(candidateItem);
+            int available = session.Inventory.CountById(candidateItem);
+            if (available < livingSurvivors.Count)
+            {
+                return ActionResult.Blocked(
+                    "insufficient_food",
+                    $"Insufficient {(def?.displayName ?? candidateItem)}: need {livingSurvivors.Count} portions, but only {available} available.");
+            }
+
+            var aggregatedDeltas = new Dictionary<string, double>(StringComparer.Ordinal);
+            for (int i = 0; i < livingSurvivors.Count; i++)
+            {
+                var r = session.ConsumeResult(candidateItem, livingSurvivors[i]);
+                if (!r.IsSuccess) return r;
+                foreach (var kv in r.Deltas)
+                {
+                    aggregatedDeltas.TryGetValue(kv.Key, out double cur);
+                    aggregatedDeltas[kv.Key] = cur + kv.Value;
+                }
             }
 
             StateChanged?.Invoke();
-            return ActionResult.Success($"Consumed {amount} × {itemId}.", deltas);
+            return ActionResult.Success(
+                $"Fed {livingSurvivors.Count} crew members 1 × {(def?.displayName ?? candidateItem)}.",
+                aggregatedDeltas);
         }
 
         public string? FindAvailableFoodItemId()
         {
             var inv = EffectiveInventory;
-            if (inv != null)
+            if (inv == null) return null;
+
+            for (int i = 0; i < inv.Slots.Count; i++)
             {
-                for (int i = 0; i < inv.Slots.Count; i++)
+                var slot = inv.Slots[i];
+                if (slot?.Item != null && slot.Amount > 0 && slot.Item.IsConsumable())
                 {
-                    var slot = inv.Slots[i];
-                    if (slot?.Item != null && slot.Amount > 0)
-                    {
-                        if (slot.Item.type == ItemType.Food ||
-                            slot.Item.type == ItemType.ContaminatedFood ||
-                            slot.Item.hungerRestore > 0f)
-                            return slot.Item.id;
-                    }
+                    if (slot.Item.type == ItemType.Food ||
+                        slot.Item.type == ItemType.ContaminatedFood ||
+                        slot.Item.hungerRestore > 0f)
+                        return slot.Item.id;
                 }
-            }
-            string[] preferredFood = { "canned_food", "crop_wheat", "crop_tuber", "crop_grain", "crop_mushroom", "ration_pack", "dried_meat", "mre" };
-            foreach (var food in preferredFood)
-            {
-                if (Trade.GetHeld(food) > 0) return food;
             }
             return null;
         }
@@ -552,25 +566,19 @@ namespace AtomicWar.GodotApp
         public string? FindAvailableWaterItemId()
         {
             var inv = EffectiveInventory;
-            if (inv != null)
+            if (inv == null) return null;
+
+            if (inv.CountById("clean_water") > 0) return "clean_water";
+            for (int i = 0; i < inv.Slots.Count; i++)
             {
-                if (inv.CountById("clean_water") > 0) return "clean_water";
-                for (int i = 0; i < inv.Slots.Count; i++)
+                var slot = inv.Slots[i];
+                if (slot?.Item != null && slot.Amount > 0 && slot.Item.IsConsumable())
                 {
-                    var slot = inv.Slots[i];
-                    if (slot?.Item != null && slot.Amount > 0)
-                    {
-                        if (slot.Item.type == ItemType.Water ||
-                            slot.Item.type == ItemType.IrradiatedWater ||
-                            slot.Item.thirstRestore > 0f)
-                            return slot.Item.id;
-                    }
+                    if (slot.Item.type == ItemType.Water ||
+                        slot.Item.type == ItemType.IrradiatedWater ||
+                        slot.Item.thirstRestore > 0f)
+                        return slot.Item.id;
                 }
-            }
-            string[] preferredWater = { "clean_water", "water_bottle", "purified_water", "irradiated_water" };
-            foreach (var water in preferredWater)
-            {
-                if (Trade.GetHeld(water) > 0) return water;
             }
             return null;
         }
@@ -578,27 +586,21 @@ namespace AtomicWar.GodotApp
         public string? FindAvailableAntiRadItemId()
         {
             var inv = EffectiveInventory;
-            if (inv != null)
+            if (inv == null) return null;
+
+            if (inv.CountById("anti_rad") > 0) return "anti_rad";
+            if (inv.CountById("rad_away") > 0) return "rad_away";
+            if (inv.CountById("iodine_pills") > 0) return "iodine_pills";
+            for (int i = 0; i < inv.Slots.Count; i++)
             {
-                if (inv.CountById("anti_rad") > 0) return "anti_rad";
-                if (inv.CountById("rad_away") > 0) return "rad_away";
-                if (inv.CountById("iodine_pills") > 0) return "iodine_pills";
-                for (int i = 0; i < inv.Slots.Count; i++)
+                var slot = inv.Slots[i];
+                if (slot?.Item != null && slot.Amount > 0 && slot.Item.IsConsumable())
                 {
-                    var slot = inv.Slots[i];
-                    if (slot?.Item != null && slot.Amount > 0)
-                    {
-                        if (slot.Item.type == ItemType.AntiRad ||
-                            slot.Item.type == ItemType.Iodine ||
-                            slot.Item.radCleanse > 0f)
-                            return slot.Item.id;
-                    }
+                    if (slot.Item.type == ItemType.AntiRad ||
+                        slot.Item.type == ItemType.Iodine ||
+                        slot.Item.radCleanse > 0f)
+                        return slot.Item.id;
                 }
-            }
-            string[] preferredAntiRad = { "anti_rad", "rad_away", "iodine_pills" };
-            foreach (var item in preferredAntiRad)
-            {
-                if (Trade.GetHeld(item) > 0) return item;
             }
             return null;
         }

@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-10<br>
-**Total Registered Actions:** 164 entries / 238 flag tokens (aliases included)
+**Last Verified:** 2026-09-15<br>
+**Total Registered Actions:** 176 entries / 251 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -173,6 +173,18 @@
 | `--ui-snapshot-uitest` | `--ui-snapshots` | Capture all snapshot targets, DIFF against snapshots/ goldens (needs real display, not --headless) |
 | `--utility-ai-uitest` | — | Utility AI debug view, consideration curves, and behavior trees |
 | `--verdict-uitest` | — | Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free |
+| `--sofc-power-selftest` | — | Plan 122 solid-oxide fuel cell: catalog, electrochemistry engine, power/water gating, save round-trip |
+| `--sound-ranging-selftest` | — | Plan 123 sound ranging: catalog, threat engine, bearing/registration math, determinism |
+| `--cvd-diamond-selftest` | — | Plan 124 CVD diamond synthesis: catalog, plasma-phase engine, batch lifecycle, save round-trip |
+| `--amphibious-draisine-selftest` | — | Plan 125 amphibious draisine: catalog, crossing engine, cargo/load gates, water crossings |
+| `--late-tech-mobility-selftest` | — | Combined Plans 122–125 harness: all four late-tech systems composed through one CLI world |
+| `--plans-122-125-selftest` | — | Plans 122–125 aggregate: catalog + engine + wiring + persistence checks for SOFC/sound ranging/CVD diamond/amphibious draisine |
+| `--plans-122-125-balance-soak` | — | Plans 122–125 balance soaks: bounded multi-day soak over the four late-tech systems, writes the plan 122–125 balance reports |
+| `--insar-selftest` | — | Plan 139 InSAR geodesy: repeat passes, decorrelation, deformation classes, travel/excavation projections |
+| `--hydraulic-extrusion-selftest` | — | Plan 140 hydraulic extrusion: phases, defect rolls, tool wear, rejected/premium outcomes |
+| `--runflat-tire-selftest` | — | Plan 141 run-flat tires: install gating, hazard reduction, heat/fuel penalty, severe-failure paths |
+| `--plans-139-141-selftest` | — | Plans 139–141 aggregate: InSAR + hydraulic extrusion + run-flat wiring, persistence, and panel reachability |
+| `--shelter-physics-selftest` | `--shelter-actor-physics-selftest` | Shelter physics and actor movement selftests: interior traversal, hazard interaction |
 | `--user-data-dir` | — | <path> Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR) |
 | `--log-dir` | — | <path> Configure log output directory for headless runs (or set ASHFALL_LOG_DIR) |
 | `--host-help` | `--help` | This list |

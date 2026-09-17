@@ -23,6 +23,8 @@ namespace Ashfall.Core.Medical
         private readonly List<MedicalProcedureDef> _procedures;
 
         public event Action<MedicalWardEvent>? OnWardChanged;
+        /// <summary>Raised after an active admission is recorded.</summary>
+        public event Action<string>? OnPatientAdmitted;
 
         public MedicalWardSystem(MedicalWardState state,
             IEnumerable<MedicalBed> beds,
@@ -55,6 +57,8 @@ namespace Ashfall.Core.Medical
                 return MedicalWardAdmissionResult.Fail("missing_bed_id");
             if (FindBed(bedId) == null)
                 return MedicalWardAdmissionResult.Fail("unknown_bed");
+            if (GetActiveAdmission(patientId) != null)
+                return MedicalWardAdmissionResult.Fail("already_admitted");
             if (GetBedOccupant(bedId) != null)
                 return MedicalWardAdmissionResult.Fail("bed_occupied");
             var record = new MedicalAdmissionRecord
@@ -67,6 +71,7 @@ namespace Ashfall.Core.Medical
             _state.Admissions.Add(record);
             OnWardChanged?.Invoke(new MedicalWardEvent(MedicalWardEventKind.Admitted,
                 patientId, bedId, day));
+            OnPatientAdmitted?.Invoke(patientId);
             return MedicalWardAdmissionResult.Ok(record);
         }
 

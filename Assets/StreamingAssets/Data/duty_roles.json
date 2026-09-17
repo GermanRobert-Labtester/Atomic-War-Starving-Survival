@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "collection_id": "duty_roles",
+  "thresholds": {
+    "fatigue_impaired": 60.0,
+    "fatigue_unfit": 85.0,
+    "health_impaired": 60.0,
+    "health_unfit": 30.0,
+    "hunger_impaired": 60.0,
+    "hunger_unfit": 85.0,
+    "thirst_impaired": 60.0,
+    "thirst_unfit": 85.0,
+    "warmth_impaired": 40.0,
+    "warmth_unfit": 20.0,
+    "days_without_sleep_impaired": 2,
+    "days_without_sleep_unfit": 4,
+    "discharge_recovery_days": 2,
+    "sick_band_impaired": 1,
+    "sick_band_unfit": 2,
+    "sick_band_incapacitated": 3,
+    "dose_impaired_msv": 100.0,
+    "dose_unfit_msv": 300.0
+  },
+  "roles": [
+    {
+      "id": "night_watch",
+      "skill_id": "skill_watchful",
+      "minimum_skill": 0.0,
+      "maximum_fatigue": 90.0,
+      "minimum_health": 30.0,
+      "maximum_dose_msv": 300.0,
+      "maximum_hours": 12.0,
+      "maximum_hours_if_impaired": 8.0,
+      "allow_unfit": false,
+      "light_duty": false,
+      "requires_not_quarantined": true,
+      "precision_work": true,
+      "hazard_class": "perimeter"
+    },
+    {
+      "id": "mess",
+      "skill_id": "skill_iron_chef",
+      "minimum_skill": 0.0,
+      "maximum_fatigue": 90.0,
+      "minimum_health": 30.0,
+      "maximum_dose_msv": 300.0,
+      "maximum_hours": 12.0,
+      "maximum_hours_if_impaired": 8.0,
+      "allow_unfit": false,
+      "light_duty": false,
+      "requires_not_quarantined": true,
+      "precision_work": true,
+      "hazard_class": "food"
+    },
+    {
+      "id": "hatch_opener",
+      "skill_id": "skill_rough_repairs",
+      "minimum_skill": 0.0,
+      "maximum_fatigue": 85.0,
+      "minimum_health": 35.0,
+      "maximum_dose_msv": 300.0,
+      "maximum_hours": 12.0,
+      "maximum_hours_if_impaired": 6.0,
+      "allow_unfit": false,
+      "light_duty": false,
+      "requires_not_quarantined": true,
+      "precision_work": true,
+      "hazard_class": "airlock"
+    },
+    {
+      "id": "intake_sleeper",
+      "skill_id": "",
+      "minimum_skill": 0.0,
+      "maximum_fatigue": 95.0,
+      "minimum_health": 25.0,
+      "maximum_dose_msv": 600.0,
+      "maximum_hours": 8.0,
+      "maximum_hours_if_impaired": 8.0,
+      "allow_unfit": true,
+      "light_duty": true,
+      "requires_not_quarantined": true,
+      "precision_work": false,
+      "hazard_class": "intake"
+    },
+    {
+      "id": "expedition",
+      "skill_id": "skill_trail_memory",
+      "minimum_skill": 0.0,
+      "maximum_fatigue": 80.0,
+      "minimum_health": 40.0,
+      "maximum_dose_msv": 100.0,
+      "maximum_hours": 12.0,
+      "maximum_hours_if_impaired": 6.0,
+      "allow_unfit": false,
+      "light_duty": false,
+      "requires_not_quarantined": true,
+      "precision_work": true,
+      "hazard_class": "surface"
+    }
+  ],
+  "overwork": {
+    "fatigue_per_excess_hour": 0.5,
+    "morale_per_excess_hour": -0.25,
+    "yield_penalty_permille": 150
+  },
+  "worker_yield": {
+    "floor_permille": 750,
+    "cap_permille": 1050,
+    "impaired_penalty_permille": 100,
+    "absolute_floor_permille": 500
+  }
+}

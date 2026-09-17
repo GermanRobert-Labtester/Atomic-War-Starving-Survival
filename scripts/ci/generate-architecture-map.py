@@ -743,6 +743,20 @@ ARCHITECTURE_GRAPH = {
         "cli": [],
         "tests": ["Plan210SanitationSystemTests", "Plan210SanitationFacilityCatalogTests", "Plan210SanitationHostWiringTests"]
     },
+    "echoes": {
+        "domain": "Narrative",
+        "core": ["EchoSystem", "NarrativeContinuityEngine"],
+        "catalog": ["echoes.json"],
+        "host": ["EchoHostSession", "EchoSaveStore"],
+        "setup": "SetupEchoes",
+        "ticked": True,
+        "tick_type": "Narrative Echo Tick",
+        "store": ["EchoSaveStore"],
+        "ui": [],
+        "routes": [],
+        "cli": [],
+        "tests": ["EchoCatalogTests", "EchoSystemTests"]
+    },
     "black_market": {
         "domain": "Economy & Trade",
         "core": ["BlackMarketSystem", "BlackMarketInventoryCatalog"],
@@ -2007,7 +2021,7 @@ ARCHITECTURE_GRAPH = {
     "psyops": { "domain": "Radio", "core": ["PsyOpsSystem"], "catalog": [], "host": ["PsyOpsHostSession"], "setup": "SetupPsyOps", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["PsyOpsSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["PsyOpsSystemTests"] },
     "cultural_archives": { "domain": "Knowledge", "core": ["CulturalArchiveVaultSystem"], "catalog": [], "host": ["Main"], "setup": "SetupCulturalArchive", "ticked": False, "tick_type": "On-Demand", "store": ["CulturalArchiveSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["CulturalArchiveVaultTests"] },
     "diplomatic_summits": { "domain": "Factions", "core": ["DiplomaticSummitSystem"], "catalog": [], "host": ["Main"], "setup": "SetupDiplomaticSummit", "ticked": False, "tick_type": "On-Demand", "store": ["DiplomaticSummitSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["DiplomaticSummitTests"] },
-    "sky_defense_battery": { "domain": "Combat", "core": ["SkyDefenseBatterySystem"], "catalog": [], "host": ["Main"], "setup": "SetupSkyDefense", "ticked": False, "tick_type": "On-Demand", "store": ["SkyDefenseBatterySaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["SkyDefenseBatteryTests"] },
+    "sky_defense_battery": { "domain": "Combat", "core": ["SkyDefenseBatterySystem"], "catalog": [], "host": ["Main"], "setup": "SetupSkyDefense", "ticked": False, "tick_type": "On-Demand", "store": ["SkyDefenseBatterySaveStore"], "ui": ["SkyDefenseBatteryPanel"], "routes": ["sky_defense_battery"], "cli": [], "tests": ["SkyDefenseBatteryTests"] },
     "psychological_sanatorium": { "domain": "Medical", "core": ["PsychologicalSanatoriumSystem"], "catalog": [], "host": ["Main"], "setup": "SetupSanatorium", "ticked": False, "tick_type": "On-Demand", "store": ["PsychologicalSanatoriumSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["PsychologicalSanatoriumTests"] },
     "agriculture": { "domain": "Farming", "core": ["AgricultureSystem"], "catalog": ["crop_strains.json"], "host": ["Main"], "setup": "SetupAgriculture", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["AgricultureSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["AgricultureSystemTests"] },
     "settlement_defenses": { "domain": "Combat", "core": ["DefenseSystem"], "catalog": ["defenses.json"], "host": ["DefenseHostSession"], "setup": "SetupDefense", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["DefenseSaveStore"], "ui": ["DefenseGridPanel"], "routes": ["defense_grid"], "cli": [], "tests": ["DefenseSystemTests"] },

@@ -59,6 +59,7 @@ namespace Ashfall.Core.Campaign
                 switch (evt.Kind)
                 {
                     case "survivor_perished":
+                    case "child_lost":
                         deaths.Add(new DailyBriefingEntry("Deaths", evt.PrimaryId,
                             string.IsNullOrEmpty(evt.SecondaryId) ? $"{evt.PrimaryId} has perished." : $"{evt.PrimaryId} perished: {evt.SecondaryId}", order: order));
                         break;
@@ -67,6 +68,46 @@ namespace Ashfall.Core.Campaign
                     case "hazard_warning":
                         warnings.Add(new DailyBriefingEntry("Warnings", evt.PrimaryId,
                             string.IsNullOrEmpty(evt.SecondaryId) ? $"{evt.PrimaryId} warning." : $"{evt.PrimaryId}: {evt.SecondaryId}", order: order, numeric: evt.Numeric));
+                        break;
+
+                    // C2 / Plan 23 (§23B) — attributed power shedding: the player can
+                    // tell what the grid shut down automatically versus what they
+                    // shut down themselves, and what the deficit cost.
+                    case "power_critical_deficit":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Power grid",
+                            $"LIFE SUPPORT UNSERVED — {evt.Numeric:0} W shed; a critical-tier circuit lost power.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "power_shed_automatic":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", "Power grid",
+                            $"The grid shed {evt.PrimaryId} automatically to cover the deficit.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "power_shed_player":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", "Power grid",
+                            $"You shut down {evt.PrimaryId}.", order: order));
+                        break;
+
+                    case "power_brownout_began":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Power grid",
+                            "Brownout: generation cannot cover demand and the battery is drained.", order: order));
+                        break;
+
+                    case "power_brownout_restored":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", "Power grid",
+                            "Power restored — generation covers demand again.", order: order));
+                        break;
+
+                    // C2[6] 23C — fact-driven cascade attribution: one semantic line
+                    // per stressor transition, so the player can trace the chain.
+                    case "cascade_warning":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Cascade",
+                            $"Strain: {evt.SecondaryId} — recover before it compounds.", order: order));
+                        break;
+
+                    case "cascade_recovered":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", "Cascade",
+                            $"Strain resolved: {evt.SecondaryId}.", order: order));
                         break;
 
                     // C2 / Plan 20B (§29) — shelter shielding causality: the
@@ -79,6 +120,18 @@ namespace Ashfall.Core.Campaign
                     case "shelter_hatch_unsealed":
                         warnings.Add(new DailyBriefingEntry("Warnings", "Airlock",
                             $"Airlock state: {evt.SecondaryId}. Contamination ingress risk while unsealed.", order: order));
+                        break;
+
+                    // C2 / Plan 20C (§39) — forecast-miss attribution: the
+                    // briefing explains WHY the player wasn't warned.
+                    case "weather_forecast_miss":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Forecast miss",
+                            $"{evt.PrimaryId} arrived — the station predicted otherwise. Check calibration.", order: order));
+                        break;
+
+                    case "weather_unexpected_storm":
+                        warnings.Add(new DailyBriefingEntry("Warnings", "Unwarned storm",
+                            $"{evt.PrimaryId} arrived with no station forecast covering today.", order: order));
                         break;
 
                     case "shelter_decon_started":
@@ -98,9 +151,70 @@ namespace Ashfall.Core.Campaign
                             survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId, $"{evt.PrimaryId} condition: {evt.SecondaryId}.", order: order, numeric: evt.Numeric));
                         break;
 
+                    case "duty_vacated":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            $"{evt.PrimaryId} left {evt.SecondaryId} duty after a fitness change.", order: order));
+                        break;
+
+                    case "medical_admitted":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            $"{evt.PrimaryId} was admitted to the medical ward ({evt.SecondaryId}).", order: order));
+                        break;
+
+                    case "medical_discharged":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            $"{evt.PrimaryId} was discharged from the medical ward ({evt.SecondaryId}) and remains under recovery review.", order: order));
+                        break;
+
                     case "consumed_rations":
+                    case "consumed_child_rations":
                         resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
                             $"{evt.PrimaryId}: {evt.Numeric:F0} consumed.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "ate":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
+                            $"{evt.PrimaryId} consumed {evt.SecondaryId}.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "drank":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
+                            $"{evt.PrimaryId} drank {evt.SecondaryId}.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "med_taken":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            $"{evt.PrimaryId} took medicine: {evt.SecondaryId}.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "contaminated_meal":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            $"Contamination warning: {evt.PrimaryId} ingested contaminated ration ({evt.SecondaryId}, +{evt.Numeric:F1} rads).", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "meal_served":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
+                            $"{evt.PrimaryId} was served a prepared meal: {evt.SecondaryId}.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "portions_spoiled":
+                        resourceConsumption.Add(new DailyBriefingEntry("Resource Consumption", evt.PrimaryId,
+                            $"Kitchen spoilage: {evt.Numeric:F0} portions of {evt.PrimaryId} spoiled.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "child_born":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            string.IsNullOrEmpty(evt.SecondaryId) ? $"A child was born in the shelter: {evt.PrimaryId}." : $"A child was born ({evt.PrimaryId}, parents: {evt.SecondaryId}).", order: order));
+                        break;
+
+                    case "child_aged":
+                        shelterSocial.Add(new DailyBriefingEntry("Shelter Social", evt.PrimaryId,
+                            $"{evt.PrimaryId} reached age {evt.Numeric:F0} days.", order: order, numeric: evt.Numeric));
+                        break;
+
+                    case "generation_advanced":
+                        survivorChanges.Add(new DailyBriefingEntry("Survivor Changes", evt.PrimaryId,
+                            $"Generation advanced: {evt.PrimaryId} has matured into adulthood.", order: order));
                         break;
 
                     case "resource_delta":

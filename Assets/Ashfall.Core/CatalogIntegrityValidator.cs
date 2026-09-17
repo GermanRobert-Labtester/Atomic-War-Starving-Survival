@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.Json;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.Radiation;
+using Ashfall.Core.Survivors;
 
 namespace Ashfall.Core
 {
@@ -446,7 +447,10 @@ namespace Ashfall.Core
             // Plans 50-53
             "slot_type", "compatible_vehicle_tags", "operation_class", "target_subsystem", "risk_level", "trigger_tags", "journal_entry_key", "bus_id", "playback_mode", "ducking_group", "attenuation_profile",
             // Plan 135 — Narrative Discovery Manifest vocabulary & foreign keys
-            "channel", "source_record_id", "source_catalog", "producer_type"
+            "channel", "source_record_id", "source_catalog", "producer_type",
+            // C2[6] 23C — cascade rule vocabulary (validated by CascadeRuleCatalogLoader:
+            // known condition/off-ramp keys, never catalog id references).
+            "requires_all", "off_ramps", "effect_tags"
         };
 
         /// <summary>
@@ -926,10 +930,277 @@ namespace Ashfall.Core
             // goods-id resolution, region/category vocabularies, duplicate rows.
             ValidateRegionalPriceAtlas(dataDirectory, files, report);
 
+            // Plan 24A: health-aware duty validation. The duty role catalog is
+            // required data, and its skill references must resolve against the
+            // existing skill authority rather than becoming a second registry.
+            ValidateDutyRoleCatalog(dataDirectory, files, ctx, report);
+
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
 
             return report;
+        }
+
+        private static void ValidateDutyRoleCatalog(
+            string dataDirectory,
+            IFileIO files,
+            Ctx ctx,
+            CatalogIntegrityReport report)
+        {
+            string path = Path.Combine(dataDirectory, "duty_roles.json");
+            if (!files.FileExists(path))
+            {
+                report.Error("duty_roles.json: required duty fitness catalog is missing");
+                return;
+            }
+
+            try
+            {
+                using var doc = JsonDocument.Parse(files.ReadAllText(path));
+                var root = doc.RootElement;
+                if (root.ValueKind != JsonValueKind.Object)
+                {
+                    report.Error("duty_roles.json: root must be an object");
+                    return;
+                }
+
+                if (!root.TryGetProperty("schema_version", out var schema)
+                    || schema.ValueKind != JsonValueKind.Number
+                    || schema.GetInt32() != 1)
+                    report.Error("duty_roles.json: schema_version must be 1");
+                if (!root.TryGetProperty("collection_id", out var collection)
+                    || collection.ValueKind != JsonValueKind.String
+                    || collection.GetString() != "duty_roles")
+                    report.Error("duty_roles.json: collection_id must be 'duty_roles'");
+
+                if (!root.TryGetProperty("thresholds", out var thresholds)
+                    || thresholds.ValueKind != JsonValueKind.Object)
+                {
+                    report.Error("duty_roles.json: thresholds object is required");
+                }
+                else
+                {
+                    ValidateDutyThresholds(thresholds, report);
+                }
+
+                if (!root.TryGetProperty("roles", out var roles)
+                    || roles.ValueKind != JsonValueKind.Array)
+                {
+                    report.Error("duty_roles.json: roles array is required");
+                    return;
+                }
+
+                // Plan 24B A2: additive labor blocks (optional for legacy
+                // catalogs; validated when present).
+                if (root.TryGetProperty("overwork", out var overwork)
+                    && overwork.ValueKind == JsonValueKind.Object)
+                {
+                    float fatiguePerHour = GetFloat(overwork, "fatigue_per_excess_hour", report);
+                    float moralePerHour = GetFloat(overwork, "morale_per_excess_hour", report);
+                    int yieldPenalty = GetInt(overwork, "yield_penalty_permille", report);
+                    if (fatiguePerHour < 0f || fatiguePerHour > 10f)
+                        report.Error("duty_roles.json: overwork.fatigue_per_excess_hour must be 0..10");
+                    if (moralePerHour > 0f || moralePerHour < -10f)
+                        report.Error("duty_roles.json: overwork.morale_per_excess_hour must be -10..0");
+                    if (yieldPenalty < 0 || yieldPenalty > 500)
+                        report.Error("duty_roles.json: overwork.yield_penalty_permille must be 0..500");
+                }
+                if (root.TryGetProperty("worker_yield", out var workerYield)
+                    && workerYield.ValueKind == JsonValueKind.Object)
+                {
+                    int floor = GetInt(workerYield, "floor_permille", report);
+                    int cap = GetInt(workerYield, "cap_permille", report);
+                    int impaired = GetInt(workerYield, "impaired_penalty_permille", report);
+                    int absolute = GetInt(workerYield, "absolute_floor_permille", report);
+                    if (floor < 100 || floor > 1000)
+                        report.Error("duty_roles.json: worker_yield.floor_permille must be 100..1000");
+                    if (cap < floor || cap > 2000)
+                        report.Error("duty_roles.json: worker_yield.cap_permille must be ordered above floor within 2000");
+                    if (impaired < 0 || impaired > 500)
+                        report.Error("duty_roles.json: worker_yield.impaired_penalty_permille must be 0..500");
+                    if (absolute < 100 || absolute > floor)
+                        report.Error("duty_roles.json: worker_yield.absolute_floor_permille must be 100..floor");
+                }
+
+                var roleIds = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var role in roles.EnumerateArray())
+                {
+                    if (role.ValueKind != JsonValueKind.Object)
+                    {
+                        report.Error("duty_roles.json: every role must be an object");
+                        continue;
+                    }
+                    string id = GetString(role, "id");
+                    if (string.IsNullOrEmpty(id))
+                    {
+                        report.Error("duty_roles.json: role id is required");
+                        continue;
+                    }
+                    if (!roleIds.Add(id))
+                        report.Error("duty_roles.json: duplicate role id '" + id + "'");
+
+                    bool knownRole = false;
+                    for (int i = 0; i < DutyRosterIds.AssignmentRoles.Length; i++)
+                    {
+                        if (string.Equals(DutyRosterIds.AssignmentRoles[i], id, StringComparison.Ordinal))
+                        {
+                            knownRole = true;
+                            break;
+                        }
+                    }
+                    if (!knownRole)
+                        report.Error("duty_roles.json: unknown live role '" + id + "'");
+
+                    string skillId = GetString(role, "skill_id");
+                    if (!string.IsNullOrEmpty(skillId)
+                        && !ctx.Registry.ContainsKey(skillId)
+                        && !IsKnownRuntimeId(skillId))
+                        report.Error("duty_roles.json: role '" + id + "' skill_id '" + skillId + "' is not in skills.json");
+
+                    ValidateDutyRoleNumber(role, id, "minimum_skill", 0f, 1f, report);
+                    ValidateDutyRoleNumber(role, id, "maximum_fatigue", 0f, 100f, report);
+                    ValidateDutyRoleNumber(role, id, "minimum_health", 0f, 100f, report);
+                    ValidateDutyRoleNumber(role, id, "maximum_dose_msv", 0f, float.MaxValue, report);
+                    ValidateDutyRoleNumber(role, id, "maximum_hours", 0f, 24f, report);
+                    ValidateDutyRoleNumber(role, id, "maximum_hours_if_impaired", 0f, 24f, report);
+
+                    bool hasAllowUnfit = TryGetBoolean(role, "allow_unfit", out bool allowUnfit);
+                    bool hasLightDuty = TryGetBoolean(role, "light_duty", out bool lightDuty);
+                    bool hasPrecisionWork = TryGetBoolean(role, "precision_work", out bool precisionWork);
+                    bool hasQuarantinePolicy = TryGetBoolean(role, "requires_not_quarantined", out _);
+                    if (!hasAllowUnfit) report.Error("duty_roles.json: role '" + id + "' requires boolean 'allow_unfit'");
+                    if (!hasLightDuty) report.Error("duty_roles.json: role '" + id + "' requires boolean 'light_duty'");
+                    if (!hasPrecisionWork) report.Error("duty_roles.json: role '" + id + "' requires boolean 'precision_work'");
+                    if (!hasQuarantinePolicy) report.Error("duty_roles.json: role '" + id + "' requires boolean 'requires_not_quarantined'");
+                    if (hasAllowUnfit && hasLightDuty && allowUnfit && !lightDuty)
+                        report.Error("duty_roles.json: role '" + id + "' allow_unfit requires light_duty");
+                    if (hasLightDuty && hasPrecisionWork && lightDuty && precisionWork)
+                        report.Error("duty_roles.json: role '" + id + "' cannot be both light_duty and precision_work");
+
+                    string hazardClass = GetString(role, "hazard_class");
+                    if (!DutyHazardClassIds.IsKnown(hazardClass))
+                        report.Error("duty_roles.json: role '" + id + "' has an unknown hazard_class");
+                }
+
+                for (int i = 0; i < DutyRosterIds.AssignmentRoles.Length; i++)
+                {
+                    string role = DutyRosterIds.AssignmentRoles[i];
+                    if (!roleIds.Contains(role))
+                        report.Error("duty_roles.json: missing live role '" + role + "'");
+                }
+            }
+            catch (Exception ex)
+            {
+                report.Error("duty_roles.json: validator error: " + ex.Message);
+            }
+        }
+
+        private static void ValidateDutyThresholds(JsonElement thresholds, CatalogIntegrityReport report)
+        {
+            float fatigueImpaired = GetFloat(thresholds, "fatigue_impaired", report);
+            float fatigueUnfit = GetFloat(thresholds, "fatigue_unfit", report);
+            float healthImpaired = GetFloat(thresholds, "health_impaired", report);
+            float healthUnfit = GetFloat(thresholds, "health_unfit", report);
+            float hungerImpaired = GetFloat(thresholds, "hunger_impaired", report);
+            float hungerUnfit = GetFloat(thresholds, "hunger_unfit", report);
+            float thirstImpaired = GetFloat(thresholds, "thirst_impaired", report);
+            float thirstUnfit = GetFloat(thresholds, "thirst_unfit", report);
+            float warmthImpaired = GetFloat(thresholds, "warmth_impaired", report);
+            float warmthUnfit = GetFloat(thresholds, "warmth_unfit", report);
+            int sleepImpaired = GetInt(thresholds, "days_without_sleep_impaired", report);
+            int sleepUnfit = GetInt(thresholds, "days_without_sleep_unfit", report);
+            int dischargeRecoveryDays = GetInt(thresholds, "discharge_recovery_days", report);
+            int sickBandImpaired = GetInt(thresholds, "sick_band_impaired", report);
+            int sickBandUnfit = GetInt(thresholds, "sick_band_unfit", report);
+            int sickBandIncapacitated = GetInt(thresholds, "sick_band_incapacitated", report);
+            float doseImpaired = GetFloat(thresholds, "dose_impaired_msv", report);
+            float doseUnfit = GetFloat(thresholds, "dose_unfit_msv", report);
+
+            if (!(fatigueImpaired < fatigueUnfit)) report.Error("duty_roles.json: fatigue impaired threshold must be below unfit");
+            if (!(healthImpaired > healthUnfit)) report.Error("duty_roles.json: health impaired threshold must be above unfit");
+            if (!(hungerImpaired < hungerUnfit)) report.Error("duty_roles.json: hunger impaired threshold must be below unfit");
+            if (!(thirstImpaired < thirstUnfit)) report.Error("duty_roles.json: thirst impaired threshold must be below unfit");
+            if (!(warmthImpaired > warmthUnfit)) report.Error("duty_roles.json: warmth impaired threshold must be above unfit");
+            if (!(sleepImpaired < sleepUnfit)) report.Error("duty_roles.json: sleep impaired threshold must be below unfit");
+            if (dischargeRecoveryDays < 0 || dischargeRecoveryDays > 30)
+                report.Error("duty_roles.json: discharge_recovery_days must be 0..30");
+            if (sickBandImpaired < 0 || sickBandImpaired >= sickBandUnfit
+                || sickBandUnfit >= sickBandIncapacitated || sickBandIncapacitated > 3)
+                report.Error("duty_roles.json: sick-list fitness bands must be strictly ordered within 0..3");
+            if (!(doseImpaired < doseUnfit)) report.Error("duty_roles.json: dose impaired threshold must be below unfit");
+            if (fatigueImpaired < 0f || fatigueUnfit > 100f
+                || fatigueUnfit < 0f || fatigueImpaired > 100f
+                || healthUnfit < 0f || healthImpaired > 100f
+                || healthImpaired < 0f || healthUnfit > 100f
+                || hungerImpaired < 0f || hungerUnfit > 100f
+                || hungerUnfit < 0f || hungerImpaired > 100f
+                || thirstImpaired < 0f || thirstUnfit > 100f
+                || thirstUnfit < 0f || thirstImpaired > 100f
+                || warmthUnfit < 0f || warmthImpaired > 100f
+                || warmthImpaired < 0f || warmthUnfit > 100f
+                || sleepImpaired < 0 || doseImpaired < 0f)
+                report.Error("duty_roles.json: duty thresholds are outside supported ranges");
+        }
+
+        private static bool TryGetBoolean(JsonElement element, string property, out bool value)
+        {
+            if (element.TryGetProperty(property, out var parsed)
+                && (parsed.ValueKind == JsonValueKind.True || parsed.ValueKind == JsonValueKind.False))
+            {
+                value = parsed.GetBoolean();
+                return true;
+            }
+            value = false;
+            return false;
+        }
+
+        private static void ValidateDutyRoleNumber(
+            JsonElement role,
+            string roleId,
+            string property,
+            float minimum,
+            float maximum,
+            CatalogIntegrityReport report)
+        {
+            if (!role.TryGetProperty(property, out var value)
+                || value.ValueKind != JsonValueKind.Number)
+            {
+                report.Error("duty_roles.json: role '" + roleId + "' requires numeric '" + property + "'");
+                return;
+            }
+            float number = value.GetSingle();
+            if (number < minimum || number > maximum)
+                report.Error("duty_roles.json: role '" + roleId + "' '" + property + "' is outside its supported range");
+        }
+
+        private static string GetString(JsonElement element, string property)
+        {
+            return element.TryGetProperty(property, out var value)
+                && value.ValueKind == JsonValueKind.String
+                ? value.GetString() ?? string.Empty
+                : string.Empty;
+        }
+
+        private static float GetFloat(JsonElement element, string property, CatalogIntegrityReport report)
+        {
+            if (!element.TryGetProperty(property, out var value)
+                || value.ValueKind != JsonValueKind.Number)
+            {
+                report.Error("duty_roles.json: thresholds requires numeric '" + property + "'");
+                return 0f;
+            }
+            return value.GetSingle();
+        }
+
+        private static int GetInt(JsonElement element, string property, CatalogIntegrityReport report)
+        {
+            if (!element.TryGetProperty(property, out var value)
+                || value.ValueKind != JsonValueKind.Number)
+            {
+                report.Error("duty_roles.json: thresholds requires integer '" + property + "'");
+                return 0;
+            }
+            return value.GetInt32();
         }
 
         private static bool TryParse(string path, IFileIO files, out JsonDocument doc, CatalogIntegrityReport report)

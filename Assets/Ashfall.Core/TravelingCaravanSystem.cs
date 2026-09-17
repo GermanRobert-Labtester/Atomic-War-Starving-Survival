@@ -190,6 +190,15 @@ namespace Ashfall.Core
         /// </summary>
         public void DailyTick() => DailyTick(0, null);
 
+        /// <summary>
+        /// C2 / Plan 20C (§41) — optional weather-availability provider from
+        /// the ONE weather-effects table (caravan_availability_multiplier).
+        /// Applied as a movement-progress modifier — distinct from (and
+        /// combined with) the geopolitical embargo gate, per plan §41. Unbound
+        /// keeps legacy movement byte-identical.
+        /// </summary>
+        public Func<WeatherKind, float>? WeatherAvailabilityProvider { get; set; }
+
         public void DailyTick(
             int currentDay,
             ISeededRng? rng = null,
@@ -214,6 +223,10 @@ namespace Ashfall.Core
                     if (!blocked)
                         progress = Embargoes.GetRouteProgressMultiplier(caravan.originRegion, weather);
                 }
+                // Plan 20C §41 — physical weather inaccessibility combines with
+                // (never mixes into) the embargo multiplier at this decision.
+                if (!blocked && WeatherAvailabilityProvider != null)
+                    progress *= Math.Clamp(WeatherAvailabilityProvider(weather), 0f, 5f);
 
                 if (blocked)
                 {

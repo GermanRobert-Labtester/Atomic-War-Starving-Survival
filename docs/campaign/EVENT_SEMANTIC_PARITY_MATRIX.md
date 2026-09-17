@@ -14,14 +14,23 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 |---|---|---|---|---|
 | `aeroponics_ticked` | Main.Plans74_77.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `aquaponics_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `ate` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |
+| `child_aged` | — (Plan 19B) | yes | via briefing panel | HANDLED |
+| `child_born` | — (Plan 19B) | yes | via briefing panel | HANDLED |
+| `child_lost` | — (Plan 19B) | yes | via briefing panel | HANDLED |
+| `contaminated_meal` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |
+| `consumed_child_rations` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `consumed_rations` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `crafting_completed` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `crafting_production` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `cryo_vault_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `debt_ledger_ticked` | Main.DebtCredit.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `drank` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |
 | `duty_roster_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `echo_consequence_due` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — echo-consequence surface from in-flight worktree work) |
 | `echo_surfaced` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — echo-consequence surface from in-flight worktree work) |
+| `weather_forecast_miss` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
+| `weather_unexpected_storm` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `espionage_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `events_evaluated` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `expedition_milestone` | HostCli.WorldPlaytest.cs, Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
@@ -31,6 +40,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `flagship_institutions_ticked` | Main.FlagshipInstitutions.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `fluid_logistics_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `geothermal_orc_ticked` | Main.Plans74_77.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `generation_advanced` | — (Plan 19B) | yes | via briefing panel | HANDLED |
 | `greenhouse_foundry_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `hazard_warning` | HostCli.WorldPlaytest.cs, Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `holdfast_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
@@ -39,6 +49,8 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `market_shocks_active` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `market_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `medical_disease_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `meal_served` | KitchenNutritionHostSession.cs | yes | via briefing panel | HANDLED |
+| `med_taken` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |
 | `memorial_checked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `morale_contagion_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `narrative_arc_selected` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
@@ -47,6 +59,14 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `nuclear_generation_published` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `personal_quest_progressed` | PersonalQuestSystem.cs | generic default | via briefing panel | GENERIC (visible) |
 | `pneumatic_dispatch_ticked` | Main.Plans74_77.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `portions_spoiled` | KitchenNutritionHostSession.cs | yes | via briefing panel | HANDLED |
+| `cascade_recovered` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23C — fact-driven cascade) |
+| `cascade_warning` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23C — fact-driven cascade) |
+| `power_brownout_began` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23B — attributed brownout) |
+| `power_brownout_restored` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23B — attributed brownout) |
+| `power_critical_deficit` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23B — life-support deficit) |
+| `power_shed_automatic` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23B — grid-automatic shed) |
+| `power_shed_player` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED (C2[6] 23B — player shed) |
 | `power_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `precision_metrology_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `procedural_narrative_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |

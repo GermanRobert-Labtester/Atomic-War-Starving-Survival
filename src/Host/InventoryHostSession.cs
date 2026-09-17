@@ -540,11 +540,7 @@ namespace AtomicWar.GodotApp
 
                 if (Survivors != null && targetId != null)
                 {
-                    var rad = Survivors.RadStateFor(targetId);
-                    if (rad != null)
-                    {
-                        Survivors.Radiation.AdjustDose(rad, dose);
-                    }
+                    Survivors.ApplyAcuteRadDose(targetId, dose, $"consumed_{def.id}");
                 }
             };
 
@@ -565,6 +561,40 @@ namespace AtomicWar.GodotApp
             else
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.ActionItemPickup);
 
+            // Plan 22 Task 22C: Medical treatment logging and dependency tracking
+            if (def.type == ItemType.AntiRad || def.radCleanse > 0f)
+            {
+                OnAntiRadAdministered?.Invoke(targetId ?? string.Empty, CurrentDay);
+            }
+            if (def.type == ItemType.Medical || def.type == ItemType.AntiRad || def.type == ItemType.Iodine || def.healthEffect > 0f)
+            {
+                MedicalRecordLog?.Append(CurrentDay, "treatment_completed", targetId ?? string.Empty, def.id);
+            }
+            if (string.Equals(def.id, "morphine", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(def.id, "painkillers", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(def.id, "opioid_painkillers", StringComparison.OrdinalIgnoreCase))
+            {
+                OnChemicalSubstanceConsumed?.Invoke(targetId ?? string.Empty, def.id, Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+            }
+
+            // Plan 22 Task 22A §22A.17: Emit canonical DayStateChangeEvent
+            string eventKind = (def.type == ItemType.Water || def.type == ItemType.IrradiatedWater)
+                ? (def.contamination > 0f ? "contaminated_meal" : "drank")
+                : (def.type == ItemType.AntiRad || def.type == ItemType.Medical || def.type == ItemType.Iodine)
+                    ? "med_taken"
+                    : (def.contamination > 0f ? "contaminated_meal" : "ate");
+
+            float eventNumeric = def.contamination > 0f
+                ? (def.contamination * InventoryContainer.ContaminationDosePerUnit)
+                : 1f;
+
+            PendingDayEvents.Add(new Ashfall.Core.Campaign.DayStateChangeEvent(
+                eventKind,
+                "inventory",
+                def.id,
+                targetId,
+                eventNumeric));
+
             var result = ActionResult.Success($"Consumed 1 × {def.displayName}.", deltas);
             LastEvent = result.MessageKey;
             // Observers (nutrition diversity, Plan 162) see only committed consumptions.
@@ -574,6 +604,19 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Raised after a consume transaction commits (survivorId, itemId).</summary>
         public Action<string, string>? OnConsumed;
+
+        public int CurrentDay { get; set; } = 1;
+        public Action<string, int>? OnAntiRadAdministered { get; set; }
+        public Action<string, string, Ashfall.Core.Medical.ChemicalDependencyKind>? OnChemicalSubstanceConsumed { get; set; }
+        public Ashfall.Core.Medical.MedicalRecordLog? MedicalRecordLog { get; set; }
+        public List<Ashfall.Core.Campaign.DayStateChangeEvent> PendingDayEvents { get; } = new List<Ashfall.Core.Campaign.DayStateChangeEvent>();
+
+        public void DrainDayEvents(List<Ashfall.Core.Campaign.DayStateChangeEvent> target)
+        {
+            if (target == null || PendingDayEvents.Count == 0) return;
+            target.AddRange(PendingDayEvents);
+            PendingDayEvents.Clear();
+        }
 
         // ── Status ─────────────────────────────────────────────────────
 

@@ -22,6 +22,11 @@ namespace Ashfall.Core
         // TryMaturation (one-way, idempotent within the cohort).
         public bool isMatured;
         public int maturationDay;
+        // Plan 19B — child mortality and loss tracking. Round-trips cleanly
+        // through DoseLedgerSave without a parallel registry.
+        public bool isDeceased;
+        public int deathDay = -1;
+        public string deathCause = string.Empty;
     }
 
     [Serializable]
@@ -46,10 +51,29 @@ namespace Ashfall.Core
         public event Action<string, string> OnChildBooked;       // childId, guessBand
         public event Action<string, string> OnBaselineCorrected; // childId, trueBand
         public event Action<string, int> OnMaturation;           // childId, day  -- Plan 12A
+        public event Action<string, int, string>? OnChildLost;   // childId, day, cause -- Plan 19B
+        public event Action<string, int>? OnChildAged;           // childId, ageDays -- Plan 19B
         public event Action<CohortSystemState> OnStateChanged;
+
+        public CohortTuning Tuning { get; set; } = CohortTuning.Default;
 
         public CohortSystemState State => _state;
         public IReadOnlyList<CohortChild> Children => _state.children;
+
+        public int SurvivingChildrenCount
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < _state.children.Count; i++)
+                {
+                    if (!_state.children[i].isDeceased) count++;
+                }
+                return count;
+            }
+        }
+
+        public bool AnyChildrenSurvived => SurvivingChildrenCount > 0;
 
         /// <summary>Book a child with a guess band ("low"/"medium"/"high"). Never rewrite.</summary>
         public bool BookChild(string childId, IReadOnlyList<string> parentIds, string guessBand, int birthDay, string? moralityMemory = null)
@@ -105,13 +129,71 @@ namespace Ashfall.Core
         {
             if (string.IsNullOrEmpty(childId) || day <= 0) return false;
             if (!_children.TryGetValue(childId, out var child)) return false;
-            if (child.isMatured) return false;
+            if (child.isMatured || child.isDeceased) return false;
 
             child.isMatured = true;
             child.maturationDay = day;
             OnMaturation?.Invoke(childId, day);
             RaiseChanged();
             return true;
+        }
+
+        /// <summary>
+        /// Plan 19B.7 / 19B.10: Record a cohort child death or loss.
+        /// </summary>
+        public bool MarkChildLost(string childId, int day, string? cause = null)
+        {
+            if (string.IsNullOrEmpty(childId) || day <= 0) return false;
+            if (!_children.TryGetValue(childId, out var child)) return false;
+            if (child.isDeceased) return false;
+
+            child.isDeceased = true;
+            child.deathDay = day;
+            child.deathCause = string.IsNullOrEmpty(cause) ? "lost" : cause;
+            OnChildLost?.Invoke(childId, day, child.deathCause);
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>
+        /// Plan 19B.5: Cohort maturation determines when a child becomes work/duty eligible.
+        /// Unmatured living children cannot be assigned to duty roster.
+        /// Returns true for survivors not tracked in the cohort (standard adults).
+        /// </summary>
+        public bool IsWorkEligible(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return false;
+            if (!_children.TryGetValue(survivorId, out var child))
+                return true; // Not a cohort child; standard adult dweller
+            return !child.isDeceased && child.isMatured;
+        }
+
+        /// <summary>
+        /// Plan 19B.4: Determines if a child has reached schooling/apprenticeship age.
+        /// Under-age (e.g. infants) are not eligible; matured dwellers graduate.
+        /// </summary>
+        public bool IsSchoolEligible(string childId, int currentDay)
+        {
+            if (string.IsNullOrEmpty(childId) || currentDay <= 0) return false;
+            if (!_children.TryGetValue(childId, out var child)) return false;
+            if (child.isDeceased || child.isMatured) return false;
+            int age = Math.Max(0, currentDay - child.birthDay);
+            int minAge = Tuning?.schooling_age_days ?? 30;
+            return age >= minAge;
+        }
+
+        /// <summary>
+        /// Plan 19B.2 / 19B.3: Calculates total daily child food units required deterministically
+        /// based on surviving cohort population and the child ration fraction in data.
+        /// </summary>
+        public int CalculateChildFoodUnits(StartingLevel.RationPolicy policy = StartingLevel.RationPolicy.Standard)
+        {
+            int living = SurvivingChildrenCount;
+            if (living <= 0) return 0;
+            float basePerAdult = policy == StartingLevel.RationPolicy.Half ? 2f : 3f;
+            float fraction = Tuning?.child_ration_fraction ?? 0.5f;
+            float total = living * basePerAdult * fraction;
+            return (int)Math.Ceiling(total);
         }
 
         public CohortSystemState CaptureState()
@@ -134,7 +216,10 @@ namespace Ashfall.Core
                     moralityMemory = c.moralityMemory,
                     parentIds = new List<string>(c.parentIds),
                     isMatured = c.isMatured,
-                    maturationDay = c.maturationDay
+                    maturationDay = c.maturationDay,
+                    isDeceased = c.isDeceased,
+                    deathDay = c.deathDay,
+                    deathCause = c.deathCause ?? string.Empty
                 });
             }
             return copy;
@@ -161,7 +246,10 @@ namespace Ashfall.Core
                         moralityMemory = c.moralityMemory,
                         parentIds = c.parentIds != null ? new List<string>(c.parentIds) : new List<string>(),
                         isMatured = c.isMatured,
-                        maturationDay = c.maturationDay
+                        maturationDay = c.maturationDay,
+                        isDeceased = c.isDeceased,
+                        deathDay = c.deathDay,
+                        deathCause = c.deathCause ?? string.Empty
                     };
                     _children[c.survivorId] = copy;
                     _state.children.Add(copy);

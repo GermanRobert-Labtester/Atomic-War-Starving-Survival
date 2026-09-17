@@ -58,6 +58,10 @@ namespace AtomicWar.GodotApp
             return _powerGrid?.IsRoomServed(nodeId) ?? false;
         }
 
+        /// <summary>C2[6] 23B: canonical rising-water clock for a node.</summary>
+        public SumpFloodingSystem.SumpRiskSnapshot GetRisk(string nodeId)
+            => System.GetRisk(nodeId);
+
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)
         {
             var res = System.AddNode(nodeId, displayName, maxWaterLevelCm);

@@ -39,7 +39,11 @@ namespace AtomicWar.GodotApp
                     .Select(s => s.Id)
                     .ToList(),
                 GetMorale = id => _survivors.Needs.Get(id)?.Morale ?? 50f,
-                ApplyMoraleDelta = (id, delta) => _survivors.Needs.Modify(id, NeedKind.Morale, delta),
+                // Plan 24B (A1): the sink routes the contagion morale stream
+                // through the shared attributed needs seam — the (id, delta)
+                // stream is unchanged; the cause is now named.
+                ApplyMoraleDelta = (id, delta, source) =>
+                    _survivors.Needs.ApplyAttributedDelta(id, NeedKind.Morale, delta, source),
                 AreInSameRoom = (a, b) => _shelterAssignment?.AreInSameRoom(a, b) ?? false,
                 GetDutyRole = id => _dutyRoster?.Roster?.GetRoleOf(id) ?? string.Empty,
                 GetBondStrength = (a, b) => _survivorSocial?.TraumaBond?.GetBondStrength(a, b) ?? 0f,

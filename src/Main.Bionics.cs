@@ -66,14 +66,17 @@ namespace AtomicWar.GodotApp
                     (id, amount) => inv.RemoveById(id, amount));
             }
 
-            // §6.10 — charger truth from the real power grid: the clinical ward
-            // is the implant-charging station; no powered ward, no charge.
-            // (The watts feed into the grid ledger is deferred to the power-grid
-            // feed package, matching the sanitation-facility precedent.)
+            // §6.10 — charger truth from the real power grid: the quarantine
+            // ward is the implant-charging station; no powered ward, no charge.
+            // C2[6] 23A: the previous gate read `room_ward_clinical`, which is
+            // not a row in power_grid.json and is never registered as a dynamic
+            // load, so IsRoomPowered returned false permanently and the charger
+            // was dead. Use the canonical quarantine ward (same room the disease
+            // isolation check uses).
             _bionics.ChargerAvailable = () =>
                 _powerGrid?.System != null
                 && !_powerGrid.System.IsBrownout
-                && _powerGrid.System.IsRoomPowered("room_ward_clinical");
+                && _powerGrid.System.IsRoomPowered("room_ward_quarantine");
 
             var saved = BionicsSaveStore.TryLoad();
             if (saved != null)

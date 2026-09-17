@@ -171,7 +171,14 @@ namespace Ashfall.Core.Tests.Economy
             var regionalQuotes = regions.ToDictionary(
                 r => r, r => market.GetPrice("mechanical_parts", r));
             Assert.Equal(4f, regionalQuotes["foundry"], 3);      // 5.0 × 0.8
-            Assert.Equal(5f, regionalQuotes["settlement"], 3);   // neutral home market
+            // CONTRACT DRIFT (Plan 14 -> Plan 56): settlement used to be
+            // neutral here. regionalSupply is now a live quote factor, so
+            // foundry-produced parts are imported at settlement (5.0 x 1.5).
+            Assert.Equal(7.5f, regionalQuotes["settlement"], 3);
+            Assert.Contains(
+                market.ExplainPrice("mechanical_parts", MarketTransactionSide.Buy, "settlement").factors,
+                factor => factor.kind == PriceFactorKind.RegionalSupply &&
+                    Math.Abs(factor.multiplier - 1.5f) < 0.0001f);
 
             // A weather shock changes the TEMPORARY quote, not the regional
             // baseline: RadHail (all goods, all regions) lifts every quote.

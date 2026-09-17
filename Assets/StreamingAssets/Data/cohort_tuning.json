@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "child_ration_fraction": 0.5,
+  "schooling_age_days": 30,
+  "maturation_age_days": 180,
+  "max_active_apprentices": 3
+}

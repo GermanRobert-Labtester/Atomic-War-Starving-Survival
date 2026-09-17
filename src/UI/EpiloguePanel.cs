@@ -60,31 +60,6 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        /// <summary>Legacy parameter bundle — routes through CampaignOutcomeEvaluator.</summary>
-        public void Bind(
-            int daysSurvived,
-            int livingCount,
-            int deathsCount,
-            bool grandTreaty,
-            bool tempestDecom,
-            bool ledgersBurned,
-            bool childrenAlive,
-            bool velExposed)
-        {
-            var input = new CampaignOutcomeEvaluationInput
-            {
-                TotalDaysSurvived = daysSurvived,
-                LivingDwellerCount = livingCount,
-                TotalDeathsRecorded = deathsCount,
-                GrandTreatySignedOverride = grandTreaty,
-                TempestDecommissionedOverride = tempestDecom,
-                DebtLedgersBurnedOverride = ledgersBurned,
-                ChildrenSurvivedOverride = childrenAlive,
-                VelSecretExposedOverride = velExposed
-            };
-            Bind(CampaignOutcomeEvaluator.Evaluate(input));
-        }
-
         public void Open()
         {
             Visible = true;

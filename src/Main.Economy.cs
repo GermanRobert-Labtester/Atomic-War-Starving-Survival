@@ -150,6 +150,15 @@ namespace AtomicWar.GodotApp
             // (rules from trade_embargoes.json); route blocking evaluates the
             // same rules the market prices from.
             _caravans.Engine.Embargoes = _economy.EmbargoSystem;
+            // C2 / Plan 20C (§41) — weather availability from the ONE effects
+            // table, combined with (never mixed into) the embargo multiplier.
+            _caravans.Engine.WeatherAvailabilityProvider = weather =>
+            {
+                var effects = _world?.WeatherEffects;
+                if (effects != null && effects.TryGetEffects(weather, out var fx) && fx != null)
+                    return fx.caravan_availability_multiplier;
+                return 1f;
+            };
             _caravans.StateChanged += () => _caravansDirty = true;
             GD.Print("[Ashfall Godot] Caravan host ready.");
         }

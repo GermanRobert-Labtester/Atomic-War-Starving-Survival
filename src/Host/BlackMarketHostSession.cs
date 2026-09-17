@@ -3,6 +3,7 @@ using System;
 using Ashfall.Core;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Factions;
+using Ashfall.Core.Inventory;
 
 namespace AtomicWar.GodotApp
 {
@@ -25,6 +26,15 @@ namespace AtomicWar.GodotApp
         public FactionBountySystem Bounties { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
+
+        private BlackMarketSettlementService? _settlement;
+        private Func<int>? _dayProvider;
+
+        /// <summary>Exactly one result event per player command attempt.</summary>
+        public event Action<BlackMarketActionResult>? ActionCompleted;
+
+        public bool ActionsAvailable => _settlement != null && _dayProvider != null;
+        public long WalletValue => _settlement?.WalletValue ?? 0L;
 
         public BlackMarketHostSession(BlackMarketSystem system)
             : this(system, new FactionBountySystem())
@@ -101,6 +111,64 @@ namespace AtomicWar.GodotApp
             }
             return session;
         }
+
+        /// <summary>
+        /// Bind the existing wallet and inventory authorities. The host owns
+        /// no currency or goods state; the coordinator is stateless.
+        /// </summary>
+        public void BindSettlementOwners(HoldfastTradeSession wallet,
+            Ashfall.Core.Inventory.Inventory inventory, ItemCatalog items, Func<int> dayProvider)
+        {
+            _settlement = new BlackMarketSettlementService(System, wallet, inventory, items);
+            _dayProvider = dayProvider ?? throw new ArgumentNullException(nameof(dayProvider));
+        }
+
+        public int InventoryCountForEntry(string entryId)
+        {
+            var entry = System.Catalog.FindEntry(entryId);
+            return entry == null ? 0 : (_settlement?.InventoryCount(entry.item_id) ?? 0);
+        }
+
+        public BlackMarketActionPreview PreviewBuy(string syndicateId, string entryId, int quantity) =>
+            _settlement?.PreviewBuy(syndicateId, entryId, quantity, CurrentDay()) ?? UnboundPreview("buy");
+
+        public BlackMarketActionPreview PreviewSell(string syndicateId, string entryId, int quantity) =>
+            _settlement?.PreviewSell(syndicateId, entryId, quantity, CurrentDay()) ?? UnboundPreview("sell");
+
+        public BlackMarketActionPreview PreviewLoan(string syndicateId, long units, int durationDays) =>
+            _settlement?.PreviewLoan(syndicateId, units, CurrentDay(), durationDays) ?? UnboundPreview("take_loan");
+
+        public BlackMarketActionPreview PreviewRepay(string debtId, long units) =>
+            _settlement?.PreviewRepay(debtId, units, CurrentDay()) ?? UnboundPreview("repay");
+
+        public BlackMarketActionResult Buy(string syndicateId, string entryId, int quantity) =>
+            Publish(_settlement?.Buy(syndicateId, entryId, quantity, CurrentDay()) ?? UnboundResult("buy"));
+
+        public BlackMarketActionResult Sell(string syndicateId, string entryId, int quantity) =>
+            Publish(_settlement?.Sell(syndicateId, entryId, quantity, CurrentDay()) ?? UnboundResult("sell"));
+
+        public BlackMarketActionResult TakeLoan(string syndicateId, long units, int durationDays) =>
+            Publish(_settlement?.TakeLoan(syndicateId, units, CurrentDay(), durationDays) ?? UnboundResult("take_loan"));
+
+        public BlackMarketActionResult Repay(string debtId, long units) =>
+            Publish(_settlement?.Repay(debtId, units, CurrentDay()) ?? UnboundResult("repay"));
+
+        private int CurrentDay() => _dayProvider?.Invoke() ?? 0;
+
+        private BlackMarketActionResult Publish(BlackMarketActionResult result)
+        {
+            LastEvent = result.Message;
+            ActionCompleted?.Invoke(result);
+            return result;
+        }
+
+        private static BlackMarketActionPreview UnboundPreview(string actionId) =>
+            new BlackMarketActionPreview(false, actionId, string.Empty, string.Empty, string.Empty,
+                string.Empty, 0, 0, 0, "settlement_unbound", "Trade settlement is not available.");
+
+        private static BlackMarketActionResult UnboundResult(string actionId) =>
+            new BlackMarketActionResult(false, actionId, string.Empty, string.Empty, string.Empty,
+                string.Empty, 0, 0, 0, 0, 0, "settlement_unbound", "Trade settlement is not available.");
 
         /// <summary>
         /// Advance one day: refresh discovered syndicates' stock snapshots

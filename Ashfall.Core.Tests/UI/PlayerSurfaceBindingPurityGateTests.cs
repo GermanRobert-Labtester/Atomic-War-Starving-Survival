@@ -81,6 +81,14 @@ namespace Ashfall.Core.Tests.UI
                 .Where(f => !f.Replace('\\', '/').Contains("/obj/") && !f.Replace('\\', '/').Contains("/bin/"))
                 .OrderBy(f => f, StringComparer.Ordinal));
 
+            string doseDir = Path.Combine(root, "src", "Dose");
+            if (Directory.Exists(doseDir))
+            {
+                files.AddRange(Directory.EnumerateFiles(doseDir, "*.cs", SearchOption.AllDirectories)
+                    .Where(f => !f.Replace('\\', '/').Contains("/obj/") && !f.Replace('\\', '/').Contains("/bin/"))
+                    .OrderBy(f => f, StringComparer.Ordinal));
+            }
+
             var list = new List<(string RelativePath, string StrippedCode)>(files.Count);
             foreach (var f in files)
             {

@@ -26,6 +26,25 @@ namespace Ashfall.Core.Tests.Campaign
         }
 
         [Fact]
+        public void BuildFromDayEvents_IncludesWardAdmissionDischargeAndDutyVacancy()
+        {
+            var report = DailyBriefingReportBuilder.BuildFromDayEvents(8, 17,
+                new[]
+                {
+                    new DayStateChangeEvent("medical_admitted", "medical_ward", "mara", "bed_general_a", 8),
+                    new DayStateChangeEvent("medical_discharged", "medical_ward", "mara", "bed_general_a", 8),
+                    new DayStateChangeEvent("duty_vacated", "duty_roster", "mara", "night_watch")
+                });
+
+            Assert.Single(report.Sections);
+            Assert.Equal("Survivor Changes", report.Sections[0].Title);
+            Assert.Equal(3, report.Sections[0].Entries.Length);
+            Assert.Contains(report.Sections[0].Entries, entry => entry.Text.Contains("admitted to the medical ward"));
+            Assert.Contains(report.Sections[0].Entries, entry => entry.Text.Contains("discharged from the medical ward"));
+            Assert.Contains(report.Sections[0].Entries, entry => entry.Text.Contains("left night_watch duty"));
+        }
+
+        [Fact]
         public void Build_OrdersSectionsDeterministically()
         {
             var inputs = new DailyBriefingInputs

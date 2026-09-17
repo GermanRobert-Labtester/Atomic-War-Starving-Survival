@@ -111,7 +111,7 @@ namespace Ashfall.Core.Tests
             sys.SetRecipeLookup(id => recipe.id == id ? recipe : null);
 
             int completionCount = 0;
-            sys.OnCraftCompleted += _ => completionCount++;
+            sys.OnCraftCompleted += (_, _) => completionCount++;
 
             sys.StartCraft(recipe);
             Assert.Equal(1, sys.ActiveCraftCount);
@@ -219,7 +219,7 @@ namespace Ashfall.Core.Tests
             sys2.RestoreState(save);
 
             int completions = 0;
-            sys2.OnCraftCompleted += _ => completions++;
+            sys2.OnCraftCompleted += (_, _) => completions++;
             sys2.Tick(3f); // 2h remaining → completes
 
             Assert.Equal(0, sys2.ActiveCraftCount);

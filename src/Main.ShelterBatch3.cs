@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
@@ -124,10 +125,47 @@ namespace AtomicWar.GodotApp
             var knNeeds = _survivors.Needs;
             var knSys = new KitchenNutritionSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 12), knInv, knNeeds, new GodotLog());
             knSys.RestoreState(knState);
+            // Plan 24A: cooking is labor and must consume the same survivor
+            // fitness projection as duty and expedition dispatch. The Core
+            // kitchen remains the mutation authority; this is only its host
+            // binding to the existing survivor state.
+            knSys.SurvivorFitnessProvider = EvaluateSurvivorFitness;
+            knSys.CookFitnessProvider = survivorId =>
+                EvaluateDutyRoleFitness(survivorId, DutyRosterIds.RoleMess);
+            // Plan 24B A2 — the shared worker-productivity seam: the cook's
+            // skill/fitness/overwork verdict resolves through the ONE campaign
+            // contract with the mess role's data-authored skill id. Unbound
+            // catalog → null resolver → exact legacy kitchen behavior.
+            SetupFitnessForDuty();
+            string messSkillId = string.Empty;
+            if (_fitnessRoleCatalog != null
+                && _fitnessRoleCatalog.TryGetRole(DutyRosterIds.RoleMess, out var messRole))
+                messSkillId = messRole.SkillId;
+            if (!string.IsNullOrEmpty(messSkillId))
+            {
+                string skillId = messSkillId;
+                knSys.CookProductivityResolver = cookId =>
+                    EnsureWorkerProductivityContract().Resolve(cookId, skillId);
+            }
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
             if (_kitchenNutritionPanel != null && _kitchenNutritionPanel.IsInsideTree())
                 RemoveChild(_kitchenNutritionPanel);
             _kitchenNutritionPanel = new KitchenNutritionPanel();
+            _kitchenNutritionPanel.DefaultSurvivorResolver = () =>
+            {
+                SetupSurvivors();
+                SetupDutyRoster();
+                string assignedCook = _dutyRoster?.Roster.GetAssignment(DutyRosterIds.RoleMess);
+                if (!string.IsNullOrEmpty(assignedCook)
+                    && _survivors.Needs.Get(assignedCook)?.IsAliveState == true)
+                    return assignedCook;
+                return _holdfastRuntime?.PlayerSurvivorId ?? _survivors.RosterState.FirstOrDefault(s => s != null && s.IsAliveState)?.Id;
+            };
+            _kitchenNutritionPanel.LivingSurvivorsResolver = () =>
+            {
+                SetupSurvivors();
+                return _survivors.RosterState.Where(s => s != null && s.IsAliveState).Select(s => s.Id).ToList();
+            };
             _kitchenNutritionPanel.Bind(_kitchenNutrition);
             _kitchenNutritionPanel.Visible = false;
             AddChild(_kitchenNutritionPanel);
@@ -158,12 +196,19 @@ namespace AtomicWar.GodotApp
         private void SetupLibraryStudy(ResearchSystem sharedResearch)
         {
             if (_libraryStudy != null) return;
+            SetupDutyRoster();
+            _expandedShelterRoster = _dutyRoster.Roster;
             var lsState = LibraryStudySaveStore.TryLoad() ?? new LibraryStudyState();
             var lsSkills = EnsureSharedSkillProgression();
             var lsResearch = sharedResearch;
             var lsJournal = _journal;
             var lsSys = new LibraryStudySystem(lsSkills, lsResearch, lsJournal, _expandedShelterRoster, new GodotLog());
             lsSys.RestoreState(lsState);
+            // C2[6] 23A: authored `requires_power` manuals now actually gate on the
+            // real grid (previously dead data). The library/study desks share the
+            // laboratory-research electrical bus.
+            lsSys.PowerAvailable = () =>
+                _powerGrid?.System == null || _powerGrid.System.IsRoomServed("room_laboratory_research");
             _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, _expandedShelterRoster);
             _libraryStudy.LoadCatalog(_dataDir);
             if (_libraryStudyPanel != null && _libraryStudyPanel.IsInsideTree())
@@ -177,6 +222,8 @@ namespace AtomicWar.GodotApp
         private void SetupArchiveDesk()
         {
             if (_archiveDesk != null) return;
+            SetupDutyRoster();
+            _expandedShelterRoster = _dutyRoster.Roster;
             var adState = ArchiveDeskSaveStore.TryLoad() ?? new ArchiveDeskState();
             var adJournal = _journal;
             var adKnowledge = new KnowledgeBase();
@@ -196,6 +243,8 @@ namespace AtomicWar.GodotApp
         private void SetupContractorRoster()
         {
             if (_contractorRoster != null) return;
+            SetupDutyRoster();
+            _expandedShelterRoster = _dutyRoster.Roster;
             SetupCampaignDay();
             var crState = ContractorRosterSaveStore.TryLoad() ?? new ContractorRosterState();
             var crInv = _inventory.Inventory;
@@ -214,6 +263,8 @@ namespace AtomicWar.GodotApp
         private void SetupMentalHealthCrisis()
         {
             if (_mentalHealthCrisis != null) return;
+            SetupDutyRoster();
+            _expandedShelterRoster = _dutyRoster.Roster;
             SetupCampaignDay();
             var mhState = MentalHealthCrisisSaveStore.TryLoad() ?? new MentalHealthState();
             var mhNeeds = _survivors.Needs;
@@ -259,7 +310,8 @@ namespace AtomicWar.GodotApp
             if (_travelingCaravanPanel != null && _travelingCaravanPanel.IsInsideTree())
                 RemoveChild(_travelingCaravanPanel);
             _travelingCaravanPanel = new TravelingCaravanPanel();
-            _travelingCaravanPanel.Bind(_travelingCaravan, GetTradeVoiceResolver());
+            _travelingCaravanPanel.Bind(_travelingCaravan, GetTradeVoiceResolver(),
+                () => _world?.Weather?.Current ?? Ashfall.Core.WeatherKind.Clear);
             _travelingCaravanPanel.Visible = false;
             AddChild(_travelingCaravanPanel);
         }

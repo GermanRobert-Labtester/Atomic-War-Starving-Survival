@@ -2245,3 +2245,133 @@ lifecycle PASS · triad PASS.
 **Next:** 20C (weather as a decision system — §33–§47), which consumes the
 `weather_effects.json` authority created in 20A (currently only
 `outdoor_rad_modifier` is populated; the remaining fields are 20C's scope).
+
+---
+
+# 68. Checkpoint — 20C Phase B+§44 complete (2026-09-15)
+
+The WeatherEffects record is now the full data authority (schema_version 2, all 22
+kinds × 8 effect fields):
+
+- **New authored fields per kind:** `visibility_modifier`, `thermal_load_additive_c`
+  (°C), `travel_speed_multiplier`, `travel_encounter_multiplier`,
+  `trap_yield_multiplier`, `caravan_availability_multiplier` — plus
+  `explicitly_neutral` classification (§44: an all-identity row must DECLARE
+  neutrality; a declared-neutral row must be all-identity; the loader errors on
+  violations, and the coverage-gate test fails on any silent default).
+- **Three Core switches retired to data:** `OutdoorRadModifier` (20A),
+  `VisibilityFactor` + `PeekForecast` visibility projection, and
+  `TemperaturePenaltyForWeather` thermal values — all read the bound table with
+  legacy-constant fallback when unbound (byte-identical). Panel + status-line call
+  sites migrated to the instance methods (`TemperaturePenaltyC`/`VisibilityModifier`)
+  so UI can never drift from the table (§57.3).
+- **§42 thermal coupling:** the table-driven temperature penalty feeds
+  `WeatherStationSystem` temperature + shelter UI — the existing thermal chain
+  (no second fuel drain).
+- **§44 gate:** `WeatherEffectsCoverageGateTests` — every kind has an explicit row
+  with ≥1 mechanical effect; `Clear` is the single declared-neutral state (D3).
+- Authored balance values recorded (storms: visibility 0–0.3, travel 0.5–0.7,
+  traps 0.3–0.5, caravans 0.25–0.5; FalseSpring +5 °C / ThermalInversion +2 °C).
+  Balance-sweep re-validation deferred with the other 20C balance items.
+
+**Verification:** World 439/439 · WeatherEffects 13/13 · host build 0 ·
+data-integrity PASS · triad PASS.
+
+**Remaining 20C (next package):** §36 travel estimate wiring (speed/encounter
+multipliers into `ExpeditionSystem.Estimate` + dispatch-time sampling), §40 trapping
+engine consumption (the per-species `weatherSensitivity` seam exists),
+§41 caravan availability consumption, §37 forecast-reliability display,
+§39 radio/briefing warnings, §43 audio-parity mapping, §45 forecast-panel effects.
+
+---
+
+# 69. Checkpoint — 20C consumer trio wired (2026-09-15)
+
+§36/§40/§41 closed — the consumer trio reads the ONE weather-effects table:
+
+- **§36 travel:** `ExpeditionWeatherInputs` (speed/encounter multipliers) into
+  `ExpeditionSystem.Estimate` (additive param; encounter risk scales through the
+  existing readiness formula) AND the runtime — `ExpeditionState.weatherSpeedMultiplier`
+  sampled at dispatch (additive persisted field, old saves = 1.0 = no effect), applied
+  in `AdvanceOutbound`/`AdvanceInbound` next to the vehicle multiplier. Estimate and
+  runtime consume the same dispatch-sampled value (§36.2). Host:
+  `ExpeditionHostSession.SetEstimateWeatherInputs` → `Main.Expeditions` binds
+  current-weather sampling from the table.
+- **§40 trapping:** the hardcoded 22-kind `WeatherPenaltyFor` curve is now overridden
+  by the shared table (penalty = 1 − trap_yield_multiplier) via
+  `WildlifeTrappingSystem.WeatherPenaltyProvider`; the trap_yield column was
+  RE-AUTHORED to the exact parity curve (multiplier = 1 − legacy penalty) so the
+  migration is behavior-preserving for every species sensitivity. **Silence joins
+  Clear as declared-neutral** (its trapping penalty was always 0) — D3 revised;
+  the §44 gate proves neutral rows are declared, never silent.
+- **§41 caravan:** `TravelingCaravanSystem.WeatherAvailabilityProvider` — the table's
+  `caravan_availability_multiplier` applies as a movement-progress modifier,
+  combined with (never mixed into) the Plan 14A embargo multiplier at the same
+  decision point (geopolitics and physical weather stay separable).
+- **Host bindings:** `WorldHostSession.WeatherEffects` exposes the bound authority;
+  `Main.ShelterSocial` (trapping) and `Main.Economy` (caravans) bind providers;
+  all null-safe with legacy fallback.
+
+**Verification:** Expeditions 248/248 (5 new consumer tests) · World 439/439 ·
+WeatherEffects 13/13 · host build 0 · data-integrity PASS · bridge PASS ·
+panel lifecycle PASS · triad PASS · docs index 2138.
+
+**Remaining 20C (presentation layer, next package):** §37 forecast-reliability
+display, §39 radio/briefing warning differentiation, §43 audio-parity mapping audit,
+§45 WeatherForecastPanel/MapPanel effects display.
+
+---
+
+# 70. Checkpoint — 20C presentation layer complete (2026-09-15)
+
+§45 + §37 closed:
+
+- **§45 forecast effects:** `WeatherForecastEntry` now carries the full effects row
+  (thermal °C, travel speed/encounter, traps, caravan availability — populated from
+  the bound table in `PeekForecast`, one path, legacy-neutral when unbound).
+  `WeatherForecastPanel.AddForecastRow` renders decision-focused text:
+  `Day N: FalloutStorm, RAD +150, VIS 0%, COLD −5°C, TRAVEL 70%, TRAPS 50%, TRADE 50%`.
+- **§37 reliability:** `WeatherForecastPanel.Bind(weather, intelligence?)` — a
+  reliability line shows station tier / accuracy % / calibration / horizon from the
+  existing `WeatherIntelligenceCoordinator` read model; uncalibrated or low-accuracy
+  stations render in the warning color (§37.2 imperfect but fair); bound in
+  `Main.PlayerSurfaces`.
+
+**20C final state:** §44 gate + §35 data authority + §36/§40/§41 consumer trio +
+§42 thermal coupling + §45/§37 presentation = the decision layer is complete.
+§39 (radio/briefing differentiation) and §43 (audio-parity audit) remain as the last
+items — both need dedicated passes (briefing builder day-event routing + an audio
+cue-family audit across the 22 kinds); documented for the next package.
+
+---
+
+# 71. Checkpoint — 20C COMPLETE (2026-09-15, final pass)
+
+§39 + §43 closed:
+
+- **§39 forecast-miss attribution:** `WeatherWorldDayOwner` captures the station's
+  cached prediction for today before the weather advances; a severe arrival that the
+  station predicted-otherwise emits `weather_forecast_miss`; with no station forecast
+  covering today, `weather_unexpected_storm`. The briefing renders both as Warnings
+  naming the cause ("the station predicted otherwise — check calibration" /
+  "no station forecast covering today") — the radio layer has no authored weather
+  predictions yet (documented; the radio/station distinction activates when that
+  data exists). Parity matrix current; parity gate 2/2.
+- **§43 audio alert parity:** hazard alerting is now data-driven —
+  `WorldHostSession.IsSevereWeather(kind)` classifies from the effects table
+  (rad ≥ 60 ∨ visibility ≤ 0.5 ∨ thermal ≤ −10 °C) instead of the three-kind literal;
+  GlassStorm/RadHail/IceStorm/BioFog/ParticulateFog now alert like Blizzard.
+  Exactly-once (transition edge). Ambience beds already covered every severe kind by
+  semantic family (audited; source-gated). No audio→gameplay edge exists.
+- **Incident:** the merge-integrated `echoes` save section was missing from the
+  architecture map (pre-existing gate failure from the narrative merge) — regenerated
+  via `generate-architecture-map.py` (+echoes node, 193 subsystems, 100% evidence);
+  producing code untouched.
+
+**20C status: COMPLETE** (§33–§47; balance re-validation of the authored severity
+values remains the standing foreman-window item).
+
+**Verification (final):** Campaign 112 · World 439 · Expeditions 248 · Inventory 84 ·
+Radiation 72 · Shelter 588 · Radio 323 · Tooling 83 — all green; host build 0 errors;
+data-integrity PASS; bridge PASS; panel lifecycle PASS; ui-a11y PASS; survivors
+selftest PASS; triad PASS; docs index 2138.

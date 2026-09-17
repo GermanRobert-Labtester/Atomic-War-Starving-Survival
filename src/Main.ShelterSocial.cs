@@ -219,6 +219,17 @@ namespace AtomicWar.GodotApp
                 if (trapCatalog != null) trapCatalog.RegisterWith(wtrapSys);
             }
             wtrapSys.RestoreState(wtrapState);
+            // C2 / Plan 20C (§40) — trap penalties from the ONE weather-effects
+            // table (penalty = 1 − trap_yield_multiplier); unbound → the legacy
+            // hardcoded curve byte-identical.
+            wtrapSys.WeatherPenaltyProvider = kind =>
+            {
+                if (_world?.WeatherEffects != null
+                    && _world.WeatherEffects.TryGetEffects(kind, out var fx)
+                    && fx != null)
+                    return 1f - fx.trap_yield_multiplier;
+                return WildlifeTrappingSystem.WeatherPenaltyFor(kind);
+            };
             _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
             _wildlifeTrapping.Catalog = trapCatalog;
             _wildlifeTrapping.Inventory = _inventory;
@@ -475,6 +486,8 @@ namespace AtomicWar.GodotApp
         private void SetupApprenticeship()
         {
             if (_apprenticeship != null) return;
+            SetupDutyRoster();
+            _expandedShelterRoster = _dutyRoster.Roster;
             SetupCampaignDay();
             var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
             var appSkills = EnsureSharedSkillProgression();
@@ -482,6 +495,14 @@ namespace AtomicWar.GodotApp
                 appSkills.RestoreState(appState.skillProgression);
             var appSys = new ApprenticeshipSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Social, 0, 3), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
             appSys.RestoreState(appState);
+            appSys.IsApprenticeEligible = id =>
+            {
+                SetupDoseLedger();
+                if (_doseLedger?.Cohort == null) return true;
+                if (_doseLedger.Cohort.GetChild(id) == null) return true;
+                int currentDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+                return _doseLedger.Cohort.IsSchoolEligible(id, currentDay);
+            };
             _apprenticeship = new ApprenticeshipHostSession(appSys);
             if (_apprenticeshipPanel != null && _apprenticeshipPanel.IsInsideTree())
                 RemoveChild(_apprenticeshipPanel);
@@ -504,9 +525,55 @@ namespace AtomicWar.GodotApp
         private void SetupCaregiving()
         {
             if (_caregiving != null) return;
+            SetupDutyRoster();
+            _expandedShelterRoster = _dutyRoster.Roster;
             var cgState = CaregivingSaveStore.TryLoad() ?? new CaregivingSaveState();
             var cgSys = new CaregivingSystem();
             cgSys.RestoreState(cgState);
+            cgSys.IsAlive = id => _survivors?.Needs.Get(id)?.IsAliveState == true;
+            cgSys.CanProvideCare = id =>
+            {
+                if (_survivors?.Needs.Get(id)?.IsAliveState != true) return false;
+                return EvaluateSurvivorFitness(id).Level != FitnessLevel.Incapacitated;
+            };
+            cgSys.NeedsCare = id =>
+            {
+                var needs = _survivors?.Needs.Get(id);
+                if (needs == null || !needs.IsAliveState) return false;
+                if (needs.Health < 75f) return true;
+                if (_medicalWard?.GetActiveAdmission(id) != null) return true;
+                if (_disease?.Engine != null && _disease.Catalog?.All != null)
+                {
+                    var diseases = _disease.Catalog.All;
+                    for (int i = 0; i < diseases.Count; i++)
+                    {
+                        var disease = diseases[i];
+                        if (disease != null && !string.IsNullOrEmpty(disease.id)
+                            && _disease.Engine.IsInfected(id, disease.id)) return true;
+                    }
+                }
+                return _survivors?.RadStateFor(id)?.HasAcuteRadiationSickness == true;
+            };
+            cgSys.AdjustAffinity = (caregiverId, patientId, delta) =>
+                _survivorRelationsCore?.ModifyAffinity(caregiverId, patientId, delta);
+            cgSys.ApplyFatigueDelta = (id, delta) =>
+                _survivors?.Needs.ApplyAttributedDelta(
+                    id, NeedKind.Fatigue, delta, "caregiving.fatigue");
+            cgSys.ApplyHealthRecoveryBonus = (id, amount) =>
+                _survivors?.Needs.ApplyAttributedDelta(
+                    id, NeedKind.Health, amount, "caregiving.recovery");
+            cgSys.OnCaregivingStarted += (caregiverId, _) =>
+            {
+                // Care is labor. Vacate the caregiver's existing duty before
+                // the next shift so one survivor cannot silently cover two
+                // incompatible assignments.
+                if (_dutyRoster == null)
+                    SetupDutyRoster();
+                var rosterHost = _dutyRoster;
+                string role = rosterHost?.Roster?.GetRoleOf(caregiverId);
+                if (!string.IsNullOrEmpty(role))
+                    rosterHost!.Roster.Assign(role, string.Empty);
+            };
             _caregiving = new CaregivingHostSession(cgSys);
             if (_caregivingPanel != null && _caregivingPanel.IsInsideTree())
                 RemoveChild(_caregivingPanel);

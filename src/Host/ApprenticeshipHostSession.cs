@@ -2,7 +2,6 @@
 using System;
 using Godot;
 using Ashfall.Core;
-using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
 {
@@ -16,14 +15,11 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
         public ApprenticeshipHostSession(ApprenticeshipSystem system)
         {
-            if (system == null)
-            {
-                var skills = new SkillProgressionSystem();
-                var roster = new DutyRosterSystem();
-                var relations = new SurvivorRelationsSystem(new SeededRng(1986));
-                system = new ApprenticeshipSystem(new SeededRng(1986), skills, roster, relations, new GodotLog());
-            }
-            System = system;
+            // The campaign composer supplies the shared skill progression,
+            // roster, and relations authorities. Creating private fallbacks
+            // here would make apprenticeship progress invisible to duty,
+            // trapping, and the saved campaign ledger.
+            System = system ?? throw new ArgumentNullException(nameof(system));
 
             System.OnApprenticeshipCompleted += pair =>
             {

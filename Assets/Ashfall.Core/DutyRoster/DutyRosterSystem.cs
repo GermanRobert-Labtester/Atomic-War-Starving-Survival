@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.DutyRoster;
+using Ashfall.Core.Survivors;
 #pragma warning disable CS8618
 using Ashfall.Core.PlayerCommand;
 
@@ -45,6 +47,9 @@ namespace Ashfall.Core
     {
         public string role;
         public string survivorId;
+        public bool fitnessWarningAcknowledged;
+        public int fitnessWarningDay = -1;
+        public List<string> fitnessWarningReasons = new List<string>();
     }
 
     [Serializable]
@@ -211,6 +216,8 @@ namespace Ashfall.Core
         public event Action<string> OnNameErased;
         public event Action OnRosterBurned;
         public event Action<string, string> OnAssignmentChanged;
+        /// <summary>Raised when an existing labor assignment is vacated.</summary>
+        public event Action<string, string> OnDutyVacated;
         public event Action<DutyRosterSystemState> OnStateChanged;
 
         public DutyRosterSystemState State => _state;
@@ -224,6 +231,29 @@ namespace Ashfall.Core
         {
             get => _assignments.IsExternalReserved;
             set => _assignments.IsExternalReserved = value;
+        }
+        public Func<string, bool>? IsCandidateEligible
+        {
+            get => _assignments.IsCandidateEligible;
+            set
+            {
+                _assignments.IsCandidateEligible = value;
+                _chart.IsCandidateEligible = value;
+            }
+        }
+        public Func<string, string, RoleFitnessVerdict>? EvaluateRoleFitness
+        {
+            get => _assignments.EvaluateRoleFitness;
+            set => _assignments.EvaluateRoleFitness = value;
+        }
+
+        /// <summary>
+        /// Read-only role preview used by host UI and command validation. It
+        /// delegates to the same evaluator enforced during assignment commit.
+        /// </summary>
+        public RoleFitnessVerdict? PreviewRoleFitness(string survivorId, string role)
+        {
+            return _assignments.EvaluateRoleFitness?.Invoke(survivorId, role);
         }
 
         public DutyRosterSystem() : this(SeedUtilityOffset)
@@ -240,6 +270,7 @@ namespace Ashfall.Core
                 GetRow,
                 RaiseUpdated,
                 (r, s) => OnAssignmentChanged?.Invoke(r, s),
+                (r, s) => OnDutyVacated?.Invoke(r, s),
                 () => _state.seedSalt,
                 () => _state.rows);
             _overflow = new DutyRosterOverflowEngine(RaiseChanged);
@@ -368,6 +399,17 @@ namespace Ashfall.Core
             return _assignments.Assign(role, survivorId);
         }
 
+        /// <summary>Plan 24B A2 — optional duty-hour projection (bound by the
+        /// host to its derived ledger). Null ⇒ the hours surface is unavailable
+        /// and panels omit it; never persisted, never a second assignment
+        /// authority.</summary>
+        public Func<string, DutyHourSnapshot>? DutyHourResolver { get; set; }
+
+        /// <summary>Read-only hours snapshot for the duty detail UI, or null
+        /// when no ledger is bound (legacy paths).</summary>
+        public DutyHourSnapshot? PreviewDutyHours(string survivorId)
+            => DutyHourResolver?.Invoke(survivorId);
+
         /// <summary>
         /// Canonical consumer for a delivered pneumatic duty memo. Delivery is
         /// idempotent by memo ID and the bonus is time-bounded campaign state.
@@ -409,18 +451,25 @@ namespace Ashfall.Core
             return Math.Clamp(total, 0f, 0.5f);
         }
 
-        public ActionResult AssignWithResult(string role, string survivorId)
+        public ActionResult AssignWithResult(
+            string role,
+            string survivorId,
+            bool confirmFitnessWarning = false)
         {
-            return _assignments.AssignWithResult(role, survivorId);
+            return _assignments.AssignWithResult(role, survivorId, confirmFitnessWarning);
         }
 
         /// <summary>
         /// Side-effect-free preview of a duty assignment command.
         /// Shares the same validation path as <see cref="AssignWithResult"/>.
         /// </summary>
-        public CommandPreview PreviewAssign(string role, string survivorId, long stateVersion = 0)
+        public CommandPreview PreviewAssign(
+            string role,
+            string survivorId,
+            long stateVersion = 0,
+            bool confirmFitnessWarning = false)
         {
-            var validation = _assignments.ValidateAssign(role, survivorId);
+            var validation = _assignments.ValidateAssign(role, survivorId, confirmFitnessWarning);
             if (!validation.IsSuccess)
                 return CommandPreview.Unavailable(PlayerCommandCode.AssignRole, validation.FailureCode, validation.MessageKey, stateVersion);
 
@@ -443,16 +492,21 @@ namespace Ashfall.Core
         /// Execute a duty assignment using the same validation path as <see cref="PreviewAssign"/>.
         /// Stale previews (state version mismatch) are rejected without mutation.
         /// </summary>
-        public CommandResult ExecuteAssign(string role, string survivorId, long expectedStateVersion = 0, long currentStateVersion = 0)
+        public CommandResult ExecuteAssign(
+            string role,
+            string survivorId,
+            long expectedStateVersion = 0,
+            long currentStateVersion = 0,
+            bool confirmFitnessWarning = false)
         {
-            var preview = PreviewAssign(role, survivorId, expectedStateVersion);
+            var preview = PreviewAssign(role, survivorId, expectedStateVersion, confirmFitnessWarning);
             if (!preview.IsAvailable)
                 return CommandResult.FromPreview(preview);
 
             if (preview.StateVersion != currentStateVersion)
                 return CommandResult.StalePreview(PlayerCommandCode.AssignRole, preview.StateVersion, currentStateVersion);
 
-            var result = AssignWithResult(role, survivorId);
+            var result = AssignWithResult(role, survivorId, confirmFitnessWarning);
             if (!result.IsSuccess)
                 return new CommandResult(
                     PlayerCommandCode.AssignRole,
@@ -476,6 +530,32 @@ namespace Ashfall.Core
         public string GetAssignment(string role)
         {
             return _assignments.GetAssignment(role);
+        }
+
+        /// <summary>
+        /// Records the player's explicit acceptance of an impaired fitness
+        /// warning on the existing roster assignment. The verdict remains
+        /// derived; only the acknowledgement belongs in the duty save.
+        /// </summary>
+        public bool AcknowledgeFitnessWarning(string role, string survivorId, int day)
+        {
+            if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(survivorId)) return false;
+            if (GetAssignment(role) != survivorId) return false;
+            var verdict = PreviewRoleFitness(survivorId, role);
+            if (verdict == null || !verdict.RequiresConfirmation) return false;
+
+            for (int i = 0; i < _state.assignments.Count; i++)
+            {
+                var assignment = _state.assignments[i];
+                if (assignment == null || assignment.role != role || assignment.survivorId != survivorId)
+                    continue;
+                assignment.fitnessWarningAcknowledged = true;
+                assignment.fitnessWarningDay = day;
+                assignment.fitnessWarningReasons = new List<string>(verdict.WarningReasons);
+                RaiseUpdated();
+                return true;
+            }
+            return false;
         }
 
         /// <summary>Drop every role assignment held by a survivor (death, departure).</summary>
@@ -777,7 +857,12 @@ namespace Ashfall.Core
                     to.assignments.Add(new DutyRosterAssignmentEntry
                     {
                         role = a.role,
-                        survivorId = a.survivorId
+                        survivorId = a.survivorId,
+                        fitnessWarningAcknowledged = a.fitnessWarningAcknowledged,
+                        fitnessWarningDay = a.fitnessWarningDay,
+                        fitnessWarningReasons = a.fitnessWarningReasons != null
+                            ? new List<string>(a.fitnessWarningReasons)
+                            : new List<string>()
                     });
                 }
             }

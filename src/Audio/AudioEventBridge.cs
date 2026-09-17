@@ -253,7 +253,7 @@ namespace AtomicWar.GodotApp.Audio
                 _crafting.OnCraftCompleted += OnCraftCompleted;
         }
 
-        private void OnCraftCompleted(Recipe recipe)
+        private void OnCraftCompleted(Recipe recipe, string crafterId)
         {
             _playCue(AudioCueCatalog.ActionCrafting);
         }

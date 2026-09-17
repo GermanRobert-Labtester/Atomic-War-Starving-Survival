@@ -159,6 +159,13 @@ namespace Ashfall.Core.SkyDefense
 
         public IReadOnlyList<CounterBatteryTurretState> Turrets => _state.turrets.AsReadOnly();
         public IReadOnlyList<OrbitalTrackState> Tracks => _state.tracks.AsReadOnly();
+
+        /// <summary>
+        /// Read-only ordnance catalog loaded from the authored authority. UI
+        /// read model only — callers must never mutate or use it as a second
+        /// loader; the system remains the sole owner of the catalog.
+        /// </summary>
+        public IReadOnlyDictionary<string, SkyDefenseOrdnanceDefinition> OrdnanceCatalog => _ordnance;
         public int TotalInterceptions => _state.total_interceptions;
         public int TotalVolleys => _state.total_volleys;
         public SkyDefenseOrdnanceDefinition? GetOrdnance(string ordnanceId) =>

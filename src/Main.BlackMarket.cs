@@ -26,8 +26,15 @@ namespace AtomicWar.GodotApp
         {
             if (_blackMarket != null) return;
 
+            SetupHoldfastRuntime();
+            SetupInventory();
             SetupEconomy();
             _blackMarket = BlackMarketHostSession.Create(_dataDir, _economy.Market);
+            _blackMarket.BindSettlementOwners(
+                _holdfastRuntime.Trade,
+                _inventory.Inventory,
+                _inventory.Catalog,
+                () => _holdfastRuntime.Day);
             _blackMarket.StateChanged += () =>
             {
                 _blackMarketDirty = true;
@@ -65,7 +72,8 @@ namespace AtomicWar.GodotApp
         {
             SetupBlackMarket();
             EnsureBlackMarketPanel();
-            if (_blackMarketPanel != null) { _blackMarketPanel.Visible = true; _blackMarketPanel.RefreshView(); }
+            if (_blackMarketPanel != null)
+                _blackMarketPanel.Open();
         }
     }
 }

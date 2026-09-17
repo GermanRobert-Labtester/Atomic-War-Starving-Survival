@@ -152,6 +152,9 @@ namespace Ashfall.Core
     {
         public const string SystemId = "shelter_thermal";
         public const string InsulationCatalogPath = "shelter_insulation_catalog.json";
+        /// <summary>Plan 24B needs-modifier source id for the per-day room
+        /// warmth restoration pull (attribution only; the delta is one-shot).</summary>
+        public const string RoomWarmthModifierSource = "thermal.room_warmth";
         public float BoilerFuelLevel => _state.boilerFuelLevel;
         public bool BoilerActive => _state.boilerActive;
 
@@ -659,9 +662,12 @@ namespace Ashfall.Core
             // here, natural decay still applies in NeedsSystem.Tick).
             //
             // gameHours per day = 24; GetRoomWarmthModifier is the per-day
-            // additive pull. NeedsSystem.Modify(survivor, Warmth, +x) restores
-            // warmth — including a healthy room capping at 100 via NeedsSystem
-            // clamp, plus Warmth-critical threshold checks inside NeedsSystem.
+            // additive pull. NeedsSystem.ApplyAttributedDelta applies the same
+            // clamped warmth delta through the shared modifier seam (Plan 24B
+            // A1 — "thermal.room_warmth") so the contributor display can name
+            // the cause; a healthy room still caps at 100 and the
+            // Warmth-critical threshold checks inside NeedsSystem are
+            // unchanged.
             if (_assignments != null && _needs != null)
                 {
                     foreach (var room in _state.rooms)
@@ -673,7 +679,9 @@ namespace Ashfall.Core
                         {
                             string survivorId = inRoom[i].SurvivorId;
                             if (!string.IsNullOrEmpty(survivorId))
-                                _needs.Modify(survivorId, NeedKind.Warmth, warmth * 24f);
+                                _needs.ApplyAttributedDelta(
+                                    survivorId, NeedKind.Warmth, warmth * 24f,
+                                    RoomWarmthModifierSource);
                         }
                     }
                 }

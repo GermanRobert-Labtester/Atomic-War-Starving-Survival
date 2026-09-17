@@ -44,6 +44,7 @@ namespace Ashfall.Core
         public bool isFlooded;
         public bool equipmentDisabled;
         public float contaminationLevel;     // 0-1
+        public float lastNetLevelChangeCmPerDay; // C2[6] 23B: observed daily level delta (rising-water clock)
         public string stratumId = string.Empty;   // bound drainage stratum (sump_drainage_catalog)
         public float suspendedSolidsKg;           // silt in suspension; settles daily into settledSludgeKg
         public float settledSludgeKg;             // settled sludge mass awaiting treatment/dredging
@@ -154,6 +155,48 @@ namespace Ashfall.Core
         public SumpFloodingState State => _state;
         public event Action<FloodIncident> OnIncident;
         public event Action OnFloodingChanged;
+
+        /// <summary>
+        /// C2[6] 23B — rising-water clock read model. Derived from the same level
+        /// and per-day delta the simulation applied; no UI-side forecast arithmetic.
+        /// </summary>
+        public readonly struct SumpRiskSnapshot
+        {
+            public bool NodeExists { get; init; }
+            public bool IsFlooded { get; init; }
+            public float LevelCm { get; init; }
+            public float ThresholdCm { get; init; }
+            public float NetChangeCmPerDay { get; init; }
+            /// <summary>Hours until the 80% flood threshold at the observed rate; +inf when not rising.</summary>
+            public float HoursToThreshold { get; init; }
+        }
+
+        /// <summary>
+        /// Rising-water risk for one node. <see cref="SumpRiskSnapshot.HoursToThreshold"/> is
+        /// computed from the observed daily delta (<see cref="SumpNode.lastNetLevelChangeCmPerDay"/>)
+        /// against the same 80% threshold the flood trigger uses.
+        /// </summary>
+        public SumpRiskSnapshot GetRisk(string nodeId)
+        {
+            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            if (node == null)
+                return new SumpRiskSnapshot { NodeExists = false, HoursToThreshold = float.PositiveInfinity };
+
+            float threshold = node.maxWaterLevelCm * 0.8f;
+            float ratePerHour = node.lastNetLevelChangeCmPerDay / 24f;
+            float hours = (ratePerHour > 0f && node.waterLevelCm < threshold)
+                ? (threshold - node.waterLevelCm) / ratePerHour
+                : float.PositiveInfinity;
+            return new SumpRiskSnapshot
+            {
+                NodeExists = true,
+                IsFlooded = node.isFlooded,
+                LevelCm = node.waterLevelCm,
+                ThresholdCm = threshold,
+                NetChangeCmPerDay = node.lastNetLevelChangeCmPerDay,
+                HoursToThreshold = hours
+            };
+        }
 
         public SumpFloodingSystem(
             ISeededRng rng,
@@ -510,6 +553,8 @@ ILog? log = null)
             {
                 if (node.isFlooded && node.equipmentDisabled) continue;
 
+                float levelBefore = node.waterLevelCm;
+
                 // Inflow from groundwater. Nodes bound to a drainage stratum use
                 // catalog-driven ingress scaled by live groundwater pressure;
                 // unbound nodes keep the legacy flat model.
@@ -650,6 +695,11 @@ ILog? log = null)
                         OnIncident?.Invoke(incident);
                     }
                 }
+
+                // C2[6] 23B: record the true observed daily delta for the
+                // rising-water clock (level, rate, ETA) — same numbers the
+                // simulation just applied, never a UI re-derivation.
+                node.lastNetLevelChangeCmPerDay = node.waterLevelCm - levelBefore;
             }
 
             OnFloodingChanged?.Invoke();

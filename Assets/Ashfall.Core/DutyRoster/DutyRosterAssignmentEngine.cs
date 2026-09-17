@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Survivors;
 
 namespace Ashfall.Core
 {
@@ -18,6 +19,7 @@ namespace Ashfall.Core
         private readonly Func<string, DutyRosterRow> _getRow;
         private readonly Action _raiseUpdated;
         private readonly Action<string, string> _onAssignmentChanged;
+        private readonly Action<string, string> _onDutyVacated;
         private readonly Func<int> _seedSaltProvider;
         private readonly Func<IReadOnlyList<DutyRosterRow>> _rowsProvider;
 
@@ -27,6 +29,7 @@ namespace Ashfall.Core
             Func<string, DutyRosterRow> getRow,
             Action raiseUpdated,
             Action<string, string> onAssignmentChanged,
+            Action<string, string> onDutyVacated,
             Func<int> seedSaltProvider,
             Func<IReadOnlyList<DutyRosterRow>> rowsProvider)
         {
@@ -35,6 +38,7 @@ namespace Ashfall.Core
             _getRow = getRow;
             _raiseUpdated = raiseUpdated;
             _onAssignmentChanged = onAssignmentChanged;
+            _onDutyVacated = onDutyVacated;
             _seedSaltProvider = seedSaltProvider;
             _rowsProvider = rowsProvider;
         }
@@ -44,32 +48,48 @@ namespace Ashfall.Core
             return AssignWithResult(role, survivorId).IsSuccess;
         }
 
-        public ActionResult AssignWithResult(string role, string survivorId)
+        public ActionResult AssignWithResult(string role, string survivorId, bool confirmFitnessWarning = false)
         {
-            var validation = ValidateAssign(role, survivorId);
+            var validation = ValidateAssign(role, survivorId, confirmFitnessWarning);
             if (!validation.IsSuccess)
                 return validation;
 
             bool cleared = string.IsNullOrEmpty(survivorId);
-            AssignInternal(role, survivorId);
+            AssignInternal(role, survivorId, confirmFitnessWarning);
             return cleared
                 ? ActionResult.Success("duty_roster.cleared")
                 : ActionResult.Success("duty_roster.assigned");
         }
 
         public Func<string, bool>? IsExternalReserved { get; set; }
+        public Func<string, bool>? IsCandidateEligible { get; set; }
+        /// <summary>
+        /// Optional health-aware role gate supplied by the host. The assignment
+        /// engine remains ignorant of survivor state; it only enforces the
+        /// returned role verdict at both preview and commit time.
+        /// </summary>
+        public Func<string, string, RoleFitnessVerdict>? EvaluateRoleFitness { get; set; }
 
-        public ActionResult ValidateAssign(string role, string survivorId)
+        public ActionResult ValidateAssign(string role, string survivorId, bool confirmFitnessWarning = false)
         {
             if (!IsKnownRole(role))
                 return ActionResult.Blocked("unknown_role", "duty_roster.unknown_role");
             if (string.IsNullOrEmpty(survivorId))
                 return ActionResult.Success("duty_roster.cleared");
+            if (IsCandidateEligible != null && !IsCandidateEligible(survivorId))
+                return ActionResult.Blocked("ineligible_underage", "duty_roster.ineligible_underage");
             DutyRosterRow row = _getRow(survivorId);
             if (row == null)
                 return ActionResult.Blocked("unknown_survivor", "duty_roster.unknown_survivor");
             if (!CanAssign(row))
                 return ActionResult.Blocked("cannot_assign", "duty_roster.cannot_assign");
+            var fitness = EvaluateRoleFitness?.Invoke(survivorId, role);
+            if (fitness != null && !fitness.Allowed)
+                return ActionResult.Blocked("fitness_blocked", "duty_roster.fitness_blocked");
+            if (fitness != null && fitness.RequiresConfirmation && !confirmFitnessWarning)
+                return ActionResult.Blocked(
+                    "fitness_warning_confirmation_required",
+                    "duty_roster.fitness_warning_confirmation_required");
             if (IsExternalReserved != null && IsExternalReserved(survivorId))
                 return ActionResult.Blocked("busy", "duty_roster.busy");
             string currentRole = GetRoleOf(survivorId)!;
@@ -78,7 +98,7 @@ namespace Ashfall.Core
             return ActionResult.Success("duty_roster.assigned");
         }
 
-        private bool AssignInternal(string role, string survivorId)
+        private bool AssignInternal(string role, string survivorId, bool confirmFitnessWarning)
         {
             if (!IsKnownRole(role)) return false;
             if (!string.IsNullOrEmpty(survivorId))
@@ -86,8 +106,12 @@ namespace Ashfall.Core
                 DutyRosterRow row = _getRow(survivorId);
                 if (row == null) return false;
                 if (!CanAssign(row)) return false;
+                var fitness = EvaluateRoleFitness?.Invoke(survivorId, role);
+                if (fitness != null && !fitness.Allowed) return false;
+                if (fitness != null && fitness.RequiresConfirmation && !confirmFitnessWarning) return false;
             }
 
+            string previousSurvivorId = GetAssignment(role);
             if (string.IsNullOrEmpty(survivorId))
             {
                 _assignmentByRole.Remove(role);
@@ -96,6 +120,8 @@ namespace Ashfall.Core
             {
                 _assignmentByRole[role] = survivorId;
             }
+            if (!string.IsNullOrEmpty(previousSurvivorId) && previousSurvivorId != survivorId)
+                _onDutyVacated?.Invoke(role, previousSurvivorId);
             SyncAssignmentList();
             _onAssignmentChanged?.Invoke(role, survivorId);
             _raiseUpdated();
@@ -129,9 +155,16 @@ namespace Ashfall.Core
             }
 
             for (int i = 0; i < drop.Count; i++)
+            {
+                _onDutyVacated?.Invoke(drop[i], survivorId);
                 _assignmentByRole.Remove(drop[i]);
+                _onAssignmentChanged?.Invoke(drop[i], string.Empty);
+            }
             if (drop.Count > 0)
+            {
                 SyncAssignmentList();
+                _raiseUpdated();
+            }
         }
 
         /// <summary>
@@ -173,6 +206,8 @@ namespace Ashfall.Core
         private bool CanAssign(DutyRosterRow row)
         {
             if (row == null) return false;
+            if (IsCandidateEligible != null && !IsCandidateEligible(row.survivorId))
+                return false;
             if (row.status == DutyRosterIds.StatusDead || row.status == DutyRosterIds.StatusQuiet || row.status == DutyRosterIds.StatusMissing)
                 return false;
             if (row.status == DutyRosterIds.StatusLevy || row.status == DutyRosterIds.StatusWaystation)
@@ -185,7 +220,8 @@ namespace Ashfall.Core
             var pool = new List<string>();
             for (int i = 0; i < eligible.Count; i++)
             {
-                if (!used.Contains(eligible[i]))
+                if (!used.Contains(eligible[i])
+                    && IsFitnessAllowed(eligible[i], role))
                     pool.Add(eligible[i]);
             }
 
@@ -193,6 +229,16 @@ namespace Ashfall.Core
             int salt = _seedSaltProvider() + DutyRosterIds.SeedUtilityOffset + day * 17 + StableHash.Of(role);
             int n = (int)(((long)salt & 0x7FFFFFFF));
             return pool[n % pool.Count];
+        }
+
+        private bool IsFitnessAllowed(string survivorId, string role)
+        {
+            var verdict = EvaluateRoleFitness?.Invoke(survivorId, role);
+            // Utility auto-assignment has no player present to acknowledge a
+            // warning. It may choose only cleanly allowed candidates; impaired
+            // candidates remain manually assignable through the explicit
+            // host confirmation path.
+            return verdict == null || (verdict.Allowed && !verdict.RequiresConfirmation);
         }
 
         private static bool IsKnownRole(string role)
@@ -206,17 +252,34 @@ namespace Ashfall.Core
         {
             // Emit in ordinal role order: dictionary iteration order is not a
             // cross-host guarantee, and the assignments list is part of the save.
+            var previous = new Dictionary<string, DutyRosterAssignmentEntry>(StringComparer.Ordinal);
+            for (int i = 0; i < _assignments.Count; i++)
+            {
+                var entry = _assignments[i];
+                if (entry != null && !string.IsNullOrEmpty(entry.role))
+                    previous[entry.role] = entry;
+            }
             _assignments.Clear();
             var roles = new List<string>(_assignmentByRole.Count);
             foreach (var kv in _assignmentByRole) roles.Add(kv.Key);
             roles.Sort(string.CompareOrdinal);
             for (int i = 0; i < roles.Count; i++)
             {
-                _assignments.Add(new DutyRosterAssignmentEntry
+                var entry = new DutyRosterAssignmentEntry
                 {
                     role = roles[i],
                     survivorId = _assignmentByRole[roles[i]]
-                });
+                };
+                if (previous.TryGetValue(entry.role, out var old)
+                    && old.survivorId == entry.survivorId)
+                {
+                    entry.fitnessWarningAcknowledged = old.fitnessWarningAcknowledged;
+                    entry.fitnessWarningDay = old.fitnessWarningDay;
+                    entry.fitnessWarningReasons = old.fitnessWarningReasons != null
+                        ? new List<string>(old.fitnessWarningReasons)
+                        : new List<string>();
+                }
+                _assignments.Add(entry);
             }
         }
 

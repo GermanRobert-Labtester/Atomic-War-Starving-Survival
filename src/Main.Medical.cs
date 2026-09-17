@@ -304,6 +304,17 @@ namespace AtomicWar.GodotApp
             _medicalWardSession.Pipeline = _medical?.Pipeline;
             _medicalWardSession.StateChanged += () => _medicalWardDirty = true;
             _medicalWard.OnWardChanged += _ => _medicalWardDirty = true;
+            _medicalWard.OnPatientAdmitted += patientId =>
+            {
+                // An admitted patient is no longer available labor. The duty
+                // roster remains the labor authority; the ward only announces
+                // the transition so the host can vacate that existing entry.
+                if (_dutyRoster?.Roster != null)
+                {
+                    _dutyRoster.Roster.RemoveAssignmentsFor(patientId);
+                    _dutyRosterDirty = true;
+                }
+            };
             LoadMedicalWard();
             if (_medicalWardPanel == null)
             {

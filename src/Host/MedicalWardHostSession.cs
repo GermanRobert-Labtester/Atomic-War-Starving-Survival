@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Campaign;
 using Ashfall.Core.Medical;
 
 namespace AtomicWar.GodotApp
@@ -13,6 +14,7 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
         public int SimDay { get; set; }
         public List<MedicalProcedureDef> Procedures { get; set; } = new List<MedicalProcedureDef>();
+        private readonly List<DayStateChangeEvent> _pendingDayEvents = new List<DayStateChangeEvent>();
 
         /// <summary>
         /// Task #133 P1b: the unified medical pipeline, injected by Main once
@@ -37,7 +39,8 @@ namespace AtomicWar.GodotApp
                 var defaultProc = new MedicalProcedureDef("proc_1", "Procedure 1", "MedicalSystem");
                 System = new MedicalWardSystem(defaultState, new[] { defaultBed }, new[] { defaultProc });
             }
-            _onwardchanged_handler = _ => RaiseChanged();
+            _onwardchanged_handler = OnWardChanged;
+            System.OnWardChanged += _onwardchanged_handler;
         }
 
         public override void Save()
@@ -80,6 +83,32 @@ namespace AtomicWar.GodotApp
         private void RaiseChanged()
         {
             MarkDirty();
+        }
+
+        private void OnWardChanged(MedicalWardEvent evt)
+        {
+            RaiseChanged();
+            if (evt == null) return;
+
+            string? kind = evt.Kind switch
+            {
+                MedicalWardEventKind.Admitted => "medical_admitted",
+                MedicalWardEventKind.Discharged => "medical_discharged",
+                _ => null
+            };
+            if (kind == null) return;
+
+            _pendingDayEvents.Add(new DayStateChangeEvent(
+                kind, "medical_ward", evt.PatientId, evt.BedId, evt.Day));
+        }
+
+        /// <summary>Drains canonical admission/discharge transitions to the daily briefing.</summary>
+        public void DrainDayEvents(List<DayStateChangeEvent> target)
+        {
+            if (target == null) return;
+            for (int i = 0; i < _pendingDayEvents.Count; i++)
+                target.Add(_pendingDayEvents[i]);
+            _pendingDayEvents.Clear();
         }
 
         /// <summary>

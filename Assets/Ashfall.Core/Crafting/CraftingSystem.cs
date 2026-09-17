@@ -27,13 +27,17 @@ namespace Ashfall.Core.Crafting
         private Func<string, Recipe?> _recipeLookup;
         private Func<string, float> _crafterCostMultiplier; // crafterId -> material cost mult
         private Func<string, float> _crafterCraftTimeMultiplier; // crafterId -> duration mult
+        /// <summary>Plan 24B A2 — the shared worker-productivity slot. Composed
+        /// with (never replacing) the Phase0 penalty slot; bound once by the
+        /// host to the shared contract. Null ⇒ no contribution (legacy).</summary>
+        private Func<string, float> _crafterProductivityTimeMultiplier;
         private Func<string, bool> _canCraftMoonshine;
         private Func<string, bool> _researchGate;
 
         public InventoryContainer OverflowStash { get; set; }
 
         public event Action<Recipe> OnCraftStarted;
-        public event Action<Recipe> OnCraftCompleted;
+        public event Action<Recipe, string> OnCraftCompleted; // recipe, crafterId (empty when unassigned)
         public event Action<Recipe, string, int> OnCraftResultOverflow; // recipe, itemId, amount
 
         public CraftingSystem(InventoryContainer inventory)
@@ -48,6 +52,12 @@ namespace Ashfall.Core.Crafting
 
         public void SetCrafterCostMultiplier(Func<string, float> mult) => _crafterCostMultiplier = mult;
         public void SetCrafterCraftTimeMultiplier(Func<string, float> mult) => _crafterCraftTimeMultiplier = mult;
+
+        /// <summary>Plan 24B A2 — the productivity contract's craft-time slot,
+        /// composed multiplicatively with the Phase0 penalty slot so the two
+        /// authorities never clobber each other. Multiplier 1 = no effect.</summary>
+        public void SetCrafterProductivityTimeMultiplier(Func<string, float> mult)
+            => _crafterProductivityTimeMultiplier = mult;
         public void SetMoonshineGate(Func<string, bool> canCraftMoonshine) => _canCraftMoonshine = canCraftMoonshine;
 
         /// <summary>Bind authored research/blueprint requirements to the canonical ResearchSystem.</summary>
@@ -130,6 +140,11 @@ namespace Ashfall.Core.Crafting
             float duration = recipe.craftingTimeHours;
             if (crafterId != null && _crafterCraftTimeMultiplier != null)
                 duration *= _crafterCraftTimeMultiplier(crafterId);
+            if (crafterId != null && _crafterProductivityTimeMultiplier != null)
+            {
+                float productivity = _crafterProductivityTimeMultiplier(crafterId);
+                if (productivity != 1f) duration /= MathfCompat.Max(0.1f, productivity);
+            }
 
             _active.Add(new ActiveCraft
             {
@@ -205,6 +220,11 @@ namespace Ashfall.Core.Crafting
             float duration = recipe.craftingTimeHours;
             if (crafterId != null && _crafterCraftTimeMultiplier != null)
                 duration *= _crafterCraftTimeMultiplier(crafterId);
+            if (crafterId != null && _crafterProductivityTimeMultiplier != null)
+            {
+                float productivity = _crafterProductivityTimeMultiplier(crafterId);
+                if (productivity != 1f) duration /= MathfCompat.Max(0.1f, productivity);
+            }
 
             return CommandPreview.Available(
                 PlayerCommandCode.CraftStart,
@@ -304,7 +324,7 @@ namespace Ashfall.Core.Crafting
             if (station != null)
                 station.Degrade(StationWearPerCraft);
 
-            OnCraftCompleted?.Invoke(recipe);
+            OnCraftCompleted?.Invoke(recipe, craft.CrafterId);
         }
 
         private static InventoryBill BuildIngredientBill(Recipe recipe, float costMult)

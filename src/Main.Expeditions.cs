@@ -111,6 +111,9 @@ namespace AtomicWar.GodotApp
             _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters);
             _expeditions.Flags = _consequenceLedger;
             _expeditions.CurrentDay = _simDay;
+            _expeditions.SurvivorFitnessProvider = EvaluateSurvivorFitness;
+            _expeditions.ExpeditionFitnessProvider = survivorId =>
+                EvaluateDutyRoleFitness(survivorId, DutyRosterIds.RoleExpedition);
             // Plan 174 — pack-companion cargo route binds from the expedition
             // side too, so composition order never drops the seam.
             if (_companions != null) BindCompanionSeams();
@@ -142,6 +145,20 @@ namespace AtomicWar.GodotApp
             // resolver ambient + gear projection + bound wear multiplier).
             _expeditions.SetEstimateProtectiveInputs(locationId =>
                 _survivors?.BuildProtectiveEstimateInputs(locationId));
+            // C2 / Plan 20C (§36) — dispatch-time weather sampling from the ONE
+            // effects table (current weather governs a departure now; the
+            // forecast UI shows what waiting would buy).
+            _expeditions.SetEstimateWeatherInputs(_ =>
+            {
+                var effects = _world?.WeatherEffects;
+                if (effects == null || _world?.Weather == null) return null;
+                if (!effects.TryGetEffects(_world.Weather.Current, out var fx) || fx == null) return null;
+                return new Ashfall.Core.Expeditions.ExpeditionWeatherInputs
+                {
+                    SpeedMultiplier = fx.travel_speed_multiplier,
+                    EncounterMultiplier = fx.travel_encounter_multiplier
+                };
+            });
             // C2 / Plan 20A (G3) — the documented contract of
             // OnWeatherGateForced is that the radiation owner applies
             // block.ForceRadDose to the survivor. This is an acute discrete

@@ -6,11 +6,11 @@
       "id": "medical_laceration",
       "category": "injury",
       "display_name": "Laceration",
-      "diagnosis_text": "A deep cut, edges ragged, bleeding steady. The skin is parted, the flesh beneath is red and raw. It needs cleaning and closing.",
+      "diagnosis_text": "Laceration. Deep, edges ragged, bleeding steady. Needs closing.",
       "symptom_descriptions": [
-        "Blood runs down your arm in a steady stream. The cut is deep enough to see the fat beneath the skin.",
-        "The edges of the wound are ragged, not clean. Something tore the skin rather than cut it.",
-        "The bleeding is steady — not arterial, but constant. You're losing blood with every minute."
+        "Not spurting, but it has not stopped; the first dressing is through and it has been four minutes.",
+        "Torn rather than cut, and holding debris that the first flush did not shift.",
+        "Loss is constant and cumulative. Pallor showing at the nail beds."
       ],
       "treatment_steps": [
         "Clean the wound with clean water. Flush out debris and dirt.",
@@ -175,11 +175,11 @@
       "id": "medical_radiation_exposure",
       "category": "illness",
       "display_name": "Radiation Exposure",
-      "diagnosis_text": "Your dosimeter clicked. Your skin is warm. Your stomach is turning. You've been exposed to radiation. The question is how much.",
+      "diagnosis_text": "Acute radiation exposure. Dose received; magnitude not yet known.",
       "symptom_descriptions": [
-        "Nausea. Your stomach turns. Your mouth fills with saliva. You know what's coming.",
-        "Fatigue. Your body is heavy. Your eyes are tired. Your muscles don't want to work.",
-        "Skin warmth. The radiation is heating you from the inside. You can feel it."
+        "Nausea inside the hour, with salivation. Vomiting would confirm dose.",
+        "Metallic taste reported. The dosimeter reading is logged and disputed.",
+        "Skin warm where it was uncovered. Erythema may follow within hours."
       ],
       "treatment_steps": [
         "Take iodine pills immediately. Protect your thyroid.",
@@ -232,11 +232,11 @@
       "id": "medical_infection",
       "category": "illness",
       "display_name": "Infection",
-      "diagnosis_text": "The wound is hot, red, swollen. Pus seeps from the edges. The smell is sweet and wrong. Infection. You need to clean it before it spreads.",
+      "diagnosis_text": "Infection. Fever and spreading inflammation; source not localised.",
       "symptom_descriptions": [
-        "The wound is hot to the touch. The skin around it is red and swollen.",
-        "Pus seeps from the edges. The color is yellow-green. The smell is sweet and wrong.",
-        "Fever. Your body is fighting something. The temperature is rising."
+        "Fever with rigors. Rising through the night, breaking toward dawn.",
+        "Inflammation past the original site, and the margins are not distinct.",
+        "Appetite gone. Pulse elevated out of proportion to the temperature."
       ],
       "treatment_steps": [
         "Clean the wound with antiseptic. Flush out the infection.",
@@ -289,11 +289,11 @@
       "id": "medical_dehydration",
       "category": "illness",
       "display_name": "Dehydration",
-      "diagnosis_text": "Your mouth is dry. Your lips are cracked. Your urine is dark. You haven't had enough water. Your body is shutting down.",
+      "diagnosis_text": "Dehydration. Intake below loss; urine dark, membranes dry.",
       "symptom_descriptions": [
-        "Your mouth is dry. Your lips are cracked. Your tongue is thick.",
-        "Your urine is dark, almost brown. Your body is conserving water.",
-        "Your head aches. Your vision blurs. Your muscles cramp."
+        "Lips split at the corners. Tongue coated, speech slightly thickened.",
+        "Urine dark amber, small in volume and infrequent.",
+        "Headache behind the eyes; cramping in the calves after any load."
       ],
       "treatment_steps": [
         "Drink water. Clean water. As much as you can.",
@@ -345,11 +345,11 @@
       "id": "medical_starvation",
       "category": "illness",
       "display_name": "Starvation",
-      "diagnosis_text": "Your stomach is empty. Your muscles are weak. Your vision is blurry. You haven't eaten in days. Your body is consuming itself.",
+      "diagnosis_text": "Starvation. Caloric deficit sustained; the body is consuming itself.",
       "symptom_descriptions": [
-        "Your stomach is empty. The hunger has passed — now it's just emptiness.",
-        "Your muscles are weak. Your body is consuming itself for energy.",
-        "Your vision is blurry. Your brain is running on fumes."
+        "Hunger has stopped registering. What is left is weakness and cold.",
+        "Wasting visible at the temples and along the forearms.",
+        "Standing produces a black-out pause. Rations divided ever finer."
       ],
       "treatment_steps": [
         "Eat something. Anything. Your body needs calories.",
@@ -402,11 +402,11 @@
       "id": "medical_hypothermia",
       "category": "illness",
       "display_name": "Hypothermia",
-      "diagnosis_text": "You're shivering. Your teeth are chattering. Your fingers are numb. Your body is losing heat faster than it can produce it.",
+      "diagnosis_text": "Hypothermia. Core cooling faster than the body can replace it.",
       "symptom_descriptions": [
-        "Shivering. Your body is trying to generate heat. It's not working.",
-        "Numbness. Your fingers and toes are losing feeling.",
-        "Confusion. Your brain is slowing down. Your thoughts are foggy."
+        "Shivering in violent waves. Speech slurred at the consonants.",
+        "Fingers useless on fastenings; cannot manage a buckle or a match.",
+        "Shivering has stopped and the skin is cold. This is the worse sign."
       ],
       "treatment_steps": [
         "Get out of the cold. Find shelter immediately.",
@@ -458,11 +458,11 @@
       "id": "medical_heatstroke",
       "category": "illness",
       "display_name": "Heatstroke",
-      "diagnosis_text": "You're hot. Your skin is dry. Your pulse is rapid. Your body is overheating. The cooling systems have failed.",
+      "diagnosis_text": "Heatstroke. Sweating has stopped; core temperature still climbing.",
       "symptom_descriptions": [
-        "Hot. Your skin is dry. Your body has stopped sweating.",
-        "Rapid pulse. Your heart is working overtime to cool you down.",
-        "Confusion. Your brain is cooking. Your thoughts are scrambled."
+        "Skin hot and dry to the touch. Sweating ceased some time ago.",
+        "Pulse rapid and shallow. Face flushed despite the cold shelter.",
+        "Answers late and wrongly, and does not notice the mistake."
       ],
       "treatment_steps": [
         "Get out of the heat. Find shade or shelter immediately.",
@@ -514,11 +514,11 @@
       "id": "medical_panic_attack",
       "category": "mental",
       "display_name": "Panic Attack",
-      "diagnosis_text": "Your chest is tight. Your breath is fast. The world is closing in. You're having a panic attack. You need to breathe.",
+      "diagnosis_text": "Panic attack. Acute hyperventilation; no physical cause found.",
       "symptom_descriptions": [
-        "Chest tightness. Like someone is sitting on your chest.",
-        "Rapid breathing. You can't get enough air. The more you try, the less you get.",
-        "Tunnel vision. The world narrows to a point. Everything else disappears."
+        "Breath fast and shallow. Cannot complete a full exhalation.",
+        "Reports the chest compressed. No cardiac signs on examination.",
+        "Vision narrowing. Hands braced on something, unwilling to let go."
       ],
       "treatment_steps": [
         "Breathe. Slowly. Four counts in. Four counts out.",
@@ -570,11 +570,11 @@
       "id": "medical_insomnia",
       "category": "mental",
       "display_name": "Insomnia",
-      "diagnosis_text": "You can't sleep. Your eyes are tired but your mind won't stop. You've been awake for days. Your body is shutting down.",
+      "diagnosis_text": "Insomnia. Sleep debt compounding; cognition degrading with it.",
       "symptom_descriptions": [
-        "Tired eyes. Your body wants to sleep. Your mind won't let it.",
-        "Racing thoughts. Your brain won't stop. The thoughts keep coming.",
-        "Weakness. Your body is running on empty. Your muscles are failing."
+        "Wake through the second and third watches, and reports the ceiling.",
+        "Microsleep on duty: the head drops, then a jerk and a denial.",
+        "Irritable over small matters. Reaction time visibly slower."
       ],
       "treatment_steps": [
         "Find a safe place. Your mind won't rest if your body isn't safe.",
@@ -626,11 +626,11 @@
       "id": "medical_wound_infection",
       "category": "complication",
       "display_name": "Wound Infection",
-      "diagnosis_text": "The wound is hot, red, swollen. Pus seeps from the edges. The smell is sweet and wrong. The infection is spreading. You need to act now.",
+      "diagnosis_text": "Septic wound. Localised infection, purulent, tracking up the limb.",
       "symptom_descriptions": [
-        "The wound is hot to the touch. The skin around it is red and swollen.",
-        "Pus seeps from the edges. The color is yellow-green. The smell is sweet and wrong.",
-        "Red streaks spread from the wound. The infection is moving."
+        "Wound hot and swollen, margins bright. Pain out of proportion.",
+        "Purulent discharge, yellow-green, with a sweet smell that is wrong.",
+        "Red streaking running up the limb from the site toward the nodes."
       ],
       "treatment_steps": [
         "Clean the wound with antiseptic. Flush out the infection.",
@@ -795,11 +795,11 @@
       "id": "medical_dehydration_severe",
       "category": "emergency",
       "display_name": "Severe Dehydration",
-      "diagnosis_text": "Your mouth is desert dry. Your lips are cracked and bleeding. Your urine is brown. Your body is shutting down. You need water now.",
+      "diagnosis_text": "Severe dehydration. Volume deficit critical; seizure is the risk.",
       "symptom_descriptions": [
-        "Your mouth is so dry you can't swallow. Your lips crack when you move them.",
-        "Your urine is brown, almost black. Your body has given up on conserving water.",
-        "Your vision tunnels. Your muscles cramp. Your body is failing."
+        "Skin tents when pinched and stays that way. Membranes dry.",
+        "Urine brown and scant. Pulse thready and faster than it should be.",
+        "Wrong about the day and the shift. Cannot keep water down."
       ],
       "treatment_steps": [
         "Drink water immediately. Clean water. As much as you can.",
@@ -966,11 +966,11 @@
       "id": "medical_chronic_radiation",
       "category": "chronic",
       "display_name": "Chronic Radiation Illness",
-      "diagnosis_text": "The exposure was too much. The damage is done. Your body is fighting a losing battle against the radiation inside you.",
+      "diagnosis_text": "Chronic radiation illness. Accumulated dose; no clearance pathway.",
       "symptom_descriptions": [
-        "Fatigue that never goes away. Your body is always tired.",
-        "Nausea that comes and goes. Your stomach is never settled.",
-        "Skin lesions that won't heal. Your body is breaking down."
+        "Fatigue that sleep does not repay. Duties take twice the time.",
+        "Lesions on the forearms that close, then reopen without cause.",
+        "Morning nausea. Appetite gone, and weight following it down."
       ],
       "treatment_steps": [
         "Anti-rad medication. Chelation therapy. Regular doses.",
@@ -1080,11 +1080,11 @@
       "id": "medical_addiction",
       "category": "chronic",
       "display_name": "Addiction",
-      "diagnosis_text": "You need it. The substance. The relief. The escape. Your body craves it. Your mind demands it. You're addicted.",
+      "diagnosis_text": "Chemical dependence. Dosing interval shortening; withdrawal onset.",
       "symptom_descriptions": [
-        "Cravings that won't stop. Your body demands the substance.",
-        "Withdrawal that hurts. Your body punishes you for not using.",
-        "Tolerance that grows. You need more to feel the same."
+        "Tremor in the hands that settles within an hour of a dose.",
+        "Night sweats, blamed on the shelter heat. Intervals still shortening.",
+        "The rationing explanations are getting longer and less consistent."
       ],
       "treatment_steps": [
         "Detox. Stop using. Let your body purge the substance.",
@@ -1137,11 +1137,11 @@
       "id": "medical_ptsd",
       "category": "mental",
       "display_name": "Post-Traumatic Stress",
-      "diagnosis_text": "The memories won't stop. The nightmares won't end. The triggers won't go away. You're haunted by what you've seen.",
+      "diagnosis_text": "Post-traumatic stress. Intrusive recall, poor sleep, hypervigilance.",
       "symptom_descriptions": [
-        "Flashbacks that hit without warning. The past becomes the present.",
-        "Nightmares that won't let you sleep. The dark becomes your enemy.",
-        "Hypervigilance that won't let you relax. The world becomes your threat."
+        "Wakes shouting, or wakes silent and already out of the bunk.",
+        "Startles at the door seals. Will not sit facing away from them.",
+        "Avoids the corridor where it happened. The detour costs ten minutes."
       ],
       "treatment_steps": [
         "Talk about it. Share your experiences with others.",
@@ -3189,11 +3189,11 @@
       "id": "medical_asthma",
       "category": "chronic_disease",
       "display_name": "Asthma",
-      "diagnosis_text": "Your airways are constricted. Your breathing is difficult. You need an inhaler or you'll suffocate.",
+      "diagnosis_text": "Airway constriction. Wheeze on exhale. Inhaler needed to sustain.",
       "symptom_descriptions": [
-        "Wheezing. Your airways are narrowing.",
-        "Shortness of breath. Your lungs can't get enough air.",
-        "Chest tightness. Your chest is constricting."
+        "Audible wheeze on the exhale. Breath shallow, rate high.",
+        "Speaks in short clauses, stopping mid-sentence to draw air.",
+        "Cough wakes them in the cold hours. Dust and spore load worsen it."
       ],
       "treatment_steps": [
         "Use an inhaler if available. It opens the airways.",

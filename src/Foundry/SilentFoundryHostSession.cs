@@ -106,6 +106,12 @@ namespace AtomicWar.GodotApp
             }
 
             Engine.TickDaily(day);
+            // C2[6] 23A: the salt mine is a real electrical load. Its private
+            // isPowered field is no longer an independent authority — feed it from
+            // the canonical allocation (mine shares the foundry/workshop bus).
+            SaltMine.SetPower(PowerGrid == null
+                || PowerGrid.IsRoomServed("room_foundry")
+                || PowerGrid.IsRoomServed("room_workshop"));
             SaltMine.TickDaily(day, new CoreSeededRng(day * 31));
             StateChanged?.Invoke();
         }

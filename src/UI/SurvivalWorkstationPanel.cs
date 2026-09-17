@@ -49,13 +49,32 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
 
     private CraftingHostSession? _craftingHost;
     private InventoryHostSession? _inventoryHost;
+    private SurvivorsHostSession? _survivorsHost;
     private int _selectedRecipeIndex = -1;
     private string _activeFilter = "all"; // "all" | "craftable" | "queued"
 
-    public void Bind(CraftingHostSession crafting, InventoryHostSession? inventory = null)
+    // ── Bench operator (trade specialty attribution) ───────────────────
+    private OptionButton? _crafterSelect;
+    private readonly List<string> _crafterIds = new();
+
+    /// <summary>
+    /// The survivor chosen at the bench, or "" for unassigned — in which case the
+    /// host auto-credits a living survivor whose trade matches the item. Index 0
+    /// is the UNASSIGNED row, so ids are offset by one.
+    /// </summary>
+    public string SelectedCrafterId =>
+        _crafterSelect != null && _crafterSelect.Selected > 0 && _crafterSelect.Selected - 1 < _crafterIds.Count
+            ? _crafterIds[_crafterSelect.Selected - 1]
+            : string.Empty;
+
+    public void Bind(
+        CraftingHostSession crafting,
+        InventoryHostSession? inventory = null,
+        SurvivorsHostSession? survivors = null)
     {
         _craftingHost = crafting;
         _inventoryHost = inventory;
+        _survivorsHost = survivors;
         if (_craftingHost != null)
         {
             _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
@@ -72,10 +91,50 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
         RefreshQueueFooter();
         BuildRecipeRows();
         RefreshDetail();
+        RefreshCrafterOptions();
+    }
+
+    /// <summary>
+    /// Rebuild the bench-operator list from the living roster. The current
+    /// selection is preserved across refreshes so starting a craft does not
+    /// silently reassign the bench to UNASSIGNED.
+    /// </summary>
+    private void RefreshCrafterOptions()
+    {
+        if (_crafterSelect == null) return;
+        string previous = SelectedCrafterId;
+
+        _crafterSelect.Clear();
+        _crafterIds.Clear();
+        _crafterSelect.AddItem("UNASSIGNED (auto-credit)");
+
+        var rosterSystem = _survivorsHost?.Roster;
+        if (rosterSystem != null)
+        {
+            for (int i = 0; i < rosterSystem.Roster.Count; i++)
+            {
+                var entry = rosterSystem.Roster[i];
+                if (entry == null || !entry.isAlive || string.IsNullOrEmpty(entry.survivorId)) continue;
+
+                var def = rosterSystem.FindDefinition(entry.definitionId);
+                string name = def != null && !string.IsNullOrEmpty(def.displayName)
+                    ? def.displayName
+                    : entry.survivorId;
+                string trade = def != null && !string.IsNullOrEmpty(def.profession)
+                    ? def.profession
+                    : "no trade";
+
+                _crafterIds.Add(entry.survivorId);
+                _crafterSelect.AddItem($"{name} — {trade}");
+            }
+        }
+
+        int restore = previous.Length > 0 ? _crafterIds.IndexOf(previous) : -1;
+        _crafterSelect.Selected = restore >= 0 ? restore + 1 : 0;
     }
 
     private void OnEngineCraftStarted(Recipe _) { RefreshView(); OnCraftStarted?.Invoke(); }
-    private void OnEngineCraftCompleted(Recipe _) => RefreshView();
+    private void OnEngineCraftCompleted(Recipe recipe, string crafterId) => RefreshView();
 
     public override void _Ready()
     {
@@ -208,13 +267,25 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
 
         actionRow.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill });
 
+        actionRow.AddChild(AshfallUiHelpers.MakeBody("AT BENCH:"));
+        _crafterSelect = new OptionButton();
+        _crafterSelect.CustomMinimumSize = new Vector2(260, 32);
+        _crafterSelect.TooltipText =
+            "Who works the bench. Trade specialty progress is credited to this survivor. " +
+            "UNASSIGNED lets the shelter auto-credit a living survivor whose trade matches the item.";
+        actionRow.AddChild(_crafterSelect);
+        // Bind() can run before _Ready(), so populate as soon as the control exists.
+        RefreshCrafterOptions();
+
         _btnStartSelected = AshfallUiHelpers.MakeButton("START SELECTED", () =>
         {
             if (_selectedRecipeIndex < 0) return;
             if (_craftingHost == null) return;
             var recipe = GetRecipeAtVisibleRow(_selectedRecipeIndex);
             if (recipe == null) return;
-            _craftingHost?.Start(recipe.id);
+            // Read at click time so a bench-operator change after the row was
+            // drawn still applies to this craft.
+            _craftingHost?.Start(recipe.id, SelectedCrafterId);
         });
         _btnStartSelected.CustomMinimumSize = new Vector2(160, 32);
         actionRow.AddChild(_btnStartSelected);

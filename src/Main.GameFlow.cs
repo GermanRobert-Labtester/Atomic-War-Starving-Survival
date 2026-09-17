@@ -353,7 +353,8 @@ namespace AtomicWar.GodotApp
                     break;
                 case "economy_detail":
                     SetupEconomy();
-                    _economyDetailPanel.Bind(_economy);
+                    SetupEconomy();
+                    _economyDetailPanel.Bind(_economy, () => _world?.Weather?.Current ?? Ashfall.Core.WeatherKind.Clear);
                     _economyDetailPanel.Open();
                     break;
                 case "radiation_history":
@@ -403,8 +404,9 @@ namespace AtomicWar.GodotApp
                 case "crafting":
                     SetupCrafting();
                     SetupInventory();
+                    SetupSurvivors();
                     SyncCraftingStationsFromShelter();
-                    _craftingPanel.Bind(_crafting, _inventory);
+                    _craftingPanel.Bind(_crafting, _inventory, _survivors);
                     _craftingPanel.Open();
                     break;
                 case "medical":
@@ -563,7 +565,7 @@ namespace AtomicWar.GodotApp
                     _centurySeedPanel.Open();
                     break;
                 case "epilogue":
-                    _epiloguePanel.Bind(BuildCampaignOutcomeSnapshot());
+                    _epiloguePanel.Bind(BuildCurrentEpilogueContext());
                     _epiloguePanel.Open();
                     break;
                 case "verdict":
@@ -637,6 +639,7 @@ namespace AtomicWar.GodotApp
                 case "traveling_caravan":
                 case "shelter_barter":
                 case "medical_ward":
+                case "sky_defense_battery":
                     OpenExpandedPanel(panelId);
                     break;
             }
@@ -783,7 +786,9 @@ namespace AtomicWar.GodotApp
                 FilterDutyAssignee = intakeAssignee,
                 Forecast = _world.Weather.PeekForecast(3),
                 LastEvent = lastEvent,
-                MachineTellText = BuildMachineTellText()
+                MachineTellText = BuildMachineTellText(),
+                MemorialCount = _memorial?.Entries?.Count ?? 0,
+                CohortLivingCount = _doseLedger?.Cohort?.SurvivingChildrenCount ?? 0
             });
         }
 

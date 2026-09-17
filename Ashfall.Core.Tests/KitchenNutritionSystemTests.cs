@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+using System;
 using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
@@ -33,6 +34,25 @@ namespace Ashfall.Core.Tests
             var r = k.StartPrepJob("stew", "cook_1", new Dictionary<string, int> { { "meat", 2 }, { "veg", 1 } });
             Assert.Equal(ActionResult.StatusKind.Success, r.Status);
             Assert.Single(k.State.activeJobs);
+        }
+
+        [Fact] public void StartPrepJob_UnfitCook_IsBlockedBeforeIngredientsMove()
+        {
+            var k = Create(out var inv, out _);
+            inv.AddById("meat", 5);
+            k.SurvivorFitnessProvider = _ => new FitnessVerdict(
+                "cook_1",
+                FitnessLevel.Unfit,
+                new[] { FitnessReasonIds.SevereFatigue },
+                Array.Empty<string>(),
+                Array.Empty<NeedKind>());
+
+            var r = k.StartPrepJob("stew", "cook_1", new Dictionary<string, int> { { "meat", 2 } });
+
+            Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
+            Assert.Equal("fitness_blocked", r.FailureCode);
+            Assert.Equal(5, inv.CountById("meat"));
+            Assert.Empty(k.State.activeJobs);
         }
 
         [Fact] public void TickDay_CompletesJob()

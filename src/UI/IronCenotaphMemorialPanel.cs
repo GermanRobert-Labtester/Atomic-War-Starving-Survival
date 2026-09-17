@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using Ashfall.Core;
 using Godot;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -17,6 +18,34 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer? _buttonContainer;
         private VBoxContainer? _dataContainer;
         private Label? _logOutputLabel;
+
+        /// <summary>Plan 24C (A3) — the vigil command: mourns the most recent
+        /// unmourned loss through the memorial owner; the result text is the
+        /// only feedback (never a silent no-op).</summary>
+        private void OnVigilPressed()
+        {
+            if (_mourning == null)
+            {
+                if (_logOutputLabel != null)
+                    _logOutputLabel.Text = "[RIT-01] No memorial ledger bound. The dead stay uncounted.";
+                return;
+            }
+            var pending = _mourning.LatestUnmourned();
+            if (pending == null)
+            {
+                if (_logOutputLabel != null)
+                    _logOutputLabel.Text = "[RIT-01] Every recorded loss has had its vigil.";
+                return;
+            }
+            var result = _mourning.Mourn(pending.Value.id);
+            if (_logOutputLabel != null)
+                _logOutputLabel.Text = result.IsSuccess
+                    ? $"[RIT-01] The shelter stood together and mourned. (D{pending.Value.day} loss)"
+                    : "[RIT-01] The vigil could not begin: "
+                        + (result.MessageKey ?? result.FailureCode ?? "unspecified")
+                        .Replace("memorial.", "").Replace('_', ' ') + ".";
+            RefreshView();
+        }
 
         public override void _Ready()
         {
@@ -43,11 +72,43 @@ namespace AtomicWar.GodotApp.UI
             IsBound = false;
         }
 
+        /// <summary>
+        /// Plan 24C (A3) — the mourning route's binding: the memorial owner's
+        /// read model plus the once-per-death vigil command. The panel renders
+        /// truthful state and dispatches the command; it never recomputes
+        /// grief or morale (the host owns the attributed recovery).
+        /// </summary>
+        public sealed class MourningBinding
+        {
+            public Func<int> TotalDeaths { get; init; } = () => 0;
+            public Func<(string id, int day)?> LatestUnmourned { get; init; } = () => null;
+            /// <summary>deceasedId → the memorial owner's action result.</summary>
+            public Func<string, ActionResult> Mourn { get; init; } = _ =>
+                ActionResult.Blocked("unbound", "memorial.mourn_unbound");
+        }
+
+        private MourningBinding? _mourning;
+
+        public void BindMourning(MourningBinding binding)
+        {
+            _mourning = binding;
+            IsBound = binding != null;
+            RefreshView();
+        }
+
         public void RefreshView()
         {
             if (_statusBadgeLabel != null)
             {
-                _statusBadgeLabel.Text = "STATUS: MEMORIAL FLAME ACTIVE - RECORDED: 38 SOULS (-18% GRIEF)";
+                // Plan 24C (A3): truthful status from the memorial owner when
+                // bound; the unbound placeholder keeps its historical text.
+                if (_mourning != null)
+                {
+                    var pending = _mourning.LatestUnmourned();
+                    _statusBadgeLabel.Text = pending == null
+                        ? $"STATUS: MEMORIAL FLAME ACTIVE - RECORDED: {_mourning.TotalDeaths()} SOULS - ALL MOURNED"
+                        : $"STATUS: MEMORIAL FLAME ACTIVE - RECORDED: {_mourning.TotalDeaths()} SOULS - VIGIL PENDING (D{pending.Value.day})";
+                }
             }
         }
 
@@ -83,7 +144,11 @@ namespace AtomicWar.GodotApp.UI
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
             _buttonContainer.AddChild(new Button { Text = "[ENGRAVE BRONZE MEMORIAL PLAQUE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
             _buttonContainer.AddChild(new Button { Text = "[REFUEL ETERNAL MEMORIAL FLAME]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[HOLD ALL-SHELTER VIGIL & MOMENT OF SILENCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            // Plan 24C (A3): the vigil is the mourning action — once per death,
+            // routed through the memorial owner's command with truthful feedback.
+            var vigilButton = new Button { Text = "[HOLD ALL-SHELTER VIGIL & MOMENT OF SILENCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            vigilButton.Pressed += OnVigilPressed;
+            _buttonContainer.AddChild(vigilButton);
             _buttonContainer.AddChild(new Button { Text = "[RECITE DIEGETIC COMMEMORATION EULOGY]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)

@@ -40,6 +40,9 @@ namespace AtomicWar.GodotApp
         private OpeningProtocolModal _openingProtocolModal = null!;
         private PowerGridHostSession _powerGrid = null!;
         private bool _powerGridDirty;
+        // C2[6] 23B: player-initiated load sheds accumulated during the day, drained
+        // by the power day owner into a `power_shed_player` attribution event.
+        private readonly List<string> _pendingPlayerSheds = new List<string>();
         private GreenhouseHostSession _greenhouse = null!;
         private AtomicWar.GodotApp.UI.DeconAirlockPanel _deconAirlockPanel = null!;
         private AtomicWar.GodotApp.UI.GeodeticSurveyPanel _geodeticSurveyPanel = null!;
@@ -283,6 +286,22 @@ namespace AtomicWar.GodotApp
                 if (def.traitIds != null && def.traitIds.Contains("skill_crafting_expert")) skill += 0.5f;
                 if (def.traitIds != null && def.traitIds.Contains("skill_scavenge_efficiency")) skill += 0.3f;
                 return skill;
+            });
+
+            // Plan 24B A2 — the workshop's craft-time leg resolves through the
+            // ONE shared worker-productivity contract (campaign skill authority
+            // + fitness + duty-hour overwork), composed with — never replacing
+            // — the Phase0 penalty slot and the legacy trait evaluator. Workers
+            // with no workshop-sense level resolve null ⇒ exact legacy speed.
+            // Bounded [0.8, 1.3]× so degraded crafters slow and skilled ones
+            // speed up without extreme swings.
+            _crafting.Engine.SetCrafterProductivityTimeMultiplier(crafterId =>
+            {
+                if (string.IsNullOrEmpty(crafterId)) return 1f;
+                var verdict = EnsureWorkerProductivityContract()
+                    .Resolve(crafterId, "skill_workshop_sense");
+                if (verdict == null) return 1f;
+                return MathfCompat.Clamp(verdict.YieldModifierPermille / 1000f, 0.8f, 1.3f);
             });
 
             WireRelicRestorationDeltas(_crafting.Workshop);
@@ -542,11 +561,37 @@ namespace AtomicWar.GodotApp
                 _powerGridPanel = new PowerGridPanel();
                 _powerGridPanel.OnRoomToggled += id =>
                 {
-                    if (_powerGrid.ToggleBreaker(id))
-                        ObserveSigil("power.breaker_toggled");
+                    bool wasPowered = _powerGrid.System.IsRoomPowered(id);
+                    if (!_powerGrid.ToggleBreaker(id))
+                        return;
+                    ObserveSigil("power.breaker_toggled");
+                    // C2[6] 23B: if the player just took a served room offline, record
+                    // it as a player shed so the briefing can say who did it.
+                    if (wasPowered && !_powerGrid.System.IsRoomPowered(id))
+                        _pendingPlayerSheds.Add(id);
                 };
                 _powerGridPanel.OnPriorityChanged += (id, p) => _powerGrid.SetPriority(id, p);
                 _powerGridPanel.OnFuelAdded += u => _powerGrid.AddFuel(u);
+                // C2[6] 23B: overload/surge trips need an explicit, costly reset — the
+                // canonical machine_oil service is consumed once (preview/consume/commit
+                // discipline, same as generator service).
+                _powerGridPanel.OnBreakerResetRequested += id =>
+                {
+                    if (!_powerGrid.System.IsRoomTripped(id))
+                        return;
+                    var inv = _inventory.Inventory;
+                    if (inv.CountById(PowerGridSystem.GeneratorMaintenanceItemId) < 1)
+                    {
+                        ObserveSigil("power.breaker_reset_missing_item");
+                        return;
+                    }
+                    if (!_powerGrid.ClearTripped(id))
+                        return;
+                    inv.TryConsumeById(PowerGridSystem.GeneratorMaintenanceItemId, 1);
+                    _journal?.TryAddRawEntry("power_breaker_reset",
+                        $"MAINTENANCE: Breaker for {id} reset after an overload trip (machine_oil consumed).", null!, _simDay);
+                    ObserveSigil("power.breaker_reset");
+                };
                 // B5–B8 Phase 2: battery-bank install — preview check, canonical
                 // item consumed once, then authoritative commit; blocked installs
                 // mutate nothing and say why.

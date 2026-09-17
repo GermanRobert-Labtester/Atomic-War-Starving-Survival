@@ -55,6 +55,8 @@ namespace Ashfall.Core
             return row;
         }
 
+        public Func<string, bool>? IsCandidateEligible { get; set; }
+
         public bool WriteName(
             string survivorId,
             string displayName,
@@ -66,6 +68,7 @@ namespace Ashfall.Core
             if (!_state.expansionUnlocked) return false;
             if (_state.chartScript == DutyRosterIds.ScriptBurned || _state.mutationRosterBurned) return false;
             if (string.IsNullOrEmpty(survivorId)) return false;
+            if (IsCandidateEligible != null && !IsCandidateEligible(survivorId)) return false;
             if (script != DutyRosterIds.ScriptPencil && script != DutyRosterIds.ScriptInk) return false;
 
             if (_blankRowsLiving.Contains(survivorId))

@@ -22,6 +22,34 @@ namespace Ashfall.Core.Survivors
         public List<TradeSpecialtySurvivorState> survivors = new List<TradeSpecialtySurvivorState>();
     }
 
+    // ── Authored profession content (trade_specialties.json) ─────────
+    // Presentation/reference data keyed by milestone tier. Content only, never
+    // per-run state, so none of it belongs in TradeSpecialtySaveState.
+
+    [Serializable]
+    public sealed class TradeSpecialtyMilestoneInfo
+    {
+        public int Tier = 1;
+        public string Title = string.Empty;
+        public string NarrativeId = string.Empty;
+
+        /// <summary>Authored per-milestone bonus. Retained so it is queryable and no
+        /// longer silently dropped; the runtime still applies the constants below.</summary>
+        public float SkillBonus;
+    }
+
+    [Serializable]
+    public sealed class TradeSpecialtyProfessionInfo
+    {
+        public string ProfessionId = string.Empty;
+        public string DisplayName = string.Empty;
+        public string MasteryNarrativeId = string.Empty;
+        public string MasteryBonusText = string.Empty;
+        public List<string> Aliases = new List<string>();
+        public Dictionary<int, TradeSpecialtyMilestoneInfo> Milestones =
+            new Dictionary<int, TradeSpecialtyMilestoneInfo>();
+    }
+
     /// <summary>
     /// Trade Specialty System — pre-war professions unlock specialized perk
     /// trees as survivors craft related items, turning basic tasks into
@@ -69,6 +97,115 @@ namespace Ashfall.Core.Survivors
                 if (!string.IsNullOrEmpty(p) && !list.Contains(p))
                     list.Add(p);
             }
+        }
+
+        /// <summary>
+        /// True when the item matches the profession's authored crafting patterns.
+        /// This is the same rule OnItemCrafted applies, exposed so a host can
+        /// attribute an unassigned craft without duplicating the match logic.
+        /// </summary>
+        public static bool ProfessionMatchesItem(string professionId, string itemId)
+        {
+            if (string.IsNullOrEmpty(professionId) || string.IsNullOrEmpty(itemId)) return false;
+            if (!ProfessionItemCategories.TryGetValue(professionId, out var categories)) return false;
+            for (int i = 0; i < categories.Count; i++)
+            {
+                if (itemId.IndexOf(categories[i], StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+            }
+            return false;
+        }
+
+        // ── Profession content registry (fed by TradeSpecialtyCatalogLoader) ──
+        public static readonly Dictionary<string, TradeSpecialtyProfessionInfo> ProfessionInfo =
+            new Dictionary<string, TradeSpecialtyProfessionInfo>(StringComparer.Ordinal);
+
+        /// <summary>Registers authored profession content. Re-registering the same
+        /// profession replaces it, so reloading the catalog cannot duplicate state.</summary>
+        public static void RegisterProfessionInfo(TradeSpecialtyProfessionInfo? info)
+        {
+            if (info == null || string.IsNullOrEmpty(info.ProfessionId)) return;
+            ProfessionInfo[info.ProfessionId] = info;
+            RebuildProfessionLabelIndex();
+        }
+
+        public static TradeSpecialtyProfessionInfo? GetProfessionInfo(string professionId)
+        {
+            if (string.IsNullOrEmpty(professionId)) return null;
+            return ProfessionInfo.TryGetValue(professionId, out var info) ? info : null;
+        }
+
+        public static TradeSpecialtyMilestoneInfo? GetMilestone(string professionId, int tier)
+        {
+            var info = GetProfessionInfo(professionId);
+            if (info == null || info.Milestones == null) return null;
+            return info.Milestones.TryGetValue(tier, out var milestone) ? milestone : null;
+        }
+
+        public static string GetDisplayName(string professionId)
+            => GetProfessionInfo(professionId)?.DisplayName ?? string.Empty;
+
+        /// <summary>Authored mastery narrative event id, or empty when the profession
+        /// has no catalog entry. Empty means MasterTrade fires nothing rather than
+        /// inventing an id that events.json cannot resolve.</summary>
+        public static string GetMasteryNarrativeId(string professionId)
+            => GetProfessionInfo(professionId)?.MasteryNarrativeId ?? string.Empty;
+
+        public static string GetMasteryBonusText(string professionId)
+            => GetProfessionInfo(professionId)?.MasteryBonusText ?? string.Empty;
+
+        public static string GetMilestoneTitle(string professionId, int tier)
+            => GetMilestone(professionId, tier)?.Title ?? string.Empty;
+
+        public static string GetMilestoneNarrativeId(string professionId, int tier)
+            => GetMilestone(professionId, tier)?.NarrativeId ?? string.Empty;
+
+        // ── Profession label → specialty id resolution ─────────────────
+        // Survivor rosters author display labels ("Trauma Surgeon") while
+        // specialty trees are keyed by id (bone_setter). The index is rebuilt
+        // from the registry in ordinal profession-id order, so resolution never
+        // depends on catalog load order or registration sequence.
+        private static readonly Dictionary<string, string> s_professionLabelIndex =
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        public static IReadOnlyDictionary<string, string> ProfessionLabelIndex => s_professionLabelIndex;
+
+        private static void RebuildProfessionLabelIndex()
+        {
+            s_professionLabelIndex.Clear();
+            var ids = new List<string>(ProfessionInfo.Keys);
+            ids.Sort(StringComparer.Ordinal);
+            for (int i = 0; i < ids.Count; i++)
+            {
+                var info = ProfessionInfo[ids[i]];
+                if (info == null || info.Aliases == null) continue;
+                for (int a = 0; a < info.Aliases.Count; a++)
+                {
+                    string alias = info.Aliases[a]?.Trim() ?? string.Empty;
+                    if (alias.Length == 0) continue;
+                    if (!s_professionLabelIndex.ContainsKey(alias))
+                        s_professionLabelIndex[alias] = info.ProfessionId;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resolve a survivor's specialty id. An explicit authored
+        /// pre_war_profession_id always wins; otherwise the roster display label
+        /// is matched against authored profession_aliases. Empty means the
+        /// survivor has no trade specialty tree.
+        /// </summary>
+        public static string ResolveProfessionId(string? explicitProfessionId, string? professionLabel)
+        {
+            if (!string.IsNullOrWhiteSpace(explicitProfessionId))
+                return explicitProfessionId.Trim();
+            return ResolveProfessionIdFromLabel(professionLabel);
+        }
+
+        public static string ResolveProfessionIdFromLabel(string? professionLabel)
+        {
+            if (string.IsNullOrWhiteSpace(professionLabel)) return string.Empty;
+            return s_professionLabelIndex.TryGetValue(professionLabel.Trim(), out var id) ? id : string.Empty;
         }
 
         // ── Events ─────────────────────────────────────────────────────
@@ -121,19 +258,7 @@ namespace Ashfall.Core.Survivors
             if (!string.Equals(state.professionId, professionId, StringComparison.Ordinal))
                 return; // profession changed — do not count toward an old tree
 
-            if (!ProfessionItemCategories.TryGetValue(professionId, out var categories))
-                return;
-
-            bool matches = false;
-            for (int i = 0; i < categories.Count; i++)
-            {
-                if (itemId.IndexOf(categories[i], StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    matches = true;
-                    break;
-                }
-            }
-            if (!matches) return;
+            if (!ProfessionMatchesItem(professionId, itemId)) return;
 
             string milestoneId = professionId + "_" + itemId;
             if (state.craftMilestonesCompleted.Contains(milestoneId))
@@ -142,6 +267,13 @@ namespace Ashfall.Core.Survivors
             state.craftMilestonesCompleted.Add(milestoneId);
             int milestoneTier = Math.Min(state.craftMilestonesCompleted.Count, MilestonesToMaster);
             OnSpecialtyMilestone?.Invoke(survivorId, professionId, milestoneTier);
+
+            // Authored per-tier narrative (milestones[].narrative). Fires on every tier
+            // including the third, so a mastery craft emits both its tier narrative and
+            // the profession-level mastery_narrative from MasterTrade below.
+            string tierNarrativeId = GetMilestoneNarrativeId(professionId, milestoneTier);
+            if (!string.IsNullOrEmpty(tierNarrativeId))
+                FireNarrativeEvent?.Invoke(tierNarrativeId, survivorId);
 
             if (state.craftMilestonesCompleted.Count >= MilestonesToMaster)
             {
@@ -163,8 +295,12 @@ namespace Ashfall.Core.Survivors
             ApplyMoraleDelta?.Invoke(survivorId, MasteryMoraleBonus);
             OnSpecialtyMastered?.Invoke(survivorId, state.professionId);
 
-            // Fire narrative event
-            string narrativeId = GetNarrativeEventId?.Invoke(state.professionId)!;
+            // Authored mastery_narrative from trade_specialties.json is the authority.
+            // GetNarrativeEventId remains only as a fallback for professions the catalog
+            // does not cover, so the host hook cannot override authored content.
+            string narrativeId = GetMasteryNarrativeId(state.professionId);
+            if (string.IsNullOrEmpty(narrativeId))
+                narrativeId = GetNarrativeEventId?.Invoke(state.professionId) ?? string.Empty;
             if (!string.IsNullOrEmpty(narrativeId))
                 FireNarrativeEvent?.Invoke(narrativeId, survivorId);
         }

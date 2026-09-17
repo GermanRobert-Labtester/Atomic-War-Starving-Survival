@@ -277,21 +277,6 @@ namespace Ashfall.Core.Tests.Radio
                 return Trace(w, 1, 14);
             }
 
-            List<string> Interrupted()
-            {
-                var w = World.Create();
-                w.RegisterMissions();
-                RunRescueActions(w);
-                w.SetDay(6);
-                w.Distress.TickDaily(6);
-                w.FollowUps.TickDaily(6); // answered follow-up fires day 6
-                string save = w.Save();   // save between answer and follow-up 2
-
-                var w2 = World.Load(save); // load on the follow-up due boundary
-                return Trace(w2, 7, 14)
-                    .Union(TracePrefixFromSave(w, 1, 6))
-                    .OrderBy(l => l, StringComparer.Ordinal).ToList();
-            }
 
             // The interrupted trace (days 7–14 after reload) must equal the
             // continuous trace for the same days, field by field.

@@ -418,6 +418,69 @@ namespace Ashfall.Core
 
         public long Value => _value;
         public long PlayerValue => _value;
+
+        /// <summary>
+        /// True when the canonical Holdfast wallet can cover an external
+        /// settlement without becoming negative. This is a read-only query.
+        /// </summary>
+        public bool CanDebitValue(long amount) => amount >= 0 && amount <= _value;
+
+        /// <summary>True when crediting the canonical wallet cannot overflow.</summary>
+        public bool CanCreditValue(long amount) =>
+            amount >= 0 && amount <= long.MaxValue - _value;
+
+        /// <summary>
+        /// Atomically debit the existing Holdfast wallet and execute an
+        /// optional second transaction leg. A false or throwing second leg
+        /// restores the wallet before returning. No parallel currency state
+        /// is introduced.
+        /// </summary>
+        public bool TryDebitValue(long amount, Func<bool>? secondLeg = null) =>
+            TryAdjustExternalValue(-amount, amount, secondLeg, notifyOnSuccess: true);
+
+        /// <summary>
+        /// Atomically credit the existing Holdfast wallet and execute an
+        /// optional second transaction leg. A false or throwing second leg
+        /// restores the wallet before returning.
+        /// </summary>
+        public bool TryCreditValue(long amount, Func<bool>? secondLeg = null) =>
+            TryAdjustExternalValue(amount, amount, secondLeg, notifyOnSuccess: true);
+
+        internal bool TryDebitValueForSettlement(long amount, Func<bool>? secondLeg = null) =>
+            TryAdjustExternalValue(-amount, amount, secondLeg, notifyOnSuccess: false);
+
+        internal bool TryCreditValueForSettlement(long amount, Func<bool>? secondLeg = null) =>
+            TryAdjustExternalValue(amount, amount, secondLeg, notifyOnSuccess: false);
+
+        internal void NotifyExternalValueSettlement() => StateChanged?.Invoke();
+
+        private bool TryAdjustExternalValue(long delta, long absoluteAmount,
+            Func<bool>? secondLeg, bool notifyOnSuccess)
+        {
+            if (absoluteAmount < 0) return false;
+            if (delta < 0 && !CanDebitValue(absoluteAmount)) return false;
+            if (delta >= 0 && !CanCreditValue(absoluteAmount)) return false;
+
+            long previousValue = _value;
+            _value += delta;
+            try
+            {
+                if (secondLeg != null && !secondLeg())
+                {
+                    _value = previousValue;
+                    return false;
+                }
+            }
+            catch
+            {
+                _value = previousValue;
+                throw;
+            }
+
+            if (notifyOnSuccess) StateChanged?.Invoke();
+            return true;
+        }
+
         public IReadOnlyDictionary<string, int> Held
         {
             get

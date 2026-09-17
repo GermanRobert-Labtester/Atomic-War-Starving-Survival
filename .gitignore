@@ -183,6 +183,8 @@ InitTestScene*.unity*
 /snapshot-capture
 /Ashfall.Core.Tests/TestResults
 /.claude/worktrees
+/.claude/worktrees/
+.claude/worktrees/
 # .NET build output for the Godot assembly.
 /bin/
 /obj/

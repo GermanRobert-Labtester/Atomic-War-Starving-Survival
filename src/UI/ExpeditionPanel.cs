@@ -7,6 +7,7 @@ using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Factions;
 using Ashfall.Core.UI;
+using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
@@ -44,6 +45,8 @@ namespace AtomicWar.GodotApp.UI
         private readonly List<string> _vehicleIds = new();
         private readonly List<string> _weaponInstanceIds = new();
         private Ashfall.Core.EquipmentConditionSystem? _equipment;
+        private ConfirmationDialog? _fitnessWarningDialog;
+        private Action? _pendingFitnessDispatch;
 
         /// <summary>The vehicle chosen in the dispatch-preparation selector, or "" for foot.</summary>
         private string SelectedVehicleId =>
@@ -290,6 +293,59 @@ namespace AtomicWar.GodotApp.UI
             hint.HorizontalAlignment = HorizontalAlignment.Center;
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootBox.AddChild(hint);
+
+            _fitnessWarningDialog = new ConfirmationDialog
+            {
+                Title = "FITNESS WARNING — EXPEDITION",
+                DialogText = string.Empty
+            };
+            _fitnessWarningDialog.Confirmed += ConfirmFitnessDispatch;
+            _fitnessWarningDialog.Canceled += () => _pendingFitnessDispatch = null;
+            AddChild(_fitnessWarningDialog);
+        }
+
+        private void DispatchWithFitnessCheck(
+            string survivorId,
+            string locationId,
+            ExpeditionStance stance,
+            int day,
+            RoleFitnessVerdict? fitness)
+        {
+            if (_expeditionHost == null) return;
+
+            Action dispatch = () =>
+            {
+                _expeditionHost.DispatchSortie(
+                    survivorId,
+                    locationId,
+                    stance,
+                    day,
+                    SelectedVehicleId,
+                    confirmFitnessWarning: fitness?.RequiresConfirmation == true);
+                OnExpeditionUpdated?.Invoke();
+                RefreshView();
+            };
+
+            if (fitness?.RequiresConfirmation == true)
+            {
+                string reasons = string.Join(", ", fitness.WarningReasons).Replace('_', ' ');
+                _pendingFitnessDispatch = dispatch;
+                _fitnessWarningDialog!.DialogText =
+                    $"{FormatSurvivorName(survivorId)} is impaired. Dispatch is allowed with explicit confirmation. " +
+                    $"Recommended maximum duty: {fitness.RecommendedMaxHours:0} hours. " +
+                    (string.IsNullOrEmpty(reasons) ? string.Empty : "Fitness factors: " + reasons + ".");
+                _fitnessWarningDialog.PopupCentered();
+                return;
+            }
+
+            dispatch();
+        }
+
+        private void ConfirmFitnessDispatch()
+        {
+            var dispatch = _pendingFitnessDispatch;
+            _pendingFitnessDispatch = null;
+            dispatch?.Invoke();
         }
 
         private static string FormatSurvivorName(string id)
@@ -480,10 +536,50 @@ namespace AtomicWar.GodotApp.UI
                     card.AddChild(worldLabel);
                 }
 
-                // Dispatch Bar
-                var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 string defId = def.id;
                 bool blocked = _expeditionHost.IsLocationBlocked(defId);
+                RoleFitnessVerdict? dispatchRoleFitness = livingSurvivors.Count > 0
+                    ? _expeditionHost.GetExpeditionFitness(livingSurvivors[0])
+                    : null;
+                FitnessVerdict? dispatchFitness = livingSurvivors.Count > 0
+                    ? _expeditionHost.GetSurvivorFitness(livingSurvivors[0])
+                    : null;
+                bool fitnessBlocked = dispatchRoleFitness != null
+                    ? !dispatchRoleFitness.Allowed
+                    : dispatchFitness != null && dispatchFitness.Level >= FitnessLevel.Unfit;
+
+                if (dispatchRoleFitness != null || dispatchFitness != null)
+                {
+                    var level = dispatchRoleFitness?.BaseVerdict.Level ?? dispatchFitness!.Level;
+                    float maximumHours = dispatchRoleFitness?.RecommendedMaxHours
+                        ?? dispatchFitness!.RecommendedMaxHours;
+                    string fitnessState = fitnessBlocked
+                        ? "FITNESS: UNFIT — dispatch blocked"
+                        : level == FitnessLevel.Fit
+                        ? "FITNESS: FIT"
+                        : $"FITNESS: IMPAIRED — allowed, max {maximumHours:0}h";
+                    var fitnessLabel = AshfallUiHelpers.MakeMono(fitnessState);
+                    fitnessLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                        fitnessBlocked ? Ashfall.Core.UI.Theme.Critical :
+                        level == FitnessLevel.Impaired ? Ashfall.Core.UI.Theme.Warm :
+                        Ashfall.Core.UI.Theme.Lethe));
+                    fitnessLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+                    fitnessLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                    card.AddChild(fitnessLabel);
+                    var reasons = fitnessBlocked
+                        ? dispatchRoleFitness?.BlockingReasons
+                        : dispatchRoleFitness?.WarningReasons;
+                    if (reasons != null && reasons.Count > 0)
+                    {
+                        var reasonLabel = AshfallUiHelpers.MakeSmall(
+                            "Fitness factors: " + string.Join(", ", reasons).Replace('_', ' '), autowrap: true);
+                        reasonLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                        card.AddChild(reasonLabel);
+                    }
+                }
+
+                // Dispatch Bar
+                var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
 
                 if (blocked)
                 {
@@ -495,26 +591,20 @@ namespace AtomicWar.GodotApp.UI
                 var btnDispatchStealth = AshfallUiHelpers.MakeButton("DISPATCH STEALTH SORTIE", () =>
                 {
                     if (livingSurvivors.Count > 0)
-                    {
-                        _expeditionHost.DispatchSortie(livingSurvivors[0], defId, ExpeditionStance.Stealth, 1, SelectedVehicleId);
-                        OnExpeditionUpdated?.Invoke();
-                        RefreshView();
-                    }
+                        DispatchWithFitnessCheck(
+                            livingSurvivors[0], defId, ExpeditionStance.Stealth, 1, dispatchRoleFitness);
                 });
-                btnDispatchStealth.Disabled = blocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchStealth.Disabled = blocked || fitnessBlocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
                 btnDispatchStealth.CustomMinimumSize = new Vector2(200, 32);
                 dispatchRow.AddChild(btnDispatchStealth);
 
                 var btnDispatchSpeed = AshfallUiHelpers.MakeButton("DISPATCH SPEED SORTIE (1.5x)", () =>
                 {
                     if (livingSurvivors.Count > 0)
-                    {
-                        _expeditionHost.DispatchSortie(livingSurvivors[0], defId, ExpeditionStance.Speed, 1, SelectedVehicleId);
-                        OnExpeditionUpdated?.Invoke();
-                        RefreshView();
-                    }
+                        DispatchWithFitnessCheck(
+                            livingSurvivors[0], defId, ExpeditionStance.Speed, 1, dispatchRoleFitness);
                 });
-                btnDispatchSpeed.Disabled = blocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchSpeed.Disabled = blocked || fitnessBlocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
                 btnDispatchSpeed.CustomMinimumSize = new Vector2(220, 32);
                 dispatchRow.AddChild(btnDispatchSpeed);
 

@@ -73,6 +73,10 @@ namespace AtomicWar.GodotApp
         }
 
         public string LastEvent { get; private set; } = string.Empty;
+        /// <summary>C2 / Plan 20C — the bound weather-effects authority
+        /// (null when no valid data file; consumers fall back to legacy).</summary>
+        public WeatherEffectsCatalog? WeatherEffects { get; private set; }
+
         public WorldHostSession(
             WeatherSystem weather = null!,
             SkyLayerArmorSystem skyArmor = null!,
@@ -93,7 +97,7 @@ namespace AtomicWar.GodotApp
             Weather.OnWeatherChanged += kind =>
             {
                 LastEvent = $"Weather: {kind}";
-                if (IsHazardWeather(kind))
+                if (IsSevereWeather(kind))
                     AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayWeatherAlert();
                 RaiseStateChanged();
             };
@@ -121,14 +125,17 @@ namespace AtomicWar.GodotApp
                 // Plan 28: the same Plan 19 authority paces wildlife abundance.
                 session.Wildlife.BindSeasonProfile(profile);
             }
-            // C2 / Plan 20A (G1) — bind the data-authored weather-effects
-            // authority so runtime dose and forecast projection share one
-            // table. Missing/invalid file keeps the legacy constants path.
+            // C2 / Plan 20C (§36/§40/§41) — expose the bound weather-effects
+            // authority so consumer hosts (trapping, expeditions, caravans)
+            // sample the ONE table.
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var effects = WeatherEffectsCatalog.LoadFromDirectory(dataDir, new FileSystemIO());
                 if (effects.LoadedCount > 0)
+                {
                     session.Weather.BindWeatherEffects(effects);
+                    session.WeatherEffects = effects;
+                }
             }
             var env = WorldSaveStore.TryLoadEnvelope();
             if (env != null)
@@ -219,7 +226,7 @@ namespace AtomicWar.GodotApp
         {
             return $"Weather: {Weather.Current} · visibility {Weather.VisibilityFactor:P0} · " +
                    $"outdoor rad {Weather.OutdoorRadModifier:0} · " +
-                   $"temp penalty {WeatherSystem.TemperaturePenaltyForWeather(Weather.Current):0}°C";
+                   $"temp penalty {Weather.TemperaturePenaltyC(Weather.Current):0}°C";
         }
 
         // ── Save / Load ──────────────────────────────────────────────
@@ -317,6 +324,26 @@ namespace AtomicWar.GodotApp
             return kind == WeatherKind.FalloutStorm
                 || kind == WeatherKind.BlackRain
                 || kind == WeatherKind.Blizzard;
+        }
+
+        /// <summary>
+        /// C2 / Plan 20C (§43) — data-driven alert parity from the ONE effects
+        /// table: a transition cue fires for every SEVERE kind (rad ≥ 60,
+        /// visibility ≤ 0.5, or thermal ≤ −10 °C) — previously only three kinds
+        /// alerted while equally severe states (GlassStorm, RadHail, IceStorm)
+        /// stayed silent. Exactly-once: OnWeatherChanged fires on the
+        /// transition edge only. Unbound → the legacy hazard classification.
+        /// </summary>
+        internal bool IsSevereWeather(WeatherKind kind)
+        {
+            if (WeatherEffects != null && WeatherEffects.TryGetEffects(kind, out var fx)
+                && fx != null)
+            {
+                return fx.outdoor_rad_modifier >= 60f
+                    || fx.visibility_modifier <= 0.5f
+                    || fx.thermal_load_additive_c <= -10f;
+            }
+            return IsHazardWeather(kind);
         }
     }
 }

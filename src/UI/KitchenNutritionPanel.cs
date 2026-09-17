@@ -18,6 +18,8 @@ namespace AtomicWar.GodotApp.UI
     public partial class KitchenNutritionPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public Func<string?>? DefaultSurvivorResolver { get; set; }
+        public Func<IReadOnlyList<string>>? LivingSurvivorsResolver { get; set; }
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -272,12 +274,71 @@ namespace AtomicWar.GodotApp.UI
             _prepStation.AddChild(AshfallUiHelpers.MakeBody("Assign shelter cooks through the Duty Roster to schedule daily meal prep batches for this recipe."));
             _prepStation.AddChild(AshfallUiHelpers.MakeButton("START PREP // SHELTER COOK", () =>
             {
-                var result = _host.StartPrepJob(curRecipe.id, "cook_shelter", curRecipe.inputs);
+                // Use the live survivor selected by the host instead of a
+                // synthetic cook id. The kitchen Core gate must evaluate the
+                // same survivor fitness projection as duty and expedition work.
+                string cookId = DefaultSurvivorResolver?.Invoke() ?? "cook_shelter";
+                var result = _host.StartPrepJob(curRecipe.id, cookId, curRecipe.inputs);
                 _eventLogLabel.Text = result.IsSuccess
-                    ? $"Prep started: {curRecipe.name}."
+                    ? $"Prep started: {curRecipe.name} ({cookId})."
                     : $"Prep blocked: {result.FailureCode}.";
                 RefreshView();
             }));
+
+            _prepStation.AddChild(AshfallUiHelpers.MakeSeparator());
+            _prepStation.AddChild(AshfallUiHelpers.MakeSubsectionHeader("PANTRY & PREPARED MEALS"));
+
+            int availablePortions = _host.System.GetAvailablePortions(curRecipe.id);
+            var matchingPantry = s.pantry.Where(p => p.itemId == curRecipe.id && !p.isSpoiled && p.portionCount > 0).ToList();
+            if (matchingPantry.Count > 0)
+            {
+                foreach (var p in matchingPantry)
+                {
+                    string preservationText = p.preservation switch
+                    {
+                        PreservationMethod.Refrigeration => "Refrigerated",
+                        PreservationMethod.RootCellar => "Root Cellar",
+                        _ => "Ambient"
+                    };
+                    _prepStation.AddChild(AshfallUiHelpers.MakeDataRow(
+                        $"{curRecipe.name}",
+                        $"{p.portionCount} portions · spoil in {p.spoilageTimer:F0}d ({preservationText})",
+                        AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                }
+            }
+            else
+            {
+                _prepStation.AddChild(AshfallUiHelpers.MakeMetadata("No prepared portions in pantry. Start a prep job to cook."));
+            }
+
+            var serveHbox = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var btnServeOne = AshfallUiHelpers.MakeButton("SERVE MEAL", () =>
+            {
+                string? survivorId = DefaultSurvivorResolver?.Invoke();
+                if (string.IsNullOrEmpty(survivorId)) survivorId = "player";
+
+                var res = _host.ServeMeal(survivorId, curRecipe.id);
+                _eventLogLabel.Text = res.IsSuccess
+                    ? $"Served {curRecipe.name} to {survivorId}."
+                    : $"Cannot serve: {res.FailureCode}.";
+                RefreshView();
+            });
+            serveHbox.AddChild(btnServeOne);
+
+            var btnServeAll = AshfallUiHelpers.MakeButton("SERVE ALL LIVING CREW", () =>
+            {
+                var livingSurvivors = LivingSurvivorsResolver?.Invoke()
+                    ?? new List<string> { "player" };
+
+                var res = _host.ServeAllMeals(livingSurvivors, curRecipe.id);
+                _eventLogLabel.Text = res.IsSuccess
+                    ? $"Served all living crew ({livingSurvivors.Count}) with {curRecipe.name}."
+                    : $"Cannot serve crew: {res.FailureCode}.";
+                RefreshView();
+            });
+            btnServeAll.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
+            serveHbox.AddChild(btnServeAll);
+            _prepStation.AddChild(serveHbox);
 
             // Populate Serving Log
             if (s.servingLog.Count == 0)

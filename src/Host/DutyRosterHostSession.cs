@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
+using Ashfall.Core.Campaign;
+using Ashfall.Core.DutyRoster;
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
 {
@@ -25,11 +28,21 @@ namespace AtomicWar.GodotApp
         public DutyRosterCatalog Catalog { get; }
         public SimClock Clock { get; }
         public string LastEvent { get; private set; } = string.Empty;
+        private readonly List<DayStateChangeEvent> _pendingDayEvents = new List<DayStateChangeEvent>();
 
         public int LocationCount => Catalog.Locations.Count;
         public int QuestCount => Catalog.Quests.Count;
         public int MarkCount => Catalog.Marks.Count;
         public int SeasonCount => Catalog.Seasons.Count;
+
+        /// <summary>Read-only fitness projection used by the duty detail UI.</summary>
+        public RoleFitnessVerdict? PreviewRoleFitness(string survivorId, string roleId)
+            => Roster.PreviewRoleFitness(survivorId, roleId);
+
+        /// <summary>Plan 24B A2 — read-only duty-hours projection for the duty
+        /// detail UI (null when no ledger is bound — legacy paths).</summary>
+        public DutyHourSnapshot? PreviewDutyHours(string survivorId)
+            => Roster.PreviewDutyHours(survivorId);
 
         public DutyRosterHostSession(
             DutyRosterSystem roster,
@@ -55,6 +68,13 @@ namespace AtomicWar.GodotApp
             Roster.OnNameWritten += id => LastEvent = "name written: " + id;
             Roster.OnNameErased += id => LastEvent = "name erased: " + id;
             Roster.OnRosterBurned += () => LastEvent = "CHART BURNED";
+            Roster.OnDutyVacated += (role, survivorId) =>
+            {
+                LastEvent = $"duty vacated: {survivorId} ({role})";
+                _pendingDayEvents.Add(new DayStateChangeEvent(
+                    "duty_vacated", "duty_roster", survivorId, role));
+                RaiseStateChanged();
+            };
             Encounters.OnShelterEncounterStarted += rec =>
                 LastEvent = "encounter: " + rec.kind + " (" + (rec.visitorId ?? "none") + ")";
             Quests.OnQuestStarted += p => LastEvent = "quest started: " + p.questId;
@@ -181,6 +201,20 @@ namespace AtomicWar.GodotApp
         {
             if (day > 0)
                 Clock.SetDay(day);
+        }
+
+        /// <summary>
+        /// Drains duty invalidation events into the canonical campaign briefing
+        /// feed. Fitness can change between day advances (for example through
+        /// quarantine, admission, death, or a care assignment), so the host
+        /// buffers the event until the campaign-day owner consumes it.
+        /// </summary>
+        public void DrainDayEvents(List<DayStateChangeEvent> target)
+        {
+            if (target == null) return;
+            for (int i = 0; i < _pendingDayEvents.Count; i++)
+                target.Add(_pendingDayEvents[i]);
+            _pendingDayEvents.Clear();
         }
 
         /// <summary>
@@ -375,11 +409,28 @@ namespace AtomicWar.GodotApp
             return $"Duty Roster: {LocationCount} locations · {QuestCount} quests · {MarkCount} marks · {SeasonCount} seasons";
         }
 
-        public CommandResult AssignDuty(string role, string survivorId)
+        public CommandResult AssignDuty(string role, string survivorId, bool confirmFitnessWarning = false)
         {
-            var result = Roster.ExecuteAssign(role, survivorId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            var fitness = Roster.PreviewRoleFitness(survivorId, role);
+            if (fitness != null && fitness.RequiresConfirmation && !confirmFitnessWarning)
+            {
+                return new CommandResult(
+                    PlayerCommandCode.AssignRole,
+                    ActionResult.Blocked("fitness_warning_confirmation_required", "duty_roster.fitness_warning_confirmation_required"),
+                    StateVersion,
+                    StateVersion);
+            }
+
+            var result = Roster.ExecuteAssign(
+                role,
+                survivorId,
+                expectedStateVersion: StateVersion,
+                currentStateVersion: StateVersion,
+                confirmFitnessWarning: confirmFitnessWarning);
             if (result.IsSuccess)
             {
+                if (fitness != null && fitness.RequiresConfirmation && confirmFitnessWarning)
+                    Roster.AcknowledgeFitnessWarning(role, survivorId, Clock.Day);
                 LastEvent = $"Duty assigned: {role} = {survivorId}";
                 RaiseStateChanged();
             }

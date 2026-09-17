@@ -102,6 +102,22 @@ namespace Ashfall.Core
         private readonly DutyRosterSystem _roster;
         private int _currentDay;
 
+        /// <summary>
+        /// Optional grid-derived power gate for manuals authored with
+        /// <c>requires_power</c>. Null (the default) keeps legacy behaviour — study is
+        /// always possible. The host binds it to the canonical power allocation so a
+        /// blackout does not silently grant a powered manual's full progress.
+        /// </summary>
+        public Func<bool>? PowerAvailable { get; set; }
+
+        /// <summary>True when the manual currently has the power it declares it needs.</summary>
+        public bool IsManualPowered(string manualId)
+        {
+            if (PowerAvailable == null) return true;
+            if (!_catalog.TryGetValue(manualId, out var manual)) return true;
+            return !manual.requiresPower || PowerAvailable();
+        }
+
         public LibraryStudyState State => _state;
         public IReadOnlyDictionary<string, ManualDefinition> Catalog => _catalog;
         public event Action<StudyJob> OnJobCompleted;
@@ -225,6 +241,11 @@ namespace Ashfall.Core
                     return ActionResult.Blocked("missing_prerequisite", "library.missing_prerequisite");
             }
 
+            // Authored power requirement: a powered-only manual cannot start during a
+            // blackout. Null provider = legacy always-powered behaviour.
+            if (manual.requiresPower && PowerAvailable != null && !PowerAvailable())
+                return ActionResult.Blocked("power_unavailable", "library.no_power");
+
             // Check duty roster availability (B2-008: GetRoleOf checks if reader is on duty)
             if (!string.IsNullOrEmpty(_roster.GetRoleOf(readerId)))
                 return ActionResult.Blocked("busy", "library.busy");
@@ -266,6 +287,11 @@ namespace Ashfall.Core
                     _log.Warn($"[Library] active job '{job.jobId}' references unknown manual '{job.manualId}'");
                     continue;
                 }
+
+                // Unpowered powered-only manual: the job is retained but makes no
+                // progress until power returns (never silently completed).
+                if (manual.requiresPower && PowerAvailable != null && !PowerAvailable())
+                    continue;
 
                 float rate = GetComprehensionRate(job.readerId, job.manualId);
                 job.progressHours += 8f * rate;

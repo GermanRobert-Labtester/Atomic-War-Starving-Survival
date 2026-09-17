@@ -98,6 +98,14 @@ namespace Ashfall.Core
             RaiseChanged();
         }
 
+        public void RecordAntiRadTreatment(string survivorId, int day)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return;
+            var e = GetOrCreate(survivorId);
+            e.lastAntiRadDay = day;
+            RaiseChanged();
+        }
+
         /// <summary>Refund calibration accuracy after the configured reading count.</summary>
         public void Calibrate(string survivorId, int day)
         {

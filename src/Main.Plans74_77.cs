@@ -150,10 +150,15 @@ namespace AtomicWar.GodotApp
         private void TickPneumaticDispatch(int day)
         {
             SetupPneumaticDispatch();
-            float powerAvailability = _powerGrid?.System == null
-                ? 1f
-                : (_powerGrid.System.IsBrownout ? 0f : 1f);
-            _pneumaticDispatch.TickDay(day, powerAvailability);
+            // C2[6] 23A: the grid owns the tube network's blackout state. The
+            // blower shares the foundry/workshop electrical bus, so a brownout that
+            // still serves that bus keeps the network pressurised. This overwrites
+            // the legacy manual toggle every day, removing the private authority.
+            bool serviced = _powerGrid?.System == null
+                || _powerGrid.System.IsRoomServed("room_foundry")
+                || _powerGrid.System.IsRoomServed("room_workshop");
+            _pneumaticDispatch.SetBlackout(!serviced);
+            _pneumaticDispatch.TickDay(day, serviced ? 1f : 0f);
             if (_pneumaticDispatchDirty) SavePneumaticDispatch();
         }
 

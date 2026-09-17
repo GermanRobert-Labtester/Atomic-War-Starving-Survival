@@ -50,7 +50,7 @@ internal sealed class ContagionTestWorld
     {
         AliveSurvivors = () => Alive,
         GetMorale = id => Morale.TryGetValue(id, out var m) ? m : 50f,
-        ApplyMoraleDelta = (id, delta) => Morale[id] = Math.Clamp(Morale[id] + delta, 0f, 100f),
+        ApplyMoraleDelta = (id, delta, _) => Morale[id] = Math.Clamp(Morale[id] + delta, 0f, 100f),
         AreInSameRoom = (a, b) =>
             Rooms.TryGetValue(a, out var ra) && Rooms.TryGetValue(b, out var rb) && ra == rb && ra != null,
         GetDutyRole = id => DutyRole.TryGetValue(id, out var r) ? r : string.Empty,
@@ -606,7 +606,7 @@ public class MoraleContagionSystemTests
         int moraleChanges = 0;
         var ports = world.Ports();
         var originalApply = ports.ApplyMoraleDelta;
-        ports.ApplyMoraleDelta = (id, delta) => { moraleChanges++; originalApply(id, delta); };
+        ports.ApplyMoraleDelta = (id, delta, source) => { moraleChanges++; originalApply(id, delta, source); };
 
         var fresh = new MoraleContagionSystem(catalog, ports);
         int schisms = 0, breakdowns = 0;

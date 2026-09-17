@@ -8,6 +8,7 @@ using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
 
 #pragma warning disable CS8618
@@ -70,6 +71,21 @@ namespace AtomicWar.GodotApp
         /// stage). When set, any location it blocks cannot be dispatched.
         /// </summary>
         public Func<string, bool> ExtraBlocked { get; set; }
+
+        /// <summary>
+        /// Optional projection from the campaign's survivor fitness authority.
+        /// Fit and impaired survivors may dispatch (the latter with a warning
+        /// in the caller's detail view); unfit and incapacitated survivors are
+        /// refused before vehicle fuel/wear or expedition state can mutate.
+        /// </summary>
+        public Func<string, FitnessVerdict?>? SurvivorFitnessProvider { get; set; }
+
+        /// <summary>
+        /// Role-specific expedition requirements from the campaign fitness
+        /// authority. When supplied, this is the commit-time dispatch gate;
+        /// the base provider remains for read-only compatibility surfaces.
+        /// </summary>
+        public Func<string, RoleFitnessVerdict?>? ExpeditionFitnessProvider { get; set; }
 
         /// <summary>Plan 174 — optional pack-animal cargo provider: survivorId →
         /// extra kg added to the active sortie's capacity after a successful
@@ -138,6 +154,16 @@ namespace AtomicWar.GodotApp
         /// provider for the dispatch estimate (location → protective inputs;
         /// null keeps the legacy estimate shape).</summary>
         private Func<string, ExpeditionProtectiveInputs?>? _estimateProtectiveInputs;
+
+        /// <summary>C2 / Plan 20C (§36) — optional weather-effects provider for
+        /// the dispatch estimate + runtime start (location → weather inputs;
+        /// sampled at dispatch so estimate and runtime consume the same value).</summary>
+        private Func<string, ExpeditionWeatherInputs?>? _estimateWeatherInputs;
+
+        public void SetEstimateWeatherInputs(Func<string, ExpeditionWeatherInputs?>? provider)
+        {
+            _estimateWeatherInputs = provider;
+        }
 
         public void SetEstimateProtectiveInputs(Func<string, ExpeditionProtectiveInputs?>? provider)
         {
@@ -468,7 +494,8 @@ namespace AtomicWar.GodotApp
             int staminaBudget = 40,
             string vehicleId = "",
             long? stateVersion = null,
-            bool forceWeatherGate = false)
+            bool forceWeatherGate = false,
+            bool confirmFitnessWarning = false)
         {
             long version = stateVersion ?? StateVersion;
 
@@ -479,6 +506,9 @@ namespace AtomicWar.GodotApp
             // stale preview, and did so only after the fuel had been spent.
             if (version != StateVersion)
                 return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, version, StateVersion);
+
+            var fitnessBlock = GetFitnessBlock(survivorId, version, confirmFitnessWarning);
+            if (fitnessBlock != null) return fitnessBlock.Value;
 
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
@@ -528,7 +558,8 @@ namespace AtomicWar.GodotApp
             // invalidate the dispatch it is preparing for.
             long preparedVersion = StateVersion;
             var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: preparedVersion, currentStateVersion: preparedVersion,
-                startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost);
+                startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost,
+                weather: _estimateWeatherInputs?.Invoke(locationId));
             if (result.IsSuccess)
             {
                 if (forcedGateStaminaCost > 0f)
@@ -586,7 +617,8 @@ namespace AtomicWar.GodotApp
                 }
             }
             var estimate = ExpeditionSystem.Estimate(def, stance, false, profile, weaponReadiness, weaponJamRisk,
-                protective: _estimateProtectiveInputs?.Invoke(locationId));
+                protective: _estimateProtectiveInputs?.Invoke(locationId),
+                weather: _estimateWeatherInputs?.Invoke(locationId));
 
             // Plans 146–149: hazard still scales encounter risk on the estimate.
             // Travel stretch is already baked into def via ProjectRouteTravelDef.
@@ -799,7 +831,8 @@ namespace AtomicWar.GodotApp
             int day,
             string vehicleId = "",
             long? stateVersion = null,
-            bool forceWeatherGate = false)
+            bool forceWeatherGate = false,
+            bool confirmFitnessWarning = false)
         {
             long version = stateVersion ?? StateVersion;
 
@@ -807,6 +840,9 @@ namespace AtomicWar.GodotApp
             // preparation spends fuel, then compare current-to-current afterwards.
             if (version != StateVersion)
                 return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, version, StateVersion);
+
+            var fitnessBlock = GetFitnessBlock(survivorId, version, confirmFitnessWarning);
+            if (fitnessBlock != null) return fitnessBlock.Value;
 
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
@@ -866,6 +902,48 @@ namespace AtomicWar.GodotApp
             }
             return result;
         }
+
+        private CommandResult? GetFitnessBlock(
+            string survivorId,
+            long stateVersion,
+            bool confirmFitnessWarning)
+        {
+            var roleVerdict = ExpeditionFitnessProvider?.Invoke(survivorId);
+            if (roleVerdict != null)
+            {
+                if (roleVerdict.Allowed
+                    && (!roleVerdict.RequiresConfirmation || confirmFitnessWarning)) return null;
+                return CommandResult.ContextBlocked(
+                    PlayerCommandCode.ExpeditionDispatch,
+                    roleVerdict.Allowed
+                        ? "fitness_warning_confirmation_required"
+                        : "fitness_blocked",
+                    roleVerdict.Allowed
+                        ? "expedition.fitness_warning_confirmation_required"
+                        : "expedition.fitness_blocked",
+                    stateVersion);
+            }
+
+            var verdict = SurvivorFitnessProvider?.Invoke(survivorId);
+            if (verdict == null || verdict.Level == FitnessLevel.Fit
+                || verdict.Level == FitnessLevel.Impaired)
+                return null;
+
+            return CommandResult.ContextBlocked(
+                PlayerCommandCode.ExpeditionDispatch,
+                "fitness_blocked",
+                "expedition.fitness_blocked",
+                stateVersion);
+        }
+
+        /// <summary>Read-only fitness projection for expedition panels and
+        /// accessibility surfaces. Dispatch still re-evaluates at commit.</summary>
+        public FitnessVerdict? GetSurvivorFitness(string survivorId)
+            => SurvivorFitnessProvider?.Invoke(survivorId);
+
+        /// <summary>Read-only role-aware expedition eligibility for UI.</summary>
+        public RoleFitnessVerdict? GetExpeditionFitness(string survivorId)
+            => ExpeditionFitnessProvider?.Invoke(survivorId);
 
         /// <summary>Production API to advance active expeditions by the specified duration.</summary>
         public string TickHours(float hours)

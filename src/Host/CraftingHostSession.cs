@@ -68,7 +68,7 @@ namespace AtomicWar.GodotApp
             };
 
             Engine.OnCraftStarted += _ => RaiseStateChanged();
-            Engine.OnCraftCompleted += _ => RaiseStateChanged();
+            Engine.OnCraftCompleted += (_, _) => RaiseStateChanged();
             Workshop.OnWorkshopStateChanged += () => RaiseStateChanged();
             PharmaLab.OnPharmaStateChanged += () => RaiseStateChanged();
 
@@ -248,7 +248,13 @@ namespace AtomicWar.GodotApp
 
         // ── Craft ops ──────────────────────────────────────────────────
 
-        public CommandResult Start(string recipeId)
+        /// <summary>
+        /// Queue a recipe. <paramref name="crafterId"/> attributes the craft to a
+        /// survivor so downstream systems (trade specialty progression) can act on
+        /// completion; leave it null for unassigned shelter crafting, which those
+        /// systems explicitly bypass.
+        /// </summary>
+        public CommandResult Start(string recipeId, string? crafterId = null)
         {
             var recipe = FindRecipe(recipeId);
             if (recipe == null)
@@ -258,7 +264,7 @@ namespace AtomicWar.GodotApp
                     StateVersion, StateVersion);
 
             long versionBefore = StateVersion;
-            var result = Engine.ExecuteCraft(recipe, crafterId: null, expectedStateVersion: versionBefore, currentStateVersion: StateVersion);
+            var result = Engine.ExecuteCraft(recipe, crafterId, expectedStateVersion: versionBefore, currentStateVersion: StateVersion);
             if (result.IsSuccess)
             {
                 RaiseStateChanged();

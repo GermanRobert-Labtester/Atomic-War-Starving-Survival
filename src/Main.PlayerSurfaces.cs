@@ -194,7 +194,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseWeatherDetailPanel());
 
             PanelRegistry.ConfigureActions("weather_forecast",
-                bindAction: () => { SetupWorld(); _weatherForecastPanel.Bind(_world?.Weather); },
+                bindAction: () => { SetupWorld(); _weatherForecastPanel.Bind(_world?.Weather, _world?.WeatherIntelligence); },
                 openAction: () => _weatherForecastPanel.Open(),
                 closeAction: () => CloseWeatherForecastPanel());
 
@@ -214,7 +214,13 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseEventsLogPanel());
 
             PanelRegistry.ConfigureActions("economy_detail",
-                bindAction: () => { SetupEconomy(); _economyDetailPanel.Bind(_economy); },
+                bindAction: () =>
+                {
+                    SetupEconomy();
+                    // Plan 14A (B1): the embargo banner needs the live weather;
+                    // the provider is read-only (the authority stays in Core).
+                    _economyDetailPanel.Bind(_economy, () => _world?.Weather?.Current ?? Ashfall.Core.WeatherKind.Clear);
+                },
                 openAction: () => _economyDetailPanel.Open(),
                 closeAction: () => CloseEconomyDetailPanel());
 
@@ -259,7 +265,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseInventoryOverlay());
 
             PanelRegistry.ConfigureActions("crafting",
-                bindAction: () => { SetupCrafting(); SetupInventory(); SyncCraftingStationsFromShelter(); _craftingPanel.Bind(_crafting, _inventory); },
+                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); SyncCraftingStationsFromShelter(); _craftingPanel.Bind(_crafting, _inventory, _survivors); },
                 openAction: () => { SyncCraftingStationsFromShelter(); _craftingPanel.Open(); },
                 closeAction: () => CloseCraftingPanel());
 
@@ -434,7 +440,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseCenturySeedPanel());
 
             PanelRegistry.ConfigureActions("epilogue",
-                bindAction: () => { _epiloguePanel.Bind(BuildCampaignOutcomeSnapshot()); },
+                bindAction: () => { _epiloguePanel.Bind(BuildCurrentEpilogueContext()); },
                 openAction: () => _epiloguePanel.Open(),
                 closeAction: () => CloseEpiloguePanel());
 
@@ -606,7 +612,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _skillMatrixPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("survival_workstation",
-                bindAction: () => { SetupCrafting(); SetupInventory(); _survivalWorkstationPanel.Bind(_crafting, _inventory); },
+                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); _survivalWorkstationPanel.Bind(_crafting, _inventory, _survivors); },
                 openAction: () => _survivalWorkstationPanel.Open(),
                 closeAction: () => _survivalWorkstationPanel.Visible = false);
 
@@ -780,7 +786,8 @@ namespace AtomicWar.GodotApp
                 "low_background_metrology", "insar_mapping", "hydraulic_extrusion", "runflat_tire",
                 "sofc_power", "sound_ranging", "cvd_diamond", "amphibious_draisine",
                 "sanitation", "black_market",
-                "companion_kennel", "beliefs_panel", "anomaly_watch", "cybernetics"
+                "companion_kennel", "beliefs_panel", "anomaly_watch", "cybernetics",
+                "sky_defense_battery"
             };
 
             foreach (var expId in expandedIds)

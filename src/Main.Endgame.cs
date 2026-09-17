@@ -105,6 +105,24 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Derives authoritative endgame inputs from live campaign authorities (Plan 19 / INV-19.1).
+        /// </summary>
+        public EpilogueContextInputs BuildCurrentEpilogueInputs()
+        {
+            return BuildCampaignOutcomeSnapshot().ToInputs();
+        }
+
+        /// <summary>
+        /// Projects live campaign authorities into the EpilogueEvaluationContext (Plan 19 / INV-19.1).
+        /// Consumed by both game-over and player-facing epilogue routes.
+        /// </summary>
+        public EpilogueEvaluationContext BuildCurrentEpilogueContext()
+        {
+            var inputs = BuildCurrentEpilogueInputs();
+            return EpilogueContextFactory.Build(inputs);
+        }
+
+        /// <summary>
         /// Mean morale across living roster survivors; neutral 50 when roster is empty/unavailable.
         /// </summary>
         private float EstimateAverageMorale()

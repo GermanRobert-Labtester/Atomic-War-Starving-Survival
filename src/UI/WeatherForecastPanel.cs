@@ -26,12 +26,18 @@ public partial class WeatherForecastPanel : Control
     private VBoxContainer _precipitationData = null!;
     private VBoxContainer _windForecast = null!;
 
-    public void Bind(WeatherSystem weather)
+    private Ashfall.Core.World.WeatherIntelligenceCoordinator? _intelligence;
+
+    /// <summary>C2 / Plan 20C (§37) — bind the intelligence coordinator so the
+    /// forecast can show its own reliability (station accuracy/calibration/
+    /// horizon). Optional; unbound hides the reliability line.</summary>
+    public void Bind(WeatherSystem weather, Ashfall.Core.World.WeatherIntelligenceCoordinator? intelligence = null)
     {
         if (_weather != null && _onWeatherChanged != null)
             _weather.OnWeatherChanged -= _onWeatherChanged;
 
         _weather = weather;
+        _intelligence = intelligence;
         _onWeatherChanged ??= _ => RefreshView();
 
         if (_weather != null)
@@ -59,6 +65,29 @@ public partial class WeatherForecastPanel : Control
         AshfallUiHelpers.EmptyChildren(_precipitationData);
         AshfallUiHelpers.EmptyChildren(_windForecast);
 
+        // C2 / Plan 20C (§37) — reliability line: the player must be able to
+        // judge HOW MUCH to trust the forecast (station accuracy, calibration,
+        // horizon). Imperfect but fair — no hidden arbitrary failure.
+        if (_intelligence != null)
+        {
+            var intel = _intelligence.BuildReadModel();
+            if (intel != null && intel.stationInstalled)
+            {
+                string cal = intel.stationCalibrated ? "calibrated" : "UNCALIBRATED";
+                string stale = intel.forecastHorizonDays <= 0 ? " · NO DATA" : "";
+                var rel = new Label
+                {
+                    Text = $"Station {intel.stationTierName} · accuracy {intel.stationAccuracy:P0} · {cal}" +
+                           $" · horizon {intel.forecastHorizonDays}d{stale}"
+                };
+                rel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                rel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                    intel.stationCalibrated && intel.stationAccuracy >= 0.5f
+                        ? DesignTheme.Pale : DesignTheme.Warm));
+                _forecastData.AddChild(rel);
+            }
+        }
+
         var forecast = _weather.PeekForecast(7);
         if (forecast.Count == 0)
         {
@@ -80,7 +109,19 @@ public partial class WeatherForecastPanel : Control
         var when = f.Day > 0 ? $"Day {f.Day}" : "Today";
         var rad = f.OutdoorRad > 0f ? $", RAD +{f.OutdoorRad:0}" : "";
         var vis = f.Visibility is < 1f and > 0f ? $", VIS {f.Visibility:P0}" : "";
-        var text = $"{when}: {f.Kind}{rad}{vis}";
+
+        // C2 / Plan 20C (§45) — decision-focused effects from the same
+        // table the simulation consumes; presented as consequences, not
+        // raw coefficients.
+        string thermal = f.ThermalLoadC < 0f ? $", COLD {f.ThermalLoadC:0}°C"
+            : f.ThermalLoadC > 0f ? $", WARM +{f.ThermalLoadC:0}°C" : "";
+        string travel = f.TravelSpeedMultiplier < 1f
+            ? $", TRAVEL {f.TravelSpeedMultiplier:P0}" : "";
+        string traps = f.TrapYieldMultiplier is < 1f or > 1f
+            ? $", TRAPS {f.TrapYieldMultiplier:P0}" : "";
+        string caravan = f.CaravanAvailabilityMultiplier < 1f
+            ? $", TRADE {f.CaravanAvailabilityMultiplier:P0}" : "";
+        var text = $"{when}: {f.Kind}{rad}{vis}{thermal}{travel}{traps}{caravan}";
 
         var label = new Label { Text = text };
         label.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);

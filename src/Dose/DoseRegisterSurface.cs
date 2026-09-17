@@ -331,8 +331,23 @@ namespace AtomicWar.GodotApp.Dose
         private void OnCorrectBaseline()
         {
             if (_session == null) return;
-            bool ok = _session.Cohort.CorrectBaseline("sv_cohort_demo", "high");
-            ShowStatus(ok ? "Baseline corrected to high." : "No such child on the board.");
+            CohortChild target = null;
+            for (int i = 0; i < _session.Cohort.Children.Count; i++)
+            {
+                var c = _session.Cohort.Children[i];
+                if (c != null && !c.baselineCorrected && !c.isDeceased)
+                {
+                    target = c;
+                    break;
+                }
+            }
+            if (target == null)
+            {
+                ShowStatus("No uncorrected child on the board.");
+                return;
+            }
+            bool ok = _session.Cohort.CorrectBaseline(target.survivorId, "high");
+            ShowStatus(ok ? $"Baseline corrected for {target.survivorId} to high." : "Correction failed.");
         }
 
         private void OnSignVolunteer()

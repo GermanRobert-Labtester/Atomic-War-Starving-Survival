@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "minimum_warning_hours": 6,
+  "rules": [
+    {
+      "id": "cascade_brownout_pump_flood",
+      "display_name": "Pumping lost while the sump rises",
+      "requires_all": ["power_deficit", "pumping_unserved", "sump_rising"],
+      "warning_hours": 24,
+      "effect_tags": ["sump_infrastructure_risk", "contamination_risk"],
+      "off_ramps": ["restore_power", "manual_pump", "shed_other_load"]
+    },
+    {
+      "id": "cascade_cold_storage_warm",
+      "display_name": "Cold storage warming under a deficit",
+      "requires_all": ["power_deficit", "cold_storage_unpowered"],
+      "warning_hours": 12,
+      "effect_tags": ["spoilage_risk"],
+      "off_ramps": ["restore_power", "shed_other_load"]
+    },
+    {
+      "id": "cascade_filtration_fallout_dose",
+      "display_name": "Filtration down during fallout",
+      "requires_all": ["filtration_unserved", "fallout_storm"],
+      "warning_hours": 6,
+      "effect_tags": ["interior_dose_risk"],
+      "off_ramps": ["restore_power", "seal_hatch", "decontaminate", "shed_other_load"]
+    },
+    {
+      "id": "cascade_heating_cold_stress",
+      "display_name": "Circulation lost in the cold",
+      "requires_all": ["heating_unserved", "power_deficit"],
+      "warning_hours": 24,
+      "effect_tags": ["cold_stress_risk", "pipe_freeze_risk"],
+      "off_ramps": ["restore_power", "service_heating", "shed_other_load"]
+    },
+    {
+      "id": "cascade_darkness_incident",
+      "display_name": "Darkness during a deficit",
+      "requires_all": ["darkness", "power_deficit"],
+      "warning_hours": 12,
+      "effect_tags": ["incident_risk"],
+      "off_ramps": ["restore_power", "shed_other_load"]
+    }
+  ]
+}

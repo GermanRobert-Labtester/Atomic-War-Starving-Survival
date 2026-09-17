@@ -58,5 +58,23 @@ namespace Ashfall.Core.Endgame
                 velSecretExposed = VelSecretExposed
             };
         }
+
+        /// <summary>
+        /// Projects this snapshot into the immutable EpilogueContextInputs DTO (Plan 19 / INV-19.1).
+        /// </summary>
+        public EpilogueContextInputs ToInputs()
+        {
+            return new EpilogueContextInputs(
+                TotalDaysSurvived,
+                LivingDwellerCount,
+                TotalDeathsRecorded,
+                GrandTreatySigned,
+                TempestDecommissioned,
+                DebtLedgersBurned,
+                ChildrenSurvived,
+                VelSecretExposed,
+                OutcomeTrace
+            );
+        }
     }
 }

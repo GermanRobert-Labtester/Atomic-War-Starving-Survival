@@ -104,6 +104,9 @@ namespace Ashfall.Core
         public ApprenticeshipState State => _state;
         public IReadOnlyDictionary<string, MentorshipDef> Catalog => _catalog;
 
+        public int MaxConcurrentPairs { get; set; } = 3;
+        public Func<string, bool>? IsApprenticeEligible { get; set; }
+
         public event Action<Apprenticeship>? OnApprenticeshipCompleted;
         public event Action? OnApprenticeshipChanged;
         public event Action<string, string>? OnManualTranscribed; // survivorId, manualItemId
@@ -219,6 +222,13 @@ namespace Ashfall.Core
 
         public ActionResult StartPair(string mentorId, string apprenticeId, string targetSkillId, float targetXp = 100f, string? mentorshipId = null)
         {
+            int activeCount = _state.activePairs.FindAll(p => !p.isComplete && !p.isCancelled).Count;
+            if (activeCount >= MaxConcurrentPairs)
+                return ActionResult.Blocked("capacity_full", "apprentice.capacity_full");
+
+            if (IsApprenticeEligible != null && !IsApprenticeEligible(apprenticeId))
+                return ActionResult.Blocked("apprentice_ineligible", "apprentice.apprentice_ineligible");
+
             if (_roster.GetRoleOf(mentorId) != null)
                 return ActionResult.Blocked("mentor_busy", "apprentice.mentor_busy");
             if (_roster.GetRoleOf(apprenticeId) != null)

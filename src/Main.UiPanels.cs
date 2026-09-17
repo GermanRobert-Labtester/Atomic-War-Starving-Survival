@@ -674,6 +674,7 @@ namespace AtomicWar.GodotApp
             // ── Survivor Detail panel (overlay) ──
             _survivorDetailPanel = PanelSceneLoader.Load<SurvivorDetailPanel>("res://assets/ui/panels/SurvivorDetailPanel.tscn");
             _survivorDetailPanel.AppDayProvider = () => _simDay;
+            _survivorDetailPanel.FitnessProvider = EvaluateSurvivorFitness;
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 
@@ -1236,6 +1237,22 @@ namespace AtomicWar.GodotApp
 
             _ironCenotaphMemorialPanel = new IronCenotaphMemorialPanel { Visible = false };
             _ironCenotaphMemorialPanel.OnClose += () => _ironCenotaphMemorialPanel.Visible = false;
+            // Plan 24C (A3): the mourning route — truthful memorial state plus
+            // the once-per-death vigil command through the memorial owner.
+            _ironCenotaphMemorialPanel.BindMourning(new IronCenotaphMemorialPanel.MourningBinding
+            {
+                TotalDeaths = () => _memorial?.Entries?.Count ?? 0,
+                LatestUnmourned = () =>
+                {
+                    var entry = _memorial?.LatestUnmourned();
+                    return entry == null ? null : (entry.SurvivorId, entry.Day);
+                },
+                Mourn = deceasedId =>
+                {
+                    SetupMemorial();
+                    return _memorial.Mourn(deceasedId, _simDay);
+                },
+            });
             AddChild(_ironCenotaphMemorialPanel);
 
             _aquiferTreatyConcessionPanel = new AquiferTreatyConcessionPanel { Visible = false };

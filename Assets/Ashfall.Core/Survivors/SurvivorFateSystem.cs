@@ -101,6 +101,10 @@ namespace Ashfall.Core.Survivors
         /// <summary>Shelter-wide morale hit when a survivor dies.</summary>
         public const float GriefMoraleDelta = -8f;
 
+        /// <summary>Plan 24B needs-modifier source id for shelter-wide grief
+        /// (24C's named grief-to-needs slot; attribution only, no rate).</summary>
+        public const string GriefModifierSource = "grief.shelter_loss";
+
         private readonly SurvivorFateSaveState _state;
         private readonly Dictionary<string, SurvivorFateEvent> _byId =
             new Dictionary<string, SurvivorFateEvent>(StringComparer.Ordinal);
@@ -285,7 +289,10 @@ namespace Ashfall.Core.Survivors
             // 4. Social: leadership stress / succession.
             _social?.OnSurvivorDied(id);
 
-            // Shelter-wide grief for the living.
+            // Shelter-wide grief for the living. Plan 24B (A1): the grief
+            // contribution routes through the shared attributed seam so the
+            // survivor-detail contributor display can name the cause; the
+            // numeric delta and the death-cascade timing are unchanged.
             if (_needs != null && _roster != null)
             {
                 var entries = _roster.Roster;
@@ -294,7 +301,9 @@ namespace Ashfall.Core.Survivors
                     var e = entries[i];
                     if (e == null || !e.isAlive) continue;
                     if (string.Equals(e.survivorId, id, StringComparison.Ordinal)) continue;
-                    _needs.Modify(e.survivorId, NeedKind.Morale, GriefMoraleDelta);
+                    _needs.ApplyAttributedDelta(
+                        e.survivorId, NeedKind.Morale, GriefMoraleDelta,
+                        GriefModifierSource);
                 }
             }
 

@@ -39,8 +39,19 @@ namespace Ashfall.Core.Survivors
         public event Action<string, string, float> OnResentmentBuilt;
         public event Action<string, string> OnRationConfrontation;
         public event Action<string, string> OnRationsStolen;
-        public event Action<string, float> OnMoraleDelta;
+        /// <summary>Plan 24B attributed morale event: (survivorId, delta,
+        /// sourceId). The source id distinguishes the confrontation cause from
+        /// the theft cause so the shared needs seam can name them separately
+        /// (§24B.15 source-distinction rule).</summary>
+        public event Action<string, float, string> OnMoraleDelta;
         public event Action OnStateChanged;
+
+        /// <summary>Plan 24B modifier source id for a ration confrontation
+        /// (resenter −10, target −5, attribution only).</summary>
+        public const string ConfrontationModifierSource = "ration.confrontation";
+        /// <summary>Plan 24B modifier source id for a ration-theft victim hit
+        /// (−15, attribution only).</summary>
+        public const string TheftModifierSource = "ration.theft";
 
         private readonly ISeededRng _rng;
         private readonly Dictionary<string, RationConflictSurvivorState> _bySurvivor =
@@ -131,8 +142,8 @@ namespace Ashfall.Core.Survivors
 
         private void TriggerConfrontation(string resenterId, string targetId)
         {
-            OnMoraleDelta?.Invoke(resenterId, ConfrontationMoraleHit);
-            OnMoraleDelta?.Invoke(targetId, ConfrontationMoraleHit * 0.5f);
+            OnMoraleDelta?.Invoke(resenterId, ConfrontationMoraleHit, ConfrontationModifierSource);
+            OnMoraleDelta?.Invoke(targetId, ConfrontationMoraleHit * 0.5f, ConfrontationModifierSource);
             OnRationConfrontation?.Invoke(resenterId, targetId);
         }
 
@@ -141,7 +152,7 @@ namespace Ashfall.Core.Survivors
             double roll = _rng.NextDouble();
             if (roll < 0.3)
             {
-                OnMoraleDelta?.Invoke(victimId, TheftMoraleHit);
+                OnMoraleDelta?.Invoke(victimId, TheftMoraleHit, TheftModifierSource);
                 OnRationsStolen?.Invoke(thiefId, victimId);
                 state.resentmentLevel = Math.Max(0f, state.resentmentLevel - 0.3f);
             }

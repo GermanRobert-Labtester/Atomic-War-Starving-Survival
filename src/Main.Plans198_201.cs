@@ -272,7 +272,11 @@ namespace AtomicWar.GodotApp
         private void TickPlans198_201(int day, List<DayStateChangeEvent> events)
         {
             float gridWatts = _powerGrid?.System != null ? _powerGrid.System.GenerationWatts : 1000f;
-            bool gridPowered = _powerGrid?.System == null || !_powerGrid.System.IsBrownout;
+            // C2[6] 23A: the comms array is the radio-room load; use the
+            // allocation-aware served state so a brownout that still serves
+            // room_radio_tuner keeps the array online.
+            bool gridPowered = _powerGrid?.System == null
+                || _powerGrid.System.IsRoomServed("room_radio_tuner");
 
             if (_chemWarfare != null)
             {

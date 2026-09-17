@@ -341,7 +341,10 @@ namespace AtomicWar.GodotApp
                 cat,
                 rng,
                 new GodotLog(),
-                isGridPowered: () => _powerGrid?.System != null && !_powerGrid.System.IsBrownout,
+                // C2[6] 23A: allocation-aware, not global-brownout. Hydroponic racks
+                // live in the greenhouse load; a brownout that still serves
+                // room_greenhouse keeps them growing.
+                isGridPowered: () => _powerGrid?.System != null && _powerGrid.System.IsRoomServed("room_greenhouse"),
                 waterConsume: amount =>
                 {
                     var inv = _inventory?.Inventory;

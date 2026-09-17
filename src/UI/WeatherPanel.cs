@@ -90,7 +90,7 @@ namespace AtomicWar.GodotApp.UI
                 _statusRail.Set("hazmat_decay", "×1.0", AshfallMetricCard.Criticality.Normal);
                 return;
             }
-            float tempPen = WeatherSystem.TemperaturePenaltyForWeather(w.Current);
+            float tempPen = w.TemperaturePenaltyC(w.Current);
             float outdoor = w.OutdoorRadModifier;
             float vis = w.VisibilityFactor;
             _statusRail.Set("pattern", w.Current.ToString().ToUpperInvariant(),
@@ -294,7 +294,7 @@ namespace AtomicWar.GodotApp.UI
                 _advisoryList.AddChild(row);
                 count++;
             }
-            float tempPen = WeatherSystem.TemperaturePenaltyForWeather(w.Current);
+            float tempPen = w.TemperaturePenaltyC(w.Current);
             if (tempPen < 0f)
             {
                 var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);

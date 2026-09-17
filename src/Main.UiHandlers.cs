@@ -18,8 +18,9 @@ namespace AtomicWar.GodotApp
         {
             SetupCrafting();
             SetupInventory();
+            SetupSurvivors();
             SyncCraftingStationsFromShelter();
-            _craftingPanel.Bind(_crafting, _inventory);
+            _craftingPanel.Bind(_crafting, _inventory, _survivors);
             _craftingPanel.Open();
         }
         public void OpenRadioPanel()

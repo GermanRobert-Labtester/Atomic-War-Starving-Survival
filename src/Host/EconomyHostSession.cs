@@ -145,6 +145,15 @@ namespace AtomicWar.GodotApp
             MarketTransactionSide side = MarketTransactionSide.Buy)
             => Market.ExplainPrice(itemId, side);
 
+        /// <summary>Plan 14B (B1) — region-aware decomposition for the regional
+        /// heat map: identical typed factors, evaluated at the atlas's regional
+        /// geography. Read-only pass-through; no UI-side math.</summary>
+        public PriceExplanation ExplainPrice(
+            string itemId,
+            MarketTransactionSide side,
+            string? region)
+            => Market.ExplainPrice(itemId, side, region);
+
         public string StatusLine()
         {
             var sb = new System.Text.StringBuilder();

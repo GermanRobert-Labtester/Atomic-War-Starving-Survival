@@ -25,21 +25,40 @@ namespace AtomicWar.GodotApp.UI
 
         private CraftingHostSession? _craftingHost;
         private InventoryHostSession? _inventoryHost;
+        private SurvivorsHostSession? _survivorsHost;
 
         private VBoxContainer _recipeList = null!;
         private VBoxContainer _queueList = null!;
         private Label _queueHeader = null!;
         private Label _filterStatus = null!;
 
+        // ── Bench operator (trade specialty attribution) ───────────────
+        private OptionButton? _crafterSelect;
+        private readonly List<string> _crafterIds = new();
+
+        /// <summary>
+        /// The survivor chosen at the bench, or "" for unassigned — in which case
+        /// the host auto-credits a living survivor whose trade matches the item.
+        /// Index 0 is the UNASSIGNED row, so ids are offset by one.
+        /// </summary>
+        public string SelectedCrafterId =>
+            _crafterSelect != null && _crafterSelect.Selected > 0 && _crafterSelect.Selected - 1 < _crafterIds.Count
+                ? _crafterIds[_crafterSelect.Selected - 1]
+                : string.Empty;
+
         private string _activeFilter = "all";  // "all" | "craftable" | "queued"
         private bool _craftSubmitting; // debounce
 
         // ── Binding ────────────────────────────────────────────────────
 
-        public void Bind(CraftingHostSession crafting, InventoryHostSession? inventory = null)
+        public void Bind(
+            CraftingHostSession crafting,
+            InventoryHostSession? inventory = null,
+            SurvivorsHostSession? survivors = null)
         {
             _craftingHost = crafting;
             _inventoryHost = inventory;
+            _survivorsHost = survivors;
 
             // Subscribe to crafting events so the panel stays fresh
             _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
@@ -57,13 +76,15 @@ namespace AtomicWar.GodotApp.UI
             OnCraftStarted?.Invoke();
         }
 
-        private void OnEngineCraftCompleted(Recipe _) => RefreshView();
+        private void OnEngineCraftCompleted(Recipe recipe, string crafterId) => RefreshView();
 
         // ── Refresh ────────────────────────────────────────────────────
 
         public void RefreshView()
         {
             if (_recipeList == null || _queueList == null) return;
+
+            RefreshCrafterOptions();
 
             // Clear
             ClearChildren(_recipeList);
@@ -169,7 +190,9 @@ namespace AtomicWar.GodotApp.UI
                 {
                     if (_craftSubmitting) return;
                     _craftSubmitting = true;
-                    _craftingHost?.Start(recipeId);
+                    // Read at click time, not at card-build time: the player may
+                    // change the bench operator after the recipe list was drawn.
+                    _craftingHost?.Start(recipeId, SelectedCrafterId);
                 });
             btnCraft.Disabled = !canCraft || _craftSubmitting;
             btnCraft.CustomMinimumSize = new Vector2(200, 30);
@@ -235,6 +258,45 @@ namespace AtomicWar.GodotApp.UI
             return "Cannot craft";
         }
 
+        /// <summary>
+        /// Rebuild the bench-operator list from the living roster. The current
+        /// selection is preserved across refreshes so starting a craft does not
+        /// silently reassign the bench to UNASSIGNED.
+        /// </summary>
+        private void RefreshCrafterOptions()
+        {
+            if (_crafterSelect == null) return;
+            string previous = SelectedCrafterId;
+
+            _crafterSelect.Clear();
+            _crafterIds.Clear();
+            _crafterSelect.AddItem("UNASSIGNED (auto-credit)");
+
+            var rosterSystem = _survivorsHost?.Roster;
+            if (rosterSystem != null)
+            {
+                for (int i = 0; i < rosterSystem.Roster.Count; i++)
+                {
+                    var entry = rosterSystem.Roster[i];
+                    if (entry == null || !entry.isAlive || string.IsNullOrEmpty(entry.survivorId)) continue;
+
+                    var def = rosterSystem.FindDefinition(entry.definitionId);
+                    string name = def != null && !string.IsNullOrEmpty(def.displayName)
+                        ? def.displayName
+                        : entry.survivorId;
+                    string trade = def != null && !string.IsNullOrEmpty(def.profession)
+                        ? def.profession
+                        : "no trade";
+
+                    _crafterIds.Add(entry.survivorId);
+                    _crafterSelect.AddItem($"{name} — {trade}");
+                }
+            }
+
+            int restore = previous.Length > 0 ? _crafterIds.IndexOf(previous) : -1;
+            _crafterSelect.Selected = restore >= 0 ? restore + 1 : 0;
+        }
+
         private static void ClearChildren(Node parent)
         {
             AshfallUiHelpers.EmptyChildren(parent);
@@ -257,6 +319,7 @@ namespace AtomicWar.GodotApp.UI
             binder.Require<Button>("FilterCraftableButton");
             binder.Require<Button>("RelicWorkshopButton");
             binder.Require<Button>("PharmaLabButton");
+            binder.Require<OptionButton>("CrafterSelect");
 
             _recipeList = binder.Get<VBoxContainer>("RecipeList");
             _queueList = binder.Get<VBoxContainer>("QueueList");
@@ -264,6 +327,7 @@ namespace AtomicWar.GodotApp.UI
             _queueHeader.Text = "CRAFTING QUEUE  [idle]";
             _filterStatus = binder.Get<Label>("FilterStatus");
             _filterStatus.Text = "Filter:";
+            _crafterSelect = binder.Get<OptionButton>("CrafterSelect");
 
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
 

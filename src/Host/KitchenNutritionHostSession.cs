@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Campaign;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Save;
@@ -19,6 +20,15 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public KitchenNutritionSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
+        private readonly List<DayStateChangeEvent> _pendingDayEvents = new List<DayStateChangeEvent>();
+
+        public void DrainDayEvents(List<DayStateChangeEvent> target)
+        {
+            if (target == null || _pendingDayEvents.Count == 0) return;
+            target.AddRange(_pendingDayEvents);
+            _pendingDayEvents.Clear();
+        }
+
         public KitchenNutritionHostSession(
             KitchenNutritionSystem system,
             Inventory inventory,
@@ -31,6 +41,13 @@ namespace AtomicWar.GodotApp
             System.OnMealServed += serving =>
             {
                 LastEvent = $"Meal served: {serving.recipeId} to {serving.survivorId} (+{serving.moraleBonus} morale)";
+                _pendingDayEvents.Add(new DayStateChangeEvent("meal_served", "kitchen_nutrition", serving.survivorId, serving.recipeId, 1f));
+                RaiseStateChanged();
+            };
+            System.OnPortionsSpoiled += (recipeId, portions) =>
+            {
+                LastEvent = $"Portions spoiled: {portions} portions of {recipeId}";
+                _pendingDayEvents.Add(new DayStateChangeEvent("portions_spoiled", "kitchen_nutrition", recipeId, null, portions));
                 RaiseStateChanged();
             };
             System.OnKitchenChanged += () => RaiseStateChanged();
@@ -53,6 +70,17 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Meal served: {recipeId} to {survivorId}";
+                RaiseStateChanged();
+            }
+            return res;
+        }
+
+        public ActionResult ServeAllMeals(IReadOnlyList<string> survivorIds, string recipeId)
+        {
+            var res = System.ServeAllMeals(survivorIds, recipeId);
+            if (res.IsSuccess)
+            {
+                LastEvent = $"All crew served: {recipeId} ({survivorIds.Count} survivors)";
                 RaiseStateChanged();
             }
             return res;

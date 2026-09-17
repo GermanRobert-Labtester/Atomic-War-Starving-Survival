@@ -85,7 +85,7 @@ namespace Ashfall.Core.Endgame
             snapshot.VelSecretExposed = EvaluateVelSecretExposed(input, snapshot, trace);
 
             // 7. Matrix Narrative & Classifications
-            var ctx = snapshot.ToContext();
+            var ctx = EpilogueContextFactory.Build(snapshot.ToInputs());
             snapshot.Fate = Runtime.EvaluateRegionalFate(ctx);
             snapshot.Demographics = Runtime.EvaluateDemographics(ctx);
             snapshot.MoralStanding = Runtime.EvaluateMoralStanding(ctx);
@@ -253,9 +253,15 @@ namespace Ashfall.Core.Endgame
 
             if (input.CohortChildren != null && input.CohortChildren.Count > 0)
             {
-                snapshot.ChildrenCount = input.CohortChildren.Count;
-                trace.Add($"[Children] ChildrenSurvived is TRUE: {input.CohortChildren.Count} cohort child/children active in shelter.");
-                return true;
+                int livingChildren = input.CohortChildren.Count(c => c != null && !c.isDeceased);
+                if (livingChildren > 0)
+                {
+                    snapshot.ChildrenCount = livingChildren;
+                    trace.Add($"[Children] ChildrenSurvived is TRUE: {livingChildren} living cohort child/children active in shelter.");
+                    return true;
+                }
+                trace.Add($"[Children] ChildrenSurvived is FALSE: all {input.CohortChildren.Count} cohort child/children perished.");
+                return false;
             }
 
             if (input.GenerationalState?.generationRecords != null)

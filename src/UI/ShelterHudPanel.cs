@@ -73,6 +73,8 @@ public partial class ShelterHudPanel : Control
         public string LastEvent = string.Empty;
         public List<Ashfall.Core.World.WeatherForecastEntry> Forecast = new();
         public Dictionary<string, string> DutyAssignments = new();
+        public int MemorialCount;
+        public int CohortLivingCount;
     }
 
     private AshfallDashboardShell _shell = null!;

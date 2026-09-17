@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
@@ -32,6 +34,10 @@ namespace AtomicWar.GodotApp.UI
         private Ashfall.Core.Survivors.SurvivorEnrichmentService? _enrichmentService;
         private string _survivorId = string.Empty;
 
+        /// <summary>Read-only projection supplied by Main; no fitness state is
+        /// owned by this panel.</summary>
+        public Func<string, FitnessVerdict?>? FitnessProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -40,11 +46,18 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(SurvivorsHostSession? survivors, string survivorId, Ashfall.Core.Survivors.SurvivorEnrichmentService? enrichmentService = null)
         {
+            if (_survivors != null)
+                _survivors.Needs.OnNeedChanged -= HandleNeedChanged;
             _survivors = survivors;
             _survivorId = survivorId ?? string.Empty;
             _enrichmentService = enrichmentService;
+            if (_survivors != null)
+                _survivors.Needs.OnNeedChanged += HandleNeedChanged;
             RefreshView();
         }
+
+        private void HandleNeedChanged(SurvivorNeedsState _, NeedKind __, float ___)
+            => RefreshView();
 
         public override void _Ready()
         {
@@ -154,11 +167,76 @@ namespace AtomicWar.GodotApp.UI
             AddRow(_statusList, $"Critical flags: hunger={s.WasHungerCritical} thirst={s.WasThirstCritical} warmth={s.WasWarmthCritical}",
                 (s.WasHungerCritical || s.WasThirstCritical || s.WasWarmthCritical) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount++;
+
+            var fitness = FitnessProvider?.Invoke(s.Id);
+            if (fitness != null)
+            {
+                string fitnessText = fitness.Level == FitnessLevel.Fit
+                    ? "FIT"
+                    : fitness.Level == FitnessLevel.Impaired ? "IMPAIRED" : "UNFIT / INCAPACITATED";
+                AddRow(_statusList, $"Fitness: {fitnessText}",
+                    fitness.Level == FitnessLevel.Fit ? Ashfall.Core.UI.Theme.Lethe :
+                    fitness.Level == FitnessLevel.Impaired ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical);
+                var reasons = new List<string>();
+                reasons.AddRange(fitness.BlockingReasons);
+                reasons.AddRange(fitness.DegradedFactors);
+                if (reasons.Count > 0)
+                    AddRow(_statusList, "Factors: " + string.Join(", ", reasons).Replace('_', ' '), Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount += reasons.Count > 0 ? 2 : 1;
+            }
+
+            var needsSystem = _survivors?.Needs;
+            int modifierDay = AppDayProvider?.Invoke() ?? needsSystem?.CurrentDay ?? -1;
+            var modifiers = needsSystem?.ModifierStack.GetForSurvivor(s.Id)
+                .Where(modifier => modifier.IsActive(modifierDay))
+                .ToList();
+            if (modifiers != null && modifiers.Count > 0)
+            {
+                modifiers.Sort((left, right) =>
+                {
+                    int magnitude = Math.Abs(right.DeltaPerHour).CompareTo(Math.Abs(left.DeltaPerHour));
+                    if (magnitude != 0) return magnitude;
+                    int source = string.CompareOrdinal(left.SourceId, right.SourceId);
+                    return source != 0 ? source : ((int)left.Need).CompareTo((int)right.Need);
+                });
+                AddRow(_statusList, "Top active need contributors", Ashfall.Core.UI.Theme.Pale);
+                int count = Math.Min(5, modifiers.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    var modifier = modifiers[i];
+                    AddRow(_statusList,
+                        $"  {FormatModifierSource(modifier.SourceId)}: {modifier.Need} {modifier.DeltaPerHour:+0.##;-0.##;0}/h",
+                        Ashfall.Core.UI.Theme.Dim);
+                }
+                if (modifiers.Count > count)
+                    AddRow(_statusList, $"  +{modifiers.Count - count} other active contributors", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount += count + 1 + (modifiers.Count > count ? 1 : 0);
+            }
+
+            var recent = needsSystem?.ModifierStack.GetRecentForSurvivor(s.Id);
+            if (recent != null && recent.Count > 0)
+            {
+                AddRow(_statusList, "Recent need contributors", Ashfall.Core.UI.Theme.Pale);
+                int count = Math.Min(4, recent.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    var contribution = recent[i];
+                    AddRow(_statusList,
+                        $"  {FormatModifierSource(contribution.SourceId)}: {contribution.Need} {contribution.DeltaPerHour:+0.##;-0.##;0}",
+                        Ashfall.Core.UI.Theme.Dim);
+                }
+                RenderedRowCount += count + 1;
+            }
         }
 
         private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
         {
-            var label = new Label { Text = text };
+            var label = new Label
+            {
+                Text = text,
+                AutowrapMode = TextServer.AutowrapMode.WordSmart,
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+            };
             label.CustomMinimumSize = new Vector2(400, 0);
             label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
@@ -178,6 +256,12 @@ namespace AtomicWar.GodotApp.UI
             if (string.IsNullOrEmpty(id)) return "Unknown";
             int us = id.IndexOf('_');
             return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
+        }
+
+        private static string FormatModifierSource(string sourceId)
+        {
+            if (string.IsNullOrEmpty(sourceId)) return "Unknown source";
+            return sourceId.Replace('.', ' ').Replace('_', ' ').Replace(':', ' ');
         }
 
         public void Open()

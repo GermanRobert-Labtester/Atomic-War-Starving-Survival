@@ -79,7 +79,15 @@ namespace Ashfall.Core.Survivors
         private readonly System.Collections.Generic.List<SurvivorNeedsState> _survivors =
             new System.Collections.Generic.List<SurvivorNeedsState>();
 
+        /// <summary>Campaign day used only for timed external modifiers. A
+        /// negative value keeps day-agnostic callers active.</summary>
+        public int CurrentDay { get; set; } = -1;
+
+        /// <summary>External, attributable per-hour need contributions.</summary>
+        public NeedsModifierStack ModifierStack { get; } = new NeedsModifierStack();
+
         public event Action<SurvivorNeedsState, NeedKind, float>? OnNeedChanged;
+        public event Action<SurvivorNeedsState, NeedsModifierContribution>? OnAttributedContribution;
         public event Action<SurvivorNeedsState, NeedKind>? OnNeedCritical;
         public event Action<SurvivorNeedsState>? OnDied;
 
@@ -191,6 +199,11 @@ namespace Ashfall.Core.Survivors
 
         public void Tick(float gameHours)
         {
+            // Recent attribution is a presentation window for the current
+            // simulation pass, not durable state. Clear it once per aggregate
+            // tick so the UI cannot report an effect from an arbitrarily old
+            // day as if it were current.
+            ModifierStack.ClearRecentAttributions();
             for (int i = 0; i < _survivors.Count; i++)
                 Tick(_survivors[i], gameHours);
         }
@@ -199,7 +212,43 @@ namespace Ashfall.Core.Survivors
         {
             if (survivor == null || !survivor.IsAliveState || gameHours <= 0f) return;
             ApplyBaseNeedDrift(survivor, gameHours);
+            ModifierStack.ApplyTo(this, survivor, gameHours, CurrentDay);
             ApplyCriticalNeedConsequences(survivor, gameHours);
+        }
+
+        public void SetExternalModifier(string survivorId, string sourceId, NeedKind need,
+            float deltaPerHour, int priority = 0, int startDay = -1, int endDay = -1)
+            => ModifierStack.Set(survivorId, sourceId, need, deltaPerHour, priority, startDay, endDay);
+
+        public bool RemoveExternalModifier(string survivorId, string sourceId, NeedKind need)
+            => ModifierStack.Remove(survivorId, sourceId, need);
+
+        public int ClearExternalModifiers(string sourceId)
+            => ModifierStack.ClearSource(sourceId);
+
+        /// <summary>
+        /// Applies a one-shot effect through the same attributed seam used by
+        /// persistent modifiers. The delta itself is not persisted as a rate.
+        /// </summary>
+        public bool ApplyAttributedDelta(string survivorId, NeedKind need,
+            float delta, string sourceId)
+        {
+            if (string.IsNullOrWhiteSpace(sourceId) || float.IsNaN(delta)
+                || float.IsInfinity(delta)) return false;
+            var survivor = Get(survivorId);
+            if (survivor == null || !survivor.IsAliveState || delta == 0f) return false;
+            Modify(survivor, need, delta);
+            var contribution = new NeedsModifierContribution(survivorId, sourceId, need, delta);
+            ModifierStack.RecordApplied(contribution);
+            OnAttributedContribution?.Invoke(survivor, contribution);
+            return true;
+        }
+
+        internal void NotifyAttributedContribution(SurvivorNeedsState survivor,
+            NeedsModifierContribution contribution)
+        {
+            ModifierStack.RecordApplied(contribution);
+            OnAttributedContribution?.Invoke(survivor, contribution);
         }
 
         private void ApplyBaseNeedDrift(SurvivorNeedsState survivor, float gameHours)

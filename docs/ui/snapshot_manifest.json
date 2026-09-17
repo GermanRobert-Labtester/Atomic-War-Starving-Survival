@@ -5,10 +5,12 @@
   "invocation": "--ui-snapshot-uitest",
   "renderer": "Godot 4.7.1 .NET, AMD RADV RENOIR Vulkan 1.4, Forward+, X11 DISPLAY=:0 (the project's gl_compatibility + headless pipeline returns null SubViewport textures)",
   "totals": {
-    "targets": 30,
-    "pass": 30,
+    "targets": 31,
+    "pass": 31,
     "fail": 0,
-    "approved_baselines_committed": 30
+    "approved_baselines_committed": 31,
+    "harness_targets": 32,
+    "known_manifest_gap": "market_default predates this update and remains outside this manifest"
   },
   "targets": [
     {
@@ -218,6 +220,30 @@
       "baseline_bytes": 209063,
       "consumers": [
         "CaravanBarterLedgerPanel wraps this WITHOUT forcing another dashboard"
+      ]
+    },
+    {
+      "snapshot_id": "black_market_default",
+      "runtime_surface": "src/UI/BlackMarketPanel.cs",
+      "runtime_state": "Bound to production BlackMarketHostSession with one discovered contact, seeded daily stock, HoldfastTradeSession value, and canonical inventory goods. Buy, sell, and loan controls render from authoritative previews.",
+      "fixture_source": "DETERMINISTIC_PRODUCTION_FIXTURE (src/UI/BlackMarketSnapshotFixture.cs)",
+      "viewport_width": 1280,
+      "viewport_height": 800,
+      "ui_scale": 1.0,
+      "seed": 211,
+      "locale": "en_US",
+      "theme": "Ashfall.Core.UI.DesignTheme",
+      "expected_asset_family": "Text controls only; stock and item identity come from canonical black-market and inventory catalogs.",
+      "stitch_reference_id": "(no Stitch; Plan 211 action surface)",
+      "visual_status": "MATCH — 52303 bytes on 2026-09-17 focused target verification",
+      "phase_origin": "Wave 8 Part 2 C1",
+      "baseline_path": "snapshots/black_market_default.png",
+      "baseline_bytes": 52303,
+      "consumers": [
+        "AshfallDashboardShell",
+        "AshfallStatusRail",
+        "BlackMarketHostSession",
+        "BlackMarketSettlementService"
       ]
     },
     {
@@ -734,6 +760,7 @@
       "medical_default",
       "shelter_default",
       "journal_default",
+      "black_market_default",
       "survival_workstation_default",
       "caravan_barter_default",
       "shelter_hud_default",
@@ -769,7 +796,8 @@
       "weather_dashboard_default"
     ],
     "POPULATED_STATE": [
-      "faction_matrix_default"
+      "faction_matrix_default",
+      "black_market_default"
     ],
     "SELECTION_STATE": [],
     "WARNING_STATE": [],
@@ -777,10 +805,10 @@
     "ERROR_STATE": []
   },
   "regenerated": {
-    "date": "2026-08-31",
-    "reason": "Plan 12C Final added one inspected populated shelter-decor baseline. The real-display diff also reported 29 pre-existing unrelated drifts, so this delivery promoted only its own new target and did not overwrite the established corpus.",
-    "pipeline": "godot --path . --rendering-method forward_plus -- --ui-snapshot-regenerate (DISPLAY=:0)",
-    "post_regen_diff_gate": "shelter_decor_default captured and inspected; global corpus remains 29 unrelated drifts / 0 capture failures",
-    "approval": "Plan 12C fixture baseline promoted after visual inspection; global corpus rebaseline remains separately pending"
+    "date": "2026-09-17",
+    "reason": "Wave 8 Part 2 C1 added and visually inspected one deterministic populated black-market action baseline. Existing unrelated corpus drift was left untouched.",
+    "pipeline": "godot --path . --rendering-method forward_plus -- --ui-snapshot-uitest (DISPLAY=:0); promote only snapshot-capture/black_market_default.png",
+    "post_regen_diff_gate": "black_market_default MATCH (52303 bytes); aggregate remains red with 31 unrelated existing drifts / 0 capture failures",
+    "approval": "C1 black-market target promoted after visual inspection; whole-corpus rebaseline remains a separate owned repair"
   }
 }

@@ -445,7 +445,7 @@ namespace AtomicWar.GodotApp
                     LastEvent = $"Specialty: {sv} morale {delta:+#.##;-#.##;0}.";
                     RaiseStateChanged();
                 },
-                GetNarrativeEventId = prof => $"narrative_trade_mastery_{prof}",
+                GetNarrativeEventId = prof => TradeSpecialtySystem.GetMasteryNarrativeId(prof),
                 FireNarrativeEvent = (narrativeId, sv) =>
                 {
                     Consumers.FireNarrativeEvent?.Invoke(narrativeId, sv);
@@ -540,7 +540,9 @@ namespace AtomicWar.GodotApp
         /// Load trade_specialties.json profession patterns into the Phase-0
         /// specialty system. Without this the wired specialty loop (events,
         /// save, host hooks) runs with zero patterns and mastery can never
-        /// progress — the catalog is the feeder for CraftItem.
+        /// progress — the catalog is the feeder for CraftItem. It is also the
+        /// sole authority for milestone/mastery narrative event ids, so an
+        /// unloaded catalog means no narrative fires at all.
         /// </summary>
         public void LoadTradeSpecialties(string dataDir)
         {

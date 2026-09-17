@@ -6,7 +6,7 @@
       "archetype_id": "the_surgeon",
       "wish_type": "teach_lesson",
       "wish_title": "The Final Surgery",
-      "wish_description": "{name} asks for one last student. 'My hands won't be steady much longer,' they say. 'But someone needs to know how to close a wound properly.'",
+      "wish_description": "The tremor is in {name}'s right hand now, visible whenever they hold it flat. 'One student,' they say. 'I want somebody who can close a wound properly after I have stopped being able to. Bring me the one with the patience for it, not the one with the steady hand. The steady hand goes first.'",
       "steps": [
         {
           "step_id": "gather_surgical_tools",
@@ -23,7 +23,7 @@
           "requires_patient": true
         }
       ],
-      "completion_text": "{name}'s final lesson is complete. The student nods \u2014 they understand. {name} sets down the scalpel for the last time. 'You'll do fine,' they say. 'You'll do fine.'",
+      "completion_text": "The student makes four closures on a soaked rag under the lamp while {name} watches, and says nothing at all until the third one. Then a single correction about the bite of the needle, and a nod. {name} wipes the scalpel, oils it, and puts it in the student's kit instead of back in the drawer. 'Take the rag as well,' they say. 'You will want the practice longer than you will want the knife.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -32,7 +32,7 @@
       "archetype_id": "the_soldier",
       "wish_type": "build_memorial",
       "wish_title": "The Fallen's Wall",
-      "wish_description": "{name} gathers scrap metal and concrete. 'Every unit has a memorial,' they say. 'This bunker should too.'",
+      "wish_description": "Scrap steel, a length of angle iron and a cold chisel: {name} lays them out on the floor in a line, spaced, like a kit inspection. 'Every unit I served in had a wall,' they say. 'Not for the ceremony. So the count had somewhere to go. This shelter has no wall, and the shelter is the unit now.'",
       "steps": [
         {
           "step_id": "gather_materials",
@@ -54,7 +54,7 @@
           "description": "{name} spends hours inscribing names onto the memorial wall."
         }
       ],
-      "completion_text": "The memorial stands in the corner of the bunker, names etched into salvaged steel. {name} salutes once, then turns away. 'That's everyone,' they say. 'That's everyone I remember.'",
+      "completion_text": "Eighteen names are cut into the salvaged plate, shallow and uneven, the chisel slipping twice on the last one. {name} runs a thumb along each groove to check it will hold dust and stay legible in low light, then wipes the steel down. There is no salute. 'That is everyone I can name,' they say. 'Leave the right-hand side clear. There will be more, and they should not have to go on the back.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -63,7 +63,7 @@
       "archetype_id": "the_nurse",
       "wish_type": "teach_lesson",
       "wish_title": "The Caregiver's Legacy",
-      "wish_description": "{name} calls the bunker's children to their bedside. 'Let me show you how to check a pulse,' they say. 'How to know when a fever is dangerous. How to hold someone's hand when they're scared.'",
+      "wish_description": "The three oldest children are sent for, and {name} has the bedside table cleared to make room on it. 'Pulse, fever, and how to hold a hand without frightening the person in the bed,' they say. 'That is the whole of it. The other half of nursing is not going away when you are tired, and I would rather you learned this half from me than from whoever is left.'",
       "steps": [
         {
           "step_id": "gather_teaching_aids",
@@ -78,7 +78,7 @@
           "description": "{name} teaches the bunker's children basic first aid and compassionate care."
         }
       ],
-      "completion_text": "The children gather around {name}'s bed, practicing bandage wraps on each other's arms. {name} watches them with tired, proud eyes. 'You'll take care of each other,' they say. 'That's all I ever wanted.'",
+      "completion_text": "The children practise wraps on each other's arms until the roll runs out, and one of them does it badly enough that {name} sits up to correct the fold. That costs them, and everyone in the room notices, and nobody says so. 'Count the pulse out loud,' they say, lying back down. 'Out loud. Then you cannot lose track of where you were.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -87,7 +87,7 @@
       "archetype_id": "the_mother",
       "wish_type": "reconcile",
       "wish_title": "The Last Letter",
-      "wish_description": "{name} asks for paper and a pencil. 'There's someone I need to write to,' they say. 'Someone I should have written to a long time ago.'",
+      "wish_description": "Paper, a pencil with a point on it, and privacy \u2014 {name} asks for the three in that order, and waits until the curtain is actually drawn. 'There is somebody I should have written to years ago,' they say. 'I kept not doing it because I wanted the wording to come out right. The wording was never going to come out right.'",
       "steps": [
         {
           "step_id": "find_paper",
@@ -102,7 +102,7 @@
           "description": "Deliver the letter \u2014 to a living survivor, or to a grave."
         }
       ],
-      "completion_text": "{name} seals the letter with trembling hands. 'It says everything I should have said years ago,' they whisper. Whether the recipient ever reads it, {name} is at peace.",
+      "completion_text": "It takes {name} four attempts to get past the first line, and the three failures are torn into small pieces rather than left anywhere a person could read them. The finished page is short. They fold it twice, write a name and a settlement on the outside, and hand it over without asking whether it can realistically be delivered. 'If it gets there, it gets there,' they say. 'I stopped needing the answer somewhere around the second page.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -111,7 +111,7 @@
       "archetype_id": "the_mechanic",
       "wish_type": "retrieve_heirloom",
       "wish_title": "The Lost Wrench",
-      "wish_description": "{name} describes a specific wrench \u2014 their father's, their grandfather's before that. 'It's still in my old garage,' they say. 'If someone could bring it back...'",
+      "wish_description": "What {name} wants is one specific wrench: nine-sixteenths, adjustable at the jaw, handle wrapped in strips cut from an inner tube. 'My father's, and his father's before the war,' they say. 'Second shelf of the garage at the old house, left side, behind the paint tins. If the roof has come down, look anyway. It will be under something rather than out in the weather.'",
       "steps": [
         {
           "step_id": "locate_garage",
@@ -123,7 +123,7 @@
           "description": "Recover the heirloom wrench from the garage."
         }
       ],
-      "completion_text": "{name} holds the wrench like it's made of gold. Three generations of hands have worn the grip smooth. 'It still fits,' they say, turning it over. 'It still fits perfectly.'",
+      "completion_text": "The inner-tube wrap has rotted away in places and the jaw is stiff, but it is the wrench. {name} turns it over twice, finds the notch on the handle where the metal was bent once and straightened again, and stops there. 'Somebody fixed this,' they say. 'I never knew who.' They work the jaw open and shut until it moves freely, then set it on the bunk beside them instead of in the tool box.",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -132,7 +132,7 @@
       "archetype_id": "the_teacher",
       "wish_type": "teach_lesson",
       "wish_title": "The Last Period",
-      "wish_description": "{name} asks everyone in the bunker to gather. 'I have one more lesson to teach,' they say. 'It's not in any curriculum. It's about how to carry on when everything tells you to stop.'",
+      "wish_description": "{name} wants everyone off shift at the same hour, which has not happened once since the doors closed. 'One more lesson,' they say. 'Not the curriculum \u2014 I want to teach the part I never had a period for. What you do on the morning you have decided you cannot go on, and you go on. I have notes. I would rather say it to you than leave it written down where you might not read it.'",
       "steps": [
         {
           "step_id": "prepare_lesson",
@@ -147,7 +147,7 @@
           "description": "Gather the bunker for {name}'s final class."
         }
       ],
-      "completion_text": "The bunker is silent as {name} finishes speaking. Then, one by one, everyone stands. No one claps \u2014 that would feel wrong. They just stand, in quiet acknowledgment of a teacher who gave everything.",
+      "completion_text": "It takes nineteen minutes and {name} has to sit down twice during it. Nobody leaves early and nobody talks over the end. When it is finished there is the particular silence of a room deciding what to do with its hands. Then the duty roster is read out loud, because that is the next thing, and {name} asks to hear their own name on it once more. It is there. They nod, and close the notebook.",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -156,14 +156,14 @@
       "archetype_id": "the_refugee",
       "wish_type": "see_the_sky",
       "wish_title": "One Last Sunrise",
-      "wish_description": "{name} asks to be taken to the surface. 'Just once more,' they say. 'I want to see if the sun still rises the same way.'",
+      "wish_description": "To the surface, once, in the hour before dawn \u2014 that is the whole of what {name} asks for, and they are precise about the timing. 'I want to watch it come up rather than be told about it afterwards,' they say. 'I have been describing the colour of it to people in here for a year and I am no longer certain I have the colour right.'",
       "steps": [
         {
           "step_id": "escort_to_surface",
           "description": "Escort {name} to the surface at dawn, radiation suit and all."
         }
       ],
-      "completion_text": "The sun breaks over the ash-choked horizon, painting the grey sky in shades of orange and pink that haven't been seen in months. {name} watches in silence, then smiles. 'It's still there,' they whisper. 'It's still there.'",
+      "completion_text": "It comes up grey-red through the particulate, and the light arrives well before the colour does, which is not at all how {name} had been describing it. They watch the whole of it without speaking and have to be helped down off the ridge afterwards. 'I had it wrong,' they say on the walk back, and then, after a while: 'It is the same sun. I was the one who had it wrong.' They sleep through most of the following day.",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
@@ -172,7 +172,7 @@
       "archetype_id": "the_electrician",
       "wish_type": "retrieve_heirloom",
       "wish_title": "The Old Voltmeter",
-      "wish_description": "{name} mentions an old analog voltmeter \u2014 the first tool they ever owned. 'My mentor gave it to me when I was sixteen,' they say. 'It's still in the substation control room, if the roof hasn't caved in.'",
+      "wish_description": "An analogue voltmeter, needle type, bakelite case with the lower-left corner cracked \u2014 the first tool {name} ever owned. 'My mentor gave it to me at sixteen and told me never to trust a readout I could not see move,' they say. 'It should still be on the control-room shelf at the substation, second bay, assuming the roof has held.'",
       "steps": [
         {
           "step_id": "reach_substation",
@@ -184,11 +184,12 @@
           "description": "Find and recover the voltmeter from the control room."
         }
       ],
-      "completion_text": "The voltmeter's needle still swings true when {name} tests it on a live circuit. They hold it for a long moment, then hang it on the bunker wall. 'So the next electrician knows where they came from,' they say.",
+      "completion_text": "Fed from a live circuit the needle still swings true, comes up slowly, and settles without overshoot, which is the only test that ever mattered. {name} checks the zero adjust, finds it a quarter of a scale out, and corrects it with a fingernail. Then they mount it on the wall above the distribution board, high enough to be read from the floor. 'So the next one knows where it came from,' they say. 'And so somebody notices if it ever stops being true.'",
       "morale_bonus": 15,
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_pharmacist_compounding_table",
       "archetype_id": "the_pharmacist",
       "wish_type": "teach_lesson",
       "wish_title": "The Compounding Table",
@@ -212,6 +213,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_plumber_where_the_weight_sits",
       "archetype_id": "the_plumber",
       "wish_type": "teach_lesson",
       "wish_title": "Where the Weight Sits",
@@ -236,6 +238,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_hunter_reading_the_runs",
       "archetype_id": "the_hunter",
       "wish_type": "teach_lesson",
       "wish_title": "Reading the Runs",
@@ -259,6 +262,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_courier_last_waybill",
       "archetype_id": "the_courier",
       "wish_type": "deliver_letter",
       "wish_title": "The Last Waybill",
@@ -282,6 +286,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_reporter_attribution_sealed",
       "archetype_id": "the_reporter",
       "wish_type": "deliver_letter",
       "wish_title": "Attribution Sealed",
@@ -305,6 +310,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_blind_preacher_words_for_the_stone",
       "archetype_id": "the_blind_preacher",
       "wish_type": "deliver_letter",
       "wish_title": "Words for the Stone",
@@ -328,6 +334,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_misanthrope_grey_water",
       "archetype_id": "the_misanthrope",
       "wish_type": "see_a_place",
       "wish_title": "The Grey Water",
@@ -348,6 +355,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_botanist_overgrown_sill",
       "archetype_id": "the_botanist",
       "wish_type": "see_a_place",
       "wish_title": "The Overgrown Sill",
@@ -371,6 +379,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_prisoner_discharged_grudge",
       "archetype_id": "the_prisoner",
       "wish_type": "reconcile",
       "wish_title": "The Discharged Grudge",
@@ -391,6 +400,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_defector_broken_signal",
       "archetype_id": "the_defector",
       "wish_type": "reconcile",
       "wish_title": "The Broken Signal",
@@ -411,6 +421,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_undertaker_apart_from_the_wards",
       "archetype_id": "the_undertaker",
       "wish_type": "die_with_dignity",
       "wish_title": "Apart from the Wards",
@@ -430,6 +441,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_pacifist_last_office",
       "archetype_id": "the_pacifist",
       "wish_type": "die_with_dignity",
       "wish_title": "The Last Office",
@@ -453,6 +465,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_watchmaker_final_balance",
       "archetype_id": "the_watchmaker",
       "wish_type": "die_with_dignity",
       "wish_title": "The Final Balance",
@@ -472,6 +485,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_chef_simmered_root",
       "archetype_id": "the_chef",
       "wish_type": "last_meal",
       "wish_title": "The Simmered Root",
@@ -496,6 +510,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_exhausted_father_porridge_for_the_dawn",
       "archetype_id": "the_exhausted_father",
       "wish_type": "last_meal",
       "wish_title": "Porridge for the Dawn",
@@ -519,6 +534,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_hoarder_floorboard_cache",
       "archetype_id": "the_hoarder",
       "wish_type": "confess",
       "wish_title": "The Floorboard Cache",
@@ -545,6 +561,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_general_sealed_bulkhead",
       "archetype_id": "the_general",
       "wish_type": "confess",
       "wish_title": "The Sealed Bulkhead",
@@ -567,6 +584,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_fierce_mother_who_watches_lina",
       "archetype_id": "the_fierce_mother",
       "wish_type": "protect_someone",
       "wish_title": "Who Watches Lina",
@@ -587,6 +605,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_martyr_steady_watch",
       "archetype_id": "the_martyr",
       "wish_type": "protect_someone",
       "wish_title": "The Steady Watch",
@@ -607,6 +626,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_burglar_put_it_back",
       "archetype_id": "the_burglar",
       "wish_type": "return_a_relic",
       "wish_title": "Put It Back",
@@ -630,6 +650,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_historian_iron_cenotaph",
       "archetype_id": "the_historian",
       "wish_type": "return_a_relic",
       "wish_title": "The Iron Cenotaph",
@@ -652,6 +673,7 @@
       "buff_id": "their_memory_lives_on"
     },
     {
+      "id": "wish_quartermaster_keys_and_ledger",
       "archetype_id": "the_quartermaster",
       "wish_type": "name_a_successor",
       "wish_title": "The Keys and Ledger",

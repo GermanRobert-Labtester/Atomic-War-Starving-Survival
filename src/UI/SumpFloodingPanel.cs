@@ -221,6 +221,18 @@ namespace AtomicWar.GodotApp.UI
                     waterRow.AddChild(waterLbl);
                     cardVbox.AddChild(waterRow);
 
+                    // C2[6] 23B: rising-water clock from the canonical Core read
+                    // model (level, rate, ETA) — no panel-side forecast math.
+                    var risk = _host.GetRisk(node.nodeId);
+                    if (risk.NodeExists && !risk.IsFlooded
+                        && !float.IsPositiveInfinity(risk.HoursToThreshold))
+                    {
+                        var riskLbl = AshfallUiHelpers.MakeSmall(
+                            $"RISING {risk.NetChangeCmPerDay:+0.0;-0.0;0} cm/d — FLOOD RISK ~{risk.HoursToThreshold:0} h");
+                        riskLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+                        cardVbox.AddChild(riskLbl);
+                    }
+
                     // B5–B8 Phase 9: allocation-aware truth — RUNNING only when
                     // the player toggle is on AND the grid serves the load.
                     bool pumpServed = _host.IsPumpEffectivelyPowered(node.nodeId);

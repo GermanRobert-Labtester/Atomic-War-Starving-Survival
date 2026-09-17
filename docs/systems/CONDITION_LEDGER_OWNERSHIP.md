@@ -82,3 +82,29 @@ best/median protection, no-working-mask count, projected dose, projected gear we
 mid-route failure prediction — consumed from the canonical authorities above
 (Inventory projection + ECS weapons already feed `weaponReadiness`). Warn-don't-block
 dispatch semantics per plan §34/§35.
+
+---
+
+## 8. Plan 22 execution (2026-09-15) — consumption semantics closed
+
+- **Tags live:** items.json `tags` now parsed by `ItemCatalogLoader` →
+  `ItemDefinition.tags` + `HasTag` (both schema generations; absent = empty).
+- **One classification authority:** `ItemTagCatalog` (medical/protective/filter);
+  the hardcoded 6-ID list in `CraftingSystem.IsMedicalCraftResult` is retired —
+  parity proven over the full live catalog vs the retired oracle
+  (`Plan22CatalogClassificationParityTests`, 6/6 incl. trade parity).
+- **Protective-gear restore-repair (D2):** through the previously-orphaned
+  `ItemDefinition.repairRecipe` seam — authored on `gas_mask`/`hazmat_suit`
+  (cloth/scrap bills, `max_repair_condition_fraction: 0.85`); new
+  `Inventory.TryRepairEquippedGear` = atomic `TryConsumeBill` → restore to cap on
+  the same canonical `EquippedItem.CurrentDurability`; failed ⇒ replace-only;
+  repair never fires `OnProtectiveGearFailed`; `OnProtectiveGearRepaired` for
+  attribution. `RepairRecipe.hours` = labour metadata reserved for Plan 24.
+- **Trade parity:** `cloth` + `item_air_filter_hepa` added to `economy_goods.json`
+  (were missing) — repair materials and replacement canisters are real trade goods
+  priced by the canonical economy; no gear-shop model.
+- **UI (Phase 4):** WorkshopPanel gear-repair rows (condition %, text state
+  serviceable/repairable/FAILED—REPLACE, keyboard-focusable REPAIR, disabled when
+  not repairable) — presentation only, no condition arithmetic in the panel.
+- Repair bills data → validated by the item-catalog walk; no new save state
+  anywhere (tags derived; repair mutates the already-persisted durability).

@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-15
-**Total Catalogs:** 613 | **Total Definitions:** 13026 | **Domain Families:** 32
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-17
+**Total Catalogs:** 616 | **Total Definitions:** 13064 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -68,7 +68,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (154 Catalogs, 2505 Definitions)
+### Core / Miscellaneous (157 Catalogs, 2515 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -96,11 +96,13 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `caravans.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `carbon_composite_catalog.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CarbonCompositeCatalogLoader, CarbonCompositeEngine` |
 | `cargo_airdrop_catalog.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `cascade_rules.json` | 5 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `cellulosic_ethanol_catalog.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `ceremonies.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CeremonySystem` |
 | `chemical_syntheses.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `chlor_alkali_synthesis_catalog.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `climbing_winch_catalog.json` | 8 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `cohort_tuning.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `collectibles.json` | 40 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CollectibleEffectDispatcher, CollectibleCatalogLoader` |
 | `commodity_baselines.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `comms_targets.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CommsArraySystem` |
@@ -114,6 +116,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `development_traits.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `diplomatic_treaties.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiplomaticTreatyCatalogLoader` |
 | `direction_finding_catalog.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DirectionFindingCatalogLoader` |
+| `duty_roles.json` | 5 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `ebpvd_coating_catalog.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EbPvdCoatingCatalogLoader, EbPvdCoatingEngine` |
 | `echoes.json` | 23 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EchoCatalogLoader` |
 | `ecological_infestations.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
@@ -257,13 +260,13 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `duty_roster_marks.json` | 43 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterCatalog` |
 | `duty_roster_seasons.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DutyRosterCatalog` |
 
-### Economy & Trade (9 Catalogs, 144 Definitions)
+### Economy & Trade (9 Catalogs, 146 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `black_market_inventory.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `caravan_trade_routes.json` | 10 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `economy_goods.json` | 48 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GoodsCatalog` |
+| `economy_goods.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GoodsCatalog` |
 | `hardcore_economy_tuning.json` | 22 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HardcoreEconomyTuningLoader` |
 | `trade_embargoes.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `trade_screen_scenarios.json` | 15 | `1.0.0` | `ORPHANED` | `TradeScreenScenarios` |
@@ -342,7 +345,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `holdfast_flavor.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFlavorCatalog` |
 | `holdfast_npcs.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 
-### Items (14 Catalogs, 1279 Definitions)
+### Items (14 Catalogs, 1283 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -357,7 +360,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `holdfast_items.json` | 55 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
 | `item_degradation.json` | 5 | `1.0.0` | `ORPHANED` | `Core default` |
 | `item_description_texts.json` | 183 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemDescriptionCatalogLoader, ItemCatalogLoader` |
-| `items.json` | 689 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
+| `items.json` | 693 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_items.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
@@ -766,12 +769,12 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `shelter_shielding.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `sofc_power_catalog.json` | 11 | `1.0.0` | `UNRESOLVED` | `Core default` |
 
-### Social & Psychology (3 Catalogs, 108 Definitions)
+### Social & Psychology (3 Catalogs, 130 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `confession_secrets.json` | 38 | `1.0.0` | `ORPHANED` | `ConfessionSecrets` |
-| `final_wishes.json` | 30 | `1.0.0` | `ORPHANED` | `FinalWishSystem` |
+| `final_wishes.json` | 52 | `1.0.0` | `GAMEPLAY_CONSUMED` | `FinalWishSystem` |
 | `guilt_sources.json` | 40 | `1.0.0` | `ORPHANED` | `GuiltInsomniaSystem` |
 
 ### Standing Record (Exp 03) (2 Catalogs, 66 Definitions)

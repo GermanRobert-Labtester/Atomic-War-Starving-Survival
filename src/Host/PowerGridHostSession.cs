@@ -103,6 +103,20 @@ namespace AtomicWar.GodotApp
             return ok;
         }
 
+        /// <summary>
+        /// C2[6] 23B: clear an overload/surge trip so the room can be served again.
+        /// Core-only — the host route consumes the recovery part before calling this,
+        /// so a reset is never free. Returns false when the room was not tripped.
+        /// </summary>
+        public bool ClearTripped(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId) || !System.IsRoomTripped(roomId)) return false;
+            System.ClearTripped(roomId);
+            LastSnapshot = System.Snapshot();
+            OnStateChanged?.Invoke();
+            return true;
+        }
+
         public bool SetPriority(string roomId, PowerGridRoomPriority priority)
         {
             bool ok = System.SetPriority(roomId, priority);

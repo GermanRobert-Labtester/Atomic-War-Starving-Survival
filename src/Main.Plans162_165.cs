@@ -568,7 +568,12 @@ namespace AtomicWar.GodotApp
                 }
                 else if (behavior == Ashfall.Core.Survivors.ArcBehavior.WithdrawSelfCare)
                 {
-                    _survivors?.Needs.Modify(survivorId, NeedKind.Hygiene, 8f); // higher = worse
+                    // Plan 24B (A1): the self-care lapse routes through the
+                    // shared attributed seam — same +8 hygiene (higher =
+                    // worse), now named in the contributor display.
+                    _survivors?.Needs.ApplyAttributedDelta(
+                        survivorId, NeedKind.Hygiene, 8f,
+                        "hygiene.self_care_withdrawn");
                 }
             };
             system.OnStashDiscovered += survivorId =>

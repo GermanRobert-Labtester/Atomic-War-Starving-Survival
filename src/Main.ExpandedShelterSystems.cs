@@ -87,6 +87,11 @@ namespace AtomicWar.GodotApp
         private void SetupExpandedShelterSystems()
         {
             SetupSurvivors();
+            SetupDutyRoster();
+            // All shelter work consumers share the persisted campaign duty
+            // authority; the former empty helper roster could disagree with
+            // quarantine, care, fitness and the player-visible shift chart.
+            _expandedShelterRoster = _dutyRoster.Roster;
             SetupInventory();
             SetupPowerGrid();
             SetupJournal();
@@ -351,9 +356,16 @@ namespace AtomicWar.GodotApp
             // water plant ticks so a blocked source refuses intake same-day.
             TickPiezometerAdvisoryBridge(day);
 
-            // SHELTER_EMP_MEDICAL_POWER: water-plant power follows the canonical
-            // room_water_pump breaker (same bus as the fluid network's feed).
-            float waterPower = _powerGrid?.System == null || _powerGrid.System.IsRoomPowered("room_water_pump") ? 1f : 0f;
+            // C2[6] 23A: water treatment spans two real loads. Extraction follows
+            // room_water_pump; processing follows room_water_filtration (previously an
+            // unread critical catalog row). Allocation-aware: a brownout that still
+            // serves both buses keeps the plant at full throughput; one bus served is
+            // partial; neither pauses treatment (the passive path remains).
+            bool pumpServed = _powerGrid?.System == null
+                || _powerGrid.System.IsRoomServed("room_water_pump");
+            bool filtrationServed = _powerGrid?.System == null
+                || _powerGrid.System.IsRoomServed("room_water_filtration");
+            float waterPower = !pumpServed ? 0f : (filtrationServed ? 1f : 0.5f);
             _waterTreatment?.TickDay(day, waterPower);
             _airlockSecurity?.TickDay(day);
             _survivorRelations?.TickDay(day);
@@ -368,6 +380,18 @@ namespace AtomicWar.GodotApp
             TickSharedSkillProgression(day);
             _apprenticeship?.TickDay(day);
             _caregiving?.TickDay(day);
+            // C2[6] 23A: heating circulation is an electrical load. The generator's
+            // waste heat only reaches the radiators while the circulation pump has
+            // served room_heating power; no pump power = heat generated but not
+            // delivered. Derived from the canonical base generator (external fuel-free
+            // sources produce no combustion waste heat).
+            if (_shelterThermal != null && _powerGrid?.System != null)
+            {
+                bool heatingPowered = _powerGrid.System.IsRoomServed("room_heating");
+                float baseGeneratorKw = _powerGrid.System.BaseGenerationWatts
+                    * _powerGrid.System.GeneratorOutputFactor / 1000f;
+                _shelterThermal.System.SetGeneratorWasteHeat(baseGeneratorKw, heatingPowered);
+            }
             _shelterThermal?.TickDay(day);
             _weatherHardening?.TickDay(day);
             _geothermalAquifer?.TickDay(day);
@@ -390,11 +414,17 @@ namespace AtomicWar.GodotApp
             if (_ventilation != null)
             {
                 var ventWeather = _world.Weather.Current;
+                // C2[6] 23A: mechanical air handling is a real load. When
+                // room_air_filtration is shed the fans stop and only residual
+                // passive draft removes air (see VentilationSystem.TickDay).
+                bool mechanicalPower = _powerGrid?.System == null
+                    || _powerGrid.System.IsRoomServed("room_air_filtration");
                 _ventilation.TickDay(
                     day,
                     Ashfall.Core.ElectrostaticFiltrationCatalogLoader.WeatherIntakeParticulateKg(
                         ventWeather, _ventilation.State.mainDuctOpen),
-                    Ashfall.Core.ElectrostaticFiltrationCatalogLoader.IsHotAshLoad(ventWeather));
+                    Ashfall.Core.ElectrostaticFiltrationCatalogLoader.IsHotAshLoad(ventWeather),
+                    mechanicalPower);
             }
             _waystation?.TickDaily(iceRoadOpen: true);
             _sumpFlooding?.TickDay(day);
@@ -464,6 +494,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "black_market":
                     OpenBlackMarketPanel();
+                    break;
+                case "sky_defense_battery":
+                    OpenSkyDefenseBatteryPanel();
                     break;
                 case "companion_kennel":
                     OpenKennelPanel();

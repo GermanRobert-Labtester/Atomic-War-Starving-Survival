@@ -56,6 +56,8 @@ namespace AtomicWar.GodotApp.UI
             public System.Collections.Generic.List<Ashfall.Core.World.WeatherForecastEntry> Forecast = new();
             public System.Collections.Generic.Dictionary<string, string> DutyAssignments = new();
             public string MachineTellText = string.Empty;
+            public int MemorialCount;
+            public int CohortLivingCount;
         }
 
         private Label _dayLabel = null!;
@@ -187,9 +189,15 @@ namespace AtomicWar.GodotApp.UI
                         ? DesignTheme.Entropy
                         : DesignTheme.Pale));
 
+            string cohortExtra = "";
+            if (state.MemorialCount > 0)
+                cohortExtra += $" · {state.MemorialCount} MEMORIALIZED";
+            if (state.CohortLivingCount > 0)
+                cohortExtra += $" · {state.CohortLivingCount} YOUTH";
+
             _survivorSummary.Text = totalSurvivors == 0
                 ? "ROSTER // NO SURVIVORS REGISTERED"
-                : $"ROSTER // {livingSurvivors}/{totalSurvivors} LIVING · AVG HP {Math.Max(0f, state.AverageSurvivorHealth):0}%";
+                : $"ROSTER // {livingSurvivors}/{totalSurvivors} LIVING{cohortExtra} · AVG HP {Math.Max(0f, state.AverageSurvivorHealth):0}%";
 
             _shelterState.Text = state.FilterSpares <= 0
                 ? "SHELTER STATUS // NO FILTER SPARES"

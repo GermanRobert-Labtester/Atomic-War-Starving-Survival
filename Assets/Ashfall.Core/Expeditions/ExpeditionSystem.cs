@@ -130,6 +130,11 @@ namespace Ashfall.Core.Expeditions
         public float projectedGearWear;
         public float protectiveLifeHours;
         public bool predictsMidRouteFailure;
+
+        // ── C2 / Plan 20C (§36) — applied weather multipliers (1 when no
+        // weather inputs supplied; recorded for UI/parity display).
+        public float weatherSpeedMultiplier = 1f;
+        public float weatherEncounterMultiplier = 1f;
     }
 
     /// <summary>
@@ -156,6 +161,18 @@ namespace Ashfall.Core.Expeditions
         public float WearMultiplier = 1f;
         /// <summary>Real hours consumed per travel tick (host cadence).</summary>
         public float HoursPerTick = 1f;
+    }
+
+    /// <summary>
+    /// C2 / Plan 20C (§36) — optional weather effects for the dispatch
+    /// estimate: speed and encounter multipliers from the ONE weather-effects
+    /// table. The same speed multiplier is stored on the expedition state at
+    /// dispatch, so estimate and runtime consume the same source (§36.2).
+    /// </summary>
+    public sealed class ExpeditionWeatherInputs
+    {
+        public float SpeedMultiplier = 1.0f;
+        public float EncounterMultiplier = 1.0f;
     }
 
     /// <summary>Serialized state of one expedition (save/load safe).</summary>
@@ -185,6 +202,12 @@ namespace Ashfall.Core.Expeditions
         public bool hasFlashlight = false;
         public string vehicleId = string.Empty;
         public float vehicleSpeedMultiplier = 1f;
+
+        /// <summary>C2 / Plan 20C (§36.2) — weather speed multiplier sampled
+        /// from the weather-effects table at dispatch; estimate and runtime
+        /// consume the same value. Additive field; old saves default to 1
+        /// (no weather effect — legacy behavior).</summary>
+        public float weatherSpeedMultiplier = 1f;
         public float vehicleBreakdownChancePerTick = 0f;
         public bool vehicleBrokenDown = false;
         public string outcomeText = string.Empty;
@@ -354,7 +377,8 @@ namespace Ashfall.Core.Expeditions
             bool hasBicycle = false,
             bool hasFlashlight = false,
             ExpeditionVehicleProfile? vehicle = null,
-            float startingStamina = MaxStamina)
+            float startingStamina = MaxStamina,
+            ExpeditionWeatherInputs? weather = null)
         {
             if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
                 return false;
@@ -389,6 +413,8 @@ namespace Ashfall.Core.Expeditions
                 if (vehicle.cargoCapacityKg > 0f)
                     exp.maxLootCapacityKg = vehicle.cargoCapacityKg;
             }
+            if (weather != null)
+                exp.weatherSpeedMultiplier = Math.Clamp(weather.SpeedMultiplier, 0f, 5f);
             _active[survivorId] = exp;
             OnExpeditionStarted?.Invoke(exp);
             OnStateChanged?.Invoke(exp);
@@ -447,7 +473,8 @@ namespace Ashfall.Core.Expeditions
             ExpeditionVehicleProfile? vehicle = null,
             long expectedStateVersion = 0,
             long currentStateVersion = 0,
-            float startingStamina = MaxStamina)
+            float startingStamina = MaxStamina,
+            ExpeditionWeatherInputs? weather = null)
         {
             var preview = PreviewStart(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, expectedStateVersion);
             if (!preview.IsAvailable)
@@ -456,7 +483,7 @@ namespace Ashfall.Core.Expeditions
             if (preview.StateVersion != currentStateVersion)
                 return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, preview.StateVersion, currentStateVersion);
 
-            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, startingStamina);
+            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, startingStamina, weather);
             if (!ok)
                 return new CommandResult(
                     PlayerCommandCode.ExpeditionDispatch,
@@ -568,7 +595,8 @@ namespace Ashfall.Core.Expeditions
             float weaponReadiness = 1f,
             float weaponJamRisk = 0f,
             bool hasBicycle = false,
-            ExpeditionProtectiveInputs? protective = null)
+            ExpeditionProtectiveInputs? protective = null,
+            ExpeditionWeatherInputs? weather = null)
         {
             var est = new ExpeditionEstimate
             {
@@ -581,6 +609,12 @@ namespace Ashfall.Core.Expeditions
             };
 
             float speed = stance == ExpeditionStance.Speed ? 1.5f : 1.0f;
+            if (weather != null)
+            {
+                est.weatherSpeedMultiplier = Math.Clamp(weather.SpeedMultiplier, 0f, 5f);
+                est.weatherEncounterMultiplier = Math.Clamp(weather.EncounterMultiplier, 0f, 5f);
+                speed *= est.weatherSpeedMultiplier;
+            }
             float breakdown = 0f;
             float fuelPerTick = 0f;
             if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
@@ -616,6 +650,8 @@ namespace Ashfall.Core.Expeditions
             // A degraded weapon cannot deter trouble as well: poor readiness
             // raises the effective encounter risk by up to half again.
             encounter *= 1f + (1f - est.weaponReadiness) * 0.5f;
+            if (weather != null)
+                encounter *= est.weatherEncounterMultiplier;
             est.encounterRiskPerTick = Math.Clamp(encounter, 0f, 1f);
 
             // C2 / Plan 21C (P6) — protective projection through the CANONICAL
@@ -1042,6 +1078,7 @@ namespace Ashfall.Core.Expeditions
         {
             float step = exp.stance == nameof(ExpeditionStance.Speed) ? 1.5f : 1.0f;
             step *= VehicleTravelMultiplier(exp);
+            step *= Math.Clamp(exp.weatherSpeedMultiplier, 0f, 5f); // Plan 20C §36.2
             exp.travelTicksCompleted += (int)Math.Round(step, MidpointRounding.AwayFromZero);
             if (exp.travelTicksCompleted >= exp.distanceTicks)
                 SetPhase(exp, ExpeditionPhase.Looting);
@@ -1204,6 +1241,7 @@ namespace Ashfall.Core.Expeditions
             float step = exp.stance == nameof(ExpeditionStance.Speed) ? 1.5f : 1.0f;
             if (exp.hasBicycle) step += 0.5f; // faster return on a bicycle
             step *= VehicleTravelMultiplier(exp);
+            step *= Math.Clamp(exp.weatherSpeedMultiplier, 0f, 5f); // Plan 20C §36.2
             exp.travelTicksCompleted -= (int)Math.Round(step, MidpointRounding.AwayFromZero);
             if (exp.travelTicksCompleted <= 0)
             {

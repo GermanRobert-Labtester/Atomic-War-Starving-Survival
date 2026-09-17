@@ -156,7 +156,13 @@ namespace AtomicWar.GodotApp
 
             if (_foodPreservation64 != null)
             {
-                _foodPreservation64.SetPowerStatus(isPowerOnline);
+                // C2[6] 23A: powered refrigeration follows the served power of the
+                // kitchen/preservation load rather than the global brownout. A
+                // brownout that still serves room_kitchen keeps cold storage live;
+                // a shed kitchen lets it warm on the 22B thermal-mass curve.
+                bool preservationPower = _powerGrid?.System == null
+                    || _powerGrid.System.IsRoomServed("room_kitchen");
+                _foodPreservation64.SetPowerStatus(preservationPower);
                 // Plan 196: project storage-bay °C from thermal authority (no weather copy).
                 float storageTempC = FoodPreservationSystem.DefaultStorageTemperatureC;
                 var thermalRooms = _shelterThermal?.System.State.rooms;

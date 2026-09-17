@@ -383,21 +383,31 @@ namespace Ashfall.Core
 
         // ── Daily Tick ───────────────────────────────────────────────────────
 
-        /// <summary>Daily ventilation tick. Called after production phase.
-        /// Plan 72: the electrostatic stage (if installed) treats the day's
-        /// intake particulate mass; hosts obtain it via
-        /// ElectrostaticFiltrationCatalogLoader.WeatherIntakeParticulateKg.</summary>
-        public void TickDay(int day, float incomingParticulateKgPerDay = 0f, bool hotAshLoad = false)
+        /// <summary>
+        /// Daily ventilation tick. Called after the production phase.
+        /// <paramref name="mechanicalPowerAvailable"/> is the grid-derived availability
+        /// of the mechanical air-handling load (<c>room_air_filtration</c>): true =
+        /// legacy nominal behaviour; false = forced exhaust fans stop and only residual
+        /// passive draft removes air, so emissions accumulate inside and filtration
+        /// effectiveness collapses. Default true keeps every existing caller
+        /// byte-identical. The electrostatic stage keeps its own independent
+        /// <see cref="BindStageServices"/> power gate; hosts obtain its intake mass via
+        /// ElectrostaticFiltrationCatalogLoader.WeatherIntakeParticulateKg.
+        /// </summary>
+        public void TickDay(int day, float incomingParticulateKgPerDay = 0f, bool hotAshLoad = false,
+            bool mechanicalPowerAvailable = true)
         {
             _currentDay = day;
             float totalSmoke = 0;
             float totalCo = 0;
 
-            // Collect emissions from active sources
+            // Collect emissions from active sources. With no mechanical power the
+            // fans cannot force air down the exhaust path — the same effect as a
+            // closed valve, applied to every source at once.
             foreach (var source in _state.activeSources)
             {
                 if (!source.isActive) continue;
-                bool hasExhaustPath = source.requiresExhaust switch
+                bool hasExhaustPath = mechanicalPowerAvailable && source.requiresExhaust switch
                 {
                     true when source.sourceId == "foundry" => _state.valveToFoundryOpen && _state.mainDuctOpen,
                     true when source.sourceId == "generator" => _state.valveToGeneratorOpen && _state.mainDuctOpen,
@@ -424,6 +434,9 @@ namespace Ashfall.Core
             // Apply to StartingLevelSystem air quality
             float filterEfficiency = _startingLevel.State.airFilterHealthPercent / 100f;
             if (_state.emergencyRecirculationMode) filterEfficiency *= 0.3f;
+            // Unpowered mechanical handling: filters cannot pull air, leaving only a
+            // small passive-draft residual instead of full filtration.
+            if (!mechanicalPowerAvailable) filterEfficiency *= 0.25f;
 
             _state.smokeSootLevel = Math.Min(MaxSmokeSoot, _state.smokeSootLevel + totalSmoke * (1f - filterEfficiency));
             _state.carbonMonoxidePpm = Math.Min(MaxCoPpm, _state.carbonMonoxidePpm + totalCo * (1f - filterEfficiency));

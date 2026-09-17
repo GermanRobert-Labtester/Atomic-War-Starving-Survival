@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action<string>? OnRoomToggled;
         public event Action<string, PowerGridRoomPriority>? OnPriorityChanged;
+        public event Action<string>? OnBreakerResetRequested;
         public event Action<float>? OnFuelAdded;
         public event Action? OnBatteryBankInstallRequested;
         public event Action? OnGeneratorServiceRequested;
@@ -28,6 +29,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _drawLabel = null!;
         private Label _batteryLabel = null!;
         private Label _fuelLabel = null!;
+        private Label _deficitLabel = null!;
         private Label _brownoutLabel = null!;
         private VBoxContainer _roomList = null!;
 
@@ -47,7 +49,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_session == null || _genLabel == null || _drawLabel == null || _batteryLabel == null || _fuelLabel == null || _brownoutLabel == null || _roomList == null) return;
+            if (_session == null || _genLabel == null || _drawLabel == null || _batteryLabel == null || _fuelLabel == null || _deficitLabel == null || _brownoutLabel == null || _roomList == null) return;
             var snap = _session.LastSnapshot;
             var tick = _session.LastTickSummary;
             float cond = _session.System.GeneratorCondition;
@@ -62,6 +64,17 @@ namespace AtomicWar.GodotApp.UI
             int maxBanks = PowerGridSystem.MaxInstalledBatteryBanks;
             _batteryLabel.Text = $"BATTERY {snap.BatteryReserveWh:0}/{snap.BatteryCapacityWh:0} Wh ({pct:0}%) — BANKS {banks}/{maxBanks}";
             _fuelLabel.Text = $"FUEL {snap.FuelUnits:0} units";
+
+            // C2[6] 23B: canonical demand/supply/deficit/runtime read model — the
+            // panel renders Core numbers, never its own arithmetic.
+            float runtime = _session.System.EstimatedRuntimeHours;
+            string runtimeText = float.IsPositiveInfinity(runtime) ? "INF" : $"{runtime:0.0} h";
+            _deficitLabel.Text = $"SUPPLY {_session.System.AvailableSupplyWatts:0} W "
+                + $"// DEFICIT {_session.System.DeficitWatts:0} W "
+                + $"// BATTERY ETA {runtimeText} "
+                + $"// FUEL ~{_session.System.EstimatedFuelRunwayDays:0.0} d";
+            _deficitLabel.AddThemeColorOverride("font_color",
+                AshfallUiHelpers.ToColor(_session.System.DeficitWatts > 0f ? DesignTheme.Warning : DesignTheme.Pale));
             // B5–B8 Phase 9: honest status line — brownout vs critical
             // life-support deficit are different states (§8.6), and served/shed
             // numbers come from the actual tick allocation, not a guess.
@@ -95,12 +108,13 @@ namespace AtomicWar.GodotApp.UI
                     ? tickRooms.ServedRoomIds.Contains(r.RoomId)
                     : _session.System.IsRoomServed(r.RoomId);
                 bool legacyPowered = _session.System.IsRoomPowered(r.RoomId);
+                bool tripped = _session.System.IsRoomTripped(r.RoomId);
                 var pri = _session.System.EffectivePriority(r.RoomId);
-                _roomList.AddChild(MakeRoomRow(r, served, pri, legacyPowered));
+                _roomList.AddChild(MakeRoomRow(r, served, pri, legacyPowered, tripped));
             }
         }
 
-        private Control MakeRoomRow(PowerGridRoom r, bool served, PowerGridRoomPriority pri, bool legacyPowered)
+        private Control MakeRoomRow(PowerGridRoom r, bool served, PowerGridRoomPriority pri, bool legacyPowered, bool tripped)
         {
             var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             var nameLbl = AshfallUiHelpers.MakeMono(r.DisplayName);
@@ -129,13 +143,25 @@ namespace AtomicWar.GodotApp.UI
             }
             row.AddChild(priRow);
 
-            var state = AshfallUiHelpers.MakeButton(
-                legacyPowered ? "ON" : "OFF",
-                () => OnRoomToggled?.Invoke(r.RoomId));
-            state.CustomMinimumSize = new Vector2(60, 24);
-            state.AddThemeColorOverride("font_color",
-                AshfallUiHelpers.ToColor(legacyPowered ? DesignTheme.Pale : DesignTheme.Warm));
-            row.AddChild(state);
+            // C2[6] 23B: a tripped circuit needs an explicit (costly) reset; the
+            // breaker toggle alone would not clear the trip.
+            if (tripped)
+            {
+                var resetBtn = AshfallUiHelpers.MakeButton("RESET", () => OnBreakerResetRequested?.Invoke(r.RoomId));
+                resetBtn.CustomMinimumSize = new Vector2(60, 24);
+                resetBtn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+                row.AddChild(resetBtn);
+            }
+            else
+            {
+                var state = AshfallUiHelpers.MakeButton(
+                    legacyPowered ? "ON" : "OFF",
+                    () => OnRoomToggled?.Invoke(r.RoomId));
+                state.CustomMinimumSize = new Vector2(60, 24);
+                state.AddThemeColorOverride("font_color",
+                    AshfallUiHelpers.ToColor(legacyPowered ? DesignTheme.Pale : DesignTheme.Warm));
+                row.AddChild(state);
+            }
             return row;
         }
 
@@ -170,11 +196,13 @@ namespace AtomicWar.GodotApp.UI
             _drawLabel = AshfallUiHelpers.MakeMono("DRAW 0 W (net 0)");
             _batteryLabel = AshfallUiHelpers.MakeMono("BATTERY 0/0 Wh (0%)");
             _fuelLabel = AshfallUiHelpers.MakeMono("FUEL 0 units");
+            _deficitLabel = AshfallUiHelpers.MakeMono("SUPPLY 0 W // DEFICIT 0 W // BATTERY ETA INF // FUEL ~0.0 d");
             _brownoutLabel = AshfallUiHelpers.MakeMono("STABLE");
             stats.AddChild(_genLabel);
             stats.AddChild(_drawLabel);
             stats.AddChild(_batteryLabel);
             stats.AddChild(_fuelLabel);
+            stats.AddChild(_deficitLabel);
             stats.AddChild(_brownoutLabel);
             vbox.AddChild(stats);
 

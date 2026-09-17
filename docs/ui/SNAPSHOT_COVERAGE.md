@@ -17,15 +17,18 @@ For full audit reasoning, see
 ## State header
 
 ```
-COVERED:           27 surfaces (30 targets)   ← +1 Plan 12C (Shelter Interior)   ← +1 Phase 28 (Research)
+COVERED:           28 surfaces (31 documented targets)   ← +1 Wave 8 C1 (Black Market)
 PARTIAL:            1 surface  (TradeScreen, INTENTIONAL_CHILD)
 REGRESSION_ONLY:    1 surface  (CraftingPanel drill-down)
 MISSING:            0 surfaces  (ALL SURFACES COVERED)
 DELETED:           17 surfaces (drill-downs, brief modals, dev-only)
-Total tracked:     29 player-facing runtime surfaces (ALL COVERED)
+Total tracked:     30 player-facing runtime surfaces (ALL COVERED)
 ```
 
-**Snapshot fixtures on disk:** 30 distinct byte-distinct target PNGs (+ 5 gallery baselines = 35 total),
+**Snapshot fixtures on disk:** 32 target PNGs (+ 5 gallery baselines = 37 total).
+The harness includes the later Plan 56 `market_default` target, which remains a
+pre-existing manifest/coverage reconciliation item. The 31 documented targets are
+tracked below.
 0 duplicate MD5 groups, 0 blank captures — verified by direct RGBA8 pixel-decode check
 after the Phase 26 SubViewport pipeline fix.
 
@@ -55,6 +58,7 @@ after the Phase 26 SubViewport pipeline fix.
 | `WeatherPanel` | `weather_default`, `weather_dashboard_default` | ✔ | `#24` | COVERED (legacy + dashboard pair) |
 | `VerdictPanel` (legacy), `VerdictDashboardPanel` (Phase 13) | `verdict_default`, `verdict_dashboard_default` | ✔ | `#15` | COVERED (dashboard variant); legacy unbroken |
 | `TradeScreenGodotPanel` | `trade_default` | ✔ | `#35` | PARTIAL — INTENTIONAL_CHILD of CaravanBarterLedgerPanel |
+| `BlackMarketPanel` | `black_market_default` | ✔ | Plan 211 | COVERED — populated production catalog/wallet/inventory/settlement fixture |
 | `CaravanBarterLedgerPanel` | `caravan_barter_default` | ✔ | `#35` | COVERED |
 | `SurvivalWorkstationPanel` | `survival_workstation_default` | ✔ | `#19` | COVERED |
 | `ShelterHudPanel` | `shelter_hud_default` | ✔ | `#40` | COVERED |
@@ -76,7 +80,7 @@ after the Phase 26 SubViewport pipeline fix.
 | `StandingRecordPanel` | `standing_record_atlas_default` (via `StandingRecordAtlasPanel` sub-card) | ✔ | (Expansion 03) | COVERED (Phase 27 Tier-3 sub-card sibling) |
 | `ResearchPanel` | `research_atlas_default` (via `ResearchAtlasPanel` sub-card) | ✔ | (R&D / Library) | COVERED (Phase 28 Tier-3 sub-card sibling) |
 
-29 tracked surfaces total: 27 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY + 0 MISSING.
+30 tracked surfaces total: 28 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY + 0 MISSING.
 
 ---
 

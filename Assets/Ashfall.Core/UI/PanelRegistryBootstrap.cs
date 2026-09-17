@@ -206,6 +206,9 @@ namespace Ashfall.Core.UI
             // ── Plans 198–201: late-game strategic consoles (Live) ─────────
             // CBRN hazard monitor (Plan 198) — bound to ChemWarfareSystem.
             R("chem_warfare_defense",      "Toxic Hazard Monitor",        PanelGroup.Expanded, new[] { "combat", "power_grid" });
+            // Kinetic sky-layer counter-battery (Flagship Task 7) — bound to
+            // SkyDefenseBatterySystem (Wave 8 B2 player route).
+            R("sky_defense_battery",       "Sky Defense Battery",         PanelGroup.Expanded, new[] { "combat", "inventory", "survivors" });
             // Communications array (Plan 199) — bound to CommsArraySystem.
             R("comms_array_transceiver",   "Communications Array",        PanelGroup.Expanded, new[] { "power_grid", "radio", "world" });
             // Ceremonies & festivals (Plan 200) — bound to CeremonySystem.

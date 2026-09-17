@@ -92,6 +92,54 @@ namespace Ashfall.Core.Economy
         }
     }
 
+    /// <summary>Side-effect-free loan preflight owned by the black-market authority.</summary>
+    public readonly struct BlackMarketLoanQuote
+    {
+        public readonly bool Valid;
+        public readonly string SyndicateId;
+        public readonly float Units;
+        public readonly int DurationDays;
+        public readonly int DueDay;
+        public readonly int InterestBp;
+        public readonly string RejectReason;
+
+        public BlackMarketLoanQuote(bool valid, string syndicateId, float units, int durationDays,
+            int dueDay, int interestBp, string rejectReason)
+        {
+            Valid = valid;
+            SyndicateId = syndicateId ?? string.Empty;
+            Units = units;
+            DurationDays = durationDays;
+            DueDay = dueDay;
+            InterestBp = interestBp;
+            RejectReason = rejectReason ?? string.Empty;
+        }
+    }
+
+    /// <summary>Side-effect-free active-debt repayment preflight.</summary>
+    public readonly struct BlackMarketRepayQuote
+    {
+        public readonly bool Valid;
+        public readonly string DebtId;
+        public readonly float RequestedUnits;
+        public readonly float AppliedUnits;
+        public readonly float OutstandingUnits;
+        public readonly bool CompletesDebt;
+        public readonly string RejectReason;
+
+        public BlackMarketRepayQuote(bool valid, string debtId, float requestedUnits,
+            float appliedUnits, float outstandingUnits, bool completesDebt, string rejectReason)
+        {
+            Valid = valid;
+            DebtId = debtId ?? string.Empty;
+            RequestedUnits = requestedUnits;
+            AppliedUnits = appliedUnits;
+            OutstandingUnits = outstandingUnits;
+            CompletesDebt = completesDebt;
+            RejectReason = rejectReason ?? string.Empty;
+        }
+    }
+
     /// <summary>
     /// Plan 211 — BLACK MARKET &amp; UNDERWORLD SYNDICATES authority.
     ///
@@ -367,11 +415,10 @@ namespace Ashfall.Core.Economy
         // ── Transactions (atomic — §E) ──────────────────────────────
 
         /// <summary>
-        /// Buy from the counter. Preflight (stock, access, price) before any
-        /// mutation; on success the stock line is decremented atomically.
-        /// The caller owns the inventory leg via the returned quote.
+        /// Side-effect-free buy preflight. Funds and inventory policy remain
+        /// outside this authority and are composed by the settlement owner.
         /// </summary>
-        public BlackMarketQuote Buy(string syndicateId, string entryId, int quantity, int day)
+        public BlackMarketQuote PreviewBuy(string syndicateId, string entryId, int quantity, int day)
         {
             var entry = _catalog.FindEntry(entryId);
             var ledger = FindLedger(syndicateId);
@@ -386,14 +433,12 @@ namespace Ashfall.Core.Economy
             float unitPrice = GetBuyPrice(syndicateId, entry);
             if (float.IsNaN(unitPrice)) return Reject(entryId, "unpriced");
 
-            // Atomic commit.
-            line.quantity -= quantity;
             return new BlackMarketQuote(true, entryId, quantity, unitPrice,
                 _market!.GetPrice(entry.item_id), unitPrice * quantity, string.Empty);
         }
 
-        /// <summary>Sell to the counter (stock line may grow within max_stock).</summary>
-        public BlackMarketQuote Sell(string syndicateId, string entryId, int quantity, int day)
+        /// <summary>Side-effect-free sell preflight.</summary>
+        public BlackMarketQuote PreviewSell(string syndicateId, string entryId, int quantity, int day)
         {
             var entry = _catalog.FindEntry(entryId);
             var ledger = FindLedger(syndicateId);
@@ -405,16 +450,109 @@ namespace Ashfall.Core.Economy
             float unitPrice = GetSellPrice(syndicateId, entry);
             if (float.IsNaN(unitPrice)) return Reject(entryId, "unpriced_entry");
 
-            var line = GetStockLine(syndicateId, entryId);
-            if (line != null)
-                line.quantity += quantity;   // fence the goods into their stock
-            else
-            {
-                _state.stock.Add(new BlackMarketStockLine { entryId = entryId, quantity = quantity, generatedDay = day });
-                _state.stockOwners.Add(syndicateId);
-            }
             return new BlackMarketQuote(true, entryId, quantity, unitPrice,
                 _market!.GetPrice(entry.item_id), unitPrice * quantity, string.Empty);
+        }
+
+        /// <summary>
+        /// Buy from the counter. Black-market stock is staged first so the
+        /// supplied funds/goods settlement observes the final domain state.
+        /// A rejected or throwing settlement restores stock before returning.
+        /// </summary>
+        public BlackMarketQuote Buy(string syndicateId, string entryId, int quantity, int day) =>
+            Buy(syndicateId, entryId, quantity, day, null);
+
+        public BlackMarketQuote Buy(string syndicateId, string entryId, int quantity, int day,
+            Func<BlackMarketQuote, bool>? settle)
+        {
+            var quote = PreviewBuy(syndicateId, entryId, quantity, day);
+            if (!quote.Valid) return quote;
+
+            var line = GetStockLine(syndicateId, entryId)!;
+            int previousQuantity = line.quantity;
+            line.quantity -= quantity;
+            try
+            {
+                if (settle != null && !settle(quote))
+                {
+                    line.quantity = previousQuantity;
+                    return Reject(entryId, "settlement_failed");
+                }
+            }
+            catch
+            {
+                line.quantity = previousQuantity;
+                throw;
+            }
+
+            OnStateChanged?.Invoke(_state);
+            return quote;
+        }
+
+        /// <summary>
+        /// Sell to the counter. Stock growth is staged and rolled back if the
+        /// canonical inventory/wallet settlement cannot commit.
+        /// </summary>
+        public BlackMarketQuote Sell(string syndicateId, string entryId, int quantity, int day) =>
+            Sell(syndicateId, entryId, quantity, day, null);
+
+        public BlackMarketQuote Sell(string syndicateId, string entryId, int quantity, int day,
+            Func<BlackMarketQuote, bool>? settle)
+        {
+            var quote = PreviewSell(syndicateId, entryId, quantity, day);
+            if (!quote.Valid) return quote;
+
+            var line = GetStockLine(syndicateId, entryId);
+            bool createdLine = line == null;
+            int previousQuantity = line?.quantity ?? 0;
+            if (line != null)
+            {
+                line.quantity += quantity;
+            }
+            else
+            {
+                line = new BlackMarketStockLine { entryId = entryId, quantity = quantity, generatedDay = day };
+                _state.stock.Add(line);
+                _state.stockOwners.Add(syndicateId);
+            }
+
+            try
+            {
+                if (settle != null && !settle(quote))
+                {
+                    RollbackSellLine(syndicateId, line, createdLine, previousQuantity);
+                    return Reject(entryId, "settlement_failed");
+                }
+            }
+            catch
+            {
+                RollbackSellLine(syndicateId, line, createdLine, previousQuantity);
+                throw;
+            }
+
+            OnStateChanged?.Invoke(_state);
+            return quote;
+        }
+
+        private void RollbackSellLine(string syndicateId, BlackMarketStockLine line,
+            bool createdLine, int previousQuantity)
+        {
+            if (!createdLine)
+            {
+                line.quantity = previousQuantity;
+                return;
+            }
+
+            for (int i = _state.stock.Count - 1; i >= 0; i--)
+            {
+                if (ReferenceEquals(_state.stock[i], line) && i < _state.stockOwners.Count &&
+                    _state.stockOwners[i] == syndicateId)
+                {
+                    _state.stock.RemoveAt(i);
+                    _state.stockOwners.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         private static BlackMarketQuote Reject(string entryId, string reason) =>
@@ -422,33 +560,71 @@ namespace Ashfall.Core.Economy
 
         // ── Loans / debt (§171.10–171.11) ───────────────────────────
 
-        /// <summary>Take a resource loan. Credit limit = profile credit limit; one active loan per syndicate.</summary>
-        public UnderworldDebtRecord? TakeLoan(string syndicateId, float units, int day, int durationDays)
+        /// <summary>Side-effect-free loan eligibility and due-date projection.</summary>
+        public BlackMarketLoanQuote PreviewLoan(string syndicateId, float units, int day, int durationDays)
         {
             var profile = _catalog.FindSyndicate(syndicateId);
             var ledger = FindLedger(syndicateId);
-            if (profile == null || ledger == null || !ledger.discovered) return null;
-            if (units <= 0f) return null;
+            if (profile == null) return RejectLoan(syndicateId, "unknown_syndicate");
+            if (ledger == null || !ledger.discovered) return RejectLoan(syndicateId, "contact_not_discovered");
+            if (units <= 0f) return RejectLoan(syndicateId, "amount_must_be_positive");
             if (durationDays < 1) durationDays = 1;
-            if (units > profile.credit_limit_units) return null;
+            if (units > profile.credit_limit_units) return RejectLoan(syndicateId, "credit_limit_exceeded");
             if (_state.debts.Any(d => d != null && d.syndicateId == syndicateId && d.status == UnderworldDebtRecord.StatusActive))
-                return null;   // one active loan per syndicate — no stacking
+                return RejectLoan(syndicateId, "active_loan_exists");
+
+            return new BlackMarketLoanQuote(true, syndicateId, units, durationDays,
+                day + durationDays, profile.loan_interest_bp, string.Empty);
+        }
+
+        /// <summary>Take a resource loan. Credit limit = profile credit limit; one active loan per syndicate.</summary>
+        public UnderworldDebtRecord? TakeLoan(string syndicateId, float units, int day, int durationDays) =>
+            TakeLoan(syndicateId, units, day, durationDays, null);
+
+        public UnderworldDebtRecord? TakeLoan(string syndicateId, float units, int day, int durationDays,
+            Func<BlackMarketLoanQuote, bool>? settle)
+        {
+            var preview = PreviewLoan(syndicateId, units, day, durationDays);
+            if (!preview.Valid) return null;
+            var ledger = FindLedger(syndicateId)!;
+            float previousTrust = ledger.trust;
 
             var debt = new UnderworldDebtRecord
             {
                 debtId = $"debt_{syndicateId}_{day}_{_state.debts.Count + 1}",
                 syndicateId = syndicateId,
                 principalUnits = units,
-                interestBp = profile.loan_interest_bp,
+                interestBp = preview.InterestBp,
                 issuedDay = day,
-                dueDay = day + durationDays,
+                dueDay = preview.DueDay,
                 reason = "underworld_loan"
             };
             _state.debts.Add(debt);
             ledger.trust = Math.Min(TrustMax, ledger.trust + 10f);   // credit extended builds trust
+
+            try
+            {
+                if (settle != null && !settle(preview))
+                {
+                    _state.debts.Remove(debt);
+                    ledger.trust = previousTrust;
+                    return null;
+                }
+            }
+            catch
+            {
+                _state.debts.Remove(debt);
+                ledger.trust = previousTrust;
+                throw;
+            }
+
             OnDebtIssued?.Invoke(debt);
+            OnStateChanged?.Invoke(_state);
             return debt;
         }
+
+        private static BlackMarketLoanQuote RejectLoan(string syndicateId, string reason) =>
+            new BlackMarketLoanQuote(false, syndicateId, 0f, 0, 0, 0, reason);
 
         public float OutstandingOnDebt(UnderworldDebtRecord debt)
         {
@@ -459,25 +635,68 @@ namespace Ashfall.Core.Economy
             return remaining;
         }
 
-        /// <summary>Repay an active debt. Accepts partial repayment.</summary>
-        public bool RepayDebt(string debtId, float amount, int day)
+        /// <summary>Side-effect-free active-debt repayment preflight.</summary>
+        public BlackMarketRepayQuote PreviewRepay(string debtId, float amount, int day)
         {
-            if (string.IsNullOrEmpty(debtId) || amount <= 0f) return false;
+            if (string.IsNullOrEmpty(debtId)) return RejectRepay(debtId, "unknown_debt");
+            if (amount <= 0f) return RejectRepay(debtId, "amount_must_be_positive");
             var debt = _state.debts.FirstOrDefault(d => d != null && d.debtId == debtId);
-            if (debt == null || debt.status != UnderworldDebtRecord.StatusActive) return false;
+            if (debt == null) return RejectRepay(debtId, "unknown_debt");
+            if (debt.status != UnderworldDebtRecord.StatusActive) return RejectRepay(debtId, "debt_not_active");
 
             float outstanding = OutstandingOnDebt(debt);
             float applied = Math.Min(amount, outstanding);
+            return new BlackMarketRepayQuote(true, debtId, amount, applied, outstanding,
+                applied >= outstanding - 1e-4f, string.Empty);
+        }
+
+        /// <summary>Repay an active debt. Accepts partial repayment.</summary>
+        public bool RepayDebt(string debtId, float amount, int day) =>
+            RepayDebt(debtId, amount, day, null);
+
+        public bool RepayDebt(string debtId, float amount, int day,
+            Func<BlackMarketRepayQuote, bool>? settle)
+        {
+            var preview = PreviewRepay(debtId, amount, day);
+            if (!preview.Valid) return false;
+            var debt = _state.debts.First(d => d != null && d.debtId == debtId)!;
+            var ledger = FindLedger(debt.syndicateId);
+            float previousRepaid = debt.repaidUnits;
+            string previousStatus = debt.status;
+            float previousTrust = ledger?.trust ?? 0f;
+
             debt.repaidUnits += Math.Min(amount, debt.principalUnits - debt.repaidUnits);
             if (debt.repaidUnits >= debt.principalUnits - 1e-4f)
             {
                 debt.status = UnderworldDebtRecord.StatusRepaid;
-                var ledger = FindLedger(debt.syndicateId);
                 if (ledger != null) ledger.trust = Math.Min(TrustMax, ledger.trust + 15f);
             }
-            OnDebtRepaid?.Invoke(debt, applied);
+
+            try
+            {
+                if (settle != null && !settle(preview))
+                {
+                    debt.repaidUnits = previousRepaid;
+                    debt.status = previousStatus;
+                    if (ledger != null) ledger.trust = previousTrust;
+                    return false;
+                }
+            }
+            catch
+            {
+                debt.repaidUnits = previousRepaid;
+                debt.status = previousStatus;
+                if (ledger != null) ledger.trust = previousTrust;
+                throw;
+            }
+
+            OnDebtRepaid?.Invoke(debt, preview.AppliedUnits);
+            OnStateChanged?.Invoke(_state);
             return true;
         }
+
+        private static BlackMarketRepayQuote RejectRepay(string debtId, string reason) =>
+            new BlackMarketRepayQuote(false, debtId, 0f, 0f, 0f, false, reason);
 
         // ── Daily tick ───────────────────────────────────────────────
 
