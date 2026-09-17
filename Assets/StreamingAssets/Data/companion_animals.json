@@ -51,6 +51,40 @@
       "disease_resistance": 2,
       "terrain_tags": ["forest_burn", "lowland"],
       "tags": ["small", "quiet", "den_animal"]
+    },
+    {
+      "species_id": "species_rad_dog",
+      "display_name": "Rad-Dog",
+      "role_tags": ["guard", "pack"],
+      "base_food_per_day": 1,
+      "preferred_food_tags": ["meat", "scraps"],
+      "fallback_food_item_ids": ["raw_meat", "cooked_meat"],
+      "max_health": 95,
+      "trainability": 3,
+      "bond_rate": 4,
+      "guard_rating": 65,
+      "pack_capacity_kg": 15,
+      "morale_support_bp": 80,
+      "disease_resistance": 8,
+      "terrain_tags": ["open_waste", "highway"],
+      "tags": ["canine", "heavy_guard", "irradiated_blood"]
+    },
+    {
+      "species_id": "species_iron_crow",
+      "display_name": "Iron Crow",
+      "role_tags": ["guard", "morale"],
+      "base_food_per_day": 1,
+      "preferred_food_tags": ["grain", "meat"],
+      "fallback_food_item_ids": ["crop_ash_grain", "raw_meat"],
+      "max_health": 35,
+      "trainability": 9,
+      "bond_rate": 7,
+      "guard_rating": 30,
+      "pack_capacity_kg": 0,
+      "morale_support_bp": 200,
+      "disease_resistance": 5,
+      "terrain_tags": ["open_waste", "highland"],
+      "tags": ["avian", "alert_senses", "scout"]
     }
   ]
 }

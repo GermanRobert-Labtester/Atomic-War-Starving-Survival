@@ -4999,6 +4999,20 @@
       "bodyText": "A second trail crosses the approach to the trap: human bootprints, half-filled with ash. They stop beside the set, circle once, and head back toward the ruins. Nothing was taken. Someone only wanted to know where you were looking.",
       "weight": 1.0,
       "minDay": 1
+    },
+    {
+      "id": "event_drowning_pup_rescue",
+      "title": "Flooded Culvert Whine",
+      "bodyText": "After heavy runoff fills the perimeter ditch, a sharp, choked whine cuts through the water noise. A soaked pup clings to a floating packing crate caught against the storm grate. Pulling it out costs warm towels and a ration bowl; driving it off saves food but leaves the bunker silent in a hollow way.",
+      "weight": 1.2,
+      "minDay": 12
+    },
+    {
+      "id": "event_expedition_stray_follows_home",
+      "title": "A Shadow on the Return Trail",
+      "bodyText": "Fifty paces behind the expedition party, a gaunt mongrel trails through the dust. It stops when the scouts stop; it sits when they check bearings. When the airlock opens, it waits at the threshold, ribs visible beneath scarred gray fur, watching the door.",
+      "weight": 1.0,
+      "minDay": 25
     }
   ]
 }

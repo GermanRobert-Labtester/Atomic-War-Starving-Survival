@@ -154,6 +154,8 @@ namespace Ashfall.Core
         public event Action<string, string, string, bool> OnButcheryCompleted; // siteId, butcherId, species, isToxic
         public event Action<ButcheryCompletedEvent>? OnButcheryCompletedDetailed;
         public event Action<string, string> OnHidePreserved; // siteId, hideItemId
+        /// <summary>Plan 14E / C1.6: Fired when quarry preservation creates an eligible trophy recipe opportunity. Args: (speciesId, recipeId).</summary>
+        public event Action<string, string>? OnTrophyReady;
         /// <summary>WT-INT-01: Fired when a prey species is caught for the first time. Args: (speciesId, siteId, hunterId).</summary>
         public event Action<string, string, string>? OnNewSpeciesDiscovered;
         /// <summary>Plan 36 III: Fired when secondary quarry (bycatch) is entangled alongside primary catch. Args: (siteId, trapId, primarySpecies, bycatchSpecies, day, hunterId).</summary>
@@ -1164,7 +1166,37 @@ namespace Ashfall.Core
             OnTrappingChanged?.Invoke();
             if (!string.IsNullOrEmpty(hideItemId))
                 OnHidePreserved?.Invoke(siteId, hideItemId);
+
+            string trophyRecipe = GetTrophyRecipeForSpecies(site.catchSpecies);
+            if (!string.IsNullOrEmpty(trophyRecipe))
+                OnTrophyReady?.Invoke(site.catchSpecies, trophyRecipe);
+
             return ActionResult.Success("trapping.hide_preserved");
+        }
+
+        private static readonly Dictionary<string, string> s_trophyRecipes = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            { "wolf", "recipe_trophy_wolf_head" },
+            { "deer", "recipe_trophy_deer_antlers" },
+            { "boar", "recipe_trophy_boar_tusks" },
+            { "fox", "recipe_trophy_fox_pelt" },
+            { "slag_beetle", "recipe_trophy_beetle_carapace" },
+            { "molerat", "recipe_trophy_molerat_skull" },
+            { "ash_crow", "recipe_trophy_crow_feathers" },
+            { "pheasant", "recipe_trophy_pheasant_plume" },
+            { "ash_hound", "recipe_trophy_ash_hound_pelt" },
+            { "species_ash_hound", "recipe_trophy_ash_hound_pelt" },
+            { "dust_lynx", "recipe_trophy_gulden_wolf" },
+            { "species_dust_lynx", "recipe_trophy_gulden_wolf" },
+            { "iron_crow", "recipe_trophy_kestrel_wings" },
+            { "species_iron_crow", "recipe_trophy_kestrel_wings" }
+        };
+
+        /// <summary>Plan 14E / C1.6: Get trophy recipe ID for quarry species.</summary>
+        public string GetTrophyRecipeForSpecies(string speciesId)
+        {
+            if (string.IsNullOrEmpty(speciesId)) return string.Empty;
+            return s_trophyRecipes.TryGetValue(speciesId, out var r) ? r : string.Empty;
         }
 
         /// <summary>Get the bait catalog for UI display.</summary>

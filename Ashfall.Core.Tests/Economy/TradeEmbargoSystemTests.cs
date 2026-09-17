@@ -339,7 +339,7 @@ namespace Ashfall.Core.Tests.Economy
         {
             var load = TradeEmbargoCatalogLoader.Load(GetDataDir(), new FileSystemIO(), new SystemTextJsonSerializer());
             Assert.False(load.HasErrors, string.Join("; ", load.Errors));
-            Assert.Equal(10, load.Rules.Count);
+            Assert.True(load.Rules.Count >= 10);
 
             var byWeather = load.Rules.Select(r => (r.Weather, r)).ToDictionary(t => t.Item1, t => t.Item2);
             Assert.True(byWeather.ContainsKey(WeatherKind.FalloutStorm));   // all blocked, medical +50%

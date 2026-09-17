@@ -132,9 +132,11 @@ source assumed. Classified per §43.1:
 
 ## Remaining Debt (foreman decisions / separate packages)
 
-1. **Plan 31** — unregistered. Semantic-kind authority, producer-side
-   vocabulary standardization, 11 handled-but-never-emitted cases, alert
-   ducking/concurrency (17C Phase I). Highest-value next package.
+1. **Plan 31** — `SEMANTIC AUTHORITY COMPLETE — DailyBriefingReportBuilder WIRING DEFERRED TO CLAIM HANDOFF` (Wave 9 Task B1).
+   `SemanticKind` total domain taxonomy implemented in Core (`DayEventVocabulary.cs` + `SemanticKind.cs`),
+   covering all 110 registered kinds (100% totality gate `DayEventSemanticKindTests` PASS 37/37). Briefing
+   consumer wiring deferred due to active claim `claim-c1-plan24-survivor-ledger-2026-09-16`. Remaining:
+   producer-side vocabulary standardization across future owners, alert ducking (17C Phase I / Task B2).
 2. **17C Phase E sweep** — acquisition-path pickup confirmation parity.
 3. **17B deep verification** — snapshot fixture, teach-before-demand matrix,
    a11y pass, subscription-leak soak (implementation exists; test matrix not

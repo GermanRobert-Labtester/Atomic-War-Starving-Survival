@@ -727,6 +727,7 @@ namespace Ashfall.Core.Inventory
                 case "equipment":
                     return ItemType.Protective;
                 case "media":
+                case "decor":
                     return ItemType.Comfort;
                 default:
                     return ItemType.Material;

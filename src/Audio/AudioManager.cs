@@ -75,6 +75,7 @@ namespace AtomicWar.GodotApp.Audio
         private SurfaceAmbienceController? _surfaceAmbience;
         private IAudioDomainProvider? _domainProvider;
         private Action? _settingsChangedHandler;
+        private int _oneShotDroppedCount;
 
         // ── Lifecycle ───────────────────────────────────────────
 
@@ -771,6 +772,7 @@ namespace AtomicWar.GodotApp.Audio
             else
             {
                 // Pool exhausted — skip rather than allocate unbounded
+                _oneShotDroppedCount++;
                 return;
             }
 
@@ -892,6 +894,8 @@ namespace AtomicWar.GodotApp.Audio
         public int ActiveOneShotCount => _activeOneShots.Count;
         public int ActiveLoopCount => _loopPlayers.Count;
         public int PoolAvailable => _pool.Count;
+        public int OneShotDroppedCount => _oneShotDroppedCount;
+        public AudioStateCoordinator? StateCoordinator => _stateCoordinator;
         public bool IsHeadless => _headless;
 
         // ── Core condition bridge ──────────────────────────────

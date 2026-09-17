@@ -747,6 +747,42 @@
       "intelType": "NumbersStation",
       "confidence": 0.4,
       "message": "[Music box, three notes. The voice reads at a pace meant for a hand writing it down.] FOUR ONE NINE. WATER, MUNICIPAL RESERVE, SEALED. [Pause.] TWO TWO SEVEN. WATER, MUNICIPAL RESERVE, SEALED. [Pause.] EIGHT ZERO THREE. DO NOT. [Three times, in the tone of the numbers, with no change of any kind.] EIGHT ZERO THREE. DO NOT. [Pause.] THREE ONE FIVE. CISTERNS, SIX ACCESS, FIVE SEALED, ONE MARKED. [Carrier drops.]"
+    },
+    {
+      "id": "radio_broadcast_embargo_alert",
+      "frequency": 88.5,
+      "minDay": 10,
+      "maxDay": 120,
+      "intelType": "Civilian",
+      "confidence": 0.85,
+      "message": "Market Notice, 88.5. Traders on the southern track report caravan blockades due to extreme storm fronts. Prices for regional imports are surging. Check your pantry before making long contracts."
+    },
+    {
+      "id": "radio_broadcast_embargo_clearing",
+      "frequency": 88.5,
+      "minDay": 12,
+      "maxDay": 120,
+      "intelType": "Civilian",
+      "confidence": 0.85,
+      "message": "Trade Relay, 88.5. Caravans report road obstructions clearing along the eastern corridor. Supply lines are normalizing and temporary surcharges are declining."
+    },
+    {
+      "id": "radio_broadcast_kennel_guard",
+      "frequency": 88.5,
+      "minDay": 5,
+      "maxDay": 120,
+      "intelType": "Civilian",
+      "confidence": 0.85,
+      "message": "Perimeter report: Settlers credit domestic watch hounds with early perimeter warnings against night scavengers. A trained companion is worth three shifts of sleep."
+    },
+    {
+      "id": "radio_broadcast_kennel_training",
+      "frequency": 88.5,
+      "minDay": 8,
+      "maxDay": 120,
+      "intelType": "Civilian",
+      "confidence": 0.85,
+      "message": "Settlement bulletin: Reliable working beasts have significantly expanded expedition cargo haulage across the ash barrens. Upkeep pays dividends in survival."
     }
   ]
 }

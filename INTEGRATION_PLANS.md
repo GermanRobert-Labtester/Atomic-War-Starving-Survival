@@ -28,6 +28,14 @@ implementation log) and the environment-blocked snapshot rebaseline. Closeout:
 `docs/plans/PLAN_24_CLOSEOUT.md`. Evidence ledger:
 `docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md`.
 
+**C1.4 briefing consumer closed (2026-09-17):** the Wave 9 Part 1 A1 deferred
+handoff is now integrated as an additive Plan 24 claim handoff (package
+`C1-BRIEFING-CRISIS-CONSUMER`). `DailyBriefingReportBuilder.AppendCrisisWarnings`
+renders `CrisisPredictor.Evaluate` output assembled from canonical host read
+models; the Plan 31 semantic-kind briefing re-grouping remains a contract
+decision because `DayEventVocabularyTests` pins `GenericSectionTitle` for
+unhandled kinds. Details: `A1_BRIEFING_DEFERRED.md`, `WAVE9_PART1_CLOSEOUT.md`.
+
 | Package | Owner | Exact paths | Acceptance | Focused verify |
 |---|---|---|---|---|
 | `DISTRESS-SIGNALS-9-12-WAVE1-STAGE-CONTRACT` | Builder (this session) | **Core:** `Assets/Ashfall.Core/Radio/DistressStageResolver.cs` (new), `Radio/RadioDistressSystem.cs` (additive `outcome_hint`), `Radio/RadioTuner.cs` + `Radio/RadioPropagation.cs` (resolver delegation, duplicated selection loops consolidated), `CatalogIntegrityValidator.cs` (`ValidateDistressSignalStages` — within-file dup ids / stage-day ordering / clarity monotonicity+range / text presence / hint shape; cross-file dup ids = documented primary-wins warning); **Tests:** `Ashfall.Core.Tests/Radio/DistressStageResolverTests.cs` (17 cases incl. legacy-parity oracle over all signals × days 0–60); **Docs:** baseline + `docs/radio/DISTRESS_SIGNAL_STAGE_CONTRACT.md` | **DONE 2026-09-13:** single pure stage resolver (`DistressStageResolver`) is the sole fragment-selection authority; `outcome_hint` additive DTO field bound from JSON; stage contract validated inside the permanent data-integrity gate (PASS, 5 documented primary-wins warnings, 0 errors); baseline frozen (build 0 err; Radio 249→266; selftest 325 PASS); scope correction 25→43 unique identities recorded; no stage persistence needed (purely derivable from absolute-day anchor — documented) | `bash scripts/run_test.sh Ashfall.Core.Tests/Radio/` (266/266); `bash scripts/run_test.sh Ashfall.Core.Tests/Radio/DistressStageResolverTests.cs` (17/17); adjacent FactionRadioBroadcastExpansion 22/22, NpcArcData 12/12, NpcArcSystem 23/23; `godot --headless --path . -- --data-integrity-selftest` PASS; `dotnet build Ashfall.csproj` 0 errors (4 pre-existing CS8602 warnings from user's uncommitted SilentFoundryPanel.cs — outside claim) |

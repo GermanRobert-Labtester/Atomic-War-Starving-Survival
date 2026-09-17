@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-17
-**Total Catalogs:** 616 | **Total Definitions:** 13064 | **Domain Families:** 32
+**Total Catalogs:** 617 | **Total Definitions:** 13089 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -68,7 +68,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (157 Catalogs, 2515 Definitions)
+### Core / Miscellaneous (158 Catalogs, 2523 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -216,6 +216,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `thermal_gear.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `toxic_chemical_catalog.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ToxicChemicalCatalogLoader` |
 | `travel_encounters.json` | 57 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `trophies.json` | 8 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `underground_flora.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `utility_actions.json` | 20 | `1.0.0` | `GAMEPLAY_CONSUMED` | `UtilityAiSystem` |
 | `uv_corona_detector_catalog.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `UvCoronaDetectionCatalogLoader, UvCoronaDetectionEngine` |
@@ -230,14 +231,14 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `world_evolution_seeds.json` | 118 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EvolvingWorldCatalog` |
 | `world_history.json` | 79 | `1.0.0` | `GAMEPLAY_CONSUMED` | `EvolvingWorldCatalog` |
 
-### Crafting & Relics (6 Catalogs, 200 Definitions)
+### Crafting & Relics (6 Catalogs, 208 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `glassworks_recipes.json` | 2 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `library_manuals.json` | 24 | `1.0.0` | `GAMEPLAY_CONSUMED` | `LibraryManualCatalogLoader` |
 | `metallurgy_recipes.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `recipes.json` | 110 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RecipeCatalogLoader` |
+| `recipes.json` | 118 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RecipeCatalogLoader` |
 | `relic_recipes.json` | 39 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RelicCatalogLoader` |
 | `workshop_recipes.json` | 13 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 
@@ -345,7 +346,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `holdfast_flavor.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastFlavorCatalog` |
 | `holdfast_npcs.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 
-### Items (14 Catalogs, 1283 Definitions)
+### Items (14 Catalogs, 1292 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -360,7 +361,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `holdfast_items.json` | 55 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
 | `item_degradation.json` | 5 | `1.0.0` | `ORPHANED` | `Core default` |
 | `item_description_texts.json` | 183 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemDescriptionCatalogLoader, ItemCatalogLoader` |
-| `items.json` | 693 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
+| `items.json` | 702 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_items.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 

@@ -313,6 +313,7 @@ namespace AtomicWar.GodotApp
 
         private static string CategoryFor(string itemId)
         {
+            if (itemId.IndexOf("trophy", StringComparison.Ordinal) >= 0) return "trophy";
             if (itemId.IndexOf("plaque", StringComparison.Ordinal) >= 0) return "memorial plaque";
             if (itemId.IndexOf("poster", StringComparison.Ordinal) >= 0) return "poster";
             if (itemId.IndexOf("drawing", StringComparison.Ordinal) >= 0) return "drawing";

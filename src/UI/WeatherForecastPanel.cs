@@ -85,6 +85,82 @@ public partial class WeatherForecastPanel : Control
                     intel.stationCalibrated && intel.stationAccuracy >= 0.5f
                         ? DesignTheme.Pale : DesignTheme.Warm));
                 _forecastData.AddChild(rel);
+
+                if (intel.hasPredictedCrisis)
+                {
+                    var crisisBox = new HBoxContainer();
+                    var crisisIcon = new Label { Text = "[!] " };
+                    crisisIcon.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH2);
+                    crisisIcon.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warning));
+                    crisisBox.AddChild(crisisIcon);
+
+                    var crisisLabel = new Label
+                    {
+                        Text = $"CRISIS PREDICTION: {intel.predictedWeatherKind} projected Day {intel.predictedCrisisDay} " +
+                               $"({intel.predictedCrisisConfidence:P0} confidence) — {intel.crisisPreparationAdvice}"
+                    };
+                    crisisLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                    crisisLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warning));
+                    crisisBox.AddChild(crisisLabel);
+                    _forecastData.AddChild(crisisBox);
+                }
+
+                // C1.5 — Cloud Seeding Action Surface
+                if (_intelligence.CloudSeeding.IsInstalled)
+                {
+                    if (_intelligence.CloudSeeding.IsOnCooldown)
+                    {
+                        var cdLabel = new Label
+                        {
+                            Text = $"Cloud Seeding Recharging: {_intelligence.CloudSeeding.CooldownRemaining}d remaining"
+                        };
+                        cdLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                        cdLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
+                        _forecastData.AddChild(cdLabel);
+                    }
+                    else if (intel.hasPredictedCrisis && intel.predictedWeatherKind.HasValue)
+                    {
+                        var preflight = _intelligence.CloudSeeding.PreflightDeploy(
+                            intel.predictedCrisisDay,
+                            intel.predictedWeatherKind.Value,
+                            intel.predictedCrisisDay);
+
+                        var seedBtn = new Button
+                        {
+                            Text = preflight.CanDeploy
+                                ? $"DEPLOY CLOUD SEEDING ({preflight.SuccessChance:P0} success chance)"
+                                : $"CLOUD SEEDING BLOCKED: {preflight.Reason}",
+                            Disabled = !preflight.CanDeploy
+                        };
+                        seedBtn.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                        if (preflight.CanDeploy)
+                        {
+                            seedBtn.Pressed += () =>
+                            {
+                                _intelligence.CloudSeeding.Deploy(
+                                    intel.predictedCrisisDay,
+                                    intel.predictedWeatherKind.Value,
+                                    intel.predictedCrisisDay);
+                                RefreshView();
+                            };
+                        }
+                        _forecastData.AddChild(seedBtn);
+                    }
+                }
+                else
+                {
+                    var installBtn = new Button
+                    {
+                        Text = "INSTALL CLOUD SEEDING DISPENSER"
+                    };
+                    installBtn.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                    installBtn.Pressed += () =>
+                    {
+                        _intelligence.CloudSeeding.Install(intel.predictedCrisisDay > 0 ? intel.predictedCrisisDay : 1);
+                        RefreshView();
+                    };
+                    _forecastData.AddChild(installBtn);
+                }
             }
         }
 

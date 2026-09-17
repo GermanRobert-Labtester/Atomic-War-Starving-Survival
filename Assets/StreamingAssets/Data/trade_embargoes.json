@@ -102,6 +102,46 @@
       "caravan_blocked": false,
       "route_slow_permille": 700,
       "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_ashfall_materials",
+      "weather_kind": "Ashfall",
+      "affected_regions": ["*"],
+      "affected_categories": ["materials"],
+      "price_multiplier_permille": 1200,
+      "caravan_blocked": false,
+      "route_slow_permille": 800,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_blood_rain_water",
+      "weather_kind": "BloodRain",
+      "affected_regions": ["settlement"],
+      "affected_categories": ["water"],
+      "price_multiplier_permille": 1500,
+      "caravan_blocked": true,
+      "route_slow_permille": 1000,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_thermal_inversion_food",
+      "weather_kind": "ThermalInversion",
+      "affected_regions": ["greenhouse"],
+      "affected_categories": ["food"],
+      "price_multiplier_permille": 1250,
+      "caravan_blocked": false,
+      "route_slow_permille": 700,
+      "decay_days": 2
+    },
+    {
+      "rule_id": "embargo_particulate_fog_medical",
+      "weather_kind": "ParticulateFog",
+      "affected_regions": ["traplines"],
+      "affected_categories": ["medical"],
+      "price_multiplier_permille": 1300,
+      "caravan_blocked": false,
+      "route_slow_permille": 800,
+      "decay_days": 2
     }
   ]
 }

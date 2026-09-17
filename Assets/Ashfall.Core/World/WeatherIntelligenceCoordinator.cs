@@ -21,6 +21,7 @@ namespace Ashfall.Core.World
         public WeatherStationState station = new WeatherStationState();
         public OrbitalTelemetryState orbital = new OrbitalTelemetryState();
         public SeasonalEventSaveState seasonal = new SeasonalEventSaveState();
+        public CloudSeedingSaveState? cloudSeeding;
     }
 
     // ── Read model (consumed by Weather and Map panels) ─────────────────────
@@ -68,6 +69,23 @@ namespace Ashfall.Core.World
         public int bestTravelDay;
         public float bestTravelConfidence;
         public string advisory = string.Empty;
+
+        // C1.4 — Crisis Prediction
+        public string? predictedCrisisEventId;
+        public int predictedCrisisDay;
+        public float predictedCrisisConfidence;
+        public string? crisisPreparationAdvice;
+        public WeatherKind? predictedWeatherKind;
+        public bool hasPredictedCrisis;
+        public int daysUntilPredictedCrisis;
+        public string predictionSource = string.Empty;
+        public bool isStationCalibrated;
+
+        // C1.5 — Cloud Seeding
+        public bool cloudSeedingInstalled;
+        public bool cloudSeedingOnCooldown;
+        public int cloudSeedingCooldownDays;
+        public bool cloudSeedingPartialProtectionActive;
     }
 
     /// <summary>
@@ -87,6 +105,7 @@ namespace Ashfall.Core.World
         public WeatherStationSystem Station { get; }
         public OrbitalHarrowTelemetrySystem Orbital { get; }
         public SeasonalEventSystem Seasonal { get; }
+        public CloudSeedingSystem CloudSeeding { get; }
 
         private readonly WeatherSystem _weather;
         private readonly SkyLayerArmorSystem _armor;
@@ -115,6 +134,7 @@ namespace Ashfall.Core.World
             Station = new WeatherStationSystem(_weather, new SeededRng(seed), _log);
             Orbital = new OrbitalHarrowTelemetrySystem(_armor, new SeededRng(unchecked(seed ^ 0x5A5A5A5A)), _log);
             Seasonal = new SeasonalEventSystem(_log);
+            CloudSeeding = new CloudSeedingSystem(_weather, Station, null, new SeededRng(unchecked(seed ^ 0x3C3C3C3C)), _log);
 
             Station.OnForecastUpdated += RaiseChanged;
             Station.OnStationStateChanged += RaiseChanged;
@@ -122,6 +142,8 @@ namespace Ashfall.Core.World
             Orbital.OnImpactWarning += _ => RaiseChanged();
             Orbital.OnImpactResolved += (_, _) => RaiseChanged();
             Seasonal.OnStateChanged += RaiseChanged;
+            CloudSeeding.OnStateChanged += RaiseChanged;
+            CloudSeeding.OnCloudSeedingDeployed += _ => RaiseChanged();
         }
 
         // ── Daily tick ──────────────────────────────────────────────────────
@@ -141,6 +163,8 @@ namespace Ashfall.Core.World
 
             var season = _weather.GetSeasonForDay(day);
             Seasonal.TickDay(day, season?.id ?? "window_first_thaw", new SeededRng(unchecked(_rng.Seed * 31 + day)));
+
+            CloudSeeding.TickDay(day);
         }
 
         // ── Read model ─────────────────────────────────────────────────────
@@ -201,8 +225,67 @@ namespace Ashfall.Core.World
             rm.bestTravelDay = bestDay;
             rm.bestTravelConfidence = bestConf;
 
+            // C1.4 — Crisis Prediction from Weather Station
+            rm.isStationCalibrated = s.isCalibrated;
+            if (Station.IsOperational && s.cachedForecast.Count > 0)
+            {
+                foreach (var f in s.cachedForecast)
+                {
+                    if (IsSevereWeather(f.weather) && f.day >= _currentDay)
+                    {
+                        rm.hasPredictedCrisis = true;
+                        rm.predictedCrisisDay = f.day;
+                        rm.daysUntilPredictedCrisis = Math.Max(0, f.day - _currentDay);
+                        rm.predictedWeatherKind = f.weather;
+                        rm.predictedCrisisEventId = $"crisis.weather.{f.weather.ToString().ToLowerInvariant()}";
+                        float calBonus = s.isCalibrated ? 0.15f : 0.0f;
+                        int dist = Math.Max(1, f.day - _currentDay);
+                        float distFactor = Math.Max(0.5f, 1.0f - (dist - 1) * 0.12f);
+                        rm.predictedCrisisConfidence = Math.Clamp((s.accuracy + calBonus) * distFactor * f.confidence, 0.35f, 0.98f);
+                        rm.crisisPreparationAdvice = GetCrisisAdvice(f.weather);
+                        rm.predictionSource = "weather_station";
+                        break;
+                    }
+                }
+            }
+
+            // C1.5 — Cloud Seeding
+            rm.cloudSeedingInstalled = CloudSeeding.IsInstalled;
+            rm.cloudSeedingOnCooldown = CloudSeeding.IsOnCooldown;
+            rm.cloudSeedingCooldownDays = CloudSeeding.CooldownRemaining;
+            rm.cloudSeedingPartialProtectionActive = CloudSeeding.PartialProtectionActive;
+
             rm.advisory = BuildAdvisory(rm);
             return rm;
+        }
+
+        private static bool IsSevereWeather(WeatherKind kind)
+        {
+            return kind switch
+            {
+                WeatherKind.FalloutStorm or
+                WeatherKind.Blizzard or
+                WeatherKind.GlassStorm or
+                WeatherKind.RadHail or
+                WeatherKind.EMPStorm or
+                WeatherKind.AcidSnow or
+                WeatherKind.BlackRain or
+                WeatherKind.BioFog or
+                WeatherKind.IceStorm => true,
+                _ => false
+            };
+        }
+
+        private static string GetCrisisAdvice(WeatherKind kind)
+        {
+            return kind switch
+            {
+                WeatherKind.GlassStorm or WeatherKind.RadHail => "Deploy cloud seeding or reinforce ceiling armor against kinetic impacts.",
+                WeatherKind.FalloutStorm or WeatherKind.AcidSnow => "Seal outer blast doors and administer anti-rad medication.",
+                WeatherKind.EMPStorm => "Disconnect delicate electronics and charge auxiliary battery banks.",
+                WeatherKind.Blizzard or WeatherKind.IceStorm => "Stock furnace fuel and cancel outdoor surface expeditions.",
+                _ => "Prepare shelter environmental seals and monitor broadcast frequencies."
+            };
         }
 
         private static string BuildAdvisory(WeatherIntelligenceReadModel rm)
@@ -221,6 +304,11 @@ namespace Ashfall.Core.World
                     sb.Append($"Best travel window: day {rm.bestTravelDay} ({rm.bestTravelConfidence:P0} confidence). ");
                 else
                     sb.Append("No safe travel windows in forecast. ");
+            }
+
+            if (rm.hasPredictedCrisis)
+            {
+                sb.Append($"CRISIS ALERT: {rm.predictedWeatherKind} on day {rm.predictedCrisisDay} ({rm.predictedCrisisConfidence:P0} confidence). {rm.crisisPreparationAdvice} ");
             }
 
             if (rm.telemetryActive)
@@ -247,7 +335,8 @@ namespace Ashfall.Core.World
             {
                 station = Station.CaptureState(),
                 orbital = Orbital.CaptureState(),
-                seasonal = Seasonal.CaptureState()
+                seasonal = Seasonal.CaptureState(),
+                cloudSeeding = CloudSeeding.CaptureState()
             };
         }
 
@@ -257,6 +346,7 @@ namespace Ashfall.Core.World
             if (saved.station != null) Station.RestoreState(saved.station);
             if (saved.orbital != null) Orbital.RestoreState(saved.orbital);
             if (saved.seasonal != null) Seasonal.RestoreState(saved.seasonal);
+            if (saved.cloudSeeding != null) CloudSeeding.RestoreState(saved.cloudSeeding);
             RaiseChanged();
         }
 

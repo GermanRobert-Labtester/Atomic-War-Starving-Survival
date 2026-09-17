@@ -329,6 +329,10 @@ namespace AtomicWar.GodotApp.UI
                 }
                 else
                 {
+                    if (ShelterDecorSystem.IsTrophyItem(placement.ItemId))
+                    {
+                        stack.AddChild(AshfallUiHelpers.MakeInfo($"[TROPHY MOUNT] Hunting achievement · Species: {definition?.displayName ?? "Rare quarry"} · +{modifier?.LocalizedMoraleDelta ?? 0f:F1} morale"));
+                    }
                     string slot = placement.SlotId;
                     var remove = AshfallUiHelpers.MakeButton("RETURN TO STORAGE", () =>
                     {
@@ -339,6 +343,40 @@ namespace AtomicWar.GodotApp.UI
                     stack.AddChild(remove);
                 }
                 _placements.AddChild(card);
+            }
+
+            if (!string.Equals(roomId, ShelterDecorHostSession.MemorialWallRoomId, StringComparison.Ordinal))
+            {
+                var trophySlots = _host.System.GetTrophySlots(roomId);
+                for (int i = 0; i < trophySlots.Count; i++)
+                {
+                    string tSlot = trophySlots[i];
+                    bool occupied = false;
+                    for (int j = 0; j < placements.Count; j++)
+                    {
+                        if (string.Equals(placements[j].SlotId, tSlot, StringComparison.Ordinal))
+                        {
+                            occupied = true;
+                            break;
+                        }
+                    }
+                    if (!occupied)
+                    {
+                        var emptyCard = AshfallUiHelpers.MakePanel();
+                        var emptyStack = AshfallUiHelpers.MakeVBox(4);
+                        emptyCard.AddChild(emptyStack);
+                        emptyStack.AddChild(AshfallUiHelpers.MakeLabel($"[TROPHY MOUNT]  //  {tSlot.ToUpperInvariant()}", 16, bold: true));
+                        emptyStack.AddChild(AshfallUiHelpers.MakeMetadata("Place a trophy here (craft at workbench from rare quarry)."));
+                        var quickMount = AshfallUiHelpers.MakeButton($"MOUNT AT {tSlot.ToUpperInvariant()}", () =>
+                        {
+                            if (_slotInput != null) _slotInput.Text = tSlot;
+                            MountSelected();
+                        });
+                        quickMount.CustomMinimumSize = new Vector2(200, 28);
+                        emptyStack.AddChild(quickMount);
+                        _placements.AddChild(emptyCard);
+                    }
+                }
             }
         }
 
@@ -359,14 +397,18 @@ namespace AtomicWar.GodotApp.UI
                 string itemId = definition.id;
                 var modifier = _host.System.GetItemModifier(itemId);
                 int count = _host.Inventory.CountById(itemId);
+                bool isTrophy = ShelterDecorSystem.IsTrophyItem(itemId);
+                string countLabel = count > 0 ? $"{count} HELD" : (isTrophy ? "0 HELD (craft at workbench)" : "0 HELD");
                 var choose = AshfallUiHelpers.MakeButton(
-                    $"{definition.displayName.ToUpperInvariant()}  ·  {count} HELD  ·  +{modifier?.LocalizedMoraleDelta ?? 0f:F1}",
+                    $"{definition.displayName.ToUpperInvariant()}  ·  {countLabel}  ·  +{modifier?.LocalizedMoraleDelta ?? 0f:F1}",
                     () =>
                     {
                         _selectedItemId = itemId;
                         RefreshView();
                     });
-                choose.TooltipText = definition.description;
+                choose.TooltipText = isTrophy && count <= 0
+                    ? $"{definition.description}\n[CRAFTING REQUIRED: Preserve rare quarry in traps, then craft trophy at workbench]"
+                    : definition.description;
                 choose.Disabled = count <= 0;
                 choose.Modulate = string.Equals(itemId, _selectedItemId, StringComparison.Ordinal)
                     ? AshfallUiHelpers.ColorHighlight

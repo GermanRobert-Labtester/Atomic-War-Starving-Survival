@@ -27,6 +27,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `debt_ledger_ticked` | Main.DebtCredit.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `drank` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |
 | `duty_roster_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `duty_vacated` | DutyRosterHostSession.cs | yes | via briefing panel | HANDLED |
 | `echo_consequence_due` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — echo-consequence surface from in-flight worktree work) |
 | `echo_surfaced` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — echo-consequence surface from in-flight worktree work) |
 | `weather_forecast_miss` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
@@ -49,6 +50,8 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `market_shocks_active` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `market_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `medical_disease_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `medical_admitted` | MedicalWardHostSession.cs | yes | via briefing panel | HANDLED |
+| `medical_discharged` | MedicalWardHostSession.cs | yes | via briefing panel | HANDLED |
 | `meal_served` | KitchenNutritionHostSession.cs | yes | via briefing panel | HANDLED |
 | `med_taken` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |
 | `memorial_checked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |

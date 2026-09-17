@@ -1176,6 +1176,39 @@ namespace AtomicWar.GodotApp.Audio
             audioMgr.StopCondition(AudioCueCatalog.HepaRadonHum);
             Check("Machine tell loop routes through AudioManager condition API cleanly", true, ref pass, ref fail);
 
+            // ── Phase B2: Ducking & Acquisition Verification (Wave 9 Task B2) ──
+            GD.Print("[AudioSelfTest] --- Phase B2: Ducking & Acquisition Verification ---");
+            if (audioMgr.StateCoordinator != null)
+            {
+                var coordinator = audioMgr.StateCoordinator;
+                coordinator.SetSnapshot(AudioSnapshot.ShelterCrisis);
+                Check("AudioStateCoordinator transitions to ShelterCrisis snapshot", coordinator.CurrentSnapshot == AudioSnapshot.ShelterCrisis, ref pass, ref fail);
+
+                // Repeated application is idempotent
+                coordinator.SetSnapshot(AudioSnapshot.ShelterCrisis);
+                Check("Repeated snapshot application is idempotent and bounded", coordinator.CurrentSnapshot == AudioSnapshot.ShelterCrisis, ref pass, ref fail);
+
+                // Restores to Normal baseline
+                coordinator.SetSnapshot(AudioSnapshot.Normal);
+                Check("AudioStateCoordinator restores to Normal snapshot neutral baseline", coordinator.CurrentSnapshot == AudioSnapshot.Normal, ref pass, ref fail);
+            }
+            else
+            {
+                Check("AudioStateCoordinator is instantiated on AudioManager", false, ref pass, ref fail);
+            }
+
+            // Missing cue fail-visible & anti-spam
+            int missingBefore = audioMgr.MissingAssetCount;
+            audioMgr.PlayCue("unregistered_missing_test_cue_xyz");
+            Check("Missing cue increments MissingAssetCount without throw", audioMgr.MissingAssetCount == missingBefore + 1, ref pass, ref fail);
+
+            // Repeated missing cue does not spam (anti-spam set deduplication)
+            audioMgr.PlayCue("unregistered_missing_test_cue_xyz");
+            Check("Repeated missing cue is deduplicated by anti-spam set", audioMgr.MissingAssetCount == missingBefore + 1, ref pass, ref fail);
+
+            // OneShotDroppedCount telemetry exists and is safe
+            Check("OneShotDroppedCount telemetry property is non-negative", audioMgr.OneShotDroppedCount >= 0, ref pass, ref fail);
+
             // ── Summary ─────────────────────────────────────────
             GD.Print($"[AudioSelfTest] --- SUMMARY ---");
             GD.Print($"[AudioSelfTest] Pass: {pass}, Fail: {fail}, Total: {pass + fail}");

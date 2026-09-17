@@ -468,6 +468,44 @@ namespace Ashfall.Core.Campaign
             return r;
         }
 
+        /// <summary>
+        /// Task 14C deferred consumer — render the authoritative crisis
+        /// predictions as a bounded "Crisis Warnings" section. The predictions
+        /// are produced by <see cref="CrisisPredictor"/> from host-assembled,
+        /// read-only inputs; this method only renders them (no policy, no RNG).
+        /// A false/empty prediction list leaves the report unchanged.
+        /// </summary>
+        public static void AppendCrisisWarnings(
+            DailyBriefingReport report,
+            IReadOnlyList<CrisisPredictionRecord>? predictions,
+            int maxEntriesPerSection = DefaultMaxEntriesPerSection)
+        {
+            if (report == null || predictions == null || predictions.Count == 0) return;
+
+            var entries = new List<DailyBriefingEntry>();
+            int order = 0;
+            foreach (var p in predictions)
+            {
+                if (p == null) continue;
+                order++;
+                string when = p.HorizonDays <= 0 ? "today"
+                    : p.HorizonDays == 1 ? "tomorrow"
+                    : $"in {p.HorizonDays} days";
+                string primaryId = string.IsNullOrEmpty(p.ReasonId)
+                    ? $"crisis.{p.Kind}".ToLowerInvariant()
+                    : p.ReasonId;
+                string confidence = p.ConfidenceBand.ToString().ToLowerInvariant();
+                entries.Add(new DailyBriefingEntry(
+                    "Crisis Warnings",
+                    primaryId,
+                    $"{p.Kind} projected {when} (day {p.ProjectedDay}, {confidence} confidence). {p.PreparationAdvice}",
+                    order: order,
+                    numeric: p.Confidence));
+            }
+
+            AddSectionIfNotEmpty(report, "Crisis Warnings", entries, maxEntriesPerSection);
+        }
+
         private static void AddSectionIfNotEmpty(
             DailyBriefingReport report,
             string title,

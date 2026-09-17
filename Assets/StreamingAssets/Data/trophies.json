@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "collection_id": "trophies_c1_6",
+  "trophies": [
+    {
+      "id": "trophy_wolf_head",
+      "species_id": "wolf",
+      "trophy_item_id": "item_decor_trophy_wolf_head",
+      "recipe_id": "recipe_trophy_wolf_head",
+      "display_name": "Two-Headed Steppe Wolf Trophy",
+      "description": "Taxidermied twin heads of an apex steppe predator mounted on charred timbers. A grim testament to survivor vigilance and trapping skill.",
+      "localized_morale_delta": 3.0,
+      "recommended_room_id": "crafting",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_deer_antlers",
+      "species_id": "deer",
+      "trophy_item_id": "item_decor_trophy_deer_antlers",
+      "recipe_id": "recipe_trophy_deer_antlers",
+      "display_name": "Wasteland Mule Deer Antlers",
+      "description": "Sweeping calcified antlers polished and secured to a dark hardwood shield. Evokes memories of open country before the fallout.",
+      "localized_morale_delta": 2.0,
+      "recommended_room_id": "common",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_boar_tusks",
+      "species_id": "boar",
+      "trophy_item_id": "item_decor_trophy_boar_tusks",
+      "recipe_id": "recipe_trophy_boar_tusks",
+      "display_name": "Razorback Boar Tusks",
+      "description": "Curved yellowed tusks banded in brass and bolted to salvage cedar. Displays the brute strength required to bring down irradiated quarry.",
+      "localized_morale_delta": 3.0,
+      "recommended_room_id": "common",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_fox_pelt",
+      "species_id": "fox",
+      "trophy_item_id": "item_decor_trophy_fox_pelt",
+      "recipe_id": "recipe_trophy_fox_pelt",
+      "display_name": "Barren Fox Pelt",
+      "description": "A thick russet-gray winter coat cured with borax and hung from copper rings. Brings warmth and a touch of comfort to cold bunker walls.",
+      "localized_morale_delta": 2.0,
+      "recommended_room_id": "sleeping",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_beetle_carapace",
+      "species_id": "slag_beetle",
+      "trophy_item_id": "item_decor_trophy_beetle_carapace",
+      "recipe_id": "recipe_trophy_beetle_carapace",
+      "display_name": "Titan Slag-Back Beetle Carapace",
+      "description": "Iridescent chitin plates cleaned with acid and lacquered against dust. Serves as a trophy and a study in wasteland armor biology.",
+      "localized_morale_delta": 2.0,
+      "recommended_room_id": "workshop",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_molerat_skull",
+      "species_id": "molerat",
+      "trophy_item_id": "item_decor_trophy_molerat_skull",
+      "recipe_id": "recipe_trophy_molerat_skull",
+      "display_name": "Tessarat Blind Mole-Rat Skull",
+      "description": "The heavy, reinforced cranium and chisel incisors of a subterranean pest. Warns all who see it of what burrows beneath the concrete.",
+      "localized_morale_delta": 1.0,
+      "recommended_room_id": "medical",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_crow_feathers",
+      "species_id": "ash_crow",
+      "trophy_item_id": "item_decor_trophy_crow_feathers",
+      "recipe_id": "recipe_trophy_crow_feathers",
+      "display_name": "Three-Eyed Sentry Crow Feathers",
+      "description": "A dark fan of glossy black-and-silver plumage bound with wire. Reminds observers of the sentinels watching from scorched power poles.",
+      "localized_morale_delta": 1.0,
+      "recommended_room_id": "radio",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_pheasant_plume",
+      "species_id": "pheasant",
+      "trophy_item_id": "item_decor_trophy_pheasant_plume",
+      "recipe_id": "recipe_trophy_pheasant_plume",
+      "display_name": "Ash Pheasant Plume",
+      "description": "Vibrant ember-tinted tail feathers preserved behind a salvage glass bezel. A rare splash of vivid color amidst the gray ruins.",
+      "localized_morale_delta": 1.0,
+      "recommended_room_id": "greenhouse",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_ash_hound_pelt",
+      "species_id": "species_ash_hound",
+      "trophy_item_id": "item_decor_trophy_ash_hound_pelt",
+      "recipe_id": "recipe_trophy_ash_hound_pelt",
+      "display_name": "Ash Hound Pelt",
+      "description": "A dense cinder-colored hide taken from an ash hound pack hunter. Softened with fat and mounted for warmth.",
+      "localized_morale_delta": 2.0,
+      "recommended_room_id": "common",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_gulden_wolf",
+      "species_id": "species_dust_lynx",
+      "trophy_item_id": "item_decor_trophy_gulden_wolf",
+      "recipe_id": "recipe_trophy_gulden_wolf",
+      "display_name": "Apex Dust Lynx Trophy",
+      "description": "The formidable head and fangs of a dust lynx apex ambush hunter. A sign of rare survival against predator ambush.",
+      "localized_morale_delta": 3.0,
+      "recommended_room_id": "sleeping",
+      "condition_kind": "quarry_harvested"
+    },
+    {
+      "id": "trophy_kestrel_wings",
+      "species_id": "species_iron_crow",
+      "trophy_item_id": "item_decor_trophy_kestrel_wings",
+      "recipe_id": "recipe_trophy_kestrel_wings",
+      "display_name": "Iron Crow Wings Trophy",
+      "description": "Broad slate-colored wingspan from an iron crow scav-scout mounted on salvage copper plate.",
+      "localized_morale_delta": 1.0,
+      "recommended_room_id": "radio",
+      "condition_kind": "quarry_harvested"
+    }
+  ]
+}
