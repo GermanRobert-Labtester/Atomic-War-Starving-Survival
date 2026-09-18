@@ -936,6 +936,147 @@ namespace AtomicWar.GodotApp
             return endingsResult == 0 && completionHistoryResult == 0 ? 0 : 1;
         }
 
+        /// <summary>
+        /// XP-01 — difficulty authority selftest: canonical catalog loads,
+        /// the director resolves every authored preset (default for null,
+        /// typed rejection for unknown ids), the v1/v2 manifest checksum
+        /// contract holds, and a v2 envelope round-trips its preset id
+        /// through the real SaveSlotService write/validate/load path.
+        /// </summary>
+        public static int RunDifficultySelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool ok, string label)
+            {
+                if (ok) GD.Print($"[difficulty_selftest] PASS {label}");
+                else { failures++; GD.PrintErr($"[difficulty_selftest] FAIL {label}"); }
+            }
+
+            Ashfall.Core.Difficulty.DifficultyPresetCatalog catalog;
+            try
+            {
+                catalog = Ashfall.Core.Difficulty.DifficultyPresetCatalogLoader.Load(
+                    dataDirectory, new GodotFileIO());
+                Check(true, "catalog_load");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[difficulty_selftest] catalog load threw: {ex.Message}");
+                return EmitSummary("difficulty_selftest", false, 1, 0, 1, "catalog load failed");
+            }
+
+            var director = new Ashfall.Core.Difficulty.DifficultyDirector(catalog);
+            bool allResolve = true;
+            foreach (var preset in catalog.AllPresets)
+            {
+                try
+                {
+                    var provider = director.ResolveProvider(preset.id);
+                    if (provider.PresetId != preset.id) allResolve = false;
+                }
+                catch (Exception)
+                {
+                    allResolve = false;
+                }
+            }
+            Check(allResolve, "director_resolves_all_presets");
+
+            bool defaultOk = false;
+            try
+            {
+                defaultOk = director.ResolveProvider(null).PresetId == catalog.default_preset_id;
+            }
+            catch (Exception) { }
+            Check(defaultOk, "null_resolves_default_preset");
+
+            bool unknownRejected = false;
+            try { director.ResolveProvider("difficulty_nonexistent"); }
+            catch (InvalidOperationException) { unknownRejected = true; }
+            catch (Exception) { }
+            Check(unknownRejected, "unknown_preset_rejected_typed");
+
+            var legacy = Ashfall.Core.Difficulty.DifficultyScalarsProvider.Legacy;
+            Check(legacy.PresetId == "difficulty_standard" &&
+                  Math.Abs(legacy.HungerMult - 1f) < 1e-6f,
+                  "legacy_provider_all_ones");
+
+            // Manifest checksum contract (v1 ignore / v2 bind).
+            Ashfall.Core.Save.SaveManifest Manifest(int version, string preset) =>
+                new Ashfall.Core.Save.SaveManifest
+                {
+                    manifestVersion = version,
+                    profileId = new Ashfall.Core.Save.SaveProfileId("dp"),
+                    slotId = new Ashfall.Core.Save.SaveSlotId("ds"),
+                    currentDay = 1,
+                    difficultyPresetId = preset
+                };
+            Ashfall.Core.Save.AggregateSaveEnvelope Envelope(Ashfall.Core.Save.SaveManifest manifest) =>
+                new Ashfall.Core.Save.AggregateSaveEnvelope
+                {
+                    manifestVersion = Ashfall.Core.Save.CampaignEnvelopeBuilder.CurrentEnvelopeVersion,
+                    manifest = manifest,
+                    sections = new System.Collections.Generic.List<Ashfall.Core.Save.SaveSectionEnvelope>
+                    {
+                        new Ashfall.Core.Save.SaveSectionEnvelope
+                        {
+                            sectionName = "campaign_day",
+                            schemaVersion = 1,
+                            payloadJson = "{\"day\":1}"
+                        }
+                    }
+                };
+
+            string v1Empty = Ashfall.Core.Save.SaveSlotService.ComputeAggregateChecksum(Envelope(Manifest(1, "")));
+            string v1Populated = Ashfall.Core.Save.SaveSlotService.ComputeAggregateChecksum(Envelope(Manifest(1, "difficulty_austere")));
+            Check(v1Empty == v1Populated, "v1_checksum_ignores_difficulty_field");
+
+            string v2Standard = Ashfall.Core.Save.SaveSlotService.ComputeAggregateChecksum(Envelope(Manifest(2, "difficulty_standard")));
+            string v2Sparing = Ashfall.Core.Save.SaveSlotService.ComputeAggregateChecksum(Envelope(Manifest(2, "difficulty_sparing")));
+            Check(v2Standard != v2Sparing, "v2_checksum_binds_difficulty_field");
+
+            // Scratch round-trip: write a v2 envelope with the sparing preset,
+            // then load it back through the real service validation path.
+            string tempDir = System.IO.Path.Combine(
+                System.IO.Path.GetTempPath(),
+                "ashfall_difficulty_selftest_" + System.Guid.NewGuid().ToString("N"));
+            try
+            {
+                System.IO.Directory.CreateDirectory(tempDir);
+                var service = new Ashfall.Core.Save.SaveSlotService(
+                    new FileSystemIO(), new SystemTextJsonSerializer(), new GodotLog(), tempDir);
+                var manifest = Manifest(2, "difficulty_sparing");
+                manifest.generationId = "gen_selftest";
+                var envelope = Ashfall.Core.Save.CampaignEnvelopeBuilder.Build(
+                    new System.Collections.Generic.Dictionary<string, string>
+                    {
+                        { "campaign_day", "{\"day\":1}" }
+                    },
+                    manifest);
+                bool written = service.WriteAggregateAtomically(manifest.profileId, manifest.slotId, envelope);
+                Check(written, "envelope_written");
+
+                var loaded = service.TryLoadAggregate(manifest.profileId, manifest.slotId);
+                Check(loaded.IsSuccess && loaded.Envelope != null, "envelope_loaded_valid");
+                Check(loaded.Envelope?.manifest?.difficultyPresetId == "difficulty_sparing",
+                      "preset_id_round_trips");
+            }
+            finally
+            {
+                try { if (System.IO.Directory.Exists(tempDir)) System.IO.Directory.Delete(tempDir, true); }
+                catch (Exception) { }
+            }
+
+            return EmitSummary(
+                "difficulty_selftest",
+                failures == 0,
+                failures == 0 ? 0 : 1,
+                9 - failures,
+                failures,
+                failures == 0
+                    ? "difficulty authority, manifest contract, and round-trip GREEN"
+                    : $"{failures} difficulty selftest check(s) failed");
+        }
+
 
         public static int RunJournalSaveSelfTest()
         {

@@ -306,6 +306,10 @@ namespace AtomicWar.GodotApp
 
             WireRelicRestorationDeltas(_crafting.Workshop);
 
+            // Plan 36C — bind the craft-result gate so the seam is HOST_REQUIRED-live.
+            // No item restriction authority exists yet; the gate is permissive (all results allowed).
+            _crafting.Engine.BindCraftResultGate(_ => true);
+
             _crafting.PharmaLab.BindSkillEvaluator(chemistId =>
             {
                 if (string.IsNullOrEmpty(chemistId)) return 1.0f;

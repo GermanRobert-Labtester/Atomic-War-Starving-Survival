@@ -1,6 +1,6 @@
 # ASHFALL — Save-Store Contract Matrix & Completeness Authority
 
-**Last Verified:** 2026-09-17<br>
+**Last Verified:** 2026-09-18<br>
 **Total Save Stores:** 194 classes<br>
 **Total Static Persistence Methods:** 200 methods<br>
 **Checksum-Protected Stores:** 194/194 (100.0%)<br>
@@ -126,7 +126,7 @@
 | 98 | `MedicalPipelineSaveStore` | [`src/Host/MedicalPipelineSaveStore.cs`](../../src/Host/MedicalPipelineSaveStore.cs) | `medical_pipeline` | `medical_pipeline_save.json` | `TryLoad()` | ✅ | ✅ | `MedicalPipelineArchitectureGateTests.cs` |
 | 99 | `MedicalSaveStore` | [`src/Host/MedicalSaveStore.cs`](../../src/Host/MedicalSaveStore.cs) | `medical` | `medical_save.json` | `TryLoad()` | ✅ | ✅ | `AudioConditionSystemTests.cs`, `CampaignConsequenceLedgerTests.cs` *(+34 more)* |
 | 100 | `MedicalWardSaveStore` | [`src/Host/MedicalWardSaveStore.cs`](../../src/Host/MedicalWardSaveStore.cs) | `medical_ward` | `medical_ward_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `DailyBriefingReportBuilderTests.cs` *(+2 more)* |
-| 101 | `MemorialSaveStore` | [`src/Host/MemorialSaveStore.cs`](../../src/Host/MemorialSaveStore.cs) | `memorial` | `memorial_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignDayCoordinatorSourceGateTests.cs` *(+6 more)* |
+| 101 | `MemorialSaveStore` | [`src/Host/MemorialSaveStore.cs`](../../src/Host/MemorialSaveStore.cs) | `memorial` | `memorial_save.json` | `TryLoad()` | ✅ | ✅ | `CampaignCalendarTests.cs`, `CampaignCompletionHistoryTests.cs` *(+7 more)* |
 | 102 | `MentalHealthCrisisSaveStore` | [`src/Host/MentalHealthCrisisHostSession.cs`](../../src/Host/MentalHealthCrisisHostSession.cs) | `mental_health_crisis` | `mental_health_crisis_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` |
 | 103 | `MercenarySaveStore` | [`src/Host/MercenarySaveStore.cs`](../../src/Host/MercenarySaveStore.cs) | `mercenary_bounties` | `mercenary_bounties_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 104 | `MicrofluidicDiagnosticSaveStore` | [`src/Host/MicrofluidicDiagnosticSaveStore.cs`](../../src/Host/MicrofluidicDiagnosticSaveStore.cs) | `microfluidic_diagnostic` | `microfluidic_diagnostic_save.json` | `TryLoad()` | ✅ | ✅ | — |

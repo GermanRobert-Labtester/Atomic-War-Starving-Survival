@@ -157,6 +157,10 @@ namespace AtomicWar.GodotApp
 
         private void RestoreAllSubsystemsFromDisk()
         {
+            // XP-01: bind campaign scalars before any subsystem setup so
+            // premise-checked consumers read the resolved provider.
+            SetupDifficultyFromSave();
+
             SetupHoldfastRuntime();
             _holdfastTerminal?.OpenTerminal();
 

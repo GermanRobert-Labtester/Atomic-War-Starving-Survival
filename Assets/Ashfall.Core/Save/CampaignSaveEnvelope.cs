@@ -12,7 +12,15 @@ namespace Ashfall.Core.Save;
 public class SaveManifest
 {
     /// <summary>Manifest schema version. Increment when fields are added/removed.</summary>
-    public int manifestVersion = 1;
+    /// <remarks>
+    /// v2 (XP-01, 2026-09-18) adds <see cref="difficultyPresetId"/>. The
+    /// aggregate checksum includes that field only for v2+ manifests, so
+    /// every v1 envelope keeps validating byte-for-byte.
+    /// </remarks>
+    public const int CurrentManifestVersion = 2;
+
+    /// <summary>Manifest schema version. Increment when fields are added/removed.</summary>
+    public int manifestVersion = CurrentManifestVersion;
 
     /// <summary>Game version string that wrote this manifest.</summary>
     public string gameVersion = string.Empty;
@@ -40,6 +48,14 @@ public class SaveManifest
 
     /// <summary>Player-assigned campaign name (optional).</summary>
     public string campaignName = string.Empty;
+
+    /// <summary>
+    /// Campaign difficulty preset id (XP-01). Immutable once the first
+    /// aggregate envelope is written: slot creation stamps it and every later
+    /// save clones it. Empty/null on v1 (legacy) manifests resolves to the
+    /// catalog default preset at restore.
+    /// </summary>
+    public string difficultyPresetId = string.Empty;
 
     /// <summary>
     /// Iron-man terminal state. Set to TerminalLoss when a data-defined end

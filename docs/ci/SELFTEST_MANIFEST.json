@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 123,
-  "headless_test_count": 121,
+  "total_tests": 124,
+  "headless_test_count": 122,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -226,6 +226,17 @@
       "description": "Flagship Plans 122-125 Phase 10: deterministic 75-day combined scenario \u2014 SOFC commissioning/baseload, acoustic threat narrowing, diamond tool economy, amphibious retrofit/crossing, day-71 save + replay parity via state hashes",
       "headless_compatible": true,
       "expected_summary_id": "late_tech_mobility_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "port_contract_selftest",
+      "action": "PortContractSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--port-contract-selftest",
+      "aliases": [],
+      "description": "Plan 36: Port Contracts & Host Wiring \u2014 validates all Core integration seams against docs/ci/port_contract_policy.json and runtime host collaborator/port wiring",
+      "headless_compatible": true,
+      "expected_summary_id": "port_contract_selftest",
       "timeout_seconds": 30
     },
     {

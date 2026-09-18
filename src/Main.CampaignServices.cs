@@ -192,6 +192,22 @@ namespace AtomicWar.GodotApp
             if (_silentFoundry != null)
             {
                 _sharedFactionStance = _silentFoundry.GuildStanceEngine;
+                // Plan 36C — bulk-register holdfast faction thresholds so the
+                // RegisterFactions HOST_REQUIRED seam is live. Default thresholds
+                // apply; faction trust-state is owned by save. (Rule: one authority
+                // per concern — FactionStanceEngine is the sole trust authority.)
+                _sharedFactionStance.RegisterFactions(new[]
+                {
+                    new Ashfall.Core.Economy.FactionThresholds("faction_the_office",
+                        raidThreshold: -80f, robThreshold: -40f,
+                        minTrustToTrade: -20f, intelShareThreshold: 50f),
+                    new Ashfall.Core.Economy.FactionThresholds("faction_the_cutters",
+                        raidThreshold: -70f, robThreshold: -30f,
+                        minTrustToTrade: -20f, intelShareThreshold: 45f),
+                    new Ashfall.Core.Economy.FactionThresholds("faction_the_fleet",
+                        raidThreshold: -60f, robThreshold: -25f,
+                        minTrustToTrade: -15f, intelShareThreshold: 40f),
+                });
             }
             else
             {

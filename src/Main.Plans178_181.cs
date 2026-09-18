@@ -249,6 +249,17 @@ namespace AtomicWar.GodotApp
                 }
             }
 
+            // Plan 36C — RegisterWeaponNoise (HOST_REQUIRED seam live).
+            // Canonical noise profiles for the primary Holdfast weapon categories.
+            // Profiles follow the convention: handling_noise [0,1], melee_noise [0,1], fired_noise [0,1].
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_hunting_rifle",      handling_noise = 0.10f, melee_noise = 0.20f, fired_noise = 0.90f, is_suppressed = false });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_scavenged_pistol",   handling_noise = 0.08f, melee_noise = 0.15f, fired_noise = 0.80f, is_suppressed = false });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_suppressed_pistol",  handling_noise = 0.08f, melee_noise = 0.15f, fired_noise = 0.25f, is_suppressed = true  });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_pipe_rifle",         handling_noise = 0.12f, melee_noise = 0.20f, fired_noise = 0.85f, is_suppressed = false });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_crossbow",           handling_noise = 0.06f, melee_noise = 0.10f, fired_noise = 0.15f, is_suppressed = false });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_machete",            handling_noise = 0.05f, melee_noise = 0.30f, fired_noise = 0.00f, is_suppressed = false });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile { weapon_id = "item_crowbar",            handling_noise = 0.05f, melee_noise = 0.35f, fired_noise = 0.00f, is_suppressed = false });
+
             var saved = StealthSaveStore.TryLoad();
             if (saved != null)
             {

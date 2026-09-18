@@ -108,7 +108,7 @@
     "holdfast_locations.json": "GAMEPLAY_CONSUMED",
     "holdfast_npcs.json": "UNRESOLVED",
     "holdfast_quests.json": "GAMEPLAY_CONSUMED",
-    "hydroponic_crops.json": "UNRESOLVED",
+    "hydroponic_crops.json": "GAMEPLAY_CONSUMED",
     "incidents.json": "GAMEPLAY_CONSUMED",
     "independent_faction_branch.json": "GAMEPLAY_CONSUMED",
     "infiltrator_profiles.json": "GAMEPLAY_CONSUMED",

@@ -3,6 +3,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Feedback;
+using Ashfall.Core.Spiritual;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -21,6 +22,8 @@ namespace AtomicWar.GodotApp
     {
         private SurvivorFateSystem _survivorFate = null!;
         private bool _survivorFateDirty;
+        // Plan 36C — SpiritualMeaningCoordinator: mourning-arc authority.
+        private SpiritualMeaningCoordinator? _spiritualCoordinator;
 
         private void SetupSurvivorFate()
         {
@@ -70,6 +73,24 @@ namespace AtomicWar.GodotApp
                     category: "failure",
                     dedupeKey: $"survivor_lost_{fate.survivorId}"
                 ));
+                // Plan 36C — SpiritualMeaningCoordinator.RegisterDeath (HOST_REQUIRED seam).
+                // Lazily load the catalog on first death; null catalog = spiritual system
+                // not authored yet, no mourning arcs created (graceful degradation).
+                if (_spiritualCoordinator == null)
+                {
+                    try
+                    {
+                        var catalog = SpiritualCatalogLoader.Load(
+                            _dataDir, new FileSystemIO(),
+                            new SystemTextJsonSerializer());
+                        _spiritualCoordinator = new SpiritualMeaningCoordinator(catalog);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        GD.PushWarning($"[Ashfall Godot] Spiritual catalog load failed: {ex.Message}");
+                    }
+                }
+                _spiritualCoordinator?.RegisterDeath(fate.survivorId, _simDay);
             };
             _survivorFate.OnLastSurvivorDied += OnLastSurvivorDied;
 

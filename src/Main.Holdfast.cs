@@ -60,6 +60,9 @@ namespace AtomicWar.GodotApp
             }
 
             RefreshIceRoadLabel();
+            // Plan 36C — register loc_holdfast as the home ice-road terminal so
+            // IceRoadSystem.IsHoldfastNode queries are live (HOST_REQUIRED seam).
+            _core.IceRoad.RegisterHoldfastNode("loc_holdfast");
             GD.Print($"[Ashfall Godot] Ice road ready. {_core.CatalogLine()}");
         }
 

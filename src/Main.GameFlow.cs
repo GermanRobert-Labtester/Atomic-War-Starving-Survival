@@ -153,15 +153,18 @@ namespace AtomicWar.GodotApp
             // Fresh campaigns are transactions, not resets of the currently
             // selected campaign. Allocate the next deterministic slot before
             // tearing down live sessions so an existing campaign remains
-            // loadable if allocation fails.
+            // loadable if allocation fails. The XP-01 preset is stamped into
+            // the slot at creation and is immutable from there on.
             if (_saveLoadHost != null &&
-                !_saveLoadHost.TryCreateFreshCampaignSlot(out _))
+                !_saveLoadHost.TryCreateFreshCampaignSlot(out _, _cliDifficultyPresetId))
             {
                 GD.PrintErr("[Ashfall Godot] New Game aborted: no fresh campaign slot could be allocated.");
                 if (_statusLabel != null)
                     _statusLabel.Text = "Unable to allocate a fresh campaign slot.";
                 return;
             }
+
+            SetupDifficulty(_cliDifficultyPresetId);
 
             _state = GameState.Playing;
             _mainMenu.Visible = false;

@@ -73,6 +73,14 @@ public partial class SaveLoadHostSession : Node
     /// Existing slot roots and envelopes are never reset or deleted.
     /// </summary>
     public bool TryCreateFreshCampaignSlot(out SaveSlotId slotId)
+        => TryCreateFreshCampaignSlot(out slotId, difficultyPresetId: null);
+
+    /// <summary>
+    /// Allocate the first deterministic free slot for a fresh campaign,
+    /// stamping the immutable XP-01 difficulty preset into the slot manifest
+    /// (null/empty resolves to the catalog default at first bind).
+    /// </summary>
+    public bool TryCreateFreshCampaignSlot(out SaveSlotId slotId, string? difficultyPresetId)
     {
         slotId = default;
         if (_slotService == null) return false;
@@ -86,7 +94,7 @@ public partial class SaveLoadHostSession : Node
         }
 
         var candidate = new SaveSlotId($"slot_{nextIndex}");
-        if (!CreateSlot(candidate))
+        if (!CreateSlot(candidate, difficultyPresetId))
             return false;
 
         slotId = candidate;
@@ -183,6 +191,14 @@ public partial class SaveLoadHostSession : Node
     /// already exists.
     /// </summary>
     public bool CreateSlot(SaveSlotId slotId)
+        => CreateSlot(slotId, difficultyPresetId: null);
+
+    /// <summary>
+    /// Create a new empty slot, optionally stamping the immutable XP-01
+    /// difficulty preset. Null/empty keeps the catalog-default resolution
+    /// (identical to legacy behavior).
+    /// </summary>
+    public bool CreateSlot(SaveSlotId slotId, string? difficultyPresetId)
     {
         if (_slotService == null) return false;
         if (_slotService.SlotExists(_currentProfileId, slotId)) return false;
@@ -199,7 +215,8 @@ public partial class SaveLoadHostSession : Node
             lastSaveTick = 0,
             mode = CampaignMode.Normal,
             ironManTerminalState = IronManTerminalState.Active,
-            lastSaveTimestamp = DateTime.UtcNow.ToString("o") // DETERMINISM_ALLOWLIST: Host save metadata timestamp
+            lastSaveTimestamp = DateTime.UtcNow.ToString("o"), // DETERMINISM_ALLOWLIST: Host save metadata timestamp
+            difficultyPresetId = difficultyPresetId ?? string.Empty
         };
 
         _slotService.SaveManifest(_currentProfileId, slotId, manifest);
@@ -1008,7 +1025,38 @@ public partial class SaveLoadHostSession : Node
             ironManTerminalState = source.ironManTerminalState,
             lastSaveTimestamp = source.lastSaveTimestamp,
             generationId = source.generationId,
+            difficultyPresetId = source.difficultyPresetId,
         };
+    }
+
+    /// <summary>
+    /// XP-01 — resolve the immutable campaign difficulty preset id for the
+    /// active slot. Checks the live envelope first (authority), then the
+    /// manifest projection, then the slot manifest file. Returns false with
+    /// an empty id when nothing resolves (legacy/empty slot ⇒ catalog
+    /// default at bind time).
+    /// </summary>
+    public bool TryGetActiveDifficultyPresetId(out string presetId)
+    {
+        string? fromEnvelope = _activeEnvelope?.manifest?.difficultyPresetId;
+        if (!string.IsNullOrWhiteSpace(fromEnvelope))
+        {
+            presetId = fromEnvelope;
+            return true;
+        }
+
+        if (_activeSlotId.HasValue)
+        {
+            SaveManifest? projection = _slotService?.LoadManifest(_currentProfileId, _activeSlotId.Value);
+            if (!string.IsNullOrWhiteSpace(projection?.difficultyPresetId))
+            {
+                presetId = projection!.difficultyPresetId;
+                return true;
+            }
+        }
+
+        presetId = string.Empty;
+        return false;
     }
 
     private void CaptureSelectionRollback(SaveSlotId targetSlotId)

@@ -364,6 +364,20 @@
       "dependency_risk": 0.04,
       "required_station": "pharma_bench",
       "category": "antagonist"
+    },
+    {
+      "recipe_id": "recipe_cordyceps_antibiotic",
+      "display_name": "Cordyceps Broad-Spectrum Ampoule",
+      "input_ids": ["fungus_spores_medicinal", "item_sterile_solvent_pack", "clean_water"],
+      "input_amounts": [2, 1, 1],
+      "output_item_id": "antibiotics",
+      "output_amount": 2,
+      "base_hours": 3.0,
+      "required_temperature": 82.0,
+      "purity_target": 0.88,
+      "dependency_risk": 0.06,
+      "required_station": "pharma_bench",
+      "category": "antibiotic"
     }
   ]
 }

@@ -409,6 +409,19 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void HydroponicCrops_AreGameplayConsumedByBiomeSystem()
+        {
+            var scanner = new ContentUtilizationScanner(FindRepoRoot(), GetDataDir(), GetCoreDir(), GetSrcDir());
+            var graph = scanner.Scan();
+            var cat = graph.Catalogs.FirstOrDefault(c =>
+                string.Equals(System.IO.Path.GetFileName(c.Path), "hydroponic_crops.json", StringComparison.OrdinalIgnoreCase));
+            Assert.NotNull(cat);
+            Assert.Equal(ContentClassification.GAMEPLAY_CONSUMED, cat.Classification);
+            Assert.Contains("HydroponicBiomeSystem", cat.ConsumerSystems);
+            Assert.Contains("HydroponicCropCatalogLoader", cat.Loader);
+        }
+
+        [Fact]
         public void Graph_Stabilize_ProducesDeterministicOrder()
         {
             var graph = new ContentUtilizationGraph();

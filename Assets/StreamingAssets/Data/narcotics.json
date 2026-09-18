@@ -223,6 +223,44 @@
         "fungal",
         "controlled"
       ]
+    },
+    {
+      "chem_id": "chem_choke_spore_toxin",
+      "name": "Choke-Spore Contact Toxin",
+      "category": "Toxin",
+      "effect_tags": [
+        "respiratory_distress",
+        "nausea",
+        "incapacitation"
+      ],
+      "duration_hours": 6.0,
+      "onset_class": "Immediate",
+      "tolerance_gain": 0.08,
+      "dependency_pressure": 6.0,
+      "withdrawal_profile_id": "withdrawal_none",
+      "toxicity_contribution": 42.0,
+      "contraindication_tags": [
+        "respiratory_depression",
+        "open_wound"
+      ],
+      "trade_value": 35,
+      "research_tier": 2,
+      "recipe_inputs": [
+        {
+          "item_id": "fungus_spores_common",
+          "amount": 3
+        },
+        {
+          "item_id": "item_sterile_solvent_pack",
+          "amount": 1
+        }
+      ],
+      "tags": [
+        "toxin",
+        "fungal",
+        "poison",
+        "controlled"
+      ]
     }
   ]
 }

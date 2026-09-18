@@ -4,8 +4,8 @@
 
 ## Summary Metrics
 
-- **Total integration seams:** 248
-- **Host-required (`HOST_REQUIRED`):** 176 (all verified called from `src/`)
+- **Total integration seams:** 249
+- **Host-required (`HOST_REQUIRED`):** 177 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 0
 - **Live via Core (`LIVE_VIA_CORE`):** 34
 - **Test/Diagnostic only (`TEST_ONLY`):** 21
@@ -236,6 +236,7 @@
 | `StartingLevelSystem.BindMaintenance` | startinglevel | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in StartingLevelSystem. |
 | `StealthSystem.RegisterCamouflageGear` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in StealthSystem. |
 | `StealthSystem.RegisterWeaponNoise` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `SubsystemManifest.RegisterSetupAction` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Host lifecycle registration for subsystem setup actions (Plan 28C). |
 | `SumpFloodingSystem.BindServices` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in SumpFloodingSystem. |
 | `SurvivorDowntimeSystem.RegisterHobby` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
 | `SurvivorEntityStore.RegisterComponentStore` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in SurvivorEntityStore. |

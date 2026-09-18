@@ -51,6 +51,12 @@ namespace AtomicWar.GodotApp
             _startingSuppliesProfileId =
                 _cliStartingSuppliesProfileId ??
                 StartingSuppliesCatalog.StandardProfileId;
+            // XP-01: optional campaign difficulty preset (null ⇒ catalog
+            // default). Stamped into the slot manifest at new-game creation.
+            _cliDifficultyPresetId =
+                HostCli.ExtractArgValue(
+                    OS.GetCmdlineUserArgs(),
+                    "--difficulty-preset");
 
             // Validate required catalogs before any systems are initialized.
             // This ensures the game cannot start with missing or malformed required data.
@@ -326,6 +332,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.ClusterSelfTest:
                     GetTree().Quit(HostCli.RunClusterSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DifficultySelfTest:
+                    GetTree().Quit(HostCli.RunDifficultySelfTest(_dataDir));
                     return;
                 case HostCliAction.EndingsSelfTest:
                     GetTree().Quit(HostCli.RunEndingsSelfTest());

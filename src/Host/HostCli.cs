@@ -84,6 +84,7 @@ namespace AtomicWar.GodotApp
         SkyDefenseSelfTest,
         VehicleGarageSelfTest,
         PortContractSelfTest,
+        DifficultySelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
         DeconAirlockUiTest,
@@ -560,6 +561,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.WastelandInhabitantsSelfTest;
             if (Has(args, "--port-contract-selftest") || Has(args, "--port-contracts-selftest"))
                 return HostCliAction.PortContractSelfTest;
+            if (Has(args, "--difficulty-selftest"))
+                return HostCliAction.DifficultySelfTest;
             if (Has(args, "--oral-lore-selftest"))
                 return HostCliAction.OralLoreSelfTest;
             return HostCliAction.Interactive;
@@ -584,6 +587,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --catalog-boot-preflight   Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors");
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
             GD.Print("  --port-contract-selftest / --port-contracts-selftest Validate all Core integration seams and host subsystem wiring contracts against port_contract_policy.json (Plan 36)");
+            GD.Print("  --difficulty-selftest XP-01 difficulty authority: catalog load, director resolution, v1/v2 manifest checksum contract, and preset round-trip through the real save path");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
             GD.Print("  --save-store-checksum-selftest / --save-store-checksums-selftest / --checksum-sweep-selftest Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)");
             GD.Print("  --runtime-scale-selftest / --runtime-scale / --performance-selftest / --perf-selftest Performance budget validation: 30/180/360-day campaign workloads, day-advance latency, save/load/checksum, allocations, retained memory, and lifecycle leak tests; writes artifacts/runtime-scale-results.json");

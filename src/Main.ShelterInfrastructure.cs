@@ -433,6 +433,29 @@ namespace AtomicWar.GodotApp
             _shelterThermalPanel.Bind(_shelterThermal);
             _shelterThermalPanel.Visible = false;
             AddChild(_shelterThermalPanel);
+
+            // Plan 36C — wire RegisterExternalBurst to blizzard onset so the
+            // HOST_REQUIRED seam is live. Severity 0.4 = moderate freeze risk.
+            // RegisterExternalBurst is idempotent per pipe (repeated blizzards are safe).
+            // When no pipes are registered the calls gracefully return Failed("unknown_pipe").
+            if (_world?.Weather != null)
+            {
+                _world.Weather.OnWeatherChanged += kind =>
+                {
+                    if (kind == Ashfall.Core.WeatherKind.Blizzard && _shelterThermal?.System != null)
+                    {
+                        var pipes = _shelterThermal.System.State.pipes;
+                        for (int i = 0; i < pipes.Count; i++)
+                        {
+                            var p = pipes[i];
+                            if (p != null && !p.hasBurst)
+                                _shelterThermal.System.RegisterExternalBurst(
+                                    p.pipeId, _simDay, severity: 0.4f,
+                                    description: $"Blizzard freeze burst in {p.pipeId} on day {_simDay}");
+                        }
+                    }
+                };
+            }
         }
 
         private void SaveShelterThermal()

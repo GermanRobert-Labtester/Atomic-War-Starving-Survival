@@ -2,9 +2,9 @@
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all Core integration ports and host wiring contracts (Plan 36).",
   "generated_at": "2026-09-18",
-  "total_seams": 248,
+  "total_seams": 249,
   "counts": {
-    "HOST_REQUIRED": 176,
+    "HOST_REQUIRED": 177,
     "OPTIONAL_HOST": 0,
     "LIVE_VIA_CORE": 34,
     "TEST_ONLY": 21,
@@ -5537,6 +5537,23 @@
       "diagnostic": false,
       "activation_condition": "Planned beta activation or cleanup boundary.",
       "expiry": "2026-12-31"
+    },
+    {
+      "port_id": "core-architecture.subsystemmanifest.registersetupaction",
+      "class_name": "SubsystemManifest",
+      "method_name": "RegisterSetupAction",
+      "file_path": "Assets/Ashfall.Core/Orchestration/SubsystemManifest.cs",
+      "owner": "core-architecture",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Main.Lifecycle.cs"
+      ],
+      "reason": "Host lifecycle registration for subsystem setup actions (Plan 28C).",
+      "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.sumpfloodingsystem.bindservices",

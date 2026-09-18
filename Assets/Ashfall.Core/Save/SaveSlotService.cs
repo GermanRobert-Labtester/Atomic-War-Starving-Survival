@@ -1251,6 +1251,11 @@ public class SaveSlotService
         sb.Append("campaignName=").Append(envelope.manifest?.campaignName ?? string.Empty).Append('\n');
         sb.Append("ironManTerminalState=").Append((int)(envelope.manifest?.ironManTerminalState ?? IronManTerminalState.Active)).Append('\n');
         sb.Append("lastSaveTimestamp=").Append(envelope.manifest?.lastSaveTimestamp ?? string.Empty).Append('\n');
+        // XP-01 (manifest v2): the immutable difficulty preset joins the
+        // canonical checksum only for v2+ manifests. v1 envelopes were
+        // checksummed without this line and must keep validating unchanged.
+        if ((envelope.manifest?.manifestVersion ?? 1) >= 2)
+            sb.Append("difficultyPresetId=").Append(envelope.manifest?.difficultyPresetId ?? string.Empty).Append('\n');
         if (includeGenerationId)
             sb.Append("generationId=").Append(envelope.manifest?.generationId ?? string.Empty).Append('\n');
 

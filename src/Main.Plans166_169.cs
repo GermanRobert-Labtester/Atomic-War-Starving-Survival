@@ -58,6 +58,9 @@ namespace AtomicWar.GodotApp
                 system.BindResearchGate(id =>
                     _sharedResearch?.GetKnowledge(id)?.isCompleted == true
                     || _sharedResearch?.State.completedIds?.Contains(id) == true);
+                // Plan 36C — bind canonical faction resolver so espionage faction ids
+                // are normalized through the shared resolver (HOST_REQUIRED seam live).
+                system.BindFactionResolver(FactionStandingIdResolver.ToSystemsId);
                 _espionage166 = EspionageHostSession.Create(_dataDir, system);
                 _espionage166.StateChanged += () => _espionage166Dirty = true;
                 var saved = EspionageSaveStore.TryLoad();
