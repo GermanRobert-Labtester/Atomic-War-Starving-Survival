@@ -36,8 +36,7 @@ namespace Ashfall.Core.Campaign
         {
             // ── Heartbeats (Internal steady-state simulation ticks) ──
             { "aeroponics_ticked", SemanticKind.Heartbeat },
-            { "aquaponics_ticked", SemanticKi
-nd.Heartbeat },
+            { "aquaponics_ticked", SemanticKind.Heartbeat },
             { "cryo_vault_ticked", SemanticKind.Heartbeat },
             { "debt_ledger_ticked", SemanticKind.Heartbeat },
             { "duty_roster_ticked", SemanticKind.Heartbeat },
@@ -69,8 +68,7 @@ nd.Heartbeat },
             { "seismic_geology_ticked", SemanticKind.Heartbeat },
             { "shelter_facilities_ticked", SemanticKind.Heartbeat },
             { "shelter_fire_ticked", SemanticKind.Heartbeat },
-            { "subte
-rranean_ticked", SemanticKind.Heartbeat },
+            { "subterranean_ticked", SemanticKind.Heartbeat },
             { "survivor_social_ticked", SemanticKind.Heartbeat },
             { "survivors_ticked", SemanticKind.Heartbeat },
             { "trapping_ticked", SemanticKind.Heartbeat },
@@ -108,8 +106,7 @@ rranean_ticked", SemanticKind.Heartbeat },
             { "consumed_child_rations", SemanticKind.Survivor },
             { "contaminated_meal", SemanticKind.Survivor },
             { "portions_spoiled", SemanticKind.Survivor },
-            { "child_born", SemanticKind.
-Survivor },
+            { "child_born", SemanticKind.Survivor },
             { "child_aged", SemanticKind.Survivor },
             { "generation_advanced", SemanticKind.Survivor },
             { "survivor_condition", SemanticKind.Survivor },
@@ -146,8 +143,7 @@ Survivor },
             { "expeditions_caravans_ticked", SemanticKind.Expedition },
             { "subterranean_rescue_active", SemanticKind.Expedition },
             { "subterranean_rescue_completed", SemanticKind.Expedition },
-            { "sub
-terranean_rescue_failed", SemanticKind.Expedition },
+            { "subterranean_rescue_failed", SemanticKind.Expedition },
 
             // ── Communications & Signals ──
             { "radio_intercept", SemanticKind.Communication },
@@ -184,8 +180,7 @@ terranean_rescue_failed", SemanticKind.Expedition },
             if (string.IsNullOrEmpty(kind)) return SemanticKind.Unknown;
             if (SemanticKindMap.TryGetValue(kind, out var sem)) return sem;
             if (IsInternalHeartbeat(kind)) return SemanticKind.Heartbeat;
-  
-          return SemanticKind.Unknown;
+            return SemanticKind.Unknown;
         }
 
         /// <summary>
@@ -230,8 +225,7 @@ terranean_rescue_failed", SemanticKind.Expedition },
             if (kind.EndsWith("_ticked", StringComparison.Ordinal))
             {
                 // Handled player-facing exceptions to the _ticked suffix convention:
-          
-      if (string.Equals(kind, "weather_ticked", StringComparison.Ordinal) ||
+                if (string.Equals(kind, "weather_ticked", StringComparison.Ordinal) ||
                     string.Equals(kind, "expeditions_caravans_ticked", StringComparison.Ordinal))
                 {
                     return false;

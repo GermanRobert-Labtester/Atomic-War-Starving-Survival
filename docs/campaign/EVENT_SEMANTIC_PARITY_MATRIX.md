@@ -129,3 +129,4 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 
 Suffix rule: `*_ticked` + curated internal aggregates (`events_evaluated`, `world_ticked`).
 Tested by `DayEventVocabularyTests` / `DayEventParitySourceGateTests`.
+
