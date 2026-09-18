@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+using System;
+using System.IO;
 using Xunit;
 using Ashfall.Core;
 
@@ -7,6 +9,33 @@ namespace Ashfall.Core.Tests
     public class IceRoadSystemTests
     {
         private static IceRoadSystem Sys(int seed = 808) => new IceRoadSystem(seed);
+
+        private static string RepoRoot()
+        {
+            var dir = new DirectoryInfo(AppContext.BaseDirectory);
+            while (dir != null)
+            {
+                if (Directory.Exists(Path.Combine(dir.FullName, "Assets", "Ashfall.Core")))
+                    return dir.FullName;
+                dir = dir.Parent;
+            }
+
+            return Directory.GetCurrentDirectory();
+        }
+
+        [Fact]
+        public void DefaultHoldfastNodes_UsePublicRegistrationPath()
+        {
+            string source = File.ReadAllText(Path.Combine(
+                RepoRoot(), "Assets", "Ashfall.Core", "IceRoadSystem.cs"));
+
+            Assert.Contains("RegisterHoldfastNode(CutNodeIds[i]);", source, StringComparison.Ordinal);
+            Assert.DoesNotContain("_holdfastNodes.Add(CutNodeIds[i]);", source, StringComparison.Ordinal);
+
+            var ice = Sys();
+            foreach (string nodeId in IceRoadSystem.CutNodeIds)
+                Assert.True(ice.IsHoldfastNode(nodeId), $"Default Holdfast node was not registered: {nodeId}");
+        }
 
         [Fact]
         public void DarkUntilUnlock()

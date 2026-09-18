@@ -22,7 +22,6 @@ namespace Ashfall.Core.Crafting
         private readonly InventoryContainer _inventory;
         private readonly List<CraftingStation> _stations = new List<CraftingStation>();
         private readonly List<ActiveCraft> _active = new List<ActiveCraft>();
-        private Func<string, bool> _isCraftResultAllowed;
         private Func<int> _getDay;
         private Func<string, Recipe?> _recipeLookup;
         private Func<string, float> _crafterCostMultiplier; // crafterId -> material cost mult
@@ -44,9 +43,6 @@ namespace Ashfall.Core.Crafting
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
         }
-
-        public void BindCraftResultGate(Func<string, bool> isResultAllowed)
-            => _isCraftResultAllowed = isResultAllowed;
 
         public void SetDayProvider(Func<int> getDay) => _getDay = getDay;
 
@@ -100,14 +96,6 @@ namespace Ashfall.Core.Crafting
             {
                 var station = GetStation(recipe.requiredStationId);
                 if (station == null || !station.IsOperational) return false;
-            }
-
-            if (_isCraftResultAllowed != null
-                && recipe.result != null
-                && !string.IsNullOrEmpty(recipe.result.id)
-                && !_isCraftResultAllowed(recipe.result.id))
-            {
-                return false;
             }
 
             float costMult = GetCraftCostMultiplier(crafterId);
@@ -180,14 +168,6 @@ namespace Ashfall.Core.Crafting
                 var station = GetStation(recipe.requiredStationId);
                 if (station == null || !station.IsOperational)
                     return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "station_unavailable", "craft.station_unavailable", stateVersion);
-            }
-
-            if (_isCraftResultAllowed != null
-                && recipe.result != null
-                && !string.IsNullOrEmpty(recipe.result.id)
-                && !_isCraftResultAllowed(recipe.result.id))
-            {
-                return CommandPreview.Unavailable(PlayerCommandCode.CraftStart, "result_restricted", "craft.result_restricted", stateVersion);
             }
 
             float costMult = GetCraftCostMultiplier(crafterId);

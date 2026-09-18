@@ -13,12 +13,13 @@ by any runtime code.
 **Model: catalog membership = knowledge; qualification = station + ingredients.**
 
 - **Data owner:** `recipes.json` (the only recipe authority).
-- **Runtime evaluator:** `CraftingSystem.CanCraft` (station operational →
-  craft-result gate → ingredient bill → output capacity).
+- **Runtime evaluator:** `CraftingSystem.CanCraft` (research/blueprint gate →
+  station operational → ingredient bill → output capacity).
 - **UI visibility:** all catalog recipes listed; ineligibility is explained by
   existing `CommandPreview` lock reasons (`station_unavailable`,
-  `insufficient_ingredients`, `inventory_full`, `result_restricted`,
-  `moonshine_restricted`) — no new UI surface required.
+  `research_locked`, `blueprint_locked`, `station_unavailable`,
+  `insufficient_ingredients`, `inventory_full`, `moonshine_restricted`) — no
+  new UI surface required.
 - **Save owner:** only `ActiveCraftSave` (in-progress jobs). Recipe knowledge
   needs no save state because it is static.
 - **Old-save default:** new recipes appear automatically; no fabricated

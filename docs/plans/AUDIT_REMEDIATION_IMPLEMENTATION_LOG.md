@@ -64,3 +64,43 @@ Impact:
 Known limitation:
 
 - The caller proof remains method-token-based until W03/W06.
+
+## W02 — Re-land PR #55 semantics on current main
+
+Status: PASS
+
+Changed:
+
+- Removed the zero-caller `CraftingSystem.BindCraftResultGate`, its backing
+  delegate, and both permanently inactive validation branches.
+- Routed default Ice Road Holdfast nodes through `RegisterHoldfastNode` and
+  reclassified that seam as `LIVE_VIA_CORE`.
+- Added a focused regression proving the default-node loop uses the public
+  registration path and still registers every Cut node.
+- Updated the recipe-unlock authority to remove the retired restriction reason.
+- Regenerated both port-contract artifacts from the updated source and policy.
+
+Verification:
+
+- `bash scripts/run_test.sh Ashfall.Core.Tests/CraftingSystemTests.cs` — PASS,
+  9/9.
+- `bash scripts/run_test.sh Ashfall.Core.Tests/IceRoadSystemTests.cs` — PASS,
+  11/11.
+- `bash scripts/run_test.sh Ashfall.Core.Tests/Tooling/PortContractGateTests.cs`
+  — PASS, 8/8.
+- `python3 scripts/ci/generate-port-contract.py --check` — PASS, 247 seams,
+  176 host-required, 4 deferred.
+- `git diff --check` — PASS.
+
+Divergence:
+
+- PR #55's historical patch removed the crafting field and binder but left two
+  references to the field. Reapplying that patch literally would not compile.
+  The current-main implementation removes the complete never-bound path, which
+  preserves current runtime behavior and fulfills the reviewed intent.
+
+Impact:
+
+- Save/schema/RNG: none.
+- Runtime: no behavior change for crafting because the removed gate had no
+  caller; Ice Road defaults now share the public registration invariant.
