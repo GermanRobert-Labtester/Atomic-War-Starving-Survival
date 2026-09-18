@@ -609,14 +609,14 @@
       "consumers": [
         "AshfallDashboardShell",
         "AshfallStatusRail",
-        "AshfallDataGrid (4 instances)"
+        "AshfallDataGrid"
       ]
     },
     {
       "snapshot_id": "map_atlas_default",
       "runtime_surface": "src/UI/MapAtlasPanel.cs",
-      "runtime_state": "Bound: ExpeditionHostSession null. Renders 1-row-per-quadrant tile fixtures (North/East/South) + 3-row action bar. Status rail returns dashes.",
-      "fixture_source": "DETERMINISTIC_TEST_FIXTURE (BuildFixtureRows + BuildActionFixtureRows)",
+      "runtime_state": "Bound: ExpeditionHostSession/WorldHostSession null. Renders one explicit map-intelligence empty-state row; status rail returns dashes; no fabricated location telemetry or command rows.",
+      "fixture_source": "EMPTY_STATE (BuildFixtureRows)",
       "viewport_width": 1280,
       "viewport_height": 800,
       "ui_scale": 1.0,
