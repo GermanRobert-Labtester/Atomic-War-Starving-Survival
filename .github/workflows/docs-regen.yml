@@ -1,0 +1,154 @@
+# ASHFALL Docs Regen — keeps drift-gated documentation in sync with the repo.
+# Regenerates all script-only drift-gated catalogs whenever a generator changes,
+# and commits the result so the drift gates stay green.
+# Local developer parity: run the generator commands below by hand (docs/INDEX.md LAST).
+
+name: Docs Regen
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/ci/generate-*.py"
+      - "scripts/ci/generate-*.sh"
+      - ".github/workflows/docs-regen.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-regen-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    name: Regenerate drift-gated documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Apply one-shot date-rot fix to drift-gate generators
+        run: |
+          python3 - <<'PATCHER'
+          import pathlib
+
+          # One-shot (idempotent) patch: make --check mask the daily-changing
+          # "Last Verified"/"Generated" date line before comparing, using the
+          # same policy already established by generate-catalog-registry.py.
+          patches = {
+              "scripts/ci/generate-agent-skills-catalog.py": [(
+                  '        current_md = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        if current_md.strip() != generated_md.strip():\n',
+                  '        current_md = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        # The "Last Verified" date line is expected to change daily and is not\n'
+                  '        # drift — compare everything else for real content drift (same policy\n'
+                  '        # as generate-catalog-registry.py).\n'
+                  '        date_re = re.compile(r"\\*\\*Last Verified:\\*\\* `?\\d{4}-\\d{2}-\\d{2}`?")\n'
+                  '        if date_re.sub("**Last Verified:** DATE", current_md).strip() != date_re.sub("**Last Verified:** DATE", generated_md).strip():\n',
+              )],
+              "scripts/ci/generate-audio-catalog.py": [(
+                  '        current_md = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        if current_md.strip() != generated_md.strip():\n',
+                  '        current_md = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        # The "Last Verified" date line is expected to change daily and is not\n'
+                  '        # drift — compare everything else for real content drift (same policy\n'
+                  '        # as generate-catalog-registry.py).\n'
+                  '        date_re = re.compile(r"\\*\\*Last Verified:\\*\\* `?\\d{4}-\\d{2}-\\d{2}`?")\n'
+                  '        if date_re.sub("**Last Verified:** DATE", current_md).strip() != date_re.sub("**Last Verified:** DATE", generated_md).strip():\n',
+              )],
+              "scripts/ci/generate-core-systems-catalog.py": [(
+                  '        new = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        if curr != new:\n',
+                  '        new = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        # The "Generated" date line is expected to change daily and is not\n'
+                  '        # drift — compare everything else for real content drift (same policy\n'
+                  '        # as generate-catalog-registry.py).\n'
+                  '        date_re = re.compile(r"\\*\\*Generated:\\*\\* \\d{4}-\\d{2}-\\d{2}")\n'
+                  '        if date_re.sub("**Generated:** DATE", curr).strip() != date_re.sub("**Generated:** DATE", new).strip():\n',
+              )],
+              "scripts/ci/generate-ui-panel-catalog.py": [(
+                  '        new = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        if curr != new:\n',
+                  '        new = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                  '        # The "Generated" date line is expected to change daily and is not\n'
+                  '        # drift — compare everything else for real content drift (same policy\n'
+                  '        # as generate-catalog-registry.py).\n'
+                  '        date_re = re.compile(r"\\*\\*Generated:\\*\\* \\d{4}-\\d{2}-\\d{2}")\n'
+                  '        if date_re.sub("**Generated:** DATE", curr).strip() != date_re.sub("**Generated:** DATE", new).strip():\n',
+              )],
+              "scripts/ci/generate-expansions-catalog.py": [
+                  (
+                      'import os\nimport sys\nimport pathlib\n',
+                      'import os\nimport re\nimport sys\nimport pathlib\n',
+                  ),
+                  (
+                      '        new = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                      '        if curr != new:\n',
+                      '        new = OUTPUT_FILE.read_text(encoding="utf-8")\n'
+                      '        # The "Generated" date line is expected to change daily and is not\n'
+                      '        # drift — compare everything else for real content drift (same policy\n'
+                      '        # as generate-catalog-registry.py).\n'
+                      '        date_re = re.compile(r"\\*\\*Generated:\\*\\* \\d{4}-\\d{2}-\\d{2}")\n'
+                      '        if date_re.sub("**Generated:** DATE", curr).strip() != date_re.sub("**Generated:** DATE", new).strip():\n',
+                  ),
+              ],
+          }
+
+          changed = []
+          for path, repls in patches.items():
+              p = pathlib.Path(path)
+              text = p.read_text(encoding="utf-8")
+              original = text
+              for old, new in repls:
+                  if old in text:
+                      text = text.replace(old, new, 1)
+              if text != original:
+                  p.write_text(text, encoding="utf-8")
+                  changed.append(path)
+
+          print("Patched:", changed if changed else "nothing (already patched)")
+          PATCHER
+
+      - name: Regenerate drift-gated catalogs
+        run: |
+          python3 scripts/ci/generate-catalog-registry.py
+          python3 scripts/ci/generate-audio-catalog.py
+          python3 scripts/ci/generate-agent-skills-catalog.py
+          python3 scripts/ci/generate-core-systems-catalog.py
+          python3 scripts/ci/generate-ui-panel-catalog.py
+          python3 scripts/ci/generate-expansions-catalog.py
+          bash scripts/ci/generate-save-store-matrix.sh
+          # docs/INDEX.md must be regenerated LAST: it embeds the header lines
+          # of every other document, including their verification dates.
+          python3 scripts/ci/generate-docs-index.py
+
+      - name: Verify drift gates pass
+        run: |
+          for g in \
+            catalog_registry_drift \
+            audio_catalog_drift \
+            agent_skills_catalog_drift \
+            core_systems_catalog_drift \
+            ui_panel_catalog_drift \
+            expansions_catalog_drift \
+            save_store_matrix_drift \
+            docs_index_drift; do
+            python3 scripts/ci/run-gates.py --gate "$g"
+          done
+
+      - name: Commit regenerated docs
+        run: |
+          git config user.name "ashfall-docs-regen[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No drift — nothing to commit."
+            exit 0
+          fi
+          git commit -m "docs: regenerate drift-gated catalogs (automated)" \
+                     -m "Includes the one-shot date-rot fix for five drift-gate generators: --check now masks the daily-changing date line before comparing, matching the policy already used by generate-catalog-registry.py."
+          git push
