@@ -622,7 +622,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => _verdictDashboardPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("map_atlas",
-                bindAction: () => { SetupExpeditions(); _mapAtlasPanel.Bind(_expeditions); },
+                bindAction: () => { SetupExpeditions(); SetupWorld(); _mapAtlasPanel.Bind(_expeditions, _world); },
                 openAction: () => _mapAtlasPanel.Open(),
                 closeAction: () => _mapAtlasPanel.Visible = false);
 
