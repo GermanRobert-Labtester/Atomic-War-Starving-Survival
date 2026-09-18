@@ -1,4 +1,4 @@
-# ASHFALL — Godot 4.7 .NET (Canonical Shared Verification Pipeline)
+# ASHFALL CI — Godot 4.7 .NET (Canonical Shared Verification Pipeline)
 # Driven by docs/ci/CI_GATE_MANIFEST.json via scripts/ci/run-gates.py.
 # Local developer parity: bash scripts/ci/verify-fast.sh
 # Standalone Godot host; no JsonUtility; Core stays engine-agnostic.
@@ -57,8 +57,7 @@ jobs:
               try:
                   d = json.loads(rp.read_text(encoding="utf-8"))
               except Exception as e:
-                  print(f"::error::could not parse {repo
-rt}: {e}")
+                  print(f"::error::could not parse {report}: {e}")
                   continue
               for r in d.get("results", []):
                   if r.get("passed"):
