@@ -1,6 +1,7 @@
 # ASHFALL Docs Regen — keeps drift-gated documentation in sync with the repo.
-# Regenerates all script-only drift-gated catalogs whenever a generator changes,
-# and commits the result so the drift gates stay green.
+# Whenever a generator under scripts/ci/generate-* changes, this regenerates all
+# script-only drift-gated catalogs, verifies the drift gates, and (if the repo's
+# workflow permissions allow writes) commits the result.
 # Local developer parity: run the generator commands below by hand (docs/INDEX.md LAST).
 
 name: Docs Regen
@@ -96,6 +97,17 @@ jobs:
                       '        if date_re.sub("**Generated:** DATE", curr).strip() != date_re.sub("**Generated:** DATE", new).strip():\n',
                   ),
               ],
+              "scripts/ci/generate-docs-index.py": [(
+                  '        current = INDEX_FILE.read_text(encoding="utf-8")\n'
+                  '        if current.strip() != rendered.strip():\n',
+                  '        current = INDEX_FILE.read_text(encoding="utf-8")\n'
+                  '        # Verification dates embedded in document summary lines (and the\n'
+                  '        # index\'s own "Last Verified" line) change whenever another gated doc\n'
+                  '        # is regenerated and are not drift — compare everything else for real\n'
+                  '        # content drift (same policy as generate-catalog-registry.py).\n'
+                  '        date_re = re.compile(r"\\d{4}-\\d{2}-\\d{2}")\n'
+                  '        if date_re.sub("DATE", current).strip() != date_re.sub("DATE", rendered).strip():\n',
+              )],
           }
 
           changed = []
@@ -112,7 +124,6 @@ jobs:
 
           print("Patched:", changed if changed else "nothing (already patched)")
           PATCHER
-
       - name: Regenerate drift-gated catalogs
         run: |
           python3 scripts/ci/generate-catalog-registry.py
@@ -140,7 +151,7 @@ jobs:
             python3 scripts/ci/run-gates.py --gate "$g"
           done
 
-      - name: Commit regenerated docs
+      - name: Commit regenerated docs (best-effort)
         run: |
           git config user.name "ashfall-docs-regen[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -149,6 +160,11 @@ jobs:
             echo "No drift — nothing to commit."
             exit 0
           fi
-          git commit -m "docs: regenerate drift-gated catalogs (automated)" \
-                     -m "Includes the one-shot date-rot fix for five drift-gate generators: --check now masks the daily-changing date line before comparing, matching the policy already used by generate-catalog-registry.py."
-          git push
+          git commit -m "docs: regenerate drift-gated catalogs (automated)"
+          if out=$(git push 2>&1); then
+            echo "Pushed regenerated docs."
+          else
+            echo "::error::DOCS-REGEN PUSH FAILED — ${out}"
+            echo "::warning::Verification above passed; only the auto-commit push failed. If this is a GITHUB_TOKEN permission denial, set Settings → Actions → General → Workflow permissions to 'Read and write permissions' and re-run this workflow."
+            exit 1
+          fi
