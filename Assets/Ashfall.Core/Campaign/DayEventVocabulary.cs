@@ -162,6 +162,8 @@ namespace Ashfall.Core.Campaign
             { "echo_consequence_due", SemanticKind.Narrative },
             { "narrative_arc_selected", SemanticKind.Narrative },
             { "personal_quest_progressed", SemanticKind.Narrative },
+            { "obligation_warning", SemanticKind.Narrative },
+            { "obligation_missed", SemanticKind.Narrative },
             { "social_dispute_mediated", SemanticKind.Narrative }
         };
 

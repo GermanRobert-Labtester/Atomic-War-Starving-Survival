@@ -60,6 +60,8 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `narrative_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `needs_ticked` | PerformanceCampaignHarness.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `nuclear_generation_published` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
+| `obligation_missed` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible — missed commitment with consequence payload; Plan 38) |
+| `obligation_warning` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible — deadline warning with counterparty and days remaining; Plan 38) |
 | `personal_quest_progressed` | PersonalQuestSystem.cs | generic default | via briefing panel | GENERIC (visible) |
 | `pneumatic_dispatch_ticked` | Main.Plans74_77.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `portions_spoiled` | KitchenNutritionHostSession.cs | yes | via briefing panel | HANDLED |
