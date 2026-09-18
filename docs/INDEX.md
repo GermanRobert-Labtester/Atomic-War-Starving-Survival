@@ -306,7 +306,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | **Dynamic World Save Contract & Migration Integrity** — "systemId": "world_weather_system", |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-17<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-18<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
 ## 4. Expansions (01–10 Master Plans & Context) (61 documents)
@@ -1263,7 +1263,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_COMPLETION_REPORT.md`](cartography/PLAN85_COMPLETION_REPORT.md) | **Plan 85 — Completion Report** — - **baseline damaged-map zone count:** 6 (repository truth; plan assumed 3 — delta rule §1.12 applied) |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_FRAGMENT_LIFECYCLE.md`](cartography/PLAN85_FRAGMENT_LIFECYCLE.md) | **Plan 85 — Fragment Lifecycle** — Damaged-map fragments are **not inventory items**. `fragment_id` is a catalog/state key. There are no fragment item d... |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_REGRESSION_MATRIX.md`](cartography/PLAN85_REGRESSION_MATRIX.md) | **Plan 85 — Regression Matrix** — **New — `Ashfall.Core.Tests/World/DamagedMapSystemTests.cs` (13 tests):** catalog structure (12 zones, unique ids, co... |
-| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-17<br> |
+| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-18<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md`](collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md) | **ASHFALL Collectibles — 100-Run Scavenging Balance Report** — **Generated** for Tasks 5–8 Wave F · Harness: `CollectibleBalanceCharacterizationTests` |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md`](collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md) | **ASHFALL Collectibles Utilization Matrix** — **Generated** by `scripts/ci/generate-collectibles-matrix.py` — machine-derived from |
