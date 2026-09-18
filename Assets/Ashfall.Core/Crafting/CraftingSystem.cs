@@ -22,7 +22,6 @@ namespace Ashfall.Core.Crafting
         private readonly InventoryContainer _inventory;
         private readonly List<CraftingStation> _stations = new List<CraftingStation>();
         private readonly List<ActiveCraft> _active = new List<ActiveCraft>();
-        private Func<string, bool> _isCraftResultAllowed;
         private Func<int> _getDay;
         private Func<string, Recipe?> _recipeLookup;
         private Func<string, float> _crafterCostMultiplier; // crafterId -> material cost mult
@@ -44,9 +43,6 @@ namespace Ashfall.Core.Crafting
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
         }
-
-        public void BindCraftResultGate(Func<string, bool> isResultAllowed)
-            => _isCraftResultAllowed = isResultAllowed;
 
         public void SetDayProvider(Func<int> getDay) => _getDay = getDay;
 

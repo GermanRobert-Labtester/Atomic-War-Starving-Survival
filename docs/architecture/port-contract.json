@@ -2,14 +2,14 @@
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all Core integration ports and host wiring contracts (Plan 36).",
   "generated_at": "2026-09-18",
-  "total_seams": 248,
+  "total_seams": 247,
   "counts": {
     "HOST_REQUIRED": 176,
     "OPTIONAL_HOST": 5,
-    "LIVE_VIA_CORE": 40,
+    "LIVE_VIA_CORE": 41,
     "TEST_ONLY": 21,
     "PURE_LIBRARY": 0,
-    "DEFERRED": 6
+    "DEFERRED": 4
   },
   "ports": [
     {
@@ -764,21 +764,6 @@
       "diagnostic": false,
       "activation_condition": null,
       "expiry": null
-    },
-    {
-      "port_id": "core-architecture.craftingsystem.bindcraftresultgate",
-      "class_name": "CraftingSystem",
-      "method_name": "BindCraftResultGate",
-      "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
-      "observed_caller_count": 0,
-      "observed_callers": [],
-      "reason": "Integration seam in CraftingSystem.",
-      "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
     },
     {
       "port_id": "crafting.craftingsystem.bindresearchgate",
@@ -2951,15 +2936,15 @@
       "class_name": "IceRoadSystem",
       "method_name": "RegisterHoldfastNode",
       "file_path": "Assets/Ashfall.Core/IceRoadSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "world",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in IceRoadSystem.",
+      "reason": "Invoked internally by IceRoadSystem.RegisterDefaultHoldfastNodes; public method remains the validated extension path for additional holdfast nodes.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.ideologicalfrictionsystem.registerbelief",
