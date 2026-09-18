@@ -233,7 +233,12 @@ def main():
             print(f"FAIL: {INDEX_FILE} does not exist. Run: python3 scripts/ci/generate-docs-index.py", file=sys.stderr)
             sys.exit(1)
         current = INDEX_FILE.read_text(encoding="utf-8")
-        if current.strip() != rendered.strip():
+        # Verification dates embedded in document summary lines (and the
+        # index's own "Last Verified" line) change whenever another gated doc
+        # is regenerated and are not drift — compare everything else for real
+        # content drift (same policy as generate-catalog-registry.py).
+        date_re = re.compile(r"\d{4}-\d{2}-\d{2}")
+        if date_re.sub("DATE", current).strip() != date_re.sub("DATE", rendered).strip():
             print(f"FAIL: {INDEX_FILE} is out of sync with repository markdown files.", file=sys.stderr)
             print("Run: python3 scripts/ci/generate-docs-index.py && git commit", file=sys.stderr)
             sys.exit(1)
