@@ -264,7 +264,14 @@ def validate_and_generate(check_mode: bool = False):
     for p in ports:
         seam_name = f"`{p['class_name']}.{p['method_name']}`"
         caller_count = len(p.get("observed_callers", []))
-        status = "✅ BOUND" if caller_count > 0 else ("🔹 CORE" if p["classification"] == "LIVE_VIA_CORE" else "⏳ DEFERRED" if p["classification"] == "DEFERRED" else "🧪 TEST")
+        status = (
+            "✅ BOUND" if caller_count > 0 else
+            "🔹 CORE" if p["classification"] == "LIVE_VIA_CORE" else
+            "🧩 OPTIONAL" if p["classification"] == "OPTIONAL_HOST" else
+            "📚 LIBRARY" if p["classification"] == "PURE_LIBRARY" else
+            "⏳ DEFERRED" if p["classification"] == "DEFERRED" else
+            "🧪 TEST"
+        )
         reason = p.get("activation_condition") if p["classification"] == "DEFERRED" else p["reason"]
         md_lines.append(f"| {seam_name} | {p['owner']} | `{p['classification']}` | {caller_count} | {status} | {reason} |")
 
