@@ -7,10 +7,10 @@
 - **Total integration seams:** 248
 - **Host-required (`HOST_REQUIRED`):** 176 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 5
-- **Live via Core (`LIVE_VIA_CORE`):** 40
+- **Live via Core (`LIVE_VIA_CORE`):** 41
 - **Test/Diagnostic only (`TEST_ONLY`):** 21
 - **Pure library utilities (`PURE_LIBRARY`):** 0
-- **Deferred / Exemptions (`DEFERRED`):** 6 (shrink-only ratchet with dated owner)
+- **Deferred / Exemptions (`DEFERRED`):** 4 (shrink-only ratchet with dated owner)
 - **Unbound production-required seams:** 0
 
 ## Taxonomy & Classification Rules
@@ -60,7 +60,6 @@
 | `CompanionAnimalSystem.BindFoodPort` | ecology | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in CompanionAnimalSystem. |
 | `CompanionAnimalSystem.RegisterCompanion` | ecology | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in CompanionAnimalSystem. |
 | `CounterIntelligenceSystem.RegisterProfile` | factions | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in CounterIntelligenceSystem. |
-| `CraftingSystem.BindCraftResultGate` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
 | `CraftingSystem.BindResearchGate` | crafting | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in CraftingSystem. |
 | `CrisisPresentationCoordinator.Bind` | core-architecture | `HOST_REQUIRED` | 261 | ✅ BOUND | Integration seam in CrisisPresentationCoordinator. |
 | `CrossingQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 19 | ✅ BOUND | Integration seam in CrossingQuestSystem. |
@@ -128,7 +127,7 @@
 | `HoldfastNpcCatalog.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in HoldfastNpcCatalog. |
 | `HoldfastQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 19 | ✅ BOUND | Integration seam in HoldfastQuestSystem. |
 | `HydraulicExtrusionEngine.RegisterMachine` | foundry | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in HydraulicExtrusionEngine. |
-| `IceRoadSystem.RegisterHoldfastNode` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `IceRoadSystem.RegisterHoldfastNode` | world | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by IceRoadSystem.RegisterDefaultHoldfastNodes; public method remains the validated extension path for additional holdfast nodes. |
 | `IdeologicalFrictionSystem.RegisterBelief` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in IdeologicalFrictionSystem. |
 | `IndependentBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in IndependentBranchCatalog. |
 | `ItemCatalog.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in ItemCatalog. |
