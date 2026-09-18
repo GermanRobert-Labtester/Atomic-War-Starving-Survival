@@ -6,10 +6,10 @@
   "counts": {
     "HOST_REQUIRED": 176,
     "OPTIONAL_HOST": 0,
-    "LIVE_VIA_CORE": 34,
+    "LIVE_VIA_CORE": 36,
     "TEST_ONLY": 21,
     "PURE_LIBRARY": 0,
-    "DEFERRED": 17
+    "DEFERRED": 15
   },
   "ports": [
     {
@@ -5751,30 +5751,30 @@
       "class_name": "TradeTellEngine",
       "method_name": "RegisterBand",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "economy",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in TradeTellEngine.",
+      "reason": "Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.tradetellengine.registertellpool",
       "class_name": "TradeTellEngine",
       "method_name": "RegisterTellPool",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "economy",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in TradeTellEngine.",
+      "reason": "Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "shelter.trophysystem.registertrophy",
