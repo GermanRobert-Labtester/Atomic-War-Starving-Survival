@@ -417,7 +417,11 @@ if __name__ == "__main__":
         curr = OUTPUT_FILE.read_text(encoding="utf-8")
         generate_catalog()
         new = OUTPUT_FILE.read_text(encoding="utf-8")
-        if curr != new:
+        # The "Generated" date line is expected to change daily and is not
+        # drift — compare everything else for real content drift (same policy
+        # as generate-catalog-registry.py).
+        date_re = re.compile(r"\*\*Generated:\*\* \d{4}-\d{2}-\d{2}")
+        if date_re.sub("**Generated:** DATE", curr).strip() != date_re.sub("**Generated:** DATE", new).strip():
             print("❌ Error: UI_PANEL_ARCHITECTURE_GUIDE.md drifted from generator.", file=sys.stderr)
             sys.exit(1)
         print("OK: UI_PANEL_ARCHITECTURE_GUIDE.md is in sync.")
