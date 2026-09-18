@@ -264,7 +264,7 @@ def validate_and_generate(check_mode: bool = False):
     for p in ports:
         seam_name = f"`{p['class_name']}.{p['method_name']}`"
         caller_count = len(p.get("observed_callers", []))
-        status = (
+        # Zero-caller status is classification-aware: optional/library seams are not tests.\n        status = (
             "✅ BOUND" if caller_count > 0 else
             "🔹 CORE" if p["classification"] == "LIVE_VIA_CORE" else
             "🧩 OPTIONAL" if p["classification"] == "OPTIONAL_HOST" else
