@@ -6,11 +6,11 @@
 
 - **Total integration seams:** 248
 - **Host-required (`HOST_REQUIRED`):** 176 (all verified called from `src/`)
-- **Optional host ports (`OPTIONAL_HOST`):** 4
-- **Live via Core (`LIVE_VIA_CORE`):** 36
+- **Optional host ports (`OPTIONAL_HOST`):** 5
+- **Live via Core (`LIVE_VIA_CORE`):** 40
 - **Test/Diagnostic only (`TEST_ONLY`):** 21
 - **Pure library utilities (`PURE_LIBRARY`):** 0
-- **Deferred / Exemptions (`DEFERRED`):** 11 (shrink-only ratchet with dated owner)
+- **Deferred / Exemptions (`DEFERRED`):** 6 (shrink-only ratchet with dated owner)
 - **Unbound production-required seams:** 0
 
 ## Taxonomy & Classification Rules
@@ -89,7 +89,7 @@
 | `EbPvdCoatingEngine.RegisterCoating` | shelter | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EbPvdCoatingEngine. |
 | `EchoSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in EchoSystem. |
 | `EquipmentConditionSystem.RegisterItem` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in EquipmentConditionSystem. |
-| `EquipmentConditionSystem.RegisterProfile` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `EquipmentConditionSystem.RegisterProfile` | equipment | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by EquipmentConditionSystem default-profile construction and LoadProfiles catalog ingestion. |
 | `EspionageConsequenceRouter.BindConsumers` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageConsequenceRouter. |
 | `EspionageSystem.BindAgentAvailability` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageSystem. |
 | `EspionageSystem.BindAgentCapability` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageSystem. |
@@ -99,9 +99,9 @@
 | `EvidenceLedger.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in EvidenceLedger. |
 | `ExpansionQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 19 | ✅ BOUND | Integration seam in ExpansionQuestSystem. |
 | `ExpeditionDefinitionRegistry.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in ExpeditionDefinitionRegistry. |
-| `ExpeditionLootReferenceResolver.RegisterCategory` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `ExpeditionLootReferenceResolver.RegisterCategory` | expeditions | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional resolver extension; canonical/default category sets are already accepted through the resolver constructor. |
 | `ExpeditionLootReferenceResolver.RegisterItem` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in ExpeditionLootReferenceResolver. |
-| `ExpeditionNavalSystem.RegisterVessel` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `ExpeditionNavalSystem.RegisterVessel` | expeditions | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by ExpeditionNavalSystem default-vessel construction and LoadCatalog ingestion. |
 | `FactionRadioEngine.RegisterChannel` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in FactionRadioEngine. |
 | `FactionStanceEngine.RegisterFaction` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in FactionStanceEngine. |
 | `FactionStanceEngine.RegisterFactions` | factions | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional batch convenience API over the production-wired RegisterFaction seam; no separate activation is required. |
@@ -219,7 +219,7 @@
 | `ShelterSocialDynamicsSystem.RegisterSurvivorRoom` | core-architecture | `TEST_ONLY` | 1 | ✅ BOUND | Integration seam in ShelterSocialDynamicsSystem. |
 | `ShelterThermalSystem.RegisterExternalBurst` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or host wiring. |
 | `ShelterThermalSystem.RegisterInsulation` | core-architecture | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in ShelterThermalSystem. |
-| `ShelterThermalSystem.RegisterThermalGear` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `ShelterThermalSystem.RegisterThermalGear` | shelter | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by ShelterThermalSystem default thermal-gear registration during construction. |
 | `ShelterWorkshopSystem.BindWorkerSkillProvider` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in ShelterWorkshopSystem. |
 | `SignalTriangulationSystem.RegisterStationBaseline` | radio | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in SignalTriangulationSystem. |
 | `SilentFoundrySystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 19 | ✅ BOUND | Integration seam in SilentFoundrySystem. |
@@ -237,7 +237,7 @@
 | `StealthSystem.RegisterCamouflageGear` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in StealthSystem. |
 | `StealthSystem.RegisterWeaponNoise` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
 | `SumpFloodingSystem.BindServices` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in SumpFloodingSystem. |
-| `SurvivorDowntimeSystem.RegisterHobby` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `SurvivorDowntimeSystem.RegisterHobby` | survivors | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by SurvivorDowntimeSystem default-hobby construction and LoadCatalog ingestion. |
 | `SurvivorEntityStore.RegisterComponentStore` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in SurvivorEntityStore. |
 | `SurvivorRosterSystem.RegisterDefinition` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in SurvivorRosterSystem. |
 | `SurvivorRosterSystem.RegisterRange` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in SurvivorRosterSystem. |
