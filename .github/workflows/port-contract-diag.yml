@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Patch literal escape corruption and verify gate
+      - name: Patch, regenerate, verify
         run: |
           set -e
           python3 - <<'PATCH'
@@ -26,6 +26,7 @@ jobs:
           py_compile.compile(P, doraise=True)
           print("PATCH OK")
           PATCH
+          python3 scripts/ci/generate-port-contract.py
           set +e
           python3 scripts/ci/generate-port-contract.py --check > /tmp/check.log 2>&1
           RC=$?
@@ -43,8 +44,7 @@ jobs:
           BR="ci-portcontract-fix-$GITHUB_RUN_ID"
           git checkout -b "$BR"
           git rm -q .github/workflows/port-contract-diag.yml || true
-          git add -u
-          git add scripts docs 2>/dev/null || true
-          git commit -m "fix(ci): repair literal escape corruption in generate-port-contract.py"
+          git add -A
+          git commit -m "fix(ci): repair escape corruption in port contract generator and regenerate artifacts"
           git push origin HEAD:"$BR"
           echo "::error::PC-FIX: committed to branch $BR sha $(git rev-parse HEAD)"
