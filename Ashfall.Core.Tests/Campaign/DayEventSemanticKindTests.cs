@@ -161,6 +161,8 @@ namespace Ashfall.Core.Tests.Campaign
         [InlineData("weather_forecast_miss", SemanticKind.Weather)]
         [InlineData("echo_surfaced", SemanticKind.Narrative)]
         [InlineData("personal_quest_progressed", SemanticKind.Narrative)]
+        [InlineData("obligation_warning", SemanticKind.Narrative)]
+        [InlineData("obligation_missed", SemanticKind.Narrative)]
         [InlineData("events_evaluated", SemanticKind.Heartbeat)]
         [InlineData("world_ticked", SemanticKind.Heartbeat)]
         [InlineData("power_ticked", SemanticKind.Heartbeat)]
