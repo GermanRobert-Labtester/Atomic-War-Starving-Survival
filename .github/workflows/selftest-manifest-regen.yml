@@ -1,0 +1,71 @@
+# ASHFALL Selftest Manifest Regen — one-shot regenerator for
+# docs/ci/SELFTEST_MANIFEST.json, which must stay byte-identical to the live
+# HostCliRegistry output queried from the built Godot host.
+# The fix branch is protected by a ruleset that blocks GITHUB_TOKEN pushes, so
+# the regenerated manifest is pushed to ci-docs-autogen and merged via PR.
+
+name: Selftest Manifest Regen
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/selftest-manifest-regen.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: selftest-manifest-regen
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    name: Regenerate SELFTEST_MANIFEST.json
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Setup Godot 4.7.1 mono
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.1
+          use-dotnet: true
+          include-templates: true
+
+      - name: Build Godot host
+        run: dotnet build Ashfall.csproj --nologo
+
+      - name: Regenerate selftest manifest
+        run: python3 scripts/ci/generate-selftest-manifest.py
+
+      - name: Verify manifest drift gate passes
+        run: python3 scripts/ci/generate-selftest-manifest.py --check
+
+      - name: Commit regenerated manifest (best-effort)
+        run: |
+          git config user.name "ashfall-docs-regen[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ci/SELFTEST_MANIFEST.json
+          if git diff --cached --quiet; then
+            echo "No drift — nothing to commit."
+            exit 0
+          fi
+          git commit -m "ci: regenerate SELFTEST_MANIFEST.json from HostCliRegistry (automated)"
+          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen 2>&1); then
+            echo "Pushed regenerated manifest to ci-docs-autogen."
+          else
+            echo "::error::MANIFEST-REGEN PUSH FAILED — ${out}"
+            exit 1
+          fi
