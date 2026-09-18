@@ -26,16 +26,12 @@ jobs:
           v = open(vpath, encoding='utf-8').read()
           m = open(mpath, encoding='utf-8').read()
           dupes = [
-              '            { "obligation_warning", SemanticKind.Hazard },
-',
-              '            { "obligation_missed", SemanticKind.Production },
-',
+              '            { "obligation_warning", SemanticKind.Hazard },\n',
+              '            { "obligation_missed", SemanticKind.Production },\n',
           ]
           rows = [
-              '| `obligation_missed` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible) |
-',
-              '| `obligation_warning` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible) |
-',
+              '| `obligation_missed` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible) |\n',
+              '| `obligation_warning` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible) |\n',
           ]
           if all(v.count(d) == 0 for d in dupes):
               print('already clean; nothing to do')
@@ -51,13 +47,11 @@ jobs:
                   sys.exit(1)
               m = m.replace(r, '')
           for k in ('obligation_warning', 'obligation_missed'):
-              n = sum(1 for line in v.split('
-') if ('{ "' + k + '"') in line)
+              n = sum(1 for line in v.split('\n') if ('{ "' + k + '"') in line)
               if n != 1:
                   print('::error::' + k + ' appears ' + str(n) + ' times in vocab after dedup')
                   sys.exit(1)
-              nm = sum(1 for line in m.split('
-') if ('`' + k + '`') in line)
+              nm = sum(1 for line in m.split('\n') if ('`' + k + '`') in line)
               if nm != 1:
                   print('::error::' + k + ' appears ' + str(nm) + ' times in matrix after dedup')
                   sys.exit(1)
@@ -87,3 +81,6 @@ jobs:
           gh pr create --base main --head "$BRANCH" \
             --title "fix(core): dedupe obligation day-event kind registrations" \
             --body "Automated dedup after the #46/#47 double-merge. Keeps the Plan 38 Narrative classification from #46; drops the duplicate Hazard/Production entries from #47 that produced duplicate SemanticKindMap keys and crashed the static initializer."
+          git rm -f .github/workflows/obligation-dedup.yml
+          git commit -m "chore: remove one-shot dedup workflow" || true
+          git push origin "$BRANCH"
