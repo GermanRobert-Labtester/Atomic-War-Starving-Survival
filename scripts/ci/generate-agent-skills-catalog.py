@@ -60,7 +60,6 @@ TAXONOMY_MAP = {
     ]
 }
 
-
 def parse_skills():
     if not SKILLS_DIR.is_dir():
         print(f"Error: {SKILLS_DIR} not found.", file=sys.stderr)
@@ -92,7 +91,6 @@ def parse_skills():
         }
 
     return skills
-
 
 def generate_skills_index_markdown(skills) -> str:
     lines = [
@@ -149,7 +147,6 @@ def generate_skills_index_markdown(skills) -> str:
     text = "\n".join(lines).rstrip() + "\n"
     return text
 
-
 def main():
     check_mode = "--check" in sys.argv
     skills = parse_skills()
@@ -160,7 +157,11 @@ def main():
             print(f"FAIL: {OUTPUT_FILE} does not exist. Run python3 scripts/ci/generate-agent-skills-catalog.py", file=sys.stderr)
             sys.exit(1)
         current_md = OUTPUT_FILE.read_text(encoding="utf-8")
-        if current_md.strip() != generated_md.strip():
+        # The "Last Verified" date line is expected to change daily and is not
+        # drift — compare everything else for real content drift (same policy
+        # as generate-catalog-registry.py).
+        date_re = re.compile(r"\*\*Last Verified:\*\* `?\d{4}-\d{2}-\d{2}`?")
+        if date_re.sub("**Last Verified:** DATE", current_md).strip() != date_re.sub("**Last Verified:** DATE", generated_md).strip():
             print(f"FAIL: {OUTPUT_FILE} is out of date. Run python3 scripts/ci/generate-agent-skills-catalog.py", file=sys.stderr)
             sys.exit(1)
         print(f"OK: {OUTPUT_FILE} is in sync with .agents/skills/ ({len(skills)} skills).")
