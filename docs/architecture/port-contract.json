@@ -5,11 +5,11 @@
   "total_seams": 248,
   "counts": {
     "HOST_REQUIRED": 176,
-    "OPTIONAL_HOST": 0,
+    "OPTIONAL_HOST": 4,
     "LIVE_VIA_CORE": 36,
     "TEST_ONLY": 21,
     "PURE_LIBRARY": 0,
-    "DEFERRED": 15
+    "DEFERRED": 11
   },
   "ports": [
     {
@@ -2170,14 +2170,14 @@
       "method_name": "BindFactionResolver",
       "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
       "owner": "factions",
-      "classification": "DEFERRED",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in EspionageSystem.",
+      "reason": "Optional override hook; EspionageSystem already defaults to FactionStandingIdResolver.ToSystemsId when no host resolver is supplied.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "factions.espionagesystem.bindresearchgate",
@@ -2418,15 +2418,15 @@
       "class_name": "FactionStanceEngine",
       "method_name": "RegisterFactions",
       "file_path": "Assets/Ashfall.Core/Economy/FactionStanceEngine.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
+      "owner": "factions",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in FactionStanceEngine.",
+      "reason": "Optional batch convenience API over the production-wired RegisterFaction seam; no separate activation is required.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.falloutsystem.registerpattern",
@@ -3712,14 +3712,14 @@
       "method_name": "RegisterAdapter",
       "file_path": "Assets/Ashfall.Core/Narrative/NarrativeDiscoveryCatalog.cs",
       "owner": "narrative",
-      "classification": "DEFERRED",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in NarrativeDiscoveryCatalog.",
+      "reason": "Optional extension hook; NarrativeDiscoveryCatalog installs its canonical default adapters in the constructor.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.narrativeencountersystem.registerencounter",
@@ -6224,14 +6224,14 @@
       "method_name": "RegisterTrapSiteLocation",
       "file_path": "Assets/Ashfall.Core/World/WastelandMapSystem.cs",
       "owner": "world",
-      "classification": "DEFERRED",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in WastelandMapSystem.",
+      "reason": "Optional runtime extension hook; authored trap-site locations are already supplied by WastelandMapCatalogLoader through the system constructor.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.watertreatmentsystem.registercontaminationadvisory",
