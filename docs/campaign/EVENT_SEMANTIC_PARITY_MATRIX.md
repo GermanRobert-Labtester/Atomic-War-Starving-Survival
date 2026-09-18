@@ -58,6 +58,8 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `morale_contagion_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `narrative_arc_selected` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `narrative_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `obligation_missed` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible) |
+| `obligation_warning` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible) |
 | `needs_ticked` | PerformanceCampaignHarness.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `nuclear_generation_published` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `obligation_missed` | CommitmentSystem.cs | generic default | via briefing panel | GENERIC (visible — missed commitment with consequence payload; Plan 38) |

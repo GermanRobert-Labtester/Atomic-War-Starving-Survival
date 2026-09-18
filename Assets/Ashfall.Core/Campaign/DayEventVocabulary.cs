@@ -93,6 +93,7 @@ namespace Ashfall.Core.Campaign
             { "subterranean_shoring_warning", SemanticKind.Hazard },
             { "social_dispute_unresolved", SemanticKind.Hazard },
             { "social_privacy_warning", SemanticKind.Hazard },
+            { "obligation_warning", SemanticKind.Hazard },
             { "sanitation_spill", SemanticKind.Hazard },
             { "weather_unexpected_storm", SemanticKind.Hazard },
 
@@ -135,6 +136,7 @@ namespace Ashfall.Core.Campaign
             { "resource_delta", SemanticKind.Production },
             { "trapping_harvest", SemanticKind.Production },
             { "market_shocks_active", SemanticKind.Production },
+            { "obligation_missed", SemanticKind.Production },
 
             // ── Expeditions & Rescues ──
             { "expedition_milestone", SemanticKind.Expedition },
