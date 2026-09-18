@@ -9,6 +9,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Dump offending source region
         run: |
-          sed -n "258,284p" scripts/ci/generate-port-contract.py > /tmp/src.txt
-          cat -n /tmp/src.txt
-          awk '{ printf "PC-SRC-L%d: %s\n", NR+257, $0 }' /tmp/src.txt | cut -c1-650 | head -30 | sed "s/^/::error::/"
+          sed -n "267,276p" scripts/ci/generate-port-contract.py > /tmp/src.txt
+          cat -A /tmp/src.txt | head -3
+          awk '{ printf "PC-SRC-L%d: %s\n", NR+266, $0 }' /tmp/src.txt | cut -c1-700 | head -10 | sed "s/^/::error::/"
