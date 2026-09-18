@@ -5,6 +5,7 @@ using System.Linq;
 using Godot;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.Difficulty;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -16,13 +17,16 @@ namespace AtomicWar.GodotApp.UI
     {
         public string CohortProfileId { get; }
         public string StartingSuppliesProfileId { get; }
+        public string DifficultyPresetId { get; }
 
         public StartingCohortSelection(
             string cohortProfileId,
-            string startingSuppliesProfileId)
+            string startingSuppliesProfileId,
+            string difficultyPresetId)
         {
             CohortProfileId = cohortProfileId;
             StartingSuppliesProfileId = startingSuppliesProfileId;
+            DifficultyPresetId = difficultyPresetId;
         }
     }
 
@@ -33,11 +37,14 @@ namespace AtomicWar.GodotApp.UI
 
         private VBoxContainer _profileList = null!;
         private VBoxContainer _originList = null!;
+        private VBoxContainer _difficultyList = null!;
         private Label _preview = null!;
         private string _selectedProfileId = StartingCohortCatalog.StandardProfileId;
         private string _selectedOriginId = StartingSuppliesCatalog.StandardProfileId;
+        private string _selectedDifficultyPresetId = string.Empty;
         private StartingCohortCatalog? _catalog;
         private StartingSuppliesCatalog? _suppliesCatalog;
+        private DifficultyPresetCatalog? _difficultyCatalog;
 
         public override void _Ready()
         {
@@ -48,14 +55,17 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(
             StartingCohortCatalog catalog,
-            StartingSuppliesCatalog? suppliesCatalog = null)
+            StartingSuppliesCatalog? suppliesCatalog,
+            DifficultyPresetCatalog difficultyCatalog)
         {
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             _suppliesCatalog = suppliesCatalog ??
                 new StartingSuppliesCatalog(
                     new[] { StartingSuppliesCatalog.CreateLegacyFallbackProfile() },
                     StartingSuppliesCatalog.StandardProfileId);
-            if (_profileList == null) return;
+            _difficultyCatalog = difficultyCatalog ??
+                throw new ArgumentNullException(nameof(difficultyCatalog));
+            if (_profileList == null || _originList == null || _difficultyList == null) return;
 
             AshfallUiHelpers.EmptyChildren(_profileList);
             foreach (var profile in catalog.Profiles)
@@ -84,14 +94,31 @@ namespace AtomicWar.GodotApp.UI
                 _originList.AddChild(button);
             }
 
+            AshfallUiHelpers.EmptyChildren(_difficultyList);
+            foreach (var preset in _difficultyCatalog.AllPresets)
+            {
+                var captured = preset.id;
+                var button = AshfallUiHelpers.MakeButton(
+                    $"{preset.display_name.ToUpperInvariant()}\n{preset.description}",
+                    () => SelectDifficulty(captured));
+                button.Alignment = HorizontalAlignment.Left;
+                button.CustomMinimumSize = new Vector2(0, 62);
+                button.TooltipText = preset.description;
+                _difficultyList.AddChild(button);
+            }
+
             if (!catalog.TryGet(_selectedProfileId, out _))
                 _selectedProfileId = catalog.DefaultProfileId;
             if (!_suppliesCatalog.TryGet(_selectedOriginId, out _))
                 _selectedOriginId = _suppliesCatalog.DefaultProfileId;
+            if (!_difficultyCatalog.TryGet(_selectedDifficultyPresetId, out _))
+                _selectedDifficultyPresetId = _difficultyCatalog.default_preset_id;
             RefreshPreview();
         }
 
-        public void Open(string? startingSuppliesProfileId = null)
+        public void Open(
+            string? startingSuppliesProfileId = null,
+            string? difficultyPresetId = null)
         {
             if (_catalog != null)
             {
@@ -104,6 +131,14 @@ namespace AtomicWar.GodotApp.UI
                     _suppliesCatalog.TryGet(startingSuppliesProfileId, out _)
                         ? startingSuppliesProfileId
                         : _suppliesCatalog.DefaultProfileId;
+            }
+            if (_difficultyCatalog != null)
+            {
+                _selectedDifficultyPresetId =
+                    !string.IsNullOrWhiteSpace(difficultyPresetId) &&
+                    _difficultyCatalog.TryGet(difficultyPresetId, out _)
+                        ? difficultyPresetId
+                        : _difficultyCatalog.default_preset_id;
             }
             RefreshPreview();
             Visible = true;
@@ -126,7 +161,7 @@ namespace AtomicWar.GodotApp.UI
             center.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(center);
 
-            var panel = AshfallUiHelpers.MakePanel(860, 620);
+            var panel = AshfallUiHelpers.MakePanel(860, 680);
             center.AddChild(panel);
             var margin = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
             panel.AddChild(margin);
@@ -160,6 +195,9 @@ namespace AtomicWar.GodotApp.UI
             profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("STARTING STORES"));
             _originList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
             profileColumn.AddChild(_originList);
+            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("CAMPAIGN DIFFICULTY"));
+            _difficultyList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            profileColumn.AddChild(_difficultyList);
             scroll.AddChild(profileColumn);
             split.AddChild(scroll);
 
@@ -187,7 +225,8 @@ namespace AtomicWar.GodotApp.UI
                 () => OnStartRequested?.Invoke(
                     new StartingCohortSelection(
                         _selectedProfileId,
-                        _selectedOriginId)));
+                        _selectedOriginId,
+                        _selectedDifficultyPresetId)));
             start.CustomMinimumSize = new Vector2(180, 40);
             actions.AddChild(start);
             root.AddChild(actions);
@@ -205,12 +244,21 @@ namespace AtomicWar.GodotApp.UI
             RefreshPreview();
         }
 
+        private void SelectDifficulty(string presetId)
+        {
+            _selectedDifficultyPresetId = presetId;
+            RefreshPreview();
+        }
+
         private void RefreshPreview()
         {
             if (_preview == null || _catalog == null) return;
             if (!_catalog.TryGet(_selectedProfileId, out var profile)) return;
             var supplies = _suppliesCatalog?.ResolveOrDefault(_selectedOriginId);
             if (supplies == null) return;
+            if (_difficultyCatalog == null ||
+                !_difficultyCatalog.TryGet(_selectedDifficultyPresetId, out var difficulty))
+                return;
 
             _preview.Text =
                 $"{profile.display_name.ToUpperInvariant()}\n\n" +
@@ -220,7 +268,10 @@ namespace AtomicWar.GodotApp.UI
                     $"• {m.displayName} — {DescribeInitialCondition(m)}")) +
                 "\n\nSTARTING STORES\n" +
                 $"{supplies.display_name.ToUpperInvariant()}\n" +
-                supplies.description;
+                supplies.description +
+                "\n\nCAMPAIGN DIFFICULTY\n" +
+                difficulty.display_name.ToUpperInvariant() + "\n" +
+                difficulty.description;
         }
 
         private static string DescribeInitialCondition(StartingSurvivorDefinition member)
