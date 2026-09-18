@@ -248,12 +248,29 @@ namespace Ashfall.Core
         }
 
         /// <summary>
+        /// Plan 43 / C1[13]: Optional crew consent/refusal evaluator.
+        /// </summary>
+        public Func<string, string, CrewConsentVerdict>? EvaluateCrewConsent
+        {
+            get => _assignments.EvaluateCrewConsent;
+            set => _assignments.EvaluateCrewConsent = value;
+        }
+
+        /// <summary>
         /// Read-only role preview used by host UI and command validation. It
         /// delegates to the same evaluator enforced during assignment commit.
         /// </summary>
         public RoleFitnessVerdict? PreviewRoleFitness(string survivorId, string role)
         {
             return _assignments.EvaluateRoleFitness?.Invoke(survivorId, role);
+        }
+
+        /// <summary>
+        /// Plan 43 / C1[13]: Read-only preview of crew consent before assignment.
+        /// </summary>
+        public CrewConsentVerdict? PreviewCrewConsent(string survivorId, string role)
+        {
+            return _assignments.EvaluateCrewConsent?.Invoke(survivorId, role);
         }
 
         public DutyRosterSystem() : this(SeedUtilityOffset)

@@ -135,6 +135,10 @@ namespace Ashfall.Core.Expeditions
         // weather inputs supplied; recorded for UI/parity display).
         public float weatherSpeedMultiplier = 1f;
         public float weatherEncounterMultiplier = 1f;
+
+        // ── C2 §D3 — limb-state travel factor sampled at dispatch (1 when no
+        // survivor input supplied; recorded for UI/parity display).
+        public float survivorSpeedMultiplier = 1f;
     }
 
     /// <summary>
@@ -208,6 +212,11 @@ namespace Ashfall.Core.Expeditions
         /// consume the same value. Additive field; old saves default to 1
         /// (no weather effect — legacy behavior).</summary>
         public float weatherSpeedMultiplier = 1f;
+
+        /// <summary>C2 §D3 — limb-state move-speed factor sampled from the
+        /// medical owner at dispatch; estimate and runtime consume the same
+        /// value. Additive field; old saves default to 1 (intact parity).</summary>
+        public float survivorSpeedMultiplier = 1f;
         public float vehicleBreakdownChancePerTick = 0f;
         public bool vehicleBrokenDown = false;
         public string outcomeText = string.Empty;
@@ -378,7 +387,8 @@ namespace Ashfall.Core.Expeditions
             bool hasFlashlight = false,
             ExpeditionVehicleProfile? vehicle = null,
             float startingStamina = MaxStamina,
-            ExpeditionWeatherInputs? weather = null)
+            ExpeditionWeatherInputs? weather = null,
+            float survivorSpeedMultiplier = 1f)
         {
             if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
                 return false;
@@ -415,6 +425,7 @@ namespace Ashfall.Core.Expeditions
             }
             if (weather != null)
                 exp.weatherSpeedMultiplier = Math.Clamp(weather.SpeedMultiplier, 0f, 5f);
+            exp.survivorSpeedMultiplier = SurvivorSpeedFactor(survivorSpeedMultiplier);
             _active[survivorId] = exp;
             OnExpeditionStarted?.Invoke(exp);
             OnStateChanged?.Invoke(exp);
@@ -434,7 +445,8 @@ namespace Ashfall.Core.Expeditions
             bool hasBicycle = false,
             bool hasFlashlight = false,
             ExpeditionVehicleProfile? vehicle = null,
-            long stateVersion = 0)
+            long stateVersion = 0,
+            float survivorSpeedMultiplier = 1f)
         {
             if (def == null || string.IsNullOrEmpty(def.id) || string.IsNullOrEmpty(survivorId))
                 return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionDispatch, "invalid_params", "expedition.invalid_params", stateVersion);
@@ -442,7 +454,8 @@ namespace Ashfall.Core.Expeditions
                 return CommandPreview.Unavailable(PlayerCommandCode.ExpeditionDispatch, "already_active", "expedition.already_active", stateVersion);
 
             var projected = new Dictionary<string, double>();
-            var estimate = Estimate(def, stance, isNightScavenge, vehicle, hasBicycle: hasBicycle);
+            var estimate = Estimate(def, stance, isNightScavenge, vehicle, hasBicycle: hasBicycle,
+                survivorSpeedMultiplier: survivorSpeedMultiplier);
             projected["travel_ticks"] = estimate.totalTicks;
             projected["stamina_cost"] = estimate.totalTicks * (def != null ? def.baseStaminaDrainPerHour : 2.0);
             if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
@@ -474,16 +487,19 @@ namespace Ashfall.Core.Expeditions
             long expectedStateVersion = 0,
             long currentStateVersion = 0,
             float startingStamina = MaxStamina,
-            ExpeditionWeatherInputs? weather = null)
+            ExpeditionWeatherInputs? weather = null,
+            float survivorSpeedMultiplier = 1f)
         {
-            var preview = PreviewStart(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, expectedStateVersion);
+            var preview = PreviewStart(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, expectedStateVersion,
+                survivorSpeedMultiplier: survivorSpeedMultiplier);
             if (!preview.IsAvailable)
                 return CommandResult.FromPreview(preview);
 
             if (preview.StateVersion != currentStateVersion)
                 return CommandResult.StalePreview(PlayerCommandCode.ExpeditionDispatch, preview.StateVersion, currentStateVersion);
 
-            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, startingStamina, weather);
+            bool ok = Start(def, survivorId, day, stance, isNightScavenge, hasBicycle, hasFlashlight, vehicle, startingStamina, weather,
+                survivorSpeedMultiplier);
             if (!ok)
                 return new CommandResult(
                     PlayerCommandCode.ExpeditionDispatch,
@@ -596,7 +612,8 @@ namespace Ashfall.Core.Expeditions
             float weaponJamRisk = 0f,
             bool hasBicycle = false,
             ExpeditionProtectiveInputs? protective = null,
-            ExpeditionWeatherInputs? weather = null)
+            ExpeditionWeatherInputs? weather = null,
+            float survivorSpeedMultiplier = 1f)
         {
             var est = new ExpeditionEstimate
             {
@@ -615,6 +632,9 @@ namespace Ashfall.Core.Expeditions
                 est.weatherEncounterMultiplier = Math.Clamp(weather.EncounterMultiplier, 0f, 5f);
                 speed *= est.weatherSpeedMultiplier;
             }
+            // C2 §D3 — limb-state factor (intact = 1.0 ⇒ parity).
+            est.survivorSpeedMultiplier = SurvivorSpeedFactor(survivorSpeedMultiplier);
+            speed *= est.survivorSpeedMultiplier;
             float breakdown = 0f;
             float fuelPerTick = 0f;
             if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
@@ -1079,6 +1099,7 @@ namespace Ashfall.Core.Expeditions
             float step = exp.stance == nameof(ExpeditionStance.Speed) ? 1.5f : 1.0f;
             step *= VehicleTravelMultiplier(exp);
             step *= Math.Clamp(exp.weatherSpeedMultiplier, 0f, 5f); // Plan 20C §36.2
+            step *= SurvivorTravelMultiplier(exp);                  // C2 §D3
             exp.travelTicksCompleted += (int)Math.Round(step, MidpointRounding.AwayFromZero);
             if (exp.travelTicksCompleted >= exp.distanceTicks)
                 SetPhase(exp, ExpeditionPhase.Looting);
@@ -1242,6 +1263,7 @@ namespace Ashfall.Core.Expeditions
             if (exp.hasBicycle) step += 0.5f; // faster return on a bicycle
             step *= VehicleTravelMultiplier(exp);
             step *= Math.Clamp(exp.weatherSpeedMultiplier, 0f, 5f); // Plan 20C §36.2
+            step *= SurvivorTravelMultiplier(exp);                  // C2 §D3
             exp.travelTicksCompleted -= (int)Math.Round(step, MidpointRounding.AwayFromZero);
             if (exp.travelTicksCompleted <= 0)
             {
@@ -1249,6 +1271,18 @@ namespace Ashfall.Core.Expeditions
                 SetPhase(exp, ExpeditionPhase.Completed);
             }
         }
+
+        /// <summary>C2 §D3 — minimum limb-state travel factor (medical floor).</summary>
+        public const float MinSurvivorSpeedMultiplier = 0.15f;
+        /// <summary>C2 §D3 — maximum limb-state travel factor (bionic ceiling).</summary>
+        public const float MaxSurvivorSpeedMultiplier = 2f;
+
+        /// <summary>C2 §D3 — bounded limb-state factor (intact/absent = 1).</summary>
+        internal static float SurvivorSpeedFactor(float raw)
+            => Math.Clamp(raw > 0f ? raw : 1f, MinSurvivorSpeedMultiplier, MaxSurvivorSpeedMultiplier);
+
+        private static float SurvivorTravelMultiplier(ExpeditionState exp)
+            => SurvivorSpeedFactor(exp.survivorSpeedMultiplier);
 
         /// <summary>
         /// Travel multiplier of the dispatched vehicle. A broken-down vehicle

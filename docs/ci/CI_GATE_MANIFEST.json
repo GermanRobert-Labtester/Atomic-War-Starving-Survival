@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 50,
-  "fast_tier_count": 47,
+  "total_gates": 53,
+  "fast_tier_count": 50,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -552,6 +552,36 @@
       "command": "bash scripts/ci/uid-sidecar-gate.sh",
       "timeout_seconds": 30,
       "expected_summary": "UID Sidecar Gate: PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "coverage_gate",
+      "name": "Core Save Round-Trip & Determinism Coverage Gate (Plan 27B)",
+      "category": "Quality & Verification",
+      "command": "bash scripts/ci/coverage-gate.sh",
+      "timeout_seconds": 60,
+      "expected_summary": "Coverage gate passed",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "content_acceptance_pipeline",
+      "name": "Content Acceptance Pipeline Gate (Plan 45 / C1[14])",
+      "category": "Quality & Verification",
+      "command": "bash scripts/ci/content-acceptance-gate.sh",
+      "timeout_seconds": 120,
+      "expected_summary": "CONTENT_ACCEPTANCE_PIPELINE PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "port_contract_gate",
+      "name": "Core Port Contracts and Host Wiring Gate (Plan 36A / C2[13])",
+      "category": "Quality & Verification",
+      "command": "python3 scripts/ci/generate-port-contract.py --check",
+      "timeout_seconds": 60,
+      "expected_summary": "Port contract verification gate: all",
       "classification": "fast",
       "critical": true
     }

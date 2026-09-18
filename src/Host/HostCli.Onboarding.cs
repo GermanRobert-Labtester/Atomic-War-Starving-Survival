@@ -50,8 +50,7 @@ namespace AtomicWar.GodotApp
                 InventoryHostSession? inv = null;
                 try
                 {
-                    inv = new InventoryHostSession();
-                    inv.SeedStartingSupplies();
+                    inv = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: true);
                     cannedBefore = inv.Inventory.CountById("canned_food");
                     bandageBefore = inv.Inventory.CountById("bandage");
                 }

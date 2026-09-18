@@ -162,7 +162,7 @@ namespace AtomicWar.GodotApp
 
                 // ── GATE 5: Static UI Panel Accessibility Source Lint ────────────────
                 GD.Print("\n[Gate 5] Running static accessibility source lint over src/UI/...");
-                string uiDir = Path.Combine(Directory.GetCurrentDirectory(), "src", "UI");
+                string uiDir = Path.Combine(CatalogPath.ResolveRepoRoot(), "src", "UI");
                 if (Directory.Exists(uiDir))
                 {
                     var uiFiles = Directory.EnumerateFiles(uiDir, "*.cs", SearchOption.AllDirectories)

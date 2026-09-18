@@ -103,7 +103,12 @@ namespace Ashfall.Core.Tests
             Assert.True(report.Clean,
                 "cross-file reuse of an authored id must not error:\n"
                 + string.Join("\n", report.Errors));
-            Assert.Equal(1, report.AuthoredIds);
+            // D1 drift note: the scratch now declares the mandatory catalogs
+            // (trade embargoes / regional prices / duty roles), whose entity-root
+            // ids are counted too. The morphine authoring + tag reuse contract is
+            // unchanged, so assert presence/reuse rather than the historical
+            // exact count of 1.
+            Assert.True(report.AuthoredIds >= 1, "the morphine item must be authored");
             Assert.True(report.ReuseCount >= 1);
         }
 
@@ -209,6 +214,7 @@ namespace Ashfall.Core.Tests
             try
             {
                 Directory.CreateDirectory(scratch);
+                IntegrityScratchFixture.SeedMandatoryCatalogs(scratch);
                 seed(scratch);
                 return CatalogIntegrityValidator.Validate(scratch, new FileSystemIO());
             }

@@ -73,10 +73,13 @@ the default wiring and persists it in the radio save section.
   signal's authored authenticity is never changed retroactively;
 - candidates must be sorted by stable signal ID before weighting (caller
   contract); `ModifyCandidates` preserves order and is side-effect free;
-- **current architecture note**: the distress catalog is statically tunable —
-  no dynamic candidate-selection pool exists in the runtime yet. This API is
-  the tested policy the future selection consumer (Task 11+ availability
-  wave) must call; no scan mechanic was invented.
+- **RETIREMENT / STATUS NOTE (Wave 9 Part 2 — Option B Approved)**: `SignalTrustAvailability`
+  is DORMANT / RETIRED. ASHFALL distress tuning operates as an analog rotary dial over static
+  authored dial frequencies (`RadioTuner.EvaluateFrequency` -> `FindSignalAtFrequency`). No dynamic
+  candidate-selection pool or spawner exists in runtime, and inventing one would conflict with
+  the physical dial mechanic. The pure math contract and its unit tests (`SignalTrustTests.cs`)
+  are retained as mathematical specification pins, but runtime consumer integration is formally
+  closed and retired without runtime code alterations.
 
 ## 6. Save contract
 

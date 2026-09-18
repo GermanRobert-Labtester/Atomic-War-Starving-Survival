@@ -86,6 +86,49 @@ namespace Ashfall.Core.Phantoms
             return results;
         }
 
+        /// <summary>
+        /// Plan 41 / C1[12]: Bounded behavioral morale modifier derived from held heirlooms.
+        /// Derived directly from held heirloom memories without a parallel save store.
+        /// </summary>
+        public float GetHolderMoraleModifier(string holderId)
+        {
+            if (string.IsNullOrEmpty(holderId)) return 0f;
+            float total = 0f;
+            var held = GetHeirloomsForHolder(holderId);
+            for (int i = 0; i < held.Count; i++)
+            {
+                var inst = held[i];
+                var def = _catalog.GetById(inst.heirloom_id);
+                if (def == null || def.holder_memories == null || def.holder_memories.Count == 0) continue;
+                float effect = 0f;
+                for (int m = 0; m < def.holder_memories.Count; m++)
+                {
+                    if (string.Equals(def.holder_memories[m].affinity_key, "generic", StringComparison.OrdinalIgnoreCase))
+                    {
+                        effect = def.holder_memories[m].morale_effect;
+                        break;
+                    }
+                }
+                if (effect == 0f && def.holder_memories.Count > 0)
+                {
+                    effect = def.holder_memories[0].morale_effect;
+                }
+                total += effect;
+            }
+            return Math.Clamp(total, -20f, 20f);
+        }
+
+        /// <summary>
+        /// Plan 41 / C1[12]: Bounded fatigue relief derived from held heirlooms.
+        /// </summary>
+        public float GetHolderFatigueRelief(string holderId)
+        {
+            if (string.IsNullOrEmpty(holderId)) return 0f;
+            var held = GetHeirloomsForHolder(holderId);
+            if (held.Count == 0) return 0f;
+            return Math.Min(held.Count * 0.5f, 2.0f);
+        }
+
         public HeirloomInstanceState CreateInstance(
             string heirloomId,
             string initialHolderId,

@@ -80,6 +80,7 @@ namespace Ashfall.Core
         public static readonly string[] IdPrefixes =
         {
             "weather_gate_",
+            "commitment_",
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "chem_agent_", "comms_target_", "ceremony_", "robot_",
             "vessel_", "hobby_", "degrade_profile_", "thermal_gear_", "insul_", "fault_", "mentorship_", "caravan_",
@@ -929,6 +930,10 @@ namespace Ashfall.Core
             // Plan 14B (C1): regional price atlas integrity — loader contract,
             // goods-id resolution, region/category vocabularies, duplicate rows.
             ValidateRegionalPriceAtlas(dataDirectory, files, report);
+
+            // Plan 38 (C1[11]): commitments and deadlines integrity — loader contract,
+            // non-underflowing warning leads, and valid consequence targets.
+            ValidateCommitments(dataDirectory, files, report);
 
             // Plan 24A: health-aware duty validation. The duty role catalog is
             // required data, and its skill references must resolve against the
@@ -2146,6 +2151,21 @@ namespace Ashfall.Core
             foreach (var entry in load.Entries)
                 if (!string.IsNullOrEmpty(entry.ItemId) && !goodIds.Contains(entry.ItemId))
                     report.Error($"regional_prices.json: entry item '{entry.ItemId}' (region '{entry.Region}') does not resolve in economy_goods.json");
+        }
+
+        /// <summary>
+        /// Plan 38 / C1[11] — commitments.json must load cleanly through its strict
+        /// loader and every commitment must declare valid windows and consequence targets.
+        /// </summary>
+        public static void ValidateCommitments(string dataDirectory, IFileIO files, CatalogIntegrityReport report)
+        {
+            string path = Path.Combine(dataDirectory, Ashfall.Core.Commitments.CommitmentCatalogLoader.FileName);
+            if (!files.FileExists(path)) return;
+
+            var load = Ashfall.Core.Commitments.CommitmentCatalogLoader.Load(
+                dataDirectory, files, new SystemTextJsonSerializer());
+            foreach (var err in load.Errors)
+                report.Error(err);
         }
 
         /// <summary>Goods-catalog id set (economy_goods.json), for cross-file resolution in the economy geography validators.</summary>

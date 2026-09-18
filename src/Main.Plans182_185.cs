@@ -30,13 +30,12 @@ namespace AtomicWar.GodotApp
 
             _aviation = new AviationSystem();
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/aircraft_parts.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("aircraft_parts.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _aviation.LoadCatalog(json, new SystemTextJsonSerializer());
                 }
             }
@@ -76,13 +75,12 @@ namespace AtomicWar.GodotApp
 
             _forcedLabor = new ForcedLaborSystem();
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/labor_camps.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("labor_camps.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _forcedLabor.LoadCatalog(json, new SystemTextJsonSerializer());
                 }
             }
@@ -122,13 +120,12 @@ namespace AtomicWar.GodotApp
 
             _narcotics = new NarcoticsSystem();
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/narcotics.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("narcotics.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _narcotics.LoadCatalog(json, new SystemTextJsonSerializer());
                 }
             }
@@ -168,13 +165,12 @@ namespace AtomicWar.GodotApp
 
             _politics = new PoliticsSystem();
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/political_policies.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("political_policies.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _politics.LoadCatalog(json, new SystemTextJsonSerializer());
                 }
             }

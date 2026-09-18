@@ -156,7 +156,7 @@ namespace AtomicWar.GodotApp.UI
             // Load faction display names from lore catalog (idempotent)
             try
             {
-                string lorePath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
+                string lorePath = CatalogPath.ResolveCatalog("faction_lore.json");
                 if (File.Exists(lorePath))
                     FactionDisplayNameCatalog.LoadFromJson(File.ReadAllText(lorePath));
             }
@@ -709,7 +709,8 @@ namespace AtomicWar.GodotApp.UI
             float readiness = Ashfall.Core.Combat.WeaponEquipmentBridge.Readiness(_equipment, weaponInstance);
             float jam = Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(_equipment, weaponInstance);
 
-            var preview = _expeditionHost.EstimateExpedition(def.id, ExpeditionStance.Stealth, SelectedVehicleId, readiness, jam);
+            var preview = _expeditionHost.EstimateExpedition(def.id, ExpeditionStance.Stealth, SelectedVehicleId, readiness, jam,
+                survivorId: survivorId ?? _selectedSurvivorId);
             if (preview == null)
             {
                 _estimateLabel.Text = "NO ROUTE DATA.";

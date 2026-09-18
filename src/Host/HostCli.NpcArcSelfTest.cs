@@ -32,10 +32,11 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir) &&
-                !CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir))
+            if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir))
+                dataDir = CatalogPath.ResolveDataDir();
+            if (string.IsNullOrEmpty(dataDir))
             {
-                GD.Print("[FAIL] could not locate Assets/StreamingAssets/Data");
+                GD.Print("[FAIL] could not locate StreamingAssets data directory");
                 return 1;
             }
 

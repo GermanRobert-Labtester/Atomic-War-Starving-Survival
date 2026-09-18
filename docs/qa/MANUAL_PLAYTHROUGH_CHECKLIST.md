@@ -1,8 +1,10 @@
 # Manual Playthrough Checklist — Day 1 → Day 2 Milestone
 
 > [!NOTE]
-> **LAST VERIFIED AT HEAD — 2026-08-27**
+> **LAST VERIFIED AT HEAD — 2026-09-17 (Wave 10 Standing Product Proof)**
 > - **Test Suite Baseline:** All Core unit tests passing (`dotnet test`, net9.0, 0 failures)
+> - **Standing Failures:** required to be **0** for release; verified 0 standing failures at HEAD.
+> - **7-Day Standing Product Proof:** `--7-day-smoke-selftest` passes 10/10 gates cleanly (seed 9001).
 > - **Data Integrity Gate:** 129 StreamingAssets JSON catalogs (4,794 authored IDs, 0 errors)
 > - **UI Snapshot Baseline:** 29/29 golden snapshot targets verified
 > - **Canonical Headless Verification Pipeline:**

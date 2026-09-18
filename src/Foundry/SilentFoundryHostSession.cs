@@ -211,8 +211,8 @@ namespace AtomicWar.GodotApp
             SaltMine.OnWorkerExposure += (id, contam) => { LastEvent = $"Worker exposure at {id}: {contam:P0}"; StateChanged?.Invoke(); };
 
             // The authored journal templates stay the source of the narrative text.
-            string dataDir = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data");
-            string jrnlPath = Path.Combine(dataDir, "narrative", "jrnl_templates_cycle_d.json");
+            // Plan 26A — resolve through the one data-path authority.
+            string jrnlPath = CatalogPath.ResolveSub("narrative", "jrnl_templates_cycle_d.json");
             if (System.IO.File.Exists(jrnlPath))
             {
                 try

@@ -1,8 +1,16 @@
 {
   "schema_version": "1.0.0",
-  "description": "Authoritative policy classifying all Core integration seams (REM-002 / R12).",
-  "total_seams": 144,
+  "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
+  "total_seams": 248,
   "ports": [
+    {
+      "class_name": "AeroponicsSystem",
+      "method_name": "RegisterProfile",
+      "file_path": "Assets/Ashfall.Core/Shelter/AeroponicsSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in AeroponicsSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
     {
       "class_name": "AmputationSystem",
       "method_name": "RegisterProcedure",
@@ -10,6 +18,47 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in AmputationSystem."
+    },
+    {
+      "class_name": "AnomalyHazardSystem",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/World/AnomalyHazardSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in AnomalyHazardSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ApprenticeshipSystem",
+      "method_name": "RegisterMentorship",
+      "file_path": "Assets/Ashfall.Core/ApprenticeshipSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in ApprenticeshipSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ApprenticeshipSystem",
+      "method_name": "RegisterWill",
+      "file_path": "Assets/Ashfall.Core/ApprenticeshipSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in ApprenticeshipSystem.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "AquiferPiezometerEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Shelter/AquiferPiezometerEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in AquiferPiezometerEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "AquiferPiezometerEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Shelter/AquiferPiezometerEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in AquiferPiezometerEngine.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "ArchaeologySystem",
@@ -29,12 +78,68 @@
       "diagnostic": true
     },
     {
+      "class_name": "BallisticsWorkbenchSystem",
+      "method_name": "RegisterDefinition",
+      "file_path": "Assets/Ashfall.Core/Combat/BallisticsWorkbenchSystem.cs",
+      "owner": "combat",
+      "reason": "Integration seam in BallisticsWorkbenchSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "BioFermentationEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Shelter/BioFermentationEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in BioFermentationEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "BionicsSystem",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Medical/BionicsSystem.cs",
+      "owner": "medical",
+      "reason": "Integration seam in BionicsSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "BlackFlotillaStanding",
       "method_name": "Register",
       "file_path": "Assets/Ashfall.Core/Maritime/BlackFlotillaStanding.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in BlackFlotillaStanding."
+    },
+    {
+      "class_name": "BlackMarketSystem",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Economy/BlackMarketSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in BlackMarketSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "BlackMarketSystem",
+      "method_name": "BindFactionBountySystem",
+      "file_path": "Assets/Ashfall.Core/Economy/BlackMarketSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in BlackMarketSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "BlackMarketSystem",
+      "method_name": "BindMarket",
+      "file_path": "Assets/Ashfall.Core/Economy/BlackMarketSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in BlackMarketSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CampaignCalendar",
+      "method_name": "BindProfile",
+      "file_path": "Assets/Ashfall.Core/Campaign/CampaignCalendar.cs",
+      "owner": "campaign",
+      "reason": "Integration seam in CampaignCalendar.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "CampaignDayCoordinator",
@@ -45,6 +150,38 @@
       "reason": "Integration seam in CampaignDayCoordinator."
     },
     {
+      "class_name": "CarbonCompositeEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Shelter/CarbonCompositeEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in CarbonCompositeEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CarbonCompositeEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Shelter/CarbonCompositeEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in CarbonCompositeEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CargoAirdropSystem",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/World/CargoAirdropSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in CargoAirdropSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CatalogBootValidator",
+      "method_name": "RegisterCatalog",
+      "file_path": "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
+      "classification": "HOST_REQUIRED",
+      "owner": "core-architecture",
+      "reason": "Integration seam in CatalogEntry."
+    },
+    {
       "class_name": "CatalogDiagnostics",
       "method_name": "RegisterLog",
       "file_path": "Assets/Ashfall.Core/IO/CatalogDiagnostics.cs",
@@ -52,14 +189,6 @@
       "owner": "core-architecture",
       "reason": "Integration seam in CatalogDiagnostics.",
       "diagnostic": true
-    },
-    {
-      "class_name": "CatalogEntry",
-      "method_name": "RegisterCatalog",
-      "file_path": "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
-      "classification": "HOST_REQUIRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in CatalogEntry."
     },
     {
       "class_name": "CatalogIntegrityDefinitionChecker",
@@ -102,6 +231,38 @@
       "reason": "Integration seam in CombatTraumaSystem."
     },
     {
+      "class_name": "CommitmentSystem",
+      "method_name": "RegisterCommitment",
+      "file_path": "Assets/Ashfall.Core/Commitments/CommitmentSystem.cs",
+      "owner": "commitments",
+      "reason": "Integration seam in CommitmentSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "CompanionAnimalSystem",
+      "method_name": "BindFoodPort",
+      "file_path": "Assets/Ashfall.Core/Ecology/CompanionAnimalSystem.cs",
+      "owner": "ecology",
+      "reason": "Integration seam in CompanionAnimalSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CompanionAnimalSystem",
+      "method_name": "RegisterCompanion",
+      "file_path": "Assets/Ashfall.Core/Ecology/CompanionAnimalSystem.cs",
+      "owner": "ecology",
+      "reason": "Integration seam in CompanionAnimalSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CounterIntelligenceSystem",
+      "method_name": "RegisterProfile",
+      "file_path": "Assets/Ashfall.Core/Factions/CounterIntelligenceSystem.cs",
+      "owner": "factions",
+      "reason": "Integration seam in CounterIntelligenceSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "CraftingSystem",
       "method_name": "BindCraftResultGate",
       "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
@@ -110,6 +271,14 @@
       "reason": "Integration seam in CraftingSystem.",
       "activation_condition": "Planned beta activation or cleanup boundary.",
       "expiry": "2026-12-31"
+    },
+    {
+      "class_name": "CraftingSystem",
+      "method_name": "BindResearchGate",
+      "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
+      "owner": "crafting",
+      "reason": "Integration seam in CraftingSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "CrisisPresentationCoordinator",
@@ -126,6 +295,48 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in CrossingQuestSystem."
+    },
+    {
+      "class_name": "CrossingQuestSystem",
+      "method_name": "BindConsequenceLedger",
+      "file_path": "Assets/Ashfall.Core/Crossing/CrossingQuestSystem.cs",
+      "owner": "crossing",
+      "reason": "Integration seam in CrossingQuestSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CrossingQuestSystem",
+      "method_name": "BindMoralSystem",
+      "file_path": "Assets/Ashfall.Core/Crossing/CrossingQuestSystem.cs",
+      "owner": "crossing",
+      "reason": "Integration seam in CrossingQuestSystem.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "CryoVaultSystem",
+      "method_name": "RegisterSample",
+      "file_path": "Assets/Ashfall.Core/Shelter/CryoVaultSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in CryoVaultSystem.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "CryogenicAirSeparationSystem",
+      "method_name": "ConfigureProducts",
+      "file_path": "Assets/Ashfall.Core/CryogenicAirSeparationSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in CryogenicAirSeparationSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "CvdDiamondSynthesisEngine",
+      "method_name": "RegisterConsumer",
+      "file_path": "Assets/Ashfall.Core/Shelter/CvdDiamondSynthesisEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in CvdDiamondSynthesisEngine.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "DamagedMapSystem",
@@ -185,20 +396,28 @@
       "reason": "Integration seam in DiseaseSystem."
     },
     {
+      "class_name": "DiseaseSystem",
+      "method_name": "RegisterStrain",
+      "file_path": "Assets/Ashfall.Core/Disease/DiseaseSystem.cs",
+      "owner": "disease",
+      "reason": "Integration seam in DiseaseSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "DistressFollowUpScheduler",
+      "method_name": "BindToMissionEvents",
+      "file_path": "Assets/Ashfall.Core/Radio/DistressFollowUpScheduler.cs",
+      "owner": "radio",
+      "reason": "Integration seam in DistressFollowUpScheduler.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "DoorEncounterSystem",
       "method_name": "RegisterEncounter",
       "file_path": "Assets/Ashfall.Core/YearOfAsh/DoorEncounterSystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in DoorEncounterSystem."
-    },
-    {
-      "class_name": "DoseLedgerSystem",
-      "method_name": "ConfigureLadder",
-      "file_path": "Assets/Ashfall.Core/DoseLedgerSystem.cs",
-      "classification": "HOST_REQUIRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in DoseLedgerSystem."
     },
     {
       "class_name": "DosimeterCalibrationSystem",
@@ -258,6 +477,22 @@
       "reason": "Integration seam in DutyRosterSystem."
     },
     {
+      "class_name": "EbPvdCoatingEngine",
+      "method_name": "RegisterCoating",
+      "file_path": "Assets/Ashfall.Core/Shelter/EbPvdCoatingEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in EbPvdCoatingEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "EchoSystem",
+      "method_name": "RegisterRange",
+      "file_path": "Assets/Ashfall.Core/Narrative/EchoSystem.cs",
+      "owner": "narrative",
+      "reason": "Integration seam in EchoSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "EquipmentConditionSystem",
       "method_name": "RegisterItem",
       "file_path": "Assets/Ashfall.Core/EquipmentConditionSystem.cs",
@@ -274,6 +509,56 @@
       "reason": "Integration seam in EquipmentConditionSystem.",
       "activation_condition": "Planned beta activation or cleanup boundary.",
       "expiry": "2026-12-31"
+    },
+    {
+      "class_name": "EspionageConsequenceRouter",
+      "method_name": "BindConsumers",
+      "file_path": "Assets/Ashfall.Core/Factions/EspionageConsequenceRouter.cs",
+      "owner": "factions",
+      "reason": "Integration seam in EspionageConsequenceRouter.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "EspionageSystem",
+      "method_name": "BindAgentAvailability",
+      "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
+      "owner": "factions",
+      "reason": "Integration seam in EspionageSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "EspionageSystem",
+      "method_name": "BindAgentCapability",
+      "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
+      "owner": "factions",
+      "reason": "Integration seam in EspionageSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "EspionageSystem",
+      "method_name": "BindFactionResolver",
+      "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
+      "owner": "factions",
+      "reason": "Integration seam in EspionageSystem.",
+      "classification": "DEFERRED",
+      "activation_condition": "Planned beta activation or host wiring.",
+      "expiry": "2026-12-31"
+    },
+    {
+      "class_name": "EspionageSystem",
+      "method_name": "BindResearchGate",
+      "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
+      "owner": "factions",
+      "reason": "Integration seam in EspionageSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "EspionageSystem",
+      "method_name": "BindRng",
+      "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
+      "owner": "factions",
+      "reason": "Integration seam in EspionageSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "EvidenceLedger",
@@ -378,6 +663,46 @@
       "reason": "Integration seam in FinalWishSystem."
     },
     {
+      "class_name": "FischerTropschSynthesisEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Shelter/FischerTropschSynthesisEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in FischerTropschSynthesisEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "FischerTropschSynthesisEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Shelter/FischerTropschSynthesisEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in FischerTropschSynthesisEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "FischerTropschSynthesisEngine",
+      "method_name": "RegisterLubricantConsumer",
+      "file_path": "Assets/Ashfall.Core/Shelter/FischerTropschSynthesisEngine.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in FischerTropschSynthesisEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "FluidLogisticsSystem",
+      "method_name": "BindRng",
+      "file_path": "Assets/Ashfall.Core/Shelter/FluidLogisticsSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in FluidLogisticsSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "FluidLogisticsSystem",
+      "method_name": "ConfigureSink",
+      "file_path": "Assets/Ashfall.Core/Shelter/FluidLogisticsSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in FluidLogisticsSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "FungiCultivationSystem",
       "method_name": "RegisterCatalog",
       "file_path": "Assets/Ashfall.Core/Farming/FungiCultivationSystem.cs",
@@ -400,6 +725,63 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in GenerationalSystem."
+    },
+    {
+      "class_name": "GeothermalAquiferSystem",
+      "method_name": "RegisterStrata",
+      "file_path": "Assets/Ashfall.Core/Shelter/GeothermalAquiferSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in GeothermalAquiferSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "GeothermalOrcSystem",
+      "method_name": "RegisterStratum",
+      "file_path": "Assets/Ashfall.Core/Shelter/GeothermalOrcSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in GeothermalOrcSystem.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "GrainProcessingSystem",
+      "method_name": "RegisterRecipe",
+      "file_path": "Assets/Ashfall.Core/GrainProcessingSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in GrainProcessingSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "GrainProcessingSystem",
+      "method_name": "RegisterSilo",
+      "file_path": "Assets/Ashfall.Core/GrainProcessingSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in GrainProcessingSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "GroundPenetratingRadarEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/World/GroundPenetratingRadarEngine.cs",
+      "owner": "world",
+      "reason": "Integration seam in GroundPenetratingRadarEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "GroundPenetratingRadarEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/World/GroundPenetratingRadarEngine.cs",
+      "owner": "world",
+      "reason": "Integration seam in GroundPenetratingRadarEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "HeliographSystem",
+      "method_name": "RegisterStation",
+      "file_path": "Assets/Ashfall.Core/HeliographSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in HeliographSystem.",
+      "classification": "LIVE_VIA_CORE"
     },
     {
       "class_name": "HoldfastFactionsCatalog",
@@ -432,6 +814,14 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in HoldfastQuestSystem."
+    },
+    {
+      "class_name": "HydraulicExtrusionEngine",
+      "method_name": "RegisterMachine",
+      "file_path": "Assets/Ashfall.Core/Foundry/HydraulicExtrusionEngine.cs",
+      "owner": "foundry",
+      "reason": "Integration seam in HydraulicExtrusionEngine.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "IceRoadSystem",
@@ -476,6 +866,30 @@
       "reason": "Integration seam in ItemCatalog."
     },
     {
+      "class_name": "ItemDescriptionCatalog",
+      "method_name": "Register",
+      "file_path": "Assets/Ashfall.Core/Inventory/ItemDescriptionCatalog.cs",
+      "owner": "inventory",
+      "reason": "Integration seam in ItemDescriptionCatalog.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ItemDescriptionCatalog",
+      "method_name": "RegisterAlias",
+      "file_path": "Assets/Ashfall.Core/Inventory/ItemDescriptionCatalog.cs",
+      "owner": "inventory",
+      "reason": "Integration seam in ItemDescriptionCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "JournalSystem",
+      "method_name": "BindAuthoredCorpus",
+      "file_path": "Assets/Ashfall.Core/Journal/JournalSystem.cs",
+      "owner": "journal",
+      "reason": "Integration seam in JournalSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "JournalVoice",
       "method_name": "BindCatalog",
       "file_path": "Assets/Ashfall.Core/Journal/JournalVoice.cs",
@@ -517,6 +931,22 @@
       "diagnostic": true
     },
     {
+      "class_name": "LocalizationService",
+      "method_name": "RegisterTranslation",
+      "file_path": "Assets/Ashfall.Core/Localization/LocalizationService.cs",
+      "owner": "localization",
+      "reason": "Integration seam in LocalizationService.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "LyophilizationSystem",
+      "method_name": "RegisterMedicalProtocol",
+      "file_path": "Assets/Ashfall.Core/Medical/LyophilizationSystem.cs",
+      "owner": "medical",
+      "reason": "Integration seam in LyophilizationSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "MaritimeDiveSystem",
       "method_name": "RegisterSite",
       "file_path": "Assets/Ashfall.Core/Maritime/MaritimeDiveSystem.cs",
@@ -532,6 +962,38 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in MarketSystem."
+    },
+    {
+      "class_name": "MarketSystem",
+      "method_name": "BindCommodityCatalog",
+      "file_path": "Assets/Ashfall.Core/Economy/MarketSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in MarketSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "MarketSystem",
+      "method_name": "BindEmbargoSystem",
+      "file_path": "Assets/Ashfall.Core/Economy/MarketSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in MarketSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "MarketSystem",
+      "method_name": "BindRegionalPriceAtlas",
+      "file_path": "Assets/Ashfall.Core/Economy/MarketSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in MarketSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "MaterialProfileCatalog",
+      "method_name": "BindOutputItem",
+      "file_path": "Assets/Ashfall.Core/Foundry/MaterialProfileCatalog.cs",
+      "owner": "foundry",
+      "reason": "Integration seam in MaterialProfileCatalog.",
+      "classification": "LIVE_VIA_CORE"
     },
     {
       "class_name": "MedicalPipelineCoordinator",
@@ -558,12 +1020,28 @@
       "reason": "Integration seam in MercenarySystem."
     },
     {
+      "class_name": "MicrofluidicDiagnosticEngine",
+      "method_name": "RegisterAssay",
+      "file_path": "Assets/Ashfall.Core/Medical/MicrofluidicDiagnosticEngine.cs",
+      "owner": "medical",
+      "reason": "Integration seam in MicrofluidicDiagnosticEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "MilitaryBranchCatalog",
       "method_name": "Register",
       "file_path": "Assets/Ashfall.Core/Factions/MilitaryBranchCatalog.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in MilitaryBranchCatalog."
+    },
+    {
+      "class_name": "MineClearingFlailEngine",
+      "method_name": "RegisterModule",
+      "file_path": "Assets/Ashfall.Core/Expeditions/MineClearingFlailEngine.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in MineClearingFlailEngine.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "MoralBranchingSystem",
@@ -580,6 +1058,22 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in MoralBranchingSystem."
+    },
+    {
+      "class_name": "MoralChoiceSystem",
+      "method_name": "RegisterQuest",
+      "file_path": "Assets/Ashfall.Core/MoralChoice/MoralChoiceSystem.cs",
+      "owner": "moralchoice",
+      "reason": "Integration seam in MoralChoiceSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "MoralChoiceSystem",
+      "method_name": "RegisterQuests",
+      "file_path": "Assets/Ashfall.Core/MoralChoice/MoralChoiceSystem.cs",
+      "owner": "moralchoice",
+      "reason": "Integration seam in MoralChoiceSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "MoraleMarkSystem",
@@ -604,6 +1098,24 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in MutationSystem."
+    },
+    {
+      "class_name": "NarrativeArcEventSystem",
+      "method_name": "RegisterRange",
+      "file_path": "Assets/Ashfall.Core/Narrative/NarrativeArcEventSystem.cs",
+      "owner": "narrative",
+      "reason": "Integration seam in NarrativeArcEventSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "NarrativeDiscoveryCatalog",
+      "method_name": "RegisterAdapter",
+      "file_path": "Assets/Ashfall.Core/Narrative/NarrativeDiscoveryCatalog.cs",
+      "owner": "narrative",
+      "reason": "Integration seam in NarrativeDiscoveryCatalog.",
+      "classification": "DEFERRED",
+      "activation_condition": "Planned beta activation or host wiring.",
+      "expiry": "2026-12-31"
     },
     {
       "class_name": "NarrativeEncounterSystem",
@@ -670,6 +1182,14 @@
       "reason": "Integration seam in PanelRegistryBootstrap."
     },
     {
+      "class_name": "PathogenStrainSystem",
+      "method_name": "BindEngineHooks",
+      "file_path": "Assets/Ashfall.Core/Disease/PathogenStrainSystem.cs",
+      "owner": "disease",
+      "reason": "Integration seam in PathogenStrainSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "PhantomMemoryEngine",
       "method_name": "RegisterRule",
       "file_path": "Assets/Ashfall.Core/PhantomMemoryEngine.cs",
@@ -703,12 +1223,85 @@
       "diagnostic": true
     },
     {
+      "class_name": "PharmaceuticalTabletEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Medical/PharmaceuticalTabletEngine.cs",
+      "owner": "medical",
+      "reason": "Integration seam in PharmaceuticalTabletEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PharmaceuticalTabletEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Medical/PharmaceuticalTabletEngine.cs",
+      "owner": "medical",
+      "reason": "Integration seam in PharmaceuticalTabletEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PlasticPyrolysisSystem",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Shelter/PlasticPyrolysisSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in PlasticPyrolysisSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PlasticPyrolysisSystem",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Shelter/PlasticPyrolysisSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in PlasticPyrolysisSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PneumaticDispatchSystem",
+      "method_name": "RegisterEndpoint",
+      "file_path": "Assets/Ashfall.Core/Shelter/PneumaticDispatchSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in PneumaticDispatchSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PowerGridSystem",
+      "method_name": "ConfigureSurge",
+      "file_path": "Assets/Ashfall.Core/Shelter/PowerGridSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in PowerGridSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PowerGridSystem",
+      "method_name": "RegisterLoadRoom",
+      "file_path": "Assets/Ashfall.Core/Shelter/PowerGridSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in PowerGridSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "PrisonerSystem",
       "method_name": "RegisterTactic",
       "file_path": "Assets/Ashfall.Core/Factions/PrisonerSystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in PrisonerSystem."
+    },
+    {
+      "class_name": "ProceduralItemInstance",
+      "method_name": "ConfigureSequence",
+      "file_path": "Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs",
+      "owner": "inventory",
+      "reason": "Integration seam in ProceduralItemInstance.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "QuestRuntimeCoordinator",
+      "method_name": "Register",
+      "file_path": "Assets/Ashfall.Core/Quests/QuestRuntimeCoordinator.cs",
+      "owner": "quests",
+      "reason": "Integration seam in QuestRuntimeCoordinator.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "QuestlineSystem",
@@ -768,12 +1361,44 @@
       "reason": "Integration seam in RadioStationCatalog."
     },
     {
+      "class_name": "RailGrindingEngine",
+      "method_name": "RegisterHead",
+      "file_path": "Assets/Ashfall.Core/Expeditions/RailGrindingEngine.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in RailGrindingEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "RailwayInterlockEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Expeditions/RailwayInterlockEngine.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in RailwayInterlockEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "RailwayInterlockEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Expeditions/RailwayInterlockEngine.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in RailwayInterlockEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "RailwaySystem",
       "method_name": "RegisterCatalog",
       "file_path": "Assets/Ashfall.Core/Expeditions/RailwaySystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in RailwaySystem."
+    },
+    {
+      "class_name": "RailwaySystem",
+      "method_name": "RegisterLogisticsCatalog",
+      "file_path": "Assets/Ashfall.Core/Expeditions/RailwaySystem.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in RailwaySystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "RationConflictSystem",
@@ -792,12 +1417,36 @@
       "reason": "Integration seam in RebelBranchCatalog."
     },
     {
+      "class_name": "ReconTelemetrySystem",
+      "method_name": "RegisterPlatform",
+      "file_path": "Assets/Ashfall.Core/Expeditions/ReconTelemetrySystem.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in ReconTelemetrySystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "ResearchSystem",
       "method_name": "Register",
       "file_path": "Assets/Ashfall.Core/Research/ResearchSystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in ResearchSystem."
+    },
+    {
+      "class_name": "RouteInfrastructureSystem",
+      "method_name": "RegisterMinefield",
+      "file_path": "Assets/Ashfall.Core/World/RouteInfrastructureSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in RouteInfrastructureSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "RouteInfrastructureSystem",
+      "method_name": "RegisterRailSegment",
+      "file_path": "Assets/Ashfall.Core/World/RouteInfrastructureSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in RouteInfrastructureSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "SafeCrackingSystem",
@@ -816,6 +1465,14 @@
       "reason": "Integration seam in SaltMineExtractionSystem."
     },
     {
+      "class_name": "SanitationSystem",
+      "method_name": "BindFacilityCatalog",
+      "file_path": "Assets/Ashfall.Core/Shelter/SanitationSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in SanitationSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "SeasonalEventSystem",
       "method_name": "BindDefinitions",
       "file_path": "Assets/Ashfall.Core/World/SeasonalEventSystem.cs",
@@ -824,12 +1481,28 @@
       "reason": "Integration seam in SeasonalEventSystem."
     },
     {
+      "class_name": "SeismicDynamicsSystem",
+      "method_name": "RegisterFault",
+      "file_path": "Assets/Ashfall.Core/Shelter/SeismicDynamicsSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in SeismicDynamicsSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "SessionLifecycleRegistry",
       "method_name": "Register",
       "file_path": "Assets/Ashfall.Core/Lifecycle/SessionLifecycleRegistry.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in SessionLifecycleRegistry."
+    },
+    {
+      "class_name": "ShelterBarterSystem",
+      "method_name": "RegisterCaravan",
+      "file_path": "Assets/Ashfall.Core/Economy/ShelterBarterSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in ShelterBarterSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "ShelterDecorSystem",
@@ -852,11 +1525,9 @@
       "class_name": "ShelterRadioStationSystem",
       "method_name": "BindWeatherNoiseProvider",
       "file_path": "Assets/Ashfall.Core/Radio/ShelterRadioStationSystem.cs",
-      "classification": "DEFERRED",
+      "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
-      "reason": "Integration seam in ShelterRadioStationSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "reason": "Integration seam in ShelterRadioStationSystem."
     },
     {
       "class_name": "ShelterSocialDynamicsSystem",
@@ -878,6 +1549,24 @@
     },
     {
       "class_name": "ShelterThermalSystem",
+      "method_name": "RegisterExternalBurst",
+      "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in ShelterThermalSystem.",
+      "classification": "DEFERRED",
+      "activation_condition": "Planned beta activation or host wiring.",
+      "expiry": "2026-12-31"
+    },
+    {
+      "class_name": "ShelterThermalSystem",
+      "method_name": "RegisterInsulation",
+      "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in ShelterThermalSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ShelterThermalSystem",
       "method_name": "RegisterThermalGear",
       "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
       "classification": "DEFERRED",
@@ -894,6 +1583,14 @@
       "owner": "core-architecture",
       "reason": "Integration seam in ShelterWorkshopSystem.",
       "diagnostic": true
+    },
+    {
+      "class_name": "SignalTriangulationSystem",
+      "method_name": "RegisterStationBaseline",
+      "file_path": "Assets/Ashfall.Core/Radio/SignalTriangulationSystem.cs",
+      "owner": "radio",
+      "reason": "Integration seam in SignalTriangulationSystem.",
+      "classification": "LIVE_VIA_CORE"
     },
     {
       "class_name": "SilentFoundrySystem",
@@ -913,6 +1610,14 @@
     },
     {
       "class_name": "SilentFoundrySystem",
+      "method_name": "BindGlassworksCatalog",
+      "file_path": "Assets/Ashfall.Core/Foundry/SilentFoundrySystem.Glassworks.cs",
+      "owner": "foundry",
+      "reason": "Integration seam in SilentFoundrySystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "SilentFoundrySystem",
       "method_name": "BindInventory",
       "file_path": "Assets/Ashfall.Core/Foundry/SilentFoundrySystem.cs",
       "classification": "HOST_REQUIRED",
@@ -921,11 +1626,36 @@
     },
     {
       "class_name": "SilentFoundrySystem",
+      "method_name": "BindMaterialProfiles",
+      "file_path": "Assets/Ashfall.Core/Foundry/SilentFoundrySystem.Material.cs",
+      "owner": "foundry",
+      "reason": "Integration seam in SilentFoundrySystem.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "SilentFoundrySystem",
+      "method_name": "BindMetallurgyCatalog",
+      "file_path": "Assets/Ashfall.Core/Foundry/SilentFoundrySystem.Metallurgy.cs",
+      "owner": "foundry",
+      "reason": "Integration seam in SilentFoundrySystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "SilentFoundrySystem",
       "method_name": "BindTreaties",
       "file_path": "Assets/Ashfall.Core/Foundry/SilentFoundrySystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in SilentFoundrySystem."
+    },
+    {
+      "class_name": "SilentFoundrySystem",
+      "method_name": "BindVentilation",
+      "file_path": "Assets/Ashfall.Core/Foundry/SilentFoundrySystem.Metallurgy.cs",
+      "owner": "foundry",
+      "reason": "Integration seam in SilentFoundrySystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "SkillProgressionSystem",
@@ -954,6 +1684,14 @@
       "reason": "Integration seam in SpiritualMeaningCoordinator.",
       "activation_condition": "Planned beta activation or cleanup boundary.",
       "expiry": "2026-12-31"
+    },
+    {
+      "class_name": "StartingLevelSystem",
+      "method_name": "BindMaintenance",
+      "file_path": "Assets/Ashfall.Core/StartingLevel/StartingLevelSystem.cs",
+      "owner": "startinglevel",
+      "reason": "Integration seam in StartingLevelSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "StealthSystem",
@@ -1025,6 +1763,14 @@
       "reason": "Integration seam in SurvivorSocialCoordinator."
     },
     {
+      "class_name": "TacticalCombatSystem",
+      "method_name": "ConfigureBreachingLogistics",
+      "file_path": "Assets/Ashfall.Core/Combat/TacticalCombatSystem.Breaching.cs",
+      "owner": "combat",
+      "reason": "Integration seam in TacticalCombatSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "ThirdonaryQuestSystem",
       "method_name": "BindCatalog",
       "file_path": "Assets/Ashfall.Core/Thirdonary/ThirdonaryQuestSystem.cs",
@@ -1033,12 +1779,20 @@
       "reason": "Integration seam in ThirdonaryQuestSystem."
     },
     {
+      "class_name": "TradeEmbargoSystem",
+      "method_name": "RegisterRule",
+      "file_path": "Assets/Ashfall.Core/Economy/TradeEmbargoSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in TradeEmbargoSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "TradeSpecialtySystem",
-      "method_name": "BindToCrafting",
+      "method_name": "RegisterProfessionInfo",
       "file_path": "Assets/Ashfall.Core/Survivors/TradeSpecialtySystem.cs",
-      "classification": "HOST_REQUIRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in TradeSpecialtySystem to subscribe to crafting completion events."
+      "owner": "survivors",
+      "reason": "Integration seam in TradeSpecialtySystem.",
+      "classification": "LIVE_VIA_CORE"
     },
     {
       "class_name": "TradeSpecialtySystem",
@@ -1069,6 +1823,38 @@
       "expiry": "2026-12-31"
     },
     {
+      "class_name": "TrophySystem",
+      "method_name": "RegisterTrophy",
+      "file_path": "Assets/Ashfall.Core/Shelter/TrophySystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in TrophySystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "UvCoronaDetectionEngine",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Radio/UvCoronaDetectionEngine.cs",
+      "owner": "radio",
+      "reason": "Integration seam in UvCoronaDetectionEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "UvCoronaDetectionEngine",
+      "method_name": "BindInventory",
+      "file_path": "Assets/Ashfall.Core/Radio/UvCoronaDetectionEngine.cs",
+      "owner": "radio",
+      "reason": "Integration seam in UvCoronaDetectionEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "VehicleGarageSystem",
+      "method_name": "RegisterRecoveryMission",
+      "file_path": "Assets/Ashfall.Core/Expeditions/VehicleGarageSystem.cs",
+      "owner": "expeditions",
+      "reason": "Integration seam in VehicleGarageSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "VentilationSystem",
       "method_name": "BindStageServices",
       "file_path": "Assets/Ashfall.Core/VentilationSystem.cs",
@@ -1085,12 +1871,38 @@
       "reason": "Integration seam in VentilationSystem."
     },
     {
+      "class_name": "VerdictAccusationSystem",
+      "method_name": "Bind",
+      "file_path": "Assets/Ashfall.Core/Verdict/VerdictAccusationSystem.cs",
+      "owner": "verdict",
+      "reason": "Integration seam in VerdictAccusationSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
       "class_name": "VerdictNpcSystem",
       "method_name": "Register",
       "file_path": "Assets/Ashfall.Core/Verdict/VerdictNpcSystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in VerdictNpcSystem."
+    },
+    {
+      "class_name": "WastelandMapSystem",
+      "method_name": "RegisterTrapSiteLocation",
+      "file_path": "Assets/Ashfall.Core/World/WastelandMapSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in WastelandMapSystem.",
+      "classification": "DEFERRED",
+      "activation_condition": "Planned beta activation or host wiring.",
+      "expiry": "2026-12-31"
+    },
+    {
+      "class_name": "WaterTreatmentSystem",
+      "method_name": "RegisterContaminationAdvisory",
+      "file_path": "Assets/Ashfall.Core/WaterTreatmentSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in WaterTreatmentSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "WaystationNetworkSystem",
@@ -1109,6 +1921,14 @@
       "reason": "Integration seam in WeatherGateCatalog."
     },
     {
+      "class_name": "WeatherHardeningSystem",
+      "method_name": "RegisterUpgrade",
+      "file_path": "Assets/Ashfall.Core/World/WeatherHardeningSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in WeatherHardeningSystem.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "WeatherSondeSystem",
       "method_name": "BindRecoveryInventory",
       "file_path": "Assets/Ashfall.Core/World/WeatherSondeSystem.cs",
@@ -1123,6 +1943,14 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in WeatherSystem."
+    },
+    {
+      "class_name": "WeatherSystem",
+      "method_name": "BindWeatherEffects",
+      "file_path": "Assets/Ashfall.Core/World/WeatherSystem.cs",
+      "owner": "world",
+      "reason": "Integration seam in WeatherSystem.",
+      "classification": "HOST_REQUIRED"
     },
     {
       "class_name": "WildlifeMigrationSystem",
@@ -1190,12 +2018,29 @@
     },
     {
       "class_name": "WorkshopReverseEngineeringSystem",
+      "method_name": "BindTechSalvageRng",
+      "file_path": "Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs",
+      "owner": "core-architecture",
+      "reason": "Integration seam in WorkshopReverseEngineeringSystem.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "WorkshopReverseEngineeringSystem",
       "method_name": "RegisterRelic",
       "file_path": "Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs",
       "classification": "TEST_ONLY",
       "owner": "core-architecture",
       "reason": "Integration seam in WorkshopReverseEngineeringSystem.",
       "diagnostic": true
+    },
+    {
+      "class_name": "ZealotrySystem",
+      "method_name": "RegisterLeader",
+      "file_path": "Assets/Ashfall.Core/Survivors/ZealotrySystem.cs",
+      "owner": "survivors",
+      "reason": "Integration seam in ZealotrySystem.",
+      "classification": "HOST_REQUIRED"
     }
   ]
 }

@@ -42,6 +42,7 @@ namespace Ashfall.Core
         Plans122to125BalanceSoak,
         SkyDefenseSelfTest,
         VehicleGarageSelfTest,
+        PortContractSelfTest,
 
         // Expansions & Campaign Modules
         ArbitrationSelfTest,
@@ -357,7 +358,13 @@ namespace Ashfall.Core
                     "Core & System Gates",
                     "--plans-122-125-balance-soak",
                     null,
-                    "Flagship Plans 122-125 Phase 11: long-horizon balance soaks — SOFC 180-day characterization, acoustic fixed-seed event matrix, diamond 120-day tool economy, amphibious 54-cell route matrix; prints [SOAK] data rows for the balance reports")
+                    "Flagship Plans 122-125 Phase 11: long-horizon balance soaks — SOFC 180-day characterization, acoustic fixed-seed event matrix, diamond 120-day tool economy, amphibious 54-cell route matrix; prints [SOAK] data rows for the balance reports"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PortContractSelfTest,
+                    "Core & System Gates",
+                    "--port-contract-selftest",
+                    null,
+                    "Plan 36: Port Contracts & Host Wiring — validates all Core integration seams against docs/ci/port_contract_policy.json and runtime host collaborator/port wiring")
         };
 
         private static readonly HostCliActionDescriptor[] _expansionDescriptors = new[]

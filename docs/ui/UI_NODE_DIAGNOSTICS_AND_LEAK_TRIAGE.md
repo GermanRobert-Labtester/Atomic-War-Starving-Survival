@@ -75,7 +75,48 @@ graph TD
 
 ---
 
-## 4. Best Practices for Panel Implementation
+## 4. Shutdown Resource/RID Warnings — Classified Signatures
+
+The diagnostic guide also governs **process-shutdown** `Resource`/`RID`/`ObjectDB`
+warnings. Two signatures are currently known.
+
+### 5.1 Known-benign — accessibility smoke-specimen harness
+
+Signature (exact, emitted at exit):
+
+```
+WARNING: 2 RIDs of type "CanvasItem" were leaked.
+ERROR: 1 RID allocations of type '...FontAdvanced...' were leaked at exit.
+WARNING: 8 ObjectDB instances were leaked at exit
+ERROR: 1 resources still in use at exit
+```
+
+Verbose object set: 2 parentless `Label`, 2 base `Object`, `StyleBoxFlat`,
+`StyleBoxEmpty`, `FontFile`, `Image`.
+
+**Class:** diagnostic-harness specimen lifetime (NOT a production panel leak).
+`UiAccessibilitySelfTest` instantiates a fixed list of representative panels
+plus a briefing modal **without attaching them to the SceneTree**, calls
+`_Ready()` for inspection, then `Free()`s them. The default-theme style/font
+resources created for those standalone specimens are retained by two parentless
+labels and are released only at process teardown.
+
+**Evidence (flat, not monotonic):** three consecutive
+`--ui-accessibility-selftest` runs each emit exactly the same 8 ObjectDB / 2
+CanvasItem RIDs / 1 Font RID / 1 resource.
+
+**Distinguisher from a real leak:** the production lifecycle path
+`--panel-bind-lifecycle-selftest` emits **zero** shutdown warnings across its
+bind/unbind/close cycles, and the count does not grow across repeated a11y runs.
+A warning whose ObjectDB count **grows** across cycles, or that appears on a
+lifecycle path (not a specimen harness), is a real leak and is not covered by
+this classification.
+
+**Disposition:** acceptable Tier 3 shutdown noise for the a11y harness; no
+global forced-free cleanup is permitted. Any new/renamed leaked type in this
+signature is a finding, not blanket-ignored.
+
+## 5. Best Practices for Panel Implementation
 
 1. **Clear Dynamic Children in `RefreshView`:**
    ```csharp

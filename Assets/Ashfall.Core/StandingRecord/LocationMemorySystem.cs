@@ -51,6 +51,12 @@ namespace Ashfall.Core
 
         /// <summary>Chronological history of applied description recasts.</summary>
         public List<string> recastHistory = new List<string>();
+
+        /// <summary>Plan 41 / C1[12]: Visit counts per site (place memory).</summary>
+        public Dictionary<string, int> visitCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>Plan 41 / C1[12]: Last recorded visit day per site.</summary>
+        public Dictionary<string, int> lastVisitDays = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -227,6 +233,38 @@ namespace Ashfall.Core
             return null;
         }
 
+        /// <summary>
+        /// Plan 41 / C1[12]: Record a visit to a site on the specified day.
+        /// </summary>
+        public void RecordSiteVisit(string siteId, int day)
+        {
+            if (string.IsNullOrEmpty(siteId)) return;
+            if (!_state.visitCounts.TryGetValue(siteId, out int currentCount))
+            {
+                currentCount = 0;
+            }
+            _state.visitCounts[siteId] = currentCount + 1;
+            _state.lastVisitDays[siteId] = day;
+            RaiseChanged();
+        }
+
+        public bool HasVisited(string siteId)
+        {
+            return !string.IsNullOrEmpty(siteId) && _state.visitCounts.TryGetValue(siteId, out int c) && c > 0;
+        }
+
+        public int GetSiteVisitCount(string siteId)
+        {
+            if (string.IsNullOrEmpty(siteId)) return 0;
+            return _state.visitCounts.TryGetValue(siteId, out int c) ? c : 0;
+        }
+
+        public int GetLastVisitDay(string siteId)
+        {
+            if (string.IsNullOrEmpty(siteId)) return 0;
+            return _state.lastVisitDays.TryGetValue(siteId, out int d) ? d : 0;
+        }
+
         public LocationMemoryState CaptureState()
         {
             var copy = new LocationMemoryState
@@ -235,7 +273,9 @@ namespace Ashfall.Core
                 expansionUnlocked = _state.expansionUnlocked,
                 activeFlags = _state.activeFlags != null ? new List<string>(_state.activeFlags) : new List<string>(),
                 recastHistory = _state.recastHistory != null ? new List<string>(_state.recastHistory) : new List<string>(),
-                strata = new List<LocationMemoryStratum>()
+                strata = new List<LocationMemoryStratum>(),
+                visitCounts = new Dictionary<string, int>(_state.visitCounts, StringComparer.OrdinalIgnoreCase),
+                lastVisitDays = new Dictionary<string, int>(_state.lastVisitDays, StringComparer.OrdinalIgnoreCase)
             };
             for (int i = 0; i < _strata.Count; i++)
             {
@@ -268,6 +308,12 @@ namespace Ashfall.Core
                     recastHistory = saved.recastHistory != null
                         ? new List<string>(saved.recastHistory)
                         : new List<string>(),
+                    visitCounts = saved.visitCounts != null
+                        ? new Dictionary<string, int>(saved.visitCounts, StringComparer.OrdinalIgnoreCase)
+                        : new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
+                    lastVisitDays = saved.lastVisitDays != null
+                        ? new Dictionary<string, int>(saved.lastVisitDays, StringComparer.OrdinalIgnoreCase)
+                        : new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
                     strata = new List<LocationMemoryStratum>()
                 };
                 if (saved.strata != null)

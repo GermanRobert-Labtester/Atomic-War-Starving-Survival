@@ -34,7 +34,10 @@ namespace AtomicWar.GodotApp.UI
 
         // ── Bench operator (trade specialty attribution) ───────────────
         private OptionButton? _crafterSelect;
+        private Label? _crafterDetail;
         private readonly List<string> _crafterIds = new();
+        private Ashfall.Core.Survivors.TradeSpecialtySystem? _tradeSpecialty;
+        private Func<string, string>? _professionResolver;
 
         /// <summary>
         /// The survivor chosen at the bench, or "" for unassigned — in which case
@@ -54,11 +57,15 @@ namespace AtomicWar.GodotApp.UI
         public void Bind(
             CraftingHostSession crafting,
             InventoryHostSession? inventory = null,
-            SurvivorsHostSession? survivors = null)
+            SurvivorsHostSession? survivors = null,
+            Ashfall.Core.Survivors.TradeSpecialtySystem? tradeSpecialty = null,
+            Func<string, string>? professionResolver = null)
         {
             _craftingHost = crafting;
             _inventoryHost = inventory;
             _survivorsHost = survivors;
+            _tradeSpecialty = tradeSpecialty;
+            _professionResolver = professionResolver;
 
             // Subscribe to crafting events so the panel stays fresh
             _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
@@ -295,6 +302,77 @@ namespace AtomicWar.GodotApp.UI
 
             int restore = previous.Length > 0 ? _crafterIds.IndexOf(previous) : -1;
             _crafterSelect.Selected = restore >= 0 ? restore + 1 : 0;
+            UpdateCrafterDetail();
+        }
+
+        /// <summary>
+        /// Show the bench operator's real trade-specialty state: the authored tier
+        /// title and progress, or the authored mastery_bonus_text once mastered.
+        /// Presentation only — every value is read from TradeSpecialtySystem, which
+        /// owns the catalog and the per-survivor progress.
+        /// </summary>
+        private void UpdateCrafterDetail()
+        {
+            if (_crafterDetail == null) return;
+
+            string survivorId = SelectedCrafterId;
+            if (string.IsNullOrEmpty(survivorId))
+            {
+                _crafterDetail.Text =
+                    "No one assigned — the shelter will auto-credit a living survivor whose trade matches the item.";
+                return;
+            }
+
+            string name = SurvivorDisplayName(survivorId);
+            string professionId = _tradeSpecialty != null
+                ? ResolveProfessionId(survivorId)
+                : string.Empty;
+            var info = Ashfall.Core.Survivors.TradeSpecialtySystem.GetProfessionInfo(professionId);
+            if (info == null)
+            {
+                _crafterDetail.Text = $"{name} — no trade specialty on record.";
+                return;
+            }
+
+            int tier = _tradeSpecialty?.GetMasteryTier(survivorId) ?? 0;
+            bool mastered = _tradeSpecialty?.HasMasteredTrade(survivorId) ?? false;
+            if (mastered)
+            {
+                string bonus = Ashfall.Core.Survivors.TradeSpecialtySystem
+                    .GetMasteryBonusText(info.ProfessionId)
+                    .Replace("{name}", name);
+                string masteryTitle = Ashfall.Core.Survivors.TradeSpecialtySystem
+                    .GetMilestoneTitle(info.ProfessionId, 3);
+                _crafterDetail.Text = string.IsNullOrEmpty(masteryTitle)
+                    ? $"{name} — {info.DisplayName}, MASTERED. {bonus}"
+                    : $"{name} — {info.DisplayName}, {masteryTitle}. {bonus}";
+                return;
+            }
+
+            string tierTitle = tier > 0
+                ? Ashfall.Core.Survivors.TradeSpecialtySystem.GetMilestoneTitle(info.ProfessionId, tier)
+                : string.Empty;
+            _crafterDetail.Text = string.IsNullOrEmpty(tierTitle)
+                ? $"{name} — {info.DisplayName}, not yet started ({tier}/3)"
+                : $"{name} — {info.DisplayName}, {tierTitle} ({tier}/3)";
+        }
+
+        private string SurvivorDisplayName(string survivorId)
+        {
+            var def = _survivorsHost?.Roster?.FindDefinition(survivorId);
+            return def != null && !string.IsNullOrEmpty(def.displayName) ? def.displayName : survivorId;
+        }
+
+        private string ResolveProfessionId(string survivorId)
+        {
+            // Prefer the host resolver so the panel and the craft-attribution
+            // bridge can never disagree about who has which trade.
+            if (_professionResolver != null)
+                return _professionResolver(survivorId) ?? string.Empty;
+
+            var def = _survivorsHost?.Roster?.FindDefinition(survivorId);
+            return Ashfall.Core.Survivors.TradeSpecialtySystem.ResolveProfessionId(
+                string.Empty, def?.profession);
         }
 
         private static void ClearChildren(Node parent)
@@ -320,6 +398,7 @@ namespace AtomicWar.GodotApp.UI
             binder.Require<Button>("RelicWorkshopButton");
             binder.Require<Button>("PharmaLabButton");
             binder.Require<OptionButton>("CrafterSelect");
+            binder.Require<Label>("CrafterDetail");
 
             _recipeList = binder.Get<VBoxContainer>("RecipeList");
             _queueList = binder.Get<VBoxContainer>("QueueList");
@@ -328,6 +407,8 @@ namespace AtomicWar.GodotApp.UI
             _filterStatus = binder.Get<Label>("FilterStatus");
             _filterStatus.Text = "Filter:";
             _crafterSelect = binder.Get<OptionButton>("CrafterSelect");
+            _crafterDetail = binder.Get<Label>("CrafterDetail");
+            _crafterSelect.ItemSelected += _ => UpdateCrafterDetail();
 
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
 

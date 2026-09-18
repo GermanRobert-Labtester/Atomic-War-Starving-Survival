@@ -20,6 +20,7 @@ using Ashfall.Core.Flags;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Legacy;
 using Ashfall.Core.Endgame;
+using AtomicWar.GodotApp.Host;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Settings;
 using AtomicWar.GodotApp.UI;
@@ -930,7 +931,9 @@ namespace AtomicWar.GodotApp
         {
             var report = EndingsHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return EmitSummaryFromHeadlessReport("endings_selftest", report);
+            int endingsResult = EmitSummaryFromHeadlessReport("endings_selftest", report);
+            int completionHistoryResult = CompletionHistorySelfTest.Run();
+            return endingsResult == 0 && completionHistoryResult == 0 ? 0 : 1;
         }
 
 

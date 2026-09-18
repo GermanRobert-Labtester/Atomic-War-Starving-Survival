@@ -212,7 +212,7 @@ namespace AtomicWar.GodotApp
 
                 // ── GATE 4: GreenhousePanel Bind -> Unbind -> Rebind Callback Test ──
                 GD.Print("\n[Gate 4] Testing GreenhousePanel node callback lifecycle...");
-                var invHost = new InventoryHostSession();
+                var invHost = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: false);
                 var ghSession = GreenhouseHostSession.Create(invHost);
 
                 var ghPanel = new GreenhousePanel();
@@ -244,7 +244,7 @@ namespace AtomicWar.GodotApp
                 var research = new ResearchSystem(log: new GodotLog());
                 // Plan 34: load the authoritative research_knowledge.json catalog —
                 // no hardcoded fallback exists anymore.
-                string gate5DataDir = string.IsNullOrEmpty(dataDirectory) ? "Assets/StreamingAssets/Data" : dataDirectory;
+                string gate5DataDir = string.IsNullOrEmpty(dataDirectory) ? CatalogPath.ResolveDataDir() : dataDirectory;
                 ResearchKnowledgeCatalogLoader.LoadAndRegister(
                     research, gate5DataDir, new FileSystemIO(), new SystemTextJsonSerializer());
                 research.UnlockManual("knowledge_water_basics");
@@ -371,7 +371,7 @@ namespace AtomicWar.GodotApp
 
                 // ── GATE 9: Shelter Batch Panels Bind -> Unbind -> Rebind Lifecycle ──
                 GD.Print("\n[Gate 9] Testing shelter batch panels bind -> unbind -> rebind lifecycle...");
-                string dataDir = string.IsNullOrEmpty(dataDirectory) ? "Assets/StreamingAssets/Data" : dataDirectory;
+                string dataDir = string.IsNullOrEmpty(dataDirectory) ? CatalogPath.ResolveDataDir() : dataDirectory;
                 var rng = new SeededRng(1986);
                 var log = new GodotLog();
 

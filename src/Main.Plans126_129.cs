@@ -33,13 +33,12 @@ namespace AtomicWar.GodotApp
 
             _bioFermentation = new BioFermentationEngine(inv, rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/bio_fermentation_catalog.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("bio_fermentation_catalog.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<BioFermentationCatalog>(json);

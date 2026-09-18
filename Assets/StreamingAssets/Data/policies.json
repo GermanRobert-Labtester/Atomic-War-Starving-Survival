@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "policies": [
+    {
+      "id": "policy_ration_triage",
+      "scope": "rations",
+      "proposer_rules": "leader_only",
+      "decision_method": "executive",
+      "default_option_id": "ration_standard",
+      "options": [
+        {
+          "id": "ration_standard",
+          "label": "Standard Rations",
+          "description": "Full nutritional servings. Stable camp morale and normal calorie consumption.",
+          "attention_cost": 1,
+          "reversal_cost": 1,
+          "effect_type": "ration_policy",
+          "effect_payload": "Standard"
+        },
+        {
+          "id": "ration_half",
+          "label": "Half Rations",
+          "description": "Reduces daily calorie consumption by 50% at the cost of hunger buildup and morale penalties.",
+          "attention_cost": 1,
+          "reversal_cost": 1,
+          "effect_type": "ration_policy",
+          "effect_payload": "Half"
+        },
+        {
+          "id": "ration_irradiated",
+          "label": "Irradiated Supplement",
+          "description": "Conserves clean reserves by mixing irradiated meal packs. Inflicts radiation dose.",
+          "attention_cost": 1,
+          "reversal_cost": 2,
+          "effect_type": "ration_policy",
+          "effect_payload": "Irradiated"
+        }
+      ]
+    },
+    {
+      "id": "policy_curfew",
+      "scope": "curfew",
+      "proposer_rules": "open_council",
+      "decision_method": "consensus",
+      "default_option_id": "curfew_disabled",
+      "options": [
+        {
+          "id": "curfew_disabled",
+          "label": "Open Bunk Access",
+          "description": "Survivors are permitted free movement between compartments after dark.",
+          "attention_cost": 1,
+          "reversal_cost": 1,
+          "effect_type": "schedule_flag",
+          "effect_payload": "curfew_disabled"
+        },
+        {
+          "id": "curfew_enabled",
+          "label": "Enforced Curfew",
+          "description": "All non-duty survivors confined to assigned bunks between watches.",
+          "attention_cost": 1,
+          "reversal_cost": 1,
+          "effect_type": "schedule_flag",
+          "effect_payload": "curfew_enabled"
+        }
+      ]
+    },
+    {
+      "id": "policy_emergency_override",
+      "scope": "emergency_override",
+      "proposer_rules": "leader_only",
+      "decision_method": "executive",
+      "default_option_id": "override_disabled",
+      "options": [
+        {
+          "id": "override_disabled",
+          "label": "Standard Schedule",
+          "description": "Bunker systems and shift rotations run on normal operational schedules.",
+          "attention_cost": 1,
+          "reversal_cost": 1,
+          "effect_type": "schedule_flag",
+          "effect_payload": "override_disabled"
+        },
+        {
+          "id": "override_enabled",
+          "label": "Emergency Priority Override",
+          "description": "Suspends scheduled non-critical maintenance and directs all labour to emergency recovery.",
+          "attention_cost": 2,
+          "reversal_cost": 1,
+          "effect_type": "schedule_flag",
+          "effect_payload": "override_enabled"
+        }
+      ]
+    }
+  ]
+}

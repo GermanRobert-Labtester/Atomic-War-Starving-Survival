@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "commitments": [
+    {
+      "id": "commitment_warlord_grain_tribute",
+      "type": "tribute",
+      "title": "Iron Coalition Winter Grain Quota",
+      "counterparty": "faction_supply_corps",
+      "start_day": 10,
+      "due_day": 25,
+      "warning_lead_days": 7,
+      "target_quantity": 50,
+      "target_id": "item_grain_flour",
+      "condition_type": "resource_delivery",
+      "consequence_class": "standing_penalty",
+      "consequence_target": "faction_supply_corps",
+      "consequence_magnitude": -15
+    },
+    {
+      "id": "commitment_water_filter_treaty",
+      "type": "treaty_term",
+      "title": "Highland Union Water Filtration Protocol",
+      "counterparty": "faction_grain_exchange",
+      "start_day": 30,
+      "due_day": 45,
+      "warning_lead_days": 5,
+      "target_quantity": 2,
+      "target_id": "item_water_filter",
+      "condition_type": "deliver_equipment",
+      "consequence_class": "economic_shock",
+      "consequence_target": "faction_grain_exchange",
+      "consequence_magnitude": 1
+    },
+    {
+      "id": "commitment_shelter_census_filing",
+      "type": "census_filing",
+      "title": "Autonomous Zone Census & Ration Report",
+      "counterparty": "faction_the_office",
+      "start_day": 50,
+      "due_day": 65,
+      "warning_lead_days": 7,
+      "target_quantity": 1,
+      "target_id": "item_water_filter",
+      "condition_type": "census_status",
+      "consequence_class": "trigger_crisis",
+      "consequence_target": "event_eco_blight_decimates_forage",
+      "consequence_magnitude": 1
+    }
+  ]
+}

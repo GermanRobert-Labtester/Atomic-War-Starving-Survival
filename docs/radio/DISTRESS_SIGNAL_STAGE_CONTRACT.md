@@ -55,7 +55,9 @@ permanent `--data-integrity-selftest` gate over both catalogs:
 
 - within-file duplicate `frequency_id` → **error**
 - cross-file duplicate → **warning** (documented primary-wins override;
-  `radio_distress_signals.json` loads last and wins)
+  `radio_distress_signals.json` loads last and wins). The five exact rows are
+  pinned in the authoritative dead-data register
+  (`DISTRESS_SIGNAL_DEAD_DATA_REGISTER.md`).
 - missing/empty `message_fragments` → error
 - duplicate stage day / descending stage day → error
 - clarity outside [0,1] / decreasing → error

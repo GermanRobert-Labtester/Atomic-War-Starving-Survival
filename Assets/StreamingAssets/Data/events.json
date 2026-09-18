@@ -5013,6 +5013,13 @@
       "bodyText": "Fifty paces behind the expedition party, a gaunt mongrel trails through the dust. It stops when the scouts stop; it sits when they check bearings. When the airlock opens, it waits at the threshold, ribs visible beneath scarred gray fur, watching the door.",
       "weight": 1.0,
       "minDay": 25
+    },
+    {
+      "id": "narrative_final_wish_completed",
+      "title": "A Last Wish Kept",
+      "bodyText": "The shelter did what was asked of it. The wish is kept now, and the keeping changed the room: voices run lower, and they are aimed at each other instead of at the walls. Nobody mentions the empty bunk. Everybody knows what it cost to honour the last of it, and that knowing is its own kind of company.",
+      "weight": 1.0,
+      "minDay": 10
     }
   ]
 }

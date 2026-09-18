@@ -1,5 +1,13 @@
 # Plan 191 — Item Identification & Appraisal System
 
+> **STATUS: RETIRED (2026-09-17, C3).** Player-visible item inspection is already
+> live (`ItemInspectionModel` → `InventoryHostSession.GetInspection` →
+> `InventoryDetailPanel.CurrentInspection`) and appraisal already rolls in
+> `ShelterBarterSystem`; a standalone identification system would invent an
+> inventory-instance unidentified-state scope. Reopen only with a signed
+> inventory-instance owner and a consumed reveal surface. See
+> `docs/plans/wave8_part2/C3_DECISION.md`.
+
 ## Goal
 
 Create an item identification and appraisal system where salvaged items return from expeditions in an unidentified state, requiring analysis by skilled survivors to reveal their properties, value, and potential uses. Currently `ProceduralScavengeSystem.cs` (213 lines) generates loot with full property disclosure — all items are immediately known. There is no identification step, no appraisal skill, no unknown item state, no analysis mechanic. This plan adds discovery depth to scavenging and creates a role for skilled appraisers.

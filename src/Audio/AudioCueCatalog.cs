@@ -404,13 +404,15 @@ namespace AtomicWar.GodotApp.Audio
             RegisterAll();
         }
 
-        private const string PrimaryCatalogPath = "Assets/StreamingAssets/Data/audio_cues.json";
         private const string GodotCatalogPath = "res://assets/StreamingAssets/Data/audio_cues.json";
 
         public static void RegisterAll()
         {
             s_cues.Clear();
-            bool loaded = LoadFromJson(PrimaryCatalogPath);
+            // Plan 26A: resolve through the one data-path authority.
+            bool loaded = false;
+            try { loaded = LoadFromJson(CatalogPath.ResolveCatalog("audio_cues.json")); }
+            catch { /* CatalogPath may throw if segment is invalid; fall through */ }
             if (!loaded)
             {
                 LoadFromJson(GodotCatalogPath);

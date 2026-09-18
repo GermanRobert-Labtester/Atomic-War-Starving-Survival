@@ -124,7 +124,7 @@ namespace Ashfall.Core.Tests
                     // Apply before tick so drift and restoration are co-located in same hour
                     if (elapsedHours % intervalFood == 0)
                     {
-                        // Real mechanic: NeedsSystem.Modify is the authoritative hunger restore (10 per unit in SurvivorInspection)
+                        // Real mechanic: NeedsSystem.Modify is the authoritative hunger restore (10 per unit).
                         needs.Modify(survivor, NeedKind.Hunger, -unitsFood * 10f);
                         foodTotal += unitsFood;
                     }

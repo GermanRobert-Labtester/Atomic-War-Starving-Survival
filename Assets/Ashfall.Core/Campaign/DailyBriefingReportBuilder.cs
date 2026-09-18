@@ -348,7 +348,8 @@ namespace Ashfall.Core.Campaign
                                 DayEventVocabulary.RenderGeneric(evt),
                                 order: order,
                                 secondaryId: evt.SecondaryId,
-                                numeric: evt.Numeric));
+                                numeric: evt.Numeric,
+                                kind: evt.Kind));
                         }
                         break;
                 }
@@ -367,6 +368,7 @@ namespace Ashfall.Core.Campaign
             AddSectionIfNotEmpty(r, "Shelter", shelterConditions, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, DayEventVocabulary.GenericSectionTitle, systemActivity, maxEntriesPerSection);
 
+            BriefingRouteMap.ApplyRoutes(r);
             return r;
         }
 
@@ -389,6 +391,7 @@ namespace Ashfall.Core.Campaign
             foreach (var s in DeathList(inputs)) r.Sections.Add(s);
             foreach (var s in WarningList(inputs)) r.Sections.Add(s);
 
+            BriefingRouteMap.ApplyRoutes(r);
             return r;
         }
 
@@ -465,6 +468,7 @@ namespace Ashfall.Core.Campaign
             AddSectionIfNotEmpty(r, "Intelligence & Recon", intel, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Settlement Morale", flavor, maxEntriesPerSection);
 
+            BriefingRouteMap.ApplyRoutes(r);
             return r;
         }
 
@@ -640,10 +644,19 @@ namespace Ashfall.Core.Campaign
         public float Numeric;
         public string DeepLinkRoute = string.Empty;
 
+        // Plan 31B — decision-support metadata. Kind is the concrete day-event
+        // kind when known; CauseId/ActorId are reserved for cause/actor
+        // semantics; IsActionable is true only when a live route resolved.
+        public string Kind = string.Empty;
+        public string CauseId = string.Empty;
+        public string ActorId = string.Empty;
+        public bool IsActionable;
+
         public DailyBriefingEntry() { }
 
         public DailyBriefingEntry(string category, string primaryId,
-            string text, int order = 0, string? secondaryId = null, float numeric = 0f, string? deepLinkRoute = null)
+            string text, int order = 0, string? secondaryId = null, float numeric = 0f, string? deepLinkRoute = null,
+            string? kind = null, string? causeId = null, string? actorId = null)
         {
             Category = category ?? string.Empty;
             PrimaryId = primaryId ?? string.Empty;
@@ -652,6 +665,9 @@ namespace Ashfall.Core.Campaign
             Order = order;
             Numeric = numeric;
             DeepLinkRoute = deepLinkRoute ?? string.Empty;
+            Kind = kind ?? string.Empty;
+            CauseId = causeId ?? string.Empty;
+            ActorId = actorId ?? string.Empty;
         }
     }
 

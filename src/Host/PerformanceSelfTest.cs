@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp
                 if (!ok) failures++;
             }
 
-            string artifactsDir = "artifacts";
+            string artifactsDir = Path.Combine(CatalogPath.ResolveRepoRoot(), "artifacts");
             Directory.CreateDirectory(artifactsDir);
 
             string platform = System.Environment.OSVersion.Platform.ToString();
@@ -45,8 +45,9 @@ namespace AtomicWar.GodotApp
                     session30.Measure(() => harness30.AdvanceDays(WorkloadProfile.Days30.CampaignDays));
                 }
                 var stats30 = session30.ComputeStatistics();
-                results.Add(session30.ToResult("day_advance_30d", "advisory", slowestOwnerMs: stats30.Maximum));
-                Check(stats30.Median < 2000, $"30d day-advance median < 2s (was {stats30.Median:F1}ms)");
+                bool pass30 = stats30.Median < 2000;
+                results.Add(session30.ToResult("day_advance_30d", pass30 ? "pass" : "fail", slowestOwnerMs: stats30.Maximum));
+                Check(pass30, $"30d day-advance median < 2s (was {stats30.Median:F1}ms)");
             }
 
             // 2. 180-day mature.
@@ -59,8 +60,9 @@ namespace AtomicWar.GodotApp
                     session180.Measure(() => harness180.AdvanceDays(WorkloadProfile.Days180.CampaignDays));
                 }
                 var stats180 = session180.ComputeStatistics();
-                results.Add(session180.ToResult("day_advance_180d", "advisory"));
-                Check(stats180.Median < 12000, $"180d day-advance median < 12s (was {stats180.Median:F1}ms)");
+                bool pass180 = stats180.Median < 12000;
+                results.Add(session180.ToResult("day_advance_180d", pass180 ? "pass" : "fail"));
+                Check(pass180, $"180d day-advance median < 12s (was {stats180.Median:F1}ms)");
             }
 
             // 3. 360-day stress.
@@ -73,8 +75,9 @@ namespace AtomicWar.GodotApp
                     session360.Measure(() => harness360.AdvanceDays(WorkloadProfile.Days360.CampaignDays));
                 }
                 var stats360 = session360.ComputeStatistics();
-                results.Add(session360.ToResult("day_advance_360d", "advisory"));
-                Check(stats360.Median < 30000, $"360d day-advance median < 30s (was {stats360.Median:F1}ms)");
+                bool pass360 = stats360.Median < 30000;
+                results.Add(session360.ToResult("day_advance_360d", pass360 ? "pass" : "fail"));
+                Check(pass360, $"360d day-advance median < 30s (was {stats360.Median:F1}ms)");
             }
 
             // 4. Persistence gate on the 30-day workload.
@@ -85,8 +88,9 @@ namespace AtomicWar.GodotApp
                 sessionP.Measure(() => harnessP.MeasureSaveLatency());
                 sessionP.Measure(() => harnessP.CaptureSavePayload());
                 var statsP = sessionP.ComputeStatistics();
-                results.Add(sessionP.ToResult("save_30d", "advisory"));
-                Check(statsP.Median < 500, $"30d save median < 500ms (was {statsP.Median:F1}ms)");
+                bool passP = statsP.Median < 500;
+                results.Add(sessionP.ToResult("save_30d", passP ? "pass" : "fail"));
+                Check(passP, $"30d save median < 500ms (was {statsP.Median:F1}ms)");
             }
 
             // 5. Allocation growth bound.
@@ -99,8 +103,9 @@ namespace AtomicWar.GodotApp
                     sessionA.Measure(() => harnessA.AdvanceDays(1));
                 }
                 var statsA = sessionA.ComputeStatistics();
-                results.Add(sessionA.ToResult("alloc_growth_30d", "advisory"));
-                Check(statsA.MedianAllocatedBytes < 5_000_000,
+                bool passA = statsA.MedianAllocatedBytes < 5_000_000;
+                results.Add(sessionA.ToResult("alloc_growth_30d", passA ? "pass" : "fail"));
+                Check(passA,
                     $"per-day allocation median < 5MB (was {statsA.MedianAllocatedBytes:N0} bytes)");
             }
 

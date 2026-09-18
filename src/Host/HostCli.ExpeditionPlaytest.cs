@@ -147,7 +147,7 @@ namespace AtomicWar.GodotApp
 
         private static void WriteExpeditionPlaytestArtifacts(ExpeditionPlaytestArtifact artifact)
         {
-            string directory = Path.Combine(Directory.GetCurrentDirectory(), "artifacts");
+            string directory = Path.Combine(CatalogPath.ResolveRepoRoot(), "artifacts");
             Directory.CreateDirectory(directory);
             var json = new SystemTextJsonSerializer();
             File.WriteAllText(
@@ -339,7 +339,7 @@ namespace AtomicWar.GodotApp
                 };
             }
 
-            private static string CurrentDataDirectory => Path.Combine(Directory.GetCurrentDirectory(), "Assets", "StreamingAssets", "Data");
+            private static string CurrentDataDirectory => CatalogPath.ResolveDataDir();
 
             public static ExpeditionPlaytestRun Create(string dataDirectory, int seed)
             {

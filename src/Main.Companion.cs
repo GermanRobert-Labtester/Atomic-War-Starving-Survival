@@ -41,15 +41,15 @@ namespace AtomicWar.GodotApp
             if (_companions != null) return _companions;
 
             var profiles = new List<CompanionSpeciesProfile>();
-            string catalogPath = "res://Assets/StreamingAssets/Data/companion_animals.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("companion_animals.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
                     try
                     {
-                        var root = System.Text.Json.JsonSerializer.Deserialize<CompanionCatalogRoot>(file.GetAsText());
+                        var root = System.Text.Json.JsonSerializer.Deserialize<CompanionCatalogRoot>(json);
                         if (root?.companions != null)
                         {
                             var load = new CompanionCatalogLoadResult();

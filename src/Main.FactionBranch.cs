@@ -17,9 +17,8 @@ namespace AtomicWar.GodotApp
         {
             if (_factionBranch != null) return;
 
-            string dataDir = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data");
-            if (!System.IO.Directory.Exists(dataDir))
-                dataDir = System.IO.Path.Combine(System.AppContext.BaseDirectory, "Assets/StreamingAssets/Data");
+            // Plan 26A — resolve through the one data-path authority.
+            string dataDir = CatalogPath.ResolveDataDir();
 
             _factionBranch = FactionBranchHostSession.CreateDefault(dataDir, flags: _consequenceLedger);
             _factionBranch.StateChanged += () => _factionBranchDirty = true;

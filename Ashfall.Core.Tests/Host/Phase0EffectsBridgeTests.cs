@@ -41,6 +41,14 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void TradeSpecialty_CraftingItems_AdvancesTierAndMasters()
         {
+            // D1 drift/isolation fix 2026-09-17: earlier runs depended on whether
+            // a parallel test class had populated the shared static
+            // TradeSpecialtySystem.ProfessionInfo catalog. A test-only profession
+            // id (never authored) guarantees no catalog entry exists, so the
+            // GetNarrativeEventId fallback path is exercised deterministically.
+            const string profession = "test_trade_probe_zzz";
+            TradeSpecialtySystem.RegisterProfessionPatterns(profession, new[] { "craftprobe" });
+
             var specialty = new TradeSpecialtySystem
             {
                 GetNarrativeEventId = prof => $"narrative_trade_mastery_{prof}"
@@ -54,14 +62,14 @@ namespace Ashfall.Core.Tests
                 lastNarrativeId = id;
             };
 
-            specialty.OnItemCrafted("elena_vasquez", "machinist", "wrench_standard");
-            specialty.OnItemCrafted("elena_vasquez", "machinist", "gear_standard");
+            specialty.OnItemCrafted("elena_vasquez", profession, "craftprobe_1");
+            specialty.OnItemCrafted("elena_vasquez", profession, "craftprobe_2");
             Assert.Equal(2, specialty.GetMasteryTier("elena_vasquez"));
 
-            specialty.OnItemCrafted("elena_vasquez", "machinist", "lever_standard");
+            specialty.OnItemCrafted("elena_vasquez", profession, "craftprobe_3");
             Assert.True(specialty.HasMasteredTrade("elena_vasquez"));
             Assert.Equal(1, narrativeFired);
-            Assert.Equal("narrative_trade_mastery_machinist", lastNarrativeId);
+            Assert.Equal("narrative_trade_mastery_test_trade_probe_zzz", lastNarrativeId);
         }
 
         [Fact]

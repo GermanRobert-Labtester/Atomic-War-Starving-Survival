@@ -17,6 +17,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ashfall.Core\Ashfall.Core.csproj" />
@@ -31,8 +35,7 @@
          drop (untracked, does not compile together yet). Quarantined so the canonical
          suite stays green; owned by that stream to fix and unquarantine. -->
     <Compile Remove="AquiferPiezometerEngineTests.cs" />
-    <!-- Audit #47: PortContractGateTests — policy drift (untracked seams + stale HOST_REQUIRED); rematch docs/ci/port_contract_policy.json. -->
-    <Compile Remove="Tooling/PortContractGateTests.cs" />
+    <!-- SEALED 2026-09-18 (Plan 36): PortContractGateTests restored and policy rematched to 248 Core seams. -->
     <!-- REINSTATED 2026-09-12: UtilityAiExpandedCatalogTests — live utility_actions.json has 20 actions; stale “6” census note retired. -->
     <!-- REINSTATED 2026-09-12: ArchiveInksCatalogTests — live archive_inks.json 12 inks; InkMaterialDefinition JsonPropertyName binds snake_case. -->
     <!-- RETIRED 2026-09-06 (quarantine evidence audit) — Collectible family:
@@ -50,7 +53,7 @@
 <Compile Remove="CollectibleCatalogPerformanceTests.cs" />
 <Compile Remove="CollectibleEffectTargetResolutionTests.cs" />
     <Compile Remove="RegionalTreatyConsequenceTests.cs" />
-    <Compile Remove="Medical/AutopsyProceduresCatalogTests.cs" />
+    <!-- REINSTATED 2026-09-17: AutopsyProceduresCatalogTests — live autopsy_procedures.json 12 procedures, loader AutopsyProcedureCatalogLoader -->
     <Compile Remove="Integration/Plans72To75CampaignIntegrationTests.cs" /> <!-- TEMP; restored -->
     <!-- REINSTATED 2026-09-12: HoldfastNpcCatalogTests — live holdfast_npcs.json 10 IDs; NPC owner is HoldfastNpcCatalogLoader (not HoldfastCatalog.Npcs). -->
 <Compile Remove="CollectibleMerchantBalanceTests.cs" />

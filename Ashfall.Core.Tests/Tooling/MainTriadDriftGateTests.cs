@@ -65,6 +65,8 @@ namespace Ashfall.Core.Tests
                 "WildlifeTrappingIfBound",
                 "Enrichment", // Read-only static catalog projection + journal knowledge persistence; no standalone save store
                 "Codex", // Read-only projection (CodexProjectionBuilder); zero persistent state — unlocks derive from journal/field-guide/research/faction-standing, which persist themselves
+                "Cascade", // D1 2026-09-17: derived cascade-rule projection over the day's served/shed power outcome; the coordinator is built from static cascade_rules.json and holds no persisted state (journal already records its transitions)
+                "FitnessForDuty", // D1 2026-09-17: Plan 24A derived fitness verdicts over existing persisted survivor authorities; the model is intentionally not a save section or a second survivor ledger
             };
 
         [Fact]

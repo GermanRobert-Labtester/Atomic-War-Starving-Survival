@@ -116,6 +116,7 @@ namespace AtomicWar.GodotApp
                 saveSectionKey: "combat",
                 onReset: () =>
                 {
+                    HostWiringValidator.UnregisterReporter(_combat);
                     _combat?.Dispose();
                     _combat = null!;
                     _combatDirty = false;

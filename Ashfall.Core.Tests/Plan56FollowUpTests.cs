@@ -139,8 +139,11 @@ public class Plan56FollowUpTests
     public void Baseline40_AreUntouchedByTheCategoryFill()
     {
         // The 40 goods that existed before this follow-up keep their records.
+        // D1 drift rematch: Wave 8 Plan 22 added `cloth` +
+        // `item_air_filter_hepa` (48 -> 50 total); the baseline 40 rows are
+        // asserted individually below and remain untouched.
         var (_, catalog) = Load();
-        Assert.Equal(48, catalog.Count);
+        Assert.Equal(50, catalog.Count);
         foreach (var id in new[]
                  {
                      "clean_water", "scrap_metal", "antibiotics", "iodine_pills", "fuel",

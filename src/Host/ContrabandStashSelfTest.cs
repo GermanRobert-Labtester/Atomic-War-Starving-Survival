@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp
                 // ── Resolve the data authority ──
                 string dataDir = dataDirectory ?? string.Empty;
                 if (string.IsNullOrEmpty(dataDir))
-                    CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir);
+                    dataDir = CatalogPath.ResolveDataDir();
                 if (string.IsNullOrEmpty(dataDir))
                     return "[FAIL] could not resolve the StreamingAssets data directory";
 

@@ -95,6 +95,12 @@ No domain was duplicated; every change extends the frozen authority map.
 | `python3 scripts/ci/generate-architecture-map.py --check` | OK — 191 subsystems, 100% evidence |
 | `dotnet build Ashfall.csproj` | 0 warnings, 0 errors |
 
+> **D1 addendum (2026-09-17):** `Fixtures/B5B8_Phase0/sump_flooding_phase0.json`
+> was re-captured via `B5B8_CAPTURE_FIXTURES=1`. The only drift was the
+> additive `SumpNode.lastNetLevelChangeCmPerDay` field (C2[6] 23B rising-water
+> clock), which a legacy fixture deserializes as 0 and re-serializes, breaking
+> byte parity. The other five Phase 0 fixtures remain byte-identical.
+
 ## I. Deferred scope (no silent TODOs)
 
 1. **Battery conversion efficiency <100%** — needs the hourly battery model; the legacy daily aggregate math is parity-frozen (never energy-creating today).

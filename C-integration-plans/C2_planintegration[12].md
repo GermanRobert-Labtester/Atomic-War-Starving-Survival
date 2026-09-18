@@ -8,6 +8,15 @@
 > **Non-goals:** no `AchievementSystem`, no `achievements.json`, no meta wallet, no prestige currency, no cross-campaign reward calculations, no New Game+ modifier engine, no second campaign summary, no second cross-campaign save store.
 > **Core principle:** difficulty modifies existing authoritative systems; completion records capture already-persisted facts; chronicle and epilogue render those facts without recomputing mutable live state.
 
+> **Wave 11 B3 authority revision (2026-09-18, user-authorized):** C2[12]'s
+> completion-history slice may persist an append-only, checksum-validated history
+> in a named **user-level completion-history store**. It remains observation-only:
+> records derive from the canonical ending/epilogue context, do not calculate
+> endings, rewards, unlocks, or New Game+, and never become a campaign-save
+> section. This narrowly supersedes the historical cross-campaign-store
+> prohibition in §1.3/§3.9; Plan 175 still owns profile, reward, prestige, and
+> New Game+ semantics.
+
 ---
 
 # 0. Executive Intent

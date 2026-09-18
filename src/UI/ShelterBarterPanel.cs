@@ -677,7 +677,8 @@ namespace AtomicWar.GodotApp.UI
                 _merchantStockContainer.AddChild(AshfallUiHelpers.MakeMetadata("Caravan has no stock configured."));
             }
 
-            foreach (var stockItem in caravan.stock)
+            var stockItems = _barterSystem != null ? _barterSystem.GetPrioritizedStock(caravan) : (IReadOnlyList<CaravanStockItem>)caravan.stock;
+            foreach (var stockItem in stockItems)
             {
                 string itemId = stockItem.item_id;
                 int available = cState.remainingStock.TryGetValue(itemId, out int rem) ? rem : 0;

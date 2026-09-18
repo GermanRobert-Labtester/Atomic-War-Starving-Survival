@@ -22,6 +22,7 @@ namespace AtomicWar.GodotApp
         public EndgamePhase Phase => _system.Phase;
         public bool IsSealed => _system.IsSealed;
         public CampaignEpilogueReport? EpilogueReport => _system.State.epilogueReport;
+        public event Action<CampaignEpilogueReport>? CampaignSealed;
 
         public EndgameHostSession(IJsonSerializer jsonSerializer, IFileIO fileIO, string dataDir, ISeededRng? rng = null, ILog? log = null)
         {
@@ -31,7 +32,11 @@ namespace AtomicWar.GodotApp
             _system = new EndgameSystem(rng, log);
 
             _system.OnEndingTriggered += (_, _) => RaiseStateChanged();
-            _system.OnCampaignSealed += _ => RaiseStateChanged();
+            _system.OnCampaignSealed += report =>
+            {
+                RaiseStateChanged();
+                CampaignSealed?.Invoke(report);
+            };
 
             LoadCatalog();
         }

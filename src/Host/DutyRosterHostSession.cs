@@ -405,7 +405,7 @@ namespace AtomicWar.GodotApp
         public string CatalogLine()
         {
             if (LocationCount == 0 && QuestCount == 0)
-                return "Duty Roster catalog: empty - check ASHFALL_DATA / Assets/StreamingAssets/Data";
+                return "Duty Roster catalog: empty - check ASHFALL_DATA or data directory";
             return $"Duty Roster: {LocationCount} locations · {QuestCount} quests · {MarkCount} marks · {SeasonCount} seasons";
         }
 

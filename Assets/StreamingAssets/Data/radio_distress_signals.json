@@ -16,7 +16,11 @@
       ],
       "revealed_location": "checkpoint_kilo_armory",
       "revealed_items": ["military_rations", "ammo_556", "field_dressing_kit"],
-      "narrative_id": "narrative_radio_checkpoint_kilo"
+      "narrative_id": "narrative_radio_checkpoint_kilo",
+      "follow_up_signals": [
+        { "id": "fu_217_4_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Telemetry check on Kilo's band: emergency power relay engaged as responders approach grid 14.", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_217_4_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Corporal Maren reports: survivors evacuated from the armory bunker and military stores inventoried.", "audio_cue": "radio_distress_beacon" }
+      ]
     },
     {
       "frequency_id": "freq_distress_148_2",
@@ -34,7 +38,10 @@
       ],
       "revealed_location": "raider_ambush_site",
       "warning_text": "The distress signal was bait. A raider gang has been luring scavengers to this location for weeks. The bodies of the previous 'rescuers' are still there.",
-      "narrative_id": "narrative_radio_bait_trap"
+      "narrative_id": "narrative_radio_bait_trap",
+      "follow_up_signals": [
+        { "id": "fu_148_2_trap_fallen_for", "trigger_condition": "ambush_encountered", "delay_days": 1, "clarity": 0.85, "text": "Static cuts over 148.2: laughter and weapon racking near the bunker hatch as raiders rifle through dropped packs.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_392_7",
@@ -67,7 +74,11 @@
         { "day": 3, "clarity": 0.85, "text": "*The piano falls silent mid-phrase after a long pause. Then, very quietly: 'Thank you for listening.' The signal dies.*", "outcome_hint": "The signal weakens between pieces." }
       ],
       "narrative_id": "narrative_radio_the_pianist",
-      "location_reference": "concert_hall_ruins"
+      "location_reference": "concert_hall_ruins",
+      "follow_up_signals": [
+        { "id": "fu_55_1_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "A brief piano chord rings out through the static, followed by a faint rustle of sheet music near the stage.", "audio_cue": "radio_vinyl_broadcast" },
+        { "id": "fu_55_1_expired", "trigger_condition": "expired", "delay_days": 3, "clarity": 0.75, "text": "Total silence on 55.1 MHz. The concert hall frequency has fallen permanently dark.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_401_9",
@@ -83,7 +94,11 @@
       ],
       "revealed_location": "convoy_echo7_cache",
       "revealed_items": ["military_mre", "water_purification_tablets", "field_surgical_kit", "ammo_762"],
-      "narrative_id": "narrative_radio_convoy_echo7"
+      "narrative_id": "narrative_radio_convoy_echo7",
+      "follow_up_signals": [
+        { "id": "fu_401_9_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Scout traffic near sector 41: an expedition team has sighted the hazard marker on the disabled convoy truck.", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_401_9_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Convoy Echo-7 cache secured: MRE rations and surgical supplies recovered from the sealed cargo bed.", "audio_cue": "radio_distress_beacon" }
+      ]
     },
     {
       "frequency_id": "freq_distress_88_3",
@@ -152,7 +167,11 @@
       ],
       "revealed_location": "loc_water_station",
       "revealed_items": ["item_collectible_water_treatment_handbook"],
-      "narrative_id": "narrative_radio_water_worker"
+      "narrative_id": "narrative_radio_water_worker",
+      "follow_up_signals": [
+        { "id": "fu_203_1_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "A hurried voice on sector 4: 'I see lights down by the intake ditch. If that is a rescue team, watch the rusted grating.'", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_203_1_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Water station operator safe: treatment manual and replacement membranes secured for the shelter filtration grid.", "audio_cue": "radio_distress_beacon" }
+      ]
     },
     {
       "frequency_id": "freq_distress_311_5",
@@ -167,7 +186,11 @@
         { "day": 3, "clarity": 0.8, "text": "...this is Marta, expedition leader at the sector 8 forestry compound. We have salvage to trade for fuel and medicine, but only one of us can walk while the other two cannot. Please help.", "outcome_hint": "The leader inventories her salvage aloud.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_forestry_compound",
-      "narrative_id": "narrative_radio_stranded_expedition"
+      "narrative_id": "narrative_radio_stranded_expedition",
+      "follow_up_signals": [
+        { "id": "fu_311_5_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Marta on the forestry band: 'Vehicle spotted approaching the compound perimeter. We are lighting a red flare.'", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_311_5_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Expedition team recovered: Marta and her injured crew reached safety along with salvage from the compound.", "audio_cue": "radio_distress_beacon" }
+      ]
     },
     {
       "frequency_id": "freq_distress_445_2",
@@ -279,7 +302,10 @@
       ],
       "revealed_location": "loc_warehouse_district",
       "warning_text": "The kidnapping signal is a setup. The warehouse is a holding pen operated by a scavenger-extortion ring. The 'supplies' are poisoned.",
-      "narrative_id": "narrative_radio_scavenger_kidnap"
+      "narrative_id": "narrative_radio_scavenger_kidnap",
+      "follow_up_signals": [
+        { "id": "fu_410_7_trap_fallen_for", "trigger_condition": "ambush_encountered", "delay_days": 1, "clarity": 0.85, "text": "Chatter on 410.7: extortionists boast over an intercepted rescue party at the warehouse loading dock.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_288_1",
@@ -296,7 +322,10 @@
       ],
       "revealed_location": "checkpoint_kilo_armory",
       "warning_text": "The military distress signal is a faction tactical bait. The grid reference points to open ground. Responders will be exposed.",
-      "narrative_id": "narrative_radio_faction_bait"
+      "narrative_id": "narrative_radio_faction_bait",
+      "follow_up_signals": [
+        { "id": "fu_288_1_trap_fallen_for", "trigger_condition": "ambush_encountered", "delay_days": 1, "clarity": 0.85, "text": "Warlord radio traffic: tactical decoy confirmed successful; responders pinned down in open ground.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_333_6",
@@ -314,7 +343,10 @@
       ],
       "revealed_location": "loc_grange_hall",
       "warning_text": "The settlement distress call is a false flag. The signal does not originate from Grange Hall. The coordinates lead to hostile territory.",
-      "narrative_id": "narrative_radio_false_flag_settlement"
+      "narrative_id": "narrative_radio_false_flag_settlement",
+      "follow_up_signals": [
+        { "id": "fu_333_6_trap_fallen_for", "trigger_condition": "ambush_encountered", "delay_days": 1, "clarity": 0.85, "text": "Militia chatter confirms the fake Grange Hall transmission drew rescuers directly into the crossfire.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_478_2",
@@ -331,7 +363,10 @@
       ],
       "revealed_location": "hospital_pharmacy",
       "warning_text": "The medical evacuation signal is a false flag. The clinic was stripped months ago. The signal uses incorrect medical terminology.",
-      "narrative_id": "narrative_radio_false_flag_medical"
+      "narrative_id": "narrative_radio_false_flag_medical",
+      "follow_up_signals": [
+        { "id": "fu_478_2_trap_fallen_for", "trigger_condition": "ambush_encountered", "delay_days": 1, "clarity": 0.85, "text": "Raider frequency 478.2: medical lure sprung; scavengers looting medical kits from the ambushed responders.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_512_4",
@@ -422,7 +457,12 @@
         { "day": 2, "clarity": 0.7, "text": "...my name is Petar in the school, and my teacher told me to use the radio if something happened. The ceiling fell in and I can't get out alone. Please help—I'm scared.", "outcome_hint": "The child was taught the radio procedure — someone trained him.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "loc_school_gymnasium",
-      "narrative_id": "narrative_radio_child_school"
+      "narrative_id": "narrative_radio_child_school",
+      "follow_up_signals": [
+        { "id": "fu_812_5_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Petar's voice through static: 'I hear footsteps in the hallway outside the gym. I am tapping on the radiator pipe.'", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_812_5_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Word arrives from the shelter nursery: Petar was pulled from the school rubble and is receiving warm broth.", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_812_5_expired", "trigger_condition": "expired", "delay_days": 3, "clarity": 0.8, "text": "The radio in the school gym has gone silent. Only cold wind whistling through shattered windows.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_867_9",
@@ -442,7 +482,12 @@
         { "day": 3, "clarity": 0.8, "text": "...this is Ana; my brother Miko and I are in the clinic basement with water but no food after the armed men left. The exterior door is blocked from the outside. If you come, knock three times so we know it's you.", "outcome_hint": "The older sister keeps the younger quiet between sentences.", "audio_cue": "radio_distress_beacon" }
       ],
       "revealed_location": "prewar_medical_cache",
-      "narrative_id": "narrative_radio_siblings_clinic"
+      "narrative_id": "narrative_radio_siblings_clinic",
+      "follow_up_signals": [
+        { "id": "fu_867_9_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Ana whispers on 867.9: 'We heard three knocks on the basement pipe. We are staying behind the steel locker.'", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_867_9_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Medical report from shelter: Ana and Miko have arrived safely from the clinic basement; dehydration treated.", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_867_9_expired", "trigger_condition": "expired", "delay_days": 3, "clarity": 0.8, "text": "Clinic basement frequency is dead. A patrol reports the basement door forced open and empty.", "audio_cue": "radio_static" }
+      ]
     },
     {
       "frequency_id": "freq_distress_901_2",

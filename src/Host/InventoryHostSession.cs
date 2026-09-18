@@ -35,25 +35,55 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
         private bool _startingSuppliesInitialized;
 
-        public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!, ItemDescriptionCatalog descriptionCatalog = null!, ExpansionEnrichmentCatalog? enrichmentCatalog = null)
+        public InventoryHostSession(
+            InventoryContainer inventory = null!,
+            ItemCatalog catalog = null!,
+            ItemDescriptionCatalog descriptionCatalog = null!,
+            ExpansionEnrichmentCatalog? enrichmentCatalog = null,
+            bool allowFixtureFallback = false)
         {
             Inventory = inventory ?? new InventoryContainer();
             Catalog = catalog ?? new ItemCatalog();
             DescriptionCatalog = descriptionCatalog ?? new ItemDescriptionCatalog();
             EnrichmentCatalog = enrichmentCatalog;
-            // A bare session (tests / direct construction) needs the catalog
-            // seeded too, or RestoreSave cannot resolve item ids.
-            if (Catalog.Count == 0)
-                SeedCatalog(Catalog);
+            // A bare session only seeds the demo catalog if explicitly requested as a fixture.
+            // Production paths must load from items.json via InventoryHostSession.Create(dataDir)
+            // (INV-27.1, INV-27.2).
+            if (allowFixtureFallback && Catalog.Count == 0)
+                SeedCatalogForTest(Catalog);
             Inventory.OnInventoryChanged += () => RaiseStateChanged();
         }
 
+        /// <summary>
+        /// Explicitly synthetic fixture creation for isolated micro-unit tests.
+        /// Uses hardcoded demo catalog definitions rather than the shipped items.json authority.
+        /// Must never be used by production-certifying selftests (INV-27.1, INV-27.2).
+        /// </summary>
+        public static InventoryHostSession CreateForFixture(
+            InventoryContainer? inventory = null,
+            ItemCatalog? catalog = null)
+        {
+            var cat = catalog ?? new ItemCatalog();
+            if (cat.Count == 0)
+                SeedCatalogForTest(cat);
+            return new InventoryHostSession(inventory!, cat, null!, null, allowFixtureFallback: true);
+        }
+
+        /// <summary>
+        /// Seeds a test catalog with explicit demo items. Must only be called by test fixtures.
+        /// </summary>
+        public static void SeedCatalogForTest(ItemCatalog catalog)
+        {
+            SeedCatalog(catalog);
+        }
+
         public static InventoryHostSession Create(
-            string dataDir,
+            string? dataDir = null,
             string? startingSuppliesProfileId = null,
             bool seedWhenNoSave = true)
         {
-            var fileIO = new FileSystemIO();
+            dataDir = string.IsNullOrEmpty(dataDir) ? CatalogPath.ResolveDataDir() : dataDir;
+            var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
             var serializer = new SystemTextJsonSerializer();
             var catalog = ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
             var descriptions = ItemDescriptionCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);

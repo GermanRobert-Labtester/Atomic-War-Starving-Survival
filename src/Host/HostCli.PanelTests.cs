@@ -403,12 +403,10 @@ namespace AtomicWar.GodotApp
 
             try
             {
-                if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir) &&
-                    !CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir))
-                {
-                    GD.PrintErr("[FAIL] could not locate Assets/StreamingAssets/Data");
+                if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir))
+                    dataDir = CatalogPath.ResolveDataDir();
+                if (string.IsNullOrEmpty(dataDir))
                     return (0, 1);
-                }
 
                 var fileIO = new FileSystemIO();
                 var serializer = new SystemTextJsonSerializer();
@@ -763,12 +761,8 @@ namespace AtomicWar.GodotApp
         public static int RunPowerGridCatalogSelfTest()
         {
             int errors = 0;
-            if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir) &&
-                !CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir))
-            {
-                GD.PrintErr("[PowerGridCatalogSelfTest] Could not locate StreamingAssets/Data.");
-                return EmitSummary("power_grid_catalog_selftest", false, 1, details: "data dir not found");
-            }
+            if (!CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string dataDir))
+                dataDir = CatalogPath.ResolveDataDir();
 
             var grid = PowerGridHostSession.CreateDefault(new SeededRng(4242), dataDir);
             var roomIds = new HashSet<string>(grid.System.Rooms.Select(r => r.RoomId), StringComparer.Ordinal);
@@ -1027,8 +1021,7 @@ namespace AtomicWar.GodotApp
             {
                 // Host bridge gate (Loop 9 gap): equipped inventory gear must flow
                 // into ExposureContext.WornGear and cut Mikhail's outside-zone dose.
-                var invSession = new InventoryHostSession();
-                invSession.SeedStartingSupplies();
+                var invSession = InventoryHostSession.Create(seedWhenNoSave: true);
                 invSession.Equip("hazmat_suit");
                 invSession.Equip("gas_mask");
 
@@ -1063,8 +1056,7 @@ namespace AtomicWar.GodotApp
             {
                 // Save/load round-trip of the wired session: equipped gear must survive
                 // a full save → restore cycle and keep protecting (Loop 1 + Invariant 3).
-                var invSave = new InventoryHostSession();
-                invSave.SeedStartingSupplies();
+                var invSave = InventoryHostSession.Create(seedWhenNoSave: true);
                 invSave.Equip("hazmat_suit");
                 var geared = new SurvivorsHostSession();
                 geared.SeedDemoRoster();
@@ -1073,7 +1065,7 @@ namespace AtomicWar.GodotApp
                 var survSave = geared.CaptureSave();
                 var invState = invSave.CaptureSave();
 
-                var restoredInv = new InventoryHostSession();
+                var restoredInv = InventoryHostSession.Create(seedWhenNoSave: false);
                 restoredInv.RestoreSave(invState);
                 var restored = new SurvivorsHostSession();
                 restored.RestoreSave(survSave);
@@ -2239,9 +2231,9 @@ namespace AtomicWar.GodotApp
                 // The specialty catalog is the authority for milestone/mastery
                 // narrative ids; without it the assertions below would see zero fires.
                 bool foundPhase0Data =
-                    CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string phase0DataDir)
-                    || CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out phase0DataDir);
-                Check(foundPhase0Data, "phase-0 selftest located Assets/StreamingAssets/Data");
+                    CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out string phase0DataDir);
+                if (!foundPhase0Data) { phase0DataDir = CatalogPath.ResolveDataDir(); foundPhase0Data = !string.IsNullOrEmpty(phase0DataDir); }
+                Check(foundPhase0Data, "phase-0 selftest located StreamingAssets data directory");
                 if (foundPhase0Data)
                     session.LoadTradeSpecialties(phase0DataDir);
 
@@ -2464,6 +2456,10 @@ namespace AtomicWar.GodotApp
             try
             {
                 // 1. Initial State & Clean Reset
+                if (System.IO.File.Exists(InventorySaveStore.SavePath))
+                {
+                    try { System.IO.File.Delete(InventorySaveStore.SavePath); } catch { /* cleanup: best-effort removal of stale test save */ }
+                }
                 var startingSession = new StartingLevelHostSession();
                 var startingState = startingSession.System.State;
                 Check(startingState != null, "starting level state initialized");
@@ -2491,8 +2487,7 @@ namespace AtomicWar.GodotApp
                 Check(elena != null && elena.Health > 80f, "Elena Vasquez present with machinist expertise");
 
                 // 3. Inventory & Supplies
-                var invSession = new InventoryHostSession();
-                invSession.SeedStartingSupplies();
+                var invSession = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: true);
                 var inv = invSession.Inventory;
                 Check(inv.CountById("clean_water") >= 12, "holdfast stocked with >=12 clean water");
                 Check(inv.CountById("canned_food") >= 16, "holdfast stocked with >=16 canned food");
@@ -2646,8 +2641,7 @@ namespace AtomicWar.GodotApp
                 var state = starting.System.State;
                 Check(state.day == 1, "§21 step 1-2: clean session starts on Day 1");
 
-                var inv = new InventoryHostSession();
-                inv.SeedStartingSupplies();
+                var inv = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: true);
                 var scrapMechanicalDef = inv.Catalog.Get("scrap_mechanical");
                 int scrapBefore = inv.Inventory.CountById("scrap_mechanical");
                 int bandageBefore = inv.Inventory.CountById("bandage");
@@ -2725,7 +2719,7 @@ namespace AtomicWar.GodotApp
                 Check(invSaved && craftingSaved && dutyPreState != null,
                     "§21 step 15: save stores wrote cleanly");
 
-                var freshInv = new InventoryHostSession();
+                var freshInv = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: false);
                 var freshCrafting = new CraftingSystem(freshInv.Inventory);
                 var freshDuty = new DutyRosterSystem();
                 var reloadInv = InventorySaveStore.TryLoad();
@@ -3074,8 +3068,7 @@ namespace AtomicWar.GodotApp
 
                 // 2. New Game Initialization
                 var startingSession = new StartingLevelHostSession();
-                var invSession = new InventoryHostSession();
-                invSession.SeedStartingSupplies();
+                var invSession = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: true);
                 var survivorsSession = new SurvivorsHostSession();
                 survivorsSession.SeedDemoRoster();
                 var greenhouseSession = new GreenhouseHostSession(new GreenhouseSystem(1986), invSession);
@@ -3369,8 +3362,7 @@ namespace AtomicWar.GodotApp
                 // ── 1. Medical Triage & Treatment Verification ──
                 var survivors = new SurvivorsHostSession();
                 survivors.SeedDemoRoster();
-                var inv = new InventoryHostSession();
-                inv.SeedStartingSupplies();
+                var inv = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: true);
                 inv.Add("bandage", 3);
                 inv.Add("iodine_pills", 3);
                 inv.Add("rad_away", 2);
@@ -3716,14 +3708,14 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public static string SnapshotGoldenRoot()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "snapshots");
+            return Path.Combine(CatalogPath.ResolveRepoRoot(), "snapshots");
         }
 
         /// <summary>Capture-side scratch root (outside snapshots/ so the Godot
         /// importer never sees diff captures; the dir ships a .gdignore).</summary>
         public static string SnapshotCaptureRoot()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "snapshot-capture");
+            return Path.Combine(CatalogPath.ResolveRepoRoot(), "snapshot-capture");
         }
     }
 }

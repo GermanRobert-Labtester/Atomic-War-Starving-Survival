@@ -43,12 +43,15 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void Catalog_reaches_the_48_good_breadth_target()
+        public void Catalog_reaches_the_50_good_breadth_target()
         {
             // Plan 56 follow-up: 40 + 8 (documents/weapons/contraband/misc
-            // category fill) under the revised count target.
+            // category fill) under the revised count target = 48. D1 drift
+            // rematch: Wave 8 Plan 22 trade parity added `cloth` +
+            // `item_air_filter_hepa` to economy_goods.json (48 -> 50); the
+            // breadth target now tracks the shipped catalog.
             var (_, goods) = Load();
-            Assert.Equal(48, goods.Count);
+            Assert.Equal(50, goods.Count);
         }
 
         [Fact]

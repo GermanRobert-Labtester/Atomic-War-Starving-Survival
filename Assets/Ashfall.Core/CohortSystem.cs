@@ -138,6 +138,34 @@ namespace Ashfall.Core
             return true;
         }
 
+        public const int DefaultMaturationAgeDays = 365;
+
+        /// <summary>
+        /// Plan 41 / C1[12]: Calendar-driven maturation check across living cohort children.
+        /// Evaluates all living, unmatured children and transitions those whose age (currentDay - birthDay)
+        /// is >= maturationAgeDays (default 365 days) into mature status via TryMaturation.
+        /// Returns the count of children matured on this check.
+        /// </summary>
+        public int CheckCohortMaturation(int currentDay, int maturationAgeDays = DefaultMaturationAgeDays)
+        {
+            if (currentDay <= 0 || maturationAgeDays <= 0) return 0;
+            int count = 0;
+            for (int i = 0; i < _state.children.Count; i++)
+            {
+                var child = _state.children[i];
+                if (child == null || child.isMatured || child.isDeceased) continue;
+                int age = currentDay - child.birthDay;
+                if (age >= maturationAgeDays)
+                {
+                    if (TryMaturation(child.survivorId, currentDay))
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
         /// <summary>
         /// Plan 19B.7 / 19B.10: Record a cohort child death or loss.
         /// </summary>

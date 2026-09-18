@@ -38,7 +38,7 @@ namespace AtomicWar.GodotApp
         public static int Run(string dataDirectory)
         {
             GD.Print("── LOADER WIRING SELF-TEST (REM-001) ──");
-            string root = Directory.GetCurrentDirectory();
+            string root = CatalogPath.ResolveRepoRoot();
             string policyPath = Path.Combine(root, "docs", "ci", "loader_wiring_policy.json");
 
             if (!File.Exists(policyPath))

@@ -19,8 +19,10 @@ namespace AtomicWar.GodotApp
             SetupCrafting();
             SetupInventory();
             SetupSurvivors();
+            SetupPhase0();
             SyncCraftingStationsFromShelter();
-            _craftingPanel.Bind(_crafting, _inventory, _survivors);
+            _craftingPanel.Bind(_crafting, _inventory, _survivors,
+                _phase0?.TradeSpecialty, sid => ResolveSurvivorProfessionId(sid));
             _craftingPanel.Open();
         }
         public void OpenRadioPanel()

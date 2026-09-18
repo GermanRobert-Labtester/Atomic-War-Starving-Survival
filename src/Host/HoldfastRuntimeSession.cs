@@ -326,7 +326,13 @@ namespace AtomicWar.GodotApp
             var inv = EffectiveInventory;
             if (inv != null)
             {
-                _inventorySession = new InventoryHostSession(inv);
+                string dataDir = CatalogPath.ResolveDataDir();
+                var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
+                var serializer = new SystemTextJsonSerializer();
+                var catalog = Ashfall.Core.Inventory.ItemCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
+                var descriptions = Ashfall.Core.Inventory.ItemDescriptionCatalogLoader.LoadCatalog(dataDir, fileIO, serializer);
+                var enrichmentLoader = new ExpansionEnrichmentCatalogLoader(fileIO, serializer);
+                _inventorySession = new InventoryHostSession(inv, catalog, descriptions, enrichmentLoader.Load(dataDir));
                 WireInventorySession();
                 return _inventorySession;
             }

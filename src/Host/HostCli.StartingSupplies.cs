@@ -82,7 +82,7 @@ namespace AtomicWar.GodotApp
                 string emptyRoot = Path.Combine(scratchRoot, "empty-save");
                 Directory.CreateDirectory(emptyRoot);
                 SaveSlotRoot.CurrentRoot = emptyRoot;
-                var empty = new InventoryHostSession();
+                var empty = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: false);
                 Check(
                     InventorySaveStore.TrySave(empty.CaptureSave()),
                     "explicit empty inventory save writes");

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
@@ -17,8 +18,8 @@ namespace AtomicWar.GodotApp
     /// and exposes typed snapshots + real player actions for the Combat panels.
     /// No gameplay rules live here — hosts only present and wire.
     /// </summary>
-    public sealed class CombatHostSession
-    : HostSessionBase{
+    public sealed class CombatHostSession : HostSessionBase, IWiringReporter
+    {
         public const int DemoSeed = 4242;
 
         public TacticalCombatSystem Engine { get; }
@@ -635,5 +636,42 @@ namespace AtomicWar.GodotApp
 
         public bool TryPersist() => CombatSaveStore.TrySave(Engine.CaptureState());
         public CombatState? TryRestorePersisted() => CombatSaveStore.TryLoad();
+
+        // ── Wiring Reporter (Plan 36B) ──────────────────────────────────
+
+        public WiringReport GetWiringReport()
+        {
+            var reqCollabs = new List<string> { "Inventory", "Survivors" };
+            var boundCollabs = new List<string>();
+            var missingCollabs = new List<string>();
+
+            if (Inventory != null) boundCollabs.Add("Inventory");
+            else missingCollabs.Add("Inventory");
+
+            if (Survivors != null) boundCollabs.Add("Survivors");
+            else missingCollabs.Add("Survivors");
+
+            var allPorts = new[] { "DamageSurvivor", "HealSurvivor", "ApplyMoraleDelta", "ConsumeAmmo", "ConsumeItem", "GrantLoot", "MarkCombatSurvived" };
+            var unbound = Engine?.Ports?.UnboundRequiredEffects ?? Array.Empty<string>();
+            var boundPorts = allPorts.Where(p => !unbound.Contains(p)).ToList();
+
+            var fallbacks = new List<NamedFallback>();
+            if (unbound.Count > 0)
+            {
+                fallbacks.Add(new NamedFallback("CombatHostPorts.NoOp", "combat", AllowedEnvironment.TestOnly, "No-op essential adapters used when full host ports are not injected"));
+            }
+
+            return new WiringReport
+            {
+                SessionId = "CombatHostSession",
+                RequiredCollaborators = reqCollabs,
+                BoundCollaborators = boundCollabs,
+                MissingCollaborators = missingCollabs,
+                RequiredPorts = allPorts,
+                BoundPorts = boundPorts,
+                MissingPorts = unbound.ToList(),
+                ActiveFallbacks = fallbacks
+            };
+        }
     }
 }

@@ -10,8 +10,9 @@ using Godot;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Self-test runner for REM-002 (--port-contract-selftest).
-    /// Validates all Core integration seams against docs/ci/port_contract_policy.json.
+    /// Self-test runner for Plan 36 (--port-contract-selftest).
+    /// Validates all Core integration seams against docs/ci/port_contract_policy.json
+    /// and audits runtime host subsystem wiring contracts (Plan 36A / 36B).
     /// </summary>
     public static class PortContractSelfTest
     {
@@ -38,8 +39,8 @@ namespace AtomicWar.GodotApp
 
         public static int Run(string dataDirectory)
         {
-            GD.Print("── PORT CONTRACT SELF-TEST (REM-002) ──");
-            string root = Directory.GetCurrentDirectory();
+            GD.Print("── PORT CONTRACT & HOST WIRING SELF-TEST (Plan 36) ──");
+            string root = CatalogPath.ResolveRepoRoot();
             string policyPath = Path.Combine(root, "docs", "ci", "port_contract_policy.json");
 
             if (!File.Exists(policyPath))
@@ -61,7 +62,7 @@ namespace AtomicWar.GodotApp
             if (!File.Exists(policyPath))
             {
                 GD.PrintErr($"[FAIL] port_contract_policy.json not found at {policyPath}");
-                return 1;
+                return HostCli.EmitSummary("port_contract_selftest", false, 1, 0, 1, "port_contract_policy.json missing");
             }
 
             PortContractPolicyDocument? doc;
@@ -73,13 +74,13 @@ namespace AtomicWar.GodotApp
             catch (Exception ex)
             {
                 GD.PrintErr($"[FAIL] Failed to parse port_contract_policy.json: {ex.Message}");
-                return 1;
+                return HostCli.EmitSummary("port_contract_selftest", false, 1, 0, 1, $"parse error: {ex.Message}");
             }
 
             if (doc == null || doc.ports.Count == 0)
             {
                 GD.PrintErr("[FAIL] port_contract_policy.json contained no port definitions");
-                return 1;
+                return HostCli.EmitSummary("port_contract_selftest", false, 1, 0, 1, "empty policy");
             }
 
             var srcFiles = Directory.GetFiles(Path.Combine(root, "src"), "*.cs", SearchOption.AllDirectories);
@@ -90,6 +91,7 @@ namespace AtomicWar.GodotApp
             int liveCoreCount = 0;
             int deferredCount = 0;
             int testOnlyCount = 0;
+            int pureLibCount = 0;
 
             foreach (var port in doc.ports)
             {
@@ -108,6 +110,10 @@ namespace AtomicWar.GodotApp
                 else if (port.classification == "LIVE_VIA_CORE")
                 {
                     liveCoreCount++;
+                }
+                else if (port.classification == "PURE_LIBRARY")
+                {
+                    pureLibCount++;
                 }
                 else if (port.classification == "DEFERRED")
                 {
@@ -134,14 +140,41 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            if (failures == 0)
+            // Print machine metrics (Plan 36A.10)
+            GD.Print($"PORTS_REQUIRED={hostReqCount}");
+            GD.Print($"PORTS_BOUND={hostReqCount - failures}");
+            GD.Print($"PORTS_MISSING={failures}");
+
+            // Execute runtime host subsystem wiring validation (Plan 36B.5)
+            // Ensure demo combat session is registered if none registered
+            if (HostWiringValidator.GetRegisteredReporters().Count == 0)
             {
-                GD.Print($"[PASS] All {doc.ports.Count} integration seams conform to port contract policy ({hostReqCount} host-required, {liveCoreCount} live-in-core, {deferredCount} deferred, {testOnlyCount} test/diag, 0 errors)");
-                return 0;
+                var combatSession = new CombatHostSession();
+                HostWiringValidator.RegisterReporter(combatSession);
+            }
+            var wiringSummary = HostWiringValidator.ValidateAll();
+
+            bool passed = failures == 0;
+            string details = passed
+                ? $"PASS: {doc.ports.Count} seams conform to policy ({hostReqCount} host-required, {liveCoreCount} live-in-core, {deferredCount} deferred, {testOnlyCount} test, {pureLibCount} lib); host wiring: {wiringSummary.TotalSessions} session(s) audited"
+                : $"FAIL: {failures} port policy error(s)";
+
+            if (passed)
+            {
+                GD.Print($"[PASS] All {doc.ports.Count} integration seams conform to port contract policy.");
+            }
+            else
+            {
+                GD.PrintErr($"[FAIL] Port contract self-test failed with {failures} error(s)");
             }
 
-            GD.PrintErr($"[FAIL] Port contract self-test failed with {failures} error(s)");
-            return 1;
+            return HostCli.EmitSummary(
+                "port_contract_selftest",
+                passed,
+                passed ? 0 : 1,
+                passedCount: doc.ports.Count - failures,
+                failedCount: failures,
+                details: details);
         }
     }
 }

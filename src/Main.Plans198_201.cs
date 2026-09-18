@@ -38,13 +38,12 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("chem_warfare") : new SeededRng(198);
             _chemWarfare = new ChemWarfareSystem(rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/chemical_weapons.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("chemical_weapons.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _chemWarfare.LoadCatalog(json);
                 }
             }
@@ -119,13 +118,12 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("comms_array") : new SeededRng(199);
             _commsArray = new CommsArraySystem(rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/comms_targets.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("comms_targets.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _commsArray.LoadCatalog(json);
                 }
             }
@@ -173,13 +171,12 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("ceremony_system") : new SeededRng(200);
             _ceremonySystem = new CeremonySystem(rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/ceremonies.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("ceremonies.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _ceremonySystem.LoadCatalog(json);
                 }
             }
@@ -227,13 +224,12 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("robotics") : new SeededRng(201);
             _robotics = new RoboticsSystem(rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/robotics.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("robotics.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _robotics.LoadCatalog(json);
                 }
             }
