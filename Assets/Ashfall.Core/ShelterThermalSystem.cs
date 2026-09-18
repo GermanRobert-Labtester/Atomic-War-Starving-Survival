@@ -502,6 +502,25 @@ namespace Ashfall.Core
         {
             _currentDay = day;
 
+            // One room-id → node pass per tick. The keyed room lookups below
+            // (heat-distribution insulation, pipe freeze, warmth) previously
+            // each ran a List.Find scan — O(rooms² + pipes·rooms) per tick.
+            // First entry wins so duplicate ids from a corrupt restore keep
+            // the exact List.Find first-match semantics.
+            var roomById = new Dictionary<string, ThermalRoomNode>(_state.rooms.Count);
+            for (int i = 0; i < _state.rooms.Count; i++)
+            {
+                var node = _state.rooms[i];
+                if (node.roomId != null)
+                    roomById.TryAdd(node.roomId, node);
+            }
+            ThermalRoomNode? FindRoom(string roomId)
+            {
+                if (roomId == null)
+                    return _state.rooms.Find(r => r.roomId == null);
+                return roomById.TryGetValue(roomId, out var byId) ? byId : null;
+            }
+
             // Deep freeze input
             float deepFreezeFactor = _deepFreeze.IsIntakeBlocked ? 0.3f : 1f;
 
@@ -585,7 +604,7 @@ namespace Ashfall.Core
                 // (numerical instability, not physics).
                 float gainW = heatGainKw * 1000f;
                 float conductionWPerK = Math.Max(1f, NewtonCoolingCoefficient * volumeM3
-                                      / Math.Max(0.05f, GetEffectiveInsulationFactor(room.roomId)) * 1000f)
+                                      / Math.Max(0.05f, EffectiveInsulationFactorFor(FindRoom(room.roomId))) * 1000f)
                                       * deepFreezeFactor;
                 float steadyC = outdoorTemp + gainW / conductionWPerK;
                 float relaxFactor = (float)Math.Exp(-conductionWPerK * SecondsPerDay / heatCapacityJ);
@@ -632,8 +651,8 @@ namespace Ashfall.Core
             // Pipe freezing progression (Plan 57 §4.6)
             foreach (var pipe in _state.pipes)
             {
-                var r1 = _state.rooms.Find(r => r.roomId == pipe.fromRoomId);
-                var r2 = _state.rooms.Find(r => r.roomId == pipe.toRoomId);
+                var r1 = FindRoom(pipe.fromRoomId);
+                var r2 = FindRoom(pipe.toRoomId);
                 float minTemp = Math.Min(r1?.currentTempC ?? _deepFreeze.IndoorTempCelsius, r2?.currentTempC ?? _deepFreeze.IndoorTempCelsius);
                 if (minTemp < 0f)
                 {
@@ -672,7 +691,7 @@ namespace Ashfall.Core
                 {
                     foreach (var room in _state.rooms)
                     {
-                        float warmth = GetRoomWarmthModifier(room.roomId);
+                        float warmth = WarmthModifierFor(FindRoom(room.roomId));
                         if (warmth <= 0f) continue;
                         var inRoom = _assignments.GetAssignmentsForRoom(room.roomId);
                         for (int i = 0; i < inRoom.Count; i++)
@@ -811,11 +830,12 @@ namespace Ashfall.Core
         }
 
         public float GetRoomWarmthModifier(string roomId)
-        {
-            var room = _state.rooms.Find(r => r.roomId == roomId);
-            if (room == null) return 0f;
-            return room.currentTempC > 15f ? (room.currentTempC - 15f) * 0.02f : 0f;
-        }
+            => WarmthModifierFor(_state.rooms.Find(r => r.roomId == roomId));
+
+        private static float WarmthModifierFor(ThermalRoomNode? room)
+            => room != null && room.currentTempC > 15f
+                ? (room.currentTempC - 15f) * 0.02f
+                : 0f;
 
         public bool IsRoomAvailable(string roomId)
         {
@@ -840,11 +860,13 @@ namespace Ashfall.Core
 
         /// <summary>Effective insulation factor including external hardening modifiers.</summary>
         public float GetEffectiveInsulationFactor(string zoneId)
+            => EffectiveInsulationFactorFor(_state.rooms.Find(r => r.roomId == zoneId));
+
+        private float EffectiveInsulationFactorFor(ThermalRoomNode? room)
         {
-            var room = _state.rooms.Find(r => r.roomId == zoneId);
             if (room == null) return 1f;
             float modifier = 0f;
-            if (_externalInsulationModifiers.TryGetValue(zoneId, out var m))
+            if (_externalInsulationModifiers.TryGetValue(room.roomId, out var m))
                 modifier = m;
             return Math.Max(0.1f, room.insulationFactor * (1f + modifier));
         }
