@@ -2414,7 +2414,7 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.factionstanceengine.registerfactions",
+      "port_id": "factions.factionstanceengine.registerfactions",
       "class_name": "FactionStanceEngine",
       "method_name": "RegisterFactions",
       "file_path": "Assets/Ashfall.Core/Economy/FactionStanceEngine.cs",
@@ -5747,7 +5747,7 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.tradetellengine.registerband",
+      "port_id": "economy.tradetellengine.registerband",
       "class_name": "TradeTellEngine",
       "method_name": "RegisterBand",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
@@ -5762,7 +5762,7 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.tradetellengine.registertellpool",
+      "port_id": "economy.tradetellengine.registertellpool",
       "class_name": "TradeTellEngine",
       "method_name": "RegisterTellPool",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
