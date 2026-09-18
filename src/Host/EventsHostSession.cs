@@ -38,8 +38,8 @@ namespace AtomicWar.GodotApp.Host
 
         private void LoadEvents()
         {
-            string eventsJsonPath = "res://Assets/StreamingAssets/Data/events.json";
-            string eventsJson = _fileIO.ReadAllText(eventsJsonPath);
+            string eventsJsonPath = CatalogPath.ResolveCatalog("events.json");
+            string eventsJson = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir()).ReadAllText(eventsJsonPath);
             var eventsData = _jsonSerializer.Deserialize<EventsRoot>(eventsJson);
             if (eventsData?.Events != null)
                 _events = eventsData.Events;
@@ -69,10 +69,11 @@ namespace AtomicWar.GodotApp.Host
 
         private void LoadIncidents()
         {
-            string incidentsJsonPath = "res://Assets/StreamingAssets/Data/incidents.json";
-            if (_fileIO.FileExists(incidentsJsonPath))
+            string incidentsJsonPath = CatalogPath.ResolveCatalog("incidents.json");
+            var io = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (io.FileExists(incidentsJsonPath))
             {
-                string incidentsJson = _fileIO.ReadAllText(incidentsJsonPath);
+                string incidentsJson = io.ReadAllText(incidentsJsonPath);
                 var incidentsData = _jsonSerializer.Deserialize<IncidentsRoot>(incidentsJson);
                 if (incidentsData?.Incidents != null)
                     _incidents = incidentsData.Incidents;
@@ -81,10 +82,11 @@ namespace AtomicWar.GodotApp.Host
 
         private void LoadNarrativeProgression()
         {
-            string narrativeJsonPath = "res://Assets/StreamingAssets/Data/narrative_progression.json";
-            if (_fileIO.FileExists(narrativeJsonPath))
+            string narrativeJsonPath = CatalogPath.ResolveCatalog("narrative_progression.json");
+            var io = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (io.FileExists(narrativeJsonPath))
             {
-                string narrativeJson = _fileIO.ReadAllText(narrativeJsonPath);
+                string narrativeJson = io.ReadAllText(narrativeJsonPath);
                 var narrativeData = _jsonSerializer.Deserialize<NarrativeRoot>(narrativeJson);
                 if (narrativeData?.Entries != null)
                     _narrativeProgression = narrativeData.Entries;

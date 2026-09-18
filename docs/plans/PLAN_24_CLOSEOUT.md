@@ -71,8 +71,14 @@ remains environment-dependent and must run on a renderer-capable session.
 ## Known non-Plan-24 debt routed elsewhere
 
 - **Godot shutdown resource/RID warning** — reproduced during the a11y
-  selftest in this wave (`ERROR: 1 resources still in use at exit`) — routed
-  to Task D3 with the reproduction evidence.
+  selftest in this wave (`ERROR: 1 resources still in use at exit`).
+  **Classified 2026-09-17 (D3):** the a11y smoke-specimen harness leaks a fixed
+  8 ObjectDB / 2 CanvasItem RIDs / 1 font RID / 1 resource at exit (identical
+  across three runs); the production lifecycle path
+  `--panel-bind-lifecycle-selftest` emits zero. Documented as known-benign
+  Tier 3 harness noise in `docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md` §4,
+  with the distinguisher (growth across cycles or appearance on a lifecycle
+  path = real leak).
 - **Greenhouse / foundry-output / medical producer rows** — named blockers
   (no worker identity; operator-free forging; staffing signature) recorded in
   the implementation log.

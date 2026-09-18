@@ -36,13 +36,12 @@ namespace AtomicWar.GodotApp
 
             _amputation = new AmputationSystem(rng, inv, needs, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/surgical_procedures.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("surgical_procedures.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<SurgicalProcedureCatalog>(json);
@@ -68,9 +67,6 @@ namespace AtomicWar.GodotApp
             _amputation.OnAmputationComplete += (survivorId, limb, condition) =>
             {
                 _journal?.TryAddRawEntry("amputation_performed", $"Emergency amputation performed on {survivorId}'s {limb} (State: {condition}).", null!, _simDay);
-                // TODO: Avatar integration — update survivor portrait variant, sprite attachment,
-                // animation set, and equipment restrictions for the affected limb.
-                RefreshSurvivorVisuals(survivorId);
             };
 
             _amputation.OnGangreneDeclared += (survivorId, limb) =>
@@ -81,7 +77,6 @@ namespace AtomicWar.GodotApp
             _amputation.OnProstheticFitted += (survivorId, prostheticId) =>
             {
                 _journal?.TryAddRawEntry("prosthetic_fitted", $"Prosthetic '{prostheticId}' fitted to {survivorId}.", null!, _simDay);
-                RefreshSurvivorVisuals(survivorId);
             };
 
             _amputation.OnPhantomPainEpisode += (survivorId, stressAmount) =>
@@ -116,13 +111,12 @@ namespace AtomicWar.GodotApp
 
             _railway = new RailwaySystem(rng, inv, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/rail_network.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("rail_network.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<RailwayNetworkCatalog>(json);
@@ -138,13 +132,11 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            string logisticsPath = "res://Assets/StreamingAssets/Data/rail_logistics_catalog.json";
-            if (Godot.FileAccess.FileExists(logisticsPath))
+            string logisticsPath = CatalogPath.ResolveCatalog("rail_logistics_catalog.json");
+            if (_catalogIo.FileExists(logisticsPath))
             {
-                using var file = Godot.FileAccess.Open(logisticsPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(logisticsPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var container = System.Text.Json.JsonSerializer.Deserialize<RailLogisticsCatalogContainer>(json);
@@ -208,13 +200,12 @@ namespace AtomicWar.GodotApp
 
             _fungi = new FungiCultivationSystem(rng, inv, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/underground_flora.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("underground_flora.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<UndergroundFloraCatalog>(json);
@@ -289,13 +280,12 @@ namespace AtomicWar.GodotApp
 
             _justice = new JusticeSystem(rng, inv, needs, _politics, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/wasteland_laws.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("wasteland_laws.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<WastelandLawsCatalog>(json);
@@ -383,16 +373,6 @@ namespace AtomicWar.GodotApp
             _justice?.TickDay(currentDay);
         }
 
-        /// <summary>
-        /// Placeholder for avatar/visual refresh when survivor limb state changes.
-        /// Future: update portrait variant, sprite attachments, animation sets,
-        /// and equipment restrictions based on AmputationSystem limb conditions.
-        /// </summary>
-        private void RefreshSurvivorVisuals(string survivorId)
-        {
-            // TODO: Integrate with survivor portrait/avatar system when available.
-            GD.Print($"[Main.Plans190_193] Visual refresh requested for survivor '{survivorId}' (avatar system not yet integrated).");
-        }
         // ── UI-07 closeout: amputation / tribunal / railway / archaeology consoles ──
 
         private void HandleAmputationAction(string action, string param = "")

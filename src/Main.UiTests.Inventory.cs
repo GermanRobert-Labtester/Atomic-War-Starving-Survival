@@ -88,7 +88,7 @@ namespace AtomicWar.GodotApp
 
             // Save → restore roundtrip.
             var save = _inventory.CaptureSave();
-            var fresh = new InventoryHostSession();
+            var fresh = InventoryHostSession.Create(_dataDir, seedWhenNoSave: false);
             fresh.RestoreSave(save);
             bool roundtrip = fresh.Inventory.CountById("canned_food") == 6
                 && fresh.Inventory.GetEquipped(EquipSlot.Face) != null;

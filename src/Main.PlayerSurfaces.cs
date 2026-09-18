@@ -265,7 +265,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseInventoryOverlay());
 
             PanelRegistry.ConfigureActions("crafting",
-                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); SyncCraftingStationsFromShelter(); _craftingPanel.Bind(_crafting, _inventory, _survivors); },
+                bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); SetupPhase0(); SyncCraftingStationsFromShelter(); _craftingPanel.Bind(_crafting, _inventory, _survivors, _phase0?.TradeSpecialty, sid => ResolveSurvivorProfessionId(sid)); },
                 openAction: () => { SyncCraftingStationsFromShelter(); _craftingPanel.Open(); },
                 closeAction: () => CloseCraftingPanel());
 

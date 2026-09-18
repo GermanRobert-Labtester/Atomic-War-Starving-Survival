@@ -112,8 +112,8 @@ namespace AtomicWar.GodotApp
 
         private static string FindSrcDir()
         {
-            // Walk up from the binary/working directory looking for src/.
-            string[] starts = { Directory.GetCurrentDirectory(), AppContext.BaseDirectory };
+            // Walk up from the data dir or binary dir looking for src/.
+            string[] starts = { CatalogPath.ResolveRepoRoot(), CatalogPath.ResolveDataDir(), AppContext.BaseDirectory };
             foreach (string start in starts)
             {
                 var dir = new DirectoryInfo(Path.GetFullPath(start));

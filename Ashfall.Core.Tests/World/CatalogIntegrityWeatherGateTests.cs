@@ -23,6 +23,7 @@ namespace Ashfall.Core.Tests.World
             try
             {
                 Directory.CreateDirectory(scratch);
+                IntegrityScratchFixture.SeedMandatoryCatalogs(scratch);
                 seed(scratch);
                 return CatalogIntegrityValidator.Validate(scratch, new FileSystemIO());
             }

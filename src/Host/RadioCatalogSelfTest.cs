@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp
             string stationsFile = Path.Combine(actualDataDir, RadioStationCatalogLoader.StationsFileName);
             if (!File.Exists(stationsFile))
             {
-                actualDataDir = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "StreamingAssets", "Data");
+                actualDataDir = CatalogPath.ResolveDataDir();
                 stationsFile = Path.Combine(actualDataDir, RadioStationCatalogLoader.StationsFileName);
             }
 
@@ -164,7 +164,7 @@ namespace AtomicWar.GodotApp
             }
 
             // 7. Core Source Gate: No Hardcoded Station Defaults
-            string coreFile = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Ashfall.Core", "Radio", "RadioStationCatalog.cs");
+            string coreFile = Path.Combine(CatalogPath.ResolveRepoRoot(), "Assets", "Ashfall.Core", "Radio", "RadioStationCatalog.cs");
             if (File.Exists(coreFile))
             {
                 string text = File.ReadAllText(coreFile);

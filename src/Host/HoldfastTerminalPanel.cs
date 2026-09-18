@@ -73,7 +73,7 @@ namespace AtomicWar.GodotApp
             {
                 _session.StateChanged += RefreshView;
                 _selectedFactionId = _session.Trade.SelectedFactionId;
-                _dispatch = new HoldfastDispatchLog(HoldfastFlavorCatalog.Load(session.World.Catalog.Items.Items.Count > 0 ? "Assets/StreamingAssets/Data" : "")!);
+                _dispatch = new HoldfastDispatchLog(HoldfastFlavorCatalog.Load(session.World.Catalog.Items.Items.Count > 0 ? CatalogPath.ResolveDataDir() : "")!);
                 _dispatch.OnSessionOpened("holdfast");
             }
             RefreshView();

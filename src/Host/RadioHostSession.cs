@@ -159,7 +159,7 @@ namespace AtomicWar.GodotApp
             string path = Path.Combine(actualDataDir, CorpusFileName);
             if (!File.Exists(path))
             {
-                actualDataDir = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "StreamingAssets", "Data");
+                actualDataDir = CatalogPath.ResolveDataDir();
                 path = Path.Combine(actualDataDir, CorpusFileName);
             }
 

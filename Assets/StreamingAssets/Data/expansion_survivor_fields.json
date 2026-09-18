@@ -504,6 +504,10 @@
       "pre_war_profession_id": "",
       "belief_profile_id": "superstitious_traditional",
       "personal_keepsake_item_id": "burnt_cloth"
+    },
+    {
+      "survivor_id": "the_pyromaniac",
+      "pre_war_profession_id": "metallurgist"
     }
   ]
 }

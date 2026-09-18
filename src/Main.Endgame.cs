@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Endgame;
+using AtomicWar.GodotApp.Host;
 
 namespace AtomicWar.GodotApp
 {
@@ -12,6 +13,7 @@ namespace AtomicWar.GodotApp
     {
         private EndgameHostSession? _endgame;
         private bool _endgameDirty;
+        private CompletionHistoryStore? _completionHistory;
 
         private void SetupEndgame()
         {
@@ -19,6 +21,8 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("endgame") : new SeededRng(84);
             _endgame = EndgameHostSession.Create(_dataDir, rng);
             _endgame.StateChanged += () => _endgameDirty = true;
+            _endgame.CampaignSealed += OnCampaignSealed;
+            _completionHistory = CompletionHistoryStore.Load();
 
             var save = EndgameSaveStore.TryLoad();
             if (save != null)
@@ -37,6 +41,66 @@ namespace AtomicWar.GodotApp
         private void FlushEndgameIfDirty()
         {
             if (_endgameDirty) SaveEndgame();
+        }
+
+        /// <summary>
+        /// Observes the existing endgame authority after it has sealed a campaign. The completion
+        /// history is user-level and append-only; it is never added to campaign-save sections and
+        /// does not select an ending or alter gameplay state.
+        /// </summary>
+        private void OnCampaignSealed(CampaignEpilogueReport epilogue)
+        {
+            if (!TryBuildCompletionRunIdentity(out string runIdentity))
+            {
+                GD.PrintErr("[Main.Endgame] Completion history was not recorded: active campaign identity is unavailable.");
+                return;
+            }
+
+            // The campaign envelope remains authoritative for its own terminal state. Commit the
+            // already-sealed endgame section before observing it in the separate history store.
+            if (!SaveAll(playCue: false))
+            {
+                GD.PrintErr("[Main.Endgame] Completion history was not recorded: terminal campaign save failed.");
+                return;
+            }
+
+            _completionHistory ??= CompletionHistoryStore.Load();
+            CampaignOutcomeSnapshot snapshot = BuildCampaignOutcomeSnapshot();
+            var observation = new CampaignCompletionObservation(
+                runIdentity,
+                epilogue.endingId,
+                snapshot.ToInputs());
+
+            CompletionHistoryAppendResult result = _completionHistory.Append(observation, out CampaignCompletionRecord? record);
+            if (result == CompletionHistoryAppendResult.Appended)
+            {
+                GD.Print($"[Main.Endgame] Completion record appended: {record!.completionId}.");
+                return;
+            }
+
+            if (result == CompletionHistoryAppendResult.AlreadyRecorded)
+            {
+                GD.Print("[Main.Endgame] Completion record already exists for this sealed campaign.");
+                return;
+            }
+
+            GD.PrintErr($"[Main.Endgame] Completion history append failed: {result}. Campaign terminal state remains preserved.");
+        }
+
+        private bool TryBuildCompletionRunIdentity(out string runIdentity)
+        {
+            runIdentity = string.Empty;
+            if (_saveLoadHost == null || !_saveLoadHost.ActiveSlotId.HasValue)
+                return false;
+
+            var slotId = _saveLoadHost.ActiveSlotId.Value;
+            var manifest = _saveLoadHost.GetManifest(slotId);
+            if (manifest == null)
+                return false;
+
+            runIdentity = _saveLoadHost.CurrentProfileId.Value + "/" + slotId.Value + "/seed_" +
+                manifest.seed.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            return true;
         }
 
         public void CheckAndTriggerEndgame(int day)

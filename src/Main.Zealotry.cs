@@ -29,15 +29,15 @@ namespace AtomicWar.GodotApp
             SetupSurvivorSocial();   // friction beliefs are the adoption source
 
             var profiles = new List<ZealotryBeliefProfile>();
-            string catalogPath = "res://Assets/StreamingAssets/Data/wasteland_religions.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("wasteland_religions.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
                     try
                     {
-                        var root = System.Text.Json.JsonSerializer.Deserialize<ZealotryCatalogRoot>(file.GetAsText());
+                        var root = System.Text.Json.JsonSerializer.Deserialize<ZealotryCatalogRoot>(json);
                         if (root?.religions != null)
                         {
                             var load = new ZealotryCatalogLoadResult();

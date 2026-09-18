@@ -90,11 +90,7 @@ namespace AtomicWar.GodotApp
             ));
 
             // ── Load Radio Corpus & Initialize Core Radio Engine ──
-            var radioCorpusPath = Path.Combine(AppContext.BaseDirectory, "Assets/StreamingAssets/Data/faction_radio_corpus.json");
-            if (!File.Exists(radioCorpusPath))
-            {
-                radioCorpusPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/StreamingAssets/Data/faction_radio_corpus.json");
-            }
+            var radioCorpusPath = CatalogPath.ResolveCatalog("faction_radio_corpus.json");
             string radioJson = File.Exists(radioCorpusPath) ? File.ReadAllText(radioCorpusPath) : "{}";
             var radioEngine = FactionRadioEngine.LoadFromJson(radioJson);
             var radioRng = new SeededRng(2026);

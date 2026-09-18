@@ -30,13 +30,12 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("plastic_pyrolysis") : new SeededRng(2020);
             _plasticPyrolysis = new PlasticPyrolysisSystem(rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/plastic_pyrolysis_catalog.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("plastic_pyrolysis_catalog.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<PlasticPyrolysisCatalog>(json);
@@ -126,13 +125,12 @@ namespace AtomicWar.GodotApp
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("cargo_airdrop") : new SeededRng(2050);
             _cargoAirdrop = new CargoAirdropSystem(rng, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/cargo_airdrop_catalog.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("cargo_airdrop_catalog.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<CargoAirdropCatalog>(json);

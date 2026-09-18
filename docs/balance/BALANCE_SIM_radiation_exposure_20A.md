@@ -103,5 +103,17 @@ Findings:
 - **F8 — intact shelter floor**: 1.44 mSv/day from radon alone — a real but survivable
   maintenance pressure vs the 80 acute / 400 chronic thresholds.
 
-No production data was modified. Proposal-only balance questions (F1–F4 in the main report)
-remain open for the foreman.
+No production data was modified.
+
+---
+
+## Foreman Decision & Closure (Wave 9 Part 2 — 2026-09-17)
+
+All findings (F1–F8) are formally closed per signed foreman authorization (`docs/plans/wave9_part2/C3_DECISION.md`):
+
+1. **F1 (Surface/expedition lethality): DECLINED RE-SCALE.** The proposal to scale down outdoor rates is rejected. Ashfall is designed as a hardcore survival simulator where the radioactive wasteland surface is inherently lethal without appropriate environmental protection. Long surface excursions require Plan 21 gear condition, Plan 50 vehicle shielding, Plan 20B shelter infrastructure, and Plan 22C anti-rad countermeasures.
+2. **F2 (Ashfall alignment): RESOLVED.** Closed as verified in 20A (+45 mSv/h alignment in `weather_effects.json`).
+3. **F3 (Ceiling attenuation): RESOLVED.** Composite multi-component model fully realized in Plan 20B.
+4. **F4 (Intact shelter floor): RESOLVED.** 12 Bq/m³ radon baseline provides the intended 1.44 mSv/day indoor floor in Plan 20B.
+5. **F5–F8 (Shielding invariants): CONFIRMED.** Intact structure weather immunity, maintenance ordering, bounded decontamination, and indoor radon floor are confirmed canonical rules.
+6. **Data Modifications: 0.** Zero unauthorized production data changes; all test pins in `Plan20ARadiationBalanceSweepTests` (9/9) and `Plan20BShieldingBalanceSweepTests` (12/12) are preserved byte-for-byte.

@@ -1,0 +1,609 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "Plan 29 / C1[7] One Truth Capability Authority",
+  "verified_at": "2026-09-17",
+  "total_claims": 24,
+  "claims": [
+    {
+      "claim_id": "inv_engine_free_core",
+      "category": "Architecture & Invariants",
+      "document": "AGENTS.md",
+      "anchor": "Rule 2",
+      "claim": "Assets/Ashfall.Core/ contains pure domain logic and never references Godot, UnityEngine, or engine serialization APIs.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "gate",
+          "path": "scripts/ci/forbidden-api-gate.sh",
+          "symbol": null
+        },
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Inventory/Inventory.cs",
+          "symbol": "Inventory"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Tooling/MainTriadDriftGateTests.cs"
+      ],
+      "gates": [
+        "forbidden_core_apis"
+      ],
+      "notes": "Enforced on every fast-tier CI run via forbidden-api-gate.sh."
+    },
+    {
+      "claim_id": "inv_json_data_authoritative",
+      "category": "Architecture & Invariants",
+      "document": "AGENTS.md",
+      "anchor": "Rule 3",
+      "claim": "Assets/StreamingAssets/Data/ is the sole authoritative source for authored game data; panels and hosts do not duplicate gameplay authority.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/CatalogIntegrityValidator.cs",
+          "symbol": "CatalogIntegrityValidator"
+        },
+        {
+          "type": "gate",
+          "path": "scripts/ci/json-schema-policy-gate.sh",
+          "symbol": null
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/CatalogIntegrityValidatorTests.cs"
+      ],
+      "gates": [
+        "json_schema_policy"
+      ],
+      "notes": "Verified across 300+ JSON data catalogs."
+    },
+    {
+      "claim_id": "inv_deterministic_rng",
+      "category": "Architecture & Invariants",
+      "document": "AGENTS.md",
+      "anchor": "Rule 4",
+      "claim": "Deterministic simulation uses seeded RNG; System.Random and unseeded Guid generators are strictly forbidden in deterministic Core behavior.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Random/CampaignRngStream.cs",
+          "symbol": "CampaignRngStream"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Save/GoldenSaveFixtureTests.cs",
+        "Ashfall.Core.Tests/Tooling/CampaignDayOwnerDeterminismGateTests.cs"
+      ],
+      "gates": [
+        "forbidden_core_apis"
+      ],
+      "notes": "Monitored by determinism test suite and forbidden API scanner."
+    },
+    {
+      "claim_id": "inv_rulebook_synchronization",
+      "category": "Governance & Rulebooks",
+      "document": "AGENTS.md",
+      "anchor": "Rulebook Sync Contract",
+      "claim": "All 13 AI agent client rulebooks derive byte-identically from AGENTS.md via sync-agent-rulebooks.py with zero drift.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "gate",
+          "path": "scripts/ci/sync-agent-rulebooks.py",
+          "symbol": null
+        }
+      ],
+      "tests": [],
+      "gates": [
+        "agent_rulebooks_sync"
+      ],
+      "notes": "Gate 37 in CI manifest; covers CLAUDE, CODEX, CRUSH, GOOSE, QWEN, VIBE, MIMOCODE, OPENSETUP, ANTIGRAVITY, GEMINI, .clinerules, .cursorrules, .windsurfrules."
+    },
+    {
+      "claim_id": "inv_docs_index_integrity",
+      "category": "Governance & Rulebooks",
+      "document": "docs/CURRENT_AUTHORITY.md",
+      "anchor": "Docs Index Gate",
+      "claim": "docs/INDEX.md is generated deterministically from repository markdown inputs and checked via generate-docs-index.py --check.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "gate",
+          "path": "scripts/ci/generate-docs-index.py",
+          "symbol": null
+        }
+      ],
+      "tests": [],
+      "gates": [
+        "docs_index_drift"
+      ],
+      "notes": "Gate 26 in CI manifest; indexes 2,450+ markdown documents."
+    },
+    {
+      "claim_id": "eco_shelter_barter_system",
+      "category": "Economy & Trade",
+      "document": "docs/plans/C1_planintegration.md",
+      "anchor": "Plan 14A",
+      "claim": "ShelterBarterSystem owns trade valuation, currency conversions, and transaction execution without duplicating inventory state.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Economy/ShelterBarterSystem.cs",
+          "symbol": "ShelterBarterSystem"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/EconomySystemTests.cs",
+        "Ashfall.Core.Tests/Economy/Plan14AEconomyIntegrationTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Integrated with ShelterBarterPanel in Godot host."
+    },
+    {
+      "claim_id": "eco_trade_embargo_registry",
+      "category": "Economy & Trade",
+      "document": "docs/plans/C1_planintegration.md",
+      "anchor": "Plan 14B §14B.7",
+      "claim": "TradeEmbargoSystem models factional trade sanctions and embargoes affecting regional price multipliers and caravan arrival availability.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Economy/TradeEmbargoSystem.cs",
+          "symbol": "TradeEmbargoSystem"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Economy/TradeEmbargoSystemTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Verified with 20/20 unit and integration tests."
+    },
+    {
+      "claim_id": "eco_black_market_settlement",
+      "category": "Economy & Trade",
+      "document": "docs/economy/PLAN_211_BLACK_MARKET_CLOSEOUT.md",
+      "anchor": "Plan 211",
+      "claim": "BlackMarketSettlementService executes canonical immediate inventory transactions, loans, and repayments without adding shadow balance ledgers.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Economy/BlackMarketSettlementService.cs",
+          "symbol": "BlackMarketSettlementService"
+        },
+        {
+          "type": "source",
+          "path": "src/UI/BlackMarketPanel.cs",
+          "symbol": "BlackMarketPanel"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Economy/Plan211BlackMarketSettlementTests.cs",
+        "Ashfall.Core.Tests/Economy/Plan211BlackMarketPanelContractTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Sealed in Wave 8 Part 2 C1; visual snapshot verified."
+    },
+    {
+      "claim_id": "inv_single_condition_mutation_api",
+      "category": "Inventory & Condition",
+      "document": "docs/systems/CONDITION_LEDGER_OWNERSHIP.md",
+      "anchor": "Plan 21A",
+      "claim": "Inventory.RecordWear is the single mutation API for protective gear condition degradation with exactly-once failure semantics.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Inventory/Inventory.cs",
+          "symbol": "Inventory.RecordWear"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Inventory/Plan21ProtectiveWearTests.cs",
+        "Ashfall.Core.Tests/Inventory/Plan21EndToEndJourneyTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Protected gear emits OnProtectiveGearFailed and triggers replace-only state."
+    },
+    {
+      "claim_id": "inv_protective_restore_repair",
+      "category": "Inventory & Condition",
+      "document": "docs/plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md",
+      "anchor": "Plan 22",
+      "claim": "TryRepairEquippedGear restores protective gear condition up to authored max_repair_condition_fraction (0.85) consuming authored repairRecipe bills.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Inventory/Inventory.cs",
+          "symbol": "Inventory.TryRepairEquippedGear"
+        },
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Inventory/ItemTagCatalog.cs",
+          "symbol": "ItemTagCatalog"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Inventory/Plan22TagAndRepairTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Sealed in Plan 22 with real-catalog parity tests."
+    },
+    {
+      "claim_id": "surv_fitness_for_duty",
+      "category": "Survivors & Needs",
+      "document": "docs/systems/SURVIVOR_JOURNEY_OWNERSHIP.md",
+      "anchor": "Plan 24A",
+      "claim": "FitnessForDutyModel derives health-aware duty capability and dispatch readiness from existing persisted survivor condition without adding save state.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Survivors/FitnessForDutyModel.cs",
+          "symbol": "FitnessForDutyModel"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Survivors/Plan24FitnessForDutyTests.cs",
+        "Ashfall.Core.Tests/DutyRoster/Plan24DutyRosterFitnessTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Hard blocks on incapacitation, death, and medical ward admission."
+    },
+    {
+      "claim_id": "surv_needs_modifier_stack",
+      "category": "Survivors & Needs",
+      "document": "docs/systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md",
+      "anchor": "Plan 24A/24B",
+      "claim": "NeedsModifierStack provides a unified attributed seam for starvation, dehydration, cold, grief, and overwork needs modifiers.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Survivors/NeedsModifierStack.cs",
+          "symbol": "NeedsModifierStack"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Survivors/Plan24NeedsModifierStackTests.cs",
+        "Ashfall.Core.Tests/Survivors/Plan24NeedsSourceMigrationTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "All 9 historical needs source families migrated to this unified seam."
+    },
+    {
+      "claim_id": "surv_duty_hours_and_productivity",
+      "category": "Survivors & Duty Roster",
+      "document": "docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md",
+      "anchor": "Plan 24 Task A2",
+      "claim": "DutyHourLedger accumulates derived duty hours, feeds overwork penalties into NeedsModifierStack, and routes skill-to-yield through WorkerProductivityContract.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/DutyRoster/DutyHourLedger.cs",
+          "symbol": "DutyHourLedger"
+        },
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Survivors/LaborProductivity.cs",
+          "symbol": "LaborProductivity"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/DutyRoster/Plan24DutyHourTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Wired to workshop craft times and kitchen meal preparation."
+    },
+    {
+      "claim_id": "exp_amputation_travel_multiplier",
+      "category": "Expeditions",
+      "document": "docs/plans/wave8_part2/C2_DECISION.md",
+      "anchor": "Plan 190 Wave 8 C2",
+      "claim": "ExpeditionState.survivorSpeedMultiplier samples AmputationSystem.GetMovementSpeedMultiplier at dispatch to slow parties containing amputees.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Expeditions/ExpeditionSystem.cs",
+          "symbol": "ExpeditionSystem"
+        },
+        {
+          "type": "source",
+          "path": "src/Host/ExpeditionHostSession.cs",
+          "symbol": "SurvivorMovementSpeedProvider"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Expeditions/C2AmputationTravelTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Intact survivor multiplier = 1.0; amputee leg penalties bound transit speed."
+    },
+    {
+      "claim_id": "world_weather_effects_authority",
+      "category": "World & Weather",
+      "document": "docs/plans/C2_planintegration[4].md",
+      "anchor": "Plan 20C §68",
+      "claim": "WeatherEffectsCatalog is the data authority for environmental modifiers across all 22 weather kinds from weather_effects.json.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/World/WeatherEffectsCatalog.cs",
+          "symbol": "WeatherEffectsCatalog"
+        },
+        {
+          "type": "source",
+          "path": "Assets/StreamingAssets/Data/weather_effects.json",
+          "symbol": null
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/World/WeatherEffectsCatalogTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Replaced hardcoded C# switches with data-driven rad, thermal, and visibility values."
+    },
+    {
+      "claim_id": "world_weather_station_intelligence",
+      "category": "World & Weather",
+      "document": "docs/plans/C2_planintegration[4].md",
+      "anchor": "Plan 20C §37/§39",
+      "claim": "WeatherStationSystem provides tiered, calibrated multi-day forecasts; DailyBriefingReportBuilder attributes misses to station calibration vs unwarned storms.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/WeatherStationSystem.cs",
+          "symbol": "WeatherStationSystem"
+        },
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Campaign/DailyBriefingReportBuilder.cs",
+          "symbol": "DailyBriefingReportBuilder"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Campaign/DailyBriefingCrisisTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Emits weather_forecast_miss and weather_unexpected_storm day events."
+    },
+    {
+      "claim_id": "rad_shelter_shielding_model",
+      "category": "Radiation & Shielding",
+      "document": "docs/shelter/PLAN_20B_SHIELDING_AUTHORITY_MAP.md",
+      "anchor": "Plan 20B",
+      "claim": "ShelterShieldingModel evaluates interior radiation attenuation from data-driven shelter_shielding.json upgrades and ceiling terms without adding save sections.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Shelter/ShelterShieldingModel.cs",
+          "symbol": "ShelterShieldingModel"
+        },
+        {
+          "type": "source",
+          "path": "Assets/StreamingAssets/Data/shelter_shielding.json",
+          "symbol": null
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Shelter/Plan20BShelterShieldingTests.cs",
+        "Ashfall.Core.Tests/Shelter/Plan20BShieldingBalanceSweepTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Bound lazily in host; unbound state guarantees byte-identical legacy behavior."
+    },
+    {
+      "claim_id": "radio_distress_stage_resolver",
+      "category": "Radio & Narrative",
+      "document": "docs/radio/DISTRESS_SIGNAL_STAGE_CONTRACT.md",
+      "anchor": "Plan 9-12 Wave 1",
+      "claim": "DistressStageResolver computes monotonic progression stages, broadcast fragments, and outcome hints for distress calls across radio_distress_signals.json.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Radio/DistressStageResolver.cs",
+          "symbol": "DistressStageResolver"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Radio/DistressStageResolverTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Validated structurally by CatalogIntegrityValidator.ValidateDistressSignalStages."
+    },
+    {
+      "claim_id": "radio_distress_follow_up_scheduler",
+      "category": "Radio & Narrative",
+      "document": "docs/radio/DISTRESS_SIGNAL_FOLLOWUP_CONTRACT.md",
+      "anchor": "Plan 9-12 Wave 3",
+      "claim": "DistressFollowUpScheduler manages delayed consequence broadcasts triggered by rescue outcomes, preventing circular graph cycles via self-contained payloads.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Radio/DistressFollowUpScheduler.cs",
+          "symbol": "DistressFollowUpScheduler"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Radio/DistressFollowUpTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Persisted under V6 RadioSave codec with frozen V5 migration path."
+    },
+    {
+      "claim_id": "save_state_round_trip_coverage",
+      "category": "Save & Persistence",
+      "document": "docs/testing/FIXTURE_POLICY.md",
+      "anchor": "Plan 27B",
+      "claim": "All stateful Core systems implementing ISaveable register save sections and achieve 100% round-trip fidelity under SaveStateRoundTripCoverageGateTests.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Ashfall.Core.Tests/Tooling/SaveStateRoundTripCoverageGateTests.cs",
+          "symbol": "SaveStateRoundTripCoverageGateTests"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Tooling/SaveStateRoundTripCoverageGateTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Gate asserts that all stateful systems round-trip capture/restore with identical checksums."
+    },
+    {
+      "claim_id": "campaign_day_owner_determinism",
+      "category": "Campaign & Determinism",
+      "document": "docs/testing/JOURNEYS.md",
+      "anchor": "Plan 27B/27C",
+      "claim": "Campaign day advance owners are tracked by CampaignDayOwnerDeterminismGateTests, guaranteeing pure deterministic execution across paired seeds.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Ashfall.Core.Tests/Tooling/CampaignDayOwnerDeterminismGateTests.cs",
+          "symbol": "CampaignDayOwnerDeterminismGateTests"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Tooling/CampaignDayOwnerDeterminismGateTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Asserts zero unmanaged day-advance owners in CampaignDayCoordinator."
+    },
+    {
+      "claim_id": "host_catalog_path_single_authority",
+      "category": "Architecture & Invariants",
+      "document": "docs/perf/BUDGETS.md",
+      "anchor": "Plan 26A",
+      "claim": "CatalogPath.cs is the sole path-resolution authority for JSON streaming assets in Godot host; CatalogPathForbiddenGateTests prevents bypass callers.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "src/Host/CatalogPath.cs",
+          "symbol": "CatalogPath"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Tooling/CatalogPathForbiddenGateTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "All 40 legacy bypass call sites migrated to CatalogPath; gate allowlist clamped to 1."
+    },
+    {
+      "claim_id": "briefing_route_navigation_map",
+      "category": "UI & Navigation",
+      "document": "docs/telemetry/DAY_RECORD.md",
+      "anchor": "Plan 31B",
+      "claim": "BriefingRouteMap maps daily briefing entry kinds to validated player-navigable UI routes; Main.Campaign.cs validates against PanelRegistry before routing.",
+      "status": "TRUE",
+      "confidence": "PROVEN_RUNTIME",
+      "evidence": [
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/Campaign/BriefingRouteMap.cs",
+          "symbol": "BriefingRouteMap"
+        },
+        {
+          "type": "source",
+          "path": "src/Main.Campaign.cs",
+          "symbol": "ShowBriefingForDay"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Campaign/Plan31BriefingRouteTests.cs"
+      ],
+      "gates": [
+        "test_core_suite"
+      ],
+      "notes": "Emits telemetry and guarantees no crash on unmapped or sheltered panels."
+    },
+    {
+      "claim_id": "claim_amputation_equipment_restrictions",
+      "category": "Survivors & Equipment",
+      "document": "docs/plans/wave8_part2/C2_DECISION.md",
+      "anchor": "Plan 190 Phase 2",
+      "claim": "Amputated limbs prevent equipping 2-handed weapons, boots, or gloves depending on missing limbs.",
+      "status": "PARTLY_TRUE",
+      "confidence": "SOURCE_ONLY",
+      "evidence": [
+        {
+          "type": "doc",
+          "path": "docs/plans/wave8_part2/C2_DECISION.md",
+          "symbol": null
+        }
+      ],
+      "tests": [],
+      "gates": [],
+      "notes": "Travel speed multiplier is implemented; equipment model limb-slot restrictions are SPLIT and queued for Wave 10 Part 2."
+    }
+  ]
+}

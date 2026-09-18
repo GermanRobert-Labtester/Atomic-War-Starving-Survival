@@ -34,13 +34,12 @@ namespace AtomicWar.GodotApp
 
             _generational = new GenerationalSystem(rng, inv, needs, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/development_traits.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("development_traits.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<DevelopmentTraitsCatalog>(json);
@@ -96,13 +95,12 @@ namespace AtomicWar.GodotApp
 
             _prisoners = new PrisonerSystem(rng, inv, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/interrogation_tactics.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("interrogation_tactics.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<InterrogationTacticsCatalog>(json);
@@ -168,13 +166,12 @@ namespace AtomicWar.GodotApp
 
             _mutations = new MutationSystem(rng, inv, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/mutations.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("mutations.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<MutationCatalog>(json);
@@ -230,13 +227,12 @@ namespace AtomicWar.GodotApp
 
             _stealth = new StealthSystem(rng, inv, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/camouflage_gear.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("camouflage_gear.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var catalog = System.Text.Json.JsonSerializer.Deserialize<CamouflageGearCatalog>(json);

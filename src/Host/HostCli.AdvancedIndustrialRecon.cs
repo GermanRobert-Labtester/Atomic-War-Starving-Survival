@@ -214,7 +214,7 @@ namespace AtomicWar.GodotApp
 
         private static void WriteAdvancedIndustrialArtifacts(AdvancedIndustrialReconRun run, List<AdvancedCheck> checks, bool same, bool different, bool saveParity)
         {
-            string directory = Path.Combine(Directory.GetCurrentDirectory(), "artifacts");
+            string directory = Path.Combine(CatalogPath.ResolveRepoRoot(), "artifacts");
             Directory.CreateDirectory(directory);
             var artifact = new AdvancedIndustrialReconArtifact
             {

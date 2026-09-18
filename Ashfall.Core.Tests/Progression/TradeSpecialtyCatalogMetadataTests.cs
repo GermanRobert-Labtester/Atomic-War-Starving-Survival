@@ -294,19 +294,61 @@ namespace Ashfall.Core.Tests.Progression
         }
 
         [Fact]
-        public void SkillBonus_IsRetained_ButRuntimeConstantsAreUnchanged()
+        public void IntermediateMilestones_GrantAuthoredSkillBonus_MasteryKeepsConstant()
         {
             var dtos = LoadCatalog();
-            LoadAndRegister();
+            var system = LoadAndRegister();
 
-            // Authored value is retained and queryable...
-            Assert.Equal(0.05f, TradeSpecialtySystem.GetMilestone("electrician", 1)!.SkillBonus);
+            // Authored value retained and queryable for every milestone.
+            Assert.Equal(0.05f, TradeSpecialtySystem.GetMilestone("electrician", 1)!.SkillBonus, 3);
             foreach (var dto in dtos)
                 foreach (var m in dto.Milestones)
                     Assert.Equal(m.SkillBonus,
-                        TradeSpecialtySystem.GetMilestone(dto.ProfessionId, m.Tier)!.SkillBonus);
+                        TradeSpecialtySystem.GetMilestone(dto.ProfessionId, m.Tier)!.SkillBonus, 3);
 
-            // ...but applying it is a balance decision, so the runtime constants stay put.
+            var grants = new List<float>();
+            system.GrantSkillBonus = (sv, prof, amount) => grants.Add(amount);
+
+            system.OnItemCrafted("survivor_g", "electrician", "item_battery_cell");
+            system.OnItemCrafted("survivor_g", "electrician", "item_solar_cell");
+            system.OnItemCrafted("survivor_g", "electrician", "item_advanced_circuit");
+
+            Assert.True(system.HasMasteredTrade("survivor_g"));
+            Assert.Equal(3, grants.Count);
+            // Tiers 1-2 take the authored 0.05. Mastery keeps MasterySkillBonus
+            // because the catalog authors no separate mastery bonus, and applying
+            // the milestone value at tier 3 would cut the payoff to a third.
+            Assert.Equal(0.05f, grants[0], 3);
+            Assert.Equal(0.05f, grants[1], 3);
+            Assert.Equal(TradeSpecialtySystem.MasterySkillBonus, grants[2], 3);
+        }
+
+        [Fact]
+        public void UncataloguedProfession_FallsBackToDerivedMilestoneBonus()
+        {
+            var system = LoadAndRegister();
+            var grants = new List<float>();
+            system.GrantSkillBonus = (sv, prof, amount) => grants.Add(amount);
+
+            TradeSpecialtySystem.RegisterProfessionPatterns(TestProfession, new[] { "testwidget" });
+            try
+            {
+                system.OnItemCrafted("survivor_h", TestProfession, "testwidget_one");
+
+                Assert.Single(grants);
+                Assert.Equal(
+                    TradeSpecialtySystem.MasterySkillBonus * TradeSpecialtySystem.MilestoneSkillBonusFactor,
+                    grants[0], 3);
+            }
+            finally
+            {
+                TradeSpecialtySystem.ProfessionItemCategories.Remove(TestProfession);
+            }
+        }
+
+        [Fact]
+        public void RuntimeMasteryConstants_AreUnchanged()
+        {
             Assert.Equal(0.15f, TradeSpecialtySystem.MasterySkillBonus);
             Assert.Equal(0.3f, TradeSpecialtySystem.MilestoneSkillBonusFactor);
             Assert.Equal(10f, TradeSpecialtySystem.MasteryMoraleBonus);
@@ -529,6 +571,82 @@ namespace Ashfall.Core.Tests.Progression
 
             Assert.Equal(dtos.Count * probeItems.Length, checkedPairs);
             Assert.True(checkedPairs > 0);
+        }
+
+        [Fact]
+        public void ProfessionMatchesItem_RejectsSubstringAccidents_AcceptsInflection()
+        {
+            LoadAndRegister();
+
+            // Whole-token anchoring: a short pattern must not match inside a word.
+            Assert.False(TradeSpecialtySystem.ProfessionMatchesItem("radio_technician", "item_pickled_tubers"));
+            Assert.False(TradeSpecialtySystem.ProfessionMatchesItem("teacher", "item_comm_codebook_alpha"));
+
+            // Inflection is still accepted, so authored items keep matching.
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("preservationist", "item_brined_legume_mash"));
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("preservationist", "item_salted_meat"));
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("preservationist", "item_smoked_meat"));
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("greenhouse_grower", "item_cloud_seeding_canister"));
+
+            // Exact token, plural, and a token that is not the first one.
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("electrician", "battery"));
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("electrician", "battery_pack"));
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("electrician", "solar_cells"));
+            Assert.True(TradeSpecialtySystem.ProfessionMatchesItem("electrician", "item_car_battery"));
+
+            // Suffix-like tails that are not inflections stay rejected.
+            Assert.False(TradeSpecialtySystem.ProfessionMatchesItem("electrician", "batteryfluid"));
+            Assert.False(TradeSpecialtySystem.ProfessionMatchesItem("electrician", "wiremesh_panel"));
+        }
+
+        [Serializable]
+        private sealed class RecipesRoot
+        {
+            public List<RecipeRow> recipes { get; set; } = new List<RecipeRow>();
+        }
+
+        [Serializable]
+        private sealed class RecipeRow
+        {
+            public string resultItemId { get; set; } = string.Empty;
+        }
+
+        [Fact]
+        public void ReachabilityPin_MasteryRequiresThreeCraftableMatches()
+        {
+            var dtos = LoadCatalog();
+            LoadAndRegister();
+
+            string path = Path.Combine(ResolveDataDir(), "recipes.json");
+            var root = new SystemTextJsonSerializer().Deserialize<RecipesRoot>(File.ReadAllText(path));
+            Assert.NotNull(root);
+            var craftable = root!.recipes
+                .Where(r => r != null && !string.IsNullOrEmpty(r.resultItemId))
+                .Select(r => r.resultItemId)
+                .Distinct()
+                .ToList();
+            Assert.True(craftable.Count > 0);
+
+            var masterable = new List<string>();
+            int deficit = 0;
+            foreach (var dto in dtos)
+            {
+                int matches = craftable.Count(id =>
+                    TradeSpecialtySystem.ProfessionMatchesItem(dto.ProfessionId, id));
+                if (matches >= TradeSpecialtySystem.MilestonesToMaster)
+                    masterable.Add(dto.ProfessionId);
+                deficit += Math.Max(0, TradeSpecialtySystem.MilestonesToMaster - matches);
+            }
+
+            // KNOWN CONTENT GAP, measured 2026-09-17. Mastery needs 3 distinct
+            // craftable matches, and only recipes.json feeds CraftingSystem — the
+            // workshop / relic / pharma / metallurgy / glassworks catalogs run on
+            // separate systems whose completions never reach the specialty bridge.
+            // 33 more craftable items are needed to make all 16 masterable. This pin
+            // exists so the gap cannot be silently forgotten: update it as content lands.
+            masterable.Sort(StringComparer.Ordinal);
+            Assert.Equal(new[] { "electrician", "preservationist" }, masterable);
+            Assert.Equal(33, deficit);
         }
     }
 }

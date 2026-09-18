@@ -31,15 +31,15 @@ namespace AtomicWar.GodotApp
             EnsureAmputation();
 
             var defs = new List<ImplantDefinition>();
-            string catalogPath = "res://Assets/StreamingAssets/Data/bionics.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("bionics.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string _bionicsCatalogJson = _catalogIo.ReadAllText(catalogPath);
                 {
                     try
                     {
-                        var root = System.Text.Json.JsonSerializer.Deserialize<BionicsCatalogRoot>(file.GetAsText());
+                        var root = System.Text.Json.JsonSerializer.Deserialize<BionicsCatalogRoot>(_bionicsCatalogJson);
                         if (root?.implants != null)
                         {
                             var load = new BionicsCatalogLoadResult();
@@ -89,7 +89,6 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry($"implant_installed_{instance.instance_id}",
                     $"Surgery complete: {def.display_name} installed on {instance.survivor_id}. Integration begins.",
                     null!, _simDay);
-                RefreshSurvivorVisuals(instance.survivor_id);
             };
             _bionics.OnImplantComplication += (instance, complication) =>
             {
@@ -121,14 +120,12 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry($"implant_removed_{instance.instance_id}",
                     $"{instance.survivor_id}'s implant was surgically removed.",
                     null!, _simDay);
-                RefreshSurvivorVisuals(instance.survivor_id);
             };
             _bionics.OnImplantDestroyed += instance =>
             {
                 _journal?.TryAddRawEntry($"implant_destroyed_{instance.instance_id}",
                     $"{instance.survivor_id}'s implant has failed beyond repair. The socket is bare again.",
                     null!, _simDay);
-                RefreshSurvivorVisuals(instance.survivor_id);
             };
 
             return _bionics;

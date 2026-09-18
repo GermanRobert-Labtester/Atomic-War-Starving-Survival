@@ -115,6 +115,14 @@ namespace AtomicWar.GodotApp
             // the single source of fitted-modification effects and component
             // wear for the sortie profile. Optional seam; unbound = legacy path.
             _expeditions.Garage = EnsureVehicleGarage();
+            // C2 §D3 — limb-state travel factor from the medical owner. Lazy so
+            // the expedition flow may run before medical setup; unbound/inactive
+            // ⇒ 1.0 (intact parity).
+            _expeditions.SurvivorMovementSpeedProvider = survivorId =>
+            {
+                if (_amputation == null) SetupAmputation();
+                return _amputation?.GetMovementSpeedMultiplier(survivorId) ?? 1f;
+            };
             _expeditions.SurvivorFitnessProvider = EvaluateSurvivorFitness;
             _expeditions.ExpeditionFitnessProvider = survivorId =>
                 EvaluateDutyRoleFitness(survivorId, DutyRosterIds.RoleExpedition);
@@ -298,6 +306,7 @@ namespace AtomicWar.GodotApp
                 // Plan B86 — inventory-bound breaching logistics (fail-closed without stock).
                 _combat.ConfigureBreachingLogistics(vehicleAvailable: false);
                 _combat.ValidatePorts();
+                HostWiringValidator.RegisterReporter(_combat);
                 _combat.StateChanged += () => _combatDirty = true;
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);

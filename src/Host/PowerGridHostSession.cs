@@ -44,7 +44,7 @@ namespace AtomicWar.GodotApp
 
         /// <summary>
         /// Constructs from the authoritative power_grid.json catalog
-        /// (Assets/StreamingAssets/Data/power_grid.json) via the Core loader.
+        /// (power_grid.json from the data authority) via the Core loader.
         /// A missing or unusable catalog falls back to embedded defaults
         /// (ShelterPowerGridCatalogLoader.FallbackDefault) so boot never fails
         /// over a catalog. The previous hardcoded DefaultGrid() snapshot was

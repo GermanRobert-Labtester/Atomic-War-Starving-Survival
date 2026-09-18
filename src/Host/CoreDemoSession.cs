@@ -238,7 +238,7 @@ namespace AtomicWar.GodotApp
         public string CatalogLine()
         {
             if (LocationCount == 0 && QuestCount == 0)
-                return "Holdfast catalog: empty — check ASHFALL_DATA / Assets/StreamingAssets/Data";
+                return "Holdfast catalog: empty — check ASHFALL_DATA or data directory";
             return $"Holdfast catalog: {LocationCount} locations · {QuestCount} quests · layouts {Layouts.LayoutCount}";
         }
 

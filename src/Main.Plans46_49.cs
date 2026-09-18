@@ -46,13 +46,12 @@ namespace AtomicWar.GodotApp
             _shelterWorkshop = new ShelterWorkshopSystem(inv, rng, equip, veh, new GodotLog());
 
             // Load authoritative catalog
-            string catalogPath = "res://Assets/StreamingAssets/Data/workshop_recipes.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("workshop_recipes.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _shelterWorkshop.LoadCatalog(json);
                 }
             }
@@ -115,13 +114,12 @@ namespace AtomicWar.GodotApp
                 _radioStationSystem.BindWeatherNoiseProvider(() => WeatherNoiseForKind(weather.Current));
             }
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/radio_intercepts.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("radio_intercepts.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _radioStationSystem.LoadCatalog(json);
                 }
             }
@@ -205,13 +203,12 @@ namespace AtomicWar.GodotApp
 
             _shelterSocialDynamics = new ShelterSocialDynamicsSystem(rng, relations, needs, memorial, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/shelter_social_events.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("shelter_social_events.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _shelterSocialDynamics.LoadCatalog(json);
                 }
             }
@@ -258,13 +255,12 @@ namespace AtomicWar.GodotApp
 
             _excavationHazards = new ExcavationHazardSystem(inv, rng, excavation, null, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/excavation_hazard_mitigation.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("excavation_hazard_mitigation.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _excavationHazards.LoadCatalog(json);
                 }
             }

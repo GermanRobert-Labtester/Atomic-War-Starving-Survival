@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Journal;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Memorial
@@ -148,6 +149,12 @@ namespace Ashfall.Core.Memorial
         /// </summary>
         public IGriefSink? GriefSink { get; set; }
 
+        /// <summary>
+        /// Plan 41 / C1[12]: Optional procedural eulogy engine for composing and archiving
+        /// literary funeral inscriptions during memorialization.
+        /// </summary>
+        public ProceduralEulogyEngine? EulogyEngine { get; set; }
+
         public MemorialSystem(MemorialState state)
         {
             _state = state ?? throw new ArgumentNullException(nameof(state));
@@ -209,6 +216,20 @@ namespace Ashfall.Core.Memorial
                 if (_state.Entries[i].SurvivorId == input.SurvivorId)
                     return _state.Entries[i];
 
+            string eulogy = input.EulogyText ?? string.Empty;
+            if (string.IsNullOrEmpty(eulogy) && EulogyEngine != null)
+            {
+                var life = input.LifeRecord ?? new DwellerLifeRecord
+                {
+                    dwellerId = input.SurvivorId,
+                    dwellerName = input.SurvivorId,
+                    daysSurvived = input.Day - input.BirthDay,
+                    causeOfDeath = string.IsNullOrEmpty(input.Cause) ? "unspecified" : input.Cause,
+                    favoriteRelicName = input.HeirloomItemId ?? string.Empty
+                };
+                eulogy = EulogyEngine.ComposeEulogy(life);
+            }
+
             var entry = new MemorialEntry
             {
                 SurvivorId = input.SurvivorId,
@@ -217,6 +238,7 @@ namespace Ashfall.Core.Memorial
                 SurvivedDays = input.Day - input.BirthDay,
                 FinalWishResolved = input.FinalWishResolved,
                 Epitaph = input.Epitaph ?? string.Empty,
+                EulogyText = eulogy,
                 HeirloomItemId = input.HeirloomItemId ?? string.Empty,
                 HeirloomRecipientId = input.HeirloomRecipientId ?? string.Empty,
                 MoraleDelta = input.MoraleDelta,
@@ -259,6 +281,7 @@ namespace Ashfall.Core.Memorial
         public int SurvivedDays;
         public bool FinalWishResolved;
         public string Epitaph;
+        public string EulogyText = string.Empty;
         public string HeirloomItemId;
         public string HeirloomRecipientId;
         public float MoraleDelta;
@@ -281,6 +304,8 @@ namespace Ashfall.Core.Memorial
         public int BirthDay;
         public bool FinalWishResolved;
         public string Epitaph;
+        public string? EulogyText;
+        public DwellerLifeRecord? LifeRecord;
         public string HeirloomItemId;
         public string HeirloomRecipientId;
         public float MoraleDelta;
@@ -297,14 +322,60 @@ namespace Ashfall.Core.Memorial
     {
         public List<MemorialEntry> Entries = new List<MemorialEntry>();
 
-        public MemorialState Capture() => new MemorialState
+        public MemorialState Capture()
         {
-            Entries = new List<MemorialEntry>(Entries)
-        };
+            var copy = new MemorialState();
+            for (int i = 0; i < Entries.Count; i++)
+            {
+                var e = Entries[i];
+                if (e == null) continue;
+                copy.Entries.Add(new MemorialEntry
+                {
+                    SurvivorId = e.SurvivorId,
+                    Cause = e.Cause,
+                    Day = e.Day,
+                    SurvivedDays = e.SurvivedDays,
+                    FinalWishResolved = e.FinalWishResolved,
+                    Epitaph = e.Epitaph,
+                    EulogyText = e.EulogyText ?? string.Empty,
+                    HeirloomItemId = e.HeirloomItemId,
+                    HeirloomRecipientId = e.HeirloomRecipientId,
+                    MoraleDelta = e.MoraleDelta,
+                    DeathQuality = e.DeathQuality,
+                    Outcome = e.Outcome,
+                    MournedDay = e.MournedDay,
+                });
+            }
+            return copy;
+        }
 
         public void RestoreInto(MemorialState state)
         {
-            Entries = state.Entries ?? new List<MemorialEntry>();
+            Entries = new List<MemorialEntry>();
+            if (state?.Entries != null)
+            {
+                for (int i = 0; i < state.Entries.Count; i++)
+                {
+                    var e = state.Entries[i];
+                    if (e == null) continue;
+                    Entries.Add(new MemorialEntry
+                    {
+                        SurvivorId = e.SurvivorId,
+                        Cause = e.Cause,
+                        Day = e.Day,
+                        SurvivedDays = e.SurvivedDays,
+                        FinalWishResolved = e.FinalWishResolved,
+                        Epitaph = e.Epitaph,
+                        EulogyText = e.EulogyText ?? string.Empty,
+                        HeirloomItemId = e.HeirloomItemId,
+                        HeirloomRecipientId = e.HeirloomRecipientId,
+                        MoraleDelta = e.MoraleDelta,
+                        DeathQuality = e.DeathQuality,
+                        Outcome = e.Outcome,
+                        MournedDay = e.MournedDay,
+                    });
+                }
+            }
         }
     }
 }

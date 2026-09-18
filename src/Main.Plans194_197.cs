@@ -33,13 +33,12 @@ namespace AtomicWar.GodotApp
 
             _recreation = new SurvivorDowntimeSystem(rng, inv, needs, social, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/recreation.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("recreation.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _recreation.LoadCatalog(json);
                 }
             }
@@ -87,13 +86,12 @@ namespace AtomicWar.GodotApp
 
             _navalSystem = new ExpeditionNavalSystem(new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/naval_vessels.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("naval_vessels.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     _navalSystem.LoadCatalog(json);
                 }
             }

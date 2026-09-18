@@ -140,7 +140,7 @@ namespace AtomicWar.GodotApp
 
         private static void WriteWorldPlaytestArtifacts(WorldPlaytestArtifact artifact)
         {
-            string artifactDir = Path.Combine(Directory.GetCurrentDirectory(), "artifacts");
+            string artifactDir = Path.Combine(CatalogPath.ResolveRepoRoot(), "artifacts");
             Directory.CreateDirectory(artifactDir);
             var json = new SystemTextJsonSerializer();
             File.WriteAllText(
@@ -971,7 +971,7 @@ namespace AtomicWar.GodotApp
         {
             try
             {
-                string git = Path.Combine(Directory.GetCurrentDirectory(), ".git");
+                string git = Path.Combine(CatalogPath.ResolveRepoRoot(), ".git");
                 string headPath = Directory.Exists(git) ? Path.Combine(git, "HEAD") : git;
                 string head = File.ReadAllText(headPath).Trim();
                 if (head.StartsWith("ref: ", StringComparison.Ordinal))

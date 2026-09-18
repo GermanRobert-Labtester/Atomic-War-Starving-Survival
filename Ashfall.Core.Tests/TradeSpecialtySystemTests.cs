@@ -75,6 +75,24 @@ namespace Ashfall.Core.Tests
             Assert.True(sys.HasMasteredTrade(SvA));
         }
 
+        /// <summary>
+        /// The intermediate-milestone bonus production grants for this profession
+        /// right now: the authored skill_bonus when trade_specialties.json is
+        /// loaded, otherwise the derived constant. Read from the same static
+        /// registry the system uses, because whether the catalog is loaded depends
+        /// on which other tests ran first — pinning a literal here would make these
+        /// tests order-dependent. The authored values themselves are pinned
+        /// deterministically by TradeSpecialtyCatalogMetadataTests, which loads the
+        /// catalog itself.
+        /// </summary>
+        private static float ExpectedIntermediateBonus(string professionId, int tier)
+        {
+            var milestone = TradeSpecialtySystem.GetMilestone(professionId, tier);
+            return milestone != null
+                ? milestone.SkillBonus
+                : TradeSpecialtySystem.MasterySkillBonus * TradeSpecialtySystem.MilestoneSkillBonusFactor;
+        }
+
         [Fact]
         public void MasterTrade_AppliesFullSkillBonusAndMorale()
         {
@@ -91,9 +109,11 @@ namespace Ashfall.Core.Tests
             sys.OnItemCrafted(SvA, "electrician", "generator_small");
 
             Assert.Equal(1, masteredFired);
-            // 2 intermediate milestones (×0.3 each) + full mastery bonus.
+            // 2 intermediate milestones + full mastery bonus. Mastery always uses
+            // MasterySkillBonus: the catalog authors no separate mastery bonus.
             float expectedTotal = TradeSpecialtySystem.MasterySkillBonus
-                + 2f * TradeSpecialtySystem.MasterySkillBonus * TradeSpecialtySystem.MilestoneSkillBonusFactor;
+                + ExpectedIntermediateBonus("electrician", 1)
+                + ExpectedIntermediateBonus("electrician", 2);
             Assert.Equal(expectedTotal, skillBonusTotal, 4);
             Assert.Equal(TradeSpecialtySystem.MasteryMoraleBonus, moraleDelta, 4);
         }
@@ -107,8 +127,7 @@ namespace Ashfall.Core.Tests
 
             sys.OnItemCrafted(SvA, "machinist", "wrench_standard");
 
-            Assert.Equal(TradeSpecialtySystem.MasterySkillBonus * TradeSpecialtySystem.MilestoneSkillBonusFactor,
-                skillBonusTotal, 4);
+            Assert.Equal(ExpectedIntermediateBonus("machinist", 1), skillBonusTotal, 4);
         }
 
         [Fact]

@@ -36,6 +36,143 @@ models; the Plan 31 semantic-kind briefing re-grouping remains a contract
 decision because `DayEventVocabularyTests` pins `GenericSectionTitle` for
 unhandled kinds. Details: `A1_BRIEFING_DEFERRED.md`, `WAVE9_PART1_CLOSEOUT.md`.
 
+**Wave 11 Part 1 closed into Part 2 (2026-09-18):** A1–A5 are SEALED (Plan 38
+calendar/commitments, Plan 41 memory consumers, Plan 43 governance/refusal,
+Plan 45 content acceptance, Plan 47 mod contract). C2[10] and C2[11] are
+PARTIALLY-SEALED with decision-bound Plan 30 runtime/consequence-reach and Plan
+32 map/graph-travel remainders. The closeout, census, and debt register agree:
+`docs/plans/wave11_part1/WAVE11_PART1_CLOSEOUT.md`,
+`docs/plans/UNCLAIMED_CORPUS_CENSUS.md`, `KNOWN_DEBT.md`. Part 2 begins under
+`claim-wave11-part2-execution-2026-09-18`.
+
+**Wave 11 Part 2 B3–B5 premise pass (2026-09-18):** C2[12] is
+**PARTIALLY-SEALED**. The user-authorized B3 authority revision permits the
+sealed append-only, user-level completion-history store while retaining Plan
+175's profile/reward/New Game+ boundary. No canonical campaign difficulty
+authority or completion-history chronicle contract exists, so 34B/34C remain
+explicitly unsealed. C2[13] is **PARTIALLY-SEALED**: Plan 36A/36B executed and sealed
+(engine-free Core `PortContract` vocabulary, 248-seam policy with 100% active callers
+for 176 `HOST_REQUIRED`, CI generator in `CI_GATE_MANIFEST.json` verified with `--check`,
+runtime `HostSessionContracts` + `IWiringReporter` wired, `--port-contract-selftest`
+registered and green, `PortContractGateTests` 8/8 green with failure proofs, Ticket #47 closed;
+Plan 36C long-tail sweep queued). C2[14] is **RECONCILED-DUPLICATE** and superseded by executed
+C1[10]/Wave 10 Part 2 B5; its historical document is bannered for provenance. Evidence:
+`docs/plans/wave11_part2/{B3_PLAN34_IMPLEMENTATION_LOG,B4_PLAN36_IMPLEMENTATION_LOG,B5_PLAN35_DUPLICATE_RECONCILIATION}.md`.
+
+**Wave 11 Part 2 C1/C2 status (2026-09-18):** The decision-register recurrence
+and final census rerank are blocked pending explicit foreman signatures; no
+Wave 12 head is certified. The partial actuality refresh, measured drains, and
+signature boundary are recorded in
+`docs/plans/wave11_part2/{C1_DECISION_REGISTER_PASS,C2_CENSUS_REFRESH}.md`.
+
+**Wave 12 Part 1.1 conflict resolution (2026-09-18):** The foreman authorized
+and completed an evidence-only prerequisite audit for C1[16]/Plan 49 after revalidation
+showed that the source plan requires Plan 42 voice/density and Plan 46B
+reachability. C2[18]/Plan 42 and C2[20]/Plan 46 remain `AUDIT-PENDING`; Plan
+42 additionally depends on C2[17] identity and partially sealed C2[13] port
+contracts. The audit classified all 10 verified scanner orphans and ends
+`DECIDED-DEFERRED`; it did not activate content, implement voice, or certify
+formal reachability. Evidence:
+`docs/plans/wave12_part1_1/A1_PLAN49_PREREQUISITE_AUDIT.md`.
+
+**D1 verification truth closed (2026-09-17):** package `D1-VERIFICATION-TRUTH`
+triaged the inherited baseline to zero standing failures (14→0) with no
+production change — mandatory-catalog scratch fixtures, market save v3, goods
+breadth 48→50, VersionReport section pins, Triad allowlist for derived
+`Cascade`/`FitnessForDuty`, B5B8 sump fixture re-capture, stale generated docs
+index, and a static-state test-isolation flake. Full suite 11,697/11,697.
+Evidence: `docs/plans/wave8_part2/D1_*.md`. Plan 126–129 header ambiguity
+recorded, not guessed.
+
+**C2 amputation integration (2026-09-17):** package `C2-AMPUTATION-INTEGRATION` —
+Phase 4 avatar truth sealed (print-only placeholder deleted), Phase 1 contract
+matrix recorded, Phase 2 equipment restriction SPLIT to a separate signed schema
+package, Phase 3 expedition movement consumer PROPOSED and held at the C2 §1.6
+signature gate. Evidence: `docs/plans/wave8_part2/C2_{PREMISE_EVIDENCE,DECISION}.md`;
+awaiting the foreman's one-line contract confirmation before any travel penalty.
+
+**C2-D3 + D2 executed (2026-09-17):** C2-D3 approved and shipped — the
+expedition now consumes `AmputationSystem.GetMovementSpeedMultiplier` through the
+additive `ExpeditionState.survivorSpeedMultiplier` (intact parity 1.0). D2 closed
+the pre-recorded SurvivorInspection retirement (zero-consumer re-proof → files
++ fixture deleted) and added the authoritative 5-row primary-wins dead-data
+register (`docs/radio/DISTRESS_SIGNAL_DEAD_DATA_REGISTER.md`). Evidence:
+`docs/plans/wave8_part2/{C2,D2}_*.md`.
+
+**D3 shutdown cleanliness classified (2026-09-17):** the a11y-selftest
+shutdown resource/RID warnings are a fixed, harness-scoped specimen-lifetime
+signature (flat ×3; lifecycle selftest clean), documented in
+`docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md` §4. Evidence:
+`docs/plans/wave8_part2/D3_*.md`.
+
+**C3 endgame disposition signed (2026-09-17):** 0 PROMOTE · 1 RETIRE · 4 HOLD —
+191 retired (inspection + barter appraisal live); 174/175/192/199 held with
+measurable recheck conditions. Evidence: `docs/plans/wave8_part2/C3_*.md`.
+
+**Wave 10 Part 1 A1 (corpus census) tranche 1 (2026-09-17):** package
+`WAVE10-PART1-A1-CORPUS-CENSUS` — 131-file inventory, 73-edge DAG, 3
+SEALED-ELSEWHERE + 6 evidence-backed anchors + 122 audit-pending; **39
+filename-only baseline→closeout matches are numbering collisions, not seals**;
+proposed chain head `C1[8]` (Plan 31B/31C). Evidence:
+`docs/plans/UNCLAIMED_CORPUS_CENSUS.md`.
+
+**Wave 10 Part 1 A2 (claim hygiene) (2026-09-17):** closed the stale ACTIVE
+`C1-PLAN14-ECONOMY-CORE` claim (14A/14B + B1 presentation complete; TradeEmbargo
+20/20, RegionalPriceAtlas 16/16, full suite green, data-integrity PASS) →
+HANDED_OFF. Sweep: only `C1-PLAN24-SURVIVOR-LEDGER` remains legitimately ACTIVE
+(24B/24C partial, two signatures pending); no active path overlap. Package
+`WAVE10-PART1-A1-CORPUS-CENSUS`.
+
+**Wave 10 Part 1 C1[8]/Plan 31B+31C (2026-09-17):** package
+`WAVE10-PART1-C1-PLAN31` — navigable briefings (`BriefingRouteMap` + live-route
+host guard) and replayable diagnostics (`DayRecord`/`DayRecordBuilder` + opt-in
+`ASHFALL_DAY_RECORD=1` JSONL writer). Full suite 11,716/11,716. Evidence:
+`docs/plans/wave10_part1/C1_PLAN31_IMPLEMENTATION_LOG.md`.
+
+**Wave 10 Part 1 B1 entry gate (2026-09-17):** B1 (C1[6]/Plan 27) is
+**DEPENDENCY-BLOCKED** on C2[8]/Plan 26A — bypass readers remain
+(`EventsHostSession` reads `res://…/events.json` directly; several tools build
+`Assets/StreamingAssets/Data` paths). Per B1 §5.2 the prerequisite may not be
+waived because tests pass. Next executable: `C2[8]`/Plan 26A. Evidence:
+`docs/plans/wave10_part1/B1_ENTRY_GATE.md`.
+
+**Wave 10 Part 1 C2[8]/Plan 26A tranche 1 (2026-09-17):** package
+`WAVE10-PART1-C2-PLAN26A` — extended `CatalogPath` (`ResolveCatalog`/
+`ResolveSub`/validation/resolution-source), migrated `EventsHostSession` +
+`Main.FactionBranch` + `SilentFoundryHostSession`, added a green shrinking
+forbidden-path gate (40-file tranche-2 remainder). Full suite 11,718/11,718.
+Evidence: `docs/plans/wave10_part1/C2_26A_IMPLEMENTATION_LOG.md`.
+
+**Wave 10 Part 1 B1/Plan 27 (2026-09-17):** package
+`WAVE10-PART1-B1-PLAN27` — Tests That Mean It: Fidelity, Coverage, and Runtime Evidence.
+Executed across Tasks 27A (Fidelity), 27B (Coverage & Risk Gates), and 27C (Runtime Evidence & Journeys).
+Enforced shipped data authority in inventory host sessions and selftests; explicit fixture policy
+codified in `docs/testing/FIXTURE_POLICY.md`; 100% round-trip coverage gate on stateful Core systems;
+100% determinism coverage gate on campaign day owners; golden save fixtures + digests pinned;
+5 named campaign journeys codified in `docs/testing/JOURNEYS.md`; `coverage-gate.sh` integrated as
+gate 48 in `CI_GATE_MANIFEST.json`. All 48 fast CI gates pass cleanly. Evidence:
+`docs/plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md`.
+
+**Wave 10 Part 1 A3 micro-deferral sweep (2026-09-17):** package
+`WAVE10-PART1-A3-MICRO-DEFERRALS` — comprehensive sweep of 15 tracked recorded deferrals across
+prior claims, closeouts, and debt ledgers. 7 ALREADY-RESOLVED struck with sealing evidence; 4
+DECISION-NEEDED routed to foreman with recommendations (radio weather prediction authority,
+water_sample_contaminated quirk, ward staffing, affliction recovery ramps; stopped at signature
+per Rule 10); 1 CODE-GAP-LARGE promoted to queue (amputation equipment restrictions); 1
+CODE-GAP-SMALL/DECIDED-DEFERRED (subject queries/snapshots); 2 STALE/RETIRED (presenter skills, phobia growth).
+Evidence: `docs/plans/WAVE10_MICRO_DEFERRAL_SWEEP.md`.
+
+**Wave 10 Part 1 B2/Plan 29 One Truth (2026-09-17):** package
+`WAVE10-PART1-B2-PLAN29-ONE-TRUTH` — One Truth: Documentation, Canon, Roadmap Governance & Documentation Integrity.
+29A rulebook sync verified across 13 clients; 29B machine-readable capability claims registry
+`docs/architecture/CLAIMS.json` (24 claims across core subsystems) + CI claims verifier
+`scripts/ci/verify-capability-claims.py` (all 24 verified; failure test catches invalid paths);
+29C roadmap index `docs/roadmap/README.md` (flow of truth, <100 vs >=100 numbering, collision rules,
+binding Definitions of Done for System, Content, UI, Build, Plan) + `docs/roadmap/WAVE_LEDGER.md`
+(Waves 1–10 indexed). C1[7] marked SEALED in census. Evidence:
+`docs/plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md`.
+
+
 | Package | Owner | Exact paths | Acceptance | Focused verify |
 |---|---|---|---|---|
 | `DISTRESS-SIGNALS-9-12-WAVE1-STAGE-CONTRACT` | Builder (this session) | **Core:** `Assets/Ashfall.Core/Radio/DistressStageResolver.cs` (new), `Radio/RadioDistressSystem.cs` (additive `outcome_hint`), `Radio/RadioTuner.cs` + `Radio/RadioPropagation.cs` (resolver delegation, duplicated selection loops consolidated), `CatalogIntegrityValidator.cs` (`ValidateDistressSignalStages` — within-file dup ids / stage-day ordering / clarity monotonicity+range / text presence / hint shape; cross-file dup ids = documented primary-wins warning); **Tests:** `Ashfall.Core.Tests/Radio/DistressStageResolverTests.cs` (17 cases incl. legacy-parity oracle over all signals × days 0–60); **Docs:** baseline + `docs/radio/DISTRESS_SIGNAL_STAGE_CONTRACT.md` | **DONE 2026-09-13:** single pure stage resolver (`DistressStageResolver`) is the sole fragment-selection authority; `outcome_hint` additive DTO field bound from JSON; stage contract validated inside the permanent data-integrity gate (PASS, 5 documented primary-wins warnings, 0 errors); baseline frozen (build 0 err; Radio 249→266; selftest 325 PASS); scope correction 25→43 unique identities recorded; no stage persistence needed (purely derivable from absolute-day anchor — documented) | `bash scripts/run_test.sh Ashfall.Core.Tests/Radio/` (266/266); `bash scripts/run_test.sh Ashfall.Core.Tests/Radio/DistressStageResolverTests.cs` (17/17); adjacent FactionRadioBroadcastExpansion 22/22, NpcArcData 12/12, NpcArcSystem 23/23; `godot --headless --path . -- --data-integrity-selftest` PASS; `dotnet build Ashfall.csproj` 0 errors (4 pre-existing CS8602 warnings from user's uncommitted SilentFoundryPanel.cs — outside claim) |
@@ -52,8 +189,8 @@ unhandled kinds. Details: `A1_BRIEFING_DEFERRED.md`, `WAVE9_PART1_CLOSEOUT.md`.
 - **C1 Plan 22 one food authority — DONE 2026-09-15:** Opening Continuity Wave 2 (*The Bunker Machine*) (`docs/plans/C1_planintegration[4].md`). 22A one direct consumption authority (subject-aware host seam `Consume(survivorId, itemId, scale)`, authored effects to Needs/Radiation/Contamination, inventory UI wiring, Holdfast terminal delegation, 0 hardcoded hunger arithmetic, 0 hardcoded edible arrays, shelter inventory authority, FeedAllCrew preflight); 22B kitchen & crew table (`ServeMeal` UI wiring, "Serve All" preflight, cellar/refrigeration preservation, meal quality > raw cans, cook duty check, ration conflict grievance hook, OnMealServed/OnPortionsSpoiled day events); 22C medicine treatment decisions (authoritative treatment log in `DoseLedgerSystem`, affliction preflight, dependency hooks, medical timeline UI). Verification: focused tests 7+6+4+6=23 PASS, DayEventParitySourceGateTests 2/2 PASS, KitchenNutritionSystemTests 11/11 PASS, full verify-fast suite 47/47 PASS cleanly.
 - **C1 Plan 19 ending continuity & repository truth — DONE 2026-09-15:** Closing Continuity Wave 1 (`docs/plans/C1_planintegration[3].md`). 19A ending projection (`EpilogueContextInputs` → `EpilogueContextFactory.Build`, zero hardcoded booleans, single host projector in `Main.Endgame.cs`, 32/32 branches reachable from campaign state, memorial death ledger authority); 19B cohort & generational legacy (3 scoped links: child rations via data fraction, schooling/apprenticeship capacity + duty roster work eligibility gate, ending fact; memorial circumstance variance; demo literal removed; 3-year deterministic balance simulation); 19C repository truth (14 dangling sidecars removed, UID sidecar gate 47 passed, session continuity journey test passed, anti-all-true regression guard passed, master docs index synchronized). Verification: `Ashfall.Core.Tests/Endgame/` 84/84 PASS, focused 19A/19B/19C suites (22 + 23 + 2 = 47 PASS), compiler warnings 0 across all 3 targets, `verify-fast.sh` ALL 47 GATES PASSED cleanly.
 - **C2[2] Plan 17 legibility (executed 2026-09-15, bounded):** 17A-S no-silent-drop repair (Core `DayEventVocabulary` + builder default case + 8 tests), parity matrix (`docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`, gate-enforced), owner-failure briefing visibility, radiation exposure-end lifecycle (Core events + geiger loop wiring in AudioEventBridge, 7 tests), guidance F2 toggle (`ashfall_guidance` — F1 collides with `ashfall_help`, documented). Full classification of executed/stale/deferred phases + evidence: `docs/plans/C2_PLANINTEGRATION_2_CLOSURE_REPORT.md`. Plan doc: `docs/plans/C2_planintegration[2].md`. NOT executed (stale per recon): original 17A mute-owner work (erratum honored), 17B route/visibility (already built), most 17C audio phases (already built). NOT executed (real gaps, need packages): Plan 31 semantic-kind authority, 17C Phase I alert ducking/concurrency, 17C Phase E acquisition sweep, 17B deep test matrix.
-- **PR 2 content tranche** — **DONE 2026-09-15:** outcome_hint text authored for all 43 JSON-backed signals (63 stage hints: 37 primary + 26 expansion-effective; the 5 primary-wins-overridden expansion rows left untouched as dead data). Content-only — zero code/schema changes. Evidence: `docs/radio/DISTRESS_SIGNAL_PR2_HINT_TRANCHE.md`. Verify: Radio 323/323, DistressStageResolverTests 17/17, data-integrity PASS 0 errors. Remaining deferred: follow-up payload content, authored audio_cue content, availability consumer (stale — no selection pool exists).
-- **Availability consumer (deferred with evidence):** no dynamic distress-signal selection pool exists in the runtime; `SignalTrustAvailability` is the tested policy awaiting that future seam (documented in SIGNAL_TRUST_CONTRACT.md §5).
+- **PR 2 content tranche** — **DONE 2026-09-15:** outcome_hint text authored for all 43 JSON-backed signals (63 stage hints: 37 primary + 26 expansion-effective; the 5 primary-wins-overridden expansion rows left untouched as dead data). Content-only — zero code/schema changes. Evidence: `docs/radio/DISTRESS_SIGNAL_PR2_HINT_TRANCHE.md`. Verify: Radio 323/323, DistressStageResolverTests 17/17, data-integrity PASS 0 errors. Remaining deferred: follow-up payload content, authored audio_cue content.
+- **Availability consumer — RETIRED (Wave 9 Part 2, Option B Approved):** no dynamic distress-signal selection pool exists in the analog dial radio runtime; `SignalTrustAvailability` is retained as a tested pure math specification pin; runtime consumer integration is formally closed and retired without runtime code alterations (documented in `docs/plans/wave9_part2/C2_DECISION.md` and `docs/radio/SIGNAL_TRUST_CONTRACT.md` §5).
 
 ## Previous batch — RESCUE-SIGNAL-RUNTIME (INTEGRATED, presented for acceptance)
 

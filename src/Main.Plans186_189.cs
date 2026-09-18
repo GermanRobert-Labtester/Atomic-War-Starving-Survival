@@ -30,13 +30,12 @@ namespace AtomicWar.GodotApp
 
             _fallout = new FalloutSystem(new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/fallout_patterns.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("fallout_patterns.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var container = System.Text.Json.JsonSerializer.Deserialize<FalloutCatalogContainer>(json);
@@ -98,13 +97,12 @@ namespace AtomicWar.GodotApp
 
             _desperation = new DesperationSystem(rng, inv, needs, disease, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/desperation_events.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("desperation_events.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var container = System.Text.Json.JsonSerializer.Deserialize<DesperationCatalogContainer>(json);
@@ -159,13 +157,12 @@ namespace AtomicWar.GodotApp
 
             _mercenary = new MercenarySystem(rng, inv, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/bounty_board.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("bounty_board.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var container = System.Text.Json.JsonSerializer.Deserialize<BountyCatalogContainer>(json);
@@ -259,13 +256,12 @@ namespace AtomicWar.GodotApp
 
             _archaeology = new ArchaeologySystem(rng, inv, research, new GodotLog());
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/lore_archives.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("lore_archives.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var container = System.Text.Json.JsonSerializer.Deserialize<ArchaeologyCatalogContainer>(json);

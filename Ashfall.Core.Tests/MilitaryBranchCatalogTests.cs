@@ -84,6 +84,7 @@ namespace Ashfall.Core.Tests
             try
             {
                 Directory.CreateDirectory(scratch);
+                IntegrityScratchFixture.SeedMandatoryCatalogs(scratch);
                 seed(scratch);
                 return CatalogIntegrityValidator.Validate(scratch, new FileSystemIO());
             }

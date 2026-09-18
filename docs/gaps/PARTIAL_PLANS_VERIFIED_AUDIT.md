@@ -38,8 +38,8 @@ closed. Everything below was verified against source on this date.
 
 | # | Finding | Evidence | Status |
 |---|---|---|---|
-| P9 | Amputation/prosthetic limb **avatar + equipment-restriction integration** never landed | `src/Main.Plans190_193.cs:71` TODO ("Avatar integration — portrait variant, sprite attachment, animation set, equipment restrictions") and `:393` TODO; `RefreshSurvivorVisuals(string)` at `:392-396` is a print-only no-op (`avatar system not yet integrated`). Limb state mutates and journals, but nothing visual or equipment-gating consumes it. | **PLACEHOLDER** |
-| P10 | `SurvivorInspectionHostSession` (Core) has **zero consumers** | `Assets/Ashfall.Core/Survivors/SurvivorInspectionHostSession.cs:24` — no reference in `src/` or tests repo-wide. `ItemInspectionModel` *is* wired (InventoryHostSession.cs:87, InventoryDetailPanel.cs:45), so the survivor half is the orphan. This is the literal substrate of `DEBT-186-INSPECTION-PROJECTION`. | **UNWIRED** |
+| P9 | Amputation/prosthetic limb **avatar + equipment-restriction integration** never landed | **Update 2026-09-17 (C2):** the `:71`/`:393` TODOs and the print-only `RefreshSurvivorVisuals` no-op were **deleted** (avatar work stays out of scope). Limb state mutates and journals. Equipment restriction remains blocked (no handedness/slot-limb model — separate signed package); expedition movement consumer proposed and awaiting signature. See `docs/plans/wave8_part2/C2_{PREMISE_EVIDENCE,DECISION}.md`. | **SPLIT — AVATAR SEALED; EQUIPMENT BLOCKED; EXPEDITION SEALED** |
+| P10 | `SurvivorInspectionHostSession` (Core) has **zero consumers** | **SEALED 2026-09-17 (D2):** re-proved zero live consumers repo-wide, then deleted `SurvivorInspectionHostSession.cs` + `SurvivorInspectionHostSessionTests.cs`. `ItemInspectionModel` *is* wired (InventoryHostSession.cs:87, InventoryDetailPanel.cs:45). | **SEALED** |
 | P11 | UI gaps for settled systems | `vehicle_garage`, `dynamic_quests`, `sky_defense_battery` have Core+host+save but **0 panel files** under `src/UI/` (verified by filename search). May be intentional (headless-first), but each is an unimplemented player-facing route. | UI GAP (triage) |
 
 ## 4. Confirmed blocked/unstarted (unchanged from the 170–199 audit)
@@ -91,15 +91,27 @@ The only *functional* candidate is limb-based **equipment restriction**:
 not restrict gear today. That must route through the equipment owner (not the
 medical panel), and it is tracked as `DEBT-AMPUTATION-EQUIPMENT-RESTRICTION`.
 
-### D2 — `SurvivorInspectionHostSession`: **RETIRED as a duplicate projection**
+**Update 2026-09-17 (C2):** the placeholder and its TODOs were deleted. The
+equipment restriction is now formally **split**: the equipment model has no
+handedness/slot-limb field, so it needs a schema redesign in a separate signed
+package. The medical movement multiplier (`GetMovementSpeedMultiplier`) exists
+and is tested but unconsumed; consuming it as an expedition travel factor is a
+bounded additive contract proposed in `C2_DECISION.md` §D3 and awaits the
+foreman signature required by C2 §1.6.
+
+### D2 — `SurvivorInspectionHostSession`: **RETIRED and DELETED (2026-09-17)**
 
 Evidence: the class (`Assets/Ashfall.Core/Survivors/SurvivorInspectionHostSession.cs:24`)
-and its `SurvivorInspectionSnapshot` have **zero consumers** repo-wide. Its read
-model (`Hunger/Thirst/Fatigue/Warmth/Health/Morale/Hygiene`) duplicates exactly
-what the live consumer already reads directly — `src/UI/SurvivorDetailPanel.cs:115-121`
+and its `SurvivorInspectionSnapshot` had **zero live consumers** repo-wide
+(re-proved under D2 Phase 0). Its read model
+(`Hunger/Thirst/Fatigue/Warmth/Health/Morale/Hygiene`) duplicated exactly what
+the live consumer already reads directly — `src/UI/SurvivorDetailPanel.cs:115-121`
 reads the same fields from `SurvivorsHostSession`. The item half of the same
 debt is genuinely wired (`ItemInspectionModel` → `InventoryHostSession.cs:87`,
 `InventoryDetailPanel.cs:45`).
+
+**Execution:** both source files and the direct test fixture were deleted
+(2026-09-17); build 0/0, survivor suite green, architecture map `--check` green.
 
 Reconciliation: DEBT-186's "promote only an event/inspection projection with
 named consumers" condition is **not met** by the survivor class — there is no

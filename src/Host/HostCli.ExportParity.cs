@@ -11,7 +11,7 @@ namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Plan VIII · Task 23 — packaged-data parity gate.
-    /// Proves the EXPORTED Linux layout (exe + .pck + loose Assets/StreamingAssets/Data)
+    /// Proves the EXPORTED Linux layout (exe + .pck + loose StreamingAssets data)
     /// carries the same authoritative catalogs as the repository data authority:
     /// every catalog present, byte-identical (SHA-256), parseable, exact Linux path
     /// casing, no Git-LFS pointers shipped in place of binaries, and a real ELF
@@ -149,7 +149,7 @@ namespace AtomicWar.GodotApp
             }
             catch { /* headless dev context — fall through */ }
 
-            return Path.Combine(Directory.GetCurrentDirectory(), "builds", "linux");
+            return Path.Combine(CatalogPath.ResolveRepoRoot(), "builds", "linux");
         }
 
         private static int CheckElfExecutable(string exePath)

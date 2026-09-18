@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "description": "Golden save fixtures for early, mid, and late campaign regression and load fidelity testing.",
+  "fixtures": [
+    {
+      "fixture_name": "early_campaign.json",
+      "save_version": 2,
+      "seed": 1337,
+      "day": 1,
+      "mode": "Normal",
+      "required_sections": ["campaign_day", "inventory", "power_grid", "starting_level", "journal"],
+      "expected_checksum": "f3f1029eab8ea841dba4ece5c3f10ce07da8cb73563e1cca9375505e63312592"
+    },
+    {
+      "fixture_name": "mid_campaign.json",
+      "save_version": 2,
+      "seed": 1337,
+      "day": 15,
+      "mode": "Normal",
+      "required_sections": ["campaign_day", "inventory", "power_grid", "starting_level", "journal", "crafting", "caravan"],
+      "expected_checksum": "f342732517c18c0c149ba401f97286ce2aa7f7e2d2b55abbb0882556a29c169e"
+    },
+    {
+      "fixture_name": "late_campaign.json",
+      "save_version": 2,
+      "seed": 1337,
+      "day": 60,
+      "mode": "Normal",
+      "required_sections": ["campaign_day", "inventory", "power_grid", "starting_level", "journal", "crafting", "caravan", "greenhouse", "narrative"],
+      "expected_checksum": "7735739fe077fbbebde02b11e1776209b6ad7f6db10b08efeb6b1ad4b9087488"
+    }
+  ]
+}

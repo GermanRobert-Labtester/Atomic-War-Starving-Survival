@@ -70,6 +70,12 @@ namespace Ashfall.Core
         /// </summary>
         public Func<string, string, RoleFitnessVerdict>? EvaluateRoleFitness { get; set; }
 
+        /// <summary>
+        /// Plan 43 / C1[13]: Optional crew consent/refusal gate.
+        /// When bound, survivors can explicitly refuse duty shifts or accept with warnings.
+        /// </summary>
+        public Func<string, string, CrewConsentVerdict>? EvaluateCrewConsent { get; set; }
+
         public ActionResult ValidateAssign(string role, string survivorId, bool confirmFitnessWarning = false)
         {
             if (!IsKnownRole(role))
@@ -90,6 +96,14 @@ namespace Ashfall.Core
                 return ActionResult.Blocked(
                     "fitness_warning_confirmation_required",
                     "duty_roster.fitness_warning_confirmation_required");
+            if (EvaluateCrewConsent != null)
+            {
+                var consent = EvaluateCrewConsent(survivorId, role);
+                if (consent != null && !consent.Consented)
+                    return ActionResult.Blocked(
+                        string.IsNullOrEmpty(consent.RefusalReason) ? "duty_refused" : consent.RefusalReason,
+                        $"duty_roster.refused:{consent.RefusalReason}");
+            }
             if (IsExternalReserved != null && IsExternalReserved(survivorId))
                 return ActionResult.Blocked("busy", "duty_roster.busy");
             string currentRole = GetRoleOf(survivorId)!;
@@ -109,6 +123,11 @@ namespace Ashfall.Core
                 var fitness = EvaluateRoleFitness?.Invoke(survivorId, role);
                 if (fitness != null && !fitness.Allowed) return false;
                 if (fitness != null && fitness.RequiresConfirmation && !confirmFitnessWarning) return false;
+                if (EvaluateCrewConsent != null)
+                {
+                    var consent = EvaluateCrewConsent(survivorId, role);
+                    if (consent != null && !consent.Consented) return false;
+                }
             }
 
             string previousSurvivorId = GetAssignment(role);
@@ -221,7 +240,8 @@ namespace Ashfall.Core
             for (int i = 0; i < eligible.Count; i++)
             {
                 if (!used.Contains(eligible[i])
-                    && IsFitnessAllowed(eligible[i], role))
+                    && IsFitnessAllowed(eligible[i], role)
+                    && IsConsentAllowed(eligible[i], role))
                     pool.Add(eligible[i]);
             }
 
@@ -229,6 +249,12 @@ namespace Ashfall.Core
             int salt = _seedSaltProvider() + DutyRosterIds.SeedUtilityOffset + day * 17 + StableHash.Of(role);
             int n = (int)(((long)salt & 0x7FFFFFFF));
             return pool[n % pool.Count];
+        }
+
+        private bool IsConsentAllowed(string survivorId, string role)
+        {
+            var consent = EvaluateCrewConsent?.Invoke(survivorId, role);
+            return consent == null || consent.Consented;
         }
 
         private bool IsFitnessAllowed(string survivorId, string role)

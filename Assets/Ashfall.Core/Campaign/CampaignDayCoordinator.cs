@@ -257,8 +257,13 @@ namespace Ashfall.Core.Campaign
                     try
                     {
                         var events = new List<DayStateChangeEvent>();
+                        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                         reg.Owner.TickDay(day, events);
-                        report = new DayOwnerReport(reg.OwnerId, true, events, string.Empty);
+                        stopwatch.Stop();
+                        report = new DayOwnerReport(reg.OwnerId, true, events, string.Empty)
+                        {
+                            DurationMs = stopwatch.Elapsed.TotalMilliseconds
+                        };
                     }
                     catch (Exception e)
                     {
@@ -427,6 +432,9 @@ string? primaryId = null, string? secondaryId = null, float numeric = 0f)
     public sealed class DayOwnerReport
     {
         public string OwnerId;
+        /// <summary>Plan 31C.8 — monotonic per-owner tick duration (ms).
+        /// Observational only; never affects simulation.</summary>
+        public double DurationMs;
         public bool Succeeded;
         public DayStateChangeEvent[] Events;
         public string FailureMessage;

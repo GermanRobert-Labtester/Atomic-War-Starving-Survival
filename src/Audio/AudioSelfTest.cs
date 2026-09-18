@@ -1116,9 +1116,7 @@ namespace AtomicWar.GodotApp.Audio
 
             // The tell catalog loads from the data authority and every authored
             // quirk audio_cue resolves to a registered cue with a loadable stream.
-            string tellDataDir = Directory.Exists("Assets/StreamingAssets/Data")
-                ? "Assets/StreamingAssets/Data"
-                : ProjectSettings.GlobalizePath("res://assets/StreamingAssets/Data");
+            string tellDataDir = CatalogPath.ResolveDataDir();
             var tellCatalog = ShelterMachineTellCatalog.Load(
                 new Ashfall.Core.FileSystemIO(), new SystemTextJsonSerializer(), tellDataDir);
             Check("Machine tell catalog loads from data authority", tellCatalog.MachineCount > 0, ref pass, ref fail);

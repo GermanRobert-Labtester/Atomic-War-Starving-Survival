@@ -108,12 +108,87 @@ namespace Ashfall.Core.Survivors
         {
             if (string.IsNullOrEmpty(professionId) || string.IsNullOrEmpty(itemId)) return false;
             if (!ProfessionItemCategories.TryGetValue(professionId, out var categories)) return false;
+            if (categories == null || categories.Count == 0) return false;
+
+            List<string> tokens = null;
             for (int i = 0; i < categories.Count; i++)
             {
-                if (itemId.IndexOf(categories[i], StringComparison.OrdinalIgnoreCase) >= 0)
-                    return true;
+                string pattern = categories[i];
+                if (string.IsNullOrEmpty(pattern)) continue;
+
+                // Authored patterns are single words. If one ever contains a
+                // separator, token matching could never hit it and the pattern
+                // would go silently dead — so fall back to a substring match.
+                if (pattern.IndexOfAny(ItemIdSeparators) >= 0)
+                {
+                    if (itemId.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                    continue;
+                }
+
+                tokens ??= TokenizeItemId(itemId);
+                for (int t = 0; t < tokens.Count; t++)
+                {
+                    if (TokenMatchesPattern(tokens[t], pattern)) return true;
+                }
             }
             return false;
+        }
+
+        private static readonly char[] ItemIdSeparators = { '_', '-', '.', ' ' };
+
+        private static List<string> TokenizeItemId(string itemId)
+        {
+            var parts = itemId.Split(ItemIdSeparators, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = new List<string>(parts.Length);
+            for (int i = 0; i < parts.Length; i++)
+                if (parts[i].Length > 0) tokens.Add(parts[i]);
+            return tokens;
+        }
+
+        /// <summary>
+        /// True when an id token is the pattern or a plain inflection of it
+        /// (s / es / d / ed / ing / y). Inflection is accepted so authored items
+        /// keep matching — item_brined_legume_mash against "brine", item_salted_meat
+        /// against "salt", item_smoked_meat against "smoke". Whole-token anchoring
+        /// is what rejects the substring accidents: "tube" no longer matches
+        /// item_pickled_tubers, and "book" no longer matches item_comm_codebook_alpha.
+        /// </summary>
+        private static bool TokenMatchesPattern(string token, string pattern)
+        {
+            if (token.Length < pattern.Length) return false;
+            if (!token.StartsWith(pattern, StringComparison.OrdinalIgnoreCase)) return false;
+
+            string tail = token.Substring(pattern.Length);
+            switch (tail.Length)
+            {
+                case 0: return true;
+                case 1:
+                    return EqualsAny(tail, "s", "d", "y");
+                case 2:
+                    return EqualsAny(tail, "es", "ed");
+                case 3:
+                    return EqualsAny(tail, "ing");
+                default:
+                    return false;
+            }
+        }
+
+        private static bool EqualsAny(string value, string a)
+        {
+            return string.Equals(value, a, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool EqualsAny(string value, string a, string b)
+        {
+            return string.Equals(value, a, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(value, b, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool EqualsAny(string value, string a, string b, string c)
+        {
+            return EqualsAny(value, a, b)
+                || string.Equals(value, c, StringComparison.OrdinalIgnoreCase);
         }
 
         // ── Profession content registry (fed by TradeSpecialtyCatalogLoader) ──
@@ -281,9 +356,17 @@ namespace Ashfall.Core.Survivors
             }
             else
             {
-                // Intermediate milestone — small boost
-                GrantSkillBonus?.Invoke(survivorId, professionId,
-                    MasterySkillBonus * MilestoneSkillBonusFactor);
+                // Intermediate milestone — the authored skill_bonus from
+                // trade_specialties.json wins; the derived constant is only a
+                // fallback for professions the catalog does not cover. Mastery
+                // keeps MasterySkillBonus deliberately: the catalog authors one
+                // value per milestone and no separate mastery bonus, so applying
+                // the milestone value at tier 3 would cut the payoff to a third.
+                var milestone = GetMilestone(professionId, milestoneTier);
+                float bonus = milestone != null
+                    ? milestone.SkillBonus
+                    : MasterySkillBonus * MilestoneSkillBonusFactor;
+                GrantSkillBonus?.Invoke(survivorId, professionId, bonus);
             }
             RaiseChanged();
         }

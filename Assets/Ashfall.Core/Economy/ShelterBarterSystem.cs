@@ -118,6 +118,7 @@ namespace Ashfall.Core.Economy
 
         private ShelterBarterSaveState _state = new ShelterBarterSaveState();
         private bool _isSevereWinterWeather;
+        private Func<string, int>? _priorityScorer;
 
         public IReadOnlyDictionary<string, MerchantCaravanDef> Catalog => _catalog;
         public ShelterBarterSaveState State => _state;
@@ -125,6 +126,17 @@ namespace Ashfall.Core.Economy
         {
             get => _isSevereWinterWeather;
             set => _isSevereWinterWeather = value;
+        }
+
+        /// <summary>
+        /// Wave 9 Part 2 C1 (Option C) — optional priority scorer for stock items
+        /// (e.g. category scarcity index, active shocks, or trade pressure).
+        /// When unset, items evaluate using their authored price multiplier and ID ordinal.
+        /// </summary>
+        public Func<string, int>? PriorityScorer
+        {
+            get => _priorityScorer;
+            set => _priorityScorer = value;
         }
 
         public event Action<MerchantCaravanDef>? OnCaravanArrived;
@@ -264,10 +276,48 @@ namespace Ashfall.Core.Economy
             return cState;
         }
 
+        /// <summary>
+        /// Wave 9 Part 2 C1 (Option C) — pure deterministic priority score calculation.
+        /// Higher score = higher priority. Tie-break is deterministic by ordinal item ID.
+        /// </summary>
+        public static int ComputeItemPriorityScore(CaravanStockItem item, MerchantCaravanDef def, Func<string, int>? customScorer = null)
+        {
+            if (item == null) return 0;
+            int score = item.price_multiplier_bp;
+            if (customScorer != null && !string.IsNullOrEmpty(item.item_id))
+            {
+                score += customScorer(item.item_id);
+            }
+            return score;
+        }
+
+        /// <summary>
+        /// Wave 9 Part 2 C1 (Option C) — returns the caravan's stock sorted deterministically
+        /// by priority score descending, then item ID ascending (stable tie-break).
+        /// All authored items and quantities are preserved exactly (Option C: order only).
+        /// </summary>
+        public IReadOnlyList<CaravanStockItem> GetPrioritizedStock(MerchantCaravanDef def)
+        {
+            if (def?.stock == null || def.stock.Count == 0)
+                return Array.Empty<CaravanStockItem>();
+
+            var list = new List<CaravanStockItem>(def.stock);
+            list.Sort((a, b) =>
+            {
+                int scoreA = ComputeItemPriorityScore(a, def, _priorityScorer);
+                int scoreB = ComputeItemPriorityScore(b, def, _priorityScorer);
+                int cmp = scoreB.CompareTo(scoreA); // descending priority
+                if (cmp != 0) return cmp;
+                return string.Compare(a.item_id, b.item_id, StringComparison.Ordinal); // ascending tie-break
+            });
+            return list;
+        }
+
         private void RestockCaravan(MerchantCaravanDef def, CaravanRuntimeState cState)
         {
             cState.remainingStock.Clear();
-            foreach (var item in def.stock)
+            var stockItems = GetPrioritizedStock(def);
+            foreach (var item in stockItems)
             {
                 // Plan 147: per-arrival day gate — high-tier stock only enters
                 // the manifest from its gate day (real campaign state). Stock is

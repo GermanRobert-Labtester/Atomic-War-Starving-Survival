@@ -8,6 +8,7 @@ using Ashfall.Core.Campaign;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Memorial;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.YearOfAsh;
 
@@ -120,6 +121,15 @@ namespace AtomicWar.GodotApp
                 if (qIdx >= 0)
                 {
                     panelId = panelSpec.Substring(0, qIdx);
+                }
+
+                // Plan 31B.8 — validate the route target is still live before
+                // navigating; a shelved/unregistered target stays informational.
+                var descriptor = PanelRegistry.Get(panelId);
+                if (descriptor == null || !descriptor.IsPlayerNavigable)
+                {
+                    GD.PushWarning($"[Briefing] deep-link target '{panelId}' is not a live player panel; staying informational.");
+                    return;
                 }
 
                 OpenPlayerPanel(panelId);
@@ -287,6 +297,8 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void ShowBriefingForDay(int day, DayAdvancedEventArgs? args = null)
         {
+            // Plan 31C — opt-in replayable day record (dev-only, off by default).
+            AppendDayRecordIfEnabled(day, args);
             SetupDailyBriefingModal();
             SetupSurvivors();
             SetupInventory();

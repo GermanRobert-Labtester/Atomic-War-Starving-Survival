@@ -35,14 +35,14 @@ namespace AtomicWar.GodotApp
         {
             if (_dependencyKindsByItemId != null) return _dependencyKindsByItemId;
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/chemical_dependency_items.json";
-            if (!Godot.FileAccess.FileExists(catalogPath)) return null;
-            using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-            if (file == null) return null;
+            string catalogPath = CatalogPath.ResolveCatalog("chemical_dependency_items.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (!_catalogIo.FileExists(catalogPath)) return null;
+            string _depJson = _catalogIo.ReadAllText(catalogPath);
 
             try
             {
-                using var doc = System.Text.Json.JsonDocument.Parse(file.GetAsText());
+                using var doc = System.Text.Json.JsonDocument.Parse(_depJson);
                 var map = new Dictionary<string, ChemicalDependencyKind>(StringComparer.Ordinal);
                 foreach (var it in doc.RootElement.GetProperty("items").EnumerateArray())
                 {
@@ -278,13 +278,12 @@ namespace AtomicWar.GodotApp
         private BunkerContrabandCatalog LoadContrabandCatalogForHost()
         {
             var catalog = new BunkerContrabandCatalog();
-            string catalogPath = "res://Assets/StreamingAssets/Data/narrative/bunker_contraband_barter.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveSub("narrative", "bunker_contraband_barter.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     var report = ContrabandCatalogValidator.ValidateJson(json);
                     if (report.IsValid)
                         catalog = BunkerContrabandCatalog.LoadFromJson(json);

@@ -29,13 +29,12 @@ namespace AtomicWar.GodotApp
 
             _anomalyHazard = new AnomalyHazardSystem();
 
-            string catalogPath = "res://Assets/StreamingAssets/Data/anomalies.json";
-            if (Godot.FileAccess.FileExists(catalogPath))
+            string catalogPath = CatalogPath.ResolveCatalog("anomalies.json");
+            var _catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (_catalogIo.FileExists(catalogPath))
             {
-                using var file = Godot.FileAccess.Open(catalogPath, Godot.FileAccess.ModeFlags.Read);
-                if (file != null)
+                string json = _catalogIo.ReadAllText(catalogPath);
                 {
-                    string json = file.GetAsText();
                     try
                     {
                         var root = System.Text.Json.JsonSerializer.Deserialize<AnomalyCatalogRoot>(json);

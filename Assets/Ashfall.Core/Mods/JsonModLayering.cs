@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using Ashfall.Core.Content;
 
 namespace Ashfall.Core.Mods
 {
@@ -23,8 +24,14 @@ namespace Ashfall.Core.Mods
         [JsonPropertyName("mod_id")]
         public string ModId { get; set; } = string.Empty;
 
+        [JsonPropertyName("id")]
+        public string? IdAlias { get; set; }
+
         [JsonPropertyName("display_name")]
         public string DisplayName { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string? NameAlias { get; set; }
 
         [JsonPropertyName("version")]
         public string Version { get; set; } = "1.0.0";
@@ -37,17 +44,77 @@ namespace Ashfall.Core.Mods
 
         [JsonPropertyName("catalogs")]
         public List<string> Catalogs { get; set; } = new List<string>();
+
+        [JsonPropertyName("content_roots")]
+        public List<string>? ContentRootsAlias { get; set; }
+
+        [JsonPropertyName("game_range")]
+        public string? GameRange { get; set; }
+
+        [JsonPropertyName("supported_game_range")]
+        public string? SupportedGameRangeAlias { get; set; }
+
+        [JsonPropertyName("mod_contract_range")]
+        public string? ModContractRange { get; set; }
+
+        [JsonPropertyName("supported_mod_contract_range")]
+        public string? SupportedModContractRangeAlias { get; set; }
+
+        [JsonPropertyName("pack_type")]
+        public string PackType { get; set; } = "mod";
+
+        [JsonPropertyName("dependencies")]
+        public List<string> Dependencies { get; set; } = new List<string>();
+
+        [JsonIgnore]
+        public string EffectiveModId => !string.IsNullOrWhiteSpace(ModId) ? ModId : (IdAlias ?? string.Empty);
+
+        [JsonIgnore]
+        public string EffectiveDisplayName => !string.IsNullOrWhiteSpace(DisplayName) ? DisplayName : (NameAlias ?? string.Empty);
+
+        [JsonIgnore]
+        public string? EffectiveGameRange => !string.IsNullOrWhiteSpace(GameRange) ? GameRange : SupportedGameRangeAlias;
+
+        [JsonIgnore]
+        public string? EffectiveModContractRange => !string.IsNullOrWhiteSpace(ModContractRange) ? ModContractRange : SupportedModContractRangeAlias;
+
+        [JsonIgnore]
+        public IReadOnlyList<string> EffectiveCatalogs => Catalogs != null && Catalogs.Count > 0 ? Catalogs : (ContentRootsAlias ?? (IReadOnlyList<string>)Array.Empty<string>());
+    }
+
+    public enum ModRejectionCode
+    {
+        MissingManifest,
+        InvalidManifestJson,
+        UnsafeModId,
+        DuplicateModId,
+        UnsupportedSchemaVersion,
+        NoCatalogs,
+        IncompatibleGameVersion,
+        IncompatibleModContract,
+        MalformedVersionRange,
+        MissingDependency,
+        CircularDependency,
+        UnsafeCatalogPath,
+        MissingCatalogFile,
+        DuplicateDefinitionId,
+        DisallowedPrefix,
+        OverrideNotAllowed,
+        MalformedCatalogJson,
+        AcceptancePipelineFailed
     }
 
     public sealed class ModDiagnostic
     {
         public string ModId { get; }
         public string Message { get; }
+        public ModRejectionCode Code { get; }
 
-        public ModDiagnostic(string modId, string message)
+        public ModDiagnostic(string modId, string message, ModRejectionCode code = ModRejectionCode.InvalidManifestJson)
         {
             ModId = modId;
             Message = message;
+            Code = code;
         }
 
         public override string ToString() => $"{ModId}: {Message}";
@@ -86,12 +153,6 @@ namespace Ashfall.Core.Mods
     /// </summary>
     public sealed class JsonModLayering
     {
-        private static readonly JsonSerializerOptions ManifestOptions = new()
-        {
-            PropertyNameCaseInsensitive = true,
-            IncludeFields = true
-        };
-
         private static readonly HashSet<string> ReservedManifestNames =
             new(StringComparer.OrdinalIgnoreCase) { "manifest.json" };
 
@@ -100,7 +161,11 @@ namespace Ashfall.Core.Mods
             string modsDirectory,
             IFileIO files,
             IJsonSerializer json,
-            ISet<string>? enabledModIds = null)
+            ISet<string>? enabledModIds = null,
+            bool validatePackAcceptance = false,
+            Func<string, string, bool>? customPackAcceptanceValidator = null,
+            string currentGameVersion = ModCompatibilityEvaluator.DefaultGameVersion,
+            int currentContractVersion = ModCompatibilityEvaluator.DefaultModContractVersion)
         {
             if (files == null) throw new ArgumentNullException(nameof(files));
             if (json == null) throw new ArgumentNullException(nameof(json));
@@ -115,8 +180,10 @@ namespace Ashfall.Core.Mods
                 return new ModLayerResult(overlays, accepted, rejected, diagnostics);
             }
 
-            var manifests = new List<(ModManifest Manifest, string Directory)>();
+            var candidateManifests = new Dictionary<string, (ModManifest Manifest, string Directory)>(StringComparer.Ordinal);
             var seenIds = new HashSet<string>(StringComparer.Ordinal);
+
+            // Phase 1: Enumerate and parse manifests in deterministic filesystem path order
             foreach (string modDirectory in files.GetDirectories(modsDirectory).OrderBy(p => p, StringComparer.Ordinal))
             {
                 string manifestPath = files.Combine(modDirectory, "manifest.json");
@@ -124,7 +191,7 @@ namespace Ashfall.Core.Mods
                 if (!files.FileExists(manifestPath))
                 {
                     rejected.Add(directoryName);
-                    diagnostics.Add(new ModDiagnostic(directoryName, "manifest.json is missing"));
+                    diagnostics.Add(new ModDiagnostic(directoryName, "manifest.json is missing", ModRejectionCode.MissingManifest));
                     continue;
                 }
 
@@ -136,66 +203,189 @@ namespace Ashfall.Core.Mods
                 catch (Exception ex)
                 {
                     rejected.Add(directoryName);
-                    diagnostics.Add(new ModDiagnostic(directoryName, "manifest JSON is invalid: " + ex.Message));
+                    diagnostics.Add(new ModDiagnostic(directoryName, "manifest JSON is invalid: " + ex.Message, ModRejectionCode.InvalidManifestJson));
                     continue;
                 }
 
-                string modId = manifest?.ModId?.Trim() ?? string.Empty;
+                string modId = manifest?.EffectiveModId?.Trim() ?? string.Empty;
                 if (!IsSafeModId(modId))
                 {
                     rejected.Add(string.IsNullOrEmpty(modId) ? directoryName : modId);
-                    diagnostics.Add(new ModDiagnostic(modIdOrDirectory(modId, directoryName),
-                        "mod_id must be lowercase snake_case and path-safe"));
+                    diagnostics.Add(new ModDiagnostic(ModIdOrDirectory(modId, directoryName),
+                        "mod_id must be lowercase snake_case and path-safe", ModRejectionCode.UnsafeModId));
                     continue;
                 }
                 if (!seenIds.Add(modId))
                 {
                     rejected.Add(modId);
-                    diagnostics.Add(new ModDiagnostic(modId, "duplicate mod_id"));
+                    diagnostics.Add(new ModDiagnostic(modId, "duplicate mod_id", ModRejectionCode.DuplicateModId));
                     continue;
                 }
                 if (manifest == null || manifest.SchemaVersion != 1)
                 {
                     rejected.Add(modId);
-                    diagnostics.Add(new ModDiagnostic(modId, "unsupported manifest schema_version"));
+                    diagnostics.Add(new ModDiagnostic(modId, "unsupported manifest schema_version", ModRejectionCode.UnsupportedSchemaVersion));
                     continue;
                 }
                 if (enabledModIds != null && enabledModIds.Count > 0 && !enabledModIds.Contains(modId))
                     continue;
-                if (manifest.Catalogs == null || manifest.Catalogs.Count == 0)
+                if (manifest.EffectiveCatalogs == null || manifest.EffectiveCatalogs.Count == 0)
                 {
                     rejected.Add(modId);
-                    diagnostics.Add(new ModDiagnostic(modId, "catalogs must contain at least one file"));
+                    diagnostics.Add(new ModDiagnostic(modId, "catalogs must contain at least one file", ModRejectionCode.NoCatalogs));
                     continue;
                 }
 
-                manifests.Add((manifest, modDirectory));
+                // Phase 2: Compatibility Governance Evaluation
+                if (!ModCompatibilityEvaluator.EvaluateGameVersion(currentGameVersion, manifest.EffectiveGameRange, out string? gameError))
+                {
+                    rejected.Add(modId);
+                    if (gameError != null && gameError.StartsWith("malformed", StringComparison.Ordinal))
+                    {
+                        diagnostics.Add(new ModDiagnostic(modId, gameError, ModRejectionCode.MalformedVersionRange));
+                    }
+                    else
+                    {
+                        diagnostics.Add(new ModDiagnostic(modId,
+                            $"incompatible game version: current '{currentGameVersion}' does not satisfy '{manifest.EffectiveGameRange}'",
+                            ModRejectionCode.IncompatibleGameVersion));
+                    }
+                    continue;
+                }
+
+                if (!ModCompatibilityEvaluator.EvaluateModContractVersion(currentContractVersion, manifest.EffectiveModContractRange, out string? contractError))
+                {
+                    rejected.Add(modId);
+                    if (contractError != null && contractError.StartsWith("malformed", StringComparison.Ordinal))
+                    {
+                        diagnostics.Add(new ModDiagnostic(modId, contractError, ModRejectionCode.MalformedVersionRange));
+                    }
+                    else
+                    {
+                        diagnostics.Add(new ModDiagnostic(modId,
+                            $"incompatible mod contract version: current '{currentContractVersion}' does not satisfy '{manifest.EffectiveModContractRange}'",
+                            ModRejectionCode.IncompatibleModContract));
+                    }
+                    continue;
+                }
+
+                candidateManifests[modId] = (manifest, modDirectory);
             }
 
-            foreach (var entry in manifests
-                .OrderBy(item => item.Manifest.LoadOrder)
-                .ThenBy(item => item.Manifest.ModId, StringComparer.Ordinal))
+            // Phase 3: Dependency Resolution & Cycle Detection
+            bool dependencyRemoved;
+            do
             {
-                string modId = entry.Manifest.ModId;
+                dependencyRemoved = false;
+                foreach (var kvp in candidateManifests.ToList())
+                {
+                    string modId = kvp.Key;
+                    var manifest = kvp.Value.Manifest;
+                    if (manifest.Dependencies == null || manifest.Dependencies.Count == 0)
+                        continue;
+
+                    string? missingDep = manifest.Dependencies.FirstOrDefault(dep => !candidateManifests.ContainsKey(dep));
+                    if (missingDep != null)
+                    {
+                        candidateManifests.Remove(modId);
+                        rejected.Add(modId);
+                        diagnostics.Add(new ModDiagnostic(modId, $"missing required dependency '{missingDep}'", ModRejectionCode.MissingDependency));
+                        dependencyRemoved = true;
+                    }
+                }
+            } while (dependencyRemoved);
+
+            // Topological sort with deterministic tie-breaking (LoadOrder ascending, ModId ordinal ascending)
+            var inDegree = new Dictionary<string, int>(StringComparer.Ordinal);
+            var dependents = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+            foreach (var kvp in candidateManifests)
+            {
+                inDegree[kvp.Key] = 0;
+                dependents[kvp.Key] = new List<string>();
+            }
+
+            foreach (var kvp in candidateManifests)
+            {
+                string modId = kvp.Key;
+                if (kvp.Value.Manifest.Dependencies != null)
+                {
+                    foreach (string dep in kvp.Value.Manifest.Dependencies)
+                    {
+                        if (candidateManifests.ContainsKey(dep))
+                        {
+                            dependents[dep].Add(modId);
+                            inDegree[modId]++;
+                        }
+                    }
+                }
+            }
+
+            var orderedManifests = new List<(ModManifest Manifest, string Directory)>();
+            var readyQueue = new SortedSet<string>(Comparer<string>.Create((a, b) =>
+            {
+                var entryA = candidateManifests[a].Manifest;
+                var entryB = candidateManifests[b].Manifest;
+                int cmp = entryA.LoadOrder.CompareTo(entryB.LoadOrder);
+                return cmp != 0 ? cmp : string.CompareOrdinal(a, b);
+            }));
+
+            foreach (var kvp in inDegree)
+            {
+                if (kvp.Value == 0)
+                    readyQueue.Add(kvp.Key);
+            }
+
+            while (readyQueue.Count > 0)
+            {
+                string currentId = readyQueue.Min!;
+                readyQueue.Remove(currentId);
+                orderedManifests.Add(candidateManifests[currentId]);
+
+                foreach (string dependent in dependents[currentId])
+                {
+                    inDegree[dependent]--;
+                    if (inDegree[dependent] == 0)
+                        readyQueue.Add(dependent);
+                }
+            }
+
+            // Any candidates with inDegree > 0 participate in a cycle
+            if (orderedManifests.Count < candidateManifests.Count)
+            {
+                foreach (var kvp in inDegree.OrderBy(p => p.Key, StringComparer.Ordinal))
+                {
+                    if (kvp.Value > 0)
+                    {
+                        rejected.Add(kvp.Key);
+                        diagnostics.Add(new ModDiagnostic(kvp.Key, "circular dependency detected", ModRejectionCode.CircularDependency));
+                    }
+                }
+            }
+
+            // Phase 4: Deterministic Overlay Merge & Content Acceptance
+            foreach (var entry in orderedManifests)
+            {
+                string modId = entry.Manifest.EffectiveModId;
                 var candidate = new SortedDictionary<string, string>(StringComparer.Ordinal);
                 bool valid = true;
-                foreach (string catalog in entry.Manifest.Catalogs
+
+                foreach (string catalog in entry.Manifest.EffectiveCatalogs
                     .OrderBy(value => value, StringComparer.Ordinal))
                 {
                     if (!IsSafeCatalogFileName(catalog))
                     {
-                        diagnostics.Add(new ModDiagnostic(modId, $"catalog path is not allowed: {catalog}"));
+                        diagnostics.Add(new ModDiagnostic(modId, $"catalog path is not allowed: {catalog}", ModRejectionCode.UnsafeCatalogPath));
                         valid = false;
-                        continue;
+                        break;
                     }
 
                     string basePath = files.Combine(baseDataDirectory, catalog);
                     string modPath = files.Combine(entry.Directory, catalog);
                     if (!files.FileExists(basePath) || !files.FileExists(modPath))
                     {
-                        diagnostics.Add(new ModDiagnostic(modId, $"catalog does not exist in both base and mod: {catalog}"));
+                        diagnostics.Add(new ModDiagnostic(modId, $"catalog does not exist in both base and mod: {catalog}", ModRejectionCode.MissingCatalogFile));
                         valid = false;
-                        continue;
+                        break;
                     }
 
                     string current = candidate.TryGetValue(catalog, out var staged)
@@ -203,13 +393,50 @@ namespace Ashfall.Core.Mods
                         : overlays.TryGetValue(catalog, out var layered)
                             ? layered
                             : files.ReadAllText(basePath);
+
                     if (!TryMergeCatalog(current, files.ReadAllText(modPath), entry.Manifest.AllowOverrides,
-                        out string merged, out string error))
+                        out string merged, out string error, out ModRejectionCode mergeCode))
                     {
-                        diagnostics.Add(new ModDiagnostic(modId, $"{catalog}: {error}"));
+                        diagnostics.Add(new ModDiagnostic(modId, $"{catalog}: {error}", mergeCode));
                         valid = false;
-                        continue;
+                        break;
                     }
+
+                    // Content Acceptance Pipeline integration
+                    if ((validatePackAcceptance || customPackAcceptanceValidator != null) &&
+                        string.Equals(entry.Manifest.PackType, "content_pack", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (customPackAcceptanceValidator != null && !customPackAcceptanceValidator(catalog, merged))
+                        {
+                            diagnostics.Add(new ModDiagnostic(modId,
+                                $"{catalog} failed custom acceptance validator",
+                                ModRejectionCode.AcceptancePipelineFailed));
+                            valid = false;
+                            break;
+                        }
+
+                        if (validatePackAcceptance)
+                        {
+                            var catalogEntry = new CatalogEntry
+                            {
+                                Path = catalog,
+                                Loader = "JsonModLayering",
+                                DefinitionCount = 1,
+                                Classification = ContentClassification.GAMEPLAY_CONSUMED,
+                                RequiredRung = ContentAcceptanceRung.LOADED
+                            };
+                            var pipelineResult = ContentAcceptancePipeline.Evaluate(catalogEntry);
+                            if (!pipelineResult.IsSuccess)
+                            {
+                                diagnostics.Add(new ModDiagnostic(modId,
+                                    $"{catalog} failed acceptance pipeline [{pipelineResult.FailedRung}]: {pipelineResult.Summary}",
+                                    ModRejectionCode.AcceptancePipelineFailed));
+                                valid = false;
+                                break;
+                            }
+                        }
+                    }
+
                     candidate[catalog] = merged;
                 }
 
@@ -250,10 +477,12 @@ namespace Ashfall.Core.Mods
             string modText,
             bool allowOverrides,
             out string mergedText,
-            out string error)
+            out string error,
+            out ModRejectionCode rejectionCode)
         {
             mergedText = string.Empty;
             error = string.Empty;
+            rejectionCode = ModRejectionCode.MalformedCatalogJson;
             JsonNode? baseRoot;
             JsonNode? modRoot;
             try
@@ -264,12 +493,14 @@ namespace Ashfall.Core.Mods
             catch (Exception ex)
             {
                 error = "invalid JSON: " + ex.Message;
+                rejectionCode = ModRejectionCode.MalformedCatalogJson;
                 return false;
             }
 
             if (baseRoot is not JsonObject baseObject || modRoot is not JsonObject modObject)
             {
                 error = "catalog roots must be objects with schema_version";
+                rejectionCode = ModRejectionCode.MalformedCatalogJson;
                 return false;
             }
 
@@ -278,6 +509,7 @@ namespace Ashfall.Core.Mods
             if (baseSchema == null || modSchema == null || baseSchema != modSchema)
             {
                 error = "base and mod schema_version must be present and equal";
+                rejectionCode = ModRejectionCode.UnsupportedSchemaVersion;
                 return false;
             }
 
@@ -286,6 +518,7 @@ namespace Ashfall.Core.Mods
             if (arrayName == null || !string.Equals(arrayName, modArrayName, StringComparison.Ordinal))
             {
                 error = "mod must target the catalog's single definition array";
+                rejectionCode = ModRejectionCode.MalformedCatalogJson;
                 return false;
             }
 
@@ -294,6 +527,7 @@ namespace Ashfall.Core.Mods
             if (baseArray == null || modArray == null)
             {
                 error = "definition array is missing";
+                rejectionCode = ModRejectionCode.MalformedCatalogJson;
                 return false;
             }
 
@@ -303,11 +537,13 @@ namespace Ashfall.Core.Mods
                 if (!TryGetDefinitionId(baseArray[i], out string id))
                 {
                     error = $"base definition at index {i} has no supported id";
+                    rejectionCode = ModRejectionCode.MalformedCatalogJson;
                     return false;
                 }
                 if (!positions.TryAdd(id, i))
                 {
                     error = $"base catalog contains duplicate id '{id}'";
+                    rejectionCode = ModRejectionCode.DuplicateDefinitionId;
                     return false;
                 }
             }
@@ -320,21 +556,25 @@ namespace Ashfall.Core.Mods
                 if (!TryGetDefinitionId(node, out string id))
                 {
                     error = $"mod definition at index {i} has no supported id";
+                    rejectionCode = ModRejectionCode.MalformedCatalogJson;
                     return false;
                 }
                 if (!patchIds.Add(id))
                 {
                     error = $"mod catalog contains duplicate id '{id}'";
+                    rejectionCode = ModRejectionCode.DuplicateDefinitionId;
                     return false;
                 }
                 if (!HasAllowedPrefix(id))
                 {
                     error = $"id '{id}' uses a prefix outside the catalog whitelist";
+                    rejectionCode = ModRejectionCode.DisallowedPrefix;
                     return false;
                 }
                 if (positions.ContainsKey(id) && !allowOverrides)
                 {
                     error = $"id '{id}' already exists; set allow_overrides=true to replace it";
+                    rejectionCode = ModRejectionCode.OverrideNotAllowed;
                     return false;
                 }
                 patches.Add((id, node!));
@@ -400,7 +640,7 @@ namespace Ashfall.Core.Mods
             => CatalogIntegrityRules.IdPrefixes.Any(prefix =>
                 id.StartsWith(prefix, StringComparison.Ordinal));
 
-        private static string modIdOrDirectory(string modId, string directoryName)
+        private static string ModIdOrDirectory(string modId, string directoryName)
             => string.IsNullOrWhiteSpace(modId) ? directoryName : modId;
     }
 }

@@ -95,6 +95,17 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public Func<string, RoleFitnessVerdict?>? ExpeditionFitnessProvider { get; set; }
 
+        /// <summary>
+        /// C2 §D3 — limb-state move-speed factor from the medical owner.
+        /// Unset (or unknown survivor) ⇒ 1.0 (intact/legacy parity). Sampled
+        /// once at dispatch and stored on the expedition state, so a mid-route
+        /// limb change never retroactively alters travel.
+        /// </summary>
+        public Func<string, float>? SurvivorMovementSpeedProvider { get; set; }
+
+        private float SurvivorMovementSpeed(string survivorId)
+            => SurvivorMovementSpeedProvider?.Invoke(survivorId) ?? 1f;
+
         /// <summary>Plan 174 — optional pack-animal cargo provider: survivorId →
         /// extra kg added to the active sortie's capacity after a successful
         /// start. Zero/absent keeps legacy capacity (§5.11).</summary>
@@ -567,7 +578,8 @@ namespace AtomicWar.GodotApp
             long preparedVersion = StateVersion;
             var result = Engine.ExecuteStart(def, survivorId, staminaBudget, stance, vehicle: profile, expectedStateVersion: preparedVersion, currentStateVersion: preparedVersion,
                 startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost,
-                weather: _estimateWeatherInputs?.Invoke(locationId));
+                weather: _estimateWeatherInputs?.Invoke(locationId),
+                survivorSpeedMultiplier: SurvivorMovementSpeed(survivorId));
             if (result.IsSuccess)
             {
                 if (forcedGateStaminaCost > 0f)
@@ -595,7 +607,8 @@ namespace AtomicWar.GodotApp
             ExpeditionStance stance,
             string vehicleId = "",
             float weaponReadiness = 1f,
-            float weaponJamRisk = 0f)
+            float weaponJamRisk = 0f,
+            string survivorId = "")
         {
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);
@@ -626,7 +639,8 @@ namespace AtomicWar.GodotApp
             }
             var estimate = ExpeditionSystem.Estimate(def, stance, false, profile, weaponReadiness, weaponJamRisk,
                 protective: _estimateProtectiveInputs?.Invoke(locationId),
-                weather: _estimateWeatherInputs?.Invoke(locationId));
+                weather: _estimateWeatherInputs?.Invoke(locationId),
+                survivorSpeedMultiplier: SurvivorMovementSpeed(survivorId));
 
             // Plans 146–149: hazard still scales encounter risk on the estimate.
             // Travel stretch is already baked into def via ProjectRouteTravelDef.
@@ -907,7 +921,8 @@ namespace AtomicWar.GodotApp
 
             long dispatchVersion = StateVersion;
             var result = Engine.ExecuteStart(def, survivorId, day, stance, vehicle: profile, expectedStateVersion: dispatchVersion, currentStateVersion: dispatchVersion,
-                startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost);
+                startingStamina: ExpeditionSystem.MaxStamina - forcedGateStaminaCost,
+                survivorSpeedMultiplier: SurvivorMovementSpeed(survivorId));
             if (result.IsSuccess)
             {
                 if (forcedGateStaminaCost > 0f)

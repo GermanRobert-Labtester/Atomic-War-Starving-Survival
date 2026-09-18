@@ -1,5 +1,12 @@
 # C2 — Flagship Integration Plan [14]: Goods Must Arrive
 
+> **STATUS (2026-09-18): RECONCILED-DUPLICATE / SUPERSEDED-BY `C1_planintegration[10].md`.**
+> Wave 11 Part 2 B5 established that both files derive from Plan 35 and define
+> the same 35A → 36A → 35B → 35C delivery-chain scope. C1[10] is the
+> authoritative current integration adaptation and was executed by Wave 10 Part
+> 2 B5. This historical body remains intact for provenance. Reconciliation:
+> `docs/plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md`.
+
 > **Source:** Plan 35 — Goods Must Arrive: The Production-to-Provisioning Chain
 > **Wave:** Continuity Wave 5 — The Human Interface
 > **Execution order:** **35A → 36A → 35B → 35C**

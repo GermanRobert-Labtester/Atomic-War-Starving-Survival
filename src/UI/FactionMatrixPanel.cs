@@ -76,7 +76,7 @@ public partial class FactionMatrixPanel : Control, IBindablePanel
             return;
         }
 
-        string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
+        string osPath = CatalogPath.ResolveCatalog("faction_lore.json");
         try
         {
             if (!File.Exists(osPath)) return;
