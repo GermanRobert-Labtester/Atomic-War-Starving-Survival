@@ -71,8 +71,9 @@ jobs:
           git commit -m "docs: regenerate drift-gated catalogs (automated)"
           # Push to a dedicated autogen branch (the fix branch is protected by a
           # repository ruleset that blocks GITHUB_TOKEN pushes); the result is
-          # merged into the fix branch via an authenticated PR.
-          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen 2>&1); then
+          # merged into the fix branch via an authenticated PR. Force-push keeps
+          # the disposable autogen branch aligned with the current fix-branch HEAD.
+          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen --force 2>&1); then
             echo "Pushed regenerated docs to ci-docs-autogen."
           else
             echo "::error::DOCS-REGEN PUSH FAILED — ${out}"

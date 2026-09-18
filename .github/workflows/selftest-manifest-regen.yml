@@ -63,7 +63,9 @@ jobs:
             exit 0
           fi
           git commit -m "ci: regenerate SELFTEST_MANIFEST.json from HostCliRegistry (automated)"
-          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen 2>&1); then
+          # Force-push keeps the disposable autogen branch aligned with the
+          # current fix-branch HEAD (it may have advanced since the last run).
+          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen --force 2>&1); then
             echo "Pushed regenerated manifest to ci-docs-autogen."
           else
             echo "::error::MANIFEST-REGEN PUSH FAILED — ${out}"
