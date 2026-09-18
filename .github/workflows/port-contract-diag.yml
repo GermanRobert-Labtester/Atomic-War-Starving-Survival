@@ -1,14 +1,50 @@
-name: Port Contract Diag
+name: Port Contract Fix
 on: push
 permissions:
   contents: write
 jobs:
-  diag:
+  fix:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Dump offending source region
+      - name: Patch literal escape corruption and verify gate
         run: |
-          sed -n "267,276p" scripts/ci/generate-port-contract.py > /tmp/src.txt
-          cat -A /tmp/src.txt | head -3
-          awk '{ printf "PC-SRC-L%d: %s\n", NR+266, $0 }' /tmp/src.txt | cut -c1-700 | head -10 | sed "s/^/::error::/"
+          set -e
+          python3 - <<'PATCH'
+          import re, py_compile, sys
+          P = "scripts/ci/generate-port-contract.py"
+          s = open(P, encoding="utf-8").read()
+          BS = chr(92)
+          bad = "# Zero-caller status is classification-aware: optional/library seams are not tests." + BS + "n status = ("
+          if bad not in s:
+              print("PATTERN NOT FOUND")
+              sys.exit(3)
+          m = re.search(chr(10) + "([ ]*)caller_count = len", s)
+          indent = m.group(1)
+          good = "# Zero-caller status is classification-aware: optional/library seams are not tests." + chr(10) + indent + "status = ("
+          open(P, "w", encoding="utf-8").write(s.replace(bad, good))
+          py_compile.compile(P, doraise=True)
+          print("PATCH OK")
+          PATCH
+          set +e
+          python3 scripts/ci/generate-port-contract.py --check > /tmp/check.log 2>&1
+          RC=$?
+          set -e
+          cat /tmp/check.log
+          if [ "$RC" != "0" ]; then
+            fold -w 600 /tmp/check.log | head -8 | sed "s/^/::error::PC-CHECK-AFTER-FIX: /"
+            exit 1
+          fi
+      - name: Commit fix to run-unique branch
+        run: |
+          set -e
+          git config user.name "ashfall-ci-bot"
+          git config user.email "actions@github.com"
+          BR="ci-portcontract-fix-$GITHUB_RUN_ID"
+          git checkout -b "$BR"
+          git rm -q .github/workflows/port-contract-diag.yml || true
+          if ! git diff --quiet HEAD -- scripts docs; then git add scripts docs; fi
+          git add -u
+          git commit -m "fix(ci): repair literal escape corruption in generate-port-contract.py line 267"
+          git push origin HEAD:"$BR"
+          echo "::error::PC-FIX: committed to branch $BR sha $(git rev-parse HEAD)"
