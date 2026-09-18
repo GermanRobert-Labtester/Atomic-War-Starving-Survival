@@ -7,10 +7,10 @@
 - **Total integration seams:** 248
 - **Host-required (`HOST_REQUIRED`):** 176 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 0
-- **Live via Core (`LIVE_VIA_CORE`):** 34
+- **Live via Core (`LIVE_VIA_CORE`):** 36
 - **Test/Diagnostic only (`TEST_ONLY`):** 21
 - **Pure library utilities (`PURE_LIBRARY`):** 0
-- **Deferred / Exemptions (`DEFERRED`):** 17 (shrink-only ratchet with dated owner)
+- **Deferred / Exemptions (`DEFERRED`):** 15 (shrink-only ratchet with dated owner)
 - **Unbound production-required seams:** 0
 
 ## Taxonomy & Classification Rules
@@ -247,8 +247,8 @@
 | `TradeEmbargoSystem.RegisterRule` | economy | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in TradeEmbargoSystem. |
 | `TradeSpecialtySystem.RegisterProfessionInfo` | survivors | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in TradeSpecialtySystem. |
 | `TradeSpecialtySystem.RegisterProfessionPatterns` | core-architecture | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in TradeSpecialtySystem. |
-| `TradeTellEngine.RegisterBand` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
-| `TradeTellEngine.RegisterTellPool` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `TradeTellEngine.RegisterBand` | economy | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus. |
+| `TradeTellEngine.RegisterTellPool` | economy | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus. |
 | `TrophySystem.RegisterTrophy` | shelter | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in TrophySystem. |
 | `UvCoronaDetectionEngine.BindCatalog` | radio | `HOST_REQUIRED` | 19 | ✅ BOUND | Integration seam in UvCoronaDetectionEngine. |
 | `UvCoronaDetectionEngine.BindInventory` | radio | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in UvCoronaDetectionEngine. |
