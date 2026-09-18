@@ -7,39 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run port contract gate and capture output
+      - name: Dump offending source region
         run: |
-          set +e
-          python3 scripts/ci/generate-port-contract.py --check > /tmp/check.log 2>&1
-          RC=$?
-          set -e
-          echo "=== CHECK EXIT CODE: $RC ==="
-          cat /tmp/check.log
-          if [ "$RC" != "0" ]; then
-            fold -w 600 /tmp/check.log | head -8 | sed "s/^/::error::PC-CHECK: /"
-          else
-            echo "::error::PC-CHECK: gate passed unexpectedly"
-          fi
-      - name: Regenerate and commit diff branch
-        run: |
-          set +e
-          python3 scripts/ci/generate-port-contract.py > /tmp/regen.log 2>&1
-          RC=$?
-          set -e
-          cat /tmp/regen.log
-          if [ "$RC" != "0" ]; then
-            fold -w 600 /tmp/regen.log | head -8 | sed "s/^/::error::PC-REGEN: /"
-            exit 1
-          fi
-          if git diff --quiet; then
-            echo "::error::PC-REGEN: regeneration produced NO diff (gate failure is validation, not drift)"
-          else
-            git config user.name "ashfall-ci-bot"
-            git config user.email "actions@github.com"
-            BR="ci-portcontract-$GITHUB_RUN_ID"
-            git checkout -b "$BR"
-            git add -A
-            git commit -m "fix(ports): regenerate port contract outputs from policy"
-            git push origin HEAD:"$BR"
-            echo "::error::PC-REGEN: diff committed to branch $BR; stat: $(git diff HEAD~1 --stat | head -5 | tr "\n" "|")"
-          fi
+          sed -n "240,300p" scripts/ci/generate-port-contract.py > /tmp/src.txt
+          cat -n /tmp/src.txt
+          fold -w 600 /tmp/src.txt | head -14 | sed "s/^/::error::PC-SRC: /"
+          python3 -c "import ast; ast.parse(open('scripts/ci/generate-port-contract.py').read())" 2>&1 | head -5 | sed "s/^/::error::PC-PARSE: /" || true
