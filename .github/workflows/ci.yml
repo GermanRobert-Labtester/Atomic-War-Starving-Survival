@@ -38,14 +38,14 @@ jobs:
 
       - name: Execute Canonical Verification Suite (Fast Tier)
         run: |
-          python3 scripts/ci/run-gates.py --tier fast \\
-            --report-json build/reports/gate-results.json \\
+          python3 scripts/ci/run-gates.py --tier fast \
+            --report-json build/reports/gate-results.json \
             --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
 
       - name: Execute Full Core xUnit Regression Gate
         run: |
-          python3 scripts/ci/run-gates.py --gate test_core_suite \\
-            --report-json build/reports/core-test-results.json \\
+          python3 scripts/ci/run-gates.py --gate test_core_suite \
+            --report-json build/reports/core-test-results.json \
             --fail-artifact build/reports/CORE_TEST_FAILURE_REPORT.md
 
       - name: Surface Gate Failures as Annotations
@@ -70,10 +70,17 @@ jobs:
                   print(f"::error title={r.get('gate_id','gate')}::GATE FAILED: "
                         f"{r.get('gate_id','?')} ({r.get('name','?')}) - {reason}")
                   out = (r.get("output") or "")
+                  shown = 0
                   for line in out.splitlines():
                       line = line.strip()
-                      if line.startswith("FAIL") or "Failed " in line or "Error Message" in line or line.startswith("  ✗") or "Assert" in line[:80]:
+                      if (line.startswith("FAIL") or "Failed " in line
+                              or "Error Message" in line or "Assert" in line[:80]
+                              or line.startswith("✗")):
                           print(f"::error title={r.get('gate_id','gate')}:: {line[:500]}")
+                          shown += 1
+                          if shown >= 25:
+                              print(f"::error title={r.get('gate_id','gate')}:: (output truncated)")
+                              break
           PY
 
       - name: Generate GitHub Actions Step Summary
