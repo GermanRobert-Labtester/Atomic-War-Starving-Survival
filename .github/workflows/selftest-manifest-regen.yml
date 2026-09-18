@@ -1,8 +1,9 @@
-# ASHFALL Selftest Manifest Regen — one-shot regenerator for
+# ASHFALL Selftest Manifest Regen — regenerator for
 # docs/ci/SELFTEST_MANIFEST.json, which must stay byte-identical to the live
 # HostCliRegistry output queried from the built Godot host.
-# The fix branch is protected by a ruleset that blocks GITHUB_TOKEN pushes, so
-# the regenerated manifest is pushed to ci-docs-autogen and merged via PR.
+# The fix branch is protected by a ruleset that blocks GITHUB_TOKEN pushes and
+# force-pushes, so the regenerated manifest goes to a fresh run-unique branch
+# that is merged into the fix branch via an authenticated PR.
 
 name: Selftest Manifest Regen
 
@@ -63,10 +64,12 @@ jobs:
             exit 0
           fi
           git commit -m "ci: regenerate SELFTEST_MANIFEST.json from HostCliRegistry (automated)"
-          # Force-push keeps the disposable autogen branch aligned with the
-          # current fix-branch HEAD (it may have advanced since the last run).
-          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen --force 2>&1); then
-            echo "Pushed regenerated manifest to ci-docs-autogen."
+          # Push to a run-unique branch (branch creation is allowed; force-push
+          # is blocked by the repository ruleset). The branch is merged into
+          # the fix branch via an authenticated PR.
+          AUTOGEN_BRANCH="ci-autogen-${GITHUB_RUN_ID}"
+          if out=$(git push origin HEAD:refs/heads/$AUTOGEN_BRANCH 2>&1); then
+            echo "Pushed regenerated manifest to $AUTOGEN_BRANCH."
           else
             echo "::error::MANIFEST-REGEN PUSH FAILED — ${out}"
             exit 1
