@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2495 | **Last Verified:** 2026-09-18
+**Total Indexed Documents:** 2499 | **Last Verified:** 2026-09-18
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2449 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2453 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 44 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -309,7 +309,7 @@ The following documents share identical or near-identical filenames across root,
 | 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-17<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
-## 4. Expansions (01–10 Master Plans & Context) (60 documents)
+## 4. Expansions (01–10 Master Plans & Context) (61 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -355,6 +355,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_plan.md`](expansions/expansion_the_holdfast_plan.md) | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE HOLDFAST |
 | 🟢 `CURRENT` | [`docs/factions/PLAN_122_MILITARY_FACTION_BRANCH_EXPANSION_CLOSEOUT.md`](factions/PLAN_122_MILITARY_FACTION_BRANCH_EXPANSION_CLOSEOUT.md) | **Plan 122 — Military Faction Branch Expansion (8 → 15) — Completion Report** — Plan 122 expands the Military faction character-ending layer from **8 branches (24 endings) to 15 branches (45 ending... |
 | 🟢 `CURRENT` | [`docs/factions/PLAN_123_REBEL_FACTION_BRANCH_EXPANSION_CLOSEOUT.md`](factions/PLAN_123_REBEL_FACTION_BRANCH_EXPANSION_CLOSEOUT.md) | **Plan 123 — Rebel Faction Branch Expansion Closeout** — Complete for the live branch catalog and shared branch runtime. The catalog |
+| 🟢 `CURRENT` | [`docs/governance/DECISION_PACKET_2026-09-18_XP_EXPANSION_W1.md`](governance/DECISION_PACKET_2026-09-18_XP_EXPANSION_W1.md) | **XP Expansion W1 Decision Record** — **Date:** 2026-09-18 |
 | 🟢 `CURRENT` | [`docs/journal/PLAN_95_JOURNAL_VOICE_PROSE_EXPANSION_CLOSEOUT.md`](journal/PLAN_95_JOURNAL_VOICE_PROSE_EXPANSION_CLOSEOUT.md) | **Plan 95 — Journal Voice Prose Expansion Closeout** — **COMPLETE — prose expansion with deferred producer-dependent keys.** |
 | 🟢 `CURRENT` | [`docs/medical/PLAN_79_AUTOPSY_PROCEDURES_EXPANSION_CLOSEOUT.md`](medical/PLAN_79_AUTOPSY_PROCEDURES_EXPANSION_CLOSEOUT.md) | **Plan 79 — Autopsy Procedures Expansion Closeout** — Expanded `autopsy_procedures.json` from **9 → 12 procedures** (the plan's stated baseline of 3 was stale — concurrent... |
 | 🟢 `CURRENT` | [`docs/narrative/PLAN_58_NARRATIVE_ENCOUNTER_EXPANSION_CLOSEOUT.md`](narrative/PLAN_58_NARRATIVE_ENCOUNTER_EXPANSION_CLOSEOUT.md) | **Plan 58 — Narrative Encounter Expansion: Closeout** — Base before:  3  (enc_dead_letter_office, enc_weather_station, enc_pianist) |
@@ -576,7 +577,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2133 documents)
+## 9. General Project Guides & Archive Reference (2136 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1154,8 +1155,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
-| 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | **Proprietary License** — All rights reserved. |
-| 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🟢 `CURRENT` | [`docs/ACCESSIBILITY.md`](ACCESSIBILITY.md) | **ASHFALL — ACCESSIBILITY ARCHITECTURE & STANDARDS (PLAN 80 / TASK B21)** — **Classification:** Core UX & Accessibility Authority |
 | 🟢 `CURRENT` | [`docs/ACTION_RESULT_SURFACING_MATRIX.md`](ACTION_RESULT_SURFACING_MATRIX.md) | **Typed action-result surfacing matrix** — Core owns stable failure codes; host/UI owns player-facing wording. |
@@ -1736,7 +1735,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/gaps/logs/PLANS_150_153_NARRATIVE_ACTIVATION_SEAL_LOG.md`](gaps/logs/PLANS_150_153_NARRATIVE_ACTIVATION_SEAL_LOG.md) | **Plans 150–153 Narrative Activation Seal Log** — Date: 2026-09-12 |
 | 🟢 `CURRENT` | [`docs/gaps/plans/GAP-48-49_DESTINATION_SEAMS_SEALING_PLAN.md`](gaps/plans/GAP-48-49_DESTINATION_SEAMS_SEALING_PLAN.md) | **GAP-48/49 — Destination-Level Weather Gates & Micro-Location Bindings — Sealing Plan** — Sequel to `docs/expeditions/PLAN76_CLOSEOUT.md` (deferred items) and |
 | 🟢 `CURRENT` | [`docs/governance/DECISION_PACKET_2026-09-18.md`](governance/DECISION_PACKET_2026-09-18.md) | **ASHFALL — Foreman Decision Packet** — **Date:** 2026-09-18 · **Prepared for:** Foreman (user) · **Prepared by:** Integrator |
-| 🟢 `CURRENT` | [`docs/governance/DECISION_REGISTER.md`](governance/DECISION_REGISTER.md) | **ASHFALL Standing Decision Register** — **Authority:** Wave 10 Part 2 — Task E1 |
+| 🟢 `CURRENT` | [`docs/governance/DECISION_REGISTER.md`](governance/DECISION_REGISTER.md) | **ASHFALL Standing Decision Register** — **Authority:** Wave 10 Part 2 — Task E1\ |
 | 🟢 `CURRENT` | [`docs/greenhouse/GREENHOUSE_CRAFTING_BINDINGS.md`](greenhouse/GREENHOUSE_CRAFTING_BINDINGS.md) | **GREENHOUSE CRAFTING BINDINGS (plan §37-38)** — Four new recipes appended to `Assets/StreamingAssets/Data/recipes.json` |
 | 🟢 `CURRENT` | [`docs/greenhouse/GREENHOUSE_ITEM_CATALOG_AUTHORITY.md`](greenhouse/GREENHOUSE_ITEM_CATALOG_AUTHORITY.md) | **GREENHOUSE ITEM CATALOG AUTHORITY (Plan 91)** — `ItemCatalogLoader.SecondaryItemFiles` (`Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs:67`) |
 | 🟢 `CURRENT` | [`docs/greenhouse/GREENHOUSE_ITEM_GLOBAL_ID_AUDIT.md`](greenhouse/GREENHOUSE_ITEM_GLOBAL_ID_AUDIT.md) | **GREENHOUSE ITEM GLOBAL ID AUDIT (Plan 91)** — Global item namespace at Plan 91 execution: **747 unique IDs** across 10 item |
@@ -2037,19 +2036,19 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/flagship_xii_collectibles_IMPLEMENTATION_LOG.md`](plans/flagship_xii_collectibles_IMPLEMENTATION_LOG.md) | **Flagship XII (collectibles) — Implementation Log** — Plan: Flagship Integration Plan XII — Collectible Narrative Quality, |
 | 🟢 `CURRENT` | [`docs/plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md`](plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md) | **Plan 12C Final — Shelter Interior & Memorial Wall** — Finish the deferred player-facing Plan 12C lane without creating a second |
 | 🟢 `CURRENT` | [`docs/plans/wave10_part1/B1_ENTRY_GATE.md`](plans/wave10_part1/B1_ENTRY_GATE.md) | **Wave 10 Part 1 — B1 Entry Gate (C1[6] / Plan 27)** — **Task:** B1 — C1[6] "Tests That Mean It" / Plan 27 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md`](plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md) | **B1 / Plan 27 — Tests That Mean It: Fidelity, Coverage, and Runtime Evidence (Implementation Log)** — **Task:** Wave 10 Part 1 — B1 (C1[6] / Plan 27) |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md`](plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md) | **C1[7] / Plan 29 — One Truth: Implementation Log** — **Package ID:** `WAVE10-PART1-B2-PLAN29-ONE-TRUTH` |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md`](plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md) | **B1 / Plan 27 — Tests That Mean It: Fidelity, Coverage, and Runtime Evidence (Implementation Log)** — **Task:** Wave 10 Part 1 — B1 (C1[6] / Plan 27)\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md`](plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md) | **C1[7] / Plan 29 — One Truth: Implementation Log** — **Package ID:** `WAVE10-PART1-B2-PLAN29-ONE-TRUTH`\ |
 | 🟢 `CURRENT` | [`docs/plans/wave10_part1/C1_PLAN31_IMPLEMENTATION_LOG.md`](plans/wave10_part1/C1_PLAN31_IMPLEMENTATION_LOG.md) | **C1[8] / Plan 31B–31C — Implementation Log** — **Task:** Wave 10 Part 1 — C1[8] "The Event Layer Speaks" (31B navigable briefings + 31C replayable diagnostics) |
 | 🟢 `CURRENT` | [`docs/plans/wave10_part1/C2_26A_IMPLEMENTATION_LOG.md`](plans/wave10_part1/C2_26A_IMPLEMENTATION_LOG.md) | **C2[8] / Plan 26A & 26C — One Path Authority & Performance Budgets (Implementation Log)** — **Task:** Wave 10 Part 1 — C2[8] "Ship Gate" / Plan 26A & 26C (prerequisite to B1) |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part1/WAVE10_PART1_CLOSEOUT.md`](plans/wave10_part1/WAVE10_PART1_CLOSEOUT.md) | **ASHFALL — GENERATION WAVE 10 PART 1 CLOSEOUT REPORT** — **Role:** authoritative closeout report for Wave 10 Part 1 execution. |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/B3_PLAN31_RECONCILIATION.md`](plans/wave10_part2/B3_PLAN31_RECONCILIATION.md) | **Plan 31 (C1[8]) Reconciliation Report: "The Event Layer Speaks"** — **Package:** Wave 10 Part 2 — Task B3 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/B4_PLAN33_INTEL_VALUE_LOG.md`](plans/wave10_part2/B4_PLAN33_INTEL_VALUE_LOG.md) | **Plan 33 (C1[9]) Implementation & Audit Log: "Intel Has To Be Worth Something"** — **Package:** Wave 10 Part 2 — Task B4 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/B5_PLAN35_36_DELIVERY_CHAIN.md`](plans/wave10_part2/B5_PLAN35_36_DELIVERY_CHAIN.md) | **Plan 35 / Plan 36 (C1[10]) Implementation & Audit Log: "Goods Must Arrive"** — **Package:** Wave 10 Part 2 — Task B5 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md`](plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md) | **Plan 26 (C2[8]) Reconciliation Report: "The Ship Gate"** — **Package:** Wave 10 Part 2 — Task C1 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md`](plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md) | **Plan 28 (C2[9]) Reconciliation & Implementation Log: "The Orchestration Spine"** — **Package:** Wave 10 Part 2 — Task C2 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/D1_SEVEN_DAY_SLICE_PROOF.md`](plans/wave10_part2/D1_SEVEN_DAY_SLICE_PROOF.md) | **ASHFALL Standing Product Proof: Seven-Day Slice (Task D1)** — **Package:** Wave 10 Part 2 — Task D1 |
-| 🟢 `CURRENT` | [`docs/plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md`](plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md) | **ASHFALL GENERATION WAVE 10 PART 2 — CLOSEOUT & INTEGRATION REPORT** — **Document ID:** `docs/plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md` |
-| 🟢 `CURRENT` | [`docs/plans/wave11_part1/A1_PLAN38_IMPLEMENTATION_LOG.md`](plans/wave11_part1/A1_PLAN38_IMPLEMENTATION_LOG.md) | **Task A1 Implementation Log: C1[11] Plan 38 — The Year Turns** — **Date:** 2026-09-17 |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part1/WAVE10_PART1_CLOSEOUT.md`](plans/wave10_part1/WAVE10_PART1_CLOSEOUT.md) | **ASHFALL — GENERATION WAVE 10 PART 1 CLOSEOUT REPORT** — **Role:** authoritative closeout report for Wave 10 Part 1 execution.\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/B3_PLAN31_RECONCILIATION.md`](plans/wave10_part2/B3_PLAN31_RECONCILIATION.md) | **Plan 31 (C1[8]) Reconciliation Report: "The Event Layer Speaks"** — **Package:** Wave 10 Part 2 — Task B3\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/B4_PLAN33_INTEL_VALUE_LOG.md`](plans/wave10_part2/B4_PLAN33_INTEL_VALUE_LOG.md) | **Plan 33 (C1[9]) Implementation & Audit Log: "Intel Has To Be Worth Something"** — **Package:** Wave 10 Part 2 — Task B4\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/B5_PLAN35_36_DELIVERY_CHAIN.md`](plans/wave10_part2/B5_PLAN35_36_DELIVERY_CHAIN.md) | **Plan 35 / Plan 36 (C1[10]) Implementation & Audit Log: "Goods Must Arrive"** — **Package:** Wave 10 Part 2 — Task B5\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md`](plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md) | **Plan 26 (C2[8]) Reconciliation Report: "The Ship Gate"** — **Package:** Wave 10 Part 2 — Task C1\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md`](plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md) | **Plan 28 (C2[9]) Reconciliation & Implementation Log: "The Orchestration Spine"** — **Package:** Wave 10 Part 2 — Task C2\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/D1_SEVEN_DAY_SLICE_PROOF.md`](plans/wave10_part2/D1_SEVEN_DAY_SLICE_PROOF.md) | **ASHFALL Standing Product Proof: Seven-Day Slice (Task D1)** — **Package:** Wave 10 Part 2 — Task D1\ |
+| 🟢 `CURRENT` | [`docs/plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md`](plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md) | **ASHFALL GENERATION WAVE 10 PART 2 — CLOSEOUT & INTEGRATION REPORT** — **Document ID:** `docs/plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md`\ |
+| 🟢 `CURRENT` | [`docs/plans/wave11_part1/A1_PLAN38_IMPLEMENTATION_LOG.md`](plans/wave11_part1/A1_PLAN38_IMPLEMENTATION_LOG.md) | **Task A1 Implementation Log: C1[11] Plan 38 — The Year Turns** — **Date:** 2026-09-17\ |
 | 🟢 `CURRENT` | [`docs/plans/wave11_part1/A2_PLAN41_IMPLEMENTATION_LOG.md`](plans/wave11_part1/A2_PLAN41_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 1 — TASK A2 IMPLEMENTATION LOG** — Task A2 reconciles and wires memory systems into concrete, decision-relevant behavior without creating parallel memor... |
 | 🟢 `CURRENT` | [`docs/plans/wave11_part1/A3_PLAN43_IMPLEMENTATION_LOG.md`](plans/wave11_part1/A3_PLAN43_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 1 — TASK A3 IMPLEMENTATION LOG** — Task A3 executes the governance, leadership policy cadence, typed crew consent, and work refusal mechanics without in... |
 | 🟢 `CURRENT` | [`docs/plans/wave11_part1/A4_PLAN45_IMPLEMENTATION_LOG.md`](plans/wave11_part1/A4_PLAN45_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 1 — TASK A4 IMPLEMENTATION LOG** — Task A4 completes the fail-fast 4-stage automated content acceptance pipeline orchestrator, gate runner, documentatio... |
@@ -2057,12 +2056,12 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/wave11_part1/B1_PLAN30_IMPLEMENTATION_LOG.md`](plans/wave11_part1/B1_PLAN30_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 1 — TASK B1 IMPLEMENTATION LOG** — **Premise finding:** The census row marked C2[10] as `SEALED-ELSEWHERE` citing `docs/spiritual/PLAN30_COMPLETION_REPO... |
 | 🟢 `CURRENT` | [`docs/plans/wave11_part1/B2_PLAN32_IMPLEMENTATION_LOG.md`](plans/wave11_part1/B2_PLAN32_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 1 — TASK B2 IMPLEMENTATION LOG** — Census row `C2[11]`: `AUDIT-PENDING` — no prior evidence recorded. This log provides the full premise reconciliation. |
 | 🟢 `CURRENT` | [`docs/plans/wave11_part1/WAVE11_PART1_CLOSEOUT.md`](plans/wave11_part1/WAVE11_PART1_CLOSEOUT.md) | **WAVE 11 PART 1 CLOSEOUT** — **Period:** 2026-09-18 |
-| 🟢 `CURRENT` | [`docs/plans/wave11_part2/B3_PLAN34_IMPLEMENTATION_LOG.md`](plans/wave11_part2/B3_PLAN34_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 2 — TASK B3 IMPLEMENTATION LOG** — **Source baseline:** `033df2b7` plus the user-owned dirty worktree, 2026-09-18. |
-| 🟢 `CURRENT` | [`docs/plans/wave11_part2/B4_PLAN36_IMPLEMENTATION_LOG.md`](plans/wave11_part2/B4_PLAN36_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 2 — TASK B4 IMPLEMENTATION LOG** — **Source baseline:** `033df2b7` plus the active Wave 11 Part 2 claim and user worktree, 2026-09-18. |
+| 🟢 `CURRENT` | [`docs/plans/wave11_part2/B3_PLAN34_IMPLEMENTATION_LOG.md`](plans/wave11_part2/B3_PLAN34_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 2 — TASK B3 IMPLEMENTATION LOG** — **Source baseline:** `033df2b7` plus the user-owned dirty worktree, 2026-09-18.\ |
+| 🟢 `CURRENT` | [`docs/plans/wave11_part2/B4_PLAN36_IMPLEMENTATION_LOG.md`](plans/wave11_part2/B4_PLAN36_IMPLEMENTATION_LOG.md) | **WAVE 11 PART 2 — TASK B4 IMPLEMENTATION LOG** — **Source baseline:** `033df2b7` plus the active Wave 11 Part 2 claim and user worktree, 2026-09-18.\ |
 | 🟢 `CURRENT` | [`docs/plans/wave11_part2/B4_PLAN36_PORT_CONTRACT_LOG.md`](plans/wave11_part2/B4_PLAN36_PORT_CONTRACT_LOG.md) | **WAVE 11 PART 2 — TASK B4 IMPLEMENTATION LOG** — - Historical scope read: `C2_planintegration[13].md` requires one engine-free vocabulary, generated static gate, runt... |
-| 🟢 `CURRENT` | [`docs/plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md`](plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md) | **WAVE 11 PART 2 — TASK B5 DUPLICATE RECONCILIATION** — **Class:** TRUE DUPLICATE |
-| 🟢 `CURRENT` | [`docs/plans/wave11_part2/C1_DECISION_REGISTER_PASS.md`](plans/wave11_part2/C1_DECISION_REGISTER_PASS.md) | **Wave 11 Part 2 C1 — Decision-Register Recurrence** — **Date:** 2026-09-18 |
-| 🟢 `CURRENT` | [`docs/plans/wave11_part2/C2_CENSUS_REFRESH.md`](plans/wave11_part2/C2_CENSUS_REFRESH.md) | **Wave 11 Part 2 C2 — Census Refresh and Queue Maintenance** — **Date:** 2026-09-18 |
+| 🟢 `CURRENT` | [`docs/plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md`](plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md) | **WAVE 11 PART 2 — TASK B5 DUPLICATE RECONCILIATION** — **Class:** TRUE DUPLICATE\ |
+| 🟢 `CURRENT` | [`docs/plans/wave11_part2/C1_DECISION_REGISTER_PASS.md`](plans/wave11_part2/C1_DECISION_REGISTER_PASS.md) | **Wave 11 Part 2 C1 — Decision-Register Recurrence** — **Date:** 2026-09-18\ |
+| 🟢 `CURRENT` | [`docs/plans/wave11_part2/C2_CENSUS_REFRESH.md`](plans/wave11_part2/C2_CENSUS_REFRESH.md) | **Wave 11 Part 2 C2 — Census Refresh and Queue Maintenance** — **Date:** 2026-09-18\ |
 | 🟢 `CURRENT` | [`docs/plans/wave8_part2/B2_PANEL_WAVE.md`](plans/wave8_part2/B2_PANEL_WAVE.md) | **Wave 8 — B2 Player-Route Panel Wave (premise verification + build record)** — This document records the source-level verification of the B2 intent table |
 | 🟢 `CURRENT` | [`docs/plans/wave8_part2/C1_ACCEPTANCE.md`](plans/wave8_part2/C1_ACCEPTANCE.md) | **Wave 8 Part 2 C1 — Acceptance Evidence** — **Terminal candidate:** `IMPLEMENTED`<br> |
 | 🟢 `CURRENT` | [`docs/plans/wave8_part2/C1_CHANGE_MATRIX.md`](plans/wave8_part2/C1_CHANGE_MATRIX.md) | **Wave 8 Part 2 C1 — Change Matrix** — `items.json`, both asset-registry outputs, the snapshot manifest/coverage files, `INTEGRATION_PLANS.md`, `WORKTREE_OW... |
@@ -2093,6 +2092,11 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/wave9_part2/C3_DECISION.md`](plans/wave9_part2/C3_DECISION.md) | **Wave 9 Part 2 C3 — Radiation Balance Findings F1–F8 Decision** — `WAVE9-PART2-C3-RADIATION-BALANCE-F1-F8` |
 | 🟢 `CURRENT` | [`docs/plans/wave9_part2/D2_DECISION.md`](plans/wave9_part2/D2_DECISION.md) | **Wave 9 Part 2 D2 — F1/F9 Repository Governance Decision** — `WAVE9-PART2-D2-GOVERNANCE-F1-F9` |
 | 🟢 `CURRENT` | [`docs/plans/wave9_part2/WAVE9_PART2_CLOSEOUT.md`](plans/wave9_part2/WAVE9_PART2_CLOSEOUT.md) | **ASHFALL — WAVE 9 PART 2 IMPLEMENTATION UNBLOCKER CLOSEOUT REPORT** — Wave 9 Part 2 resolved the six surviving blocker packages from the Wave 9 ledger. All tasks were executed strictly in... |
+| 🟢 `CURRENT` | [`docs/plans/xp/w1/W1_ACCEPTANCE.md`](plans/xp/w1/W1_ACCEPTANCE.md) | **XP W1 Acceptance** — **Package:** `XP-WAVE1-DIFFICULTY-AUTHORITY` |
+| 🟢 `CURRENT` | [`docs/plans/xp/w1/W1_CHANGE_MATRIX.md`](plans/xp/w1/W1_CHANGE_MATRIX.md) | **XP W1 Change Matrix** — **Package:** `XP-WAVE1-DIFFICULTY-AUTHORITY` |
+| 🟢 `CURRENT` | [`docs/plans/xp/w1/W1_HANDOFF.md`](plans/xp/w1/W1_HANDOFF.md) | **XP W1 Handoff** — **Delivered:** catalog-backed campaign difficulty selection, checksummed |
+| 🟢 `CURRENT` | [`docs/plans/xp/w1/W1_IMPLEMENTATION_LOG.md`](plans/xp/w1/W1_IMPLEMENTATION_LOG.md) | **XP W1 Implementation Log** — **Package:** `XP-WAVE1-DIFFICULTY-AUTHORITY` |
+| 🟢 `CURRENT` | [`docs/plans/xp/w1/W1_PREMISE_EVIDENCE.md`](plans/xp/w1/W1_PREMISE_EVIDENCE.md) | **XP W1 Premise Evidence** — **Package:** `XP-WAVE1-DIFFICULTY-AUTHORITY` |
 | 🟢 `CURRENT` | [`docs/power/PLAN41_POWER_ROOM_RECONCILIATION.md`](power/PLAN41_POWER_ROOM_RECONCILIATION.md) | **Plan 41 ↔ Plan 71 Room Reconciliation** — 1. **`room_radio_tuner`:** Plan 41 authoritatively registered `room_radio_tuner` in `shelter_rooms.json`, `ShelterRoo... |
 | 🟢 `CURRENT` | [`docs/power/PLAN71_BALANCE_REPORT.md`](power/PLAN71_BALANCE_REPORT.md) | **Plan 71 Balance Report** — - **Primary Diesel Dynamo:** 800 W default output. |
 | 🟢 `CURRENT` | [`docs/power/PLAN71_BASELINE.md`](power/PLAN71_BASELINE.md) | **Plan 71 — Power Grid Baseline Reconnaissance** — `Assets/StreamingAssets/Data/power_grid.json` established a 6-room footprint: |
@@ -2244,8 +2248,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/research/PLAN34_COMPLETION_REPORT.md`](research/PLAN34_COMPLETION_REPORT.md) | **Plan 34 Completion Report — Research Tree Externalization (2026-09-01)** — The externalization half of Plan 34 had already landed under `research_knowledge.json` / |
 | 🟢 `CURRENT` | [`docs/research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md`](research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md) | **Plan 166 — Salvage & Reverse Engineering Closeout** — `WorkshopReverseEngineeringSystem` remains the sole workshop authority. The implementation adds `PreWarTechDef` catal... |
 | 🟢 `CURRENT` | [`docs/research/RESEARCH_FAILURE_POLICY.md`](research/RESEARCH_FAILURE_POLICY.md) | **Research Failure Policy (Plan 34 §1.10, §34D.9)** — The JSON catalog is the **sole authored research authority**. There is no hardcoded fallback. |
-| 🟢 `CURRENT` | [`docs/roadmap/README.md`](roadmap/README.md) | **ASHFALL Roadmap Governance & Single-Truth Authority** — **Canonical source:** Plan 29 / C1[7] "One Truth" |
-| 🟢 `CURRENT` | [`docs/roadmap/WAVE_LEDGER.md`](roadmap/WAVE_LEDGER.md) | **ASHFALL Master Wave Ledger** — **Canonical source:** Plan 29 / C1[7] "One Truth" |
+| 🟢 `CURRENT` | [`docs/roadmap/README.md`](roadmap/README.md) | **ASHFALL Roadmap Governance & Single-Truth Authority** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
+| 🟢 `CURRENT` | [`docs/roadmap/WAVE_LEDGER.md`](roadmap/WAVE_LEDGER.md) | **ASHFALL Master Wave Ledger** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_CONDITION_PROVENANCE.md`](shelter/MACHINE_CONDITION_PROVENANCE.md) | **Plan 29 — Machine Condition Provenance (Phase 0, §3.5)** — Existing condition bands that already support truthful diagnostic tells: |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_INVENTORY.md`](shelter/MACHINE_INVENTORY.md) | **Plan 29 — Machine Inventory (Phase 0, §3.4)** — Diesel Generator & Alternator Vault, Central Ventilation & Blower Station, Deep Artesian |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN29_AUDIO_HOOKS.md`](shelter/PLAN29_AUDIO_HOOKS.md) | **Plan 29 — Audio Hooks (Task 29B §29B.21, Plan 07B handoff)** — - Machine identity sound is consistent: the degraded variations derive from the healthy |

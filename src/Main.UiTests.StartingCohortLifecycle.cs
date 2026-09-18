@@ -44,7 +44,10 @@ namespace AtomicWar.GodotApp
                 AddChild(_saveLoadHost);
 
                 var cohortCatalog = EnsureStartingCohortCatalog();
-                _startingCohortSetupPanel.Bind(cohortCatalog);
+                _startingCohortSetupPanel.Bind(
+                    cohortCatalog,
+                    EnsureStartingSuppliesCatalog(),
+                    EnsureDifficultyCatalog());
                 _startingCohortSetupPanel.Open();
                 Check(
                     _startingCohortSetupPanel.Visible &&
@@ -82,11 +85,17 @@ namespace AtomicWar.GodotApp
 
                 // Campaign B: this must create a new root, reset only memory,
                 // and apply the selected alternate once.
-                StartNewGame("cohort_repair_crew", "origin_machine_room");
+                StartNewGame(
+                    "cohort_repair_crew",
+                    "origin_machine_room",
+                    "difficulty_sparing");
                 var campaignB = _saveLoadHost.ActiveSlotId!.Value;
                 Check(campaignB.Value == "slot_2", "second fresh campaign allocates slot_2");
                 Check(_saveLoadHost.GetSlots().Count >= 2,
                     "fresh campaign allocation preserves the previous slot root");
+                Check(
+                    DifficultyPresetId == "difficulty_sparing",
+                    "selected difficulty becomes the active campaign authority");
                 Check(_survivors.RosterState.Count == 3,
                     "alternate cohort initializes exactly three survivors");
                 int campaignBBaselineMarker = _inventory.Inventory.CountById(campaignMarker);
@@ -103,7 +112,15 @@ namespace AtomicWar.GodotApp
                     _inventory.Inventory.CountById("battery") == 14 &&
                     _inventory.Inventory.CountById("scrap_mechanical") == 24,
                     "selected Machine-Room Holdout supplies are applied to the fresh campaign");
+                Check(
+                    _inventory.Inventory.CountById("canned_food") == 11 &&
+                    _inventory.Inventory.CountById("iodine_pills") == 3,
+                    "Sparing difficulty adds its authored starter supplies once");
                 Check(SaveAll(playCue: false), "campaign B saves its alternate cohort");
+                Check(
+                    TryReadPersistedDifficulty(out string savedDifficulty) &&
+                    savedDifficulty == "difficulty_sparing",
+                    "campaign header persists the selected difficulty before restore");
 
                 // Continue campaign A and prove its state is still present.
                 Check(
@@ -127,6 +144,9 @@ namespace AtomicWar.GodotApp
                 Check(
                     TryLoadAndRestoreGame(campaignB, out string restoreB),
                     $"campaign B can be selected for empty-roster probe: {restoreB}");
+                Check(
+                    DifficultyPresetId == "difficulty_sparing",
+                    "campaign restore preserves its checksummed difficulty selection");
                 var emptyPayloads = CurrentEnvelopePayloads();
                 emptyPayloads["survivors"] = SurvivorsSaveStore.TryCapturePersisted(
                     new SurvivorsSaveState
@@ -212,6 +232,27 @@ namespace AtomicWar.GodotApp
                 section => section.sectionName,
                 section => section.payloadJson,
                 StringComparer.Ordinal);
+        }
+
+        private bool TryReadPersistedDifficulty(out string presetId)
+        {
+            presetId = string.Empty;
+            if (!_saveLoadHost.TryGetSectionPayload("campaign_day", out string payload))
+                return false;
+
+            try
+            {
+                var header = CampaignDaySaveCodec.Decode(
+                    payload,
+                    new SystemTextJsonSerializer());
+                presetId = header.difficulty_preset_id;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr("[StartingCohortLifecycle] campaign header probe failed: " + ex.Message);
+                return false;
+            }
         }
 
         private static bool SetEquals(

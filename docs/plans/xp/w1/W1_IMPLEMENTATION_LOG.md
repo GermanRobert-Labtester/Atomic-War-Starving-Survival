@@ -1,7 +1,7 @@
 # XP W1 Implementation Log
 
 **Package:** `XP-WAVE1-DIFFICULTY-AUTHORITY`
-**Slice:** catalog and Core resolver
+**Slice:** catalog, campaign binding, and checked header restore
 **Date:** 2026-09-18
 
 ## Outcome
@@ -19,6 +19,18 @@ Implemented the first XP-01 authority slice:
 - The permanent data-integrity walk validates the typed catalog and strict
   starter-item references.
 
+Implemented the campaign-binding sub-slice:
+
+- The New Game panel exposes all authored presets with their data-authoritative
+  descriptions and submits the stable preset ID with cohort and stores.
+- The checked `campaign_day` header stores `difficulty_preset_id`; v1 headers
+  validate against their historical checksum shape and migrate to v2 with the
+  authored default on their next write.
+- The inventory owner adds bonus items only for a fresh campaign. Restores
+  never grant them again.
+- `campaign_day` is now reset with the rest of the selected slot's sessions,
+  allowing the header and difficulty selection to restore before dependents.
+
 ## Source corrections applied
 
 | Proposal premise | Current source result | Action |
@@ -34,11 +46,14 @@ Implemented the first XP-01 authority slice:
 | `DifficultyPresetCatalogTests` + `DifficultyDirectorTests` | PASS — 8/8 |
 | Shipped `CatalogIntegrityValidatorTests.AllCatalogIdsCrossReferenceCleanly` | PASS |
 | `Plan122SofcElectrochemistryEngineTests` | PASS — 17/17 |
+| `CampaignDayDifficultyMigrationTests` | PASS |
+| `starting_cohort_lifecycle_selftest` | PASS — selected `difficulty_sparing` survives a slot restore and grants one `canned_food` plus one `iodine_pills` on fresh initialization |
 | `git diff --check` | PASS |
 
 ## Follow-on boundary
 
-The catalog is deliberately not yet bound to campaign creation, persistence,
-or the seven proposed consumer seams. Those edits need individual source
-premise checks and save-owner integration. `DEBT-PLAN34-DIFFICULTY-CHRONICLE-AUTHORITY`
-remains open until those paths and the read-only chronicle are complete.
+The selected preset is deliberately not yet bound to the seven proposed
+consumer seams, and no chronicle projection has been added. Those edits need
+individual source premise checks and completion-history ownership transfer.
+`DEBT-PLAN34-DIFFICULTY-CHRONICLE-AUTHORITY` remains open until that work is
+complete.

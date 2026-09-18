@@ -70,12 +70,14 @@ namespace Ashfall.Core.Tests.Difficulty
                     {
                         id = "difficulty_standard",
                         display_name = "STANDARD",
+                        description = "Baseline.",
                         scalars = DifficultyScalars.Legacy()
                     },
                     new DifficultyPreset
                     {
                         id = "difficulty_austere",
                         display_name = "AUSTERE",
+                        description = "Tighter margins.",
                         scalars = new DifficultyScalars
                         {
                             hunger_rate_mult = 1.35f,
