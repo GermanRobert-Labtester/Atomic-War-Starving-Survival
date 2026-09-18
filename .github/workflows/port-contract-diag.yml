@@ -1,50 +1,16 @@
-name: Port Contract Fix
+name: Port Contract Diag
 on: push
 permissions:
   contents: write
 jobs:
-  fix:
+  diag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Patch literal escape corruption and verify gate
+      - name: Dump exact bytes of lines 264-276
         run: |
-          set -e
-          python3 - <<'PATCH'
-          import re, py_compile, sys
-          P = "scripts/ci/generate-port-contract.py"
-          s = open(P, encoding="utf-8").read()
-          BS = chr(92)
-          bad = "# Zero-caller status is classification-aware: optional/library seams are not tests." + BS + "n status = ("
-          if bad not in s:
-              print("PATTERN NOT FOUND")
-              sys.exit(3)
-          m = re.search(chr(10) + "([ ]*)caller_count = len", s)
-          indent = m.group(1)
-          good = "# Zero-caller status is classification-aware: optional/library seams are not tests." + chr(10) + indent + "status = ("
-          open(P, "w", encoding="utf-8").write(s.replace(bad, good))
-          py_compile.compile(P, doraise=True)
-          print("PATCH OK")
-          PATCH
-          set +e
-          python3 scripts/ci/generate-port-contract.py --check > /tmp/check.log 2>&1
-          RC=$?
-          set -e
-          cat /tmp/check.log
-          if [ "$RC" != "0" ]; then
-            fold -w 600 /tmp/check.log | head -8 | sed "s/^/::error::PC-CHECK-AFTER-FIX: /"
-            exit 1
-          fi
-      - name: Commit fix to run-unique branch
-        run: |
-          set -e
-          git config user.name "ashfall-ci-bot"
-          git config user.email "actions@github.com"
-          BR="ci-portcontract-fix-$GITHUB_RUN_ID"
-          git checkout -b "$BR"
-          git rm -q .github/workflows/port-contract-diag.yml || true
-          if ! git diff --quiet HEAD -- scripts docs; then git add scripts docs; fi
-          git add -u
-          git commit -m "fix(ci): repair literal escape corruption in generate-port-contract.py line 267"
-          git push origin HEAD:"$BR"
-          echo "::error::PC-FIX: committed to branch $BR sha $(git rev-parse HEAD)"
+          sed -n "264,276p" scripts/ci/generate-port-contract.py | base64 -w 0 > /tmp/b64.txt
+          echo "::error::PC-B64-1: $(cut -c1-600 /tmp/b64.txt)"
+          echo "::error::PC-B64-2: $(cut -c601-1200 /tmp/b64.txt)"
+          echo "::error::PC-B64-3: $(cut -c1201-1800 /tmp/b64.txt)"
+          echo "::error::PC-B64-4: $(cut -c1801-2400 /tmp/b64.txt)"
