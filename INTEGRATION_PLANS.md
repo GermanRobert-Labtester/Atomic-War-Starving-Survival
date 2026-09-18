@@ -5,6 +5,17 @@ duplicate prose from historical plan documents.
 
 ## Current batch
 
+**XP Expansion W1 — ACTIVE (2026-09-18):** the user authorized the XP-01 …
+XP-10 proposal and integration plan. The first owned package is
+`XP-WAVE1-DIFFICULTY-AUTHORITY`: establish the canonical difficulty catalog and
+Core director, then re-check each proposed consumer before it is bound. The
+W1 SOFC premise is corrected by source evidence: Plan 122 already consumes
+canonical inventory fuel through `Main.Plans122to125.cs` and the existing
+`SofcPowerHostSession` port, with grid-reserve fallback. No duplicate fuel
+catalog, reserve, or save section will be introduced. Evidence and decision
+record: `docs/plans/xp/w1/W1_PREMISE_EVIDENCE.md` and
+`docs/governance/DECISION_PACKET_2026-09-18_XP_EXPANSION_W1.md`.
+
 **Status:** COMPLETE (presented for acceptance) — `DISTRESS-SIGNALS-9-12`
 flagship wave (user-authorized 2026-09-13); Waves 0–5 delivered; closeout:
 `docs/radio/DISTRESS_SIGNAL_TASKS_9_12_CLOSEOUT.md`. Plan: Tasks 9–12 multi-stage progression, signal trust, follow-up
