@@ -161,8 +161,11 @@ jobs:
             exit 0
           fi
           git commit -m "docs: regenerate drift-gated catalogs (automated)"
-          if out=$(git push 2>&1); then
-            echo "Pushed regenerated docs."
+          # Push to a dedicated autogen branch (the fix branch is protected by a
+          # repository ruleset that blocks GITHUB_TOKEN pushes); the result is
+          # merged into the fix branch via an authenticated PR.
+          if out=$(git push origin HEAD:refs/heads/ci-docs-autogen 2>&1); then
+            echo "Pushed regenerated docs to ci-docs-autogen."
           else
             echo "::error::DOCS-REGEN PUSH FAILED — ${out}"
             echo "::warning::Verification above passed; only the auto-commit push failed. If this is a GITHUB_TOKEN permission denial, set Settings → Actions → General → Workflow permissions to 'Read and write permissions' and re-run this workflow."
