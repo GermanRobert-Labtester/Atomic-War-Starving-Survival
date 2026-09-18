@@ -278,6 +278,45 @@ namespace Ashfall.Core.Shelter
             _state.RestoreInto(saved);
             OnStateChanged?.Invoke();
         }
+
+        /// <summary>
+        /// Plan 14E / C1.6: Return all slots in this room eligible for or currently holding a trophy mount.
+        /// </summary>
+        public IReadOnlyList<string> GetTrophySlots(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return Array.Empty<string>();
+            var slots = new List<string> { "trophy_mount_1", "trophy_mount_2" };
+            for (int i = 0; i < _state.Placements.Count; i++)
+            {
+                var p = _state.Placements[i];
+                if (string.Equals(p.RoomId, roomId, StringComparison.Ordinal)
+                    && IsTrophyItem(p.ItemId)
+                    && !slots.Contains(p.SlotId))
+                {
+                    slots.Add(p.SlotId);
+                }
+            }
+            return slots;
+        }
+
+        /// <summary>
+        /// Plan 14E / C1.6: Return the localized morale delta for a trophy item.
+        /// </summary>
+        public float GetTrophyMoraleModifier(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return 0f;
+            var mod = GetItemModifier(itemId);
+            return mod != null ? mod.LocalizedMoraleDelta : 0f;
+        }
+
+        /// <summary>
+        /// True if the item id corresponds to a trophy mount.
+        /// </summary>
+        public static bool IsTrophyItem(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return false;
+            return itemId.IndexOf("trophy", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
     }
 
     /// <summary>

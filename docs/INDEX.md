@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2406 | **Last Verified:** 2026-09-17
+**Total Indexed Documents:** 2411 | **Last Verified:** 2026-09-17
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2360 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2365 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 44 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -570,10 +570,12 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2047 documents)
+## 9. General Project Guides & Archive Reference (2052 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
+| 🟢 `CURRENT` | [`A1_BRIEFING_DEFERRED.md`](../A1_BRIEFING_DEFERRED.md) | **A1 Briefing Deferred — Claim-Safe Consumer Handoff Record** — **Task:** A1 — C1.4 Crisis Prediction |
+| 🟢 `CURRENT` | [`A1_COORDINATION_RECORD.md`](../A1_COORDINATION_RECORD.md) | **A1 Coordination Record — Crisis Prediction & Plan 24 Coordination Gate** — **Date:** 2026-09-17 |
 | 🟢 `CURRENT` | [`AI_AGENT_WORKFLOW.md`](../AI_AGENT_WORKFLOW.md) | **ASHFALL AI Agent Workflow** — This file governs agent roles, evidence, handoffs, and escalation. `AGENTS.md` |
 | 🟢 `CURRENT` | [`ANTIGRAVITY.md`](../ANTIGRAVITY.md) | **ASHFALL PROJECT — ANTIGRAVITY Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md`](../C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md) | **ASHFALL — First-Week World, Dedicated Asset Coverage, and High-Traffic UI Integration Plan** — **Document type:** Flagship implementation and integration plan<br> |
@@ -1120,12 +1122,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/1967914_ASHFALL_WAVE9_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md`](../Seal-steps/1967914_ASHFALL_WAVE9_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md) | **ASHFALL — GENERATION WAVE 9 — IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 2** — **Purpose:** execution-grade continuation of the Wave 9 surviving-blocker ledger. |
 | 🟢 `CURRENT` | [`Seal-steps/531842_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN.md`](../Seal-steps/531842_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN.md) | **ASHFALL — IMPLEMENTATION UNBLOCKER MASTER PLAN** — **Purpose:** convert the supplied Wave 8 blocker inventory into an execution-grade implementation plan that can be ha... |
 | 🟢 `CURRENT` | [`Seal-steps/5573522_ASHFALL_WAVE10_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md`](../Seal-steps/5573522_ASHFALL_WAVE10_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md) | **ASHFALL — GENERATION WAVE 10 — IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 2** — **Document role:** execution-grade Part 2 plan for Wave 10, continuing from the Wave 10 corpus census / claim-hygiene... |
-| 🟢 `CURRENT` | [`Seal-steps/639421_ASHFALL_WAVE9_IMPLEMENTATION_UNBLOCKER_PLAN_PART1.md`](../Seal-steps/639421_ASHFALL_WAVE9_IMPLEMENTATION_UNBLOCKER_PLAN_PART1.md) | **ASHFALL — GENERATION WAVE 9 — IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 1** — **Purpose:** execution-grade continuation of the ASHFALL gap-sealing / blocker-unblocking series. |
 | 🟢 `CURRENT` | [`Seal-steps/7227502_ASHFALL_WAVE11_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md`](../Seal-steps/7227502_ASHFALL_WAVE11_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md) | **ASHFALL — GENERATION WAVE 11 — IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 2** — **Document role:** execution-grade Wave 11 Part 2 continuation, derived from the verified second-half Wave 11 ledger. |
 | 🟢 `CURRENT` | [`Seal-steps/847219_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md`](../Seal-steps/847219_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN_PART2.md) | **ASHFALL — WAVE 8 IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 2** — **Document role:** execution-grade continuation of the Wave 8 blocker-unblocking package. |
 | 🟢 `CURRENT` | [`Seal-steps/9911560_ASHFALL_WAVE11_IMPLEMENTATION_UNBLOCKER_PLAN_PART1.md`](../Seal-steps/9911560_ASHFALL_WAVE11_IMPLEMENTATION_UNBLOCKER_PLAN_PART1.md) | **ASHFALL — GENERATION WAVE 11 — IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 1** — **Document role:** execution-grade Part 1 plan for Wave 11, derived only from the verified queue and premise table in... |
+| 🟢 `CURRENT` | [`Seal-steps/Completed/639421_ASHFALL_WAVE9_IMPLEMENTATION_UNBLOCKER_PLAN_PART1.md`](../Seal-steps/Completed/639421_ASHFALL_WAVE9_IMPLEMENTATION_UNBLOCKER_PLAN_PART1.md) | **ASHFALL — GENERATION WAVE 9 — IMPLEMENTATION UNBLOCKER MASTER PLAN — PART 1** — **Purpose:** execution-grade continuation of the ASHFALL gap-sealing / blocker-unblocking series. |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
+| 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
@@ -1191,6 +1194,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/audio/AUDIO_NEXT_20_TASKS.md`](audio/AUDIO_NEXT_20_TASKS.md) | **ASHFALL Audio Generation & Sound Design — Next 20 Tasks Roadmap** — Following the successful implementation and verification of Phases 1 through 5 (145 registered cues, 91 verified audi... |
 | 🟢 `CURRENT` | [`docs/audio/AUDIO_PIPELINE_REPRODUCIBILITY_LEDGER.md`](audio/AUDIO_PIPELINE_REPRODUCIBILITY_LEDGER.md) | **ASHFALL Audio Pipeline Delivery Ledger** |
 | 🟢 `CURRENT` | [`docs/audio/AUDIO_QA_REPORT.md`](audio/AUDIO_QA_REPORT.md) | **ASHFALL audio QA report** — The unified output path is `AudioManager` plus Core-event bridges. Gameplay |
+| 🟢 `CURRENT` | [`docs/audio/C2_DEFERRED_DELTA_SCOPE_MAP.md`](audio/C2_DEFERRED_DELTA_SCOPE_MAP.md) | **C2[2] DEFERRED DELTA SCOPE MAP** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`docs/audio/FLAGSHIP_PHASE0_BASELINE_REPORT.md`](audio/FLAGSHIP_PHASE0_BASELINE_REPORT.md) | **Flagship Asset Library Program — Phase 0 Baseline & Forensic Report** — **Document Version:** 1.0.0 |
 | 🟢 `CURRENT` | [`docs/audio/FLAGSHIP_PHASE5_COMPLETION_REPORT.md`](audio/FLAGSHIP_PHASE5_COMPLETION_REPORT.md) | **ASHFALL Flagship Asset Program — Phase 5 Completion Report** — **Phase 5: Close Confirmed Live Audio Gaps** |
 | 🟢 `CURRENT` | [`docs/audio/FLAGSHIP_PHASE6_COMPLETION_REPORT.md`](audio/FLAGSHIP_PHASE6_COMPLETION_REPORT.md) | **ASHFALL Flagship Asset Program — Phase 6 Completion Report** — **Phase 6: Shared Audio Generation Pipeline** |
@@ -1432,6 +1436,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/debug/10LOOP_WHOLE_REPOSITORY_ASSET_GAP_AUDIT.md`](debug/10LOOP_WHOLE_REPOSITORY_ASSET_GAP_AUDIT.md) | **ASHFALL Whole-Repository Asset and Gap Audit** — Date: 2026-09-03 |
 | 🟢 `CURRENT` | [`docs/debug/10LOOP_WHOLE_REPOSITORY_AUDIT_2026-09-05.md`](debug/10LOOP_WHOLE_REPOSITORY_AUDIT_2026-09-05.md) | **ASHFALL whole-repository audit — 2026-09-05** — **Mode:** read-only forensic audit; no production code, JSON authority, assets, or existing plan was changed. |
 | 🟢 `CURRENT` | [`docs/debug/10LOOP_player_ui_ux_BUG_AUDIT.md`](debug/10LOOP_player_ui_ux_BUG_AUDIT.md) | **ASHFALL 10-Loop Bug Audit** — Player-facing Godot UI: panel inventory, route reachability, live-system binding, flagship-screen fidelity, and inter... |
+| 🟢 `CURRENT` | [`docs/decisions/WATER_SAMPLE_CONTAMINATED_DECISION_MEMO.md`](decisions/WATER_SAMPLE_CONTAMINATED_DECISION_MEMO.md) | **DECISION MEMO: `water_sample_contaminated` Equipability Quirk** — **Document ID:** `MEMO-2026-09-17-WATER-SAMPLE-EQUIPABILITY` |
 | 🟢 `CURRENT` | [`docs/design/CHARACTER_AND_PHYSICS_BASE.md`](design/CHARACTER_AND_PHYSICS_BASE.md) | **Character Placeholder Base & Shelter Physics Base** — **Status:** placeholder art + real (minimal) physics base · **Created:** 2026-09-12 |
 | 🟢 `CURRENT` | [`docs/design/SHELTER_PLACEHOLDER_PACK.md`](design/SHELTER_PLACEHOLDER_PACK.md) | **Holdfast Shelter Placeholder Art Pack** — **Status:** PLACEHOLDER — NOT FINAL ART · **Created:** 2026-09-12 |
 | 🟢 `CURRENT` | [`docs/design/SURFACE_PLACEHOLDER_PACK.md`](design/SURFACE_PLACEHOLDER_PACK.md) | **Wasteland Surface Placeholder Art Pack** — **Status:** PLACEHOLDER — NOT FINAL ART · **Created:** 2026-09-12 |

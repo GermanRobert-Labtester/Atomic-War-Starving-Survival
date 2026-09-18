@@ -446,6 +446,11 @@ namespace AtomicWar.GodotApp
                 report = DailyBriefingReportBuilder.Build(inputs);
             }
 
+            // C1.4 deferred consumer — surface the authoritative crisis
+            // predictions (food/water/power/radiation/disease/weather) in the
+            // briefing. Empty predictions leave the report untouched.
+            DailyBriefingReportBuilder.AppendCrisisWarnings(report, BuildBriefingCrisisPredictions(day));
+
             if (report.IsEmpty) return;
             _dailyBriefing.Enqueue(report);
             _dailyBriefingDirty = true;

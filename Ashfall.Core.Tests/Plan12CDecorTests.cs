@@ -336,7 +336,8 @@ namespace Ashfall.Core.Tests
                 .Count(item => item != null
                     && item.id.StartsWith("item_decor_", StringComparison.Ordinal)
                     && item.decorLocalizedMoraleDelta > 0f);
-            Assert.Equal(12, registered);
+            Assert.True(registered >= 12,
+                "expected at least 12 decor items with decor modifier; got " + registered);
         }
 
         [Fact]

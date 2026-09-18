@@ -20,6 +20,12 @@
     { "region": "traplines", "item_id": "electronic_scrap", "base_price_modifier_permille": 1500, "scarcity_profile": "imported_scarce" },
     { "region": "settlement", "item_id": "medical_kit", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" },
     { "region": "settlement", "item_id": "anti_rad", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" },
-    { "region": "settlement", "item_id": "solar_cell", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" }
+    { "region": "settlement", "item_id": "solar_cell", "base_price_modifier_permille": 900, "scarcity_profile": "balanced" },
+    { "region": "coastal", "item_id": "trap_fish", "base_price_modifier_permille": 700, "scarcity_profile": "local_surplus" },
+    { "region": "coastal", "item_id": "clean_water", "base_price_modifier_permille": 850, "scarcity_profile": "local_surplus" },
+    { "region": "coastal", "category": "tools", "base_price_modifier_permille": 1200, "scarcity_profile": "imported_scarce" },
+    { "region": "flotilla", "item_id": "item_taper_kit_opioid", "base_price_modifier_permille": 1100, "scarcity_profile": "balanced" },
+    { "region": "settlement", "item_id": "tobacco_pouch", "base_price_modifier_permille": 1100, "scarcity_profile": "balanced" },
+    { "region": "traplines", "item_id": "trap_box", "base_price_modifier_permille": 850, "scarcity_profile": "local_surplus" }
   ]
 }

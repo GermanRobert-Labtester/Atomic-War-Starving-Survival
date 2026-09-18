@@ -19,15 +19,185 @@ namespace Ashfall.Core.Campaign
     ///      (<see cref="GenericSectionTitle"/> / <see cref="RenderGeneric"/>) so a
     ///      valid producer event can never silently disappear.
     ///
-    /// This is NOT the Plan 31 semantic-kind authority. Plan 31 (Event Layer
-    /// Semantic Kinds / No Silent Drops) may replace or formalize this vocabulary;
-    /// until then this class is the documented consumer contract C2 depends on.
+    /// This is the Plan 31 semantic-kind authority and C2 consumer contract.
+    /// Every registered event kind maps to exactly one non-unknown <see cref="SemanticKind"/>.
     /// Classification is deterministic: no RNG, no dictionary-order dependence.
     /// </summary>
     public static class DayEventVocabulary
     {
         /// <summary>Section title for generically rendered non-heartbeat kinds.</summary>
         public const string GenericSectionTitle = "System Activity";
+
+        /// <summary>
+        /// Total Plan 31 semantic kind mapping covering all registered day-event kinds.
+        /// Statically defined, deterministic, and enforced by totality unit tests.
+        /// </summary>
+        private static readonly Dictionary<string, SemanticKind> SemanticKindMap = new(StringComparer.Ordinal)
+        {
+            // ── Heartbeats (Internal steady-state simulation ticks) ──
+            { "aeroponics_ticked", SemanticKind.Heartbeat },
+            { "aquaponics_ticked", SemanticKind.Heartbeat },
+            { "cryo_vault_ticked", SemanticKind.Heartbeat },
+            { "debt_ledger_ticked", SemanticKind.Heartbeat },
+            { "duty_roster_ticked", SemanticKind.Heartbeat },
+            { "espionage_ticked", SemanticKind.Heartbeat },
+            { "events_evaluated", SemanticKind.Heartbeat },
+            { "expedition_ticked", SemanticKind.Heartbeat },
+            { "expeditions_ticked", SemanticKind.Heartbeat },
+            { "flagship_institutions_ticked", SemanticKind.Heartbeat },
+            { "fluid_logistics_ticked", SemanticKind.Heartbeat },
+            { "geothermal_orc_ticked", SemanticKind.Heartbeat },
+            { "greenhouse_foundry_ticked", SemanticKind.Heartbeat },
+            { "holdfast_ticked", SemanticKind.Heartbeat },
+            { "journal_ticked", SemanticKind.Heartbeat },
+            { "maritime_ticked", SemanticKind.Heartbeat },
+            { "market_ticked", SemanticKind.Heartbeat },
+            { "medical_disease_ticked", SemanticKind.Heartbeat },
+            { "morale_contagion_ticked", SemanticKind.Heartbeat },
+            { "narrative_ticked", SemanticKind.Heartbeat },
+            { "needs_ticked", SemanticKind.Heartbeat },
+            { "pneumatic_dispatch_ticked", SemanticKind.Heartbeat },
+            { "power_ticked", SemanticKind.Heartbeat },
+            { "precision_metrology_ticked", SemanticKind.Heartbeat },
+            { "procedural_narrative_ticked", SemanticKind.Heartbeat },
+            { "psychology_arcs_ticked", SemanticKind.Heartbeat },
+            { "psyops_ticked", SemanticKind.Heartbeat },
+            { "radio_program_production_ticked", SemanticKind.Heartbeat },
+            { "research_ticked", SemanticKind.Heartbeat },
+            { "sanitation_ticked", SemanticKind.Heartbeat },
+            { "seismic_geology_ticked", SemanticKind.Heartbeat },
+            { "shelter_facilities_ticked", SemanticKind.Heartbeat },
+            { "shelter_fire_ticked", SemanticKind.Heartbeat },
+            { "subterranean_ticked", SemanticKind.Heartbeat },
+            { "survivor_social_ticked", SemanticKind.Heartbeat },
+            { "survivors_ticked", SemanticKind.Heartbeat },
+            { "trapping_ticked", SemanticKind.Heartbeat },
+            { "underworld_ticked", SemanticKind.Heartbeat },
+            { "world_evolution_ticked", SemanticKind.Heartbeat },
+            { "world_ticked", SemanticKind.Heartbeat },
+
+            // ── Casualties ──
+            { "survivor_perished", SemanticKind.Casualty },
+            { "child_lost", SemanticKind.Casualty },
+
+            // ── Hazards & Warnings ──
+            { "hazard_warning", SemanticKind.Hazard },
+            { "cascade_warning", SemanticKind.Hazard },
+            { "power_critical_deficit", SemanticKind.Hazard },
+            { "power_brownout_began", SemanticKind.Hazard },
+            { "shelter_filter_degraded", SemanticKind.Hazard },
+            { "shelter_hatch_unsealed", SemanticKind.Hazard },
+            { "subterranean_cave_in", SemanticKind.Hazard },
+            { "subterranean_flood_warning", SemanticKind.Hazard },
+            { "subterranean_methane_warning", SemanticKind.Hazard },
+            { "subterranean_shoring_warning", SemanticKind.Hazard },
+            { "social_dispute_unresolved", SemanticKind.Hazard },
+            { "social_privacy_warning", SemanticKind.Hazard },
+            { "sanitation_spill", SemanticKind.Hazard },
+            { "weather_unexpected_storm", SemanticKind.Hazard },
+
+            // ── Survivors & Crew ──
+            { "ate", SemanticKind.Survivor },
+            { "drank", SemanticKind.Survivor },
+            { "med_taken", SemanticKind.Survivor },
+            { "meal_served", SemanticKind.Survivor },
+            { "consumed_rations", SemanticKind.Survivor },
+            { "consumed_child_rations", SemanticKind.Survivor },
+            { "contaminated_meal", SemanticKind.Survivor },
+            { "portions_spoiled", SemanticKind.Survivor },
+            { "child_born", SemanticKind.Survivor },
+            { "child_aged", SemanticKind.Survivor },
+            { "generation_advanced", SemanticKind.Survivor },
+            { "survivor_condition", SemanticKind.Survivor },
+            { "duty_vacated", SemanticKind.Survivor },
+            { "medical_admitted", SemanticKind.Survivor },
+            { "medical_discharged", SemanticKind.Survivor },
+            { "memorial_checked", SemanticKind.Survivor },
+
+            // ── Shelter & Infrastructure ──
+            { "power_shed_automatic", SemanticKind.Shelter },
+            { "power_shed_player", SemanticKind.Shelter },
+            { "power_brownout_restored", SemanticKind.Shelter },
+            { "cascade_recovered", SemanticKind.Shelter },
+            { "shelter_consequence", SemanticKind.Shelter },
+            { "shelter_decon_started", SemanticKind.Shelter },
+            { "shelter_decon_completed", SemanticKind.Shelter },
+            { "shelter_decor_morale", SemanticKind.Shelter },
+            { "sanitation_disease_sweep", SemanticKind.Shelter },
+            { "nuclear_generation_published", SemanticKind.Shelter },
+            { "workshop_job_completed", SemanticKind.Shelter },
+            { "workshop_machine_degraded", SemanticKind.Shelter },
+            { "workshop_machine_overhauled", SemanticKind.Shelter },
+
+            // ── Production & Economy ──
+            { "crafting_completed", SemanticKind.Production },
+            { "crafting_production", SemanticKind.Production },
+            { "resource_delta", SemanticKind.Production },
+            { "trapping_harvest", SemanticKind.Production },
+            { "market_shocks_active", SemanticKind.Production },
+
+            // ── Expeditions & Rescues ──
+            { "expedition_milestone", SemanticKind.Expedition },
+            { "expeditions_caravans_ticked", SemanticKind.Expedition },
+            { "subterranean_rescue_active", SemanticKind.Expedition },
+            { "subterranean_rescue_completed", SemanticKind.Expedition },
+            { "subterranean_rescue_failed", SemanticKind.Expedition },
+
+            // ── Communications & Signals ──
+            { "radio_intercept", SemanticKind.Communication },
+            { "radio_intercept_decrypted", SemanticKind.Communication },
+            { "radio_location_triangulated", SemanticKind.Communication },
+            { "radio_transmission", SemanticKind.Communication },
+            { "radio_distress_active", SemanticKind.Communication },
+            { "radio_distress_expiring", SemanticKind.Communication },
+            { "radio_program_production_active_delta", SemanticKind.Communication },
+
+            // ── Weather & Atmosphere ──
+            { "weather_condition", SemanticKind.Weather },
+            { "weather_forecast_miss", SemanticKind.Weather },
+            { "weather_ticked", SemanticKind.Weather },
+
+            // ── Narrative & Story ──
+            { "echo_surfaced", SemanticKind.Narrative },
+            { "echo_consequence_due", SemanticKind.Narrative },
+            { "narrative_arc_selected", SemanticKind.Narrative },
+            { "personal_quest_progressed", SemanticKind.Narrative },
+            { "social_dispute_mediated", SemanticKind.Narrative }
+        };
+
+        /// <summary>Read-only view of the static semantic kind mappings.</summary>
+        public static IReadOnlyDictionary<string, SemanticKind> AllSemanticMappings => SemanticKindMap;
+
+        /// <summary>
+        /// Resolves the semantic kind for an event kind identifier.
+        /// Returns <see cref="SemanticKind.Heartbeat"/> for steady-state ticks,
+        /// the registered semantic kind for recognized events, or <see cref="SemanticKind.Unknown"/> if unclassified.
+        /// </summary>
+        public static SemanticKind GetSemanticKind(string? kind)
+        {
+            if (string.IsNullOrEmpty(kind)) return SemanticKind.Unknown;
+            if (SemanticKindMap.TryGetValue(kind, out var sem)) return sem;
+            if (IsInternalHeartbeat(kind)) return SemanticKind.Heartbeat;
+            return SemanticKind.Unknown;
+        }
+
+        /// <summary>
+        /// Extension helper resolving the semantic kind directly on a <see cref="DayStateChangeEvent"/>.
+        /// </summary>
+        public static SemanticKind GetSemanticKind(this DayStateChangeEvent? evt)
+        {
+            return evt == null ? SemanticKind.Unknown : GetSemanticKind(evt.Kind);
+        }
+
+        /// <summary>
+        /// Attempts to resolve the semantic kind for an event kind.
+        /// Returns true if classified into a valid domain category (non-unknown).
+        /// </summary>
+        public static bool TryGetSemanticKind(string? kind, out SemanticKind result)
+        {
+            result = GetSemanticKind(kind);
+            return result != SemanticKind.Unknown;
+        }
 
         /// <summary>
         /// Kinds that do not end in the heartbeat suffix but are still
@@ -43,16 +213,24 @@ namespace Ashfall.Core.Campaign
         /// <summary>
         /// True when the kind is a steady-state owner heartbeat. Heartbeats are
         /// intentionally classified as non-player-facing: rendering every daily
-        /// tick would breach the briefing noise budget (C2 §42.1). The
-        /// classification is suffix-based plus a curated internal set so new
-        /// owners that follow the repository naming convention are classified
-        /// without code changes here.
+        /// tick would breach the briefing noise budget (C2 §42.1).
+        /// Follows the Plan 31 SemanticKind authority.
         /// </summary>
         public static bool IsInternalHeartbeat(string? kind)
         {
             if (string.IsNullOrEmpty(kind)) return true;
             if (InternalKinds.Contains(kind)) return true;
-            return kind.EndsWith("_ticked", StringComparison.Ordinal);
+            if (kind.EndsWith("_ticked", StringComparison.Ordinal))
+            {
+                // Handled player-facing exceptions to the _ticked suffix convention:
+                if (string.Equals(kind, "weather_ticked", StringComparison.Ordinal) ||
+                    string.Equals(kind, "expeditions_caravans_ticked", StringComparison.Ordinal))
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

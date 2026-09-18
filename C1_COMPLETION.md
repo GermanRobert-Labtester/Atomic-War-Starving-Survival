@@ -90,18 +90,24 @@ Ashfall.Core.Tests/UI/PanelRouteGateTests.cs`, `dotnet build Ashfall.csproj`.
   economy gate is complete end-to-end. Evidence: the plan's checkpoint report
   plus panel lifecycle/a11y/caravan/bridge gates.
 - C1.4 crisis prediction → C1.5 cloud seeding → C1.6 trophies → C1.7/C1.8
-  kennel (must route through the Plan 174 `CompanionAnimalSystem` authority —
-  see plan §1.5) → C1.9 hardening → **C1.10 content expansion tranche (+30%)**
-  (plan §22).
-- A second agent is concurrently active on the Campaign/DailyBriefing area
-  (14C-adjacent); do not touch unclaimed Campaign files.
+  kennel → C1.9 hardening → C1.10 content expansion tranche (+30%) are ALL
+  COMPLETED as of Wave 9 Part 1 (2026-09-17).
+- C1 Chain Status: `C1 CORE/MECHANISMS CLOSED — SURFACE DEFERRED`.
+  Daily briefing surface integration is deferred per §5.17 and documented in
+  `A1_BRIEFING_DEFERRED.md` due to active claim `claim-c1-plan24-survivor-ledger-2026-09-16`.
+  Core crisis prediction models, weather intelligence coordinator integration,
+  weather forecast panel presentation, cloud seeding runtime consumer, trophy
+  system and shelter decor integration, companion animal kennel verification,
+  and the +30% content expansion tranche are 100% verified green.
 
 ## Content expansion note (user-directed, 2026-09-15)
 
-The plan now carries **Phase 22 — Content Expansion Tranche (+30%)**:
-embargo rules 10→14, atlas entries 18→24 (coastal becomes a first-class
-region), crisis-advice/briefing copy +8, cloud-seeding bulk recipe +1,
-trophies 8→11 (Ash Hound verified; two rows carry an authoring-time species
-verification gate), kennel breeds +2 / events +2, radio/briefing flavor +4.
-All rows extend EXISTING authorities and pass the existing integrity hooks.
-UI wave (AGY, tagged above) is unaffected and can start immediately.
+The plan's **Phase 22 — Content Expansion Tranche (+30%)** is FULLY IMPLEMENTED:
+- embargo rules: 10 → 14 rules (+Ashfall, BloodRain, ThermalInversion, ParticulateFog)
+- regional price atlas: 18 → 24 entries (coastal region added with trap_fish, clean_water, tools)
+- cloud-seeding bulk recipe: +1 (`craft_silver_iodide_cartridge_bulk` at distiller)
+- trophies: 8 → 11 rows (Ash Hound, Dust Lynx, Iron Crow added with recipes and items)
+- kennel companion animals: +2 species profiles (`species_rad_dog`, `species_iron_crow`)
+- companion events: +2 acquisition events (`event_drowning_pup_rescue`, `event_expedition_stray_follows_home`)
+- radio broadcasts: +4 flavor broadcasts (2 embargo market alerts, 2 kennel milestones)
+- All rows pass `--data-integrity-selftest` (333 catalogs, 0 errors).

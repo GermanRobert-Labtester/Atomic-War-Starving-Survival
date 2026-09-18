@@ -2305,6 +2305,271 @@
       "resultAmount": 1,
       "craftingTimeHours": 2.0,
       "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_wolf_head",
+      "recipeName": "Craft Wolf Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_wolf_head",
+      "resultAmount": 1,
+      "craftingTimeHours": 5.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_deer_antlers",
+      "recipeName": "Craft Deer Antlers Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_deer_antlers",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_boar_tusks",
+      "recipeName": "Craft Boar Tusks Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_boar_tusks",
+      "resultAmount": 1,
+      "craftingTimeHours": 5.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_fox_pelt",
+      "recipeName": "Craft Fox Pelt Mount",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_fox_pelt",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_beetle_carapace",
+      "recipeName": "Craft Slag-Back Beetle Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_beetle_carapace",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_molerat_skull",
+      "recipeName": "Craft Mole-Rat Skull Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_molerat_skull",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_crow_feathers",
+      "recipeName": "Craft Sentry Crow Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_crow_feathers",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_pheasant_plume",
+      "recipeName": "Craft Ash Pheasant Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_pheasant_plume",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "craft_silver_iodide_cartridge_bulk",
+      "recipeName": "Synthesize Cloud Seeding Canisters (Bulk Batch)",
+      "ingredients": [
+        {
+          "itemId": "chemicals",
+          "amount": 8
+        },
+        {
+          "itemId": "sulphur",
+          "amount": 5
+        },
+        {
+          "itemId": "fuel",
+          "amount": 5
+        }
+      ],
+      "resultItemId": "item_cloud_seeding_canister",
+      "resultAmount": 3,
+      "craftingTimeHours": 6.0,
+      "requiredStationId": "distiller",
+      "requiredBlueprintId": "knowledge_atmospheric_cloud_seeding"
+    },
+    {
+      "id": "recipe_trophy_ash_hound_pelt",
+      "recipeName": "Craft Ash Hound Trophy Mount",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_ash_hound_pelt",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_gulden_wolf",
+      "recipeName": "Craft Dust Lynx Apex Trophy",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_gulden_wolf",
+      "resultAmount": 1,
+      "craftingTimeHours": 5.5,
+      "requiredStationId": "workbench"
+    },
+    {
+      "id": "recipe_trophy_kestrel_wings",
+      "recipeName": "Craft Iron Crow Wings Mount",
+      "ingredients": [
+        {
+          "itemId": "leather_strap",
+          "amount": 1
+        },
+        {
+          "itemId": "scrap_wood",
+          "amount": 2
+        },
+        {
+          "itemId": "chemicals",
+          "amount": 1
+        }
+      ],
+      "resultItemId": "item_decor_trophy_kestrel_wings",
+      "resultAmount": 1,
+      "craftingTimeHours": 4.0,
+      "requiredStationId": "workbench"
     }
   ]
 }
