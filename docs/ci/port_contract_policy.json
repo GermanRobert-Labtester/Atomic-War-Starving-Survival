@@ -264,16 +264,6 @@
     },
     {
       "class_name": "CraftingSystem",
-      "method_name": "BindCraftResultGate",
-      "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in CraftingSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
-    },
-    {
-      "class_name": "CraftingSystem",
       "method_name": "BindResearchGate",
       "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
       "owner": "crafting",
@@ -817,11 +807,9 @@
       "class_name": "IceRoadSystem",
       "method_name": "RegisterHoldfastNode",
       "file_path": "Assets/Ashfall.Core/IceRoadSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in IceRoadSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "world",
+      "reason": "Invoked internally by IceRoadSystem.RegisterDefaultHoldfastNodes; public method remains the validated extension path for additional holdfast nodes."
     },
     {
       "class_name": "IdeologicalFrictionSystem",
