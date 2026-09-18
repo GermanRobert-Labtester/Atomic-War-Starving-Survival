@@ -1,4 +1,4 @@
-# ASHFALL CI — Godot 4.7 .NET (Canonical Shared Verification Pipeline)
+# ASHFALL — Godot 4.7 .NET (Canonical Shared Verification Pipeline)
 # Driven by docs/ci/CI_GATE_MANIFEST.json via scripts/ci/run-gates.py.
 # Local developer parity: bash scripts/ci/verify-fast.sh
 # Standalone Godot host; no JsonUtility; Core stays engine-agnostic.
@@ -38,15 +38,11 @@ jobs:
 
       - name: Execute Canonical Verification Suite (Fast Tier)
         run: |
-          python3 scripts/ci/run-gates.py --tier fast \
-            --report-json build/reports/gate-results.json \
-            --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
+          python3 scripts/ci/run-gates.py --tier fast --report-json build/reports/gate-results.json --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
 
       - name: Execute Full Core xUnit Regression Gate
         run: |
-          python3 scripts/ci/run-gates.py --gate test_core_suite \
-            --report-json build/reports/core-test-results.json \
-            --fail-artifact build/reports/CORE_TEST_FAILURE_REPORT.md
+          python3 scripts/ci/run-gates.py --gate test_core_suite --report-json build/reports/core-test-results.json --fail-artifact build/reports/CORE_TEST_FAILURE_REPORT.md
 
       - name: Surface Gate Failures as Annotations
         if: always()
@@ -74,8 +70,7 @@ jobs:
                   for line in out.splitlines():
                       line = line.strip()
                       if (line.startswith("FAIL") or "Failed " in line
-                              or "Error Message" in line or "Assert" in line[:80]
-                              or line.startswith("✗")):
+                              or "Error Message" in line or "Assert" in line[:80]):
                           print(f"::error title={r.get('gate_id','gate')}:: {line[:500]}")
                           shown += 1
                           if shown >= 25:
