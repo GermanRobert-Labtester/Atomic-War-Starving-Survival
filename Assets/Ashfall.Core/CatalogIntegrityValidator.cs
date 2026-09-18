@@ -81,6 +81,7 @@ namespace Ashfall.Core
         {
             "weather_gate_",
             "commitment_",
+            "difficulty_",
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "chem_agent_", "comms_target_", "ceremony_", "robot_",
             "vessel_", "hobby_", "degrade_profile_", "thermal_gear_", "insul_", "fault_", "mentorship_", "caravan_",
@@ -286,7 +287,7 @@ namespace Ashfall.Core
             // Plans 126-129 — biological fermentation catalog references
             "feedstock_item_ids", "byproduct_item_ids", "starter_item_id",
             "filter_item_id", "build_cost_item_ids", "sanitize_cost_item_ids",
-            "service_cost_item_ids"
+            "service_cost_item_ids", "starting_bonus_item_ids"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -304,7 +305,7 @@ namespace Ashfall.Core
             // slug vocabularies are not catalog references (repaired alongside the
             // flagship institutions data registration).
             "agenda_clauses", "canonical_surface", "sensor_class", "tool_class", "effectType",
-            "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id", "art_asset_id",
+            "tags", "intel_tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id", "art_asset_id", "description_key",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "exclusive_group",
             "collection_id", "affinity_key", "legacy_aliases", "observation_clue",
             "hazardType", "will_not", "lootCategories", "tech_offerings", "narrativeHook", "patrol_archetype",
@@ -940,10 +941,41 @@ namespace Ashfall.Core
             // existing skill authority rather than becoming a second registry.
             ValidateDutyRoleCatalog(dataDirectory, files, ctx, report);
 
+            // XP-01: campaign difficulty scalar authority. The generic walk
+            // checks starter-item references; this typed validation owns schema,
+            // scalar envelopes, default resolution, and duplicate rejection.
+            ValidateDifficultyPresetCatalog(dataDirectory, files, report);
+
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
 
             return report;
+        }
+
+        /// <summary>
+        /// Validates the optional XP-01 difficulty catalog when it is present.
+        /// A fresh repository fixture may omit the catalog, but a shipped
+        /// catalog must fail closed on every structural error.
+        /// </summary>
+        public static void ValidateDifficultyPresetCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report)
+        {
+            if (string.IsNullOrEmpty(dataDirectory) || files == null || report == null)
+                return;
+
+            string path = files.Combine(dataDirectory, Difficulty.DifficultyPresetCatalogLoader.FileName);
+            if (!files.FileExists(path)) return;
+
+            try
+            {
+                Difficulty.DifficultyPresetCatalogLoader.Load(dataDirectory, files);
+            }
+            catch (Exception ex)
+            {
+                report.Error(Difficulty.DifficultyPresetCatalogLoader.FileName + ": " + ex.Message);
+            }
         }
 
         private static void ValidateDutyRoleCatalog(
