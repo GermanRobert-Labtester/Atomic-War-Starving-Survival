@@ -70,12 +70,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (Directory.Exists(root))
-                        Directory.Delete(root, recursive: true);
-                }
-                catch { /* cleanup: best-effort temp mod root delete after selftest */ }
+                TryDeleteTempDirectory(root);
             }
         }
 
