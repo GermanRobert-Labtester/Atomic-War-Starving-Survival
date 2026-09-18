@@ -1806,21 +1806,17 @@
       "class_name": "TradeTellEngine",
       "method_name": "RegisterBand",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in TradeTellEngine.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "economy",
+      "reason": "Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus."
     },
     {
       "class_name": "TradeTellEngine",
       "method_name": "RegisterTellPool",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in TradeTellEngine.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "economy",
+      "reason": "Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus."
     },
     {
       "class_name": "TrophySystem",
