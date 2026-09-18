@@ -6,11 +6,11 @@
 
 - **Total integration seams:** 248
 - **Host-required (`HOST_REQUIRED`):** 176 (all verified called from `src/`)
-- **Optional host ports (`OPTIONAL_HOST`):** 0
+- **Optional host ports (`OPTIONAL_HOST`):** 4
 - **Live via Core (`LIVE_VIA_CORE`):** 36
 - **Test/Diagnostic only (`TEST_ONLY`):** 21
 - **Pure library utilities (`PURE_LIBRARY`):** 0
-- **Deferred / Exemptions (`DEFERRED`):** 15 (shrink-only ratchet with dated owner)
+- **Deferred / Exemptions (`DEFERRED`):** 11 (shrink-only ratchet with dated owner)
 - **Unbound production-required seams:** 0
 
 ## Taxonomy & Classification Rules
@@ -93,7 +93,7 @@
 | `EspionageConsequenceRouter.BindConsumers` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageConsequenceRouter. |
 | `EspionageSystem.BindAgentAvailability` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageSystem. |
 | `EspionageSystem.BindAgentCapability` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageSystem. |
-| `EspionageSystem.BindFactionResolver` | factions | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or host wiring. |
+| `EspionageSystem.BindFactionResolver` | factions | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional override hook; EspionageSystem already defaults to FactionStandingIdResolver.ToSystemsId when no host resolver is supplied. |
 | `EspionageSystem.BindResearchGate` | factions | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in EspionageSystem. |
 | `EspionageSystem.BindRng` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageSystem. |
 | `EvidenceLedger.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in EvidenceLedger. |
@@ -104,7 +104,7 @@
 | `ExpeditionNavalSystem.RegisterVessel` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
 | `FactionRadioEngine.RegisterChannel` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in FactionRadioEngine. |
 | `FactionStanceEngine.RegisterFaction` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in FactionStanceEngine. |
-| `FactionStanceEngine.RegisterFactions` | core-architecture | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or cleanup boundary. |
+| `FactionStanceEngine.RegisterFactions` | factions | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional batch convenience API over the production-wired RegisterFaction seam; no separate activation is required. |
 | `FalloutSystem.RegisterPattern` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in FalloutSystem. |
 | `FeedbackMessageCatalog.RegisterTemplate` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in FeedbackMessageCatalog. |
 | `FinalWishSystem.RegisterWish` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in FinalWishSystem. |
@@ -163,7 +163,7 @@
 | `MusterSystem.RegisterQuestline` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MusterSystem. |
 | `MutationSystem.RegisterMutation` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in MutationSystem. |
 | `NarrativeArcEventSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in NarrativeArcEventSystem. |
-| `NarrativeDiscoveryCatalog.RegisterAdapter` | narrative | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or host wiring. |
+| `NarrativeDiscoveryCatalog.RegisterAdapter` | narrative | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional extension hook; NarrativeDiscoveryCatalog installs its canonical default adapters in the constructor. |
 | `NarrativeEncounterSystem.RegisterEncounter` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in NarrativeEncounterSystem. |
 | `NarrativeEncounterSystem.RegisterRange` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in NarrativeEncounterSystem. |
 | `NeedsSystem.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in NeedsSystem. |
@@ -257,7 +257,7 @@
 | `VentilationSystem.RegisterSource` | core-architecture | `LIVE_VIA_CORE` | 1 | ✅ BOUND | Integration seam in VentilationSystem. |
 | `VerdictAccusationSystem.Bind` | verdict | `HOST_REQUIRED` | 261 | ✅ BOUND | Integration seam in VerdictAccusationSystem. |
 | `VerdictNpcSystem.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in VerdictNpcSystem. |
-| `WastelandMapSystem.RegisterTrapSiteLocation` | world | `DEFERRED` | 0 | ⏳ DEFERRED | Planned beta activation or host wiring. |
+| `WastelandMapSystem.RegisterTrapSiteLocation` | world | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional runtime extension hook; authored trap-site locations are already supplied by WastelandMapCatalogLoader through the system constructor. |
 | `WaterTreatmentSystem.RegisterContaminationAdvisory` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in WaterTreatmentSystem. |
 | `WaystationNetworkSystem.BindShortagePolicy` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in WaystationNetworkSystem. |
 | `WeatherGateCatalog.Register` | core-architecture | `HOST_REQUIRED` | 24 | ✅ BOUND | Integration seam in WeatherGateCatalog. |
