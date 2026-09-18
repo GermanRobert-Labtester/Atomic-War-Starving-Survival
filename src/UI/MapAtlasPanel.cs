@@ -2,476 +2,420 @@
 using System;
 using System.Collections.Generic;
 using Godot;
-using Ashfall.Core;
-using Ashfall.Core.Expeditions;
 using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
+using Ashfall.Core.World;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
-/// ASHFALL — Map Atlas Dashboard (#5 Stitch, Phase 23, Tier-3).
+/// ASHFALL — canonical wasteland map-intelligence dashboard.
 ///
-/// Phase 23 ships a cartography surface as a Tier-3 HYBRID sub-card sibling
-/// of the existing `MapPanel.cs` (Phase 9 modal). The atlas reads the user's
-/// own `ExpeditionDefinition` set through `ExpeditionHostSession` (same
-/// source as Phase 17's `ExpeditionRadarPanel`) and renders a 5×5 tile
-/// grid with sector / danger / radiation / loot summaries per cell.
-///
-/// Six cards on the status rail and four `AshfallDataGrid` tiles:
-///   1. North quadrant (5-row tile grid)
-///   2. East quadrant  (5-row tile grid)
-///   3. South quadrant (5-row tile grid)
-///   4. Action bar     (dispatch / waypoint / detail)
-///
-/// Plus right-side location detail inspector with live map cell rendering.
+/// This panel is presentation-only. It projects the live WastelandMapSystem
+/// read model and uses ExpeditionHostSession only for active-sortie count.
+/// It never invents sector IDs, radiation rates, route reachability, or
+/// dispatch commands. Selecting a row routes to the existing map-detail
+/// surface through <see cref="OnLocationSelected"/>.
 /// </summary>
 public partial class MapAtlasPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
     public event Action<string>? OnLocationSelected;
 
+    private sealed class AtlasLocation
+    {
+        public string Id = string.Empty;
+        public string Display = string.Empty;
+        public MapFogState FogState;
+        public MapNodeStatusKind Status;
+        public MapNodeDanger Danger;
+        public float PositionX;
+        public float PositionY;
+        public string Intel = string.Empty;
+        public bool Routable;
+    }
+
     private AshfallDashboardShell _shell = null!;
     private AshfallStatusRail? _statusRail;
-    private AshfallDataGrid? _northGrid;
-    private AshfallDataGrid? _eastGrid;
-    private AshfallDataGrid? _southGrid;
-    private AshfallDataGrid? _actionBarGrid;
+    private AshfallDataGrid? _grid;
     private VBoxContainer _detailBox = null!;
-    private Label _detailTitle = null!;
     private int _selectedIndex = -1;
 
-    private ExpeditionHostSession? _host;
-    private List<(string id, string display, string sector, float danger, float rads, string desc)> _locations = new();
+    private ExpeditionHostSession? _expeditionHost;
+    private WorldHostSession? _worldHost;
+    private readonly List<AtlasLocation> _locations = new();
 
-    public bool IsBound => _host != null;
+    public bool IsBound => _expeditionHost != null && _worldHost != null;
 
-    public void Bind(ExpeditionHostSession host)
+    public void Bind(ExpeditionHostSession expeditionHost, WorldHostSession? worldHost = null)
     {
-        if (_host != null)
-            _host.StateChanged -= RefreshView;
-        _host = host;
-        if (_host != null)
-            _host.StateChanged += RefreshView;
-        LoadLocationsFromHost();
+        Unsubscribe();
+
+        _expeditionHost = expeditionHost;
+        _worldHost = worldHost;
+
+        if (_expeditionHost != null)
+            _expeditionHost.StateChanged += HandleSourceChanged;
+
+        if (_worldHost?.WastelandMap != null)
+        {
+            var map = _worldHost.WastelandMap;
+            map.OnNodeDiscovered += HandleMapNode;
+            map.OnNodeKnowledgeChanged += HandleMapKnowledge;
+            map.OnNodeCompleted += HandleMapNode;
+            map.OnNodeLockChanged += HandleMapLock;
+            map.OnMarkersChanged += HandleMarkersChanged;
+        }
+
+        ReloadLocations();
         RefreshView();
     }
 
-    private void LoadLocationsFromHost()
+    private void Unsubscribe()
+    {
+        if (_expeditionHost != null)
+            _expeditionHost.StateChanged -= HandleSourceChanged;
+
+        if (_worldHost?.WastelandMap != null)
+        {
+            var map = _worldHost.WastelandMap;
+            map.OnNodeDiscovered -= HandleMapNode;
+            map.OnNodeKnowledgeChanged -= HandleMapKnowledge;
+            map.OnNodeCompleted -= HandleMapNode;
+            map.OnNodeLockChanged -= HandleMapLock;
+            map.OnMarkersChanged -= HandleMarkersChanged;
+        }
+    }
+
+    private void HandleSourceChanged()
+    {
+        ReloadLocations();
+        RefreshView();
+    }
+
+    private void HandleMapNode(string _)
+        => HandleSourceChanged();
+
+    private void HandleMapKnowledge(string _, MapFogState __)
+        => HandleSourceChanged();
+
+    private void HandleMapLock(string _, bool __)
+        => HandleSourceChanged();
+
+    private void HandleMarkersChanged()
+        => HandleSourceChanged();
+
+    private void ReloadLocations()
     {
         _locations.Clear();
-        if (_host == null) return;
-        var defs = _host.Definitions;
-        for (int i = 0; i < defs.Count; i++)
-        {
-            var d = defs[i];
-            if (d == null) continue;
-            _locations.Add((d.id ?? string.Empty,
-                d.displayName ?? d.id ?? "Unknown",
-                InferSector(d.id),
-                d.dangerLevel,
-                d.dangerLevel * 2.5f,
-                SummariseLoot(d)));
-        }
-    }
+        var map = _worldHost?.WastelandMap;
+        if (map == null) return;
 
-    private static string InferSector(string? id)
-    {
-        if (string.IsNullOrEmpty(id)) return "Sector ??";
-        if (id.Contains("allotments", StringComparison.OrdinalIgnoreCase)) return "Sector 12";
-        if (id.Contains("substation", StringComparison.OrdinalIgnoreCase)) return "Sector 04";
-        if (id.Contains("cathedral", StringComparison.OrdinalIgnoreCase)) return "Sector 09";
-        if (id.Contains("station", StringComparison.OrdinalIgnoreCase)) return "Sector 06";
-        if (id.Contains("tunnel", StringComparison.OrdinalIgnoreCase)) return "Sector 02";
-        return "Sector ??";
-    }
-
-    private static string SummariseLoot(ExpeditionDefinition d)
-    {
-        if (d.lootCategories == null || d.lootCategories.Count == 0) return "—";
-        var sb = new System.Text.StringBuilder();
-        for (int i = 0; i < d.lootCategories.Count; i++)
+        for (int i = 0; i < map.Nodes.Count; i++)
         {
-            if (sb.Length > 0) sb.Append(", ");
-            sb.Append(d.lootCategories[i]);
+            var node = map.Nodes[i];
+            if (node == null || string.IsNullOrEmpty(node.Id)) continue;
+
+            var intel = map.GetNodeIntel(node.Id);
+            if (intel == null || intel.FogState == MapFogState.Unknown)
+                continue; // Unknown geography stays hidden; no presentation leak.
+
+            _locations.Add(new AtlasLocation
+            {
+                Id = intel.NodeId,
+                Display = intel.DisplayName,
+                FogState = intel.FogState,
+                Status = map.ResolveNodeStatus(node.Id),
+                Danger = intel.Danger,
+                PositionX = intel.PositionX,
+                PositionY = intel.PositionY,
+                Intel = intel.LootDescription ?? string.Empty,
+                Routable = intel.Routable
+            });
         }
-        return sb.ToString();
+
+        _locations.Sort((a, b) =>
+        {
+            int y = a.PositionY.CompareTo(b.PositionY);
+            if (y != 0) return y;
+            int x = a.PositionX.CompareTo(b.PositionX);
+            if (x != 0) return x;
+            return string.CompareOrdinal(a.Id, b.Id);
+        });
+
+        if (_selectedIndex >= _locations.Count)
+            _selectedIndex = -1;
     }
 
     public override void _Ready()
     {
         SetAnchorsPreset(LayoutPreset.FullRect);
 
-        _shell = new AshfallDashboardShell("Map Atlas // Wasteland Cartography Grid", minWidth: 1280, minHeight: 720);
-        SetContentRoot(_shell);
+        _shell = new AshfallDashboardShell(
+            "Map Atlas // Canonical Wasteland Intelligence",
+            minWidth: 1280,
+            minHeight: 720);
+        AddChild(_shell);
+        _shell.SetAnchorsPreset(LayoutPreset.FullRect);
+        _shell.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        _shell.SizeFlagsVertical = SizeFlags.ExpandFill;
 
         _statusRail = _shell.SetStatusRail();
-        _statusRail.AddCard("zones",     "Zones Mapped",  "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
-        _statusRail.AddCard("outposts",  "Outposts",      "—", AshfallMetricCard.Criticality.Normal, minWidth: 100);
-        _statusRail.AddCard("caravans",  "Caravans",      "—", AshfallMetricCard.Criticality.Caution, minWidth: 100);
-        _statusRail.AddCard("dungeons",  "Dungeons",      "—", AshfallMetricCard.Criticality.Warn,   minWidth: 100);
-        _statusRail.AddCard("safe",      "Safe Routes",   "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
-        _statusRail.AddCard("hazards",   "Hazard Zones",  "—", AshfallMetricCard.Criticality.Critical, minWidth: 120);
+        _statusRail.AddCard("known", "Known Nodes", "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+        _statusRail.AddCard("routes", "Known Route Edges", "—", AshfallMetricCard.Criticality.Normal, minWidth: 145);
+        _statusRail.AddCard("active", "Active Sorties", "—", AshfallMetricCard.Criticality.Caution, minWidth: 120);
+        _statusRail.AddCard("hazards", "Hazard Nodes", "—", AshfallMetricCard.Criticality.Warn, minWidth: 120);
+        _statusRail.AddCard("locked", "Locked Nodes", "—", AshfallMetricCard.Criticality.Critical, minWidth: 115);
 
-        var tileCols = new[]
+        var columns = new[]
         {
-            new AshfallDataGrid.Column { Header = "Cell",  MinWidth = 60,  Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Tile",  MinWidth = 200, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Sector", MinWidth = 90, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Danger", MinWidth = 80, Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Rads/h", MinWidth = 80, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Location", MinWidth = 220, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Knowledge", MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Status", MinWidth = 105, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Danger", MinWidth = 85, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Map Position", MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Intel", MinWidth = 260, Alignment = AshfallDataGrid.ColumnAlign.Left },
         };
-        _northGrid = new AshfallDataGrid(tileCols, showHeader: true, minWidth: 380, minHeight: 220);
-        _eastGrid = new AshfallDataGrid(tileCols, showHeader: true, minWidth: 380, minHeight: 220);
-        _southGrid = new AshfallDataGrid(tileCols, showHeader: true, minWidth: 380, minHeight: 220);
-        _eastGrid.OnRowSelected += HandleRowSelected;
-        _southGrid.OnRowSelected += HandleRowSelected;
-        _northGrid.OnRowSelected += HandleRowSelected;
+        _grid = new AshfallDataGrid(columns, showHeader: true, minWidth: 820, minHeight: 520);
+        _grid.OnRowSelected += HandleRowSelected;
 
-        var actionCols = new[]
-        {
-            new AshfallDataGrid.Column { Header = "Action", MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Hint",   MinWidth = 240, Alignment = AshfallDataGrid.ColumnAlign.Left },
-        };
-        _actionBarGrid = new AshfallDataGrid(actionCols, showHeader: true, minWidth: 380, minHeight: 100);
-
-        var body = new VBoxContainer();
+        var body = new HBoxContainer();
         body.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
         body.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         body.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-        var topRow = new HBoxContainer();
-        topRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
-        topRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        topRow.SizeFlagsVertical = SizeFlags.ExpandFill;
-
-        var northCol = new VBoxContainer();
-        northCol.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-        northCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        northCol.AddChild(AshfallUiHelpers.MakeSectionHeader("North Quadrant — Sector 01..05"));
-        northCol.AddChild(_northGrid);
-        topRow.AddChild(northCol);
-
-        var eastCol = new VBoxContainer();
-        eastCol.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-        eastCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        eastCol.AddChild(AshfallUiHelpers.MakeSectionHeader("East Quadrant — Sector 06..10"));
-        eastCol.AddChild(_eastGrid);
-        topRow.AddChild(eastCol);
-
-        var southCol = new VBoxContainer();
-        southCol.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-        southCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        southCol.AddChild(AshfallUiHelpers.MakeSectionHeader("South Quadrant — Sector 11..15"));
-        southCol.AddChild(_southGrid);
-        topRow.AddChild(southCol);
-
-        body.AddChild(topRow);
-        body.AddChild(AshfallUiHelpers.MakeSeparator());
-
-        var actionRow = new HBoxContainer();
-        actionRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
-        actionRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        actionRow.SizeFlagsVertical = SizeFlags.ExpandFill;
-
-        var actionCol = new VBoxContainer();
-        actionCol.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-        actionCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        actionCol.AddChild(AshfallUiHelpers.MakeSectionHeader("Action Bar"));
-        actionCol.AddChild(_actionBarGrid);
-
-        var legendRow = new HBoxContainer();
-        legendRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
-        LegendChip(legendRow, "LOCKED", DesignTheme.Critical, "Restricted");
-        LegendChip(legendRow, "AVAILABLE", DesignTheme.Ozone, "Reachable");
-        LegendChip(legendRow, "DISCOVERED", DesignTheme.Lethe, "Charted");
-        LegendChip(legendRow, "COMPLETE", DesignTheme.Muted, "Cleared");
-        actionCol.AddChild(legendRow);
-
-        actionRow.AddChild(actionCol);
+        var mapColumn = new VBoxContainer();
+        mapColumn.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        mapColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        mapColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
+        mapColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("KNOWN MAP INTELLIGENCE"));
+        mapColumn.AddChild(AshfallUiHelpers.MakeMetadata(
+            "Rows come from WastelandMapSystem.GetNodeIntel. Unknown nodes are intentionally hidden."));
+        mapColumn.AddChild(_grid);
+        body.AddChild(mapColumn);
 
         _detailBox = new VBoxContainer();
         _detailBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-        _detailBox.CustomMinimumSize = new Vector2(280, 220);
+        _detailBox.CustomMinimumSize = new Vector2(330, 420);
         _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
-        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("LOCATION DETAIL"));
-        _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Bind an ExpeditionHostSession to see live map cells. Select a tile to view location detail."));
-        actionRow.AddChild(_detailBox);
+        body.AddChild(_detailBox);
 
-        body.AddChild(actionRow);
         _shell.SetContent(body);
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("LOCATION DETAIL");
         RefreshView();
     }
 
-    private void SetContentRoot(Control root)
+    private void HandleRowSelected(int index)
     {
-        AddChild(root);
-        root.SetAnchorsPreset(LayoutPreset.FullRect);
-        root.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        root.SizeFlagsVertical = SizeFlags.ExpandFill;
-    }
-
-    private void HandleRowSelected(int idx)
-    {
-        _selectedIndex = idx;
-        var locationId = ResolveVisibleRow(idx);
-        if (!string.IsNullOrEmpty(locationId))
-            OnLocationSelected?.Invoke(locationId);
+        if (index < 0 || index >= _locations.Count) return;
+        _selectedIndex = index;
         RefreshDetail();
+        OnLocationSelected?.Invoke(_locations[index].Id);
     }
 
     public void RefreshView()
     {
         RefreshStatusRail();
-        BuildTileRows();
-        BuildActionRows();
+        BuildRows();
         RefreshDetail();
     }
 
     private void RefreshStatusRail()
     {
         if (_statusRail == null) return;
-        if (_host == null || _locations.Count == 0)
+        var map = _worldHost?.WastelandMap;
+        if (map == null)
         {
-            _statusRail.Set("zones",    "—", AshfallMetricCard.Criticality.Normal);
-            _statusRail.Set("outposts", "—", AshfallMetricCard.Criticality.Normal);
-            _statusRail.Set("caravans", "—", AshfallMetricCard.Criticality.Caution);
-            _statusRail.Set("dungeons", "—", AshfallMetricCard.Criticality.Warn);
-            _statusRail.Set("safe",     "—", AshfallMetricCard.Criticality.Normal);
-            _statusRail.Set("hazards",  "—", AshfallMetricCard.Criticality.Critical);
+            SetStatusDashes();
             return;
         }
 
-        int outposts = 0, caravans = 0, dungeons = 0, safe = 0, hazards = 0;
+        var knownIds = new HashSet<string>(StringComparer.Ordinal);
+        int hazardCount = 0;
+        int lockedCount = 0;
         for (int i = 0; i < _locations.Count; i++)
         {
-            var l = _locations[i];
-            if (l.danger >= 4f) dungeons++;
-            else if (l.danger >= 2f) hazards++;
-            else outposts++;
-            if (l.danger == 0f) safe++;
+            var location = _locations[i];
+            knownIds.Add(location.Id);
+            if (location.Danger == MapNodeDanger.Medium || location.Danger == MapNodeDanger.High)
+                hazardCount++;
+            if (location.Status == MapNodeStatusKind.Locked)
+                lockedCount++;
         }
-        if (_host?.Engine != null && _host.Engine.ActiveCount > 0) caravans = _host.Engine.ActiveCount;
 
-        _statusRail.Set("zones",    $"{_locations.Count}", AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("outposts", $"{outposts}", outposts > 0 ? AshfallMetricCard.Criticality.Normal : AshfallMetricCard.Criticality.Caution);
-        _statusRail.Set("caravans", $"{caravans}", caravans > 0 ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("dungeons", $"{dungeons}", dungeons > 0 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("safe",     $"{safe}", AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("hazards",  $"{hazards}", hazards > 0 ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
+        int knownRouteEdges = 0;
+        for (int i = 0; i < map.Routes.Count; i++)
+        {
+            var route = map.Routes[i];
+            if (route != null && knownIds.Contains(route.From) && knownIds.Contains(route.To))
+                knownRouteEdges++;
+        }
+
+        int active = _expeditionHost?.Engine?.ActiveCount ?? 0;
+        _statusRail.Set("known", _locations.Count.ToString(), AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("routes", knownRouteEdges.ToString(), AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("active", active.ToString(), active > 0 ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("hazards", hazardCount.ToString(), hazardCount > 0 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("locked", lockedCount.ToString(), lockedCount > 0 ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
     }
 
-    private void BuildTileRows()
+    private void SetStatusDashes()
     {
-        if (_northGrid == null || _eastGrid == null || _southGrid == null) return;
+        if (_statusRail == null) return;
+        _statusRail.Set("known", "—", AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("routes", "—", AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("active", "—", AshfallMetricCard.Criticality.Caution);
+        _statusRail.Set("hazards", "—", AshfallMetricCard.Criticality.Warn);
+        _statusRail.Set("locked", "—", AshfallMetricCard.Criticality.Critical);
+    }
 
-        if (_host == null || _locations.Count == 0)
+    private void BuildRows()
+    {
+        if (_grid == null) return;
+        if (_worldHost?.WastelandMap == null)
         {
-            _northGrid.SetRows(BuildFixtureRows(0));
-            _eastGrid.SetRows(BuildFixtureRows(1));
-            _southGrid.SetRows(BuildFixtureRows(2));
+            _grid.SetRows(BuildFixtureRows());
             return;
         }
 
-        _northGrid.SetRows(TileRowsFor(0));
-        _eastGrid.SetRows(TileRowsFor(1));
-        _southGrid.SetRows(TileRowsFor(2));
-    }
-
-    private List<AshfallDataGrid.Row> TileRowsFor(int quadrant)
-    {
         var rows = new List<AshfallDataGrid.Row>();
         for (int i = 0; i < _locations.Count; i++)
         {
-            var l = _locations[i];
-            if (l.sector == null) continue;
-            int sectorNum = ExtractSectorNum(l.sector);
-            if (QuadrantForSector(sectorNum) != quadrant) continue;
-            int cell = (i % 5) + 1;
-            var cells = new List<AshfallDataGrid.Cell>
-            {
-                new($"Q{quadrant+1}.{cell}", AshfallDataGrid.CellState.Muted),
-                new(l.display, AshfallDataGrid.CellState.Normal),
-                new(l.sector, AshfallDataGrid.CellState.Muted),
-                new($"LVL {(int)l.danger}", l.danger >= 4f ? AshfallDataGrid.CellState.Critical :
-                                        l.danger >= 2f ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal),
-                new($"{l.rads:0.0}", l.rads > 10f ? AshfallDataGrid.CellState.Critical : AshfallDataGrid.CellState.Normal),
-            };
-            rows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
-        }
-        if (rows.Count == 0)
-        {
+            var location = _locations[i];
             rows.Add(new AshfallDataGrid.Row
             {
+                Selectable = true,
                 Cells = new List<AshfallDataGrid.Cell>
                 {
-                    new("—", AshfallDataGrid.CellState.Muted),
-                    new("— quadrant empty —", AshfallDataGrid.CellState.Muted),
-                    new("—", AshfallDataGrid.CellState.Muted),
-                    new("—", AshfallDataGrid.CellState.Muted),
-                    new("—", AshfallDataGrid.CellState.Muted),
+                    new(location.Display, AshfallDataGrid.CellState.Normal),
+                    new(location.FogState.ToString(), KnowledgeState(location.FogState)),
+                    new(location.Status.ToString(), StatusState(location.Status)),
+                    new(location.Danger.ToString(), DangerState(location.Danger)),
+                    new($"({location.PositionX:0}, {location.PositionY:0})", AshfallDataGrid.CellState.Muted),
+                    new(string.IsNullOrEmpty(location.Intel) ? "—" : location.Intel, AshfallDataGrid.CellState.Muted),
                 }
             });
         }
-        return rows;
+
+        if (rows.Count == 0)
+            rows = BuildFixtureRows();
+
+        _grid.SetRows(rows);
     }
 
-    private static int ExtractSectorNum(string sector)
-    {
-        int idx = sector.LastIndexOf(' ');
-        if (idx < 0 || idx + 1 >= sector.Length) return 0;
-        if (int.TryParse(sector.Substring(idx + 1), out int n)) return n;
-        return 0;
-    }
-
-    private static int QuadrantForSector(int sectorNum)
-    {
-        if (sectorNum <= 0) return 0;
-        if (sectorNum <= 5) return 0;   // North 01..05
-        if (sectorNum <= 10) return 1;  // East 06..10
-        if (sectorNum <= 15) return 2;  // South 11..15
-        return 0;
-    }
-
-    private string ResolveVisibleRow(int visibleIndex)
-    {
-        if (_host == null || _locations.Count == 0) return string.Empty;
-        int seen = -1;
-        for (int i = 0; i < _locations.Count; i++)
+    private static AshfallDataGrid.CellState KnowledgeState(MapFogState state)
+        => state switch
         {
-            int sectorNum = ExtractSectorNum(_locations[i].sector);
-            // Match any quadrant: visible rows are those the grids emit.
-            seen++;
-            if (seen == visibleIndex) return _locations[i].id;
-        }
-        return string.Empty;
-    }
+            MapFogState.Rumored => AshfallDataGrid.CellState.Warning,
+            MapFogState.Surveyed => AshfallDataGrid.CellState.Normal,
+            MapFogState.Visited => AshfallDataGrid.CellState.Normal,
+            _ => AshfallDataGrid.CellState.Muted
+        };
 
-    private void BuildActionRows()
-    {
-        if (_actionBarGrid == null) return;
-        _actionBarGrid.SetRows(BuildActionFixtureRows());
-    }
+    private static AshfallDataGrid.CellState StatusState(MapNodeStatusKind status)
+        => status switch
+        {
+            MapNodeStatusKind.Locked => AshfallDataGrid.CellState.Critical,
+            MapNodeStatusKind.Available => AshfallDataGrid.CellState.Warning,
+            MapNodeStatusKind.Completed => AshfallDataGrid.CellState.Muted,
+            _ => AshfallDataGrid.CellState.Normal
+        };
+
+    private static AshfallDataGrid.CellState DangerState(MapNodeDanger danger)
+        => danger switch
+        {
+            MapNodeDanger.High => AshfallDataGrid.CellState.Critical,
+            MapNodeDanger.Medium => AshfallDataGrid.CellState.Warning,
+            MapNodeDanger.Locked => AshfallDataGrid.CellState.Critical,
+            _ => AshfallDataGrid.CellState.Normal
+        };
 
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
         AshfallUiHelpers.EmptyChildren(_detailBox);
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("LOCATION DETAIL");
-        _detailBox.AddChild(_detailTitle);
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("LOCATION DETAIL"));
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        if (_host == null || _locations.Count == 0)
+
+        if (_worldHost?.WastelandMap == null)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Map atlas offline. Bind an ExpeditionHostSession to see live map cells."));
+                "Map atlas offline. Bind WorldHostSession and ExpeditionHostSession."));
             return;
         }
-        if (_selectedIndex < 0)
+
+        if (_selectedIndex < 0 || _selectedIndex >= _locations.Count)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a tile row to view location detail."));
+                "Select a known map row to open the canonical location detail."));
             return;
         }
-        var loc = FindLocation(_selectedIndex);
-        if (loc == null)
-        {
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope."));
-            return;
-        }
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Sector", loc.Value.sector,
+
+        var location = _locations[_selectedIndex];
+        var map = _worldHost.WastelandMap;
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("ID", location.Id,
+            AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Knowledge", location.FogState.ToString(),
             AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Danger", $"LVL {(int)loc.Value.danger}",
-            loc.Value.danger >= 4f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
-            loc.Value.danger >= 2f ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
-                                       AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Rads/h", $"{loc.Value.rads:0.0}",
-            loc.Value.rads > 10f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Status", location.Status.ToString(),
+            location.Status == MapNodeStatusKind.Locked
+                ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
+                : AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Danger", location.Danger.ToString(),
+            location.Danger == MapNodeDanger.High || location.Danger == MapNodeDanger.Locked
+                ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
+                : location.Danger == MapNodeDanger.Medium
+                    ? AshfallUiHelpers.ToColor(DesignTheme.Entropy)
+                    : AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(
+            "Map Position",
+            $"({location.PositionX:0}, {location.PositionY:0})",
+            AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+        var routes = map.GetRoutesFrom(location.Id);
+        float totalDistanceKm = 0f;
+        for (int i = 0; i < routes.Count; i++)
+            totalDistanceKm += routes[i].DistanceKm;
+
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(
+            "Known outgoing routes",
+            location.Routable ? $"{routes.Count} / {totalDistanceKm:0.0} km authored" : "unconfirmed",
+            AshfallUiHelpers.ToColor(location.Routable ? DesignTheme.Ozone : DesignTheme.Dim)));
+
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Loot Categories"));
-        _detailBox.AddChild(AshfallUiHelpers.MakeSmall(loc.Value.desc, autowrap: true));
+        _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("CANONICAL INTEL"));
+        _detailBox.AddChild(AshfallUiHelpers.MakeSmall(
+            string.IsNullOrEmpty(location.Intel) ? "No confirmed loot intelligence." : location.Intel,
+            autowrap: true));
+        _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+            "Dispatch remains in Wasteland Expeditions; this atlas does not fabricate command affordances."));
     }
 
-    private (string id, string display, string sector, float danger, float rads, string desc)? FindLocation(int visibleIndex)
-    {
-        if (_host == null || _locations.Count == 0) return null;
-        int seen = -1;
-        for (int i = 0; i < _locations.Count; i++)
+    /// <summary>
+    /// Truthful unbound/empty-state fixture. It intentionally contains no
+    /// canonical-looking locations, sector IDs, radiation numbers, or commands.
+    /// </summary>
+    internal static List<AshfallDataGrid.Row> BuildFixtureRows()
+        => new()
         {
-            seen++;
-            if (seen == visibleIndex) return _locations[i];
-        }
-        return null;
-    }
-
-    /// <summary>Hard-coded fixture rows for the bound=false case. Per-quadrant tiles drawn from canonical location ids.</summary>
-    internal static List<AshfallDataGrid.Row> BuildFixtureRows(int quadrant)
-    {
-        var rows = new List<AshfallDataGrid.Row>();
-        if (quadrant == 0)
-        {
-            rows.Add(new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
+            new AshfallDataGrid.Row
             {
-                new("Q1.1", AshfallDataGrid.CellState.Muted),
-                new("The Denial Cut Substation", AshfallDataGrid.CellState.Normal),
-                new("Sector 04", AshfallDataGrid.CellState.Muted),
-                new("LVL 4", AshfallDataGrid.CellState.Critical),
-                new("10.0", AshfallDataGrid.CellState.Critical),
-            }, Selectable = true });
-        }
-        else if (quadrant == 1)
-        {
-            rows.Add(new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
-            {
-                new("Q2.1", AshfallDataGrid.CellState.Muted),
-                new("Holdfast Bunker [home]", AshfallDataGrid.CellState.Normal),
-                new("Sector 07", AshfallDataGrid.CellState.Muted),
-                new("LVL 0", AshfallDataGrid.CellState.Normal),
-                new("0.5", AshfallDataGrid.CellState.Normal),
-            }, Selectable = true });
-        }
-        else
-        {
-            rows.Add(new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
-            {
-                new("Q3.1", AshfallDataGrid.CellState.Muted),
-                new("The Works Allotment Commune", AshfallDataGrid.CellState.Normal),
-                new("Sector 12", AshfallDataGrid.CellState.Muted),
-                new("LVL 2", AshfallDataGrid.CellState.Warning),
-                new("5.0", AshfallDataGrid.CellState.Normal),
-            }, Selectable = true });
-        }
-        return rows;
-    }
-
-    internal static List<AshfallDataGrid.Row> BuildActionFixtureRows()
-    {
-        return new List<AshfallDataGrid.Row>
-        {
-            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
-            {
-                new("Dispatch Sortie", AshfallDataGrid.CellState.Normal),
-                new("Select a tile · pick a survivor · pick a stance", AshfallDataGrid.CellState.Muted),
-            }, Selectable = false },
-            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
-            {
-                new("Plot Waypoint",  AshfallDataGrid.CellState.Normal),
-                new("Mark a safe route for the caravan",              AshfallDataGrid.CellState.Muted),
-            }, Selectable = false },
-            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
-            {
-                new("Inspect Detail", AshfallDataGrid.CellState.Normal),
-                new("Click a tile to view loot categories and rads",   AshfallDataGrid.CellState.Muted),
-            }, Selectable = false },
+                Selectable = false,
+                Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("— map intelligence unavailable —", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("Bind live world state", AshfallDataGrid.CellState.Muted),
+                }
+            }
         };
-    }
 
     public void Open()
     {
         Visible = true;
+        ReloadLocations();
         RefreshView();
         QueueRedraw();
     }
@@ -486,34 +430,18 @@ public partial class MapAtlasPanel : Control, IBindablePanel
         }
     }
 
-    private static void LegendChip(HBoxContainer host, string label, (float r, float g, float b, float a) token, string desc)
-    {
-        var chip = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingXs);
-        var dot = new ColorRect
-        {
-            Color = AshfallUiHelpers.ToColor(token),
-            CustomMinimumSize = new Vector2(8, 8),
-            SizeFlagsVertical = SizeFlags.ShrinkCenter
-        };
-        chip.AddChild(dot);
-        var lbl = AshfallUiHelpers.MakeSmall($"{label} [{desc}]");
-        lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(token));
-        chip.AddChild(lbl);
-        host.AddChild(chip);
-    }
-
-
     public void Unbind()
     {
-        if (_host != null)
-        {
-            _host.StateChanged -= RefreshView;
-        }
+        Unsubscribe();
+        _expeditionHost = null;
+        _worldHost = null;
+        _locations.Clear();
+        _selectedIndex = -1;
     }
 
     public override void _ExitTree()
-        {
-            Unbind();
-            base._ExitTree();
-        }
+    {
+        Unbind();
+        base._ExitTree();
+    }
 }
