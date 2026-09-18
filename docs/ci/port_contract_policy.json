@@ -504,11 +504,9 @@
       "class_name": "EquipmentConditionSystem",
       "method_name": "RegisterProfile",
       "file_path": "Assets/Ashfall.Core/EquipmentConditionSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in EquipmentConditionSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "equipment",
+      "reason": "Invoked internally by EquipmentConditionSystem default-profile construction and LoadProfiles catalog ingestion."
     },
     {
       "class_name": "EspionageConsequenceRouter",
@@ -586,11 +584,9 @@
       "class_name": "ExpeditionLootReferenceResolver",
       "method_name": "RegisterCategory",
       "file_path": "Assets/Ashfall.Core/Expeditions/ExpeditionLootReferenceResolver.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in ExpeditionLootReferenceResolver.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "OPTIONAL_HOST",
+      "owner": "expeditions",
+      "reason": "Optional resolver extension; canonical/default category sets are already accepted through the resolver constructor."
     },
     {
       "class_name": "ExpeditionLootReferenceResolver",
@@ -604,11 +600,9 @@
       "class_name": "ExpeditionNavalSystem",
       "method_name": "RegisterVessel",
       "file_path": "Assets/Ashfall.Core/Expeditions/ExpeditionNavalSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in ExpeditionNavalSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "expeditions",
+      "reason": "Invoked internally by ExpeditionNavalSystem default-vessel construction and LoadCatalog ingestion."
     },
     {
       "class_name": "FactionRadioEngine",
@@ -1563,11 +1557,9 @@
       "class_name": "ShelterThermalSystem",
       "method_name": "RegisterThermalGear",
       "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in ShelterThermalSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "shelter",
+      "reason": "Invoked internally by ShelterThermalSystem default thermal-gear registration during construction."
     },
     {
       "class_name": "ShelterWorkshopSystem",
@@ -1717,11 +1709,9 @@
       "class_name": "SurvivorDowntimeSystem",
       "method_name": "RegisterHobby",
       "file_path": "Assets/Ashfall.Core/Recreation/SurvivorDowntimeSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in SurvivorDowntimeSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "survivors",
+      "reason": "Invoked internally by SurvivorDowntimeSystem default-hobby construction and LoadCatalog ingestion."
     },
     {
       "class_name": "SurvivorEntityStore",
