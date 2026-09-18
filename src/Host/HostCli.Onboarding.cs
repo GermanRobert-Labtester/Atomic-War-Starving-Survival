@@ -169,7 +169,7 @@ namespace AtomicWar.GodotApp
             finally
             {
                 SaveSlotRoot.CurrentRoot = null;
-                try { Directory.Delete(scratchRoot, recursive: true); } catch { /* cleanup: scratch dir is disposable; nothing to recover */ }
+                TryDeleteTempDirectory(scratchRoot);
             }
 
             return EmitSummary("onboarding_journey_selftest", failures == 0,

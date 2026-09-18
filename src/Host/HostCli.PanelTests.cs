@@ -142,14 +142,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("year_of_ash_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -222,14 +215,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("duty_roster_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -329,14 +315,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("expansion_hub_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -1591,14 +1570,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("dose_ledger_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -1733,14 +1705,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("black_flotilla_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -1828,14 +1793,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("radio_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -1963,14 +1921,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                try
-                {
-                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
-                }
-                catch (Exception ex)
-                {
-                    GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
-                }
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("holdfast_save_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -2456,10 +2407,7 @@ namespace AtomicWar.GodotApp
             try
             {
                 // 1. Initial State & Clean Reset
-                if (System.IO.File.Exists(InventorySaveStore.SavePath))
-                {
-                    try { System.IO.File.Delete(InventorySaveStore.SavePath); } catch { /* cleanup: best-effort removal of stale test save */ }
-                }
+                TryDeleteTempFile(InventorySaveStore.SavePath);
                 var startingSession = new StartingLevelHostSession();
                 var startingState = startingSession.System.State;
                 Check(startingState != null, "starting level state initialized");

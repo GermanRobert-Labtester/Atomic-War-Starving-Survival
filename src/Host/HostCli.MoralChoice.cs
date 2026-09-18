@@ -91,7 +91,7 @@ namespace AtomicWar.GodotApp
             string tmpDir = Path.Combine(Path.GetTempPath(), "ashfall_moral_choice_selftest");
             Directory.CreateDirectory(tmpDir);
             string path = Path.Combine(tmpDir, MoralChoiceSaveStore.FileName);
-            try { File.Delete(path); } catch (Exception ex) { GD.PrintErr("[Cleanup] Best-effort file delete failed: " + ex.Message); }
+            TryDeleteTempFile(path);
 
             MoralChoiceSaveStore.Save(sys.CaptureState(), path);
             var loaded = MoralChoiceSaveStore.TryLoad(path);

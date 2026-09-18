@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+using System;
+using System.IO;
 using Godot;
 using Ashfall.Core;
 
@@ -6,6 +8,40 @@ namespace AtomicWar.GodotApp
 {
     public static partial class HostCli
     {
+        /// <summary>
+        /// Best-effort temp-file removal for self-test cleanup. Failures are
+        /// logged and never fail the self-test.
+        /// </summary>
+        private static void TryDeleteTempFile(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            try
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr("[Cleanup] Best-effort temp file delete failed: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Best-effort temp-directory removal for self-test cleanup. Failures
+        /// are logged and never fail the self-test.
+        /// </summary>
+        private static void TryDeleteTempDirectory(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            try
+            {
+                if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr("[Cleanup] Best-effort temp directory delete failed: " + ex.Message);
+            }
+        }
+
         /// <summary>
         /// Emits standardized, machine-readable PASS/FAIL summary lines for host self-tests.
         /// Outputs:
