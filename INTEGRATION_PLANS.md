@@ -5,6 +5,16 @@ duplicate prose from historical plan documents.
 
 ## Current batch
 
+**Repository audit remediation infrastructure wave — ACTIVE (2026-09-19):**
+the repository owner authorized execution of the 2026-09-19 audit plan in full.
+The first bounded claim is W00-W17 infrastructure only: restore and harden the
+port-contract proof, reconcile its generated authority and CI ownership, repair
+architecture-map cadence evidence, and remove randomized string hashing from
+the named host/test paths. Campaign RNG migrations and remaining gameplay seam
+integrations are not part of this first claim. Decision-blocked packages remain
+decision-blocked. Baseline: `166fa9aebb75a2310b15cb47dc5cc9b8a270e2b6`.
+Execution log: `docs/plans/AUDIT_REMEDIATION_IMPLEMENTATION_LOG.md`.
+
 **XP Expansion W1 — ACTIVE (2026-09-18):** the user authorized the XP-01 …
 XP-10 proposal and integration plan. The first owned package is
 `XP-WAVE1-DIFFICULTY-AUTHORITY`: establish the canonical difficulty catalog and
