@@ -40,10 +40,10 @@ namespace Ashfall.Core.Tests.UI
 
             Assert.DoesNotContain("InferSector", panel, StringComparison.Ordinal);
             Assert.DoesNotContain("dangerLevel * 2.5", panel, StringComparison.Ordinal);
-            Assert.DoesNotContain("\\\"Rads/h\\\"", panel, StringComparison.Ordinal);
+            Assert.DoesNotContain("Rads/h", panel, StringComparison.Ordinal);
             Assert.DoesNotContain("BuildActionFixtureRows", panel, StringComparison.Ordinal);
-            Assert.DoesNotContain("\\\"Dispatch Sortie\\\"", panel, StringComparison.Ordinal);
-            Assert.DoesNotContain("\\\"Plot Waypoint\\\"", panel, StringComparison.Ordinal);
+            Assert.DoesNotContain("Dispatch Sortie", panel, StringComparison.Ordinal);
+            Assert.DoesNotContain("Plot Waypoint", panel, StringComparison.Ordinal);
         }
 
         [Fact]
