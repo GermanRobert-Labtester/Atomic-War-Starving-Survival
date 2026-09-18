@@ -92,5 +92,15 @@ namespace Ashfall.Core.Tests.Orchestration
             Assert.False(SubsystemManifest.TryGet(null!, out var d3));
             Assert.Null(d3);
         }
+
+        [Fact]
+        public void ExecuteSetup_InvokesConfiguredDelegates_AndReturnsCount()
+        {
+            bool invoked = false;
+            SubsystemManifest.RegisterSetupAction("journal", () => invoked = true);
+            int count = SubsystemManifest.ExecuteSetup(LifecyclePhase.Bootstrap);
+            Assert.True(invoked, "Expected journal setup delegate to be invoked");
+            Assert.True(count >= 1, "Expected at least 1 delegate executed");
+        }
     }
 }

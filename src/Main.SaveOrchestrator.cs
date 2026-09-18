@@ -160,6 +160,8 @@ namespace AtomicWar.GodotApp
             SetupHoldfastRuntime();
             _holdfastTerminal?.OpenTerminal();
 
+            ExecuteSubsystemManifestBootstrap();
+
             SetupStartingLevel();
             SetupSurvivors();
             SetupInventory();

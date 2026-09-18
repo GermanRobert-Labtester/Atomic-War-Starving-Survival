@@ -55,6 +55,7 @@ namespace Ashfall.Core.Survivors
         public const string Airlock = "airlock";
         public const string Intake = "intake";
         public const string Surface = "surface";
+        public const string Medical = "medical";
 
         public static bool IsKnown(string value)
         {
@@ -65,6 +66,7 @@ namespace Ashfall.Core.Survivors
                 case Airlock:
                 case Intake:
                 case Surface:
+                case Medical:
                     return true;
                 default:
                     return false;

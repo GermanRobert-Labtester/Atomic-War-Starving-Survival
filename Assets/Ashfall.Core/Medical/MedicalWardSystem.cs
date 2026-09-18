@@ -26,6 +26,12 @@ namespace Ashfall.Core.Medical
         /// <summary>Raised after an active admission is recorded.</summary>
         public event Action<string>? OnPatientAdmitted;
 
+        /// <summary>
+        /// Optional ward staffing preflight predicate (Plan 24 / C1[5]).
+        /// When bound, procedures require active eligible staffing to execute.
+        /// </summary>
+        public Func<bool>? StaffingPreflight { get; set; }
+
         public MedicalWardSystem(MedicalWardState state,
             IEnumerable<MedicalBed> beds,
             IEnumerable<MedicalProcedureDef> procedures)
@@ -102,6 +108,9 @@ namespace Ashfall.Core.Medical
             if (proc == null) return MedicalWardProcedureResult.Fail("unknown_procedure");
             var admission = GetActiveAdmission(patientId);
             if (admission == null) return MedicalWardProcedureResult.Fail("patient_not_admitted");
+
+            if (StaffingPreflight != null && !StaffingPreflight())
+                return MedicalWardProcedureResult.Fail("ward_unstaffed");
 
             // Clinical result is delegated to the owning system — the ward
             // does not invent outcomes, only records them.

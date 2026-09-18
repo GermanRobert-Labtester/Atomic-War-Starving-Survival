@@ -29,13 +29,18 @@ only → minimal SignalTrustState; audio needs only additive cue fields).
 was explicitly promoted by the user on 2026-09-16. Its exact ownership and
 stale-completed-claim override are recorded in `WORKTREE_OWNERSHIP.md`; the
 package was implemented in dependency order without altering unrelated dirty
-worktree changes. **Plan 24 is CLOSED-WITH-DEFERRALS (Wave 8, 2026-09-17):**
+worktree changes. **Plan 24 is CLOSED (Wave 8, 2026-09-17; signatures
+resolved 2026-09-18):**
 all originally open acceptance items are closed-with-evidence (nine-family
 needs migration, duty-hour/overwork/skill-to-yield labor cluster, assignment
 UI, grief-to-needs, mourning vigil, ration journey, save/load journey parity,
-30-day simulation, needs baseline 15/15) except two signature-gated decision
-items (ward staffing; affliction-specific recovery ramp — memos in the
-implementation log) and the environment-blocked snapshot rebaseline. Closeout:
+30-day simulation, needs baseline 15/15). The two signature-gated decision
+items were resolved 2026-09-18 under the user's completion-first program
+authorization: ward staffing was implemented and sealed (option b;
+`DEBT-PLAN24-MEDICAL-WARD-STAFFING` RETIRED) and the affliction-specific
+recovery ramp was closed per option (ii) with no ramp authority fabricated.
+The environment-blocked snapshot rebaseline is the only recorded residual
+(renderer-capable session required). Closeout:
 `docs/plans/PLAN_24_CLOSEOUT.md`. Evidence ledger:
 `docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md`.
 

@@ -73,6 +73,7 @@ namespace Ashfall.Core
         public const string RoleHatchOpener = "hatch_opener";
         public const string RoleIntakeSleeper = "intake_sleeper";
         public const string RoleExpedition = "expedition";
+        public const string RoleWard = "ward";
 
         // ── Authored mutations / flags ────────────────────────────────
         public const string MutationRosterInUse = "mutation_roster_in_use";
@@ -121,7 +122,7 @@ namespace Ashfall.Core
 
         public static readonly string[] AssignmentRoles =
         {
-            RoleNightWatch, RoleMess, RoleHatchOpener, RoleIntakeSleeper, RoleExpedition
+            RoleNightWatch, RoleMess, RoleHatchOpener, RoleIntakeSleeper, RoleExpedition, RoleWard
         };
     }
 }
