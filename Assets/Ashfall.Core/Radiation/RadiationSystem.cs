@@ -125,6 +125,9 @@ namespace Ashfall.Core.Radiation
         public event Action<SurvivorRadState> OnExposureStarted;
         public event Action<SurvivorRadState> OnExposureEnded;
 
+        /// <summary>Optional campaign multiplier for ambient dose composition.</summary>
+        public Func<float>? ExposureRateMultiplier { get; set; }
+
         /// <summary>Transient exposure-active tracking. Not persisted: on
         /// restore the first tick re-derives the correct state, so a load can
         /// spuriously fire a start (correct — exposure genuinely resumes) but
@@ -204,12 +207,15 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
                 {
                     interiorRads = context.ShelterRadQuery(zone);
                     exposurePerHour = ComputeEffectiveRate(
-                        zone, gearProtection, context.ShelterShielding, interiorRads);
+                        zone, gearProtection, context.ShelterShielding, interiorRads,
+                        ResolveRateMultiplier(ExposureRateMultiplier));
                 }
                 else
                 {
                     float shielding = context != null ? context.ShelterShielding : 0f;
-                    exposurePerHour = ComputeEffectiveRate(zone, gearProtection, shielding, null);
+                    exposurePerHour = ComputeEffectiveRate(
+                        zone, gearProtection, shielding, null,
+                        ResolveRateMultiplier(ExposureRateMultiplier));
                 }
 
                 if (survivor.HasRadResistance)
@@ -266,11 +272,27 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
         /// applies. Behaviorally identical to the original inline tick branch.
         /// </summary>
         public static float ComputeEffectiveRate(
-            float zoneRadLevel, float gearProtection, float shelterShielding, float? interiorRads)
+            float zoneRadLevel, float gearProtection, float shelterShielding, float? interiorRads,
+            float rateMultiplier = 1f)
         {
+            float multiplier = NormalizeRateMultiplier(rateMultiplier);
             if (interiorRads.HasValue)
-                return MathfCompat.Max(0f, interiorRads.Value - MathfCompat.Max(0f, gearProtection));
-            return ComputeExposurePerHour(zoneRadLevel, gearProtection, shelterShielding);
+                return MathfCompat.Max(0f,
+                    (interiorRads.Value - MathfCompat.Max(0f, gearProtection)) * multiplier);
+            return MathfCompat.Max(0f,
+                (zoneRadLevel
+                 - MathfCompat.Max(0f, gearProtection)
+                 - MathfCompat.Max(0f, shelterShielding)) * multiplier);
+        }
+
+        private static float ResolveRateMultiplier(Func<float>? provider)
+        {
+            return provider == null ? 1f : NormalizeRateMultiplier(provider());
+        }
+
+        private static float NormalizeRateMultiplier(float value)
+        {
+            return float.IsNaN(value) || float.IsInfinity(value) || value < 0f ? 1f : value;
         }
 
         public static float ComputeContaminationAmbient(System.Collections.Generic.IEnumerable<Contamination> contaminations)

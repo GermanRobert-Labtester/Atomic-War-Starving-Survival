@@ -107,6 +107,9 @@ namespace Ashfall.Core
         public event Action<EquipmentInstance>? OnItemBroken;
         public event Action<EquipmentInstance>? OnItemRepaired;
 
+        /// <summary>Optional campaign multiplier for use wear.</summary>
+        public Func<float>? WearRateMultiplierProvider { get; set; }
+
         private readonly Dictionary<string, EquipmentInstance> _itemLookup = new Dictionary<string, EquipmentInstance>(StringComparer.Ordinal);
         private readonly Dictionary<string, DegradationProfileDef> _profiles = new Dictionary<string, DegradationProfileDef>(StringComparer.Ordinal);
 
@@ -317,7 +320,12 @@ namespace Ashfall.Core
             float baseWear = profile?.base_wear_per_use ?? 1.0f;
             float intensity = evt?.intensity ?? 1.0f;
             float envMod = evt?.environmentModifier ?? 1.0f;
-            float wear = baseWear * intensity * envMod;
+            float wearMultiplier = WearRateMultiplierProvider == null
+                ? 1f
+                : WearRateMultiplierProvider();
+            if (float.IsNaN(wearMultiplier) || float.IsInfinity(wearMultiplier) || wearMultiplier < 0f)
+                wearMultiplier = 1f;
+            float wear = baseWear * intensity * envMod * wearMultiplier;
 
             if (item.rustLevel > 0f)
             {

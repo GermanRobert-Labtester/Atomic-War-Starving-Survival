@@ -138,6 +138,7 @@ namespace AtomicWar.GodotApp
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
                 SetupPlans166To169();
+                BindDifficultyConsumers();
             }
             finally
             {

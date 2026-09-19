@@ -86,6 +86,10 @@ namespace Ashfall.Core.Survivors
         /// <summary>External, attributable per-hour need contributions.</summary>
         public NeedsModifierStack ModifierStack { get; } = new NeedsModifierStack();
 
+        /// <summary>Optional campaign multipliers for the two authored base need drifts.</summary>
+        public Func<float>? HungerRateMultiplier { get; set; }
+        public Func<float>? ThirstRateMultiplier { get; set; }
+
         public event Action<SurvivorNeedsState, NeedKind, float>? OnNeedChanged;
         public event Action<SurvivorNeedsState, NeedsModifierContribution>? OnAttributedContribution;
         public event Action<SurvivorNeedsState, NeedKind>? OnNeedCritical;
@@ -253,10 +257,19 @@ namespace Ashfall.Core.Survivors
 
         private void ApplyBaseNeedDrift(SurvivorNeedsState survivor, float gameHours)
         {
-            Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours);
-            Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours);
+            Modify(survivor, NeedKind.Hunger,
+                _profile.hungerPerHour * ResolveRateMultiplier(HungerRateMultiplier) * gameHours);
+            Modify(survivor, NeedKind.Thirst,
+                _profile.thirstPerHour * ResolveRateMultiplier(ThirstRateMultiplier) * gameHours);
             Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours);
             ApplyWarmth(survivor, gameHours);
+        }
+
+        private static float ResolveRateMultiplier(Func<float>? provider)
+        {
+            if (provider == null) return 1f;
+            float value = provider();
+            return float.IsNaN(value) || float.IsInfinity(value) || value < 0f ? 1f : value;
         }
 
         private void ApplyCriticalNeedConsequences(SurvivorNeedsState survivor, float gameHours)

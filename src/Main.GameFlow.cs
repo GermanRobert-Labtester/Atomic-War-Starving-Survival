@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
+using Ashfall.Core.Difficulty;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Save;
 using Ashfall.Core.Expeditions;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.World;
@@ -140,16 +142,34 @@ namespace AtomicWar.GodotApp
             StartNewGame(
                 Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId,
                 _cliStartingSuppliesProfileId ??
-                StartingSuppliesCatalog.StandardProfileId);
+                StartingSuppliesCatalog.StandardProfileId,
+                DifficultyScalarsProvider.Legacy.PresetId);
         }
 
         private void StartNewGame(string profileId)
         {
-            StartNewGame(profileId, StartingSuppliesCatalog.StandardProfileId);
+            StartNewGame(profileId, StartingSuppliesCatalog.StandardProfileId,
+                DifficultyScalarsProvider.Legacy.PresetId);
         }
 
         private void StartNewGame(string cohortProfileId, string startingSuppliesProfileId)
         {
+            StartNewGame(cohortProfileId, startingSuppliesProfileId,
+                DifficultyScalarsProvider.Legacy.PresetId);
+        }
+
+        private void StartNewGame(
+            string cohortProfileId,
+            string startingSuppliesProfileId,
+            string difficultyPresetId)
+        {
+            if (!TrySelectDifficultyForNewCampaign(difficultyPresetId, out string difficultyError))
+            {
+                GD.PrintErr("[Ashfall Godot] New Game aborted: " + difficultyError);
+                if (_statusLabel != null) _statusLabel.Text = "Unable to select the requested difficulty.";
+                return;
+            }
+
             // Fresh campaigns are transactions, not resets of the currently
             // selected campaign. Allocate the next deterministic slot before
             // tearing down live sessions so an existing campaign remains
@@ -162,6 +182,12 @@ namespace AtomicWar.GodotApp
                     _statusLabel.Text = "Unable to allocate a fresh campaign slot.";
                 return;
             }
+
+            _saveLoadHost?.UpdateManifest(m =>
+            {
+                m.manifestVersion = SaveManifest.CurrentManifestVersion;
+                m.difficultyPresetId = _difficultyPresetId;
+            });
 
             _state = GameState.Playing;
             _mainMenu.Visible = false;
@@ -178,6 +204,7 @@ namespace AtomicWar.GodotApp
             // Reset only memory: the newly allocated slot is empty and all
             // existing campaign roots remain untouched on disk.
             ResetAllSessionsInMemory();
+            PrepareDifficultyForNewCampaign();
             _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
             _startingCohortProfileId = string.IsNullOrEmpty(cohortProfileId)
                 ? Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId
@@ -188,6 +215,7 @@ namespace AtomicWar.GodotApp
 
             // Compose all campaign-owned services before any panel opens.
             ComposeCampaign();
+            GrantDifficultyStartingBonusesOnce();
 
             _openingProtocolModal.Bind(_startingLevel);
             // Veteran mode (TutorialMode 2): land on the clean game view instead

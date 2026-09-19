@@ -135,7 +135,9 @@ namespace Ashfall.Core.Economy
         /// <summary>Plan 14A — temporary embargo shock multiplier incl. decay (one record).</summary>
         Embargo = 6,
         /// <summary>Plan 18C — authored GoodDefinition.regionalSupply provenance factor.</summary>
-        RegionalSupply = 7
+        RegionalSupply = 7,
+        /// <summary>XP-01 — campaign difficulty price multiplier.</summary>
+        Difficulty = 8
     }
 
     /// <summary>
@@ -239,6 +241,12 @@ namespace Ashfall.Core.Economy
         public event Action<MarketShockState> OnShockStarted;
         /// <summary>Plan 212 — raised once per shock when it expires during TickDay.</summary>
         public event Action<MarketShockState> OnShockExpired;
+
+        /// <summary>
+        /// Optional campaign difficulty multiplier for quoted value. Applied
+        /// once before the existing authored floor and ceiling clamps.
+        /// </summary>
+        public Func<float>? PriceMultiplierProvider { get; set; }
 
         public MarketSystem(MarketState? state = null)
         {
@@ -742,6 +750,27 @@ namespace Ashfall.Core.Economy
                         price = afterEmbargo;
                     }
                 }
+            }
+
+            float difficultyMultiplier = PriceMultiplierProvider == null
+                ? 1f
+                : PriceMultiplierProvider();
+            if (float.IsNaN(difficultyMultiplier) || float.IsInfinity(difficultyMultiplier) || difficultyMultiplier < 0f)
+                difficultyMultiplier = 1f;
+            if (Math.Abs(difficultyMultiplier - 1f) > 1e-6f)
+            {
+                float afterDifficulty = price * difficultyMultiplier;
+                explanation.factors.Add(new PriceFactorRecord
+                {
+                    kind = PriceFactorKind.Difficulty,
+                    sourceId = "difficulty_market_price",
+                    beforePrice = price,
+                    afterPrice = afterDifficulty,
+                    delta = afterDifficulty - price,
+                    multiplier = difficultyMultiplier,
+                    isConstraint = false
+                });
+                price = afterDifficulty;
             }
 
             float floor = good.basePrice * PriceFloorFraction;

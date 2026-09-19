@@ -25,7 +25,11 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private IReadOnlyList<CrisisPredictionRecord> BuildBriefingCrisisPredictions(int day)
         {
-            var inputs = new CrisisPredictionInputs { CurrentDay = day };
+            var inputs = new CrisisPredictionInputs
+            {
+                CurrentDay = day,
+                DeadlineMultiplier = _difficultyScalars?.CrisisDeadlineMult ?? 1f
+            };
 
             // ── Roster: living count + radiation exposure ────────────────
             SetupSurvivors();

@@ -94,6 +94,7 @@ public class SaveSlotService
 
         var manifest = new SaveManifest
         {
+            manifestVersion = Ashfall.Core.Save.SaveManifest.CurrentManifestVersion,
             profileId = profileId,
             slotId = slotId,
             campaignName = !string.IsNullOrWhiteSpace(campaignName) ? campaignName : $"Campaign {slotId.Value}",
@@ -1251,6 +1252,8 @@ public class SaveSlotService
         sb.Append("campaignName=").Append(envelope.manifest?.campaignName ?? string.Empty).Append('\n');
         sb.Append("ironManTerminalState=").Append((int)(envelope.manifest?.ironManTerminalState ?? IronManTerminalState.Active)).Append('\n');
         sb.Append("lastSaveTimestamp=").Append(envelope.manifest?.lastSaveTimestamp ?? string.Empty).Append('\n');
+        if (envelope.manifest != null && envelope.manifest.manifestVersion >= Ashfall.Core.Save.SaveManifest.CurrentManifestVersion)
+            sb.Append("difficultyPresetId=").Append(envelope.manifest.difficultyPresetId ?? string.Empty).Append('\n');
         if (includeGenerationId)
             sb.Append("generationId=").Append(envelope.manifest?.generationId ?? string.Empty).Append('\n');
 
@@ -1288,4 +1291,3 @@ public class SaveSlotService
         return result.ToString();
     }
 }
-

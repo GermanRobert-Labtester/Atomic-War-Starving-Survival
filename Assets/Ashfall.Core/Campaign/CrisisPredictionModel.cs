@@ -88,6 +88,8 @@ namespace Ashfall.Core.Campaign
         public float TotalDrawWatts { get; set; } = 300f;
         public float FuelUnits { get; set; } = 50f;
         public float FuelRunwayDays { get; set; } = 10f;
+        /// <summary>Campaign difficulty multiplier for predicted deadlines.</summary>
+        public float DeadlineMultiplier { get; set; } = 1f;
 
         // Radiation & Sanitation
         public float AverageRadiationDose { get; set; } = 0f;
@@ -132,6 +134,7 @@ namespace Ashfall.Core.Campaign
             var predictions = new List<CrisisPredictionRecord>();
             int currentDay = Math.Max(1, inputs.CurrentDay);
             int livingSurvivors = Math.Max(0, inputs.LivingSurvivorCount);
+            float deadlineMultiplier = NormalizeDeadlineMultiplier(inputs.DeadlineMultiplier);
 
             // 1. Food Trajectory (only relevant if roster is alive)
             if (livingSurvivors > 0)
@@ -139,12 +142,13 @@ namespace Ashfall.Core.Campaign
                 float burn = inputs.DailyFoodBurnRate > 0f ? inputs.DailyFoodBurnRate : (float)livingSurvivors;
                 float stock = Math.Max(0f, inputs.FoodStockUnits);
                 float runway = stock / burn;
+                float effectiveRunway = runway * deadlineMultiplier;
 
-                if (runway <= FoodWarningRunwayDays)
+                if (effectiveRunway <= FoodWarningRunwayDays)
                 {
-                    int horizon = (int)Math.Floor(runway);
+                    int horizon = (int)Math.Floor(effectiveRunway);
                     int projectedDay = currentDay + horizon;
-                    float confidence = Math.Clamp(1.0f - (runway / (FoodWarningRunwayDays + 1f)) * 0.4f, 0.6f, 1.0f);
+                    float confidence = Math.Clamp(1.0f - (effectiveRunway / (FoodWarningRunwayDays + 1f)) * 0.4f, 0.6f, 1.0f);
                     CrisisConfidenceBand band = confidence >= 0.8f ? CrisisConfidenceBand.High : CrisisConfidenceBand.Moderate;
 
                     predictions.Add(new CrisisPredictionRecord(
@@ -155,7 +159,7 @@ namespace Ashfall.Core.Campaign
                         band,
                         "crisis.reason.food_stock_exhaustion",
                         "Stock non-perishable rations or activate secondary greenhouse crops immediately.",
-                        runway));
+                        effectiveRunway));
                 }
             }
 
@@ -165,12 +169,13 @@ namespace Ashfall.Core.Campaign
                 float burn = inputs.DailyWaterBurnRate > 0f ? inputs.DailyWaterBurnRate : (float)livingSurvivors;
                 float stock = Math.Max(0f, inputs.WaterStockUnits);
                 float runway = stock / burn;
+                float effectiveRunway = runway * deadlineMultiplier;
 
-                if (runway <= WaterWarningRunwayDays)
+                if (effectiveRunway <= WaterWarningRunwayDays)
                 {
-                    int horizon = (int)Math.Floor(runway);
+                    int horizon = (int)Math.Floor(effectiveRunway);
                     int projectedDay = currentDay + horizon;
-                    float confidence = Math.Clamp(1.0f - (runway / (WaterWarningRunwayDays + 1f)) * 0.4f, 0.6f, 1.0f);
+                    float confidence = Math.Clamp(1.0f - (effectiveRunway / (WaterWarningRunwayDays + 1f)) * 0.4f, 0.6f, 1.0f);
                     CrisisConfidenceBand band = confidence >= 0.8f ? CrisisConfidenceBand.High : CrisisConfidenceBand.Moderate;
 
                     predictions.Add(new CrisisPredictionRecord(
@@ -181,7 +186,7 @@ namespace Ashfall.Core.Campaign
                         band,
                         "crisis.reason.water_stock_exhaustion",
                         "Ration drinking water and service filtration or condensation units.",
-                        runway));
+                        effectiveRunway));
                 }
             }
 
@@ -190,7 +195,8 @@ namespace Ashfall.Core.Campaign
             if (inputs.FuelRunwayDays <= PowerFuelWarningRunwayDays || (netWatts < 0f && inputs.BatteryReserveWh <= 0f))
             {
                 float runway = Math.Max(0f, inputs.FuelRunwayDays);
-                int horizon = (int)Math.Floor(runway);
+                float effectiveRunway = runway * deadlineMultiplier;
+                int horizon = (int)Math.Floor(effectiveRunway);
                 int projectedDay = currentDay + horizon;
                 float confidence = runway <= 1f ? 0.95f : 0.75f;
                 CrisisConfidenceBand band = confidence >= 0.8f ? CrisisConfidenceBand.High : CrisisConfidenceBand.Moderate;
@@ -203,13 +209,15 @@ namespace Ashfall.Core.Campaign
                     band,
                     "crisis.reason.power_fuel_depletion",
                     "Acquire generator fuel or shed non-critical room subgrids.",
-                    runway));
+                    effectiveRunway));
             }
 
             // 4. Radiation Hazard
             if (inputs.MaxRadiationDose >= SevereRadThreshold || inputs.AverageRadiationDose >= SevereRadThreshold)
             {
-                int horizon = inputs.MaxRadiationDose >= CriticalRadThreshold ? 1 : 2;
+                int horizon = ScaleDeadlineHorizon(
+                    inputs.MaxRadiationDose >= CriticalRadThreshold ? 1 : 2,
+                    deadlineMultiplier);
                 int projectedDay = currentDay + horizon;
                 float confidence = Math.Clamp(inputs.MaxRadiationDose / 100f, 0.65f, 0.99f);
                 CrisisConfidenceBand band = confidence >= 0.8f ? CrisisConfidenceBand.High : CrisisConfidenceBand.Moderate;
@@ -228,7 +236,9 @@ namespace Ashfall.Core.Campaign
             // 5. Disease & Sanitation Spill Surge
             if (inputs.ActiveSanitationSpills > 0 || inputs.PathogenExposureModifier >= SeverePathogenThreshold)
             {
-                int horizon = inputs.ActiveSanitationSpills > 1 ? 1 : 2;
+                int horizon = ScaleDeadlineHorizon(
+                    inputs.ActiveSanitationSpills > 1 ? 1 : 2,
+                    deadlineMultiplier);
                 int projectedDay = currentDay + horizon;
                 float confidence = inputs.ActiveSanitationSpills > 0 ? 0.85f : 0.7f;
                 CrisisConfidenceBand band = confidence >= 0.8f ? CrisisConfidenceBand.High : CrisisConfidenceBand.Moderate;
@@ -247,7 +257,9 @@ namespace Ashfall.Core.Campaign
             // 6. Distress Signal Ambush / Trap
             if (inputs.PendingHighRiskDistressFollowUps > 0 && inputs.NextDistressFollowUpDay >= currentDay)
             {
-                int horizon = Math.Max(0, inputs.NextDistressFollowUpDay - currentDay);
+                int horizon = ScaleDeadlineHorizon(
+                    Math.Max(0, inputs.NextDistressFollowUpDay - currentDay),
+                    deadlineMultiplier);
                 predictions.Add(new CrisisPredictionRecord(
                     CrisisClass.DistressAmbush,
                     inputs.NextDistressFollowUpDay,
@@ -317,6 +329,16 @@ namespace Ashfall.Core.Campaign
             });
 
             return predictions;
+        }
+
+        private static int ScaleDeadlineHorizon(int horizon, float multiplier)
+        {
+            return Math.Max(0, (int)Math.Floor(Math.Max(0, horizon) * multiplier));
+        }
+
+        private static float NormalizeDeadlineMultiplier(float value)
+        {
+            return float.IsNaN(value) || float.IsInfinity(value) || value < 0f ? 1f : value;
         }
 
         private static bool IsSevereWeather(WeatherKind kind)

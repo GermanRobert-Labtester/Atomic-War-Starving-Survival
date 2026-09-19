@@ -189,6 +189,7 @@ public partial class SaveLoadHostSession : Node
 
         var manifest = new SaveManifest
         {
+            manifestVersion = SaveManifest.CurrentManifestVersion,
             profileId = _currentProfileId,
             slotId = slotId,
             campaignName = $"Campaign {slotId.Value}",
@@ -683,7 +684,10 @@ public partial class SaveLoadHostSession : Node
     /// On failure, provides a recoverable user-facing message, preserves live session,
     /// and fires OnLoadCompleted.
     /// </summary>
-    public bool TryLoadSlot(SaveSlotId slotId, out SaveLoadResult result)
+    public bool TryLoadSlot(
+        SaveSlotId slotId,
+        out SaveLoadResult result,
+        Func<AggregateSaveEnvelope, string?>? loadedEnvelopeValidator = null)
     {
         if (_slotService == null)
         {
@@ -702,6 +706,23 @@ public partial class SaveLoadHostSession : Node
             OnLoadCompleted?.Invoke(result);
             GD.PrintErr($"[SaveLoad] Load failed for slot '{slotId}': {result.UserMessage}");
             return false;
+        }
+
+        if (loadedEnvelopeValidator != null)
+        {
+            string? validationError = loadedEnvelopeValidator(aggregateResult.Envelope);
+            if (!string.IsNullOrWhiteSpace(validationError))
+            {
+                RestoreSelectionAfterFailedLoad(slotId);
+                result = SaveLoadResult.Fail(
+                    SaveLoadStatus.CorruptData,
+                    $"Save slot '{slotId.Value}' failed campaign metadata validation. Live session preserved.",
+                    new List<string> { validationError });
+                LastLoadResult = result;
+                OnLoadCompleted?.Invoke(result);
+                GD.PrintErr($"[SaveLoad] Load rejected for slot '{slotId}': {validationError}");
+                return false;
+            }
         }
 
         // campaign.json has already passed aggregate validation. The section
@@ -1008,6 +1029,7 @@ public partial class SaveLoadHostSession : Node
             ironManTerminalState = source.ironManTerminalState,
             lastSaveTimestamp = source.lastSaveTimestamp,
             generationId = source.generationId,
+            difficultyPresetId = source.difficultyPresetId,
         };
     }
 

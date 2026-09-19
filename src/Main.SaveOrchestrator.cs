@@ -114,7 +114,10 @@ namespace AtomicWar.GodotApp
                 return false;
             }
 
-            bool loaded = _saveLoadHost.TryLoadSlot(slotId, out var result);
+            bool loaded = _saveLoadHost.TryLoadSlot(
+                slotId,
+                out var result,
+                ValidateDifficultyEnvelope);
             message = result.UserMessage;
             if (!loaded || !result.IsSuccess)
             {
@@ -126,6 +129,8 @@ namespace AtomicWar.GodotApp
                 ));
                 return false;
             }
+
+            ApplyDifficultyFromLoadedManifest();
 
             // The slot root now points at the requested campaign. Dispose all
             // live session instances before setup so guarded SetupXxx methods
@@ -289,6 +294,8 @@ namespace AtomicWar.GodotApp
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
+
+            BindDifficultyConsumers();
 
             UpdateHud();
         }
