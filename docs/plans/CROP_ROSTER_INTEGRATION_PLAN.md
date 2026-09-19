@@ -124,9 +124,9 @@ No full suite.
 
 # 19. Phases
 
-**Phase 0 (this session):** scanner maps + baseline pin + artifact regen.
-**Phase 1 (this session):** pharma cordyceps recipe, choke-spore toxin, three items, tests.
-**Phase 2:** oilseed press recipes + confit retarget + goods. No ChandlerySystem.
+**Phase 0 (this session):** scanner maps + baseline pin + artifact regen. (COMPLETE)
+**Phase 1 (this session):** pharma cordyceps recipe, choke-spore toxin, three items, tests. (COMPLETE)
+**Phase 2 (this session):** oilseed press recipes + confit retarget + goods. No ChandlerySystem. (COMPLETE 2026-09-19)
 **Phase 3:** consume cryo `traits[]` via agriculture/hydroponic overlay (signature if greenhouse stats must become data).
 **Phase 4:** seasonal greenhouse presentation; kitchen catalog binding; expand crop filter past 4 seeds.
 **Phase 5:** hydroponic retune after oilseed has non-zero identity.

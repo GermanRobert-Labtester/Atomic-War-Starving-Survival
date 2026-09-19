@@ -1114,6 +1114,20 @@
       "requiredStationId": "stove"
     },
     {
+      "id": "craft_press_oilseed",
+      "recipeName": "Press Sun-Flax Oil",
+      "ingredients": [
+        {
+          "itemId": "crop_oilseed",
+          "amount": 2
+        }
+      ],
+      "resultItemId": "cooking_oil",
+      "resultAmount": 1,
+      "craftingTimeHours": 1.0,
+      "requiredStationId": "stove"
+    },
+    {
       "id": "craft_herbal_poultice",
       "recipeName": "Brew Herbal Poultice",
       "ingredients": [
@@ -1382,8 +1396,8 @@
           "amount": 3
         },
         {
-          "itemId": "fuel",
-          "amount": 2
+          "itemId": "cooking_oil",
+          "amount": 1
         },
         {
           "itemId": "item_preservation_salt",
