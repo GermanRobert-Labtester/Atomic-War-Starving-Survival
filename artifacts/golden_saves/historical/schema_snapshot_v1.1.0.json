@@ -1,0 +1,18 @@
+{
+  "game_version": "1.1.0",
+  "release_tag": "v1.1.0",
+  "release_date": "2026-09-19",
+  "captured_by": "Plan 48 / C2[21] Phase 3 — initial historical corpus bootstrapping",
+  "notes": "Schema snapshot at the v1.1.0 release tag. Codec versions confirmed via headless --version run. This file is a structural record only; actual save payload round-trip tests use the existing artifacts/golden_saves/ corpus.",
+  "_policy": "IMMUTABLE — never edit. Append-only corpus.",
+  "schema_map": {
+    "holdfast": 5,
+    "year_of_ash": 5,
+    "dose_ledger": 2,
+    "expansion_hub": 6,
+    "expansion_quest": 1,
+    "weight_of_choices": 2
+  },
+  "curated_codec_count": 6,
+  "support_window_note": "The runtime at game v1.1.0 must be able to load any save written with these schema versions or higher through the migration path. A save written with holdfast v4 will be migrated to v5 (migration path verified in DeepCoastHeadlessDemo)."
+}

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.0",
-  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates)",
+  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate)",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 56,
+  "total_gates": 57,
   "fast_tier_count": 53,
   "gates": [
     {
@@ -615,6 +615,17 @@
       "expected_summary": "CHANGELOG_DRIFT PASS",
       "classification": "fast",
       "critical": false
+    },
+    {
+      "gate_id": "save_support_window",
+      "name": "Save Support Window & Historical Fixture Corpus Gate (Plan 48 / C2[21] Phase 3)",
+      "category": "Release",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter SaveSupportWindowTests --nologo",
+      "timeout_seconds": 120,
+      "expected_summary": "Passed!",
+      "classification": "full",
+      "critical": true,
+      "depends_on": []
     }
   ]
 }
