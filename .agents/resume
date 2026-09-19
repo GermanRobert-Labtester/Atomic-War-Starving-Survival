@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Keep the repository's case-sensitive dual asset trees configured after wake.
+set -euo pipefail
+
+readonly REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO_ROOT"
+
+git config core.ignorecase false
+echo "[orb-resume] Repository configuration ready."

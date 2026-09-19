@@ -271,3 +271,6 @@ _verify_*.csproj
 # addons/ziva_agent ships ~470MB of CEF/binaries incl. >100MB files that
 # GitHub rejects) — never commit; each machine installs its own tools.
 /addons/
+
+# Amp orb portal metadata is generated per sandbox.
+/.amp/portals/

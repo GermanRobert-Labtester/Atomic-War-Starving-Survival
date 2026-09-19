@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# ASHFALL orb bootstrap: installs the Godot/.NET toolchain and restores the
+# dependencies and assets needed by the canonical headless verification path.
+set -euo pipefail
+
+readonly REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly GODOT_VERSION="4.7.1"
+readonly GODOT_ARCHIVE="Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip"
+readonly GODOT_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/${GODOT_ARCHIVE}"
+readonly GODOT_HOME="/opt/godot/${GODOT_VERSION}"
+
+cd "$REPO_ROOT"
+
+cleanup_paths=()
+cleanup() {
+  rm -rf "${cleanup_paths[@]}"
+}
+trap cleanup EXIT
+
+run_timed() {
+  local label="$1"
+  shift
+  local started
+  started="$(date +%s)"
+  echo "[orb-setup] ${label}..."
+  "$@"
+  echo "[orb-setup] ${label} complete in $(( $(date +%s) - started ))s"
+}
+
+if [[ "${EUID}" -eq 0 ]]; then
+  SUDO=()
+else
+  SUDO=(sudo)
+fi
+
+missing_packages=()
+for package in ca-certificates curl git-lfs unzip; do
+  dpkg-query -W -f='${db:Status-Status}' "$package" 2>/dev/null | grep -qx installed || missing_packages+=("$package")
+done
+
+if (( ${#missing_packages[@]} )); then
+  run_timed "Updating apt package metadata" "${SUDO[@]}" apt-get update
+  run_timed "Installing system prerequisites" "${SUDO[@]}" apt-get install -y "${missing_packages[@]}"
+fi
+
+if ! dpkg-query -W -f='${db:Status-Status}' packages-microsoft-prod 2>/dev/null | grep -qx installed; then
+  microsoft_deb="$(mktemp)"
+  cleanup_paths+=("$microsoft_deb")
+  run_timed "Downloading Microsoft package feed" curl --fail --location --retry 3 --output "$microsoft_deb" \
+    https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
+  run_timed "Installing Microsoft package feed" "${SUDO[@]}" dpkg -i "$microsoft_deb"
+  run_timed "Updating apt package metadata" "${SUDO[@]}" apt-get update
+fi
+
+missing_dotnet_packages=()
+for package in dotnet-sdk-8.0 dotnet-sdk-9.0; do
+  dpkg-query -W -f='${db:Status-Status}' "$package" 2>/dev/null | grep -qx installed || missing_dotnet_packages+=("$package")
+done
+
+if (( ${#missing_dotnet_packages[@]} )); then
+  run_timed "Installing .NET SDKs" "${SUDO[@]}" apt-get install -y "${missing_dotnet_packages[@]}"
+fi
+
+if ! command -v godot >/dev/null 2>&1 || ! godot --version | grep -q "^${GODOT_VERSION}"; then
+  archive="$(mktemp --suffix=.zip)"
+  extracted_dir="$(mktemp -d)"
+  cleanup_paths+=("$archive" "$extracted_dir")
+  run_timed "Downloading Godot ${GODOT_VERSION} .NET" curl --fail --location --retry 3 --output "$archive" "$GODOT_URL"
+  unzip -q "$archive" -d "$extracted_dir"
+  godot_bundle="$(find "$extracted_dir" -mindepth 1 -maxdepth 1 -type d -name 'Godot_*' -print -quit)"
+  godot_binary="$(find "$godot_bundle" -maxdepth 1 -type f -name 'Godot_*' -print -quit)"
+  [[ -n "$godot_binary" ]] || { echo "[orb-setup] Godot archive did not contain an executable" >&2; exit 1; }
+  if [[ -e "$GODOT_HOME" ]]; then
+    echo "[orb-setup] Existing Godot installation at $GODOT_HOME is not ${GODOT_VERSION}; refusing to replace it." >&2
+    exit 1
+  fi
+  run_timed "Installing Godot ${GODOT_VERSION} .NET" "${SUDO[@]}" install -d "$GODOT_HOME"
+  "${SUDO[@]}" cp -a "$godot_bundle/." "$GODOT_HOME/"
+  "${SUDO[@]}" ln -sfn "$GODOT_HOME/$(basename "$godot_binary")" /usr/local/bin/godot
+fi
+
+run_timed "Configuring repository and Git LFS" ./setup-repo.sh
+run_timed "Fetching Git LFS assets" git lfs pull
+run_timed "Restoring core test dependencies" dotnet restore Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
+run_timed "Restoring Godot host dependencies" dotnet restore Ashfall.csproj --nologo
+run_timed "Importing Godot resources" godot --headless --path . --import
+
+echo "[orb-setup] Ready: $(dotnet --version); $(godot --version)"
