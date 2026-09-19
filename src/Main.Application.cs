@@ -318,6 +318,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.HiddenAgendaSelfTest:
                     GetTree().Quit(HiddenAgendaSelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.ShelterReputationSelfTest:
+                    GetTree().Quit(ShelterReputationSelfTest.Run(_dataDir));
+                    return;
                 case HostCliAction.HoldfastRuntimeUiTest:
                     RunHoldfastRuntimeUiTestAndQuit();
                     return;

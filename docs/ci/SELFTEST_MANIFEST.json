@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 128,
-  "headless_test_count": 126,
+  "total_tests": 129,
+  "headless_test_count": 127,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1068,6 +1068,19 @@
       "description": "Survivor hidden agendas, multi-day investigation, confrontation branches, persistence round-trip, and UI binding",
       "headless_compatible": true,
       "expected_summary_id": "hidden_agenda_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_reputation_selftest",
+      "action": "ShelterReputationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--shelter-reputation-selftest",
+      "aliases": [
+        "--reputation-selftest"
+      ],
+      "description": "Plan 207: Shelter reputation, external perception, notoriety, public tags, persistence round-trip, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_reputation_selftest",
       "timeout_seconds": 30
     },
     {

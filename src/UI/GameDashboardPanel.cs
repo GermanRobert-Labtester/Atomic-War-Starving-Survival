@@ -468,6 +468,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "PSYCH WATCH", "psychology_arcs");
             AddNavButton(content, "BESTIARY", "bestiary");
             AddNavButton(content, "INTRIGUE", "hidden_agenda");
+            AddNavButton(content, "REPUTATION", "shelter_reputation");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());

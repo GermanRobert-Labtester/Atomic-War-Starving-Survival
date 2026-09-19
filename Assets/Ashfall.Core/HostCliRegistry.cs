@@ -119,6 +119,7 @@ namespace Ashfall.Core
         SettingsSelfTest,
         SurvivorsSelfTest,
         HiddenAgendaSelfTest,
+        ShelterReputationSelfTest,
         UtilityAiSelfTest,
         WeatherSaveSelfTest,
         WorldSelfTest,
@@ -809,6 +810,12 @@ namespace Ashfall.Core
                     "--hidden-agenda-selftest",
                     new[] { "--hidden-agendas-selftest" },
                     "Survivor hidden agendas, multi-day investigation, confrontation branches, persistence round-trip, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterReputationSelfTest,
+                    "Host Domains & Save Stores",
+                    "--shelter-reputation-selftest",
+                    new[] { "--reputation-selftest" },
+                    "Plan 207: Shelter reputation, external perception, notoriety, public tags, persistence round-trip, and UI binding"),
                 new HostCliActionDescriptor(
                     HostCliAction.UtilityAiSelfTest,
                     "Host Domains & Save Stores",

@@ -155,6 +155,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--hidden-agenda-selftest"],
         "tests": ["Plan132HiddenAgendaIntegrationTests", "HiddenAgendaSystemTests"]
     },
+    "shelter_reputation": {
+        "domain": "Shelter (Plan 207)",
+        "core": ["ShelterReputationSystem"],
+        "catalog": [],
+        "host": ["ShelterReputationHostSession"],
+        "setup": "SetupShelterReputation",
+        "ticked": True,
+        "tick_type": "Daily (Reputation Decay & Tag Evaluation)",
+        "store": ["ShelterReputationSaveStore"],
+        "ui": ["ShelterReputationPanel", "GameDashboardPanel"],
+        "routes": ["shelter_reputation"],
+        "cli": ["--shelter-reputation-selftest"],
+        "tests": ["Plan207ShelterReputationIntegrationTests"]
+    },
     "ecological_infestation": {
         "domain": "World",
         "core": ["EcologicalInfestationSystem"],

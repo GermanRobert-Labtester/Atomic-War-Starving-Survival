@@ -142,6 +142,7 @@ namespace AtomicWar.GodotApp
             SetupShelterDecor();        // uses the final assignment map + inventory catalog
             SetupShelterAtmosphere();
             SetupHiddenAgenda();
+            SetupShelterReputation();
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -295,6 +296,7 @@ namespace AtomicWar.GodotApp
             SaveShelterThermal();
             SaveShelterAtmosphere();
             SaveHiddenAgenda();
+            SaveShelterReputation();
             SaveWeatherHardening();
             SaveGeothermalAquifer();
             SaveShelterSchedule();
@@ -450,6 +452,7 @@ namespace AtomicWar.GodotApp
             TickSleepNarrative(day);
             _crafting?.TickDay(day);
             TickHiddenAgenda(day);
+            TickShelterReputation(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -602,6 +605,9 @@ namespace AtomicWar.GodotApp
                 case "hidden_agenda":
                     ShowHiddenAgendaPanel();
                     break;
+                case "shelter_reputation":
+                    ShowShelterReputationPanel();
+                    break;
                 case "medical_ward":
                     SetupJournal();
                     DiscoverBureaucraticDocuments("medical_office");
@@ -665,6 +671,7 @@ namespace AtomicWar.GodotApp
             RemovePanel(_powerGridPanel); _powerGridPanel = null!;
             RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
+            RemovePanel(_shelterReputationPanel); _shelterReputationPanel = null!;
             _plans94To97Panel?.Unbind();
             RemovePanel(_plans94To97Panel); _plans94To97Panel = null;
             _shelterBarterPanel?.Unbind();
@@ -749,6 +756,8 @@ namespace AtomicWar.GodotApp
             _aeroponicsDirty = false;
             _pneumaticDispatchDirty = false;
             _medicalWardDirty = false;
+            _shelterReputation = null!;
+            _shelterReputationDirty = false;
 
             // Lifecycle reset is intentionally persistence-free. The expanded
             // shelter group owns the existing section captures, but it does
