@@ -3,7 +3,7 @@
 > **Living Multi-Agent Navigation Guide**: Documents all specialized agent skills in `.agents/skills/` organized across 6 functional capability domains. Used by Antigravity, Claude, Codex, Cline, Cursor, and Windsurf AI agents for instant tool discovery.
 
 **Total Registered Skills:** `35`<br>
-**Last Verified:** `2026-09-18`<br>
+**Last Verified:** `2026-09-19`<br>
 **Drift Gated:** `python3 scripts/ci/generate-agent-skills-catalog.py --check`
 
 ---
