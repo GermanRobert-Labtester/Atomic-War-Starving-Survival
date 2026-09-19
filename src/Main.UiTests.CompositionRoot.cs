@@ -230,7 +230,7 @@ namespace AtomicWar.GodotApp
             "Viewport", "SubViewport", "BackBufferCopy", "ColorRect",
             "NinePatchRect", "TextureProgress", "VideoStreamPlayer",
             "Camera", "Light", "WorldEnvironment", "NavigationRegion",
-            "CanvasLayer", "ViewportTexture"
+            "CanvasLayer", "ViewportTexture", "Snapshot", "Hud"
         };
 
         private Dictionary<string, object?> CaptureManifestSessionValues()

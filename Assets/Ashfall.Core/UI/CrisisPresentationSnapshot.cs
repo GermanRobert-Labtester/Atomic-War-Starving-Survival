@@ -62,6 +62,25 @@ namespace Ashfall.Core.UI
         public List<CrisisLogEntryView> Log { get; set; } = new List<CrisisLogEntryView>();
 
         public string AudioStateId { get; set; } = "";
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is CrisisPresentationSnapshot other)
+            {
+                return string.Equals(CrisisId, other.CrisisId, StringComparison.Ordinal)
+                    && string.Equals(Kind, other.Kind, StringComparison.Ordinal)
+                    && Severity == other.Severity
+                    && IsActive == other.IsActive
+                    && string.Equals(Title, other.Title, StringComparison.Ordinal)
+                    && string.Equals(Summary, other.Summary, StringComparison.Ordinal);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(CrisisId, Kind, Severity, IsActive);
+        }
     }
 
     public sealed class CrisisMetricView

@@ -75,7 +75,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_resourcesList == null || _tradeList == null || _marketList == null || _debtList == null) return;
+            if (_resourcesList == null || _tradeList == null || _marketList == null || _debtList == null || _embargoBanner == null || _heatMapContainer == null) return;
 
             AshfallUiHelpers.EmptyChildren(_resourcesList);
             AshfallUiHelpers.EmptyChildren(_tradeList);
@@ -83,7 +83,6 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_debtList);
             AshfallUiHelpers.EmptyChildren(_embargoBanner);
             AshfallUiHelpers.EmptyChildren(_heatMapContainer);
-            AshfallUiHelpers.EmptyChildren(_heatMapDetail);
 
             RenderedRowCount = 0;
 
@@ -265,6 +264,9 @@ namespace AtomicWar.GodotApp.UI
                 RenderedRowCount++;
             }
 
+            _heatMapDetail = new VBoxContainer();
+            _heatMapDetail.AddThemeConstantOverride("separation", 2);
+            _heatMapContainer.AddChild(_heatMapDetail);
             RenderHeatMapDetail();
         }
 
@@ -373,7 +375,6 @@ namespace AtomicWar.GodotApp.UI
             _embargoBanner = BuildInsertedSection("Sep1", "COMMODITY EMBARGOES");
             _heatMapContainer = BuildInsertedSection("DebtHeader", "REGIONAL PRICE HEAT MAP");
             _heatMapDetail = new VBoxContainer();
-            _heatMapContainer.AddChild(_heatMapDetail);
 
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
 
