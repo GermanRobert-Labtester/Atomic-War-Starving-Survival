@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2553 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2554 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2506 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2507 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2189 documents)
+## 9. General Project Guides & Archive Reference (2190 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2024,6 +2024,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md`](plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md) | **PLAN 48 / C2[21] — Release Craft Closeout** — Plan 48 (C2[21]) — *Release Craft: Versioning, Changelog, and the Hotfix Path* — |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) | **Plan 53 / E1 — Ambition Governance & Expansion Intake: Integration Plan** — Convert ASHFALL's accumulated plan corpus — three numbering namespaces, no universal status markers, demonstrably sta... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md`](plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md) | **PLANS B66–B69 — HOST WIRING & CROSS-PLAN SCENARIOS CLOSEOUT** — **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship` |

@@ -154,7 +154,7 @@
       "claim_id": "eco_trade_embargo_registry",
       "category": "Economy & Trade",
       "document": "docs/plans/C1_planintegration.md",
-      "anchor": "Plan 14B §14B.7",
+      "anchor": "Plan 14B \u00a714B.7",
       "claim": "TradeEmbargoSystem models factional trade sanctions and embargoes affecting regional price multipliers and caravan arrival availability.",
       "status": "TRUE",
       "confidence": "PROVEN_INTEGRATION",
@@ -362,7 +362,7 @@
       "claim_id": "world_weather_effects_authority",
       "category": "World & Weather",
       "document": "docs/plans/C2_planintegration[4].md",
-      "anchor": "Plan 20C §68",
+      "anchor": "Plan 20C \u00a768",
       "claim": "WeatherEffectsCatalog is the data authority for environmental modifiers across all 22 weather kinds from weather_effects.json.",
       "status": "TRUE",
       "confidence": "PROVEN_INTEGRATION",
@@ -390,7 +390,7 @@
       "claim_id": "world_weather_station_intelligence",
       "category": "World & Weather",
       "document": "docs/plans/C2_planintegration[4].md",
-      "anchor": "Plan 20C §37/§39",
+      "anchor": "Plan 20C \u00a737/\u00a739",
       "claim": "WeatherStationSystem provides tiered, calibrated multi-day forecasts; DailyBriefingReportBuilder attributes misses to station calibration vs unwarned storms.",
       "status": "TRUE",
       "confidence": "PROVEN_RUNTIME",
@@ -661,12 +661,22 @@
       "document": "docs/releases/VERSIONING.md",
       "anchor": "Save Support Window",
       "claim": "The save support window (which codec versions the current runtime accepts) is tested against golden historical fixtures on every release gate run.",
-      "status": "UNVERIFIABLE",
-      "confidence": "UNVERIFIED",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
       "evidence": [
         {
           "type": "doc",
           "path": "docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md",
+          "symbol": null
+        },
+        {
+          "type": "test_file",
+          "path": "Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs",
+          "symbol": null
+        },
+        {
+          "type": "artifact",
+          "path": "artifacts/golden_saves/historical/manifest.json",
           "symbol": null
         }
       ],
@@ -674,10 +684,9 @@
         "Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs"
       ],
       "gates": [
-        "save_support_window",
-        "release_fixture_matrix"
+        "save_support_window"
       ],
-      "notes": "Phase 3 will create SaveSupportWindowTests and golden fixture corpus. Claim is UNVERIFIABLE until Phase 3 lands. Gates are release-tier (not fast)."
+      "notes": "Phase 3 complete: SaveSupportWindowTests (15/15 PASS) validates 6 curated codec version pins and historical corpus invariants. save_support_window gate registered as full-tier critical."
     },
     {
       "claim_id": "rel_hotfix_never_migrates",
