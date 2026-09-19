@@ -1,7 +1,9 @@
 # CF-XP01 — Difficulty Full Binding Integration Plan
 
 Status: COMPLETE — implemented and focused-verified 2026-09-19 under the
-`claim-xp-wave1-difficulty-2026-09-18` ownership claim.
+`claim-xp-wave1-difficulty-2026-09-18` ownership claim. All 4 phases and all explicit
+acceptance criteria satisfied. `--difficulty-selftest` 14/14 PASS;
+`dotnet test --filter Difficulty` 19/19 PASS; port contract and CI gates conforming.
 
 ## Bounded outcome
 
@@ -76,3 +78,9 @@ Verification passed:
 The pre-existing `EconomyDetailPanel.tscn` `%Content` binding error and exit-time
 RID leak warnings remain outside this package. Completion-history files were not
 edited.
+
+## Verification Evidence (2026-09-19)
+
+- `godot --headless --path . -- --difficulty-selftest`: 14/14 PASS (catalog, scalar_bounds, legacy_parity, unknown_fail_closed, starting_bonus_authority, starting_bonus_once, standard_no_bonus, needs_consumer, radiation_consumer, disease_consumer, market_consumer, equipment_consumer, crisis_consumer, save_binding).
+- `dotnet test --filter Difficulty`: 19/19 PASS (DifficultyPresetCatalogTests 8/8, DifficultyDirectorTests 11/11).
+- `python3 scripts/ci/generate-port-contract.py --check`: 264 seams conforming, 0 deferred ratchet.

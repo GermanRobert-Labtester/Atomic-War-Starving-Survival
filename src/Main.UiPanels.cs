@@ -155,6 +155,7 @@ namespace AtomicWar.GodotApp
         private CaravanBarterLedgerPanel _caravanBarterLedgerPanel = null!;
         private FactionMatrixPanel _factionMatrixPanel = null!;
         private FactionsNarrativePanel _factionsNarrativePanel = null!;
+        private FactionCommuniqueBoardPanel _communiqueBoardPanel = null!;
         private SkillMatrixPanel _skillMatrixPanel = null!;
         private SurvivalWorkstationPanel _survivalWorkstationPanel = null!;
         private VerdictDashboardPanel _verdictDashboardPanel = null!;
@@ -1098,6 +1099,10 @@ namespace AtomicWar.GodotApp
             _factionsNarrativePanel.OnClose += () => _factionsNarrativePanel.Visible = false;
             _factionsNarrativePanel.OnFactionSelected += OpenFactionDetailPanel;
             AddChild(_factionsNarrativePanel);
+
+            _communiqueBoardPanel = new FactionCommuniqueBoardPanel { Visible = false };
+            _communiqueBoardPanel.OnClose += () => _communiqueBoardPanel.Visible = false;
+            AddChild(_communiqueBoardPanel);
 
             _skillMatrixPanel = new SkillMatrixPanel { Visible = false };
             _skillMatrixPanel.OnClose += () => _skillMatrixPanel.Visible = false;

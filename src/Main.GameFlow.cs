@@ -894,23 +894,6 @@ namespace AtomicWar.GodotApp
             return false;
         }
 
-        public override void _UnhandledInput(InputEvent @event)
-        {
-            if (@event.IsActionPressed(AshfallInputActions.UiCancel) || @event.IsActionPressed(AshfallInputActions.Close))
-            {
-                if (AnyOverlayPanelOpen())
-                {
-                    CloseAllOverlayPanels();
-                    GetViewport().SetInputAsHandled();
-                    return;
-                }
-                if (_state == GameState.Playing)
-                {
-                    ReturnToMenu();
-                    GetViewport().SetInputAsHandled();
-                }
-            }
-        }
 
         private void OnStartGameClicked()
         {

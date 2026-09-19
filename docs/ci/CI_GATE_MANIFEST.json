@@ -1,8 +1,9 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
+  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate)",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 53,
-  "fast_tier_count": 50,
+  "total_gates": 57,
+  "fast_tier_count": 53,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -584,6 +585,47 @@
       "expected_summary": "Port contract verification gate: all",
       "classification": "fast",
       "critical": true
+    },
+    {
+      "gate_id": "input_map_contract",
+      "name": "Input Map Contract and Action Parity Gate (Plan 37 / C2[15])",
+      "category": "Quality & Verification",
+      "command": "bash scripts/ci/input-map-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "input map contract PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "version_gate",
+      "name": "Version Drift Gate — three-source agreement + strict semver (Plan 48 / C2[21])",
+      "category": "Release",
+      "command": "python3 scripts/ci/version-gate.py",
+      "timeout_seconds": 30,
+      "expected_summary": "VERSION_GATE PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "changelog_drift",
+      "name": "Changelog Machine-Region Drift Gate (Plan 48 / C2[21])",
+      "category": "Release",
+      "command": "python3 scripts/release/generate_changelog.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "CHANGELOG_DRIFT PASS",
+      "classification": "fast",
+      "critical": false
+    },
+    {
+      "gate_id": "save_support_window",
+      "name": "Save Support Window & Historical Fixture Corpus Gate (Plan 48 / C2[21] Phase 3)",
+      "category": "Release",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter SaveSupportWindowTests --nologo",
+      "timeout_seconds": 120,
+      "expected_summary": "Passed!",
+      "classification": "full",
+      "critical": true,
+      "depends_on": []
     }
   ]
 }

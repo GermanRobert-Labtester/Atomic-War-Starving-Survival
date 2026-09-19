@@ -2,7 +2,7 @@
 
 **Classification:** Core UX & Accessibility Authority
 **Author:** AI Pair Programmer / Antigravity
-**Status:** Implemented & CI-Gated
+**Status:** Implemented & CI-Gated (Infrastructure wired; full keyboard/controller navigation delivered by Plan 37)
 **Enforcement Test:** `Ashfall.Core.Tests/UI/AccessibilitySourceAuditTests.cs`
 
 ---
@@ -11,13 +11,13 @@
 
 ASHFALL is designed to deliver a rigorous, immersive post-nuclear survival simulation that is fully navigable by keyboard, contrast-safe under WCAG guidelines, and free of photosensitive or disorienting visual effects.
 
-This document records the foundational accessibility guarantees introduced in **Plan 80 (Task B21)**, including the centralized **Focus Policy**, **Typographic Floors**, **WCAG Color Contrast Ratios**, **Keyboard Navigation Model**, and our **honest statement of assistive technology limitations**.
+This document records the foundational accessibility guarantees introduced in **Plan 80 (Task B21)** and wired end-to-end in **Plan 37**, including the centralized **Focus Policy**, **Typographic Floors**, **WCAG Color Contrast Ratios**, **Keyboard Navigation Model**, and our **honest statement of assistive technology limitations**.
 
 ---
 
-## 2. Centralized Focus Policy (`AshfallFocusPolicy`)
+## 2. Centralized Focus Policy (`AshfallFocusPolicy` & `AshfallFocusNavigator`)
 
-All overlay panels, modals, and interactive dialogs conform to a unified focus lifecycle implemented in `src/UI/AshfallFocusPolicy.cs`:
+All overlay panels, modals, and interactive dialogs conform to a unified focus lifecycle implemented in `src/UI/AshfallFocusPolicy.cs` and `src/UI/AshfallFocusNavigator.cs`:
 
 1. **Deterministic Initial Focus (`OpenWithFocus`)**:
    - When an overlay or modal opens, keyboard focus is immediately and deterministically acquired by the primary action or first interactive control.

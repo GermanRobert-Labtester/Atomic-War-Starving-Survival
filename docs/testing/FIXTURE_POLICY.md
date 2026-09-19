@@ -124,4 +124,47 @@ This policy is enforced continuously by:
 1. `Ashfall.Core.Tests/Tooling/DataAuthorityFidelityTests.cs` — verifies that items.json properties match runtime expectations and flags divergent synthetic fixtures.
 2. `Ashfall.Core.Tests/Tooling/NoFreshCampaignSystemGateTests.cs` — source gate scanning `src/Host/*SelfTest*.cs` and `src/Main.UiTests*.cs` for unauthorized direct campaign-system instantiations.
 3. `Ashfall.Core.Tests/Save/GoldenSaveFixtureTests.cs` — validates early, mid, and late campaign golden save envelopes (`artifacts/golden_saves/`), aggregate checksums, and determinism digests.
-4. `scripts/ci/verify-fast.sh` — gating all selftests against canonical data paths.
+4. `Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs` — validates curated codec schema version pins and historical fixture corpus structural invariants.
+5. `scripts/ci/verify-fast.sh` — gating all selftests against canonical data paths.
+
+---
+
+## 7. Historical Save Corpus (Plan 48 / C2[21] Phase 3)
+
+### Purpose
+
+The historical corpus records the codec schema versions in effect at each
+release tag. It serves as the minimum-version floor for save support window
+testing: the current runtime must always support loading saves produced at
+any version in the corpus (via migration paths).
+
+### Location
+
+```
+artifacts/golden_saves/historical/
+├── manifest.json                   # corpus index (immutable entries only)
+└── schema_snapshot_v<X.Y.Z>.json  # one file per release tag
+```
+
+### Corpus Invariants (INV-48.1–48.3)
+
+- **INV-48.1 — Immutability:** Historical corpus entries must never be edited
+  after initial commit. The `_policy` field in each file and in `manifest.json`
+  documents this. Only new entries may be appended when a new release tag is cut.
+
+- **INV-48.2 — No regression:** `SaveSupportWindowTests.CurrentCodecVersions_NeverRegressBelowHistoricalMinimum`
+  asserts that each curated codec's `CurrentVersion` is always >= the minimum
+  version recorded across the entire historical corpus. A schema downgrade is a
+  save-breaking regression and must never land silently.
+
+- **INV-48.3 — Release ceremony:** When cutting a new release tag (`vX.Y.Z`),
+  add a new `schema_snapshot_vX.Y.Z.json` to `artifacts/golden_saves/historical/`
+  and append a corresponding entry to `manifest.json` as part of `prepare-release.sh`.
+
+### Append-Only Protocol
+
+At each new release (Phase 4+ ceremony):
+1. `prepare-release.sh` generates a new `schema_snapshot_vX.Y.Z.json` from the
+   current `VersionReport.SaveSchemaVersions` live constants.
+2. It appends the corresponding entry to `manifest.json`.
+3. Both files are committed as part of the release commit (never hand-edited).

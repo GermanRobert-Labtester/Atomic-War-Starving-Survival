@@ -580,6 +580,18 @@
       "weightKg": 1.5,
       "regionalSupply": "foundry",
       "barterNote": "The bunker breathes through these. A sealed cartridge trades at the price of the seller's own remaining air."
+    },
+    {
+      "id": "crop_oilseed",
+      "displayName": "Harvested Sun-Flax",
+      "category": "materials",
+      "basePrice": 10.0,
+      "volatility": 0.15,
+      "elasticity": 0.9,
+      "stackSize": 25,
+      "weightKg": 0.15,
+      "regionalSupply": "settlement",
+      "barterNote": "Dense, oily seeds from the greenhouse sun-flax beds. Presses into clean cooking oil; the press-cake bolsters flour rations."
     }
   ]
 }

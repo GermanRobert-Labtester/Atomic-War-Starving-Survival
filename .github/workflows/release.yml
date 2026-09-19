@@ -1,0 +1,80 @@
+# ASHFALL Release Workflow — Plan 48 / C2[21] Phase 4
+# =====================================================
+# Triggered on version tags (vX.Y.Z). Runs the release gate and exports builds.
+# Only fires on properly formatted release tags — never on branch pushes.
+# See docs/releases/PROCESS.md for the full ceremony.
+
+name: ASHFALL Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  release-gate:
+    name: Release Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Version drift gate
+        run: python3 scripts/ci/version-gate.py
+
+      - name: Changelog drift gate
+        run: python3 scripts/release/generate_changelog.py --check
+
+      - name: dotnet build (0/0 check)
+        run: dotnet build Ashfall.csproj --nologo
+
+      - name: Save support window gate
+        run: >
+          dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+          --filter SaveSupportWindowTests --nologo
+
+  export-release:
+    name: Export Release Builds
+    needs: release-gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Setup Godot 4.7.1 mono
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.1
+          use-dotnet: true
+          include-templates: true
+
+      - name: Run export-build.sh
+        run: bash scripts/ci/export-build.sh
+
+      - name: Upload Linux build
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-Linux-${{ github.ref_name }}
+          path: builds/linux
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-Windows-${{ github.ref_name }}
+          path: builds/windows

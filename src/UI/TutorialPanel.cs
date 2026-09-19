@@ -4,6 +4,7 @@ using System;
 using Godot;
 using Ashfall.Core.Localization;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.Host;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.Localization;
 
@@ -215,7 +216,9 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc/F1]", () => OnClose?.Invoke());
+            var btnClose = AshfallUiHelpers.MakeButton(
+                $"CLOSE [{AshfallInputActions.GetActionPrompt(AshfallInputActions.Close)}/{AshfallInputActions.GetActionPrompt(AshfallInputActions.Help)}]",
+                () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
 
@@ -245,7 +248,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (!Visible) return;
 
-            if (@event is InputEventKey key && key.Pressed && (key.Keycode == Key.Escape || key.Keycode == Key.F1))
+            if (AshfallInputActions.IsCloseOrCancel(@event) || AshfallInputActions.IsHelp(@event))
             {
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();

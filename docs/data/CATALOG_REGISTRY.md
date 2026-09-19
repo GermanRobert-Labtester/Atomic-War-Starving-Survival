@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-19
-**Total Catalogs:** 622 | **Total Definitions:** 10402 | **Domain Families:** 32
+**Total Catalogs:** 622 | **Total Definitions:** 10404 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -235,14 +235,14 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `world_evolution_seeds.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `world_history.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 
-### Crafting & Relics (6 Catalogs, 149 Definitions)
+### Crafting & Relics (6 Catalogs, 150 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `glassworks_recipes.json` | 2 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `library_manuals.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `metallurgy_recipes.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `recipes.json` | 122 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `recipes.json` | 123 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `relic_recipes.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `workshop_recipes.json` | 13 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 
@@ -265,13 +265,13 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `duty_roster_marks.json` | 43 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `duty_roster_seasons.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 
-### Economy & Trade (9 Catalogs, 77 Definitions)
+### Economy & Trade (9 Catalogs, 78 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `black_market_inventory.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `caravan_trade_routes.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `economy_goods.json` | 49 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `economy_goods.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `hardcore_economy_tuning.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `trade_embargoes.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `trade_screen_scenarios.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "description": "Historical save schema corpus for ASHFALL save support window testing (Plan 48 / C2[21] Phase 3). Each entry records the game version, codec schema versions in effect at that release tag, and the release date. Used by SaveSupportWindowTests to verify that the current runtime never regresses below what old saves required.",
+  "_policy": "IMMUTABLE — entries must never be edited after initial commit. Only new entries may be appended when a new release tag is cut. See docs/testing/FIXTURE_POLICY.md for invariants.",
+  "fixtures": [
+    {
+      "fixture_name": "schema_snapshot_v1.1.0.json",
+      "game_version": "1.1.0",
+      "release_tag": "v1.1.0",
+      "release_date": "2026-09-19",
+      "notes": "Initial historical corpus entry. Schema versions at the v1.1.0 tag, confirmed via --version headless run.",
+      "schema_map": {
+        "holdfast": 5,
+        "year_of_ash": 5,
+        "dose_ledger": 2,
+        "expansion_hub": 6,
+        "expansion_quest": 1,
+        "weight_of_choices": 2
+      }
+    }
+  ]
+}

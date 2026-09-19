@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
@@ -394,10 +395,25 @@ namespace AtomicWar.GodotApp.UI
             var evCard = AshfallUiHelpers.MakeCardFrame("RECENT DIPLOMATIC COMMUNIQUES", "RADIO INTERCEPTS");
             var evBox = evCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
-            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 04] Black Flotilla", "Coastal barge dispatch confirmed trade route into Sector 12.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 03] Scavenger Guild", "Brannick Sten renewed boundary markers near Denial Cut Substation.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
-            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 02] Ledger Keepers", "Emissary courier delivered technical index of surviving infrastructure.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 01] Green Thread", "Agrarian collective requested potassium iodide exchange for hydroponic seeds.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            var catalog = _yearOfAsh?.WarRunner?.Catalog;
+            int currentDay = _yearOfAsh?.Timeline?.CurrentDay ?? 0;
+            var visible = catalog?.Communiques?
+                .Where(c => c.day <= currentDay)
+                .OrderByDescending(c => c.day)
+                .Take(4)
+                .ToList();
+
+            if (visible != null && visible.Count > 0)
+            {
+                foreach (var c in visible)
+                {
+                    evBox.AddChild(AshfallUiHelpers.MakeDataRow($"[Day {c.day:D2}] {c.factionId}", c.title, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                }
+            }
+            else
+            {
+                evBox.AddChild(AshfallUiHelpers.MakeDataRow("STATUS", "No diplomatic communiqués intercepted on local frequencies.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            }
             _eventsContainer.AddChild(evCard);
         }
 

@@ -34,7 +34,7 @@ namespace AtomicWar.GodotApp
                 _doseGeographyPanel,
                 _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
                 _pneumaticDispatchPanel,
-                _caravanBarterLedgerPanel, _factionMatrixPanel, _factionsNarrativePanel,
+                _caravanBarterLedgerPanel, _factionMatrixPanel, _factionsNarrativePanel, _communiqueBoardPanel,
                 _skillMatrixPanel, _survivalWorkstationPanel, _verdictDashboardPanel,
                 _mapAtlasPanel, _maritimeAtlasPanel, _musterAtlasPanel,
                 _questsAtlasPanel, _researchAtlasPanel, _standingRecordAtlasPanel,
@@ -66,11 +66,20 @@ namespace AtomicWar.GodotApp
             foreach (Control panel in panels)
             {
                 if (panel != null)
+                {
+                    if (panel.Visible)
+                    {
+                        AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(panel);
+                    }
                     panel.Visible = false;
+                }
             }
 
             if (_journalBook != null && _journalBook.IsOpen)
+            {
+                AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(_journalBook);
                 _journalBook.Close();
+            }
         }
 
         private void CloseSettingsPanel()

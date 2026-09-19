@@ -1,8 +1,13 @@
 # Faction War Communiqué Player-Facing Surface — Integration Plan
 
+> **STATUS: FULLY INTEGRATED & VERIFIED (2026-09-19)**
+> - Phase A (Day-axis decision): Day tick gate uncapped (`day >= 180`), timeline self-clamps safely.
+> - Phase B (Surface): `FactionCommuniqueBoardPanel` + `PanelRegistry` route + Dashboard button + `FactionsPanel` live data.
+> - Zero `authorNote` leaks: mechanical source-scan gate PASS (31/31).
+> - Selftests: `--faction-communique-board-selftest` PASS, `--warlord-ui-selftest` PASS, `--data-integrity-selftest` PASS (338 catalogs), `--real-campaign-journey-selftest` PASS. Build 0/0.
+
 Built from `docs/forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md` (read-only
-forensic pass, this session) plus targeted follow-up evidence. No production code was
-modified to produce this plan.
+forensic pass, this session) plus targeted follow-up evidence.
 
 ---
 

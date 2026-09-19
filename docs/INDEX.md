@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2534 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2544 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2487 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2497 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -375,7 +375,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/PLAN_127_VERDICT_DATA_CORRUPTION_HISTORY_EXPANSION_CLOSEOUT.md`](verdict/PLAN_127_VERDICT_DATA_CORRUPTION_HISTORY_EXPANSION_CLOSEOUT.md) | **Plan 127 Verdict Data Expansion Closeout** — **Status:** DATA COMPLETE / RUNTIME REACHABILITY DEFERRED |
 | 🟢 `CURRENT` | [`docs/verdict/PLAN_82_VERDICT_LOCATIONS_EXPANSION_CLOSEOUT.md`](verdict/PLAN_82_VERDICT_LOCATIONS_EXPANSION_CLOSEOUT.md) | **Plan 82 — Verdict Investigation Sites Expansion Closeout Report** — Plan 82 — Final Regression |
 
-## 5. UI, UX & Visual Systems (106 documents)
+## 5. UI, UX & Visual Systems (107 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -435,6 +435,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/INFORMATION_HIERARCHY_AUDIT.md`](ui/INFORMATION_HIERARCHY_AUDIT.md) | **ASHFALL — Information Hierarchy, Causality & Decision Clarity Audit** — **Audit Reference:** Plan 14 Task 14D |
 | 🟢 `CURRENT` | [`docs/ui/INPUT_AND_NAVIGATION_AUDIT.md`](ui/INPUT_AND_NAVIGATION_AUDIT.md) | **ASHFALL — Input Map, Navigation & Interaction Audit** — **Audit Reference:** Plan 14 Task 14E / `ashfall-input-map-audit` |
 | 🟢 `CURRENT` | [`docs/ui/JOURNAL_UI_PLAN.md`](ui/JOURNAL_UI_PLAN.md) | **ASHFALL — Journal UI Plan** — Turn the existing diegetic journal (playthrough log + tutorial pages) into the |
+| 🟢 `CURRENT` | [`docs/ui/KEYBOARD.md`](ui/KEYBOARD.md) | **ASHFALL — Authoritative Keyboard & Controller Map** — - **Initial Focus**: Every overlay open routes through `AshfallFocusPolicy.OpenWithFocus`. |
 | 🟢 `CURRENT` | [`docs/ui/LOCALIZATION_READINESS.md`](ui/LOCALIZATION_READINESS.md) | **ASHFALL — Localization Readiness & String Extraction Architecture** — **Audit Reference:** Plan 14 Task 14C / `ashfall-string-extractor` |
 | 🟢 `CURRENT` | [`docs/ui/PANEL_AUTHORITY_OWNERSHIP.md`](ui/PANEL_AUTHORITY_OWNERSHIP.md) | **Panel Authority Ownership — Live player surfaces and their campaign authorities** — - `ResolveLiveDosimeterTag()` — `src/Main.PlayerSurfaces.cs`; ordinal-first registered |
 | 🟢 `CURRENT` | [`docs/ui/PHASE13_DATA_AVAILABILITY.md`](ui/PHASE13_DATA_AVAILABILITY.md) | **Phase 13 — Data Availability Report** — **Date:** this turn. |
@@ -577,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2171 documents)
+## 9. General Project Guides & Archive Reference (2180 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2018,9 +2019,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md) | **PLAN 22 IMPLEMENTATION LOG — Greenhouse Runtime Item Consumption** — Plan: `docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_24_CLOSEOUT.md`](plans/PLAN_24_CLOSEOUT.md) | **Plan 24 — Survivor Fitness, Needs, Labor, and Medical Journey: CLOSEOUT** — **Status:** CLOSED — both signature items resolved 2026-09-18 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** PLAN — not yet authorized for implementation. Phase 0 (the premise |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md`](plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md) | **PLAN 48 / C2[21] — Release Craft Closeout** — Plan 48 (C2[21]) — *Release Craft: Versioning, Changelog, and the Hotfix Path* — |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) | **Plan 53 / E1 — Ambition Governance & Expansion Intake: Integration Plan** — Convert ASHFALL's accumulated plan corpus — three numbering namespaces, no universal status markers, demonstrably sta... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md`](plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md) | **PLANS B66–B69 — HOST WIRING & CROSS-PLAN SCENARIOS CLOSEOUT** — **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship` |
@@ -2257,7 +2259,14 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/relationships/CONFESSION_CONSEQUENCE_RANGE_MATRIX.md`](relationships/CONFESSION_CONSEQUENCE_RANGE_MATRIX.md) | **Confession Consequence Range Matrix** — - **Forgiveness Affinity:** Mean $\approx +16.0$, Range: $[+8, +25]$ |
 | 🟢 `CURRENT` | [`docs/relationships/CONFESSION_SECRET_SCHEMA.md`](relationships/CONFESSION_SECRET_SCHEMA.md) | **Confession Secret Catalog Schema Specification** — "schema_version": 1, |
 | 🟢 `CURRENT` | [`docs/relationships/PLAN88_BASELINE.md`](relationships/PLAN88_BASELINE.md) | **Plan 88 — Baseline Discovery & Forensic Reconciliation** — Plan 88 requested expanding `confession_secrets.json` from a supposed 8-entry baseline to 20 confession secrets cover... |
+| 🟢 `CURRENT` | [`docs/releases/HOTFIX.md`](releases/HOTFIX.md) | **ASHFALL Hotfix Guide** — Not every urgent fix is a hotfix. Classify first. |
+| 🟢 `CURRENT` | [`docs/releases/HOTFIX_REHEARSAL_v1.1.1.md`](releases/HOTFIX_REHEARSAL_v1.1.1.md) | **ASHFALL Hotfix Rehearsal Record — v1.1.1** — Prove that the hotfix gate **correctly refuses** a branch that contains |
+| 🟢 `CURRENT` | [`docs/releases/POSTMORTEM_TEMPLATE.md`](releases/POSTMORTEM_TEMPLATE.md) | **ASHFALL Post-Mortem Template** — **Date:** [YYYY-MM-DD] |
+| 🟢 `CURRENT` | [`docs/releases/PROCESS.md`](releases/PROCESS.md) | **ASHFALL Release Process** — ASHFALL uses a tag-based release model. Every public release is represented |
 | 🟢 `CURRENT` | [`docs/releases/RELEASE_1.1.0.md`](releases/RELEASE_1.1.0.md) | **RELEASE 1.1.0 — Release Record — ✅ GO (clean-clone verified)** — Lane: `lane/trapping-flagship-verification` (branched from `feat/asset-pipeline-flagship`) |
+| 🟢 `CURRENT` | [`docs/releases/SUPPORT.md`](releases/SUPPORT.md) | **ASHFALL — Support Triage Kit** — This document helps triage player-reported issues: classify them, determine the |
+| 🟢 `CURRENT` | [`docs/releases/TEMPLATE.md`](releases/TEMPLATE.md) | **ASHFALL Release Note Template** — **Release Date:** [YYYY-MM-DD] |
+| 🟢 `CURRENT` | [`docs/releases/VERSIONING.md`](releases/VERSIONING.md) | **ASHFALL — Versioning & Compatibility Policy** — ASHFALL maintains three independent, cooperating version axes: |
 | 🟢 `CURRENT` | [`docs/remediation/68_glm53_flash_50_issue_closeout.md`](remediation/68_glm53_flash_50_issue_closeout.md) | **GLM 5.3 Flash 50-Issue Closeout** — - Plan target: `9b4985d0122d707c31f6078050df5877b69b607b` |
 | 🟢 `CURRENT` | [`docs/remediation/69_audit_issues_11_25_closeout.md`](remediation/69_audit_issues_11_25_closeout.md) | **ASHFALL — Audit Issues 11–25 Closeout** — **Branch:** `feat/asset-pipeline-flagship` |
 | 🟢 `CURRENT` | [`docs/remediation/70_audit_issues_26_35_closeout.md`](remediation/70_audit_issues_26_35_closeout.md) | **ASHFALL — Audit Issues 26–35 Closeout** — **Branch:** `feat/asset-pipeline-flagship` |
@@ -2306,6 +2315,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_124_CVD_DIAMOND_CLOSEOUT.md`](shelter/PLAN_124_CVD_DIAMOND_CLOSEOUT.md) | **PLAN 124 — CVD Diamond Closeout (Phase 12)** — **Verb:** `--cvd-diamond-selftest` (alias) · **Tool economy:** `docs/shelter/PLAN_124_DIAMOND_TOOL_ECONOMY.md` · **Au... |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_124_DIAMOND_AUTHORITY_MAP.md`](shelter/PLAN_124_DIAMOND_AUTHORITY_MAP.md) | **PLAN 124 — CVD Diamond Tooling Authority Map (Phase 1)** — **Status:** ACCEPTED (reconnaissance). Premise-verified against current source. |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_124_DIAMOND_TOOL_ECONOMY.md`](shelter/PLAN_124_DIAMOND_TOOL_ECONOMY.md) | **PLAN 124 — Diamond Tool Economy (Phase 11)** — **Source:** `--plans-122-125-balance-soak` 120-day tool-economy soak (2 industrial ticks/day, skill 65, refined feed ... |
+| 🟢 `CURRENT` | [`docs/shelter/PLAN_138_LOW_BACKGROUND_LEAD_CLOSEOUT.md`](shelter/PLAN_138_LOW_BACKGROUND_LEAD_CLOSEOUT.md) | **Plan 138 — Low-Background Radiation Metrology: Closeout** — **Status:** COMPLETE · **Date:** 2026-09-19 · **Batch:** `PLANS-138-139-141-LATER-PHASES` |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_140_HYDRAULIC_EXTRUSION_CLOSEOUT.md`](shelter/PLAN_140_HYDRAULIC_EXTRUSION_CLOSEOUT.md) | **Plan 140 — Advanced Hydraulic Extrusion: Closeout** — **Status:** COMPLETE · **Date:** 2026-09-12 · **Batch:** `PLANS-138-139-141-LATER-PHASES` |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_146_EBPVD_COATINGS_CLOSEOUT.md`](shelter/PLAN_146_EBPVD_COATINGS_CLOSEOUT.md) | **Plan 146 Closeout: EB-PVD Thermal Barrier Coatings** — **Plan ID:** AF-146 |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_186_MAINTENANCE_PROJECTION_AUTHORITY_MAP.md`](shelter/PLAN_186_MAINTENANCE_PROJECTION_AUTHORITY_MAP.md) | **Plan 186 — Shelter maintenance projection authority map** — **Status:** ACCEPTED — §3 signed 2026-09-12 |

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Settings;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.Host;
 using AtomicWar.GodotApp.Settings;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
@@ -21,6 +23,30 @@ namespace AtomicWar.GodotApp.UI
 
         private UserSettingsData _working = new();
         private UserSettingsData _initial = new();
+
+        // Input & Controls (Plan 37)
+        private readonly Dictionary<string, Button> _bindingButtons = new(StringComparer.Ordinal);
+        private string? _rebindAction;
+        private Label _lblConflictWarning = null!;
+
+        private static readonly Dictionary<string, string> ActionLabels = new(StringComparer.Ordinal)
+        {
+            { AshfallInputActions.Close, "Close / Cancel" },
+            { AshfallInputActions.Confirm, "Confirm / Select" },
+            { AshfallInputActions.NextTab, "Next Tab" },
+            { AshfallInputActions.NavUp, "Navigate Up" },
+            { AshfallInputActions.NavDown, "Navigate Down" },
+            { AshfallInputActions.NavLeft, "Navigate Left" },
+            { AshfallInputActions.NavRight, "Navigate Right" },
+            { AshfallInputActions.Journal, "Toggle Journal" },
+            { AshfallInputActions.Help, "Help / Tutorial" },
+            { AshfallInputActions.Guidance, "Toggle Guidance" },
+            { AshfallInputActions.Forecast, "Weather Forecast" },
+            { AshfallInputActions.WeatherHistory, "Weather History" },
+            { AshfallInputActions.Events, "Events Log" },
+            { AshfallInputActions.Expeditions, "Expeditions" },
+            { AshfallInputActions.Holdfast, "Holdfast Terminal" }
+        };
 
         // Audio labels
         private Label _lblMasterVol = null!;
@@ -89,6 +115,38 @@ namespace AtomicWar.GodotApp.UI
             if (!Visible) return;
             if (@event is InputEventKey key && key.Pressed && !key.Echo)
             {
+                if (!string.IsNullOrEmpty(_rebindAction))
+                {
+                    if (key.Keycode == Key.Escape)
+                    {
+                        _rebindAction = null;
+                        if (_lblConflictWarning != null) _lblConflictWarning.Text = "";
+                        RefreshControls();
+                        GetViewport().SetInputAsHandled();
+                        return;
+                    }
+
+                    string? conflict = KeyBindingApplicator.FindConflict(_rebindAction, key.Keycode, _working);
+                    if (conflict != null)
+                    {
+                        string conflictLabel = ActionLabels.TryGetValue(conflict, out var cl) ? cl : conflict;
+                        if (_lblConflictWarning != null)
+                        {
+                            _lblConflictWarning.Text = $"Key '{key.Keycode}' conflicts with '{conflictLabel}'!";
+                        }
+                        GetViewport().SetInputAsHandled();
+                        return;
+                    }
+
+                    _working.KeyBindings ??= new Dictionary<string, List<int>>(StringComparer.Ordinal);
+                    _working.KeyBindings[_rebindAction] = new List<int> { (int)key.Keycode };
+                    _rebindAction = null;
+                    if (_lblConflictWarning != null) _lblConflictWarning.Text = "";
+                    RefreshControls();
+                    GetViewport().SetInputAsHandled();
+                    return;
+                }
+
                 if (key.Keycode == Key.Escape)
                 {
                     CancelAndClose();
@@ -358,6 +416,64 @@ namespace AtomicWar.GodotApp.UI
             rowRadioLog.AddChild(_btnVerboseRadio);
             contentVBox.AddChild(rowRadioLog);
 
+            contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── 5. INPUT & CONTROLS SECTION (Plan 37) ──────────────────────
+            contentVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("INPUT & CONTROLS"));
+
+            _lblConflictWarning = AshfallUiHelpers.MakeLabel("", DesignTheme.FontSizeSmall, DesignTheme.Hot);
+            contentVBox.AddChild(_lblConflictWarning);
+
+            foreach (var contract in AshfallInputActions.Contract)
+            {
+                if (!contract.Rebindable) continue;
+                string actionKey = contract.Action;
+                string labelText = ActionLabels.TryGetValue(actionKey, out var friendly) ? friendly : actionKey;
+
+                var row = MakeSettingRow(labelText);
+
+                var btnBind = AshfallUiHelpers.MakeButton("[---]", () =>
+                {
+                    _rebindAction = actionKey;
+                    _lblConflictWarning.Text = $"Press a key to bind '{labelText}' (Esc to cancel)...";
+                    RefreshControls();
+                });
+                btnBind.CustomMinimumSize = new Vector2(160, 32);
+                _bindingButtons[actionKey] = btnBind;
+                row.AddChild(btnBind);
+
+                var btnResetSingle = AshfallUiHelpers.MakeButton("↺", () =>
+                {
+                    if (_working.KeyBindings != null)
+                    {
+                        _working.KeyBindings.Remove(actionKey);
+                    }
+                    if (_rebindAction == actionKey) _rebindAction = null;
+                    _lblConflictWarning.Text = "";
+                    RefreshControls();
+                });
+                btnResetSingle.CustomMinimumSize = new Vector2(36, 32);
+                btnResetSingle.TooltipText = "Reset this key to canonical default";
+                row.AddChild(btnResetSingle);
+
+                contentVBox.AddChild(row);
+            }
+
+            var rowResetAllBindings = MakeSettingRow("Reset All Keybindings");
+            var btnResetAllBindings = AshfallUiHelpers.MakeButton("RESET ALL KEYS", () =>
+            {
+                if (_working.KeyBindings != null)
+                {
+                    _working.KeyBindings.Clear();
+                }
+                _rebindAction = null;
+                _lblConflictWarning.Text = "All keybindings reset to canonical defaults.";
+                RefreshControls();
+            });
+            btnResetAllBindings.CustomMinimumSize = new Vector2(200, 32);
+            rowResetAllBindings.AddChild(btnResetAllBindings);
+            contentVBox.AddChild(rowResetAllBindings);
+
             mainVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── BOTTOM ACTION BAR ──────────────────────────────────────────
@@ -493,6 +609,24 @@ namespace AtomicWar.GodotApp.UI
             }
             _btnConfirmEndDay.Text = _working.ConfirmEndDay ? "ENABLED" : "DISABLED";
             _btnVerboseRadio.Text = _working.VerboseRadioLog ? "ENABLED" : "DISABLED";
+
+            // Keybindings (Plan 37)
+            foreach (var contract in AshfallInputActions.Contract)
+            {
+                if (!contract.Rebindable) continue;
+                if (_bindingButtons.TryGetValue(contract.Action, out var btn))
+                {
+                    if (_rebindAction == contract.Action)
+                    {
+                        btn.Text = "PRESS KEY...";
+                    }
+                    else
+                    {
+                        Key effective = KeyBindingApplicator.GetEffectiveKey(contract.Action, _working);
+                        btn.Text = $"[{effective}]";
+                    }
+                }
+            }
         }
 
         private void ResetToDefaults()

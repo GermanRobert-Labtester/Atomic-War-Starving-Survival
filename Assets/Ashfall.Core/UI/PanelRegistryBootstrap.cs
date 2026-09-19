@@ -21,6 +21,7 @@ namespace Ashfall.Core.UI
             R("research",            "Research",                      PanelGroup.Dashboard,  new[] { "research" });
             R("weather_detail",      "Weather Detail",                PanelGroup.Dashboard,  new[] { "world" });
             R("weather_forecast",    "Weather Forecast",              PanelGroup.Dashboard,  new[] { "world" });
+            R("weather_history",     "Weather History",               PanelGroup.Dashboard,  new[] { "world" });
             R("event_detail",        "Event Detail",                  PanelGroup.Dashboard,  new[] { "events" });
             R("events_log",          "Events Log",                    PanelGroup.Dashboard,  new[] { "events" });
             R("economy_detail",      "Economy Detail",                PanelGroup.Dashboard,  new[] { "economy" });
@@ -139,6 +140,7 @@ namespace Ashfall.Core.UI
             R("caravan_barter",      "Caravan Barter Ledger",         PanelGroup.Secondary,  new[] { "economy" });
             R("faction_matrix",      "Faction Stance Matrix",         PanelGroup.Secondary,  new[] { "factions" });
             R("factions_narrative",  "Factions Narrative",            PanelGroup.Secondary,  new[] { "factions" });
+            R("faction_communique_board", "Faction Communiqués",      PanelGroup.Secondary,  new[] { "factions" });
             R("skill_matrix",        "Skill Progression Matrix",      PanelGroup.Secondary,  new[] { "survivors" });
             R("survival_workstation","Survival Workstation",          PanelGroup.Dashboard,  new[] { "crafting", "inventory" });
             R("verdict_dashboard",   "Verdict Dashboard",             PanelGroup.Dashboard,  new[] { "verdict" });
