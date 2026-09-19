@@ -48,10 +48,11 @@ namespace Ashfall.Core.Tests
             // Plan 56 follow-up: 40 + 8 (documents/weapons/contraband/misc
             // category fill) under the revised count target = 48. D1 drift
             // rematch: Wave 8 Plan 22 trade parity added `cloth` +
-            // `item_air_filter_hepa` to economy_goods.json (48 -> 50); the
-            // breadth target now tracks the shipped catalog.
+            // `item_air_filter_hepa` to economy_goods.json (48 -> 50).
+            // 2026-09-19: Crop Roster Phase 2 added `crop_oilseed` (50 -> 51);
+            // breadth target tracks the shipped catalog.
             var (_, goods) = Load();
-            Assert.Equal(50, goods.Count);
+            Assert.Equal(51, goods.Count);
         }
 
         [Fact]
