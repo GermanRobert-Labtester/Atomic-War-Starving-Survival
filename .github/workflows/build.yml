@@ -36,6 +36,9 @@ jobs:
       - name: dotnet build Godot host
         run: dotnet build Ashfall.csproj --nologo
 
+      - name: Version drift gate (Plan 48 / C2[21])
+        run: python3 scripts/ci/version-gate.py
+
       - name: godot --import
         run: bash scripts/ci/run-godot-bounded.sh --path . --import 2>&1 | tail -n 20
 
