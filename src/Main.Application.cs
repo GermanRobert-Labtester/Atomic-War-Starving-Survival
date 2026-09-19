@@ -586,6 +586,15 @@ namespace AtomicWar.GodotApp
                     GetTree().Quit(NarrativeContinuitySelfTest.Run(
                         ProjectSettings.GlobalizePath("res://"), _dataDir));
                     return;
+                case HostCliAction.PropagandaSelfTest:
+                    GetTree().Quit(PropagandaSelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.RumorNetworkSelfTest:
+                    GetTree().Quit(RumorNetworkSelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.ShelterSecuritySelfTest:
+                    GetTree().Quit(ShelterSecuritySelfTest.Run(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)

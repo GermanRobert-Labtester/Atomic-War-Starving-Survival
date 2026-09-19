@@ -143,6 +143,9 @@ namespace AtomicWar.GodotApp
             SetupShelterAtmosphere();
             SetupHiddenAgenda();
             SetupShelterReputation();
+            SetupPropaganda();
+            SetupRumorNetwork();
+            SetupShelterSecurity();
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -297,6 +300,9 @@ namespace AtomicWar.GodotApp
             SaveShelterAtmosphere();
             SaveHiddenAgenda();
             SaveShelterReputation();
+            SavePropaganda();
+            SaveRumorNetwork();
+            SaveShelterSecurity();
             SaveWeatherHardening();
             SaveGeothermalAquifer();
             SaveShelterSchedule();
@@ -453,6 +459,9 @@ namespace AtomicWar.GodotApp
             _crafting?.TickDay(day);
             TickHiddenAgenda(day);
             TickShelterReputation(day);
+            TickPropaganda(day);
+            TickRumorNetwork(day);
+            TickShelterSecurity(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -608,6 +617,15 @@ namespace AtomicWar.GodotApp
                 case "shelter_reputation":
                     ShowShelterReputationPanel();
                     break;
+                case "propaganda":
+                    ShowPropagandaPanel();
+                    break;
+                case "rumors":
+                    ShowRumorNetworkPanel();
+                    break;
+                case "shelter_security":
+                    ShowShelterSecurityPanel();
+                    break;
                 case "medical_ward":
                     SetupJournal();
                     DiscoverBureaucraticDocuments("medical_office");
@@ -758,6 +776,12 @@ namespace AtomicWar.GodotApp
             _medicalWardDirty = false;
             _shelterReputation = null!;
             _shelterReputationDirty = false;
+            _propaganda = null!;
+            _propagandaDirty = false;
+            _rumorNetwork = null!;
+            _rumorNetworkDirty = false;
+            _shelterSecurity = null!;
+            _shelterSecurityDirty = false;
 
             // Lifecycle reset is intentionally persistence-free. The expanded
             // shelter group owns the existing section captures, but it does

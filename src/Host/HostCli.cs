@@ -194,7 +194,10 @@ namespace AtomicWar.GodotApp
         DynamicWorldSelfTest,
         WastelandInhabitantsSelfTest,
         OralLoreSelfTest,
-        ReconTelemetrySelfTest
+        ReconTelemetrySelfTest,
+        PropagandaSelfTest,
+        RumorNetworkSelfTest,
+        ShelterSecuritySelfTest
     }
 
     /// <summary>
@@ -577,6 +580,12 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.PortContractSelfTest;
             if (Has(args, "--oral-lore-selftest"))
                 return HostCliAction.OralLoreSelfTest;
+            if (Has(args, "--propaganda-selftest") || Has(args, "--propaganda-campaign-selftest"))
+                return HostCliAction.PropagandaSelfTest;
+            if (Has(args, "--rumor-network-selftest") || Has(args, "--rumors-selftest"))
+                return HostCliAction.RumorNetworkSelfTest;
+            if (Has(args, "--shelter-security-selftest") || Has(args, "--security-selftest"))
+                return HostCliAction.ShelterSecuritySelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -769,6 +778,9 @@ namespace AtomicWar.GodotApp
             GD.Print("  --sky-defense-selftest   Flagship Task 7 counter-battery: telemetry track intake, magazine logistics, deterministic volley, service, crew claim, save round-trip, and player-panel construction");
             GD.Print("  --vehicle-garage-selftest Plan 50 overland vehicle garage: modification install/uninstall, component wear, service, immobilization gate, recovery completion, and expedition-profile decoration");
             GD.Print("  --shelter-physics-selftest / --shelter-actor-physics-selftest  Shelter physics and actor movement selftests: interior traversal, hazard interaction");
+            GD.Print("  --propaganda-selftest    Plan 168: Propaganda and morale warfare system, campaigns, broadcasts, save persistence, and UI binding");
+            GD.Print("  --rumor-network-selftest Plan 203: Wasteland information flow, rumors, intelligence gathering, save persistence, and UI binding");
+            GD.Print("  --shelter-security-selftest Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding");
 
             GD.Print("\n--- User Data & Log Configuration ---");
             GD.Print("  --user-data-dir <path>   Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR)");

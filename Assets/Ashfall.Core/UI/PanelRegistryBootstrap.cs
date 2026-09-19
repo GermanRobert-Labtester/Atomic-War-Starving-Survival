@@ -241,6 +241,12 @@ namespace Ashfall.Core.UI
             R("desperation_crisis",         "Desperation & Taboo Monitor", PanelGroup.Expanded, new[] { "survivors", "inventory" });
             // ── Plan 126: biological fermentation reactor (Live) ──────────
             R("bio_fermentation",           "Fermentation Reactor",        PanelGroup.Expanded, new[] { "farming", "inventory", "power_grid" });
+            // ── Plan 168: propaganda & morale warfare (Live) ──────────────
+            R("propaganda",                 "Propaganda & Morale Warfare", PanelGroup.Expanded, new[] { "radio", "survivors" });
+            // ── Plan 203: wasteland information flow & rumors (Live) ─────
+            R("rumors",                     "Wasteland Rumor Network",     PanelGroup.Expanded, new[] { "radio", "world" });
+            // ── Plan 138: shelter defense & security clearance (Live) ────
+            R("shelter_security",           "Shelter Security Clearance",  PanelGroup.Expanded, new[] { "shelter", "survivors" });
         }
 
         private static void R(

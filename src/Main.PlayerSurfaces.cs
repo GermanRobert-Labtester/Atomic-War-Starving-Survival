@@ -799,7 +799,10 @@ namespace AtomicWar.GodotApp
                 "companion_kennel", "beliefs_panel", "anomaly_watch", "cybernetics",
                 "sky_defense_battery",
                 "dynamic_quests",
-                "vehicle_garage"
+                "vehicle_garage",
+                "propaganda",
+                "rumors",
+                "shelter_security"
             };
 
             foreach (var expId in expandedIds)

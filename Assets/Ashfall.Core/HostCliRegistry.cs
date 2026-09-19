@@ -158,7 +158,10 @@ namespace Ashfall.Core
         EbPvdCoatingUiTest,
         MicrofluidicDiagnosticUiTest,
         MineFlailUiTest,
-        RailGrindingUiTest
+        RailGrindingUiTest,
+        PropagandaSelfTest,
+        RumorNetworkSelfTest,
+        ShelterSecuritySelfTest
     }
 
     /// <summary>
@@ -839,7 +842,25 @@ namespace Ashfall.Core
                     "Host Domains & Save Stores",
                     "--year-of-ash-save-selftest",
                     null,
-                    "Year of Ash save write → reload → restore → checksum/tamper checks")
+                    "Year of Ash save write → reload → restore → checksum/tamper checks"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PropagandaSelfTest,
+                    "Host Domains & Save Stores",
+                    "--propaganda-selftest",
+                    new[] { "--propaganda-campaign-selftest" },
+                    "Plan 168: Propaganda and morale warfare system, campaigns, broadcasts, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RumorNetworkSelfTest,
+                    "Host Domains & Save Stores",
+                    "--rumor-network-selftest",
+                    new[] { "--rumors-selftest" },
+                    "Plan 203: Wasteland information flow, rumors, intelligence gathering, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterSecuritySelfTest,
+                    "Host Domains & Save Stores",
+                    "--shelter-security-selftest",
+                    new[] { "--security-selftest" },
+                    "Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding")
         };
 
         private static readonly HostCliActionDescriptor[] _uiDescriptors = new[]

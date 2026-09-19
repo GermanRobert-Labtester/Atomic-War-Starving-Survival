@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-19<br>
-**Total Registered Actions:** 180 entries / 256 flag tokens (aliases included)
+**Last Verified:** 2026-09-20<br>
+**Total Registered Actions:** 183 entries / 259 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -189,6 +189,9 @@
 | `--sky-defense-selftest` | — | Flagship Task 7 counter-battery: telemetry track intake, magazine logistics, deterministic volley, service, crew claim, save round-trip, and player-panel construction |
 | `--vehicle-garage-selftest` | — | Plan 50 overland vehicle garage: modification install/uninstall, component wear, service, immobilization gate, recovery completion, and expedition-profile decoration |
 | `--shelter-physics-selftest` | `--shelter-actor-physics-selftest` | Shelter physics and actor movement selftests: interior traversal, hazard interaction |
+| `--propaganda-selftest` | — | Plan 168: Propaganda and morale warfare system, campaigns, broadcasts, save persistence, and UI binding |
+| `--rumor-network-selftest` | — | Plan 203: Wasteland information flow, rumors, intelligence gathering, save persistence, and UI binding |
+| `--shelter-security-selftest` | — | Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding |
 | `--user-data-dir` | — | <path> Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR) |
 | `--log-dir` | — | <path> Configure log output directory for headless runs (or set ASHFALL_LOG_DIR) |
 | `--host-help` | `--help` | This list |

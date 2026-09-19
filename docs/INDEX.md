@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2558 | **Last Verified:** 2026-09-20
+**Total Indexed Documents:** 2559 | **Last Verified:** 2026-09-20
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2511 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2512 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2194 documents)
+## 9. General Project Guides & Archive Reference (2195 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1274,7 +1274,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_COMPLETION_REPORT.md`](cartography/PLAN85_COMPLETION_REPORT.md) | **Plan 85 — Completion Report** — - **baseline damaged-map zone count:** 6 (repository truth; plan assumed 3 — delta rule §1.12 applied) |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_FRAGMENT_LIFECYCLE.md`](cartography/PLAN85_FRAGMENT_LIFECYCLE.md) | **Plan 85 — Fragment Lifecycle** — Damaged-map fragments are **not inventory items**. `fragment_id` is a catalog/state key. There are no fragment item d... |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_REGRESSION_MATRIX.md`](cartography/PLAN85_REGRESSION_MATRIX.md) | **Plan 85 — Regression Matrix** — **New — `Ashfall.Core.Tests/World/DamagedMapSystemTests.cs` (13 tests):** catalog structure (12 zones, unique ids, co... |
-| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-19<br> |
+| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-20<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md`](collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md) | **ASHFALL Collectibles — 100-Run Scavenging Balance Report** — **Generated** for Tasks 5–8 Wave F · Harness: `CollectibleBalanceCharacterizationTests` |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md`](collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md) | **ASHFALL Collectibles Utilization Matrix** — **Generated** by `scripts/ci/generate-collectibles-matrix.py` — machine-derived from |
@@ -2001,6 +2001,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLANS_158_161_RECONNAISSANCE.md`](plans/PLANS_158_161_RECONNAISSANCE.md) | **Plans 158–161 — Repository Reconnaissance (Phase A Exit Gate)** — **Stream authority:** PLANS_158_161_MASTER_PLAN.md |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_162_165_IMPLEMENTATION_LOG.md`](plans/PLANS_162_165_IMPLEMENTATION_LOG.md) | **Plans 162–165 — Implementation Log** — Journal per ashfall-implement discipline. Companion authority map: |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_162_165_RECONNAISSANCE.md`](plans/PLANS_162_165_RECONNAISSANCE.md) | **Plans 162–165 — Repository Reconnaissance (Phase A Exit Gate)** — Date: 2026-09-05. Authority map produced before any production edit, per the |
+| 🟢 `CURRENT` | [`docs/plans/PLANS_168_203_138_INTEGRATION_LOG.md`](plans/PLANS_168_203_138_INTEGRATION_LOG.md) | **ASHFALL — Plans 168, 203, and 138 Full Integration Log** — Three partially integrated systems across the unclaimed corpus have been brought to 100% full, production-ready integ... |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_198_201_CLOSEOUT.md`](plans/PLANS_198_201_CLOSEOUT.md) | **Plans 198–201 — Integration Closeout & Follow-Up Register** — **Status:** Player-facing integration complete (commits `231595b8` + this follow-up commit). |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_202_205_FLAGSHIP_IMPLEMENTATION_LOG.md`](plans/PLANS_202_205_FLAGSHIP_IMPLEMENTATION_LOG.md) | **Plans 202–205 Flagship Integration Log — Shelter Resilience & Long-Range Logistics** — **Flagship:** waste-plastic fuel recovery (202), perimeter defense extension (203), |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_202_205_RECONNAISSANCE.md`](plans/PLANS_202_205_RECONNAISSANCE.md) | **Plans 202–205 Flagship Reconnaissance — Authority Map** — Status: **Wave A — reconnaissance complete.** Exit criterion "no duplicate authority planned" |

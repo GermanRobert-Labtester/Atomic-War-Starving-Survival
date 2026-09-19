@@ -104,10 +104,14 @@ namespace Ashfall.Core.Propaganda
         public event Action<PropagandaCampaign, float>? OnCampaignProgressed;
         public event Action<PropagandaCampaign>? OnCampaignCompleted;
         public event Action<PropagandaCampaign>? OnCampaignCompromised;
+        public event Action? OnStateChanged;
 
         public float ShelterCredibility => _state.ShelterCredibility;
         public int MessageCount => _state.Messages.Count;
         public int ActiveCampaignCount => _state.Campaigns.Count(c => c.Status == CampaignStatus.Active);
+        public IReadOnlyList<PropagandaMessage> Messages => _state.Messages;
+        public IReadOnlyList<PropagandaCampaign> Campaigns => _state.Campaigns;
+        public PropagandaState State => _state;
 
         public PropagandaSystem(PropagandaState? state = null)
         {
@@ -156,6 +160,7 @@ namespace Ashfall.Core.Propaganda
 
             _state.Messages.Add(message);
             OnMessageCreated?.Invoke(message);
+            OnStateChanged?.Invoke();
             return message;
         }
 
@@ -186,6 +191,7 @@ namespace Ashfall.Core.Propaganda
 
             _state.Campaigns.Add(campaign);
             OnCampaignStarted?.Invoke(campaign);
+            OnStateChanged?.Invoke();
             return campaign;
         }
 
@@ -231,6 +237,7 @@ namespace Ashfall.Core.Propaganda
                     OnCampaignCompleted?.Invoke(cmp);
                 }
             }
+            OnStateChanged?.Invoke();
         }
 
         private float CalculateDailyEffectiveness(PropagandaCampaign campaign)
@@ -412,6 +419,7 @@ namespace Ashfall.Core.Propaganda
                     _state.FactionMoraleImpacts[kvp.Key] = kvp.Value;
                 }
             }
+            OnStateChanged?.Invoke();
         }
     }
 }

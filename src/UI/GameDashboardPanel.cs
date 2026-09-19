@@ -469,6 +469,9 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "BESTIARY", "bestiary");
             AddNavButton(content, "INTRIGUE", "hidden_agenda");
             AddNavButton(content, "REPUTATION", "shelter_reputation");
+            AddNavButton(content, "PROPAGANDA", "propaganda");
+            AddNavButton(content, "RUMORS", "rumors");
+            AddNavButton(content, "SECURITY", "shelter_security");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());

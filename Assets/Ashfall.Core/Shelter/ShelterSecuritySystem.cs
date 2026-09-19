@@ -102,10 +102,15 @@ namespace Ashfall.Core.Shelter
         public event Action<string, string, string>? OnAccessDenied;
         public event Action<SecurityBreach>? OnSecurityBreachDetected;
         public event Action<bool>? OnLockdownToggled;
+        public event Action? OnStateChanged;
 
         public bool IsInLockdown => _state.ShelterInLockdown;
         public int ZoneCount => _state.Zones.Count;
         public int ActiveBreachCount => _state.Breaches.Count(b => !b.IsResolved);
+        public IReadOnlyList<SecurityZone> Zones => _state.Zones;
+        public IReadOnlyList<SurvivorClearance> Clearances => _state.Clearances;
+        public IReadOnlyList<SecurityBreach> Breaches => _state.Breaches;
+        public ShelterSecurityState State => _state;
 
         public ShelterSecuritySystem(ShelterSecurityState? state = null)
         {
@@ -143,6 +148,7 @@ namespace Ashfall.Core.Shelter
                 zone.LockState = lockState;
             }
 
+            OnStateChanged?.Invoke();
             return zone;
         }
 
@@ -176,6 +182,7 @@ namespace Ashfall.Core.Shelter
                 cl.Reason = reason ?? cl.Reason;
             }
 
+            OnStateChanged?.Invoke();
             return cl;
         }
 
@@ -191,6 +198,7 @@ namespace Ashfall.Core.Shelter
             if (zone == null) return false;
 
             zone.LockState = lockState;
+            OnStateChanged?.Invoke();
             return true;
         }
 
@@ -215,6 +223,7 @@ namespace Ashfall.Core.Shelter
             }
 
             OnLockdownToggled?.Invoke(active);
+            OnStateChanged?.Invoke();
         }
 
         public AccessAttemptResult RequestAccess(string survivorId, string zoneId, int currentDay)
@@ -279,6 +288,7 @@ namespace Ashfall.Core.Shelter
                 };
                 _state.Breaches.Add(breach);
                 OnSecurityBreachDetected?.Invoke(breach);
+                OnStateChanged?.Invoke();
             }
 
             OnAccessDenied?.Invoke(survivorId, zoneId, $"Insufficient clearance ({survivorClearance} vs {zone.Level}).");
@@ -305,6 +315,7 @@ namespace Ashfall.Core.Shelter
                 zone.AlarmState = SecurityAlarmState.Normal;
             }
 
+            OnStateChanged?.Invoke();
             return true;
         }
 
@@ -427,6 +438,7 @@ namespace Ashfall.Core.Shelter
                     });
                 }
             }
+            OnStateChanged?.Invoke();
         }
     }
 }

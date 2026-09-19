@@ -61,10 +61,14 @@ namespace Ashfall.Core.InformationFlow
         public event Action<WastelandRumor>? OnRumorGenerated;
         public event Action<WastelandRumor, string>? OnRumorPropagated;
         public event Action<WastelandRumor>? OnRumorIntercepted;
+        public event Action? OnStateChanged;
 
         public int TotalRumorCount => _state.Rumors.Count;
         public int InterceptedRumorCount => _state.Rumors.Count(r => r.IsIntercepted);
         public int HubCount => _state.Hubs.Count;
+        public IReadOnlyList<WastelandRumor> Rumors => _state.Rumors;
+        public IReadOnlyList<InformationHub> Hubs => _state.Hubs;
+        public RumorNetworkState State => _state;
 
         public RumorSystem(RumorNetworkState? state = null)
         {
@@ -94,6 +98,7 @@ namespace Ashfall.Core.InformationFlow
                 _state.Hubs.Add(hub);
             }
 
+            OnStateChanged?.Invoke();
             return hub;
         }
 
@@ -131,6 +136,7 @@ namespace Ashfall.Core.InformationFlow
 
             _state.Rumors.Add(rumor);
             OnRumorGenerated?.Invoke(rumor);
+            OnStateChanged?.Invoke();
             return rumor;
         }
 
@@ -150,6 +156,7 @@ namespace Ashfall.Core.InformationFlow
                 rumor.Truthfulness = Math.Clamp(rumor.Truthfulness * (hub.Credibility * 0.95f), 0.1f, 1f);
 
                 OnRumorPropagated?.Invoke(rumor, hub.HubId);
+                OnStateChanged?.Invoke();
                 return true;
             }
 
@@ -165,6 +172,7 @@ namespace Ashfall.Core.InformationFlow
             {
                 rumor.IsIntercepted = true;
                 OnRumorIntercepted?.Invoke(rumor);
+                OnStateChanged?.Invoke();
             }
 
             return true;
@@ -183,6 +191,7 @@ namespace Ashfall.Core.InformationFlow
                     _state.Rumors.RemoveAt(i);
                 }
             }
+            OnStateChanged?.Invoke();
         }
 
         public IReadOnlyList<WastelandRumor> GetRumorsAtLocation(string locationId)
@@ -287,6 +296,7 @@ namespace Ashfall.Core.InformationFlow
                     });
                 }
             }
+            OnStateChanged?.Invoke();
         }
     }
 }

@@ -169,6 +169,48 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--shelter-reputation-selftest"],
         "tests": ["Plan207ShelterReputationIntegrationTests"]
     },
+    "propaganda_campaigns": {
+        "domain": "Morale & Influence (Plan 168)",
+        "core": ["PropagandaSystem"],
+        "catalog": [],
+        "host": ["PropagandaHostSession"],
+        "setup": "SetupPropaganda",
+        "ticked": True,
+        "tick_type": "Daily (Campaign Decay & Distribution)",
+        "store": ["PropagandaSaveStore"],
+        "ui": ["PropagandaPanel", "GameDashboardPanel"],
+        "routes": ["propaganda"],
+        "cli": ["--propaganda-selftest"],
+        "tests": ["Plan168PropagandaIntegrationTests"]
+    },
+    "wasteland_rumors": {
+        "domain": "Information & Rumors (Plan 203)",
+        "core": ["RumorSystem"],
+        "catalog": [],
+        "host": ["RumorNetworkHostSession"],
+        "setup": "SetupRumorNetwork",
+        "ticked": True,
+        "tick_type": "Daily (Decay & Propagation)",
+        "store": ["RumorNetworkSaveStore"],
+        "ui": ["RumorBoardPanel", "GameDashboardPanel"],
+        "routes": ["rumors"],
+        "cli": ["--rumor-network-selftest"],
+        "tests": ["Plan203RumorNetworkIntegrationTests"]
+    },
+    "shelter_security": {
+        "domain": "Shelter Defense (Plan 138)",
+        "core": ["ShelterSecuritySystem"],
+        "catalog": [],
+        "host": ["ShelterSecurityHostSession"],
+        "setup": "SetupShelterSecurity",
+        "ticked": True,
+        "tick_type": "Daily (Breach Decay & Alert Drift)",
+        "store": ["ShelterSecuritySaveStore"],
+        "ui": ["ShelterSecurityPanel", "GameDashboardPanel"],
+        "routes": ["shelter_security"],
+        "cli": ["--shelter-security-selftest"],
+        "tests": ["Plan138ShelterSecurityIntegrationTests"]
+    },
     "ecological_infestation": {
         "domain": "World",
         "core": ["EcologicalInfestationSystem"],

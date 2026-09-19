@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 129,
-  "headless_test_count": 127,
+  "total_tests": 132,
+  "headless_test_count": 130,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1125,6 +1125,45 @@
       "description": "Year of Ash save write \u2192 reload \u2192 restore \u2192 checksum/tamper checks",
       "headless_compatible": true,
       "expected_summary_id": "year_of_ash_save_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "propaganda_selftest",
+      "action": "PropagandaSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--propaganda-selftest",
+      "aliases": [
+        "--propaganda-campaign-selftest"
+      ],
+      "description": "Plan 168: Propaganda and morale warfare system, campaigns, broadcasts, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "propaganda_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rumor_network_selftest",
+      "action": "RumorNetworkSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--rumor-network-selftest",
+      "aliases": [
+        "--rumors-selftest"
+      ],
+      "description": "Plan 203: Wasteland information flow, rumors, intelligence gathering, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "rumor_network_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_security_selftest",
+      "action": "ShelterSecuritySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--shelter-security-selftest",
+      "aliases": [
+        "--security-selftest"
+      ],
+      "description": "Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_security_selftest",
       "timeout_seconds": 30
     },
     {
