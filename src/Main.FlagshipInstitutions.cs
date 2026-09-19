@@ -121,6 +121,7 @@ namespace AtomicWar.GodotApp
             _culturalArchive.OnSalonStarted += _ => MarkCulturalArchiveDirty();
             _culturalArchive.OnSalonEnded += _ => MarkCulturalArchiveDirty();
             _culturalArchive.OnChronicleEntryAdded += _ => MarkCulturalArchiveDirty();
+            _culturalArchive.OnDocumentationChanged += () => MarkCulturalArchiveDirty();
             BindCultureCrossDomainEvents();
 
             var saved = CulturalArchiveSaveStore.TryLoad();

@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2535 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2534 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2488 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2487 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -577,7 +577,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2172 documents)
+## 9. General Project Guides & Archive Reference (2171 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1163,8 +1163,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
-| 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | **Proprietary License** — All rights reserved. |
-| 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🟢 `CURRENT` | [`docs/ACCESSIBILITY.md`](ACCESSIBILITY.md) | **ASHFALL — ACCESSIBILITY ARCHITECTURE & STANDARDS (PLAN 80 / TASK B21)** — **Classification:** Core UX & Accessibility Authority |
 | 🟢 `CURRENT` | [`docs/ACTION_RESULT_SURFACING_MATRIX.md`](ACTION_RESULT_SURFACING_MATRIX.md) | **Typed action-result surfacing matrix** — Core owns stable failure codes; host/UI owns player-facing wording. |
@@ -1977,6 +1975,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md) | **Partial-plan production unblock implementation log — follow-up** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_WAVE4_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_WAVE4_FULL_INTEGRATION_IMPLEMENTATION_LOG.md) | **Partial Wave 4 — Plans 216 + 202 Integration Log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.md) | **Partial Wave 5 — Plans 163 + 210 Integration Log** — Date: 2026-09-19 |
+| 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md) | **Partial Wave 6 — Plans 167 + 219 Integration Log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`](plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md) | **Partial-plan production unblock implementation log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md`](plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md) | **Remaining partial-plan placeholders** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN102_IMPLEMENTATION_LOG.md`](plans/PLAN102_IMPLEMENTATION_LOG.md) | **Plan 102 Implementation Log** — Tests: Baseline Foundry selftest 26/26; data integrity 298/298; full xUnit |
@@ -2284,7 +2283,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/roadmap/README.md`](roadmap/README.md) | **ASHFALL Roadmap Governance & Single-Truth Authority** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
 | 🟢 `CURRENT` | [`docs/roadmap/WAVE_LEDGER.md`](roadmap/WAVE_LEDGER.md) | **ASHFALL Master Wave Ledger** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1A_IMPLEMENTATION_LOG.md`](roadmap/e1/E1A_IMPLEMENTATION_LOG.md) | **E1A Implementation Log — Baseline Evidence** — **Package:** E1 / Plan 53 — Ambition Governance & Expansion Intake |
-| 🟢 `CURRENT` | [`docs/roadmap/e1/E1_BASELINE.md`](roadmap/e1/E1_BASELINE.md) | **E1A Baseline — Ambition Governance & Expansion Intake** — - Generated (UTC): `2026-09-19T16:58:11Z` |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/E1_BASELINE.md`](roadmap/e1/E1_BASELINE.md) | **E1A Baseline — Ambition Governance & Expansion Intake** — - Generated (UTC): `2026-09-19T19:57:56Z` |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_CONDITION_PROVENANCE.md`](shelter/MACHINE_CONDITION_PROVENANCE.md) | **Plan 29 — Machine Condition Provenance (Phase 0, §3.5)** — Existing condition bands that already support truthful diagnostic tells: |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_INVENTORY.md`](shelter/MACHINE_INVENTORY.md) | **Plan 29 — Machine Inventory (Phase 0, §3.4)** — Diesel Generator & Alternator Vault, Central Ventilation & Blower Station, Deep Artesian |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN29_AUDIO_HOOKS.md`](shelter/PLAN29_AUDIO_HOOKS.md) | **Plan 29 — Audio Hooks (Task 29B §29B.21, Plan 07B handoff)** — - Machine identity sound is consistent: the degraded variations derive from the healthy |

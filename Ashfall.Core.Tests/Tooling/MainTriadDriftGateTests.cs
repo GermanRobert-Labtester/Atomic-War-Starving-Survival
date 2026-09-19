@@ -67,6 +67,7 @@ namespace Ashfall.Core.Tests
                 "Codex", // Read-only projection (CodexProjectionBuilder); zero persistent state — unlocks derive from journal/field-guide/research/faction-standing, which persist themselves
                 "Cascade", // D1 2026-09-17: derived cascade-rule projection over the day's served/shed power outcome; the coordinator is built from static cascade_rules.json and holds no persisted state (journal already records its transitions)
                 "FitnessForDuty", // D1 2026-09-17: Plan 24A derived fitness verdicts over existing persisted survivor authorities; the model is intentionally not a save section or a second survivor ledger
+                "Difficulty", // XP-01: preset id persists on campaign header / save-envelope manifest (difficulty_preset_id / difficultyPresetId); not a standalone SaveDifficulty section
             };
 
         [Fact]
