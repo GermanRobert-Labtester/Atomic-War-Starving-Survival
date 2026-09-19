@@ -9,6 +9,7 @@ namespace AtomicWar.GodotApp
     {
         private void CloseAllOverlayPanels()
         {
+            bool briefingWasOpen = _dailyBriefingModal != null && _dailyBriefingModal.IsOpen;
             Control[] panels =
             {
                 _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
@@ -60,7 +61,8 @@ namespace AtomicWar.GodotApp
                 _amputationTriagePanel, _justiceTribunalPanel,
                 _railwayTerminalPanel, _archaeologyExcavationPanel,
                 _desperationCrisisPanel, _mercenaryBountyBoardPanel,
-                _falloutPlumePanel
+                _falloutPlumePanel,
+                _dailyBriefingModal
             };
 
             foreach (Control panel in panels)
@@ -79,6 +81,14 @@ namespace AtomicWar.GodotApp
             {
                 AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(_journalBook);
                 _journalBook.Close();
+            }
+
+            // Keep aligned with AnyOverlayPanelOpen: briefing counts as an overlay for Esc.
+            if (briefingWasOpen && _dailyBriefingModal != null)
+            {
+                AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(_dailyBriefingModal);
+                _dailyBriefingModal.Hide();
+                _briefingPending = false;
             }
         }
 
