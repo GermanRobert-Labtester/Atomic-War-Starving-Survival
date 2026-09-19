@@ -1,7 +1,7 @@
 # CF-XP01 — Difficulty Full Binding Integration Plan
 
-Status: ACTIVE — P0 premise audit recorded 2026-09-19; implementation follows
-the active `claim-xp-wave1-difficulty-2026-09-18` ownership claim.
+Status: COMPLETE — implemented and focused-verified 2026-09-19 under the
+`claim-xp-wave1-difficulty-2026-09-18` ownership claim.
 
 ## Bounded outcome
 
@@ -50,3 +50,29 @@ fail closed, and completion-history files owned by Wave 11 remain untouched.
 - All eight scalars have one existing owner seam and a standard/legacy parity
   assertion.
 - Completion history remains Wave 11-owned and unchanged.
+
+## Implementation and verification record
+
+- Added the difficulty multipliers to the existing Needs, Radiation, Disease,
+  Market, Equipment Condition, and Crisis Prediction owner seams. Legacy
+  values remain neutral and clamps stay in their existing owners.
+- Bound selection, manifest persistence/checksum coverage, fail-closed load
+  validation, consumer callbacks, starting-cohort preview, and the canonical
+  fresh-inventory starter bonus path.
+- Removed the duplicate flow-level starter grant found by the lifecycle gate;
+  `SetupInventory` is the sole fresh-campaign bonus owner.
+- Added `--difficulty-selftest` and the focused Core contract coverage.
+
+Verification passed:
+
+- `dotnet build Ashfall.csproj --no-restore`: 0 warnings, 0 errors.
+- `bash scripts/run_test.sh Ashfall.Core.Tests/Difficulty/`: 15/15.
+- `bash scripts/run_test.sh Ashfall.Core.Tests/HostCliHelpContractTests.cs`:
+  2/2.
+- `--difficulty-selftest`: 14/14.
+- `--starting-cohort-lifecycle-selftest`: PASS, including one-time authored
+  sparing supplies and restore isolation.
+
+The pre-existing `EconomyDetailPanel.tscn` `%Content` binding error and exit-time
+RID leak warnings remain outside this package. Completion-history files were not
+edited.

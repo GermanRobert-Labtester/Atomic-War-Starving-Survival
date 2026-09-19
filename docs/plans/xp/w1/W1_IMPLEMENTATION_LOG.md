@@ -72,10 +72,23 @@ this package and are not edited.
 | `starting_cohort_lifecycle_selftest` | PASS — selected `difficulty_sparing` survives a slot restore and grants one `canned_food` plus one `iodine_pills` on fresh initialization |
 | `git diff --check` | PASS |
 
-## Follow-on boundary
+## XP-01 full-binding completion — 2026-09-19
 
-The selected preset is deliberately not yet bound to the seven proposed
-consumer seams, and no chronicle projection has been added. Those edits need
-individual source premise checks and completion-history ownership transfer.
-`DEBT-PLAN34-DIFFICULTY-CHRONICLE-AUTHORITY` remains open until that work is
-complete.
+The follow-on package is complete. The selected preset now reaches all seven
+bounded consumer seams through existing owners: hunger/thirst, radiation,
+disease onset, market pricing, equipment wear, crisis deadlines, and the
+fresh-campaign canonical inventory bonus path. Standard/legacy parity is
+preserved, the panel exposes the authored display name and current numeric
+scalars, and the checksummed manifest rejects unknown preset IDs before live
+restore.
+
+The first lifecycle run exposed a duplicate starter grant in the new-game
+flow. It was removed so `SetupInventory` is the sole fresh-campaign bonus
+owner; the end-to-end lifecycle gate then passed with exactly one `canned_food`
+and one `iodine_pills` bonus for Sparing.
+
+Verification: Core difficulty suite 15/15; Host CLI help 2/2; runtime
+`--difficulty-selftest` 14/14; runtime `--starting-cohort-lifecycle-selftest`
+PASS; host build 0 warnings/0 errors. The completion-history chronicle
+projection remains separately deferred under `DEBT-PLAN34-DIFFICULTY-CHRONICLE-AUTHORITY`;
+the Wave 11 completion-history paths remain untouched.
