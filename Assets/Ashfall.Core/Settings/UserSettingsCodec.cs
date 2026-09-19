@@ -155,6 +155,46 @@ namespace Ashfall.Core.Settings
             data.RadioVolume = SanitizeVolume("RadioVolume", data.RadioVolume, 0.9f, warnings);
             data.AmbienceVolume = SanitizeVolume("AmbienceVolume", data.AmbienceVolume, 0.7f, warnings);
 
+            // Key Bindings (Plan 37)
+            if (data.KeyBindings == null)
+            {
+                data.KeyBindings = new Dictionary<string, List<int>>(StringComparer.Ordinal);
+            }
+            else
+            {
+                var sanitizedBindings = new Dictionary<string, List<int>>(StringComparer.Ordinal);
+                foreach (var (action, keyList) in data.KeyBindings)
+                {
+                    if (string.IsNullOrWhiteSpace(action))
+                    {
+                        warnings.Add("Ignored null or whitespace keybinding action");
+                        continue;
+                    }
+
+                    if (keyList == null)
+                    {
+                        warnings.Add($"Null key list for action '{action}' reset to empty");
+                        sanitizedBindings[action] = new List<int>();
+                        continue;
+                    }
+
+                    var validKeys = new List<int>();
+                    foreach (int code in keyList)
+                    {
+                        if (code > 0 && code <= 0x01FFFFFF)
+                        {
+                            validKeys.Add(code);
+                        }
+                        else
+                        {
+                            warnings.Add($"Invalid keycode {code} for action '{action}' dropped");
+                        }
+                    }
+                    sanitizedBindings[action] = validKeys;
+                }
+                data.KeyBindings = sanitizedBindings;
+            }
+
             diagnosticMessage = warnings.Count > 0
                 ? "[UserSettingsCodec] Sanitized settings: " + string.Join("; ", warnings)
                 : null;

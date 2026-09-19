@@ -8,6 +8,7 @@ using Ashfall.Core.Expeditions;
 using Ashfall.Core.Exploration;
 using Ashfall.Core.Localization;
 using Ashfall.Core.UI;
+using Ashfall.Core.Underground;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.Localization;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -171,6 +172,29 @@ namespace AtomicWar.GodotApp.UI
                         AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
                 }
                 _overviewContainer.AddChild(surveyCard);
+            }
+
+            // Plan 167 — underground transit passages over canonical map topology.
+            if (_world?.WastelandMap?.Tunnels != null)
+            {
+                var discoveredTunnels = _world.WastelandMap.GetDiscoveredTunnels();
+                int totalSegments = _world.WastelandMap.Tunnels.TotalSegmentCount;
+                if (discoveredTunnels.Count > 0 || totalSegments > 0)
+                {
+                    var tunnelCard = AshfallUiHelpers.MakeCardFrame("UNDERGROUND TUNNEL NETWORK", "SUBTERRANEAN TRANSIT");
+                    var tunnelBox = tunnelCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+                    tunnelBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        "Discovered passages",
+                        $"{discoveredTunnels.Count}/{totalSegments} mapped",
+                        AshfallUiHelpers.ToColor(discoveredTunnels.Count > 0 ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Dim)));
+                    int clearCount = discoveredTunnels.Count(s => s.Status == TunnelStatus.Clear);
+                    int collapsedCount = discoveredTunnels.Count(s => s.Status == TunnelStatus.Collapsed);
+                    tunnelBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        "Passable conduits",
+                        $"{clearCount} clear{(collapsedCount > 0 ? $" · {collapsedCount} collapsed" : "")}",
+                        AshfallUiHelpers.ToColor(clearCount > 0 ? Ashfall.Core.UI.Theme.Pale : Ashfall.Core.UI.Theme.Warm)));
+                    _overviewContainer.AddChild(tunnelCard);
+                }
             }
 
             // Trap markers are a projection of known trap lifecycle state. The

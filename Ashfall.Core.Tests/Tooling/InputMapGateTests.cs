@@ -34,6 +34,7 @@ namespace Ashfall.Core.Tests.Tooling
             "ashfall_nav_right",
             "ashfall_journal",
             "ashfall_help",
+            "ashfall_guidance",
             "ashfall_forecast",
             "ashfall_weather_history",
             "ashfall_events",
@@ -114,12 +115,11 @@ namespace Ashfall.Core.Tests.Tooling
         {
             string repoRoot = FindRepoRoot();
             string mainAppPath = Path.Combine(repoRoot, "src", "Main.Application.cs");
-            string mainFlowPath = Path.Combine(repoRoot, "src", "Main.GameFlow.cs");
             string holdfastPath = Path.Combine(repoRoot, "src", "Host", "HoldfastTerminalPanel.cs");
             string briefingPath = Path.Combine(repoRoot, "src", "UI", "DailyBriefingModal.cs");
             string gameOverPath = Path.Combine(repoRoot, "src", "UI", "GameOverPanel.cs");
 
-            var files = new[] { mainAppPath, mainFlowPath, holdfastPath, briefingPath, gameOverPath };
+            var files = new[] { mainAppPath, holdfastPath, briefingPath, gameOverPath };
 
             foreach (var path in files)
             {

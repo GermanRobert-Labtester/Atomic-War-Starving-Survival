@@ -1,0 +1,7 @@
+---
+PLAN_ID: FIXTURE-INVALID-CATEGORY
+STATUS: READY
+CATEGORY: WISHLIST
+---
+
+# Invalid category fixture

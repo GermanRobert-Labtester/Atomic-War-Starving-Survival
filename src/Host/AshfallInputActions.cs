@@ -75,15 +75,60 @@ namespace AtomicWar.GodotApp
             HoldfastStatus
         };
 
+        /// <summary>Scope in which an action fires. Drives conflict policy and the gate.</summary>
+        public enum InputScope
+        {
+            Global,
+            PlayingOnly,
+            JournalBook,
+            HoldfastTerminal
+        }
+
+        /// <summary>
+        /// Static contract row consumed by the gate script and the rebinding UI.
+        /// Single source for: action -> scope -> route (nullable) -> rebindable flag.
+        /// </summary>
+        public sealed record InputActionContract(
+            string Action,
+            InputScope Scope,
+            string? RouteId,
+            bool Rebindable);
+
+        public static readonly IReadOnlyList<InputActionContract> Contract = new[]
+        {
+            new InputActionContract(Close, InputScope.Global, null, true),
+            new InputActionContract(Confirm, InputScope.Global, null, true),
+            new InputActionContract(NextTab, InputScope.Global, null, true),
+            new InputActionContract(NavUp, InputScope.Global, null, true),
+            new InputActionContract(NavDown, InputScope.Global, null, true),
+            new InputActionContract(NavLeft, InputScope.Global, null, true),
+            new InputActionContract(NavRight, InputScope.Global, null, true),
+            new InputActionContract(Journal, InputScope.PlayingOnly, "journal", true),
+            new InputActionContract(Help, InputScope.PlayingOnly, "help", true),
+            new InputActionContract(Guidance, InputScope.PlayingOnly, "guidance", true),
+            new InputActionContract(Forecast, InputScope.PlayingOnly, "weather_forecast", true),
+            new InputActionContract(WeatherHistory, InputScope.PlayingOnly, "weather_history", true),
+            new InputActionContract(Events, InputScope.PlayingOnly, "events_log", true),
+            new InputActionContract(Expeditions, InputScope.PlayingOnly, "expeditions", true),
+            new InputActionContract(Holdfast, InputScope.PlayingOnly, "holdfast", true),
+            new InputActionContract(JournalTab1, InputScope.JournalBook, null, false),
+            new InputActionContract(JournalTab2, InputScope.JournalBook, null, false),
+            new InputActionContract(JournalTab3, InputScope.JournalBook, null, false),
+            new InputActionContract(JournalTab4, InputScope.JournalBook, null, false),
+            new InputActionContract(JournalTab5, InputScope.JournalBook, null, false),
+            new InputActionContract(HoldfastBuild, InputScope.HoldfastTerminal, null, false),
+            new InputActionContract(HoldfastStatus, InputScope.HoldfastTerminal, null, false)
+        };
+
         public static readonly IReadOnlyDictionary<string, Key> CanonicalDefaults = new Dictionary<string, Key>
         {
             { Close, Key.Escape },
             { Confirm, Key.Enter },
             { NextTab, Key.Tab },
-            { NavUp, Key.W },
-            { NavDown, Key.S },
-            { NavLeft, Key.A },
-            { NavRight, Key.D },
+            { NavUp, Key.Up },
+            { NavDown, Key.Down },
+            { NavLeft, Key.Left },
+            { NavRight, Key.Right },
             { Journal, Key.J },
             { Help, Key.F1 },
             { Guidance, Key.F2 },
@@ -101,121 +146,6 @@ namespace AtomicWar.GodotApp
             { HoldfastStatus, Key.S }
         };
 
-        /// <summary>
-        /// Ensures all canonical ASHFALL actions are registered in the runtime InputMap
-        /// if not already loaded from project.godot, and reconciles pairwise collisions.
-        /// </summary>
-        public static void EnsureActionsRegistered()
-        {
-            RegisterAction(Close, Key.Escape, JoyButton.B);
-            RegisterAction(Confirm, Key.Enter, JoyButton.A, Key.Space);
-            RegisterAction(NextTab, Key.Tab, JoyButton.RightShoulder);
-            RegisterAction(NavUp, Key.W, JoyButton.DpadUp, Key.Up);
-            RegisterAction(NavDown, Key.S, JoyButton.DpadDown, Key.Down);
-            RegisterAction(NavLeft, Key.A, JoyButton.DpadLeft, Key.Left);
-            RegisterAction(NavRight, Key.D, JoyButton.DpadRight, Key.Right);
-            RegisterAction(Journal, Key.J, JoyButton.Y);
-            RegisterAction(Help, Key.F1, JoyButton.Back);
-            RegisterAction(Guidance, Key.F2);
-            RegisterAction(Forecast, Key.F);
-            RegisterAction(WeatherHistory, Key.H);
-            RegisterAction(Events, Key.E);
-            RegisterAction(Expeditions, Key.X);
-            RegisterAction(Holdfast, Key.T);
-            RegisterAction(JournalTab1, Key.Key1);
-            RegisterAction(JournalTab2, Key.Key2);
-            RegisterAction(JournalTab3, Key.Key3);
-            RegisterAction(JournalTab4, Key.Key4);
-            RegisterAction(JournalTab5, Key.Key5);
-            RegisterAction(HoldfastBuild, Key.B);
-            RegisterAction(HoldfastStatus, Key.S);
-
-            ReconcileCollisions();
-        }
-
-        public static int ReconcileCollisions()
-        {
-            int repaired = 0;
-            var keyOwners = new Dictionary<Key, string>();
-
-            foreach (var action in AllActions)
-            {
-                if (!InputMap.HasAction(action)) continue;
-                Key primaryKey = Key.None;
-                InputEventKey? keyEvent = null;
-
-                foreach (var ev in InputMap.ActionGetEvents(action))
-                {
-                    if (ev is InputEventKey k)
-                    {
-                        primaryKey = k.PhysicalKeycode != Key.None ? k.PhysicalKeycode : k.Keycode;
-                        keyEvent = k;
-                        break;
-                    }
-                }
-
-                if (primaryKey != Key.None)
-                {
-                    if (keyOwners.TryGetValue(primaryKey, out var existingAction))
-                    {
-                        // Collision detected! Repair this action to its canonical default.
-                        if (CanonicalDefaults.TryGetValue(action, out var canonicalKey))
-                        {
-                            if (keyEvent != null)
-                            {
-                                InputMap.ActionEraseEvent(action, keyEvent);
-                            }
-                            var repairedEvent = new InputEventKey { Keycode = canonicalKey, PhysicalKeycode = canonicalKey };
-                            InputMap.ActionAddEvent(action, repairedEvent);
-                            repaired++;
-                            keyOwners[canonicalKey] = action;
-                        }
-                    }
-                    else
-                    {
-                        keyOwners[primaryKey] = action;
-                    }
-                }
-            }
-            return repaired;
-        }
-
-        private static void RegisterAction(string action, Key primaryKey, JoyButton? joyButton = null, Key? secondaryKey = null)
-        {
-            if (!InputMap.HasAction(action))
-            {
-                InputMap.AddAction(action);
-            }
-
-            bool hasKey = false;
-            foreach (var ev in InputMap.ActionGetEvents(action))
-            {
-                if (ev is InputEventKey)
-                {
-                    hasKey = true;
-                    break;
-                }
-            }
-
-            if (!hasKey)
-            {
-                var k = new InputEventKey { Keycode = primaryKey, PhysicalKeycode = primaryKey };
-                InputMap.ActionAddEvent(action, k);
-
-                if (secondaryKey.HasValue)
-                {
-                    var k2 = new InputEventKey { Keycode = secondaryKey.Value, PhysicalKeycode = secondaryKey.Value };
-                    InputMap.ActionAddEvent(action, k2);
-                }
-
-                if (joyButton.HasValue)
-                {
-                    var jb = new InputEventJoypadButton { ButtonIndex = joyButton.Value };
-                    InputMap.ActionAddEvent(action, jb);
-                }
-            }
-        }
-
         public static bool IsCloseOrCancel(InputEvent @event)
         {
             return @event.IsActionPressed(Close) || @event.IsActionPressed(UiCancel);
@@ -226,15 +156,15 @@ namespace AtomicWar.GodotApp
             return @event.IsActionPressed(Confirm) || @event.IsActionPressed(UiAccept);
         }
 
-        public static bool IsConfirmOrAccept(InputEvent @event)
-        {
-            return IsConfirm(@event);
-        }
-
         public static bool IsNextTab(InputEvent @event)
         {
             return @event.IsActionPressed(NextTab);
         }
+
+        public static bool IsNavUp(InputEvent @event) => @event.IsActionPressed(NavUp);
+        public static bool IsNavDown(InputEvent @event) => @event.IsActionPressed(NavDown);
+        public static bool IsNavLeft(InputEvent @event) => @event.IsActionPressed(NavLeft);
+        public static bool IsNavRight(InputEvent @event) => @event.IsActionPressed(NavRight);
 
         public static bool IsForecast(InputEvent @event)
         {

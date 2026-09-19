@@ -1,8 +1,8 @@
 # Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality
 ## Integration Plan (package `C2[15]` / `PLAN37-INPUT-FOCUS-CONTROLLER`)
 
-**Status:** PLAN — not yet authorized for implementation. Phase 0 (the premise
-audit) is executed by this document; its findings are recorded in §2 and §4.
+**Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered,
+Gate 54 (input_map_contract) PASS, builds 0/0.
 **Source document:** `Next-steps-plans/shipped_to_chat/Plan_37_Hands_On_The_Wheel_Input_Focus_Controller.md`
 (verified against `ccac926e`; re-verified here against current `Zcode_Branch` HEAD).
 **Promotion record:** `docs/plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md` row 7 —

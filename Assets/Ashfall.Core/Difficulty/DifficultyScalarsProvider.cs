@@ -39,5 +39,27 @@ namespace Ashfall.Core.Difficulty
                 throw new ArgumentException("invalid difficulty preset: " + error, nameof(preset));
             return new DifficultyScalarsProvider(preset.id, preset.scalars);
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is DifficultyScalarsProvider other)
+            {
+                return string.Equals(PresetId, other.PresetId, StringComparison.Ordinal)
+                    && _scalars.hunger_rate_mult == other._scalars.hunger_rate_mult
+                    && _scalars.thirst_rate_mult == other._scalars.thirst_rate_mult
+                    && _scalars.radiation_gain_mult == other._scalars.radiation_gain_mult
+                    && _scalars.disease_onset_mult == other._scalars.disease_onset_mult
+                    && _scalars.hostile_encounter_mult == other._scalars.hostile_encounter_mult
+                    && _scalars.market_price_mult == other._scalars.market_price_mult
+                    && _scalars.equipment_decay_mult == other._scalars.equipment_decay_mult
+                    && _scalars.crisis_deadline_mult == other._scalars.crisis_deadline_mult;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(PresetId, _scalars.hunger_rate_mult, _scalars.thirst_rate_mult, _scalars.radiation_gain_mult);
+        }
     }
 }

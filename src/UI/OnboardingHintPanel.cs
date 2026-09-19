@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Onboarding;
+using AtomicWar.GodotApp.Host;
 using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
@@ -104,7 +105,8 @@ namespace AtomicWar.GodotApp.UI
             _titleLabel.TooltipText = T("onboarding.tooltip.tracker",
                 "First-hour checklist. Progress is kept with the save.");
             header.AddChild(_titleLabel);
-            _closeBtn = AshfallUiHelpers.MakeButton(T("ui.common.close_short", "CLOSE [Esc]"),
+            _closeBtn = AshfallUiHelpers.MakeButton(
+                T("ui.common.close_short", $"CLOSE [{AshfallInputActions.GetActionPrompt(AshfallInputActions.Close)}]"),
                 () => { Visible = false; });
             _closeBtn.TooltipText = T("onboarding.tooltip.close",
                 "Close the onboarding hint panel. Your progress is preserved.");
@@ -244,8 +246,7 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-            if (@event is InputEventKey key && key.Pressed && !key.IsEcho()
-                && key.Keycode == Key.Escape)
+            if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 Visible = false;
                 GetViewport().SetInputAsHandled();

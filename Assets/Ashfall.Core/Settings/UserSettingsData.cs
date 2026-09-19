@@ -13,7 +13,7 @@ namespace Ashfall.Core.Settings
     public sealed class UserSettingsData
     {
         [JsonPropertyName("schema_version")]
-        public int SchemaVersion { get; set; } = 1;
+        public int SchemaVersion { get; set; } = 2;
 
         // ── Display ───────────────────────────────────────────────────────
         [JsonPropertyName("window_mode")]
@@ -96,8 +96,21 @@ namespace Ashfall.Core.Settings
         [JsonPropertyName("enabled_mods")]
         public List<string> EnabledMods { get; set; } = new();
 
+        // ── Input & Controls (Plan 37) ──────────────────────────────────
+        [JsonPropertyName("key_bindings")]
+        public Dictionary<string, List<int>> KeyBindings { get; set; } = new(StringComparer.Ordinal);
+
         public UserSettingsData Clone()
         {
+            var clonedBindings = new Dictionary<string, List<int>>(StringComparer.Ordinal);
+            if (KeyBindings != null)
+            {
+                foreach (var kvp in KeyBindings)
+                {
+                    clonedBindings[kvp.Key] = kvp.Value != null ? new List<int>(kvp.Value) : new List<int>();
+                }
+            }
+
             return new UserSettingsData
             {
                 SchemaVersion = SchemaVersion,
@@ -124,7 +137,8 @@ namespace Ashfall.Core.Settings
                 VerboseRadioLog = VerboseRadioLog,
                 AutoSaveOnDay = AutoSaveOnDay,
                 ModsEnabled = ModsEnabled,
-                EnabledMods = new List<string>(EnabledMods ?? new List<string>())
+                EnabledMods = new List<string>(EnabledMods ?? new List<string>()),
+                KeyBindings = clonedBindings
             };
         }
     }

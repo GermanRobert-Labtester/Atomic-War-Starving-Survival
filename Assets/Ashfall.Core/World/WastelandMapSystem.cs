@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Underground;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.World
@@ -25,6 +26,9 @@ namespace Ashfall.Core.World
         private readonly List<MapRoute> _routes;
         private readonly Dictionary<string, TrapSiteMapLocation> _trapSiteLocations =
             new Dictionary<string, TrapSiteMapLocation>(StringComparer.Ordinal);
+
+        /// <summary>Plan 167: Subterranean tunnel network authority.</summary>
+        public TunnelNetworkSystem Tunnels { get; }
 
         public event Action<string>? OnNodeDiscovered;
         public event Action<string, MapFogState>? OnNodeKnowledgeChanged;
@@ -65,6 +69,9 @@ namespace Ashfall.Core.World
                 _routes.Add(r);
             }
             _state.NormalizeAndValidate(_nodes);
+            _state.Tunnels ??= new TunnelNetworkState();
+            Tunnels = new TunnelNetworkSystem(_state.Tunnels);
+            EnsureCanonicalTunnels();
             if (trapSiteLocations != null)
             {
                 foreach (var location in trapSiteLocations)
@@ -318,6 +325,7 @@ namespace Ashfall.Core.World
 
             OnNodeDiscovered?.Invoke(nodeId);
             OnNodeKnowledgeChanged?.Invoke(nodeId, MapFogState.Surveyed);
+            CheckAutoTunnelDiscovery(nodeId);
             return true;
         }
 
@@ -371,6 +379,7 @@ namespace Ashfall.Core.World
             if (isNewlyDiscovered)
                 OnNodeDiscovered?.Invoke(nodeId);
 
+            CheckAutoTunnelDiscovery(nodeId);
             return true;
         }
 
@@ -685,13 +694,97 @@ namespace Ashfall.Core.World
             return ExpeditionSystem.Estimate(def, stance, isNightScavenge, vehicle, weaponReadiness, weaponJamRisk);
         }
 
-        public WastelandMapState CaptureState() => _state.Capture();
+        public WastelandMapState CaptureState()
+        {
+            _state.Tunnels = Tunnels.CaptureState();
+            return _state.Capture();
+        }
 
         public void RestoreState(WastelandMapState state)
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
             _state.RestoreInto(state, _nodes);
+            Tunnels.RestoreState(_state.Tunnels ?? new TunnelNetworkState());
+            EnsureCanonicalTunnels();
             OnMarkersChanged?.Invoke();
+        }
+
+        // -----------------------------------------------------------------
+        // Plan 167 — Underground Tunnel Network
+        // -----------------------------------------------------------------
+
+        public void EnsureCanonicalTunnels()
+        {
+            if (Tunnels.TotalSegmentCount > 0) return;
+
+            Tunnels.RegisterJunction("loc_holdfast", "Holdfast Undercroft");
+            Tunnels.RegisterJunction("loc_cut_abandoned_depot", "Depot Sub-Basement", hasResource: true, resourceType: "scrap");
+            Tunnels.RegisterJunction("loc_cut_radiation_zone_alpha", "Vault Conduit Alpha");
+
+            Tunnels.RegisterSegment(
+                segmentId: "tun_holdfast_depot",
+                name: "Depot Maintenance Tunnel",
+                connectsFrom: "loc_holdfast",
+                connectsTo: "loc_cut_abandoned_depot",
+                lengthHours: 1.5f,
+                difficulty: 2,
+                integrity: 100f);
+
+            Tunnels.RegisterSegment(
+                segmentId: "tun_depot_alpha",
+                name: "Deep Service Conduit",
+                connectsFrom: "loc_cut_abandoned_depot",
+                connectsTo: "loc_cut_radiation_zone_alpha",
+                lengthHours: 2.5f,
+                difficulty: 3,
+                integrity: 75f);
+        }
+
+        public (bool CanTraverse, float TravelTimeHours, string Reason) CanTraverseTunnel(string fromNodeId, string toNodeId)
+        {
+            return Tunnels.CanTraverse(fromNodeId, toNodeId);
+        }
+
+        public bool DiscoverTunnel(string segmentId)
+        {
+            bool discovered = Tunnels.DiscoverSegment(segmentId);
+            if (discovered)
+            {
+                OnMarkersChanged?.Invoke();
+            }
+            return discovered;
+        }
+
+        public bool RepairTunnel(string segmentId, float repairAmount = 50f)
+        {
+            bool repaired = Tunnels.RepairSegment(segmentId, repairAmount);
+            if (repaired)
+            {
+                OnMarkersChanged?.Invoke();
+            }
+            return repaired;
+        }
+
+        public IReadOnlyList<TunnelSegment> GetDiscoveredTunnels() => Tunnels.GetDiscoveredSegments();
+
+        private void CheckAutoTunnelDiscovery(string nodeId)
+        {
+            if (Tunnels == null) return;
+            foreach (var segment in Tunnels.CaptureState().Segments)
+            {
+                if (!segment.IsDiscovered &&
+                    (string.Equals(segment.ConnectsFrom, nodeId, StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(segment.ConnectsTo, nodeId, StringComparison.OrdinalIgnoreCase)))
+                {
+                    string otherNode = string.Equals(segment.ConnectsFrom, nodeId, StringComparison.OrdinalIgnoreCase)
+                        ? segment.ConnectsTo
+                        : segment.ConnectsFrom;
+                    if (IsDiscovered(otherNode))
+                    {
+                        DiscoverTunnel(segment.SegmentId);
+                    }
+                }
+            }
         }
 
         private MapNode? FindNode(string id)
@@ -882,6 +975,9 @@ namespace Ashfall.Core.World
         /// <summary>Player-known map markers, including active trapping sites.</summary>
         public List<MapMarkerState> Markers = new List<MapMarkerState>();
 
+        /// <summary>Plan 167: Subterranean tunnel network topology, hazards, and integrity.</summary>
+        public TunnelNetworkState Tunnels = new TunnelNetworkState();
+
         public void NormalizeAndValidate(IReadOnlyList<MapNode> nodes)
         {
             var validIds = new HashSet<string>(StringComparer.Ordinal);
@@ -1001,7 +1097,8 @@ namespace Ashfall.Core.World
             Unlocked = new List<string>(Unlocked),
             RegisteredMapFragments = new List<string>(RegisteredMapFragments),
             Knowledge = Knowledge != null ? Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>(),
-            Markers = Markers != null ? Markers.Select(m => m.Clone()).ToList() : new List<MapMarkerState>()
+            Markers = Markers != null ? Markers.Select(m => m.Clone()).ToList() : new List<MapMarkerState>(),
+            Tunnels = Tunnels != null ? new TunnelNetworkSystem(Tunnels).CaptureState() : new TunnelNetworkState()
         };
 
         public void RestoreInto(WastelandMapState state, IReadOnlyList<MapNode> nodes)
@@ -1013,6 +1110,7 @@ namespace Ashfall.Core.World
             RegisteredMapFragments = state.RegisteredMapFragments != null ? new List<string>(state.RegisteredMapFragments) : new List<string>();
             Knowledge = state.Knowledge != null ? state.Knowledge.Select(k => k.Clone()).ToList() : new List<MapNodeKnowledgeState>();
             Markers = state.Markers != null ? state.Markers.Select(m => m.Clone()).ToList() : new List<MapMarkerState>();
+            Tunnels = state.Tunnels != null ? new TunnelNetworkSystem(state.Tunnels).CaptureState() : new TunnelNetworkState();
             NormalizeAndValidate(nodes);
         }
     }

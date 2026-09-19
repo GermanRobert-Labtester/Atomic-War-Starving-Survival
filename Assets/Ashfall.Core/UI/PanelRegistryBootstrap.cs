@@ -21,6 +21,7 @@ namespace Ashfall.Core.UI
             R("research",            "Research",                      PanelGroup.Dashboard,  new[] { "research" });
             R("weather_detail",      "Weather Detail",                PanelGroup.Dashboard,  new[] { "world" });
             R("weather_forecast",    "Weather Forecast",              PanelGroup.Dashboard,  new[] { "world" });
+            R("weather_history",     "Weather History",               PanelGroup.Dashboard,  new[] { "world" });
             R("event_detail",        "Event Detail",                  PanelGroup.Dashboard,  new[] { "events" });
             R("events_log",          "Events Log",                    PanelGroup.Dashboard,  new[] { "events" });
             R("economy_detail",      "Economy Detail",                PanelGroup.Dashboard,  new[] { "economy" });

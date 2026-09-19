@@ -31,6 +31,8 @@ User preferences in ASHFALL are isolated from gameplay save slots to avoid progr
 | **E6** | `user://audio_settings.json` | **Mixed Invalid Types**<br>(String for number, number for boolean) | Write `{ "master_volume": "MAX", "music_volume": 50, "sfx_mute": 999 }`. | - Resilient parser skips `"MAX"` and assigns default 100% to Master.<br>- `MusicVolume` is preserved as `50.0`.<br>- Non-boolean `sfx_mute` resets to safe `false`.<br>- Recovery warning logged listing affected fields. |
 | **E7** | `user://settings.json` | **Out-of-Range Bounds**<br>(Negative / extreme values) | Write `{ "ResolutionWidth": -500, "MaxFps": 9999, "UiScale": 50.0 }`. | - `ResolutionWidth` clamped to `1920`.<br>- `MaxFps` clamped to `60` (or valid engine bounds).<br>- `UiScale` clamped to `1.0`.<br>- Clamping warnings recorded in diagnostic log. |
 | **E8** | `user://audio_settings.json`<br>`user://settings.json` | **Runtime Save & Persistence**<br>(Slider & toggle modification) | Open Settings panel, set Master Volume to `35%`, toggle `ConfirmEndDay`, close panel. | - Files written atomically via `.tmp` file swap.<br>- Re-opening settings or restarting game retains `35%` and `ConfirmEndDay=true`.<br>- File size > 0 and valid JSON on disk. |
+| **E9** | `user://settings.json` | **Corrupted / Negative Keybindings**<br>(Plan 37 Rebinding) | Write `{ "schema_version": 2, "key_bindings": { "ashfall_journal": [74, -99, 999999999] } }`. | - Corrupt keycodes dropped with diagnostic.<br>- Valid keycode (74) preserved.<br>- No uncaught exception on load/apply. |
+| **E10** | Host Environment | **Safe-Mode Boot**<br>(Shift key held during boot) | Start game while holding `Shift`. | - Custom keybinding overrides bypassed for current session.<br>- `[KeyBindingApplicator]` logs safe-mode notice.<br>- Allows player to recover from broken bindings. |
 
 ---
 
@@ -95,3 +97,5 @@ SETTINGS_DIR="$HOME/.local/share/godot/app_userdata/Atomic War"
 | E6 — Mixed invalid types | PASS | `AudioSettingsCodecTests` | Skips mismatched types with warning |
 | E7 — Out-of-bounds numbers | PASS | `UserSettingsCodecTests` | Clamps resolutions, FPS, and scale |
 | E8 — Atomic runtime saving | PASS | `UserSettingsStore` | Atomic `.tmp` replacement verified |
+| E9 — Corrupt keybindings recovery | PASS | `UserSettingsRecoveryTests` | Drops out-of-range keys; preserves valid entries |
+| E10 — Safe-mode boot | PASS | `KeyBindingApplicator` | Holding Shift bypasses overrides safely |

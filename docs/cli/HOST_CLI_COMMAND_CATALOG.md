@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-18<br>
-**Total Registered Actions:** 179 entries / 255 flag tokens (aliases included)
+**Last Verified:** 2026-09-19<br>
+**Total Registered Actions:** 180 entries / 256 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -23,6 +23,7 @@
 | `--power-grid-catalog-selftest` | — | Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal |
 | `--core-selftest` | — | Ice road + census headless demos |
 | `--data-integrity-selftest` | — | Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates) |
+| `--difficulty-selftest` | — | XP-01 difficulty catalog, scalar consumers, starting bonuses, fail-closed selection, and save checksum binding |
 | `--export-parity-selftest` | — | [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present |
 | `--catalog-boot-preflight` | — | Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors |
 | `--panel-bind-lifecycle-selftest` | `--panel-bind-selftest`, `--panel-lifecycle-selftest` | Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch |

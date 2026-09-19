@@ -220,6 +220,16 @@ namespace AtomicWar.GodotApp.Settings
             {
                 GD.Print($"[UserSettingsStore] Accessibility apply notice: {ex.Message}");
             }
+
+            // 6. Input & Controls Keybinding Overrides (Plan 37)
+            try
+            {
+                KeyBindingApplicator.Apply(data);
+            }
+            catch (Exception ex)
+            {
+                GD.Print($"[UserSettingsStore] Keybinding apply notice: {ex.Message}");
+            }
         }
 
         private static void ApplyAudio(string busName, float linearVolume, bool muteAll)

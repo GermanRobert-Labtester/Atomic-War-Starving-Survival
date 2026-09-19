@@ -107,6 +107,21 @@ re-grouping (D11), quarantine drain (D21), XP-04 economy legs (F13), XP-06
 body-integrity schema (F14), EN-01…EN-08 proposals, Plan 49 (needs
 Plan 42/46 audits), C3 HOLDs 174/175/192/199, string freeze (D22).
 
+## FOLLOW-UP PARTIAL WAVE — REMAINING PLACEHOLDERS (2026-09-19)
+
+Plans 185 (Memory Decay), 162 (Shelter Archive), 216 (Exercise), 202
+(Interpersonal Conflict), 163 (Cartography), and 210 (Personal Belongings)
+now have bounded implementation logs. The remaining ranked partials are
+intentionally deferred and tracked as placeholders in
+`docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md`.
+
+That file is a pointer, not an approval or ownership claim. Before promoting a
+row, re-audit the current authority, claim exact paths, and keep the work
+small: one truthful production seam, focused tests, and no parallel mutable
+state or save section.
+
+Wave 5 details: `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`.
+
 ## ARCHITECTURE AND DATA
 
 - Core target: `Assets/Ashfall.Core/` (`netstandard2.1`); pure domain logic.

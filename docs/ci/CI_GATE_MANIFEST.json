@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 53,
-  "fast_tier_count": 50,
+  "total_gates": 54,
+  "fast_tier_count": 51,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -582,6 +582,16 @@
       "command": "python3 scripts/ci/generate-port-contract.py --check",
       "timeout_seconds": 60,
       "expected_summary": "Port contract verification gate: all",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "input_map_contract",
+      "name": "Input Map Contract and Action Parity Gate (Plan 37 / C2[15])",
+      "category": "Quality & Verification",
+      "command": "bash scripts/ci/input-map-gate.sh",
+      "timeout_seconds": 30,
+      "expected_summary": "input map contract PASS",
       "classification": "fast",
       "critical": true
     }

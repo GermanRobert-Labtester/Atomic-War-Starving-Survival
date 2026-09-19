@@ -198,6 +198,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _weatherForecastPanel.Open(),
                 closeAction: () => CloseWeatherForecastPanel());
 
+            PanelRegistry.ConfigureActions("weather_history",
+                bindAction: () => { SetupWorld(); _weatherHistoryPanel.Bind(_world?.Weather); },
+                openAction: () => OpenWeatherHistoryPanel(),
+                closeAction: () => { if (_weatherHistoryPanel != null) _weatherHistoryPanel.Visible = false; });
+
             PanelRegistry.ConfigureActions("event_detail",
                 bindAction: () => { SetupEventsHost(); _eventDetailPanel.Bind(_eventsHost); },
                 openAction: () => _eventDetailPanel.Open(),
@@ -240,7 +245,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseSurvivalDetailPanel());
 
             PanelRegistry.ConfigureActions("survivor_detail",
-                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
+                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); SetupCulturalArchive(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
                 openAction: () => _survivorDetailPanel.Open(),
                 closeAction: () => CloseSurvivorDetailPanel());
 
