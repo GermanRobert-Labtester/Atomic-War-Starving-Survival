@@ -139,6 +139,7 @@ namespace AtomicWar.GodotApp
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
         ShelterDecorSelfTest,
+        ShelterAtmosphereSelfTest,
         ShelterPhysicsSelfTest,
         AudioSelfTest,
         DeepCoastSelfTest,
@@ -247,6 +248,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.Version;
             if (Has(args, "--shelter-decor-selftest") || Has(args, "--shelter-interior-selftest") || Has(args, "--memorial-wall-selftest"))
                 return HostCliAction.ShelterDecorSelfTest;
+            if (Has(args, "--shelter-atmosphere-selftest") || Has(args, "--atmosphere-selftest") || Has(args, "--shelter-noise-selftest"))
+                return HostCliAction.ShelterAtmosphereSelfTest;
             if (Has(args, "--shelter-physics-selftest") || Has(args, "--shelter-actor-physics-selftest"))
                 return HostCliAction.ShelterPhysicsSelfTest;
             if (Has(args, "--shelter-operations-selftest") || Has(args, "--operations-selftest") || Has(args, "--shelter-ops-selftest"))
@@ -641,6 +644,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --muster-selftest / --expansion-06-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
             GD.Print("  --faction-ecology-selftest                      Plan 25 faction ecology vertical slice (action board, E-P1 chain, witness, camp scene, muster path)");
             GD.Print("  --faction-communique-board-selftest / --communique-board-selftest  Plan 133 faction war communique board self-test (surface bind, catalog queries, empty states)");
+            GD.Print("  --shelter-atmosphere-selftest / --atmosphere-selftest / --shelter-noise-selftest  Plan 220/205 shelter atmosphere + noise self-test (facets, save stores, morale deltas, panel bind)");
             GD.Print("  --phase0-selftest        Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
             GD.Print("  --precision-metrology-selftest Plan B89 precision metrology: grades, registered consumers only, workshop projection, disturbance, save round-trip");
             GD.Print("  --silent-foundry-selftest Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip");

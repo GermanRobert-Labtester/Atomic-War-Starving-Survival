@@ -142,6 +142,7 @@ namespace Ashfall.Core
         ShelterOperationsSelfTest,
         ShelterDecorSelfTest,
         ShelterPhysicsSelfTest,
+        ShelterAtmosphereSelfTest,
         SilentFoundryUiTest,
         SurvivorsUiTest,
         UiLayoutSelfTest,
@@ -937,6 +938,12 @@ namespace Ashfall.Core
                     "--shelter-physics-selftest",
                     new[] { "--shelter-actor-physics-selftest" },
                     "Physics base: CharacterBody2D gravity/floor collision, accelerated horizontal seek to room anchors, and blockout character sheet animation"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterAtmosphereSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--shelter-atmosphere-selftest",
+                    new[] { "--atmosphere-selftest", "--shelter-noise-selftest" },
+                    "Plan 220 & 205: Shelter atmosphere environmental facets, noise discipline, quiet hours, and acoustic management verification"),
                 new HostCliActionDescriptor(
                     HostCliAction.SilentFoundryUiTest,
                     "UI Tests, Layout & Gameplay Smoke",

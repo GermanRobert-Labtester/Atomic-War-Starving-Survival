@@ -140,6 +140,7 @@ namespace AtomicWar.GodotApp
             SetupMentalHealthCrisis();
             SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
             SetupShelterDecor();        // uses the final assignment map + inventory catalog
+            SetupShelterAtmosphere();
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -291,6 +292,7 @@ namespace AtomicWar.GodotApp
             SaveApprenticeship();
             SaveCaregiving();
             SaveShelterThermal();
+            SaveShelterAtmosphere();
             SaveWeatherHardening();
             SaveGeothermalAquifer();
             SaveShelterSchedule();
@@ -408,6 +410,7 @@ namespace AtomicWar.GodotApp
                 _expeditionPanel?.SetLightingPhase(lightingPhase);
             }
             _shelterSchedule?.TickDay(day);
+            TickShelterAtmosphere(day);
             _autopsy?.TickDay(day);
             // Plan 72 §3 ordering: advance ventilation/air filtration — hosts
             // pass weather truth; Core owns the intake conversion and stage math.
@@ -589,6 +592,9 @@ namespace AtomicWar.GodotApp
                 case "shelter_decor":
                     SetupShelterDecor();
                     if (_shelterDecorPanel != null) { _shelterDecorPanel.Visible = true; _shelterDecorPanel.RefreshView(); }
+                    break;
+                case "shelter_atmosphere":
+                    ShowShelterAtmospherePanel();
                     break;
                 case "medical_ward":
                     SetupJournal();
