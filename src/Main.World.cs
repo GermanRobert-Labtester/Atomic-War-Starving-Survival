@@ -667,6 +667,11 @@ namespace AtomicWar.GodotApp
             if (_greenhouse != null) return;
             SetupInventory();
             _greenhouse = GreenhouseHostSession.Create(_inventory);
+            _greenhouse.SeasonWindowProvider = () =>
+            {
+                var season = WildlifeSeasonalCalendar.SeasonWindowForDay(_world?.Profile, _simDay);
+                return !string.IsNullOrEmpty(season?.displayName) ? season.displayName : (!string.IsNullOrEmpty(season?.id) ? season.id : "Standard");
+            };
             _greenhouse.StateChanged += () =>
             {
                 _greenhouseDirty = true;

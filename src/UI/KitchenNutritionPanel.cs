@@ -222,6 +222,15 @@ namespace AtomicWar.GodotApp.UI
                     cost = "1x Milled Ash-Barley Flour",
                     morale = 4,
                     inputs = new Dictionary<string, int> { ["item_grain_flour"] = 1 }
+                },
+                new RecipeOption
+                {
+                    id = "recipe_confit_tuber",
+                    name = "Cold-Confit Root Tubers",
+                    desc = "Preserved root tubers slowly cooked and sealed in seed-pressed cooking oil.",
+                    cost = "3x Frost Tuber, 1x Cooking Oil, 1x Salt",
+                    morale = 4,
+                    inputs = new Dictionary<string, int> { ["crop_tuber"] = 3, ["cooking_oil"] = 1, ["item_preservation_salt"] = 1 }
                 }
             };
 
@@ -236,7 +245,8 @@ namespace AtomicWar.GodotApp.UI
                 cardMargin.AddChild(cardVbox);
 
                 var headerRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-                headerRow.AddChild(AshfallUiHelpers.MakeBadgeIcon("badge_scurvy", 18));
+                string badgeIcon = r.id == "recipe_greenhouse_salad" ? "badge_scurvy" : "badge_morale";
+                headerRow.AddChild(AshfallUiHelpers.MakeBadgeIcon(badgeIcon, 18));
                 var nameLbl = AshfallUiHelpers.MakeBody(r.name);
                 nameLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                 headerRow.AddChild(nameLbl);
@@ -267,7 +277,17 @@ namespace AtomicWar.GodotApp.UI
             _prepStation.AddChild(AshfallUiHelpers.MakeDataRow("Recipe ID", curRecipe.id, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             _prepStation.AddChild(AshfallUiHelpers.MakeDataRow("Ingredients Required", curRecipe.cost, AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             _prepStation.AddChild(AshfallUiHelpers.MakeDataRow("Nutritional Morale Impact", $"+{curRecipe.morale} Morale Bonus", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-            _prepStation.AddChild(AshfallUiHelpers.MakeDataRow("Scurvy Prevention", "High Vitamin C Equivalent", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            string dietaryImpact = curRecipe.id switch
+            {
+                "recipe_greenhouse_salad" => "High Vitamin C Equivalent (Prevents Scurvy)",
+                "recipe_fungal_stew" => "Trace Minerals & Fungal Antioxidants",
+                "recipe_subterranean_mushroom_mash" => "Subterranean Fiber & Protein",
+                "recipe_cured_jerky_broth" => "High Animal Protein & Iron",
+                "recipe_ash_flour_bread" => "Complex Carbohydrates & Energy",
+                "recipe_confit_tuber" => "Calorie-Dense Lipids & Electrolytes",
+                _ => "Standard Caloric Rations"
+            };
+            _prepStation.AddChild(AshfallUiHelpers.MakeDataRow("Dietary Impact", dietaryImpact, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
 
             _prepStation.AddChild(AshfallUiHelpers.MakeSeparator());
             _prepStation.AddChild(AshfallUiHelpers.MakeSubsectionHeader("COOK ASSIGNMENT"));

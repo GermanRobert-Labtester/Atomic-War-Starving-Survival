@@ -65,16 +65,22 @@ public partial class GreenhousePanel : Control
 
         var cropsItems = new[]
         {
-            new AshfallSidebar.Item { Id = "all",      Label = "All Beds",      Hint = "every plot · stage / water / soil", IconPath = "" },
-            new AshfallSidebar.Item { Id = "fallow",   Label = "Fallow Only",   Hint = "empty soil beds ready to seed",    IconPath = "" },
-            new AshfallSidebar.Item { Id = "critical", Label = "Damaged",       Hint = "failed or blight-stricken beds",   IconPath = "" },
-            new AshfallSidebar.Item { Id = "harvest",  Label = "Ready",         Hint = "beds at mature stage",            IconPath = "" },
+            new AshfallSidebar.Item { Id = "all",      Label = "All Beds",       Hint = "every plot · stage / water / soil", IconPath = "" },
+            new AshfallSidebar.Item { Id = "fallow",   Label = "Fallow Only",    Hint = "empty soil beds ready to seed",    IconPath = "" },
+            new AshfallSidebar.Item { Id = "critical", Label = "Damaged",        Hint = "failed or blight-stricken beds",   IconPath = "" },
+            new AshfallSidebar.Item { Id = "harvest",  Label = "Ready",          Hint = "beds at mature stage",            IconPath = "" },
+            new AshfallSidebar.Item { Id = "tubers",   Label = "Tubers",         Hint = "frost & hardy tuber lines",        IconPath = "" },
+            new AshfallSidebar.Item { Id = "grains",   Label = "Grains",         Hint = "ash-barley, winter rye & wheat",  IconPath = "" },
+            new AshfallSidebar.Item { Id = "fungi",    Label = "Fungi",          Hint = "spore & phosphor cap mycelium",   IconPath = "" },
+            new AshfallSidebar.Item { Id = "greens",   Label = "Greens & Herbs", Hint = "winter cress, herbs & greens",     IconPath = "" },
+            new AshfallSidebar.Item { Id = "legumes",  Label = "Legumes & Seeds", Hint = "iron pea, oilseed & algae slurry", IconPath = "" },
             new AshfallSidebar.Item { Id = "apiary",   Label = "Apiary (Hives)", Hint = "colony health · pollination · honey & wax", IconPath = "" },
         };
         _sidebar = _shell.SetSidebar(cropsItems, "Filter", "all");
         _sidebar.OnSelected += HandleSidebar;
 
         _statusRail = _shell.SetStatusRail();
+        _statusRail.AddCard("season", "Season", "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
         _statusRail.AddCard("active", "Active Beds", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
         _statusRail.AddCard("plotcount", "Plot Count", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
         _statusRail.AddCard("harvests", "Harvests", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
@@ -139,15 +145,7 @@ public partial class GreenhousePanel : Control
 
     private void HandleSidebar(string id)
     {
-        if (id == "fallow" || id == "critical" || id == "harvest" || id == "apiary")
-        {
-            // map sidebar filter to a crop filter token for BuildPlotRows
-            _cropFilter = id;
-        }
-        else
-        {
-            _cropFilter = "all";
-        }
+        _cropFilter = string.IsNullOrEmpty(id) ? "all" : id;
         RefreshView();
     }
 
@@ -197,6 +195,7 @@ public partial class GreenhousePanel : Control
         if (_statusRail == null) return;
         if (_host == null)
         {
+            _statusRail.Set("season", "—", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("active", "—", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("plotcount", "—", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("harvests", "—", AshfallMetricCard.Criticality.Normal);
@@ -204,6 +203,8 @@ public partial class GreenhousePanel : Control
             _statusRail.Set("blight", "—", AshfallMetricCard.Criticality.Caution);
             return;
         }
+
+        _statusRail.Set("season", _host.CurrentSeasonLabel, AshfallMetricCard.Criticality.Normal);
 
         if (_cropFilter == "apiary")
         {
@@ -380,14 +381,39 @@ public partial class GreenhousePanel : Control
         var stage = (GreenhouseStage)p.stage;
         if (_cropFilter == "harvest") return stage == GreenhouseStage.Mature;
         if (_cropFilter == "critical") return p.blight > 0f || stage == GreenhouseStage.Failed;
-        // crop-type filter by seed id
         if (string.IsNullOrEmpty(p.seedItemId)) return false;
-        return p.seedItemId switch
+
+        return _cropFilter switch
         {
-            GreenhouseExpansionCatalog.Items.SeedMushroom => _cropFilter == "mushroom",
-            GreenhouseExpansionCatalog.Items.SeedTuber    => _cropFilter == "tuber",
-            GreenhouseExpansionCatalog.Items.SeedGrain    => _cropFilter == "grain",
-            GreenhouseExpansionCatalog.Items.SeedWheat    => _cropFilter == "wheat",
+            "tubers" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedTuber
+                     || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedHardyTuber
+                     || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedPacketsMixed,
+            "grains" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedGrain
+                     || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedAshGrain
+                     || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedWheat,
+            "fungi" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedMushroom
+                    || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedBiolumMushroom,
+            "greens" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedLeafyGreen
+                     || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedGlacierGreens
+                     || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedMedicinalHerb,
+            "legumes" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedColdLegume
+                      || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedFrostPea
+                      || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedOilseed
+                      || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedNutrientAlgae,
+            "tuber" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedTuber || p.seedItemId == GreenhouseExpansionCatalog.Items.SeedPacketsMixed,
+            "hardytuber" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedHardyTuber,
+            "grain" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedGrain,
+            "ashgrain" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedAshGrain,
+            "wheat" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedWheat,
+            "mushroom" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedMushroom,
+            "biolum" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedBiolumMushroom,
+            "leafy" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedLeafyGreen,
+            "glacier" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedGlacierGreens,
+            "herb" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedMedicinalHerb,
+            "legume" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedColdLegume,
+            "frostpea" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedFrostPea,
+            "oilseed" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedOilseed,
+            "algae" => p.seedItemId == GreenhouseExpansionCatalog.Items.SeedNutrientAlgae,
             _ => false,
         };
     }
@@ -656,6 +682,9 @@ public partial class GreenhousePanel : Control
         GreenhouseExpansionCatalog.Items.SeedLeafyGreen     => "Leafy Green",
         GreenhouseExpansionCatalog.Items.SeedOilseed        => "Oilseed",
         GreenhouseExpansionCatalog.Items.SeedColdLegume     => "Cold Legume",
+        GreenhouseExpansionCatalog.Items.SeedFrostPea       => "Frost Pea",
+        GreenhouseExpansionCatalog.Items.SeedGlacierGreens  => "Glacier Greens",
+        GreenhouseExpansionCatalog.Items.SeedPacketsMixed   => "Assorted Seed Packet",
         _ => "Cultivar",
     };
 

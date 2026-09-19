@@ -115,11 +115,55 @@ namespace AtomicWar.GodotApp
             _cryoVault.OnVaultWarning += _ => _cryoVaultDirty = true;
             _cryoVault.OnBreachStarted += _ => _cryoVaultDirty = true;
             _cryoVault.OnSampleReleased += (_, _, _, _) => _cryoVaultDirty = true;
+            _cryoVault.OnCultivarReleased += OnCryoCultivarReleased;
             _cryoVault.OnSampleFailed += _ => _cryoVaultDirty = true;
             _cryoVault.OnStateChanged += () => _cryoVaultDirty = true;
 
             GD.Print("[Ashfall Godot] Cryo vault host ready (plan B69, " +
                      _cryoVault.Catalog.Count + " cultivars).");
+        }
+
+        private void OnCryoCultivarReleased(string canisterId, CryoCultivarDef def, int viability)
+        {
+            _cryoVaultDirty = true;
+            if (def == null) return;
+
+            // 1. Hydroponic trait overlay (stabilized traits)
+            if (def.traits != null && def.traits.Length > 0)
+            {
+                var hydro = _hydroponicBiomes;
+                if (hydro != null)
+                {
+                    foreach (var trait in def.traits)
+                    {
+                        if (string.Equals(trait, "frost_hardy", StringComparison.OrdinalIgnoreCase))
+                            hydro.UnlockStabilizedTrait("Trait_Cold_Hardy");
+                        else if (string.Equals(trait, "radiation_tolerant", StringComparison.OrdinalIgnoreCase))
+                            hydro.UnlockStabilizedTrait("Trait_Drought_Resistant");
+                        else if (string.Equals(trait, "rapid_growth", StringComparison.OrdinalIgnoreCase))
+                            hydro.UnlockStabilizedTrait("Trait_Double_Harvest");
+                    }
+                    _hydroponicBiomesDirty = true;
+                }
+            }
+
+            // 2. Agriculture strain unlocking
+            if (_agriculture != null && _agriculture.System != null)
+            {
+                var agri = _agriculture.System;
+                var catalog = agri.Catalog;
+                if (catalog?.strains != null)
+                {
+                    foreach (var strain in catalog.strains)
+                    {
+                        if (strain != null && string.Equals(strain.seed_item_id, def.recovery_item_id, StringComparison.Ordinal))
+                        {
+                            agri.UnlockStrain(strain.id);
+                            _agricultureDirty = true;
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

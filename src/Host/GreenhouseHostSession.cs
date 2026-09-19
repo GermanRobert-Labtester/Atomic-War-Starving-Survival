@@ -24,6 +24,8 @@ namespace AtomicWar.GodotApp
         public ApicultureSystem Apiculture { get; }
         public InventoryHostSession? InventoryHost { get; set; }
         public string LastEvent { get; private set; } = string.Empty;
+        public Func<string>? SeasonWindowProvider { get; set; }
+        public string CurrentSeasonLabel => SeasonWindowProvider?.Invoke() ?? "Standard";
         public GreenhouseHostSession(GreenhouseSystem system, InventoryHostSession? inventoryHost = null, ApicultureSystem? apiculture = null)
         {
             System = system ?? new GreenhouseSystem(DefaultSeed);

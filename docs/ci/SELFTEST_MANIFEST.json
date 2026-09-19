@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 125,
-  "headless_test_count": 123,
+  "total_tests": 126,
+  "headless_test_count": 124,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -680,6 +680,19 @@
       "description": "Warlord tribute payment loop + collector voice + FactionsPanel card",
       "headless_compatible": true,
       "expected_summary_id": "warlord_ui_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "faction_communique_board_selftest",
+      "action": "FactionCommuniqueBoardSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--faction-communique-board-selftest",
+      "aliases": [
+        "--communique-board-selftest"
+      ],
+      "description": "Faction Communiqu\u00e9 Board: day-gated rendering, empty states, attribution, refresh idempotence",
+      "headless_compatible": true,
+      "expected_summary_id": "faction_communique_board_selftest",
       "timeout_seconds": 30
     },
     {
