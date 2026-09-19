@@ -94,6 +94,12 @@ namespace Ashfall.Core.Shelter
         public float DetectionRisk => _state.DetectionRisk;
         public bool QuietHoursActive => _state.QuietHoursActive;
         public int ActiveSourceCount => _state.Sources.Count(s => s.IsActive);
+        public int QuietHoursStart => _state.QuietHoursStart;
+        public int QuietHoursEnd => _state.QuietHoursEnd;
+        public IReadOnlyList<NoiseSource> Sources => _state.Sources;
+        public IReadOnlyList<RoomAcousticProfile> RoomProfiles => _state.RoomProfiles;
+        public IReadOnlyList<NoiseEvent> Events => _state.Events;
+        public ShelterNoiseState State => _state;
 
         public ShelterNoiseSystem(ShelterNoiseState? state = null)
         {

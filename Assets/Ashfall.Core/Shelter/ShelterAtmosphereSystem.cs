@@ -67,6 +67,15 @@ namespace Ashfall.Core.Shelter
         public float OverallMoodScore => _state.OverallMoodScore;
         public AtmosphereMoodCategory CurrentMoodCategory => _state.CurrentMoodCategory;
         public AtmosphereProfileType ActiveProfile => _state.ActiveProfile;
+        public float LightingQuality => _state.LightingQuality;
+        public float AcousticComfort => _state.AcousticComfort;
+        public float AirPurity => _state.AirPurity;
+        public float ThermalComfort => _state.ThermalComfort;
+        public float Cleanliness => _state.Cleanliness;
+        public float SocialWarmth => _state.SocialWarmth;
+        public float DecorationLevel => _state.DecorationLevel;
+        public int LastUpdatedDay => _state.LastUpdatedDay;
+        public AtmosphereState State => _state;
 
         public ShelterAtmosphereSystem(AtmosphereState? state = null)
         {

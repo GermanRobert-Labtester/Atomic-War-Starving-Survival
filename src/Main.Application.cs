@@ -537,6 +537,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterDecorSelfTest:
                     GetTree().Quit(ShelterDecorSelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.ShelterAtmosphereSelfTest:
+                    GetTree().Quit(ShelterAtmosphereSelfTest.Run(_dataDir));
+                    return;
                 case HostCliAction.ShelterPhysicsSelfTest:
                     RunShelterPhysicsSelfTestAndQuit();
                     return;

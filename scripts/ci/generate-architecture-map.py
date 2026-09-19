@@ -113,6 +113,34 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--shelter-decor-selftest"],
         "tests": ["Plan12CDecorTests"]
     },
+    "shelter_atmosphere": {
+        "domain": "Shelter",
+        "core": ["ShelterAtmosphereSystem"],
+        "catalog": [],
+        "host": ["ShelterAtmosphereHostSession"],
+        "setup": "SetupShelterAtmosphere",
+        "ticked": True,
+        "tick_type": "Daily (Day Coordinator)",
+        "store": ["ShelterAtmosphereSaveStore"],
+        "ui": ["ShelterAtmospherePanel", "GameDashboardPanel"],
+        "routes": ["shelter_atmosphere"],
+        "cli": ["--shelter-atmosphere-selftest"],
+        "tests": ["Plan220ShelterAtmosphereIntegrationTests"]
+    },
+    "shelter_noise": {
+        "domain": "Shelter",
+        "core": ["ShelterNoiseSystem"],
+        "catalog": [],
+        "host": ["ShelterAtmosphereHostSession"],
+        "setup": "SetupShelterAtmosphere",
+        "ticked": True,
+        "tick_type": "Daily (Midday Acoustic Audit)",
+        "store": ["ShelterNoiseSaveStore"],
+        "ui": ["ShelterAtmospherePanel"],
+        "routes": ["shelter_atmosphere"],
+        "cli": ["--shelter-atmosphere-selftest"],
+        "tests": ["Plan220ShelterAtmosphereIntegrationTests"]
+    },
     "ecological_infestation": {
         "domain": "World",
         "core": ["EcologicalInfestationSystem"],

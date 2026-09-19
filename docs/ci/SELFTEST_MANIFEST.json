@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 126,
-  "headless_test_count": 124,
+  "total_tests": 127,
+  "headless_test_count": 125,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1326,6 +1326,20 @@
       "description": "Physics base: CharacterBody2D gravity/floor collision, accelerated horizontal seek to room anchors, and blockout character sheet animation",
       "headless_compatible": true,
       "expected_summary_id": "shelter_physics_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_atmosphere_selftest",
+      "action": "ShelterAtmosphereSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--shelter-atmosphere-selftest",
+      "aliases": [
+        "--atmosphere-selftest",
+        "--shelter-noise-selftest"
+      ],
+      "description": "Plan 220 & 205: Shelter atmosphere environmental facets, noise discipline, quiet hours, and acoustic management verification",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_atmosphere_selftest",
       "timeout_seconds": 30
     },
     {

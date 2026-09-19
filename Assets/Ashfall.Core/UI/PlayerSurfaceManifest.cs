@@ -59,7 +59,7 @@ namespace Ashfall.Core.UI
             "radio", "greenhouse", "silent_foundry", "trade", "muster", "duty_roster", "save",
             "settings", "combat", "water_treatment", "airlock_security", "survivor_relations",
             "regional_treaty", "vinyl_morale", "wildlife_trapping", "excavation", "apprenticeship",
-            "caregiving", "shelter_thermal", "shelter_schedule", "shelter_decor", "autopsy_report", "waystation_network",
+            "caregiving", "shelter_thermal", "shelter_schedule", "shelter_decor", "shelter_atmosphere", "autopsy_report", "waystation_network",
             "chemical_dependency", "sump_flooding", "decontamination", "kitchen_nutrition",
             "equipment_condition", "library_study", "archive_desk", "contractor_roster",
             "mental_health_crisis", "phantom_memory", "traveling_caravan", "shelter_barter", "medical_ward",
