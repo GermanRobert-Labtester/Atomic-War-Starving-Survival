@@ -73,6 +73,26 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
+        /// <summary>
+        /// Authored <c>item_degradation.json</c> overrides matching built-in
+        /// profile ids and family keys. Built-ins remain if the file is absent.
+        /// </summary>
+        public void LoadCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            try
+            {
+                var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
+                string path = fileIO.Combine(dataDir, "item_degradation.json");
+                if (!fileIO.FileExists(path)) return;
+                System.LoadProfiles(fileIO.ReadAllText(path));
+            }
+            catch (Exception ex)
+            {
+                GD.PushWarning($"[Ashfall Godot] Equipment degradation catalog load failed: {ex.Message}");
+            }
+        }
+
         public override void Save()
         {
             if (!IsDirty) return;

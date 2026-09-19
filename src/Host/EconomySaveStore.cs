@@ -81,6 +81,7 @@ namespace AtomicWar.GodotApp
 
         private static MarketState? DecodeState(string raw, IJsonSerializer json)
         {
+            if (string.IsNullOrWhiteSpace(raw)) return null;
             var envelope = json.Deserialize<EconomySaveEnvelope>(raw);
             if (envelope != null && envelope.State != null)
             {
@@ -91,9 +92,22 @@ namespace AtomicWar.GodotApp
                     return null;
                 return envelope.State;
             }
+
+            // An envelope with a checksum field or state property is an envelope save;
+            // if it failed the above validation it is corrupt/tampered, not a legacy save.
+            if (envelope != null && (!string.IsNullOrEmpty(envelope.Checksum) || envelope.State != null))
+                return null;
+            if (raw.Contains("\"Checksum\"", StringComparison.OrdinalIgnoreCase))
+                return null;
+
             // Legacy migration: a bare MarketState (pre-checksum store shape)
             // has no envelope; accept it so an upgrade never silently loses
             // the economy. Legacy saves carry no checksum by definition.
+            if (!raw.Contains("\"demand\"", StringComparison.OrdinalIgnoreCase)
+                && !raw.Contains("\"tickCount\"", StringComparison.OrdinalIgnoreCase)
+                && !raw.Contains("\"systemId\"", StringComparison.OrdinalIgnoreCase))
+                return null;
+
             var legacy = json.Deserialize<MarketState>(raw);
             if (legacy != null && !string.IsNullOrEmpty(legacy.systemId))
                 return legacy;

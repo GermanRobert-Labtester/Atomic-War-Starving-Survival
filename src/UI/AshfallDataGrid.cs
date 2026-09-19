@@ -73,6 +73,22 @@ public partial class AshfallDataGrid : PanelContainer
         public Action? OnSelected = null;
     }
 
+    /// <summary>Truthful empty/unbound grid: no invented fixture gameplay.</summary>
+    public static List<Row> UnavailableRows(int columnCount, string message)
+    {
+        int cols = Math.Max(1, columnCount);
+        var cells = new List<Cell>(cols)
+        {
+            new(message ?? "Unavailable — no live authority bound.", CellState.Muted)
+        };
+        for (int i = 1; i < cols; i++)
+            cells.Add(new("—", CellState.Muted));
+        return new List<Row>
+        {
+            new Row { Cells = cells, Selectable = false }
+        };
+    }
+
     public event Action<int>? OnRowSelected;
 
     public int RowCount => _rows.Count;

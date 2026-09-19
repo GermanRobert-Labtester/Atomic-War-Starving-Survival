@@ -3,7 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Endgame
 {
@@ -30,6 +34,15 @@ namespace Ashfall.Core.Endgame
         public bool velSecretExposed;
         public string previousChecksum = string.Empty;
 
+        /// <summary>
+        /// Schema v2 observation: campaign difficulty preset id. Marked
+        /// NonSerialized so v1 SaveChecksum.Compute stays byte-identical;
+        /// v2 folds it in via <see cref="CampaignCompletionHistoryService"/>.
+        /// </summary>
+        [NonSerialized]
+        [JsonInclude]
+        public string difficultyPresetId = string.Empty;
+
         // SaveChecksum deliberately excludes a root field with this exact name,
         // allowing the checksum to cover every immutable semantic field above.
         public string Checksum = string.Empty;
@@ -52,16 +65,22 @@ namespace Ashfall.Core.Endgame
     /// </summary>
     public sealed class CampaignCompletionObservation
     {
-        public CampaignCompletionObservation(string runIdentity, string endingId, EpilogueContextInputs context)
+        public CampaignCompletionObservation(
+            string runIdentity,
+            string endingId,
+            EpilogueContextInputs context,
+            string? difficultyPresetId = null)
         {
             RunIdentity = runIdentity ?? string.Empty;
             EndingId = endingId ?? string.Empty;
             Context = context ?? throw new ArgumentNullException(nameof(context));
+            DifficultyPresetId = difficultyPresetId ?? string.Empty;
         }
 
         public string RunIdentity { get; }
         public string EndingId { get; }
         public EpilogueContextInputs Context { get; }
+        public string DifficultyPresetId { get; }
     }
 
     public enum CompletionHistoryAppendResult
@@ -78,7 +97,8 @@ namespace Ashfall.Core.Endgame
     /// </summary>
     public static class CampaignCompletionHistoryService
     {
-        private const int CurrentSchemaVersion = 1;
+        private const int CurrentSchemaVersion = 2;
+        private const int MinimumSchemaVersion = 1;
 
         public static CompletionHistoryAppendResult Append(
             CampaignCompletionHistory history,
@@ -115,11 +135,14 @@ namespace Ashfall.Core.Endgame
                 debtLedgersBurned = context.DebtLedgersBurned,
                 childrenSurvived = context.ChildrenSurvived,
                 velSecretExposed = context.VelSecretExposed,
+                difficultyPresetId = observation.DifficultyPresetId ?? string.Empty,
                 previousChecksum = history.records.Count == 0
                     ? string.Empty
                     : history.records[history.records.Count - 1].Checksum
             };
-            record.Checksum = SaveChecksum.Compute(record);
+            record.Checksum = ComputeRecordChecksum(record);
+            if (history.schemaVersion < CurrentSchemaVersion)
+                history.schemaVersion = CurrentSchemaVersion;
             history.records.Add(record);
             appendedRecord = CloneRecord(record);
             return CompletionHistoryAppendResult.Appended;
@@ -138,7 +161,7 @@ namespace Ashfall.Core.Endgame
                 return false;
             }
 
-            if (history.schemaVersion != CurrentSchemaVersion)
+            if (history.schemaVersion < MinimumSchemaVersion || history.schemaVersion > CurrentSchemaVersion)
             {
                 error = $"Unsupported completion-history schema {history.schemaVersion}.";
                 return false;
@@ -161,7 +184,9 @@ namespace Ashfall.Core.Endgame
                     return false;
                 }
 
-                if (record.schemaVersion != CurrentSchemaVersion || record.completionOrdinal != index + 1)
+                if (record.schemaVersion < MinimumSchemaVersion
+                    || record.schemaVersion > CurrentSchemaVersion
+                    || record.completionOrdinal != index + 1)
                 {
                     error = $"Completion record {index + 1} has an invalid schema or append ordinal.";
                     return false;
@@ -179,7 +204,7 @@ namespace Ashfall.Core.Endgame
                     return false;
                 }
 
-                if (!string.Equals(record.Checksum, SaveChecksum.Compute(record), StringComparison.Ordinal))
+                if (!string.Equals(record.Checksum, ComputeRecordChecksum(record), StringComparison.Ordinal))
                 {
                     error = $"Completion record {index + 1} failed checksum validation.";
                     return false;
@@ -330,9 +355,25 @@ namespace Ashfall.Core.Endgame
                 debtLedgersBurned = record.debtLedgersBurned,
                 childrenSurvived = record.childrenSurvived,
                 velSecretExposed = record.velSecretExposed,
+                difficultyPresetId = record.difficultyPresetId ?? string.Empty,
                 previousChecksum = record.previousChecksum,
                 Checksum = record.Checksum
             };
+        }
+
+        internal static string ComputeRecordChecksum(CampaignCompletionRecord record)
+        {
+            string baseHash = SaveChecksum.Compute(record);
+            if (record.schemaVersion < 2)
+                return baseHash;
+            string extra = record.difficultyPresetId ?? string.Empty;
+            byte[] bytes = Encoding.UTF8.GetBytes(baseHash + "\n" + extra);
+            using var sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(bytes);
+            var sb = new StringBuilder(hash.Length * 2);
+            for (int i = 0; i < hash.Length; i++)
+                sb.Append(hash[i].ToString("x2", CultureInfo.InvariantCulture));
+            return sb.ToString();
         }
 
         [Serializable]

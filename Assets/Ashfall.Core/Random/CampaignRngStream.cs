@@ -23,6 +23,7 @@ namespace Ashfall.Core.Random
         public const string Muster = "muster";
         public const string Foundry = "foundry";
         public const string Maritime = "maritime";
+        public const string DeepCoast = "deep_coast";
         public const string Psychology = "psychology";
         public const string Medical = "medical";
         public const string Events = "events";

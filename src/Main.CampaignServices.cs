@@ -35,6 +35,7 @@ namespace AtomicWar.GodotApp
                 SetupThirdonary();
                 SetupInventory();
                 SetupSurvivors();
+                SetupDifficulty();
                 SetupWorld();
                 SetupMedical();
                 SetupMedicalWard();
@@ -62,6 +63,7 @@ namespace AtomicWar.GodotApp
                 SetupCombat();
                 SetupNarrative();
                 SetupEchoes();
+                SetupSpiritual();
                 SetupUtilityAi();
                 SetupCaravans();
                 SetupExpansions();

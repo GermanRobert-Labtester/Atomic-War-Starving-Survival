@@ -58,9 +58,11 @@ namespace AtomicWar.GodotApp
                 GD.Print("[Ashfall Godot] Survivor-social state restored.");
             }
 
+            _survivorSocial.Leadership.OnStateChanged += OnLeadershipStateChanged;
+            _survivorSocial.OnBelongingsChanged += OnPersonalBelongingsChanged;
+
             // Push the read model to the survivor-relations panel.
-            if (_survivorRelationsPanel != null)
-                _survivorRelationsPanel.SetSocialReadModel(_survivorSocial.BuildReadModel());
+            RefreshSurvivorSocialReadModel();
         }
 
         private static string InferBeliefProfile(Ashfall.Core.Survivors.SurvivorDefinition? def)
@@ -125,8 +127,51 @@ namespace AtomicWar.GodotApp
             _survivorSocialDirty = true;
 
             // Push the read model to the survivor-relations panel.
+            RefreshSurvivorSocialReadModel();
+        }
+
+        private void OnLeadershipStateChanged()
+        {
+            _survivorSocialDirty = true;
+            RefreshSurvivorSocialReadModel();
+        }
+
+        private void OnPersonalBelongingsChanged()
+        {
+            _survivorSocialDirty = true;
+            _survivorDetailPanel?.RefreshView();
+        }
+
+        private void RefreshSurvivorSocialReadModel()
+        {
             if (_survivorRelationsPanel != null && _survivorSocial != null)
                 _survivorRelationsPanel.SetSocialReadModel(_survivorSocial.BuildReadModel());
+        }
+
+        public bool DesignateLeadershipSuccessor(string survivorId)
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial != null && _survivorSocial.DesignateSuccessor(survivorId);
+        }
+
+        public bool AppointLeadershipDeputy(string survivorId)
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial != null && _survivorSocial.AppointDeputy(survivorId);
+        }
+
+        public string InitiateLeadershipChallenge(string challengerId, string reason)
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial?.InitiateLeadershipChallenge(challengerId, reason)?.challenge_id
+                ?? string.Empty;
+        }
+
+        public bool ResolveLeadershipChallenge(string challengeId, bool challengerWon)
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial != null
+                && _survivorSocial.ResolveLeadershipChallenge(challengeId, challengerWon);
         }
     }
 }

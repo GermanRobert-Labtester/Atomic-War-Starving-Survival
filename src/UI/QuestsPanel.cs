@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Crossing;
+using Ashfall.Core.Narrative;
 using Ashfall.Core.UI;
 
 namespace AtomicWar.GodotApp.UI
@@ -18,6 +19,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnClose;
         public event Action<string>? OnQuestDetailRequested;
         public event Action? OnCrossingPanelRequested;
+        public event Action? OnProceduralQuestRequested;
 
         /// <summary>Open the authored personal arc belonging to a survivor.</summary>
         public event Action<string>? OnBeginSurvivorArcRequested;
@@ -41,11 +43,12 @@ namespace AtomicWar.GodotApp.UI
         private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralChoice;
         private IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? _moralDefs;
         private NarrativeQuestlineHostSession? _survivorArcs;
+        private ProceduralNarrativeHostSession? _proceduralNarrative;
         private Func<string, string>? _survivorDisplayName;
         private Func<string, string>? _itemLabel;
         private int _currentDay = 1;
 
-        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null || _moralDefs != null || _survivorArcs != null;
+        public bool IsBound => _holdfastQuests != null || _crossingQuests != null || _branchCoordinator != null || _moralDefs != null || _survivorArcs != null || _proceduralNarrative != null;
 
         public void Bind(
             HoldfastQuestSystem? holdfastQuests,
@@ -57,7 +60,8 @@ namespace AtomicWar.GodotApp.UI
             IReadOnlyList<Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition>? moralDefs = null,
             NarrativeQuestlineHostSession? survivorArcs = null,
             Func<string, string>? survivorDisplayName = null,
-            Func<string, string>? itemLabel = null)
+            Func<string, string>? itemLabel = null,
+            ProceduralNarrativeHostSession? proceduralNarrative = null)
         {
             Unbind();
 
@@ -69,6 +73,7 @@ namespace AtomicWar.GodotApp.UI
             _moralChoice = moralChoice;
             _moralDefs = moralDefs;
             _survivorArcs = survivorArcs;
+            _proceduralNarrative = proceduralNarrative;
             _survivorDisplayName = survivorDisplayName;
             _itemLabel = itemLabel;
 
@@ -80,6 +85,8 @@ namespace AtomicWar.GodotApp.UI
                 _branchCoordinator.OnStateChanged += RefreshView;
             if (_survivorArcs != null)
                 _survivorArcs.StateChanged += RefreshView;
+            if (_proceduralNarrative != null)
+                _proceduralNarrative.StateChanged += RefreshView;
 
             RefreshView();
         }
@@ -105,6 +112,11 @@ namespace AtomicWar.GodotApp.UI
             {
                 _survivorArcs.StateChanged -= RefreshView;
                 _survivorArcs = null;
+            }
+            if (_proceduralNarrative != null)
+            {
+                _proceduralNarrative.StateChanged -= RefreshView;
+                _proceduralNarrative = null;
             }
             _dutyRoster = null;
             _moralChoice = null;
@@ -310,6 +322,37 @@ namespace AtomicWar.GodotApp.UI
             }
 
             _overviewContainer.AddChild(ovCard);
+
+            // ── Canonical procedural narrative runtime (Plan 171) ──
+            // This card is a read/command surface over the existing
+            // ProceduralNarrativeSystem + QuestRuntimeCoordinator pair. The
+            // panel never selects templates or mutates quest state itself.
+            if (_proceduralNarrative != null)
+            {
+                var runtime = _proceduralNarrative.QuestRuntime;
+                var proceduralCard = AshfallUiHelpers.MakeCardFrame(
+                    "PROCEDURAL OPERATIONAL OPPORTUNITIES",
+                    "JSON templates · canonical quest runtime");
+                var proceduralBox = proceduralCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+                var proceduralRows = runtime.BuildReadModel();
+                int activeProcedural = 0;
+                int offeredProcedural = 0;
+                for (int i = 0; i < proceduralRows.Count; i++)
+                {
+                    if (!proceduralRows[i].isProcedural) continue;
+                    if (proceduralRows[i].status == Ashfall.Core.Quests.QuestLifecycleState.Active) activeProcedural++;
+                    if (proceduralRows[i].status == Ashfall.Core.Quests.QuestLifecycleState.Offered) offeredProcedural++;
+                }
+                proceduralBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                    "Canonical runtime",
+                    $"{activeProcedural} active · {offeredProcedural} offered · {proceduralRows.Count} total",
+                    AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+                var generateButton = AshfallUiHelpers.MakeButton(
+                    "REQUEST NEW OPERATIONAL OPPORTUNITY",
+                    () => OnProceduralQuestRequested?.Invoke());
+                proceduralBox.AddChild(generateButton);
+                _availableContainer.AddChild(proceduralCard);
+            }
 
             // ── Active Quests ──
             foreach (var q in activeList)

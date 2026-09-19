@@ -907,7 +907,7 @@ namespace AtomicWar.GodotApp
             }
             finally
             {
-                if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
+                TryDeleteTempFile(tmpPath);
             }
 
             return EmitSummary("verdict_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");

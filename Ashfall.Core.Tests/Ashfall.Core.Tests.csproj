@@ -25,6 +25,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Ashfall.Core\Ashfall.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Assets\_Game\Shelter\NoiseDisciplineSystem.cs" Link="Shelter\NoiseDisciplineSystem.cs" />
+  </ItemGroup>
 
     <!-- CI orphan quarantine: expansion tests whose Core APIs or catalog data
        are not yet on this branch. Re-enable per file when implementations land.

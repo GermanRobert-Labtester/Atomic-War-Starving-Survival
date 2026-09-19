@@ -237,7 +237,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
         if (_host == null)
         {
-            _activeGrid.SetRows(BuildActiveFixtureRows());
+            _activeGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — expedition host not bound."));
             return;
         }
 
@@ -289,7 +289,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
         if (_host == null)
         {
-            _targetGrid.SetRows(BuildTargetFixtureRows());
+            _targetGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — expedition host not bound."));
             return;
         }
 

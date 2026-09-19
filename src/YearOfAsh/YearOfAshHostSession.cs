@@ -162,7 +162,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             _timeline.AdvanceDay(day);
             _factionWar.SimulateDailyFriction(day);
-            _warRunner.TickDay(day);
+            _warRunner.TickDay(FactionWarChainRunner.ToAuthoredDay(day));
             _deepFreeze.TickDailyThermal(day, _timeline.AmbientTemperatureCelsius);
             _radon.TickDailyRadon(day, _timeline.AmbientTemperatureCelsius);
             TickWarlord(day);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Narrative;
+using Ashfall.Core.Random;
 
 namespace AtomicWar.GodotApp
 {
@@ -16,6 +17,8 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public const int DemoSeed = 4242;
 
+        private readonly ICampaignRngManager? _campaignRng;
+
         public NarrativeEncounterSystem Engine { get; }
         public NarrativeArcEventSystem Arc { get; }
         public NarrativeArcEventDefinition? PendingArcEvent => Arc.PendingEvent;
@@ -23,8 +26,10 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
         public NarrativeHostSession(
             NarrativeEncounterSystem engine = null!,
-            NarrativeArcEventSystem? arc = null)
+            NarrativeArcEventSystem? arc = null,
+            ICampaignRngManager? campaignRng = null)
         {
+            _campaignRng = campaignRng;
             Engine = engine ?? new NarrativeEncounterSystem();
             Arc = arc ?? new NarrativeArcEventSystem();
             Engine.OnEncounterSelected += def =>
@@ -55,9 +60,9 @@ namespace AtomicWar.GodotApp
             Arc.OnStateChanged += _ => RaiseStateChanged();
         }
 
-        public static NarrativeHostSession Create(string dataDir)
+        public static NarrativeHostSession Create(string dataDir, ICampaignRngManager? campaignRng = null)
         {
-            var session = new NarrativeHostSession();
+            var session = new NarrativeHostSession(campaignRng: campaignRng);
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var fileIO = new FileSystemIO();
@@ -109,7 +114,10 @@ namespace AtomicWar.GodotApp
 
         public string SelectDemo(string stance, float danger, string locationId)
         {
-            var picked = Engine.SelectEncounter(stance, danger, locationId, new SeededRng(DemoSeed));
+            var rng = _campaignRng != null
+                ? _campaignRng.Fork(CampaignStreamIds.Narrative)
+                : new SeededRng(DemoSeed);
+            var picked = Engine.SelectEncounter(stance, danger, locationId, rng);
             return picked != null
                 ? $"Encounter offered: {picked.title} ({picked.id}) — {picked.choices.Count} choices."
                 : "Nothing eligible on this leg.";

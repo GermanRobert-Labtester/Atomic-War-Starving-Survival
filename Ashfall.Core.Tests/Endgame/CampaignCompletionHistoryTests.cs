@@ -138,6 +138,54 @@ namespace Ashfall.Core.Tests.Endgame
         }
 
         [Fact]
+        public void Append_StampsDifficultyPresetOnV2Records()
+        {
+            var history = new CampaignCompletionHistory();
+            var observation = new CampaignCompletionObservation(
+                "default/slot_1/seed_17",
+                "ending_dawn_of_thaw",
+                new EpilogueContextInputs(360, 9, 4, true, false, true, true, false),
+                "difficulty_austere");
+
+            Assert.Equal(CompletionHistoryAppendResult.Appended,
+                CampaignCompletionHistoryService.Append(history, observation, out CampaignCompletionRecord? record));
+            Assert.Equal(2, record!.schemaVersion);
+            Assert.Equal("difficulty_austere", record.difficultyPresetId);
+            Assert.True(CampaignCompletionHistoryService.TryValidate(history, out string error), error);
+        }
+
+        [Fact]
+        public void TryValidate_AcceptsLegacyV1RecordsWithoutDifficultyField()
+        {
+            var seeded = new CampaignCompletionHistory();
+            Assert.Equal(CompletionHistoryAppendResult.Appended,
+                CampaignCompletionHistoryService.Append(seeded, Observation("default/slot_1/seed_17", "ending_dawn_of_thaw"), out CampaignCompletionRecord? modern));
+
+            var v1 = new CampaignCompletionRecord
+            {
+                schemaVersion = 1,
+                completionId = modern!.completionId,
+                completionOrdinal = 1,
+                runIdentity = modern.runIdentity,
+                endingId = modern.endingId,
+                daysSurvived = modern.daysSurvived,
+                livingDwellers = modern.livingDwellers,
+                deathsRecorded = modern.deathsRecorded,
+                grandTreatySigned = modern.grandTreatySigned,
+                tempestDecommissioned = modern.tempestDecommissioned,
+                debtLedgersBurned = modern.debtLedgersBurned,
+                childrenSurvived = modern.childrenSurvived,
+                velSecretExposed = modern.velSecretExposed,
+                previousChecksum = string.Empty
+            };
+            v1.Checksum = Ashfall.Core.SaveChecksum.Compute(v1);
+
+            var history = new CampaignCompletionHistory { schemaVersion = 1 };
+            history.records.Add(v1);
+            Assert.True(CampaignCompletionHistoryService.TryValidate(history, out string error), error);
+        }
+
+        [Fact]
         public void PublicHistoryApi_ExposesNoMutationOrDeletionOperation()
         {
             string[] methodNames = typeof(CampaignCompletionHistoryService)

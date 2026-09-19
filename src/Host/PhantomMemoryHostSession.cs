@@ -77,12 +77,28 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Load the phantom_triggers.json catalog into the engine.</summary>
-        public static PhantomMemoryHostSession Create(string dataDir, ISeededRng? rng = null)
+        public static PhantomMemoryHostSession Create(
+            string dataDir,
+            ISeededRng? rng = null,
+            IFileIO? fileIO = null,
+            IJsonSerializer? jsonSerializer = null,
+            Action<string>? onError = null)
         {
             var engine = new PhantomMemoryEngine();
-            bool loaded = LoadRulesFromJson(engine, dataDir);
+            bool loaded = LoadRulesFromJson(engine, dataDir, fileIO, jsonSerializer, onError);
             return new PhantomMemoryHostSession(engine, loadDefaults: !loaded, rng: rng);
         }
+
+        /// <summary>
+        /// Loads phantom trigger rules from data directory using optional IFileIO and IJsonSerializer.
+        /// Returns true if rules were loaded, false on missing file, malformed JSON, or I/O error.
+        /// </summary>
+        public bool LoadData(
+            string dataDir,
+            IFileIO? fileIO = null,
+            IJsonSerializer? jsonSerializer = null,
+            Action<string>? onError = null) =>
+            LoadRulesFromJson(Engine, dataDir, fileIO, jsonSerializer, onError);
 
         public void LoadDefaultRules()
         {
@@ -188,7 +204,11 @@ namespace AtomicWar.GodotApp
         {
             var list = Survivors;
             for (int i = 0; i < list.Count; i++)
-                Engine.TickHour(list[i].survivorId, 1f);
+            {
+                var sv = list[i];
+                if (sv != null && !string.IsNullOrEmpty(sv.survivorId))
+                    Engine.TickHour(sv.survivorId, 1f);
+            }
             LastEvent = "Phantom timers ticked.";
             RaiseStateChanged();
             return LastEvent;
@@ -304,17 +324,24 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        private static bool LoadRulesFromJson(PhantomMemoryEngine engine, string dataDir)
+        public static bool LoadRulesFromJson(
+            PhantomMemoryEngine engine,
+            string dataDir,
+            IFileIO? fileIO = null,
+            IJsonSerializer? jsonSerializer = null,
+            Action<string>? onError = null)
         {
-            if (string.IsNullOrEmpty(dataDir)) return false;
+            if (engine == null || string.IsNullOrEmpty(dataDir)) return false;
             try
             {
-                var files = new FileSystemIO();
-                var json = new SystemTextJsonSerializer();
-                string path = System.IO.Path.Combine(dataDir, "phantom_triggers.json");
+                var files = fileIO ?? new FileSystemIO();
+                var json = jsonSerializer ?? new SystemTextJsonSerializer();
+                string path = files.Combine(dataDir, "phantom_triggers.json");
                 if (!files.FileExists(path)) return false;
 
                 string text = files.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(text)) return false;
+
                 List<PhantomTriggerJsonEntry>? entries = null;
                 try
                 {
@@ -362,7 +389,9 @@ namespace AtomicWar.GodotApp
             }
             catch (Exception ex)
             {
-                GD.PrintErr($"[PhantomMemory] Failed to load rules: {ex.Message}");
+                string msg = $"[PhantomMemory] Failed to load rules: {ex.Message}";
+                onError?.Invoke(msg);
+                GD.PrintErr(msg);
                 return false;
             }
         }

@@ -271,9 +271,9 @@ public partial class MapAtlasPanel : Control, IBindablePanel
 
         if (_host == null || _locations.Count == 0)
         {
-            _northGrid.SetRows(BuildFixtureRows(0));
-            _eastGrid.SetRows(BuildFixtureRows(1));
-            _southGrid.SetRows(BuildFixtureRows(2));
+            _northGrid.SetRows(AshfallDataGrid.UnavailableRows(5, "Unavailable — map atlas not bound."));
+            _eastGrid.SetRows(AshfallDataGrid.UnavailableRows(5, "Unavailable — map atlas not bound."));
+            _southGrid.SetRows(AshfallDataGrid.UnavailableRows(5, "Unavailable — map atlas not bound."));
             return;
         }
 

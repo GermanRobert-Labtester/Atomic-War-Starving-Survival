@@ -2,14 +2,14 @@
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all Core integration ports and host wiring contracts (Plan 36).",
   "generated_at": "2026-09-18",
-  "total_seams": 248,
+  "total_seams": 262,
   "counts": {
-    "HOST_REQUIRED": 176,
-    "OPTIONAL_HOST": 0,
-    "LIVE_VIA_CORE": 34,
-    "TEST_ONLY": 21,
+    "HOST_REQUIRED": 180,
+    "OPTIONAL_HOST": 3,
+    "LIVE_VIA_CORE": 44,
+    "TEST_ONLY": 35,
     "PURE_LIBRARY": 0,
-    "DEFERRED": 17
+    "DEFERRED": 0
   },
   "ports": [
     {
@@ -539,6 +539,21 @@
       "expiry": null
     },
     {
+      "port_id": "exploration.cartographysystem.registerregion",
+      "class_name": "CartographySystem",
+      "method_name": "RegisterRegion",
+      "file_path": "Assets/Ashfall.Core/Exploration/CartographySystem.cs",
+      "owner": "exploration",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Region registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
       "port_id": "core-architecture.catalogbootvalidator.registercatalog",
       "class_name": "CatalogBootValidator",
       "method_name": "RegisterCatalog",
@@ -623,6 +638,21 @@
       "observed_callers": [],
       "reason": "Integration seam in CatalogIntegrityDefinitionChecker.",
       "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "survivors.childdevelopmentsystem.registerchild",
+      "class_name": "ChildDevelopmentSystem",
+      "method_name": "RegisterChild",
+      "file_path": "Assets/Ashfall.Core/Survivors/ChildDevelopmentSystem.cs",
+      "owner": "survivors",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Child registration is exercised in Core tests; no production host caller yet.",
+      "diagnostic": true,
       "activation_condition": null,
       "expiry": null
     },
@@ -766,19 +796,21 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.craftingsystem.bindcraftresultgate",
+      "port_id": "crafting.craftingsystem.bindcraftresultgate",
       "class_name": "CraftingSystem",
       "method_name": "BindCraftResultGate",
       "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
-      "observed_caller_count": 0,
-      "observed_callers": [],
-      "reason": "Integration seam in CraftingSystem.",
+      "owner": "crafting",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Host/CraftingHostSession.cs"
+      ],
+      "reason": "CraftingHostSession binds the gate to ItemCatalog.Contains so unknown result ids cannot be crafted.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "crafting.craftingsystem.bindresearchgate",
@@ -1344,6 +1376,21 @@
       "observed_callers": [],
       "reason": "Integration seam in DiseaseSystem.",
       "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "expeditions.discoveryconsequencesystem.registerdiscovery",
+      "class_name": "DiscoveryConsequenceSystem",
+      "method_name": "RegisterDiscovery",
+      "file_path": "Assets/Ashfall.Core/Expeditions/DiscoveryConsequenceSystem.cs",
+      "owner": "expeditions",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Discovery registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
       "activation_condition": null,
       "expiry": null
     },
@@ -2040,6 +2087,23 @@
       "expiry": null
     },
     {
+      "port_id": "quests.dynamicquestgenerator.registertemplate",
+      "class_name": "DynamicQuestGenerator",
+      "method_name": "RegisterTemplate",
+      "file_path": "Assets/Ashfall.Core/Quests/DynamicQuestGenerator.cs",
+      "owner": "quests",
+      "classification": "TEST_ONLY",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Main.Plans186_189.cs"
+      ],
+      "reason": "Template registration is Core-side; mercenary host calls a different RegisterTemplate.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
       "port_id": "shelter.ebpvdcoatingengine.registercoating",
       "class_name": "EbPvdCoatingEngine",
       "method_name": "RegisterCoating",
@@ -2104,14 +2168,14 @@
       "method_name": "RegisterProfile",
       "file_path": "Assets/Ashfall.Core/EquipmentConditionSystem.cs",
       "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in EquipmentConditionSystem.",
+      "reason": "LoadProfiles (host-called) registers authored and built-in degradation profiles through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "factions.espionageconsequencerouter.bindconsumers",
@@ -2170,14 +2234,14 @@
       "method_name": "BindFactionResolver",
       "file_path": "Assets/Ashfall.Core/Factions/EspionageSystem.cs",
       "owner": "factions",
-      "classification": "DEFERRED",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in EspionageSystem.",
+      "reason": "Optional override; Core already defaults to FactionStandingIdResolver.ToSystemsId.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "factions.espionagesystem.bindresearchgate",
@@ -2330,19 +2394,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.expeditionlootreferenceresolver.registercategory",
+      "port_id": "expeditions.expeditionlootreferenceresolver.registercategory",
       "class_name": "ExpeditionLootReferenceResolver",
       "method_name": "RegisterCategory",
       "file_path": "Assets/Ashfall.Core/Expeditions/ExpeditionLootReferenceResolver.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
+      "owner": "expeditions",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in ExpeditionLootReferenceResolver.",
+      "reason": "Additive category hook; the resolver already seeds its default category set at construction.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.expeditionlootreferenceresolver.registeritem",
@@ -2364,19 +2428,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.expeditionnavalsystem.registervessel",
+      "port_id": "expeditions.expeditionnavalsystem.registervessel",
       "class_name": "ExpeditionNavalSystem",
       "method_name": "RegisterVessel",
       "file_path": "Assets/Ashfall.Core/Expeditions/ExpeditionNavalSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "expeditions",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in ExpeditionNavalSystem.",
+      "reason": "Default vessels and LoadCatalog register through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.factionradioengine.registerchannel",
@@ -2414,19 +2478,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.factionstanceengine.registerfactions",
+      "port_id": "economy.factionstanceengine.registerfactions",
       "class_name": "FactionStanceEngine",
       "method_name": "RegisterFactions",
       "file_path": "Assets/Ashfall.Core/Economy/FactionStanceEngine.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
+      "owner": "economy",
+      "classification": "OPTIONAL_HOST",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in FactionStanceEngine.",
+      "reason": "Bulk helper over live RegisterFaction; production registers factions one-by-one.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.falloutsystem.registerpattern",
@@ -2947,19 +3011,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.iceroadsystem.registerholdfastnode",
+      "port_id": "holdfast.iceroadsystem.registerholdfastnode",
       "class_name": "IceRoadSystem",
       "method_name": "RegisterHoldfastNode",
       "file_path": "Assets/Ashfall.Core/IceRoadSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "holdfast",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in IceRoadSystem.",
+      "reason": "Default Cut/holdfast node registration goes through this method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.ideologicalfrictionsystem.registerbelief",
@@ -3133,6 +3197,25 @@
       "observed_callers": [],
       "reason": "Integration seam in ItemDescriptionCatalog.",
       "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "inventory.itemloresystem.registeritem",
+      "class_name": "ItemLoreSystem",
+      "method_name": "RegisterItem",
+      "file_path": "Assets/Ashfall.Core/Inventory/ItemLoreSystem.cs",
+      "owner": "inventory",
+      "classification": "TEST_ONLY",
+      "status": "BOUND",
+      "observed_caller_count": 3,
+      "observed_callers": [
+        "src/Host/EquipmentConditionHostSession.cs",
+        "src/Host/HostCli.PanelTests.cs",
+        "src/Main.UiTests.RealCampaignJourney.cs"
+      ],
+      "reason": "Item provenance registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
       "activation_condition": null,
       "expiry": null
     },
@@ -3434,6 +3517,21 @@
       "expiry": null
     },
     {
+      "port_id": "cognition.memorydecaysystem.registerorupdate",
+      "class_name": "MemoryDecaySystem",
+      "method_name": "RegisterOrUpdate",
+      "file_path": "Assets/Ashfall.Core/Cognition/MemoryDecaySystem.cs",
+      "owner": "cognition",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Memory records are registered from Core tests; no production host caller yet.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
       "port_id": "core-architecture.mercenarysystem.registertemplate",
       "class_name": "MercenarySystem",
       "method_name": "RegisterTemplate",
@@ -3712,14 +3810,14 @@
       "method_name": "RegisterAdapter",
       "file_path": "Assets/Ashfall.Core/Narrative/NarrativeDiscoveryCatalog.cs",
       "owner": "narrative",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in NarrativeDiscoveryCatalog.",
+      "reason": "Default source adapters register through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.narrativeencountersystem.registerencounter",
@@ -4208,6 +4306,21 @@
       ],
       "reason": "Integration seam in PathogenStrainSystem.",
       "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "survivors.personalbelongingssystem.registerbelonging",
+      "class_name": "PersonalBelongingsSystem",
+      "method_name": "RegisterBelonging",
+      "file_path": "Assets/Ashfall.Core/Survivors/PersonalBelongingsSystem.cs",
+      "owner": "survivors",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Belonging registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
       "activation_condition": null,
       "expiry": null
     },
@@ -4909,6 +5022,21 @@
       "expiry": null
     },
     {
+      "port_id": "survivors.relationshipdecaysystem.registerorupdatepair",
+      "class_name": "RelationshipDecaySystem",
+      "method_name": "RegisterOrUpdatePair",
+      "file_path": "Assets/Ashfall.Core/Survivors/RelationshipDecaySystem.cs",
+      "owner": "survivors",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Pair-bond registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
       "port_id": "core-architecture.researchsystem.register",
       "class_name": "ResearchSystem",
       "method_name": "Register",
@@ -4979,6 +5107,21 @@
       ],
       "reason": "Integration seam in RouteInfrastructureSystem.",
       "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "information-flow.rumorsystem.registerhub",
+      "class_name": "RumorSystem",
+      "method_name": "RegisterHub",
+      "file_path": "Assets/Ashfall.Core/InformationFlow/RumorSystem.cs",
+      "owner": "information-flow",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Hub registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
       "activation_condition": null,
       "expiry": null
     },
@@ -5142,6 +5285,36 @@
       "expiry": null
     },
     {
+      "port_id": "shelter.shelternoisesystem.registerroom",
+      "class_name": "ShelterNoiseSystem",
+      "method_name": "RegisterRoom",
+      "file_path": "Assets/Ashfall.Core/Shelter/ShelterNoiseSystem.cs",
+      "owner": "shelter",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Room acoustic registration is Core-internal / test-exercised; no production host caller yet.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "shelter.sheltersecuritysystem.configurezone",
+      "class_name": "ShelterSecuritySystem",
+      "method_name": "ConfigureZone",
+      "file_path": "Assets/Ashfall.Core/Shelter/ShelterSecuritySystem.cs",
+      "owner": "shelter",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Security-zone configuration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
       "port_id": "core-architecture.shelterradiostationsystem.bindskillprovider",
       "class_name": "ShelterRadioStationSystem",
       "method_name": "BindSkillProvider",
@@ -5211,14 +5384,14 @@
       "method_name": "RegisterExternalBurst",
       "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
       "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in ShelterThermalSystem.",
+      "reason": "WeatherHardeningSystem freeze bursts call this Core-to-Core; host does not invoke it directly.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.shelterthermalsystem.registerinsulation",
@@ -5236,19 +5409,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.shelterthermalsystem.registerthermalgear",
+      "port_id": "shelter.shelterthermalsystem.registerthermalgear",
       "class_name": "ShelterThermalSystem",
       "method_name": "RegisterThermalGear",
       "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "shelter",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in ShelterThermalSystem.",
+      "reason": "Built-in thermal gear and catalog load register through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.shelterworkshopsystem.bindworkerskillprovider",
@@ -5441,19 +5614,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.skillprogressionsystem.registerdefaultskills",
+      "port_id": "survivors.skillprogressionsystem.registerdefaultskills",
       "class_name": "SkillProgressionSystem",
       "method_name": "RegisterDefaultSkills",
       "file_path": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
+      "owner": "survivors",
+      "classification": "TEST_ONLY",
       "status": "EXEMPT",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in SkillProgressionSystem.",
-      "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "reason": "Retained zero-op compatibility boundary; production skills load from skills.json.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.skillprogressionsystem.registerskill",
@@ -5473,19 +5646,21 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.spiritualmeaningcoordinator.registerdeath",
+      "port_id": "spiritual.spiritualmeaningcoordinator.registerdeath",
       "class_name": "SpiritualMeaningCoordinator",
       "method_name": "RegisterDeath",
       "file_path": "Assets/Ashfall.Core/Spiritual/SpiritualMeaningCoordinator.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
-      "observed_caller_count": 0,
-      "observed_callers": [],
-      "reason": "Integration seam in SpiritualMeaningCoordinator.",
+      "owner": "spiritual",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Main.Spiritual.cs"
+      ],
+      "reason": "SurvivorFate.OnSurvivorFate registers mourning arcs; memorial vigil maps to ShelterVigilRiteId.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "startinglevel.startinglevelsystem.bindmaintenance",
@@ -5524,19 +5699,38 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.stealthsystem.registerweaponnoise",
+      "port_id": "combat.stealthsystem.registerweaponnoise",
       "class_name": "StealthSystem",
       "method_name": "RegisterWeaponNoise",
       "file_path": "Assets/Ashfall.Core/Combat/StealthSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
-      "observed_caller_count": 0,
-      "observed_callers": [],
-      "reason": "Integration seam in StealthSystem.",
+      "owner": "combat",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Main.Plans178_181.cs"
+      ],
+      "reason": "Weapon-noise profiles feed PartyStealthState.accumulatedNoise.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "orchestration.subsystemmanifest.registersetupaction",
+      "class_name": "SubsystemManifest",
+      "method_name": "RegisterSetupAction",
+      "file_path": "Assets/Ashfall.Core/Orchestration/SubsystemManifest.cs",
+      "owner": "orchestration",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Main.Lifecycle.cs"
+      ],
+      "reason": "Plan 28C host registers setup delegates for declarative subsystem bootstrap.",
+      "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.sumpfloodingsystem.bindservices",
@@ -5556,19 +5750,19 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.survivordowntimesystem.registerhobby",
+      "port_id": "recreation.survivordowntimesystem.registerhobby",
       "class_name": "SurvivorDowntimeSystem",
       "method_name": "RegisterHobby",
       "file_path": "Assets/Ashfall.Core/Recreation/SurvivorDowntimeSystem.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "recreation",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in SurvivorDowntimeSystem.",
+      "reason": "Default hobbies and LoadCatalog register through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.survivorentitystore.registercomponentstore",
@@ -5747,34 +5941,34 @@
       "expiry": null
     },
     {
-      "port_id": "core-architecture.tradetellengine.registerband",
+      "port_id": "economy.tradetellengine.registerband",
       "class_name": "TradeTellEngine",
       "method_name": "RegisterBand",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "economy",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in TradeTellEngine.",
+      "reason": "LoadFromJson registers trust bands through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
-      "port_id": "core-architecture.tradetellengine.registertellpool",
+      "port_id": "economy.tradetellengine.registertellpool",
       "class_name": "TradeTellEngine",
       "method_name": "RegisterTellPool",
       "file_path": "Assets/Ashfall.Core/Economy/TradeTellEngine.cs",
-      "owner": "core-architecture",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "owner": "economy",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in TradeTellEngine.",
+      "reason": "LoadFromJson registers stance/band tell pools through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "shelter.trophysystem.registertrophy",
@@ -5788,6 +5982,36 @@
       "observed_callers": [],
       "reason": "Integration seam in TrophySystem.",
       "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "underground.tunnelnetworksystem.registerjunction",
+      "class_name": "TunnelNetworkSystem",
+      "method_name": "RegisterJunction",
+      "file_path": "Assets/Ashfall.Core/Underground/TunnelNetworkSystem.cs",
+      "owner": "underground",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Junction registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "underground.tunnelnetworksystem.registersegment",
+      "class_name": "TunnelNetworkSystem",
+      "method_name": "RegisterSegment",
+      "file_path": "Assets/Ashfall.Core/Underground/TunnelNetworkSystem.cs",
+      "owner": "underground",
+      "classification": "TEST_ONLY",
+      "status": "EXEMPT",
+      "observed_caller_count": 0,
+      "observed_callers": [],
+      "reason": "Segment registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true,
       "activation_condition": null,
       "expiry": null
     },
@@ -6224,14 +6448,14 @@
       "method_name": "RegisterTrapSiteLocation",
       "file_path": "Assets/Ashfall.Core/World/WastelandMapSystem.cs",
       "owner": "world",
-      "classification": "DEFERRED",
-      "status": "EXEMPT",
+      "classification": "LIVE_VIA_CORE",
+      "status": "LIVE_CORE",
       "observed_caller_count": 0,
       "observed_callers": [],
-      "reason": "Integration seam in WastelandMapSystem.",
+      "reason": "Constructor trap-site catalog load registers through this Core method.",
       "diagnostic": false,
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "activation_condition": null,
+      "expiry": null
     },
     {
       "port_id": "core-architecture.watertreatmentsystem.registercontaminationadvisory",

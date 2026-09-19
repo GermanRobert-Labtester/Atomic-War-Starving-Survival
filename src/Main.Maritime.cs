@@ -56,12 +56,14 @@ namespace AtomicWar.GodotApp
             SetupJournal();
             SetupMaritime();
             SetupHoldfastRuntime(); // canonical Holdfast trade inventory for the route bills
+            SetupCampaignDay();
             _deepCoast = DeepCoastHostSession.Create(
                 _core.DeepCoast,
                 _journal,
                 null!,
                 _holdfastRuntime!.Trade.Inventory!,
-                _maritime!);
+                _maritime!,
+                _campaignDay.Rng);
             // Seasonal (Ice Road) + route-stage gate for expedition dispatch.
             if (_expeditions != null)
             {
@@ -119,7 +121,8 @@ namespace AtomicWar.GodotApp
         private void SetupMaritime()
         {
             if (_maritime != null) return;
-            _maritime = MaritimeHostSession.Create(_dataDir);
+            SetupCampaignDay();
+            _maritime = MaritimeHostSession.Create(_dataDir, _campaignDay.Rng);
             _maritime.StateChanged += () => _maritimeDirty = true;
             GD.Print("[Ashfall Godot] Maritime host ready: stealth dive · scavenge · contamination.");
         }

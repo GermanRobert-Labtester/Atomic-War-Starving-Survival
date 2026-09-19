@@ -42,6 +42,15 @@ namespace Ashfall.Core.Tests.Medical
             var tincture = system.GetDefinition("chem_dulcimer_tincture");
             Assert.NotNull(tincture);
             Assert.Equal("Analgesic", tincture.category);
+
+            var antibiotic = system.GetDefinition("chem_fungal_antibiotic");
+            Assert.NotNull(antibiotic);
+            Assert.True(antibiotic.recipe_inputs.Exists(r => r.item_id == "fungus_spores_medicinal"));
+
+            var toxin = system.GetDefinition("chem_choke_spore_toxin");
+            Assert.NotNull(toxin);
+            Assert.Equal("Toxin", toxin.category);
+            Assert.True(toxin.recipe_inputs.Exists(r => r.item_id == "fungus_spores_common"));
         }
 
         [Fact]
@@ -78,6 +87,45 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(1, removedPrecursors);
             Assert.Equal(1, removedSolvents);
             Assert.Equal(1, addedStims);
+        }
+
+        [Fact]
+        public void BrewChem_ChokeSporeToxin_ConsumesCommonSpores()
+        {
+            var system = new NarcoticsSystem();
+            system.LoadCatalog(LoadNarcoticsCatalogJson(), new SystemTextJsonSerializer());
+
+            var inventory = new Dictionary<string, int>
+            {
+                ["fungus_spores_common"] = 5,
+                ["item_sterile_solvent_pack"] = 1
+            };
+
+            int removedSpores = 0;
+            int addedToxin = 0;
+            bool brewed = system.BrewChem(
+                "chem_choke_spore_toxin",
+                id => inventory.GetValueOrDefault(id, 0),
+                (id, count) =>
+                {
+                    if (id == "fungus_spores_common")
+                    {
+                        removedSpores += count;
+                        inventory[id] -= count;
+                    }
+                    if (id == "item_sterile_solvent_pack")
+                        inventory[id] -= count;
+                },
+                (id, count) =>
+                {
+                    if (id == "item_chem_choke_spore_toxin") addedToxin += count;
+                },
+                out string error);
+
+            Assert.True(brewed, error);
+            Assert.Equal(3, removedSpores);
+            Assert.Equal(1, addedToxin);
+            Assert.Equal(2, inventory["fungus_spores_common"]);
         }
 
         [Fact]

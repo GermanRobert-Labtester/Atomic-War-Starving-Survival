@@ -93,6 +93,11 @@ namespace Ashfall.Core.Economy
         // Plan 14A (additive v3 — nested embargo decay runtime state; a v1/v2
         // save restores neutral. Rules are data; only decay state persists).
         public TradeEmbargoState? tradeEmbargo;
+
+        // Plan 215 (additive policy state). Quantities remain owned by the
+        // inventory/domain consumers; the economy envelope carries only the
+        // ration policy so old saves restore the neutral/full default.
+        public ResourceRationingState? rationing;
     }
 
     /// <summary>Result of a market transaction.</summary>
@@ -253,6 +258,21 @@ namespace Ashfall.Core.Economy
             _catalog = catalog;
         }
 
+        /// <summary>
+        /// Loads a goods catalog from the specified data directory and binds it to the market.
+        /// </summary>
+        public void LoadCatalog(string dataDir, IFileIO? fileIO = null, IJsonSerializer? serializer = null)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var io = fileIO ?? new FileSystemIO();
+            var json = serializer ?? new SystemTextJsonSerializer();
+            var load = GoodsCatalogLoader.Load(dataDir, io, json);
+            if (!load.HasErrors)
+            {
+                BindCatalog(GoodsCatalogLoader.ToCatalog(load));
+            }
+        }
+
         public GoodDefinition? FindGood(string itemId) =>
             _catalog != null ? _catalog.Find(itemId) : null;
 
@@ -328,6 +348,19 @@ namespace Ashfall.Core.Economy
             }
             OnEconomyChanged?.Invoke(); // prices moved
             RaiseChanged();
+        }
+
+        /// <summary>
+        /// Advances the market simulation by the specified number of days using a deterministic seeded RNG.
+        /// </summary>
+        public void TickDays(int days, ISeededRng? rng = null)
+        {
+            if (days <= 0) return;
+            var seededRng = rng ?? new SeededRng(2026);
+            for (int i = 0; i < days; i++)
+            {
+                TickDay(_state.day + 1, seededRng);
+            }
         }
 
         // ── Plan 212: commodity indices / pressure / shocks ─────────

@@ -68,10 +68,7 @@ namespace Ashfall.Core.World
             if (trapSiteLocations != null)
             {
                 foreach (var location in trapSiteLocations)
-                {
-                    if (location == null || string.IsNullOrEmpty(location.SiteId)) continue;
-                    _trapSiteLocations[location.SiteId] = location;
-                }
+                    RegisterTrapSiteLocation(location);
             }
         }
 

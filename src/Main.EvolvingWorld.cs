@@ -189,6 +189,11 @@ namespace AtomicWar.GodotApp
                     if (routeHazard > 0f) mult *= routeHazard;
                 }
 
+                SetupDifficulty();
+                float hostile = _difficultyScalars?.HostileEncounterMult ?? 1f;
+                if (hostile > 0f && System.Math.Abs(hostile - 1f) > 0.001f)
+                    mult *= hostile;
+
                 return mult;
             };
         }

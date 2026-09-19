@@ -145,9 +145,20 @@ namespace AtomicWar.GodotApp.UI
                 _log.AppendText($"[T{snap.Events[i].Turn}] {snap.Events[i].Detail}\n");
 
             // Outcome + loot
-            _outcome.Text = snap.Resolved
-                ? "OUTCOME: " + snap.OutcomeText + (snap.Loot.Count > 0 ? "  ·  loot " + snap.Loot.Count + " lines" : "")
-                : "";
+            if (snap.Resolved)
+            {
+                string political = snap.FactionConsequences.Count > 0
+                    ? "  ·  faction: " + string.Join(", ", snap.FactionConsequences.ConvertAll(c =>
+                        $"{c.FactionId} {c.StandingDelta:+0.##;-0.##;0} ({c.Reason})"))
+                    : string.Empty;
+                _outcome.Text = "OUTCOME: " + snap.OutcomeText
+                    + (snap.Loot.Count > 0 ? "  ·  loot " + snap.Loot.Count + " lines" : "")
+                    + political;
+            }
+            else
+            {
+                _outcome.Text = string.Empty;
+            }
         }
 
         private void UpdateButtonPreflights(CombatSnapshot snap)

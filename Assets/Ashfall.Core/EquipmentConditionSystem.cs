@@ -107,7 +107,69 @@ namespace Ashfall.Core
         public event Action<EquipmentInstance>? OnItemBroken;
         public event Action<EquipmentInstance>? OnItemRepaired;
 
+        private readonly Dictionary<string, EquipmentInstance> _itemLookup = new Dictionary<string, EquipmentInstance>(StringComparer.Ordinal);
         private readonly Dictionary<string, DegradationProfileDef> _profiles = new Dictionary<string, DegradationProfileDef>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Retrieves an equipment instance by its instanceId with O(1) dictionary lookup.
+        /// </summary>
+        public EquipmentInstance? GetItem(string instanceId)
+        {
+            if (string.IsNullOrEmpty(instanceId)) return null;
+            EnsureItemLookup();
+            if (_itemLookup.TryGetValue(instanceId, out var item) && string.Equals(item.instanceId, instanceId, StringComparison.Ordinal))
+            {
+                return item;
+            }
+
+            var fallback = _state.items.Find(i => string.Equals(i.instanceId, instanceId, StringComparison.Ordinal));
+            if (fallback != null)
+            {
+                _itemLookup[instanceId] = fallback;
+            }
+            return fallback;
+        }
+
+        private void EnsureItemLookup()
+        {
+            if (_state?.items != null && _itemLookup.Count != _state.items.Count)
+            {
+                RebuildItemLookup();
+            }
+        }
+
+        private void RebuildItemLookup()
+        {
+            _itemLookup.Clear();
+            if (_state?.items == null) return;
+            for (int i = 0; i < _state.items.Count; i++)
+            {
+                var item = _state.items[i];
+                if (item != null && !string.IsNullOrEmpty(item.instanceId))
+                {
+                    _itemLookup[item.instanceId] = item;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reduces condition/durability of the given equipment instance.
+        /// </summary>
+        public void ReduceDurability(string instanceId, float amount)
+        {
+            var item = GetItem(instanceId);
+            if (item != null)
+            {
+                item.condition = Math.Max(0, item.condition - amount);
+                if (item.condition <= 0)
+                {
+                    item.isBroken = true;
+                    OnItemBroken?.Invoke(item);
+                }
+                OnConditionChanged?.Invoke(item);
+                OnItemConditionChanged?.Invoke(item);
+            }
+        }
 
         public EquipmentConditionSystem(
             ISeededRng rng,
@@ -119,6 +181,7 @@ namespace Ashfall.Core
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _crafting = crafting ?? throw new ArgumentNullException(nameof(crafting));
             _log = log ?? NullLog.Instance;
+            RebuildItemLookup();
             RegisterDefaultProfiles();
         }
 
@@ -199,24 +262,33 @@ namespace Ashfall.Core
             }
         }
 
+        public bool TryGetProfile(string id, out DegradationProfileDef profile)
+        {
+            profile = null!;
+            if (string.IsNullOrWhiteSpace(id)) return false;
+            return _profiles.TryGetValue(id, out profile);
+        }
+
         public ActionResult RegisterItem(string instanceId, string itemId, string ownerId, EquipmentFamily family, float maxCondition = 100f)
         {
-            if (_state.items.Exists(i => i.instanceId == instanceId))
+            if (GetItem(instanceId) != null)
                 return ActionResult.Blocked("item_exists", "equip.item_exists");
 
-            _state.items.Add(new EquipmentInstance
+            var item = new EquipmentInstance
             {
                 instanceId = instanceId, itemId = itemId, ownerId = ownerId,
                 family = family, condition = maxCondition, maxCondition = maxCondition,
                 originalMaxCondition = maxCondition
-            });
+            };
+            _state.items.Add(item);
+            _itemLookup[instanceId] = item;
             OnEquipmentChanged?.Invoke();
             return ActionResult.Success("equip.item_registered");
         }
 
         public ActionResult UseItem(string instanceId, float wearAmount = 1f)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             item.condition = Math.Max(0, item.condition - wearAmount);
@@ -237,7 +309,7 @@ namespace Ashfall.Core
 
         public ActionResult ApplyWear(string instanceId, WearEvent evt)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             string familyKey = item.family.ToString();
@@ -291,7 +363,7 @@ namespace Ashfall.Core
 
         public ActionResult ApplyCorrosion(string instanceId, float exposureAmount, string environmentType = "weather")
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             string familyKey = item.family.ToString();
@@ -315,7 +387,7 @@ namespace Ashfall.Core
 
         public ActionResult JuryRig(string instanceId, List<string> scrapMaterialIds)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             if (scrapMaterialIds != null && scrapMaterialIds.Count > 0)
@@ -340,7 +412,7 @@ namespace Ashfall.Core
 
         public ActionResult RepairItem(string instanceId, MaintenanceType type, List<string> parts, float repairQuality = 1.0f)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             if (parts != null && parts.Count > 0)
@@ -368,7 +440,7 @@ namespace Ashfall.Core
 
         public ActionResult ClearJam(string instanceId)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             item.isJammed = false;
@@ -379,14 +451,14 @@ namespace Ashfall.Core
 
         public float GetConditionPercent(string key)
         {
-            var item = _state.items.Find(i => i.instanceId == key || i.itemId == key);
+            var item = GetItem(key) ?? _state.items.Find(i => i.itemId == key);
             if (item == null || item.maxCondition <= 0f) return 0f;
             return Math.Clamp((item.condition / item.maxCondition) * 100f, 0f, 100f);
         }
 
         public ActionResult StartMaintenance(string instanceId, string stationId, MaintenanceType type, List<string> requiredParts)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
             var reserved = new List<string>();
@@ -420,7 +492,7 @@ namespace Ashfall.Core
                 if (job.progress >= job.totalRequired)
                 {
                     job.isComplete = true;
-                    var item = _state.items.Find(i => i.instanceId == job.instanceId);
+                    var item = GetItem(job.instanceId);
                     if (item != null)
                     {
                         item.condition = Math.Min(item.maxCondition, item.condition + 20f);
@@ -435,21 +507,21 @@ namespace Ashfall.Core
 
         public float GetSlipRisk(string instanceId)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return 0f;
             return item.condition < 30f ? (30f - item.condition) / 30f : 0f;
         }
 
         public float GetJamRisk(string instanceId)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return 0f;
             return item.condition < 20f ? (20f - item.condition) / 20f : 0f;
         }
 
         public bool IsUsable(string instanceId)
         {
-            var item = _state.items.Find(i => i.instanceId == instanceId);
+            var item = GetItem(instanceId);
             if (item == null) return false;
             return item.condition > 0 && (item.usesRemaining == -1 || item.usesRemaining > 0);
         }
@@ -460,6 +532,7 @@ namespace Ashfall.Core
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            RebuildItemLookup();
         }
 
         private static EquipmentConditionState CloneState(EquipmentConditionState src)

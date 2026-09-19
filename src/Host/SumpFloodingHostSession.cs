@@ -53,7 +53,7 @@ namespace AtomicWar.GodotApp
         /// panel must never claim RUNNING when the load is shed.</summary>
         public bool IsPumpEffectivelyPowered(string nodeId)
         {
-            var node = System.State.nodes.Find(n => n.nodeId == nodeId);
+            var node = System.GetNode(nodeId);
             if (node == null || !node.hasSumpPump || !node.pumpPowered) return false;
             return _powerGrid?.IsRoomServed(nodeId) ?? false;
         }

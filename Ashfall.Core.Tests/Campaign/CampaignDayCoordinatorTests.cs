@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Campaign;
+using Ashfall.Core.Random;
 using Xunit;
 
 namespace Ashfall.Core.Tests.Campaign
@@ -205,6 +206,27 @@ namespace Ashfall.Core.Tests.Campaign
             // Next valid day must be > 10
             Assert.Null(c2.Advance(10));
             Assert.NotNull(c2.Advance(11));
+        }
+
+        [Fact]
+        public void RestoreState_RebindsMasterSeed_ForksMatchContinuous()
+        {
+            var c1 = new CampaignDayCoordinator(rng: new CampaignRngManager(4242));
+            int continuousA = c1.Rng.Fork(CampaignStreamIds.Weather, 4).Next(0, 10000);
+            int continuousB = c1.Rng.Fork(CampaignStreamIds.Expedition, 4).Next(0, 10000);
+
+            var save = c1.CaptureState();
+            Assert.Equal(4242, save.masterSeed);
+
+            var c2 = new CampaignDayCoordinator();
+            Assert.Equal(CampaignRngManager.DefaultMasterSeed, c2.Rng.MasterSeed);
+            c2.RestoreState(save);
+            Assert.Equal(4242, c2.Rng.MasterSeed);
+
+            int restoredA = c2.Rng.Fork(CampaignStreamIds.Weather, 4).Next(0, 10000);
+            int restoredB = c2.Rng.Fork(CampaignStreamIds.Expedition, 4).Next(0, 10000);
+            Assert.Equal(continuousA, restoredA);
+            Assert.Equal(continuousB, restoredB);
         }
 
         [Fact]

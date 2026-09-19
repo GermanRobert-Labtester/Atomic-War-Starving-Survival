@@ -8,6 +8,7 @@ using Ashfall.Core;
 using Ashfall.Core.Combat;
 using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.Random;
 
 namespace AtomicWar.GodotApp
 {
@@ -22,7 +23,12 @@ namespace AtomicWar.GodotApp
     {
         public const int DemoSeed = 4242;
 
+        private readonly ICampaignRngManager? _campaignRng;
+        private readonly CombatFactionStandingBridge _factionStandingBridge = new();
+        private Action<string, int>? _applyFactionStanding;
+
         public TacticalCombatSystem Engine { get; }
+        public event Action<CombatFactionConsequence>? FactionConsequenceApplied;
 
         /// <summary>Optional real inventory backing for ammo / scrap / loot.</summary>
         public InventoryHostSession Inventory { get; set; }
@@ -52,22 +58,63 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public ChemWarfareSystem? ChemWarfare { get; set; }
 
+        /// <summary>Optional stealth authority. Fired weapons add registered noise.</summary>
+        public StealthSystem? Stealth { get; set; }
+
+        /// <summary>Expedition id used when applying weapon noise. Defaults to the live combat encounter.</summary>
+        public string StealthExpeditionId { get; set; } = "combat_active";
+
         /// <summary>Condition-at-start of bridge-bound weapons, for the post-combat write-back.</summary>
         private readonly Dictionary<string, float> _boundWeaponConditionAtStart = new();
         private string _boundWeaponsSyncedForResolution = string.Empty;
 
         public string LastEvent { get; private set; } = string.Empty;
-        public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
+        public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!, ICampaignRngManager? campaignRng = null)
         {
+            _campaignRng = campaignRng;
             Engine = engine ?? new TacticalCombatSystem(null!, ports ?? CombatHostPorts.NoOp());
             Engine.OnStateChanged += _ => RaiseStateChanged();
             Engine.OnCombatEvent += (s, e) => { LastEvent = e.Detail; RaiseStateChanged(); };
+            _factionStandingBridge.OnConsequenceApplied += consequence =>
+                FactionConsequenceApplied?.Invoke(consequence);
             Engine.OnEncounterEnded += s =>
             {
                 LastEvent = "Combat ended: " + s.OutcomeText;
                 SyncBoundWeaponsAfterCombat(s);
+                int factionConsequences = ApplyFactionConsequences(s);
+                if (factionConsequences > 0)
+                    LastEvent += $" · {factionConsequences} faction consequence(s) recorded";
                 RaiseStateChanged();
             };
+        }
+
+        /// <summary>
+        /// Bind the one canonical faction-standing mutation path. If a resolved
+        /// encounter was restored with pending consequences, binding retries it;
+        /// persisted incident markers prevent replay after a completed apply.
+        /// </summary>
+        public void ConfigureFactionStanding(Action<string, int>? applyStanding)
+        {
+            _applyFactionStanding = applyStanding;
+            if (Engine.State.Resolved)
+            {
+                int applied = ApplyFactionConsequences(Engine.State);
+                if (applied > 0) RaiseStateChanged();
+            }
+        }
+
+        private int ApplyFactionConsequences(CombatState state)
+        {
+            if (state == null) return 0;
+            var consequences = CombatFactionStandingBridge.EvaluateConsequences(
+                state, state.IsSelfDefense);
+            int applied = _factionStandingBridge.ApplyConsequences(
+                consequences,
+                _applyFactionStanding,
+                state.AppliedFactionConsequenceIds);
+            state.FactionConsequences = TacticalCombatSystem.CloneFactionConsequences(
+                new List<CombatFactionConsequence>(consequences));
+            return applied;
         }
 
         /// <summary>
@@ -208,7 +255,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static CombatHostSession Create(string dataDir)
+        public static CombatHostSession Create(string dataDir, ICampaignRngManager? campaignRng = null)
         {
             // The weapon/ammo/material catalog is the data authority
             // (combat_catalog.json). Without loading it here, every real
@@ -235,7 +282,7 @@ namespace AtomicWar.GodotApp
             if (CombatCatalog.GetWeapon("weapon_assault_rifle") == null)
                 CombatCatalog.SeedDefaults();
 
-            var session = new CombatHostSession();
+            var session = new CombatHostSession(campaignRng: campaignRng);
             if (!string.IsNullOrEmpty(dataDir))
             {
                 try
@@ -291,7 +338,8 @@ namespace AtomicWar.GodotApp
             int enemyCount = 0,
             int enemyHealth = 0,
             int? seed = null,
-            IReadOnlyList<string>? enemyCombatantIds = null)
+            IReadOnlyList<string>? enemyCombatantIds = null,
+            bool isSelfDefense = false)
         {
             if (!Engine.State.Resolved && !string.IsNullOrEmpty(Engine.State.EncounterId)
                 && Engine.State.Phase != (int)CombatPhase.Setup)
@@ -380,7 +428,7 @@ namespace AtomicWar.GodotApp
                 locationId,
                 locationName ?? locationId,
                 ScheduleDay(),
-                seed ?? DemoSeed,
+                seed ?? CombatEncounterSeed(),
                 players,
                 weaponList,
                 enemyCount: finalEnemyCount,
@@ -396,6 +444,8 @@ namespace AtomicWar.GodotApp
                         Engine.SetBoundWeaponStartCondition(w.InstanceId, w.ConditionPct);
                 }
             }
+
+            if (ok) Engine.State.IsSelfDefense = isSelfDefense;
 
             return ok ? "Combat engaged at " + (locationName ?? locationId) + "." : "Could not start combat.";
         }
@@ -424,6 +474,16 @@ namespace AtomicWar.GodotApp
         public string ActionFire(string targetId)
         {
             var r = Engine.PlayerFire(targetId, new SeededRng(RollSeed()));
+            if (r.Success && Stealth != null)
+            {
+                string expeditionId = string.IsNullOrEmpty(StealthExpeditionId)
+                    ? "combat_active"
+                    : StealthExpeditionId;
+                string weaponId = Engine.State?.Weapons != null && Engine.State.Weapons.Count > 0
+                    ? Engine.State.Weapons[0].WeaponId
+                    : "weapon_assault_rifle";
+                Stealth.ApplyWeaponNoise(expeditionId, weaponId, StealthSystem.WeaponNoiseKind.Fired);
+            }
             return r.Message;
         }
 
@@ -569,8 +629,22 @@ namespace AtomicWar.GodotApp
             {
                 int day = Engine.State.Day;
                 int turn = Engine.State.Turn;
-                return (DemoSeed * 31) + (day * 7) + (turn * 13);
+                return (CombatBaseSeed() * 31) + (day * 7) + (turn * 13);
             }
+        }
+
+        private int CombatBaseSeed()
+        {
+            return _campaignRng != null
+                ? _campaignRng.GetStream(CampaignStreamIds.Combat).DerivedBaseSeed
+                : DemoSeed;
+        }
+
+        private int CombatEncounterSeed()
+        {
+            return _campaignRng != null
+                ? _campaignRng.GetStream(CampaignStreamIds.Combat).ForkSeed(ScheduleDay())
+                : DemoSeed;
         }
 
         /// <summary>First living hostile id for HUD Fire when no target picker is wired.</summary>

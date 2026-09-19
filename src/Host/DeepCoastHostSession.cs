@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
+using Ashfall.Core.Random;
 using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Journal;
@@ -40,15 +41,19 @@ namespace AtomicWar.GodotApp
             JournalSystem journal = null!,
             FactionStanceEngine stances = null!,
             HoldfastTradeInventory inventory = null!,
-            MaritimeHostSession maritime = null!)
+            MaritimeHostSession maritime = null!,
+            ICampaignRngManager? campaignRng = null)
         {
-            DeepCoast = deepCoast ?? new District8DeepCoastSystem(DemoSeed);
+            int seed = campaignRng != null
+                ? campaignRng.GetStream(CampaignStreamIds.DeepCoast).DerivedBaseSeed
+                : DemoSeed;
+            DeepCoast = deepCoast ?? new District8DeepCoastSystem(seed);
             Journal = journal ?? new JournalSystem();
             Stances = stances ?? new FactionStanceEngine();
             Inventory = inventory ?? new HoldfastTradeInventory();
             // Determinism: the dock salvage stream shares the same seeded rng as
             // the route decisions, so same seed + same actions ⇒ same rewards.
-            _rng = new SeededRng(DemoSeed);
+            _rng = new SeededRng(seed);
             _dockScavenge = new ProceduralScavengeSystem(_rng);
             _dockLoot = BuildDockLoot();
             Maritime = maritime ?? new MaritimeHostSession();
@@ -63,9 +68,10 @@ namespace AtomicWar.GodotApp
             JournalSystem journal = null!,
             FactionStanceEngine stances = null!,
             HoldfastTradeInventory inventory = null!,
-            MaritimeHostSession maritime = null!)
+            MaritimeHostSession maritime = null!,
+            ICampaignRngManager? campaignRng = null)
         {
-            return new DeepCoastHostSession(deepCoast, journal, stances, inventory, maritime);
+            return new DeepCoastHostSession(deepCoast, journal, stances, inventory, maritime, campaignRng);
         }
 
         // ── Actions (each one a single, idempotent stage step) ─────────

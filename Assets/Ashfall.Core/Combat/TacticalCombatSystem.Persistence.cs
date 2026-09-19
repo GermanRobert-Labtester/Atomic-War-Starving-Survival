@@ -24,6 +24,7 @@ namespace Ashfall.Core.Combat
                 IsActive = !string.IsNullOrEmpty(_state.EncounterId) && !_state.Resolved,
                 Aftermath = CloneAftermath(_state.Aftermath)
             };
+            snap.FactionConsequences = CloneFactionConsequences(_state.FactionConsequences);
 
             var combatants = new List<CombatantState>(_state.Combatants);
             combatants.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
@@ -103,8 +104,11 @@ namespace Ashfall.Core.Combat
                 Resolved = _state.Resolved,
                 OutcomeText = _state.OutcomeText,
                 ResolutionId = _state.ResolutionId,
+                IsSelfDefense = _state.IsSelfDefense,
                 Aftermath = CloneAftermath(_state.Aftermath)
             };
+            copy.AppliedFactionConsequenceIds = CloneIncidentIds(_state.AppliedFactionConsequenceIds);
+            copy.FactionConsequences = CloneFactionConsequences(_state.FactionConsequences);
             copy.BoundWeaponConditions = CloneBoundWeaponConditions(_state.BoundWeaponConditions);
             copy.Combatants = CloneCombatants(_state.Combatants);
             copy.Weapons = CloneWeapons(_state.Weapons);
@@ -146,8 +150,11 @@ namespace Ashfall.Core.Combat
                 Resolved = s.Resolved,
                 OutcomeText = s.OutcomeText ?? string.Empty,
                 ResolutionId = s.ResolutionId ?? string.Empty,
+                IsSelfDefense = s.IsSelfDefense,
                 Aftermath = CloneAftermath(s.Aftermath)
             };
+            m.AppliedFactionConsequenceIds = CloneIncidentIds(s.AppliedFactionConsequenceIds);
+            m.FactionConsequences = CloneFactionConsequences(s.FactionConsequences);
             m.BoundWeaponConditions = CloneBoundWeaponConditions(s.BoundWeaponConditions);
             m.Combatants = CloneCombatants(s.Combatants);
             m.Weapons = CloneWeapons(s.Weapons);
@@ -211,6 +218,48 @@ namespace Ashfall.Core.Combat
                     });
                 }
             }
+            return copy;
+        }
+
+        public static List<string> CloneIncidentIds(List<string>? source)
+        {
+            var copy = new List<string>();
+            if (source == null) return copy;
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = 0; i < source.Count; i++)
+            {
+                string id = source[i] ?? string.Empty;
+                if (!string.IsNullOrEmpty(id) && seen.Add(id)) copy.Add(id);
+            }
+            copy.Sort(StringComparer.Ordinal);
+            return copy;
+        }
+
+        public static List<CombatFactionConsequence> CloneFactionConsequences(
+            List<CombatFactionConsequence>? source)
+        {
+            var copy = new List<CombatFactionConsequence>();
+            if (source == null) return copy;
+            for (int i = 0; i < source.Count; i++)
+            {
+                var consequence = source[i];
+                if (consequence == null) continue;
+                copy.Add(new CombatFactionConsequence
+                {
+                    IncidentId = consequence.IncidentId ?? string.Empty,
+                    EncounterId = consequence.EncounterId ?? string.Empty,
+                    FactionId = consequence.FactionId ?? string.Empty,
+                    Day = consequence.Day,
+                    Kills = consequence.Kills,
+                    Downed = consequence.Downed,
+                    Assisted = consequence.Assisted,
+                    IsSelfDefense = consequence.IsSelfDefense,
+                    StandingDelta = consequence.StandingDelta,
+                    Reason = consequence.Reason ?? string.Empty,
+                    Applied = consequence.Applied
+                });
+            }
+            copy.Sort((a, b) => string.CompareOrdinal(a.IncidentId, b.IncidentId));
             return copy;
         }
 

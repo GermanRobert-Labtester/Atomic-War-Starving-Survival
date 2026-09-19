@@ -53,6 +53,8 @@ namespace Ashfall.Core.Tests.Spiritual
             // 6 memorial rites
             Assert.Equal(6, catalog.MemorialRites.Count);
             Assert.NotNull(catalog.GetMemorialRite("memorial_rite_roll_call_naming"));
+            Assert.Equal("memorial_rite_roll_call_naming", SpiritualMeaningCoordinator.ShelterVigilRiteId);
+            Assert.NotNull(catalog.GetMemorialRite(SpiritualMeaningCoordinator.ShelterVigilRiteId));
             Assert.NotNull(catalog.GetMemorialRite("memorial_rite_empty_bunk_night"));
             Assert.NotNull(catalog.GetMemorialRite("memorial_rite_division_of_effects"));
             Assert.NotNull(catalog.GetMemorialRite("memorial_rite_work_gang_farewell"));

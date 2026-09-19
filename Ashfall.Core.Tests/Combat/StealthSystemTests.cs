@@ -58,6 +58,42 @@ namespace Ashfall.Core.Tests.Combat
         }
 
         [Fact]
+        public void ApplyWeaponNoise_SuppressedRifle_AddsLessThanUnsuppressed()
+        {
+            var sys = CreateSystem();
+            sys.RegisterWeaponNoise(new WeaponNoiseProfile
+            {
+                weapon_id = "weapon_assault_rifle",
+                fired_noise = 0.85f,
+                is_suppressed = false
+            });
+            sys.RegisterWeaponNoise(new WeaponNoiseProfile
+            {
+                weapon_id = "weapon_suppressed_rifle",
+                fired_noise = 0.28f,
+                is_suppressed = true
+            });
+
+            var loud = sys.EnsurePartyStealth("exp_loud");
+            var quiet = sys.EnsurePartyStealth("exp_quiet");
+            loud.accumulatedNoise = 0f;
+            quiet.accumulatedNoise = 0f;
+            float loudStart = loud.accumulatedNoise;
+            float quietStart = quiet.accumulatedNoise;
+
+            float loudAdd = sys.ApplyWeaponNoise("exp_loud", "weapon_assault_rifle", StealthSystem.WeaponNoiseKind.Fired);
+            float quietAdd = sys.ApplyWeaponNoise("exp_quiet", "weapon_suppressed_rifle", StealthSystem.WeaponNoiseKind.Fired);
+
+            Assert.Equal(0.85f, loudAdd, 3);
+            Assert.Equal(0.28f, quietAdd, 3);
+            Assert.True(loud.accumulatedNoise - loudStart > quiet.accumulatedNoise - quietStart);
+
+            var loudRisk = sys.CalculateDetectionRisk("exp_loud", "clear", false, "wasteland");
+            var quietRisk = sys.CalculateDetectionRisk("exp_quiet", "clear", false, "wasteland");
+            Assert.True(loudRisk.FinalProbability > quietRisk.FinalProbability);
+        }
+
+        [Fact]
         public void BypassEncounter_Skips_Combat_On_Success()
         {
             // Seed chosen such that roll > detection risk

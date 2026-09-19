@@ -287,9 +287,9 @@ namespace Ashfall.Core.Tests.Save
             // Plan 210 added sanitation; Plan 211 added black_market.
             // B5–B8 expansion added deep_well + water_condenser (Plans 64–67 flagship, §9.8).
             // Plan 18A added the dedicated echoes section.
-            Assert.Equal(193, SaveSectionRegistry.All.Count);
+            Assert.Equal(194, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(193, keys.Count);
+            Assert.Equal(194, keys.Count);
         }
     }
 }

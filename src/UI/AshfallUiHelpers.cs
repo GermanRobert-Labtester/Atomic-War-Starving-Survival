@@ -872,7 +872,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Bound the loop defensively against free-during-iteration races;
             // safety counter guards against pathological parents whose
-            // GetChild() invariant breaks under teardown.
+            // child retrieval invariant breaks under teardown.
             int safety = parent.GetChildCount() + 8;
             while (parent.GetChildCount() > 0 && safety-- > 0)
             {

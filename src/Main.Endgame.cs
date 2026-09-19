@@ -65,11 +65,13 @@ namespace AtomicWar.GodotApp
             }
 
             _completionHistory ??= CompletionHistoryStore.Load();
+            SetupDifficulty();
             CampaignOutcomeSnapshot snapshot = BuildCampaignOutcomeSnapshot();
             var observation = new CampaignCompletionObservation(
                 runIdentity,
                 epilogue.endingId,
-                snapshot.ToInputs());
+                snapshot.ToInputs(),
+                _difficultyScalars.PresetId);
 
             CompletionHistoryAppendResult result = _completionHistory.Append(observation, out CampaignCompletionRecord? record);
             if (result == CompletionHistoryAppendResult.Appended)

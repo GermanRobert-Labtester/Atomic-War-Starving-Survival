@@ -177,13 +177,47 @@ namespace AtomicWar.GodotApp
                 session.Unlock(5);
                 session.ResolveChart(DutyRosterIds.ChoiceWritePencil);
                 session.TickDay();
-                session.QueueVisitor(ShelterEncounterSystem.VisitorLen);
+                session.Marks.SetMark("mark_ration_protocol", "selftest", session.Clock.Day);
+                session.SyncDay(60);
+                session.StartRosterQuest(DutyRosterIds.QuestTheChart);
+                session.GrantOverflowAccess();
+                session.RegisterOverflowVisit(DutyRosterIds.LocOverflowAlloc11);
+                var assignResult = session.AssignDuty(DutyRosterIds.RoleNightWatch, "npc_kess_adler");
+                Check(assignResult.IsSuccess, "duty assigned to night watch");
 
                 var save = session.CaptureSave();
                 Check(!string.IsNullOrEmpty(save.Checksum), "capture stamps checksum");
                 Check(save.saveVersion == DutyRosterSave.CurrentSaveVersion, "saveVersion current");
                 Check(save.roster.expansionUnlocked, "envelope carries roster unlock");
                 Check(save.roster.rows != null && save.roster.rows.Count > 0, "envelope carries chart rows");
+
+                // Direct in-memory RestoreSave probe on a fresh host session
+                var memoryFresh = DutyRosterHostSession.Create(dataDirectory);
+                memoryFresh.RestoreSave(save);
+                Check(memoryFresh.Clock.Day == session.Clock.Day, "direct RestoreSave: sim day restored");
+                Check(memoryFresh.WallLine() == session.WallLine(), "direct RestoreSave: wall line restored");
+                Check(memoryFresh.EncountersLine() == session.EncountersLine(), "direct RestoreSave: encounters line restored");
+                Check(memoryFresh.Marks.HasMark("mark_ration_protocol"), "direct RestoreSave: mark restored");
+                Check(memoryFresh.Quests.IsStarted(DutyRosterIds.QuestTheChart), "direct RestoreSave: quest progress restored");
+                Check(memoryFresh.Roster.HasVisitedOverflow(DutyRosterIds.LocOverflowAlloc11), "direct RestoreSave: overflow visited restored");
+                Check(memoryFresh.Roster.GetAssignment(DutyRosterIds.RoleNightWatch) == "npc_kess_adler", "direct RestoreSave: role assignment restored");
+
+                // Idempotence probe: calling RestoreSave repeatedly produces identical state
+                memoryFresh.RestoreSave(save);
+                Check(memoryFresh.Marks.Count == session.Marks.Count, "RestoreSave idempotent: mark count unchanged");
+                Check(memoryFresh.Roster.OccupiedRowCount == session.Roster.OccupiedRowCount, "RestoreSave idempotent: row count unchanged");
+
+                // Null safety check: RestoreSave(null) throws ArgumentNullException
+                bool nullThrew = false;
+                try
+                {
+                    memoryFresh.RestoreSave(null!);
+                }
+                catch (ArgumentNullException)
+                {
+                    nullThrew = true;
+                }
+                Check(nullThrew, "RestoreSave(null) throws ArgumentNullException");
 
                 Check(DutyRosterSaveStore.TrySave(save, tmpPath), "save written via codec");
 
@@ -193,10 +227,14 @@ namespace AtomicWar.GodotApp
                 if (loaded != null)
                 {
                     fresh.RestoreSave(loaded!);
-                    Check(fresh.Clock.Day == session.Clock.Day, "sim day restored");
-                    Check(fresh.WallLine() == session.WallLine(), "wall line identical after roundtrip");
+                    Check(fresh.Clock.Day == session.Clock.Day, "disk RestoreSave: sim day restored");
+                    Check(fresh.WallLine() == session.WallLine(), "disk RestoreSave: wall line identical after roundtrip");
                     Check(fresh.EncountersLine() == session.EncountersLine(),
-                        "encounters line identical after roundtrip");
+                        "disk RestoreSave: encounters line identical after roundtrip");
+                    Check(fresh.Marks.HasMark("mark_ration_protocol"), "disk RestoreSave: mark restored");
+                    Check(fresh.Quests.IsStarted(DutyRosterIds.QuestTheChart), "disk RestoreSave: quest progress restored");
+                    Check(fresh.Roster.HasVisitedOverflow(DutyRosterIds.LocOverflowAlloc11), "disk RestoreSave: overflow visited restored");
+                    Check(fresh.Roster.GetAssignment(DutyRosterIds.RoleNightWatch) == "npc_kess_adler", "disk RestoreSave: role assignment restored");
                 }
 
                 // Tamper: flip the roster unlock flag in the raw text. Checksum must refuse it.
@@ -208,6 +246,40 @@ namespace AtomicWar.GodotApp
                     File.WriteAllText(tmpPath, tampered);
                     Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "tampered save rejected (checksum)");
                 }
+
+                // Error handling / try-catch resilience:
+                // 1. Missing file returns null without throwing
+                Check(DutyRosterSaveStore.TryLoad(tmpPath + ".non_existent") == null, "missing save file returns null safely");
+
+                // 2. Empty/whitespace file returns null without throwing
+                File.WriteAllText(tmpPath, "   \n\t ");
+                Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "empty save file returns null safely");
+
+                // 3. Corrupt/malformed JSON returns null without throwing
+                File.WriteAllText(tmpPath, "{ \"saveVersion\": 3, corrupt_syntax: [ }");
+                Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "corrupt JSON caught and returns null safely");
+
+                // 4. Truncated JSON returns null without throwing
+                File.WriteAllText(tmpPath, "{\"saveVersion\":3,\"simDay\":");
+                Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "truncated JSON caught and returns null safely");
+
+                // 5. Missing checksum returns null without throwing
+                File.WriteAllText(tmpPath, "{\"saveVersion\":3,\"simDay\":5,\"Checksum\":\"\"}");
+                Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "missing checksum caught and returns null safely");
+
+                // 6. Unsupported future version returns null without throwing
+                File.WriteAllText(tmpPath, "{\"saveVersion\":999,\"simDay\":5,\"Checksum\":\"dummy\"}");
+                Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "future saveVersion caught and returns null safely");
+
+                // 7. Invalid negative version returns null without throwing
+                File.WriteAllText(tmpPath, "{\"saveVersion\":-1,\"simDay\":5,\"Checksum\":\"dummy\"}");
+                Check(DutyRosterSaveStore.TryLoad(tmpPath) == null, "invalid negative saveVersion caught and returns null safely");
+
+                // 8. Null arguments safety
+                Check(!DutyRosterSaveStore.TrySave(null!, tmpPath), "TrySave(null) returns false safely");
+                Check(DutyRosterSaveStore.TryRestore(null!) == null, "TryRestore(null) returns null safely");
+                Check(DutyRosterSaveStore.TryRestore("{ invalid json }") == null, "TryRestore(corrupt) returns null safely");
+                Check(DutyRosterSaveStore.TryCapture(null!) == string.Empty, "TryCapture(null) returns empty string safely");
             }
             catch (Exception e)
             {
@@ -905,6 +977,78 @@ namespace AtomicWar.GodotApp
         public static int RunMedicalSelfTest()
         {
             var report = MedicalHeadlessDemo.Run(new GodotLog());
+
+            // MedicalHostSession TickHours & TickVigil runtime probe:
+            try
+            {
+                var session = new MedicalHostSession();
+                bool stateChangedInvoked = false;
+                session.StateChanged += () => stateChangedInvoked = true;
+
+                // 1. Initial clean state
+                session.TickHours(24f);
+                bool initialOk = session.TotalMoraleDrain == 0f;
+
+                // 2. Consume doses and enter managed detox
+                session.Engine.OnSubstanceConsumed("sv_patient_a", "morphine", ChemicalDependencyKind.Opioid);
+                session.Engine.OnSubstanceConsumed("sv_patient_a", "morphine", ChemicalDependencyKind.Opioid);
+                session.BeginDetoxDemo("sv_patient_a", "morphine", managed: true);
+
+                // 3. Tick 24 hours under managed detox
+                stateChangedInvoked = false;
+                session.TickHours(24f);
+                bool drainOk = session.TotalMoraleDrain > 0f;
+                bool stateOk = stateChangedInvoked && session.IsDirty && session.StateVersion > 0;
+
+                // 4. Tick remaining hours to complete detox (threshold is 96h)
+                session.TickHours(100f);
+                bool detoxCompleteOk = session.LastEvent.Contains("clean of morphine");
+
+                // 5. Cold turkey withdrawal and tremor penalties
+                session.Engine.OnSubstanceConsumed("sv_patient_b", "sedative_amp", ChemicalDependencyKind.Sedative);
+                session.Engine.OnSubstanceConsumed("sv_patient_b", "sedative_amp", ChemicalDependencyKind.Sedative);
+                session.BeginDetoxDemo("sv_patient_b", "sedative_amp", managed: false);
+                session.TickHours(10f);
+                bool penaltyActiveOk = session.ActiveCraftingPenalty > 0f && session.ActiveCombatPenalty > 0f;
+
+                session.TickHours(70f);
+                bool penaltyClearedOk = session.ActiveCraftingPenalty == 0f && session.ActiveCombatPenalty == 0f;
+
+                // 6. Bedside Vigil ticking
+                session.HoldVigil("sv_patient_c");
+                bool vigilActiveOk = session.VigilActive;
+                float progressBefore = session.VigilProgress;
+                session.TickVigil(10.0);
+                bool vigilTickedOk = session.VigilProgress > progressBefore;
+
+                // 7. Zero/negative parameter safety
+                session.TickHours(0f);
+                session.TickHours(-5f);
+                session.TickVigil(-1.0);
+
+                bool allOk = initialOk && drainOk && stateOk && detoxCompleteOk && penaltyActiveOk && penaltyClearedOk && vigilActiveOk && vigilTickedOk;
+                if (allOk)
+                {
+                    report.PassedCount++;
+                    report.Checks.Add(new HeadlessCheck { Name = "MedicalHostSession.TickHours & TickVigil runtime probe", Passed = true });
+                    GD.Print("[PASS] MedicalHostSession.TickHours & TickVigil advance dependencies, detox, penalties, and vigil progress");
+                }
+                else
+                {
+                    report.FailedCount++;
+                    report.Passed = false;
+                    report.Checks.Add(new HeadlessCheck { Name = "MedicalHostSession.TickHours & TickVigil runtime probe", Passed = false });
+                    GD.Print($"[FAIL] MedicalHostSession tick probe failed: init={initialOk} drain={drainOk} state={stateOk} detox={detoxCompleteOk} penalty={penaltyActiveOk} cleared={penaltyClearedOk} vigil={vigilActiveOk} vigilTick={vigilTickedOk}");
+                }
+            }
+            catch (Exception e)
+            {
+                report.FailedCount++;
+                report.Passed = false;
+                report.Checks.Add(new HeadlessCheck { Name = "MedicalHostSession.TickHours runtime probe exception", Passed = false });
+                GD.Print("[FAIL] MedicalHostSession tick probe threw: " + e.Message);
+            }
+
             GD.Print(report.Summary);
             return EmitSummaryFromHeadlessReport("medical_selftest", report);
         }
@@ -1290,6 +1434,75 @@ namespace AtomicWar.GodotApp
         public static int RunWorldSelfTest()
         {
             var report = WorldHeadlessDemo.Run(new GodotLog());
+
+            // ── WorldHostSession Sky Layer Armor save restoration probe ──
+            void Check(bool condition, string name)
+            {
+                report.Checks.Add(new HeadlessCheck { Name = name, Passed = condition });
+                if (condition)
+                {
+                    report.PassedCount++;
+                    GD.Print("[PASS] " + name);
+                }
+                else
+                {
+                    report.FailedCount++;
+                    GD.Print("[FAIL] " + name);
+                }
+            }
+
+            try
+            {
+                var session1 = new WorldHostSession();
+                Check(session1.SkyArmorStatusLine() == "Sky armor: no cells plated", "world sky armor initially unplated");
+
+                session1.SetSkyArmorDemo(0, "concrete", 2.0f);
+                session1.SetSkyArmorDemo(1, "lead", 1.5f);
+                Check(session1.SkyArmor.GetCell(0) != null, "session1 set cell 0 (concrete)");
+                Check(session1.SkyArmor.GetCell(1) != null, "session1 set cell 1 (lead)");
+
+                var save = session1.CaptureSkyArmorSave();
+                Check(save != null && save.cells.Count == 2, "capture sky armor save captures 2 cells");
+
+                var session2 = new WorldHostSession();
+                Check(session2.SkyArmor.GetCell(0) == null, "session2 initially empty");
+
+                session2.RestoreSkyArmorSave(save!);
+                var c0 = session2.SkyArmor.GetCell(0);
+                var c1 = session2.SkyArmor.GetCell(1);
+                Check(c0 != null && c0.material == CeilingMaterialTier.ReinforcedConcrete && Math.Abs(c0.thicknessMeters - 2.0f) < 0.001f, "session2 restored cell 0 concrete");
+                Check(c1 != null && c1.material == CeilingMaterialTier.LeadSheeting && Math.Abs(c1.thicknessMeters - 1.5f) < 0.001f, "session2 restored cell 1 lead");
+                Check(session2.SkyArmorStatusLine().StartsWith("Sky armor: 2 cells"), "session2 status line reflects restored cells");
+
+                string absorbed = session2.ImpactDemo(0, 10f);
+                Check(absorbed.Contains("absorbed"), "session2 impact absorbed by concrete");
+
+                string breach = session2.ImpactDemo(0, 100f);
+                Check(breach.Contains("BREACH"), "session2 impact breaches concrete");
+
+                // Overwrite test: new state replaces prior cells
+                var smallSave = new SkyArmorSaveState
+                {
+                    cells = new System.Collections.Generic.List<CeilingCellArmor>
+                    {
+                        new CeilingCellArmor { gridX = 5, material = CeilingMaterialTier.TungstenComposite, thicknessMeters = 3.0f, currentDurability = 100f }
+                    }
+                };
+                session2.RestoreSkyArmorSave(smallSave);
+                Check(session2.SkyArmor.GetCell(0) == null && session2.SkyArmor.GetCell(5) != null, "restore overwrites previous cells");
+
+                // Null safety test: safely clears existing state
+                session2.RestoreSkyArmorSave(null!);
+                Check(session2.SkyArmorStatusLine() == "Sky armor: no cells plated", "restore null clears cells safely");
+            }
+            catch (Exception ex)
+            {
+                Check(false, "WorldHostSession sky armor probe exception: " + ex.Message);
+            }
+
+            report.Passed = report.FailedCount == 0;
+            report.Summary = $"[WorldHeadlessDemo] {(report.Passed ? "PASS" : "FAIL")} {report.PassedCount}/{report.PassedCount + report.FailedCount}";
+
             GD.Print(report.Summary);
             return EmitSummaryFromHeadlessReport("world_selftest", report);
         }
@@ -1375,6 +1588,44 @@ namespace AtomicWar.GodotApp
             finally
             {
                 if (File.Exists(legacyPath)) File.Delete(legacyPath);
+            }
+
+            // Corrupt-save probe: malformed JSON, truncated JSON, empty content, and missing files
+            // must be caught safely by EconomySaveStore.TryLoad and return null without throwing.
+            string corruptPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_economy_corrupt_" + Guid.NewGuid().ToString("N") + ".json"); // DETERMINISM_ALLOWLIST: Selftest scratch file path
+            try
+            {
+                File.WriteAllText(corruptPath, "{ \"Checksum\": \"abc\", \"State\": malformed_json_syntax");
+                var corruptLoaded = EconomySaveStore.TryLoad(corruptPath);
+                GD.Print(corruptLoaded == null
+                    ? "[PASS] malformed JSON save refused (error caught)"
+                    : "[FAIL] malformed JSON save returned non-null state");
+
+                File.WriteAllText(corruptPath, "{\"Checksum\":");
+                var truncatedLoaded = EconomySaveStore.TryLoad(corruptPath);
+                GD.Print(truncatedLoaded == null
+                    ? "[PASS] truncated JSON save refused (error caught)"
+                    : "[FAIL] truncated JSON save returned non-null state");
+
+                File.WriteAllText(corruptPath, "   \n\t ");
+                var emptyLoaded = EconomySaveStore.TryLoad(corruptPath);
+                GD.Print(emptyLoaded == null
+                    ? "[PASS] empty save file refused"
+                    : "[FAIL] empty save file returned non-null state");
+
+                var missingLoaded = EconomySaveStore.TryLoad(corruptPath + ".nonexistent");
+                GD.Print(missingLoaded == null
+                    ? "[PASS] missing save file refused"
+                    : "[FAIL] missing save file returned non-null state");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] corrupt-save probe threw: " + e.Message);
+            }
+            finally
+            {
+                if (File.Exists(corruptPath)) File.Delete(corruptPath);
             }
 
             // Tuning-integration probe (Candidate A slice 4): the core overlay
@@ -1476,6 +1727,96 @@ namespace AtomicWar.GodotApp
             {
                 if (File.Exists(continuityPath)) File.Delete(continuityPath);
             }
+
+            // EconomyHostSession TickDemo probe:
+            try
+            {
+                var session = new EconomyHostSession();
+                bool stateChangedInvoked = false;
+                session.StateChanged += () => stateChangedInvoked = true;
+
+                int initialDay = session.Market.Day;
+                int initialTicks = (int)session.Market.TickCount;
+
+                string eventMsg = session.TickDemo(3);
+                bool dayUpdated = session.Market.Day == initialDay + 3;
+                bool ticksUpdated = session.Market.TickCount == initialTicks + 3;
+                bool eventUpdated = session.LastEvent == $"Advanced 3 days to Day {session.Market.Day}." && eventMsg == session.LastEvent;
+                bool stateUpdated = stateChangedInvoked && session.IsDirty && session.StateVersion > 0;
+
+                string eventMsg2 = session.TickDemo(2);
+                bool day2Updated = session.Market.Day == initialDay + 5;
+                bool ticks2Updated = session.Market.TickCount == initialTicks + 5;
+                bool event2Updated = session.LastEvent == $"Advanced 2 days to Day {session.Market.Day}." && eventMsg2 == session.LastEvent;
+
+                bool tickDemoOk = dayUpdated && ticksUpdated && eventUpdated && stateUpdated && day2Updated && ticks2Updated && event2Updated;
+                if (tickDemoOk)
+                {
+                    report.PassedCount++;
+                    report.Checks.Add(new HeadlessCheck { Name = "EconomyHostSession.TickDemo probe", Passed = true });
+                    GD.Print($"[PASS] EconomyHostSession.TickDemo advances day ({session.Market.Day}) and updates LastEvent/StateChanged");
+                }
+                else
+                {
+                    report.FailedCount++;
+                    report.Passed = false;
+                    report.Checks.Add(new HeadlessCheck { Name = "EconomyHostSession.TickDemo probe", Passed = false });
+                    GD.Print($"[FAIL] EconomyHostSession.TickDemo failed: day={dayUpdated} ticks={ticksUpdated} event={eventUpdated} state={stateUpdated}");
+                }
+            }
+            catch (Exception e)
+            {
+                report.FailedCount++;
+                report.Passed = false;
+                report.Checks.Add(new HeadlessCheck { Name = "EconomyHostSession.TickDemo probe exception", Passed = false });
+                GD.Print("[FAIL] EconomyHostSession.TickDemo probe threw: " + e.Message);
+            }
+
+            // EconomyHostSession BarterDemo probe:
+            try
+            {
+                var session = EconomyHostSession.Create(dataDirectory);
+                bool stateChangedInvoked = false;
+                session.StateChanged += () => stateChangedInvoked = true;
+
+                // 1. Accepted barter: 20 scrap_metal for clean_water
+                string barterMsg = session.BarterDemo("scrap_metal", 20, "clean_water");
+                bool barterAccepted = barterMsg.StartsWith("Bartered 20x scrap_metal for ")
+                    && session.LastEvent == barterMsg
+                    && stateChangedInvoked
+                    && session.IsDirty;
+
+                // 2. Rejected barter: unknown give good
+                string rejMsg1 = session.BarterDemo("nonexistent_good_xyz", 5, "clean_water");
+                bool rej1Ok = rejMsg1 == "Barter rejected: unknown give good." && session.LastEvent == rejMsg1;
+
+                // 3. Rejected barter: non-positive quantity
+                string rejMsg2 = session.BarterDemo("scrap_metal", 0, "clean_water");
+                bool rej2Ok = rejMsg2 == "Barter rejected: quantity must be > 0." && session.LastEvent == rejMsg2;
+
+                bool barterDemoOk = barterAccepted && rej1Ok && rej2Ok;
+                if (barterDemoOk)
+                {
+                    report.PassedCount++;
+                    report.Checks.Add(new HeadlessCheck { Name = "EconomyHostSession.BarterDemo probe", Passed = true });
+                    GD.Print("[PASS] EconomyHostSession.BarterDemo exchanges goods, handles rejections, and notifies StateChanged");
+                }
+                else
+                {
+                    report.FailedCount++;
+                    report.Passed = false;
+                    report.Checks.Add(new HeadlessCheck { Name = "EconomyHostSession.BarterDemo probe", Passed = false });
+                    GD.Print($"[FAIL] EconomyHostSession.BarterDemo probe failed: accepted={barterAccepted} rejUnknown={rej1Ok} rejZero={rej2Ok}");
+                }
+            }
+            catch (Exception e)
+            {
+                report.FailedCount++;
+                report.Passed = false;
+                report.Checks.Add(new HeadlessCheck { Name = "EconomyHostSession.BarterDemo probe exception", Passed = false });
+                GD.Print("[FAIL] EconomyHostSession.BarterDemo probe threw: " + e.Message);
+            }
+
             GD.Print(report.Summary);
             return EmitSummaryFromHeadlessReport("economy_selftest", report);
         }
@@ -2202,6 +2543,136 @@ namespace AtomicWar.GodotApp
                 float hostMult = session.GetEffects("survivor_gunner_mikhail").workEfficiencyMultiplier;
                 Check(Math.Abs(hostMult - 1f) < 1e-4f,
                     "host work-efficiency view recomputes after boost decays");
+
+                // ── 1b. PhantomMemoryHostSession.ScavengeItem direct probe ─────
+                var phantomHost = new PhantomMemoryHostSession(new Ashfall.Core.PhantomMemoryEngine(), loadDefaults: true, rng: new Ashfall.Core.SeededRng(42));
+                bool phantomStateChanged = false;
+                phantomHost.StateChanged += () => phantomStateChanged = true;
+
+                // A. Invalid item ID
+                string invalidItemResult = phantomHost.ScavengeItem("survivor_gunner_mikhail", "");
+                Check(invalidItemResult == "Invalid relic item ID.",
+                    "PhantomMemoryHostSession.ScavengeItem rejects empty item ID");
+
+                // B. Category token passed as item ID
+                string catTokenResult = phantomHost.ScavengeItem("survivor_gunner_mikhail", "military");
+                Check(catTokenResult == "Invalid item ID 'military': category tokens are not item IDs.",
+                    "PhantomMemoryHostSession.ScavengeItem rejects category token 'military'");
+
+                // C. Unknown survivor
+                string unknownSvResult = phantomHost.ScavengeItem("nonexistent_survivor", "item_dog_tags");
+                Check(unknownSvResult == "Unknown survivor.",
+                    "PhantomMemoryHostSession.ScavengeItem rejects unknown survivor");
+
+                // D. Deceased survivor
+                var deceasedSv = new Ashfall.Core.PhantomSurvivorSnapshot
+                {
+                    survivorId = "sv_deceased_tester",
+                    displayName = "Fallen Soldier",
+                    backgroundId = "former_soldier",
+                    isAlive = false
+                };
+                phantomHost.DemoSurvivors.Add(deceasedSv);
+                string deceasedResult = phantomHost.ScavengeItem("sv_deceased_tester", "item_dog_tags");
+                Check(deceasedResult == "Survivor is deceased and cannot inspect relics.",
+                    "PhantomMemoryHostSession.ScavengeItem rejects deceased survivor");
+
+                // E. Non-matching item (TriggerOutcome.None)
+                string nonMatchingResult = phantomHost.ScavengeItem("survivor_gunner_mikhail", "clean_water");
+                Check(nonMatchingResult == "No memory triggered. The item is just an object."
+                    && phantomHost.LastEvent == nonMatchingResult,
+                    "PhantomMemoryHostSession.ScavengeItem handles non-matching relic without memory trigger");
+
+                // F. Matching relic with guaranteed trigger
+                phantomHost.Engine.TriggerChanceOverride = 1.0f;
+                phantomStateChanged = false;
+                string triggeredResult = phantomHost.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+                bool validTriggerText = triggeredResult.Contains("Gunner Mikhail (Heavy Artillery Loader)")
+                    && (triggeredResult.Contains("pockets the tags") || triggeredResult.Contains("reads the name on the tag"));
+                Check(validTriggerText
+                    && phantomHost.LastEvent == triggeredResult
+                    && phantomStateChanged
+                    && phantomHost.IsDirty,
+                    "PhantomMemoryHostSession.ScavengeItem resolves vignette, updates LastEvent, marks dirty, and fires StateChanged");
+
+                // G. Inventory binding check: missing item
+                var invSystem = new Ashfall.Core.Inventory.Inventory();
+                var invCatalog = new Ashfall.Core.Inventory.ItemCatalog();
+                var invDesc = new Ashfall.Core.Inventory.ItemDescriptionCatalog();
+                var invSession = new InventoryHostSession(invSystem, invCatalog, invDesc);
+                phantomHost.BindInventory(invSession);
+                string invMissingResult = phantomHost.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+                Check(invMissingResult == "Item 'item_dog_tags' not present in shelter inventory.",
+                    "PhantomMemoryHostSession.ScavengeItem enforces inventory presence when InventorySession bound");
+
+                // H. Inventory binding check: present item without consumption
+                invSystem.Add(new Ashfall.Core.Inventory.ItemDefinition { id = "item_dog_tags", displayName = "Dog Tags", stackMax = 10 }, 1);
+                string invPresentResult = phantomHost.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+                Check(invPresentResult.Contains("Gunner Mikhail (Heavy Artillery Loader)")
+                    && invSystem.CountById("item_dog_tags") == 1,
+                    "PhantomMemoryHostSession.ScavengeItem succeeds without consuming item from shelter inventory");
+
+                // I. PhantomMemoryHostSession.TickDemo direct probe
+                phantomStateChanged = false;
+                long preTickVersion = phantomHost.StateVersion;
+                string tickResult = phantomHost.TickDemo();
+                Check(tickResult == "Phantom timers ticked."
+                    && phantomHost.LastEvent == "Phantom timers ticked."
+                    && phantomStateChanged
+                    && phantomHost.IsDirty
+                    && phantomHost.StateVersion > preTickVersion,
+                    "PhantomMemoryHostSession.TickDemo updates LastEvent, marks dirty, and fires StateChanged");
+
+                // J. TickDemo timer decrement across multiple hours
+                // Force a known motivation boost on Mikhail (8 hours)
+                phantomHost.Engine.RegisterRule("former_soldier", "military", 1.0f, "desc",
+                    "{name} stands tall.", "{name} falters.");
+                phantomHost.Engine.TriggerChanceOverride = 1.0f;
+                phantomHost.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+                Check(phantomHost.Engine.HasMotivationBoost("survivor_gunner_mikhail"),
+                    "PhantomMemoryHostSession motivation boost active before tick decay");
+
+                // Tick 8 hours so the motivation boost fully decays to 0
+                for (int t = 0; t < 8; t++)
+                {
+                    phantomHost.TickDemo();
+                }
+                Check(!phantomHost.Engine.HasMotivationBoost("survivor_gunner_mikhail")
+                    && phantomHost.Engine.GetWorkEfficiencyMultiplier("survivor_gunner_mikhail") == 1.0f,
+                    "PhantomMemoryHostSession.TickDemo decays motivation boost and restores base efficiency");
+
+                // K. LoadData error path probe: missing directory
+                bool missingLoad = phantomHost.LoadData("invalid/nonexistent/dir");
+                Check(!missingLoad, "PhantomMemoryHostSession.LoadData returns false for non-existent directory");
+
+                // L. LoadRulesFromJson error path probe: simulated I/O fault caught, reported, and returns false
+                var faultIo = new PanelTestFaultyFileIo();
+                string capturedError = string.Empty;
+                bool faultResult = PhantomMemoryHostSession.LoadRulesFromJson(
+                    new Ashfall.Core.PhantomMemoryEngine(),
+                    phase0DataDir,
+                    faultIo,
+                    new Ashfall.Core.SystemTextJsonSerializer(),
+                    err => capturedError = err);
+                Check(!faultResult && capturedError.Contains("Simulated I/O disk error"),
+                    "PhantomMemoryHostSession.LoadRulesFromJson catches I/O exception, invokes onError, and returns false");
+
+                // M. LoadRulesFromJson error path probe: malformed JSON syntax caught, reported, and returns false
+                var corruptIo = new PanelTestCorruptJsonFileIo();
+                string capturedCorruptError = string.Empty;
+                bool corruptResult = PhantomMemoryHostSession.LoadRulesFromJson(
+                    new Ashfall.Core.PhantomMemoryEngine(),
+                    phase0DataDir,
+                    corruptIo,
+                    new Ashfall.Core.SystemTextJsonSerializer(),
+                    err => capturedCorruptError = err);
+                Check(!corruptResult && capturedCorruptError.Contains("[PhantomMemory] Failed to load rules:"),
+                    "PhantomMemoryHostSession.LoadRulesFromJson catches malformed JSON and returns false");
+
+                // N. Create fallback probe: invalid path falls back to default built-in rules
+                var fallbackHost = PhantomMemoryHostSession.Create("invalid/nonexistent/path");
+                Check(fallbackHost != null && fallbackHost.Engine.GetRules("former_soldier").Count > 0,
+                    "PhantomMemoryHostSession.Create falls back to default rules when JSON loading fails");
 
                 // ── 2. Somatic flashback: real shelter proximity grounding ─
                 var shelterAssignments = new Ashfall.Core.Shelter.ShelterAssignmentSystem(
@@ -3665,5 +4136,23 @@ namespace AtomicWar.GodotApp
         {
             return Path.Combine(CatalogPath.ResolveRepoRoot(), "snapshot-capture");
         }
+    }
+
+    internal sealed class PanelTestFaultyFileIo : Ashfall.Core.IFileIO
+    {
+        public bool DirectoryExists(string path) => true;
+        public bool FileExists(string path) => true;
+        public string ReadAllText(string path) => throw new System.IO.IOException("Simulated I/O disk error");
+        public void WriteAllText(string path, string contents) { }
+        public string Combine(params string[] parts) => System.IO.Path.Combine(parts);
+    }
+
+    internal sealed class PanelTestCorruptJsonFileIo : Ashfall.Core.IFileIO
+    {
+        public bool DirectoryExists(string path) => true;
+        public bool FileExists(string path) => true;
+        public string ReadAllText(string path) => "{ not valid json syntax !!!";
+        public void WriteAllText(string path, string contents) { }
+        public string Combine(params string[] parts) => System.IO.Path.Combine(parts);
     }
 }

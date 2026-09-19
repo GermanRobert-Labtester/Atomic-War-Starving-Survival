@@ -17,6 +17,12 @@ namespace AtomicWar.GodotApp
         public const int DemoSeed = 2026;
 
         public MarketSystem Market { get; }
+        /// <summary>
+        /// Plan 215 policy projection. Inventory, water, medical, and power
+        /// systems still own quantities and effects; this session only owns
+        /// the persisted ration policy and routes bounded authorization.
+        /// </summary>
+        public ResourceRationingSystem Rationing { get; }
         public GoodsCatalog Catalog { get; private set; }
         /// <summary>Plan 212 — bound commodity behavior catalog (null when missing/invalid; market then runs the legacy v1 path).</summary>
         public CommodityBaselineCatalog? CommodityCatalog { get; private set; }
@@ -32,9 +38,10 @@ namespace AtomicWar.GodotApp
 
         public string LastEvent { get; private set; } = string.Empty;
 
-        public EconomyHostSession(MarketSystem market = null!)
+        public EconomyHostSession(MarketSystem market = null!, ResourceRationingSystem? rationing = null)
         {
             Market = market ?? new MarketSystem();
+            Rationing = rationing ?? new ResourceRationingSystem();
             Market.OnDemandAdjusted += (itemId, delta) =>
             {
                 LastEvent = $"Demand {itemId} {delta:+0.00;-0.00}";
@@ -52,6 +59,21 @@ namespace AtomicWar.GodotApp
             Market.OnShockExpired += shock =>
             {
                 LastEvent = $"Shock ended {shock.categoryId}";
+                RaiseStateChanged();
+            };
+            Rationing.OnRationingTierChanged += target =>
+            {
+                LastEvent = $"Rationing {target.ResourceId}: {target.Tier}.";
+                RaiseStateChanged();
+            };
+            Rationing.OnCrisisDeclared += crisis =>
+            {
+                LastEvent = $"Resource crisis declared: {crisis.Type}.";
+                RaiseStateChanged();
+            };
+            Rationing.OnCrisisResolved += crisis =>
+            {
+                LastEvent = $"Resource crisis resolved: {crisis.Type}.";
                 RaiseStateChanged();
             };
         }
@@ -119,9 +141,55 @@ namespace AtomicWar.GodotApp
             if (save != null)
             {
                 session.Market.RestoreState(save);
+                session.Rationing.RestoreState(save.rationing ?? new ResourceRationingState());
                 session.LastEvent = "Economy state restored from save.";
             }
             return session;
+        }
+
+        public void LoadData(string dataDir)
+        {
+            Market.LoadCatalog(dataDir);
+        }
+
+        /// <summary>Bind the canonical item/goods validator before player policy commands.</summary>
+        public void BindRationingResourceValidator(Func<string, bool>? validator)
+            => Rationing.BindResourceValidator(validator);
+
+        public RationTarget SetRationTier(string resourceId, RationingTier tier, int currentDay)
+            => Rationing.SetRationTier(resourceId, tier, currentDay);
+
+        public ResourceAllocationDecision AuthorizeAllocation(
+            string resourceId,
+            string consumerId,
+            int demandUnits,
+            int availableUnits,
+            int currentDay)
+            => Rationing.AuthorizeAllocation(new ResourceAllocationRequest
+            {
+                ResourceId = resourceId,
+                ConsumerId = consumerId,
+                DemandUnits = demandUnits,
+                AvailableUnits = availableUnits,
+                CurrentDay = currentDay
+            });
+
+        public string TickDemo(int days)
+        {
+            Market.TickDays(days);
+            LastEvent = $"Advanced {days} days to Day {Market.Day}.";
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        public string BarterDemo(string giveItemId, int giveQuantity, string takeItemId)
+        {
+            var result = Market.Barter(giveItemId, giveQuantity, takeItemId, Market.Day);
+            LastEvent = result.Accepted
+                ? $"Bartered {giveQuantity}x {giveItemId} for {result.Quantity}x {takeItemId}."
+                : $"Barter rejected: {result.RejectReason}.";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         // ── Production actions ───────────────────────────────────────
@@ -159,6 +227,7 @@ namespace AtomicWar.GodotApp
             var sb = new System.Text.StringBuilder();
             sb.Append($"Economy: day {Market.Day} · {Market.State.ledger.Count} ledger lines · " +
                       $"supplies {(Market.IsSuppliesShort() ? "SHORT" : "normal")}\n");
+            sb.Append($"Rationing: {Rationing.TargetCount} policy target(s), {Rationing.ActiveCrisesCount} active crisis(es)\n");
             if (Catalog != null)
             {
                 foreach (var good in Catalog.All())
@@ -169,7 +238,17 @@ namespace AtomicWar.GodotApp
 
         // ── Save / Load ──────────────────────────────────────────────
 
-        public MarketState CaptureSave() => Market.CaptureState();
-        public void RestoreSave(MarketState state) => Market.RestoreState(state);
+        public MarketState CaptureSave()
+        {
+            var state = Market.CaptureState();
+            state.rationing = Rationing.CaptureState();
+            return state;
+        }
+
+        public void RestoreSave(MarketState state)
+        {
+            Market.RestoreState(state);
+            Rationing.RestoreState(state?.rationing ?? new ResourceRationingState());
+        }
     }
 }

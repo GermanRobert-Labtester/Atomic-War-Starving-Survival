@@ -45,16 +45,15 @@ namespace AtomicWar.GodotApp
 
         public bool GenerateAndRegister(NarrativeWorldSnapshot snapshot, ISeededRng rng)
         {
-            if (!System.TryGenerate(snapshot, rng, out var draft))
+            if (!DynamicQuestGenerator.TryGenerateAndRegisterCanonicalCandidate(System, QuestRuntime, snapshot, rng, out var draft))
             {
                 LastEvent = "Procedural generation rejected: " + draft.rejectionReason;
                 RaiseStateChanged();
                 return false;
             }
-            bool registered = QuestRuntime.Register(draft.quest);
-            LastEvent = registered ? "Procedural quest registered: " + draft.quest.instanceId : "Procedural quest registration rejected";
+            LastEvent = "Procedural quest registered: " + draft.quest.instanceId;
             RaiseStateChanged();
-            return registered;
+            return true;
         }
 
         public void AdvanceDay(int day)

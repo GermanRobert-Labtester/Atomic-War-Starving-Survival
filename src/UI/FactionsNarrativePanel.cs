@@ -243,7 +243,7 @@ public partial class FactionsNarrativePanel : Control, IBindablePanel
 
         if (_stance == null || _factions.Count == 0)
         {
-            _factionGrid.SetRows(BuildFixtureRows());
+            _factionGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — faction stance not bound."));
             return;
         }
 

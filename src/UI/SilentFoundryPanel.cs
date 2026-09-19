@@ -360,7 +360,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
 
         if (_host == null)
         {
-            _productGrid.SetRows(BuildFixtureRows());
+            _productGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — foundry host not bound."));
             return;
         }
 

@@ -428,7 +428,7 @@ namespace Ashfall.Core
         private void RegisterDefaultHoldfastNodes()
         {
             for (int i = 0; i < CutNodeIds.Length; i++)
-                _holdfastNodes.Add(CutNodeIds[i]);
+                RegisterHoldfastNode(CutNodeIds[i]);
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);

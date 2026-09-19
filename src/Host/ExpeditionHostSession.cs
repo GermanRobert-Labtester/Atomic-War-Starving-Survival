@@ -9,6 +9,7 @@ using Ashfall.Core.Journal;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.Random;
 using Ashfall.Core.World;
 
 #pragma warning disable CS8618
@@ -38,6 +39,12 @@ namespace AtomicWar.GodotApp
         public List<ExpeditionDefinition> DemoDefinitions => Definitions;
         public DiveInstanceRunner DiveRunner { get; private set; }
         public Ashfall.Core.Flags.IFlagLedger Flags { get; set; } = new Ashfall.Core.Flags.CampaignConsequenceLedger();
+        public DiscoveryConsequenceSystem DiscoveryConsequences { get; }
+
+        /// <summary>Plan 133 — host adapter event for the campaign consequence
+        /// owner. The host raises the fact; Main binds the canonical standing
+        /// and flag consumers.</summary>
+        public event Action<ConsequenceOutcome>? OnDiscoveryConsequenceApplied;
 
         /// <summary>F17 — host wire into the canonical disease authority for
         /// micro-location hazard consequences (same lazy-delegate pattern as
@@ -73,6 +80,13 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Optional crossing gate — when set, crossing-node expeditions require vouch access.</summary>
         public VouchAccessSystem CrossingGate { get; set; }
+
+        /// <summary>
+        /// Plan 32B/32C — the wasteland map graph. When bound, dispatch uses
+        /// graph distance for discovered destinations and refuses Unknown fog.
+        /// Unbound ⇒ catalog distanceTicks and no knowledge gate.
+        /// </summary>
+        public WastelandMapSystem? WastelandMap { get; set; }
 
         /// <summary>
         /// Optional extra dispatch gate (ice road seasonal + deep-coast route
@@ -147,7 +161,17 @@ namespace AtomicWar.GodotApp
             var def = Definitions.Find(d => d != null && d.id == locationId);
             if (def != null && def.requiresDiscovery && !Engine.IsLocationKnown(locationId))
                 return "Location unidentified — no clues found yet";
+            if (IsKnowledgeBlocked(locationId))
+                return "Unmapped — no route knowledge";
             return ExtraGateBlock?.Invoke(locationId)?.ShortReason;
+        }
+
+        private bool IsKnowledgeBlocked(string locationId)
+        {
+            if (WastelandMap == null || string.IsNullOrEmpty(locationId)) return false;
+            if (WastelandMap.GetNode(locationId) == null) return false;
+            return !WastelandMap.IsDiscovered(locationId)
+                && WastelandMap.GetFogState(locationId) == MapFogState.Unknown;
         }
 
         /// <summary>The weather gate blocking a location, or null when the
@@ -309,8 +333,26 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public ExpeditionEncounterBridge Bridge => _bridge;
 
+        private ISeededRng ActiveRng
+        {
+            get
+            {
+                if (_campaignRng == null) return _rng;
+                if (_dayRng == null || _rngDay != CurrentDay)
+                {
+                    _rngDay = CurrentDay;
+                    _dayRng = _campaignRng.Fork(CampaignStreamIds.Expedition, CurrentDay);
+                    _bridge.SetRng(_dayRng);
+                }
+                return _dayRng;
+            }
+        }
+
         private readonly ExpeditionEncounterBridge _bridge;
         private readonly ISeededRng _rng;
+        private readonly ICampaignRngManager? _campaignRng;
+        private int _rngDay = int.MinValue;
+        private ISeededRng? _dayRng;
         private readonly NarrativeEncounterSystem _narrative;
         private readonly ExpeditionNavalSystem _naval = new();
 
@@ -347,10 +389,14 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public NarrativeEncounterSystem? NarrativeEngine => _narrative;
 
-        public ExpeditionHostSession(ExpeditionSystem engine = null!, NarrativeEncounterSystem narrative = null!)
+        public ExpeditionHostSession(ExpeditionSystem engine = null!, NarrativeEncounterSystem narrative = null!, ICampaignRngManager? campaignRng = null)
         {
             Engine = engine ?? new ExpeditionSystem();
-            _rng = new SeededRng(DemoSeed);
+            DiscoveryConsequences = new DiscoveryConsequenceSystem();
+            _campaignRng = campaignRng;
+            _rng = campaignRng != null
+                ? campaignRng.Fork(CampaignStreamIds.Expedition)
+                : new SeededRng(DemoSeed);
             _narrative = narrative ?? new NarrativeEncounterSystem();
             _bridge = new ExpeditionEncounterBridge(_narrative, _rng);
             _bridge.RegionResolver = locId =>
@@ -365,7 +411,9 @@ namespace AtomicWar.GodotApp
             };
             Definitions = new List<ExpeditionDefinition>();
             RegisterDefaultDefinitions();
-            Vehicles = new ExpeditionVehicleSystem(new SeededRng(VehicleSeed));
+            Vehicles = new ExpeditionVehicleSystem(_campaignRng != null
+                ? _campaignRng.Fork(CampaignStreamIds.Expedition, 0, 1)
+                : new SeededRng(VehicleSeed));
             Vehicles.OnVehicleStateChanged += () => RaiseStateChanged();
             Engine.OnVehicleBreakdown += s =>
             {
@@ -375,6 +423,12 @@ namespace AtomicWar.GodotApp
             Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; RaiseStateChanged(); };
             Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; RaiseStateChanged(); };
             Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; RaiseStateChanged(); };
+            DiscoveryConsequences.OnConsequenceTriggered += outcome =>
+            {
+                LastEvent = $"Discovery consequence recorded: {outcome.DiscoveryId}.";
+                OnDiscoveryConsequenceApplied?.Invoke(outcome);
+                RaiseStateChanged();
+            };
             _bridge.OnSurfaced += dto =>
             {
                 LastEvent = $"Encounter triggered: {dto.trigger.survivorId} at {dto.trigger.displayName} (#{dto.trigger.encounterCount}) -> {dto.encounter_id ?? "bare-notice"}.";
@@ -426,9 +480,9 @@ namespace AtomicWar.GodotApp
             Definitions.Add(cut);
         }
 
-        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!, TravelEncounterSystem travel = null!)
+        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!, TravelEncounterSystem travel = null!, ICampaignRngManager? campaignRng = null)
         {
-            var session = new ExpeditionHostSession(null!, narrative);
+            var session = new ExpeditionHostSession(null!, narrative, campaignRng);
             if (travel != null)
             {
                 session.TravelEngine = travel;
@@ -533,6 +587,8 @@ namespace AtomicWar.GodotApp
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
+            if (IsKnowledgeBlocked(locationId))
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "unmapped", "expedition.unmapped", version);
             float forcedGateStaminaCost = 0f;
             var gateBlock = ExtraGateBlock?.Invoke(locationId);
             if (gateBlock != null)
@@ -843,6 +899,16 @@ namespace AtomicWar.GodotApp
         private ExpeditionDefinition ProjectRouteTravelDef(ExpeditionDefinition def, string locationId)
         {
             if (def == null) return def!;
+            if (WastelandMap != null && !string.IsNullOrEmpty(locationId))
+            {
+                var graphEstimate = WastelandMap.EstimateRoute("loc_holdfast", locationId);
+                if (graphEstimate != null && graphEstimate.distanceTicks > 0
+                    && graphEstimate.distanceTicks != def.distanceTicks)
+                {
+                    def = ExpeditionTravelStretch.ProjectDefinition(def,
+                        graphEstimate.distanceTicks / (float)Math.Max(1, def.distanceTicks));
+                }
+            }
             float travelMult = _estimateTravelMultiplier?.Invoke(locationId) ?? 1f;
             return ExpeditionTravelStretch.ProjectDefinition(def, travelMult);
         }
@@ -890,6 +956,8 @@ namespace AtomicWar.GodotApp
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
             if (ExtraBlocked != null && ExtraBlocked(locationId))
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "route_blocked", "expedition.route_blocked", version);
+            if (IsKnowledgeBlocked(locationId))
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "unmapped", "expedition.unmapped", version);
             float forcedGateStaminaCost = 0f;
             var gateBlock2 = ExtraGateBlock?.Invoke(locationId);
             if (gateBlock2 != null)
@@ -987,7 +1055,9 @@ namespace AtomicWar.GodotApp
         /// <summary>Production API to advance active expeditions by the specified duration.</summary>
         public string TickHours(float hours)
         {
-            Engine.TickHours(hours, _rng);
+            var rng = ActiveRng;
+            _bridge.SetRng(rng);
+            Engine.TickHours(hours, rng);
             return $"Tick: {Engine.ActiveCount} active expedition(s).";
         }
 
@@ -1102,7 +1172,7 @@ namespace AtomicWar.GodotApp
             if (!resolved) return false;
 
             // Combat escalation — the single binding authority.
-            if (TravelEncounterCombatBinder.TryBind(definition, choice, dangerLevel, enemyCount, out var ids, _rng))
+            if (TravelEncounterCombatBinder.TryBind(definition, choice, dangerLevel, enemyCount, out var ids, ActiveRng))
             {
                 OnTravelEncounterCombatTriggered?.Invoke(new TravelCombatTrigger
                 {
@@ -1401,7 +1471,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Advance one night segment. Returns dawn message when complete.</summary>
         public string CampTick(string survivorId)
         {
-            bool dawn = Engine.CampTick(survivorId, _rng);
+            bool dawn = Engine.CampTick(survivorId, ActiveRng);
             var camp = Engine.GetCampState(survivorId);
             if (camp == null) return "No active camp.";
             if (dawn)
@@ -1439,7 +1509,7 @@ namespace AtomicWar.GodotApp
         public string StatusLine()
         {
             var sb = new System.Text.StringBuilder();
-            sb.Append($"Expeditions active: {Engine.ActiveCount}\n");
+            sb.Append($"Expeditions active: {Engine.ActiveCount} · discoveries {DiscoveryConsequences.DiscoveryCount} · consequences {DiscoveryConsequences.ConsequenceCount} · caravan safety +{DiscoveryConsequences.GetTotalCaravanSafetyBonus():P0}\n");
             var ids = new List<string>(Engine.Active.Keys);
             ids.Sort(string.CompareOrdinal);
             for (int i = 0; i < ids.Count; i++)
@@ -1467,6 +1537,7 @@ namespace AtomicWar.GodotApp
                 expeditions = Engine.CaptureState(),
                 vehicles = Vehicles.CaptureState(),
                 knownLocationIds = Engine.CaptureKnownLocations(),
+                discoveryConsequences = DiscoveryConsequences.CaptureState(),
                 completedCount = Engine.CompletedCount
             };
             if (aggregate.knownLocationIds.Count == 0)
@@ -1481,6 +1552,8 @@ namespace AtomicWar.GodotApp
                 Engine.RestoreState(aggregate.expeditions);
             if (aggregate.vehicles != null)
                 Vehicles.RestoreState(aggregate.vehicles);
+            if (aggregate.discoveryConsequences != null)
+                DiscoveryConsequences.RestoreState(aggregate.discoveryConsequences);
             Engine.RestoreCompletedCount(aggregate.completedCount);
 
             // F4 restore: a present list (even empty) is authoritative. A null
@@ -1525,8 +1598,11 @@ namespace AtomicWar.GodotApp
         public string StartDive(string siteId = "site_exp09_ss_sovereign")
         {
             var site = new DiveSiteDefinition(siteId, 120, 0.5, "q_keeper_of_logs");
+            var diveRng = _campaignRng != null
+                ? _campaignRng.Fork(CampaignStreamIds.Expedition, CurrentDay, 2)
+                : new SeededRng(DemoSeed);
             DiveRunner = new DiveInstanceRunner(new Ashfall.Core.Events.SimpleEventBus(),
-                Flags ?? new Ashfall.Core.Flags.CampaignConsequenceLedger(), new SeededRng(DemoSeed), site);
+                Flags ?? new Ashfall.Core.Flags.CampaignConsequenceLedger(), diveRng, site);
             return $"Dive started at {siteId}. Oxygen: {DiveRunner.OxygenRemaining} ticks.";
         }
 

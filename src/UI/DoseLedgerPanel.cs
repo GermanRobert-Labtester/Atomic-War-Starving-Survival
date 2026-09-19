@@ -111,7 +111,7 @@ public partial class DoseLedgerPanel : Control, IBindablePanel
         if (_doseGrid == null) return;
         if (_doseSession == null)
         {
-            _doseGrid.SetRows(BuildFixtureRows());
+            _doseGrid.SetRows(AshfallDataGrid.UnavailableRows(5, "Unavailable — dose ledger not bound."));
             return;
         }
 

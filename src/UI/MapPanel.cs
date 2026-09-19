@@ -5,6 +5,7 @@ using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Exploration;
 using Ashfall.Core.Localization;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
@@ -135,6 +136,42 @@ namespace AtomicWar.GodotApp.UI
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Cataloged Waypoints", $"{Math.Max(totalLocations, 8)} Sector Coordinates", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Sorties", $"{activeSorties} Active Recon Team(s)", AshfallUiHelpers.ToColor(activeSorties > 0 ? Ashfall.Core.UI.Theme.Hot : Ashfall.Core.UI.Theme.Dim)));
             _overviewContainer.AddChild(overviewCard);
+
+            // Plan 163 — map quality/provenance is a projection of the
+            // canonical WastelandMap knowledge aggregate, never a second map.
+            if (_world?.WastelandMap != null)
+            {
+                var surveys = CartographySystem.ProjectCanonicalMap(
+                    _world.WastelandMap.Nodes,
+                    _world.WastelandMap.Knowledge);
+                int charted = surveys.Count(s => s.FogState != Ashfall.Core.World.MapFogState.Unknown);
+                float completeness = surveys.Count == 0
+                    ? 0f
+                    : surveys.Average(s => s.SurveyQuality);
+                var surveyCard = AshfallUiHelpers.MakeCardFrame("CARTOGRAPHIC CONFIDENCE", "CANONICAL WORLD KNOWLEDGE");
+                var surveyBox = surveyCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+                surveyBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                    "Charted nodes",
+                    $"{charted}/{surveys.Count}",
+                    AshfallUiHelpers.ToColor(charted > 0 ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Dim)));
+                surveyBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                    "Survey quality",
+                    $"{completeness:0}% average · rumor → survey → visit",
+                    AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                var latest = surveys
+                    .Where(s => s.ProvenanceKind.HasValue)
+                    .OrderByDescending(s => s.LastConfirmedDay)
+                    .ThenBy(s => s.NodeId)
+                    .FirstOrDefault();
+                if (latest != null)
+                {
+                    surveyBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        "Latest provenance",
+                        $"{latest.NodeId} · {latest.ProvenanceKind} · day {latest.LastConfirmedDay}",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+                }
+                _overviewContainer.AddChild(surveyCard);
+            }
 
             // Trap markers are a projection of known trap lifecycle state. The
             // marker DTO intentionally has no catch/bycatch/medical fields.

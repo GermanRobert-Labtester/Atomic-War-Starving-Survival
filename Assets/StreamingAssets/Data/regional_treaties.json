@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "treaties": [
+    {
+      "treaty_id": "road_iron_charter",
+      "display_name": "Road Iron Charter",
+      "faction_id": "hydro_barons",
+      "description": "A scrap-paid right of way along the coastal haul. Ratification buys a season of discounted barter and route access.",
+      "ratification_cost_scrap": 30,
+      "ratification_cost_day": 0,
+      "prerequisites": [],
+      "effects": [
+        { "effect_type": "economy_discount", "target_id": "road_iron_charter", "value": 0.10 },
+        { "effect_type": "raid_pressure_relief", "target_id": "coastal_route", "value": 0.15 }
+      ],
+      "signatory_factions": ["hydro_barons"],
+      "compliance_check_interval_days": 30,
+      "violation_penalty_affinity": -20,
+      "term_days": 60
+    },
+    {
+      "treaty_id": "aquifer_sharing_accord",
+      "display_name": "Aquifer Sharing Accord",
+      "faction_id": "civic_holdout",
+      "description": "Metered pumping from the deep casing. Water quota in litres per day; a missed levy is a breach.",
+      "ratification_cost_scrap": 24,
+      "ratification_cost_day": 0,
+      "prerequisites": [],
+      "effects": [
+        { "effect_type": "water_quota", "target_id": "deep_aquifer", "value": 40 }
+      ],
+      "signatory_factions": ["civic_holdout"],
+      "compliance_check_interval_days": 14,
+      "violation_penalty_affinity": -12,
+      "term_days": 45
+    },
+    {
+      "treaty_id": "saltworks_access",
+      "display_name": "Saltworks Access",
+      "faction_id": "hydro_barons",
+      "description": "Shared brine-house hours. Power draw is the price of the pan.",
+      "ratification_cost_scrap": 18,
+      "ratification_cost_day": 0,
+      "prerequisites": [],
+      "effects": [
+        { "effect_type": "power", "target_id": "saltworks", "value": 8 }
+      ],
+      "signatory_factions": ["hydro_barons"],
+      "compliance_check_interval_days": 21,
+      "violation_penalty_affinity": -15,
+      "term_days": 40
+    },
+    {
+      "treaty_id": "non_aggression_compact",
+      "display_name": "Compact of Non-Aggression",
+      "faction_id": "iron_garrison",
+      "description": "Raids shelved for the term. Old grudges wait.",
+      "ratification_cost_scrap": 20,
+      "ratification_cost_day": 0,
+      "prerequisites": [],
+      "effects": [
+        { "effect_type": "raid_pressure_relief", "target_id": "non_aggression_compact", "value": 0.25 }
+      ],
+      "signatory_factions": ["iron_garrison"],
+      "compliance_check_interval_days": 30,
+      "violation_penalty_affinity": -25,
+      "term_days": 30
+    },
+    {
+      "treaty_id": "crisis_mutual_aid",
+      "display_name": "Crisis Mutual Aid",
+      "faction_id": "caravan_barons",
+      "description": "When the shelter rings the bell, a caravan answers with scrap and water — once.",
+      "ratification_cost_scrap": 12,
+      "ratification_cost_day": 0,
+      "prerequisites": [],
+      "effects": [
+        { "effect_type": "economy_discount", "target_id": "crisis_mutual_aid", "value": 0.05 }
+      ],
+      "signatory_factions": ["caravan_barons"],
+      "compliance_check_interval_days": 10,
+      "violation_penalty_affinity": -8,
+      "term_days": 20
+    }
+  ]
+}

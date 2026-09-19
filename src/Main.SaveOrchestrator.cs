@@ -167,6 +167,7 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupMedical();
             SetupMedicalWard();
+            SetupDifficulty();
             SetupWorld();
             SetupRadio();
             SetupMoraleContagion();
@@ -217,6 +218,7 @@ namespace AtomicWar.GodotApp
             SetupSurvivorSocial();
             SetupMemorial();
             SetupSurvivorFate();
+            SetupSpiritual();
             SetupExpandedShelterSystems();
             SetupPlans166To169();
             SetupFactionBranch();
@@ -450,6 +452,7 @@ namespace AtomicWar.GodotApp
                 SaveCompanionAnimals();
                 SaveBionics();
                 SaveZealotry();
+                SaveSpiritual();
                 SaveFallout();
                 SaveDesperation();
                 SaveMercenary();

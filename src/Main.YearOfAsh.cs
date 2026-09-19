@@ -169,6 +169,45 @@ namespace AtomicWar.GodotApp
                 _radio?.InterceptWarlordWarning(radioMsg, currentDay);
                 _yearOfAshDirty = true;
             };
+
+            var runner = _yearOfAsh.WarRunner;
+            if (runner == null) return;
+            runner.OnStageSurfaced += (chain, stage) =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string title = chain?.title ?? chain?.chainId ?? "war chain";
+                string stageTitle = stage?.title ?? stage?.stageId ?? "stage";
+                _radio?.InterceptWarlordWarning($"War chain moving: {title} — {stageTitle}.", currentDay);
+                _journal?.TryAddRawEntry(
+                    $"war_chain_surfaced_{chain?.chainId}_{stage?.stageId}_{currentDay}",
+                    $"Signals watch logged a new movement in the {title}: {stageTitle}.",
+                    new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious),
+                    currentDay);
+                _yearOfAshDirty = true;
+            };
+            runner.OnStageResolved += (chain, stage, choice) =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string title = chain?.title ?? chain?.chainId ?? "war chain";
+                _journal?.TryAddRawEntry(
+                    $"war_chain_resolved_{chain?.chainId}_{stage?.stageId}_{choice?.choiceId}_{currentDay}",
+                    $"The {title} shifted after a field decision.",
+                    new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious),
+                    currentDay);
+                _yearOfAshDirty = true;
+            };
+            runner.OnChainResolved += chain =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string title = chain?.title ?? chain?.chainId ?? "war chain";
+                _radio?.InterceptWarlordWarning($"War chain closed: {title}.", currentDay);
+                _journal?.TryAddRawEntry(
+                    $"war_chain_closed_{chain?.chainId}_{currentDay}",
+                    $"The {title} has run its course. The map will not rewind it.",
+                    new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious),
+                    currentDay);
+                _yearOfAshDirty = true;
+            };
         }
 
         /// <summary>

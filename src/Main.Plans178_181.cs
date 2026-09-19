@@ -68,7 +68,32 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry("adulthood_reached", $"Milestone: {childId} has transitioned to adulthood! Acquired traits: {traitList}", null!, _simDay);
             };
 
+            _generational.OnCanonicalStageAdvanced += (childId, stage) =>
+            {
+                // Plan 183 is a projection over the canonical Generational
+                // record. Journal presentation is the observable host route;
+                // no stage copy or second save section is created here.
+                _journal?.TryAddRawEntry(
+                    "child_development_stage",
+                    $"{childId} reached developmental stage {stage}.",
+                    null!,
+                    _simDay);
+            };
+
             return _generational;
+        }
+
+        /// <summary>
+        /// Returns the detached Plan 183 read model for a canonical child.
+        /// GenerationalSystem remains the sole owner of birth, care, growth,
+        /// and adult-transition state.
+        /// </summary>
+        public ChildProfile? GetCanonicalChildDevelopment(string childId, int currentDay = -1)
+        {
+            SetupGenerational();
+            return EnsureGenerational().GetCanonicalChildProfile(
+                childId,
+                currentDay > 0 ? currentDay : _simDay);
         }
 
         private void SetupGenerational()
@@ -248,6 +273,31 @@ namespace AtomicWar.GodotApp
                     }
                 }
             }
+
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile
+            {
+                weapon_id = "weapon_assault_rifle",
+                handling_noise = 0.12f,
+                melee_noise = 0.18f,
+                fired_noise = 0.85f,
+                is_suppressed = false
+            });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile
+            {
+                weapon_id = "weapon_pipe_rifle",
+                handling_noise = 0.16f,
+                melee_noise = 0.22f,
+                fired_noise = 0.92f,
+                is_suppressed = false
+            });
+            _stealth.RegisterWeaponNoise(new WeaponNoiseProfile
+            {
+                weapon_id = "weapon_suppressed_rifle",
+                handling_noise = 0.10f,
+                melee_noise = 0.18f,
+                fired_noise = 0.28f,
+                is_suppressed = true
+            });
 
             var saved = StealthSaveStore.TryLoad();
             if (saved != null)

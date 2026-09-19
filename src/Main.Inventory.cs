@@ -64,6 +64,10 @@ namespace AtomicWar.GodotApp
                 _startingSuppliesProfileId,
                 seedWhenNoSave: _campaignInitializationMode ==
                     CampaignInitializationMode.FreshInitialize);
+            // Economy setup normally follows inventory in the composition
+            // root; this bind is repeated by SetupEconomy when the order is
+            // reversed by a focused host/panel path.
+            BindRationingToInventory();
             if (_survivors != null)
             {
                 _inventory.Survivors = _survivors;

@@ -48,6 +48,8 @@ namespace AtomicWar.GodotApp
         {
             if (_economy != null) return;
             _economy = EconomyHostSession.Create(_dataDir);
+            _economy.BindRationingResourceValidator(IsCanonicalRationingResource);
+            BindRationingToInventory();
             _economy.StateChanged += () => _economyDirty = true;
 
             // Plan 212 follow-up — trade rumors from real market state: a shock
@@ -87,6 +89,22 @@ namespace AtomicWar.GodotApp
                 _economyPanel.BindSession(_economy);
                 _economyPanel.RefreshView();
             }
+        }
+
+        private bool IsCanonicalRationingResource(string resourceId)
+        {
+            if (string.IsNullOrWhiteSpace(resourceId)) return false;
+            string id = resourceId.Trim();
+            return (_inventory?.Catalog?.Get(id) != null)
+                || (_economy?.Catalog?.Find(id) != null)
+                || GoodCategories.IsKnown(id);
+        }
+
+        private void BindRationingToInventory()
+        {
+            if (_inventory == null || _economy == null) return;
+            _inventory.RationingAuthorizer = (resourceId, consumerId, demand, day, available) =>
+                _economy.AuthorizeAllocation(resourceId, consumerId, demand, available, day);
         }
 
         private void OnEconomyOpenClicked()
@@ -150,6 +168,8 @@ namespace AtomicWar.GodotApp
             // (rules from trade_embargoes.json); route blocking evaluates the
             // same rules the market prices from.
             _caravans.Engine.Embargoes = _economy.EmbargoSystem;
+            SetupWorld();
+            _caravans.Engine.Map = _world?.WastelandMap;
             // C2 / Plan 20C (§41) — weather availability from the ONE effects
             // table, combined with (never mixed into) the embargo multiplier.
             _caravans.Engine.WeatherAvailabilityProvider = weather =>

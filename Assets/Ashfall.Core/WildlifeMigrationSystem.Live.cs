@@ -70,6 +70,29 @@ namespace Ashfall.Core
             }
         }
 
+        /// <summary>
+        /// Plan 30C — overlay extra geographic neighbors without replacing the seed graph.
+        /// </summary>
+        public void MergeSectorAdjacency(IEnumerable<(string sectorId, List<string> neighbors)> links)
+        {
+            if (links == null) return;
+            foreach (var (sectorId, neighbors) in links)
+            {
+                if (string.IsNullOrEmpty(sectorId) || neighbors == null || neighbors.Count == 0) continue;
+                if (!_sectorNeighbors.TryGetValue(sectorId, out var existing) || existing == null)
+                {
+                    _sectorNeighbors[sectorId] = new List<string>(neighbors);
+                    continue;
+                }
+                for (int i = 0; i < neighbors.Count; i++)
+                {
+                    string n = neighbors[i];
+                    if (string.IsNullOrEmpty(n) || existing.Contains(n)) continue;
+                    existing.Add(n);
+                }
+            }
+        }
+
         public bool TryGetNeighbors(string sectorId, out List<string> neighbors)
         {
             return _sectorNeighbors.TryGetValue(sectorId, out neighbors!);

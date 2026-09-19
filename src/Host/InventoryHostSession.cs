@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Economy;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Survivors;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
@@ -27,6 +28,12 @@ namespace AtomicWar.GodotApp
         public SurvivorsHostSession? Survivors { get; set; }
 
         public Func<string, ItemType, float, bool>? ApplyNeedOverride { get; set; }
+        /// <summary>
+        /// Optional policy seam supplied by the economy host. The callback
+        /// returns a policy decision only; this session remains the sole
+        /// inventory mutator and commits at most the requested unit.
+        /// </summary>
+        public Func<string, string, int, int, int, ResourceAllocationDecision?>? RationingAuthorizer { get; set; }
         public Action<string, float>? ApplyRadCleanseOverride { get; set; }
         public Action<string>? ApplyIodineOverride { get; set; }
         public Action<string, float>? ApplyContaminationOverride { get; set; }
@@ -478,6 +485,24 @@ namespace AtomicWar.GodotApp
                 if (target == null || !target.IsAliveState)
                 {
                     var blocked = ActionResult.Blocked("invalid_target", $"Cannot consume {def.displayName}: survivor {targetId} not found or deceased.");
+                    LastEvent = blocked.MessageKey;
+                    return blocked;
+                }
+            }
+
+            if (RationingAuthorizer != null)
+            {
+                var ration = RationingAuthorizer(
+                    def.id,
+                    targetId ?? string.Empty,
+                    1,
+                    CurrentDay,
+                    Inventory.Count(def));
+                if (ration != null && (!ration.Authorized || ration.AllocatedUnits < 1))
+                {
+                    var blocked = ActionResult.Blocked(
+                        "rationing_blocked",
+                        $"Consumption of {def.displayName} is currently restricted by shelter rationing.");
                     LastEvent = blocked.MessageKey;
                     return blocked;
                 }

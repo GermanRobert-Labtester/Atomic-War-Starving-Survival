@@ -275,6 +275,7 @@ namespace Ashfall.Core
         /// <summary>Decay motivation boost and breakdown refusal timers.</summary>
         public void TickHour(string survivorId, float gameHours)
         {
+            if (string.IsNullOrEmpty(survivorId)) return;
             if (!_records.TryGetValue(survivorId, out var record)) return;
 
             bool changed = false;

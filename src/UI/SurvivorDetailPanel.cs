@@ -38,6 +38,9 @@ namespace AtomicWar.GodotApp.UI
         /// owned by this panel.</summary>
         public Func<string, FitnessVerdict?>? FitnessProvider { get; set; }
 
+        /// <summary>Read-only personal-claim projection supplied by Main.</summary>
+        public Func<string, IReadOnlyList<PersonalBelonging>>? BelongingsProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -121,6 +124,24 @@ namespace AtomicWar.GodotApp.UI
             {
                 AddRow(_survivorInfo, $"Associated Keepsake: {view.KeepsakeItemLabel}", Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount++;
+            }
+
+            var belongings = BelongingsProvider?.Invoke(s.Id);
+            if (belongings != null && belongings.Count > 0)
+            {
+                AddRow(_survivorInfo, $"Personal effects: {belongings.Count}", Ashfall.Core.UI.Theme.Lethe);
+                int visible = Math.Min(3, belongings.Count);
+                for (int i = 0; i < visible; i++)
+                {
+                    var belonging = belongings[i];
+                    string favorite = belonging.IsFavorite ? " · favorite" : string.Empty;
+                    AddRow(_survivorInfo,
+                        $"  {belonging.ItemName} · {belonging.Category} · sentiment {belonging.SentimentalValue:0}{favorite}",
+                        Ashfall.Core.UI.Theme.Dim);
+                }
+                if (belongings.Count > visible)
+                    AddRow(_survivorInfo, $"  +{belongings.Count - visible} more", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount += 1 + visible + (belongings.Count > visible ? 1 : 0);
             }
 
             AddRow(_survivorInfo, $"Alive: {s.IsAlive}", s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);

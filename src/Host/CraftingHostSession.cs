@@ -101,6 +101,11 @@ namespace AtomicWar.GodotApp
 
             var session = new CraftingHostSession(inventory, recipes, research, rng, log, seedDefaultWorkbench: false);
             session.LoadedItemCatalog = itemCatalog;
+            if (itemCatalog != null && itemCatalog.Count > 0)
+            {
+                session.Engine.BindCraftResultGate(id =>
+                    !string.IsNullOrEmpty(id) && session.LoadedItemCatalog != null && session.LoadedItemCatalog.Contains(id));
+            }
 
             // When the session owns its research instance, load the authoritative
             // research_knowledge.json catalog (Plan 34: JSON is the sole authored

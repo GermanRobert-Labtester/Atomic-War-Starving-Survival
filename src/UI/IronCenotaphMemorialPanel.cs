@@ -88,11 +88,20 @@ namespace AtomicWar.GodotApp.UI
         }
 
         private MourningBinding? _mourning;
+        private Func<int>? _spiritualArcCount;
+        private Func<int>? _spiritualPendingRites;
 
         public void BindMourning(MourningBinding binding)
         {
             _mourning = binding;
             IsBound = binding != null;
+            RefreshView();
+        }
+
+        public void BindSpiritual(Func<int> arcCount, Func<int> pendingRites)
+        {
+            _spiritualArcCount = arcCount;
+            _spiritualPendingRites = pendingRites;
             RefreshView();
         }
 
@@ -105,9 +114,16 @@ namespace AtomicWar.GodotApp.UI
                 if (_mourning != null)
                 {
                     var pending = _mourning.LatestUnmourned();
-                    _statusBadgeLabel.Text = pending == null
+                    string status = pending == null
                         ? $"STATUS: MEMORIAL FLAME ACTIVE - RECORDED: {_mourning.TotalDeaths()} SOULS - ALL MOURNED"
                         : $"STATUS: MEMORIAL FLAME ACTIVE - RECORDED: {_mourning.TotalDeaths()} SOULS - VIGIL PENDING (D{pending.Value.day})";
+                    if (_spiritualArcCount != null)
+                    {
+                        int arcs = _spiritualArcCount();
+                        int rites = _spiritualPendingRites?.Invoke() ?? 0;
+                        status += $" - MOURNING ARCS: {arcs} - RITES OPEN: {rites}";
+                    }
+                    _statusBadgeLabel.Text = status;
                 }
             }
         }

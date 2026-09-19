@@ -305,6 +305,19 @@ namespace Ashfall.Core.YearOfAsh
     {
         public const string SystemId = "faction_war_chain_runner";
 
+        /// <summary>
+        /// Authored war-chain minDay values begin at 480. The playable Year of Ash
+        /// window is 180–360. Hosts pass campaign day through
+        /// <see cref="ToAuthoredDay"/> so chains surface in a live campaign.
+        /// </summary>
+        public const int AuthoredEpochStart = 480;
+        public const int PlayableEpochStart = 180;
+
+        public static int ToAuthoredDay(int playableDay)
+        {
+            return playableDay + (AuthoredEpochStart - PlayableEpochStart);
+        }
+
         private readonly FactionWarContentCatalog _catalog;
         private FactionWarChainRunnerState _state;
 
