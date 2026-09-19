@@ -146,6 +146,7 @@ namespace AtomicWar.GodotApp
         WarlordSelfTest,
         WarlordHostSelfTest,
         WarlordUiSelfTest,
+        FactionCommuniqueBoardSelfTest,
         BlackFlotillaSelfTest,
         RadioSelfTest,
         ExpeditionPanelUiTest,
@@ -483,6 +484,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.WarlordHostSelfTest;
             if (Has(args, "--warlord-ui-selftest"))
                 return HostCliAction.WarlordUiSelfTest;
+            if (Has(args, "--faction-communique-board-selftest") || Has(args, "--communique-board-selftest"))
+                return HostCliAction.FactionCommuniqueBoardSelfTest;
             if (Has(args, "--black-flotilla-selftest") || Has(args, "--maritime-selftest") || Has(args, "--expansion-09-selftest"))
                 return HostCliAction.BlackFlotillaSelfTest;
             if (Has(args, "--radio-selftest"))

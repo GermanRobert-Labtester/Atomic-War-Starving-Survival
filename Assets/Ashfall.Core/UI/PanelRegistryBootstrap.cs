@@ -140,6 +140,7 @@ namespace Ashfall.Core.UI
             R("caravan_barter",      "Caravan Barter Ledger",         PanelGroup.Secondary,  new[] { "economy" });
             R("faction_matrix",      "Faction Stance Matrix",         PanelGroup.Secondary,  new[] { "factions" });
             R("factions_narrative",  "Factions Narrative",            PanelGroup.Secondary,  new[] { "factions" });
+            R("faction_communique_board", "Faction Communiqués",      PanelGroup.Secondary,  new[] { "factions" });
             R("skill_matrix",        "Skill Progression Matrix",      PanelGroup.Secondary,  new[] { "survivors" });
             R("survival_workstation","Survival Workstation",          PanelGroup.Dashboard,  new[] { "crafting", "inventory" });
             R("verdict_dashboard",   "Verdict Dashboard",             PanelGroup.Dashboard,  new[] { "verdict" });

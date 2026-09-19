@@ -335,6 +335,7 @@ namespace Ashfall.Core.YearOfAsh
         }
 
         public FactionWarChainRunnerState State => _state;
+        public FactionWarContentCatalog Catalog => _catalog;
         public int CumulativeMoraleDelta => _state.cumulativeMoraleDelta;
 
         // ── Plan 25 injection points (host-owned effects, no Core coupling) ──

@@ -541,5 +541,22 @@ namespace Ashfall.Core.Tests
                     $"{c.id}: references the branch-sensitive cipher pad");
             }
         }
+
+        [Fact]
+        public void FactionWarChainRunner_ExposesCatalogProperty()
+        {
+            var catalog = new FactionWarContentCatalog();
+            var runner = new FactionWarChainRunner(catalog);
+            Assert.Same(catalog, runner.Catalog);
+        }
+
+        [Fact]
+        public void YearOfAshTimeline_ClampsPastDay360_PhaseA()
+        {
+            var timeline = new YearOfAshTimelineSystem();
+            timeline.AdvanceDay(500);
+            Assert.Equal(360, timeline.CurrentDay);
+            Assert.Equal(YearOfAshPhase.Phase6_TheGreatThaw, timeline.CurrentPhase);
+        }
     }
 }

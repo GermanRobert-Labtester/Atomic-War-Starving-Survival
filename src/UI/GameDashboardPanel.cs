@@ -430,6 +430,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "RESEARCH", "research");
             AddNavButton(content, "GREENHOUSE", "greenhouse");
             AddNavButton(content, "FACTIONS", "factions");
+            AddNavButton(content, "COMMUNIQUÉS", "faction_communique_board");
             AddNavButton(content, "MUSTER", "muster");
             AddNavButton(content, "VERDICT", "verdict");
             AddNavButton(content, "MARITIME", "maritime");

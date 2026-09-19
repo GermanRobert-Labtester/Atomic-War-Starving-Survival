@@ -90,6 +90,7 @@ namespace Ashfall.Core
         WarlordHostSelfTest,
         WarlordSelfTest,
         WarlordUiSelfTest,
+        FactionCommuniqueBoardSelfTest,
 
         // Host Domains & Save Stores
         AudioSelfTest,
@@ -597,7 +598,13 @@ namespace Ashfall.Core
                     "Expansions & Campaign Modules",
                     "--warlord-ui-selftest",
                     null,
-                    "Warlord tribute payment loop + collector voice + FactionsPanel card")
+                    "Warlord tribute payment loop + collector voice + FactionsPanel card"),
+                new HostCliActionDescriptor(
+                    HostCliAction.FactionCommuniqueBoardSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--faction-communique-board-selftest",
+                    new[] { "--communique-board-selftest" },
+                    "Faction Communiqué Board: day-gated rendering, empty states, attribution, refresh idempotence")
         };
 
         private static readonly HostCliActionDescriptor[] _hostDomainDescriptors = new[]

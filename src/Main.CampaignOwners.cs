@@ -1402,7 +1402,7 @@ namespace AtomicWar.GodotApp
 
                 _m.TickVerdict(day, _m.LivingDwellerCountEstimate());
 
-                if (day >= 180 && day <= 360)
+                if (day >= 180)
                 {
                     _m.SetupYearOfAsh();
                     _m._yearOfAsh.TickDay(day);

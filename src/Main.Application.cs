@@ -504,6 +504,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.WarlordUiSelfTest:
                     GetTree().Quit(HostCli.RunWarlordUiSelfTest(_dataDir));
                     return;
+                case HostCliAction.FactionCommuniqueBoardSelfTest:
+                    GetTree().Quit(HostCli.RunFactionCommuniqueBoardSelfTest(_dataDir));
+                    return;
                 case HostCliAction.Phase0SelfTest:
                     GetTree().Quit(HostCli.RunPhase0SelfTest());
                     return;

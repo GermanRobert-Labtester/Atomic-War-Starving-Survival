@@ -611,6 +611,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _factionsNarrativePanel.Open(),
                 closeAction: () => _factionsNarrativePanel.Visible = false);
 
+            PanelRegistry.ConfigureActions("faction_communique_board",
+                bindAction: () => { SetupYearOfAsh(); _communiqueBoardPanel.Bind(_yearOfAsh, _simDay); },
+                openAction: () => _communiqueBoardPanel.Open(),
+                closeAction: () => _communiqueBoardPanel.Visible = false);
+
             PanelRegistry.ConfigureActions("skill_matrix",
                 bindAction: () => { SetupSurvivors(); _skillMatrixPanel.Bind(EnsureSharedSkillProgression(), _survivors); },
                 openAction: () => _skillMatrixPanel.Open(),
