@@ -1,5 +1,7 @@
 # ASHFALL — Save-Store Contract Matrix & Completeness Authority
 
+
+> **Section-key aliases (host SectionName → registry):** `holdfast_s1` → `holdfast`; `weather` → `world`. Matrix “section key” column uses the **registry** key. See `PersistentFilenameRegistryGateTests.SectionAliases`.
 **Last Verified:** 2026-09-20<br>
 **Total Save Stores:** 197 classes<br>
 **Total Static Persistence Methods:** 203 methods<br>
@@ -106,7 +108,7 @@
 | 78 | `GrainProcessingSaveStore` | [`src/Host/GrainProcessingHostSession.cs`](../../src/Host/GrainProcessingHostSession.cs) | `grain_processing` | `grain_processing_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 79 | `GreenhouseSaveStore` | [`src/Host/GreenhouseHostSession.cs`](../../src/Host/GreenhouseHostSession.cs) | `greenhouse` | `greenhouse_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `GoldenSaveFixtureTests.cs` *(+11 more)* |
 | 80 | `HeliographSaveStore` | [`src/Host/HeliographHostSession.cs`](../../src/Host/HeliographHostSession.cs) | `heliograph` | `heliograph_save.json` | `TryLoad()` | ✅ | ✅ | — |
-| 81 | `HoldfastSaveStore` | [`src/Host/HoldfastSaveStore.cs`](../../src/Host/HoldfastSaveStore.cs) | `holdfast_s1` | `holdfast_s1_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PersistentFilenameRegistryGateTests.cs` |
+| 81 | `HoldfastSaveStore` | [`src/Host/HoldfastSaveStore.cs`](../../src/Host/HoldfastSaveStore.cs) | `holdfast` | `holdfast_s1_save.json` | `TryLoad()` | ✅ | ✅ | Registry key `holdfast` (host SectionName alias `holdfast_s1`). `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PersistentFilenameRegistryGateTests.cs` |
 | 82 | `HoldfastTradeSaveStore` | [`src/Host/HoldfastTradeSaveStore.cs`](../../src/Host/HoldfastTradeSaveStore.cs) | `holdfast_trade` | `holdfast_trade_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `HoldfastTradeSaveStoreTests.cs` *(+1 more)* |
 | 83 | `HostEventSaveStore` | [`src/Host/HostEventSaveStore.cs`](../../src/Host/HostEventSaveStore.cs) | `host_event` | `host_event_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` |
 | 84 | `HydraulicExtrusionSaveStore` | [`src/Host/HydraulicExtrusionSaveStore.cs`](../../src/Host/HydraulicExtrusionSaveStore.cs) | `hydraulic_extrusion` | `hydraulic_extrusion_save.json` | `TryLoad()` | ✅ | ✅ | `PanelRouteGateTests.cs`, `Plan140HydraulicExtrusionHostWiringTests.cs` |
@@ -216,7 +218,7 @@
 | 188 | `WaterTreatmentSaveStore` | [`src/Host/WaterTreatmentSaveStore.cs`](../../src/Host/WaterTreatmentSaveStore.cs) | `water_treatment` | `water_treatment_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `EndToEndPlayerJourneyTests.cs` *(+1 more)* |
 | 189 | `WaystationSaveStore` | [`src/Host/WaystationSaveStore.cs`](../../src/Host/WaystationSaveStore.cs) | `waystation` | `waystation_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `SaveChecksumTests.cs` |
 | 190 | `WeatherHardeningSaveStore` | [`src/Host/WeatherHardeningSaveStore.cs`](../../src/Host/WeatherHardeningSaveStore.cs) | `weather_hardening` | `weather_hardening_save.json` | `TryLoad()` | ✅ | ✅ | `PersistentFilenameRegistryGateTests.cs` |
-| 191 | `WeatherSaveStore` | [`src/Host/WeatherSaveStore.cs`](../../src/Host/WeatherSaveStore.cs) | `weather` | `weather_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+5 more)* |
+| 191 | `WeatherSaveStore` | [`src/Host/WeatherSaveStore.cs`](../../src/Host/WeatherSaveStore.cs) | `world` | `weather_save.json` | `TryLoad()` | ✅ | ✅ | Alias of registry key `world` (host SectionName `weather` → world). Facade over world weather facet — not a separate SaveSectionRegistry entry. `BareSaveStoreSealTests.cs`, `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` *(+5 more)* |
 | 192 | `WeightOfChoicesSaveStore` | [`src/Host/WeightOfChoicesSaveStore.cs`](../../src/Host/WeightOfChoicesSaveStore.cs) | `weight_of_choices` | `weight_of_choices_save.json` | `TryLoad()` | ✅ | ✅ | `SaveSupportWindowTests.cs`, `VersionReportContractTests.cs` |
 | 193 | `WildlifeEcosystemSaveStore` | [`src/Host/WildlifeEcosystemSaveStore.cs`](../../src/Host/WildlifeEcosystemSaveStore.cs) | `wildlife_ecosystem` | `wildlife_ecosystem_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 194 | `WildlifeTrappingSaveStore` | [`src/Host/WildlifeTrappingSaveStore.cs`](../../src/Host/WildlifeTrappingSaveStore.cs) | `wildlife_trapping` | `wildlife_trapping_save.json` | `TryLoad()` | ✅ | ✅ | `ComprehensiveSaveStoreCorruptionAndMigrationTests.cs`, `PanelRouteGateTests.cs` *(+2 more)* |

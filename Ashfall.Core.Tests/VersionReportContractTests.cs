@@ -202,7 +202,8 @@ namespace Ashfall.Core.Tests
             // D1 drift rematch 2026-09-17: the live registry advanced by one
             // further unversioned checksum section since that pin (VersionReport
             // is the authority; pins track its current output).
-            Assert.Equal(188, envelopes.Count);
+            // 2026-09-20: Plan 220/205 +2 checksum envelopes (188 → 190).
+            Assert.Equal(190, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -215,7 +216,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (194 sections: 6 versioned codecs, 188 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (196 sections: 6 versioned codecs, 190 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);
