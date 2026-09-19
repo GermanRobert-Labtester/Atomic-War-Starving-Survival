@@ -325,5 +325,54 @@ namespace Ashfall.Core.Tests.Settings
                 if (File.Exists(path)) File.Delete(path);
             }
         }
+
+        [Fact]
+        public void KeyBindings_V1WithoutKeyBindings_DeserializesToEmptyMapWithoutDiagnostic()
+        {
+            string v1Json = @"{ ""schema_version"": 1, ""master_volume"": 0.8 }";
+            var (data, diag) = UserSettingsCodec.DeserializeWithRecovery(v1Json);
+
+            Assert.Null(diag);
+            Assert.NotNull(data);
+            Assert.NotNull(data.KeyBindings);
+            Assert.Empty(data.KeyBindings);
+        }
+
+        [Fact]
+        public void KeyBindings_V2WithValidBindings_RoundTripsExactly()
+        {
+            var data = new UserSettingsData();
+            data.KeyBindings["ashfall_journal"] = new System.Collections.Generic.List<int> { 74 };
+            data.KeyBindings["ashfall_help"] = new System.Collections.Generic.List<int> { 4194332 };
+
+            string json = UserSettingsCodec.Serialize(data);
+            Assert.Contains("\"key_bindings\"", json);
+
+            var (reloaded, diag) = UserSettingsCodec.DeserializeWithRecovery(json);
+            Assert.Null(diag);
+            Assert.NotNull(reloaded);
+            Assert.Equal(2, reloaded.KeyBindings.Count);
+            Assert.Equal(new[] { 74 }, reloaded.KeyBindings["ashfall_journal"]);
+            Assert.Equal(new[] { 4194332 }, reloaded.KeyBindings["ashfall_help"]);
+        }
+
+        [Fact]
+        public void KeyBindings_CorruptOrNegativeKeycodes_DroppedWithDiagnosticWithoutThrowing()
+        {
+            string corruptJson = @"{
+                ""schema_version"": 2,
+                ""key_bindings"": {
+                    ""ashfall_journal"": [ 74, -99, 999999999 ],
+                    ""ashfall_help"": [ 4194332 ]
+                }
+            }";
+
+            var (data, diag) = UserSettingsCodec.DeserializeWithRecovery(corruptJson);
+            Assert.NotNull(data);
+            Assert.NotNull(diag);
+            Assert.Contains("Invalid keycode", diag);
+            Assert.Equal(new[] { 74 }, data.KeyBindings["ashfall_journal"]);
+            Assert.Equal(new[] { 4194332 }, data.KeyBindings["ashfall_help"]);
+        }
     }
 }

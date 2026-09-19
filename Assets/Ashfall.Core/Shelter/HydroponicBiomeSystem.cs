@@ -258,6 +258,12 @@ namespace Ashfall.Core.Shelter
             return committed;
         }
 
+        public bool UnlockStabilizedTrait(string traitId)
+        {
+            if (string.IsNullOrWhiteSpace(traitId)) return false;
+            return _unlockedStabilizedTraits.Add(traitId);
+        }
+
         public bool TryHarvest(string rackId)
         {
             var rack = GetRack(rackId);

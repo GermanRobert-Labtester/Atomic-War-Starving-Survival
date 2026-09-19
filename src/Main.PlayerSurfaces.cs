@@ -198,6 +198,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _weatherForecastPanel.Open(),
                 closeAction: () => CloseWeatherForecastPanel());
 
+            PanelRegistry.ConfigureActions("weather_history",
+                bindAction: () => { SetupWorld(); _weatherHistoryPanel.Bind(_world?.Weather); },
+                openAction: () => OpenWeatherHistoryPanel(),
+                closeAction: () => { if (_weatherHistoryPanel != null) _weatherHistoryPanel.Visible = false; });
+
             PanelRegistry.ConfigureActions("event_detail",
                 bindAction: () => { SetupEventsHost(); _eventDetailPanel.Bind(_eventsHost); },
                 openAction: () => _eventDetailPanel.Open(),
@@ -605,6 +610,11 @@ namespace AtomicWar.GodotApp
                 bindAction: () => _factionsNarrativePanel.Bind(EnsureSharedFactionStance()),
                 openAction: () => _factionsNarrativePanel.Open(),
                 closeAction: () => _factionsNarrativePanel.Visible = false);
+
+            PanelRegistry.ConfigureActions("faction_communique_board",
+                bindAction: () => { SetupYearOfAsh(); _communiqueBoardPanel.Bind(_yearOfAsh, _simDay); },
+                openAction: () => _communiqueBoardPanel.Open(),
+                closeAction: () => _communiqueBoardPanel.Visible = false);
 
             PanelRegistry.ConfigureActions("skill_matrix",
                 bindAction: () => { SetupSurvivors(); _skillMatrixPanel.Bind(EnsureSharedSkillProgression(), _survivors); },

@@ -142,8 +142,9 @@ public class Plan56FollowUpTests
         // D1 drift rematch: Wave 8 Plan 22 added `cloth` +
         // `item_air_filter_hepa` (48 -> 50 total); the baseline 40 rows are
         // asserted individually below and remain untouched.
+        // 2026-09-19: Crop Roster Phase 2 added `crop_oilseed` (50 -> 51 total).
         var (_, catalog) = Load();
-        Assert.Equal(50, catalog.Count);
+        Assert.Equal(51, catalog.Count);
         foreach (var id in new[]
                  {
                      "clean_water", "scrap_metal", "antibiotics", "iodine_pills", "fuel",

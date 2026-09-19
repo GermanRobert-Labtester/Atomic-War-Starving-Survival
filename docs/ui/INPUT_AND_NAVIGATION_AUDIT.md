@@ -14,18 +14,21 @@ ASHFALL enforces canonical `InputMap` action names defined centrally in `Ashfall
 | `ashfall_close` / `ui_cancel` | `Escape` | — | `JoyButton.B` | Global: Close panel / cancel dialog / back |
 | `ashfall_confirm` / `ui_accept` | `Enter` | `Space` | `JoyButton.A` | Global: Confirm action / activate button |
 | `ashfall_next_tab` | `Tab` | — | `JoyButton.RightShoulder` | Panels: Next tab in multi-tab panels |
-| `ashfall_nav_up` | `W` | `Up Arrow` | `JoyButton.DpadUp` | Directional menu & list navigation |
-| `ashfall_nav_down` | `S` | `Down Arrow` | `JoyButton.DpadDown` | Directional menu & list navigation |
-| `ashfall_nav_left` | `A` | `Left Arrow` | `JoyButton.DpadLeft` | Directional menu & list navigation |
-| `ashfall_nav_right` | `D` | `Right Arrow` | `JoyButton.DpadRight` | Directional menu & list navigation |
-| `ashfall_journal` | `J` | — | `JoyButton.Y` | Global shortcut: Open Journal / Codex |
-| `ashfall_help` | `F1` | — | `JoyButton.Back` | Global shortcut: Open Tutorial / Help |
-| `ashfall_forecast` | `F` | — | — | Global shortcut: Open Weather Forecast |
-| `ashfall_weather_history` | `H` | — | — | Global shortcut: Open Weather History |
-| `ashfall_events` | `E` | — | — | Global shortcut: Open Events Log |
-| `ashfall_expeditions` | `X` | — | — | Global shortcut: Open Expeditions |
-| `ashfall_holdfast` | `T` | — | — | Global shortcut: Open Holdfast Terminal |
-| `ashfall_journal_tab_1..5` | `1`–`5` | — | — | Journal-specific: Direct tab selection |
+| `ashfall_nav_up` | `Up Arrow` | — | `JoyButton.DpadUp` | Global: Directional menu & focus navigation |
+| `ashfall_nav_down` | `Down Arrow` | — | `JoyButton.DpadDown` | Global: Directional menu & focus navigation |
+| `ashfall_nav_left` | `Left Arrow` | — | `JoyButton.DpadLeft` | Global: Directional menu & focus navigation |
+| `ashfall_nav_right` | `Right Arrow` | — | `JoyButton.DpadRight` | Global: Directional menu & focus navigation |
+| `ashfall_journal` | `J` | — | `JoyButton.Y` | PlayingOnly: Open Journal / Codex |
+| `ashfall_help` | `F1` | — | `JoyButton.Back` | PlayingOnly: Open Tutorial / Help |
+| `ashfall_guidance` | `F2` | — | — | PlayingOnly: Toggle Guidance Overlay |
+| `ashfall_forecast` | `F` | — | — | PlayingOnly: Open Weather Forecast |
+| `ashfall_weather_history` | `H` | — | — | PlayingOnly: Open Weather History |
+| `ashfall_events` | `E` | — | — | PlayingOnly: Open Events Log |
+| `ashfall_expeditions` | `X` | — | — | PlayingOnly: Open Expeditions |
+| `ashfall_holdfast` | `T` | — | — | PlayingOnly: Open Holdfast Terminal |
+| `ashfall_journal_tab_1..5` | `1`–`5` | — | — | JournalBook: Direct tab selection |
+| `ashfall_holdfast_build` | `B` | — | — | HoldfastTerminal: Build tab |
+| `ashfall_holdfast_status` | `S` | — | — | HoldfastTerminal: Status tab |
 
 ---
 

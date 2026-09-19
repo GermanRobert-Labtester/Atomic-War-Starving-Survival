@@ -553,6 +553,7 @@ namespace AtomicWar.GodotApp.UI
                 AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayUiClick();
                 onPressed?.Invoke();
             };
+            AshfallFocusPolicy.ApplyFocusVisibleStyle(btn);
             return btn;
         }
 

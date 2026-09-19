@@ -194,6 +194,7 @@ namespace Ashfall.Core.Shelter
         public event Action<string, int, int>? OnSampleViabilityChanged;   // canisterId, old, new
         public event Action<string>? OnBreachStarted;                      // reason
         public event Action<string, string, int, int>? OnSampleReleased;   // canisterId, itemId, amount, viability
+        public event Action<string, CryoCultivarDef, int>? OnCultivarReleased; // canisterId, cultivarDef, viability
         public event Action<string>? OnSampleFailed;                       // canisterId
         public event Action? OnStateChanged;
 
@@ -497,6 +498,7 @@ namespace Ashfall.Core.Shelter
             _state.released_log.Add(canister.canister_id + ":" + def.recovery_item_id);
             RemoveCanister(canister.canister_id);
             OnSampleReleased?.Invoke(canister.canister_id, def.recovery_item_id, def.recovery_amount, canister.viability_permille);
+            OnCultivarReleased?.Invoke(canister.canister_id, def, canister.viability_permille);
         }
 
         private void RaiseWarnings()

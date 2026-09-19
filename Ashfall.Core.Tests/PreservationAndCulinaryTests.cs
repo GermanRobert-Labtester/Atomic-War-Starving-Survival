@@ -126,5 +126,34 @@ namespace Ashfall.Core.Tests
             Assert.Equal(45f, pantryItem.maxSpoilageDays);
             Assert.False(pantryItem.isSpoiled);
         }
+
+        [Fact]
+        public void OilseedPressAndConfit_RecipeInvariantsHold()
+        {
+            string recipesPath = Path.Combine(FindDataDir(), "recipes.json");
+            string json = File.ReadAllText(recipesPath);
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var file = JsonSerializer.Deserialize<RecipeFileDto>(json, options);
+            Assert.NotNull(file);
+
+            var pressRecipe = file!.recipes.Find(r => r.id == "craft_press_oilseed");
+            Assert.NotNull(pressRecipe);
+            Assert.Equal("cooking_oil", pressRecipe.resultItemId);
+            Assert.Equal(1, pressRecipe.resultAmount);
+            Assert.Equal("stove", pressRecipe.requiredStationId);
+            var pressIng = Assert.Single(pressRecipe.ingredients);
+            Assert.Equal("crop_oilseed", pressIng.itemId);
+            Assert.Equal(2, pressIng.amount);
+
+            var confitRecipe = file.recipes.Find(r => r.id == "craft_rendered_fat_confit");
+            Assert.NotNull(confitRecipe);
+            Assert.Equal("item_fat_confit", confitRecipe.resultItemId);
+            Assert.Equal(3, confitRecipe.resultAmount);
+            Assert.Equal("stove", confitRecipe.requiredStationId);
+            Assert.Contains(confitRecipe.ingredients, i => i.itemId == "crop_tuber" && i.amount == 3);
+            Assert.Contains(confitRecipe.ingredients, i => i.itemId == "cooking_oil" && i.amount == 1);
+            Assert.Contains(confitRecipe.ingredients, i => i.itemId == "item_preservation_salt" && i.amount == 1);
+            Assert.DoesNotContain(confitRecipe.ingredients, i => i.itemId == "fuel");
+        }
     }
 }

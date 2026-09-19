@@ -3,7 +3,7 @@
 > **Living Multi-Agent Navigation Guide**: Documents all specialized agent skills in `.agents/skills/` organized across 6 functional capability domains. Used by Antigravity, Claude, Codex, Cline, Cursor, and Windsurf AI agents for instant tool discovery.
 
 **Total Registered Skills:** `35`<br>
-**Last Verified:** `2026-09-18`<br>
+**Last Verified:** `2026-09-19`<br>
 **Drift Gated:** `python3 scripts/ci/generate-agent-skills-catalog.py --check`
 
 ---
@@ -76,7 +76,7 @@
 | [`ashfall-harden`](../../.agents/skills/ashfall-harden/SKILL.md) | Aggressively probes ASHFALL architecture for fragility, hidden coupling, ownership ambiguity, migration debt, save/determinism risks, weak contracts, runtime islands, lifecycle hazards, and future scalability problems, then ranks evidence-based system-hardening next steps without modifying production code. | `.agents/skills/ashfall-harden/SKILL.md` |
 | [`ashfall-seal`](../../.agents/skills/ashfall-seal/SKILL.md) | Validates ASHFALL implementation-gap findings, designs the missing behavior and wiring procedure, seals unimplemented and silent gaps, connects Core/data/Godot/save/test paths carefully, and verifies complete end-to-end functionality without introducing duplicate architecture. | `.agents/skills/ashfall-seal/SKILL.md` |
 | [`ashfall-repair`](../../.agents/skills/ashfall-repair/SKILL.md) | Deeply validates ASHFALL bug findings, determines root cause and blast radius, designs a minimal evidence-backed repair plan, then integrates the repair phase by phase with a fresh forensic checkpoint before every change and full regression verification afterward. | `.agents/skills/ashfall-repair/SKILL.md` |
-| [`ashfall-release-captain`](../../.agents/skills/ashfall-release-captain/SKILL.md) | Coordinates ASHFALL releases — version bump, changelog from git history, lane/snap discipline, full pre-release gate (tests, data integrity, asset gate, export smoke), and release checklist. Shipping discipline for the Godot era. | `.agents/skills/ashfall-release-captain/SKILL.md` |
+| [`ashfall-release-captain`](../../.agents/skills/ashfall-release-captain/SKILL.md) | Coordinates ASHFALL releases — version bump via prepare-release.sh, changelog generation, branch/tag/PR discipline, full pre-release gate (fast CI + release-gate.sh + export smoke), and release checklist. Shipping discipline for the Godot era. | `.agents/skills/ashfall-release-captain/SKILL.md` |
 | [`ashfall-repo-hygiene`](../../.agents/skills/ashfall-repo-hygiene/SKILL.md) | Audits and safely quarantines repository junk in ASHFALL (Unity-era test XMLs, audit dumps, stray root binaries), verifies Git LFS policy compliance, and keeps clone size healthy. Dry-run by default; never deletes without approval. | `.agents/skills/ashfall-repo-hygiene/SKILL.md` |
 | [`ashfall-ci-migrate`](../../.agents/skills/ashfall-ci-migrate/SKILL.md) | Migrates and maintains ASHFALL GitHub Actions from the stale Unity pipeline to the canonical dotnet + godot --headless gate. Detects CI drift, rewrites workflows, and verifies gates run clean. | `.agents/skills/ashfall-ci-migrate/SKILL.md` |
 | [`ashfall-balance-sim`](../../.agents/skills/ashfall-balance-sim/SKILL.md) | Runs seeded headless simulations and parameter sweeps over ASHFALL's data-driven systems (economy, radiation/dose, needs, cohorts, trade) to produce evidence-based balance and difficulty reports, using dotnet tests and godot --headless only. | `.agents/skills/ashfall-balance-sim/SKILL.md` |

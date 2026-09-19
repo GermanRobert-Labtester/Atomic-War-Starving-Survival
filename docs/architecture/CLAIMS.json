@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "generated_by": "Plan 29 / C1[7] One Truth Capability Authority",
   "verified_at": "2026-09-17",
-  "total_claims": 24,
+  "total_claims": 28,
   "claims": [
     {
       "claim_id": "inv_engine_free_core",
@@ -154,7 +154,7 @@
       "claim_id": "eco_trade_embargo_registry",
       "category": "Economy & Trade",
       "document": "docs/plans/C1_planintegration.md",
-      "anchor": "Plan 14B §14B.7",
+      "anchor": "Plan 14B \u00a714B.7",
       "claim": "TradeEmbargoSystem models factional trade sanctions and embargoes affecting regional price multipliers and caravan arrival availability.",
       "status": "TRUE",
       "confidence": "PROVEN_INTEGRATION",
@@ -362,7 +362,7 @@
       "claim_id": "world_weather_effects_authority",
       "category": "World & Weather",
       "document": "docs/plans/C2_planintegration[4].md",
-      "anchor": "Plan 20C §68",
+      "anchor": "Plan 20C \u00a768",
       "claim": "WeatherEffectsCatalog is the data authority for environmental modifiers across all 22 weather kinds from weather_effects.json.",
       "status": "TRUE",
       "confidence": "PROVEN_INTEGRATION",
@@ -390,7 +390,7 @@
       "claim_id": "world_weather_station_intelligence",
       "category": "World & Weather",
       "document": "docs/plans/C2_planintegration[4].md",
-      "anchor": "Plan 20C §37/§39",
+      "anchor": "Plan 20C \u00a737/\u00a739",
       "claim": "WeatherStationSystem provides tiered, calibrated multi-day forecasts; DailyBriefingReportBuilder attributes misses to station calibration vs unwarned storms.",
       "status": "TRUE",
       "confidence": "PROVEN_RUNTIME",
@@ -604,6 +604,110 @@
       "tests": [],
       "gates": [],
       "notes": "Travel speed multiplier is implemented; equipment model limb-slot restrictions are SPLIT and queued for Wave 10 Part 2."
+    },
+    {
+      "claim_id": "rel_version_single_source",
+      "category": "Release & Versioning",
+      "document": "docs/releases/VERSIONING.md",
+      "anchor": "Single Source of Truth",
+      "claim": "project.godot config/version, Directory.Build.props VersionPrefix, and export_presets.cfg file_version always agree on a single strict-semver X.Y.Z value.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "gate",
+          "path": "scripts/ci/version-gate.py",
+          "symbol": null
+        },
+        {
+          "type": "source",
+          "path": "Assets/Ashfall.Core/ReleaseVersion.cs",
+          "symbol": "ReleaseVersion"
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Release/ReleaseVersionContractTests.cs"
+      ],
+      "gates": [
+        "version_gate"
+      ],
+      "notes": "Enforced on every fast-tier CI run via version-gate.py. Three-source agreement verified by self-test."
+    },
+    {
+      "claim_id": "rel_changelog_gated",
+      "category": "Release & Versioning",
+      "document": "docs/releases/VERSIONING.md",
+      "anchor": "Changelog Policy",
+      "claim": "CHANGELOG.md machine-generated region is structurally sound and gated on every fast CI run; version bumps require a corresponding changelog section.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "gate",
+          "path": "scripts/release/generate_changelog.py",
+          "symbol": null
+        }
+      ],
+      "tests": [],
+      "gates": [
+        "changelog_drift",
+        "version_gate"
+      ],
+      "notes": "Phase 2 implements marker-region validation. Full generation (Phase 4) will populate git-log mapping and diff sections."
+    },
+    {
+      "claim_id": "rel_save_support_window_tested",
+      "category": "Release & Versioning",
+      "document": "docs/releases/VERSIONING.md",
+      "anchor": "Save Support Window",
+      "claim": "The save support window (which codec versions the current runtime accepts) is tested against golden historical fixtures on every release gate run.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "doc",
+          "path": "docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md",
+          "symbol": null
+        },
+        {
+          "type": "test_file",
+          "path": "Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs",
+          "symbol": null
+        },
+        {
+          "type": "artifact",
+          "path": "artifacts/golden_saves/historical/manifest.json",
+          "symbol": null
+        }
+      ],
+      "tests": [
+        "Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs"
+      ],
+      "gates": [
+        "save_support_window"
+      ],
+      "notes": "Phase 3 complete: SaveSupportWindowTests (15/15 PASS) validates 6 curated codec version pins and historical corpus invariants. save_support_window gate registered as full-tier critical."
+    },
+    {
+      "claim_id": "rel_hotfix_never_migrates",
+      "category": "Release & Versioning",
+      "document": "docs/releases/VERSIONING.md",
+      "anchor": "Hotfix Iron Rule",
+      "claim": "Hotfix branches are gated against save-schema constant changes; a hotfix that alters codec SchemaVersion is refused by version-gate.py --hotfix.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {
+          "type": "gate",
+          "path": "scripts/ci/version-gate.py",
+          "symbol": "detect_schema_constant_changes"
+        }
+      ],
+      "tests": [],
+      "gates": [
+        "version_gate"
+      ],
+      "notes": "Hotfix mode enforced via --hotfix flag. HOTFIX.md (Phase 5) will document full classification table and iron rule."
     }
   ]
 }

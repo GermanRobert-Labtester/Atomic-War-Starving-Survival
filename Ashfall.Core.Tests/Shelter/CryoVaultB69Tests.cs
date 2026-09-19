@@ -312,5 +312,38 @@ namespace Ashfall.Core.Tests
                 a.Vault.State.canisters[1].viability_permille,
                 b.Vault.State.canisters[1].viability_permille);
         }
+
+        // ── 10. Cultivar release event & traits ───────────────────────
+
+        [Fact]
+        public void CompleteRecovery_FiresOnCultivarReleasedWithTraits()
+        {
+            var h = new Harness();
+            h.Vault.RegisterSample("cryo_seed_radiant_wept_wheat");
+            string canisterId = h.Vault.State.canisters[0].canister_id;
+
+            string releasedCanister = "";
+            CryoCultivarDef? releasedDef = null;
+            int releasedViability = 0;
+            h.Vault.OnCultivarReleased += (cId, def, viability) =>
+            {
+                releasedCanister = cId;
+                releasedDef = def;
+                releasedViability = viability;
+            };
+
+            h.Vault.QueueRecovery(canisterId);
+            // Def specifies recovery_days = 2
+            h.Vault.TickDay(1);
+            h.Vault.TickDay(2);
+
+            Assert.Equal(canisterId, releasedCanister);
+            Assert.NotNull(releasedDef);
+            Assert.Equal("cryo_seed_radiant_wept_wheat", releasedDef!.id);
+            Assert.Equal("item_seed_wheat", releasedDef.recovery_item_id);
+            Assert.Contains("radiation_tolerant", releasedDef.traits);
+            Assert.Contains("heirloom", releasedDef.traits);
+            Assert.True(releasedViability >= CryoVaultSystem.MinViabilityForRecovery);
+        }
     }
 }

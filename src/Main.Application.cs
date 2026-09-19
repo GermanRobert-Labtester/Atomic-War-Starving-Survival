@@ -504,6 +504,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.WarlordUiSelfTest:
                     GetTree().Quit(HostCli.RunWarlordUiSelfTest(_dataDir));
                     return;
+                case HostCliAction.FactionCommuniqueBoardSelfTest:
+                    GetTree().Quit(HostCli.RunFactionCommuniqueBoardSelfTest(_dataDir));
+                    return;
                 case HostCliAction.Phase0SelfTest:
                     GetTree().Quit(HostCli.RunPhase0SelfTest());
                     return;
@@ -719,12 +722,12 @@ namespace AtomicWar.GodotApp
 
             if (AshfallInputActions.IsForecast(@event) && _state == GameState.Playing)
             {
-                OpenWeatherForecastPanel();
+                OpenPlayerPanel("weather_forecast");
                 GetViewport().SetInputAsHandled();
             }
             else if (AshfallInputActions.IsWeatherHistory(@event) && _state == GameState.Playing)
             {
-                OpenWeatherHistoryPanel();
+                OpenPlayerPanel("weather_history");
                 GetViewport().SetInputAsHandled();
             }
             else if (AshfallInputActions.IsJournal(@event))
@@ -763,17 +766,27 @@ namespace AtomicWar.GodotApp
             }
             else if (AshfallInputActions.IsEvents(@event) && _state == GameState.Playing)
             {
-                OpenEventsLogPanel();
+                OpenPlayerPanel("events_log");
+                GetViewport().SetInputAsHandled();
+            }
+            else if (_state == GameState.Playing && AtomicWar.GodotApp.UI.AshfallFocusNavigator.HandleNavInput(this, @event))
+            {
                 GetViewport().SetInputAsHandled();
             }
             else if (AshfallInputActions.IsCloseOrCancel(@event) && _state == GameState.Playing)
             {
                 // Global dismiss for keyboard-driven UI: Esc closes any open
                 // overlay panel or modal (panels also handle Esc locally).
-                // Matches the journal-book branch outcome (sleep cancelled,
-                // book closed via CloseAllOverlayPanels).
+                // If no overlay is open, returns to main menu.
                 CancelAdvanceConfirmation();
-                CloseAllOverlayPanels();
+                if (AnyOverlayPanelOpen())
+                {
+                    CloseAllOverlayPanels();
+                }
+                else
+                {
+                    ReturnToMenu();
+                }
                 GetViewport().SetInputAsHandled();
             }
             else if (_journalBook != null && _journalBook.IsOpen)

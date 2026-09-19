@@ -1,0 +1,64 @@
+# ASHFALL Hotfix CI Workflow — Plan 48 / C2[21] Phase 5
+# ======================================================
+# Triggered on pushes to hotfix/* branches.
+# Enforces the iron rule: no save-schema constant changes.
+# Also runs all fast CI gates.
+
+name: ASHFALL Hotfix Gate
+
+on:
+  push:
+    branches:
+      - 'hotfix/**'
+  pull_request:
+    branches:
+      - 'hotfix/**'
+
+jobs:
+  hotfix-gate:
+    name: Hotfix Iron Rule + Fast Gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0  # needed for git diff against base tag
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Detect base tag
+        id: base_tag
+        run: |
+          # Extract base tag from branch name (hotfix/v1.1.1 → v1.1.0 is the prior tag)
+          # Fall back to the most recent semver tag
+          BASE=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || echo "")
+          if [[ -z "$BASE" ]]; then
+            echo "No semver release tag found. Cannot run hotfix iron-rule check."
+            exit 1
+          fi
+          echo "base_tag=$BASE" >> $GITHUB_OUTPUT
+          echo "Using base tag: $BASE"
+
+      - name: Iron rule — no schema constant changes (version-gate --hotfix)
+        run: |
+          python3 scripts/ci/version-gate.py --hotfix --base-ref ${{ steps.base_tag.outputs.base_tag }}
+
+      - name: Version drift gate
+        run: python3 scripts/ci/version-gate.py
+
+      - name: Changelog drift gate
+        run: python3 scripts/release/generate_changelog.py --check
+
+      - name: dotnet build (0/0 check)
+        run: dotnet build Ashfall.csproj --nologo
+
+      - name: Hotfix classify check
+        run: |
+          bash scripts/release/hotfix.sh \
+            --base-tag ${{ steps.base_tag.outputs.base_tag }} \
+            --classify
