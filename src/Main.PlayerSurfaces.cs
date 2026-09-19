@@ -198,6 +198,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _weatherForecastPanel.Open(),
                 closeAction: () => CloseWeatherForecastPanel());
 
+            PanelRegistry.ConfigureActions("weather_history",
+                bindAction: () => { SetupWorld(); _weatherHistoryPanel.Bind(_world?.Weather); },
+                openAction: () => OpenWeatherHistoryPanel(),
+                closeAction: () => { if (_weatherHistoryPanel != null) _weatherHistoryPanel.Visible = false; });
+
             PanelRegistry.ConfigureActions("event_detail",
                 bindAction: () => { SetupEventsHost(); _eventDetailPanel.Bind(_eventsHost); },
                 openAction: () => _eventDetailPanel.Open(),

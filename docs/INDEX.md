@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2545 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2546 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2498 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2499 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -319,7 +319,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/CROSSING_DEPTH_AUDIT.md`](expansions/CROSSING_DEPTH_AUDIT.md) | **Crossing Depth Audit (Expansion 04)** — Nobody's Charter / The Crossing represents the legal, humanitarian, and political friction of border arbitration. |
 | 🟢 `CURRENT` | [`docs/expansions/CROSSING_STATE_FLOW.md`](expansions/CROSSING_STATE_FLOW.md) | **Crossing State Flow** — CrossingQuestSystem |
 | 🟢 `CURRENT` | [`docs/expansions/DEEP_LORE_MASTER_PLAN.md`](expansions/DEEP_LORE_MASTER_PLAN.md) | **ASHFALL — DEEP LORE & CHARACTER PROGRESSION: IMPLEMENTATION PLAN** — This expansion is **primarily data, not code**. The project already has all the narrative plumbing: |
-| 🟢 `CURRENT` | [`docs/expansions/EXPANSIONS_MASTER_CATALOG.md`](expansions/EXPANSIONS_MASTER_CATALOG.md) | **ASHFALL Expansions 01–11 Master Systems & Integration Atlas** — **Authoritative Expansion Catalog** \| **Generated:** 2026-09-18 \| **Total Expansions:** 11 |
+| 🟢 `CURRENT` | [`docs/expansions/EXPANSIONS_MASTER_CATALOG.md`](expansions/EXPANSIONS_MASTER_CATALOG.md) | **ASHFALL Expansions 01–11 Master Systems & Integration Atlas** — **Authoritative Expansion Catalog** \| **Generated:** 2026-09-19 \| **Total Expansions:** 11 |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_3_4_MASTER_PLAN.md`](expansions/EXPANSION_3_4_MASTER_PLAN.md) | **ASHFALL — EXPANSION 3 & 4: COMPREHENSIVE IMPLEMENTATION PLAN** — **Goal**: Add dynamic condition, contamination, and purity to all scavenged items. |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_CONTENT_MATRIX.md`](expansions/EXPANSION_CONTENT_MATRIX.md) | **Expansion Content Matrix — Four Charter Expansions** — All 82 quests/questlines across the four charter expansions cross-reference valid location IDs, item IDs, and faction... |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_CONTINUITY_AUDIT.md`](expansions/EXPANSION_CONTINUITY_AUDIT.md) | **Expansion Continuity & Chronology Audit** — All four expansions operate within a synchronized campaign chronology: |
@@ -375,7 +375,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/PLAN_127_VERDICT_DATA_CORRUPTION_HISTORY_EXPANSION_CLOSEOUT.md`](verdict/PLAN_127_VERDICT_DATA_CORRUPTION_HISTORY_EXPANSION_CLOSEOUT.md) | **Plan 127 Verdict Data Expansion Closeout** — **Status:** DATA COMPLETE / RUNTIME REACHABILITY DEFERRED |
 | 🟢 `CURRENT` | [`docs/verdict/PLAN_82_VERDICT_LOCATIONS_EXPANSION_CLOSEOUT.md`](verdict/PLAN_82_VERDICT_LOCATIONS_EXPANSION_CLOSEOUT.md) | **Plan 82 — Verdict Investigation Sites Expansion Closeout Report** — Plan 82 — Final Regression |
 
-## 5. UI, UX & Visual Systems (106 documents)
+## 5. UI, UX & Visual Systems (107 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -435,6 +435,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/INFORMATION_HIERARCHY_AUDIT.md`](ui/INFORMATION_HIERARCHY_AUDIT.md) | **ASHFALL — Information Hierarchy, Causality & Decision Clarity Audit** — **Audit Reference:** Plan 14 Task 14D |
 | 🟢 `CURRENT` | [`docs/ui/INPUT_AND_NAVIGATION_AUDIT.md`](ui/INPUT_AND_NAVIGATION_AUDIT.md) | **ASHFALL — Input Map, Navigation & Interaction Audit** — **Audit Reference:** Plan 14 Task 14E / `ashfall-input-map-audit` |
 | 🟢 `CURRENT` | [`docs/ui/JOURNAL_UI_PLAN.md`](ui/JOURNAL_UI_PLAN.md) | **ASHFALL — Journal UI Plan** — Turn the existing diegetic journal (playthrough log + tutorial pages) into the |
+| 🟢 `CURRENT` | [`docs/ui/KEYBOARD.md`](ui/KEYBOARD.md) | **ASHFALL — Authoritative Keyboard & Controller Map** — - **Initial Focus**: Every overlay open routes through `AshfallFocusPolicy.OpenWithFocus`. |
 | 🟢 `CURRENT` | [`docs/ui/LOCALIZATION_READINESS.md`](ui/LOCALIZATION_READINESS.md) | **ASHFALL — Localization Readiness & String Extraction Architecture** — **Audit Reference:** Plan 14 Task 14C / `ashfall-string-extractor` |
 | 🟢 `CURRENT` | [`docs/ui/PANEL_AUTHORITY_OWNERSHIP.md`](ui/PANEL_AUTHORITY_OWNERSHIP.md) | **Panel Authority Ownership — Live player surfaces and their campaign authorities** — - `ResolveLiveDosimeterTag()` — `src/Main.PlayerSurfaces.cs`; ordinal-first registered |
 | 🟢 `CURRENT` | [`docs/ui/PHASE13_DATA_AVAILABILITY.md`](ui/PHASE13_DATA_AVAILABILITY.md) | **Phase 13 — Data Availability Report** — **Date:** this turn. |
@@ -462,7 +463,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_3.md`](ui/UI_PANELS_MASTER_VOLUME_3.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_4.md`](ui/UI_PANELS_MASTER_VOLUME_4.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_5.md`](ui/UI_PANELS_MASTER_VOLUME_5.md) | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
-| 🟢 `CURRENT` | [`docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`](ui/UI_PANEL_ARCHITECTURE_GUIDE.md) | **ASHFALL Godot UI Panel Architecture & Node Binding Guide** — **Authoritative UI Contract Guide** \| **Generated:** 2026-09-18 \| **Scene-Backed Panels:** 22 |
+| 🟢 `CURRENT` | [`docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`](ui/UI_PANEL_ARCHITECTURE_GUIDE.md) | **ASHFALL Godot UI Panel Architecture & Node Binding Guide** — **Authoritative UI Contract Guide** \| **Generated:** 2026-09-19 \| **Scene-Backed Panels:** 22 |
 | 🟢 `CURRENT` | [`docs/ui/UI_VISUAL_TEXT_SPEC.md`](ui/UI_VISUAL_TEXT_SPEC.md) | **ASHFALL — UI Visual Information (text spec)** — All authored in house voice: cold, exhausted, human, restrained; specificity |
 | 🟢 `CURRENT` | [`docs/ui/UX_REGRESSION_MATRIX.md`](ui/UX_REGRESSION_MATRIX.md) | **ASHFALL — UX, Accessibility & Onboarding Regression Matrix** — **Execution Date:** 2026-09-01 |
 | 🟢 `CURRENT` | [`docs/utility_ai/UTILITY_ACTION_REQUIREMENT_MATRIX.md`](utility_ai/UTILITY_ACTION_REQUIREMENT_MATRIX.md) | **Utility Action Requirement Matrix** — The current Utility AI Core (`UtilityActionDef`, `UtilityActionScorer`) does **not** have a built-in requirement/elig... |
@@ -2020,7 +2021,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md) | **PLAN 22 IMPLEMENTATION LOG — Greenhouse Runtime Item Consumption** — Plan: `docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_24_CLOSEOUT.md`](plans/PLAN_24_CLOSEOUT.md) | **Plan 24 — Survivor Fitness, Needs, Labor, and Medical Journey: CLOSEOUT** — **Status:** CLOSED — both signature items resolved 2026-09-18 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** PLAN — not yet authorized for implementation. Phase 0 (the premise |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of |
