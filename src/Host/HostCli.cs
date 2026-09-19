@@ -775,12 +775,17 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public static void PrintVersion(string dataDir)
         {
-            string gameVersion = "unknown";
+            string gameVersion = "INVALID (config/version missing or not semver)";
             var setting = ProjectSettings.GetSetting("application/config/version");
             if (setting.VariantType == Variant.Type.String)
-                gameVersion = setting.AsString();
-            if (string.IsNullOrEmpty(gameVersion))
-                gameVersion = "unknown";
+            {
+                string raw = setting.AsString();
+                if (ReleaseVersion.TryParse(raw, out string normalized))
+                {
+                    gameVersion = normalized;
+                }
+            }
+
             GD.Print($"\n{VersionReport.Compose(gameVersion, dataDir)}");
             GD.Print($"data resolution: {CatalogPath.ResolveDataDir()} [source: {CatalogPath.LastResolutionSource}]");
         }
