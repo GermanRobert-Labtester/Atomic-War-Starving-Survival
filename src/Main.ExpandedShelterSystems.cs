@@ -146,6 +146,10 @@ namespace AtomicWar.GodotApp
             SetupPropaganda();
             SetupRumorNetwork();
             SetupShelterSecurity();
+            SetupPersonalQuests();
+            SetupTimeCapsules();
+            SetupDeathLegacy();
+            SetupRelationshipDecay();
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -462,6 +466,10 @@ namespace AtomicWar.GodotApp
             TickPropaganda(day);
             TickRumorNetwork(day);
             TickShelterSecurity(day);
+            TickPersonalQuests(day);
+            TickTimeCapsule(day);
+            TickSurvivorDeathLegacy(day);
+            TickRelationshipDecay(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -626,6 +634,18 @@ namespace AtomicWar.GodotApp
                 case "shelter_security":
                     ShowShelterSecurityPanel();
                     break;
+                case "personal_quests":
+                    ShowPersonalQuestPanel();
+                    break;
+                case "time_capsule":
+                    ShowTimeCapsulePanel();
+                    break;
+                case "death_legacy":
+                    ShowSurvivorDeathLegacyPanel();
+                    break;
+                case "relationship_decay":
+                    ShowRelationshipDecayPanel();
+                    break;
                 case "medical_ward":
                     SetupJournal();
                     DiscoverBureaucraticDocuments("medical_office");
@@ -690,6 +710,10 @@ namespace AtomicWar.GodotApp
             RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
             RemovePanel(_shelterReputationPanel); _shelterReputationPanel = null!;
+            RemovePanel(_personalQuestPanel); _personalQuestPanel = null!;
+            RemovePanel(_timeCapsulePanel); _timeCapsulePanel = null!;
+            RemovePanel(_deathLegacyPanel); _deathLegacyPanel = null!;
+            RemovePanel(_relationshipDecayPanel); _relationshipDecayPanel = null!;
             _plans94To97Panel?.Unbind();
             RemovePanel(_plans94To97Panel); _plans94To97Panel = null;
             _shelterBarterPanel?.Unbind();
@@ -782,6 +806,14 @@ namespace AtomicWar.GodotApp
             _rumorNetworkDirty = false;
             _shelterSecurity = null!;
             _shelterSecurityDirty = false;
+            _personalQuests = null!;
+            _personalQuestsDirty = false;
+            _timeCapsule = null!;
+            _timeCapsuleDirty = false;
+            _deathLegacy = null!;
+            _deathLegacyDirty = false;
+            _relationshipDecay = null!;
+            _relationshipDecayDirty = false;
 
             // Lifecycle reset is intentionally persistence-free. The expanded
             // shelter group owns the existing section captures, but it does

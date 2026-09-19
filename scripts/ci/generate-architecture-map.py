@@ -211,6 +211,48 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--shelter-security-selftest"],
         "tests": ["Plan138ShelterSecurityIntegrationTests"]
     },
+    "time_capsules": {
+        "domain": "Communication & Heritage (Plan 212)",
+        "core": ["TimeCapsuleSystem"],
+        "catalog": [],
+        "host": ["TimeCapsuleHostSession"],
+        "setup": "SetupTimeCapsules",
+        "ticked": True,
+        "tick_type": "Daily (Scheduled Opening & Message Delivery)",
+        "store": ["TimeCapsuleSaveStore"],
+        "ui": ["TimeCapsulePanel", "GameDashboardPanel"],
+        "routes": ["time_capsule"],
+        "cli": ["--time-capsule-selftest"],
+        "tests": ["Plan212TimeCapsuleIntegrationTests", "TimeCapsuleSystemTests"]
+    },
+    "death_legacy": {
+        "domain": "Survivor Memorial & Wills (Plan 206)",
+        "core": ["SurvivorDeathLegacySystem"],
+        "catalog": [],
+        "host": ["SurvivorDeathLegacyHostSession"],
+        "setup": "SetupDeathLegacy",
+        "ticked": True,
+        "tick_type": "Event-Driven & Daily Flush",
+        "store": ["SurvivorDeathLegacySaveStore"],
+        "ui": ["SurvivorDeathLegacyPanel", "GameDashboardPanel"],
+        "routes": ["death_legacy"],
+        "cli": ["--death-legacy-selftest"],
+        "tests": ["Plan206SurvivorDeathLegacyIntegrationTests", "SurvivorDeathLegacySystemTests"]
+    },
+    "relationship_decay": {
+        "domain": "Social Ecology & Drift (Plan 182)",
+        "core": ["RelationshipDecaySystem"],
+        "catalog": [],
+        "host": ["RelationshipDecayHostSession"],
+        "setup": "SetupRelationshipDecay",
+        "ticked": True,
+        "tick_type": "Daily (Pair Bond Decay & Social Drift)",
+        "store": ["RelationshipDecaySaveStore"],
+        "ui": ["RelationshipDecayPanel", "GameDashboardPanel"],
+        "routes": ["relationship_decay"],
+        "cli": ["--relationship-decay-selftest"],
+        "tests": ["Plan182RelationshipDecayIntegrationTests", "RelationshipDecaySystemTests"]
+    },
     "ecological_infestation": {
         "domain": "World",
         "core": ["EcologicalInfestationSystem"],
@@ -1948,18 +1990,18 @@ ARCHITECTURE_GRAPH = {
         "tests": ["BioFermentationEngineTests"]
     },
     "personal_quests": {
-        "domain": "Campaign & Quests",
+        "domain": "Survivor Quests (Plan 200)",
         "core": ["PersonalQuestSystem"],
-        "catalog": [],
+        "catalog": ["personal_quests.json"],
         "host": ["PersonalQuestHostSession"],
         "setup": "SetupPersonalQuests",
-        "ticked": False,
-        "tick_type": "On-Demand (Survivor Quest Progression)",
+        "ticked": True,
+        "tick_type": "Daily (Stage Progress & Life Stories)",
         "store": ["PersonalQuestSaveStore"],
-        "ui": ["QuestsPanel", "QuestDetailPanel"],
-        "routes": ["quests"],
-        "cli": ["--save-store-checksum-selftest"],
-        "tests": ["PersonalQuestSystemTests"]
+        "ui": ["PersonalQuestPanel", "GameDashboardPanel"],
+        "routes": ["personal_quests"],
+        "cli": ["--personal-quests-selftest"],
+        "tests": ["Plan200PersonalQuestsIntegrationTests", "PersonalQuestSystemTests"]
     },
     "narrative_questlines": {
         "domain": "Campaign & Quests",

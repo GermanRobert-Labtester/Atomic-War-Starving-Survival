@@ -130,6 +130,10 @@ namespace Ashfall.Core.Survivors
         public int DeathCount => _state.DeathRecords.Count;
         public int WillCount => _state.Wills.Count;
         public int ActiveDisputeCount => _state.Disputes.Count(d => d.Resolution == DisputeResolution.Pending);
+        public IReadOnlyList<DeathRecord> DeathRecords => _state.DeathRecords;
+        public IReadOnlyList<LastWill> Wills => _state.Wills;
+        public IReadOnlyList<InheritedItem> InheritedItems => _state.InheritedItems;
+        public IReadOnlyList<InheritanceDispute> Disputes => _state.Disputes;
 
         public SurvivorDeathLegacySystem(SurvivorDeathLegacyState? state = null)
         {

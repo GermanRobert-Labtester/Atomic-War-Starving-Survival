@@ -161,7 +161,11 @@ namespace Ashfall.Core
         RailGrindingUiTest,
         PropagandaSelfTest,
         RumorNetworkSelfTest,
-        ShelterSecuritySelfTest
+        ShelterSecuritySelfTest,
+        PersonalQuestSelfTest,
+        TimeCapsuleSelfTest,
+        DeathLegacySelfTest,
+        RelationshipDecaySelfTest
     }
 
     /// <summary>
@@ -860,7 +864,31 @@ namespace Ashfall.Core
                     "Host Domains & Save Stores",
                     "--shelter-security-selftest",
                     new[] { "--security-selftest" },
-                    "Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding")
+                    "Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PersonalQuestSelfTest,
+                    "Host Domains & Save Stores",
+                    "--personal-quests-selftest",
+                    new[] { "--personal-quest-selftest" },
+                    "Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.TimeCapsuleSelfTest,
+                    "Host Domains & Save Stores",
+                    "--time-capsule-selftest",
+                    new[] { "--time-capsules-selftest" },
+                    "Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.DeathLegacySelfTest,
+                    "Host Domains & Save Stores",
+                    "--death-legacy-selftest",
+                    new[] { "--wills-selftest", "--survivor-death-selftest" },
+                    "Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RelationshipDecaySelfTest,
+                    "Host Domains & Save Stores",
+                    "--relationship-decay-selftest",
+                    new[] { "--social-drift-selftest" },
+                    "Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding")
         };
 
         private static readonly HostCliActionDescriptor[] _uiDescriptors = new[]

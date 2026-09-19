@@ -595,6 +595,18 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterSecuritySelfTest:
                     GetTree().Quit(ShelterSecuritySelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.PersonalQuestSelfTest:
+                    GetTree().Quit(PersonalQuestSelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.TimeCapsuleSelfTest:
+                    GetTree().Quit(TimeCapsuleSelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.DeathLegacySelfTest:
+                    GetTree().Quit(SurvivorDeathLegacySelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.RelationshipDecaySelfTest:
+                    GetTree().Quit(RelationshipDecaySelfTest.Run(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)

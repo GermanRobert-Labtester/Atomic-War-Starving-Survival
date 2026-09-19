@@ -69,6 +69,8 @@ namespace Ashfall.Core.Survivors
         public event Action<PairBondState>? OnBondBroken;
 
         public int TrackedPairCount => _state.Pairs.Count;
+        public IReadOnlyList<PairBondState> Pairs => _state.Pairs;
+        public IReadOnlyList<SocialDriftEvent> DriftHistory => _state.DriftHistory;
 
         public RelationshipDecaySystem(RelationshipDecayState? state = null)
         {

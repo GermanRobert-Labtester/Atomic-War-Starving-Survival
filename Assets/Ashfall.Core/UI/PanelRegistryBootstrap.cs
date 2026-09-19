@@ -247,6 +247,14 @@ namespace Ashfall.Core.UI
             R("rumors",                     "Wasteland Rumor Network",     PanelGroup.Expanded, new[] { "radio", "world" });
             // ── Plan 138: shelter defense & security clearance (Live) ────
             R("shelter_security",           "Shelter Security Clearance",  PanelGroup.Expanded, new[] { "shelter", "survivors" });
+            // ── Plan 200: survivor personal quests & character arcs (Live) ──
+            R("personal_quests",            "Survivor Personal Quests",    PanelGroup.Expanded, new[] { "survivors", "quests" });
+            // ── Plan 212: time capsule & legacy messages (Live) ───────────
+            R("time_capsule",               "Time Capsule & Legacy",       PanelGroup.Expanded, new[] { "shelter", "communication" });
+            // ── Plan 206: survivor death records, wills & estates (Live) ──
+            R("death_legacy",               "Death Records & Wills",       PanelGroup.Expanded, new[] { "survivors", "memorial" });
+            // ── Plan 182: relationship decay & social drift (Live) ────────
+            R("relationship_decay",         "Social Drift & Bonds",        PanelGroup.Expanded, new[] { "survivors", "social" });
         }
 
         private static void R(

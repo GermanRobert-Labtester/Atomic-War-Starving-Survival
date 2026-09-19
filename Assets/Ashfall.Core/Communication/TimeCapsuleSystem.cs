@@ -101,6 +101,8 @@ namespace Ashfall.Core.Communication
         public int TotalCapsuleCount => _state.Capsules.Count;
         public int UnopenedCapsuleCount => _state.Capsules.Count(c => !c.IsOpen);
         public int PendingMessageCount => _state.Messages.Count(m => !m.IsDelivered);
+        public IReadOnlyList<TimeCapsule> Capsules => _state.Capsules;
+        public IReadOnlyList<LegacyMessage> Messages => _state.Messages;
 
         public TimeCapsuleSystem(TimeCapsuleState? state = null)
         {

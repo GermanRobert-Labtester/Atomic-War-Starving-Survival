@@ -472,6 +472,10 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "PROPAGANDA", "propaganda");
             AddNavButton(content, "RUMORS", "rumors");
             AddNavButton(content, "SECURITY", "shelter_security");
+            AddNavButton(content, "PERSONAL QUESTS", "personal_quests");
+            AddNavButton(content, "TIME CAPSULE", "time_capsule");
+            AddNavButton(content, "WILLS & LEGACY", "death_legacy");
+            AddNavButton(content, "SOCIAL BONDS", "relationship_decay");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());

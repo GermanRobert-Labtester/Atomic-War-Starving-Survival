@@ -802,7 +802,11 @@ namespace AtomicWar.GodotApp
                 "vehicle_garage",
                 "propaganda",
                 "rumors",
-                "shelter_security"
+                "shelter_security",
+                "personal_quests",
+                "time_capsule",
+                "death_legacy",
+                "relationship_decay"
             };
 
             foreach (var expId in expandedIds)

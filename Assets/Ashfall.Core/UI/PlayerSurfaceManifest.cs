@@ -64,7 +64,7 @@ namespace Ashfall.Core.UI
             "equipment_condition", "library_study", "archive_desk", "contractor_roster",
             "mental_health_crisis", "phantom_memory", "traveling_caravan", "shelter_barter", "medical_ward",
             "low_background_metrology", "insar_mapping", "hydraulic_extrusion", "runflat_tire", "hidden_agenda", "shelter_reputation",
-            "propaganda", "rumors", "shelter_security"
+            "propaganda", "rumors", "shelter_security", "personal_quests", "time_capsule", "death_legacy", "relationship_decay"
         };
 
         private static PlayerSurfaceContract BuildContractFor(PanelDescriptor desc)

@@ -3,13 +3,24 @@
 
 using Godot;
 using Ashfall.Core;
+using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
 {
     public partial class Main
     {
         private PersonalQuestHostSession? _personalQuests;
+        private PersonalQuestPanel? _personalQuestPanel;
         private bool _personalQuestsDirty;
+
+        public PersonalQuestHostSession PersonalQuests => EnsurePersonalQuests();
+
+        public PersonalQuestHostSession EnsurePersonalQuests()
+        {
+            if (_personalQuests != null) return _personalQuests;
+            SetupPersonalQuests();
+            return _personalQuests!;
+        }
 
         private void SetupPersonalQuests()
         {
@@ -23,6 +34,13 @@ namespace AtomicWar.GodotApp
                 _personalQuests.RestoreState(saved);
         }
 
+        public void TickPersonalQuests(int day)
+        {
+            EnsurePersonalQuests();
+            _personalQuests?.TickDay(day);
+            _personalQuestsDirty = true;
+        }
+
         private void SavePersonalQuests()
         {
             if (_personalQuests == null) return;
@@ -33,6 +51,29 @@ namespace AtomicWar.GodotApp
         private void FlushPersonalQuestsIfDirty()
         {
             if (_personalQuestsDirty) SavePersonalQuests();
+        }
+
+        private void SetupPersonalQuestPanel()
+        {
+            if (_personalQuestPanel != null && _personalQuestPanel.IsInsideTree())
+                return;
+
+            var session = EnsurePersonalQuests();
+            _personalQuestPanel = new PersonalQuestPanel();
+            _personalQuestPanel.Bind(session);
+            _personalQuestPanel.OnClose += () => _personalQuestPanel.Visible = false;
+            _personalQuestPanel.Visible = false;
+            AddChild(_personalQuestPanel);
+        }
+
+        public void ShowPersonalQuestPanel()
+        {
+            SetupPersonalQuestPanel();
+            if (_personalQuestPanel != null)
+            {
+                _personalQuestPanel.Visible = true;
+                _personalQuestPanel.RefreshView();
+            }
         }
     }
 }

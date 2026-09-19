@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-20<br>
-**Total Registered Actions:** 183 entries / 259 flag tokens (aliases included)
+**Total Registered Actions:** 187 entries / 263 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -192,6 +192,10 @@
 | `--propaganda-selftest` | — | Plan 168: Propaganda and morale warfare system, campaigns, broadcasts, save persistence, and UI binding |
 | `--rumor-network-selftest` | — | Plan 203: Wasteland information flow, rumors, intelligence gathering, save persistence, and UI binding |
 | `--shelter-security-selftest` | — | Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding |
+| `--personal-quests-selftest` | — | Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding |
+| `--time-capsule-selftest` | — | Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding |
+| `--death-legacy-selftest` | — | Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding |
+| `--relationship-decay-selftest` | — | Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding |
 | `--user-data-dir` | — | <path> Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR) |
 | `--log-dir` | — | <path> Configure log output directory for headless runs (or set ASHFALL_LOG_DIR) |
 | `--host-help` | `--help` | This list |

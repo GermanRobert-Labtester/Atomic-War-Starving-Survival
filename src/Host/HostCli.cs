@@ -197,7 +197,11 @@ namespace AtomicWar.GodotApp
         ReconTelemetrySelfTest,
         PropagandaSelfTest,
         RumorNetworkSelfTest,
-        ShelterSecuritySelfTest
+        ShelterSecuritySelfTest,
+        PersonalQuestSelfTest,
+        TimeCapsuleSelfTest,
+        DeathLegacySelfTest,
+        RelationshipDecaySelfTest
     }
 
     /// <summary>
@@ -586,6 +590,14 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RumorNetworkSelfTest;
             if (Has(args, "--shelter-security-selftest") || Has(args, "--security-selftest"))
                 return HostCliAction.ShelterSecuritySelfTest;
+            if (Has(args, "--personal-quests-selftest") || Has(args, "--personal-quest-selftest"))
+                return HostCliAction.PersonalQuestSelfTest;
+            if (Has(args, "--time-capsule-selftest") || Has(args, "--time-capsules-selftest"))
+                return HostCliAction.TimeCapsuleSelfTest;
+            if (Has(args, "--death-legacy-selftest") || Has(args, "--wills-selftest") || Has(args, "--survivor-death-selftest"))
+                return HostCliAction.DeathLegacySelfTest;
+            if (Has(args, "--relationship-decay-selftest") || Has(args, "--social-drift-selftest"))
+                return HostCliAction.RelationshipDecaySelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -781,6 +793,10 @@ namespace AtomicWar.GodotApp
             GD.Print("  --propaganda-selftest    Plan 168: Propaganda and morale warfare system, campaigns, broadcasts, save persistence, and UI binding");
             GD.Print("  --rumor-network-selftest Plan 203: Wasteland information flow, rumors, intelligence gathering, save persistence, and UI binding");
             GD.Print("  --shelter-security-selftest Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding");
+            GD.Print("  --personal-quests-selftest Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding");
+            GD.Print("  --time-capsule-selftest  Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding");
+            GD.Print("  --death-legacy-selftest  Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding");
+            GD.Print("  --relationship-decay-selftest Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding");
 
             GD.Print("\n--- User Data & Log Configuration ---");
             GD.Print("  --user-data-dir <path>   Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR)");

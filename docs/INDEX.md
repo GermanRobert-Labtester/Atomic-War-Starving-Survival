@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2559 | **Last Verified:** 2026-09-20
+**Total Indexed Documents:** 2560 | **Last Verified:** 2026-09-20
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2512 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2513 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2195 documents)
+## 9. General Project Guides & Archive Reference (2196 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2003,6 +2003,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLANS_162_165_RECONNAISSANCE.md`](plans/PLANS_162_165_RECONNAISSANCE.md) | **Plans 162–165 — Repository Reconnaissance (Phase A Exit Gate)** — Date: 2026-09-05. Authority map produced before any production edit, per the |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_168_203_138_INTEGRATION_LOG.md`](plans/PLANS_168_203_138_INTEGRATION_LOG.md) | **ASHFALL — Plans 168, 203, and 138 Full Integration Log** — Three partially integrated systems across the unclaimed corpus have been brought to 100% full, production-ready integ... |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_198_201_CLOSEOUT.md`](plans/PLANS_198_201_CLOSEOUT.md) | **Plans 198–201 — Integration Closeout & Follow-Up Register** — **Status:** Player-facing integration complete (commits `231595b8` + this follow-up commit). |
+| 🟢 `CURRENT` | [`docs/plans/PLANS_200_212_206_182_INTEGRATION_LOG.md`](plans/PLANS_200_212_206_182_INTEGRATION_LOG.md) | **Integration Log: Plans 200, 212, 206, and 182 Full Production Sealing** — **Date:** 2026-09-20 |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_202_205_FLAGSHIP_IMPLEMENTATION_LOG.md`](plans/PLANS_202_205_FLAGSHIP_IMPLEMENTATION_LOG.md) | **Plans 202–205 Flagship Integration Log — Shelter Resilience & Long-Range Logistics** — **Flagship:** waste-plastic fuel recovery (202), perimeter defense extension (203), |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_202_205_RECONNAISSANCE.md`](plans/PLANS_202_205_RECONNAISSANCE.md) | **Plans 202–205 Flagship Reconnaissance — Authority Map** — Status: **Wave A — reconnaissance complete.** Exit criterion "no duplicate authority planned" |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_54_57_AUTHORITY_MAP.md`](plans/PLANS_54_57_AUTHORITY_MAP.md) | **Plans 54–57 Authority Map & Cross-System Dependency Matrix** — **Scope:** Plans 54 (Trade Barter Economics), 55 (Generational Apprenticeship & Wills), 56 (Deep-Earth Seismic Dynami... |
