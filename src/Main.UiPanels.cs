@@ -685,6 +685,7 @@ namespace AtomicWar.GodotApp
             _survivorDetailPanel.FitnessProvider = EvaluateSurvivorFitness;
             _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id)
                 ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>();
+            _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id);
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 

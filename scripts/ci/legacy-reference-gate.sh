@@ -45,6 +45,7 @@ SKIP_DIRS=(
     "Ashfall.Core.Tests"
     "scripts"
     ".mimocode"
+    "Seal-steps"
 )
 
 # Root tooling files to skip (not active runtime code)

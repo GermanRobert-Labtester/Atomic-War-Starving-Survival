@@ -7,8 +7,8 @@
 - **Total integration seams:** 264
 - **Host-required (`HOST_REQUIRED`):** 182 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 5
-- **Live via Core (`LIVE_VIA_CORE`):** 42
-- **Test/Diagnostic only (`TEST_ONLY`):** 35
+- **Live via Core (`LIVE_VIA_CORE`):** 44
+- **Test/Diagnostic only (`TEST_ONLY`):** 33
 - **Pure library utilities (`PURE_LIBRARY`):** 0
 - **Deferred / Exemptions (`DEFERRED`):** 0 (shrink-only ratchet with dated owner)
 - **Unbound production-required seams:** 0
@@ -264,8 +264,8 @@
 | `TradeTellEngine.RegisterBand` | economy | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus. |
 | `TradeTellEngine.RegisterTellPool` | economy | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by TradeTellEngine.LoadFromJson while materializing the authored trade_tell_lines.json corpus. |
 | `TrophySystem.RegisterTrophy` | shelter | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in TrophySystem. |
-| `TunnelNetworkSystem.RegisterJunction` | underground | `TEST_ONLY` | 0 | 🧪 TEST | Junction registration is Core-test exercised; no production host caller yet. |
-| `TunnelNetworkSystem.RegisterSegment` | underground | `TEST_ONLY` | 0 | 🧪 TEST | Segment registration is Core-test exercised; no production host caller yet. |
+| `TunnelNetworkSystem.RegisterJunction` | underground | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Junction registration called canonically by WastelandMapSystem.EnsureCanonicalTunnels. |
+| `TunnelNetworkSystem.RegisterSegment` | underground | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Segment registration called canonically by WastelandMapSystem.EnsureCanonicalTunnels. |
 | `UvCoronaDetectionEngine.BindCatalog` | radio | `HOST_REQUIRED` | 20 | ✅ BOUND | Integration seam in UvCoronaDetectionEngine. |
 | `UvCoronaDetectionEngine.BindInventory` | radio | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in UvCoronaDetectionEngine. |
 | `VehicleGarageSystem.RegisterRecoveryMission` | expeditions | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in VehicleGarageSystem. |

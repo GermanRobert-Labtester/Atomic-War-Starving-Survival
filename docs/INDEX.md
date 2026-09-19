@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2533 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2545 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2486 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2498 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -189,7 +189,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_GLITCH_20_ROW_MATRIX.md`](architecture/BUNKER_GLITCH_20_ROW_MATRIX.md) | **BUNKER GLITCH 20-ROW MATRIX** — Canonical mapping of the 20 Subterranean Engineering Emergencies from `Assets/StreamingAssets/Data/narrative/bunker_m... |
 | 🟢 `CURRENT` | [`docs/architecture/CAMPAIGN_CALENDAR_AUTHORITY.md`](architecture/CAMPAIGN_CALENDAR_AUTHORITY.md) | **ASHFALL Campaign Calendar Authority & Time Invariants** — This document specifies the authoritative campaign calendar hierarchy, time domains, clock projections, and reconcili... |
 | 🟢 `CURRENT` | [`docs/architecture/CLOCK_POLICY.md`](architecture/CLOCK_POLICY.md) | **ASHFALL Clock Governance & Simulation Policy** — **Status:** Canonical Architecture Policy |
-| 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-09-18 \| **Systems Documented:** 34 |
+| 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-09-19 \| **Systems Documented:** 34 |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_LOG_CORPUS_MATRIX.md`](architecture/ENGINEERING_LOG_CORPUS_MATRIX.md) | **ENGINEERING LOG CORPUS MATRIX** — Overview of ASHFALL's ambient engineering and maintenance log corpora and their relationship to the canonical 20 glit... |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_SAVE_COMPATIBILITY.md`](architecture/ENGINEERING_SAVE_COMPATIBILITY.md) | **ENGINEERING SAVE COMPATIBILITY** — Plan 148 activates the subterranean engineering emergencies and maintenance logs strictly as a read-only data catalog... |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_SUBSYSTEM_AUTHORITY_MAP.md`](architecture/ENGINEERING_SUBSYSTEM_AUTHORITY_MAP.md) | **ENGINEERING SUBSYSTEM AUTHORITY MAP** — In ASHFALL, the shelter simulation is strictly authoritative. Subterranean infrastructure and machinery states are co... |
@@ -306,7 +306,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | **Dynamic World Save Contract & Migration Integrity** — "systemId": "world_weather_system", |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-18<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-19<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
 ## 4. Expansions (01–10 Master Plans & Context) (61 documents)
@@ -577,7 +577,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2170 documents)
+## 9. General Project Guides & Archive Reference (2182 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1273,7 +1273,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_COMPLETION_REPORT.md`](cartography/PLAN85_COMPLETION_REPORT.md) | **Plan 85 — Completion Report** — - **baseline damaged-map zone count:** 6 (repository truth; plan assumed 3 — delta rule §1.12 applied) |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_FRAGMENT_LIFECYCLE.md`](cartography/PLAN85_FRAGMENT_LIFECYCLE.md) | **Plan 85 — Fragment Lifecycle** — Damaged-map fragments are **not inventory items**. `fragment_id` is a catalog/state key. There are no fragment item d... |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_REGRESSION_MATRIX.md`](cartography/PLAN85_REGRESSION_MATRIX.md) | **Plan 85 — Regression Matrix** — **New — `Ashfall.Core.Tests/World/DamagedMapSystemTests.cs` (13 tests):** catalog structure (12 zones, unique ids, co... |
-| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-18<br> |
+| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-19<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md`](collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md) | **ASHFALL Collectibles — 100-Run Scavenging Balance Report** — **Generated** for Tasks 5–8 Wave F · Harness: `CollectibleBalanceCharacterizationTests` |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md`](collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md) | **ASHFALL Collectibles Utilization Matrix** — **Generated** by `scripts/ci/generate-collectibles-matrix.py` — machine-derived from |
@@ -1977,6 +1977,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md) | **Partial-plan production unblock implementation log — follow-up** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_WAVE4_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_WAVE4_FULL_INTEGRATION_IMPLEMENTATION_LOG.md) | **Partial Wave 4 — Plans 216 + 202 Integration Log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.md) | **Partial Wave 5 — Plans 163 + 210 Integration Log** — Date: 2026-09-19 |
+| 🟢 `CURRENT` | [`docs/plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md) | **Partial Wave 6 — Plans 167 + 219 Integration Log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`](plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md) | **Partial-plan production unblock implementation log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md`](plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md) | **Remaining partial-plan placeholders** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN102_IMPLEMENTATION_LOG.md`](plans/PLAN102_IMPLEMENTATION_LOG.md) | **Plan 102 Implementation Log** — Tests: Baseline Foundry selftest 26/26; data integrity 298/298; full xUnit |
@@ -2281,8 +2282,12 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/research/PLAN34_COMPLETION_REPORT.md`](research/PLAN34_COMPLETION_REPORT.md) | **Plan 34 Completion Report — Research Tree Externalization (2026-09-01)** — The externalization half of Plan 34 had already landed under `research_knowledge.json` / |
 | 🟢 `CURRENT` | [`docs/research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md`](research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md) | **Plan 166 — Salvage & Reverse Engineering Closeout** — `WorkshopReverseEngineeringSystem` remains the sole workshop authority. The implementation adds `PreWarTechDef` catal... |
 | 🟢 `CURRENT` | [`docs/research/RESEARCH_FAILURE_POLICY.md`](research/RESEARCH_FAILURE_POLICY.md) | **Research Failure Policy (Plan 34 §1.10, §34D.9)** — The JSON catalog is the **sole authored research authority**. There is no hardcoded fallback. |
+| 🟢 `CURRENT` | [`docs/roadmap/PLAN_REGISTER.md`](roadmap/PLAN_REGISTER.md) | **ASHFALL Plan Register** — This file is generated from plan front matter and repository state. The JSON sibling is the integration substrate; do... |
 | 🟢 `CURRENT` | [`docs/roadmap/README.md`](roadmap/README.md) | **ASHFALL Roadmap Governance & Single-Truth Authority** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
 | 🟢 `CURRENT` | [`docs/roadmap/WAVE_LEDGER.md`](roadmap/WAVE_LEDGER.md) | **ASHFALL Master Wave Ledger** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/E1A_IMPLEMENTATION_LOG.md`](roadmap/e1/E1A_IMPLEMENTATION_LOG.md) | **E1A baseline implementation log** — Date: 2026-09-19 |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/E1B_IMPLEMENTATION_LOG.md`](roadmap/e1/E1B_IMPLEMENTATION_LOG.md) | **E1B register implementation log** — Date: 2026-09-19 |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/E1_BASELINE.md`](roadmap/e1/E1_BASELINE.md) | **E1A Baseline** — Captured at `2026-09-19T17:10:44Z` from `b8363cb7deb8e8f8e9410f5fa400c8b9bf171327` on branch `feat/partial-wave6-plan... |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_CONDITION_PROVENANCE.md`](shelter/MACHINE_CONDITION_PROVENANCE.md) | **Plan 29 — Machine Condition Provenance (Phase 0, §3.5)** — Existing condition bands that already support truthful diagnostic tells: |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_INVENTORY.md`](shelter/MACHINE_INVENTORY.md) | **Plan 29 — Machine Inventory (Phase 0, §3.4)** — Diesel Generator & Alternator Vault, Central Ventilation & Blower Station, Deep Artesian |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN29_AUDIO_HOOKS.md`](shelter/PLAN29_AUDIO_HOOKS.md) | **Plan 29 — Audio Hooks (Task 29B §29B.21, Plan 07B handoff)** — - Machine identity sound is consistent: the degraded variations derive from the healthy |
@@ -2704,6 +2709,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/99-hardcore-economy-tuning-expansion.md`](../piagentsplans/99-hardcore-economy-tuning-expansion.md) | **Plan 99 — Hardcore Economy Tuning Expansion (2 tiers → 8 tiers, 1 faction pref → 8, 1 price shock → 6)** — Expand `hardcore_economy_tuning.json` from 2 scarcity tiers, 1 faction |
 | 🟢 `CURRENT` | [`piagentsplans/README.md`](../piagentsplans/README.md) | **piagentsplans — ASHFALL Evidence-Grounded Next-Steps Plans** — Generated by forensic repository analysis (see `docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`, |
 | 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/invalid_category.md`](../scripts/ci/fixtures/plan_governance/invalid_category.md) | **Invalid category fixture** — PLAN_ID: FIXTURE-INVALID-CATEGORY |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/legacy_plan.md`](../scripts/ci/fixtures/plan_governance/legacy_plan.md) | **Legacy plan fixture** — This fixture intentionally has no front matter. It must remain visible with a |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/stale_reference.md`](../scripts/ci/fixtures/plan_governance/stale_reference.md) | **Stale reference fixture** — PLAN_ID: FIXTURE-STALE-REFERENCE |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/superseded_cycle_a.md`](../scripts/ci/fixtures/plan_governance/superseded_cycle_a.md) | **Supersedence cycle A** — PLAN_ID: FIXTURE-CYCLE-A |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/superseded_cycle_b.md`](../scripts/ci/fixtures/plan_governance/superseded_cycle_b.md) | **Supersedence cycle B** — PLAN_ID: FIXTURE-CYCLE-B |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/unknown_rail.md`](../scripts/ci/fixtures/plan_governance/unknown_rail.md) | **Unknown rail fixture** — PLAN_ID: FIXTURE-UNKNOWN-RAIL |
+| 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/valid_active.md`](../scripts/ci/fixtures/plan_governance/valid_active.md) | **Valid active fixture** — PLAN_ID: FIXTURE-VALID-ACTIVE |
 | 🟢 `CURRENT` | [`semantic-review/2026-08-29-232720-pr-0.md`](../semantic-review/2026-08-29-232720-pr-0.md) | **Expanded-shelter lifecycle ownership and reset boundary** — W4 replaces three stale lifecycle labels with canonical save keys, adds lifecycle-only grouping metadata for the expa... |
 | 🟢 `CURRENT` | [`semantic-review/2026-08-30-015320-pr-0.md`](../semantic-review/2026-08-30-015320-pr-0.md) | **Campaign envelope authority and rollback hardening (W2)** — This diff makes `campaign.json` the preferred manifest source, revalidates the temporary aggregate payload before rep... |
 | 🟢 `CURRENT` | [`semantic-review/2026-08-30-020139-pr-0.md`](../semantic-review/2026-08-30-020139-pr-0.md) | **W2 aggregate authority, generation integrity, and fail-closed loading** — W2 makes `campaign.json` the preferred campaign authority, validates the serialized candidate before aggregate replac... |

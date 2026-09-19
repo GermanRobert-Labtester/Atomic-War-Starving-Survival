@@ -80,6 +80,9 @@ namespace Ashfall.Core.Culture
         public ArchiveSalonState salon = new();
         public int next_chronicle_ordinal;
         public float degradation_remainder;              // deterministic fractional permille carry
+        // Plan 219: Survivor photography and authored documentation records
+        // are aggregated in the cultural archive vault, avoiding parallel save stores.
+        public DocumentationState documentation = new();
     }
 
     // ---------------------------------------------------------------------
@@ -124,6 +127,9 @@ namespace Ashfall.Core.Culture
         private readonly Dictionary<string, CulturalArchiveTomeDefinition> _tomes = new(StringComparer.Ordinal);
         private CulturalArchiveVaultSave _state = new();
 
+        /// <summary>Plan 219 — Survivor photography, sketch, and authored records engine.</summary>
+        public DocumentationSystem Documentation { get; }
+
         public CulturalArchiveVaultSystem(
             Inventory.Inventory inventory,
             ILog? log = null,
@@ -136,6 +142,11 @@ namespace Ashfall.Core.Culture
             _humidityPercentProvider = humidityPercentProvider;
             _availability = availability;
             _vinyl = vinyl;
+            Documentation = new DocumentationSystem(_state.documentation);
+            Documentation.OnDocumentationCreated += _ => OnDocumentationChanged?.Invoke();
+            Documentation.OnPhotoAlbumCreated += _ => OnDocumentationChanged?.Invoke();
+            Documentation.OnPhotoAddedToAlbum += (_, _) => OnDocumentationChanged?.Invoke();
+            Documentation.OnDocumentationShared += (_, _) => OnDocumentationChanged?.Invoke();
         }
 
         // -----------------------------------------------------------------
@@ -151,6 +162,7 @@ namespace Ashfall.Core.Culture
         public event Action<int>? OnSalonEnded;                        // day
         public event Action<float>? OnSalonMoraleTick;                 // morale delta, once per day while active
         public event Action<ArchiveChronicleEntry>? OnChronicleEntryAdded;
+        public event Action? OnDocumentationChanged;
 
         // -----------------------------------------------------------------
         // Catalog
@@ -497,15 +509,151 @@ namespace Ashfall.Core.Culture
         }
 
         // -----------------------------------------------------------------
+        // Plan 219 — Photography & Documentation
+        // -----------------------------------------------------------------
+
+        public ActionResult TryCreatePhotograph(
+            string authorId,
+            string title,
+            string cameraUsed,
+            IEnumerable<string>? subjects,
+            string locationId,
+            float composition,
+            float lighting,
+            int currentDay,
+            string description,
+            bool isPublic,
+            bool requireFilm,
+            out DocumentationItem? photo)
+        {
+            photo = null;
+            if (string.IsNullOrWhiteSpace(authorId))
+                return ActionResult.Blocked("missing_author", "culture.missing_author");
+
+            if (requireFilm)
+            {
+                string filmItem = _inventory.CountById("photographic_film") > 0
+                    ? "photographic_film"
+                    : _inventory.CountById("microfiche_film") > 0
+                        ? "microfiche_film"
+                        : string.Empty;
+
+                if (string.IsNullOrEmpty(filmItem))
+                    return ActionResult.Blocked("missing_film", "culture.missing_film");
+
+                var bill = new InventoryBill();
+                bill.AddCost(filmItem, 1);
+                if (!_inventory.TryExecuteTransaction(bill))
+                    return ActionResult.Blocked("missing_film", "culture.missing_film");
+            }
+
+            photo = Documentation.CreatePhotograph(
+                authorId, title, cameraUsed, subjects, locationId,
+                composition, lighting, currentDay, description, isPublic);
+
+            TryRecordChronicleEntry(
+                "documentation_photo",
+                currentDay,
+                $"photo_{photo.DocumentationId}",
+                subjects?.ToList(),
+                authorId);
+
+            _log.Info($"[Culture] photo taken by '{authorId}': '{photo.Title}' (quality {photo.Quality:0})");
+            return ActionResult.Success("culture.photo_taken");
+        }
+
+        public ActionResult TryCreateSketch(
+            string authorId,
+            string title,
+            string subject,
+            string medium,
+            float artisticQuality,
+            float accuracy,
+            float hoursSpent,
+            int currentDay,
+            string description,
+            bool isPublic,
+            out DocumentationItem? sketch)
+        {
+            sketch = null;
+            if (string.IsNullOrWhiteSpace(authorId))
+                return ActionResult.Blocked("missing_author", "culture.missing_author");
+
+            sketch = Documentation.CreateSketch(
+                authorId, title, subject, medium, artisticQuality, accuracy, hoursSpent, currentDay, description, isPublic);
+
+            TryRecordChronicleEntry(
+                "documentation_sketch",
+                currentDay,
+                $"sketch_{sketch.DocumentationId}",
+                null,
+                authorId);
+
+            _log.Info($"[Culture] sketch created by '{authorId}': '{sketch.Title}' (quality {sketch.Quality:0})");
+            return ActionResult.Success("culture.sketch_created");
+        }
+
+        public ActionResult TryCreateWrittenRecord(
+            string authorId,
+            string title,
+            string recordType,
+            string content,
+            float writingQuality,
+            int currentDay,
+            bool isPublic,
+            out DocumentationItem? record)
+        {
+            record = null;
+            if (string.IsNullOrWhiteSpace(authorId))
+                return ActionResult.Blocked("missing_author", "culture.missing_author");
+
+            record = Documentation.CreateWrittenRecord(
+                authorId, title, recordType, content, writingQuality, currentDay, isPublic);
+
+            TryRecordChronicleEntry(
+                "documentation_record",
+                currentDay,
+                $"record_{record.DocumentationId}",
+                null,
+                authorId);
+
+            _log.Info($"[Culture] written record penned by '{authorId}': '{record.Title}' (words {record.Record?.WordCount ?? 0})");
+            return ActionResult.Success("culture.record_written");
+        }
+
+        public ActionResult TryShareDocumentation(string documentationId, int currentDay, out float moraleBoost)
+        {
+            moraleBoost = Documentation.ShareDocumentation(documentationId, currentDay);
+            if (moraleBoost <= 0f)
+                return ActionResult.Blocked("not_found", "culture.document_not_found");
+
+            TryRecordChronicleEntry(
+                "documentation_shared",
+                currentDay,
+                $"shared_{documentationId}",
+                null,
+                string.Empty);
+
+            _log.Info($"[Culture] document '{documentationId}' shared with shelter (morale boost {moraleBoost:0.#})");
+            return ActionResult.Success("culture.document_shared",
+                new Dictionary<string, double> { { "morale_boost", moraleBoost } });
+        }
+
+        // -----------------------------------------------------------------
         // Save / restore
         // -----------------------------------------------------------------
 
-        public CulturalArchiveVaultSave CaptureState() => Clone(_state);
+        public CulturalArchiveVaultSave CaptureState()
+        {
+            _state.documentation = Documentation.CaptureState();
+            return Clone(_state);
+        }
 
         public void RestoreState(CulturalArchiveVaultSave? saved)
         {
             if (saved == null) return;
             _state = Clone(saved);
+            Documentation.RestoreState(_state.documentation ?? new DocumentationState());
         }
 
         private static CulturalArchiveVaultSave Clone(CulturalArchiveVaultSave src)
