@@ -39,6 +39,28 @@ Implemented the campaign-binding sub-slice:
 | sparing bonus IDs are `item_canned_rations` and `item_iodine` | Neither exists in shipped data | Used existing `canned_food` and `iodine_pills` IDs. |
 | completion ledger can project started runs by difficulty | It stores completions only and has no difficulty ID | Deferred chronicle projection while Wave 11 owns the append-only history paths. |
 
+## XP-01 full-binding premise audit — 2026-09-19
+
+The follow-on package is authorized under the existing W1 claim. Before any
+production edits, the current owner sites were re-read and recorded in
+`docs/plans/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md`:
+
+- New-game selection is the existing cohort/supplies transaction in
+  `Main.GameFlow.cs`; the panel forwards that selection through `Main.UiPanels.cs`.
+- Needs hunger/thirst base drift is the one `ApplyBaseNeedDrift` site.
+- Radiation dose uses the shared `ComputeEffectiveRate` chain before resistance
+  and exposure; its clamps remain the owner’s responsibility.
+- Disease onset probability is clamped in `TryExpose` after source/context
+  modifiers.
+- Market `ExplainPrice` owns the base/factor/floor/ceiling path.
+- Equipment wear is applied once in `ApplyWear` before the condition floor and
+  break/jam checks.
+- Crisis deadlines are produced by `CrisisPredictor.Evaluate` from runway and
+  horizon calculations.
+
+No premise drift was found. The completion-history paths remain excluded from
+this package and are not edited.
+
 ## Verification
 
 | Gate | Result |

@@ -223,7 +223,7 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
 
         if (_skills == null)
         {
-            _matrixGrid.SetRows(BuildFixtureRows());
+            _matrixGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — skill progression not bound."));
             return;
         }
 

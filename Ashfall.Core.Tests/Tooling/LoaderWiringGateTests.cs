@@ -42,7 +42,6 @@ namespace Ashfall.Core.Tests
                 // Load-only dormant catalogs — activation tickets in
                 // docs/remediation/tickets/DORMANT_EXPANSION_ACTIVATION_TICKETS.md (audit #50).
                 ["SkyLayerArmorCatalogLoader"] = "DX-01 Expansion 11 'Orbital Harrow' designed-dormant; wire on expansion activation.",
-                ["SpiritualCatalogLoader"] = "DX-02 Plan 30 spiritual-meaning coordinator designed-dormant; wire on plan activation.",
                 ["HoldfastNpcCatalogLoader"] = "DX-03 Holdfast NPC definitions await holdfast quest-loop integration.",
             };
 

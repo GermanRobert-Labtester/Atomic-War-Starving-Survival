@@ -4,7 +4,10 @@ using System.IO;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Random;
+using Ashfall.Core.StartingLevel;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
+using Ashfall.Core.YearOfAsh;
 using Xunit;
 
 namespace Ashfall.Core.Tests.World
@@ -121,6 +124,68 @@ namespace Ashfall.Core.Tests.World
             Assert.True(restoredSystem.IsUpgradeInstalled("upgrade_trace_heating_cable"));
             Assert.Equal(captured.globalIntakeIce, restoredSystem.GlobalIntakeIce);
             Assert.Equal(1, restoredSystem.State.lastProcessedDay);
+        }
+
+        [Fact]
+        public void TickDay_FreezeBurst_RegistersThermalPipeBurst()
+        {
+            var rng = new SeededRng(7);
+            var needs = new NeedsSystem();
+            var starting = new StartingLevelSystem();
+            var deepFreeze = new YearOfAshDeepFreezeSystem(new YearOfAshDeepFreezeState { indoorTemperatureCelsius = -18f });
+            var thermal = new ShelterThermalSystem(rng, needs, starting, deepFreeze);
+            thermal.AddRoom("room_hydro", "Hydroponics", 40f);
+            thermal.AddPipe("pipe_hydro_main", "room_hydro", "room_hydro");
+
+            var hardening = new WeatherHardeningSystem(
+                new WeatherHardeningState
+                {
+                    lastProcessedDay = 0,
+                    zones = new List<ZoneHardeningState>
+                    {
+                        new ZoneHardeningState { zoneId = "room_hydro", pipeFreezeProgress = 99.95f }
+                    }
+                },
+                rng,
+                thermal: thermal);
+
+            bool burst = false;
+            hardening.OnPipeBurst += (_, _, _) => burst = true;
+            hardening.TickDay(1);
+
+            Assert.True(burst);
+            var pipe = thermal.State.pipes.Find(p => p.pipeId == "pipe_hydro_main");
+            Assert.NotNull(pipe);
+            Assert.True(pipe!.hasBurst);
+            Assert.Equal(1, pipe.burstDay);
+        }
+
+        [Fact]
+        public void TickDay_InstalledRetention_SetsThermalInsulationModifier()
+        {
+            var rng = new SeededRng(9);
+            var needs = new NeedsSystem();
+            var starting = new StartingLevelSystem();
+            var deepFreeze = new YearOfAshDeepFreezeSystem(new YearOfAshDeepFreezeState { indoorTemperatureCelsius = 12f });
+            var thermal = new ShelterThermalSystem(rng, needs, starting, deepFreeze);
+            thermal.AddRoom("room_bunker", "Bunker", 50f, insulationFactor: 1f);
+
+            var inventory = new Ashfall.Core.Inventory.Inventory();
+            inventory.AddById("copper_wire", 10);
+            var hardening = new WeatherHardeningSystem(null, rng, thermal: thermal, inventory: inventory);
+            hardening.RegisterUpgrade(new WeatherHardeningUpgradeDef
+            {
+                UpgradeId = "upgrade_retention_blanket",
+                DisplayName = "Retention Blanket",
+                MaterialCosts = new List<MaterialCost> { new MaterialCost { ItemId = "copper_wire", Amount = 1 } },
+                ThermalRetention = 0.40f
+            });
+            Assert.True(hardening.InstallUpgrade("upgrade_retention_blanket", "room_bunker").IsSuccess);
+
+            float before = thermal.GetEffectiveInsulationFactor("room_bunker");
+            hardening.TickDay(1);
+            float after = thermal.GetEffectiveInsulationFactor("room_bunker");
+            Assert.True(after > before);
         }
     }
 }

@@ -89,6 +89,16 @@ namespace AtomicWar.GodotApp
             var needs = _survivors?.Needs.Get(survivorId);
             var radiation = _survivors?.RadStateFor(survivorId);
             var row = _dutyRoster?.Roster.GetRow(survivorId);
+            // Plan 216: exercise is owned by SurvivorSocialCoordinator and
+            // persisted in its existing section. Do not create profiles while
+            // the duty roster is bootstrapping; an absent profile means the
+            // neutral capability baseline until social state is ready.
+            float conditioning = 100f;
+            if (_survivorSocial != null)
+            {
+                var profile = _survivorSocial.Exercise.TryGetProfile(survivorId);
+                conditioning = profile?.OverallConditioning ?? 100f;
+            }
             int activeIllnessBand = -1;
             var illnessBand = _doseLedger?.SickList.GetBand(survivorId);
             if (illnessBand != null
@@ -139,11 +149,13 @@ namespace AtomicWar.GodotApp
                 HasActiveWithdrawal = _chemicalDependency?.System.HasActiveWithdrawal(survivorId) ?? false,
                 HasCombatTrauma = _phase0?.CombatTrauma != null
                     && _phase0.CombatTrauma.GetHypervigilanceLevel(survivorId) >= 0.6f,
+                HasRespiratoryImpairment = (_phase0?.Respiratory?.RespiratoryDegradation(survivorId) ?? 0f) > 0f,
                 Health = needs?.Health ?? 0f,
                 Hunger = needs?.Hunger ?? 100f,
                 Thirst = needs?.Thirst ?? 100f,
                 Fatigue = needs?.Fatigue ?? 100f,
                 Warmth = needs?.Warmth ?? 0f,
+                Conditioning = conditioning,
                 CumulativeDoseMsv = Math.Max(
                     radiation?.LifetimeRadiationExposure ?? 0f,
                     _doseLedger?.Ledger.GetCumulative(survivorId) ?? 0f),

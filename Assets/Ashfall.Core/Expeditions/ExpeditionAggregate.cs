@@ -25,6 +25,10 @@ namespace Ashfall.Core.Expeditions
         /// history); a present list (even empty) is authoritative.</summary>
         public List<string>? knownLocationIds = new List<string>();
 
+        /// <summary>Plan 133 — consequence provenance projected from the
+        /// canonical expedition destination-discovery ledger.</summary>
+        public DiscoveryConsequenceState? discoveryConsequences;
+
         /// <summary>Lifetime successful returns. Defaults to 0 on legacy aggregates.</summary>
         public int completedCount;
     }

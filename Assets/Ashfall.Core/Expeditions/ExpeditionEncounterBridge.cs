@@ -73,7 +73,7 @@ namespace Ashfall.Core.Expeditions
         public event Action<EncounterSurfaced> OnSurfaced;
 
         private readonly NarrativeEncounterSystem _narrative;
-        private readonly ISeededRng _rng;
+        private ISeededRng _rng;
         private EncounterSurfaced _lastSurfaced;
 
         public TravelEncounterSystem? TravelEngine { get; set; }
@@ -103,6 +103,12 @@ namespace Ashfall.Core.Expeditions
             _narrative = narrative ?? throw new ArgumentNullException(nameof(narrative));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             TravelEngine = travel;
+        }
+
+        /// <summary>Rebind the draw stream (campaign day fork). Same instance as TickHours.</summary>
+        public void SetRng(ISeededRng rng)
+        {
+            _rng = rng ?? throw new ArgumentNullException(nameof(rng));
         }
 
         private string ResolveRegion(string? locationId)

@@ -389,7 +389,8 @@ namespace AtomicWar.GodotApp
         private void EnsureNarrativeSession()
         {
             if (_narrative != null) return;
-            _narrative = NarrativeHostSession.Create(_dataDir);
+            SetupCampaignDay();
+            _narrative = NarrativeHostSession.Create(_dataDir, _campaignDay.Rng);
             _narrative.StateChanged += () => _narrativeDirty = true;
             GD.Print("[Ashfall Godot] Narrative host ready.");
         }
@@ -588,7 +589,8 @@ namespace AtomicWar.GodotApp
             }
 
             SetupJournal();
-            _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay);
+            SetupCampaignDay();
+            _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay, _campaignDay.Rng);
             _radio.StateChanged += () => _radioPanel?.RefreshView();
             _radio.RescueMissions.OnIgnoreConsequence += (mission, tokens, standingFactionId, day) =>
             {

@@ -5,6 +5,7 @@ using System.IO;
 using Ashfall.Core;
 using Ashfall.Core.IO;
 using Ashfall.Core.Radio;
+using Ashfall.Core.Random;
 
 namespace AtomicWar.GodotApp
 {
@@ -153,7 +154,7 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        public static RadioHostSession Create(string dataDir, int day = 1)
+        public static RadioHostSession Create(string dataDir, int day = 1, ICampaignRngManager? campaignRng = null)
         {
             string actualDataDir = dataDir ?? string.Empty;
             string path = Path.Combine(actualDataDir, CorpusFileName);
@@ -202,7 +203,9 @@ namespace AtomicWar.GodotApp
 
             var session = new RadioHostSession(
                 FactionRadioEngine.LoadFromJson(json),
-                new SeededRng(DemoSeed),
+                campaignRng != null
+                    ? campaignRng.Fork(CampaignStreamIds.Radio, day)
+                    : new SeededRng(DemoSeed),
                 day,
                 triangulation,
                 broadcastCatalog,

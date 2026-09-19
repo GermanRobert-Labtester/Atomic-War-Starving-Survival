@@ -186,7 +186,8 @@ namespace AtomicWar.GodotApp
                 crewDanger, enemyCount);
             _combat.StartCombat(
                 "loc_iron_raiders_den", "The Toll — Den Raid",
-                enemyCombatantIds: enemyIds);
+                enemyCombatantIds: enemyIds,
+                isSelfDefense: true);
             _combatDirty = true;
             GD.Print($"[Ashfall Godot] Iron Raiders raid escalated to combat: {string.Join(", ", enemyIds)} ({engagement.RemainingRaiders} of {engagement.InitialRaiderStrength} raiders reached the door).");
         }

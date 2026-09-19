@@ -25,6 +25,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Ashfall.Core\Ashfall.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Assets\_Game\Shelter\NoiseDisciplineSystem.cs" Link="Shelter\NoiseDisciplineSystem.cs" />
+  </ItemGroup>
 
   <!-- Historical quarantined test drafts are no longer represented by ghost
        Compile Remove entries. SDK-style projects already ignore absent source files;

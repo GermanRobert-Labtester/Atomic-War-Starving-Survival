@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
+using Ashfall.Core.Random;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 
@@ -84,11 +86,15 @@ namespace AtomicWar.GodotApp
             WildlifeMigrationSystem wildlife = null!,
             LandmarkDegradationSystem landmarks = null!,
             WastelandMapSystem wastelandMap = null!,
-            DamagedMapSystem? damagedMap = null)
+            DamagedMapSystem? damagedMap = null,
+            ICampaignRngManager? campaignRng = null)
         {
+            int weatherSeed = campaignRng != null
+                ? campaignRng.GetStream(CampaignStreamIds.Weather).DerivedBaseSeed
+                : DemoSeed;
             Weather = weather ?? new WeatherSystem();
             SkyArmor = skyArmor ?? new SkyLayerArmorSystem();
-            WeatherIntelligence = new WeatherIntelligenceCoordinator(Weather, SkyArmor, new SeededRng(DemoSeed));
+            WeatherIntelligence = new WeatherIntelligenceCoordinator(Weather, SkyArmor, new SeededRng(weatherSeed));
             LocationEvolution = locationEvolution ?? new LocationEvolutionSystem();
             Wildlife = wildlife ?? new WildlifeMigrationSystem();
             Landmarks = landmarks ?? new LandmarkDegradationSystem();
@@ -105,12 +111,12 @@ namespace AtomicWar.GodotApp
             WeatherIntelligence.OnIntelligenceChanged += () => RaiseStateChanged();
         }
 
-        public static WorldHostSession Create(string dataDir)
+        public static WorldHostSession Create(string dataDir, ICampaignRngManager? campaignRng = null)
         {
             var mapSystem = !string.IsNullOrEmpty(dataDir)
                 ? WastelandMapCatalogLoader.CreateSystem(dataDir)
                 : null!;
-            var session = new WorldHostSession(wastelandMap: mapSystem);
+            var session = new WorldHostSession(wastelandMap: mapSystem, campaignRng: campaignRng);
             if (!string.IsNullOrEmpty(dataDir))
             {
                 session.DamagedMap = DamagedMapCatalogLoader.CreateSystem(dataDir, session.WastelandMap);
@@ -121,7 +127,10 @@ namespace AtomicWar.GodotApp
             if (profile != null)
             {
                 session.Profile = profile;
-                session.Weather.BindProfile(profile, DemoSeed);
+                int weatherSeed = campaignRng != null
+                    ? campaignRng.GetStream(CampaignStreamIds.Weather).DerivedBaseSeed
+                    : DemoSeed;
+                session.Weather.BindProfile(profile, weatherSeed);
                 // Plan 28: the same Plan 19 authority paces wildlife abundance.
                 session.Wildlife.BindSeasonProfile(profile);
             }
@@ -141,7 +150,7 @@ namespace AtomicWar.GodotApp
             if (env != null)
             {
                 if (env.State != null) session.Weather.RestoreState(env.State);
-                if (env.SkyArmor != null) session.SkyArmor.RestoreState(env.SkyArmor);
+                if (env.SkyArmor != null) session.RestoreSkyArmorSave(env.SkyArmor);
                 if (env.WeatherIntelligence != null) session.WeatherIntelligence.RestoreState(env.WeatherIntelligence);
                 if (env.LocationEvolution != null) session.LocationEvolution.RestoreState(env.LocationEvolution);
                 if (env.Wildlife != null) session.Wildlife.RestoreState(env.Wildlife);
@@ -179,7 +188,51 @@ namespace AtomicWar.GodotApp
             var mapSave = WastelandMapSaveStore.TryLoad();
             if (mapSave != null)
                 session.WastelandMap.RestoreState(mapSave);
+            OverlayWildlifeMapGraph(session.Wildlife, session.WastelandMap, session.Seeds);
             return session;
+        }
+
+        /// <summary>
+        /// Plan 30C — packs also migrate across sectors that the wasteland map
+        /// connects through location seeds. Seed neighbors are kept.
+        /// </summary>
+        private static void OverlayWildlifeMapGraph(
+            WildlifeMigrationSystem wildlife,
+            WastelandMapSystem map,
+            EvolvingWorldSeedContainer? seeds)
+        {
+            if (wildlife == null || map == null || seeds?.location_seeds == null) return;
+            var locToSector = new Dictionary<string, string>(StringComparer.Ordinal);
+            for (int i = 0; i < seeds.location_seeds.Count; i++)
+            {
+                var seed = seeds.location_seeds[i];
+                if (seed == null || string.IsNullOrEmpty(seed.location_id) || string.IsNullOrEmpty(seed.sector_id))
+                    continue;
+                locToSector[seed.location_id] = seed.sector_id;
+            }
+            if (locToSector.Count == 0) return;
+
+            var merged = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+            foreach (var route in map.Routes)
+            {
+                if (route == null) continue;
+                if (!locToSector.TryGetValue(route.From, out string fromSector)) continue;
+                if (!locToSector.TryGetValue(route.To, out string toSector)) continue;
+                if (string.Equals(fromSector, toSector, StringComparison.Ordinal)) continue;
+                if (!merged.TryGetValue(fromSector, out var neighbors))
+                {
+                    neighbors = new List<string>();
+                    merged[fromSector] = neighbors;
+                }
+                if (!neighbors.Contains(toSector))
+                    neighbors.Add(toSector);
+            }
+            if (merged.Count == 0) return;
+
+            var links = new List<(string sectorId, List<string> neighbors)>(merged.Count);
+            foreach (var kv in merged)
+                links.Add((kv.Key, kv.Value));
+            wildlife.MergeSectorAdjacency(links);
         }
 
         /// <summary>

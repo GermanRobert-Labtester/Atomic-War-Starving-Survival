@@ -3,6 +3,7 @@ using System;
 #pragma warning disable CS8618
 using System.Text;
 using Ashfall.Core;
+using Ashfall.Core.Random;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.YearOfAsh;
 using Godot;
@@ -39,7 +40,8 @@ namespace AtomicWar.GodotApp
             DoseRegistersCatalog registers = null!,
             DoseContentCatalog content = null!,
             QuestlineSystem quests = null!,
-            DosimeterCalibrationSystem calibration = null!)
+            DosimeterCalibrationSystem calibration = null!,
+            ICampaignRngManager? campaignRng = null)
         {
             Ledger = ledger ?? new DoseLedgerSystem();
             SickList = sickList ?? new SickListSystem();
@@ -49,7 +51,10 @@ namespace AtomicWar.GodotApp
             Content = content ?? new DoseContentCatalog();
             Quests = quests ?? new QuestlineSystem();
             Calibration = calibration ?? new DosimeterCalibrationSystem();
-            _rng = new SeededRng(DemoSeed);
+            int seed = campaignRng != null
+                ? campaignRng.GetStream(CampaignStreamIds.Medical).DerivedBaseSeed
+                : DemoSeed;
+            _rng = new SeededRng(seed);
 
             // Persistence: any register mutation marks the save dirty.
             Ledger.OnStateChanged += _ => RaiseStateChanged();
@@ -62,7 +67,7 @@ namespace AtomicWar.GodotApp
             Calibration.OnStateChanged += _ => RaiseStateChanged();
         }
 
-        public static DoseLedgerHostSession Create(string dataDir, ILog log = null!)
+        public static DoseLedgerHostSession Create(string dataDir, ILog log = null!, ICampaignRngManager? campaignRng = null)
         {
             CatalogLocator.UseInvariantCulture();
             var registers = new DoseRegistersCatalog();
@@ -83,7 +88,7 @@ namespace AtomicWar.GodotApp
                     quests.RegisterQuestline(q);
                 }
             }
-            return new DoseLedgerHostSession(registers: registers, content: content, quests: quests);
+            return new DoseLedgerHostSession(registers: registers, content: content, quests: quests, campaignRng: campaignRng);
         }
 
         // ── Cross-host save ──────────────────────────────────────────

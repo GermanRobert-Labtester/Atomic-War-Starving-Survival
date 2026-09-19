@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 #pragma warning disable CS8618
 using System.Linq;
 
@@ -17,11 +18,25 @@ namespace Ashfall.Core.Survivors
     }
 
     [Serializable]
+    public class LeadershipChallengeDTO
+    {
+        public string challenge_id;
+        public string challenger_id;
+        public string challenged_leader_id;
+        public string reason;
+        public bool is_resolved;
+        public bool challenger_won;
+    }
+
+    [Serializable]
     public class LeadershipSaveState
     {
         public string current_leader_id;
         public float step_down_cooldown;
+        public string designated_successor_id;
+        public string deputy_leader_id;
         public List<LeadershipSurvivorStateDTO> survivor_states = new List<LeadershipSurvivorStateDTO>();
+        public List<LeadershipChallengeDTO> challenges = new List<LeadershipChallengeDTO>();
     }
 
     /// <summary>
@@ -47,6 +62,9 @@ namespace Ashfall.Core.Survivors
         public event Action<string> OnLeaderSteppedDown;
         public event Action<string, float> OnLeaderStressIncreased;
         public event Action<string> OnLeaderBreakRisk;
+        public event Action<string, string> OnSuccessionTriggered;
+        public event Action<LeadershipChallengeDTO> OnChallengeInitiated;
+        public event Action<LeadershipChallengeDTO> OnChallengeResolved;
         public event Action OnStateChanged;
 
         // ── Host hooks ────────────────────────────────────────────
@@ -60,9 +78,16 @@ namespace Ashfall.Core.Survivors
 
         private string _currentLeaderId;
         private float _stepDownCooldown;
+        private string _designatedSuccessorId;
+        private string _deputyLeaderId;
+        private readonly List<LeadershipChallengeDTO> _challenges = new List<LeadershipChallengeDTO>();
+        private int _nextChallengeSeq = 1;
 
         public string CurrentLeaderId => _currentLeaderId;
         public float StepDownCooldown => _stepDownCooldown;
+        public string DesignatedSuccessorId => _designatedSuccessorId;
+        public string DeputyLeaderId => _deputyLeaderId;
+        public IReadOnlyList<LeadershipChallengeDTO> Challenges => _challenges;
 
         // ── Per-survivor state ────────────────────────────────────
         private class SurvivorState
@@ -142,10 +167,145 @@ namespace Ashfall.Core.Survivors
             return true;
         }
 
+        // ── Succession & Challenge (Plan 208) ───────────────────────
+        public bool DesignateSuccessor(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId))
+            {
+                _designatedSuccessorId = null!;
+                OnStateChanged?.Invoke();
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(_currentLeaderId)
+                || string.Equals(_currentLeaderId, survivorId, StringComparison.Ordinal)
+                || !IsAlive(survivorId)) return false;
+
+            _designatedSuccessorId = survivorId;
+            OnStateChanged?.Invoke();
+            return true;
+        }
+
+        public bool AppointDeputy(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId))
+            {
+                _deputyLeaderId = null!;
+                OnStateChanged?.Invoke();
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(_currentLeaderId)
+                || string.Equals(_currentLeaderId, survivorId, StringComparison.Ordinal)
+                || !IsAlive(survivorId)) return false;
+
+            _deputyLeaderId = survivorId;
+            OnStateChanged?.Invoke();
+            return true;
+        }
+
+        public LeadershipChallengeDTO? InitiateChallenge(string challengerId, string reason)
+        {
+            if (string.IsNullOrEmpty(challengerId)
+                || string.IsNullOrEmpty(_currentLeaderId)
+                || string.Equals(challengerId, _currentLeaderId, StringComparison.Ordinal)
+                || !IsAlive(challengerId)) return null;
+            if (_challenges.Any(c => !c.is_resolved
+                && string.Equals(c.challenger_id, challengerId, StringComparison.Ordinal))) return null;
+
+            var dto = new LeadershipChallengeDTO
+            {
+                challenge_id = $"chl_{_nextChallengeSeq++}",
+                challenger_id = challengerId,
+                challenged_leader_id = _currentLeaderId,
+                reason = string.IsNullOrWhiteSpace(reason) ? "Challenge for leadership" : reason,
+                is_resolved = false,
+                challenger_won = false
+            };
+            _challenges.Add(dto);
+            OnChallengeInitiated?.Invoke(dto);
+            OnStateChanged?.Invoke();
+            return dto;
+        }
+
+        public bool ResolveChallenge(string challengeId, bool challengerWon)
+        {
+            var ch = _challenges.FirstOrDefault(c => c.challenge_id == challengeId);
+            if (ch == null || ch.is_resolved) return false;
+
+            // A challenge cannot displace a later leader after its original
+            // target has already died, stepped down, or lost another contest.
+            if (!string.Equals(ch.challenged_leader_id, _currentLeaderId, StringComparison.Ordinal))
+            {
+                ch.is_resolved = true;
+                ch.challenger_won = false;
+                OnChallengeResolved?.Invoke(ch);
+                OnStateChanged?.Invoke();
+                return true;
+            }
+            if (challengerWon && !IsAlive(ch.challenger_id)) return false;
+
+            ch.is_resolved = true;
+            ch.challenger_won = challengerWon;
+
+            if (challengerWon)
+            {
+                string prevLeader = _currentLeaderId;
+                if (!string.IsNullOrEmpty(prevLeader) && _states.TryGetValue(prevLeader, out var prev))
+                {
+                    prev.IsDesignatedLeader = false;
+                }
+                _currentLeaderId = ch.challenger_id;
+                var newLeader = GetOrAdd(ch.challenger_id);
+                newLeader.IsDesignatedLeader = true;
+                if (string.Equals(_designatedSuccessorId, ch.challenger_id, StringComparison.Ordinal))
+                    _designatedSuccessorId = null!;
+                if (string.Equals(_deputyLeaderId, ch.challenger_id, StringComparison.Ordinal))
+                    _deputyLeaderId = null!;
+                OnLeaderDesignated?.Invoke(ch.challenger_id);
+
+                for (int i = 0; i < _challenges.Count; i++)
+                {
+                    var other = _challenges[i];
+                    if (ReferenceEquals(other, ch) || other.is_resolved) continue;
+                    if (!string.Equals(other.challenged_leader_id, prevLeader, StringComparison.Ordinal)) continue;
+                    other.is_resolved = true;
+                    other.challenger_won = false;
+                    OnChallengeResolved?.Invoke(other);
+                }
+            }
+
+            OnChallengeResolved?.Invoke(ch);
+            OnStateChanged?.Invoke();
+            return true;
+        }
+
         // ── Simulation callbacks ──────────────────────────────────
         public void OnSurvivorDied(string deadSurvivorId)
         {
             if (string.IsNullOrEmpty(deadSurvivorId)) return;
+
+            bool changed = false;
+            if (string.Equals(_designatedSuccessorId, deadSurvivorId, StringComparison.Ordinal))
+            {
+                _designatedSuccessorId = null!;
+                changed = true;
+            }
+            if (string.Equals(_deputyLeaderId, deadSurvivorId, StringComparison.Ordinal))
+            {
+                _deputyLeaderId = null!;
+                changed = true;
+            }
+            for (int i = 0; i < _challenges.Count; i++)
+            {
+                var challenge = _challenges[i];
+                if (challenge.is_resolved
+                    || !string.Equals(challenge.challenger_id, deadSurvivorId, StringComparison.Ordinal)) continue;
+                challenge.is_resolved = true;
+                challenge.challenger_won = false;
+                OnChallengeResolved?.Invoke(challenge);
+                changed = true;
+            }
 
             // The leader died: vacate the position immediately. Without this,
             // CurrentLeaderId dangles at a dead survivor and every later death
@@ -157,16 +317,59 @@ namespace Ashfall.Core.Survivors
                     fallen.IsDesignatedLeader = false;
                 _currentLeaderId = null!;
                 OnLeaderSteppedDown?.Invoke(deadSurvivorId);
+
+                for (int i = 0; i < _challenges.Count; i++)
+                {
+                    var challenge = _challenges[i];
+                    if (challenge.is_resolved
+                        || !string.Equals(challenge.challenged_leader_id, deadSurvivorId, StringComparison.Ordinal)) continue;
+                    challenge.is_resolved = true;
+                    challenge.challenger_won = false;
+                    OnChallengeResolved?.Invoke(challenge);
+                }
+
+                // Plan 208 Succession: check designated successor, then deputy
+                string candidate = _designatedSuccessorId;
+                var aliveList = GetAliveSurvivorIds?.Invoke();
+
+                if (string.IsNullOrEmpty(candidate) || (aliveList != null && !ContainsId(aliveList, candidate)))
+                {
+                    candidate = _deputyLeaderId;
+                }
+
+                if (!string.IsNullOrEmpty(candidate) && (aliveList == null || ContainsId(aliveList, candidate)))
+                {
+                    var successor = GetOrAdd(candidate);
+                    successor.IsDesignatedLeader = true;
+                    _currentLeaderId = candidate;
+                    if (candidate == _designatedSuccessorId) _designatedSuccessorId = null!;
+                    if (candidate == _deputyLeaderId) _deputyLeaderId = null!;
+                    OnSuccessionTriggered?.Invoke(deadSurvivorId, candidate);
+                    OnLeaderDesignated?.Invoke(candidate);
+                }
+
                 OnStateChanged?.Invoke();
                 return;
             }
 
-            if (string.IsNullOrEmpty(_currentLeaderId)) return;
-            if (!_states.TryGetValue(_currentLeaderId, out var leader)) return;
+            if (string.IsNullOrEmpty(_currentLeaderId))
+            {
+                if (changed) OnStateChanged?.Invoke();
+                return;
+            }
+            if (!_states.TryGetValue(_currentLeaderId, out var leader))
+            {
+                if (changed) OnStateChanged?.Invoke();
+                return;
+            }
 
             // Leader must be alive
             var alive = GetAliveSurvivorIds?.Invoke();
-            if (alive == null || !ContainsId(alive, _currentLeaderId)) return;
+            if (alive == null || !ContainsId(alive, _currentLeaderId))
+            {
+                if (changed) OnStateChanged?.Invoke();
+                return;
+            }
 
             leader.LeaderStressAccumulation = MathfCompat.Min(
                 LeaderStressMax,
@@ -239,8 +442,10 @@ namespace Ashfall.Core.Survivors
             {
                 current_leader_id = _currentLeaderId,
                 step_down_cooldown = _stepDownCooldown,
+                designated_successor_id = _designatedSuccessorId,
+                deputy_leader_id = _deputyLeaderId,
             };
-            foreach (var kv in _states)
+            foreach (var kv in _states.OrderBy(pair => pair.Key, StringComparer.Ordinal))
             {
                 save.survivor_states.Add(new LeadershipSurvivorStateDTO
                 {
@@ -248,6 +453,18 @@ namespace Ashfall.Core.Survivors
                     is_designated_leader = kv.Value.IsDesignatedLeader,
                     leader_stress_accumulation = kv.Value.LeaderStressAccumulation,
                     leader_deaths_witnessed = kv.Value.LeaderDeathsWitnessed,
+                });
+            }
+            foreach (var ch in _challenges)
+            {
+                save.challenges.Add(new LeadershipChallengeDTO
+                {
+                    challenge_id = ch.challenge_id,
+                    challenger_id = ch.challenger_id,
+                    challenged_leader_id = ch.challenged_leader_id,
+                    reason = ch.reason,
+                    is_resolved = ch.is_resolved,
+                    challenger_won = ch.challenger_won
                 });
             }
             return save;
@@ -258,19 +475,46 @@ namespace Ashfall.Core.Survivors
             _states.Clear();
             _currentLeaderId = null!;
             _stepDownCooldown = 0f;
+            _designatedSuccessorId = null!;
+            _deputyLeaderId = null!;
+            _challenges.Clear();
+            _nextChallengeSeq = 1;
 
             if (save != null)
             {
                 _currentLeaderId = save.current_leader_id;
                 _stepDownCooldown = save.step_down_cooldown;
-                foreach (var dto in save.survivor_states)
+                _designatedSuccessorId = save.designated_successor_id;
+                _deputyLeaderId = save.deputy_leader_id;
+                if (save.survivor_states != null)
                 {
-                    _states[dto.survivor_id] = new SurvivorState
+                    foreach (var dto in save.survivor_states)
                     {
-                        IsDesignatedLeader = dto.is_designated_leader,
-                        LeaderStressAccumulation = dto.leader_stress_accumulation,
-                        LeaderDeathsWitnessed = dto.leader_deaths_witnessed,
-                    };
+                        _states[dto.survivor_id] = new SurvivorState
+                        {
+                            IsDesignatedLeader = dto.is_designated_leader,
+                            LeaderStressAccumulation = dto.leader_stress_accumulation,
+                            LeaderDeathsWitnessed = dto.leader_deaths_witnessed,
+                        };
+                    }
+                }
+                if (save.challenges != null)
+                {
+                    foreach (var ch in save.challenges)
+                    {
+                        _challenges.Add(new LeadershipChallengeDTO
+                        {
+                            challenge_id = ch.challenge_id,
+                            challenger_id = ch.challenger_id,
+                            challenged_leader_id = string.IsNullOrEmpty(ch.challenged_leader_id)
+                                ? _currentLeaderId
+                                : ch.challenged_leader_id,
+                            reason = ch.reason,
+                            is_resolved = ch.is_resolved,
+                            challenger_won = ch.challenger_won
+                        });
+                        AdvanceChallengeSequence(ch.challenge_id);
+                    }
                 }
             }
 
@@ -283,6 +527,20 @@ namespace Ashfall.Core.Survivors
             for (int i = 0; i < list.Count; i++)
                 if (list[i] == id) return true;
             return false;
+        }
+
+        private bool IsAlive(string survivorId)
+        {
+            var alive = GetAliveSurvivorIds?.Invoke();
+            return alive != null && ContainsId(alive, survivorId);
+        }
+
+        private void AdvanceChallengeSequence(string challengeId)
+        {
+            if (string.IsNullOrEmpty(challengeId) || !challengeId.StartsWith("chl_", StringComparison.Ordinal)) return;
+            if (int.TryParse(challengeId.Substring(4), NumberStyles.None, CultureInfo.InvariantCulture, out int value)
+                && value >= _nextChallengeSeq)
+                _nextChallengeSeq = value + 1;
         }
     }
 }

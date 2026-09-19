@@ -185,6 +185,10 @@ namespace Ashfall.Core.Tests
             coord.RationPolicy = RationPolicy.Half;
             coord.SetAliveSurvivors(new[] { "sv_alpha", "sv_bravo", "sv_charlie" });
             coord.DesignateLeader("sv_charlie");
+            coord.DesignateSuccessor("sv_bravo");
+            coord.AppointDeputy("sv_alpha");
+            var challenge = coord.InitiateLeadershipChallenge("sv_bravo", "Ration dispute");
+            Assert.NotNull(challenge);
             coord.OnSharedHazardEndured(
                 new List<string> { "sv_alpha", "sv_bravo" }, "raid");
 
@@ -194,6 +198,10 @@ namespace Ashfall.Core.Tests
             var rm = coord.BuildReadModel();
 
             Assert.Equal("sv_charlie", rm.leaderId);
+            Assert.Equal("sv_bravo", rm.designatedSuccessorId);
+            Assert.Equal("sv_alpha", rm.deputyLeaderId);
+            Assert.Single(rm.leadershipChallenges);
+            Assert.Equal("sv_bravo", rm.leadershipChallenges[0].challenger_id);
             Assert.True(rm.leaderStress >= 0f);
             Assert.Equal(3, rm.entries.Count);
 
@@ -231,6 +239,26 @@ namespace Ashfall.Core.Tests
             Assert.Equal(
                 coordA.Friction.GetAffinity("sv_alpha", "sv_bravo"),
                 coordB.Friction.GetAffinity("sv_alpha", "sv_bravo"));
+        }
+
+        [Fact]
+        public void PersonalBelongings_UseNeedsMoraleAndSurviveSocialSave()
+        {
+            var (coord, survivors) = Build(17);
+            float before = survivors[0].Morale;
+            var item = coord.Belongings.RegisterBelonging(
+                "sv_alpha", "keepsake_locket", "Locket", BelongingCategory.Jewelry,
+                sentimentalValue: 80f);
+
+            Assert.NotNull(item);
+            Assert.True(survivors[0].Morale > before);
+            var save = coord.CaptureState();
+            Assert.Single(save.belongings.Belongings);
+
+            var (restored, _) = Build(17);
+            restored.RestoreState(save);
+            Assert.Single(restored.Belongings.GetBelongingsForSurvivor("sv_alpha"));
+            Assert.Equal("keepsake_locket", restored.Belongings.Belongings[0].ItemId);
         }
     }
 }

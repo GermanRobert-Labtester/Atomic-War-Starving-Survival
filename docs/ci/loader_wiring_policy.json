@@ -556,13 +556,11 @@
     {
       "loader_type": "SpiritualCatalogLoader",
       "entry_points": ["Load"],
-      "owning_host_session": null,
-      "disposition": "DEFERRED",
-      "required_catalog": "spiritual_meanings.json",
-      "owner": "narrative-team",
-      "reason": "Plan 30 spiritual-meaning coordinator is designed-dormant; wire on plan activation.",
-      "activation_condition": "Plan 30 spiritual meaning activation boundary.",
-      "expiry": "2026-12-31"
+      "owning_host_session": "Main.Spiritual",
+      "disposition": "LIVE",
+      "required_catalog": "spiritual_rituals.json",
+      "owner": "spiritual",
+      "reason": "Wired in Main.Spiritual.cs: catalog load, death feed, vigil rite, daily tick, save."
     }
   ]
 }

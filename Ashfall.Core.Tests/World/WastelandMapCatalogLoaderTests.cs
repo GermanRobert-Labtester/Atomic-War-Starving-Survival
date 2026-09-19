@@ -87,5 +87,43 @@ namespace Ashfall.Core.Tests.World
             Assert.Single(system.Nodes);
             Assert.Equal("loc_holdfast", system.Nodes[0].Id);
         }
+
+        [Fact]
+        public void AllMapNodes_ExistInLocationsCatalog()
+        {
+            string dataDir = GetDataDir();
+            var (nodes, _) = WastelandMapCatalogLoader.Load(dataDir);
+            Assert.NotEmpty(nodes);
+
+            string locationsPath = Path.Combine(dataDir, "locations.json");
+            Assert.True(File.Exists(locationsPath), "locations.json must exist");
+
+            string json = File.ReadAllText(locationsPath);
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            var locationIds = new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal);
+            if (doc.RootElement.TryGetProperty("locations", out var locs) && locs.ValueKind == System.Text.Json.JsonValueKind.Array)
+            {
+                foreach (var loc in locs.EnumerateArray())
+                {
+                    if (loc.TryGetProperty("id", out var idProp))
+                    {
+                        var id = idProp.GetString();
+                        if (!string.IsNullOrEmpty(id))
+                            locationIds.Add(id);
+                    }
+                }
+            }
+
+            var missingNodes = new System.Collections.Generic.List<string>();
+            foreach (var node in nodes)
+            {
+                if (!locationIds.Contains(node.Id))
+                {
+                    missingNodes.Add(node.Id);
+                }
+            }
+
+            Assert.True(missingNodes.Count == 0, $"The following {missingNodes.Count} map nodes are missing from locations.json: {string.Join(", ", missingNodes)}");
+        }
     }
 }

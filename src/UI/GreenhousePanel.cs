@@ -303,7 +303,7 @@ public partial class GreenhousePanel : Control
 
         if (_host == null)
         {
-            _plotGrid.SetRows(BuildFixtureRows());
+            _plotGrid.SetRows(AshfallDataGrid.UnavailableRows(8, "Unavailable — greenhouse host not bound."));
             return;
         }
 

@@ -18,16 +18,25 @@ namespace Ashfall.Core.Survivors
         public RationConflictSaveState ration = new RationConflictSaveState();
         public TraumaBondSaveState trauma = new TraumaBondSaveState();
         public SkillAtrophySaveState atrophy = new SkillAtrophySaveState();
+        // Plan 216: conditioning lives in the existing survivor-social
+        // section so exercise has no parallel campaign save owner.
+        public ExerciseSystemState exercise = new ExerciseSystemState();
+        // Plan 210: ownership claims and keepsake metadata live in this
+        // survivor aggregate; Inventory remains the physical item authority.
+        public PersonalBelongingsState belongings = new PersonalBelongingsState();
     }
 
     // ── Read model (consumed by survivor-relations and duty-roster panels) ─
 
     [Serializable]
-    public sealed class SurvivorSocialReadModel
-    {
-        public string leaderId = string.Empty;
-        public float leaderStress;
-        public List<Entry> entries = new List<Entry>();
+        public sealed class SurvivorSocialReadModel
+        {
+            public string leaderId = string.Empty;
+            public float leaderStress;
+            public string designatedSuccessorId = string.Empty;
+            public string deputyLeaderId = string.Empty;
+            public List<LeadershipChallengeDTO> leadershipChallenges = new List<LeadershipChallengeDTO>();
+            public List<Entry> entries = new List<Entry>();
 
         [Serializable]
         public sealed class Entry
@@ -42,11 +51,12 @@ namespace Ashfall.Core.Survivors
             public List<string> atrophiedSkills = new List<string>();
             public float rationAllocation;
             public float perceivedFairness;
+            public float conditioning;
         }
     }
 
     /// <summary>
-    /// Survivor-social coordinator — the single wiring point for the five
+    /// Survivor-social coordinator — the single wiring point for the six
     /// dormant social-mechanics systems (Leadership, IdeologicalFriction,
     /// RationConflict, TraumaBond, SkillAtrophy). Owns the five systems,
     /// wires their delegate hooks to the real Needs / Relations / Roster
@@ -63,6 +73,13 @@ namespace Ashfall.Core.Survivors
         public RationConflictSystem Ration { get; }
         public TraumaBondSystem TraumaBond { get; }
         public SkillAtrophySystem Atrophy { get; }
+        public ExerciseSystem Exercise { get; }
+        public PersonalBelongingsSystem Belongings { get; }
+
+        /// <summary>Raised when personal-claim metadata or its derived effects change.</summary>
+        public event Action? OnBelongingsChanged;
+
+        public const string BelongingsMoraleSource = "personal_belongings";
 
         /// <summary>
         /// Plan 60 / D7 — the relationship authority this coordinator already owns.
@@ -77,6 +94,7 @@ namespace Ashfall.Core.Survivors
         /// <summary>Plan 24B needs-modifier source id for direct per-survivor
         /// leadership morale deltas (attribution only).</summary>
         public const string LeadershipModifierSource = "leadership.morale";
+        public const string ExerciseFatigueSource = "exercise.workout";
 
         private readonly NeedsSystem _needs;
         private readonly SurvivorRelationsSystem _relations;
@@ -116,6 +134,8 @@ namespace Ashfall.Core.Survivors
             Ration = new RationConflictSystem(_rng);
             TraumaBond = new TraumaBondSystem();
             Atrophy = new SkillAtrophySystem();
+            Exercise = new ExerciseSystem();
+            Belongings = new PersonalBelongingsSystem();
 
             WireHooks();
         }
@@ -124,6 +144,32 @@ namespace Ashfall.Core.Survivors
 
         private void WireHooks()
         {
+            // Personal belongings own only stable survivor-to-item claims and
+            // sentimental metadata. Morale is applied through the canonical
+            // Needs owner, with attributable source facts for the UI.
+            Belongings.OnBelongingAcquired += item =>
+            {
+                ApplyBelongingMorale(item.OwnerSurvivorId, item.SentimentalValue * 0.05f);
+                OnBelongingsChanged?.Invoke();
+            };
+            Belongings.OnBelongingGifted += transfer =>
+            {
+                ApplyBelongingMorale(transfer.ToSurvivorId, transfer.SentimentalEffect);
+                ApplyBelongingMorale(transfer.FromSurvivorId, transfer.SentimentalEffect * 0.25f);
+                OnBelongingsChanged?.Invoke();
+            };
+            Belongings.OnBelongingInherited += (item, _) =>
+            {
+                ApplyBelongingMorale(item.OwnerSurvivorId, 5f);
+                OnBelongingsChanged?.Invoke();
+            };
+            Belongings.OnBelongingLost += loss =>
+            {
+                ApplyBelongingMorale(loss.SurvivorId, loss.MoraleEffect);
+                OnBelongingsChanged?.Invoke();
+            };
+            Belongings.OnFavoriteToggled += (_, __) => OnBelongingsChanged?.Invoke();
+
             // Leadership → Needs (morale). Plan 24B (A1): the sink routes
             // through the shared attributed seam; the leadership authority
             // still decides when the aura/delta applies and the numeric value
@@ -170,6 +216,17 @@ namespace Ashfall.Core.Survivors
             {
                 if (_needs != null) _needs.ApplyAttributedDelta(
                     id, NeedKind.Morale, delta, sourceId);
+            };
+
+            // Exercise → Needs (fatigue). The conditioning system computes the
+            // workout result; the shared Needs owner remains the sole writer of
+            // fatigue and records the source attribution once.
+            Exercise.OnWorkoutCompleted += result =>
+            {
+                if (_needs != null)
+                    _needs.ApplyAttributedDelta(
+                        result.SurvivorId, NeedKind.Fatigue,
+                        result.FatigueIncurred, ExerciseFatigueSource);
             };
         }
 
@@ -255,6 +312,35 @@ namespace Ashfall.Core.Survivors
             // 6. Skill atrophy — from real morale.
             if (_actorAdapters.Count > 0)
                 Atrophy.Tick(24f, _actorAdapters);
+
+            // Deconditioning is a deterministic daily projection over the
+            // persisted exercise profiles; no second fitness ledger is made.
+            Exercise.TickDay(day);
+            Belongings.TickDay(day);
+        }
+
+        private void ApplyBelongingMorale(string survivorId, float delta)
+        {
+            if (_needs == null || string.IsNullOrEmpty(survivorId) || Math.Abs(delta) < 0.0001f)
+                return;
+            _needs.ApplyAttributedDelta(survivorId, NeedKind.Morale, delta, BelongingsMoraleSource);
+        }
+
+        /// <summary>
+        /// Execute an exercise action for a live survivor. The host supplies an
+        /// optional seeded RNG only for the system's injury check; all persistent
+        /// state and fatigue effects remain owned by this coordinator.
+        /// </summary>
+        public WorkoutResult? ExecuteWorkout(
+            string survivorId,
+            WorkoutRoutineType routine,
+            int currentDay,
+            float intensity = 1f,
+            ISeededRng? rng = null)
+        {
+            var survivor = _needs.Get(survivorId);
+            if (survivor == null || !survivor.IsAliveState) return null;
+            return Exercise.ExecuteWorkout(survivorId, routine, currentDay, intensity, rng);
         }
 
         private void ApplyRationAllocations()
@@ -328,6 +414,12 @@ namespace Ashfall.Core.Survivors
 
         public bool DesignateLeader(string survivorId) => Leadership.DesignateLeader(survivorId);
         public bool StepDown(string survivorId) => Leadership.StepDown(survivorId);
+        public bool DesignateSuccessor(string survivorId) => Leadership.DesignateSuccessor(survivorId);
+        public bool AppointDeputy(string survivorId) => Leadership.AppointDeputy(survivorId);
+        public LeadershipChallengeDTO? InitiateLeadershipChallenge(string challengerId, string reason) =>
+            Leadership.InitiateChallenge(challengerId, reason);
+        public bool ResolveLeadershipChallenge(string challengeId, bool challengerWon) =>
+            Leadership.ResolveChallenge(challengeId, challengerWon);
 
         // ── Read model ────────────────────────────────────────────────
 
@@ -338,7 +430,23 @@ namespace Ashfall.Core.Survivors
                 leaderId = Leadership.CurrentLeaderId ?? string.Empty,
                 leaderStress = string.IsNullOrEmpty(Leadership.CurrentLeaderId)
                     ? 0f : Leadership.GetLeaderStress(Leadership.CurrentLeaderId),
+                designatedSuccessorId = Leadership.DesignatedSuccessorId ?? string.Empty,
+                deputyLeaderId = Leadership.DeputyLeaderId ?? string.Empty,
             };
+
+            for (int i = 0; i < Leadership.Challenges.Count; i++)
+            {
+                var challenge = Leadership.Challenges[i];
+                rm.leadershipChallenges.Add(new LeadershipChallengeDTO
+                {
+                    challenge_id = challenge.challenge_id,
+                    challenger_id = challenge.challenger_id,
+                    challenged_leader_id = challenge.challenged_leader_id,
+                    reason = challenge.reason,
+                    is_resolved = challenge.is_resolved,
+                    challenger_won = challenge.challenger_won
+                });
+            }
 
             for (int i = 0; i < _aliveIds.Count; i++)
             {
@@ -353,6 +461,7 @@ namespace Ashfall.Core.Survivors
                     atrophiedSkills = new List<string>(Atrophy.GetAtrophiedSkillIds(id)),
                     rationAllocation = Ration.GetAllocation(id),
                     perceivedFairness = Ration.GetState(id)?.perceivedFairness ?? 1f,
+                    conditioning = Exercise.TryGetProfile(id)?.OverallConditioning ?? 100f,
                 };
 
                 // Strongest bond partner.
@@ -388,6 +497,8 @@ namespace Ashfall.Core.Survivors
                 ration = Ration.CaptureState(),
                 trauma = TraumaBond.CaptureState(),
                 atrophy = Atrophy.CaptureState(),
+                exercise = Exercise.CaptureState(),
+                belongings = Belongings.CaptureState(),
             };
         }
 
@@ -399,6 +510,10 @@ namespace Ashfall.Core.Survivors
             Ration.RestoreState(save.ration);
             TraumaBond.RestoreState(save.trauma);
             Atrophy.RestoreState(save.atrophy);
+            if (save.exercise != null)
+                Exercise.RestoreState(save.exercise);
+            if (save.belongings != null)
+                Belongings.RestoreState(save.belongings);
         }
 
         // ── SkillActor adapter (wraps SurvivorNeedsState) ─────────────

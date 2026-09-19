@@ -158,6 +158,104 @@ namespace AtomicWar.GodotApp.Audio
             Check("Empty cue returns null", AudioCueCatalog.Resolve("") == null, ref pass, ref fail);
             Check("Null cue returns null", AudioCueCatalog.Resolve(null!) == null, ref pass, ref fail);
 
+            // Distress content is a separate data authority from the audio cue
+            // catalog. Cross-reference every signal, fragment, and follow-up
+            // cue so authored radio content cannot silently fall back to text.
+            GD.Print("[AudioSelfTest] --- Distress Cue Cross-Reference ---");
+            var distressCueIds = new HashSet<string>(StringComparer.Ordinal);
+            var distressCueSources = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+            int distressSignalsWithCue = 0, distressSignalsTextOnly = 0;
+            int distressFragmentsWithCue = 0, distressFragmentsTextOnly = 0;
+            int distressFollowUpsWithCue = 0, distressFollowUpsTextOnly = 0;
+            bool distressCatalogsParsed = true;
+            string distressDataDir = CatalogPath.ResolveDataDir();
+            string[] distressCatalogFiles = {
+                "radio_distress_signals_expansion.json",
+                "radio_distress_signals.json"
+            };
+            foreach (string catalogFile in distressCatalogFiles)
+            {
+                string catalogPath = Path.Combine(distressDataDir, catalogFile);
+                if (!File.Exists(catalogPath))
+                {
+                    distressCatalogsParsed = false;
+                    GD.PrintErr($"  [FAIL] Distress catalog missing: {catalogPath}");
+                    continue;
+                }
+
+                try
+                {
+                    using var document = JsonDocument.Parse(File.ReadAllText(catalogPath));
+                    if (!document.RootElement.TryGetProperty("radio_broadcasts", out var broadcasts)
+                        || broadcasts.ValueKind != JsonValueKind.Array)
+                    {
+                        distressCatalogsParsed = false;
+                        GD.PrintErr($"  [FAIL] Distress catalog has no radio_broadcasts array: {catalogFile}");
+                        continue;
+                    }
+
+                    foreach (var signal in broadcasts.EnumerateArray())
+                    {
+                        string signalId = signal.TryGetProperty("frequency_id", out var signalIdElement)
+                            && signalIdElement.ValueKind == JsonValueKind.String
+                            ? signalIdElement.GetString() ?? "<missing>"
+                            : "<missing>";
+                        RecordDistressCue(signal, "audio_cue",
+                            $"{catalogFile}:{signalId}:signal:0", distressCueIds, distressCueSources,
+                            ref distressSignalsWithCue, ref distressSignalsTextOnly);
+
+                        if (signal.TryGetProperty("message_fragments", out var fragments)
+                            && fragments.ValueKind == JsonValueKind.Array)
+                        {
+                            int fragmentIndex = 0;
+                            foreach (var fragment in fragments.EnumerateArray())
+                            {
+                                RecordDistressCue(fragment, "audio_cue",
+                                    $"{catalogFile}:{signalId}:message_fragments:{fragmentIndex}",
+                                    distressCueIds, distressCueSources,
+                                    ref distressFragmentsWithCue, ref distressFragmentsTextOnly);
+                                fragmentIndex++;
+                            }
+                        }
+
+                        if (signal.TryGetProperty("follow_up_signals", out var followUps)
+                            && followUps.ValueKind == JsonValueKind.Array)
+                        {
+                            int followUpIndex = 0;
+                            foreach (var followUp in followUps.EnumerateArray())
+                            {
+                                RecordDistressCue(followUp, "audio_cue",
+                                    $"{catalogFile}:{signalId}:follow_up_signals:{followUpIndex}",
+                                    distressCueIds, distressCueSources,
+                                    ref distressFollowUpsWithCue, ref distressFollowUpsTextOnly);
+                                followUpIndex++;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    distressCatalogsParsed = false;
+                    GD.PrintErr($"  [FAIL] Distress catalog parse failed for {catalogFile}: {ex.Message}");
+                }
+            }
+
+            Check("Distress signal catalogs parse for audio cross-reference",
+                distressCatalogsParsed, ref pass, ref fail);
+            foreach (string cueId in distressCueIds)
+            {
+                var distressCue = AudioCueCatalog.Resolve(cueId);
+                string sources = string.Join(", ", distressCueSources[cueId]);
+                Check($"Distress cue '{cueId}' is registered ({sources})",
+                    distressCue != null, ref pass, ref fail);
+                Check($"Distress cue '{cueId}' has a resource or valid fallback ({sources})",
+                    distressCue != null && CueHasResourceOrFallback(distressCue), ref pass, ref fail);
+            }
+            GD.Print($"[AudioSelfTest] Distress cue summary: distinct={distressCueIds.Count}; "
+                + $"signals cued={distressSignalsWithCue} text_only={distressSignalsTextOnly}; "
+                + $"fragments cued={distressFragmentsWithCue} text_only={distressFragmentsTextOnly}; "
+                + $"follow_ups cued={distressFollowUpsWithCue} text_only={distressFollowUpsTextOnly}");
+
             // ── 2. Bus Topology ─────────────────────────────────
             GD.Print("[AudioSelfTest] --- Bus Topology ---");
             string[] expectedBuses = {
@@ -1222,6 +1320,45 @@ namespace AtomicWar.GodotApp.Audio
             }
             return HostCli.EmitSummary("audio_selftest", allPass, allPass ? 0 : 1, pass, fail,
                 details: $"cues={cueCount} resolved={resolved} fallback={fallback} silent={silent} assets={keyAssets.Length}");
+        }
+
+        private static void RecordDistressCue(JsonElement node, string propertyName,
+            string source, HashSet<string> cueIds,
+            Dictionary<string, List<string>> cueSources,
+            ref int withCue, ref int textOnly)
+        {
+            if (node.TryGetProperty(propertyName, out var cue)
+                && cue.ValueKind == JsonValueKind.String
+                && !string.IsNullOrWhiteSpace(cue.GetString()))
+            {
+                cueIds.Add(cue.GetString()!);
+                if (!cueSources.TryGetValue(cue.GetString()!, out var sources))
+                {
+                    sources = new List<string>();
+                    cueSources[cue.GetString()!] = sources;
+                }
+                sources.Add(source);
+                withCue++;
+            }
+            else
+            {
+                textOnly++;
+            }
+        }
+
+        private static bool CueHasResourceOrFallback(AudioCueDef cue)
+        {
+            foreach (string resourcePath in cue.ResourcePaths)
+            {
+                if (File.Exists(ProjectSettings.GlobalizePath(resourcePath))
+                    || ResourceLoader.Exists(resourcePath))
+                {
+                    return true;
+                }
+            }
+
+            return !string.IsNullOrWhiteSpace(cue.FallbackCueId)
+                && AudioCueCatalog.Contains(cue.FallbackCueId);
         }
 
         private static void Check(string label, bool condition, ref int pass, ref int fail)

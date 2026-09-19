@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.World;
 
 namespace Ashfall.Core.Economy
 {
@@ -101,6 +102,9 @@ namespace Ashfall.Core.Economy
         public event Action<CaravanManifestState>? OnCaravanDeparted;
         public event Action<string, float, float>? OnTradeCompleted; // faction, offeredVal, requestedVal
         public event Action<string>? OnFavoredBarterStatusUnlocked; // factionId
+
+        /// <summary>Plan 32B — optional map graph for travel_days overlay.</summary>
+        public WastelandMapSystem? Map { get; set; }
 
         public IReadOnlyList<CaravanRouteDefinition> Routes => _routes;
         public IReadOnlyList<CaravanManifestState> Caravans => _state.caravans;
@@ -384,6 +388,29 @@ namespace Ashfall.Core.Economy
             };
         }
 
+        private int ResolveGraphTravelDays(CaravanRouteDefinition? route)
+        {
+            int fallback = route?.travel_days ?? 5;
+            if (Map == null || route == null) return fallback;
+            string from = ResolveRegionNode(route.origin_region_id);
+            string to = ResolveRegionNode(route.destination_region_id);
+            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to)) return fallback;
+            var estimate = Map.EstimateRoute(from, to);
+            if (estimate == null || estimate.distanceTicks <= 0) return fallback;
+            return estimate.distanceTicks;
+        }
+
+        private string ResolveRegionNode(string regionId)
+        {
+            if (string.IsNullOrEmpty(regionId) || Map == null) return string.Empty;
+            if (Map.GetNode(regionId) != null) return regionId;
+            string loc = regionId.StartsWith("loc_", StringComparison.Ordinal) ? regionId : "loc_" + regionId;
+            if (Map.GetNode(loc) != null) return loc;
+            if (string.Equals(regionId, "settlement", StringComparison.Ordinal))
+                return Map.GetNode("loc_holdfast") != null ? "loc_holdfast" : string.Empty;
+            return string.Empty;
+        }
+
         public void TickDay(int day)
         {
             _state.last_tick_day = day;
@@ -401,7 +428,7 @@ namespace Ashfall.Core.Economy
                 {
                     c.transit_progress_days++;
                     _routesById.TryGetValue(c.route_id, out var route);
-                    int totalTravel = route?.travel_days ?? 5;
+                    int totalTravel = ResolveGraphTravelDays(route);
 
                     // Resolve hazard at midpoint
                     if (!c.hazard_resolved && c.transit_progress_days >= (totalTravel / 2))

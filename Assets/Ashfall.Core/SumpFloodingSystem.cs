@@ -140,6 +140,7 @@ namespace Ashfall.Core
         public const float SludgeGasCoPpmPerKg = 0.2f;
 
         private SumpFloodingState _state = new SumpFloodingState();
+        private readonly Dictionary<string, SumpNode> _nodeLookup = new Dictionary<string, SumpNode>(StringComparer.Ordinal);
         private readonly Dictionary<string, SumpStratumDef> _strata = new Dictionary<string, SumpStratumDef>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
         private readonly ILog _log;
@@ -155,6 +156,48 @@ namespace Ashfall.Core
         public SumpFloodingState State => _state;
         public event Action<FloodIncident> OnIncident;
         public event Action OnFloodingChanged;
+
+        /// <summary>
+        /// Retrieves a sump node by its identifier with O(1) dictionary lookup.
+        /// </summary>
+        public SumpNode? GetNode(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return null;
+            EnsureNodeLookup();
+            if (_nodeLookup.TryGetValue(nodeId, out var node) && string.Equals(node.nodeId, nodeId, StringComparison.Ordinal))
+            {
+                return node;
+            }
+
+            var fallback = _state.nodes.Find(n => string.Equals(n.nodeId, nodeId, StringComparison.Ordinal));
+            if (fallback != null)
+            {
+                _nodeLookup[nodeId] = fallback;
+            }
+            return fallback;
+        }
+
+        private void EnsureNodeLookup()
+        {
+            if (_state?.nodes != null && _nodeLookup.Count != _state.nodes.Count)
+            {
+                RebuildNodeLookup();
+            }
+        }
+
+        private void RebuildNodeLookup()
+        {
+            _nodeLookup.Clear();
+            if (_state?.nodes == null) return;
+            for (int i = 0; i < _state.nodes.Count; i++)
+            {
+                var n = _state.nodes[i];
+                if (n != null && !string.IsNullOrEmpty(n.nodeId))
+                {
+                    _nodeLookup[n.nodeId] = n;
+                }
+            }
+        }
 
         /// <summary>
         /// C2[6] 23B — rising-water clock read model. Derived from the same level
@@ -178,7 +221,7 @@ namespace Ashfall.Core
         /// </summary>
         public SumpRiskSnapshot GetRisk(string nodeId)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null)
                 return new SumpRiskSnapshot { NodeExists = false, HoursToThreshold = float.PositiveInfinity };
 
@@ -203,13 +246,14 @@ namespace Ashfall.Core
             WeatherSystem weather,
             PowerGridSystem powerGrid,
             YearOfAshDeepFreezeSystem deepFreeze,
-ILog? log = null)
+            ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _weather = weather ?? throw new ArgumentNullException(nameof(weather));
             _powerGrid = powerGrid ?? throw new ArgumentNullException(nameof(powerGrid));
             _deepFreeze = deepFreeze ?? throw new ArgumentNullException(nameof(deepFreeze));
             _log = log ?? NullLog.Instance;
+            RebuildNodeLookup();
         }
 
         /// <summary>
@@ -236,7 +280,7 @@ ILog? log = null)
         /// </summary>
         public ActionResult StartFlocculation(string nodeId, int doseTier)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
             if (doseTier < 1 || doseTier > 2)
                 return ActionResult.Failed("invalid_dose", "sump.invalid_dose");
@@ -291,7 +335,7 @@ ILog? log = null)
         /// </summary>
         public ActionResult RunCentrifugeBatch(string nodeId)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
             if (node.settledSludgeKg <= 0f)
                 return ActionResult.Blocked("no_sludge", "sump.centrifuge_no_sludge");
@@ -436,20 +480,22 @@ ILog? log = null)
 
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)
         {
-            if (_state.nodes.Exists(n => n.nodeId == nodeId))
+            if (GetNode(nodeId) != null)
                 return ActionResult.Blocked("node_exists", "sump.node_exists");
 
-            _state.nodes.Add(new SumpNode
+            var node = new SumpNode
             {
                 nodeId = nodeId, displayName = displayName, maxWaterLevelCm = maxWaterLevelCm
-            });
+            };
+            _state.nodes.Add(node);
+            _nodeLookup[nodeId] = node;
             OnFloodingChanged?.Invoke();
             return ActionResult.Success("sump.node_added");
         }
 
         public ActionResult InstallPump(string nodeId)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
             if (node.hasSumpPump) return ActionResult.Blocked("pump_exists", "sump.pump_exists");
 
@@ -474,7 +520,7 @@ ILog? log = null)
 
         public ActionResult SetNodePower(string nodeId, bool powered)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
             if (!node.hasSumpPump) return ActionResult.Blocked("no_pump", "sump.no_pump");
 
@@ -485,7 +531,7 @@ ILog? log = null)
 
         public ActionResult AddMitigation(string nodeId, string mitigationType)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
 
             switch (mitigationType)
@@ -520,7 +566,7 @@ ILog? log = null)
         /// <summary>Binds a node to a catalog stratum. Nodes without a stratum keep the legacy inflow model.</summary>
         public ActionResult AssignStratum(string nodeId, string stratumId)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
             if (string.IsNullOrEmpty(stratumId) || !_strata.ContainsKey(stratumId))
                 return ActionResult.Failed("unknown_stratum", "sump.unknown_stratum");
@@ -754,7 +800,7 @@ ILog? log = null)
 
         public ActionResult DrainNode(string nodeId)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return ActionResult.Failed("unknown_node", "sump.unknown_node");
 
             node.waterLevelCm = Math.Max(0, node.waterLevelCm - 50f);
@@ -770,7 +816,7 @@ ILog? log = null)
 
         public bool IsNodeAvailable(string nodeId)
         {
-            var node = _state.nodes.Find(n => n.nodeId == nodeId);
+            var node = GetNode(nodeId);
             if (node == null) return false;
             return !node.isFlooded || !node.equipmentDisabled;
         }
@@ -781,6 +827,7 @@ ILog? log = null)
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            RebuildNodeLookup();
             // B5–B8 Phase 3: the grid's room list is not persisted — re-expose
             // installed pumps as loads after restore so served-state reads work
             // immediately (idempotent; deterministic; no RNG, no events replayed).

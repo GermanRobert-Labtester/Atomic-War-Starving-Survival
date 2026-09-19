@@ -236,6 +236,7 @@ namespace AtomicWar.GodotApp
         private void BindQuestsPanel()
         {
             SetupNarrativeQuestlines();
+            SetupPlans166To169();
             _questsPanel.Bind(
                 _core.Quests,
                 _expansions?.CrossingQuests,
@@ -246,7 +247,8 @@ namespace AtomicWar.GodotApp
                 _moralChoiceDefs,
                 _narrativeQuestlines,
                 ResolveSurvivorArcName,
-                ResolveArcItemLabel);
+                ResolveArcItemLabel,
+                _proceduralNarrative169);
         }
 
         /// <summary>

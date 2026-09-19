@@ -7,6 +7,7 @@ using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Memorial;
+using Ashfall.Core.Spiritual;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
@@ -254,6 +255,9 @@ namespace AtomicWar.GodotApp
                     + FormatSurvivorName(entry?.SurvivorId ?? string.Empty)
                     + ". For a moment, the weight eased.",
                     null!, _simDay);
+                SetupSpiritual();
+                if (!string.IsNullOrEmpty(entry?.SurvivorId))
+                    _spiritual?.PerformMemorialRite(entry.SurvivorId, SpiritualMeaningCoordinator.ShelterVigilRiteId, _simDay);
             };
             LoadMemorial();
         }

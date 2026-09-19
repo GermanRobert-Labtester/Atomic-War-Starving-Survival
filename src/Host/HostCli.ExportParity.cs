@@ -147,7 +147,10 @@ namespace AtomicWar.GodotApp
                         return exeDir;
                 }
             }
-            catch { /* headless dev context — fall through */ }
+            catch (Exception ex)
+            {
+                GD.Print("[PARITY] executable-path probe skipped: " + ex.Message);
+            }
 
             return Path.Combine(CatalogPath.ResolveRepoRoot(), "builds", "linux");
         }

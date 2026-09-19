@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Maritime;
+using Ashfall.Core.Random;
 
 namespace AtomicWar.GodotApp
 {
@@ -30,12 +31,16 @@ namespace AtomicWar.GodotApp
             StealthDiveInstance dive = null!,
             ProceduralScavengeSystem scavenge = null!,
             PsychologicalContaminationSystem psychology = null!,
-            SafeCrackingSystem safeCrack = null!)
+            SafeCrackingSystem safeCrack = null!,
+            ICampaignRngManager? campaignRng = null)
         {
+            int seed = campaignRng != null
+                ? campaignRng.GetStream(CampaignStreamIds.Maritime).DerivedBaseSeed
+                : DemoSeed;
             Dive = dive ?? new StealthDiveInstance();
-            Scavenge = scavenge ?? new ProceduralScavengeSystem(new SeededRng(DemoSeed));
+            Scavenge = scavenge ?? new ProceduralScavengeSystem(new SeededRng(seed));
             Psychology = psychology ?? new PsychologicalContaminationSystem();
-            SafeCrack = safeCrack ?? new SafeCrackingSystem(DemoSeed);
+            SafeCrack = safeCrack ?? new SafeCrackingSystem(seed);
             SeedLootNodes();
             WireEvents();
         }
@@ -58,9 +63,9 @@ namespace AtomicWar.GodotApp
             SafeCrack.OnAlarmTriggered += id => { LastEvent = $"Alarm triggered at safe {id}!"; RaiseStateChanged(); };
         }
 
-        public static MaritimeHostSession Create(string dataDir)
+        public static MaritimeHostSession Create(string dataDir, ICampaignRngManager? campaignRng = null)
         {
-            var session = new MaritimeHostSession();
+            var session = new MaritimeHostSession(campaignRng: campaignRng);
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var catalog = DiveSiteCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());

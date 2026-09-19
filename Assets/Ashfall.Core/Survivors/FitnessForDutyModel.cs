@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Ashfall.Core.IO;
+using Ashfall.Core.Medical;
 
 namespace Ashfall.Core.Survivors
 {
@@ -45,6 +46,7 @@ namespace Ashfall.Core.Survivors
         public const string RoleHealthLimit = "role_health_limit";
         public const string RoleDoseLimit = "role_dose_limit";
         public const string RoleQuarantine = "role_quarantine";
+        public const string LowConditioning = "low_conditioning";
     }
 
     /// <summary>Sanctioned hazard classes used by the live duty-role catalog.</summary>
@@ -55,6 +57,7 @@ namespace Ashfall.Core.Survivors
         public const string Airlock = "airlock";
         public const string Intake = "intake";
         public const string Surface = "surface";
+        public const string Medical = "medical";
 
         public static bool IsKnown(string value)
         {
@@ -65,6 +68,7 @@ namespace Ashfall.Core.Survivors
                 case Airlock:
                 case Intake:
                 case Surface:
+                case Medical:
                     return true;
                 default:
                     return false;
@@ -89,11 +93,18 @@ namespace Ashfall.Core.Survivors
         public bool HasSevereArs { get; set; }
         public bool HasActiveWithdrawal { get; set; }
         public bool HasCombatTrauma { get; set; }
+        public bool HasRespiratoryImpairment { get; set; }
         public float Health { get; set; } = 100f;
         public float Hunger { get; set; }
         public float Thirst { get; set; }
         public float Fatigue { get; set; }
         public float Warmth { get; set; } = 100f;
+        /// <summary>
+        /// Persisted conditioning projection from ExerciseSystem. A default of
+        /// 100 keeps callers that do not participate in the exercise package
+        /// byte-compatible while the host wires the live profile when present.
+        /// </summary>
+        public float Conditioning { get; set; } = 100f;
         public float CumulativeDoseMsv { get; set; }
         public int DaysSinceSleep { get; set; } = -1;
         public int DaysSinceDischarge { get; set; } = -1;
@@ -399,6 +410,22 @@ namespace Ashfall.Core.Survivors
                 level = Max(level, FitnessLevel.Impaired);
             }
 
+            // Plan 216: conditioning is a capability projection, not a second
+            // health/needs authority. The host supplies the persisted exercise
+            // profile; these conservative bands only affect duty fitness.
+            if (facts.Conditioning <= 20f)
+            {
+                Add(degraded, FitnessReasonIds.LowConditioning);
+                Add(needs, NeedKind.Fatigue);
+                level = Max(level, FitnessLevel.Unfit);
+            }
+            else if (facts.Conditioning <= 25f)
+            {
+                Add(degraded, FitnessReasonIds.LowConditioning);
+                Add(needs, NeedKind.Fatigue);
+                level = Max(level, FitnessLevel.Impaired);
+            }
+
             if (facts.Hunger >= _thresholds.HungerUnfit)
             {
                 Add(degraded, FitnessReasonIds.Starving);
@@ -562,7 +589,7 @@ namespace Ashfall.Core.Survivors
                     : Math.Min(hours, 4f);
             if (!allowed) hours = 0f;
 
-            return new RoleFitnessVerdict(
+            var roleVerdict = new RoleFitnessVerdict(
                 facts.SurvivorId,
                 requirements.RoleId,
                 baseVerdict,
@@ -571,6 +598,7 @@ namespace Ashfall.Core.Survivors
                 blockers,
                 warnings,
                 hours);
+            return AfflictionDutyBridge.ApplyToRoleVerdict(facts, requirements, roleVerdict);
         }
 
         private static FitnessLevel Max(FitnessLevel a, FitnessLevel b) => a > b ? a : b;

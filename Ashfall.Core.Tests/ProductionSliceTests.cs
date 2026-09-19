@@ -59,6 +59,11 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(chelation);
             Assert.Contains("chemicals", chelation.input_ids);
             Assert.Equal("item_palliative_morphine", chelation.output_item_id);
+
+            var cordyceps = catalog.recipes.Find(r => r.recipe_id == "recipe_cordyceps_antibiotic");
+            Assert.NotNull(cordyceps);
+            Assert.Contains("fungus_spores_medicinal", cordyceps.input_ids);
+            Assert.Equal("antibiotics", cordyceps.output_item_id);
         }
 
         [Fact]

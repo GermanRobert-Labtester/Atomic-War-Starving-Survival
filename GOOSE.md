@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — GOOSE Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-09-15
+# Last generated: 2026-09-19
 
 ---
 
@@ -71,16 +71,41 @@ fix. A compile-green result is not proof of runtime integration.
 - If a Godot runtime session is needed, use 15 FPS unless the user explicitly
   requests another target. Do not invoke Unity to test Godot behavior.
 
-## ACTIVE HANDOFF — AGY (Antigravity): C1 UI PANEL WAVE
+## ACTIVE QUEUE — UNBLOCKED PLANS (audited 2026-09-19)
 
-**AGY starts here.** Read `C1_COMPLETION.md` (repository root) before any other
-file: the C1 economy core (Plans 14A + 14B + market/caravan wiring) is complete
-and verified, and the tagged task is to generate/extend the `economy_detail`
-and `traveling_caravan` panels on top of the existing Core read models
-(embargo summary, typed price-factor records, caravan blocked state).
-Presentation only — panels never recompute Core outcomes (rule D of the plan's
-integration doctrine). Style authority: `DESIGN.md`. Full contract:
-`docs/plans/C1_planintegration.md` §9, §14A.8–14A.9, §14B.7–14B.8.
+**8 plans are available for integration now.** Full audit with per-plan
+evidence and verification results: `docs/plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md`.
+Queue authority stays `INTEGRATION_PLANS.md` (current batch: XP Expansion W1,
+package `XP-WAVE1-DIFFICULTY-AUTHORITY`); claim exact paths in
+`WORKTREE_OWNERSHIP.md` before editing.
+
+Available, unexecuted, no new foreman signature needed:
+
+1. `CF-P1-DISTRESS-CONTENT-SEAL` — distress follow-up/audio content seal
+   (verify-and-seal; validator rules, population replay, PR3 closeout).
+2. `CF-P5-RESTOCK-RECONCILE` — merchant-restock ledger reconciliation only
+   (DEC-05 already signed; implementation live; ledger paths integrator-owned).
+3. `CF-P6-VEHICLE-ARMOR-GRADES` — 4 armor grade tiers on the Plan 50 vehicle
+   seam (new claim + premise note).
+4. `CF-P28-ONE-BOOTSTRAP-PATH` — run the manifest bootstrap on the fresh-game
+   path (bounded host change).
+5. `CF-XP01-DIFFICULTY-FULL-BINDING` — preset selection, persistence,
+   remaining scalar consumers, panel (per-consumer premise checks under the
+   active W1 claim).
+6. `E1/Plan 53` — census `READY-UNCLAIMED` governance programme.
+7. `C2[15]/Plan 37` — input/focus/controller parity (prerequisites sealed;
+   run the premise audit first).
+8. `C2[21]/Plan 48` — release craft: versions, tags, hotfix path
+   (prerequisite sealed; run the premise audit first).
+
+Completed since 2026-09-18 (do not redo): 10 debt seals, 6 of the 15
+completion-first roster plans (Plan 24 closure, Plan 30 war projection +
+clock, Plan 32 graph travel, Plan 34 chronicle, Plan 36C port sweep,
+Plan 26A tranche-2), and census anchors C2[9]–C2[13]. Still
+**decision-blocked** — never start without the named signature: semantic-kind
+re-grouping (D11), quarantine drain (D21), XP-04 economy legs (F13), XP-06
+body-integrity schema (F14), EN-01…EN-08 proposals, Plan 49 (needs
+Plan 42/46 audits), C3 HOLDs 174/175/192/199, string freeze (D22).
 
 ## ARCHITECTURE AND DATA
 

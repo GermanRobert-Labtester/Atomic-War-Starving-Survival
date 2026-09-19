@@ -269,7 +269,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
 
         if (_host == null)
         {
-            _rosterGrid.SetRows(BuildFixtureRows());
+            _rosterGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — duty roster not bound."));
             return;
         }
 

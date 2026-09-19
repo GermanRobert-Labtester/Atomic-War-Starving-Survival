@@ -131,6 +131,19 @@ namespace AtomicWar.GodotApp.UI
                     sb.Append("\n── Social Dynamics ──\n");
                     if (!string.IsNullOrEmpty(_socialReadModel.leaderId))
                         sb.Append($"Leader: {_socialReadModel.leaderId} (stress {_socialReadModel.leaderStress:F0})\n");
+                    else
+                        sb.Append("Leader: vacant\n");
+                    if (!string.IsNullOrEmpty(_socialReadModel.designatedSuccessorId))
+                        sb.Append($"Designated successor: {_socialReadModel.designatedSuccessorId}\n");
+                    if (!string.IsNullOrEmpty(_socialReadModel.deputyLeaderId))
+                        sb.Append($"Deputy: {_socialReadModel.deputyLeaderId}\n");
+                    foreach (var challenge in _socialReadModel.leadershipChallenges)
+                    {
+                        string status = challenge.is_resolved
+                            ? (challenge.challenger_won ? "challenger prevailed" : "closed")
+                            : "open";
+                        sb.Append($"Leadership challenge {challenge.challenge_id}: {challenge.challenger_id} — {status} ({challenge.reason})\n");
+                    }
                     foreach (var e in _socialReadModel.entries)
                     {
                         sb.Append($"  • {e.survivorId}");
@@ -142,6 +155,7 @@ namespace AtomicWar.GodotApp.UI
                             sb.Append($" resentment→{e.resentmentTargetId} ({e.resentmentLevel:F2})");
                         if (e.atrophiedSkills.Count > 0)
                             sb.Append($" atrophied:[{string.Join(", ", e.atrophiedSkills)}]");
+                        sb.Append($" conditioning:{e.conditioning:F0}");
                         sb.Append('\n');
                     }
                 }

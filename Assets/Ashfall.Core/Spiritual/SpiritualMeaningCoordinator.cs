@@ -26,6 +26,9 @@ namespace Ashfall.Core.Spiritual
         private readonly Dictionary<string, int> _ritualLastPerformedDay =
             new Dictionary<string, int>(StringComparer.Ordinal);
 
+        /// <summary>Authored shelter-vigil rite id mapped from MemorialSystem.Mourn.</summary>
+        public const string ShelterVigilRiteId = "memorial_rite_roll_call_naming";
+
         public event Action<string, float>? OnRitualPerformed; // ritualId, moraleDelta
         public event Action<string, string>? OnMemorialRitePerformed; // deceasedId, riteId
         public event Action<string, int>? OnMourningStageAdvanced; // deceasedId, newStage

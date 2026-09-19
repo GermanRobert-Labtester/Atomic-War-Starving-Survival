@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core.Expeditions
@@ -15,6 +17,13 @@ namespace Ashfall.Core.Expeditions
         public int transmissionWearPermille;
         public bool isImmobilized;
         public string immobilizedReason = string.Empty;
+        // CF-P6 — additive armor state. Missing fields in old saves deserialize
+        // to the stock/default values and therefore preserve legacy behavior.
+        public string armorGradeId = string.Empty;
+        public int armorIntegrityPermille;
+        public int armorIntegrityMaxPermille;
+        public string armorMaterialProfileId = string.Empty;
+        public string armorPurity = FoundryPurityNames.Standard;
     }
 
     [Serializable]
@@ -50,8 +59,20 @@ namespace Ashfall.Core.Expeditions
 
         private readonly Dictionary<string, VehicleModificationDefinition> _modCatalog =
             new Dictionary<string, VehicleModificationDefinition>(StringComparer.Ordinal);
+        private readonly Dictionary<string, VehicleArmorGradeDefinition> _armorCatalog =
+            new Dictionary<string, VehicleArmorGradeDefinition>(StringComparer.Ordinal);
         private readonly ISeededRng _rng;
         private VehicleGarageState _state = new VehicleGarageState();
+
+        public delegate bool TryGetArmorMaterialQuality(out FoundryMaterialQuality quality);
+
+        /// <summary>Optional foundry handoff. Unset/false produces a neutral stamp.</summary>
+        public TryGetArmorMaterialQuality? ArmorMaterialQualitySource { get; set; }
+
+        /// <summary>Optional vehicle classifier. Unset keeps pure-Core callers neutral.</summary>
+        public Func<string, string?>? VehicleTerrainResolver { get; set; }
+
+        private string _armorDefaultGradeId = string.Empty;
 
         public VehicleGarageSystem(VehicleGarageCatalog? catalog = null, ISeededRng? rng = null)
         {
@@ -85,6 +106,87 @@ namespace Ashfall.Core.Expeditions
 
         public IReadOnlyDictionary<string, VehicleModificationDefinition> GetAllModifications() => _modCatalog;
 
+        public void LoadArmorCatalog(VehicleArmorGradeCatalog catalog)
+        {
+            if (catalog == null) throw new ArgumentNullException(nameof(catalog));
+            _armorCatalog.Clear();
+            foreach (var grade in catalog.grades)
+            {
+                if (grade != null && !string.IsNullOrEmpty(grade.id))
+                    _armorCatalog[grade.id] = grade;
+            }
+            _armorDefaultGradeId = catalog.default_grade_id ?? string.Empty;
+        }
+
+        public bool HasArmorGrade(string gradeId) => !string.IsNullOrEmpty(gradeId) && _armorCatalog.ContainsKey(gradeId);
+
+        public VehicleArmorGradeDefinition? GetArmorGrade(string gradeId)
+        {
+            _armorCatalog.TryGetValue(gradeId, out var definition);
+            return definition;
+        }
+
+        public IReadOnlyDictionary<string, VehicleArmorGradeDefinition> GetAllArmorGrades() => _armorCatalog;
+
+        public VehicleArmorProfile GetArmorProfile(string vehicleId)
+        {
+            var record = GetRecord(vehicleId);
+            if (record == null || string.IsNullOrEmpty(record.armorGradeId)
+                || !_armorCatalog.TryGetValue(record.armorGradeId, out var grade)
+                || grade.is_default)
+            {
+                return CreateDefaultArmorProfile();
+            }
+
+            int integrityMax = Math.Max(0, record.armorIntegrityMaxPermille);
+            int integrity = Math.Clamp(record.armorIntegrityPermille, 0, integrityMax);
+            bool active = integrity > 0;
+            return new VehicleArmorProfile
+            {
+                GradeId = grade.id,
+                DisplayName = grade.display_name,
+                Tier = grade.tier,
+                IsDefault = false,
+                MitigationPermille = active ? Math.Clamp(grade.mitigation_permille, 0, 400) : 0,
+                WearAbsorptionPermille = active ? Math.Clamp(grade.wear_absorption_permille, 0, 500) : 0,
+                IntegrityPermille = integrity,
+                IntegrityMaxPermille = integrityMax,
+                MaterialProfileId = record.armorMaterialProfileId ?? string.Empty,
+                Purity = string.IsNullOrEmpty(record.armorPurity) ? FoundryPurityNames.Standard : record.armorPurity,
+                ConditionBand = ArmorConditionBand(integrity, integrityMax),
+                SpeedMultiplierDelta = grade.speed_multiplier_delta,
+                FuelConsumptionMultiplier = grade.fuel_consumption_multiplier
+            };
+        }
+
+        public static string ArmorConditionBand(int integrityPermille, int maxPermille)
+        {
+            if (maxPermille <= 0) return "none";
+            if (integrityPermille <= 0) return "depleted";
+            if (integrityPermille * 100 >= maxPermille * 75) return "nominal";
+            if (integrityPermille * 100 >= maxPermille * 25) return "worn";
+            return "critical";
+        }
+
+        private VehicleArmorProfile CreateDefaultArmorProfile()
+        {
+            VehicleArmorGradeDefinition? grade = null;
+            if (!string.IsNullOrEmpty(_armorDefaultGradeId))
+                _armorCatalog.TryGetValue(_armorDefaultGradeId, out grade);
+            return new VehicleArmorProfile
+            {
+                GradeId = grade?.id ?? _armorDefaultGradeId,
+                DisplayName = grade?.display_name ?? "Stock Plating",
+                Tier = grade?.tier ?? 0,
+                IsDefault = true,
+                ConditionBand = "none",
+                MaterialProfileId = string.Empty,
+                Purity = FoundryPurityNames.Standard,
+                SpeedMultiplierDelta = grade?.speed_multiplier_delta ?? 0f,
+                FuelConsumptionMultiplier = grade?.fuel_consumption_multiplier ?? 1f
+            };
+        }
+
         /// <summary>Read-only customization record for a vehicle, or null when it has none yet.</summary>
         public VehicleCustomizationRecord? GetRecord(string vehicleId) =>
             !string.IsNullOrEmpty(vehicleId) && _state.vehicleRecords.TryGetValue(vehicleId, out var record) ? record : null;
@@ -116,6 +218,21 @@ namespace Ashfall.Core.Expeditions
             profile.cargoCapacityKg += GetEffectiveCargoCapacityDelta(vehicleId);
             profile.speedMultiplier = Math.Max(0.01f, profile.speedMultiplier * (1f + GetEffectiveSpeedMultiplierDelta(vehicleId)));
             profile.fuelPerTravelTick = Math.Max(0f, profile.fuelPerTravelTick * GetEffectiveFuelConsumptionMultiplier(vehicleId));
+
+            // CF-P6 armor is an additive second decorator. Mass remains present
+            // when a plate is depleted; mitigation alone is gated by integrity.
+            var armor = GetArmorProfile(vehicleId);
+            if (!armor.IsDefault)
+            {
+                profile.speedMultiplier = Math.Max(0.01f, profile.speedMultiplier * (1f + armor.SpeedMultiplierDelta));
+                profile.fuelPerTravelTick = Math.Max(0f, profile.fuelPerTravelTick * armor.FuelConsumptionMultiplier);
+                if (profile.breakdownChancePerTick > 0f && armor.MitigationPermille > 0)
+                {
+                    profile.breakdownChancePerTick = Math.Clamp(
+                        profile.breakdownChancePerTick * (1000 - armor.MitigationPermille) / 1000f,
+                        0f, 1f);
+                }
+            }
         }
 
         /// <summary>
@@ -154,6 +271,191 @@ namespace Ashfall.Core.Expeditions
 
         public bool HasVehicleRecord(string vehicleId) =>
             !string.IsNullOrEmpty(vehicleId) && _state.vehicleRecords.ContainsKey(vehicleId);
+
+        public bool CanInstallArmorGrade(string vehicleId, string gradeId, IPlayerInventoryPort? inventory, out string reason)
+        {
+            reason = string.Empty;
+            if (string.IsNullOrEmpty(vehicleId))
+            {
+                reason = "Invalid vehicle ID.";
+                return false;
+            }
+            if (!_armorCatalog.TryGetValue(gradeId, out var grade))
+            {
+                reason = $"Armor grade '{gradeId}' not found in catalog.";
+                return false;
+            }
+            if (VehicleTerrainResolver != null && VehicleTerrainResolver(vehicleId) == null)
+            {
+                reason = $"Vehicle '{vehicleId}' was not found.";
+                return false;
+            }
+            if (grade.is_default || string.Equals(grade.id, _armorDefaultGradeId, StringComparison.Ordinal))
+            {
+                reason = "Stock plating is the absence of armor — nothing to install.";
+                return false;
+            }
+
+            var record = GetOrCreateRecord(vehicleId);
+            if (string.Equals(record.armorGradeId, grade.id, StringComparison.Ordinal))
+            {
+                reason = $"Vehicle already wears grade '{grade.id}'.";
+                return false;
+            }
+            if (record.isImmobilized)
+            {
+                reason = $"Vehicle '{vehicleId}' is immobilized and cannot be modified until recovered.";
+                return false;
+            }
+
+            string? terrain = VehicleTerrainResolver?.Invoke(vehicleId);
+            if (!string.IsNullOrEmpty(terrain)
+                && (grade.compatible_terrain_types == null
+                    || !grade.compatible_terrain_types.Contains(terrain, StringComparer.Ordinal)))
+            {
+                reason = $"Grade '{grade.id}' cannot be fitted to '{terrain}' terrain vehicles.";
+                return false;
+            }
+
+            if (inventory != null)
+            {
+                foreach (var cost in grade.install_cost)
+                {
+                    if (!inventory.HasSufficient(cost.item_id, cost.amount))
+                    {
+                        reason = $"Insufficient material: requires {cost.amount} of '{cost.item_id}'.";
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool InstallArmorGrade(string vehicleId, string gradeId, IPlayerInventoryPort? inventory, out string reason)
+        {
+            if (!CanInstallArmorGrade(vehicleId, gradeId, inventory, out reason)) return false;
+
+            var grade = _armorCatalog[gradeId];
+            var bill = BuildArmorBill(grade.install_cost);
+            if (inventory != null && bill.Count > 0 && !inventory.TryConsumeBill(bill))
+            {
+                reason = "Failed to consume armor installation materials atomically from inventory.";
+                return false;
+            }
+
+            var record = GetOrCreateRecord(vehicleId);
+            if (!string.IsNullOrEmpty(record.armorGradeId)
+                && _armorCatalog.TryGetValue(record.armorGradeId, out var oldGrade))
+            {
+                foreach (var cost in oldGrade.install_cost)
+                {
+                    if (cost.item_id == "scrap_metal" && inventory != null)
+                        inventory.TryProduce(cost.item_id, Math.Max(1, cost.amount / 2));
+                }
+            }
+
+            int armorBp = 1000;
+            FoundryPurityTier purity = FoundryPurityTier.Standard;
+            string materialProfileId = string.Empty;
+            if (ArmorMaterialQualitySource != null
+                && ArmorMaterialQualitySource(out var quality))
+            {
+                armorBp = Math.Clamp(quality.ArmorModifierBp, 500, 2000);
+                purity = quality.Purity;
+                materialProfileId = quality.MaterialProfileId ?? string.Empty;
+            }
+
+            int purityBp = PurityModifierBp(purity);
+            int stampedMax = (int)Math.Round(
+                grade.integrity_pool_permille * armorBp / 1000.0 * purityBp / 1000.0,
+                MidpointRounding.AwayFromZero);
+            int minimum = (int)Math.Ceiling(grade.integrity_pool_permille * 0.5);
+            int maximum = (int)Math.Ceiling(grade.integrity_pool_permille * 1.3);
+            stampedMax = Math.Clamp(stampedMax, minimum, maximum);
+
+            record.armorGradeId = grade.id;
+            record.armorIntegrityMaxPermille = stampedMax;
+            record.armorIntegrityPermille = stampedMax;
+            record.armorMaterialProfileId = materialProfileId;
+            record.armorPurity = FoundryPurityNames.Name(purity);
+            reason = string.Empty;
+            return true;
+        }
+
+        public bool ReforgeArmorPlate(string vehicleId, IPlayerInventoryPort? inventory, out string reason)
+        {
+            reason = string.Empty;
+            var record = GetRecord(vehicleId);
+            if (record == null || string.IsNullOrEmpty(record.armorGradeId)
+                || !_armorCatalog.TryGetValue(record.armorGradeId, out var grade)
+                || grade.is_default)
+            {
+                reason = "No fitted armor plate to re-forge.";
+                return false;
+            }
+            if (record.isImmobilized)
+            {
+                reason = $"Vehicle '{vehicleId}' is immobilized and cannot be modified until recovered.";
+                return false;
+            }
+            if (record.armorIntegrityPermille >= record.armorIntegrityMaxPermille)
+            {
+                reason = "Plate is already at full integrity.";
+                return false;
+            }
+
+            if (inventory != null)
+            {
+                foreach (var cost in grade.reforge_cost)
+                {
+                    if (!inventory.HasSufficient(cost.item_id, cost.amount))
+                    {
+                        reason = $"Insufficient material: requires {cost.amount} of '{cost.item_id}'.";
+                        return false;
+                    }
+                }
+            }
+            var bill = BuildArmorBill(grade.reforge_cost);
+            if (inventory != null && bill.Count > 0 && !inventory.TryConsumeBill(bill))
+            {
+                reason = "Failed to consume re-forge materials atomically from inventory.";
+                return false;
+            }
+            record.armorIntegrityPermille = Math.Max(0, record.armorIntegrityMaxPermille);
+            return true;
+        }
+
+        private static Dictionary<string, int> BuildArmorBill(IReadOnlyList<VehicleArmorGradeCost> costs)
+        {
+            var bill = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var cost in costs)
+            {
+                if (string.IsNullOrEmpty(cost.item_id) || cost.amount <= 0) continue;
+                bill[cost.item_id] = bill.TryGetValue(cost.item_id, out int current)
+                    ? current + cost.amount : cost.amount;
+            }
+            return bill;
+        }
+
+        private static int PurityModifierBp(FoundryPurityTier purity) => purity switch
+        {
+            FoundryPurityTier.Poor => 850,
+            FoundryPurityTier.High => 1100,
+            FoundryPurityTier.Exceptional => 1200,
+            _ => 1000
+        };
+
+        private int GetEffectiveArmorMitigationPermille(string vehicleId)
+        {
+            var profile = GetArmorProfile(vehicleId);
+            return profile.IsDefault ? 0 : profile.MitigationPermille;
+        }
+
+        private int GetEffectiveArmorWearAbsorptionPermille(string vehicleId)
+        {
+            var profile = GetArmorProfile(vehicleId);
+            return profile.IsDefault ? 0 : profile.WearAbsorptionPermille;
+        }
 
         public bool CanInstallModification(string vehicleId, string slotType, string modId, IPlayerInventoryPort? inventory, out string reason)
         {
@@ -328,7 +630,17 @@ namespace Ashfall.Core.Expeditions
             float wearMult = GetEffectiveWearRateMultiplier(vehicleId) * Math.Max(0.5f, roadRoughnessMultiplier);
             int baseWear = (int)Math.Round(distanceKm * 2f * wearMult);
 
-            record.chassisStressPermille = Math.Clamp(record.chassisStressPermille + baseWear, 0, 1000);
+            int absorbed = 0;
+            int absorption = GetEffectiveArmorWearAbsorptionPermille(vehicleId);
+            if (absorption > 0)
+            {
+                absorbed = Math.Min(
+                    Math.Max(0, record.armorIntegrityPermille),
+                    (int)Math.Round(baseWear * absorption / 1000.0, MidpointRounding.AwayFromZero));
+                record.armorIntegrityPermille = Math.Max(0, record.armorIntegrityPermille - absorbed);
+            }
+
+            record.chassisStressPermille = Math.Clamp(record.chassisStressPermille + baseWear - absorbed, 0, 1000);
             record.engineFoulingPermille = Math.Clamp(record.engineFoulingPermille + (int)Math.Round(baseWear * 0.8f), 0, 1000);
             record.transmissionWearPermille = Math.Clamp(record.transmissionWearPermille + (int)Math.Round(baseWear * 0.9f), 0, 1000);
 

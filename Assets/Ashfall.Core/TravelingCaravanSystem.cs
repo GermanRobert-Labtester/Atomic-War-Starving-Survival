@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Economy;
+using Ashfall.Core.World;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -66,6 +67,9 @@ namespace Ashfall.Core
         /// movement behaves exactly as before (no blocking, no slowdown).
         /// </summary>
         public TradeEmbargoSystem? Embargoes { get; set; }
+
+        /// <summary>Plan 32B — optional wasteland graph. Unbound keeps authored hops.</summary>
+        public WastelandMapSystem? Map { get; set; }
 
         public event Action<CaravanEntry, string>? OnCaravanArrivedAtNode;
         public event Action<CaravanEntry, string, int>? OnTradeCompleted;
@@ -254,8 +258,19 @@ namespace Ashfall.Core
                 caravan.daysAtCurrentNode++;
                 if (caravan.daysAtCurrentNode >= effectiveStay)
                 {
+                    int nextIndex = (caravan.routeIndex + 1) % caravan.routeNodeIds.Count;
+                    string nextNode = caravan.routeNodeIds[nextIndex];
+                    if (Map != null && Map.GetNode(nextNode) != null
+                        && !Map.IsDiscovered(nextNode)
+                        && Map.GetFogState(nextNode) == MapFogState.Unknown)
+                    {
+                        continue;
+                    }
+
+                    ExpandRouteThroughGraph(caravan, nextIndex);
+                    nextIndex = (caravan.routeIndex + 1) % caravan.routeNodeIds.Count;
                     caravan.daysAtCurrentNode = 0;
-                    caravan.routeIndex = (caravan.routeIndex + 1) % caravan.routeNodeIds.Count;
+                    caravan.routeIndex = nextIndex;
                     caravan.currentNodeId = caravan.routeNodeIds[caravan.routeIndex];
                     OnCaravanArrivedAtNode?.Invoke(caravan, caravan.currentNodeId);
 
@@ -265,6 +280,24 @@ namespace Ashfall.Core
                     }
                 }
             }
+        }
+
+        private void ExpandRouteThroughGraph(CaravanEntry caravan, int nextIndex)
+        {
+            if (Map == null || caravan.routeNodeIds == null || caravan.routeNodeIds.Count == 0) return;
+            string from = caravan.currentNodeId;
+            string to = caravan.routeNodeIds[nextIndex];
+            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to) || from == to) return;
+            var path = Map.PlanRoute(from, to);
+            if (path == null || path.Count <= 2) return;
+            var expanded = new List<string>();
+            for (int i = 0; i <= caravan.routeIndex; i++)
+                expanded.Add(caravan.routeNodeIds[i]);
+            for (int i = 1; i < path.Count - 1; i++)
+                expanded.Add(path[i]);
+            for (int i = nextIndex; i < caravan.routeNodeIds.Count; i++)
+                expanded.Add(caravan.routeNodeIds[i]);
+            caravan.routeNodeIds = expanded;
         }
 
         public Narrative.TravelEncounterDefinition? CheckRouteEncounter(

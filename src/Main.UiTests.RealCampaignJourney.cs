@@ -2,6 +2,7 @@
 using Godot;
 using System;
 using System.IO;
+using System.Linq;
 using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
@@ -116,6 +117,9 @@ namespace AtomicWar.GodotApp
                 Check(restored, $"TryLoadAndRestoreGame succeeded: {restoreMessage}");
                 Check(_campaignDay != null && _survivors != null && _inventory != null,
                     "Continue re-composed the campaign services from disk");
+                var manifestAfterRestore = CaptureManifestSessionValues();
+                Check(manifestAfterRestore.Values.All(value => value != null),
+                    "Continue restored all manifest-mapped sessions");
 
                 int dayAfterContinue = _campaignDay!.Calendar.CurrentDay;
                 Check(dayAfterContinue == targetDay,

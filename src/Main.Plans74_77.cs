@@ -373,8 +373,13 @@ namespace AtomicWar.GodotApp
                     actionResult = _pneumaticDispatch.Maintain(param, 10f, day);
                     break;
                 case "blackout":
-                    _pneumaticDispatch.SetBlackout(!_pneumaticDispatch.System.Snapshot().Blackout);
-                    actionResult = ActionResult.Success("pneumatic.blackout_changed");
+                    bool servicedNow = _powerGrid?.System == null
+                        || _powerGrid.System.IsRoomServed("room_foundry")
+                        || _powerGrid.System.IsRoomServed("room_workshop");
+                    _pneumaticDispatch.SetBlackout(!servicedNow);
+                    actionResult = ActionResult.Success(servicedNow
+                        ? "pneumatic.grid_served"
+                        : "pneumatic.grid_blackout");
                     break;
                 default:
                     actionResult = ActionResult.Failed("unknown_action", "pneumatic.unknown_action");

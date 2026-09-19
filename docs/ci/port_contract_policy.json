@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 248,
+  "total_seams": 262,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -174,6 +174,15 @@
       "classification": "HOST_REQUIRED"
     },
     {
+      "class_name": "CartographySystem",
+      "method_name": "RegisterRegion",
+      "file_path": "Assets/Ashfall.Core/Exploration/CartographySystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "exploration",
+      "reason": "Region registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
+    },
+    {
       "class_name": "CatalogBootValidator",
       "method_name": "RegisterCatalog",
       "file_path": "Assets/Ashfall.Core/IO/CatalogBootValidator.cs",
@@ -205,6 +214,15 @@
       "classification": "LIVE_VIA_CORE",
       "owner": "core-architecture",
       "reason": "Integration seam in CatalogIntegrityDefinitionChecker."
+    },
+    {
+      "class_name": "ChildDevelopmentSystem",
+      "method_name": "RegisterChild",
+      "file_path": "Assets/Ashfall.Core/Survivors/ChildDevelopmentSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "survivors",
+      "reason": "Child registration is exercised in Core tests; no production host caller yet.",
+      "diagnostic": true
     },
     {
       "class_name": "CombatCatalog",
@@ -266,11 +284,9 @@
       "class_name": "CraftingSystem",
       "method_name": "BindCraftResultGate",
       "file_path": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in CraftingSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "HOST_REQUIRED",
+      "owner": "crafting",
+      "reason": "CraftingHostSession binds the gate to ItemCatalog.Contains so unknown result ids cannot be crafted."
     },
     {
       "class_name": "CraftingSystem",
@@ -404,6 +420,23 @@
       "classification": "LIVE_VIA_CORE"
     },
     {
+      "class_name": "DiscoveryConsequenceSystem",
+      "method_name": "RegisterDiscovery",
+      "file_path": "Assets/Ashfall.Core/Expeditions/DiscoveryConsequenceSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "expeditions",
+      "reason": "Discovery registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
+    },
+    {
+      "class_name": "DiscoveryConsequenceSystem",
+      "method_name": "RegisterExpeditionDiscovery",
+      "file_path": "Assets/Ashfall.Core/Expeditions/DiscoveryConsequenceSystem.cs",
+      "classification": "HOST_REQUIRED",
+      "owner": "expeditions",
+      "reason": "Main.Expeditions records completed expedition discoveries into consequence state."
+    },
+    {
       "class_name": "DistressFollowUpScheduler",
       "method_name": "BindToMissionEvents",
       "file_path": "Assets/Ashfall.Core/Radio/DistressFollowUpScheduler.cs",
@@ -475,6 +508,15 @@
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in DutyRosterSystem."
+    },
+    {
+      "class_name": "DynamicQuestGenerator",
+      "method_name": "RegisterTemplate",
+      "file_path": "Assets/Ashfall.Core/Quests/DynamicQuestGenerator.cs",
+      "classification": "TEST_ONLY",
+      "owner": "quests",
+      "reason": "Template registration is Core-side; mercenary host calls a different RegisterTemplate.",
+      "diagnostic": true
     },
     {
       "class_name": "EbPvdCoatingEngine",
@@ -817,11 +859,9 @@
       "class_name": "IceRoadSystem",
       "method_name": "RegisterHoldfastNode",
       "file_path": "Assets/Ashfall.Core/IceRoadSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in IceRoadSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "LIVE_VIA_CORE",
+      "owner": "holdfast",
+      "reason": "Default Cut/holdfast node registration goes through this method."
     },
     {
       "class_name": "IdeologicalFrictionSystem",
@@ -870,6 +910,15 @@
       "owner": "inventory",
       "reason": "Integration seam in ItemDescriptionCatalog.",
       "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ItemLoreSystem",
+      "method_name": "RegisterItem",
+      "file_path": "Assets/Ashfall.Core/Inventory/ItemLoreSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "inventory",
+      "reason": "Item provenance registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
     },
     {
       "class_name": "JournalSystem",
@@ -1000,6 +1049,15 @@
       "classification": "LIVE_VIA_CORE",
       "owner": "core-architecture",
       "reason": "Integration seam in MedicalPipelineCoordinator."
+    },
+    {
+      "class_name": "MemoryDecaySystem",
+      "method_name": "RegisterOrUpdate",
+      "file_path": "Assets/Ashfall.Core/Cognition/MemoryDecaySystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "cognition",
+      "reason": "Memory records are registered from Core tests; no production host caller yet.",
+      "diagnostic": true
     },
     {
       "class_name": "MercenarySystem",
@@ -1176,6 +1234,15 @@
       "owner": "disease",
       "reason": "Integration seam in PathogenStrainSystem.",
       "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PersonalBelongingsSystem",
+      "method_name": "RegisterBelonging",
+      "file_path": "Assets/Ashfall.Core/Survivors/PersonalBelongingsSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "survivors",
+      "reason": "Belonging registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
     },
     {
       "class_name": "PhantomMemoryEngine",
@@ -1413,12 +1480,29 @@
       "classification": "LIVE_VIA_CORE"
     },
     {
+      "class_name": "RelationshipDecaySystem",
+      "method_name": "RegisterOrUpdatePair",
+      "file_path": "Assets/Ashfall.Core/Survivors/RelationshipDecaySystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "survivors",
+      "reason": "Pair-bond registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
+    },
+    {
       "class_name": "ResearchSystem",
       "method_name": "Register",
       "file_path": "Assets/Ashfall.Core/Research/ResearchSystem.cs",
       "classification": "HOST_REQUIRED",
       "owner": "core-architecture",
       "reason": "Integration seam in ResearchSystem."
+    },
+    {
+      "class_name": "ResourceRationingSystem",
+      "method_name": "BindResourceValidator",
+      "file_path": "Assets/Ashfall.Core/Economy/ResourceRationingSystem.cs",
+      "classification": "HOST_REQUIRED",
+      "owner": "economy",
+      "reason": "EconomyHostSession binds the canonical catalog/consumer validator to rationing state."
     },
     {
       "class_name": "RouteInfrastructureSystem",
@@ -1435,6 +1519,15 @@
       "owner": "world",
       "reason": "Integration seam in RouteInfrastructureSystem.",
       "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "RumorSystem",
+      "method_name": "RegisterHub",
+      "file_path": "Assets/Ashfall.Core/InformationFlow/RumorSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "information-flow",
+      "reason": "Hub registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
     },
     {
       "class_name": "SafeCrackingSystem",
@@ -1501,6 +1594,24 @@
       "reason": "Integration seam in ShelterDecorSystem."
     },
     {
+      "class_name": "ShelterNoiseSystem",
+      "method_name": "RegisterRoom",
+      "file_path": "Assets/Ashfall.Core/Shelter/ShelterNoiseSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "shelter",
+      "reason": "Room acoustic registration is Core-internal / test-exercised; no production host caller yet.",
+      "diagnostic": true
+    },
+    {
+      "class_name": "ShelterSecuritySystem",
+      "method_name": "ConfigureZone",
+      "file_path": "Assets/Ashfall.Core/Shelter/ShelterSecuritySystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "shelter",
+      "reason": "Security-zone configuration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
+    },
+    {
       "class_name": "ShelterRadioStationSystem",
       "method_name": "BindSkillProvider",
       "file_path": "Assets/Ashfall.Core/Radio/ShelterRadioStationSystem.cs",
@@ -1540,10 +1651,8 @@
       "method_name": "RegisterExternalBurst",
       "file_path": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
       "owner": "core-architecture",
-      "reason": "Integration seam in ShelterThermalSystem.",
-      "classification": "DEFERRED",
-      "activation_condition": "Planned beta activation or host wiring.",
-      "expiry": "2026-12-31"
+      "reason": "WeatherHardeningSystem freeze bursts call this Core-to-Core; host does not invoke it directly.",
+      "classification": "LIVE_VIA_CORE"
     },
     {
       "class_name": "ShelterThermalSystem",
@@ -1647,11 +1756,10 @@
       "class_name": "SkillProgressionSystem",
       "method_name": "RegisterDefaultSkills",
       "file_path": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in SkillProgressionSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "TEST_ONLY",
+      "owner": "survivors",
+      "reason": "Retained zero-op compatibility boundary; production skills load from skills.json.",
+      "diagnostic": true
     },
     {
       "class_name": "SkillProgressionSystem",
@@ -1665,11 +1773,9 @@
       "class_name": "SpiritualMeaningCoordinator",
       "method_name": "RegisterDeath",
       "file_path": "Assets/Ashfall.Core/Spiritual/SpiritualMeaningCoordinator.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in SpiritualMeaningCoordinator.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "HOST_REQUIRED",
+      "owner": "spiritual",
+      "reason": "SurvivorFate.OnSurvivorFate registers mourning arcs; memorial vigil maps to ShelterVigilRiteId."
     },
     {
       "class_name": "StartingLevelSystem",
@@ -1691,11 +1797,17 @@
       "class_name": "StealthSystem",
       "method_name": "RegisterWeaponNoise",
       "file_path": "Assets/Ashfall.Core/Combat/StealthSystem.cs",
-      "classification": "DEFERRED",
-      "owner": "core-architecture",
-      "reason": "Integration seam in StealthSystem.",
-      "activation_condition": "Planned beta activation or cleanup boundary.",
-      "expiry": "2026-12-31"
+      "classification": "HOST_REQUIRED",
+      "owner": "combat",
+      "reason": "Weapon-noise profiles feed PartyStealthState.accumulatedNoise."
+    },
+    {
+      "class_name": "SubsystemManifest",
+      "method_name": "RegisterSetupAction",
+      "file_path": "Assets/Ashfall.Core/Orchestration/SubsystemManifest.cs",
+      "classification": "HOST_REQUIRED",
+      "owner": "orchestration",
+      "reason": "Plan 28C host registers setup delegates for declarative subsystem bootstrap."
     },
     {
       "class_name": "SumpFloodingSystem",
@@ -1809,6 +1921,24 @@
       "owner": "shelter",
       "reason": "Integration seam in TrophySystem.",
       "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "TunnelNetworkSystem",
+      "method_name": "RegisterJunction",
+      "file_path": "Assets/Ashfall.Core/Underground/TunnelNetworkSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "underground",
+      "reason": "Junction registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
+    },
+    {
+      "class_name": "TunnelNetworkSystem",
+      "method_name": "RegisterSegment",
+      "file_path": "Assets/Ashfall.Core/Underground/TunnelNetworkSystem.cs",
+      "classification": "TEST_ONLY",
+      "owner": "underground",
+      "reason": "Segment registration is Core-test exercised; no production host caller yet.",
+      "diagnostic": true
     },
     {
       "class_name": "UvCoronaDetectionEngine",

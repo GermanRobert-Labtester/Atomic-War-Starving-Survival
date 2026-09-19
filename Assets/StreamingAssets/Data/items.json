@@ -7443,6 +7443,36 @@
       "empShielded": true
     },
     {
+      "id": "item_chem_fungal_antibiotic",
+      "displayName": "Cordyceps Antibiotic Ampoule",
+      "description": "A cloudy ampoule distilled from medicinal cordyceps spores. The lab treats it as a last-line infection breaker, not a comfort drug.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.1,
+      "tradeValue": 65,
+      "empShielded": true
+    },
+    {
+      "id": "item_chem_spore_sedative",
+      "displayName": "Mycelial Cortex Depressant",
+      "description": "A dark tincture pressed from cultivated caps. It drops a body into heavy sleep and leaves the mouth tasting of cellar dust.",
+      "type": "Medical",
+      "stackMax": 10,
+      "weight": 0.15,
+      "tradeValue": 55,
+      "empShielded": true
+    },
+    {
+      "id": "item_chem_choke_spore_toxin",
+      "displayName": "Choke-Spore Contact Toxin",
+      "description": "A sealed vial of concentrated black-mold spores in solvent. Opening it is a decision. The lab keeps it on the poison shelf, not the dispensary.",
+      "type": "Medical",
+      "stackMax": 8,
+      "weight": 0.12,
+      "tradeValue": 35,
+      "empShielded": true
+    },
+    {
       "id": "item_official_ballot_box",
       "displayName": "Padlocked Ballot Box",
       "description": "Heavy welded steel ballot repository with tamper-evident seal for settlement democratic votes.",

@@ -27,6 +27,14 @@ namespace AtomicWar.GodotApp
             var nullBeforeNames = CaptureNonUiFieldValues().Where(kv => kv.Value == null).Select(kv => kv.Key).ToList();
             GD.Print($"[CompositionRootUiTest] nonUiFields={CountNonUiFields()} nullBefore={nullBefore} nullFields={string.Join(", ", nullBeforeNames)}");
 
+            var manifestAfterFirst = CaptureManifestSessionValues();
+            bool manifestPresent = manifestAfterFirst.Values.All(value => value != null);
+            if (!manifestPresent)
+            {
+                GD.PrintErr("[CompositionRootUiTest] Manifest session missing after fresh ComposeCampaign(): "
+                            + string.Join(", ", manifestAfterFirst.Where(kv => kv.Value == null).Select(kv => kv.Key)));
+            }
+
             ComposeCampaign();
 
             int nullAfter = CountNullNonUiFields();
@@ -41,6 +49,10 @@ namespace AtomicWar.GodotApp
             var afterFirst = CaptureNonUiFieldValues();
             ComposeCampaign();
             var afterSecond = CaptureNonUiFieldValues();
+            var manifestAfterSecond = CaptureManifestSessionValues();
+            bool manifestStable = manifestAfterFirst.All(kv =>
+                kv.Value != null && manifestAfterSecond.TryGetValue(kv.Key, out var second)
+                && ReferenceEquals(kv.Value, second));
 
             bool idempotent = true;
             string? idempotencyFailure = null;
@@ -96,6 +108,9 @@ namespace AtomicWar.GodotApp
             }
 
             // ── Step 4: StartNewGame() composition & fallback switch no-op verification ──
+            var firstCampaignMemorial = _memorial;
+            var firstCampaignBlackMarket = _blackMarket;
+            var firstCampaignVehicleGarage = _vehicleGarage;
             ResetAllSessions();
             ResetComposeCampaignCallCount();
 
@@ -106,6 +121,19 @@ namespace AtomicWar.GodotApp
             if (!startNewGameComposed)
             {
                 GD.PrintErr($"[CompositionRootUiTest] StartNewGame failed to call ComposeCampaign() exactly once: callCount={ComposeCampaignCallCount}");
+            }
+
+            bool campaignIsolationPass = firstCampaignMemorial != null
+                && firstCampaignBlackMarket != null
+                && firstCampaignVehicleGarage != null
+                && !ReferenceEquals(firstCampaignMemorial, _memorial)
+                && !ReferenceEquals(firstCampaignBlackMarket, _blackMarket)
+                && !ReferenceEquals(firstCampaignVehicleGarage, _vehicleGarage)
+                && _memorial != null
+                && _memorial.Entries.Count == 0;
+            if (!campaignIsolationPass)
+            {
+                GD.PrintErr("[CompositionRootUiTest] Campaign isolation failed: manifest sessions were not rebuilt cleanly after reset.");
             }
 
             var postNewGameServices = CaptureNonUiFieldValues();
@@ -156,12 +184,17 @@ namespace AtomicWar.GodotApp
 
             bool pass = composeConstructed &&
                         idempotent &&
+                        manifestPresent &&
+                        manifestStable &&
+                        campaignIsolationPass &&
                         panelConstructionPass &&
                         startNewGameComposed &&
                         coreServicesPresent &&
                         fallbackNoOpsPass;
 
             GD.Print($"[CompositionRootUiTest] constructed={constructed} idempotent={idempotent} " +
+                     $"manifestPresent={manifestPresent} manifestStable={manifestStable} " +
+                     $"campaignIsolationPass={campaignIsolationPass} " +
                      $"panelsTested={panelsTested} panelConstructionPass={panelConstructionPass} " +
                      $"startNewGameComposed={startNewGameComposed} coreServicesPresent={coreServicesPresent} " +
                      $"fallbackNoOpsPass={fallbackNoOpsPass} (tested {fallbackPanelsTested} fallback panels)");
@@ -199,6 +232,32 @@ namespace AtomicWar.GodotApp
             "Camera", "Light", "WorldEnvironment", "NavigationRegion",
             "CanvasLayer", "ViewportTexture"
         };
+
+        private Dictionary<string, object?> CaptureManifestSessionValues()
+        {
+            return new Dictionary<string, object?>(StringComparer.Ordinal)
+            {
+                ["journal"] = _journal,
+                ["needs"] = _survivors,
+                ["inventory"] = _inventory,
+                ["weather"] = _world,
+                ["radiation"] = _doseLedger,
+                ["radio"] = _radio,
+                ["expeditions"] = _expeditions,
+                ["duty_roster"] = _dutyRoster,
+                ["crafting"] = _crafting,
+                ["research"] = _sharedResearch,
+                ["medical"] = _medical,
+                ["medical_ward"] = _medicalWard,
+                ["factions"] = _factionBranch,
+                ["economy"] = _economy,
+                ["greenhouse"] = _greenhouse,
+                ["shelter_defense"] = _skyDefense,
+                ["vehicle_garage"] = _vehicleGarage,
+                ["black_market"] = _blackMarket,
+                ["memorial"] = _memorial,
+            };
+        }
 
         private Dictionary<string, object?> CaptureNonUiFieldValues()
         {

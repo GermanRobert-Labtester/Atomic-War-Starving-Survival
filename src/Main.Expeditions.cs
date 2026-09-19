@@ -45,6 +45,7 @@ namespace AtomicWar.GodotApp
         private bool _combatDirty;
         private ReconTelemetryHostSession _reconTelemetry = null!;
         private bool _reconTelemetryDirty;
+        private bool _discoveryConsequencesBound;
 
         private void FlushExpeditionIfDirty()
         {
@@ -108,9 +109,11 @@ namespace AtomicWar.GodotApp
                 if (_yearOfAsh != null)
                     _travelEncounters.FactionWar = _yearOfAsh.FactionWar;
             }
-            _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters);
+            SetupCampaignDay();
+            _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters, _campaignDay.Rng);
             _expeditions.Flags = _consequenceLedger;
             _expeditions.CurrentDay = _simDay;
+            BindDiscoveryConsequences();
             // Plan 50 — the campaign-owned customization/maintenance garage is
             // the single source of fitted-modification effects and component
             // wear for the sortie profile. Optional seam; unbound = legacy path.
@@ -145,6 +148,8 @@ namespace AtomicWar.GodotApp
                 _expeditions.Items = _inventory.Catalog;
             }
             AttachDamagedMapIfReady();
+            if (_world?.WastelandMap != null)
+                _expeditions.WastelandMap = _world.WastelandMap;
             // Plan 52: travel-encounter decisions land in the persisted
             // expansion-quest ledger — the recurring-NPC arc memory authority.
             SetupExpansionQuests();
@@ -224,6 +229,13 @@ namespace AtomicWar.GodotApp
                     }
                 }
 
+                if (!string.IsNullOrEmpty(state.locationId))
+                {
+                    SetupYearOfAsh();
+                    _yearOfAsh?.RecordWarLocationVisited(state.locationId);
+                    _world?.WastelandMap?.DiscoverVisited(state.locationId, "expedition", _expeditions.CurrentDay);
+                }
+
                 if (_journal != null)
                 {
                     _journal.TryAddRawEntry(
@@ -236,6 +248,43 @@ namespace AtomicWar.GodotApp
                 GD.Print($"[Ashfall Godot] Expedition completed for {state.survivorId}: {state.loot?.Count ?? 0} loot items deposited into shelter inventory.");
             };
             GD.Print("[Ashfall Godot] Expedition host ready: encounters · dive instance.");
+        }
+
+        /// <summary>
+        /// Plan 133 — project the canonical ExpeditionSystem destination fact
+        /// into the existing expedition consequence aggregate. The consequence
+        /// ledger receives provenance only; faction standing remains owned by
+        /// Year of Ash and is changed only when a typed outcome carries a
+        /// standing delta.
+        /// </summary>
+        private void BindDiscoveryConsequences()
+        {
+            if (_expeditions == null || _discoveryConsequencesBound) return;
+
+            _expeditions.Engine.OnLocationDiscovered += locationId =>
+            {
+                _expeditions.DiscoveryConsequences.RegisterExpeditionDiscovery(locationId, _simDay);
+            };
+            _expeditions.OnDiscoveryConsequenceApplied += outcome =>
+            {
+                if (outcome == null) return;
+                if (!string.IsNullOrEmpty(outcome.FactionId) && Math.Abs(outcome.FactionStandingDelta) > 0.0001f)
+                {
+                    SetupYearOfAsh();
+                    int delta = (int)Math.Round(outcome.FactionStandingDelta, MidpointRounding.AwayFromZero);
+                    if (delta != 0) _yearOfAsh.FactionWar.ModifyStanding(outcome.FactionId, delta);
+                    _yearOfAshDirty = true;
+                }
+
+                _consequenceLedger.Set(
+                    $"discovery_consequence_{outcome.ConsequenceId}",
+                    "discovery_consequences",
+                    "expedition_discovery",
+                    outcome.Day,
+                    outcome.DiscoveryId);
+                _expeditionDirty = true;
+            };
+            _discoveryConsequencesBound = true;
         }
 
         private void SaveExpeditions()
@@ -283,16 +332,20 @@ namespace AtomicWar.GodotApp
             SetupSurvivors();
             SetupPhase0();
             SetupSurvivorFate();
+            SetupYearOfAsh();
             // B99: make the persisted ballistics projection available before
             // combat builds its weapon tokens.
             ComposePlans74To77();
-            _combat = CombatHostSession.Create(_dataDir);
+            SetupCampaignDay();
+            _combat = CombatHostSession.Create(_dataDir, _campaignDay.Rng);
             if (_combat != null)
             {
                 _combat.Inventory = _inventory;
                 _combat.Survivors = _survivors;
                 _combat.Equipment = _equipmentCondition?.System;
                 _combat.Ballistics = _ballisticsWorkbench?.System;
+                _combat.Stealth = EnsureStealth();
+                _combat.StealthExpeditionId = "combat_active";
                 // CBRN: evaluate lane exposure after each EndTurn when hazards are live.
                 _combat.ChemWarfare = EnsureChemWarfare();
                 // MarkCombatSurvived is a required combat effect (see
@@ -308,6 +361,12 @@ namespace AtomicWar.GodotApp
                 _combat.ValidatePorts();
                 HostWiringValidator.RegisterReporter(_combat);
                 _combat.StateChanged += () => _combatDirty = true;
+                _combat.FactionConsequenceApplied += consequence =>
+                {
+                    _yearOfAshDirty = true;
+                    GD.Print($"[Combat] {consequence.FactionId} standing {consequence.StandingDelta:+0.##;-0.##;0} ({consequence.Reason}, {consequence.IncidentId}).");
+                };
+                _combat.ConfigureFactionStanding(_yearOfAsh.FactionWar.ModifyStanding);
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);
             }
@@ -370,7 +429,14 @@ namespace AtomicWar.GodotApp
                 if (!idle) return;
                 var enemyIds = EnemyCompositionSelector.SelectAmbushComposition(
                     state.dangerLevel, CombatHostSession.DefaultAmbushEnemyCount);
-                _combat.StartCombat(state.locationId, state.displayName, enemyCombatantIds: enemyIds);
+                _combat.StartCombat(
+                    state.locationId,
+                    state.displayName,
+                    enemyCombatantIds: enemyIds,
+                    isSelfDefense: true);
+                _combat.StealthExpeditionId = string.IsNullOrEmpty(state.survivorId)
+                    ? state.locationId
+                    : state.survivorId;
                 _combatDirty = true;
                 GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat (danger {state.dangerLevel}: {string.Join(", ", enemyIds)}).");
             };

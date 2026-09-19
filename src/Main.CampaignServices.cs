@@ -35,6 +35,7 @@ namespace AtomicWar.GodotApp
                 SetupThirdonary();
                 SetupInventory();
                 SetupSurvivors();
+                SetupDifficulty();
                 SetupWorld();
                 SetupMedical();
                 SetupMedicalWard();
@@ -62,9 +63,16 @@ namespace AtomicWar.GodotApp
                 SetupCombat();
                 SetupNarrative();
                 SetupEchoes();
+                SetupSpiritual();
                 SetupUtilityAi();
                 SetupCaravans();
                 SetupExpansions();
+
+                // CF-P28-ONE-BOOTSTRAP-PATH: the fresh lifecycle runs the same
+                // declarative manifest bootstrap as RestoreAllSubsystemsFromDisk.
+                // All 18 delegates are idempotent; this constructs any manifest
+                // subsystem the direct calls above did not.
+                ExecuteSubsystemManifestBootstrap();
 
                 // Wiring that needs all services up
                 SetupExpeditionCombatHandoff(_combat);
@@ -130,6 +138,7 @@ namespace AtomicWar.GodotApp
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
                 SetupPlans166To169();
+                BindDifficultyConsumers();
             }
             finally
             {

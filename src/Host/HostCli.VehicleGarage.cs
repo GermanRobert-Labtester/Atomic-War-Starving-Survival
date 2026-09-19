@@ -40,6 +40,13 @@ namespace AtomicWar.GodotApp
                 Check("catalog_loaded", garageCatalog.modifications.Count >= 1, $"rows={garageCatalog.modifications.Count}");
 
                 var garage = new VehicleGarageSystem(garageCatalog, new SeededRng(50));
+                var armorLoad = VehicleArmorGradeCatalogLoader.Load(dataDirectory, fileIO, json);
+                bool armorCatalogLoaded = armorLoad.Catalog != null && !armorLoad.HasErrors
+                    && armorLoad.Catalog.grades.Count == 5;
+                Check("armor_catalog_loaded", armorCatalogLoaded,
+                    armorLoad.HasErrors ? string.Join("; ", armorLoad.Errors) : $"rows={armorLoad.Catalog?.grades.Count}");
+                if (armorLoad.Catalog != null && !armorLoad.HasErrors)
+                    garage.LoadArmorCatalog(armorLoad.Catalog);
                 var vehicles = new ExpeditionVehicleSystem(new SeededRng(50));
                 vehicles.LoadCatalog(VehicleCatalogLoader.Load(dataDirectory, fileIO, json));
 
@@ -77,6 +84,82 @@ namespace AtomicWar.GodotApp
 
                     bool removed = garage.UninstallModification(vehicleId, flatbed.slot_type, inventory, out string removeReason);
                     Check("uninstall_mod", removed, removeReason);
+                }
+
+                // ── CF-P6 armor grade seam ─────────────────────────────────
+                var armorGrade = garage.GetArmorGrade("grade_1_scrap_plate");
+                if (armorGrade != null)
+                {
+                    EnsureArmorMaterials(inventory, armorGrade);
+                    bool armorInstalled = garage.InstallArmorGrade(vehicleId, armorGrade.id, inventory, out string armorReason);
+                    Check("armor_install_g1", armorInstalled, armorReason);
+                    var armorRecord = garage.GetRecord(vehicleId);
+                    Check("armor_stamp_neutral_without_foundry",
+                        armorRecord != null
+                        && armorRecord.armorIntegrityPermille == armorRecord.armorIntegrityMaxPermille
+                        && armorRecord.armorIntegrityMaxPermille == armorGrade.integrity_pool_permille
+                        && string.IsNullOrEmpty(armorRecord.armorMaterialProfileId),
+                        $"integrity={armorRecord?.armorIntegrityPermille}/{armorRecord?.armorIntegrityMaxPermille}");
+
+                    var armorProfile = new ExpeditionVehicleProfile
+                    {
+                        vehicleId = vehicleId,
+                        speedMultiplier = 1f,
+                        fuelPerTravelTick = 1f,
+                        breakdownChancePerTick = 0.2f
+                    };
+                    garage.DecorateProfile(armorProfile);
+                    Check("armor_mitigation_bounded",
+                        armorProfile.breakdownChancePerTick < 0.2f && armorProfile.breakdownChancePerTick > 0f,
+                        $"risk={armorProfile.breakdownChancePerTick}");
+
+                    int beforeArmorWear = armorRecord?.chassisStressPermille ?? 0;
+                    garage.RecordTripWear(vehicleId, 10f);
+                    Check("armor_wear_absorption",
+                        armorRecord != null && armorRecord.chassisStressPermille == beforeArmorWear + 16
+                        && armorRecord.armorIntegrityPermille == armorGrade.integrity_pool_permille - 4,
+                        $"chassis={armorRecord?.chassisStressPermille}, integrity={armorRecord?.armorIntegrityPermille}");
+
+                    if (armorRecord != null) armorRecord.armorIntegrityPermille = 0;
+                    bool reforged = garage.ReforgeArmorPlate(vehicleId, inventory, out string reforgeReason);
+                    Check("armor_depleted_then_reforge", reforged
+                        && armorRecord != null && armorRecord.armorIntegrityPermille == armorRecord.armorIntegrityMaxPermille,
+                        reforgeReason);
+
+                    var legacyProbe = new VehicleGarageSystem(garageCatalog, new SeededRng(50));
+                    legacyProbe.LoadArmorCatalog(armorLoad.Catalog!);
+                    var legacyProfile = new ExpeditionVehicleProfile
+                    {
+                        vehicleId = "unrecorded_vehicle",
+                        speedMultiplier = 1f,
+                        fuelPerTravelTick = 1f,
+                        breakdownChancePerTick = 0.2f
+                    };
+                    legacyProbe.DecorateProfile(legacyProfile);
+                    Check("armor_legacy_parity",
+                        Math.Abs(legacyProfile.speedMultiplier - 1f) < 0.001f
+                        && Math.Abs(legacyProfile.fuelPerTravelTick - 1f) < 0.001f
+                        && Math.Abs(legacyProfile.breakdownChancePerTick - 0.2f) < 0.001f);
+
+                    var armorSaved = garage.CaptureState();
+                    var armorRestored = new VehicleGarageSystem(garageCatalog, new SeededRng(50));
+                    armorRestored.LoadArmorCatalog(armorLoad.Catalog!);
+                    armorRestored.RestoreState(armorSaved);
+                    var restoredArmorRecord = armorRestored.GetRecord(vehicleId);
+                    Check("armor_save_roundtrip", restoredArmorRecord != null
+                        && restoredArmorRecord.armorGradeId == armorRecord?.armorGradeId
+                        && restoredArmorRecord.armorIntegrityPermille == armorRecord?.armorIntegrityPermille
+                        && restoredArmorRecord.armorIntegrityMaxPermille == armorRecord?.armorIntegrityMaxPermille);
+                }
+                else
+                {
+                    Check("armor_install_g1", false, "grade_1_scrap_plate missing");
+                    Check("armor_stamp_neutral_without_foundry", false, "grade_1_scrap_plate missing");
+                    Check("armor_mitigation_bounded", false, "grade_1_scrap_plate missing");
+                    Check("armor_wear_absorption", false, "grade_1_scrap_plate missing");
+                    Check("armor_depleted_then_reforge", false, "grade_1_scrap_plate missing");
+                    Check("armor_legacy_parity", false, "grade_1_scrap_plate missing");
+                    Check("armor_save_roundtrip", false, "grade_1_scrap_plate missing");
                 }
 
                 // ── Service ─────────────────────────────────────────────────
@@ -145,6 +228,14 @@ namespace AtomicWar.GodotApp
         private static void EnsureMaterials(Inventory inventory, VehicleModificationDefinition mod)
         {
             foreach (var cost in mod.install_cost)
+                inventory.AddById(cost.item_id, 100);
+        }
+
+        private static void EnsureArmorMaterials(Inventory inventory, VehicleArmorGradeDefinition grade)
+        {
+            foreach (var cost in grade.install_cost)
+                inventory.AddById(cost.item_id, 100);
+            foreach (var cost in grade.reforge_cost)
                 inventory.AddById(cost.item_id, 100);
         }
     }

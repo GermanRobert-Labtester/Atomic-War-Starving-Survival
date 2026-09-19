@@ -11,7 +11,7 @@ plan is activated. Removing an allowlist entry requires a production
 | Ticket | Loader | Expansion / Plan | Activation condition | Owner lane | Expiry review |
 |---|---|---|---|---|---|
 | **DX-01** | `SkyLayerArmorCatalogLoader` | Expansion 11 — Orbital Harrow | Expansion 11 flagged live in campaign bootstrap + sky-layer armor UI bound | Shelter / sky defense | 2026-Q4 |
-| **DX-02** | `SpiritualCatalogLoader` | Plan 30 — spiritual-meaning coordinator | Plan 30 coordinator session constructed from `Setup*` and consumed by a player surface | Narrative / meaning | 2026-Q4 |
+| **DX-02** | `SpiritualCatalogLoader` | Plan 30 — spiritual-meaning coordinator | **CLOSED 2026-09-19:** `SetupSpiritual` loads the catalog, `SurvivorFate.OnSurvivorFate` registers mourning arcs, memorial vigil maps to `ShelterVigilRiteId`, Iron Cenotaph consumes arc/rite counts, `spiritual_meaning` save section persists. | Narrative / meaning | CLOSED |
 | **DX-03** | `HoldfastNpcCatalogLoader` | Holdfast NPC definitions | Holdfast quest-loop integration consumes NPC catalog (not CLI-only) | Holdfast expansion | 2026-Q4 |
 
 ## Rules

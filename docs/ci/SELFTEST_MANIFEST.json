@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 124,
-  "headless_test_count": 122,
+  "total_tests": 125,
+  "headless_test_count": 123,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -71,6 +71,17 @@
       "description": "Cross-reference every id in the 129 StreamingAssets catalogs (recipe\u2192item, quest\u2192location, events, door encounters, survivors, factions, ranges, duplicates)",
       "headless_compatible": true,
       "expected_summary_id": "data_integrity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "difficulty_selftest",
+      "action": "DifficultySelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--difficulty-selftest",
+      "aliases": [],
+      "description": "XP-01 difficulty catalog, scalar consumers, starting bonuses, fail-closed selection, and save checksum binding",
+      "headless_compatible": true,
+      "expected_summary_id": "difficulty_selftest",
       "timeout_seconds": 30
     },
     {

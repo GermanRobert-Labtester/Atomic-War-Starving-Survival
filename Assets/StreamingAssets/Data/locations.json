@@ -1355,6 +1355,86 @@
       "dangerLevel": 5,
       "travelHours": 3.5,
       "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_broadcast_bunker_echo",
+      "displayName": "Broadcast Bunker Echo",
+      "description": "A reinforced subsurface relay bunker buried beneath an antenna lattice on the central ridge. The blast door is jammed half-open, and high-gain receiver racks line the operational bay under a steady drip of condensation. The emergency transceivers still hiss with static.",
+      "dangerLevel": 6,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 28
+    },
+    {
+      "id": "loc_underground_fuel_depot",
+      "displayName": "Underground Fuel Depot",
+      "description": "Subterranean petroleum reserves built into a reinforced quarry cut. Heavy steel manholes seal the underground storage tanks, where valve wheels are frozen in place and lingering hydrocarbon vapors warn against open flame.",
+      "dangerLevel": 5,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 22
+    },
+    {
+      "id": "loc_municipal_seed_vault",
+      "displayName": "Municipal Seed Vault",
+      "description": "A climate-controlled agricultural reserve vault beneath the municipal courthouse basement. Dry-pack seed canisters and cold storage lockers remain sealed behind insulated airlock hatches, preserving crop strains from before the ashfall.",
+      "dangerLevel": 4,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 18
+    },
+    {
+      "id": "loc_blacksite_armory_7",
+      "displayName": "Blacksite Armory 7",
+      "description": "An unlisted military munitions cache shielded by blast deflection berms and concertina wire. Hardened weapon lockers and perimeter defensive revetments guard ammunition crates and tactical equipment lockers.",
+      "dangerLevel": 7,
+      "travelHours": 3.5,
+      "baseRadsPerHour": 35
+    },
+    {
+      "id": "loc_sealed_triage_annex",
+      "displayName": "Sealed Triage Annex",
+      "description": "An emergency decontamination and overflow trauma station established in a fortified highway underpass. Carts of surgical instruments, field stretchers, and sealed medical supply crates sit under a thick layer of fallout dust.",
+      "dangerLevel": 4,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 20
+    },
+    {
+      "id": "loc_evidence_sub_basement",
+      "displayName": "Evidence Sub-Basement",
+      "description": "The subterranean storage vaults of the pre-war justice archive. Steel security cages hold confiscated contraband, logbooks, and salvageable trade goods behind tamper-sealed security gates.",
+      "dangerLevel": 3,
+      "travelHours": 1.5,
+      "baseRadsPerHour": 15
+    },
+    {
+      "id": "loc_quarantine_barn",
+      "displayName": "Quarantine Barn",
+      "description": "A timber-framed agricultural outpost repurposed during the early pandemic waves. Lime-washed containment stalls, disinfectant wash basins, and emergency supply bins stand intact beneath corrugated roofing.",
+      "dangerLevel": 3,
+      "travelHours": 1.5,
+      "baseRadsPerHour": 16
+    },
+    {
+      "id": "loc_forestry_emergency_store",
+      "displayName": "Forestry Emergency Store",
+      "description": "A backcountry ranger supply depot and fire watch caches tucked into the evergreen foothills. Equipment racks retain axes, chainsaws, safety harnesses, and winter rations sealed in galvanized drums.",
+      "dangerLevel": 4,
+      "travelHours": 2.0,
+      "baseRadsPerHour": 18
+    },
+    {
+      "id": "loc_materials_research_sublevel",
+      "displayName": "Materials Research Sublevel",
+      "description": "An advanced metallurgy and composite test facility sealed behind hydraulic security doors. Centrifuges, autoclaves, and specimen lockers contain specialized industrial reagents and rare composite stock.",
+      "dangerLevel": 6,
+      "travelHours": 3.0,
+      "baseRadsPerHour": 30
+    },
+    {
+      "id": "loc_electrical_maintenance_exchange",
+      "displayName": "Electrical Maintenance Exchange",
+      "description": "A primary substation switching vault and line-maintenance dispatch terminal. Switchgear consoles, high-voltage transformers, and racks of copper cabling and relays fill the reinforced control galleries.",
+      "dangerLevel": 5,
+      "travelHours": 2.5,
+      "baseRadsPerHour": 25
     }
   ]
 }

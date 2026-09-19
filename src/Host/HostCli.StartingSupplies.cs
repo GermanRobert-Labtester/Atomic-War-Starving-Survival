@@ -112,15 +112,7 @@ namespace AtomicWar.GodotApp
             finally
             {
                 SaveSlotRoot.CurrentRoot = null;
-                try
-                {
-                    if (Directory.Exists(scratchRoot))
-                        Directory.Delete(scratchRoot, recursive: true);
-                }
-                catch
-                {
-                    // Test-only scratch cleanup is best effort.
-                }
+                TryDeleteTempDirectory(scratchRoot);
             }
 
             return EmitSummary(

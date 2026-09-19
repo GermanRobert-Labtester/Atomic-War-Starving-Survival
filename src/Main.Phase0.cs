@@ -364,7 +364,8 @@ namespace AtomicWar.GodotApp
         private void SetupDoseLedger()
         {
             if (_doseLedger != null) return;
-            _doseLedger = DoseLedgerHostSession.Create(_dataDir);
+            SetupCampaignDay();
+            _doseLedger = DoseLedgerHostSession.Create(_dataDir, campaignRng: _campaignDay.Rng);
             _doseLedger.StateChanged += () => _doseLedgerDirty = true;
 
             var save = DoseLedgerSaveStore.TryLoad();

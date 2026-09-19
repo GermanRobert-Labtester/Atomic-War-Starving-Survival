@@ -76,8 +76,7 @@
       "narrative_id": "narrative_radio_the_pianist",
       "location_reference": "concert_hall_ruins",
       "follow_up_signals": [
-        { "id": "fu_55_1_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "A brief piano chord rings out through the static, followed by a faint rustle of sheet music near the stage.", "audio_cue": "radio_vinyl_broadcast" },
-        { "id": "fu_55_1_expired", "trigger_condition": "expired", "delay_days": 3, "clarity": 0.75, "text": "Total silence on 55.1 MHz. The concert hall frequency has fallen permanently dark.", "audio_cue": "radio_static" }
+        { "id": "fu_55_1_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "A brief piano chord rings out through the static, followed by a faint rustle of sheet music near the stage.", "audio_cue": "radio_vinyl_broadcast" }
       ]
     },
     {
@@ -459,7 +458,6 @@
       "revealed_location": "loc_school_gymnasium",
       "narrative_id": "narrative_radio_child_school",
       "follow_up_signals": [
-        { "id": "fu_812_5_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Petar's voice through static: 'I hear footsteps in the hallway outside the gym. I am tapping on the radiator pipe.'", "audio_cue": "radio_distress_beacon" },
         { "id": "fu_812_5_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Word arrives from the shelter nursery: Petar was pulled from the school rubble and is receiving warm broth.", "audio_cue": "radio_distress_beacon" },
         { "id": "fu_812_5_expired", "trigger_condition": "expired", "delay_days": 3, "clarity": 0.8, "text": "The radio in the school gym has gone silent. Only cold wind whistling through shattered windows.", "audio_cue": "radio_static" }
       ]
@@ -484,7 +482,6 @@
       "revealed_location": "prewar_medical_cache",
       "narrative_id": "narrative_radio_siblings_clinic",
       "follow_up_signals": [
-        { "id": "fu_867_9_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Ana whispers on 867.9: 'We heard three knocks on the basement pipe. We are staying behind the steel locker.'", "audio_cue": "radio_distress_beacon" },
         { "id": "fu_867_9_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Medical report from shelter: Ana and Miko have arrived safely from the clinic basement; dehydration treated.", "audio_cue": "radio_distress_beacon" },
         { "id": "fu_867_9_expired", "trigger_condition": "expired", "delay_days": 3, "clarity": 0.8, "text": "Clinic basement frequency is dead. A patrol reports the basement door forced open and empty.", "audio_cue": "radio_static" }
       ]

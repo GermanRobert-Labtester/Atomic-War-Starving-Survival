@@ -383,6 +383,14 @@ namespace AtomicWar.GodotApp
             _questsPanel.OnClose += CloseQuestsPanel;
             _questsPanel.OnQuestDetailRequested += OpenQuestDetailPanel;
             _questsPanel.OnCrossingPanelRequested += OpenCrossingQuestPanel;
+            _questsPanel.OnProceduralQuestRequested += () =>
+            {
+                bool accepted = TryGenerateProceduralQuest();
+                _statusLabel.Text = accepted
+                    ? "A new operational opportunity entered the canonical quest runtime."
+                    : (_proceduralNarrative169?.LastEvent ?? "No procedural quest opportunity is currently eligible.");
+                BindQuestsPanel();
+            };
             _questsPanel.OnBeginSurvivorArcRequested += survivorId => BeginSurvivorArc(survivorId);
             _questsPanel.OnDeliverArcObjectiveRequested += (survivorId, itemId) => DeliverSurvivorArcObjective(survivorId, itemId);
             _questsPanel.OnChooseArcBranchRequested += (survivorId, branchId) => ChooseSurvivorArcBranch(survivorId, branchId);
@@ -675,6 +683,8 @@ namespace AtomicWar.GodotApp
             _survivorDetailPanel = PanelSceneLoader.Load<SurvivorDetailPanel>("res://assets/ui/panels/SurvivorDetailPanel.tscn");
             _survivorDetailPanel.AppDayProvider = () => _simDay;
             _survivorDetailPanel.FitnessProvider = EvaluateSurvivorFitness;
+            _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id)
+                ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>();
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 
@@ -1253,6 +1263,24 @@ namespace AtomicWar.GodotApp
                     return _memorial.Mourn(deceasedId, _simDay);
                 },
             });
+            _ironCenotaphMemorialPanel.BindSpiritual(
+                () =>
+                {
+                    SetupSpiritual();
+                    return _spiritual?.MourningArcs.Count ?? 0;
+                },
+                () =>
+                {
+                    SetupSpiritual();
+                    if (_spiritual == null) return 0;
+                    int open = 0;
+                    foreach (var kv in _spiritual.MourningArcs)
+                    {
+                        if (kv.Value != null && !kv.Value.RiteCompleted && !kv.Value.RiteSkipped)
+                            open++;
+                    }
+                    return open;
+                });
             AddChild(_ironCenotaphMemorialPanel);
 
             _aquiferTreatyConcessionPanel = new AquiferTreatyConcessionPanel { Visible = false };

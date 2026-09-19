@@ -180,5 +180,27 @@ namespace Ashfall.Core.Tests.Medical
             string text = json.Serialize(save);
             Assert.Throws<InvalidOperationException>(() => MedicalWardSaveCodec.Decode(text, json));
         }
+
+        [Fact]
+        public void RunProcedure_StaffingPreflightGatesExecution()
+        {
+            var bed = new MedicalBed { BedId = "b1", DisplayName = "Bed 1", Category = MedicalBedCategory.General };
+            var proc = new MedicalProcedureDef("proc1", "Procedure 1", "MedicalSystem");
+            var ward = new MedicalWardSystem(new MedicalWardState(), new[] { bed }, new[] { proc });
+
+            ward.Admit("patient_1", "b1", 1);
+
+            // Blocked when unstaffed
+            ward.StaffingPreflight = () => false;
+            var blockedResult = ward.RunProcedure("patient_1", "proc1", 1);
+            Assert.False(blockedResult.Succeeded);
+            Assert.Equal("ward_unstaffed", blockedResult.ReasonCode);
+
+            // Allowed when staffed
+            ward.StaffingPreflight = () => true;
+            var okResult = ward.RunProcedure("patient_1", "proc1", 1);
+            Assert.True(okResult.Succeeded);
+            Assert.Equal("proc1", okResult.ProcedureId);
+        }
     }
 }

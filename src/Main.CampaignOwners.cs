@@ -932,7 +932,15 @@ namespace AtomicWar.GodotApp
                 _m._caravans.TickRoute(
                     _m._world != null && _m._world.Weather != null
                         ? _m._world.Weather.Current
-                        : WeatherKind.Clear);
+                        : WeatherKind.Clear,
+                    day,
+                    _m._campaignDay?.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Economy, day, 3));
+                _m.EnsureCaravanTrade();
+                if (_m._caravanTradeNetwork != null)
+                {
+                    _m._caravanTradeNetwork.Map = _m._world?.WastelandMap;
+                    _m._caravanTradeNetwork.TickDay(day);
+                }
 
                 events.Add(new DayStateChangeEvent("expeditions_caravans_ticked", "expeditions_caravans", null, null, day));
             }
@@ -1287,6 +1295,7 @@ namespace AtomicWar.GodotApp
 
                 // ── Plan 175: ideological pressure, rituals, tension ──
                 _m.TickZealotryDay(day);
+                _m.TickSpiritualDay(day);
 
                 // ── Plans 190-193: Infection & Amputation, Railways, Subterranean Fungi, Wasteland Justice ──
                 _m.TickPlans190_193(day);

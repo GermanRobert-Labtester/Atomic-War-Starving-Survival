@@ -274,7 +274,7 @@ namespace Ashfall.Core.Combat
     [Serializable]
     public class CombatState
     {
-        public const int CurrentSaveVersion = 3;
+        public const int CurrentSaveVersion = 4;
 
         public string SystemId = TacticalCombatSystem.SystemId;
         public int SaveVersion = CurrentSaveVersion;
@@ -291,7 +291,10 @@ namespace Ashfall.Core.Combat
         public bool Resolved;
         public string OutcomeText = string.Empty;
         public string ResolutionId = string.Empty;
+        public bool IsSelfDefense;
         public CombatAftermath? Aftermath;
+        public List<string> AppliedFactionConsequenceIds = new List<string>();
+        public List<CombatFactionConsequence> FactionConsequences = new List<CombatFactionConsequence>();
         public List<BoundWeaponConditionEntry> BoundWeaponConditions = new List<BoundWeaponConditionEntry>();
         public List<CombatantState> Combatants = new List<CombatantState>();
         public List<WeaponInstanceState> Weapons = new List<WeaponInstanceState>();
@@ -352,6 +355,7 @@ namespace Ashfall.Core.Combat
         public string OutcomeText = string.Empty;
         public bool IsActive;
         public CombatAftermath? Aftermath;
+        public List<CombatFactionConsequence> FactionConsequences = new List<CombatFactionConsequence>();
         public List<CombatantSnapshot> Combatants = new List<CombatantSnapshot>();
         public List<WeaponSnapshot> Weapons = new List<WeaponSnapshot>();
         public List<CombatEvent> Events = new List<CombatEvent>();

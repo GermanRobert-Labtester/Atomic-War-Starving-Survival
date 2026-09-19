@@ -112,6 +112,8 @@ namespace Ashfall.Core.Survivors
         public event Action<string, DevelopmentPhase, List<string>>? OnAdulthoodReached;
         public event Action<string, string, float>? OnFormativeEventRecorded;
         public event Action<string, DevelopmentPhase>? OnPhaseAdvanced;
+        /// <summary>Age-derived Plan 183 projection; no second stage state is stored.</summary>
+        public event Action<string, DevelopmentStage>? OnCanonicalStageAdvanced;
 
         public GenerationalState State => _state;
 
@@ -153,6 +155,32 @@ namespace Ashfall.Core.Survivors
         public ChildDevelopment? GetChild(string survivorId)
         {
             return _state.children.FirstOrDefault(c => c.survivorId == survivorId);
+        }
+
+        public int GetCanonicalAgeDays(string survivorId, int currentDay)
+        {
+            var child = GetChild(survivorId);
+            return child == null
+                ? 0
+                : ChildDevelopmentSystem.ResolveCanonicalAgeDays(child.birthDay, currentDay);
+        }
+
+        public DevelopmentStage? GetCanonicalStage(string survivorId, int currentDay)
+        {
+            var child = GetChild(survivorId);
+            return child == null
+                ? (DevelopmentStage?)null
+                : ChildDevelopmentSystem.ResolveCanonicalStage(
+                    child.birthDay,
+                    currentDay,
+                    child.adulthoodProcessed);
+        }
+
+        /// <summary>Detached, read-only Plan 183 projection for host/UI callers.</summary>
+        public ChildProfile? GetCanonicalChildProfile(string survivorId, int currentDay)
+        {
+            var child = GetChild(survivorId);
+            return child == null ? null : ChildDevelopmentSystem.ProjectCanonicalChild(child, currentDay);
         }
 
         public bool AssignGuardian(string childId, string guardianId)
@@ -217,8 +245,39 @@ namespace Ashfall.Core.Survivors
             {
                 if (child.adulthoodProcessed) continue;
                 if (child.lastGrowthTickDay == currentDay) continue; // Idempotent per day
+                if (currentDay < child.lastGrowthTickDay) continue; // age never regresses on a clock rewind
+
+                int previousGrowthDay = child.lastGrowthTickDay;
+                var previousStage = ChildDevelopmentSystem.ResolveCanonicalStage(
+                    child.birthDay,
+                    previousGrowthDay,
+                    adultTransitionCompleted: false);
+                var canonicalStage = ChildDevelopmentSystem.ResolveCanonicalStage(
+                    child.birthDay,
+                    currentDay,
+                    adultTransitionCompleted: false);
+
+                // A loaded/created child may skip historical days. Do not
+                // replay old milestones on first observation, but do emit
+                // each real forward boundary after the clock is established.
+                if (previousGrowthDay > 0 && canonicalStage > previousStage)
+                {
+                    for (var stage = (DevelopmentStage)((int)previousStage + 1); stage <= canonicalStage; stage++)
+                        OnCanonicalStageAdvanced?.Invoke(child.survivorId, stage);
+                }
 
                 child.lastGrowthTickDay = currentDay;
+
+                // Young adulthood is the age authority's one handoff edge.
+                // The existing ProcessAdulthood path remains the sole mutable
+                // transition and its guard makes retries idempotent.
+                if (canonicalStage >= DevelopmentStage.YoungAdult)
+                {
+                    child.developmentPhase = DevelopmentPhase.AdultTransitioned;
+                    child.developmentProgress = 100.0f;
+                    ProcessAdulthood(child);
+                    continue;
+                }
 
                 // 1. Evaluate Needs & Starvation Stunting
                 if (_needs != null)

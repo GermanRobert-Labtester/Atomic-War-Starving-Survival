@@ -122,6 +122,92 @@ namespace AtomicWar.GodotApp
             WireWarlordPlayerFacing();
             WireWarlordExpeditionDanger();
             RefreshWarlordTargets();
+            WireFactionWarConsequenceRouting();
+        }
+
+        /// <summary>
+        /// Plan 30B / Plan 123 consequence routing:
+        /// Territorial clashes and regional decrees project into radio intercepts,
+        /// journal records, and defensive sound-ranging threat intake.
+        /// </summary>
+        private void WireFactionWarConsequenceRouting()
+        {
+            if (_yearOfAsh?.FactionWar == null) return;
+
+            _yearOfAsh.FactionWar.OnTerritorialClashOccurred += (faction1, faction2) =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+
+                // Plan 30B: Radio broadcast warning
+                string radioMsg = $"Tension escalation on sector border: artillery exchange logged between {faction1} and {faction2}.";
+                _radio?.InterceptWarlordWarning(radioMsg, currentDay);
+
+                // Plan 30B: Permanent journal entry
+                string journalKey = $"war_clash_{currentDay}_{faction1}_{faction2}";
+                string journalText = $"Regional surveillance confirms long-range artillery engagement between {faction1} and {faction2}.";
+                var author = new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious);
+                _journal?.TryAddRawEntry(journalKey, journalText, author, currentDay);
+
+                // Plan 123: Hostile-fire observation emitter into Sound Ranging
+                if (_soundRanging != null)
+                {
+                    _soundRanging.RecordHostileFire(new Ashfall.Core.Combat.SoundRangingThreatEngine.HostileFireObservation
+                    {
+                        Day = currentDay,
+                        BearingDeg = (currentDay * 37) % 360,
+                        SourceClassId = "class_heavy_howitzer",
+                        SourceTag = faction1
+                    });
+                }
+                _yearOfAshDirty = true;
+            };
+
+            _yearOfAsh.FactionWar.OnDecreeEnacted += decreeId =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string radioMsg = $"Regional decree broadcast: {decreeId} enacted. Checkpoints active.";
+                _radio?.InterceptWarlordWarning(radioMsg, currentDay);
+                _yearOfAshDirty = true;
+            };
+
+            var runner = _yearOfAsh.WarRunner;
+            if (runner == null) return;
+            runner.OnStageSurfaced += (chain, stage) =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string title = chain?.title ?? chain?.chainId ?? "war chain";
+                string stageTitle = stage?.title ?? stage?.stageId ?? "stage";
+                _radio?.InterceptWarlordWarning($"War chain moving: {title} — {stageTitle}.", currentDay);
+                _journal?.TryAddRawEntry(
+                    $"war_chain_surfaced_{chain?.chainId}_{stage?.stageId}_{currentDay}",
+                    $"Signals watch logged a new movement in the {title}: {stageTitle}.",
+                    new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious),
+                    currentDay);
+                _yearOfAshDirty = true;
+            };
+            runner.OnStageResolved += (chain, stage, choice) =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string title = chain?.title ?? chain?.chainId ?? "war chain";
+                _journal?.TryAddRawEntry(
+                    $"war_chain_resolved_{chain?.chainId}_{stage?.stageId}_{choice?.choiceId}_{currentDay}",
+                    $"The {title} shifted after a field decision.",
+                    new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious),
+                    currentDay);
+                _yearOfAshDirty = true;
+            };
+            runner.OnChainResolved += chain =>
+            {
+                int currentDay = _yearOfAsh.Timeline.CurrentDay;
+                string title = chain?.title ?? chain?.chainId ?? "war chain";
+                _radio?.InterceptWarlordWarning($"War chain closed: {title}.", currentDay);
+                _journal?.TryAddRawEntry(
+                    $"war_chain_closed_{chain?.chainId}_{currentDay}",
+                    $"The {title} has run its course. The map will not rewind it.",
+                    new AtomicWar.Journal.DemoSurvivor("surveillance", "Signals Watch", Ashfall.Core.Journal.RiskBiasTrait.Cautious),
+                    currentDay);
+                _yearOfAshDirty = true;
+            };
         }
 
         /// <summary>

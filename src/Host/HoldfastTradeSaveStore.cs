@@ -131,13 +131,22 @@ namespace AtomicWar.GodotApp
 
         private static HoldfastTradeSaveEnvelope? DecodeEnvelope(string text)
         {
-            var envelope = new SystemTextJsonSerializer().Deserialize<HoldfastTradeSaveEnvelope>(text);
-            if (envelope != null && envelope.State != null && !string.IsNullOrEmpty(envelope.Checksum)
-                && string.Equals(SaveChecksum.Compute(envelope.State), envelope.Checksum, StringComparison.Ordinal))
+            if (string.IsNullOrWhiteSpace(text)) return null;
+            try
             {
-                return envelope;
+                var envelope = new SystemTextJsonSerializer().Deserialize<HoldfastTradeSaveEnvelope>(text);
+                if (envelope != null && envelope.State != null && !string.IsNullOrEmpty(envelope.Checksum)
+                    && string.Equals(SaveChecksum.Compute(envelope.State), envelope.Checksum, StringComparison.Ordinal))
+                {
+                    return envelope;
+                }
+                return null;
             }
-            return null;
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[HoldfastTrade] Deserialization failure: {ex.Message}");
+                return null;
+            }
         }
 
         private static void QuarantineCorrupt(string path, string text)

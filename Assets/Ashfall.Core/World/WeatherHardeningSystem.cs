@@ -277,7 +277,12 @@ namespace Ashfall.Core.World
                         zone.pipeFreezeProgress = 0f;
                         zone.lastFreezeDay = day;
                         OnPipeFrozen?.Invoke(room.roomId, day);
+                        BurstThermalPipesInRoom(room.roomId, day);
                     }
+
+                    _thermal.SetExternalInsulationModifier(
+                        room.roomId,
+                        GetInstalledThermalRetention(room.roomId));
                 }
             }
 
@@ -310,6 +315,25 @@ namespace Ashfall.Core.World
             var s = new SystemTextJsonSerializer();
             var json = s.Serialize(src);
             return s.Deserialize<WeatherHardeningState>(json) ?? new WeatherHardeningState();
+        }
+
+        private void BurstThermalPipesInRoom(string roomId, int day)
+        {
+            if (_thermal == null || string.IsNullOrEmpty(roomId)) return;
+            foreach (var pipe in _thermal.State.pipes)
+            {
+                if (pipe == null || pipe.hasBurst) continue;
+                bool inRoom = string.Equals(pipe.fromRoomId, roomId, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(pipe.toRoomId, roomId, StringComparison.OrdinalIgnoreCase);
+                if (!inRoom) continue;
+                var result = _thermal.RegisterExternalBurst(
+                    pipe.pipeId,
+                    day,
+                    0.7f,
+                    $"Weather-hardening freeze burst in {roomId}");
+                if (result.IsSuccess)
+                    OnPipeBurst?.Invoke(pipe.pipeId, day, 0.7f);
+            }
         }
 
         private ZoneHardeningState GetOrCreateZone(string zoneId)

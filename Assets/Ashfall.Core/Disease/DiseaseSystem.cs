@@ -339,6 +339,9 @@ namespace Ashfall.Core.Disease
         /// </summary>
         public Func<string, float>? GetIsolationQuality;
 
+        /// <summary>Optional campaign multiplier for disease onset probability.</summary>
+        public Func<float>? OnsetProbabilityMultiplier { get; set; }
+
         /// <summary>
         /// Plan 63 / B4 — optional containment capability projected from research.
         /// </summary>
@@ -467,7 +470,13 @@ ILog? log = null)
                 var src = _catalog.GetExposureSource(context.SourceId);
                 if (src != null) prob = src.base_probability;
             }
-            prob = Math.Min(1.0f, Math.Max(0f, prob * Math.Max(0f, context.ProbabilityModifier)));
+            float difficultyMultiplier = OnsetProbabilityMultiplier == null
+                ? 1f
+                : OnsetProbabilityMultiplier();
+            if (float.IsNaN(difficultyMultiplier) || float.IsInfinity(difficultyMultiplier) || difficultyMultiplier < 0f)
+                difficultyMultiplier = 1f;
+            prob = Math.Min(1.0f, Math.Max(0f,
+                prob * Math.Max(0f, context.ProbabilityModifier) * difficultyMultiplier));
 
             // 5. Roll exposure
             if (_rng.NextDouble() < prob)

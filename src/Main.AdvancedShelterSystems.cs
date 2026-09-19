@@ -51,6 +51,8 @@ namespace AtomicWar.GodotApp
                 _inventory?.Inventory ?? new Ashfall.Core.Inventory.Inventory(),
                 rng,
                 new GodotLog());
+            SetupWorld();
+            _caravanTradeNetwork.Map = _world?.WastelandMap;
 
             var saved = CaravanTradeSaveStore.TryLoad();
             if (saved != null)

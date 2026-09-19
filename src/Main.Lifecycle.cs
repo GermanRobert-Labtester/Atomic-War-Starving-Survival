@@ -3,6 +3,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Lifecycle;
+using Ashfall.Core.Orchestration;
 using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
@@ -436,6 +437,12 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void ResetEnrolledFlagshipSessions()
         {
+            void RemovePanel(Control? panel)
+            {
+                if (panel != null && panel.IsInsideTree())
+                    RemoveChild(panel);
+            }
+
             _moralChoice = null!;
             _moralChoiceDirty = false;
 
@@ -486,6 +493,25 @@ namespace AtomicWar.GodotApp
             _espionage166Dirty = false;
             _fluidLogistics168Dirty = false;
             _proceduralNarrative169Dirty = false;
+
+            // CF-P28: these manifest sessions restore state at construction;
+            // clear them with their panels so a slot switch cannot retain the
+            // previous campaign's instances or bindings.
+            _memorial = null!;
+            _memorialDirty = false;
+
+            _blackMarketPanel?.Unbind();
+            RemovePanel(_blackMarketPanel);
+            _blackMarketPanel = null;
+            _blackMarket = null;
+            _blackMarketDirty = false;
+
+            _vehicleGaragePanel?.Unbind();
+            RemovePanel(_vehicleGaragePanel);
+            _vehicleGaragePanel = null;
+            _vehicleGaragePanelBoundSystem = null;
+            _vehicleGarage = null;
+            _vehicleGarageDirty = false;
         }
 
         /// <summary>
@@ -519,6 +545,46 @@ namespace AtomicWar.GodotApp
                     System.IO.File.Delete(bak);
             }
             GD.Print("[Ashfall Godot] Lifecycle: global save files cleared from user:// storage.");
+        }
+
+        private bool _manifestSetupRegistered;
+
+        /// <summary>
+        /// Registers host setup delegates with the declarative SubsystemManifest (Plan 28C / QUEUE-PLAN28-MAIN-CONSTRUCTOR-MIGRATION).
+        /// Allows universal constructor iteration and lifecycle formalization via the Core manifest.
+        /// </summary>
+        public void RegisterManifestSetupActions()
+        {
+            if (_manifestSetupRegistered) return;
+            _manifestSetupRegistered = true;
+
+            SubsystemManifest.RegisterSetupAction("journal", () => SetupJournal());
+            SubsystemManifest.RegisterSetupAction("needs", () => SetupSurvivors());
+            SubsystemManifest.RegisterSetupAction("inventory", () => SetupInventory());
+            SubsystemManifest.RegisterSetupAction("weather", () => SetupWorld());
+            SubsystemManifest.RegisterSetupAction("radiation", () => SetupDoseLedger());
+            SubsystemManifest.RegisterSetupAction("radio", () => SetupRadio());
+            SubsystemManifest.RegisterSetupAction("expeditions", () => SetupExpeditions());
+            SubsystemManifest.RegisterSetupAction("duty_roster", () => SetupDutyRoster());
+            SubsystemManifest.RegisterSetupAction("crafting", () => SetupCrafting());
+            SubsystemManifest.RegisterSetupAction("research", () => EnsureSharedResearch());
+            SubsystemManifest.RegisterSetupAction("medical", () => { SetupMedical(); SetupMedicalWard(); });
+            SubsystemManifest.RegisterSetupAction("factions", () => SetupFactionBranch());
+            SubsystemManifest.RegisterSetupAction("economy", () => SetupEconomy());
+            SubsystemManifest.RegisterSetupAction("greenhouse", () => SetupGreenhouse());
+            SubsystemManifest.RegisterSetupAction("shelter_defense", () => SetupSkyDefense());
+            SubsystemManifest.RegisterSetupAction("vehicle_garage", () => SetupVehicleGarage());
+            SubsystemManifest.RegisterSetupAction("black_market", () => SetupBlackMarket());
+            SubsystemManifest.RegisterSetupAction("memorial", () => SetupMemorial());
+        }
+
+        /// <summary>
+        /// Executes universal constructor iteration for subsystems declared in SubsystemManifest (Plan 28C).
+        /// </summary>
+        public int ExecuteSubsystemManifestBootstrap(LifecyclePhase? phase = null)
+        {
+            RegisterManifestSetupActions();
+            return SubsystemManifest.ExecuteSetup(phase);
         }
     }
 }

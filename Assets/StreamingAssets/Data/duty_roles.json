@@ -96,6 +96,21 @@
       "requires_not_quarantined": true,
       "precision_work": true,
       "hazard_class": "surface"
+    },
+    {
+      "id": "ward",
+      "skill_id": "skill_paramedic",
+      "minimum_skill": 0.0,
+      "maximum_fatigue": 80.0,
+      "minimum_health": 35.0,
+      "maximum_dose_msv": 250.0,
+      "maximum_hours": 12.0,
+      "maximum_hours_if_impaired": 6.0,
+      "allow_unfit": false,
+      "light_duty": false,
+      "requires_not_quarantined": true,
+      "precision_work": true,
+      "hazard_class": "medical"
     }
   ],
   "overwork": {

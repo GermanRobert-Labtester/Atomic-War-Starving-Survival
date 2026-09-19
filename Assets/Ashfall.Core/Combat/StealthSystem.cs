@@ -128,6 +128,42 @@ namespace Ashfall.Core.Combat
             _weaponNoise[profile.weapon_id] = profile;
         }
 
+        public enum WeaponNoiseKind
+        {
+            Handling = 0,
+            Melee = 1,
+            Fired = 2
+        }
+
+        /// <summary>
+        /// Add registered weapon noise into the party's accumulated detection
+        /// noise. Unknown weapons use conservative unsuppressed defaults.
+        /// </summary>
+        public float ApplyWeaponNoise(string expeditionId, string weaponId, WeaponNoiseKind kind)
+        {
+            var party = EnsurePartyStealth(expeditionId);
+            WeaponNoiseProfile? profile = null;
+            if (!string.IsNullOrWhiteSpace(weaponId))
+                _weaponNoise.TryGetValue(weaponId, out profile);
+
+            float add = kind switch
+            {
+                WeaponNoiseKind.Handling => profile?.handling_noise ?? 0.10f,
+                WeaponNoiseKind.Melee => profile?.melee_noise ?? 0.20f,
+                _ => profile?.fired_noise ?? 0.85f
+            };
+            add = Math.Clamp(add, 0f, 1f);
+            party.accumulatedNoise = Math.Clamp(party.accumulatedNoise + add, 0f, 1f);
+            return add;
+        }
+
+        public bool TryGetWeaponNoise(string weaponId, out WeaponNoiseProfile profile)
+        {
+            profile = null!;
+            if (string.IsNullOrWhiteSpace(weaponId)) return false;
+            return _weaponNoise.TryGetValue(weaponId, out profile);
+        }
+
         public PartyStealthState EnsurePartyStealth(string expeditionId)
         {
             if (_state.expeditionStealthMap.TryGetValue(expeditionId, out var existing))

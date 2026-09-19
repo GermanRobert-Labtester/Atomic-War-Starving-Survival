@@ -170,7 +170,8 @@ namespace AtomicWar.GodotApp
         private void SetupWorld()
         {
             if (_world != null) return;
-            _world = WorldHostSession.Create(_dataDir);
+            SetupCampaignDay();
+            _world = WorldHostSession.Create(_dataDir, _campaignDay.Rng);
             BindJournalWorldProducerIfReady();
             WireSurgeAdapters();
             _world.StateChanged += () =>
@@ -180,6 +181,8 @@ namespace AtomicWar.GodotApp
                 _shelterPanel?.RefreshView();
                 if (_state == GameState.Playing) UpdateHud();
             };
+            if (_expeditions != null)
+                _expeditions.WastelandMap = _world.WastelandMap;
             GD.Print("[Ashfall Godot] World host ready.");
         }
 

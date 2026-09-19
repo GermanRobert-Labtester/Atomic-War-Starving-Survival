@@ -11,6 +11,9 @@ namespace Ashfall.Core.Save;
 /// </summary>
 public class SaveManifest
 {
+    /// <summary>Latest manifest field schema understood by this build.</summary>
+    public const int CurrentManifestVersion = 2;
+
     /// <summary>Manifest schema version. Increment when fields are added/removed.</summary>
     public int manifestVersion = 1;
 
@@ -52,6 +55,12 @@ public class SaveManifest
 
     /// <summary>Unique generation/run identifier to prevent mixed-generation sections.</summary>
     public string generationId = string.Empty;
+
+    /// <summary>
+    /// Immutable campaign difficulty choice. Empty on legacy manifests; the
+    /// host resolves that absence to the standard preset during restore.
+    /// </summary>
+    public string difficultyPresetId = string.Empty;
 }
 
 /// <summary>

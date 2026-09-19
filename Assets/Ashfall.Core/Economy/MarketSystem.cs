@@ -93,6 +93,11 @@ namespace Ashfall.Core.Economy
         // Plan 14A (additive v3 — nested embargo decay runtime state; a v1/v2
         // save restores neutral. Rules are data; only decay state persists).
         public TradeEmbargoState? tradeEmbargo;
+
+        // Plan 215 (additive policy state). Quantities remain owned by the
+        // inventory/domain consumers; the economy envelope carries only the
+        // ration policy so old saves restore the neutral/full default.
+        public ResourceRationingState? rationing;
     }
 
     /// <summary>Result of a market transaction.</summary>
@@ -130,7 +135,9 @@ namespace Ashfall.Core.Economy
         /// <summary>Plan 14A — temporary embargo shock multiplier incl. decay (one record).</summary>
         Embargo = 6,
         /// <summary>Plan 18C — authored GoodDefinition.regionalSupply provenance factor.</summary>
-        RegionalSupply = 7
+        RegionalSupply = 7,
+        /// <summary>XP-01 — campaign difficulty price multiplier.</summary>
+        Difficulty = 8
     }
 
     /// <summary>
@@ -235,6 +242,12 @@ namespace Ashfall.Core.Economy
         /// <summary>Plan 212 — raised once per shock when it expires during TickDay.</summary>
         public event Action<MarketShockState> OnShockExpired;
 
+        /// <summary>
+        /// Optional campaign difficulty multiplier for quoted value. Applied
+        /// once before the existing authored floor and ceiling clamps.
+        /// </summary>
+        public Func<float>? PriceMultiplierProvider { get; set; }
+
         public MarketSystem(MarketState? state = null)
         {
             _state = state ?? new MarketState();
@@ -251,6 +264,21 @@ namespace Ashfall.Core.Economy
         public void BindCatalog(GoodsCatalog catalog)
         {
             _catalog = catalog;
+        }
+
+        /// <summary>
+        /// Loads a goods catalog from the specified data directory and binds it to the market.
+        /// </summary>
+        public void LoadCatalog(string dataDir, IFileIO? fileIO = null, IJsonSerializer? serializer = null)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var io = fileIO ?? new FileSystemIO();
+            var json = serializer ?? new SystemTextJsonSerializer();
+            var load = GoodsCatalogLoader.Load(dataDir, io, json);
+            if (!load.HasErrors)
+            {
+                BindCatalog(GoodsCatalogLoader.ToCatalog(load));
+            }
         }
 
         public GoodDefinition? FindGood(string itemId) =>
@@ -328,6 +356,19 @@ namespace Ashfall.Core.Economy
             }
             OnEconomyChanged?.Invoke(); // prices moved
             RaiseChanged();
+        }
+
+        /// <summary>
+        /// Advances the market simulation by the specified number of days using a deterministic seeded RNG.
+        /// </summary>
+        public void TickDays(int days, ISeededRng? rng = null)
+        {
+            if (days <= 0) return;
+            var seededRng = rng ?? new SeededRng(2026);
+            for (int i = 0; i < days; i++)
+            {
+                TickDay(_state.day + 1, seededRng);
+            }
         }
 
         // ── Plan 212: commodity indices / pressure / shocks ─────────
@@ -709,6 +750,27 @@ namespace Ashfall.Core.Economy
                         price = afterEmbargo;
                     }
                 }
+            }
+
+            float difficultyMultiplier = PriceMultiplierProvider == null
+                ? 1f
+                : PriceMultiplierProvider();
+            if (float.IsNaN(difficultyMultiplier) || float.IsInfinity(difficultyMultiplier) || difficultyMultiplier < 0f)
+                difficultyMultiplier = 1f;
+            if (Math.Abs(difficultyMultiplier - 1f) > 1e-6f)
+            {
+                float afterDifficulty = price * difficultyMultiplier;
+                explanation.factors.Add(new PriceFactorRecord
+                {
+                    kind = PriceFactorKind.Difficulty,
+                    sourceId = "difficulty_market_price",
+                    beforePrice = price,
+                    afterPrice = afterDifficulty,
+                    delta = afterDifficulty - price,
+                    multiplier = difficultyMultiplier,
+                    isConstraint = false
+                });
+                price = afterDifficulty;
             }
 
             float floor = good.basePrice * PriceFloorFraction;

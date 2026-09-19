@@ -49,6 +49,25 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void BindCraftResultGate_RefusesUnknownResult_AllowsCataloguedResult()
+        {
+            var inv = new InventoryContainer();
+            var scrap = Def("mechanical_parts");
+            inv.Add(scrap, 4);
+            var allowed = Def("makeshift_knife", ItemType.Tool, 1, 0.5f);
+            var unknown = Def("item_not_in_catalog", ItemType.Tool, 1, 0.5f);
+            var catalog = new ItemCatalog();
+            catalog.Register(allowed);
+
+            var sys = new CraftingSystem(inv);
+            sys.AddStation(new CraftingStation { id = "workbench" });
+            sys.BindCraftResultGate(id => catalog.Contains(id));
+
+            Assert.True(sys.CanCraft(MakeRecipe("recipe_knife", allowed, new[] { (scrap, 4) })));
+            Assert.False(sys.CanCraft(MakeRecipe("recipe_ghost", unknown, new[] { (scrap, 4) })));
+        }
+
+        [Fact]
         public void CanCraft_False_WhenStationMissingOrBroken()
         {
             var inv = new InventoryContainer();

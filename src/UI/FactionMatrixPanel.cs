@@ -146,7 +146,7 @@ public partial class FactionMatrixPanel : Control, IBindablePanel
         if (_factionGrid == null) return;
         if (_stanceProvider == null || _factions.Count == 0)
         {
-            _factionGrid.SetRows(BuildFixtureRows());
+            _factionGrid.SetRows(AshfallDataGrid.UnavailableRows(5, "Unavailable — faction stance not bound."));
             return;
         }
 

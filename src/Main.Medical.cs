@@ -315,6 +315,12 @@ namespace AtomicWar.GodotApp
                     _dutyRosterDirty = true;
                 }
             };
+            _medicalWard.StaffingPreflight = () =>
+            {
+                if (_dutyRoster?.Roster == null) return true;
+                string staffId = _dutyRoster.Roster.GetAssignment(DutyRosterIds.RoleWard);
+                return !string.IsNullOrEmpty(staffId);
+            };
             LoadMedicalWard();
             if (_medicalWardPanel == null)
             {

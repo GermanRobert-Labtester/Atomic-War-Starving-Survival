@@ -29,6 +29,7 @@ namespace Ashfall.Core
         BridgeSelfTest,
         CoreSelfTest,
         DataIntegritySelfTest,
+        DifficultySelfTest,
         ResearchCatalogSelfTest,
         RadioCatalogSelfTest,
         PanelBindLifecycleSelfTest,
@@ -280,6 +281,12 @@ namespace Ashfall.Core
                     "--data-integrity-selftest",
                     null,
                     "Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.DifficultySelfTest,
+                    "Core & System Gates",
+                    "--difficulty-selftest",
+                    null,
+                    "XP-01 difficulty catalog, scalar consumers, starting bonuses, fail-closed selection, and save checksum binding"),
                 new HostCliActionDescriptor(
                     HostCliAction.ResearchCatalogSelfTest,
                     "Core & System Gates",

@@ -72,6 +72,10 @@ namespace AtomicWar.GodotApp
                 ));
             };
             _survivorFate.OnLastSurvivorDied += OnLastSurvivorDied;
+            // Plan 210: the fate owner is the only death/inheritance trigger;
+            // belongings keep only ownership metadata and never move inventory
+            // stacks behind its back.
+            _survivorFate.OnSurvivorFate += HandlePersonalBelongingsInheritance;
 
             // ── Death-source feeds ─────────────────────────────────────
             // Needs + radiation (survival loop).
@@ -100,6 +104,8 @@ namespace AtomicWar.GodotApp
                 _survivorFateDirty = true;
                 GD.Print($"[Ashfall Godot] Survivor-fate reconcile synthesized {synthesized} legacy death record(s).");
             }
+
+            SetupSpiritual();
         }
 
         /// <summary>Report a scripted / narrative death into the unified pipeline.</summary>

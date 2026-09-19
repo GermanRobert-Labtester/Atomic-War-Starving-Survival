@@ -36,7 +36,14 @@ namespace Ashfall.Core.Orchestration
         string? PrimaryPanelRoute,
         bool HasDedicatedSetup,
         string Description
-    );
+    )
+    {
+        /// <summary>
+        /// Host-bound setup delegate (Plan 28C / QUEUE-PLAN28-MAIN-CONSTRUCTOR-MIGRATION).
+        /// Set by the host composition root to allow universal constructor iteration via manifest.
+        /// </summary>
+        public Action? SetupAction { get; set; }
+    }
 
     /// <summary>
     /// Declarative subsystem manifest for ASHFALL (Plan 28 / C2[9] Orchestration Spine).
@@ -271,6 +278,36 @@ namespace Ashfall.Core.Orchestration
         public static IReadOnlyList<SubsystemDescriptor> ForPhase(LifecyclePhase phase)
         {
             return All.Where(s => s.Phase == phase).ToList();
+        }
+
+        /// <summary>
+        /// Registers a host-bound setup action for a subsystem (Plan 28C).
+        /// </summary>
+        public static void RegisterSetupAction(string id, Action action)
+        {
+            if (TryGet(id, out var descriptor) && descriptor != null)
+            {
+                descriptor.SetupAction = action ?? throw new ArgumentNullException(nameof(action));
+            }
+        }
+
+        /// <summary>
+        /// Executes all configured setup delegates for the specified phase (or all phases if null) (Plan 28C).
+        /// Returns the number of executed setup actions.
+        /// </summary>
+        public static int ExecuteSetup(LifecyclePhase? phase = null)
+        {
+            int count = 0;
+            var targets = phase.HasValue ? ForPhase(phase.Value) : All;
+            foreach (var descriptor in targets)
+            {
+                if (descriptor.SetupAction != null)
+                {
+                    descriptor.SetupAction();
+                    count++;
+                }
+            }
+            return count;
         }
     }
 }

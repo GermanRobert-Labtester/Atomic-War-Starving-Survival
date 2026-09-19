@@ -1290,21 +1290,21 @@ namespace Ashfall.Core.Narrative
 
         private void RegisterDefaultAdapters()
         {
-            _adapters.Add(new ProcessLogSourceAdapter());
-            _adapters.Add(new BunkerGlitchSourceAdapter());
-            _adapters.Add(new BunkerBlueprintSourceAdapter());
-            _adapters.Add(new BunkerCourtSourceAdapter());
-            _adapters.Add(new WireConfessionSourceAdapter());
-            _adapters.Add(new TradeLedgerSourceAdapter());
-            _adapters.Add(new RegionalTreatySourceAdapter());
-            _adapters.Add(new SurgeonsCasebookSourceAdapter());
-            _adapters.Add(new DeadHandDirectiveSourceAdapter());
-            _adapters.Add(new CourierDispatchSourceAdapter());
-            _adapters.Add(new PersonalLetterSourceAdapter());
-            _adapters.Add(new AbyssalAnomaliesSourceAdapter());
-            _adapters.Add(new FringeCultSourceAdapter());
-            _adapters.Add(new PaperPrintSourceAdapter());
-            _adapters.Add(new BoneHornSourceAdapter());
+            RegisterAdapter(new ProcessLogSourceAdapter());
+            RegisterAdapter(new BunkerGlitchSourceAdapter());
+            RegisterAdapter(new BunkerBlueprintSourceAdapter());
+            RegisterAdapter(new BunkerCourtSourceAdapter());
+            RegisterAdapter(new WireConfessionSourceAdapter());
+            RegisterAdapter(new TradeLedgerSourceAdapter());
+            RegisterAdapter(new RegionalTreatySourceAdapter());
+            RegisterAdapter(new SurgeonsCasebookSourceAdapter());
+            RegisterAdapter(new DeadHandDirectiveSourceAdapter());
+            RegisterAdapter(new CourierDispatchSourceAdapter());
+            RegisterAdapter(new PersonalLetterSourceAdapter());
+            RegisterAdapter(new AbyssalAnomaliesSourceAdapter());
+            RegisterAdapter(new FringeCultSourceAdapter());
+            RegisterAdapter(new PaperPrintSourceAdapter());
+            RegisterAdapter(new BoneHornSourceAdapter());
         }
 
         public void Clear()

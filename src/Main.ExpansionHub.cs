@@ -37,6 +37,17 @@ namespace AtomicWar.GodotApp
         private bool _expansionHubDirty;
         private bool _foundryDirty;
 
+        private void BindVehicleGarageArmorMaterialQuality()
+        {
+            if (_vehicleGarage == null) return;
+            _vehicleGarage.ArmorMaterialQualitySource = (out FoundryMaterialQuality quality) =>
+            {
+                quality = default;
+                return _silentFoundry != null
+                    && _silentFoundry.Engine.TryGetLatestMaterialQualityAny(out quality);
+            };
+        }
+
         private void SetupExpansions()
         {
             if (_expansions != null) return;
@@ -70,6 +81,7 @@ namespace AtomicWar.GodotApp
                 _expansions.BindGreenhouse(_greenhouse.System);
 
             _expansions.EnsureGreenhousePlots(3);
+            BindVehicleGarageArmorMaterialQuality();
             RefreshExpansionsStatus();
             GD.Print("[Ashfall Godot] Expansion hub ready: waystation · standing record · crossing · greenhouse");
         }

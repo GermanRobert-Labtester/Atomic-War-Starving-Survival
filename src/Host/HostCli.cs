@@ -101,6 +101,7 @@ namespace AtomicWar.GodotApp
         RailGrindingUiTest,
         GeothermalAquiferSelfTest,
         DiseaseSelfTest,
+        DifficultySelfTest,
         DutyRosterUiTest,
         ExpansionsSelfTest,
         YearOfAshSaveSelfTest,
@@ -322,6 +323,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.VehicleGarageSelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
                 return HostCliAction.DiseaseSelfTest;
+            if (Has(args, "--difficulty-selftest"))
+                return HostCliAction.DifficultySelfTest;
             if (Has(args, "--combat-selftest"))
                 return HostCliAction.CombatSelfTest;
             if (Has(args, "--silent-foundry-uitest"))
@@ -580,6 +583,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --power-grid-catalog-selftest  Verify power_grid.json loads at runtime via the Core loader, canonical room IDs resolve (room_water_pump/room_workshop), and fluid power derivation is nominal");
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --data-integrity-selftest Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
+            GD.Print("  --difficulty-selftest    XP-01 difficulty catalog, scalar consumers, starting bonuses, fail-closed selection, and save checksum binding");
             GD.Print("  --export-parity-selftest [--parity-target <dir>] Packaged-data parity: exported build's catalogs byte-identical + parseable vs the data authority, exact Linux casing, no LFS pointers, ELF exe + PCK present");
             GD.Print("  --catalog-boot-preflight   Machine-readable preflight: checks all catalogs are present, well-formed, and reports classification (required/optional/dev-only) with any load errors");
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");

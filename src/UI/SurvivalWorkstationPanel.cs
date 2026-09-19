@@ -386,10 +386,7 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
         if (_recipeGrid == null) return;
         if (_craftingHost == null)
         {
-            // Host not bound — render a deterministic fixture so the surface
-            // remains inspectable. The fixture mirrors the canonical seed
-            // catalog from CraftingHostSession.BuildSeedCatalog.
-            _recipeGrid.SetRows(BuildFixtureRows());
+            _recipeGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — workshop host not bound."));
             return;
         }
 

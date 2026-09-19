@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Factions;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.Quests;
+using Ashfall.Core.Random;
 using Ashfall.Core.Shelter;
+using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
 {
@@ -205,6 +208,51 @@ namespace AtomicWar.GodotApp
         {
             SetupPlans166To169();
             _proceduralNarrative169?.AdvanceDay(day);
+        }
+
+        /// <summary>
+        /// Plan 171 — player-facing generation command. The snapshot is
+        /// assembled from the existing survivor, expedition/map, inventory,
+        /// and canonical quest-runtime owners; the procedural narrative host
+        /// then performs the deterministic JSON-template selection and
+        /// registers the accepted instance in QuestRuntimeCoordinator.
+        /// </summary>
+        public bool TryGenerateProceduralQuest()
+        {
+            SetupPlans166To169();
+            SetupExpeditions();
+            SetupSurvivors();
+            SetupInventory();
+            if (_proceduralNarrative169 == null || _campaignDay == null)
+                return false;
+
+            var snapshot = new NarrativeWorldSnapshot
+            {
+                day = Math.Max(1, _simDay),
+                aliveSurvivorIds = (_survivors?.RosterState ?? new List<SurvivorNeedsState>())
+                    .Where(s => s != null && s.IsAliveState)
+                    .Select(s => s.Id)
+                    .Where(id => !string.IsNullOrWhiteSpace(id))
+                    .OrderBy(id => id, StringComparer.Ordinal)
+                    .ToList(),
+                knownLocationIds = (_expeditions?.Engine.CaptureKnownLocations() ?? new List<string>())
+                    .Where(id => !string.IsNullOrWhiteSpace(id))
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(id => id, StringComparer.Ordinal)
+                    .ToList(),
+                obtainableItemIds = (_inventory?.Catalog.Ids ?? Array.Empty<string>())
+                    .Where(id => !string.IsNullOrWhiteSpace(id))
+                    .OrderBy(id => id, StringComparer.Ordinal)
+                    .ToList(),
+                activeQuests = _proceduralNarrative169.QuestRuntime.BuildReadModel().ToList()
+            };
+
+            // Fork by day and a fixed command lane so UI retries do not consume
+            // the campaign stream or alter unrelated deterministic systems.
+            var rng = _campaignDay.Rng.Fork(CampaignStreamIds.Narrative, snapshot.day, actionIndex: 171);
+            bool accepted = _proceduralNarrative169.GenerateAndRegister(snapshot, rng);
+            if (accepted) _proceduralNarrative169Dirty = true;
+            return accepted;
         }
 
         private sealed class Plan166ResearchDayOwner : Ashfall.Core.Campaign.IDayAdvanceOwner

@@ -51,6 +51,11 @@ namespace AtomicWar.GodotApp
             var srSys = new SurvivorRelationsSystem(_campaignDay.Rng.GetStream(Ashfall.Core.Random.CampaignStreamIds.Social).Rng, new GodotLog());
             _survivorRelationsCore = srSys;
             srSys.RestoreState(srState);
+            // Plan 202: every canonical mediation (including the existing
+            // panel route) emits one typed morale outcome to the sole Needs
+            // owner. The relation ledger remains the authority for affinity
+            // and mediation history.
+            srSys.OnConflictResolved += ApplyInterpersonalConflictMorale;
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
             if (_survivorRelationsPanel != null && _survivorRelationsPanel.IsInsideTree())
                 RemoveChild(_survivorRelationsPanel);
@@ -72,21 +77,13 @@ namespace AtomicWar.GodotApp
             var rtState = RegionalTreatySaveStore.TryLoad() ?? new RegionalTreatyState();
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
-            // Plan 25 (25G.7): feed the canonical narrative treaty corpus into the
-            // mechanical system — until now the host never called LoadCatalog, so
-            // Propose/Ratify had nothing to act on in production.
+            // Mechanical treaty catalog only. Narrative protocols and foundry
+            // accords are different schemas and must not be fed into this system.
             if (!string.IsNullOrEmpty(_dataDir))
             {
                 var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
                 var json = new SystemTextJsonSerializer();
-                string path = fileIO.Combine(_dataDir, "narrative/regional_treaty_protocols.json");
-                if (fileIO.FileExists(path))
-                {
-                    var catalog = new Ashfall.Core.Narrative.RegionalTreatyCatalog();
-                    catalog.Load(fileIO.ReadAllText(path), json);
-                    rtSys.LoadCatalog(
-                        Ashfall.Core.RegionalTreatyFeed.Map(catalog.AllTreaties));
-                }
+                rtSys.LoadCatalog(RegionalTreatyCatalogLoader.Load(_dataDir, fileIO, json));
             }
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
 

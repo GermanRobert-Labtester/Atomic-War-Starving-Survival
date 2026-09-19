@@ -58,12 +58,12 @@ namespace AtomicWar.GodotApp
             return LastEvent;
         }
 
-        public string TickRoute(WeatherKind weather = WeatherKind.Clear)
+        public string TickRoute(WeatherKind weather = WeatherKind.Clear, int day = 0, ISeededRng? rng = null)
         {
             // Plan 14A — the day's authoritative weather drives embargo
             // blocking/slowing when the embargo system is bound; Clear (the
             // default) is embargo-neutral, so legacy callers are unchanged.
-            Engine.DailyTick(0, null, weather: weather);
+            Engine.DailyTick(day, rng, weather: weather);
             LastEvent = "Caravan day ticked.";
             RaiseStateChanged();
             return LastEvent;

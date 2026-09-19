@@ -47,7 +47,7 @@ namespace Ashfall.Core.Campaign
         public ICampaignCalendar Calendar { get; }
 
         /// <summary>The campaign RNG manager managing named domain streams.</summary>
-        public ICampaignRngManager Rng { get; }
+        public ICampaignRngManager Rng { get; private set; }
 
         public CampaignDayCoordinator(ICampaignCalendar? calendar = null, ICampaignRngManager? rng = null)
         {
@@ -350,6 +350,12 @@ namespace Ashfall.Core.Campaign
             _lastAdvancedDay = save.lastAdvancedDay < 0 ? int.MinValue : save.lastAdvancedDay;
             if (_lastAdvancedDay > 0)
                 Calendar.SetDay(_lastAdvancedDay);
+            int seed = save.masterSeed != 0 ? save.masterSeed : CampaignRngManager.DefaultMasterSeed;
+            int version = save.derivationVersion > 0
+                ? save.derivationVersion
+                : CampaignRngManager.CurrentDerivationVersion;
+            if (Rng.MasterSeed != seed || Rng.DerivationVersion != version)
+                Rng = new CampaignRngManager(seed, version);
             Rng.RestorePositions(save.streamPositions);
         }
     }
