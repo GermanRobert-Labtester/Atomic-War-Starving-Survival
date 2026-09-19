@@ -269,25 +269,9 @@ namespace AtomicWar.GodotApp
             GetTree().Quit();
         }
 
-
-
-
-
-
-
-
-
         private string _selectedApproachQuestlineId = "quest_the_rate_card_war";
 
-
-
-
-
-
-
         // ── ASHFALL: THE VERDICT (Expansion 08) ────────────────────────────────
-
-
 
         // Chain 1 tracking: previous-tick living-count snapshot held in host
         // state. Day boundary resets so we do not attribute today's losses
@@ -296,154 +280,9 @@ namespace AtomicWar.GodotApp
         private int _previousLivingCount = -1;
         private int _previousLivingDay = -1;
 
-
-
-
-
-        // ── District 8 deep-coast route (Exp 01 sibling layer) ─────────
-
-
-
-
-        // ── ASHFALL: THE BLACK FLOTILLA (Expansion 09 — maritime salvage) ──────
-
-
-
-
-
-
-
-        // ── EXPEDITIONS (Encounters port) ─────────────────────────────────────
-
-
-
-        // ── COMBAT (Expansion 06) ───────────────────────────────────────────
-
-
-
-
-
-
-
-
-
-        // ── NARRATIVE · MEDICAL · WORLD · CRAFTING ────────────────────────────
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // ── TRAVELING CARAVANS (Exp V spec §3.3) ─────────────────────────────
-
-
-
-
-
-        // ── STARTING LEVEL & HOLDFAST DIRECTIVES ───────────────────────
-
-
-
-        // ── POWER GRID (item 13) ────────────────────────────────────────────
-
-
-
-
-
-        // ── MEDICAL WARD (item 11) ─────────────────────────────────────
-
-
-
-
-        // ── MEMORIAL (item 15) ──────────────────────────────────────────
-
-
-
-
-        // ── STATE-LOSS TRIAD REPAIR (audit fix) ─────────────────────────────
-        // The four SaveXxx methods below close the 12 Setup-without-Save gaps
-        // called out in the forensic audit. They each persist a single Core
-        // envelope to user:// via a dedicated save store. The matching load
-        // step runs at the corresponding SetupXxx entry-point (see the audit
-        // reference at the top of this file for the full mapping).
-
-
-
-
-
-        // ── TRAVEL MAP (item 4) ─────────────────────────────────────────
-
-
-        // ── ENCOUNTER CHOICE (item 5) ──────────────────────────────────
-
-
-
-
         // ── PHASE 0 / CAMPAIGN DAY COORDINATOR ───────────────────────────
 
         private const string DailyBriefingSaveKey = "daily_briefing_v1";
-
-
-
-
-
-
-
-
-        // ── GREENHOUSE / THE GLASS ORCHARD (Exp 05 / XI) ───────────────
-
-
-
-
-        // ── THE SILENT FOUNDRY (Exp 10) ─────────────────────────────────
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// UI smoke tests create and queue-free a large widget tree. Give Godot one
@@ -477,6 +316,5 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        /// <summary>Headless smoke test for the player-facing Godot shell.</summary>
     }
 }

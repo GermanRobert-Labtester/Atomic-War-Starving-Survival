@@ -4,6 +4,7 @@
     {
       "id": "difficulty_sparing",
       "display_name": "SPARING",
+      "description": "Wider margins. Begin with a spare ration and iodine issue.",
       "scalars": {
         "hunger_rate_mult": 0.75,
         "thirst_rate_mult": 0.75,
@@ -19,6 +20,7 @@
     {
       "id": "difficulty_standard",
       "display_name": "STANDARD",
+      "description": "The shelter's baseline allocation.",
       "scalars": {
         "hunger_rate_mult": 1.0,
         "thirst_rate_mult": 1.0,
@@ -34,6 +36,7 @@
     {
       "id": "difficulty_austere",
       "display_name": "AUSTERE",
+      "description": "Tighter margins, harder wear, and shorter crisis windows.",
       "scalars": {
         "hunger_rate_mult": 1.35,
         "thirst_rate_mult": 1.35,
@@ -49,6 +52,7 @@
     {
       "id": "difficulty_dirge",
       "display_name": "DIRGE",
+      "description": "Severe scarcity. A stable shelter is possible; comfort is not.",
       "scalars": {
         "hunger_rate_mult": 1.75,
         "thirst_rate_mult": 1.75,

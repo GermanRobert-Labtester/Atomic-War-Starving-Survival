@@ -86,6 +86,7 @@ namespace Ashfall.Core.Difficulty
         public string id { get; set; } = string.Empty;
         public string display_name { get; set; } = string.Empty;
         public string description_key { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
         public DifficultyScalars scalars { get; set; } = new DifficultyScalars();
         public List<string> starting_bonus_item_ids { get; set; } = new List<string>();
 
@@ -101,12 +102,22 @@ namespace Ashfall.Core.Difficulty
                 error = "display_name is required";
                 return false;
             }
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                error = "description is required";
+                return false;
+            }
             if (scalars == null)
             {
                 error = "scalars are required";
                 return false;
             }
             if (!scalars.Validate(out error)) return false;
+            if (starting_bonus_item_ids == null)
+            {
+                error = "starting_bonus_item_ids are required";
+                return false;
+            }
             for (int i = 0; i < starting_bonus_item_ids.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(starting_bonus_item_ids[i]))

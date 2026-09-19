@@ -68,6 +68,17 @@ namespace AtomicWar.GodotApp
             // root; this bind is repeated by SetupEconomy when the order is
             // reversed by a focused host/panel path.
             BindRationingToInventory();
+            if (_campaignInitializationMode == CampaignInitializationMode.FreshInitialize)
+            {
+                foreach (string itemId in DifficultyStartingBonusItemIds())
+                {
+                    if (!_inventory.TryAdd(itemId, 1))
+                    {
+                        throw new InvalidOperationException(
+                            $"Difficulty starter item '{itemId}' could not be added to the canonical inventory.");
+                    }
+                }
+            }
             if (_survivors != null)
             {
                 _inventory.Survivors = _survivors;

@@ -80,6 +80,7 @@ namespace Ashfall.Core.Tests.Difficulty
                     {
                         id = "difficulty_standard",
                         display_name = "STANDARD",
+                        description = "Baseline.",
                         scalars = DifficultyScalars.Legacy()
                     }
                 }
@@ -95,6 +96,7 @@ namespace Ashfall.Core.Tests.Difficulty
                 id = source.id,
                 display_name = source.display_name,
                 description_key = source.description_key,
+                description = source.description,
                 scalars = source.scalars.Clone(),
                 starting_bonus_item_ids = new List<string>(source.starting_bonus_item_ids)
             };

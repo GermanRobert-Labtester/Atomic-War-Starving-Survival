@@ -43,6 +43,17 @@ namespace AtomicWar.GodotApp
                 ReconcileLegacySectionDays(loadedCampaignDay);
                 _campaignDay.RestoreState(loadedCampaignDay);
             }
+            if (loadedCampaignDay != null)
+            {
+                RestoreDifficultyFromCampaignHeader(loadedCampaignDay);
+            }
+            else if (string.IsNullOrEmpty(_difficultyPresetId))
+            {
+                // Fresh campaign creation selects a preset before the campaign
+                // composition root runs. Preserve that committed choice rather
+                // than treating the absent first-save header as a legacy load.
+                RestoreDifficultyFromCampaignHeader(null);
+            }
         }
 
         /// <summary>
@@ -171,6 +182,9 @@ namespace AtomicWar.GodotApp
             try
             {
                 var save = _campaignDay.CaptureState();
+                if (string.IsNullOrEmpty(_difficultyPresetId))
+                    RestoreDifficultyFromCampaignHeader(null);
+                save.difficulty_preset_id = _difficultyPresetId;
                 if (CaptureSection("campaign_day", CampaignDaySaveStore.TryCapturePersisted(save))) _campaignDayDirty = false;
             }
             catch (Exception e)

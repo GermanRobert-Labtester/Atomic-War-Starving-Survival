@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 262,
+  "total_seams": 264,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -427,6 +427,14 @@
       "owner": "expeditions",
       "reason": "Discovery registration is Core-test exercised; no production host caller yet.",
       "diagnostic": true
+    },
+    {
+      "class_name": "DiscoveryConsequenceSystem",
+      "method_name": "RegisterExpeditionDiscovery",
+      "file_path": "Assets/Ashfall.Core/Expeditions/DiscoveryConsequenceSystem.cs",
+      "classification": "HOST_REQUIRED",
+      "owner": "expeditions",
+      "reason": "Main.Expeditions projects canonical destination-discovery events into the persistent consequence ledger."
     },
     {
       "class_name": "DistressFollowUpScheduler",
@@ -1479,6 +1487,14 @@
       "owner": "survivors",
       "reason": "Pair-bond registration is Core-test exercised; no production host caller yet.",
       "diagnostic": true
+    },
+    {
+      "class_name": "ResourceRationingSystem",
+      "method_name": "BindResourceValidator",
+      "file_path": "Assets/Ashfall.Core/Economy/ResourceRationingSystem.cs",
+      "classification": "HOST_REQUIRED",
+      "owner": "economy",
+      "reason": "EconomyHostSession binds the canonical item catalog validator before accepting ration policy commands."
     },
     {
       "class_name": "ResearchSystem",

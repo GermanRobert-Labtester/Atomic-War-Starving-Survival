@@ -38,15 +38,45 @@ jobs:
 
       - name: Execute Canonical Verification Suite (Fast Tier)
         run: |
-          python3 scripts/ci/run-gates.py --tier fast \
-            --report-json build/reports/gate-results.json \
-            --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
+          python3 scripts/ci/run-gates.py --tier fast --report-json build/reports/gate-results.json --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md
 
       - name: Execute Full Core xUnit Regression Gate
         run: |
-          python3 scripts/ci/run-gates.py --gate test_core_suite \
-            --report-json build/reports/core-test-results.json \
-            --fail-artifact build/reports/CORE_TEST_FAILURE_REPORT.md
+          python3 scripts/ci/run-gates.py --gate test_core_suite --report-json build/reports/core-test-results.json --fail-artifact build/reports/CORE_TEST_FAILURE_REPORT.md
+
+      - name: Surface Gate Failures as Annotations
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          for report in ("build/reports/gate-results.json",
+                         "build/reports/core-test-results.json"):
+              rp = pathlib.Path(report)
+              if not rp.is_file():
+                  continue
+              try:
+                  d = json.loads(rp.read_text(encoding="utf-8"))
+              except Exception as e:
+                  print(f"::error::could not parse {report}: {e}")
+                  continue
+              for r in d.get("results", []):
+                  if r.get("passed"):
+                      continue
+                  reason = (r.get("error_reason") or "no reason recorded").replace("\n", " ")[:500]
+                  print(f"::error title={r.get('gate_id','gate')}::GATE FAILED: "
+                        f"{r.get('gate_id','?')} ({r.get('name','?')}) - {reason}")
+                  out = (r.get("output") or "")
+                  shown = 0
+                  for line in out.splitlines():
+                      line = line.strip()
+                      if (line.startswith("FAIL") or "Failed " in line
+                              or "Error Message" in line or "Assert" in line[:80]):
+                          print(f"::error title={r.get('gate_id','gate')}:: {line[:500]}")
+                          shown += 1
+                          if shown >= 25:
+                              print(f"::error title={r.get('gate_id','gate')}:: (output truncated)")
+                              break
+          PY
 
       - name: Generate GitHub Actions Step Summary
         if: always()

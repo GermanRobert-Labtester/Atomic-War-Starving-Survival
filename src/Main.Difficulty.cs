@@ -1,37 +1,93 @@
 // SPDX-License-Identifier: MIT
-using Godot;
+using System;
+using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.Campaign;
 using Ashfall.Core.Difficulty;
 
 namespace AtomicWar.GodotApp
 {
-    /// <summary>
-    /// XP-01 difficulty director host: loads difficulty_presets.json once and
-    /// exposes the scalar provider. Consumers multiply existing owners; this
-    /// partial never becomes a second campaign or ending authority.
-    /// </summary>
     public partial class Main
     {
-        private DifficultyDirector? _difficulty;
+        private DifficultyPresetCatalog? _difficultyCatalog;
+        private DifficultyDirector? _difficultyDirector;
         private DifficultyScalarsProvider _difficultyScalars = DifficultyScalarsProvider.Legacy;
+        private string _difficultyPresetId = string.Empty;
 
-        public DifficultyScalarsProvider DifficultyScalars => _difficultyScalars;
+        /// <summary>
+        /// The only live difficulty scalar source. Consumers are added only
+        /// after their individual calculation sites have been premise-checked.
+        /// </summary>
+        internal DifficultyScalarsProvider DifficultyScalars => _difficultyScalars;
+
+        internal string DifficultyPresetId => _difficultyPresetId;
 
         private void SetupDifficulty()
         {
-            if (_difficulty != null) return;
-            string dataDir = string.IsNullOrEmpty(_dataDir) ? CatalogPath.ResolveDataDir() : _dataDir;
-            try
-            {
-                var catalog = DifficultyPresetCatalogLoader.Load(dataDir, new FileSystemIO());
-                _difficulty = new DifficultyDirector(catalog);
-                _difficultyScalars = _difficulty.ResolveProvider(null);
-            }
-            catch (System.Exception ex)
-            {
-                GD.PrintErr("[Ashfall Godot] Difficulty catalog failed, using standard scalars: " + ex.Message);
-                _difficultyScalars = DifficultyScalarsProvider.Legacy;
-            }
+            EnsureDifficultyCatalog();
+        }
+
+        private DifficultyPresetCatalog EnsureDifficultyCatalog()
+        {
+            if (_difficultyCatalog != null) return _difficultyCatalog;
+
+            _difficultyCatalog = DifficultyPresetCatalogLoader.Load(
+                _dataDir,
+                new FileSystemIO());
+            _difficultyDirector = new DifficultyDirector(_difficultyCatalog);
+            return _difficultyCatalog;
+        }
+
+        private DifficultyDirector EnsureDifficultyDirector()
+        {
+            EnsureDifficultyCatalog();
+            return _difficultyDirector
+                ?? throw new InvalidOperationException("Difficulty director did not initialize.");
+        }
+
+        private string DefaultDifficultyPresetId() =>
+            EnsureDifficultyDirector().ResolvePreset(null).id;
+
+        private string ResolveDifficultyPresetId(string? presetId) =>
+            EnsureDifficultyDirector().ResolvePreset(presetId).id;
+
+        /// <summary>
+        /// Called exclusively by the fresh-campaign transaction after the
+        /// player commits the menu selection. The resolved ID is later stored
+        /// in the checksummed campaign header; there is no in-run edit path.
+        /// </summary>
+        private void SelectDifficultyForNewCampaign(string? presetId)
+        {
+            var director = EnsureDifficultyDirector();
+            var preset = director.ResolvePreset(presetId);
+            _difficultyPresetId = preset.id;
+            _difficultyScalars = DifficultyScalarsProvider.FromPreset(preset);
+        }
+
+        /// <summary>
+        /// Restores a header-bound selection. An absent v1 field uses the
+        /// catalog default; an explicit unknown ID fails closed via the
+        /// director rather than silently changing a campaign's difficulty.
+        /// </summary>
+        private void RestoreDifficultyFromCampaignHeader(CampaignDaySave? save)
+        {
+            SelectDifficultyForNewCampaign(save?.difficulty_preset_id);
+        }
+
+        /// <summary>
+        /// Returns the selected preset's authored starter-item IDs. The
+        /// inventory owner performs the actual grants during fresh setup.
+        /// </summary>
+        private IReadOnlyList<string> DifficultyStartingBonusItemIds()
+        {
+            var preset = EnsureDifficultyDirector().ResolvePreset(_difficultyPresetId);
+            return preset.starting_bonus_item_ids.ToArray();
+        }
+
+        private void ResetDifficultyForCampaign()
+        {
+            _difficultyPresetId = string.Empty;
+            _difficultyScalars = DifficultyScalarsProvider.Legacy;
         }
     }
 }

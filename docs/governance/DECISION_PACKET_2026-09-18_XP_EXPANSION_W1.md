@@ -14,11 +14,12 @@ campaign difficulty. A Core `DifficultyDirector` resolves the immutable
 preset ID into typed scalars. The proposed consumer list remains closed until
 each live calculation site has been premise-checked.
 
-**Current implementation boundary:** W1 first creates and validates the
-catalog/director. Campaign binding, persistence, scalar consumers, and the
-read-only chronicle projection are separate follow-on slices because the
-current source contains no campaign header and the sealed completion history
-is owned by the active Wave 11 claim.
+**Current implementation boundary:** W1 creates and validates the
+catalog/director, binds the immutable New Game selection to the existing
+checksummed `campaign_day` header, and grants starter items through canonical
+inventory initialization. The seven scalar consumers and read-only chronicle
+projection are separate follow-on slices. The sealed completion history is
+owned by the active Wave 11 claim.
 
 ## D2 — SOFC fuel owner
 

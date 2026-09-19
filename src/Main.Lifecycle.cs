@@ -22,6 +22,22 @@ namespace AtomicWar.GodotApp
             if (_lifecycleRegistered) return;
             _lifecycleRegistered = true;
 
+            // Campaign header and day coordinator must be rebuilt for every
+            // selected save slot. Retaining this owner across a restore would
+            // skip the new slot's checksummed campaign_day state.
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "campaign_day",
+                dependsOn: Array.Empty<string>(),
+                saveSectionKey: "campaign_day",
+                onReset: () =>
+                {
+                    _campaignDay = null!;
+                    _dailyBriefing = null!;
+                    _briefingPending = false;
+                    _dailyBriefingDirty = false;
+                    _campaignDayDirty = false;
+                }));
+
             // Core & Holdfast
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "core_holdfast",
@@ -484,6 +500,10 @@ namespace AtomicWar.GodotApp
             _survivorInitializationApplied = false;
             _sectionPayloads.Clear();
             _sectionCaptureFailed = false;
+            ResetDifficultyForCampaign();
+            _spiritual = null;
+            _spiritualDeathWired = false;
+            _discoveryConsequencesBound = false;
             _lifecycleRegistry.ResetAll();
             GD.Print("[Ashfall Godot] Lifecycle: all in-memory sessions reset in reverse dependency order.");
         }

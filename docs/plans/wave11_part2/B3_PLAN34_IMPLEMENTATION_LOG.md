@@ -4,6 +4,15 @@
 
 ### Terminal state: PARTIALLY-SEALED
 
+> **2026-09-18 actuality addendum:** the historical 34B premise below was true at this
+> package's source baseline but is no longer true at current `main`. XP Wave 1
+> subsequently landed the canonical `difficulty_presets.json` catalog,
+> `DifficultyDirector`/typed scalar provider, New Game selection, and checksummed
+> `campaign_day.difficulty_preset_id` persistence/restore. This does **not**
+> silently authorize completion history to record difficulty under `DEC-20`;
+> it narrows the remaining decision to observation/projection boundaries.
+
+
 **Source baseline:** `033df2b7` plus the user-owned dirty worktree, 2026-09-18.\
 **Authority revision:** The user explicitly authorized B3 on 2026-09-18. The revision recorded at the head of `C2_planintegration[12].md` permits a named user-level, append-only completion-history store. It supersedes only the historical prohibition on that store. Plan 175 still owns profile rewards, unlocks, and New Game+.
 
@@ -13,7 +22,7 @@
 |---|---|---|
 | Plan 19A epilogue authority | SEALED-ELSEWHERE | `EpilogueContextFactory` remains a pure engine-free factory; `Main.Endgame.BuildCampaignOutcomeSnapshot()` supplies its canonical inputs. |
 | Campaign completion event | SEALED-ELSEWHERE | `EndgameHostSession` owns the terminal transition and now publishes the already-sealed `CampaignEpilogueReport` as an observation event. |
-| Difficulty authority / 34B | UNSEALED | No canonical campaign difficulty ID, preset catalog, or completion difficulty owner exists at current `HEAD`; B3 does not invent one. |
+| Difficulty authority / 34B | AUTHORITY LANDED AFTER BASELINE / HISTORY OBSERVATION UNSIGNED | Current source now has the canonical preset catalog/director and immutable persisted campaign difficulty ID. B3 correctly did not invent one at its historical baseline; completion-history observation of that ID remains outside the signed `DEC-20` boundary. |
 | Chronicle completion-history projection / 34C | UNSEALED | Existing chronicle/epilogue surfaces continue to own ending presentation; no plan-defined completion-history read model or panel was present to extend safely. |
 | Part 2 claim | ACTIVE | `claim-wave11-part2-execution-2026-09-18` in `WORKTREE_OWNERSHIP.md`. |
 
@@ -26,7 +35,7 @@
 | Cross-campaign persistence | No existing completion store | `CompletionHistoryStore` persists atomically at `user://completion_history.json`, outside every campaign save slot. | SEALED-HERE |
 | Observation-only recording | Endgame was already authoritative | Main observes `CampaignSealed` after the terminal report, saves the terminal campaign state, then appends history. No campaign state, ending, reward, or RNG is changed by the recorder. | SEALED-HERE |
 | Tamper evidence | `SaveChecksum` is the current checksum discipline | Canonical semantic record payloads are individually checksummed and hash-linked to their predecessor. Invalid history is reported and never silently rewritten as valid. | SEALED-HERE |
-| Difficulty record | No current canonical source | Deliberately omitted rather than stored as a display string or inferred from unrelated mechanic difficulty values. | UNSEALED / 34B |
+| Difficulty record | Canonical source now exists in `campaign_day.difficulty_preset_id` via the XP Wave 1 difficulty authority | The B3 record remains deliberately unchanged: `DEC-20` authorized observation-only completion history but did not authorize difficulty semantics/recording. A future signed delta may copy the immutable canonical ID; it must not infer or create a second difficulty value. | DECISION-BOUNDARY OPEN / 34B |
 | Chronicle projection | Existing ending surfaces only | No second ending/history presentation owner added. A future 34C consumer must read this history through its read API after its contract is current. | UNSEALED / 34C |
 
 ## Ownership and record contract
@@ -82,6 +91,6 @@
 
 ## Remaining blocker and next queue movement
 
-**Remaining blocker:** A canonical difficulty authority and a plan-defined chronicle/history consumer are absent. B3 must not infer either from display text or mechanic-local tuning.
+**Remaining blocker:** The canonical difficulty authority now exists; the remaining 34B question is whether the user-level completion history may *observe* its immutable ID under an amended/signed boundary. The 34C chronicle/history consumer is still absent. B3 must not infer difficulty from display text, duplicate the authority, or invent a second ending/history panel.
 
 **Next queue movement:** C2[12]'s completion-history slice is sealed. Its 34B/34C remainder remains queued behind an authority/presentation contract; C2[13] remains the next independently actionable Part 2 corpus node.

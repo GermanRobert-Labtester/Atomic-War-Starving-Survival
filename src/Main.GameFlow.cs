@@ -140,16 +140,35 @@ namespace AtomicWar.GodotApp
             StartNewGame(
                 Ashfall.Core.Survivors.StartingCohortCatalog.StandardProfileId,
                 _cliStartingSuppliesProfileId ??
-                StartingSuppliesCatalog.StandardProfileId);
+                StartingSuppliesCatalog.StandardProfileId,
+                DefaultDifficultyPresetId());
         }
 
         private void StartNewGame(string profileId)
         {
-            StartNewGame(profileId, StartingSuppliesCatalog.StandardProfileId);
+            StartNewGame(
+                profileId,
+                StartingSuppliesCatalog.StandardProfileId,
+                DefaultDifficultyPresetId());
         }
 
         private void StartNewGame(string cohortProfileId, string startingSuppliesProfileId)
         {
+            StartNewGame(
+                cohortProfileId,
+                startingSuppliesProfileId,
+                DefaultDifficultyPresetId());
+        }
+
+        private void StartNewGame(
+            string cohortProfileId,
+            string startingSuppliesProfileId,
+            string difficultyPresetId)
+        {
+            // Validate the submitted stable ID before allocating a new slot so
+            // a malformed selection cannot leave an empty campaign behind.
+            string resolvedDifficultyPresetId = ResolveDifficultyPresetId(difficultyPresetId);
+
             // Fresh campaigns are transactions, not resets of the currently
             // selected campaign. Allocate the next deterministic slot before
             // tearing down live sessions so an existing campaign remains
@@ -185,6 +204,7 @@ namespace AtomicWar.GodotApp
             _startingSuppliesProfileId = string.IsNullOrEmpty(startingSuppliesProfileId)
                 ? StartingSuppliesCatalog.StandardProfileId
                 : startingSuppliesProfileId;
+            SelectDifficultyForNewCampaign(resolvedDifficultyPresetId);
 
             // Compose all campaign-owned services before any panel opens.
             ComposeCampaign();

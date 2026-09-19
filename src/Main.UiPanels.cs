@@ -1582,7 +1582,8 @@ namespace AtomicWar.GodotApp
             _startingCohortSetupPanel.OnStartRequested += selection =>
                 StartNewGame(
                     selection.CohortProfileId,
-                    selection.StartingSuppliesProfileId);
+                    selection.StartingSuppliesProfileId,
+                    selection.DifficultyPresetId);
             _startingCohortSetupPanel.OnCancel += CloseStartingCohortSetup;
             AddChild(_startingCohortSetupPanel);
 
@@ -1652,9 +1653,12 @@ namespace AtomicWar.GodotApp
         {
             if (_state != GameState.Menu || _startingCohortSetupPanel == null) return;
             var catalog = EnsureStartingCohortCatalog();
-            _startingCohortSetupPanel.Bind(catalog, EnsureStartingSuppliesCatalog());
+            _startingCohortSetupPanel.Bind(
+                catalog,
+                EnsureStartingSuppliesCatalog(),
+                EnsureDifficultyCatalog());
             _mainMenu.Visible = false;
-            _startingCohortSetupPanel.Open(_startingSuppliesProfileId);
+            _startingCohortSetupPanel.Open(_startingSuppliesProfileId, _difficultyPresetId);
         }
 
         private void CloseStartingCohortSetup()

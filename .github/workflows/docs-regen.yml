@@ -1,0 +1,82 @@
+# ASHFALL Docs Regen — keeps drift-gated documentation in sync with the repo.
+# Whenever a generator under scripts/ci/generate-* changes, this regenerates all
+# script-only drift-gated catalogs, verifies the drift gates, and (if the repo's
+# workflow permissions allow writes) commits the result.
+# Local developer parity: run the generator commands below by hand (docs/INDEX.md LAST).
+
+name: Docs Regen
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/ci/generate-*.py"
+      - "scripts/ci/generate-*.sh"
+      - ".github/workflows/docs-regen.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-regen-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    name: Regenerate drift-gated documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Regenerate drift-gated catalogs
+        run: |
+          python3 scripts/ci/generate-catalog-registry.py
+          python3 scripts/ci/generate-audio-catalog.py
+          python3 scripts/ci/generate-agent-skills-catalog.py
+          python3 scripts/ci/generate-core-systems-catalog.py
+          python3 scripts/ci/generate-ui-panel-catalog.py
+          python3 scripts/ci/generate-expansions-catalog.py
+          bash scripts/ci/generate-save-store-matrix.sh
+          # docs/INDEX.md must be regenerated LAST: it embeds the header lines
+          # of every other document, including their verification dates.
+          python3 scripts/ci/generate-docs-index.py
+
+      - name: Verify drift gates pass
+        run: |
+          for g in \
+            catalog_registry_drift \
+            audio_catalog_drift \
+            agent_skills_catalog_drift \
+            core_systems_catalog_drift \
+            ui_panel_catalog_drift \
+            expansions_catalog_drift \
+            save_store_matrix_drift \
+            docs_index_drift; do
+            python3 scripts/ci/run-gates.py --gate "$g"
+          done
+
+      - name: Commit regenerated docs (best-effort)
+        run: |
+          git config user.name "ashfall-docs-regen[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No drift — nothing to commit."
+            exit 0
+          fi
+          git commit -m "docs: regenerate drift-gated catalogs (automated)"
+          # Push to a run-unique branch (branch creation is allowed; force-push
+          # is blocked by the repository ruleset). The branch is merged into
+          # the fix branch via an authenticated PR.
+          AUTOGEN_BRANCH="ci-autogen-${GITHUB_RUN_ID}"
+          if out=$(git push origin HEAD:refs/heads/$AUTOGEN_BRANCH 2>&1); then
+            echo "Pushed regenerated docs to $AUTOGEN_BRANCH."
+          else
+            echo "::error::DOCS-REGEN PUSH FAILED — ${out}"
+            echo "::warning::Verification above passed; only the auto-commit push failed. If this is a GITHUB_TOKEN permission denial, set Settings → Actions → General → Workflow permissions to 'Read and write permissions' and re-run this workflow."
+            exit 1
+          fi

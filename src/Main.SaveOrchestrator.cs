@@ -157,6 +157,10 @@ namespace AtomicWar.GodotApp
 
         private void RestoreAllSubsystemsFromDisk()
         {
+            // campaign_day is the campaign header authority. Restore it
+            // before dependent sessions so immutable campaign selections
+            // (including difficulty) are available throughout composition.
+            SetupCampaignDay();
             SetupHoldfastRuntime();
             _holdfastTerminal?.OpenTerminal();
 
