@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Ashfall.Core.Culture;
 using Ashfall.Core.UI;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
@@ -40,6 +41,9 @@ namespace AtomicWar.GodotApp.UI
 
         /// <summary>Read-only personal-claim projection supplied by Main.</summary>
         public Func<string, IReadOnlyList<PersonalBelonging>>? BelongingsProvider { get; set; }
+
+        /// <summary>Read-only authored documentation projection supplied by Main.</summary>
+        public Func<string, IReadOnlyList<DocumentationItem>>? DocumentationProvider { get; set; }
 
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
@@ -142,6 +146,23 @@ namespace AtomicWar.GodotApp.UI
                 if (belongings.Count > visible)
                     AddRow(_survivorInfo, $"  +{belongings.Count - visible} more", Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount += 1 + visible + (belongings.Count > visible ? 1 : 0);
+            }
+
+            var docs = DocumentationProvider?.Invoke(s.Id);
+            if (docs != null && docs.Count > 0)
+            {
+                AddRow(_survivorInfo, $"Authored records: {docs.Count}", Ashfall.Core.UI.Theme.Lethe);
+                int visible = Math.Min(3, docs.Count);
+                for (int i = 0; i < visible; i++)
+                {
+                    var doc = docs[i];
+                    AddRow(_survivorInfo,
+                        $"  {doc.Title} · {doc.Type} · quality {doc.Quality:0}",
+                        Ashfall.Core.UI.Theme.Dim);
+                }
+                if (docs.Count > visible)
+                    AddRow(_survivorInfo, $"  +{docs.Count - visible} more", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount += 1 + visible + (docs.Count > visible ? 1 : 0);
             }
 
             AddRow(_survivorInfo, $"Alive: {s.IsAlive}", s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);

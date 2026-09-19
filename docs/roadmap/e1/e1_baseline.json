@@ -11,10 +11,10 @@
         "design": 3,
         "generated": 4,
         "index": 6,
-        "other": 1651,
+        "other": 1652,
         "roadmap": 2
       },
-      "total": 1769
+      "total": 1770
     },
     "plans": {
       "integration": 245,
@@ -4198,6 +4198,10 @@
     },
     {
       "category": "other",
+      "path": "docs/plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md"
+    },
+    {
+      "category": "other",
       "path": "docs/plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md"
     },
     {
@@ -7105,7 +7109,7 @@
     "historical_plan_bodies_rewritten": false,
     "runtime_paths_touched_by_e1": []
   },
-  "generated_at_utc": "2026-09-19T16:58:11Z",
+  "generated_at_utc": "2026-09-19T19:57:56Z",
   "generated_by": "scripts/ci/generate-plan-register.py --baseline",
   "namespaces": {
     "integration": [
@@ -10161,122 +10165,39 @@
     ]
   },
   "repository": {
-    "branch": "main",
+    "branch": "prepare/pr-64-onto-main",
     "dirty": true,
-    "head": "b8363cb7deb8e8f8e9410f5fa400c8b9bf171327",
+    "head": "c7cb3e212f15f888acb96bac676ea692c824eab9",
     "status_porcelain": [
-      "error: fsmonitor_ipc__send_query: unspecified error on '.git/fsmonitor--daemon.ipc'",
-      " M .clinerules",
-      " M .cursorrules",
-      " M .windsurfrules",
-      " M ANTIGRAVITY.md",
-      " M CLAUDE.md",
-      " M CODEX.md",
-      " M CRUSH.md",
-      " M GEMINI.md",
-      " M GOOSE.md",
-      " M MIMOCODE.md",
-      " M OPENSETUP.md",
-      " M QWEN.md",
-      " M VIBE.md",
-      " M WORKTREE_OWNERSHIP.md",
-      " M docs/INDEX.md",
-      " M docs/architecture/CORE_SYSTEMS_CATALOG.md",
-      " M docs/cli/HOST_CLI_COMMAND_CATALOG.md",
-      " M docs/expansions/EXPANSIONS_MASTER_CATALOG.md",
-      " M docs/plans/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md",
-      " M docs/plans/xp/w1/W1_IMPLEMENTATION_LOG.md",
-      " M docs/saves/SAVE_STORE_CONTRACT_MATRIX.md",
-      " M docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md",
-      " M scripts/ci/legacy-reference-gate.sh",
-      " M src/Main.Difficulty.cs",
-      " M src/Main.GameFlow.cs",
-      "?? Seal-steps/.gdignore",
-      "?? docs/roadmap/e1/",
-      "?? scripts/ci/generate-plan-register.py",
-      "?? scripts/ci/plan_governance_config.json"
+      "A  Ashfall.Core.Tests/Culture/Plan219DocumentationIntegrationTests.cs",
+      "A  Ashfall.Core.Tests/Underground/Plan167TunnelNetworkIntegrationTests.cs",
+      "M  Assets/Ashfall.Core/Culture/CulturalArchiveVaultSystem.cs",
+      "M  Assets/Ashfall.Core/World/WastelandMapSystem.cs",
+      "M  WORKTREE_OWNERSHIP.md",
+      "UU docs/INDEX.md",
+      "M  docs/architecture/PORT_CONTRACT.md",
+      "M  docs/architecture/port-contract.json",
+      "M  docs/ci/port_contract_policy.json",
+      "A  docs/plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md",
+      "M  docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md",
+      "AA docs/roadmap/e1/E1_BASELINE.md",
+      "AA docs/roadmap/e1/e1_baseline.json",
+      "M  src/Main.FlagshipInstitutions.cs",
+      "A  src/Main.Plans167_219.cs",
+      "M  src/Main.PlayerSurfaces.cs",
+      "M  src/Main.UiPanels.cs",
+      "M  src/UI/MapPanel.cs",
+      "M  src/UI/SurvivorDetailPanel.cs"
     ]
   },
   "schema_version": 1,
   "toolchain": {
-    "dotnet": "10.0.302",
-    "godot": "4.7.1.stable.mono.official.a13da4feb",
-    "python": "Python 3.12.14"
+    "dotnet": "unavailable",
+    "godot": "unavailable",
+    "python": "Python 3.13.5"
   },
   "verification": {
-    "fast_gate_report": {
-      "all_passed": false,
-      "failed_count": 1,
-      "failures": [
-        {
-          "error_reason": "Command exited with non-zero code 1",
-          "exit_code": 1,
-          "gate_id": "cli_catalog_drift"
-        }
-      ],
-      "inherited": true,
-      "passed_count": 49,
-      "source": "build/reports/gate-results.json",
-      "tier": "fast",
-      "total_gates": 50
-    },
-    "witnesses": [
-      {
-        "classification": "baseline_witness_pass",
-        "command": "python3 scripts/ci/generate-docs-index.py --check",
-        "duration_seconds": 1.087,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "OK: Master docs index is up to date (2534 documents verified)."
-      },
-      {
-        "classification": "baseline_witness_pass",
-        "command": "python3 scripts/ci/sync-agent-rulebooks.py --check",
-        "duration_seconds": 0.031,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "OK: All 13 client rulebooks are in sync with AGENTS.md."
-      },
-      {
-        "classification": "baseline_witness_pass",
-        "command": "python3 scripts/ci/verify-capability-claims.py --check",
-        "duration_seconds": 0.028,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "ASHFALL CAPABILITY CLAIMS VERIFICATION REPORT\n==================================================\nRegistry: /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/architecture/CLAIMS.json\nTotal claims: 24\nStatus breakdown:\n  STALE          : 0\n  FALSE          : 0\n  SUPERSEDED     : 0\n  TRUE           : 23\n  PARTLY_TRUE    : 1\n  UNVERIFIABLE   : 0\nConfidence breakdown:\n  SOURCE_ONLY         : 1\n  PROVEN_UNIT         : 0\n  UNVERIFIED          : 0\n  PROVEN_RUNTIME      : 8\n  PROVEN_INTEGRATION  : 15\n--------------------------------------------------\nAll 24 capability claims successfully verified.\n=================================================="
-      },
-      {
-        "classification": "baseline_witness_pass",
-        "command": "bash scripts/ci/doc-link-gate.sh",
-        "duration_seconds": 0.347,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "\u2500\u2500 RUNNING PORTABLE DOC LINK GATE \u2500\u2500\nOK: All markdown documents use portable relative links (2804 files checked).\n=== PORTABLE DOC LINK GATE PASSED ==="
-      },
-      {
-        "classification": "baseline_witness_pass",
-        "command": "dotnet build Ashfall.csproj --no-restore",
-        "duration_seconds": 1.07,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "  Ashfall -> /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/.godot/mono/temp/bin/Debug/Ashfall.dll\n\nBuild succeeded.\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.85"
-      },
-      {
-        "classification": "baseline_witness_pass",
-        "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --data-integrity-selftest",
-        "duration_seconds": 4.815,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org\n\n[Ashfall Godot] Initializing ASHFALL: Atomic War - Starving Survival...\nCatalog Boot Report:\n  Total: 33 (Required: 13, Optional: 20, DevOnly: 0)\n  Success: 33\n  Warnings: 0\n  Errors: 0\n\n[DATA] (warn) radio_distress_signals_expansion.json:freq_distress_55_1: expansion row overridden by primary authority (documented primary-wins load order)\n[DATA] (warn) radio_distress_signals_expansion.json:freq_distress_401_9: expansion row overridden by primary authority (documented primary-wins load order)\n[DATA] (warn) radio_distress_signals_expansion.json:freq_distress_217_4: expansion row overridden by primary authority (documented primary-wins load order)\n[DATA] (warn) radio_distress_signals_expansion.json:freq_distress_148_2: expansion row overridden by primary authority (documented primary-wins load order)\n[DATA] (warn) radio_distress_signals_expansion.json:freq_distress_392_7: expansion row overridden by primary authority (documented primary-wins load order)\nDATA_INTEGRITY_SELFTEST PASS \u2014 5 findings (13124 ids authored, 4716 reuses reserved) \u2014 0 errors, 5 warnings across 338 catalogs\n[HOST_SELFTEST] data_integrity_selftest PASS\n[HOST_SELFTEST_SUMMARY] test=data_integrity_selftest status=PASS exit_code=0 passed=338 failed=0 total=338 details=\"0 errors across 338 catalogs\"\n[HOST_SELFTEST_JSON] {\"test\":\"data_integrity_selftest\",\"status\":\"PASS\",\"exit_code\":0,\"passed\":338,\"failed\":0,\"total\":338,\"details\":\"0 errors across 338 catalogs\"}\nSELFTEST PASS: data_integrity_selftest\nDATA_INTEGRITY_SELFTEST PASS"
-      },
-      {
-        "classification": "baseline_witness_pass",
-        "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --bridge-selftest",
-        "duration_seconds": 1.79,
-        "exit_code": 0,
-        "inherited": true,
-        "output_tail": "[ashfall-godot] timeout=180s fixed_fps=15 max_fps=15\nGodot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org\n\n[Ashfall Godot] Initializing ASHFALL: Atomic War - Starving Survival...\nCatalog Boot Report:\n  Total: 33 (Required: 13, Optional: 20, DevOnly: 0)\n  Success: 33\n  Warnings: 0\n  Errors: 0\n\n[BridgeSelfTest] UnityEngine.* shim removed \u2014 src/Bridge/ is empty. Migration to Godot is complete; nothing to shim.\n[HOST_SELFTEST] bridge_selftest PASS\n[HOST_SELFTEST_SUMMARY] test=bridge_selftest status=PASS exit_code=0 details=\"UnityEngine.* shim removed\"\n[HOST_SELFTEST_JSON] {\"test\":\"bridge_selftest\",\"status\":\"PASS\",\"exit_code\":0,\"details\":\"UnityEngine.* shim removed\"}\nSELFTEST PASS: bridge_selftest\nBRIDGE_SELFTEST PASS"
-      }
-    ]
+    "fast_gate_report": null,
+    "witnesses": []
   }
 }
