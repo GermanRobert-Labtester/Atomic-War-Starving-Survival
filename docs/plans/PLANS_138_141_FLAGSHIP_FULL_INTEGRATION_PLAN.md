@@ -1,9 +1,13 @@
 # ASHFALL Flagship Full Integration Plan
 ## Plans 138–141 — Low-Background Radiation Metrology, InSAR Ground-Deformation Intelligence, Advanced Seamless Tubing Manufacture & Run-Flat Vehicle Mobility
 
-> **Status:** AUTHORIZED ROADMAP — not yet claimed. Implementation requires a
-> batch in `INTEGRATION_PLANS.md` per governance. Wave A reconnaissance
-> corrections recorded in `PLANS_138_141_WAVE_A_RECONNAISSANCE.md`.
+> **Status:** COMPLETE (All 4 Plans 138–141 Delivered and Verified 2026-09-19)
+> Closeout artifacts: `docs/shelter/PLAN_138_LOW_BACKGROUND_LEAD_CLOSEOUT.md`,
+> `docs/world/PLAN_139_INSAR_INTERFEROMETRY_CLOSEOUT.md`,
+> `docs/shelter/PLAN_140_HYDRAULIC_EXTRUSION_CLOSEOUT.md`,
+> `docs/expeditions/PLAN_141_RUNFLAT_TIRE_CLOSEOUT.md`.
+> Verified via `godot --headless --path . -- --plans-139-141-selftest` (18/18 PASS)
+> and focused unit test suites (Plan 138 19/19, Plan 139 20/20, Plan 140 17/17, Plan 141 21/21).
 >
 > **Premise corrections (2026-09-12 reconnaissance):** the plan text below
 > names some authorities that do not exist under those exact names. Where

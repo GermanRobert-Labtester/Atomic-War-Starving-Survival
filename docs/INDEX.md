@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2554 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2555 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2507 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2508 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2190 documents)
+## 9. General Project Guides & Archive Reference (2191 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -1959,7 +1959,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`](plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md) | **CF-P28-ONE-BOOTSTRAP-PATH — Integration Plan** — **Package:** `CF-P28-ONE-BOOTSTRAP-PATH` (completion-first program "Plan 10"; census anchor C2[9] / Plan 28 residual) |
 | 🟢 `CURRENT` | [`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`](plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md) | **CF-P5-RESTOCK-RECONCILE — Merchant Restock Priority Ledger Reconciliation & Ratification** — **Package:** `CF-P5-RESTOCK-RECONCILE` (completion-first program "Plan 03", roster entry 02) |
 | 🟢 `CURRENT` | [`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`](plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md) | **CF-P6 — Vehicle Armor Grades Integration Plan** — **Package:** `CF-P6-VEHICLE-ARMOR-GRADES` (completion-first program "Plan 04") |
-| 🟢 `CURRENT` | [`docs/plans/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md`](plans/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md) | **CF-XP01 — Difficulty Full Binding Integration Plan** — Status: ACTIVE — P0 premise audit recorded 2026-09-19; implementation follows |
+| 🟢 `CURRENT` | [`docs/plans/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md`](plans/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md) | **CF-XP01 — Difficulty Full Binding Integration Plan** — Status: COMPLETE — Verified 2026-09-19. All 4 phases and all explicit acceptance criteria |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_ENTRY_MATRIX.md`](plans/CONTRABAND_ENTRY_MATRIX.md) | **CONTRABAND ENTRY MATRIX — Plan 147 Task A.1/A.2** — Complete inventory of all 20 records in |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md`](plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md) | **CONTRABAND ITEM IDENTITY MATRIX — Plan 147 Task A.3/A.4** — Identity classification per record. A contraband record is **not automatically |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md`](plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md) | **CONTRABAND MECHANICS AUTHORITY MATRIX — Plan 147 Task A.5** — One row per authored mechanics key (45 total: 14 typed + 31 silently-dropped), |
@@ -2319,6 +2319,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_124_CVD_DIAMOND_CLOSEOUT.md`](shelter/PLAN_124_CVD_DIAMOND_CLOSEOUT.md) | **PLAN 124 — CVD Diamond Closeout (Phase 12)** — **Verb:** `--cvd-diamond-selftest` (alias) · **Tool economy:** `docs/shelter/PLAN_124_DIAMOND_TOOL_ECONOMY.md` · **Au... |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_124_DIAMOND_AUTHORITY_MAP.md`](shelter/PLAN_124_DIAMOND_AUTHORITY_MAP.md) | **PLAN 124 — CVD Diamond Tooling Authority Map (Phase 1)** — **Status:** ACCEPTED (reconnaissance). Premise-verified against current source. |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_124_DIAMOND_TOOL_ECONOMY.md`](shelter/PLAN_124_DIAMOND_TOOL_ECONOMY.md) | **PLAN 124 — Diamond Tool Economy (Phase 11)** — **Source:** `--plans-122-125-balance-soak` 120-day tool-economy soak (2 industrial ticks/day, skill 65, refined feed ... |
+| 🟢 `CURRENT` | [`docs/shelter/PLAN_138_LOW_BACKGROUND_LEAD_CLOSEOUT.md`](shelter/PLAN_138_LOW_BACKGROUND_LEAD_CLOSEOUT.md) | **Plan 138 — Low-Background Radiation Metrology: Closeout** — **Status:** COMPLETE · **Date:** 2026-09-19 · **Batch:** `PLANS-138-139-141-LATER-PHASES` |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_140_HYDRAULIC_EXTRUSION_CLOSEOUT.md`](shelter/PLAN_140_HYDRAULIC_EXTRUSION_CLOSEOUT.md) | **Plan 140 — Advanced Hydraulic Extrusion: Closeout** — **Status:** COMPLETE · **Date:** 2026-09-12 · **Batch:** `PLANS-138-139-141-LATER-PHASES` |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_146_EBPVD_COATINGS_CLOSEOUT.md`](shelter/PLAN_146_EBPVD_COATINGS_CLOSEOUT.md) | **Plan 146 Closeout: EB-PVD Thermal Barrier Coatings** — **Plan ID:** AF-146 |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN_186_MAINTENANCE_PROJECTION_AUTHORITY_MAP.md`](shelter/PLAN_186_MAINTENANCE_PROJECTION_AUTHORITY_MAP.md) | **Plan 186 — Shelter maintenance projection authority map** — **Status:** ACCEPTED — §3 signed 2026-09-12 |
