@@ -22,7 +22,6 @@ namespace AtomicWar.GodotApp
         private DifficultyPresetCatalog? _difficultyCatalog;
         private DifficultyScalarsProvider _difficultyScalars = DifficultyScalarsProvider.Legacy;
         private string _difficultyPresetId = DifficultyScalarsProvider.Legacy.PresetId;
-        private bool _difficultyBonusesGrantedForCampaign;
 
         /// <summary>
         /// The only live difficulty scalar source. Consumers are added only
@@ -199,35 +198,8 @@ namespace AtomicWar.GodotApp
                 _equipmentCondition.System.WearRateMultiplierProvider = () => _difficultyScalars.EquipmentDecayMult;
         }
 
-        private void GrantDifficultyStartingBonusesOnce()
-        {
-            if (_difficultyBonusesGrantedForCampaign || _inventory?.Inventory == null) return;
-            _difficultyBonusesGrantedForCampaign = true;
-
-            if (!EnsureDifficultyAuthority(out _)) return;
-            DifficultyPreset preset;
-            try
-            {
-                preset = _difficulty!.ResolvePreset(_difficultyPresetId);
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr("[Ashfall Godot] Difficulty bonus grant refused: " + ex.Message);
-                return;
-            }
-
-            for (int i = 0; i < preset.starting_bonus_item_ids.Count; i++)
-            {
-                string itemId = preset.starting_bonus_item_ids[i];
-                if (!_inventory.Inventory.AddById(itemId, 1))
-                    GD.PrintErr($"[Ashfall Godot] Difficulty bonus item '{itemId}' could not be added.");
-            }
-            SaveInventory();
-        }
-
         private void PrepareDifficultyForNewCampaign()
         {
-            _difficultyBonusesGrantedForCampaign = false;
         }
 
         private void ApplyDifficultyFromLoadedManifest()

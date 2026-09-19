@@ -227,7 +227,6 @@ namespace AtomicWar.GodotApp
 
             // Compose all campaign-owned services before any panel opens.
             ComposeCampaign();
-            GrantDifficultyStartingBonusesOnce();
 
             _openingProtocolModal.Bind(_startingLevel);
             // Veteran mode (TutorialMode 2): land on the clean game view instead
