@@ -351,6 +351,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--save-store-checksum-selftest"],
         "tests": ["ZealotrySystemTests"]
     },
+    "spiritual_meaning": {
+        "domain": "Plan 30 Spiritual Meaning",
+        "core": ["SpiritualMeaningCoordinator"],
+        "catalog": ["spiritual_rituals.json", "memorial_rites.json", "belief_movements.json"],
+        "host": ["Main"],
+        "setup": "SetupSpiritual",
+        "ticked": True,
+        "tick_type": "Daily Sim Tick",
+        "store": ["SpiritualSaveStore"],
+        "ui": ["IronCenotaphMemorialPanel"],
+        "routes": ["status"],
+        "cli": ["--save-store-checksum-selftest"],
+        "tests": ["Plan30SpiritualWorldTests"]
+    },
     "desperation": {
         "domain": "Plans 178-201 Expansion Block",
         "core": ["DesperationSystem"],
@@ -1992,7 +2006,7 @@ ARCHITECTURE_GRAPH = {
     "food_preservation": { "domain": "Shelter", "core": ["FoodPreservationSystem"], "catalog": ["food_preservation.json"], "host": ["Main"], "setup": "SetupPlans62To65", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["FoodPreservationSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["FoodPreservationSystemTests"] },
     "prewar_archives": { "domain": "Knowledge", "core": ["PrewarArchiveDecryptionSystem"], "catalog": ["prewar_archives.json"], "host": ["Main"], "setup": "SetupPlans62To65", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["PrewarArchiveSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["PrewarArchiveDecryptionTests"] },
     "shelter_prisoners": { "domain": "Factions", "core": ["ShelterPrisonerSystem"], "catalog": ["captive_interrogations.json"], "host": ["Main"], "setup": "SetupPlans62To65", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["ShelterPrisonerSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["ShelterPrisonerSystemTests"] },
-    "vehicle_garage": { "domain": "Expeditions", "core": ["VehicleGarageSystem"], "catalog": ["vehicle_modifications.json"], "host": ["Main"], "setup": "SetupVehicleGarage", "ticked": False, "tick_type": "On-Demand", "store": ["VehicleGarageSaveStore"], "ui": ["VehicleGaragePanel"], "routes": ["vehicle_garage"], "cli": ["--vehicle-garage-selftest"], "tests": ["VehicleGarageSystemTests", "Plan50VehicleGarageIntegrationTests"] },
+    "vehicle_garage": { "domain": "Expeditions", "core": ["VehicleGarageSystem", "VehicleArmorGradeCatalogLoader"], "catalog": ["vehicle_modifications.json", "vehicle_armor_grades.json"], "host": ["Main"], "setup": "SetupVehicleGarage", "ticked": False, "tick_type": "On-Demand", "store": ["VehicleGarageSaveStore"], "ui": ["VehicleGaragePanel"], "routes": ["vehicle_garage"], "cli": ["--vehicle-garage-selftest"], "tests": ["VehicleGarageSystemTests", "Plan50VehicleGarageIntegrationTests", "Plan213VehicleArmorGradeTests"] },
     "faction_espionage": { "domain": "Factions", "core": ["ShelterEspionageSystem"], "catalog": ["faction_intelligence.json"], "host": ["Main"], "setup": "SetupShelterEspionage", "ticked": False, "tick_type": "On-Demand", "store": ["ShelterEspionageSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["ShelterEspionageSystemTests"] },
     "survivor_mental_health": { "domain": "Psychology", "core": ["SurvivorMentalHealthSystem"], "catalog": ["psychological_trauma.json"], "host": ["Main"], "setup": "SetupSurvivorMentalHealth", "ticked": False, "tick_type": "On-Demand", "store": ["SurvivorMentalHealthSaveStore"], "ui": [], "routes": [], "cli": [], "tests": ["SurvivorMentalHealthTests"] },
     "grain_processing": { "domain": "Nutrition", "core": ["GrainProcessingSystem"], "catalog": [], "host": ["GrainProcessingSaveStore"], "setup": "SetupGrainProcessing", "ticked": False, "tick_type": "On-Demand", "store": ["GrainProcessingSaveStore"], "ui": [], "routes": [], "cli": [], "tests": [] },

@@ -32,15 +32,20 @@ namespace AtomicWar.GodotApp.UI
         private Label _detailText = null!;
         private Label _vehicleText = null!;
         private Label _modText = null!;
+        private Label _armorText = null!;
+        private Label _armorCostText = null!;
         private Label _maintenanceText = null!;
         private Label _recoveryText = null!;
         private Label _commandResult = null!;
 
         private OptionButton _vehicleSelector = null!;
         private OptionButton _modSelector = null!;
+        private OptionButton _armorSelector = null!;
 
         private Button _installButton = null!;
         private Button _uninstallButton = null!;
+        private Button _armorInstallButton = null!;
+        private Button _armorReforgeButton = null!;
         private Button _serviceChassisButton = null!;
         private Button _serviceEngineButton = null!;
         private Button _serviceTransmissionButton = null!;
@@ -54,6 +59,7 @@ namespace AtomicWar.GodotApp.UI
 
         private string _selectedVehicleId = string.Empty;
         private string _selectedModId = string.Empty;
+        private string _selectedArmorGradeId = string.Empty;
         private string _selectedRecoveryId = string.Empty;
         private bool _syncing;
 
@@ -146,6 +152,23 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_maintenanceText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart });
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("ARMOR PLATING"));
+
+            var armorRow = new HBoxContainer();
+            armorRow.AddThemeConstantOverride("separation", 8);
+            armorRow.AddChild(AshfallUiHelpers.MakeBody("Grade:"));
+            _armorSelector = new OptionButton { CustomMinimumSize = new Vector2(360, 34) };
+            _armorSelector.ItemSelected += OnArmorSelected;
+            armorRow.AddChild(_armorSelector);
+            _armorInstallButton = AshfallUiHelpers.MakeButton("FIT PLATE", OnInstallArmorPressed);
+            armorRow.AddChild(_armorInstallButton);
+            _armorReforgeButton = AshfallUiHelpers.MakeButton("RE-FORGE", OnReforgeArmorPressed);
+            armorRow.AddChild(_armorReforgeButton);
+            _contentStack.AddChild(armorRow);
+            _contentStack.AddChild(_armorCostText = AshfallUiHelpers.MakeSmall("—"));
+            _contentStack.AddChild(_armorText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart });
+
+            _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("RECOVERY OPERATIONS"));
 
             var recRow = new HBoxContainer();
@@ -203,6 +226,14 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        private void OnArmorSelected(long index)
+        {
+            if (_syncing) return;
+            var grades = SortedArmorGrades();
+            if (index >= 0 && index < grades.Count) _selectedArmorGradeId = grades[(int)index].id;
+            RefreshView();
+        }
+
         // ── Commands (Core owns all math and inventory mutation) ──────────
 
         private void OnInstallPressed()
@@ -223,6 +254,25 @@ namespace AtomicWar.GodotApp.UI
             if (string.IsNullOrEmpty(vehicleId) || mod == null) return;
             bool ok = _garage.UninstallModification(vehicleId, mod.slot_type, _inventory, out string reason);
             SetResult(ok, ok ? $"Removed {mod.display_name}." : reason);
+        }
+
+        private void OnInstallArmorPressed()
+        {
+            if (_garage == null || _inventory == null) return;
+            string vehicleId = SelectedVehicleId();
+            var grade = _garage.GetArmorGrade(_selectedArmorGradeId);
+            if (string.IsNullOrEmpty(vehicleId) || grade == null) return;
+            bool ok = _garage.InstallArmorGrade(vehicleId, grade.id, _inventory, out string reason);
+            SetResult(ok, ok ? $"Fitted {grade.display_name}." : reason);
+        }
+
+        private void OnReforgeArmorPressed()
+        {
+            if (_garage == null || _inventory == null) return;
+            string vehicleId = SelectedVehicleId();
+            if (string.IsNullOrEmpty(vehicleId)) return;
+            bool ok = _garage.ReforgeArmorPlate(vehicleId, _inventory, out string reason);
+            SetResult(ok, ok ? "Armor plate re-forged to its stamped integrity." : reason);
         }
 
         private void OnServiceChassisPressed()
@@ -286,6 +336,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 SyncVehicles();
                 SyncMods();
+                SyncArmorGrades();
             }
             finally
             {
@@ -318,6 +369,7 @@ namespace AtomicWar.GodotApp.UI
             RenderVehicle();
             RenderFittedAndEffective();
             RenderMaintenance();
+            RenderArmor();
             RenderRecovery();
         }
 
@@ -349,6 +401,22 @@ namespace AtomicWar.GodotApp.UI
             }
             if (string.IsNullOrEmpty(_selectedModId) && mods.Count > 0) _selectedModId = mods[0].id;
             _modSelector.Selected = selected;
+        }
+
+        private void SyncArmorGrades()
+        {
+            if (_armorSelector == null || _garage == null) return;
+            _armorSelector.Clear();
+            var grades = SortedArmorGrades();
+            int selected = 0;
+            for (int i = 0; i < grades.Count; i++)
+            {
+                _armorSelector.AddItem($"{grades[i].display_name} [T{grades[i].tier}]", i);
+                if (grades[i].id == _selectedArmorGradeId) selected = i;
+            }
+            if (string.IsNullOrEmpty(_selectedArmorGradeId) && grades.Count > 0)
+                _selectedArmorGradeId = grades[0].id;
+            _armorSelector.Selected = selected;
         }
 
         private void RenderVehicle()
@@ -439,6 +507,43 @@ namespace AtomicWar.GodotApp.UI
             if (_serviceTransmissionButton != null) _serviceTransmissionButton.Disabled = record.transmissionWearPermille <= 0;
         }
 
+        private void RenderArmor()
+        {
+            if (_armorText == null || _armorCostText == null || _garage == null) return;
+            string vehicleId = SelectedVehicleId();
+            var profile = string.IsNullOrEmpty(vehicleId)
+                ? new VehicleArmorProfile { IsDefault = true, DisplayName = "Stock Plating", ConditionBand = "none" }
+                : _garage.GetArmorProfile(vehicleId);
+            var selected = _garage.GetArmorGrade(_selectedArmorGradeId);
+
+            if (selected != null)
+            {
+                var costs = new List<string>();
+                foreach (var cost in selected.install_cost) costs.Add($"{cost.amount} × {cost.item_id}");
+                _armorCostText.Text = $"Install cost: {(costs.Count == 0 ? "none" : string.Join(", ", costs))} | labor {selected.install_labor_ticks} ticks";
+            }
+            else _armorCostText.Text = "No armor grade selected.";
+
+            if (profile.IsDefault)
+                _armorText.Text = "Stock Plating — no armor fitted.";
+            else
+            {
+                string material = string.IsNullOrEmpty(profile.MaterialProfileId) ? "unknown material" : profile.MaterialProfileId;
+                _armorText.Text = $"{profile.DisplayName} — mitigation {profile.MitigationPermille}‰, "
+                    + $"absorption {profile.WearAbsorptionPermille}‰, integrity {profile.IntegrityPermille}/{profile.IntegrityMaxPermille} — "
+                    + $"{profile.ConditionBand} (material {material}, {profile.Purity}).";
+                if (profile.ConditionBand == "depleted")
+                    _armorText.Text += " Mitigation inactive; mass penalty remains. Re-forge to restore.";
+            }
+
+            bool canInstall = selected != null && !string.IsNullOrEmpty(vehicleId)
+                && _garage.CanInstallArmorGrade(vehicleId, selected.id, _inventory, out _);
+            if (_armorInstallButton != null) _armorInstallButton.Disabled = !canInstall;
+            if (_armorReforgeButton != null)
+                _armorReforgeButton.Disabled = profile.IsDefault || profile.IntegrityPermille >= profile.IntegrityMaxPermille
+                    || _garage.IsImmobilized(vehicleId);
+        }
+
         private void SetServiceButtons(bool enabled)
         {
             if (_serviceChassisButton != null) _serviceChassisButton.Disabled = !enabled;
@@ -508,6 +613,16 @@ namespace AtomicWar.GodotApp.UI
             foreach (var kv in _garage.GetAllModifications())
                 if (kv.Value != null) list.Add(kv.Value);
             list.Sort((a, b) => string.CompareOrdinal(a.id, b.id));
+            return list;
+        }
+
+        private List<VehicleArmorGradeDefinition> SortedArmorGrades()
+        {
+            var list = new List<VehicleArmorGradeDefinition>();
+            if (_garage == null) return list;
+            foreach (var kv in _garage.GetAllArmorGrades())
+                if (kv.Value != null && !kv.Value.is_default) list.Add(kv.Value);
+            list.Sort((a, b) => a.tier != b.tier ? a.tier.CompareTo(b.tier) : string.CompareOrdinal(a.id, b.id));
             return list;
         }
 

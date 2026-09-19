@@ -6,7 +6,7 @@
 
 ## Header
 
-- **Source blocker:** Plan 147 completion report / PLANS-210-213 deferral: "Still deferred with authority question: merchant restock 'priority' (restock already day-gated per Plan 147; a priority ordering needs a signed design)."
+- **Source blocker (resolved):** Plan 147 completion report / PLANS-210-213 deferral; DEC-05 now ratifies Option C (deterministic display-order priority).
 - **Current HEAD:** Commit `HEAD` (`ShelterBarterSystem.cs`, `MarketSystem.cs`).
 - **Current owner:** `ShelterBarterSystem` (caravan arrival & restock owner); `MarketSystem` (dynamic economy / category indices owner).
 - **Current measurement/behavior:** `ShelterBarterSystem.RestockCaravan` iterates `def.stock` and populates `cState.remainingStock[item.item_id] = item.quantity` (or 0 if `_state.currentDay < item.available_from_day`). Restock occurs strictly on caravan arrival (`shouldBePresent && !cState.isAtAirlock`). Once populated, stock is pinned in `_state.caravans[def.caravan_id]`. Reopening the market panel does not re-evaluate, restock, or consume RNG.
@@ -81,9 +81,9 @@ Option D is strongly recommended because `MerchantCaravanDef` manifests are cura
 
 ## Foreman Signature Gate
 
-- **Chosen Option:** [PENDING FOREMAN DECISION]
-- **Signer:** [User / Foreman]
-- **Date:** [YYYY-MM-DD]
+- **Chosen Option:** Option C — Evaluation/Display Order Only (ratified as `DEC-05`, SIGNED 2026-09-17; wording ratified verbatim by the CF-P5 reconcile, 2026-09-19)
+- **Signer:** User / Foreman (Wave 9 Part 2 authorization; recorded in `docs/governance/DECISION_REGISTER.md` row `DEC-05` and `docs/plans/wave9_part2/WAVE9_PART2_CLOSEOUT.md`)
+- **Date:** 2026-09-17 (decision); ratification re-confirmed 2026-09-19 (CF-P5)
 - **Conditions:**
   1. Restock occurs strictly at the arrival edge (`shouldBePresent && !cState.isAtAirlock`).
   2. Stock pinning and same-day no-reroll invariant remain absolute.

@@ -68,6 +68,12 @@ namespace AtomicWar.GodotApp
                 SetupCaravans();
                 SetupExpansions();
 
+                // CF-P28-ONE-BOOTSTRAP-PATH: the fresh lifecycle runs the same
+                // declarative manifest bootstrap as RestoreAllSubsystemsFromDisk.
+                // All 18 delegates are idempotent; this constructs any manifest
+                // subsystem the direct calls above did not.
+                ExecuteSubsystemManifestBootstrap();
+
                 // Wiring that needs all services up
                 SetupExpeditionCombatHandoff(_combat);
                 if (_inventory != null && _survivors != null)

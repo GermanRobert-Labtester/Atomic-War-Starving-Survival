@@ -57,6 +57,30 @@ namespace AtomicWar.GodotApp
                 }
             }
 
+            string armorPath = Path.Combine(_dataDir, VehicleArmorGradeCatalogLoader.FileName);
+            if (System.IO.File.Exists(armorPath))
+            {
+                try
+                {
+                    string armorJson = System.IO.File.ReadAllText(armorPath);
+                    var loaded = VehicleArmorGradeCatalogLoader.LoadJson(armorJson, new SystemTextJsonSerializer());
+                    if (loaded.Catalog != null && !loaded.HasErrors)
+                        _vehicleGarage.LoadArmorCatalog(loaded.Catalog);
+                    else
+                        GD.PrintErr($"[Ashfall Godot] Failed to load {VehicleArmorGradeCatalogLoader.FileName}: {string.Join("; ", loaded.Errors)}");
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Ashfall Godot] Failed to load {VehicleArmorGradeCatalogLoader.FileName}: {ex.Message}");
+                }
+            }
+
+            // Terrain is a read-only classification from the existing vehicle
+            // owner. The optional resolver keeps early pure-Core/bootstrap paths
+            // neutral while enforcing authored terrain gates in the live garage.
+            _vehicleGarage.VehicleTerrainResolver = id => _expeditions?.Vehicles.GetDefinition(id)?.terrain_type;
+            BindVehicleGarageArmorMaterialQuality();
+
             var saved = VehicleGarageSaveStore.TryLoad();
             if (saved != null)
             {

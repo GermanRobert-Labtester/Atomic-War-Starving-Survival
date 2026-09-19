@@ -421,6 +421,12 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void ResetEnrolledFlagshipSessions()
         {
+            void RemovePanel(Control? panel)
+            {
+                if (panel != null && panel.IsInsideTree())
+                    RemoveChild(panel);
+            }
+
             _moralChoice = null!;
             _moralChoiceDirty = false;
 
@@ -471,6 +477,25 @@ namespace AtomicWar.GodotApp
             _espionage166Dirty = false;
             _fluidLogistics168Dirty = false;
             _proceduralNarrative169Dirty = false;
+
+            // CF-P28: these manifest sessions restore state at construction;
+            // clear them with their panels so a slot switch cannot retain the
+            // previous campaign's instances or bindings.
+            _memorial = null!;
+            _memorialDirty = false;
+
+            _blackMarketPanel?.Unbind();
+            RemovePanel(_blackMarketPanel);
+            _blackMarketPanel = null;
+            _blackMarket = null;
+            _blackMarketDirty = false;
+
+            _vehicleGaragePanel?.Unbind();
+            RemovePanel(_vehicleGaragePanel);
+            _vehicleGaragePanel = null;
+            _vehicleGaragePanelBoundSystem = null;
+            _vehicleGarage = null;
+            _vehicleGarageDirty = false;
         }
 
         /// <summary>

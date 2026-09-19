@@ -76,6 +76,8 @@ namespace Ashfall.Core
 
     public static class CatalogIntegrityValidator
     {
+        private const int MaxFollowUpsPerSignal = 2;
+
         /// <summary>Id namespaces recognised as ids. Extend when a catalog introduces a new one.</summary>
         public static readonly string[] IdPrefixes =
         {
@@ -946,6 +948,11 @@ namespace Ashfall.Core
             // scalar envelopes, default resolution, and duplicate rejection.
             ValidateDifficultyPresetCatalog(dataDirectory, files, report);
 
+            // CF-P6: vehicle armor grade authority. The generic walk catches
+            // item references; this typed pass owns the bounded ladder,
+            // terrain vocabulary, neutral default, and upkeep constraints.
+            ValidateVehicleArmorGradeCatalog(dataDirectory, files, report);
+
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
 
@@ -976,6 +983,293 @@ namespace Ashfall.Core
             {
                 report.Error(Difficulty.DifficultyPresetCatalogLoader.FileName + ": " + ex.Message);
             }
+        }
+
+        public static void ValidateVehicleArmorGradeCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report)
+        {
+            const string fileName = "vehicle_armor_grades.json";
+            if (string.IsNullOrEmpty(dataDirectory) || files == null || report == null)
+                return;
+
+            string path = files.Combine(dataDirectory, fileName);
+            if (!files.FileExists(path))
+                return;
+
+            JsonDocument? document = null;
+            try
+            {
+                string raw = files.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(raw))
+                {
+                    report.Error(fileName + ": catalog is empty");
+                    return;
+                }
+                document = JsonDocument.Parse(raw);
+                JsonElement root = document.RootElement;
+                if (root.ValueKind != JsonValueKind.Object)
+                {
+                    report.Error(fileName + ": root must be an object");
+                    return;
+                }
+
+                if (!root.TryGetProperty("schema_version", out var schema)
+                    || schema.ValueKind != JsonValueKind.Number
+                    || !schema.TryGetInt32(out int schemaVersion)
+                    || schemaVersion != 1)
+                    report.Error(fileName + ": schema_version must be 1");
+
+                string defaultId = GetArmorString(root, "default_grade_id");
+                if (string.IsNullOrEmpty(defaultId))
+                    report.Error(fileName + ": default_grade_id is required");
+
+                if (!root.TryGetProperty("grades", out var grades)
+                    || grades.ValueKind != JsonValueKind.Array)
+                {
+                    report.Error(fileName + ": grades array is required");
+                    return;
+                }
+
+                var seenIds = new HashSet<string>(StringComparer.Ordinal);
+                var seenTiers = new HashSet<int>();
+                var rowsByTier = new Dictionary<int, JsonElement>();
+                var itemIds = new HashSet<string>(StringComparer.Ordinal);
+                string itemsPath = files.Combine(dataDirectory, "items.json");
+                if (files.FileExists(itemsPath))
+                {
+                    try
+                    {
+                        using var itemsDocument = JsonDocument.Parse(files.ReadAllText(itemsPath));
+                        CollectCatalogIds(itemsDocument.RootElement, itemIds);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Resilient probe: the generic catalog pass owns the detailed items.json
+                        // parse diagnostic; this probe safely falls back if items.json is unavailable.
+                        report.Warn(fileName + ": could not parse items.json for item reference check: " + ex.Message);
+                    }
+                }
+
+                int defaultCount = 0;
+                for (int i = 0; i < grades.GetArrayLength(); i++)
+                {
+                    JsonElement row = grades[i];
+                    string rowPath = fileName + ".grades[" + i + "]";
+                    if (row.ValueKind != JsonValueKind.Object)
+                    {
+                        report.Error(rowPath + ": row must be an object");
+                        continue;
+                    }
+
+                    string id = GetArmorString(row, "id");
+                    if (string.IsNullOrEmpty(id) || !IsArmorSnakeCase(id) || !id.StartsWith("grade_", StringComparison.Ordinal))
+                        report.Error(rowPath + ": id must be lowercase snake_case with grade_ prefix");
+                    if (!string.IsNullOrEmpty(id) && !seenIds.Add(id))
+                        report.Error(rowPath + ": duplicate id '" + id + "'");
+
+                    if (!TryGetArmorInt(row, "tier", out int tier) || tier < 0 || tier > 4)
+                        report.Error(rowPath + ": tier must be an integer in [0,4]");
+                    else
+                    {
+                        if (!seenTiers.Add(tier)) report.Error(rowPath + ": duplicate tier " + tier);
+                        rowsByTier[tier] = row;
+                        string tierPrefix = "grade_" + tier + "_";
+                        if (!id.StartsWith(tierPrefix, StringComparison.Ordinal))
+                            report.Error(rowPath + ": id must use tier prefix '" + tierPrefix + "'");
+                    }
+
+                    bool isDefault = TryGetArmorBool(row, "is_default", out bool parsedDefault) && parsedDefault;
+                    if (isDefault) defaultCount++;
+                    if (isDefault && !string.Equals(id, defaultId, StringComparison.Ordinal))
+                        report.Error(rowPath + ": is_default row must match default_grade_id");
+
+                    ValidateArmorInt(row, rowPath, "mitigation_permille", 0, 250, report);
+                    ValidateArmorInt(row, rowPath, "wear_absorption_permille", 0, 350, report);
+                    ValidateArmorInt(row, rowPath, "integrity_pool_permille", 0, 400, report);
+                    ValidateArmorInt(row, rowPath, "install_labor_ticks", 0, int.MaxValue, report);
+                    ValidateArmorFloat(row, rowPath, "speed_multiplier_delta", -0.5f, 0f, report);
+                    ValidateArmorFloat(row, rowPath, "fuel_consumption_multiplier", 1.0f, 2.0f, report);
+
+                    string displayName = GetArmorString(row, "display_name");
+                    string description = GetArmorString(row, "description");
+                    if (string.IsNullOrEmpty(displayName)) report.Error(rowPath + ": display_name is required");
+                    if (string.IsNullOrEmpty(description)) report.Error(rowPath + ": description is required");
+
+                    if (!row.TryGetProperty("compatible_terrain_types", out var terrainTypes)
+                        || terrainTypes.ValueKind != JsonValueKind.Array)
+                        report.Error(rowPath + ": compatible_terrain_types must be an array");
+                    else
+                    {
+                        foreach (var terrain in terrainTypes.EnumerateArray())
+                        {
+                            string terrainName = terrain.ValueKind == JsonValueKind.String ? terrain.GetString() ?? string.Empty : string.Empty;
+                            if (terrainName != "road" && terrainName != "rough" && terrainName != "coastal")
+                                report.Error(rowPath + ": unsupported compatible terrain '" + terrainName + "'");
+                        }
+                    }
+
+                    ValidateArmorCosts(row, rowPath, "install_cost", itemIds, report, allowRareItem: true);
+                    ValidateArmorCosts(row, rowPath, "reforge_cost", itemIds, report, allowRareItem: false);
+                    int installScrap = ArmorCostAmount(row, "install_cost", "scrap_metal");
+                    int reforgeScrap = ArmorCostAmount(row, "reforge_cost", "scrap_metal");
+                    if (reforgeScrap > installScrap)
+                        report.Error(rowPath + ": reforge scrap cost cannot exceed install scrap cost");
+
+                    if (!row.TryGetProperty("tags", out var tags) || tags.ValueKind != JsonValueKind.Array)
+                        report.Error(rowPath + ": tags must be an array containing 'armor'");
+                    else
+                    {
+                        bool hasArmorTag = false;
+                        foreach (var tag in tags.EnumerateArray())
+                            if (tag.ValueKind == JsonValueKind.String && tag.GetString() == "armor") hasArmorTag = true;
+                        if (!hasArmorTag) report.Error(rowPath + ": tags must contain 'armor'");
+                    }
+
+                    if (isDefault)
+                    {
+                        if (GetArmorInt(row, "mitigation_permille") != 0
+                            || GetArmorInt(row, "wear_absorption_permille") != 0
+                            || GetArmorInt(row, "integrity_pool_permille") != 0
+                            || Math.Abs(GetArmorFloat(row, "speed_multiplier_delta")) > 0.0001f
+                            || Math.Abs(GetArmorFloat(row, "fuel_consumption_multiplier") - 1f) > 0.0001f
+                            || installScrap != 0 || ArmorCostCount(row, "install_cost") != 0
+                            || ArmorCostCount(row, "reforge_cost") != 0)
+                            report.Error(rowPath + ": default row must be neutral and cost-free");
+                    }
+                }
+
+                if (defaultCount != 1)
+                    report.Error(fileName + ": exactly one row must have is_default=true (found " + defaultCount + ")");
+                if (!string.IsNullOrEmpty(defaultId) && !seenIds.Contains(defaultId))
+                    report.Error(fileName + ": default_grade_id '" + defaultId + "' does not resolve to a grade");
+                for (int tier = 0; tier <= 4; tier++)
+                    if (!seenTiers.Contains(tier)) report.Error(fileName + ": missing contiguous tier " + tier);
+
+                for (int tier = 1; tier <= 4; tier++)
+                {
+                    if (!rowsByTier.TryGetValue(tier - 1, out var previous)
+                        || !rowsByTier.TryGetValue(tier, out var current)) continue;
+                    if (GetArmorInt(current, "mitigation_permille") < GetArmorInt(previous, "mitigation_permille")
+                        || GetArmorInt(current, "wear_absorption_permille") < GetArmorInt(previous, "wear_absorption_permille")
+                        || GetArmorInt(current, "integrity_pool_permille") < GetArmorInt(previous, "integrity_pool_permille"))
+                        report.Error(fileName + ": armor ladder must be non-decreasing at tier " + tier);
+                }
+            }
+            catch (JsonException ex)
+            {
+                report.Error(fileName + ": malformed JSON: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                report.Error(fileName + ": validator error: " + ex.Message);
+            }
+            finally
+            {
+                document?.Dispose();
+            }
+        }
+
+        private static string GetArmorString(JsonElement row, string property) =>
+            row.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.String
+                ? value.GetString() ?? string.Empty : string.Empty;
+
+        private static int GetArmorInt(JsonElement row, string property) =>
+            row.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.Number
+                && value.TryGetInt32(out int parsed) ? parsed : 0;
+
+        private static float GetArmorFloat(JsonElement row, string property) =>
+            row.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.Number
+                ? value.GetSingle() : 0f;
+
+        private static bool TryGetArmorInt(JsonElement row, string property, out int value)
+        {
+            value = 0;
+            return row.TryGetProperty(property, out var parsed)
+                && parsed.ValueKind == JsonValueKind.Number
+                && parsed.TryGetInt32(out value);
+        }
+
+        private static bool TryGetArmorBool(JsonElement row, string property, out bool value)
+        {
+            value = false;
+            if (!row.TryGetProperty(property, out var parsed)
+                || (parsed.ValueKind != JsonValueKind.True && parsed.ValueKind != JsonValueKind.False))
+                return false;
+
+            value = parsed.GetBoolean();
+            return true;
+        }
+
+        private static void ValidateArmorInt(JsonElement row, string rowPath, string property, int minimum, int maximum, CatalogIntegrityReport report)
+        {
+            if (!TryGetArmorInt(row, property, out int value) || value < minimum || value > maximum)
+                report.Error(rowPath + ": " + property + " must be an integer in [" + minimum + "," + maximum + "]");
+        }
+
+        private static void ValidateArmorFloat(JsonElement row, string rowPath, string property, float minimum, float maximum, CatalogIntegrityReport report)
+        {
+            if (!row.TryGetProperty(property, out var parsed) || parsed.ValueKind != JsonValueKind.Number)
+            {
+                report.Error(rowPath + ": " + property + " must be numeric");
+                return;
+            }
+            float value = parsed.GetSingle();
+            if (value < minimum || value > maximum)
+                report.Error(rowPath + ": " + property + " must be in [" + minimum + "," + maximum + "]");
+        }
+
+        private static void ValidateArmorCosts(JsonElement row, string rowPath, string property, HashSet<string> itemIds, CatalogIntegrityReport report, bool allowRareItem)
+        {
+            if (!row.TryGetProperty(property, out var costs) || costs.ValueKind != JsonValueKind.Array)
+            {
+                report.Error(rowPath + ": " + property + " must be an array");
+                return;
+            }
+            foreach (var cost in costs.EnumerateArray())
+            {
+                if (cost.ValueKind != JsonValueKind.Object)
+                {
+                    report.Error(rowPath + ": " + property + " contains a non-object cost");
+                    continue;
+                }
+                string itemId = GetArmorString(cost, "item_id");
+                int amount = GetArmorInt(cost, "amount");
+                if (string.IsNullOrEmpty(itemId) || !itemIds.Contains(itemId))
+                    report.Error(rowPath + ": " + property + " references unknown item_id '" + itemId + "'");
+                if (amount < 1)
+                    report.Error(rowPath + ": " + property + " amounts must be >= 1");
+                if (!allowRareItem && itemId == "item_ebpvd_ceramic_target_ingot")
+                    report.Error(rowPath + ": reforge_cost may not contain the rare ceramic ingot");
+            }
+        }
+
+        private static int ArmorCostAmount(JsonElement row, string property, string itemId)
+        {
+            int total = 0;
+            if (!row.TryGetProperty(property, out var costs) || costs.ValueKind != JsonValueKind.Array) return total;
+            foreach (var cost in costs.EnumerateArray())
+                if (cost.ValueKind == JsonValueKind.Object && GetArmorString(cost, "item_id") == itemId)
+                    total += GetArmorInt(cost, "amount");
+            return total;
+        }
+
+        private static int ArmorCostCount(JsonElement row, string property)
+        {
+            if (!row.TryGetProperty(property, out var costs) || costs.ValueKind != JsonValueKind.Array) return 0;
+            return costs.GetArrayLength();
+        }
+
+        private static bool IsArmorSnakeCase(string id)
+        {
+            if (string.IsNullOrEmpty(id) || id[0] == '_' || id[id.Length - 1] == '_') return false;
+            for (int i = 0; i < id.Length; i++)
+            {
+                char c = id[i];
+                if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')) return false;
+            }
+            return true;
         }
 
         private static void ValidateDutyRoleCatalog(
@@ -2059,6 +2353,13 @@ namespace Ashfall.Core
                     if (broadcast.TryGetProperty("follow_up_signals", out var followUps)
                         && followUps.ValueKind == JsonValueKind.Array)
                     {
+                        int followUpCount = 0;
+                        foreach (var _ in followUps.EnumerateArray()) followUpCount++;
+                        if (followUpCount > MaxFollowUpsPerSignal)
+                        {
+                            report.Error($"{fileName}:{signalId}.follow_up_signals: count={followUpCount} exceeds the maximum of {MaxFollowUpsPerSignal} authored follow-ups per signal [distress_followup_max_two]");
+                        }
+
                         int followUpIndex = 0;
                         foreach (var followUp in followUps.EnumerateArray())
                         {
@@ -2132,6 +2433,31 @@ namespace Ashfall.Core
                                 {
                                     report.Error($"{followUpPath} '{followUpId}'.audio_cue '{fuCue}': must be empty (text-only) or a lowercase snake_case cue id without whitespace");
                                 }
+                            }
+
+                            // Semantic follow-up rules run only after the existing
+                            // structural grammar has accepted the trigger. This
+                            // keeps one malformed row to one actionable error.
+                            if (Ashfall.Core.Radio.SignalFollowUpTriggers.IsValid(trigger)
+                                && string.Equals(trigger, "expired", StringComparison.OrdinalIgnoreCase))
+                            {
+                                bool hasWindow = TryReadIntEither(broadcast, "deadline_days", "deadlineDays", out int window)
+                                    && window > 0;
+                                if (!hasWindow)
+                                {
+                                    report.Error($"{followUpPath} '{followUpId}': trigger=expired but the signal authors no positive response window (deadline_days/deadlineDays) — expiry cannot carry a consequence; expired follow-ups on no-consequence signals are forbidden [distress_followup_expired_requires_consequence]");
+                                }
+                                else if (IsTrapClassBroadcast(broadcast))
+                                {
+                                    report.Error($"{followUpPath} '{followUpId}': trigger=expired on trap-class signal — letting a lure expire is authored as no-consequence wisdom (trust-excluded); expired follow-ups on trap-class signals are forbidden [distress_followup_expired_requires_consequence]");
+                                }
+                            }
+
+                            if (Ashfall.Core.Radio.SignalFollowUpTriggers.IsValid(trigger)
+                                && string.Equals(trigger, "ambush_encountered", StringComparison.OrdinalIgnoreCase)
+                                && !IsTrapClassBroadcast(broadcast))
+                            {
+                                report.Error($"{followUpPath} '{followUpId}': trigger=ambush_encountered (trap grammar) on a signal whose identity is not trap-class (authenticity/outcome_type/deceptive_faction_id) — trap grammar is forbidden on genuine-only identities [distress_followup_trap_only_on_lures]");
                             }
                         }
                     }
@@ -2243,6 +2569,51 @@ namespace Ashfall.Core
                 if (!ok) return false;
             }
             return true;
+        }
+
+        /// <summary>Reads an authored integer with snake_case precedence over
+        /// the legacy camelCase spelling. A present but malformed snake_case
+        /// value wins and is treated as absent rather than falling through.</summary>
+        private static bool TryReadIntEither(JsonElement row, string snake, string camel, out int value)
+        {
+            value = 0;
+            if (row.TryGetProperty(snake, out var snakeProperty))
+            {
+                return snakeProperty.ValueKind == JsonValueKind.Number
+                    && snakeProperty.TryGetInt32(out value);
+            }
+
+            if (row.TryGetProperty(camel, out var camelProperty))
+            {
+                return camelProperty.ValueKind == JsonValueKind.Number
+                    && camelProperty.TryGetInt32(out value);
+            }
+
+            return false;
+        }
+
+        /// <summary>Mirrors the runtime trap/deception classification on raw
+        /// authored JSON without constructing an engine-facing DTO.</summary>
+        private static bool IsTrapClassBroadcast(JsonElement broadcast)
+        {
+            if (broadcast.TryGetProperty("authenticity", out var authenticity)
+                && authenticity.ValueKind == JsonValueKind.String)
+            {
+                string value = authenticity.GetString() ?? string.Empty;
+                if (string.Equals(value, "trap", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(value, "false_flag", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(value, "bait_trap", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+
+            if (broadcast.TryGetProperty("outcome_type", out var outcome)
+                && outcome.ValueKind == JsonValueKind.String
+                && string.Equals(outcome.GetString(), "bait_trap", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return broadcast.TryGetProperty("deceptive_faction_id", out var deceptive)
+                && deceptive.ValueKind == JsonValueKind.String
+                && !string.IsNullOrWhiteSpace(deceptive.GetString());
         }
 
         private static string clarityFormat(float value)

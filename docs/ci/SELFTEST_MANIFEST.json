@@ -196,7 +196,7 @@
       "category": "Core & System Gates",
       "primary_flag": "--vehicle-garage-selftest",
       "aliases": [],
-      "description": "Flagship Plan 50: overland vehicle customization & maintenance \u2014 modification install/uninstall, component wear, service, immobilization gate, recovery mission completion, and expedition-profile decoration",
+      "description": "Flagship Plan 50 + CF-P6: overland vehicle customization, armor-grade install/reforge, bounded mitigation, component wear, service, immobilization gate, recovery mission completion, save round-trip, and expedition-profile decoration",
       "headless_compatible": true,
       "expected_summary_id": "vehicle_garage_selftest",
       "timeout_seconds": 30

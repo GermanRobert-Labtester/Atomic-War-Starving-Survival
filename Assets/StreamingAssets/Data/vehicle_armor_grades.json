@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "default_grade_id": "grade_0_stock",
+  "grades": [
+    {
+      "id": "grade_0_stock",
+      "display_name": "Stock Plating",
+      "description": "Factory sheet metal and hope. Every vehicle leaves the bay with this; it stops weather, not consequences.",
+      "tier": 0,
+      "is_default": true,
+      "mitigation_permille": 0,
+      "wear_absorption_permille": 0,
+      "integrity_pool_permille": 0,
+      "speed_multiplier_delta": 0.0,
+      "fuel_consumption_multiplier": 1.0,
+      "compatible_terrain_types": ["road", "rough", "coastal"],
+      "install_cost": [],
+      "install_labor_ticks": 0,
+      "reforge_cost": [],
+      "tags": ["armor", "default"]
+    },
+    {
+      "id": "grade_1_scrap_plate",
+      "display_name": "Scrap Plate",
+      "description": "Door skins and road sign bolted over the soft spots. It rattles, it drags a little, and once in a while it eats the hit that would have killed the axle.",
+      "tier": 1,
+      "is_default": false,
+      "mitigation_permille": 100,
+      "wear_absorption_permille": 200,
+      "integrity_pool_permille": 100,
+      "speed_multiplier_delta": -0.02,
+      "fuel_consumption_multiplier": 1.02,
+      "compatible_terrain_types": ["road", "rough", "coastal"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 4 },
+        { "item_id": "mechanical_parts", "amount": 2 }
+      ],
+      "install_labor_ticks": 240,
+      "reforge_cost": [
+        { "item_id": "scrap_metal", "amount": 2 }
+      ],
+      "tags": ["armor", "plate", "tier_1"]
+    },
+    {
+      "id": "grade_2_sheet_plate",
+      "display_name": "Sheet Plate",
+      "description": "Cut sheet, welded seams, a real work order in the log. The crew stops flinching at every stone strike.",
+      "tier": 2,
+      "is_default": false,
+      "mitigation_permille": 150,
+      "wear_absorption_permille": 250,
+      "integrity_pool_permille": 140,
+      "speed_multiplier_delta": -0.04,
+      "fuel_consumption_multiplier": 1.05,
+      "compatible_terrain_types": ["road", "rough", "coastal"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 6 },
+        { "item_id": "mechanical_parts", "amount": 2 },
+        { "item_id": "item_metallurgy_iron_ingot", "amount": 1 }
+      ],
+      "install_labor_ticks": 300,
+      "reforge_cost": [
+        { "item_id": "scrap_metal", "amount": 3 },
+        { "item_id": "mechanical_parts", "amount": 1 }
+      ],
+      "tags": ["armor", "plate", "tier_2"]
+    },
+    {
+      "id": "grade_3_composite_plate",
+      "display_name": "Composite Plate",
+      "description": "Layered stock from the foundry's good days, ceramic face over iron back. Heavy enough to need its own line in the fuel ledger.",
+      "tier": 3,
+      "is_default": false,
+      "mitigation_permille": 200,
+      "wear_absorption_permille": 300,
+      "integrity_pool_permille": 180,
+      "speed_multiplier_delta": -0.07,
+      "fuel_consumption_multiplier": 1.08,
+      "compatible_terrain_types": ["road", "rough"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 8 },
+        { "item_id": "mechanical_parts", "amount": 3 },
+        { "item_id": "item_metallurgy_iron_ingot", "amount": 2 },
+        { "item_id": "item_ebpvd_ceramic_target_ingot", "amount": 1 }
+      ],
+      "install_labor_ticks": 420,
+      "reforge_cost": [
+        { "item_id": "scrap_metal", "amount": 4 },
+        { "item_id": "mechanical_parts", "amount": 1 }
+      ],
+      "tags": ["armor", "plate", "composite", "tier_3"]
+    },
+    {
+      "id": "grade_4_alloyed_heavy_plate",
+      "display_name": "Alloyed Heavy Plate",
+      "description": "The heaviest set the bay can hang on a frame. Slow, thirsty, and the closest thing this world has to a promise.",
+      "tier": 4,
+      "is_default": false,
+      "mitigation_permille": 250,
+      "wear_absorption_permille": 350,
+      "integrity_pool_permille": 240,
+      "speed_multiplier_delta": -0.10,
+      "fuel_consumption_multiplier": 1.12,
+      "compatible_terrain_types": ["road", "rough"],
+      "install_cost": [
+        { "item_id": "scrap_metal", "amount": 12 },
+        { "item_id": "mechanical_parts", "amount": 4 },
+        { "item_id": "item_metallurgy_iron_ingot", "amount": 3 },
+        { "item_id": "item_ebpvd_ceramic_target_ingot", "amount": 2 }
+      ],
+      "install_labor_ticks": 600,
+      "reforge_cost": [
+        { "item_id": "scrap_metal", "amount": 6 },
+        { "item_id": "mechanical_parts", "amount": 2 }
+      ],
+      "tags": ["armor", "plate", "heavy", "tier_4"]
+    }
+  ]
+}

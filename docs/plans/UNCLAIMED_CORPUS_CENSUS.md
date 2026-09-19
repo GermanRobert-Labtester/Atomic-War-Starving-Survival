@@ -87,7 +87,7 @@ Enumerated **131** files (each once). Source baseline + mandatory order extracte
 | `C2[44]` | Plan 215 — Shelter Resource Rationing & Crisis Management | Shelter Resource Rationing, Priority Allocation, Scarcity Crisis Management, and Fairness-Aware Consumption Control |  | AUDIT-PENDING |  |
 | `C2[45]` | Plan 219 — Survivor Photography & Documentation System | Survivor Photography, Documentation, Albums, Creative Records, and Historical Media |  | AUDIT-PENDING |  |
 | `C2[8]` | Plan 26 — The Ship Gate: Exported Builds That Actually Find Their Data | Ship Gate, Single Data Path Authority, Real Export Smoke, and Performance Budgets | 26A → 26B → 26C | SEALED | **Executed 2026-09-17 (Wave 10 Tasks C2 & Part 2 C1):** 26A CatalogPath single data-path authority sealed across all 40 bypass callers (allowlist=1); 26B export staging and parity gate sealed; 26C performance budgets sealed in BUDGETS.md and verified in PerformanceSelfTest (6/6 PASS). See `docs/plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md`. |
-| `C2[9]` | Plan 28 — The Orchestration Spine: Registration You Cannot Forget | Orchestration Spine, Declarative Subsystem Manifest, Behaviour-Preserving Decomposition, and Lifecycle Contracts | 28A → 28B → 28C | PARTIALLY-SEALED | **Executed 2026-09-17 (Wave 10 Part 2 C2):** 28A declarative `SubsystemManifest` delivered in Core with cross-registry validation (`SubsystemManifestTests` 6/6 PASS); 28B file decomposition sealed elsewhere; 28C wide constructor migration promoted per §6.10. See `docs/plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md`. |
+| `C2[9]` | Plan 28 — The Orchestration Spine: Registration You Cannot Forget | Orchestration Spine, Declarative Subsystem Manifest, Behaviour-Preserving Decomposition, and Lifecycle Contracts | 28A → 28B → 28C | SEALED | **Executed 2026-09-19:** fresh `ComposeCampaign()` now invokes the existing manifest bootstrap; memorial/black-market/vehicle sessions have reset coverage; static bootstrap parity is 6/6; restore journey and bounded runtime gates pass. Closeout and the pre-existing composition-root UI limitation: `docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`. |
 | `D1` |  | D1 — Flagship Integration Plan: The Seven-Day Slice as ASHFALL's Standing Product Proof |  | AUDIT-PENDING |  |
 | `D1[10]` |  | D1 Flagship Integration Plan [10] |  | AUDIT-PENDING |  |
 | `D1[11]` |  | D1 Flagship Integration Plan [11] |  | AUDIT-PENDING |  |
@@ -182,7 +182,7 @@ Unresolved prereqs (no corpus row, no sealed evidence in tranche 1): `Plan 26A/2
 - **C1[6]/Plan 27 — SEALED (2026-09-17).** 27A authority fixtures + 27B 100% round-trip save coverage gate + 27C golden saves and real journeys; see `docs/plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md`.
 - **C1[7]/Plan 29 — SEALED (2026-09-17).** 29A rulebook sync verified + 29B `CLAIMS.json` capability registry & verifier + 29C roadmap index & definitions of done; see `docs/plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md`.
 - **C2[8]/Plan 26 — SEALED (2026-09-17).** 26A CatalogPath single data-path authority sealed + 26C performance budgets; see `docs/plans/wave10_part1/C2_26A_IMPLEMENTATION_LOG.md`.
-- **C2[9]/Plan 28 — OPEN-UNCLAIMED.** No declarative subsystem manifest.
+- **C2[9]/Plan 28 — SEALED (2026-09-19).** Fresh and restore paths now share the declarative manifest bootstrap, and the three restore-at-construction sessions are enrolled in lifecycle reset. See `docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md` for the 6/6 parity gate, runtime evidence, and the pre-existing `EconomyDetailPanel.tscn` limitation.
 
 ## 6. Prerequisite unknowns
 
@@ -220,7 +220,7 @@ The B5 source-baseline scan found this as the sole exact Plan-ID duplicate acros
 
 | Rank | Plan | Status | Resolution Evidence |
 |---:|---|---|---|
-| 1 | `C2[9]` Plan 28 | PARTIALLY-SEALED | Core `SubsystemManifest.cs` sealed with 6/6 tests; wide constructor migration queued |
+| 1 | `C2[9]` Plan 28 | SEALED | Fresh/restore bootstrap parity and reset enrollment sealed 2026-09-19; `BootstrapPathParityGateTests` 6/6; closeout: `docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md` |
 | 2 | `C1[9]` Plan 33 | SEALED | Intel consumer chain audit verified resolved (`B4_PLAN33_INTEL_VALUE_LOG.md`) |
 | 3 | `C1[10]` Plan 35 | SEALED | Production-to-provisioning delivery chain verified (`B5_PLAN35_36_DELIVERY_CHAIN.md`) |
 

@@ -417,10 +417,69 @@ namespace Ashfall.Core.Tests.Radio
             }
             finally { DisposeTemp(dir); }
 
-            // Real catalogs: no follow-ups authored yet → zero follow-up errors.
+            // V-19: the shipped catalogs remain clean after the semantic seal
+            // and its same-change content remediation.
             var real = new Ashfall.Core.CatalogIntegrityReport();
             Ashfall.Core.CatalogIntegrityValidator.ValidateDistressSignalStages(DataDirectory, new Ashfall.Core.FileSystemIO(), real);
-            Assert.DoesNotContain(real.Errors, e => e.Contains("follow_up_signals") || e.Contains("follow-up"));
+            Assert.Empty(real.Errors);
+        }
+
+        // TEST-AGGREGATION: source_rows=18 aggregate_cases=18 saved_cases=0
+        public static IEnumerable<object[]> SemanticValidatorCases()
+        {
+            yield return new object[] { "V-01", "expired", "", "", "", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-02", "expired", "deadlineDays", "0", "", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-03", "expired", "deadline_days", "-2", "", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-04", "expired", "deadlineDays", "\"five\"", "", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-05", "expired", "deadlineDays", "4", "trap", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-06", "expired", "deadlineDays", "4", "", "survivor_community", "raiders", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-07", "expired", "deadline_days", "3", "genuine", "survivor_community", "", 1, true, "", 0 };
+            yield return new object[] { "V-08", "expired", "deadline_days", "0, \"deadlineDays\": 4", "genuine", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-09", "Expired", "", "", "genuine", "survivor_community", "", 1, false, "distress_followup_expired_requires_consequence", 1 };
+            yield return new object[] { "V-10", "ambush_encountered", "", "", "genuine", "survivor_community", "", 1, false, "distress_followup_trap_only_on_lures", 1 };
+            yield return new object[] { "V-11", "ambush_encountered", "", "", "", "survivor_community", "", 1, false, "distress_followup_trap_only_on_lures", 1 };
+            yield return new object[] { "V-12", "ambush_encountered", "", "", "Trap", "survivor_community", "", 1, true, "", 0 };
+            yield return new object[] { "V-13", "ambush_encountered", "", "", "", "bait_trap", "", 1, true, "", 0 };
+            yield return new object[] { "V-14", "ambush_encountered", "", "", "", "survivor_community", "raiders", 1, true, "", 0 };
+            yield return new object[] { "V-15", "answered", "", "", "genuine", "survivor_community", "", 3, false, "distress_followup_max_two", 1 };
+            yield return new object[] { "V-16", "answered", "", "", "genuine", "survivor_community", "", 2, true, "", 0 };
+            yield return new object[] { "V-17", "answered", "", "", "genuine", "survivor_community", "", 1, true, "", 0 };
+            yield return new object[] { "V-18", "player_sneezed", "", "", "", "survivor_community", "", 1, false, "unsupported trigger_condition", 1 };
+        }
+
+        [Theory]
+        [MemberData(nameof(SemanticValidatorCases))]
+        public void Validator_EnforcesDistressFollowUpSemanticRules(
+            string caseId,
+            string trigger,
+            string deadlineField,
+            string deadlineValue,
+            string authenticity,
+            string outcomeType,
+            string deceptiveFaction,
+            int followUpCount,
+            bool expectedPass,
+            string expectedError,
+            int expectedErrorCount)
+        {
+            string deadline = string.IsNullOrEmpty(deadlineField)
+                ? string.Empty
+                : $", \"{deadlineField}\": {deadlineValue}";
+            string authenticityJson = string.IsNullOrEmpty(authenticity) ? string.Empty : $", \"authenticity\": \"{authenticity}\"";
+            string deceptiveJson = string.IsNullOrEmpty(deceptiveFaction) ? string.Empty : $", \"deceptive_faction_id\": \"{deceptiveFaction}\"";
+            var followUps = Enumerable.Range(0, followUpCount)
+                .Select(i => $"{{ \"id\": \"fu_semantic_{caseId}_{i}\", \"trigger_condition\": \"{trigger}\", \"delay_days\": 1, \"text\": \"text {i}\" }}");
+            string json = $"{{\"schema_version\":1,\"radio_broadcasts\":[{{\"frequency_id\":\"freq_{caseId}\",\"outcome_type\":\"{outcomeType}\"{authenticityJson}{deceptiveJson}{deadline},\"message_fragments\":[{{\"day\":1,\"clarity\":0.2,\"text\":\"a\"}}],\"follow_up_signals\":[{string.Join(",", followUps)}]}}]}}";
+            string dir = WriteTempCatalog(json);
+            try
+            {
+                var report = new Ashfall.Core.CatalogIntegrityReport();
+                Ashfall.Core.CatalogIntegrityValidator.ValidateDistressSignalStages(dir, new Ashfall.Core.FileSystemIO(), report);
+                Assert.Equal(expectedErrorCount, report.Errors.Count);
+                if (expectedPass) Assert.Empty(report.Errors);
+                else Assert.Contains(report.Errors, e => e.Contains(expectedError));
+            }
+            finally { DisposeTemp(dir); }
         }
 
         // ── DTO binding + V6 save ─────────────────────────────────────────────

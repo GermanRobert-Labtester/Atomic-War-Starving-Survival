@@ -124,7 +124,7 @@ namespace Ashfall.Core.Content
             "subterranean_zones.json", "propaganda_campaigns.json",
             "radio_programs.json",
             // Plans 50-53
-            "vehicle_modifications.json", "faction_intelligence.json",
+            "vehicle_modifications.json", "vehicle_armor_grades.json", "faction_intelligence.json",
             "psychological_trauma.json", "shelter_audio_cues.json",
             // Plans 54-57 (Flagship: Trade, Apprenticeship, Seismic, Thermal)
             "shelter_insulation_catalog.json", "seismic_fault_catalog.json",
@@ -517,6 +517,7 @@ namespace Ashfall.Core.Content
                 ["microfluidic_diagnostic_catalog.json"] = new[] { "MicrofluidicDiagnosticCatalogLoader", "MicrofluidicDiagnosticEngine" },
                 ["rail_grinding_catalog.json"] = new[] { "RailGrindingCatalogLoader", "RailGrindingEngine" },
                 ["vehicle_modifications.json"] = new[] { "VehicleGarageCatalogLoader", "VehicleGarageSystem" },
+                ["vehicle_armor_grades.json"] = new[] { "VehicleArmorGradeCatalogLoader", "VehicleGarageSystem" },
                 ["faction_intelligence.json"] = new[] { "FactionIntelligenceCatalogLoader", "ShelterEspionageSystem" },
                 ["psychological_trauma.json"] = new[] { "PsychologicalTraumaCatalogLoader", "SurvivorMentalHealthSystem" },
                 ["shelter_audio_cues.json"] = new[] { "ShelterAudioCueCatalogLoader", "ShelterAcousticDirector" },
@@ -1183,6 +1184,7 @@ namespace Ashfall.Core.Content
                 ["food_preservation.json"] = new[] { "FoodPreservationSystem" },
                 ["campaign_epilogues.json"] = new[] { "CampaignEpilogueEngine" },
                 ["vehicle_modifications.json"] = new[] { "VehicleGarageSystem" },
+                ["vehicle_armor_grades.json"] = new[] { "VehicleGarageSystem" },
                 ["faction_intelligence.json"] = new[] { "ShelterEspionageSystem" },
                 ["psychological_trauma.json"] = new[] { "SurvivorMentalHealthSystem" },
                 ["shelter_audio_cues.json"] = new[] { "ShelterAcousticDirector" },

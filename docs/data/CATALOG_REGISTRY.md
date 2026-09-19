@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-18
-**Total Catalogs:** 620 | **Total Definitions:** 13145 | **Domain Families:** 32
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-19
+**Total Catalogs:** 622 | **Total Definitions:** 13155 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -68,7 +68,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (161 Catalogs, 2546 Definitions)
+### Core / Miscellaneous (162 Catalogs, 2551 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -85,7 +85,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `atmospheric_sounding_catalog.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `ballistic_shield_catalog.json` | 5 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `ballistics_workbench_catalog.json` | 2 | `1.0.0` | `GAMEPLAY_CONSUMED` | `BallisticsWorkbenchCatalogLoader, BallisticsWorkbenchSystem` |
-| `belief_movements.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `belief_movements.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SpiritualCatalogLoader, SpiritualMeaningCoordinator` |
 | `bio_fermentation_catalog.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `bionics.json` | 5 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `bounty_board.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -152,7 +152,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `lore_archives.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `low_background_lead_catalog.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `lyophilization_catalog.json` | 2 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `memorial_rites.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `memorial_rites.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SpiritualCatalogLoader, SpiritualMeaningCoordinator` |
 | `memorials_expansion_05.json` | 27 | `1.0.0` | `ORPHANED` | `MemorialSystem` |
 | `mental_arcs.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MentalArcCatalogLoader` |
 | `merchant_caravans.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterBarterSystem` |
@@ -196,6 +196,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `recon_telemetry_probes.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `recreation.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `regional_prices.json` | 24 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `regional_treaties.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RegionalTreatyCatalogLoader, RegionalTreatySystem` |
 | `rerailing_equipment_catalog.json` | 2 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `research_knowledge.json` | 62 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ResearchKnowledgeCatalogLoader` |
 | `robotics.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RoboticsSystem` |
@@ -209,7 +210,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `sky_layer_armor_catalog.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `solar_concentrator_catalog.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `sound_ranging_catalog.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `spiritual_rituals.json` | 19 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `spiritual_rituals.json` | 19 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SpiritualCatalogLoader, SpiritualMeaningCoordinator` |
 | `starting_supplies.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `StartingLevelSystem` |
 | `subterranean_zones.json` | 10 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `sump_drainage_catalog.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -293,12 +294,13 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `world_evolution_events.json` | 13 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `year_of_ash_events.json` | 52 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Expeditions & Vehicles (4 Catalogs, 94 Definitions)
+### Expeditions & Vehicles (5 Catalogs, 99 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `anomalous_expedition_encounters.json` | 2 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `expeditions.json` | 75 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionCatalogLoader` |
+| `vehicle_armor_grades.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VehicleArmorGradeCatalogLoader, VehicleGarageSystem` |
 | `vehicle_modifications.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VehicleGarageCatalogLoader, VehicleGarageSystem` |
 | `vehicles.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionVehicleSystem` |
 
@@ -362,7 +364,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `foundry_items.json` | 30 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SilentFoundryCatalog` |
 | `greenhouse_items.json` | 34 | `1.0.0` | `GAMEPLAY_CONSUMED` | `GreenhouseExpansionCatalog` |
 | `holdfast_items.json` | 55 | `1.0.0` | `GAMEPLAY_CONSUMED` | `HoldfastItemsCatalog` |
-| `item_degradation.json` | 5 | `1.0.0` | `ORPHANED` | `Core default` |
+| `item_degradation.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `item_description_texts.json` | 183 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemDescriptionCatalogLoader, ItemCatalogLoader` |
 | `items.json` | 708 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ItemCatalogLoader, LoadItems` |
 | `verdict_items.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
