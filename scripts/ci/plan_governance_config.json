@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "plan_namespaces": [
+    {"name": "next_steps", "root": "Next-steps-plans", "include": ["**/Plan_*.md"], "exclude": ["archive", "__pycache__"]},
+    {"name": "piagents", "root": "piagentsplans", "include": ["**/*.md"], "exclude": ["archive", "__pycache__"]},
+    {"name": "integration", "root": "C-integration-plans", "include": ["**/*.md"], "exclude": ["archive", "__pycache__"]}
+  ],
+  "global_excludes": [".git", "__pycache__", "node_modules", "bin", "obj"],
+  "docs": {"root": "docs", "include": "**/*.md", "exclude": ["archive", "roadmap/e1", "roadmap/PLAN_REGISTER.md"]}
+}

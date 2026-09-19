@@ -1,0 +1,17 @@
+---
+PLAN_ID: FIXTURE-VALID-ACTIVE
+STATUS: READY
+CATEGORY: LINK
+WAVE: E1
+PREMISE_VERIFIED_AT: "2026-09-19T00:00:00Z"
+SUPERSEDES: []
+SUPERSEDED_BY: []
+OWNER: "governance"
+RAILS_REQUIRED:
+  - docs_index
+METRIC_MOVED: "register rows queryable"
+ACCEPTANCE_TIER: focused
+SOURCE_AUTHORITY: "docs/roadmap/README.md"
+---
+
+# Valid active fixture

@@ -1926,19 +1926,17 @@
       "class_name": "TunnelNetworkSystem",
       "method_name": "RegisterJunction",
       "file_path": "Assets/Ashfall.Core/Underground/TunnelNetworkSystem.cs",
-      "classification": "TEST_ONLY",
+      "classification": "LIVE_VIA_CORE",
       "owner": "underground",
-      "reason": "Junction registration is Core-test exercised; no production host caller yet.",
-      "diagnostic": true
+      "reason": "Junction registration called canonically by WastelandMapSystem.EnsureCanonicalTunnels."
     },
     {
       "class_name": "TunnelNetworkSystem",
       "method_name": "RegisterSegment",
       "file_path": "Assets/Ashfall.Core/Underground/TunnelNetworkSystem.cs",
-      "classification": "TEST_ONLY",
+      "classification": "LIVE_VIA_CORE",
       "owner": "underground",
-      "reason": "Segment registration is Core-test exercised; no production host caller yet.",
-      "diagnostic": true
+      "reason": "Segment registration called canonically by WastelandMapSystem.EnsureCanonicalTunnels."
     },
     {
       "class_name": "UvCoronaDetectionEngine",

@@ -240,7 +240,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseSurvivalDetailPanel());
 
             PanelRegistry.ConfigureActions("survivor_detail",
-                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
+                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); SetupCulturalArchive(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
                 openAction: () => _survivorDetailPanel.Open(),
                 closeAction: () => CloseSurvivorDetailPanel());
 
