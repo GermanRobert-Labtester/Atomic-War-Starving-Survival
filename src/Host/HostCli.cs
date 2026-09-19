@@ -139,6 +139,7 @@ namespace AtomicWar.GodotApp
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
         ShelterDecorSelfTest,
+        ShelterAtmosphereSelfTest,
         ShelterPhysicsSelfTest,
         AudioSelfTest,
         DeepCoastSelfTest,
@@ -247,6 +248,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.Version;
             if (Has(args, "--shelter-decor-selftest") || Has(args, "--shelter-interior-selftest") || Has(args, "--memorial-wall-selftest"))
                 return HostCliAction.ShelterDecorSelfTest;
+            if (Has(args, "--shelter-atmosphere-selftest") || Has(args, "--atmosphere-selftest") || Has(args, "--shelter-noise-selftest"))
+                return HostCliAction.ShelterAtmosphereSelfTest;
             if (Has(args, "--shelter-physics-selftest") || Has(args, "--shelter-actor-physics-selftest"))
                 return HostCliAction.ShelterPhysicsSelfTest;
             if (Has(args, "--shelter-operations-selftest") || Has(args, "--operations-selftest") || Has(args, "--shelter-ops-selftest"))

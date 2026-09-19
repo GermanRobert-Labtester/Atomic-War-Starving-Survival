@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2555 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2556 | **Last Verified:** 2026-09-20
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2508 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2509 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -306,7 +306,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | **Dynamic World Save Contract & Migration Integrity** — "systemId": "world_weather_system", |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-19<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-20<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
 ## 4. Expansions (01–10 Master Plans & Context) (61 documents)
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2191 documents)
+## 9. General Project Guides & Archive Reference (2192 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2016,6 +2016,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_123_REBEL_BRANCH_IMPLEMENTATION_LOG.md`](plans/PLAN_123_REBEL_BRANCH_IMPLEMENTATION_LOG.md) | **Plan 123 — Rebel Branch Implementation Log** — Confirmed the live `RebelBranchCatalog`, `RebelBranchSystem`, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_129_FOUNDRY_PRODUCTION_CLOSEOUT.md`](plans/PLAN_129_FOUNDRY_PRODUCTION_CLOSEOUT.md) | **Plan 129 Foundry Production Closeout** — Plan 129 is complete against the reconciled live baseline: |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_158_COMPLETION_REPORT.md`](plans/PLAN_158_COMPLETION_REPORT.md) | **PLAN 158 COMPLETION REPORT — Cordage, Cable & Technical Textiles (2026-09-09)** — 10 records → 7 canonical item ids (all proven, all resolving): |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_220_SHELTER_ATMOSPHERE_INTEGRATION_LOG.md`](plans/PLAN_220_SHELTER_ATMOSPHERE_INTEGRATION_LOG.md) | **Plan 220 & Plan 205 Integration Log — Shelter Atmosphere & Noise Discipline** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md`](plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md) | **PLAN 22 — Consumable Bills, Replacement Canisters, Patch Kits, Medicine, and Shared Item-Tag Consumption Semantics — INTEGRATION PLAN** — One consumption semantics layer for consumable bills (repair parts, replacement |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md) | **PLAN 22 — Greenhouse Runtime Consumption of Fertilizer / Pest / Repair Items** — Plan 91 shipped 16 greenhouse supplies that are valid, reachable, and |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md) | **PLAN 22 IMPLEMENTATION LOG — Greenhouse Runtime Item Consumption** — Plan: `docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md` |

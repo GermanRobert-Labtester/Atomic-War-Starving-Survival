@@ -425,6 +425,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "RADIO", "radio");
             AddNavButton(content, "MAP", "map");
             AddNavButton(content, "SHELTER", "shelter");
+            AddNavButton(content, "ATMOSPHERE", "shelter_atmosphere");
             AddNavButton(content, "TRADE", "trade");
             AddNavButton(content, "ECONOMY", "economy_detail");
             AddNavButton(content, "RESEARCH", "research");
