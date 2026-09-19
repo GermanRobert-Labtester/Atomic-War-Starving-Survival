@@ -66,7 +66,7 @@ Enumerated **131** files (each once). Source baseline + mandatory order extracte
 | `C2[23]` | Plan 52 — The Sound of Scarcity: Ambience, Music, and Silence as State | Stateful Ambience, Mix Discipline, and a Deliberately Sparse Musical Arc |  | AUDIT-PENDING |  |
 | `C2[24]` | Plan 55 — The Long Haul: Retention, a Save Corpus, and the 400-Year Campaign | Retention, Save Corpus Archaeology, and the 400-Year Campaign |  | AUDIT-PENDING | closeout exists for Plan 55 but subject differs → numbering collision (`docs/crafting/PLAN55_COMPLETION_REPORT.md`) |
 | `C2[25]` | Plan 59 — Retrospective: Turn Nine Waves of Findings into Rules, Then Stop Auditing | Retrospective Closure, Standing Gates, Plan-Layer Compression, and the End of Open-Ended Auditing |  | AUDIT-PENDING | closeout exists for Plan 59 but subject differs → numbering collision (`docs/quests/PLAN59_CLOSEOUT.md`) |
-| `C2[26]` | Plan 132 — Survivor Hidden Agendas & Betrayal Arc | Hidden Agendas, Evidence-Driven Betrayal Arcs, and Persistent Survivor Secrets |  | AUDIT-PENDING | closeout exists for Plan 132 but subject differs → numbering collision (`docs/content/plan132/PLAN132_COMPLETION_REPORT.md`) |
+| `C2[26]` | Plan 132 — Survivor Hidden Agendas & Betrayal Arc | Hidden Agendas, Evidence-Driven Betrayal Arcs, and Persistent Survivor Secrets |  | SEALED | **Executed 2026-09-20 (Plan 132 Full Integration):** `HiddenAgendaSystem` integrated with `HiddenAgendaHostSession`, `HiddenAgendaSaveStore` under `user://hidden_agenda_save.json` and campaign capture, `HiddenAgendaPanel` UI with `GameDashboardPanel` INTRIGUE navigation, `Main.HiddenAgenda.cs` daily tick, `--hidden-agenda-selftest` (18/18 PASS), and `Plan132HiddenAgendaIntegrationTests` + `HiddenAgendaSystemTests`; see `docs/plans/PLAN_132_HIDDEN_AGENDA_INTEGRATION_LOG.md`. |
 | `C2[27]` | Plan 135 — Weather → Deep Gameplay Cascade | Weather as a Deep Gameplay Driver, Forecast-to-Decision Pressure, and Cross-System Cascade Integrity |  | AUDIT-PENDING | closeout exists for Plan 135 but subject differs → numbering collision (`docs/content/plan135/PLAN135_COMPLETION_REPORT.md`) |
 | `C2[28]` | Plan 138 — Shelter Defense & Visitor/Refugee System | Shelter Defense, Visitor/Refugee Intake, and Contested-Hatch Decision Architecture |  | AUDIT-PENDING | closeout exists for Plan 138 but subject differs → numbering collision (`docs/content/PLAN138_COMPLETION_REPORT.md`) |
 | `C2[29]` | Plan 142 — Clothing & Warmth Gear Progression | Clothing Warmth, Layered Cold Protection, Wetness, and Nuclear-Winter Gear Progression |  | AUDIT-PENDING | closeout exists for Plan 142 but subject differs → numbering collision (`docs/implementation/PLAN142_COMPLETION_REPORT.md`) |
@@ -153,11 +153,11 @@ Enumerated **131** files (each once). Source baseline + mandatory order extracte
 
 | Classification | Count |
 |---|---:|
-| SEALED (verified executed) | 33 |
+| SEALED (verified executed) | 34 |
 | SEALED-ELSEWHERE (subject-matched) | 2 |
 | RECONCILED-DUPLICATE | 1 |
 | READY-UNCLAIMED (anchors) | 1 |
-| AUDIT-PENDING (tranche 2) | 94 |
+| AUDIT-PENDING (tranche 2) | 93 |
 | **Total** | **131** |
 
 **Key finding:** of 42 corpus baselines that share a number with a closeout filename, only **3** survive subject matching. The other **39** are **numbering collisions** — do not seal a corpus plan from its numeric baseline alone.

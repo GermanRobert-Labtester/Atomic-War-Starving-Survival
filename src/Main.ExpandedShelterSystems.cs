@@ -141,6 +141,7 @@ namespace AtomicWar.GodotApp
             SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
             SetupShelterDecor();        // uses the final assignment map + inventory catalog
             SetupShelterAtmosphere();
+            SetupHiddenAgenda();
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -293,6 +294,7 @@ namespace AtomicWar.GodotApp
             SaveCaregiving();
             SaveShelterThermal();
             SaveShelterAtmosphere();
+            SaveHiddenAgenda();
             SaveWeatherHardening();
             SaveGeothermalAquifer();
             SaveShelterSchedule();
@@ -447,6 +449,7 @@ namespace AtomicWar.GodotApp
             _mentalHealthCrisis?.TickDay(day);
             TickSleepNarrative(day);
             _crafting?.TickDay(day);
+            TickHiddenAgenda(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -595,6 +598,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "shelter_atmosphere":
                     ShowShelterAtmospherePanel();
+                    break;
+                case "hidden_agenda":
+                    ShowHiddenAgendaPanel();
                     break;
                 case "medical_ward":
                     SetupJournal();

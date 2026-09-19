@@ -180,6 +180,21 @@ namespace Ashfall.Core.Survivors
             return _state.Agendas.Where(a => !a.IsResolved).ToList();
         }
 
+        public IReadOnlyList<SurvivorHiddenAgenda> GetAllAgendas()
+        {
+            return _state.Agendas.ToList();
+        }
+
+        public IReadOnlyList<AgendaClue> GetCluesForAgenda(string agendaId)
+        {
+            return _state.Clues.Where(c => string.Equals(c.AgendaId, agendaId, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        public IReadOnlyList<AgendaClue> GetAllClues()
+        {
+            return _state.Clues.ToList();
+        }
+
         public HiddenAgendaState CaptureState()
         {
             var state = new HiddenAgendaState

@@ -141,6 +141,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--shelter-atmosphere-selftest"],
         "tests": ["Plan220ShelterAtmosphereIntegrationTests"]
     },
+    "hidden_agenda": {
+        "domain": "Survivors (Plan 132)",
+        "core": ["HiddenAgendaSystem"],
+        "catalog": [],
+        "host": ["HiddenAgendaHostSession"],
+        "setup": "SetupHiddenAgenda",
+        "ticked": True,
+        "tick_type": "Daily (Passive Slip-Up & Exposure Drift)",
+        "store": ["HiddenAgendaSaveStore"],
+        "ui": ["HiddenAgendaPanel", "GameDashboardPanel"],
+        "routes": ["hidden_agenda"],
+        "cli": ["--hidden-agenda-selftest"],
+        "tests": ["Plan132HiddenAgendaIntegrationTests", "HiddenAgendaSystemTests"]
+    },
     "ecological_infestation": {
         "domain": "World",
         "core": ["EcologicalInfestationSystem"],

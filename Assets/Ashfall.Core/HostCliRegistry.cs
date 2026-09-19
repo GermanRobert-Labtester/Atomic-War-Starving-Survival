@@ -118,6 +118,7 @@ namespace Ashfall.Core
         RadioSelfTest,
         SettingsSelfTest,
         SurvivorsSelfTest,
+        HiddenAgendaSelfTest,
         UtilityAiSelfTest,
         WeatherSaveSelfTest,
         WorldSelfTest,
@@ -802,6 +803,12 @@ namespace Ashfall.Core
                     "--survivors-selftest",
                     null,
                     "Survivors domain: needs decay, skill progression, trauma, and morale"),
+                new HostCliActionDescriptor(
+                    HostCliAction.HiddenAgendaSelfTest,
+                    "Host Domains & Save Stores",
+                    "--hidden-agenda-selftest",
+                    new[] { "--hidden-agendas-selftest" },
+                    "Survivor hidden agendas, multi-day investigation, confrontation branches, persistence round-trip, and UI binding"),
                 new HostCliActionDescriptor(
                     HostCliAction.UtilityAiSelfTest,
                     "Host Domains & Save Stores",

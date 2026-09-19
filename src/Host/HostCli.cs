@@ -117,6 +117,7 @@ namespace AtomicWar.GodotApp
         NarrativeSelfTest,
         NpcArcSelfTest,
         SurvivorsSelfTest,
+        HiddenAgendaSelfTest,
         WorldSelfTest,
         EconomySelfTest,
         EconomyUiTest,
@@ -250,6 +251,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ShelterDecorSelfTest;
             if (Has(args, "--shelter-atmosphere-selftest") || Has(args, "--atmosphere-selftest") || Has(args, "--shelter-noise-selftest"))
                 return HostCliAction.ShelterAtmosphereSelfTest;
+            if (Has(args, "--hidden-agenda-selftest") || Has(args, "--hidden-agendas-selftest"))
+                return HostCliAction.HiddenAgendaSelfTest;
             if (Has(args, "--shelter-physics-selftest") || Has(args, "--shelter-actor-physics-selftest"))
                 return HostCliAction.ShelterPhysicsSelfTest;
             if (Has(args, "--shelter-operations-selftest") || Has(args, "--operations-selftest") || Has(args, "--shelter-ops-selftest"))

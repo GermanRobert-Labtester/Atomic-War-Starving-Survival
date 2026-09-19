@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2556 | **Last Verified:** 2026-09-20
+**Total Indexed Documents:** 2557 | **Last Verified:** 2026-09-20
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2509 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2510 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -180,7 +180,7 @@ The following documents share identical or near-identical filenames across root,
 |---|---|---|
 | 🟢 `CURRENT` | [`AGENTS.md`](../AGENTS.md) | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`README.md`](../README.md) | **ASHFALL: Atomic War – Starving Survival** — 2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only |
-| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-09-19<br> |
+| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-09-20<br> |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_AUTHORITY_MAP.md`](architecture/BUNKER_COURT_AUTHORITY_MAP.md) | **Bunker Court Authority & System Boundary Map** — **Document ID:** ARCH-BUNKER-COURT-AUTHORITY |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_CASE_MATRIX.md`](architecture/BUNKER_COURT_CASE_MATRIX.md) | **Bunker Court Case Matrix — Full 24-Case Census** — **Document ID:** ARCH-BUNKER-COURT-CASE-MATRIX |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_DISCOVERY_MATRIX.md`](architecture/BUNKER_COURT_DISCOVERY_MATRIX.md) | **Bunker Court Discovery Matrix & Manifest Registration** — **Document ID:** ARCH-BUNKER-COURT-DISCOVERY-MATRIX |
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2192 documents)
+## 9. General Project Guides & Archive Reference (2193 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2015,6 +2015,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLANS_FLAGSHIP_INSTITUTIONS_T5_8_IMPLEMENTATION_LOG.md`](plans/PLANS_FLAGSHIP_INSTITUTIONS_T5_8_IMPLEMENTATION_LOG.md) | **Flagship Institutions (Tasks 5–8) — Implementation Log** — CulturalArchiveVaultSystem · DiplomaticSummitSystem · SkyDefenseBatterySystem · PsychologicalSanatoriumSystem |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_123_REBEL_BRANCH_IMPLEMENTATION_LOG.md`](plans/PLAN_123_REBEL_BRANCH_IMPLEMENTATION_LOG.md) | **Plan 123 — Rebel Branch Implementation Log** — Confirmed the live `RebelBranchCatalog`, `RebelBranchSystem`, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_129_FOUNDRY_PRODUCTION_CLOSEOUT.md`](plans/PLAN_129_FOUNDRY_PRODUCTION_CLOSEOUT.md) | **Plan 129 Foundry Production Closeout** — Plan 129 is complete against the reconciled live baseline: |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_132_HIDDEN_AGENDA_INTEGRATION_LOG.md`](plans/PLAN_132_HIDDEN_AGENDA_INTEGRATION_LOG.md) | **Plan 132 (C2[26]) — Survivor Hidden Agendas & Betrayal Arc Full Integration Log** — **Date:** 2026-09-20 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_158_COMPLETION_REPORT.md`](plans/PLAN_158_COMPLETION_REPORT.md) | **PLAN 158 COMPLETION REPORT — Cordage, Cable & Technical Textiles (2026-09-09)** — 10 records → 7 canonical item ids (all proven, all resolving): |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_220_SHELTER_ATMOSPHERE_INTEGRATION_LOG.md`](plans/PLAN_220_SHELTER_ATMOSPHERE_INTEGRATION_LOG.md) | **Plan 220 & Plan 205 Integration Log — Shelter Atmosphere & Noise Discipline** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md`](plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md) | **PLAN 22 — Consumable Bills, Replacement Canisters, Patch Kits, Medicine, and Shared Item-Tag Consumption Semantics — INTEGRATION PLAN** — One consumption semantics layer for consumable bills (repair parts, replacement |

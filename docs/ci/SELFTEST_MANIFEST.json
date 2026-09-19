@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 127,
-  "headless_test_count": 125,
+  "total_tests": 128,
+  "headless_test_count": 126,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1055,6 +1055,19 @@
       "description": "Survivors domain: needs decay, skill progression, trauma, and morale",
       "headless_compatible": true,
       "expected_summary_id": "survivors_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "hidden_agenda_selftest",
+      "action": "HiddenAgendaSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--hidden-agenda-selftest",
+      "aliases": [
+        "--hidden-agendas-selftest"
+      ],
+      "description": "Survivor hidden agendas, multi-day investigation, confrontation branches, persistence round-trip, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "hidden_agenda_selftest",
       "timeout_seconds": 30
     },
     {

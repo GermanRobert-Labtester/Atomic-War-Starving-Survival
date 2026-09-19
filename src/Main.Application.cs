@@ -315,6 +315,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.HoldfastTradeSaveSelfTest:
                     GetTree().Quit(HoldfastTradeSaveStoreSelfTest.Run());
                     return;
+                case HostCliAction.HiddenAgendaSelfTest:
+                    GetTree().Quit(HiddenAgendaSelfTest.Run(_dataDir));
+                    return;
                 case HostCliAction.HoldfastRuntimeUiTest:
                     RunHoldfastRuntimeUiTestAndQuit();
                     return;
