@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 2546 | **Last Verified:** 2026-09-19
+**Total Indexed Documents:** 2547 | **Last Verified:** 2026-09-19
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2499 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 2500 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 45 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -578,7 +578,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2182 documents)
+## 9. General Project Guides & Archive Reference (2183 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2261,6 +2261,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/relationships/CONFESSION_SECRET_SCHEMA.md`](relationships/CONFESSION_SECRET_SCHEMA.md) | **Confession Secret Catalog Schema Specification** — "schema_version": 1, |
 | 🟢 `CURRENT` | [`docs/relationships/PLAN88_BASELINE.md`](relationships/PLAN88_BASELINE.md) | **Plan 88 — Baseline Discovery & Forensic Reconciliation** — Plan 88 requested expanding `confession_secrets.json` from a supposed 8-entry baseline to 20 confession secrets cover... |
 | 🟢 `CURRENT` | [`docs/releases/RELEASE_1.1.0.md`](releases/RELEASE_1.1.0.md) | **RELEASE 1.1.0 — Release Record — ✅ GO (clean-clone verified)** — Lane: `lane/trapping-flagship-verification` (branched from `feat/asset-pipeline-flagship`) |
+| 🟢 `CURRENT` | [`docs/releases/VERSIONING.md`](releases/VERSIONING.md) | **ASHFALL — Versioning & Compatibility Policy** — ASHFALL maintains three independent, cooperating version axes: |
 | 🟢 `CURRENT` | [`docs/remediation/68_glm53_flash_50_issue_closeout.md`](remediation/68_glm53_flash_50_issue_closeout.md) | **GLM 5.3 Flash 50-Issue Closeout** — - Plan target: `9b4985d0122d707c31f6078050df5877b69b607b` |
 | 🟢 `CURRENT` | [`docs/remediation/69_audit_issues_11_25_closeout.md`](remediation/69_audit_issues_11_25_closeout.md) | **ASHFALL — Audit Issues 11–25 Closeout** — **Branch:** `feat/asset-pipeline-flagship` |
 | 🟢 `CURRENT` | [`docs/remediation/70_audit_issues_26_35_closeout.md`](remediation/70_audit_issues_26_35_closeout.md) | **ASHFALL — Audit Issues 26–35 Closeout** — **Branch:** `feat/asset-pipeline-flagship` |
