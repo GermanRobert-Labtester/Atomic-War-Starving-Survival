@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-19<br>
-**Total Registered Actions:** 180 entries / 256 flag tokens (aliases included)
+**Total Registered Actions:** 181 entries / 258 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -75,6 +75,7 @@
 | `--list-selftest` | — | Alias for --list-selftests |
 | `--muster-selftest` | `--expansion-06-selftest` | MusterHeadlessDemo (Exp 06 the Muster) |
 | `--faction-ecology-selftest` | — | Plan 25 faction ecology vertical slice (action board, E-P1 chain, witness, camp scene, muster path) |
+| `--faction-communique-board-selftest` | `--communique-board-selftest` | Plan 133 faction war communique board self-test (surface bind, catalog queries, empty states) |
 | `--phase0-selftest` | — | Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip |
 | `--precision-metrology-selftest` | — | Plan B89 precision metrology: grades, registered consumers only, workshop projection, disturbance, save round-trip |
 | `--silent-foundry-selftest` | — | Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip |
