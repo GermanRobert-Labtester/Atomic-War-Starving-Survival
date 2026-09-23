@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 153,
-  "headless_test_count": 151,
+  "total_tests": 161,
+  "headless_test_count": 159,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -816,6 +816,110 @@
       "description": "Plan 140 generational legacy & campaign inheritance: catalog load, campaign archiving, shelter persistence, trait inheritance, and New Game+ context",
       "headless_compatible": true,
       "expected_summary_id": "campaign_legacy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "research_unlock_selftest",
+      "action": "ResearchUnlockSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--research-unlock-selftest",
+      "aliases": [
+        "--research-unlocks-selftest"
+      ],
+      "description": "Plan 141 research downstream unlocks bridge: breakthrough item grant, crafting recipes, shelter, expedition, combat, and medical capabilities",
+      "headless_compatible": true,
+      "expected_summary_id": "research_unlock_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "unified_ending_selftest",
+      "action": "UnifiedEndingSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--unified-ending-selftest",
+      "aliases": [
+        "--epilogue-selftest"
+      ],
+      "description": "Plan 145 unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution",
+      "headless_compatible": true,
+      "expected_summary_id": "unified_ending_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "npc_memory_selftest",
+      "action": "NpcMemorySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--npc-memory-selftest",
+      "aliases": [
+        "--npc-memory-test"
+      ],
+      "description": "Plan 147 per-NPC memory and relationship depth: trust, grudge, favors owed, forgiveness, and trade multipliers",
+      "headless_compatible": true,
+      "expected_summary_id": "npc_memory_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ideological_friction_selftest",
+      "action": "IdeologicalFrictionSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--ideological-friction-selftest",
+      "aliases": [
+        "--ideology-selftest"
+      ],
+      "description": "Plan 148 ideological friction events and quests: confrontations, conversions, bunker factions, and mediation",
+      "headless_compatible": true,
+      "expected_summary_id": "ideological_friction_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "romance_family_selftest",
+      "action": "RomanceFamilySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--romance-family-selftest",
+      "aliases": [
+        "--romance-selftest"
+      ],
+      "description": "Plan 150 romance & family dynamics: courtship stages, partnership, bonded pairs, family units, and adoption",
+      "headless_compatible": true,
+      "expected_summary_id": "romance_family_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "vehicle_customization_selftest",
+      "action": "VehicleCustomizationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--vehicle-customization-selftest",
+      "aliases": [
+        "--vehicle-modules-selftest"
+      ],
+      "description": "Plan 152 vehicle customization & mobile base: module slots, effective stats, bunk capacity, and base camps",
+      "headless_compatible": true,
+      "expected_summary_id": "vehicle_customization_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "backstory_selftest",
+      "action": "BackstorySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--backstory-selftest",
+      "aliases": [
+        "--backstories-selftest"
+      ],
+      "description": "Plan 174 procedural survivor backstories & origin mechanics: occupations, experiences, and secrets",
+      "headless_compatible": true,
+      "expected_summary_id": "backstory_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "meta_progression_selftest",
+      "action": "MetaProgressionSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--meta-progression-selftest",
+      "aliases": [
+        "--meta-selftest"
+      ],
+      "description": "Plan 175 meta progression & cross-run profile store: prestige scoring, crests, and NG+ boons",
+      "headless_compatible": true,
+      "expected_summary_id": "meta_progression_selftest",
       "timeout_seconds": 30
     },
     {

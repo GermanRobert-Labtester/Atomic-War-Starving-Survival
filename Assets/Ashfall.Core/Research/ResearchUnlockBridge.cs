@@ -246,7 +246,8 @@ namespace Ashfall.Core.Research
         {
             if (string.IsNullOrEmpty(capabilityId)) return false;
             return _state.unlockedCapabilities.Any(c => string.Equals(c, capabilityId, StringComparison.OrdinalIgnoreCase) ||
-                                                        c.EndsWith($":{capabilityId}", StringComparison.OrdinalIgnoreCase));
+                                                        c.EndsWith($":{capabilityId}", StringComparison.OrdinalIgnoreCase) ||
+                                                        capabilityId.EndsWith($":{c}", StringComparison.OrdinalIgnoreCase));
         }
 
         public bool HasRecipe(string recipeId)

@@ -283,6 +283,12 @@ namespace Ashfall.Core.Save
             new("campaign_legacy", "SaveCampaignLegacy", "SetupCampaignLegacy", "campaign", "Plan 140 — Generational legacy, heirlooms, campaign inheritance, and New Game+ multi-generational continuity", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("research_unlock", "SaveResearchUnlock", "SetupResearchUnlockBridge", "knowledge", "Plan 141 — Research downstream unlocks bridge: items, recipes, shelter, expedition, combat, and medical capabilities", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("unified_ending", "SaveUnifiedEnding", "SetupUnifiedEnding", "endgame", "Plan 145 — Unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("npc_memory", "SaveNpcMemory", "SetupNpcMemory", "narrative", "Plan 147 — Per-NPC memory and relationship depth: trust, grudge, favors owed, forgiveness, and trade multipliers", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("ideological_friction", "SaveIdeologicalFriction", "SetupIdeologicalFriction", "survivors", "Plan 148 — Ideological friction events and quests: confrontations, conversions, bunker factions, and mediation", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("romance_family", "SaveRomanceFamily", "SetupRomanceFamily", "survivors", "Plan 150 — Romance & family dynamics: attraction, courtship, partnership, bonded pairs, family units, and adoption", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("vehicle_customization", "SaveVehicleCustomization", "SetupVehicleCustomization", "expedition", "Plan 152 — Vehicle customization & mobile base: module installation, effective vehicle stats, and deployed base camps", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("backstory", "SaveBackstory", "SetupBackstory", "survivors", "Plan 174 — Procedural survivor backstories & origin mechanics: occupations, experiences, and secrets", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("meta_progression", "SaveMetaProgression", "SetupMetaProgression", "endgame", "Plan 175 — Meta progression & cross-run profile store: prestige scoring, crests, and NG+ boons", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -534,6 +540,12 @@ namespace Ashfall.Core.Save
                 { "campaign_legacy", "campaign_legacy_save.json" },
                 { "research_unlock", "research_unlock_save.json" },
                 { "unified_ending", "unified_ending_save.json" },
+                { "npc_memory", "npc_memory_save.json" },
+                { "ideological_friction", "ideological_friction_save.json" },
+                { "romance_family", "romance_family_save.json" },
+                { "vehicle_customization", "vehicle_customization_save.json" },
+                { "backstory", "backstory_save.json" },
+                { "meta_progression", "meta_progression_save.json" },
             };
 
 

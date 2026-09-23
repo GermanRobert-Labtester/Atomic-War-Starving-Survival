@@ -1,94 +1,185 @@
 {
   "schema_version": 1,
-  "romance_stages": [
-    {
-      "stage_id": "attraction",
-      "min_score": 0,
-      "max_score": 24,
-      "label": "Attraction",
-      "description": "Survivors notice each other, gentle interest and tentative flirtation begins."
-    },
-    {
-      "stage_id": "courtship",
-      "min_score": 25,
-      "max_score": 49,
-      "label": "Courtship",
-      "description": "Deliberate courtship, spending quiet hours together and testing mutual values."
-    },
-    {
-      "stage_id": "partnership",
-      "min_score": 50,
-      "max_score": 74,
-      "label": "Partnership",
-      "description": "Committed mutual partnership, shared living quarters, and joint task dedication."
-    },
-    {
-      "stage_id": "bonded",
-      "min_score": 75,
-      "max_score": 100,
-      "label": "Bonded",
-      "description": "Deep enduring devotion, soulmate bond, and formal family unit foundation."
-    }
-  ],
   "courtship_events": [
     {
       "event_id": "shared_meal",
-      "name": "Shared Rations",
+      "name": "A Meal Taken Together",
       "min_affinity": 20,
-      "base_success_rate": 0.75,
+      "base_success_rate": 0.80,
       "score_gain": 5,
       "stress_reduction": 4.0,
-      "description": "Sharing a quiet evening ration together away from the bustling common room."
+      "description": "Two people carry their trays to the same end of the table without being asked to."
     },
     {
       "event_id": "quiet_walk",
-      "name": "Perimeter Walk",
-      "min_affinity": 30,
-      "base_success_rate": 0.70,
+      "name": "The Quiet Walk",
+      "min_affinity": 22,
+      "base_success_rate": 0.75,
       "score_gain": 8,
       "stress_reduction": 6.0,
-      "description": "Walking the upper observation catwalks during safe atmospheric lulls."
+      "description": "The last circuit of the fence before lights-out, walked slowly enough to talk."
     },
     {
       "event_id": "deep_conversation",
-      "name": "Midnight Solace",
-      "min_affinity": 40,
-      "base_success_rate": 0.65,
-      "score_gain": 10,
-      "stress_reduction": 8.0,
-      "description": "Sharing memories of the old world and fears of what tomorrow brings."
+      "name": "A Long Conversation",
+      "min_affinity": 30,
+      "base_success_rate": 0.70,
+      "score_gain": 12,
+      "stress_reduction": 9.0,
+      "description": "The account of a life told in the order it comes out rather than the order it happened."
     },
     {
       "event_id": "crafted_gift",
-      "name": "Mended Keepsake",
-      "min_affinity": 45,
-      "base_success_rate": 0.80,
+      "name": "A Crafted Gift",
+      "min_affinity": 28,
+      "base_success_rate": 0.72,
       "score_gain": 12,
-      "stress_reduction": 5.0,
-      "description": "Offering a hand-carved charm or carefully mended piece of gear as a token of affection."
+      "stress_reduction": 8.0,
+      "description": "Something made by hand from salvage that could have been spent on anything else."
     },
     {
       "event_id": "mutual_vigil",
-      "name": "Shared Sentry Watch",
-      "min_affinity": 35,
+      "name": "Keeping Watch Together",
+      "min_affinity": 36,
+      "base_success_rate": 0.68,
+      "score_gain": 10,
+      "stress_reduction": 11.0,
+      "description": "A long night beside a cot, taken in turns that stop being turns."
+    },
+    {
+      "event_id": "shared_receiver",
+      "name": "The Radio Hour",
+      "min_affinity": 28,
       "base_success_rate": 0.70,
       "score_gain": 9,
-      "stress_reduction": 3.0,
-      "description": "Standing shoulder-to-shoulder through the coldest hours of the night shift."
+      "stress_reduction": 7.0,
+      "description": "Sharing the one working receiver, arguing quietly about which band is worth the battery."
+    },
+    {
+      "event_id": "water_detail",
+      "name": "The Water Detail",
+      "min_affinity": 30,
+      "base_success_rate": 0.68,
+      "score_gain": 9,
+      "stress_reduction": 5.0,
+      "description": "Two sets of hands on the same cranks. The work goes faster than the numbers say it should."
+    },
+    {
+      "event_id": "card_game",
+      "name": "Cards by Lamplight",
+      "min_affinity": 32,
+      "base_success_rate": 0.72,
+      "score_gain": 10,
+      "stress_reduction": 8.0,
+      "description": "A deck missing three cards, played for nothing, lasting much longer than the game."
+    },
+    {
+      "event_id": "mending_clothes",
+      "name": "Mending What Can Be Mended",
+      "min_affinity": 34,
+      "base_success_rate": 0.70,
+      "score_gain": 10,
+      "stress_reduction": 6.0,
+      "description": "One sews. The other pretends not to watch. A sleeve is repaired that did not need repairing."
+    },
+    {
+      "event_id": "roof_watch",
+      "name": "The Roof Watch",
+      "min_affinity": 36,
+      "base_success_rate": 0.66,
+      "score_gain": 11,
+      "stress_reduction": 7.0,
+      "description": "A cold shift above the shelter, shared because neither wanted the other to take it alone."
+    },
+    {
+      "event_id": "old_letter",
+      "name": "Reading an Old Letter",
+      "min_affinity": 38,
+      "base_success_rate": 0.64,
+      "score_gain": 11,
+      "stress_reduction": 9.0,
+      "description": "Something written before the crossing, read aloud once, and then folded away again."
+    },
+    {
+      "event_id": "greenhouse_rows",
+      "name": "Rows in the Greenhouse",
+      "min_affinity": 40,
+      "base_success_rate": 0.68,
+      "score_gain": 12,
+      "stress_reduction": 6.0,
+      "description": "Working opposite ends of the same bed of soil, meeting in the middle more often than the rows require."
+    },
+    {
+      "event_id": "ration_share",
+      "name": "Half of a Ration",
+      "min_affinity": 42,
+      "base_success_rate": 0.70,
+      "score_gain": 12,
+      "stress_reduction": 8.0,
+      "description": "A portion quietly split when the ledger says it was not. The ledger is not told."
+    },
+    {
+      "event_id": "medical_company",
+      "name": "Sitting With the Injured",
+      "min_affinity": 44,
+      "base_success_rate": 0.62,
+      "score_gain": 12,
+      "stress_reduction": 10.0,
+      "description": "A chair pulled to the end of a ward bed and left there for the whole of a shift."
+    },
+    {
+      "event_id": "snow_sweep",
+      "name": "Clearing the Snow",
+      "min_affinity": 46,
+      "base_success_rate": 0.66,
+      "score_gain": 13,
+      "stress_reduction": 7.0,
+      "description": "Two shovels, one doorway, and a path cleared wider than anyone needed it to be."
+    },
+    {
+      "event_id": "borrowed_instrument",
+      "name": "The Borrowed Instrument",
+      "min_affinity": 48,
+      "base_success_rate": 0.60,
+      "score_gain": 13,
+      "stress_reduction": 11.0,
+      "description": "A tune played badly and then better, for an audience of exactly one."
+    },
+    {
+      "event_id": "memorial_visit",
+      "name": "At the Memorial",
+      "min_affinity": 50,
+      "base_success_rate": 0.58,
+      "score_gain": 14,
+      "stress_reduction": 12.0,
+      "description": "Standing at the names together, saying less than either expected to, which turns out to be the point."
+    },
+    {
+      "event_id": "long_haul",
+      "name": "The Long Haul",
+      "min_affinity": 52,
+      "base_success_rate": 0.56,
+      "score_gain": 15,
+      "stress_reduction": 9.0,
+      "description": "A hard run out and back, where the conversation carries further than the fuel does."
+    },
+    {
+      "event_id": "candle_quiet",
+      "name": "Quiet by a Candle",
+      "min_affinity": 54,
+      "base_success_rate": 0.58,
+      "score_gain": 15,
+      "stress_reduction": 12.0,
+      "description": "No task, no ledger, no reason to be in the same room except the being there."
+    },
+    {
+      "event_id": "salvage_trip",
+      "name": "The Salvage Trip",
+      "min_affinity": 56,
+      "base_success_rate": 0.54,
+      "score_gain": 16,
+      "stress_reduction": 8.0,
+      "description": "Two people into a dead building and two people out, having decided together which risks were worth it."
     }
-  ],
-  "compatibility_factors": {
-    "age_difference_soft_limit": 12,
-    "age_penalty_per_excess_year": 2.0,
-    "belief_alignment_bonus": 15.0,
-    "opposing_belief_penalty": 20.0,
-    "shared_trauma_bond_bonus": 10.0,
-    "base_compatibility_floor": 20.0
-  },
-  "family_benefits": {
-    "shared_quarters_morale_bonus": 8.0,
-    "task_cooperation_efficiency_bonus": 0.15,
-    "family_safety_comfort_bonus": 5.0,
-    "bereavement_grief_multiplier": 1.75
-  }
+  ]
 }

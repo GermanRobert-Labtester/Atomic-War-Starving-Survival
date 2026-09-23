@@ -665,6 +665,24 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.UnifiedEndingSelfTest:
                     GetTree().Quit(HostCliUnifiedEnding.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.NpcMemorySelfTest:
+                    GetTree().Quit(HostCliNpcMemory.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.IdeologicalFrictionSelfTest:
+                    GetTree().Quit(HostCliIdeologicalFriction.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RomanceFamilySelfTest:
+                    GetTree().Quit(HostCliRomanceFamily.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.VehicleCustomizationSelfTest:
+                    GetTree().Quit(HostCliVehicleCustomization.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.BackstorySelfTest:
+                    GetTree().Quit(HostCliBackstory.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.MetaProgressionSelfTest:
+                    GetTree().Quit(HostCliMetaProgression.RunSelfTest(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)

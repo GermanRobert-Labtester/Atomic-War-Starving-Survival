@@ -2153,3 +2153,274 @@ A map can show optional locations at expedition start without implying that the 
 ### 15.15 Handoff and integration gate
 
 The selector is ready for implementation planning only after a source-to-source map identifies the current map graph, expedition start command, active quest inputs, location loader, micro-location encounter loader, discovery owner, visibility read model, deterministic RNG adapter, save owner, and UI map route. Then claim exact paths through WORKTREE_OWNERSHIP and sequence work through INTEGRATION_PLANS. The first implementation should handle one required quest target and one fallback; optional rarity and temporary sites follow only after that path is observable. This proposal changes no source, data, claims, or tests.
+
+
+## Pass 16 — Bible-seeded destinations, evidence classes, and safe selection
+
+The master world bible suggests a seasonal numbers-station arc, a hydrophone-coast mystery, and folklore whose meaning changes as a shelter community grows. This addition specifies how those story threads should use expedition selection without claiming that every narrative record already has a map node. It is a selection contract for a future premise-checked integration.
+
+### A location is not the same thing as evidence
+
+A cipher record, hydrophone observation, discovery-manifest row, destination, map-visible marker, and quest-required site are different entities. The source review confirms existing cipher target-location reveal behavior for authored chains. It also confirms hydrophone records and discovery references, but a record does not prove a corresponding expedition destination. Folklore entries have discovery consumers, while a cohort-age callback into the map is not established. The integrator must resolve these references against the active destination and location catalogs before selection weights are assigned.
+
+Maintain an explicit mapping proposal with four outcomes: existing dispatchable site; existing non-dispatchable site that can host a shelter-only scene; record that only provides a clue; or unresolved entry deferred from the expedition pool. Never treat an unresolved string as a required location.
+
+### Selection stages
+
+1. **Build an eligibility snapshot.** From the canonical quest and world state, collect only active requirements with a verified destination binding. Keep clue-only tasks and shelter conversations out of the destination reservation list.
+2. **Reserve mandatory destinations.** Add verified active quest targets and critical progression locations first. De-duplicate by canonical destination identity, not by display text or aliases.
+3. **Reserve faction or character sites.** Add only sites whose access gates are currently satisfiable. A secret faction destination may remain hidden while still reserved if its quest is active and the route can reveal it.
+4. **Apply campaign recency limits.** Keep recently visited locations from crowding out the required route unless they are the only valid return point. A quest-required revisit wins over a generic recency exclusion.
+5. **Fill thematic slots.** Match season, weather, current region, and authored expedition tone using a deterministic score/tie-break derived from the existing seeded RNG contract. Do not use wall-clock time or collection iteration order.
+6. **Fill optional and rare slots.** Roll optional, secret, and temporary candidates only after mandatory and progression reservations. Rarity may change presentation and slot probability, never the chance that a required active quest remains possible.
+7. **Publish a visibility state.** Required known sites appear with a clear reason. Unrevealed sites can be represented by a clue or signal rather than a misleading map pin. Optional destinations can remain undiscovered until their current evidence path fires.
+
+The exact slot count and probability distribution require current ExpeditionSystem and map-owner inspection. They are intentionally not fixed here.
+
+### Exclusion and conflict rules
+
+A destination cannot be selected twice under two names. A location requiring a consumed one-use item is ineligible unless the quest owner has a recoverable alternative. A faction-only location is ineligible when the required reputation gate cannot be met and no route to that gate is available. A temporary site with an expired world condition is removed before sampling. A mandatory site cannot be removed by optional rarity, regional theme, or a “recently visited” penalty.
+
+If multiple active quests require the same destination, reserve it once and expose the several authored reasons in the journal. Resolve conflicting local states through quest-context composition; do not fork physical copies of one place to make quest markers fit.
+
+### Bible seed application
+
+**Winter Count.** The current cipher engine can reveal target locations when the authored hearing/key/decoding conditions are satisfied. At expedition start, the selector should honor the revealed target as mandatory while the chain is active. Before reveal, the station can be a known radio clue without exposing the target marker. If a save contains a revealed target that no longer resolves, preserve quest progress and use a verified equivalent, an authored clue route, or an explicit delayed state.
+
+**Shelf That Answers.** Hydrophone evidence may make a coast or shelf destination thematically eligible only after a destination binding is proven. A sound log alone is not sufficient to force a location into the dispatch list. Where no matching site exists, keep the investigation as a shelter or discovery scene and record a deferred destination proposal.
+
+**Rhyme After the Door.** Folklore is likely to resolve in a shelter scene. Do not convert every rhyme into an expedition marker. A physical clue may point to an existing room or destination after source validation. Cohort changes must not spawn map locations unless the owner explicitly reports a verified event or unlock.
+
+### Missing-target recovery and visibility
+
+Use the following priority when a required target is unavailable: first, resolve an already-authored equivalent destination with the same semantic purpose; second, keep the quest active but delayed and expose a useful action or expected condition; third, publish an authored clue that leads to a valid alternative; fourth, make the destination unavailable only when the quest contract explicitly allows a failure-forward resolution. Log which recovery was selected so support and journal text can explain it.
+
+Recovery must not silently teleport an expedition, fabricate a permanent map location, or discard a quest flag. If the target is removed by a content revision, the migration layer should preserve the old target identity long enough to map it or report the delay.
+
+### Acceptance probes for the eventual implementation
+
+Reviewers should walk at least these state combinations: an active cipher before hearing; after hearing but before key acquisition; after decode and target reveal; a hydrophone record discovered without a verified site; an active quest whose target was already visited; two quests sharing one site; a temporarily unavailable target; a failed-forward branch; and restore from a save captured between selection and dispatch. Each case must show map visibility, expedition eligibility, fallback, and the message explaining the outcome. Selection should be deterministic for the same seed and state and should never let optional content consume the last required slot. These are proposed acceptance cases, not permission to add new save fields or a second map registry.
+
+## Pass 17 — Treat destination-bound micro-locations as encounters, not map nodes
+
+This pass applies two master-world-bible questions to the location-selection architecture: which micro-locations lack narrative encounters, and how can new cemetery or archive clues enter expeditions without inflating the map graph? Current evidence shows micro_locations.json is already loaded by NarrativeEncounterCatalogLoader into EncounterDefinition entries. Each definition can carry requiredLocationId and isMicroLocation metadata. EncounterDefinition.GetEffectiveWeight returns zero when its required location differs from the current expedition site. NarrativeEncounterSystem filters depleted encounters before weighted selection. Three visible examples in the corpus bind an encounter to a named location, including a hospital, flooded subway depot, and garrison checkpoint. Therefore a micro-location encounter is generally an arrival/encounter opportunity at a parent destination; it is not automatically a new world-map node or an expedition destination.
+
+### Two-stage selection contract
+
+Keep the distinction between selecting a destination for an expedition and selecting an encounter after the expedition reaches a location.
+
+**Stage A: expedition destination.** The current map, expedition catalog, quest state, region, and weather constraints decide which destinations can be dispatched. An active investigation may reserve its verified parent destination if that location is a real map node and dispatchable. The registry record alone cannot reserve a destination. The location-selection policy should expose the reason for reservation to the journal or expedition summary.
+
+**Stage B: local encounter.** Once the current location is known, the encounter selector evaluates the ordinary eligible candidate list. A destination-bound micro-location becomes eligible only when its requiredLocationId matches. A quest-critical micro-location needs an integration seam that protects its required encounter opportunity from optional competition and prior depletion. Do not add a second micro-location scheduler or a competing encounter pool. If the existing selector cannot express the guarantee, record that as an architecture decision required before implementation.
+
+### Candidate selection rules
+
+1. Resolve each authored micro-location to its canonical parent location and confirm that parent in the locations catalog.
+2. Resolve the parent against the map graph and current expedition dispatch surface; record whether the site is guaranteed, optional, hidden, shelter-only, or unavailable.
+3. Resolve encounter-level gates such as danger minimum, weather gate, depletion, and quest prerequisites before weighting.
+4. Reserve a mandatory quest opportunity only when the quest is active and the exact encounter is reachable at the selected parent destination.
+5. Exclude optional candidates that would consume or permanently deplete a quest-required encounter before the quest begins.
+6. Preserve ordinary seeded selection among all remaining candidates. Keep mandatory routing deterministic and independent of iteration order.
+7. If there is no eligible local encounter, do not fabricate a micro-location. Continue the expedition with a truthful no-encounter outcome and leave the active quest delayed with a clue or alternate route.
+
+The order is a proposal around existing owners; it does not change the core weighted-selection contract by itself.
+
+### The cemetery investigation application
+
+The registry corpus references location_ash_dune_cemetery, and locations.json currently contains that ID. The next check is whether it resolves through the map graph and expedition dispatch surface, and whether its location state supports a cemetery visit in the active campaign. If it is valid and dispatchable, an optional physical-inspection beat may run there after arrival. If it is not dispatchable, the quest remains a shelter/archive chain or routes to a verified clue-bearing parent site. Do not add “Ash Dune Cemetery Annex” or another node merely to create an encounter slot.
+
+A micro-location representing an existing grave, plaque, or small shelter feature should normally be an encounter tied to its parent. Its visibility can be “known location, undisclosed local detail” until an authored discovery condition fires. This preserves map truth while still allowing exploration to reveal a hidden object or story beat.
+
+### Visibility, rarity, and fairness
+
+Use map fog for whether a parent site is known. Use quest/discovery state for whether a specific encounter is known. Use encounter weights for optional repeatable or exploratory content. These are separate visibility questions. Avoid displaying a quest marker for an encounter that has no reachable parent destination or whose content is depleted. If the quest is active and the encounter is mandatory, the journal should explain whether the player needs to travel to the parent, wait for an authored condition, or follow another clue.
+
+Rarity can tune optional micro-locations but cannot determine a required quest outcome. A rare environmental encounter may appear only in an eligible subset of expeditions; if an active quest depends on it, either guarantee its parent and encounter window or make the quest wait in an explicit blocked state. Map selection should never imply that a local encounter is guaranteed simply because the parent destination is selected.
+
+### Exclusion and lifecycle cases
+
+Check the following collision cases in the eventual integrator packet: the parent site is selected but the required encounter is weather-gated; the encounter has been depleted before its associated quest is accepted; two quests refer to the same local encounter; a quest becomes active after the destination selection snapshot; the parent is known but not dispatchable; a content update removes or renames the encounter; and an optional encounter competes for a forced-on-arrival slot. The recovery may be reselecting the local encounter, returning on a later expedition, replacing it with an equivalent authored clue, or delaying the quest. It must not duplicate the location, reset unrelated depletion, or promise an encounter from data whose consumer is absent.
+
+### Performance and review evidence
+
+Profile before adding an index. If candidate evaluation is shown to be costly, prefer a deterministic cache built by the current catalog owner and invalidated when catalogs or relevant state change. Do not introduce a per-frame JSON scan, shadow map graph, or another selection registry. The review packet should include parent-location resolution, dispatchability, encounter eligibility, depletion policy, map visibility, and fallback for each proposed micro-location. That packet answers the bible's coverage question with live data and lets content authors add encounters only where the actual narrative gap exists.
+
+### Pass 17B — Reservation walkthroughs and local encounter budgets
+
+The following walkthroughs show how an eventual selector should reason about the difference between a reserved expedition destination and a locally eligible encounter. They are examples for a future source-backed integration review, not fixed slot counts or probabilities.
+
+**Required cemetery visit.** An active investigation requires a physical look at the cemetery. First prove the cemetery is a current map node and dispatchable destination. If yes, reserve it before optional destinations and attach the quest reason to the visible destination card. After arrival, evaluate the linked micro-location only if the authored definition requires this parent. If a weather, danger, or depletion gate suppresses it, keep the quest active and expose the alternate evidence step. Do not claim that a reserved parent alone guarantees the encounter.
+
+**Optional grave discovery.** The player has not accepted the investigation but discovers an optional gravestone encounter. The encounter may appear through ordinary local weighting. If its choice permanently depletes that encounter, record the existing depletion state and ensure later quest acceptance has an alternative such as a journal copy or archive testimony. The optional action must not make a future required objective impossible.
+
+**Shared destination.** Two quests point at the same verified site. Reserve the destination once, attach both active reasons, and let each quest evaluate its own evidence state after arrival. Do not duplicate the destination to guarantee two encounters. If the current encounter system can select only one event per arrival, one quest may retain a clear revisit condition; otherwise both can be composed only through an approved owner seam.
+
+**Late quest activation.** If a quest activates after the expedition's destination snapshot is already committed, it cannot rewrite the active route. The quest should select the next eligible expedition, identify a current nearby clue, or remain visibly delayed. This prevents state changes in dialogue from silently invalidating a route selection already shown to the player.
+
+**No valid destination.** If the parent is missing from the map, no equivalent may be guessed from a similar display name. Consult canonical location aliases or a human-authored fallback. If none exists, delay the quest and provide an archive or witness path. A missing destination is a content-integrity problem even when the game can safely finish the expedition.
+
+For each location-selection decision, show three independent outputs: whether the parent is dispatchable; whether the local encounter is currently eligible; and whether the clue is visible to the player. A single “available” boolean hides important reasons. The expedition summary should explain a required route in player language, while internal diagnostics can record the precise exclusion reason.
+
+**Budget rules.** The selector should not allow optional content to occupy a hard capacity reserved for critical progression. However, this plan does not prescribe a numeric expedition slot count because the active system and UI need to be inspected together. Measure current destination volume, dispatch performance, travel costs, and UI card space before changing capacity. If the set of required destinations exceeds the display or expedition limit, combine compatible objectives at one parent site, defer low-priority quests, or provide an explicit multi-trip chain. Do not silently truncate the required set.
+
+**Operational acceptance.** The review owner should be able to trace one selected destination from quest state through map visibility to dispatch, then from location arrival through encounter eligibility to journal acknowledgement. It should also trace the failure route from the same start. This walkthrough is the unit of confidence; a probability table by itself cannot prove the quest remains playable.
+
+
+## Pass 18 — Expedition placement for instrument evidence without map inflation
+
+### Design purpose
+
+The Lane B Geiger calibration seed in the master world bible can enrich expeditions, but the current calibration owner describes a shelter-side, one-day station procedure. It does not establish a field-calibration station, a new destination, or an expedition interaction. This extension connects the subject to expedition selection without inventing a parallel location pool: expeditions may carry authored evidence or a location-bound encounter, while actual device calibration remains available through its existing owner after return.
+
+### Selection contract
+
+An expedition candidate is eligible only when its permanent authored definition satisfies the active quest's location, faction, time-window, and encounter constraints. Resolve eligibility before weighted selection. A weight may rank valid candidates; it must never defeat a hard quest requirement. The current plan's selection stack is refined as follows:
+
+1. Mandatory active quest parent destination, if the quest truly requires travel and the quest catalog declares the existing destination ID.
+2. Critical progression destination, under the game's current progression owner.
+3. Character- or faction-bound destination already authorized by the current expedition content.
+4. Recently discovered destination that remains reachable and has not been excluded by campaign state.
+5. Thematic destination matching the expedition brief and season.
+6. Optional exploration destinations.
+7. Rare or surprise destinations, selected only from the remaining valid set.
+
+For The Needle's Margin, the mandatory travel set is empty. A calibration return action is a shelter interaction, not an expedition location. If the quest has an authored report clue at a currently selected destination, the clue attaches as a child encounter under that parent. It must not create an extra map pin or consume a second destination slot.
+
+### Parent and micro-location relationship
+
+Treat the expedition destination as the map-visible parent. A destination-bound micro-location or encounter is a nested content opportunity with its own eligibility and visibility rules. It cannot independently satisfy a quest's travel requirement unless the quest data explicitly names the parent and required encounter. Selecting the parent reserves the opportunity; the encounter can still be omitted when weather, route, faction control, or content capacity invalidates it.
+
+A field report about instrument drift could appear at a radio hut, survey shelter, or other authored parent only when that existing location's content is compatible. Those examples are content roles, not new catalog IDs. The report gives the player provenance and a lead. It does not claim that the shelter's calibration station is physically present at the remote site.
+
+### Exclusion, rarity, and budget rules
+
+- Exclude a candidate when it is already selected for the same expedition, unavailable under authoritative campaign state, incompatible with a required faction or season, or below the minimum encounter budget.
+- Avoid two encounters that deliver the same clue, reward, or quest transition in one expedition. Repeated ambience may vary, but repeated objective credit must be idempotent.
+- Rare encounters draw only after mandatory and progression needs are satisfied. Rarity is a selection preference, not a probability guarantee that can strand a quest.
+- Quest-required parents are reserved before optional weights are drawn. If more mandatory parents are eligible than the expedition supports, the selection contract must either expand the valid destination budget through the existing owner or sequence the quest objectives. Never drop the lowest-priority active quest without an explicit delay response.
+- Seeded selection uses the existing expedition random stream and a stable candidate order. Do not use wall-clock time, hash iteration order, or a new private random generator. An identical campaign state and seed must produce the same selection and map visibility.
+
+### Map visibility and discovery
+
+A selected parent appears at expedition start according to the current expedition map contract. Its unresolved nested encounter may remain hidden until the player explores the parent. A quest clue already received at the shelter can reveal a destination only when the authored quest explicitly supplies that lead; generic calibration status should not reveal a remote location.
+
+Do not mark a destination permanently discovered just because it was selected. Selection, visibility, arrival, and discovery are distinct facts. Persist them through the current owners. A clue encounter can report that a technician once worked there without granting a permanent map unlock unless the existing discovery authority accepts that effect.
+
+### No-valid-location fallback
+
+When an active travel objective has no valid parent:
+- Substitute an authored equivalent only when the quest declares the equivalence and the replacement can fulfill the same objective.
+- Otherwise delay the objective with a visible status and preserve its clues.
+- If a previously selected reachable parent exists, place a clue there only if the quest permits a clue-based alternate route.
+- If none of these are valid, retain the quest in Blocked with a clear reason and a route to continue other play.
+- Never label shelter calibration as complete merely because the expedition produced a calibration report.
+
+### Walkthrough and acceptance
+
+Walkthrough A: the player accepts an expedition unrelated to calibration. The existing destination selector chooses its normal parent set; The Needle's Margin adds no forced destination. If a compatible selected parent contains the authored report encounter, it can appear once.
+
+Walkthrough B: a future quest variant explicitly requires a remote source. Its catalog declares one mandatory parent and an equivalent fallback. The parent is reserved before optional sites. If both are invalid, the quest moves to visible Blocked/Delayed state and remains completable later.
+
+Walkthrough C: the clue is found but the party returns with low battery or a damaged sensor. The clue is recorded by its existing discovery owner; the calibration quest remains blocked on the real device condition. No location selection mutates equipment.
+
+Implementation gates: confirm current expedition data represents nested encounters under parent destinations; confirm the quest selector accepts required-parent constraints; confirm map selection and discovery have distinct owners; and claim only those files needed for that verified seam. Acceptance includes deterministic replay of the candidate order, no duplicate map node, no silently impossible quest, no secret encounter appearing as a mandatory visible marker, and no expedition clue counted twice.
+
+
+## Pass 19 — Location selection for documentary investigations
+
+### Do not turn an intercept channel into a map node
+
+The wiretap transcript schema includes an intercept channel, target-faction string, clarity score, speaker-identities string, relative timestamp, tags, and prose. It does not contain a verified location ID, route edge, access rule, or player discovery state. Names such as a junction, a carrier line, or a relay are authored channel labels. They must not become map pins by parsing prose or channel text. The source is currently indexed as CODEX_ONLY; the first gating work is a real presentation and discovery route.
+
+The Unplayed Side has no required expedition destination in its minimum version. The player can investigate the record in shelter. A field trip is a separate optional branch that must declare a valid parent location using the current authoritative location catalog and expedition route rules.
+
+### Candidate pools and reservation order
+
+At expedition start, construct the candidate set from existing permanent locations, active-quest requirements, optional destinations, secret destinations, faction-specific destinations, and valid temporary events. The selector consumes these pools; it does not create a parallel transcript-destination registry.
+
+Apply hard filters before ranking:
+- remove locations that do not exist in the authoritative location data;
+- remove locations already selected for the expedition;
+- remove locations inaccessible under current campaign, route, season, or faction state;
+- remove locations whose required encounter is incompatible with the current expedition;
+- preserve a required destination only when the quest has an explicit, validated location reference;
+- retain the current exclusion state for destinations already exhausted or intentionally unavailable.
+
+Then allocate slots in this order:
+1. Mandatory locations named by active quests and required now.
+2. Critical progression destinations.
+3. Character or faction destinations whose current owner says they are available.
+4. Recently discovered, still-reachable destinations.
+5. Thematic destinations that fit the expedition brief.
+6. Optional exploration candidates.
+7. Rare and secret candidates from the remaining valid set.
+
+Selection weights rank candidates inside a priority band. They do not let a rare site displace a mandatory quest location. A seed and stable ID ordering determine ties. No wall-clock source, unordered dictionary traversal, or second RNG is introduced.
+
+### Quest attachment and map visibility
+
+A transcript clue can attach to an already selected parent location only when the authored encounter names that parent and the quest's condition is true. It remains a child encounter: it does not occupy another map slot or create an independent travel destination. The current source does not establish that any wiretap channel is a place, so location attachment requires a content mapping audit.
+
+Keep the following states distinct:
+- eligible: the destination can be selected under current constraints;
+- selected: it is in this expedition's location set;
+- visible: the map chooses to show it at expedition start;
+- discovered: the player has learned the location through an accepted discovery action;
+- visited: the expedition records arrival through its current travel owner;
+- clue-present: a child encounter can be triggered at the parent.
+
+A confidential or secret clue can remain hidden until discovered. A required active quest parent must be visible or otherwise clearly reachable according to the existing map contract. A generic wiretap reading must not reveal a remote destination.
+
+### Fallback behavior
+
+If an active quest requires a site and that site fails validation:
+- use an equivalent only if the quest data explicitly declares the same objective can be fulfilled there;
+- otherwise delay the travel step and tell the player why;
+- place a clue at another already selected parent only when the quest declares the alternate route;
+- offer a non-travel investigation branch when it is authored and valid;
+- preserve all previously recorded evidence and quest progress;
+- never mark the field objective complete because the selector returned no location.
+
+If no valid candidate remains for an expedition, the existing expedition owner should return a truthful empty/shortened selection or a supported fallback. The selector should not loop trying random candidates forever. A quest can remain Blocked or Delayed while other expeditions proceed.
+
+### Walkthroughs
+
+Walkthrough A, shelter investigation: the player reads the Office ammunition intercept, accepts The Unplayed Side, and selects the evidence-comparison branch. There is no travel requirement, so expedition selection is unchanged.
+
+Walkthrough B, optional corroboration: the quest has a verified parent location and marks it optional. If it is selected, the child encounter appears once. If it is not selected, the player retains the report and can request another expedition or choose the no-travel resolution.
+
+Walkthrough C, mandatory corroboration added later: the quest declares a single current parent and one author-approved equivalent. The selector reserves the primary site first. If both are invalid, it delays the quest visibly; it does not silently remove the objective.
+
+Walkthrough D, secret content: a hidden audio trace is an optional clue under a secret site only after another content source has discovered that site. It can increase context, but it cannot be the sole way to submit the base case.
+
+### Acceptance and production order
+
+First make the record reachable in its current content surface. Next prove the quest can express a location-free state. Only then consider optional location bindings. Before authoring new location content, verify an existing parent and its dispatchability, then verify the expedition map distinguishes selection from discovery.
+
+Acceptance covers deterministic candidate ordering, hard exclusions, quest reservation, duplicate parent suppression, child-encounter capacity, secret visibility, empty-pool fallback, and a save/load case in which an accepted quest survives a delayed expedition. These are proposed checks for a later owned implementation; this pass adds no map data or route.
+
+
+### Pass 19B — Worked selector scenarios for evidence-led quests
+
+| Situation at expedition start | Location decision | Player-facing result |
+|---|---|---|
+| Player has read a wiretap but accepted no travel objective | Do not reserve a map slot for the document. | Quest remains investigable at shelter; map selection is unchanged. |
+| Accepted case has an authored optional corroboration parent that passes all hard filters | Select the parent only if capacity and the existing destination selector allow it. Attach the evidence encounter under the parent. | Map shows the existing destination; the journal labels corroboration as optional. |
+| Quest declares a mandatory parent and the location is reachable | Reserve the parent before weighted optional picks. | Destination appears through the current expedition map contract. |
+| Parent is faction-locked and the player lacks access | Keep the candidate excluded. Use a declared equivalent or delay. | State the faction/access blocker without exposing a secret route. |
+| Parent has already been selected by another active quest | Reuse the parent once and attach both compatible encounters if capacity permits. Do not duplicate the map node. | Each quest gets its own progress result; encounter execution is idempotent. |
+| Every candidate is invalid | Return an empty/shortened selection or the selector's supported fallback. Keep the quest pending. | Explain that evidence work is delayed; offer the no-travel branch if authored. |
+
+The selector should report a small result envelope to its current caller: selected parent IDs in stable order, deferred quest requirement IDs with reason codes, and child encounters admitted under each parent. This is a design shape only. Reuse the current expedition result type if it carries the same information; do not add a second map-selection DTO merely for the wiretap feature.
+
+The content author declares whether a location is required, optional, secret, faction-specific, or temporary. A single destination can satisfy more than one quest, but its runtime visit should not grant the same evidence milestone twice. A temporary location can serve a case only if the underlying objective remains possible after its window closes; otherwise it must be explicitly timed and failure-forward.
+
+Attribution and secrecy affect visibility. A public route rumor may reveal a parent before the expedition starts; a sealed transcript cannot. The map label may reflect known information (“old relay site”) but cannot expose an unknown parent through a hidden quest pin. If the player later discovers the parent through another system, the quest may use that discovery without claiming the transcript revealed it.
+
+### Capacity and fairness rules
+
+A quest requirement is feasible only when it survives both route eligibility and expedition capacity checks. Validate feasibility after hard filters and before assigning optional slots. If a required parent cannot be allocated because the expedition budget is full, the caller should either reserve a slot through its existing capacity policy or defer the objective with an explicit reason. Do not use a high weight to approximate reservation.
+
+A discovery-only or interview-only completion must remain available when map content is absent unless the quest's authored premise truly depends on that trip. This lets players progress across different route seeds without lowering the meaning of evidence. The same-seed replay should select the same parent and defer the same requirement when campaign state is identical, including faction access, route hazards, and quest statuses.
+
+The final selector review records, for each candidate, its authoritative ID, source catalog, hard eligibility predicates, selection band, map visibility rule, child encounter ID, discovery effect, quest credit, and fallback. No site can be approved from a wiretap's intercept-channel text alone.

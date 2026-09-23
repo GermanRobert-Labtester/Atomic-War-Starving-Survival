@@ -2378,3 +2378,364 @@ For an optional side conversation, a useful initial budget is: one opening, two 
 ### 15.16 Authoring handoff checklist
 
 Each scene packet contains a one-sentence player purpose; existing speaker/location bindings; entry conditions; exact knowledge ledger; authored node/response list in the current supported format; visible and hidden condition explanations; consequence class and owner; branch diagram; return/repeat text; failure and unavailable-speaker behavior; short/long text limits; accessibility order; localization notes; house-voice review; and content-utilization evidence. Production begins only after the current schema is named and the cross-catalog collision check passes.
+
+
+## Pass 16 — Three connected scene packets with restrained prose samples
+
+This pass builds dialogue-ready material from the master world bible’s seasonal broadcast, hydrophone mystery, and shelter folklore seeds. The packets are DRAFT samples. They do not add runtime node IDs, assume an unverified character roster, or replace existing authored cipher, hydrophone, or folklore records. A writer and integrator should reconcile each line against the live corpora before inclusion.
+
+### Scene packet: The Winter Count
+
+**Scene purpose.** A shelter radio keeper connects a recurring count to a signal the player has already heard. The player should be able to ask about the pattern, ask who kept the record, or leave and return. The clue is not explained before the player has the relevant evidence.
+
+**Voice notes.** The keeper speaks in practical measurements and corrections. They distrust grand theories but feel responsible for a list that has outlived its author. Avoid a mystical oracle tone. Their personal stake is that a count may represent people omitted during an evacuation, not a treasure.
+
+**First visit, before the decode:** “Three winters, same pause after the seventh number. I wrote it down because the generator stutters there too. Maybe those are both just old machines talking.”
+
+**After the player brings a verified decode:** “That line was a name column. I thought we were counting crates. I am going to read it slowly, so nobody gets turned into a total again.”
+
+**After a failed interpretation:** “We made the answer fit what we wanted. Keep the first recording. It has not changed just because we did.”
+
+Player choices should include asking for the source sheet, sharing the decoded phrase, withholding the answer, and ending the conversation. A withheld answer changes local trust or later dialogue only if that consequence is supported by a current relationship owner. The final scene can reconverge on the quest’s canonical completion route while preserving distinct acknowledgement.
+
+### Scene packet: The Shelf That Answers
+
+**Scene purpose.** A listening specialist reviews an ambiguous hydrophone record. The sequence separates the sound itself from the player’s conclusion and gives uncertainty a human voice.
+
+**Voice notes.** The specialist marks what can be measured, pauses before assigning motive, and is willing to say “unknown.” A second resident may offer a competing but plausible interpretation after the player returns with another record. No speaker should treat every hostile-sounding sound as an enemy.
+
+**At initial review:** “The pulse comes back at the same interval. That tells me it is regular. It does not tell me who made it.”
+
+**After a second observation:** “The shelf carries sound farther when the ice shifts. Our two recordings may not be two callers. They may be one noise and a very good echo.”
+
+**On inconclusive resolution:** “Write ‘unresolved’ where everyone can see it. A blank space invites a better answer than a confident lie.”
+
+The dialogue may reference only records the player actually collected. A captioned transcript accompanies the audio. The branch that concludes “natural,” “mechanical,” or “unknown” must be authored to the evidence and reviewed against the chosen source record. If a branch changes a route or faction opinion, Plan 22 must name the owner and confirmation path.
+
+### Scene packet: Rhyme After the Door
+
+**Scene purpose.** An adult resident remembers a rhyme that children used to repeat near a shelter door. The player investigates what it preserved and what it distorted. The story values the rhyme as culture even if no physical secret is found.
+
+**Voice notes.** The resident is affectionate but not sentimental about the shelter. Their memory can be vivid and still inaccurate. If a cohort callback is eventually approved, the character should sound older through changed priorities and learned detail, not a caricature of childhood.
+
+**First account:** “We sang it when the lights went out. The last line changed every week. Nobody agreed on what the door was hiding.”
+
+**With a physical maintenance clue:** “That mark is real. The monster was ours. The jammed latch was real too.”
+
+**When evidence does not settle the origin:** “Leave both versions in the book. The rhyme kept us together. It never promised to be a report.”
+
+A later cohort-age callback is optional and depends on verified maturation and presentation wiring. Until that is proven, offer a repeat-visit or campaign-milestone scene instead. Avoid assigning age, parentage, or faction history without checking current canon.
+
+### Graph and copy rules
+
+Each packet can use a short branch that reconverges, with optional hub questions and repeat-visit variants. Conditions read canonical quest, discovery, relationship, and location context. Effects route through an approved command or event owner; dialogue text does not directly mutate gameplay. Local acknowledgement can vary more freely than quest completion. Every speaker has a stable source attribution and a defined knowledge boundary.
+
+Location descriptions should be observation-first and never pre-spoil a hidden quest destination. A radio room copy seed: “A pencilled tally climbs the wall beside the receiver. The newest mark is careful; the older ones have been rubbed thin by sleeves.” A coast listening-site copy seed: “The wind flattens the water into dull metal. In the headphones, a small repeated knock refuses to sound far away.” A shelter-door copy seed: “The latch has been mended twice. The children’s rhyme remembers the first break better than the repair.”
+
+### Review packet
+
+Before these samples enter a data catalog: compare phrase overlap with current corpora; confirm speaker IDs and localization conventions; bind each variant to a real condition; check that no sample reveals a locked answer; create caption-equivalent text for all audio-dependent clues; and obtain narrative continuity review. The short samples here illustrate tone and branch intent only; they are not final game strings.
+
+## Pass 17 — Spoken records, memorial scenes, and micro-location copy
+
+This pass rotates the prose register toward oral memory and institutional testimony, following the master world bible's Lane A register rotation. Existing source evidence shows 26 oral-lore pieces across two catalogs, a performance system with named producer contexts, a persisted first-heard ID ledger, a journal acknowledgement on first hearing, and an expedition discovery hook. MemorialSystem also raises a once-per-deceased OnMourned event. The implementation boundary is important: a producer can be registered in the oral-lore map without proof that its context is invoked in live play. The reviewed host hook confirms expedition location discovery; memorial and room producer call sites still require a wiring trace. These are DRAFT scene materials and do not add a new song catalog.
+
+### Reusable conversation: the second copy
+
+**Scene function.** The player brings an archival burial entry to a memorial conversation. The speaker separates what the ledger contains from what the living remember. The conversation can end with a correction, an appended note, or an intentional blank.
+
+**Voice direction.** The clerk uses administrative nouns and short clarifications; the grieving resident uses concrete objects and avoids legal language; the undertaker can explain procedure but should not speak for the deceased. Each voice must be matched to a currently authored character and knowledge state before these lines are placed in data.
+
+Opening line, archive clerk: “The book says when the service happened. It does not say when anyone knew.”
+
+Resident response, if the player has shown the record: “I remember the ring on the stone. I do not remember the date they wrote beside it.”
+
+Undertaker response, if the player asks for a correction: “I can add who told me. I cannot turn a second-hand account into a first-hand one.”
+
+Resolution acknowledgement: “We left the blank where the witness left it. The next reader will know which part is missing.”
+
+These lines model epistemic restraint. The player is not asked to decide whether the bereaved person is honest. Avoid a “solve the mystery” voice that rewards suspicion for its own sake.
+
+### Reusable oral-lore beat: song as a shared action
+
+Do not repeat or lightly rewrite an existing lyric. Use the current catalog title and performance_context through the oral-lore consumer. The scene should show who heard or performed a piece and why that context matters, then let the catalog provide the song record. A memorial variant may acknowledge a piece already heard in the room or during an expedition. It must not claim that a song was performed at a specific funeral unless the live memorial/producer event confirms it.
+
+DRAFT setup: “The tune is already halfway through when you reach the room. No one introduces it. The person keeping time taps the table once when the old line returns.”
+
+DRAFT follow-up after a first-heard event: “You ask where it came from. The singer says, ‘From whoever needed it before me.’”
+
+A second visit can change the response from discovery to recognition: “They do not start the song again. They make room on the bench.”
+
+This is a local social scene, not a morale bonus. Any gameplay effect needs an explicit owner and a separate consequence review.
+
+### Micro-location description and encounter framing
+
+Use cartographic prose to make a local detail legible without making it a new destination. At a cemetery parent location: “The path narrows where the stones lean close. Some names are deep enough to hold rain; one line is only a shallow scratch.” At an archive approach: “A strip of waxed cloth hangs over the cabinet latch. Dust marks where the drawer stopped, not who stopped it.” The description should not say that an active quest item is present until the encounter becomes eligible.
+
+A location encounter can surface an optional physical clue, a depleted one-time interaction, or a repeatable observation. The player should know whether the site changed and whether anything remains to do. A repeat visit can use a brief alternate line rather than replaying the entire first-discovery prose.
+
+### Branch structure and copy volume
+
+The first playable conversation should use a small hub-and-spoke shape: inspect the date, ask how the record was made, ask about the physical memorial, or leave. Evidence-gated branches reconverge on the resolution choice. The physical-inspection branch is available only when the parent destination and micro-location encounter are valid. The song branch is available only when the corresponding first-heard or performance state exists. An unresolved branch has a complete, dignified closing line and a return condition.
+
+For each scene, the writing packet should include: first-visit text, one evidence response, one mistaken-but-recoverable interpretation, one unresolved ending, one return line, speaker knowledge notes, audio caption/transcript, and localization length guidance. A compact packet should fit existing node structures if verified; it should not force creation of a generic dialogue graph engine.
+
+### Character and location personality notes
+
+The undertaker's personality can be defined through habits already supported by the burial records: precise about ceremony and plot, willing to preserve uncomfortable facts, careful about what he did not witness. A grieving resident should retain agency and may decline to discuss an entry. The archive clerk can be procedural without becoming a villain. These are role notes, not finalized character definitions. Reconcile aliases, identities, age, relationships, and voice blocks against the character catalog before reuse.
+
+### Editorial gates
+
+Narrative review should check that the scene respects the source record, does not claim an unverified performance, distinguishes recollection from fact, avoids repeating existing song lyrics, and gives the player a non-accusatory route. Content review should compare sample phrases against existing burial, memorial, oral-lore, and journal prose. Integration review must show the specific node, producer hook, or encounter consumer. Until then these lines are DRAFT samples, not authoritative in-game text.
+
+### Pass 17B — Additional branch cards and voice separation
+
+The first dialogue slice should be expandable through reusable scene packets with distinct jobs. The following drafts add material without introducing new named characters or quoting existing song lyrics. All speaker identities and node conditions require a live character-catalog check.
+
+**Archive clerk, correction offered.**
+Player: “The service date is clear. The report date is not.”
+Clerk: “Then the index should say that. It is shorter than the truth, but closer.”
+Player: “Will the old page change?”
+Clerk: “No. The page stays as it was. The note tells the next reader what we learned.”
+
+This branch models a correction that preserves provenance. It should only become available after a second source is verified. The clerk's procedural habit makes the archive feel like an institution with an ethical standard, not a neutral prop.
+
+**Undertaker, physical inspection delayed.**
+Player: “The road is closed. I could not reach the plot.”
+Undertaker: “You brought the page back. That counts as work.”
+Player: “Does the date still need checking?”
+Undertaker: “It does. When the road opens, we can look. Until then, write down what the page can prove.”
+
+This line keeps the quest in a blocked-but-actionable state and avoids pretending the player inspected the site. The travel condition must come from current expedition/world state.
+
+**Resident, the source is private.**
+Player: “I can add your account beside the record.”
+Resident: “You can ask me again. You cannot put my words where everyone reads them.”
+Player: “I will leave the page unchanged.”
+Resident: “Thank you. Listening was enough for today.”
+
+This choice protects a witness who declines publication. A relationship effect is not implied; the acknowledgement may remain local scene state unless the current owner supports more.
+
+**Oral-lore return beat.**
+The room settles after the final note. Someone at the far end says, “That is the verse my mother kept.” Another voice answers, “She kept the tune. You gave it the verse.” They leave the disagreement in the air and pass a cup down the bench.
+
+Use this as optional prose around a song already discovered through its existing producer. The scene describes a shared performance but does not assign its origin as fact. If the game has only first-heard state and no performance state, do not add the line “you sang it together” to a persistent journal entry.
+
+**Micro-location encounter closure.**
+“You found the shallow mark beneath the moss. It is too worn to read. The ledger can tell you where the stone belongs; it cannot tell you whose hand cut it.”
+
+The line makes a local discovery valuable without inventing an answer. It can be reused for several encounters only if it remains accurate to each site. Otherwise author a specific variant for each validated parent location.
+
+### Voice and localization controls
+
+Maintain a voice sheet with sentence length, preferred nouns, evasions, repeated patterns, and forbidden knowledge for every recurring speaker. The archive clerk should use filing and attribution language; the undertaker should focus on material details and procedure; the resident should ground emotion in an object or remembered action. Avoid giving all three the same solemn, polished cadence.
+
+Keep each response concise enough for the existing dialogue panel and controller navigation. A branch should have a readable label, visible focus state, and a non-color cue for unavailable requirements. The DRAFT copy must be translated only after string freeze and stable node conditions. Any audio performance must have caption-equivalent text and a transcript route so sound is not a required channel.
+
+**Scene reuse tests for authors.** Replace the burial record with another archive source and check whether the scene still makes sense. If so, the structure can be reused, but source-specific names, objects, chronology, and knowledge boundaries need new prose. Replace the song with another existing oral-lore ID and verify that the scene does not falsely assign a lyric or origin. Reuse the graph topology; do not reuse a distinctive line when it no longer fits the speaker or evidence.
+
+
+## Pass 18 — Calibration dialogue scenes: voices, branches, and field copy
+
+### Scene design
+
+This pass converts the master world bible's calibration seed into dialogue cards that can be reviewed and later mapped to a verified quest or encounter schema. All samples below are DRAFT. They intentionally describe measurement confidence, not a change to the irradiated world. They require no new named character; roles such as instrument keeper, scout, and record clerk can be assigned to existing cast members only after a cast audit.
+
+A calibration scene should have a quiet, practical tone. People who rely on a Geiger counter learn to respect what it cannot tell them. The instrument is not a magical truth machine: a good calibration narrows uncertainty, while damaged hardware and a broad error band still call for judgment.
+
+### Scene A — overdue discovery
+
+The instrument keeper taps the casing with a fingernail, then stops before the second tap.
+
+“Forty readings since the last check. That is the point where I stop calling this number clean.”
+
+Player responses:
+- “Does that mean the place is more dangerous?” → knowledge response; clarify that the meter's confidence changed, not the location's actual dose.
+- “Can we still use it?” → explain the current confidence and reading-eligibility state returned by the device owner.
+- “Put it on the bench.” → begin the existing one-day calibration if its actual prerequisites pass.
+- “Leave it for now.” → close the scene without altering state.
+
+Reconvergence: the keeper points to the nominal reading and its uncertainty band. The player leaves with the same available quest actions regardless of cosmetic phrasing.
+
+### Scene B — blocked by condition
+
+Battery route:
+“The display is alive, but a weak cell can leave us with no reading at all. I can swap it if we have the right part.”
+Show the action only if the existing battery replacement command is available. A response grants no battery by itself.
+
+Sensor route:
+“The cell is full. The sensor has taken too much wear to trust the next sweep.”
+Show the service route only when an existing service action is reachable. Otherwise state the blocker and leave the request open.
+
+Station occupied route:
+“The bench is already holding another instrument. We can wait for that procedure to clear or take the other unit.”
+Do not invent a second station capacity; read actual availability from the current owner.
+
+### Scene C — one-day return
+
+At start:
+“Bench is reserved until tomorrow. We will keep the old report beside the new one, so nobody mistakes a cleaner instrument for a cleaner world.”
+
+At premature return:
+“Not yet. The station's day has not turned. We can use the time to compare the reports or carry on without this instrument.”
+
+At completion:
+“The needle still has a margin. It is a narrower one now. Mark both the value and the uncertainty.”
+
+Cancellation:
+“Power failed before the check settled. The old reading record is still here. We have to decide whether to restart the procedure.”
+Cancellation is a system result; the line does not imply equipment damage unless the current owner reports it.
+
+### Graph structures
+
+The minimum graph is a short hub-and-spoke scene: overdue discovery → one of three questions → reconverge on current device status. Starting calibration exits to a quest update only after the real start command succeeds. Returning early reopens the hub with a blocked explanation. Completion reopens it with the updated owner-provided quality and uncertainty. The player can leave at every point.
+
+A second layer may add a short branch-and-reconverge debate between the keeper and a scout who wants to leave immediately. The branch changes tone and grants no permanent relationship consequence in the MVP. A relationship-aware variant can be authored only if the existing relationship owner supplies a current predicate and Plan 22 supplies a valid effect route.
+
+### Writing, UX, and access requirements
+
+- Put the nominal reading, uncertainty band, and overdue state in text as well as color.
+- Never communicate a critical blocker through animation or color alone.
+- Keep speaker turns short enough that players can scan them between shelter tasks.
+- Make the consequence of selecting Start explicit: one in-game day is reserved.
+- A Start choice that fails because conditions changed since opening the dialogue must return a specific refreshed explanation.
+- Do not use a false “perfect reading” line when quality is merely improved.
+- Preserve controller and keyboard navigation, stable focus on refresh, close/back behavior, and readable long-line wrapping.
+- Do not require the player to read all journal material to understand the essential state change.
+
+### Location and prose reuse
+
+The dialogue packet can be reused in a shelter-side panel, a character conversation, or a quest journal only by using presentation-specific line lengths and context. A field report discovered during an expedition should use a separate authored scene that identifies its source and date; it must not reuse the completion line unless the actual procedure completed. Optional repeats may shorten to a status reminder after the first full explanation, with first-heard state owned by the existing memory or narrative system.
+
+### Implementation handoff and acceptance
+
+The writer's delivery unit is a node table with stable ids, role, location context, entry conditions, visible text, responses, reconvergence target, quest update, and consequence class. It also includes fallback copy for missing device state and missing speaker state. The implementer maps it to the existing dialogue/quest authority after a catalog-level collision check.
+
+Acceptance requires proof that all responses remain reachable under their stated conditions, the graph can exit cleanly, the scene works with no optional skill knowledge, the text agrees with live calibration values, and no dialogue option directly modifies the device or dose. These cards remain content scaffolding until the current loader and runtime consumer are named.
+
+
+## Pass 19 — Listening room scenes for an attributed wiretap case
+
+### Dramatic frame
+
+Part 43's wiretap evidence seed offers a story about how a community should use a private, incomplete record. The following material is DRAFT and uses the existing Office ammunition transcript only as a cited artifact. It adds no transcript variant and does not claim that the named speakers exist as runtime character objects. Roles such as receiver operator, records clerk, and hearing delegate are placeholders for cast verification.
+
+The central tension is not “is the recording true?” The player must decide how much a clear signal can establish, how to preserve the source, and whether the community should hear an allegation before it has a corroborating record. Every branch preserves the distinction between what the tape says and what has been independently established.
+
+### Discovery card
+
+A narrow strip of paper has been folded around a spool label. The ink has bled through the fold, but the channel code is still legible. The receiver operator does not hand over the tape until the player asks what has already been copied.
+
+Operator: “The channel is in the index. The route that got it here is not.”
+
+Options:
+- “Play the transcript and keep the source attached.” Opens the hearing-room hub after the current player-read owner records discovery.
+- “Show me what the index can prove.” Opens a knowledge scene about source metadata only.
+- “Seal the identities while we investigate.” Opens a confidentiality branch if the current record system supports redaction.
+- “Leave it unopened.” Closes the scene, preserving the lead without enrolling it or creating a quest unless that action is the authored trigger.
+
+### Hub-and-spoke dialogue
+
+At the shelter records desk, the clerk places a blank register beside the copied transcript.
+
+Clerk: “I can enter the accusation. I can also enter that we do not know who moved the box afterward.”
+
+Player responses:
+- “Enter it as a lead, not a finding.” Begins the attributed-summary branch.
+- “Find the matching issue record first.” Starts an optional corroboration objective only if an existing catalog location or record can be cited.
+- “Read it into the hearing now.” Routes through the explicit submission choice and current Verdict evidence seam; if that seam is not available, explain that the record can be preserved but not admitted.
+- “Keep the copy sealed.” Records a local confidentiality choice only through an existing state owner.
+- “I need another day.” Leaves the quest in an active, non-expiring state.
+
+All branches return to the hub with the current quest status and a concise source label. The player may exit without consequence.
+
+### Cautious hearing branch
+
+Delegate: “A clear voice is still one voice.”
+Clerk: “The tape gives us an order of words. It does not give us the inventory count.”
+Operator: “If we play it publicly, the Office will know we have the copy.”
+Player: “Then record the source, the clarity, and the missing corroboration together.”
+
+This branch can produce an attributed lead only if the existing evidence contract accepts the source. Otherwise it ends with a journal note that the player has chosen a cautious interpretation; it must not increment Verdict's evidence count through a UI-only flag.
+
+### Optional side quest: The Blank Receipt
+
+Purpose: give players a short, location-based corroboration option where the current authored world already contains a reachable requisition record relevant to the accusation. No such record is asserted by this plan. The content author must identify one existing record and valid parent site before the quest is promoted.
+
+Structure:
+1. Ask the clerk what would count as corroboration.
+2. Select an available archive or storeroom site only from validated location data.
+3. Find a matching receipt, an explicit mismatch, or no useful record.
+4. Return to compare source quality and record provenance.
+5. Choose corroborated, contradicted, or unresolved wording.
+
+Failure-forward outcomes: the site is unavailable, the receipt was lost, or the record predates the intercepted exchange. Each ends in “unresolved,” not quest failure, and leaves the main investigation open. Rewards are a clearer journal summary and a new dialogue response if the relevant owner supports it.
+
+### Character voice controls
+
+- Receiver operator: careful about chain of custody; speaks in channel, spool, and copy terms; avoids declaring motive.
+- Records clerk: humane bureaucrat; asks what the community can responsibly enter; avoids courtroom flourish.
+- Hearing delegate: understands consequences of public accusation; asks who bears the cost of uncertainty.
+- Player: gets short, plain responses with a meaningful choice. Do not force the player to adopt one character's moral vocabulary.
+
+These are voice functions, not new cast definitions. Existing character personalities and faction allegiances must be checked before assignment. If no matching character exists, use a role card that does not persist a fabricated identity.
+
+### Scene topology and reuse
+
+The base conversation is a hub with five short spokes that reconverge. The optional receipt quest is a side branch with three endings and a return to the same hub. The operator's source explanation can be reused in a Codex reading view and journal detail panel, but each surface needs a length-specific version. A generic signal-provenance card can later support other intercepted documents while retaining document-specific voice and consequence data.
+
+Acceptance requires readable source attribution, no dialogue claim that the accusation is proven, a clear exit from every branch, no duplicate transcript prose, and no direct effect applied by text selection. The live dialogue schema and read-state owner must be named before these cards move from DRAFT to data.
+
+
+### Pass 19B — Additional scene cards and location copy
+
+#### Scene: the source label
+
+The operator turns the spool box until the handwritten channel label faces the light.
+
+Operator: “That is what the receiver called it. The sender did not sign the box.”
+Clerk: “Then the label travels with the copy. It does not become a name.”
+Player responses:
+- “Keep the channel label and mark the speaker unverified.” → source-attribution branch.
+- “Remove every name before review.” → privacy branch, if an existing redaction owner supports it.
+- “Ask whether another record can confirm the speaker.” → optional corroboration branch.
+- “I do not want to copy this.” → close without recording or admitting evidence.
+
+The operator's voice is practical rather than conspiratorial. The character is worried about a copied label being mistaken for a verified identity. The clerk is more concerned with what the community will do after reading the allegation. This contrast gives the player an ethical choice without turning either character into a villain.
+
+#### Scene: the copy is challenged
+
+Delegate: “If you read it aloud, people will hear the accusation before they hear the margin.”
+Clerk: “Then the margin goes first.”
+Player: “And if they only remember the accusation?”
+Clerk: “We will have written a poor record. We can still write a careful one.”
+
+Response A: “Submit the claim with its limits attached.” Requests the current Verdict evidence path and reports its actual result.
+Response B: “Hold it until a second source arrives.” Keeps the investigation active with no hidden deadline.
+Response C: “Close the case as unresolved.” Resolves the quest only if the existing lifecycle accepts an unresolved outcome.
+Response D: “I want the words entered, but the voices sealed.” Uses a privacy effect only where its owner exists; otherwise present this as a local scene choice.
+
+#### Place description: shelter records desk
+
+DRAFT short description: A strip of felt keeps the spools from rolling against the register. The clerk has left the next line blank, not because there is nothing to enter, but because no one has agreed what the first line means.
+
+DRAFT long description: The desk is built from two different cabinets joined by a length of brass angle. One drawer holds paper that can be replaced. The other holds copies that cannot be recalled once read aloud. A receiver hums behind a screen, low enough that the room can hear a pause. The register is open to a page with one ruled line left empty. The player may inspect the source label, ask for a transcript, or leave the record sealed. No option changes the actual document until the owning route confirms the action.
+
+This is a room dressing description, not a new world-map location ID. If no existing shelter desk provides a home for the interaction, use the verified records interface and do not create an otherwise empty map node.
+
+### Branching dialogue production card
+
+- Node: wiretap_source_review_open
+- Speaker role: receiver operator or verified cast match
+- Entry: transcript is available in a production consumer; player has not submitted it
+- Lines: use the source label; explain unknown identities; offer review, seal, submit, or exit
+- Effects: none on node entry
+- Response effects: player-read fact only after actual playback; submission request only after confirmation; quest step only after owner acknowledgment
+- Reconvergence: wiretap_case_hub
+- Fallback: source unavailable, no consumer, or current player state cannot be reconstructed
+
+### Reuse and quality bar
+
+The record-desk description can be adapted for other documents, but the empty register image and exact dialogue belong to this case. A reusable template should supply source label, what is known, what is missing, and the player's next choices; it should not repeat the clerk's lines verbatim across unrelated factions.
+
+The dialogue review should include three readings: one as an isolated scene, one without any optional skill knowledge, and one with a previously read related record. At each reading, the player should be able to identify who authored the statement, what remains unverified, and whether a response will submit evidence or simply close the conversation.

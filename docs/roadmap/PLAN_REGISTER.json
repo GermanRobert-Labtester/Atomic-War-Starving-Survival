@@ -3,7 +3,7 @@
   "metadata_schema_version": 1,
   "generated_by": "scripts/ci/generate-plan-register.py",
   "repository": {
-    "head": "5be1a30a63cd86cf23e4034473b739ac514f0f2a",
+    "head": "d3b3d484e7c61a10f9baae2de745b11300804b16",
     "branch": "feat/unblock-cf-p28-and-plan-implementation"
   },
   "config_path": "scripts/ci/plan_governance_config.json",
@@ -656,9 +656,9 @@
         },
         {
           "reference": "meta_unlockables.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/meta_unlockables.json"
         }
       ],
       "overlap_cluster": null,
@@ -3645,7 +3645,7 @@
           "reference": "Assets/Ashfall.Core/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 1174 path(s)"
+          "detail": "glob matched 1178 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Configuration/TuningConfig.cs",
@@ -11072,7 +11072,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 158 path(s)"
+          "detail": "glob matched 170 path(s)"
         },
         {
           "reference": "src/UI/",
@@ -14426,7 +14426,7 @@
           "reference": "Assets/Ashfall.Core/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 1174 path(s)"
+          "detail": "glob matched 1178 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Ashfall.Core.csproj",
@@ -18721,7 +18721,7 @@
           "reference": "src/Host/HostCli*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 41 path(s)"
+          "detail": "glob matched 53 path(s)"
         },
         {
           "reference": "src/Main.cs",
@@ -25752,7 +25752,7 @@
           "reference": "Assets/StreamingAssets/Data/*.json",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 420 path(s)"
+          "detail": "glob matched 421 path(s)"
         },
         {
           "reference": "docs/HoldfastManualPlaytest.md",
@@ -34673,7 +34673,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 414 path(s)"
+          "detail": "glob matched 438 path(s)"
         },
         {
           "reference": "src/Host/CombatHostSession.cs",
@@ -36515,7 +36515,7 @@
           "reference": "docs/*.md",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 56 path(s)"
+          "detail": "glob matched 57 path(s)"
         },
         {
           "reference": "docs/ARCHIVE_INDEX.md",
@@ -36767,7 +36767,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 158 path(s)"
+          "detail": "glob matched 170 path(s)"
         },
         {
           "reference": "src/Main.<Domain>.cs",
@@ -36869,7 +36869,7 @@
           "reference": "Assets/StreamingAssets/Data/*.json",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 420 path(s)"
+          "detail": "glob matched 421 path(s)"
         },
         {
           "reference": "docs/GODOT_MIGRATION_STATUS.md",
@@ -38315,7 +38315,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 158 path(s)"
+          "detail": "glob matched 170 path(s)"
         },
         {
           "reference": "src/UI/",
@@ -38423,7 +38423,7 @@
           "reference": "Assets/Ashfall.Core/**/*System.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 319 path(s)"
+          "detail": "glob matched 320 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Content/*",
@@ -38841,9 +38841,9 @@
         },
         {
           "reference": "meta_unlockables.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/meta_unlockables.json"
         }
       ],
       "overlap_cluster": null,
@@ -48777,7 +48777,7 @@
           "reference": "Assets/Ashfall.Core/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 1174 path(s)"
+          "detail": "glob matched 1178 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/ActionResult.cs",
@@ -48873,7 +48873,7 @@
           "reference": "src/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 882 path(s)"
+          "detail": "glob matched 918 path(s)"
         }
       ],
       "overlap_cluster": null,
@@ -50065,9 +50065,9 @@
         },
         {
           "reference": "meta_unlockables.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/meta_unlockables.json"
         }
       ],
       "overlap_cluster": null,
@@ -64185,7 +64185,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 414 path(s)"
+          "detail": "glob matched 438 path(s)"
         },
         {
           "reference": "src/Host/CombatHostSession.cs:145",
@@ -70141,13 +70141,13 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 158 path(s)"
+          "detail": "glob matched 170 path(s)"
         },
         {
           "reference": "src/Main.*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 157 path(s)"
+          "detail": "glob matched 169 path(s)"
         },
         {
           "reference": "src/Main.Application.cs",
@@ -71341,7 +71341,7 @@
           "reference": "src/Host/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 806 path(s)"
+          "detail": "glob matched 830 path(s)"
         },
         {
           "reference": "src/Host/**",
@@ -71353,7 +71353,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 414 path(s)"
+          "detail": "glob matched 438 path(s)"
         },
         {
           "reference": "src/Host/HoldfastTerminalPanel.cs",
@@ -71377,7 +71377,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 158 path(s)"
+          "detail": "glob matched 170 path(s)"
         },
         {
           "reference": "src/Main.Campaign.cs",
@@ -73321,7 +73321,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 414 path(s)"
+          "detail": "glob matched 438 path(s)"
         },
         {
           "reference": "src/Host/DoseLedgerHostSession.cs:192-198",

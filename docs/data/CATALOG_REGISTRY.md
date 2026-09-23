@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-23
-**Total Catalogs:** 704 | **Total Definitions:** 14275 | **Domain Families:** 32
+**Total Catalogs:** 705 | **Total Definitions:** 14305 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -69,7 +69,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (224 Catalogs, 3467 Definitions)
+### Core / Miscellaneous (225 Catalogs, 3488 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -190,6 +190,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `memory_decay_rates.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `mental_arcs.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MentalArcCatalogLoader` |
 | `merchant_caravans.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterBarterSystem` |
+| `meta_unlockables.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `metrology_standards_catalog.json` | 13 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PrecisionMetrologyCatalogLoader` |
 | `microfluidic_diagnostic_catalog.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MicrofluidicDiagnosticCatalogLoader, MicrofluidicDiagnosticEngine` |
 | `mine_flail_catalog.json` | 2 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MineFlailCatalogLoader, MineClearingFlailEngine` |
@@ -251,7 +252,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `research_unlocks.json` | 30 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `retention_policies.json` | 8 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `robotics.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RoboticsSystem` |
-| `romance_courtship.json` | 9 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `romance_courtship.json` | 20 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `routine_templates.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `rumor_hubs.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `runflat_tire_catalog.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
@@ -360,7 +361,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `world_evolution_events.json` | 13 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `year_of_ash_events.json` | 52 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Expeditions & Vehicles (6 Catalogs, 110 Definitions)
+### Expeditions & Vehicles (6 Catalogs, 119 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -368,7 +369,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `expeditions.json` | 75 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionCatalogLoader` |
 | `vehicle_armor_grades.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VehicleArmorGradeCatalogLoader, VehicleGarageSystem` |
 | `vehicle_modifications.json` | 8 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VehicleGarageCatalogLoader, VehicleGarageSystem` |
-| `vehicle_modules.json` | 11 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `vehicle_modules.json` | 20 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `vehicles.json` | 9 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ExpeditionVehicleSystem` |
 
 ### Factions (20 Catalogs, 416 Definitions)

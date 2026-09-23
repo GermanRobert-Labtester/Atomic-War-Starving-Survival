@@ -36,23 +36,7 @@ namespace AtomicWar.GodotApp
             {
                 string activeDataDir = !string.IsNullOrEmpty(dataDir) && Directory.Exists(dataDir)
                     ? dataDir
-                    : Path.Combine(ProjectSettings.GlobalizePath("res://"), "Assets/StreamingAssets/Data");
-                if (!Directory.Exists(activeDataDir))
-                {
-                    // Fallback search
-                    string current = AppContext.BaseDirectory;
-                    while (current != null)
-                    {
-                        string check = Path.Combine(current, "Assets/StreamingAssets/Data");
-                        if (Directory.Exists(check))
-                        {
-                            activeDataDir = check;
-                            break;
-                        }
-                        var parent = Directory.GetParent(current);
-                        current = parent?.FullName!;
-                    }
-                }
+                    : CatalogPath.ResolveDataDir();
 
                 var system = CampaignLegacySystem.LoadFromDirectory(activeDataDir, new FileSystemIO(), new SeededRng(42));
 
@@ -175,7 +159,7 @@ namespace AtomicWar.GodotApp
                     if (Directory.Exists(tempDir))
                         Directory.Delete(tempDir, recursive: true);
                 }
-                catch { }
+                catch { /* cleanup: best-effort removal of this probe's temp directory; it is recreated per run and a failure here must not mask the probe result */ }
             }
         }
     }

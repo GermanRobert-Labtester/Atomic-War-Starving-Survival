@@ -128,6 +128,18 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("research_unlock", new ResearchUnlockDayOwner(this), phase: 5);
             // Plan 145 — unified ending resolution: evaluates whole-campaign state and epilogue personalization.
             _campaignDay.Register("unified_ending", new UnifiedEndingDayOwner(this), phase: 5);
+            // Plan 147 — per-NPC memory and relationship depth: decays old memories and grudges.
+            _campaignDay.Register("npc_memory", new NpcMemoryDayOwner(this), phase: 5);
+            // Plan 148 — ideological friction: evaluates bunker frictions, conversions, and confrontations.
+            _campaignDay.Register("ideological_friction", new IdeologicalFrictionDayOwner(this), phase: 5);
+            // Plan 150 — romance & family: advances bonded tenure and forms new attractions from canonical affinity.
+            _campaignDay.Register("romance_family", new RomanceFamilyDayOwner(this), phase: 5);
+            // Plan 152 — vehicle customization & mobile base: keeps the module catalog bound for the day report.
+            _campaignDay.Register("vehicle_customization", new VehicleCustomizationDayOwner(this), phase: 5);
+            // Plan 174 — procedural survivor backstories: updates origin mechanics.
+            _campaignDay.Register("backstory", new BackstoryDayOwner(this), phase: 5);
+            // Plan 175 — meta progression: evaluates prestige and New Game+ boons.
+            _campaignDay.Register("meta_progression", new MetaProgressionDayOwner(this), phase: 5);
             // Plan 55 — retention runs last of all: it bounds the campaign logs
             // every other owner just appended to for this day.
             _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
@@ -360,6 +372,174 @@ namespace AtomicWar.GodotApp
                 var census = _m._unifiedEnding?.Census;
                 events.Add(new DayStateChangeEvent(
                     "unified_ending_ticked", "unified_ending", null, null, census?.IsResolved == true ? 1f : 0f));
+            }
+        }
+
+        /// <summary>Plan 147 per-NPC memory day owner (ownerId <c>npc_memory</c>, phase 5).</summary>
+        private sealed class NpcMemoryDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Narrative.NpcMemorySaveState? _snapshot;
+            public NpcMemoryDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupNpcMemory();
+                _snapshot = _m._npcMemory?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._npcMemory?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupNpcMemory();
+                _m.TickNpcMemory(day);
+                var census = _m._npcMemory?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "npc_memory_ticked", "npc_memory", null, null, census?.TotalTrackedNpcs ?? 0));
+            }
+        }
+
+        /// <summary>Plan 148 ideological friction day owner (ownerId <c>ideological_friction</c>, phase 5).</summary>
+        private sealed class IdeologicalFrictionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.IdeologicalFrictionEventSaveState? _snapshot;
+            public IdeologicalFrictionDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupIdeologicalFriction();
+                _snapshot = _m._ideologicalFriction?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._ideologicalFriction?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupIdeologicalFriction();
+                _m.TickIdeologicalFriction(day);
+                var census = _m._ideologicalFriction?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "ideological_friction_ticked", "ideological_friction", null, null, census?.TotalEventsFired ?? 0));
+            }
+        }
+
+        /// <summary>Plan 150 romance &amp; family day owner (ownerId <c>romance_family</c>, phase 5).</summary>
+        private sealed class RomanceFamilyDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private string? _snapshot;
+            public RomanceFamilyDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupRomanceFamily();
+                _snapshot = _m._romanceFamily?.CaptureCoreState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._romanceFamily?.RestoreCoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupRomanceFamily();
+                _m.TickRomanceFamily(day);
+                var census = _m._romanceFamily?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "romance_family_ticked", "romance_family", null, null, census?.TotalRelationships ?? 0));
+            }
+        }
+
+        /// <summary>Plan 152 vehicle customization day owner (ownerId <c>vehicle_customization</c>, phase 5).</summary>
+        private sealed class VehicleCustomizationDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private string? _snapshot;
+            public VehicleCustomizationDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupVehicleCustomization();
+                _snapshot = _m._vehicleCustomization?.CaptureCoreState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._vehicleCustomization?.RestoreCoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupVehicleCustomization();
+                _m.TickVehicleCustomization(day);
+                var census = _m._vehicleCustomization?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "vehicle_customization_ticked", "vehicle_customization", null, null, census?.TotalInstalledModules ?? 0));
+            }
+        }
+
+        /// <summary>Plan 174 procedural survivor backstory day owner (ownerId <c>backstory</c>, phase 5).</summary>
+        private sealed class BackstoryDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.BackstoryState? _snapshot;
+            public BackstoryDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupBackstory();
+                _snapshot = _m._backstory?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._backstory?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupBackstory();
+                _m.TickBackstory(day);
+                var census = _m._backstory?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "backstory_ticked", "backstory", null, null, census?.TotalBackstories ?? 0));
+            }
+        }
+
+        /// <summary>Plan 175 meta progression day owner (ownerId <c>meta_progression</c>, phase 5).</summary>
+        private sealed class MetaProgressionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Endgame.MetaProgressionSaveState? _snapshot;
+            public MetaProgressionDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupMetaProgression();
+                _snapshot = _m._metaProgression?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._metaProgression?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupMetaProgression();
+                _m.TickMetaProgression(day);
+                var census = _m._metaProgression?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "meta_progression_ticked", "meta_progression", null, null, census?.PrestigeScore ?? 0));
             }
         }
 

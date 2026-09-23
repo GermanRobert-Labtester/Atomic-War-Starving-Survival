@@ -303,6 +303,15 @@ namespace AtomicWar.GodotApp
             SetupWeatherCascade();
             SetupTerritoryControl();
             SetupCooking();
+            SetupCampaignLegacy();
+            SetupResearchUnlockBridge();
+            SetupUnifiedEnding();
+            SetupNpcMemory();
+            SetupIdeologicalFriction();
+            SetupRomanceFamily();
+            SetupVehicleCustomization();
+            SetupBackstory();
+            SetupMetaProgression();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
@@ -525,6 +534,15 @@ namespace AtomicWar.GodotApp
                 SaveWeatherCascade();
                 SaveTerritoryControl();
                 SaveCooking();
+                SaveCampaignLegacy();
+                SaveResearchUnlock();
+                SaveUnifiedEnding();
+                SaveNpcMemory();
+                SaveIdeologicalFriction();
+                SaveRomanceFamily();
+                SaveVehicleCustomization();
+                SaveBackstory();
+                SaveMetaProgression();
 
                 if (_sectionCaptureFailed)
                 {

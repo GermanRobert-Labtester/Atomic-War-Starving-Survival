@@ -2165,3 +2165,288 @@ A dialogue panel should request only the context needed by its current scene. Pr
 ### 15.16 Acceptance evidence
 
 A context-gate integration is reviewable when each gate points to a current API or a named missing seam; each memory is owned and consumed; conditions are deterministic; visible options remain fair under alternate states; snapshot invalidation is correct; no new mutable store was added; and save/load preserves existing owner facts. The focused test plan belongs to the later implementation package and should cover the matrix above without aggregating independent lifecycle cases.
+
+
+## Pass 16 — Explainable information gates for bible-seeded story threads
+
+The master world bible proposes cross-generational folklore, a seasonal numbers-station arc, and hydrophone mystery. This pass defines how dialogue context can expose those stories fairly while preserving the current owners. The source audit confirms an existing cipher chain state model, hydrophone and folklore discovery references, and cohort/lineage systems. It does not prove a complete record-to-maturation dialogue callback, so that branch remains optional pending a direct wiring trace.
+
+### Separate evidence from interpretation
+
+For all three story families, the context builder should distinguish at least these conceptual states: not encountered; encountered but not verified; verified observation; interpretation available; resolved or explicitly unresolved. Map these to existing quest, discovery, journal, or world-state records only after identifying the canonical owner. Do not add duplicate flags merely to make dialogue conditions convenient.
+
+For a cipher scene, the existing engine’s heard, key-acquired, decoded, and target-revealed progression provides the premise for distinct conversation options. The interface may say “You have the signal sheet” only if the item or state is actually present. Never expose decoded dialogue from a speculative text search or from a target reveal that the save does not own.
+
+For a hydrophone scene, “record collected” does not mean “source identified.” Give the player separate choices to report the observation, ask for a comparison, or make a theory. A skill may expose an additional technical description, but it cannot be the only route to quest progress or basic accessibility context.
+
+For folklore, the record itself is authored testimony. A resident’s interpretation can depend on what the player has heard or inspected. A later-life callback may depend on a verified cohort transition event, not merely elapsed text or a guessed birthday. If no stable owner exposes that event, use a general campaign milestone condition or leave the callback out.
+
+### Gate precedence and explanation
+
+Resolve gate context in this order: content and quest availability; location and visit state; information the player actually knows; relationship or faction access; optional skill flavor; presentation variant. A low-priority tone variant must not override an unavailable quest or present a false memory as fact. If several gates conflict, show a safe, truthful line and preserve the next actionable step.
+
+A blocked option should have an authored reason when the fiction permits it: “I need the decoded line first,” “Bring the second recording back,” or “That room is still sealed.” Avoid empty or disabled choices without context. The reason must not reveal an undiscovered secret. When a requirement is unavailable because a destination failed to spawn, the dialogue should state a clue or a delay through the quest’s canonical owner.
+
+### Relationship, faction, and knowledge fairness
+
+Relationship gates may change confidence or intimacy, not access to mandatory evidence unless the quest has a second route. Reputation gates should name the relevant access condition and offer an alternative where practical. Faction-specific dialogue may carry different interpretation, but the player journal must keep a shared factual record so that narrative perspective does not rewrite an observation.
+
+Skill gates are bonus lenses. Provide a baseline answer that permits progress, and let a skill reveal precision, uncertainty, or a new follow-up question. For audio clues, captions or transcripts should convey the same clue as the sound. For number patterns, a non-color-dependent, screen-reader-compatible presentation should preserve the puzzle’s inputs. A player who misses a limited broadcast needs a replay or an authored transcript route.
+
+### Memory scope and repeated visits
+
+Use current persisted quest/discovery/relationship owners for durable memory. Repeated-visit dialogue should derive from those owners or an existing visit tracker. Do not add a per-NPC memory store if an existing relationship or narrative session owner is responsible. A memory statement must be grounded in an observable prior action: “You brought the sheet” is different from “you solved the case.” Only say the latter when the canonical chain reports resolution.
+
+Failures need memory too, but the line should describe the actual alternate route. After an inconclusive acoustic comparison, an NPC can invite a future sample. After a cipher misreading, the radio keeper can preserve the clue. After an unresolved rhyme, the archivist can keep both versions. These callbacks should survive reload without repeating one-time reward dialogue.
+
+### Context decision table proposal
+
+For each condition, author a row with: data source; truth asserted; visible player knowledge; branch unlocked; branch suppressed; reason text; alternate path; persistence owner; and test evidence. A condition with unknown data source is not ready to ship. Conditions should be pure reads during dialogue selection; effects happen only after the player commits to a response and pass through Plan 22’s approved effect route.
+
+### Acceptance cases
+
+Review first encounter, repeat visit, restored save, failed quest, alternate interpretation, missing clue item, hidden location, reputation-gated option, low-skill option, inaccessible audio presentation, and an unavailable target. The player must never see a factual claim unsupported by state, lose the main route because of a flavor gate, or be told that an NPC remembers an action absent from the saved campaign. This contract is a proposal for integration review and adds no context cache or independent memory authority.
+
+## Pass 17 — Knowledge channels and grief-aware evidence gates
+
+This pass grounds dialogue gates in the master world bible's information-flow canon and applies its loop-closure matrix to burial archives, memorials, micro-locations, and oral lore. The world rule is strict: characters cannot know an event before experiencing it or learning it through an established channel; dead survivors appear only in memories, recordings, memorial rites, and epilogues. The gate model must enforce those rules through existing state owners rather than a parallel per-character memory ledger.
+
+### Evidence provenance for the burial case
+
+The burial record is authored source text. It may distinguish reported death day, burial day, witness, ceremony, and personal effects. The current campaign memorial entry is a live state record. A resident's recollection is testimony. A player's conclusion is an interpretation. These are separate facts with separate sources.
+
+For the cenotaph record, dialogue may confirm that the record says the ceremony took place on a later day. It may not upgrade a second-hand report into confirmed death time unless a witness or source explicitly supports that. A character who attended the ceremony may speak to ceremony details; they may not claim first-hand knowledge of a death they did not witness. A dead person cannot answer new questions outside an authored recording, remembered quotation, rite, or epilogue.
+
+Each dialogue condition should be expressible as a pure read from a canonical quest, discovery, memorial, journal, relationship, or location owner. If the implementation cannot identify the source, the gate is not ready. Do not persist the full conversation transcript as a substitute for domain state.
+
+### Gate categories and precedence
+
+Resolve context in this order:
+
+1. Is the content record loaded and valid for this campaign?
+2. Is the conversation or encounter available at this location and stage?
+3. Which source records has the player actually discovered?
+4. Which facts reached this speaker, through which modeled channel, and on what day?
+5. Is the speaker willing or permitted to discuss the subject based on current relationship or faction state?
+6. Is there an optional skill lens or presentation variant?
+7. Has the consequence already been applied, and what acknowledgement is appropriate?
+
+A later gate cannot manufacture evidence blocked by an earlier gate. A skill check may identify a date convention or material mark, but must not be the only way to ask a basic question. Relationship or faction access may change candor, not rewrite the source record. A player may choose to leave the case unresolved.
+
+### Knowledge-channel contract
+
+Potential channels include direct witness, journal or ledger access, a known radio report, courier delivery, public rumor, and a memorial rite. Use only those modeled and reachable in the current campaign. A rumor may unlock a question, not a confirmed factual conclusion. An archival record can unlock a document-based response even if no character has heard it. If a faction reacts to a correction, its reaction is delayed until a known information channel delivers it; no faction receives global omniscience.
+
+For oral-lore scenes, first-heard state is sourced to an existing producer context and persisted through the oral-lore owner. A character can react only when the relevant song was actually discovered or performed in a known context. A producer listed in DefaultProducerMap is not sufficient proof that a performance callback occurred; trace the live hook first. Do not open a memorial conversation solely because a song record exists in JSON.
+
+For micro-location dialogue, the encounter condition must reflect current parent location, encounter eligibility, and depletion. Knowing the parent site does not mean the player has found its local clue. A depleted encounter may produce a recognition line, but it must not present the hidden clue as still available.
+
+### Explainable blocks and alternatives
+
+Every unavailable question should map to an honest reason or to an intentionally quiet presentation. “I cannot tell you what I did not see” is a character boundary; “the entry is in the archive you have not opened” is an actionable gate; “we do not have a second copy” is an evidence limitation. A gate caused by a missing destination should expose the planned clue or delay rather than blame the player.
+
+Accessibility must carry equivalent information: descriptions for audio-only material, captions for songs or recordings where sound matters, readable labels rather than color-only source categories, and screen-reader-friendly distinction between quoted record and player inference. Long-form records should not be the only way to learn a required clue; provide a concise summary that preserves uncertainty.
+
+### Memory and return visits
+
+Use current first-heard, memorial, quest, relationship, and journal authorities for durable callbacks. A return line should be derived from a saved fact: record reviewed, correction appended, rite performed, encounter depleted, or a source delivered to the speaker. Do not store a separate “NPC remembers burial investigation” boolean if the quest or narrative owner already exposes the same milestone. Do not equate a heard song with a performed song, a discovered grave with a completed investigation, or an opened record with a verified fact.
+
+### Fairness and acceptance matrix
+
+Review a first visit before discovery; a player who found the record but has not shown it to the witness; a rumor without the primary source; a memorial after Mourn; a deceased speaker referenced only through an authored memorial artifact; a discovered parent location with a hidden micro-location; an already-depleted encounter; a song found through travel but not performed in the shelter; an unavailable character; and a restored save. In every case, dialogue must assert only what the stored source supports, keep the main route actionable, and explain a block without revealing the secret. These cases are review requirements for a future implementation, not a request to add a memory engine.
+
+### Pass 17B — Condition truth table for records, encounters, and memory
+
+The dialogue authoring and implementation teams need a shared way to talk about truth without inventing a condition language. The following conceptual table maps player-facing claims to the state required to make them.
+
+| Player-facing claim | Minimum supporting state | Safe response when absent |
+|---|---|---|
+| “The archive lists a later ceremony date.” | Burial source loaded and entry discovered | Ask where the record can be found |
+| “The widow learned about the death later.” | The relevant record or a witness statement is actually known | Call it a report, not a confirmed timeline |
+| “The cemetery has an unread mark.” | Parent location visited and local encounter resolved far enough to expose it | Explain that no physical inspection has occurred |
+| “The grave was intentionally left without a marker.” | Source record discovered, plus any required testimony if the line claims intent as confirmed | Attribute the claim to the source |
+| “I remember you corrected the entry.” | Canonical quest/narrative owner records a completed correction | Say the record was reviewed, or use a neutral greeting |
+| “We heard that song together.” | A supported performance event, not merely a catalog record or first-heard ID | Refer only to the player's known first-heard entry |
+| “The faction knows what happened.” | A verified information-flow delivery to that faction | Say the information has not reached them yet |
+
+The table is illustrative, not a new runtime schema. Implementers should connect each row to existing API reads and preserve the source when projecting the line.
+
+### Stale-context handling
+
+Dialogue may be opened with a context snapshot and selected later. Between those moments, the player may leave the location, lose an item, complete the quest through another route, or load a different campaign state. Revalidate the consequential condition at response commit. If it no longer holds, keep the option from applying and refresh the dialogue with a concise explanation. Do not apply a command against a stale conversation object.
+
+Read-only gating should not mutate discovery, visit count, or relationship. Any “first time” semantics need a deliberate committed event from the existing narrative owner. This prevents opening and closing a conversation from repeatedly advancing story state.
+
+### Uncertainty vocabulary
+
+Use consistent language for what is known:
+- “The record says” introduces a source.
+- “The witness remembers” introduces attributed testimony.
+- “We confirmed” requires an independent corroborating source.
+- “It may have been” introduces an authored hypothesis.
+- “We cannot tell” is a valid terminal or interim state.
+
+The UI need not display confidence percentages if the underlying memorial case has no quantitative confidence model. Use source labels and ordinary prose rather than adding a confidence meter. Contradictory evidence should remain visible as contradiction, not be averaged into a fake precision.
+
+### Character availability and grief-sensitive timing
+
+A resident may be unavailable because of a known schedule, health state, relationship boundary, or death. The conversation should then provide a document, another living witness, or a delayed return when possible. If a deceased character's testimony is essential, it must already exist as a recording, journal, memorial quotation, or epilogue text. Do not generate new dialogue in their voice because a quest requires a speaker.
+
+Avoid a gate that requires the bereaved player character to perform a public disclosure. Offer private, anonymous, or no-publication outcomes when the story permits them. These options may differ only in local acknowledgement. A larger relationship or faction change requires a verified owner and a clearly communicated consequence.
+
+### Acceptance walkthrough additions
+
+Review response selection after a campaign save is restored; after a second player source arrives; after the target encounter is depleted; after the witness becomes unavailable; after the player changes from an unresolved to a corrected branch; and after Plan 145 is resolved at campaign seal. The dialogue must read current truth at the time it is shown. It must not reopen a sealed ending or mutate a completed campaign through a late dialogue callback.
+
+
+## Pass 18 — Explainable context gates for calibration scenes
+
+### Gate model
+
+The Lane B calibration expansion can make dialogue respond to the player's knowledge and to a device's state, but every gate must answer three questions: which current owner supplies the fact, when is it evaluated, and what does the player see when it is false? A hidden gate may change optional tone. It must not conceal the only way to continue a required objective.
+
+The current calibration source supports device registration, assigned survivor, battery level, sensor condition, quality, readings since calibration, overdue state, station reservation and due day, calibration count, last calibration day, and error band. Those are candidate read-only predicates, not permission to copy them into a dialogue-local save object. Skill levels, relationship levels, faction reputation, discoveries, and visit counts must each be verified against their existing owner before use.
+
+### Predicate matrix
+
+- Device registered: enter device-specific lines; otherwise use the generic explanation and do not show a command for an unknown device.
+- Overdue: show the calibration warning and reading-count context. If false, use a calm operational line instead of implying danger.
+- Battery below the existing reading minimum: show the battery blocker, and offer replacement only if the current command is available.
+- Sensor below its existing minimum: show the service blocker with the same availability rule.
+- Station occupied through a future day: show the due day and a wait/leave option. Do not promise completion today.
+- Station occupied and due day reached: show the completion action only if the owning system reports calibration complete.
+- Completion event observed: show completion prose and update the quest once.
+- Quality improved: phrase the result comparatively. Never gate “safe” dialogue on a quality score.
+- Error band wide: encourage cautious interpretation, not automatic route rejection.
+- Prior clue known: optional line can acknowledge the clue if an existing discovery or journal owner supplies it.
+
+Each predicate should have a false-state fallback and a stale-state response. Dialogue opens on a snapshot for display, then the command must re-check all mutable preconditions at commit. This avoids a stale conversation starting a procedure after a battery was consumed or station occupancy changed.
+
+### Skill and knowledge gates
+
+The world-bible wording mentions deterministic skill encounters. The reviewed calibration path contains no skill-check consumer, so the MVP should not make a character skill a prerequisite or substitute for the procedure. If later integration confirms a compatible skill resolver, use it for optional interpretation: a knowledgeable character may explain why a broad uncertainty interval affects a route decision, while an unskilled character receives the same actionable instruction in plainer words. Both branches reconverge before the player commits to calibration.
+
+Skill must not change true dose, calibration device quality, or the success of the existing start/complete transition unless a future signed design explicitly assigns that authority. The skill result should be deterministic under the existing seeded encounter contract and must be visible in the content data. Avoid hidden random failure that consumes a day or destroys a device.
+
+Knowledge gates follow the same principle. A prior report, discovered note, or repeated visit may unlock a richer comparison, but the core action and essential explanation remain available without collecting it. Reputation and relationship gates may alter greeting, trust, or optional disclosure only. If any gate changes access or a quest route, document it as a quest or relationship consequence and route it through its existing owner.
+
+### Memory and repeated visits
+
+Use existing first-heard, discovery, journal, or dialogue-history storage if one is already authoritative for the exact event. Do not add permanent booleans such as has_seen_calibration_warning to the dialogue node or quest instance when another system owns that fact. If no suitable owner exists, make the MVP repeat the concise status explanation; do not invent persistence for polish.
+
+A repeated visit can be useful without new saved state: render the current device state and a short reminder. If historical comparison is later required, specify the exact provenance, lifetime, and save owner. Do not infer that a character remembers a previous reading merely because the player opened a panel.
+
+### Grief, safety, and uncertainty presentation
+
+A line about a suspect reading can implicate an injured survivor or a place connected to a death. Keep evidence language careful: “the record is uncertain” is not “the survivor lied.” The player may see a comparison that separates the remembered value, current device condition, and confidence interval. Avoid presenting a numeric band as a probability unless the source system defines one.
+
+Essential state is communicated in text and numeric labels, not color, icon, or hidden emotional tone alone. Optional emotional variants may reflect known relationship or memorial facts only when those systems are the actual owners. Never use a grief-sensitive branch to add a concealed penalty or block medical care.
+
+### Failure and acceptance cases
+
+- A device disappears between dialogue entry and action: refresh, report the missing device, preserve the quest, and offer the generic route.
+- The due day has not elapsed: reject completion and show the remaining wait.
+- The reservation is cancelled: return to an actionable state and explain the interruption.
+- A save is restored mid-procedure: dialogue reconstructs the status from restored calibration state, not from a duplicate flag.
+- A skill or relationship predicate is unavailable: hide only the optional line and keep the core explanation.
+- A context predicate is stale: reevaluate before applying any command; no command should be inferred from selected dialogue text.
+
+The review packet lists predicate owner, data type, freshness, false fallback, action revalidation, and whether the line changes availability or only wording. Acceptance requires no dialogue-owned mutable device copy, no mandatory skill gate, no essential clue hidden behind collection, and no new save field before an owner gap is demonstrated. Current implementation or test paths must be claimed and verified separately.
+
+
+## Pass 19 — Provenance-aware gates for intercepted documents
+
+### Gate principle
+
+A wiretap branch may depend on whether a particular document was found, whether the player read it, whether another source corroborates it, or whether the player chose to submit it. These are separate facts. The current BunkerWiretapEntry contains static source metadata and prose, but no saved read state or validated cast/location references. The source catalog is not currently called from production code. The dialogue plan must not treat catalog availability as player knowledge.
+
+### Predicate register
+
+| Candidate predicate | Authoritative source required | Safe false result |
+|---|---|---|
+| Transcript exists in loaded data | SignalIntelligenceCatalog plus content validation | Hide the quest entry; report a content gap to diagnostics |
+| Transcript discovered | Existing discovery or Codex owner, once a production consumer is confirmed | Show a generic lead only if another current source grants it |
+| Transcript played/read | Existing document presentation event; currently no wiretap-specific runtime read event was found | Keep evidence and quest progress unchanged |
+| Source copy secured | Current inventory or archive owner, if the content truly gives the player a physical copy | Describe it as a catalog record, not a carried item |
+| Clarity metadata visible | Authored audio_clarity_score field | Show “quality metadata unavailable”; do not infer deception |
+| Corroborating document found | Exact validated document/evidence link | Offer an unresolved outcome |
+| Speaker identity mapped | Current cast catalog mapping | Display the authored identity string with “unverified attribution” |
+| Faction mapped | Canonical faction ID and current standing owner | Treat target_faction as source text only |
+| Submission accepted | Existing Verdict evidence chain after a successful enrollment result | Keep the finding as a private quest note |
+| Location reached | Current expedition destination/discovery owner | Leave the travel branch unavailable or delayed |
+
+Do not add a default score threshold that turns clarity into credibility. If the UI later uses clarity bands, the thresholds must be calibrated against the corpus and labeled as signal quality. They cannot gate whether an allegation is true.
+
+### Gate evaluation and command-time revalidation
+
+At dialogue entry, build a read-only context snapshot from the current owners. Use it to decide which optional lines and actions to show. Before a response applies a command, revalidate its mutable predicates: quest status, document discovery, selected location, faction access, and evidence enrollment eligibility. If a predicate changed, keep the conversation open and return a precise refreshed explanation.
+
+A node that offers “submit” must check the canonical evidence route at commit. A line saying “the copy is sealed” must not create an inventory item unless the inventory owner confirms a transfer. An option that references a witness must recheck that character availability at action time. If a catalog fails to load, do not fall through to a built-in transcript body that diverges from JSON authority.
+
+### Knowledge and skill access
+
+The essential question and the basic provenance explanation are available to every player. A research or listening skill may expose optional technical context only if the existing skills authority and dialogue runtime provide a truthful API for it. Because the reviewed BunkerWiretapEntry itself carries no difficulty or skill field and no consumer has been found, this is not part of the minimum feature.
+
+A skilled survivor might explain that clear audio does not prove the speaker's identity. The unskilled path delivers the same insight through the records clerk. Both paths reconverge before the player chooses to submit, seal, seek corroboration, or defer. Skills can change explanation detail; they do not make evidence disappear, determine guilt, or alter the transcript.
+
+### Memory and repeated visits
+
+There are at least four possible memories: the transcript was discovered, it was played, its metadata was reviewed, and it was submitted. They require separate IDs and clear ownership if the game persists them. Do not compress them into one dialogue-seen flag. Before adding any memory field, identify an existing discovery/Codex/dialogue-state owner and use its established save path. If no owner fits, the first release may repeat a brief source label on every visit.
+
+Repeated visits should reflect current quest state: not yet reviewed, evidence route unavailable, corroboration pending, submitted as lead, sealed, or resolved. The dialogue should not claim that a character remembers a prior conversation unless a current character-memory system supplies that fact. Reopening a page does not count as a new listening event.
+
+### Faction and privacy gates
+
+The current transcript's target faction is a string, not proof of faction access or reputation. A branch can be faction-specific only after mapping it to a canonical faction and confirming a current reputation/access query. If access fails, show a plain reason or a non-faction route; do not make the player infer a missing UI action.
+
+Privacy is not a cosmetic gate if it changes who can be accused or how a document is presented. The MVP can offer “submit as attributed lead” versus “keep private” without creating public disclosure mechanics. If later disclosure has relationship, faction, or world effects, document each effect with its owning system and provide a warning before commit.
+
+### Testing checklist for future implementation
+
+Create focused fixtures for: missing catalog entry, loaded but undiscovered transcript, read event repeated, unknown speaker mapping, unknown faction mapping, unavailable corroboration location, delayed expedition, evidence already enrolled, restored quest with pending submission, and a changed predicate between dialogue opening and response. Check that every false predicate has a safe line and no critical route depends on hidden metadata. No tests were run in this documentation-only pass.
+
+
+### Pass 19B — Combined-state truth table
+
+Gate combinations must resolve to one clear actionable result rather than a pile of hidden conditions. These cases are proposal-level fixtures for a later implementation review.
+
+| Discovered | Read | Corroboration | Already admitted | Dialogue/action result |
+|---|---|---|---|---|
+| No | No | Any | No | Do not show the transcript-specific quest. Do not infer discovery from static catalog presence. |
+| Yes | No | No | No | Offer playback or exit. Do not count evidence. |
+| Yes | Yes | No | No | Offer investigation, private preservation, submission-as-lead, or deferral according to authored rules. |
+| Yes | Yes | Yes | No | Show both source references and allow a submission request; do not declare truth automatically. |
+| Yes | Yes | Any | Yes | Show the enrolled status and suppress duplicate submission. |
+| Yes | Yes | Contradictory source | Yes | Preserve the original entry and offer a separate correction or dispute route. |
+| Yes | State unknown after migration | Any | No | Show a generic previously discovered record view; require the player to reread before new actions. |
+
+“Any” means the state is irrelevant to that row, not permission to ignore safety or access rules. If discovery state is not persisted by a current owner, the system must not claim that it can reconstruct the state after save/load. In that case, use an explicit reread action.
+
+### Context precedence
+
+Resolve gates in this order:
+1. content validity and canonical ID existence;
+2. current player availability and location/access;
+3. persisted discovery/read facts;
+4. quest lifecycle and branch availability;
+5. corroboration and contradiction references;
+6. optional skill, relationship, or faction presentation variants;
+7. cosmetic voice and repeated-visit text.
+
+A later cosmetic condition must never override an earlier validity failure. A low skill level must never hide a mandatory action. A relationship variant cannot pretend that a document was read. Faction-specific lines cannot substitute for the source's recorded target-faction string.
+
+### Consent and privacy review
+
+The transcript contains named or identifiable speech. Before the player submits it for public consideration, the content needs an authored preview that explains what will be shared. The exact consent or privacy policy must be defined by the game's fictional institutions, not borrowed from a real legal process. Do not imply that anonymization is complete if speaker identities remain inferable from the transcript's content.
+
+If the player chooses to seal the source, distinguish:
+- sealing the physical original or copy, which needs an inventory/archive owner;
+- hiding transcript text from a public hearing, which needs a presentation/consequence owner;
+- keeping the quest private, which needs a quest owner;
+- preventing evidence admission, which means no EvidenceLedger effect.
+
+These choices may converge narratively while keeping state effects separate. If an implementation cannot represent a particular promise, do not show that option.
+
+### Review checklist
+
+For each dialogue node, list the predicate, owner, freshness, privacy consequence, command-time validation, fallback text, and whether the action is reversible. The reviewer should be able to answer: can a player enter this scene after restore, can the document be absent after load, can another path admit it first, and what happens if the faction or location changes while the scene is open? Every state race resolves with a refreshed status and no unintended evidence enrollment.

@@ -27,6 +27,24 @@ namespace Ashfall.Core.Vehicles
 
         public IReadOnlyCollection<VehicleModule> AllModules => _modules.Values;
 
+        /// <summary>
+        /// Binds modules that have already been validated by
+        /// <see cref="VehicleModuleCatalogLoader"/>. This is the seam the host
+        /// uses, so the lenient <see cref="LoadFromJson"/> parser can never
+        /// turn an authored typo into a live vehicle build. Replaces any
+        /// previously bound modules.
+        /// </summary>
+        public void BindValidatedModules(IEnumerable<VehicleModule> modules)
+        {
+            _modules.Clear();
+            if (modules == null) return;
+            foreach (var module in modules)
+            {
+                if (module != null && !string.IsNullOrWhiteSpace(module.ModuleId))
+                    _modules[module.ModuleId] = module;
+            }
+        }
+
         public bool TryGetModule(string moduleId, out VehicleModule module)
         {
             return _modules.TryGetValue(moduleId, out module!);
@@ -171,6 +189,33 @@ namespace Ashfall.Core.Vehicles
 
         public VehicleCustomizationCatalog Catalog => _catalog;
         public VehicleCustomizationState State => _state;
+
+        /// <summary>Save schema this system writes and accepts.</summary>
+        public const int StateSchemaVersion = 1;
+
+        /// <summary>
+        /// Read-only summary of live vehicle customization state. Mirrors the
+        /// census contract the integrated systems expose for the architecture
+        /// scanner and the host probe.
+        /// </summary>
+        public VehicleCustomizationCensus GetCensus()
+        {
+            int vehiclesWithModules = _state.VehicleModules.Count;
+            int installedTotal = 0;
+            int mobileBaseCapable = 0;
+            foreach (var kvp in _state.VehicleModules)
+            {
+                installedTotal += kvp.Value.Count;
+                if (IsMobileBaseCapable(kvp.Key)) mobileBaseCapable++;
+            }
+
+            return new VehicleCustomizationCensus(
+                _catalog.AllModules.Count,
+                vehiclesWithModules,
+                installedTotal,
+                _state.DeployedBaseCamps.Count,
+                mobileBaseCapable);
+        }
 
         public VehicleCustomizationSystem(VehicleCustomizationCatalog catalog, VehicleCustomizationState? state = null)
         {
@@ -366,6 +411,16 @@ namespace Ashfall.Core.Vehicles
                 }
             }
 
+            // Schema-gated: a payload written by an unknown schema is rejected
+            // outright rather than silently half-applied. A payload that omits
+            // the field is the original v1 shape and still loads, which is what
+            // keeps pre-integration saves working.
+            if (newState.SchemaVersion != StateSchemaVersion)
+            {
+                throw new InvalidOperationException(
+                    $"VehicleCustomizationSystem.RestoreState: unsupported schema_version {newState.SchemaVersion} (expected {StateSchemaVersion}).");
+            }
+
             // Extract vehicle_modules object
             int vmIdx = json.IndexOf("\"vehicle_modules\"", StringComparison.Ordinal);
             if (vmIdx >= 0)
@@ -429,6 +484,33 @@ namespace Ashfall.Core.Vehicles
             }
 
             _state = newState;
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of live vehicle customization state (Plan 152).
+    /// Exposed for the architecture scanner and the host self-test probe.
+    /// </summary>
+    public struct VehicleCustomizationCensus
+    {
+        public int LoadedModulesCount { get; }
+        public int VehiclesWithModulesCount { get; }
+        public int TotalInstalledModules { get; }
+        public int DeployedBaseCampsCount { get; }
+        public int MobileBaseCapableVehicles { get; }
+
+        public VehicleCustomizationCensus(
+            int loadedModulesCount,
+            int vehiclesWithModulesCount,
+            int totalInstalledModules,
+            int deployedBaseCampsCount,
+            int mobileBaseCapableVehicles)
+        {
+            LoadedModulesCount = loadedModulesCount;
+            VehiclesWithModulesCount = vehiclesWithModulesCount;
+            TotalInstalledModules = totalInstalledModules;
+            DeployedBaseCampsCount = deployedBaseCampsCount;
+            MobileBaseCapableVehicles = mobileBaseCapableVehicles;
         }
     }
 }

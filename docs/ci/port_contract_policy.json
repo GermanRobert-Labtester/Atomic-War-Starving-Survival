@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 287,
+  "total_seams": 291,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -2342,6 +2342,38 @@
       "owner": "weather",
       "reason": "Plan 135 / C2[27] validated-template binding: the host loads the authored cascade table through the strict WeatherCascadeCatalogLoader and hands the engine pre-validated rows, so no lenient vocabulary fallback can hide an authored typo inside a live cascade.",
       "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "RomanceCourtshipCatalog",
+      "method_name": "BindValidatedEvents",
+      "file_path": "Assets/Ashfall.Core/Survivors/RomanceFamilySystem.cs",
+      "owner": "survivors",
+      "reason": "Plan 150 validated-courtship binding: the host loads the authored table through the strict RomanceCourtshipCatalogLoader and hands the catalog pre-validated rows, so no lenient fallback can hide an authored typo inside a live courtship event.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "VehicleCustomizationCatalog",
+      "method_name": "BindValidatedModules",
+      "file_path": "Assets/Ashfall.Core/Vehicles/VehicleCustomizationSystem.cs",
+      "owner": "vehicles",
+      "reason": "Plan 152 validated-module binding: the host loads the authored table through the strict VehicleModuleCatalogLoader and hands the catalog pre-validated rows, so no lenient fallback can hide an authored typo inside a live vehicle build.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CookingSystem",
+      "method_name": "BindValidatedRecipes",
+      "file_path": "Assets/Ashfall.Core/Cooking/CookingSystem.cs",
+      "owner": "cooking",
+      "reason": "Plan 136 validated-recipe binding: the host loads recipes_cooking.json through the strict CookingRecipeCatalogLoader and hands the system pre-validated rows, so an authored typo cannot become a live recipe.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "MetaProgressionSystem",
+      "method_name": "BindProfileStore",
+      "file_path": "Assets/Ashfall.Core/Endgame/MetaProgressionSystem.cs",
+      "owner": "endgame",
+      "reason": "Plan 175 profile-store late binding. Optional: the constructor already accepts a CrossRunProfileStore and defaults to a new one, so the system is functional without this seam and no caller exists yet. Same shape as WeatherCascadeSystem.BindWeatherSource.",
+      "classification": "OPTIONAL_HOST"
     }
   ]
 }

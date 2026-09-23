@@ -2126,3 +2126,244 @@ A time-gated record must reveal the applicable window and explain the consequenc
 ### 15.14 Integration closeout receipt
 
 The future implementation handoff for this plan must contain: one selected owner and catalog per quest; a dependency list in integration order; a frozen accepted content slice; current file claims; migration note if any serialized contract changes; exact focused verification command(s); expected before/after observations; data-integrity and utilization evidence; continuity report; deferred decisions; and rollback boundary. A green schema check alone cannot prove that the quest appeared in a playable expedition. A passing quest test alone cannot prove that its location or dialogue is reachable. No receipt should be filled in until implementation actually occurs.
+
+
+## Pass 16 — World-bible bridge portfolio: signal, coast, and shelter memory
+
+This pass turns three expansion seeds in the master world bible into candidate quest packages. It deliberately connects them to existing narrative content authorities and runtime owners. Every new quest ID, location ID, faction tie, reward quantity, and gate below remains a proposal until a focused premise audit confirms the live catalog, quest runner, destination route, and ownership ledger. The intention is to make existing authored records playable as coherent journeys, not to make a second cipher, discovery, map, or cohort system.
+
+### Evidence boundary and reuse rule
+
+The source snapshot reviewed for this pass shows a persistent CipherQuestChainEngine with three authored chain definitions and save capture/restore. SignalIntelligenceCatalog reads the numbers-station cipher corpus. AbyssalAnomaliesCatalog reads hydrophone acoustic logs, and NarrativeDiscoveryCatalog plus the discovery manifest already expose selected records as discoverable content. DailySurvivalCatalog loads the base children’s folklore catalog and batch two. The manifest also contains folklore and hydrophone discovery rows. CohortSystem and GenerationalLineageExtension are existing owners for maturation and family history; the exact bridge from folklore records to mature-cohort dialogue is not established by the reviewed evidence. Therefore the folklore-to-adult thread is a gated content proposal, not a claim that maturation callbacks already exist.
+
+The old Empty Shift candidate remains under collision review because DutyRosterSystem, DutyRosterQuestRuntime, and duty-roster data already exist. Do not use these new packages to create a competing shift assignment or shelter duty authority.
+
+### Candidate package A: The Winter Count
+
+**Purpose.** Expand the existing cipher-hunt chain into an investigation that links a repeated broadcast, a verified decoding step, a mapped destination, and a human explanation for why the count was preserved. The quest must call the current cipher chain owner and respect its existing flags and restore behavior.
+
+**Typical structure.** A radio operator notices that a station’s count changes on a seasonal cadence. The player hears a broadcast, finds or earns access to the relevant key material, decodes the message, and follows the already-authored target-location reveal. At the location, a noncombat investigation resolves whether the count marks stored medicine, burial places, or a correction to a past evacuation list. The final answer can vary in tone and local consequence while the established chain resolves once.
+
+**Required locations.** The starting shelter/radio context and the exact target location in the selected existing chain. Any proposed archive room, repeater, or relay site needs an entity-by-entity check against the current map catalog before it is named as a required node.
+
+**Possible failure states.** The player may miss a broadcast window, destroy or sell a clue item, reach the target before decoding, or decode incorrectly. The chain should remain recoverable through the existing state model: repeat the broadcast, recover an alternate clue, or obtain an explicitly authored correction from an NPC. A failed interpretation may reduce the optional reward or alter who trusts the player, but it must not silently make the target impossible.
+
+**Rewards and costs.** Prefer a modest information reward, journal evidence, a relationship change, or a location unlock already supported by current owners. Avoid minting a novel currency or permanent stat. The content cost is moderate: one hub scene, one clue beat, one destination scene, a failure-forward clarification, and a compact resolution callback. The production cost rises sharply if an additional location or bespoke radio presentation is required.
+
+**Reusability.** The same scene skeleton can serve other existing cipher chains if the target, speaker, and interpretation are data-bound. Do not clone a new quest runner per chain.
+
+### Candidate package B: The Shelf That Answers
+
+**Purpose.** Let hydrophone evidence support a location-based investigation while preserving a meaningful gap between an acoustic observation and a confirmed explanation. Existing records include natural, mechanical, biological, and hostile-sounding signals; the player should not receive a guaranteed correct interpretation merely for collecting a log.
+
+**Typical structure.** A shelter technician asks the player to compare two listening records. A first expedition can surface a clue or discovery record; a later trip, instrument calibration, witness conversation, or map inspection can improve confidence. The resolution may identify a safe route, a hazard, or an unresolved sound that remains part of the setting. Build candidate branches around records that actually exist and are currently reachable after a per-record consumer audit.
+
+**Required locations.** A current listening or shelter context; the expedition site only if an existing destination or evidence-backed route can host the beat. The log’s presence in the catalog does not itself prove there is a dispatchable map location.
+
+**Possible failure states.** Poor weather, missed equipment, or a mistaken conclusion can produce an inconclusive report and a later retry. A dangerous interpretation can close one optional route or reduce a reward, but must leave another way to finish the investigation. If no appropriate destination currently exists, use a clue-leading-to-existing-location design or defer the quest instead of inventing a map node during implementation.
+
+**Rewards and costs.** A resolved record, route knowledge, a small relevant supply, or faction trust are candidate outcomes. Do not promise weapon upgrades or permanent underwater mechanics as a quest reward unless the corresponding system is verified. Content cost is medium-to-high because distinct acoustic sources need distinct descriptions and at least two truthful confidence states.
+
+**Reusability.** Keep an authored observation independent from the interpretation branch. Reuse scene structure and validation, not the same explanation text or arbitrary outcome across all recordings.
+
+### Candidate package C: The Rhyme After the Door
+
+**Purpose.** Give shelter folklore a playable social and investigative path. A childhood rhyme is found in the existing folklore corpus; adults disagree about whether it records a real maintenance practice, a frightening story, or an imperfect memory. The resolution should make the shelter feel inhabited without treating a child’s story as a literal quest marker by default.
+
+**Typical structure.** A record is discovered through the existing narrative/discovery path. The player may compare versions with a present-day resident, an archive entry, and a physical clue. If a cohort has matured during the campaign, a later conversation may revisit what the rhyme meant to that person. The latter is permitted only after a source audit proves an owned maturation-event route; otherwise make the callback available by ordinary campaign progression or omit it.
+
+**Required locations.** A shelter conversation and one already-authored room, archive, or expedition destination connected by evidence. Room names and dialogue availability remain unassigned pending live content checks.
+
+**Possible failure states.** Contradictory records can remain unresolved; a resident may stop sharing; or the player may choose to preserve the frightening version for comfort. None should erase the underlying folklore record or block unrelated cohort content.
+
+**Rewards and costs.** Relationship, shelter-memory, or journal outcomes fit the existing tone. Production cost is moderate when it uses existing spaces and high if it requires a new room, custom character schedule, or age-transition presentation.
+
+### Cross-package lifecycle contract
+
+For each candidate, record entry conditions, the current canonical state owner, the next legal transition, one recoverable block, one failure-forward route, one terminal resolution, and the visible journal/map evidence. “Blocked” must explain what the player can do next. “Failed” is not a dead end when the fiction supports a changed route. Reopening requires a deliberate authored trigger and idempotent reward rules; it is not an automatic side effect of loading a save.
+
+### Acceptance and authoring packet
+
+Before a package advances beyond DRAFT, attach: a record-to-consumer table; a unique entity check for every location, NPC, item, flag, and quest key; a branch table with successful, inconclusive, and failure-forward outcomes; a reward-owner mapping; save/restore expectations for every persistent transition; a short voice sample; and a review of repeated-visit behavior. Acceptance requires that an active quest can still be completed or explicitly delayed under missing-destination conditions, that the player receives an intelligible next action, and that replay does not grant the terminal reward twice. No implementation or catalog addition is authorized by this plan text.
+
+## Pass 17 — The ledger that remembers: an archival investigation quest family
+
+This pass advances the master world bible's undertaker-registry seed into a candidate investigation package. The source audit found narrative/undertaker_burial_records.json with stable-looking burial records and a cemetery location referenced by those records. The location ID location_ash_dune_cemetery resolves in the current locations catalog. MemorialSystem already owns campaign memorial entries, has idempotent memorialization, a once-per-deceased mourning action, and capture/restore. However, an exact search of Core and host source did not find a loader or runtime consumer for undertaker_burial_records.json. Treat the corpus as authored but not yet proven playable. The gap is a content-utilization and reconciliation question, not authorization to add a second memorial ledger.
+
+### Quest concept: The Date Left Blank
+
+A resident asks why an old ledger gives a burial date long after the reported death. The player must determine which entries are observation, hearsay, administrative shorthand, or a deliberate memorial for someone whose body was never recovered. The investigation does not assume fraud. It may conclude that a record is internally consistent once its source is identified, that a clerk made a correctable transcription error, or that the evidence cannot resolve what happened.
+
+A useful initial case is the existing cenotaph-style record for the widow's husband: the record distinguishes the date the death was said to occur, when the widow learned about it, and when the ceremony was held. Its blank body, empty plot, and ring placed at the grave are meaningful authored facts. The quest should not collapse those distinctions into a single “true death date” field or turn grief into a scavenger-hunt gimmick. A second record about an unmarked plot could provide a contrasting case only after duplicate content, speaker, and continuity checks.
+
+### Candidate quest packet
+
+**Quest family and lifecycle.** Investigation chain with a discovery start, an evidence-gathering middle, an explicit interpretation choice, and a resolution that may preserve uncertainty. “Partially completed” means the player has established a discrepancy but lacks a source. “Blocked” names an actionable next step. “Failed” routes to a limited but honest resolution, such as preserving the original text and recording an unresolved finding. “Reopened” requires a deliberate new record or campaign event and cannot replay one-time rewards.
+
+**Entry conditions.** A known discovery path must expose the burial corpus or an equivalent already-wired journal record. The player must have a reason to consult the undertaker or archive. The plan must not assume a UI panel can query a content file that has no loader. If an existing questline or narrative-discovery owner can surface the record, prefer that route; otherwise the plan remains gated on identifying the smallest existing loader/consumer seam.
+
+**Required locations.** The shelter archive or memorial conversation may be sufficient for a compact version. The cemetery is a candidate expedition location because it resolves in locations.json, but dispatchability and map visibility still require checking the WastelandMap graph and destination catalog. A resolved location record does not prove it is an available expedition destination. If the cemetery is shelter-only or absent from the dispatch surface, the quest can use an authored map clue to an available site or remain a shelter investigation.
+
+**Evidence sequence.** First, compare the ledger's event dates and ceremony type. Second, obtain an independent account from a person who could know the event, with a clear channel and day on which the information reached them. Third, inspect the physical memorial only if the destination route is valid. Fourth, ask the player to classify the result as corrected, corroborated, contested, or unresolved. The journal should preserve both the archival statement and the later interpretation, rather than overwrite the source.
+
+**Branching potential.** The player may correct a transcription, append a source note, preserve two conflicting accounts, or decline to make a finding. A correction is permitted only when a verified source supports it. A public accusation, resource penalty, or faction consequence is outside the first slice. A private acknowledgement from the undertaker or grieving resident is enough to make the choice legible.
+
+**Failure and recovery.** If a character is unavailable, use a surviving document, witness, or later conversation. If an expedition target cannot spawn, delay the physical-inspection step and provide a truthful journal reminder. If the registry corpus remains unreachable in the live build, do not start the quest from its raw JSON presence. If evidence is lost, allow the player to return to its source or complete as unresolved. No path may erase a canonical memorial entry.
+
+**Rewards.** Prefer a journal finding, an optional relationship acknowledgement, or one existing knowledge unlock. Do not grant a new memorial currency, funeral resource, or standing dimension. If the ending layer is to remember this action, Plan 22 must name the current consumer and accepted input; a private quest flag is insufficient.
+
+### Lifecycle and content cost
+
+The smallest playable slice needs one validated record source, one shelter scene, two evidence beats, three resolution choices, one repeat-visit acknowledgement, and one failure-forward path. The larger expansion adds additional record families, a second location, a contested public account, and a rumor or radio response. Estimate cost by source records that receive a complete discovery-to-memory path, not by raw JSON entry count. Each added record needs an authoring review and a consumer binding.
+
+### Reuse and acceptance packet
+
+The same investigation skeleton can support a missing name, an uncertain cause, a disputed plot, or an unclaimed personal effect, but every case needs its own evidence and voice. Reuse transition rules, not resolution text. Before promotion from proposal, provide: exact file and loader trace; current memorial entry identity mapping; location/destination proof; all speaker knowledge boundaries; branch-to-owner table; one old-save scenario; and an explicit unresolved outcome. Acceptance requires that the player can distinguish what the ledger says from what the quest concludes, that reloading cannot repeat a reward, and that a missing loader or location produces a visible deferment instead of a broken quest.
+
+### Pass 17B — Case portfolio and production order
+
+The registry investigation should be authored as a portfolio of independent cases, not a single massive quest whose branches all depend on one witness being present. The existing records suggest three distinct playable questions. They remain archival-content proposals until a loader and consumer are established.
+
+**Case 1: A name without a body.** The cenotaph entry for the widow's husband distinguishes an empty grave from a burial of remains. The player checks the source of the reported death date, learns when the widow received the report, and decides whether the archive needs a provenance note. Its central choice is what to record about uncertainty. It can complete in the shelter without an expedition if the cemetery route is unavailable.
+
+**Case 2: The unmarked plot.** A record describes a burial whose marker was intentionally withheld and whose undertaker objected. The player can inspect the reason for the compromise, listen to the living disagreement, and choose whether to preserve the administrative note or a personal account beside it. It should not turn into an investigation that punishes the person who requested the blank marker. A valid route can resolve with no physical marker ever added.
+
+**Case 3: The ledger's first rule.** The first recorded burial establishes a plot numbering convention, but old records may use different naming or time conventions. The player can help the archive distinguish an ID, a name, and an origin designation. This case supports a practical reward such as a journal index entry, not a new crafting recipe.
+
+**Production order.** Begin with the smallest single record and prove loader, presentation, journal observation, and save/revisit behavior. Add the second case only after the first record has a verified consumer and branch ownership. Add the cemetery expedition last because it introduces destination dispatch and local-encounter requirements. Do not author all cases into one data batch before confirming which catalog can host them. The smallest phase can be merged into an existing narrative questline if its schema supports the required evidence and outcome fields.
+
+**Production-cost bands.** Low cost: a shelter-only archival conversation and a journal result. Medium: a testimony branch, repeat-visit acknowledgement, or two records with shared context. High: new destination scene, recorded testimony playback, voice/audio work, faction-level disclosure, or epilogue input. The plan must state which band each case occupies and why. No cost estimate should count a static record as playable until its source is loaded, reachable, and connected to a state owner.
+
+**Boundary with campaign death.** These records contain historical details that may not match the current run. A case about a static record may proceed even if that named person is not in the current roster. A case about a campaign death must read the live memorial owner. Never spawn or kill a survivor to force the record and campaign into agreement. If the narrative needs the two timelines to meet, write the relationship explicitly and let the player inspect the evidence for the connection.
+
+**Completion review.** Review each case for its main route, a respectful unresolved route, a missing-speaker route, a missing-location route, and repeated-load behavior. A case passes content design when the player can state what was established, what remains uncertain, and what the next action is. It does not need a dramatic accusation or a faction war outcome to justify its place in the game.
+
+
+## Pass 18 — The Needle's Margin: calibration as a failure-forward side case
+
+### Intent and evidence boundary
+
+The master world bible's Part 43 lists deeper Geiger calibration as a Lane B expansion seed. This is a proposal for one optional quest packet, not evidence that a quest, skill challenge, or new calibration runtime already exists. Source review found a persistent DosimeterCalibrationSystem with registered devices, battery and sensor wear, a forty-reading overdue threshold, a one-day station reservation, completion quality, confidence and error-band calculations, cancellation, and capture/restore. The system explicitly separates observed measurement confidence from true dose and the dose ledger. The reviewed path exposes no skill-check call. The content must therefore use the existing deterministic timed procedure in its minimum viable release; a skill test is a later optional wrapper only if a current owner supports it.
+
+### Draft quest packet: The Needle's Margin
+
+- Type: optional investigation and maintenance side quest. It teaches the player why reliable observations matter without suggesting that calibration cleans a location or removes radiation.
+- Trigger: a registered instrument becomes overdue after its established reading threshold, or the player asks the assigned instrument keeper for help. The overdue event is already emitted by the calibration system. Wiring that event into the quest owner is a premise check; do not add a second counter or silently synthesize a quest instance from panel refresh.
+- Required location: the existing shelter-side calibration interface and the registered device. No map location is required. A new site, station, or character is not justified by this packet.
+- Story premise: an instrument keeper has noticed that two reports disagree. The disagreement is not proof that either report is false; the worn instrument's uncertainty band has widened. The player can investigate the record, choose whether to delay a route until the device is trustworthy, and return after the one-day procedure.
+- Player promise: the quest explains what changed, shows how uncertainty affects a decision, and gives a clear route forward when equipment is too damaged to calibrate.
+
+### Lifecycle and outcomes
+
+1. Inactive: no tracked request exists.
+2. Available: an eligible registered device is overdue, and the existing quest owner can receive that fact. The panel itself must not own quest availability.
+3. Discovered: the player receives a plain-language explanation that readings have become less precise. Keep the measured value and uncertainty band separately visible.
+4. Accepted: the player chooses to inspect the report or proceed directly to maintenance.
+5. In Progress: the device is eligible and the player starts calibration. The quest records a reference to the device and the procedure's existing state; it does not copy battery, wear, quality, or dose into quest-local fields.
+6. Blocked: the station is occupied, battery is below the current minimum, or sensor condition is below its service threshold. Explain the actual blocker and show an available repair route.
+7. Partially Completed: the player has secured a replacement battery or serviced the sensor, or has reconciled conflicting reports. These are milestones only when the relevant current system returns success; dialogue alone cannot grant them.
+8. Failed: reserve for an authored narrative failure, such as an expedition departing before a requested verification. Equipment becoming overdue is not quest failure.
+9. Completed: the procedure has completed through the owning calibration system and the player has reported back.
+10. Resolved: the player has chosen a consequence-bearing interpretation, such as using the corrected confidence interval to revise a route decision.
+11. Expired: only a genuinely time-limited offer may expire. The calibration procedure itself remains available.
+12. Abandoned: the player declines or leaves the case. The device's actual state is unchanged.
+13. Reopened: a later overdue transition may open a fresh case only if the quest owner supports repeatable instances. Otherwise it reactivates the same optional request with a new visible reason and no duplicate reward.
+
+### Branches and failure-forward routes
+
+- Inspect the paper trail first: a short report comparison teaches nominal value versus error band, then returns to the maintenance hub.
+- Calibrate first: starts the real one-day station reservation, then returns to the report comparison after the owning clock reaches the due day.
+- Battery blocked: present battery replacement as an existing system action if it is available in the campaign. Otherwise offer a non-mutating clue and leave the quest Blocked.
+- Sensor blocked: direct the player to existing sensor service when available; never mark service complete from a dialogue choice.
+- Cancelled procedure: return to Available or In Progress with a clear interruption note. Cancellation should not erase completed reading history or invent a damage penalty.
+- Missed route deadline: if the campaign has already departed, use the lower-certainty report as a changed route clue, not as a silent soft lock. Keep the player able to finish the case later.
+- False conclusion: a character may insist that the high reading proves a place is unsafe. The game should let the player challenge this with the displayed confidence band; it should not reveal that the location's true dose changed.
+
+### Rewards and content ceiling
+
+The core reward is informational: a legible before-and-after confidence explanation, acknowledgement from the instrument keeper, and a Chronicle entry through its current authority if the existing quest-to-Chronicle seam supports it. Optional material rewards must come from an existing inventory/economy owner and are not a reason to add a second ledger. No ending, faction access, or survivor health is altered by this small case. Any relationship or faction consequence belongs to a separate authored variant and Plan 22's verified effect routing.
+
+### Production and acceptance packet
+
+The writer supplies one short discovery scene, one hub scene, one blocked-device response for each real prerequisite, one start response, one elapsed-time return scene, one cancellation response, and one completion scene. Each line is tagged with speaker role, location context, device facts required, quest transition, and effect class. Keep the prose concise enough to pair with a numeric uncertainty display.
+
+Before implementation, verify that the quest loader can reference a calibration device and receive the owning system's completion event; verify the live campaign day source; and verify where equipment-service commands are offered. Acceptance requires: no quest-local copy of calibration state, no hidden true-dose adjustment, an explicit return path from every blocked state, no mandatory skill gate, and a repeatable save/restore case that preserves an in-progress station reservation. Until those premises are confirmed and exact paths are claimed, this remains a documentation proposal.
+
+
+## Pass 19 — The Unplayed Side: investigation quests that distinguish intercept from proof
+
+### Why this case belongs here
+
+The world bible's Part 43, seed 17 proposes using wiretap transcripts as standing-record evidence. Current source review finds a narrative catalog that can deserialize wiretap entries, but no game-side caller for that catalog; the two corpus files are marked CODEX_ONLY in the current content registry and utilization baseline. The Verdict evidence chain currently listens to player reads from MachineLogSystem, while Verdict items can be enrolled through the existing host method when their authored effect is positive. The separate Standing Record engine owns layouts, location memory, and room encounters; it is not a general evidence ledger. The quest below is therefore a playable-content and integration proposal, not a claim that transcripts already affect Verdict or standing.
+
+### Draft quest packet: The Unplayed Side
+
+- Type: optional investigation, with a faction-facing variant only after faction IDs and access rules are verified.
+- Source document: existing wiretap_office_cartridge_allocation_quarrel. Its authored claim concerns a disputed ammunition shortfall. The quest does not restate the transcript as fact, and the transcript's clarity score is not treated as a truth score.
+- Start condition: the player reaches an existing consumer that can present the transcript and chooses to open it. Catalog load alone must not create an active quest, discover a location, or enroll evidence.
+- Main question: what may the community responsibly record when a recording captures an accusation but does not capture the whole chain of events?
+- Required locations: none for the minimum viable case. The initial scene can occur in an existing shelter records or radio interface, but the actual screen and route must be confirmed before data is authored. Any field corroboration site is an optional quest dependency until a valid location ID is proven.
+- Objective: distinguish “heard,” “transcribed,” “corroborated,” and “admitted to the Verdict record.” These are different player actions and different state facts.
+
+### Lifecycle and state transitions
+
+Inactive → Available only when the existing discovery or codex owner reports that this exact transcript can be presented. If no such event is available, the implementation must add a consumer seam or leave the quest unpromoted. Do not use a frame refresh or a catalog-loaded flag as a player discovery.
+
+Available → Discovered when the player sees a clearly attributed lead. The visible card gives source ID, channel label, timestamp as written, and the author-provided clarity value. It states that an intercept can be incomplete or biased.
+
+Discovered → Accepted when the player elects to investigate. The player may instead leave it as a known lead; refusal does not reduce faction standing.
+
+Accepted → In Progress when the player chooses an investigation approach: preserve an unchanged copy, seek corroboration, or prepare a cautious record entry. A UI option records intent only through the quest owner. It does not write to EvidenceLedger directly.
+
+In Progress → Blocked when the source consumer, matching location, evidence definition, or requested witness is unavailable. The status must name the blocked dependency. The player can pursue another branch or return later.
+
+In Progress → Partially Completed after one verified activity, such as comparing the transcript's stated time with an available record. Since the current entry has no structured custody chain or corroborating-document reference, this milestone requires new authored support before it can be represented as factual corroboration.
+
+Partially Completed → Completed when the player creates an accurately attributed case summary. Completion means the investigation packet is ready, not that an allegation is proved.
+
+Completed → Resolved only after the player chooses whether to submit, seal, or defer the summary under the existing consequence owner. Resolved records an outcome; it does not force a verdict ending.
+
+Failed means a separately authored deadline or a destroyed optional opportunity has passed. Losing access to one witness should route to an alternate record-based approach where possible. Expired is reserved for an explicitly timed opportunity. Abandoned preserves discovered material and completed work. Reopened is permitted only through the existing quest lifecycle contract and must not double-award an already resolved case.
+
+### Branch outcomes
+
+1. Submit an attributed lead: the player states that the recording is relevant but incomplete. If the current Verdict evidence contract accepts a new source type, the submission may enroll one authorized evidence ID through that contract. The result is “recorded as a lead,” never “accusation confirmed.”
+2. Seek corroboration: the quest checks for an authored, source-linked corroborating item or site. If no valid site is available, the quest falls back to an existing-record comparison or remains Blocked with a reason. A new map location cannot be invented by interpreting the intercept channel as geography.
+3. Seal speaker identities: preserve the substantive record while hiding or withholding personal identity. This is an authored confidentiality choice, not an automatic relationship penalty.
+4. Defer: keep the file in the journal and return later. No evidence is enrolled, no faction standing changes, and no deadline is invented.
+5. Withdraw an earlier interpretation: if the player discovers that a cited document was misattributed, allow a correction record. The monotonic EvidenceLedger cannot silently erase prior enrolled evidence; any correction must use an explicit existing contradiction or supersession contract.
+
+### Failure-forward content and rewards
+
+If the transcript cannot be loaded at runtime, the quest does not appear. If the catalog entry exists but has no player-read route, it is a content-utilization gap, not a quest failure. If a field team cannot reach an optional source, the player may submit a qualified summary or defer the case. If the player chooses an unsupported conclusion, the authored dialogue can record dissent and keep the claim attributed, without fabricating a physical fact.
+
+Rewards are informational and relational only when verified owners support them: a journal finding, a new question in an existing Verdict conversation, or a character's acknowledgement that the player preserved uncertainty. No scrip, gear, faction standing, legal outcome, ending input, or item is awarded by prose. Any material or systemic reward must be separately authored and routed through its current owner.
+
+### Production packet and scope
+
+The minimum package is one discovery card, one investigation hub, four response branches, two reconvergence scenes, one blocked-state response, one correction scene, and one resolved summary. The main quest should be expansion content because it depends on a currently unreachable corpus consumer and touches Verdict-ending evidence counts. A small non-consequential Codex reading view could be core only if an existing host route and utilization gate already own it.
+
+Acceptance requires proving the exact transcript loads in production, a player read event exists, quest state is saved by the current quest owner, every branch is recoverable, and no consequence is applied on catalog load. Before implementation, audit the current EvidenceLedger catalog and ending thresholds, claim exact integration paths, and confirm how a correction to an enrolled claim is represented. Until then, this packet remains DRAFT.
+
+
+### Pass 19B — Reusable investigation packet and case variants
+
+The Unplayed Side should be authored as a reusable case template with case-specific evidence inputs. This keeps the runtime lifecycle stable while letting later expansion content explore different stakes. These variants are proposal candidates drawn from existing transcript rows; none is a verified quest or corroborated case.
+
+| Case seed | Question the player investigates | Primary branch | Failure-forward resolution |
+|---|---|---|---|
+| Office cartridge allocation quarrel | Does the intercepted dispute establish a missing stock count, a disputed ledger, or only an argument? | Compare against a separately verified requisition record if one exists. | Record the allegation as unresolved when no matching record is available. |
+| Courier Guild route-collapse briefing | Does the route report still describe a current obstruction, or only an old intercepted warning? | Check a current route authority before dispatch. | Preserve the historical warning and let the expedition owner provide current reachability. |
+| Rebuilders crop-failure conversation | Can a private failure report help prevent ration harm without falsely converting an intercepted estimate into current crop stock? | Seek a current agriculture or inventory report under that system's owner. | Save the transcript as a lead and let the existing food authority determine present stock. |
+
+Each case packet contains: source ID; source type; author-provided metadata; verified player-read trigger; optional corroboration reference; admissibility class; permitted conclusion language; blocked-state copy; and a correction route. A case can omit corroboration, but then its completion describes a careful unresolved summary. Avoid making every document quest a demand to travel.
+
+A shared lifecycle contract can support these variants: discovery opens the case; read acknowledgment records that the player saw the artifact; investigation records each validated comparison; submission asks the existing Verdict authority to consider it; admission is acknowledged only by that authority; and resolution records the player-facing summary. The quest must be able to end at “preserved, not submitted” without calling that failure.
+
+Quest instances should store only stable references and owner-returned milestone IDs. The transcript text, clarity score, faction label, and character names remain in their authoritative catalogs. A save stores quest progress through its current owner and evidence IDs through EvidenceLedger. On restore, the UI reconstructs the view from these sources; it must not recreate enrollment by replaying dialogue.
+
+### Content and implementation sizing
+
+The first release should include one case, three response routes, one optional corroboration step, and one correction scene. Adding a second transcript variant costs additional authored dialogue, source mapping, continuity review, and endgame-count review. Adding all three variants in one release also requires a reachable viewer and explicit legal/admissibility copy. The scalable plan is to prove one end-to-end case first, then add each other transcript as data-driven content using the same tested lifecycle.
+
+Reuse is high for state transitions and presentation rules, medium for dialogue nodes, and low for factual prose because each record has a distinct author and claim. The production owner must reject a template that copies an allegation from one transcript into another or applies one source's trust rating to an unrelated faction. The case matrix is accepted when every row has a verified catalog ID, one truthful completion state, one safe no-corroboration route, and a declared answer to whether it affects canonical Verdict evidence.

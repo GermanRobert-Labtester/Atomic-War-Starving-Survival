@@ -317,6 +317,29 @@ namespace Ashfall.Core.Survivors
 
         // ── Save / Restore ─────────────────────────────────────────────────
 
+        public IReadOnlyList<SurvivorBackstory> GetAllAssignedBackstories() => _state.Backstories;
+
+        /// <summary>
+        /// Read-only summary of live backstory state. Mirrors the census
+        /// contract the integrated systems expose for the architecture
+        /// scanner and the host probe.
+        /// </summary>
+        public BackstoryCensus GetCensus()
+        {
+            int revealed = 0;
+            foreach (var b in _state.Backstories)
+            {
+                revealed += b.RevealedSecrets?.Count ?? 0;
+            }
+
+            return new BackstoryCensus(
+                _state.Backstories.Count,
+                _occupations.Count,
+                _experiences.Count,
+                _templates.Count,
+                revealed);
+        }
+
         public BackstoryState CaptureState()
         {
             var snapshot = new BackstoryState
@@ -360,4 +383,32 @@ namespace Ashfall.Core.Survivors
                 }).ToList() ?? new List<SurvivorBackstory>();
         }
     }
+
+    /// <summary>
+    /// Read-only census of live backstory state (Plan 174). Exposed for
+    /// the architecture scanner and the host self-test probe.
+    /// </summary>
+    public struct BackstoryCensus
+    {
+        public int TotalBackstories { get; }
+        public int TotalOccupations { get; }
+        public int TotalExperiences { get; }
+        public int TotalTemplates { get; }
+        public int TotalRevealedSecrets { get; }
+
+        public BackstoryCensus(
+            int totalBackstories,
+            int totalOccupations,
+            int totalExperiences,
+            int totalTemplates,
+            int totalRevealedSecrets)
+        {
+            TotalBackstories = totalBackstories;
+            TotalOccupations = totalOccupations;
+            TotalExperiences = totalExperiences;
+            TotalTemplates = totalTemplates;
+            TotalRevealedSecrets = totalRevealedSecrets;
+        }
+    }
 }
+

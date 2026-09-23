@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "unlockables": [
+    {
+      "id": "meta_iron_bastion_crest",
+      "name": "Iron Bastion Crest",
+      "category": "crest",
+      "description": "Engraved steel insignia recognizing the militaristic supremacy achieved under the Garrison alliance.",
+      "required_prestige": 100,
+      "required_ending_id": "ending_iron_hegemony",
+      "required_achievement_id": ""
+    },
+    {
+      "id": "meta_dawn_horizon_crest",
+      "name": "Dawn Horizon Crest",
+      "category": "crest",
+      "description": "Embossed bronze seal commemorating survival through the permafrost into the Spring of Year Two.",
+      "required_prestige": 150,
+      "required_ending_id": "ending_dawn_of_thaw",
+      "required_achievement_id": ""
+    },
+    {
+      "id": "meta_flotilla_insignia",
+      "name": "Black Flotilla Compass",
+      "category": "insignia",
+      "description": "Naval compass medallion awarded to expeditions that reached coastal drydocks and launched into the open seas.",
+      "required_prestige": 120,
+      "required_ending_id": "ending_exodus_to_sea",
+      "required_achievement_id": ""
+    },
+    {
+      "id": "meta_silent_tombs_memorial",
+      "name": "Silent Vault Cenotaph",
+      "category": "insignia",
+      "description": "Solemn memorial plate honoring the sacrifices of lost bunkers whose dwellers vanished into the frozen silence.",
+      "required_prestige": 30,
+      "required_ending_id": "ending_silent_tombs",
+      "required_achievement_id": ""
+    },
+    {
+      "id": "meta_veteran_survivor_ribbon",
+      "name": "Month of Ash Ribbon",
+      "category": "insignia",
+      "description": "Veteran campaign ribbon awarded for commanding a shelter across 30 days of radioactive winter.",
+      "required_prestige": 50,
+      "required_ending_id": "",
+      "required_achievement_id": "month_of_ash"
+    },
+    {
+      "id": "meta_shepherd_cross",
+      "name": "Shepherd's Cross",
+      "category": "crest",
+      "description": "Golden cross recognizing zero casualty losses throughout an entire operational cycle.",
+      "required_prestige": 80,
+      "required_ending_id": "",
+      "required_achievement_id": "no_casualties"
+    },
+    {
+      "id": "meta_emergency_rations_boon",
+      "name": "Emergency Rations Stash",
+      "category": "ng_plus_boon",
+      "description": "New Game+ starting boon: Grants an initial reserve of 15 shelf-stable vacuum-sealed survival rations in storage.",
+      "required_prestige": 100,
+      "required_ending_id": "",
+      "required_achievement_id": "first_week_survivor"
+    },
+    {
+      "id": "meta_field_medic_boon",
+      "name": "Field Medic Heritage",
+      "category": "ng_plus_boon",
+      "description": "New Game+ starting boon: Pre-provisions the medical station with clean bandages and antiseptic washes.",
+      "required_prestige": 120,
+      "required_ending_id": "",
+      "required_achievement_id": "two_week_endurance"
+    },
+    {
+      "id": "meta_forged_toolkit_boon",
+      "name": "Forged Maintenance Toolkit",
+      "category": "ng_plus_boon",
+      "description": "New Game+ starting boon: Equips the shelter workshop with durable cast-iron repair implements.",
+      "required_prestige": 160,
+      "required_ending_id": "",
+      "required_achievement_id": ""
+    },
+    {
+      "id": "meta_geodetic_survey_boon",
+      "name": "Geodetic Triangulation Survey",
+      "category": "ng_plus_boon",
+      "description": "New Game+ starting boon: Inherits pre-calibrated baseline survey maps, revealing adjacent wasteland sectors.",
+      "required_prestige": 200,
+      "required_ending_id": "ending_dawn_of_thaw",
+      "required_achievement_id": ""
+    }
+  ]
+}

@@ -296,10 +296,16 @@ namespace Ashfall.Core.Tests.Save
             // Plan 136 added cooking (wildlife trapping food pipeline & cooking system);
             // Plan 140 added campaign_legacy (generational legacy & campaign inheritance);
             // Plan 141 added research_unlock (research downstream unlocks bridge);
-            // Plan 145 added unified_ending (unified ending resolution & epilogue personalization).
-            Assert.Equal(228, SaveSectionRegistry.All.Count);
+            // Plan 145 added unified_ending (unified ending resolution & epilogue personalization);
+            // Plan 147 added npc_memory (per-NPC memory & relationship depth);
+            // Plan 148 added ideological_friction (ideological friction events & quests);
+            // Plan 174 added backstory (survivor origin and backstory system);
+            // Plan 175 added meta_progression (meta progression and prestige system);
+            // Plan 150 added romance_family (romance & family dynamics: courtship, partnership, bonded pairs, family units);
+            // Plan 152 added vehicle_customization (vehicle modules, effective stats, and deployed base camps).
+            Assert.Equal(234, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(228, keys.Count);
+            Assert.Equal(234, keys.Count);
         }
 
     }

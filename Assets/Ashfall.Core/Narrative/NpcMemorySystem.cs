@@ -458,5 +458,52 @@ namespace Ashfall.Core.Narrative
                 }
             }
         }
+
+        public IReadOnlyDictionary<string, NpcRelationship> Relationships => _relationships;
+
+        public NpcMemoryCensus GetCensus()
+        {
+            int totalMemories = 0;
+            int highTrust = 0;
+            int highGrudge = 0;
+            int tradeEmbargo = 0;
+
+            foreach (var rel in _relationships.Values)
+            {
+                totalMemories += rel.Memories.Count;
+                if (rel.PersonalTrust >= 30f) highTrust++;
+                if (rel.GrudgeLevel >= 30f) highGrudge++;
+                if (rel.GrudgeLevel > 75f) tradeEmbargo++;
+            }
+
+            return new NpcMemoryCensus(
+                _relationships.Count,
+                totalMemories,
+                highTrust,
+                highGrudge,
+                tradeEmbargo);
+        }
+    }
+
+    /// <summary>
+    /// Architectural census for NpcMemorySystem reflecting current population of remembered NPCs and relationships.
+    /// </summary>
+    public struct NpcMemoryCensus
+    {
+        public int TotalTrackedNpcs { get; }
+        public int TotalMemoriesRecorded { get; }
+        public int HighTrustNpcsCount { get; }
+        public int HighGrudgeNpcsCount { get; }
+        public int TradeEmbargoNpcsCount { get; }
+
+        public NpcMemoryCensus(int totalTrackedNpcs, int totalMemoriesRecorded, int highTrustNpcsCount, int highGrudgeNpcsCount, int tradeEmbargoNpcsCount)
+        {
+            TotalTrackedNpcs = totalTrackedNpcs;
+            TotalMemoriesRecorded = totalMemoriesRecorded;
+            HighTrustNpcsCount = highTrustNpcsCount;
+            HighGrudgeNpcsCount = highGrudgeNpcsCount;
+            TradeEmbargoNpcsCount = tradeEmbargoNpcsCount;
+        }
     }
 }
+

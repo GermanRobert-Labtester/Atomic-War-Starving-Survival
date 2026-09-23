@@ -84,6 +84,7 @@ namespace Ashfall.Core
             "weather_gate_",
             "commitment_",
             "difficulty_",
+            "meta_",
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_", "settlement_", "territory_", "table_loot_", "scavenge_",
             "chem_agent_", "comms_target_", "ceremony_", "robot_",
             "vessel_", "hobby_", "degrade_profile_", "thermal_gear_", "insul_", "fault_", "mentorship_", "caravan_",

@@ -153,16 +153,42 @@ namespace AtomicWar.GodotApp
             if (result == CompletionHistoryAppendResult.Appended)
             {
                 GD.Print($"[Main.Endgame] Completion record appended: {record!.completionId}.");
-                return;
             }
-
-            if (result == CompletionHistoryAppendResult.AlreadyRecorded)
+            else if (result == CompletionHistoryAppendResult.AlreadyRecorded)
             {
                 GD.Print("[Main.Endgame] Completion record already exists for this sealed campaign.");
-                return;
+            }
+            else
+            {
+                GD.PrintErr($"[Main.Endgame] Completion history append failed: {result}. Campaign terminal state remains preserved.");
             }
 
-            GD.PrintErr($"[Main.Endgame] Completion history append failed: {result}. Campaign terminal state remains preserved.");
+            // Plan 175 — Record campaign facts in Meta Progression & Cross-Run Profile Store
+            try
+            {
+                SetupMetaProgression();
+                var endings = !string.IsNullOrEmpty(epilogue.endingId) ? new[] { epilogue.endingId } : System.Array.Empty<string>();
+                var completedAchievements = new List<string>();
+                string achPath = System.IO.Path.Combine(_dataDir, "achievements.json");
+                if (System.IO.File.Exists(achPath))
+                {
+                    var cat = Ashfall.Core.Achievements.AchievementCatalog.LoadFromJson(System.IO.File.ReadAllText(achPath));
+                    var achievementSystem = new Ashfall.Core.Achievements.AchievementSystem(cat, runIdentity);
+                    int living = _survivors?.Roster?.LivingCount ?? (_survivors?.RosterState?.Count ?? 0);
+                    int totalRoster = _survivors?.RosterState?.Count ?? living;
+                    achievementSystem.EvaluateRosterSnapshot(_simDay, totalRoster, living, 100f, 0f, 50f);
+                    completedAchievements.AddRange(achievementSystem.GetCompletedAchievementIds());
+                }
+                var historyDto = _completionHistory != null
+                    ? new CampaignCompletionHistory { records = new List<CampaignCompletionRecord>(_completionHistory.Records) }
+                    : null;
+                _metaProgression?.RecordCampaignCompletion(historyDto, completedAchievements, endings);
+                SaveMetaProgression();
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr($"[Main.Endgame] Meta progression evaluation failed: {ex.Message}");
+            }
         }
 
         private bool TryBuildCompletionRunIdentity(out string runIdentity)

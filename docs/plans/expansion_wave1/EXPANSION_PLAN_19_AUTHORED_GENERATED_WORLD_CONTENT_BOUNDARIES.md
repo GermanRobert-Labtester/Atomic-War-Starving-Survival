@@ -2283,3 +2283,265 @@ Set a bounded acceptance target for each content family. The appropriate number 
 ### 15.17 Definition of complete
 
 This plan is complete for a particular content tranche only when the selected records have a canonical owner; authored and generated facts are separated; no runtime authority is copied; the scenario has a reachable producer; all references validate; player-visible text matches the selected bindings; the RNG and save behavior are explicit; old content and saves have a migration policy; and the actual consumer has a focused verification. A plan is not “integrated” because its pages have been drafted or because JSON parses.
+
+
+## Pass 16 — Provenance contract for signal, acoustic, and shelter-memory stories
+
+This pass applies the master world bible’s expansion subjects to the authored/generated boundary. It distinguishes stable fiction from replay variation and ties each recommendation to a currently visible content owner. The contract is deliberately conservative: records already present should be audited and connected before new catalogs or procedural templates are proposed.
+
+### Current source landmarks
+
+The source snapshot reviewed for this pass has three authored cipher chains in CipherQuestChainEngine, with state capture and restore; the numbers-station corpus is loaded through SignalIntelligenceCatalog. Hydrophone acoustic logs are read by AbyssalAnomaliesCatalog and projected through AbyssalAnomaliesProjection. NarrativeDiscoveryCatalog and the discovery manifest contain hydrophone and folklore references. DailySurvivalCatalog loads the base folklore catalog and batch two. Do not infer that a similarly named expansion file is active merely because it exists in the data tree: trace its loader, validator, and consumer before integrating its records. The existing host/session narrative owners and journal projection are the route to verify for presentation.
+
+### Content authority layers
+
+For each story packet, preserve a chain of provenance:
+
+- **Authored observation:** the exact broadcast, acoustic record, rhyme, note, or testimony authored by the content owner.
+- **Player observation:** the fact the current run actually exposed, with its source and discovery context.
+- **Interpretation:** one or more authored explanations that may be incomplete, contested, or wrong.
+- **World consequence:** a permitted command routed to the current owner, such as revealing a known target or recording a resolved discovery.
+- **Generated variation:** only presentation-scale choices such as which already-authored optional line is shown, which eligible optional destination fills a slot, or which existing clue is surfaced.
+- **Persistent truth:** the minimum durable state needed to reconstruct what the player learned and what consequences occurred.
+
+These labels are a proposed editorial and runtime contract, not a claim that all current schemas expose these as formal fields. A future implementation must map them to existing structures or obtain architecture approval before adding fields.
+
+### What may vary
+
+A seeded run may choose which eligible optional clue or side-location appears, provided all mandatory story facts and routes remain available. A repeat visit may select an authored response variant based on recorded visit or quest state. A character may express uncertainty differently after the player has gained verified evidence. A radio scene may change from static to intelligible when the established cipher chain reports its appropriate state.
+
+Generated variation must not invent the identity of a speaker, a new historical fact, a new faction allegiance, a new kinship relation, a new unique item, a new permanent location, or a world-state consequence. Those are authored facts and require a reviewable record. Randomness must not make a required target disappear, change a decoded answer, or contradict a prior journal entry.
+
+### Record envelope and reviewable manifest
+
+When an integration package needs a manifest, first determine whether the current owner already holds the needed information. A proposed review table—not a new runtime schema—should list canonical record ID, source catalog, owning loader, all known consumers, authored truth, generated slots permitted, destination binding status, persistence owner, localization needs, and migration risk. Empty or unknown values are explicit blockers, never implicit permission to synthesize data.
+
+The review should catch three common duplication errors: copying a hydrophone record into a quest catalog with divergent text; shadowing a folklore record in a dialogue file that later drifts; and adding a second target-location record when the cipher engine already controls the reveal. Dialogue may refer to a content ID if the live dialogue system supports that binding; otherwise the integration plan must identify a one-way presentation adapter rather than copying mutable authority.
+
+### Seeded composition and save behavior
+
+The selection seed is a stable input for optional composition, not a content-authoring tool. Given the same campaign state and seed, the same optional clue/site selection should be reproducible. Persistent state records player-visible outcomes through current save owners. Do not serialize a generated prose string as authoritative truth when its source record and chosen variant are sufficient. If a specific generated choice must be recalled verbatim, record the stable variant key through the existing owner, after confirming that owner supports it.
+
+Content version changes need graceful behavior. A removed optional record can be omitted. A removed mandatory record must be mapped through an authored compatibility alias, converted into a recoverable clue route, or delayed with explanation. Never deserialize missing content as a silently successful quest. Do not reuse an old identifier for a different acoustic event, speaker, target, or consequence.
+
+### Quality and accessibility envelope
+
+Every generated presentation must remain within a reviewed voice and reading-level band. Surface which information is observation, uncertain interpretation, or confirmed resolution through text, journal state, and non-color cues. If a clue depends on hearing a sound, provide an equivalent caption or transcript in the same gameplay window. If a cipher relies on a text pattern, provide an accessible alternate representation that preserves the same reasoning and does not reveal the answer prematurely.
+
+### Release gates
+
+Before any new record is promoted, show a loader-to-consumer trace, duplicate-ID scan, schema and reference validation, seed replay for any generated selection, save migration review, and an author review of the authored truth. The plan remains DRAFT if a data file has no verified loader, if the record lacks a reachable presentation route, if destination identity is unknown, or if a proposed consequence has no current owner. No new authority, field, or content asset is created by this pass itself.
+
+## Pass 17 — Separate the burial archive, campaign memorial, and generated recollection
+
+This pass adds a provenance model for archival stories and destination-bound micro-locations. It follows the master world bible's instruction to distinguish static canon from dynamic state and its loop-closure rule: source, state, observation, consequence, and memory must remain traceable.
+
+### Source audit and authority classes
+
+The repository contains narrative/undertaker_burial_records.json with an items collection, burial identifiers, deceased identifiers, reported death and burial days, ceremony type, plot, witness/attendee names, epitaph, personal effects, and notes. The file references location_ash_dune_cemetery, which exists in locations.json. A direct source search did not identify a typed Core/host loader for this exact filename. That is an unverified consumption path, not proof of a live quest source.
+
+MemorialSystem is a separate, verified campaign owner. It stores actual campaign memorial entries, supports idempotent memorialization, exposes a read-only entries collection, supports one-time mourning through Mourn, and captures/restores its state. The static burial records and the runtime memorial entries must not be silently merged. The archival record may describe a pre-authored event; the memorial state describes what happened in this save. A matching deceased_id does not prove the two records refer to the same campaign person or the same run.
+
+The micro-location corpus is another authored authority. Its entries are encounter definitions loaded into NarrativeEncounterSystem, with current-location eligibility and depletion semantics. The parent location remains owned by the existing locations/map catalogs. Do not copy encounter text into a destination catalog to make a marker appear.
+
+OralLoreCatalog is loaded from two existing oral-lore files by OralLoreHostSession. OralLorePerformanceSystem tracks first-heard IDs and producer contexts; OralLoreSaveStore persists stable IDs rather than copying lyric text. Main.Plans155 binds the first-heard journal strip and expedition discovery hook. The host comment states that the system is cultural discovery only, with no morale, healing, route, or faction effects. This is an established owner and a boundary, not an invitation to duplicate songs in quest prose or attach unsupported gameplay rewards.
+
+### Proposed source-to-state table
+
+For every future content record, the authoring packet should classify it as one of:
+
+- authored archive statement: stable prose and fixed provenance, not automatically true in the player's current campaign;
+- live campaign event: a current survivor death, memorial entry, or Mourn result owned by the memorial/fate path;
+- location-bound encounter: authored text whose eligibility is tied to a validated parent destination;
+- discovered cultural record: a stable oral-lore ID whose first-heard state is saved by the oral-lore owner;
+- generated recollection: an optional presentation variant assembled from existing facts, never a new historical fact;
+- unresolved interpretation: a player or character theory that must remain distinct from the source record.
+
+This classification can live in the documentation/index until the actual consumer is verified. Do not add a provenance field to every content schema by default.
+
+### Identity and time conflict policy
+
+Fixed archival days, names, ages, causes, and plots must not overwrite dynamic campaign state. If an authored case uses a deceased ID that can also exist in a live roster, define which content mode is intended: fixed historical canon, run-specific memorial, or cross-campaign archive. Only a current owner can confirm identity equivalence. If there is no safe mapping, the text should refer to the historical record without stating that the currently controlled survivor died on that day.
+
+When campaign day and authored document day disagree, preserve both with labels such as “ledger date,” “witness estimate,” and “ceremony day.” Do not normalize uncertain testimony during serialization. Generated prose may choose an authored phrasing variant, but its underlying claim must remain the same and its variant selection must be deterministic when persistent.
+
+### Generated and authored boundary
+
+A procedural recollection can vary its opening, transition sentence, or speaker acknowledgement using known facts such as location, confirmed evidence, and whether the player has already visited. It cannot invent attendance, kinship, cause of death, a new burial plot, a song's origin, or a witness statement. No generated text may impersonate a deceased person unless the scene is explicitly framed as a recording, memorial text, remembered quotation, or epilogue—and the relevant source must exist.
+
+An authored micro-location definition supplies encounter identity, text, choices, and any current consequence fields. Generated destination composition may select among eligible encounters, but cannot change their required parent or reveal a hidden location without the normal owner. Oral-lore first-heard state stores IDs; rendering text continues to come from the current catalog. This protects content updates and save compactness.
+
+### Migration and deletion behavior
+
+If a burial record is removed or renamed, an optional archive scene can disappear only when no active quest/save refers to it. A required quest should migrate through an explicit alias, a replacement record with the same semantic purpose, or an explained delay. Never reinterpret an old burial ID as a different person or event. If a micro-location is retired, map its active quest reference through the location/encounter owner; do not leave an unresolved string that looks like a completed clue. If an oral-lore title or context changes, the stable lore ID preserves first-heard history, while the catalog provides updated display text.
+
+### Promotion gate
+
+Before an authored package becomes active, verify the exact loader, integrity validation, reachable player presentation, persistence owner, and all cross-references. For each record, report whether its source is authoritative for fiction, its runtime state owner, and its first observable channel. If any column is unknown, leave the package as proposal. The plan's purpose is to make content lineage inspectable, not to add a general-purpose provenance database.
+
+### Pass 17B — Editorial provenance packet and corpus intake
+
+A future content batch should arrive with a compact, auditable editorial packet. This avoids treating JSON presence as implementation or allowing a generator to absorb facts whose source cannot be found.
+
+**Record identity card.** For each burial entry, list the stable burial ID, deceased identifier, source file, source authoring status, event-day fields, witness/attendee claims, associated location, and whether the record describes a body, a cenotaph, or an uncertain event. Add a separate column for the live campaign memorial identity, which may be unknown. Never derive one identity from matching names alone.
+
+**Consumer trace card.** Name the exact loader, parsed DTO, runtime owner, presentation path, state write, save section, and validator that handle the record. For the present archive, the content file and cemetery reference are proven, while a direct loader/consumer remains unverified. The trace card stays incomplete until a source file and call path close that gap. Do not mark a catalog integrated because it appears in a boot-validator manifest or a data inventory.
+
+**Text lineage card.** When a quest quotes the registry, retain a reference to the source record and label the quote as source text, paraphrase, testimony, or interpretation. A later correction becomes a separate authored note with author and evidence, not an in-place rewrite of the old archive entry. This is especially important when the original entry documents institutional harm or a contested decision.
+
+**Location lineage card.** A micro-location encounter has its own encounter identity and a required parent location. A map marker is a different record and only belongs in the current map/location authority if it is a dispatchable destination. Keep both links explicit: content record to encounter definition; encounter definition to parent location. Do not create a second alias table in a quest file.
+
+**Oral-lore lineage card.** The existing stable lore ID identifies a song or spoken record; the producer identifies where or how it was first heard; the saved state records discovery. A quest can point to that ID if a supported consumer exists. It cannot copy lyrics into dialogue and then diverge. The current journal strip derives display text from the catalog, so adding another persisted prose copy is unnecessary.
+
+**Generated-language card.** For procedural line selection, list the stable authored variants, legal conditions, seed source, and which facts are invariant. If a phrase is selected after a player choice and must survive save/restore verbatim, determine whether an existing narrative owner persists that choice. If not, do not promise a unique recalled phrase; use an acknowledgement derived from durable state instead.
+
+**Repository intake and retirement.** Before adding a new corpus, search the live data tree for equivalent records and identify whether the canonical loader already accepts the format. Before retiring an entry, find active quest references, discovery manifest references, journal links, and saved stable IDs. Preserve unknown historical IDs safely. If the target consumer has no compatibility behavior, postpone retirement until a migration plan is approved.
+
+**Documentation closeout.** The final authoring packet should say “authored and validated,” “authored but not loaded,” “loaded but not reachable,” or “reachable and stateful.” These are separate maturity stages. It should include record-level unresolved questions and a direct evidence link. This language gives the content team a useful inventory without implying that a new system or migration already exists.
+
+
+## Pass 18 — Instrument procedure provenance and generated-scene limits
+
+### Boundary statement
+
+The master world bible calls for Geiger-calibration depth as a creative expansion subject. The current source confirms a single state owner for dosimeter calibration and a panel that delegates to it. This plan distinguishes three layers: authored explanation, deterministic system result, and run-specific presentation. Only the first and third are content concerns. The calibration state and measurement confidence remain owned by DosimeterCalibrationSystem, and actual radiation remains owned elsewhere.
+
+### Permanent authored material
+
+Store authored procedure steps, line variants, quest prerequisites, and outcome copy in the existing authoritative data location once the owning content loader and schema have been verified. A proposed calibration packet may describe:
+
+- Why the instrument is overdue after the current reading threshold.
+- What low battery and poor sensor condition mean for taking further readings.
+- What the one-day station reservation means to the schedule.
+- How to compare nominal readings with the resulting uncertainty band.
+- What cancellation means and how to resume later.
+- Which reports are historical testimony and which are current system state.
+
+Every authored entry needs a stable snake_case identifier, speaker or narrator role, context conditions, content provenance, and an explicit list of effects. The id must be checked against existing catalogs before it is accepted. Avoid a parallel JSON catalog that is invisible to the current loader. If the existing quest or encounter schema cannot represent the packet, record a small schema proposal with migration and validator needs; do not smuggle an unvalidated structure into a narrative file.
+
+The dialogue may state that a calibration improved confidence only after a successful completion result. It may not state that the reading is exact, that the environment is safer, or that true dose changed. Narrative records can disagree about past measurements; the current device values remain the technical authority.
+
+### Deterministic result layer
+
+The reviewed Core flow already contains a deterministic procedure: StartCalibration checks registration, battery, sensor condition, and station occupancy; it reserves the station through a due day. CompleteCalibration requires the reservation and elapsed due day, resets the readings-since-calibration count and overdue flag, increments the count, improves quality with diminishing returns, recalculates the error band, and emits completion/state events. The visible quality update is defined by the existing owner as an improvement of 0.15 times the remaining distance to one. Error band is derived from quality, sensor condition, and overdue status. A plan implementation should call this owner rather than recalculate those values in a quest or panel.
+
+The TestSourceExposureMsv constant is present in the reviewed source, but the searched references show no call site beyond its declaration. Treat it as an unused premise, not a consumable cost or booked dose. Before any design uses it, determine whether test exposure is meant to describe a fictional calibration source, a survivor exposure, or a retired value. No content effect may charge it to RadiationSystem or DoseLedgerSystem based only on the constant name.
+
+### Generated and variable presentation
+
+Generated content is limited to selecting among authored variants and to encounter placement already supported by the current content runtime. Any randomized line selection must use the established seeded stream and stable ordering; it must not generate new calibration facts, skill outcomes, location ids, device tags, dose values, quest requirements, faction effects, or reward quantities. The minimum viable version needs no generated calibration result at all.
+
+Variable detail may reflect real input fields: device tag, assigned survivor when that identity is available, readings count, overdue status, battery band, sensor band, quality, error band, and whether the one-day procedure is reserved or complete. UI copy should round values for readability without replacing the underlying numeric authority. If the system lacks a field, use generic copy instead of inventing one at runtime.
+
+### Provenance for mixed scenes
+
+A scene with an authored report and live device state must label both sources in design notes:
+- Report claim: authored speaker, date or chronology, and reliability status.
+- Current reading: derived from the registered device.
+- Current uncertainty: returned by the calibration owner.
+- Quest state: returned by the quest owner.
+- Player choice: recorded by the current consequence owner only when the player commits it.
+
+This separation supports contradiction as drama without confusing the player about state. For example, a survivor may remember that a corridor was safe last season while the current instrument reports a broad band. The dialogue can preserve both memories and invite a cautious decision; it cannot resolve the disagreement through prose alone.
+
+### Data quality and production gates
+
+Before content authoring is promoted:
+1. Verify the authoritative schema, loader, and catalog validator for the intended quest or encounter family.
+2. Confirm the target speaker and location ids exist and are reachable.
+3. Verify the calibration device fields can be supplied to dialogue without a copied mutable snapshot.
+4. Confirm all authored conditions have a fallback line.
+5. Confirm generated variants are selected deterministically and cannot alter consequence class.
+6. Check ids and references with the current content-integrity pipeline.
+7. Keep the complete prose packet marked DRAFT until its consumers are proven.
+
+The minimum viable content package is one authored procedure explanation, one overdue warning, one blocked response per actual prerequisite, one elapsed-time completion response, and one cancellation response. Expanded layers may add memory of prior visits, role-specific vocabulary, faction testimony, and expedition reports only after their owners and hooks are verified. This boundary keeps authored richness high while preventing narrative text from becoming another source of gameplay truth.
+
+
+## Pass 19 — Wiretap evidence provenance: document, reading, claim, and admission
+
+### Source-to-player chain
+
+This expansion follows the world bible's wiretap-as-standing-evidence seed, but current evidence exposes a gap. SignalIntelligenceCatalog can parse bunker_wiretap_transcripts.json and return a BunkerWiretapEntry. Repository call-site search found no production consumer of that catalog; only its own implementation and catalog tests reference the type. The corpus files are classified CODEX_ONLY in the current content utilization baseline and registry. The transcript entry has no structured evidence tag, player-read flag, custody record, linked location ID, or validated character references. The existing VerdictEvidenceChain subscribes to MachineLogSystem entry reads, and VerdictHostSession has a separate path for eligible Verdict items. Neither path generically consumes SignalIntelligenceCatalog entries.
+
+Accordingly, the content model should name four different things, each with one authority:
+
+- Authored document: the immutable transcript record and its source metadata, owned by the narrative data catalog.
+- Player discovery/read: the fact that the player found or listened to a specific entry, owned by the current discovery, Codex, journal, or document host after that owner is identified.
+- Investigation claim: the player's quest progress and interpretation, owned by the current quest lifecycle.
+- Admitted evidence: a source accepted by the existing Verdict EvidenceLedger and Reckoning chain under a new, explicitly reviewed producer seam.
+
+Do not add a mutable read boolean to the static transcript JSON. Do not create a second wiretap state store, an evidence ledger inside Standing Record, or a parallel “standing documents” catalog.
+
+### Authored data and link strategy
+
+The wiretap corpus already owns transcript text and descriptive fields. The minimum change proposal is a validated reference from an existing authoritative evidence definition to a transcript ID, plus a source type and presentation policy if the current Verdict data schema can express them. This should not duplicate the transcript body. If the current schema cannot express a source-document reference, document a narrow schema migration and update its owning validator before adding records. Do not add an unvalidated ad hoc field and rely on serializer permissiveness.
+
+The link is one-way: a Verdict evidence entry may cite a document ID. The transcript remains a historical source; its prose is never rewritten when the player chooses to admit, seal, or challenge it. A cross-reference must validate against the loaded wiretap catalog and the current evidence catalog. Unknown IDs should produce a row-level validation failure and a safe fallback, not a silent generic enrollment.
+
+Metadata in the existing record is descriptive, not automatically dispositive:
+- audio_clarity_score describes the authored recording quality; it does not prove the recorded allegation;
+- target_faction is an authored string and requires mapping before it can gate current faction access or standings;
+- speaker_identities is text, not a cast-member relationship;
+- timestamp_relative is a source claim, not the current sim day;
+- tags aid retrieval but do not grant quest progression or outcomes;
+- prose is the authored transcript and is not generated per save.
+
+### Permanent versus generated content
+
+Permanent authored material includes the transcript, its attribution note, a content warning when required, admissibility requirements, optional corroborating records, and every dialogue branch's consequence label. Generated content may select among written variants, display a current quest status, or place an eligible child encounter at a parent location already selected by the expedition owner. Generated content may not invent a speaker, alter a quote, sharpen or lower clarity, add a corroborating source, infer faction guilt, create a location, or decide that a record is admissible.
+
+A seeded line variant must use the existing deterministic content-selection contract and stable IDs. The MVP needs no generated transcript variant. The original wiretap is the invariant record; contextual dialogue may change around it.
+
+### Evidence identity and collision controls
+
+Every admitted record needs one stable evidence ID. Re-reading or re-opening the transcript must not produce a second enrollment. The current EvidenceLedger already owns unique enrollment and captures enrolled IDs; the existing evidence chain reconciles read machine logs idempotently after restore. A new adapter should reuse these rules rather than invent a new document counter. Before adding any transcript-backed evidence, check whether its ID is already represented by a Verdict item, machine-log evidence tag, quest result, or another authored record.
+
+Evidence count has major endgame consequences: Unified Verdict logic consumes enrolled evidence count. Therefore, a wiretap must not enter the canonical ledger merely because its catalog loaded, its page was rendered, or its prose appeared in the Codex. The content must specify whether an explicit player submission is required and what one entry contributes. Any change to endgame thresholds or eligibility is a separate balance and authority decision, not implied by this content bridge.
+
+### Archive and Standing Record boundaries
+
+Prewar archive evidence provides a pattern to inspect, not proof that all narrative documents share a generic evidence API. The current StandingRecordEngine coordinates location layouts, location memory, and site encounters; its catalog and host do not establish documentary admission. Keep courtroom/Verdict evidence and location-memory presentation as separate authorities. The same wiretap may be mentioned by both only through stable reference IDs and only if each system's current route is proven.
+
+### Validation checklist
+
+Before implementation, capture a source trace for: catalog load, production consumer, player read/discovery event, quest trigger, evidence definition, EvidenceLedger enrollment, Reckoning count update, save capture/restore, Codex presentation, and content-utilization classification. Acceptance requires a visible and reachable transcript, an exact reference to one catalog record, clear source attribution, an idempotent player action, no content-text duplication, no generated evidence facts, and a proven effect on endgame count. Until all links are named, label the integration DRAFT / consumer gap rather than “implemented.”
+
+
+### Pass 19B — Data contract, corpus migrations, and provenance audit
+
+The present wiretap schema is useful for authored archival display: stable ID, channel label, target faction string, numeric clarity score, speaker-identities string, relative timestamp, tags, and prose. It is not an evidence-admission schema. Keep the existing document record intact and add only a verified reference through the owning evidence data contract.
+
+If a source-reference field is approved, it must be optional for existing evidence rows, stable across saves, and checked against the narrative catalog. The migration must preserve current IDs and default old rows to “no linked transcript.” Content integrity should report each bad reference with both file and row ID. A missing optional source reference cannot erase an already admitted evidence ID from a save. Schema changes require the current data-authority workflow and should not be hand-inserted into a runtime-only panel.
+
+For a transcript-to-evidence mapping, document these provenance elements in authored data or in the established evidence definition:
+- canonical evidence ID;
+- source transcript ID;
+- source kind, such as wiretap transcript;
+- authored admission rule;
+- whether the player must explicitly submit it;
+- optional corroboration IDs;
+- contradiction/correction IDs where authored;
+- consequence class and whether admission affects the existing Reckoning count.
+
+Do not record a single “reliability” score unless a current owner defines its semantics. The transcript's clarity score measures signal clarity in the source corpus; source identity, chronology, custody, completeness, and factual corroboration remain separate. Any new display should use labels that preserve these distinctions.
+
+A generated expedition encounter may show that a clue was found at a selected parent, but the encounter instance should reference the immutable authored document ID. Its seed controls only variant choice and placement under current deterministic rules. The save need only persist discovery/quest/evidence state through existing owners; it does not copy the full transcript or a generated paraphrase.
+
+### Provenance review examples
+
+Example: a transcript is loaded, but the player never opens it. The authoring source exists; there is no player knowledge and no evidence enrollment.
+
+Example: the player opens the transcript and chooses to investigate. The record is read; the quest starts. It is still not admitted evidence.
+
+Example: the player submits it as an attributed lead, but no supporting source exists. The quest can resolve as unresolved; the Verdict ledger changes only if the existing evidence owner explicitly accepts that evidence class.
+
+Example: a later record contradicts the first transcript. Keep both authored sources and link a correction relationship. Do not rewrite the first transcript or delete its evidence enrollment.
+
+Example: generated dialogue chooses a more guarded greeting because of an existing faction relationship. It may not change the transcript's words, identity metadata, or evidence status.
+
+### Review gates and change control
+
+The data review checklist is: schema version remains valid; IDs are unique; transcript and evidence references resolve; all speaker/location/faction relationships are either canonical references or explicitly plain text; all condition fields are consumed by a current loader; missing optional references degrade safely; and content-utilization status changes only when the real consumer is integrated. Update the registry and utilization evidence after implementation rather than manually claiming reachability here.
+
+The design passes review only if an implementer can trace each player-visible statement back to either authored text or a current state owner. No generated prose may supply a new fact that the record itself never stated. This contract makes future transcript batches re-usable without creating a mutable document shadow or an undocumented evidence API.

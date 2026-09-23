@@ -28,7 +28,7 @@ namespace AtomicWar.GodotApp
         public void Initialize(string? dataDir = null)
         {
             string baseDir = string.IsNullOrWhiteSpace(dataDir)
-                ? Path.Combine(ProjectSettings.GlobalizePath("res://"), "Assets/StreamingAssets/Data")
+                ? CatalogPath.ResolveDataDir()
                 : dataDir;
 
             string configPath = Path.Combine(baseDir, "needs_performance.json");

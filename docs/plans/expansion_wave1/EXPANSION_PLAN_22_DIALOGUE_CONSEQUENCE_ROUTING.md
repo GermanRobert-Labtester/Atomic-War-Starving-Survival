@@ -2386,3 +2386,284 @@ These are proposed acceptance cases, not test files created or test runs perform
 The plans hand off in a narrow chain: Plan 19 defines which records are authored or generated; Plan 17 defines which quest owner accepts and tracks the instance; Plan 18 selects a valid location set for an expedition; Plan 20 authors the scene and response text in a supported content format; Plan 21 evaluates conditions from read-only owner facts; Plan 22 routes the accepted command and presents its result. Each boundary has a failure return: invalid record, failed registration, unavailable location, unavailable speaker, stale gate, or rejected consequence. A failure in one plan cannot be silently repaired by writing another plan's state.
 
 For the first integrated slice, use one active quest, one mandatory location, one optional clue, one scene, one gate, one accepted outcome, and one fallback. Keep callback scheduling and ending projection as separate acceptance milestones unless the current scheduler and Chronicle path can prove them already. This sequencing limits the blast radius while retaining an expansion path for later content.
+
+
+## Pass 16 — Close the evidence-to-memory loop without parallel state
+
+This pass applies the master world bible’s signal, coast, and shelter-memory expansion seeds to consequence routing. It defines observable state changes for future content packages and identifies current boundaries that need an implementation audit. The intended flow remains source record → player observation → interpretation → owner-routed consequence → journal or dialogue acknowledgement.
+
+### Consequence map for the three story families
+
+**Seasonal numbers-station arc.** Hearing, key acquisition, decode, and target reveal already belong to the current cipher-chain owner, which captures and restores its state. Dialogue can ask that owner for current facts and emit a proposed player response. The existing chain should remain the authority for whether the target is revealed and whether the chain resolves. A new quest wrapper may request journal copy or a local relationship effect only through a verified owner; it must not repeat the cipher state machine or grant the map reveal independently.
+
+**Hydrophone-coast mystery.** The hydrophone corpus, anomaly catalog/projection, and discovery manifest are established source landmarks. A selected record can be acknowledged as collected or discovered only through its current discovery/journal consumer. A character’s interpretation is not a new canonical acoustic fact. If an authored branch reveals a hazard, route, or faction stance, identify the respective existing owner first; when none exists, keep the choice local or defer the consequential branch.
+
+**Shelter folklore and cohort callback.** Folklore records have current catalog/discovery references, while CohortSystem and GenerationalLineageExtension own cohort and family-history behavior. The exact callback route joining a specific record to a maturation event remains unproven. Until confirmed, consequence routing may record that a conversation occurred only through the current narrative owner and may present a later campaign-milestone scene. It must not synthesize an age transition or family relationship.
+
+### Effect severity and routing discipline
+
+Classify each proposed response as cosmetic wording, local scene consequence, quest progress, relationship effect, faction access/reputation, world change, or ending-resolution input. The category determines which owner must accept the command. A response option is not evidence that the command succeeded: only the owner’s resulting state can authorize the follow-up acknowledgement.
+
+Keep effects narrow. “Preserve both versions in the journal” can be a journal or discovery operation if an existing command supports it. “Reveal the cipher target” is a map/cipher-owned transition, not a direct dialogue callback. “Warn the coast camp” is a faction or world-state action only if such an owner and contract are verified. “Change the ending” is not available to these expansions by default; the active Plan 145 ending-resolution work is a dependency boundary, and any new ending input must be reviewed there rather than added as a private flag.
+
+### Idempotency, retries, and failure-forward outcomes
+
+Each persistent effect needs a stable source identity and a duplicate-delivery rule. Reopening a dialogue, restoring a save, revisiting a location, or replaying a delayed callback must not grant the same unique reward twice. If an effect is already applied, the player sees an acknowledgement that matches the saved state and the handler returns safely.
+
+An inconclusive result should be a legitimate state, not an accidental half-write. Store only what the current owner needs to distinguish it from unresolved and complete. A failure-forward branch must name its new objective, destination or clue, allowed reward, and terminal condition. It cannot mark the original evidence false unless an authored record explicitly supports that conclusion.
+
+If the target owner is unavailable at runtime or after content migration, preserve the player’s chosen response where the current narrative owner allows it, report the unresolved effect, and expose a recoverable route. Never silently consume the dialogue choice and pretend the world changed.
+
+### Ordering and persistence
+
+Before dialogue opens, compose a read-only context from canonical state. On response selection, validate the context again against current state, then issue one owner-directed command. Apply the owner’s event and save path, refresh the journal/map/dialogue projection, and only then display a durable success acknowledgement. Presentation refresh failure must not roll back a committed domain event, and a failed domain command must not display success.
+
+The final design must confirm event ordering with existing hosts and save owners. Do not add a cross-system transaction coordinator for this trio unless current architecture requires and approves one. Use existing domain events and host adapters; keep any mapping table as documentation until its owners are verified.
+
+### Integration prerequisites and review artifacts
+
+Before implementation, the integrator should attach an effect matrix for each branch: command, owner, idempotency key, event, save/restore route, presentation consumer, retry behavior, and recovery message. Add a conflict table for repeated callbacks and overlapping active quests. Prove that the same selection does not resolve twice across a load/restore cycle. For every world or faction consequence, link the canonical API and active ownership claim.
+
+Plan 145 is an explicit dependency for any ending-level result. Plans 17–21 supply lifecycle, location eligibility, authorship boundaries, graph intent, and read-only context; this plan routes their committed effects but cannot authorize new architecture. Content remains DRAFT until all owner and save seams are confirmed. No production source, JSON, save schema, or test files are changed by this plan continuation.
+
+## Pass 17 — Memorial-to-chronicle consequences after Plan 145 completion
+
+Correction to the prior pass's dependency wording: the live integration ledger now records Plans 141 and 145 as fully integrated and complete on 2026-09-23. Plan 145's UnifiedEndingResolver, epilogue_personalization.json, save section, host lifecycle, campaign-seal hook, and EpiloguePanel consumer are present. New work in this plan should treat that endgame path as a verified existing downstream owner whose public input contract must be inspected, not as an active unfinished package.
+
+### What the current endgame path can observe
+
+Current host code constructs UnifiedEndingContext from campaign state, including total days, living survivors, total deaths, treaty status, faction branch, ending identity, moral band, fates, research-derived shelter upgrades and expedition discoveries, and faction standings. The death count is derived from survivor-fate and memorial counts. Main.Endgame resolves the personalized ending after campaign sealing and places the resulting chronicle prose in the endgame report. This verifies that memorial/fate totals can inform the existing epilogue path. It does not prove that a particular burial-record correction, mourning rite, or oral-lore performance is an accepted endgame input.
+
+Consequently, this expansion may propose a richer chronicle acknowledgement only if the current UnifiedEndingContext, catalog, or a ratified adapter already carries the relevant canonical fact. Do not add a private “burial truth” flag, arbitrary epilogue weight, or second ending resolver. If no current field expresses the player choice, keep the effect local to the quest journal or memorial conversation and file a separate architecture proposal for any needed endgame input.
+
+### Consequence routing for the registry investigation
+
+The archival source remains read-only. A quest response can request an append, correction, or unresolved finding through an existing quest/narrative consequence owner. It cannot rewrite the source JSON or create a second memorial entry. If the chosen action concerns an actual deceased campaign survivor, MemorialSystem is the canonical live record owner; use its existing identity and idempotency rules. A historical archive entry with no current memorial identity remains an archive fact and must not create a campaign death.
+
+A memorial action can be acknowledged after the domain owner succeeds. MemorialSystem exposes OnMemorialized and OnMourned; Mourn rejects missing or already-mourned entries and records a day. The host wires the event to persistence and presentation. A follow-up scene can listen to an existing event only after exact lifecycle and save behavior are verified. It must not replay the rite or grief effect because a dialogue window reopened.
+
+### Consequence levels and ownership
+
+- Cosmetic: wording changes from “unknown” to “second-hand report” in the current scene; no persistent write.
+- Local: a speaker acknowledges that the archive was reviewed; use the current narrative or journal owner.
+- Quest: the case becomes corroborated, contested, corrected, or unresolved; use the canonical quest/narrative state authority.
+- Relationship: a witness chooses to share more or ends the discussion; use the existing relationship owner and preserve alternate routes.
+- World: an actual map reveal or destination availability change; route through the map/expedition owner after validating a real site.
+- Cultural: first hearing of an existing oral-lore record; use OralLorePerformanceSystem and its saved stable ID. The current owner is explicitly cultural discovery only, so do not attach morale, healing, faction, or route effects.
+- Saga: personalized ending prose or a legacy result; use the completed Plan 145 contract. No new input is assumed.
+
+### Ordering, exactly-once behavior, and recovery
+
+Build dialogue context from canonical state. When the player selects an option, validate its source and eligibility again, issue the owner command once, persist through that owner's existing save route, refresh journal/map/epilogue projections, and display the success acknowledgement only after the owner reports success. If a callback is delivered twice, the domain operation must remain idempotent or the adapter must recognize the stable source identity. MemorialSystem already prevents duplicate memorialization for a survivor and Mourn is once per memorial; quest and oral-lore handlers require their own verified duplicate behavior.
+
+A content migration that removes an archive record should preserve an active quest through an explicit alias, equivalent evidence, or an explained delay. If the consequence owner is unavailable, keep the source and player choice legible in the quest's current state where possible; do not display a false success. Failure-forward outcomes should remain specific: unresolved report preserved, witness conversation unavailable, or physical inspection postponed.
+
+### Expanded integration card
+
+For each dialogue choice, document source record, speaker's knowledge channel, command owner, accepted result, save section, event/callback, duplicate rule, UI acknowledgement, failure route, and whether Plan 145 currently consumes the resulting state. Endgame review must compare the proposed effect to the real UnifiedEndingContext and current epilogue catalog. If it cannot point to an existing field or verified downstream projection, its scope ends at the current quest or journal.
+
+### Handoff and scope boundary
+
+This pass is a content and integration proposal only. It corrects stale dependency language in the preceding Plans 22 continuation. It adds no new save section, ending input, memorial field, oral-lore effect, quest status, or dialogue authority. Implementation must follow the current integration queue and ownership ledger; the documentation does not preempt the active Plans 147/148 batch or claim any code path.
+
+### Pass 17B — Outcome cards for a truthful memorial investigation
+
+These cards make the consequence route concrete while respecting the completed Plan 145 surface. They are implementation design examples only; each card must be mapped to a verified command before production.
+
+**Preserve the source.** Player chooses to retain the original burial entry and add an unresolved note. The quest/narrative owner records the resolution once. The journal projection may acknowledge that the account remains unresolved. The source file is not edited at runtime. The endgame resolver is affected only if its current inputs already represent this choice; otherwise there is no saga-level effect.
+
+**Correct a supported field.** Player chooses a correction after obtaining corroborating testimony. The quest owner records the correction and its source. The archival record remains immutable; a second authored or state-backed note carries the correction. If the system has no append-note mechanism, keep the result within the quest state and journal, and request an architecture decision before implementing an archive mutation.
+
+**Perform a mourning rite.** The player opens an actual memorial entry and uses the current MemorialSystem.Mourn operation. On success, its existing event route can update the presentation and save state. The dialogue must handle the already-mourned and unknown-memorial blocked outcomes explicitly. A historical burial record alone is not sufficient to invoke this operation.
+
+**Discover a physical clue.** The player reaches a verified parent destination and resolves its eligible local encounter. The encounter owner records the resolution and depletion if authored. A journal or discovery projection can mention the clue after success. No dialogue path should set map discovery directly when the map owner has not done so.
+
+**Hear an existing song.** A validated producer route causes OralLorePerformanceSystem to mark an existing stable ID heard and the current journal listener adds the first-heard acknowledgement. This remains a cultural-memory outcome. No morale, healing, relationship, faction, or epilogue change is attached by this plan because the live host contract explicitly excludes those effects.
+
+**Close the campaign.** Plan 145 already resolves the unified ending at campaign seal. It can observe the currently constructed campaign context, including death totals and survivor fates. If the plan seeks to personalize the chronicle around a corrected burial record or oral performance, the required fact must be exposed by a current accepted input and validated catalog reference. Until then, the ending remains unchanged and the local quest outcome stays truthful.
+
+### Ordering and failure matrix
+
+The effect owner must return a success or a specific rejection before the UI acknowledges a durable change. A rejected Mourn command leaves the memorial unchanged. A missing micro-location candidate leaves the quest delayed or routes to an alternate clue. An unresolved archive interpretation writes an unresolved state, not a correction. A failed save must be reported through the existing host persistence path; it must not turn a presentation refresh into proof that the domain command committed.
+
+Retries must reuse the same stable source identity. Reloading before a committed command may allow the player to choose again; reloading after commit must show the same result without granting a second reward. If a handler is invoked twice, the canonical owner or adapter must make the operation idempotent. Never rely on a UI button being clicked only once.
+
+### Consequence ownership worksheet
+
+For every proposed player response, complete these columns before implementation: evidence source; active campaign state; read owner; command owner; event/result; save section; journal/codex projection; map/destination projection; duplicate behavior; fallback text; Plan 145 input, if any. Unknown owner fields block promotion. A branch that is intentionally cosmetic should say so and have no hidden persistent side effect.
+
+### No new authority boundary
+
+This outcome design does not add a burial database, archive-editing subsystem, oral-lore effect dispatcher, faction rumor channel, ending resolver, or independent dialogue consequence queue. It identifies interactions among current owners and marks the missing burial loader and any new chronicle input as explicit review work. The first implementation slice, if approved later, should remain the source-loading/utilization bridge and one journal-visible outcome; broader consequences should be staged only after that loop is proven.
+
+
+## Pass 18 — Consequence routing and clock truth for calibration outcomes
+
+### Consequence envelope
+
+The master world bible's calibration minigame subject should initially be treated as a small side-story whose durable result is more trustworthy measurement, not a large world-state branch. This plan separates six effect classes so writers cannot turn a descriptive line into an unowned state mutation:
+
+1. Cosmetic: change tone or wording only.
+2. Local: select a scene response or reveal the current station status.
+3. Quest: advance The Needle's Margin only after a successful result from the quest's existing owner.
+4. Relationship: optional later effect using the relationship owner and its accepted event route.
+5. Faction: out of scope for the first packet; calibration cannot grant standing by itself.
+6. World or ending: out of scope for the first packet. Do not add private ending flags or modify the verified ending-context contract.
+
+The calibration system's current completion callback is the authority for its procedure result. A UI button press is only a request. The quest must not complete because the player selected a line, closed the panel, read a record, or found an expedition clue.
+
+### Proposed event sequence
+
+1. Panel or dialogue requests StartCalibration for a registered device.
+2. The calibration owner re-checks device condition and station occupancy.
+3. If start succeeds, the owner emits its existing started/state signals. The host reports the reservation and due day truthfully.
+4. The campaign advances through its current clock owner. The panel must read that authoritative day when refreshing.
+5. At or after the due day, the player explicitly requests completion. The owner validates the reservation, updates quality and uncertainty, resets the calibration reading count and emits completion/state signals.
+6. The current host/event seam forwards one completion fact to the quest owner. It should carry device identity and the stable procedure instance or equivalent idempotency key only if the existing event pattern supports it.
+7. The quest updates once, then dialogue and journal presentation read the new quest and device state.
+
+The panel code reviewed in this pass calls completion with currentDay + 1 when the player presses the button while the station is occupied. That makes the button act as a synthetic day advance in the reviewed path. Treat this as an integration finding that must be rechecked against the full runtime binding before implementation. A campaign panel must not advance time by changing an argument. It should use the real simulation day and leave early completion blocked. Do not write a corrective code patch as part of this plan-only pass.
+
+### State and persistence boundaries
+
+DosimeterCalibrationSystem already exposes CaptureState and RestoreState for per-device condition and in-progress reservation data. Extend or register nothing until the actual save owner is verified. If the live campaign does not currently persist this system, the implementation phase must follow the established save-section owner and include an in-progress round trip; a parallel calibration save store is prohibited.
+
+Quest outcome, first-heard dialogue, discoveries, Chronicle entries, relationship changes, faction standing, true dose, and cumulative booked dose belong to their existing owners. The calibration quest may reference an outcome or device id, but should not duplicate those values. A restored procedure must not emit a second completion consequence simply because the UI refreshes or host setup replays state.
+
+The constant TestSourceExposureMsv is defined in the calibration system, but source search found no operational use. No consequence should consume survivor health, radiation dose, inventory, or ledger value from that constant until its semantics and owner are established. Keep the minimum viable procedure free of implied test-source exposure costs.
+
+### Failure matrix
+
+- Start rejected for unknown device: no consequence; explain the missing device and preserve quest state.
+- Start rejected for low battery or sensor condition: set/retain Blocked through the quest owner only if the quest was accepted; show the actual maintenance route.
+- Start rejected for occupied station: show the known due day and return later.
+- Completion requested early: no completion event, no reward, no quest progress.
+- Cancellation: emit failure/cancel information once, keep historical readings, and offer restart.
+- Duplicate completion notification: ignore the duplicate at the integration seam; do not double-pay or double-advance the quest.
+- Save/load mid-procedure: retain reservation and due day; no premature event during restore.
+- Quest abandoned: the calibration owner remains truthful; quest abandonment does not cancel an independent procedure unless the player separately invokes the owning cancel command.
+- Expedition clue unavailable: keep the side quest viable without map selection or remote content.
+
+### Handoff and verification contract
+
+A future implementation claim must identify the calibration state owner, live-day source, panel host session, quest lifecycle owner, current save section, and event bridge. It must claim exact files before touching them and use focused verification on the directly affected routes. Suggested checks include start preconditions, due-day boundary, cancel behavior, capture/restore, exactly-once quest advancement, seeded replay if a skill layer is later added, and UI refresh with truthful status. These are design gates, not tests run in this documentation pass.
+
+Completion is accepted only when the observable panel, quest journal, and dialogue agree on the same device state and due day; the quest advances from a real calibration completion; the true-dose ledger remains unchanged by calibration; save/restore preserves an in-progress reservation; and every effect has one current owner. This pass makes no claim that any of those integrations have been implemented.
+
+
+## Pass 19 — One evidence route, explicit admission, and correction semantics
+
+### Current consequence owners
+
+The existing Verdict system already owns a save-backed EvidenceLedger and a Reckoning count. VerdictEvidenceChain subscribes to MachineLogSystem.OnEntryRead, enrolls its evidence tag once, and increments Reckoning only when the ledger accepts that ID. VerdictHostSession also has an item path that enrolls authored Verdict items when enrolled_evidence is positive. The current wiretap catalog is not connected to either path. The Standing Record engine separately owns location layout, location memory, and site encounters; its name does not make it the owner for admissible documents.
+
+The consequence design should extend the existing Verdict producer/consumer seam if and only if documentary evidence is approved. It must not introduce a second evidence ledger, a shadow standing count, a direct panel mutation, or a new ending counter.
+
+### Status ladder
+
+Represent these meanings distinctly in content and UI, using existing owners where they exist:
+
+- Available: the authored record exists in data.
+- Discovered: the player learned that a record exists.
+- Read: the player opened or listened to it.
+- Investigated: the quest compared it with another source or documented its limits.
+- Submitted: the player asked for it to be considered.
+- Admitted: the existing evidence owner accepted its stable ID.
+- Sealed: the player chose not to make the record public, subject to an existing privacy contract.
+- Corrected: a later source changes the case summary or adds a contradiction.
+
+Only Admitted changes the canonical Verdict count. If the current game does not model Submitted separately, introduce it only through the current quest/consequence owner after path audit. A display badge must not serve as mutable gameplay authority.
+
+### Event and effect routing
+
+Proposed sequence:
+1. The narrative loader supplies an immutable transcript record.
+2. The existing content presentation owner reports a real player read/discovery action.
+3. The quest owner opens the investigation and records branch progress.
+4. A player who chooses submission receives a consequence preview naming the source and uncertainty.
+5. The owning Verdict evidence bridge validates a registered stable ID and accepts it through EvidenceLedger.
+6. Only a successful first enrollment increments the existing Reckoning evidence count.
+7. The quest owner marks the submission milestone; the journal and dialogue read the resulting state.
+
+Use stable source and evidence IDs, not the transcript prose or a generated hash. The bridge should have an idempotency rule and report whether it enrolled, rejected, or had already enrolled the record. On restore, reconciliation must not double-increment the count. If the current producer contract cannot accept this event without widening ownership, pause for an architecture decision rather than expose Reckoning to a UI panel.
+
+### The ending-count gate
+
+Because enrolled evidence count is an input to Verdict endings, making wiretap records admissible changes more than a codex page. Before any transcript can be enrolled, classify whether it is:
+- informational clue that never affects the evidence count;
+- eligible evidence that requires corroboration;
+- eligible evidence whose value is explicitly one existing evidence unit;
+- inadmissible or sealed content.
+
+The content owner and balance owner must review this classification. Do not add multiple evidence rows for a single underlying incident simply because it appears as a transcript, quest item, dialogue callback, and Chronicle entry. A canonical incident-to-evidence mapping should deduplicate those representations. If a single record produces multiple independent claims, each requires separate authored identity and acceptance criteria.
+
+### Consequence classes and examples
+
+Cosmetic: choose whether the clerk says “intercept” or “record.”
+Local: keep the transcript private at the shelter desk.
+Quest: mark the evidence-comparison step complete after a valid record is read.
+Relationship: a survivor appreciates that the player withheld an unverified name; use only an existing relationship owner.
+Faction: the Office reacts to a public accusation only when its current faction event route supports it.
+World: no supplies, routes, or site ownership change in the minimum packet.
+Ending: the admission may contribute to the existing evidence count only after the endgame contract and threshold impact are reviewed.
+
+The correction branch is a local case correction, not deletion from the monotonic ledger. If admitted evidence is later challenged, retain the original source and add a separate contradiction or correction through a supported evidence model. The final UI can state that the record remains in the archive but is disputed. No silent withdrawal is allowed.
+
+### Failure and save cases
+
+- Transcript loaded but no consumer: no quest or effect.
+- Read event fires twice: no duplicate evidence enrollment.
+- Submission uses unknown ID: reject with a clear status and no Reckoning update.
+- Player chooses private preservation: record the quest choice only if a current owner supports it; otherwise treat it as local dialogue.
+- Save restored after submission: re-read the ledger and quest state; no second enrollment or payout.
+- Later contradiction arrives: preserve the admitted source and add a distinct correction.
+- Quest abandoned: do not retract already admitted evidence or alter an independent Verdict state.
+- Content is unloaded or invalid: retain any previously saved canonical evidence ID and render a safe unavailable-source label.
+
+### Integration acceptance
+
+Before implementation, verify catalog reachability, current player-read state, item/evidence registration, save ownership, Verdict ending thresholds, and the current link between EvidenceLedger enrollment and Reckoning. Claim the exact owned files through current governance and verify one user action end to end. Acceptance requires no parallel state, no automatic enrollment on load, exactly-once count change, no loss of evidence during restore, legible attribution, and an explicit non-admission route. This proposal does not change the Verdict ending contract and does not claim that wiretap evidence is currently integrated.
+
+
+### Pass 19B — Exactly-once result and correction protocol
+
+The wiretap feature is safe to integrate only when its full event path has an observable, idempotent result. The proposed contract reuses existing ownership:
+
+| Event | Owner | Required result |
+|---|---|---|
+| Static transcript parsed | Narrative catalog loader | Immutable record available to a real consumer |
+| Player opens or listens | Verified discovery/presentation owner | One player-read fact; no Verdict count change |
+| Quest accepts investigation | Current quest owner | One quest instance or supported existing quest progression |
+| Player requests submission | Quest/dialogue command seam | Confirmation preview; no mutation until accepted |
+| Evidence ID enrolled | Verdict EvidenceLedger through its chain | One unique ID; repeated request returns already-enrolled |
+| Reckoning count changes | Existing evidence chain | Increment only after the first accepted enrollment |
+| Correction or contradiction added | Existing evidence/effect owner, after premise audit | Preserve the original and add a distinct correction reference |
+| Campaign save captured | Current Verdict/quest/discovery save owners | Restore the same admission and branch status |
+
+If one source action must both create quest progress and admit evidence, order the effects so that the canonical enrollment result is obtained first. Then the quest acknowledges success. If the quest saves a pending-submission state before the ledger call and the call fails, it remains pending and can retry without double-counting. If enrollment succeeds but quest advancement fails, restore/reconcile should observe the existing ledger ID and complete the missing quest acknowledgment without incrementing Reckoning again.
+
+A successful evidence result should contain only what the current contract needs: stable evidence ID, whether newly enrolled or previously enrolled, and the canonical consequence outcome. Do not copy transcript text, speaker identities, clarity score, or faction standing into an effect message. UI feedback may summarize the source using the document catalog.
+
+### Contradiction and withdrawal
+
+The EvidenceLedger is one-way and idempotent; therefore “withdraw” cannot mean erase. The player can withdraw a public accusation or add a correction only if a current case or faction system represents that state. The original evidence remains enrolled in the canonical record. If no correction owner exists, the MVP should allow the player to mark the case unresolved before admission and should not offer a false post-admission reversal.
+
+An endgame view may present a disputed record with its correction alongside it. The evaluator still receives only the accepted canonical evidence count and current supported state. Do not add a hidden negative evidence count, subtract from enrolled count, or write a private ending flag.
+
+### Failure routing and feedback copy
+
+- Read accepted, evidence source unsupported: “The transcript is preserved as a lead. The register cannot admit this source yet.” The quest remains investigable.
+- Admission rejected for unknown ID: name the missing source link in diagnostics and tell the player the record was not counted.
+- Duplicate admission: show “already recorded”; no repeated sound cue that suggests a new reward.
+- New contradiction found: “The record remains. The claim now has a documented dispute.” Only show this after the correction owner confirms it.
+- Save restored with admission complete but quest pending: reconcile the quest milestone once, with no duplicate Reckoning event.
+- Save restored with quest complete but ledger missing: do not infer admission. Show a pending or inconsistent state and route through the owner’s recovery contract.
+- Source corpus unavailable after a game update: retain the canonical evidence ID and show a generic unavailable-source entry; never remove it from the save.
+
+### Acceptance and rollback
+
+A later implementation should first run a focused rehearsal with one transcript and one existing evidence entry. Confirm that all unauthorized routes (catalog parse, Codex display, repeated read, journal refresh) leave the count unchanged. Confirm that the single explicit admission increments once, persists, restores, and changes the Verdict readout only through the current chain. Then verify one rejected source and one duplicate request.
+
+Rollback may remove a new presentation or admission affordance, but it must preserve already saved EvidenceLedger IDs and quest state. If the catalog reference is removed after release, provide an archived-source fallback that names the missing document without making the save invalid. No rollback can rewrite history by deleting an admitted fact.
+
+This protocol is a design proposal. Do not alter ending thresholds, EvidenceLedger semantics, or the Verdict save schema until current evidence, package ownership, and a narrow acceptance plan authorize that work.

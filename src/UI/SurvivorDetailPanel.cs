@@ -45,6 +45,9 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only authored documentation projection supplied by Main.</summary>
         public Func<string, IReadOnlyList<DocumentationItem>>? DocumentationProvider { get; set; }
 
+        /// <summary>Read-only backstory projection supplied by Main (Plan 174).</summary>
+        public Func<string, Ashfall.Core.Survivors.SurvivorBackstory?>? BackstoryProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -244,6 +247,14 @@ namespace AtomicWar.GodotApp.UI
             else
             {
                 _traitsList.AddChild(MakeDimLine("No radiation state tracked."));
+            }
+
+            // Plan 174 — Procedural Survivor Backstory
+            var backstory = BackstoryProvider?.Invoke(s.Id);
+            if (backstory != null && !string.IsNullOrEmpty(backstory.OccupationId))
+            {
+                AddRow(_traitsList, $"Origin: {backstory.OccupationId}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
             }
 
             // ── Status ──

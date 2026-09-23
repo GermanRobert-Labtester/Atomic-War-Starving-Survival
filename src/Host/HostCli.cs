@@ -220,7 +220,13 @@ namespace AtomicWar.GodotApp
         DeathLegacySelfTest,
         RelationshipDecaySelfTest,
         ResearchUnlockSelfTest,
-        UnifiedEndingSelfTest
+        UnifiedEndingSelfTest,
+        NpcMemorySelfTest,
+        IdeologicalFrictionSelfTest,
+        RomanceFamilySelfTest,
+        VehicleCustomizationSelfTest,
+        BackstorySelfTest,
+        MetaProgressionSelfTest
     }
 
     /// <summary>
@@ -655,6 +661,18 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ResearchUnlockSelfTest;
             if (Has(args, "--unified-ending-selftest") || Has(args, "--epilogue-selftest"))
                 return HostCliAction.UnifiedEndingSelfTest;
+            if (Has(args, "--npc-memory-selftest") || Has(args, "--npc-memory-test"))
+                return HostCliAction.NpcMemorySelfTest;
+            if (Has(args, "--ideological-friction-selftest") || Has(args, "--ideology-selftest"))
+                return HostCliAction.IdeologicalFrictionSelfTest;
+            if (Has(args, "--romance-family-selftest") || Has(args, "--romance-selftest"))
+                return HostCliAction.RomanceFamilySelfTest;
+            if (Has(args, "--vehicle-customization-selftest") || Has(args, "--vehicle-modules-selftest"))
+                return HostCliAction.VehicleCustomizationSelfTest;
+            if (Has(args, "--backstory-selftest") || Has(args, "--backstories-selftest"))
+                return HostCliAction.BackstorySelfTest;
+            if (Has(args, "--meta-progression-selftest") || Has(args, "--meta-selftest"))
+                return HostCliAction.MetaProgressionSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -869,6 +887,10 @@ namespace AtomicWar.GodotApp
             GD.Print("  --relationship-decay-selftest Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding");
             GD.Print("  --research-unlock-selftest / --research-unlocks-selftest Plan 141 research unlock bridge: catalog load, downstream unlock queries, capability grants, recipe unlocks, and inventory awards");
             GD.Print("  --unified-ending-selftest / --epilogue-selftest Plan 145 unified ending resolver: epilogue evaluation, personalized chronicle, survivor fates, legacy trait awards, and save round-trip");
+            GD.Print("  --npc-memory-selftest / --npc-memory-test Plan 147 per-NPC memory: trust, grudge, favors owed, forgiveness, dialogue tone, and trade pricing modifiers");
+            GD.Print("  --ideological-friction-selftest / --ideology-selftest Plan 148 ideological friction: confrontations, conversions, bunker factions, and mediation");
+            GD.Print("  --romance-family-selftest / --romance-selftest     Plan 150 romance & family dynamics: courtship stages, partnership, bonded pairs, family units, adoption");
+            GD.Print("  --vehicle-customization-selftest / --vehicle-modules-selftest Plan 152 vehicle module slots, effective stats, bunk capacity, and base camps");
 
             GD.Print("\n--- User Data & Log Configuration ---");
             GD.Print("  --user-data-dir <path>   Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR)");

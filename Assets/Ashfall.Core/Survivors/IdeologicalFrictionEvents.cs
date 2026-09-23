@@ -648,5 +648,36 @@ namespace Ashfall.Core.Survivors
             if (e > s && float.TryParse(json.Substring(s, e - s), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float val)) return val;
             return def;
         }
+
+        public IdeologicalFrictionCensus GetCensus()
+        {
+            return new IdeologicalFrictionCensus(
+                _totalEventsFired,
+                _totalConversionsSucceeded,
+                _activeFactions.Count,
+                _recentEvents.Count,
+                _templates.Count);
+        }
+    }
+
+    /// <summary>
+    /// Architectural census for IdeologicalFrictionEvents reflecting event counts and active bunker factions.
+    /// </summary>
+    public struct IdeologicalFrictionCensus
+    {
+        public int TotalEventsFired { get; }
+        public int TotalConversionsSucceeded { get; }
+        public int ActiveFactionsCount { get; }
+        public int RecentEventsCount { get; }
+        public int LoadedTemplatesCount { get; }
+
+        public IdeologicalFrictionCensus(int totalEventsFired, int totalConversionsSucceeded, int activeFactionsCount, int recentEventsCount, int loadedTemplatesCount)
+        {
+            TotalEventsFired = totalEventsFired;
+            TotalConversionsSucceeded = totalConversionsSucceeded;
+            ActiveFactionsCount = activeFactionsCount;
+            RecentEventsCount = recentEventsCount;
+            LoadedTemplatesCount = loadedTemplatesCount;
+        }
     }
 }

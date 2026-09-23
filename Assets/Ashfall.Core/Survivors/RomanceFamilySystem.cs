@@ -78,6 +78,23 @@ namespace Ashfall.Core.Survivors
         public float SharedTraumaBondBonus { get; set; } = 10.0f;
         public float BaseCompatibilityFloor { get; set; } = 20.0f;
 
+        /// <summary>
+        /// Binds rows that have already been validated by
+        /// <see cref="RomanceCourtshipCatalogLoader"/>. This is the seam the
+        /// host uses, so the lenient <see cref="LoadFromJson"/> parser can
+        /// never turn an authored typo into a live courtship event. Replaces
+        /// any previously bound rows.
+        /// </summary>
+        public void BindValidatedEvents(IEnumerable<CourtshipEventDef> events)
+        {
+            CourtshipEvents.Clear();
+            if (events == null) return;
+            foreach (var evt in events)
+            {
+                if (evt != null) CourtshipEvents.Add(evt);
+            }
+        }
+
         public static RomanceCourtshipCatalog LoadFromJson(string json)
         {
             var catalog = new RomanceCourtshipCatalog();
@@ -205,9 +222,39 @@ namespace Ashfall.Core.Survivors
         private readonly List<RomanticRelationship> _relationships = new List<RomanticRelationship>();
         private readonly List<FamilyUnit> _familyUnits = new List<FamilyUnit>();
 
+        /// <summary>Save schema this system writes and accepts.</summary>
+        public const int StateSchemaVersion = 1;
+
         public IReadOnlyList<RomanticRelationship> Relationships => _relationships;
         public IReadOnlyList<FamilyUnit> FamilyUnits => _familyUnits;
         public RomanceCourtshipCatalog Catalog => _catalog;
+
+        /// <summary>
+        /// Read-only summary of live romance/family state. Mirrors the census
+        /// contract the integrated systems expose for the architecture
+        /// scanner and the host probe.
+        /// </summary>
+        public RomanceFamilyCensus GetCensus()
+        {
+            int bonded = 0;
+            int partnered = 0;
+            foreach (var rel in _relationships)
+            {
+                if (rel.Stage == RomanceStage.Bonded) bonded++;
+                if (rel.Stage == RomanceStage.Partnership) partnered++;
+            }
+
+            int children = 0;
+            foreach (var family in _familyUnits) children += family.ChildIds.Count;
+
+            return new RomanceFamilyCensus(
+                _relationships.Count,
+                bonded,
+                partnered,
+                _familyUnits.Count,
+                children,
+                _catalog.CourtshipEvents.Count);
+        }
 
         public RomanceFamilySystem(RomanceCourtshipCatalog? catalog = null)
         {
@@ -482,6 +529,17 @@ namespace Ashfall.Core.Survivors
         {
             if (string.IsNullOrWhiteSpace(json)) return;
 
+            // Schema-gated: a payload written by an unknown schema is rejected
+            // outright rather than silently half-applied. A payload that omits
+            // the field is the original v1 shape and still loads, which is what
+            // keeps pre-integration saves working.
+            int version = ExtractInt(json, "schema_version", StateSchemaVersion);
+            if (version != StateSchemaVersion)
+            {
+                throw new InvalidOperationException(
+                    $"RomanceFamilySystem.RestoreState: unsupported schema_version {version} (expected {StateSchemaVersion}).");
+            }
+
             _relationships.Clear();
             _familyUnits.Clear();
 
@@ -515,6 +573,11 @@ namespace Ashfall.Core.Survivors
                             BondedDaysCount = ExtractInt(obj, "bonded_days", 0),
                             IsSoulmate = obj.Contains("\"soulmate\":true")
                         };
+
+                        // CaptureState writes cohab; before this the quarters
+                        // assignment was silently dropped on every load.
+                        string cohab = ExtractString(obj, "cohab");
+                        rel.CohabitationQuarters = string.IsNullOrEmpty(cohab) ? null : cohab;
 
                         if (!string.IsNullOrEmpty(rel.SurvivorA) && !string.IsNullOrEmpty(rel.SurvivorB))
                         {
@@ -649,6 +712,36 @@ namespace Ashfall.Core.Survivors
                 return val;
             }
             return defaultValue;
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of live romance/family state (Plan 150). Exposed for
+    /// the architecture scanner and the host self-test probe.
+    /// </summary>
+    public struct RomanceFamilyCensus
+    {
+        public int TotalRelationships { get; }
+        public int BondedCount { get; }
+        public int PartnershipCount { get; }
+        public int TotalFamilies { get; }
+        public int TotalChildren { get; }
+        public int LoadedCourtshipEvents { get; }
+
+        public RomanceFamilyCensus(
+            int totalRelationships,
+            int bondedCount,
+            int partnershipCount,
+            int totalFamilies,
+            int totalChildren,
+            int loadedCourtshipEvents)
+        {
+            TotalRelationships = totalRelationships;
+            BondedCount = bondedCount;
+            PartnershipCount = partnershipCount;
+            TotalFamilies = totalFamilies;
+            TotalChildren = totalChildren;
+            LoadedCourtshipEvents = loadedCourtshipEvents;
         }
     }
 }
