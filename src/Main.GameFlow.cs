@@ -909,6 +909,7 @@ namespace AtomicWar.GodotApp
                 _railwayTerminalPanel, _archaeologyExcavationPanel,
                 _desperationCrisisPanel, _mercenaryBountyBoardPanel,
                 _falloutPlumePanel,
+                _shelterAtmospherePanel,
                 _dailyBriefingModal
             };
 
