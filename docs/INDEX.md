@@ -1,11 +1,11 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 4222 | **Last Verified:** 2026-09-23
+**Total Indexed Documents:** 4220 | **Last Verified:** 2026-09-23
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4172 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4170 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 48 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -2176,7 +2176,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2262 documents)
+## 9. General Project Guides & Archive Reference (2260 documents)
 
 | Status | Document | Title / Summary |
 |---|---|---|
@@ -2762,8 +2762,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
-| 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | **Proprietary License** — All rights reserved. |
-| 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🟢 `CURRENT` | [`docs/ACCESSIBILITY.md`](ACCESSIBILITY.md) | **ASHFALL — ACCESSIBILITY ARCHITECTURE & STANDARDS (PLAN 80 / TASK B21)** — **Classification:** Core UX & Accessibility Authority |
 | 🟢 `CURRENT` | [`docs/ACTION_RESULT_SURFACING_MATRIX.md`](ACTION_RESULT_SURFACING_MATRIX.md) | **Typed action-result surfacing matrix** — Core owns stable failure codes; host/UI owns player-facing wording. |
